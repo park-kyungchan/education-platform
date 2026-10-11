@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "evidence",
+  "id": "education-platform:evidence:mathcrew-live-predecessor-links",
+  "projectId": "education-platform",
+  "domainId": "education",
+  "createdAt": "2026-10-11T06:12:48.401760Z",
+  "payload": {
+    "claim": "The currently served mathCrew home page still navigates to all six predecessor public repositories.",
+    "method": "Read-only TLS GET with captured response headers/body; parse exact href values without executing page scripts. GitHub repository/deployments/Pages metadata read separately.",
+    "sourceUrl": "https://kcpalantir.tech/",
+    "fetchedAt": "2026-10-11T06:12:48.401760Z",
+    "result": {
+      "outcome": "success",
+      "processExitCode": 0,
+      "contentMatched": true,
+      "details": {
+        "httpStatus": 200,
+        "edge": "cloudflare",
+        "bodySha256": "b0b464d407b616a649e7a5512515846de7b4434f5c59a119225bbcbfc616b5f8",
+        "headerSha256": "96c87ccf2dd2b57ee853e1b72ec58579f5ff4991ebd6de91c81587beae3e2b46",
+        "oldRepositoryHrefCount": 6,
+        "privateRawBody": ".private/platform-rearchitecture/education-mathcrew-live.html",
+        "privateRawHeaders": ".private/platform-rearchitecture/education-mathcrew-live.headers",
+        "rawOwner": "hermes-harness-engineering",
+        "githubMetadata": {
+          "homepage": null,
+          "private": false,
+          "archived": false,
+          "deployments": [],
+          "pagesApiStatus": 404
+        },
+        "admittedBackendHarness": "backend-ontology top-level project context/current-work/START have no mathCrew deployment reference; host-management/runtime directory metadata provides no exact site route"
+      }
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "outcome": "success"
+      }
+    ],
+    "limitations": [
+      "Cloudflare edge and HTTP200 do not identify deployment owner, source commit, authenticated deployment capability or production acceptance.",
+      "No deployment, native mutation, credential read, account change or remote repository mutation was performed.",
+      "Main homepage observed; full browser/translated page acceptance requires the owner deployment route."
+    ]
+  }
+}

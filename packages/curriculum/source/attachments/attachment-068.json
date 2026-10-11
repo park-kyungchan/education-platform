@@ -1,0 +1,178 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "kind",
+    "id",
+    "schemaVersion",
+    "revision",
+    "status",
+    "sourceSnapshot",
+    "displayDomains",
+    "gradeBands",
+    "drilldownLevels",
+    "contract"
+  ],
+  "properties": {
+    "kind": {
+      "const": "ui_information_architecture"
+    },
+    "id": {
+      "type": "string"
+    },
+    "schemaVersion": {
+      "type": "string"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "status": {
+      "type": "string"
+    },
+    "sourceSnapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "reference",
+        "revision",
+        "sha256"
+      ],
+      "properties": {
+        "kind": {
+          "const": "source_snapshot"
+        },
+        "reference": {
+          "type": "string"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "sha256": {
+          "type": "string"
+        }
+      }
+    },
+    "displayDomains": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "kind",
+          "id",
+          "label",
+          "sourceTopicIds",
+          "coverage"
+        ],
+        "properties": {
+          "kind": {
+            "const": "display_domain"
+          },
+          "id": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "sourceTopicIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "coverage": {
+            "enum": [
+              "sample_only",
+              "empty_scaffold"
+            ]
+          }
+        }
+      }
+    },
+    "gradeBands": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "kind",
+          "id",
+          "label",
+          "mappingStatus"
+        ],
+        "properties": {
+          "kind": {
+            "const": "display_grade_band"
+          },
+          "id": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "mappingStatus": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "drilldownLevels": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "canonicalDataModified",
+        "ontologyModified",
+        "textbookUnitsAsserted",
+        "curriculumCoverageClaimed",
+        "elementaryGradeSplitKnown",
+        "allConceptIdsPreserved",
+        "defaultEdgeTypes",
+        "automaticSourceSync",
+        "statePersistence"
+      ],
+      "properties": {
+        "canonicalDataModified": {
+          "type": "boolean"
+        },
+        "ontologyModified": {
+          "type": "boolean"
+        },
+        "textbookUnitsAsserted": {
+          "type": "boolean"
+        },
+        "curriculumCoverageClaimed": {
+          "type": "boolean"
+        },
+        "elementaryGradeSplitKnown": {
+          "type": "boolean"
+        },
+        "allConceptIdsPreserved": {
+          "type": "boolean"
+        },
+        "defaultEdgeTypes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "automaticSourceSync": {
+          "type": "boolean"
+        },
+        "statePersistence": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MathEducation grid view configuration schema"
+}

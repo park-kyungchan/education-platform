@@ -1,0 +1,53 @@
+{
+  "kind": "validation_report",
+  "schemaVersion": "1.1.0",
+  "revision": 2,
+  "status": "validated",
+  "updatedAt": "2026-10-06T06:16:00Z",
+  "checks": {
+    "json_schema": "pass",
+    "unique_entity_ids": "pass",
+    "canonical_parent_refs": "pass",
+    "hierarchy_acyclic": "pass",
+    "dependency_endpoints": "pass",
+    "prerequisite_acyclic": "pass",
+    "fraction_arithmetic": "pass",
+    "independent_math_review": "pass_after_precision_corrections",
+    "javascript_syntax": "pass",
+    "four_edge_types": "pass",
+    "advanced_lens_separated": "pass",
+    "ui_runtime": "unverified_browser_read_denied"
+  },
+  "counts": {
+    "concepts": 12,
+    "terms": 19,
+    "symbols": 17,
+    "dependencyEdges": 12,
+    "openGaps": 6
+  },
+  "notVerified": [
+    "official_achievement_standard_mapping",
+    "complete_prerequisite_coverage",
+    "actual_host_render",
+    "responsive_layout_and_clicks"
+  ],
+  "sha256": {
+    "matheducation-sample-r2.json": "3332d52420632f5a5afc872692f9a9bfcd81d238705d8d63918c0c9a70118308",
+    "matheducation-sample-r2.schema.json": "e8a7ba3bfac02cde065fcf176fc79dbfcf256ab4f158a19b0e0278178c70acf1",
+    "concept-explorer.html": "282e51426a809e16c1aeb05afbcbddb45b422ed4bc852fb18569275e820333e9"
+  },
+  "behavior": {
+    "canonicalRevision": 2,
+    "schemaVersion": "1.1.0",
+    "defaultVisibleEdges": [
+      "required_prerequisite"
+    ],
+    "optionalEdgeTypes": [
+      "helpful_prerequisite",
+      "representation",
+      "related"
+    ],
+    "automaticFileSync": false,
+    "studentDataIncluded": false
+  }
+}

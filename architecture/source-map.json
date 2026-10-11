@@ -1,0 +1,173 @@
+{
+  "schema": "education.source-map.v1",
+  "projectId": "education-platform",
+  "ontologyVersion": "0.2.0",
+  "authority": "none",
+  "meaning": "Module dependency edges define integration verification order. They do not claim actual accepted mathematical consumption, canonical semantic relationships or deployment.",
+  "modules": [
+    {
+      "id": "mathematics-core",
+      "root": "packages/mathematics-core",
+      "projectId": "mathematics-cartography",
+      "sourceKind": "native-dirty-worktree",
+      "commit": "b8766843f3f83b9d36cc5888f65f6b1ea56f3c52",
+      "runtime": "node-npm",
+      "dependsOn": [],
+      "checks": [
+        "verify"
+      ],
+      "entrypoints": [
+        "src/compile-fragment-review-proposal.ts",
+        "src/compile-fragment-evidence-review-packet.ts",
+        "src/compile-human-semantic-disposition-record.ts"
+      ],
+      "native": {
+        "ownerProfile": "default",
+        "projectId": "p_8a30d5d4",
+        "projectRoot": "/opt/data/workspace/mathematics-cartography",
+        "workIssueIds": [],
+        "pendingWork": "IMMUTABLE_HUMAN_SEMANTIC_DISPOSITION_RECORD-R4",
+        "authority": "none",
+        "ontologyRootKind": "WorkStudio"
+      }
+    },
+    {
+      "id": "curriculum",
+      "root": "packages/curriculum",
+      "projectId": "math-education",
+      "sourceKind": "github-private",
+      "commit": "4a666ef6ff568f15495ff8219db583bf6dfbfe2a",
+      "runtime": "bun",
+      "dependsOn": [],
+      "checks": [
+        "validate"
+      ],
+      "entrypoints": [
+        "scripts/preview.ts",
+        "scripts/project-ui.ts"
+      ],
+      "native": {
+        "ownerProfile": null,
+        "projectId": null,
+        "projectRoot": null,
+        "workIssueIds": [],
+        "authority": "none"
+      }
+    },
+    {
+      "id": "academy",
+      "root": "apps/academy",
+      "projectId": "dc-gang-a",
+      "sourceKind": "composite-code-spec",
+      "commit": "5074aeb5649c1a97ad06d33b9f895296fb4c3ad6",
+      "runtime": "bun",
+      "dependsOn": [
+        "mathematics-core",
+        "curriculum"
+      ],
+      "checks": [
+        "check"
+      ],
+      "entrypoints": [
+        "dc-gang-a/src/academy/application.ts",
+        "dc-gang-a/src/academy/main.ts",
+        "gang-a/packages/application/select-operational-context.ts"
+      ],
+      "native": {
+        "ownerProfile": "dc-gang-a-dev",
+        "projectId": "p_a5676068",
+        "projectRoot": "/opt/data/workspace/dc-gang-a",
+        "workIssueIds": [
+          "t_ce34cba7"
+        ],
+        "authority": "none",
+        "workIssueMeaning": "historical task locator; not active status or permission"
+      }
+    },
+    {
+      "id": "clinic-workbench",
+      "root": "examples/clinic-workbench",
+      "projectId": "hermes-profile-dc-gang-a-dev",
+      "sourceKind": "github-public-synthetic-snapshot",
+      "commit": "a99605e9ea4bcbfa28130456e0d1ab8e41e7001a",
+      "runtime": "bun",
+      "dependsOn": [
+        "academy"
+      ],
+      "checks": [
+        "check"
+      ],
+      "entrypoints": [
+        "src/index.ts",
+        "scripts/demo.ts"
+      ],
+      "native": {
+        "ownerProfile": "dc-gang-a-dev",
+        "projectId": null,
+        "projectRoot": null,
+        "workIssueIds": [],
+        "authority": "none"
+      }
+    },
+    {
+      "id": "mathcrew",
+      "root": "apps/mathcrew",
+      "projectId": "hermes-profile-default",
+      "sourceKind": "github-public-product",
+      "commit": "929f2ec058846fd45be4b6ba479966264be4e5e9",
+      "runtime": "bun",
+      "dependsOn": [
+        "curriculum"
+      ],
+      "checks": [
+        "test",
+        "check"
+      ],
+      "entrypoints": [
+        "src/build.ts",
+        "src/preview-handler.ts"
+      ],
+      "native": {
+        "ownerProfile": "default",
+        "projectId": "p_566ac0ba",
+        "projectRoot": "/opt/data/workspace/backend-ontology",
+        "workIssueIds": [],
+        "authority": "none",
+        "bindingMeaning": "profile-associated backend project; public product source remains module-owned"
+      },
+      "runtimePin": "1.4.1"
+    }
+  ],
+  "academySources": [
+    {
+      "id": "native-dc",
+      "root": "apps/academy/dc-gang-a",
+      "commit": "5074aeb5649c1a97ad06d33b9f895296fb4c3ad6",
+      "revisionMeaning": "observed-HEAD-not-complete-worktree-content",
+      "privateOriginalOwner": "native-dc-gang-a"
+    },
+    {
+      "id": "gang-a-upstream",
+      "root": "apps/academy/gang-a",
+      "commit": "7b5cf56dd6f19ffe56d180b61c03d8366f5f98b1",
+      "revisionMeaning": "github-HEAD-code-only-baseline"
+    },
+    {
+      "id": "gang-a-inspected-reference",
+      "root": null,
+      "commit": "d60498707b49ae75ef6916fecdbb7458b2ac58ea",
+      "revisionMeaning": "inspected-archive-not-current-upstream",
+      "writePolicy": "reference-only",
+      "privateCustody": "education-gang-a-inspected/source.tar"
+    }
+  ],
+  "semanticState": {
+    "mathematicsHumanDecision": "PENDING",
+    "mathematicsCanonicalApplication": "NOT_PERFORMED",
+    "r4Review": "PENDING_NEW_EXACT_REVIEW_AUTHORITY",
+    "bunParity": "DEFERRED",
+    "curriculumCanonicalInputs": "not_available_in_this_ui_export"
+  },
+  "nativeBindingsCompleteness": "Only source-observed IDs are populated; missing stable WorkIssue/Project IDs are explicit unresolved bindings, never generated replacements.",
+  "historyCustodyRef": "provenance/history-custody.json"
+}

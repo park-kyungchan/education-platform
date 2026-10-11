@@ -1,0 +1,4 @@
+import {z} from 'zod';
+import {AssignmentId,StudentId,EntityId,EvidenceId,Instant} from './ids.ts';
+export const Assignment=z.strictObject({assignmentId:AssignmentId,studentId:StudentId,scope:z.array(z.strictObject({entityId:EntityId,kind:z.enum(['lesson','major_assessment']),embeddedContents:z.array(z.strictObject({labelRaw:z.string(),evidenceIds:z.array(EvidenceId),countsAsIndependentProgress:z.literal(false)}))})),evidenceIds:z.array(EvidenceId).min(1),assignedAt:Instant,dueAt:Instant.nullable(),nativeAssignmentState:z.enum(['unknown','observed']),completionState:z.enum(['unknown','teacher_confirmed_complete','teacher_confirmed_incomplete'])}).superRefine((a,c)=>{if(new Set(a.scope.map(s=>s.entityId)).size!==a.scope.length)c.addIssue({code:'custom',message:'duplicate_assignment_scope'});});
+export type Assignment=z.infer<typeof Assignment>;

@@ -1,0 +1,21 @@
+# Codex Cloud preparation
+
+Checked on 2026-10-07. This repo is a start pack; no actual Cloud environment or task was launched.
+
+## Current Cloud
+
+Select only private park-kyungchan/math-education, keep environment access Only me, and ask setup to prepare Bun exactly 1.4.2. Use bash scripts/cloud/setup.sh as the tested Install script. Use scripts/cloud/START_SKILL.md for startup. Review setup, then Publish; test a new task. Repository refresh can preserve dependency caches without rerunning installation/startup, so rerun doctor and validation for the selected branch. Setup changes need republishing. Source: [current Cloud environments](https://learn.chatgpt.com/docs/environments/cloud-environments).
+
+## Legacy
+
+Use Legacy only when explicitly selected for its integration workflows. This pack includes scripts/cloud/maintenance.sh as a compatibility command. Legacy setup/cache/secrets behavior is distinct from current Cloud. Source: [Legacy guide](https://learn.chatgpt.com/docs/environments/cloud-environment).
+
+## Runtime and access
+
+Install Bun 1.4.2 from its official vendor route before setup; setup deliberately stops on a missing/wrong runtime instead of downloading arbitrary installers. Dependencies are pinned in package.json/bun.lock; install with --frozen-lockfile --ignore-scripts. Source: [Bun installation](https://bun.com/docs/installation).
+
+No API key, browser session, Space connector, MCP configuration or student account is needed for the default tests. Package installation needs its allowed registry/download route. A domain allowance does not provide service authorization. Space links retain source access; future task tools, plugins and Page permissions must be checked in the actual environment. A blocked Page write remains blocked.
+
+Root AGENTS.md keeps the starting context small; docs/CONTEXT_MANIFEST.json routes each task to selected source records/contracts. Source: [AGENTS instructions](https://learn.chatgpt.com/docs/agent-configuration/agents-md).
+
+Do not interpret local TypeScript/tests/hash passes as real Cloud setup, hosted UI QA, mathematical approval or teacher review. Current Cloud documentation says computer/browser use is not supported; no Cloud browser QA is promised here.

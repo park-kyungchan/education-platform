@@ -1,0 +1,4 @@
+import {z} from 'zod';
+import {Id,Hash,Instant} from '../schema/v1/ids.ts';
+import {EvidenceRef} from '../schema/v1/evidence-ref.ts';import {SourceTime} from '../schema/v1/primitives.ts';
+export const TeacherOutcome=z.strictObject({id:Id,studentId:Id,targetObservationSha256:Hash,targetSourceRecordId:Id,targetSourceAttemptId:Id.nullable(),path:z.enum(['original_wrong','similar_clinic']),state:z.enum(['unknown','teacher_confirmed_complete','teacher_confirmed_incomplete']),evidence:EvidenceRef.nullable(),recordedAt:Instant,completedAt:SourceTime}).superRefine((x,c)=>{if(x.state!=='unknown'&&(!x.evidence||!['user_confirmed_statement','native_teacher_review_observed'].includes(x.evidence.sourceClass)))c.addIssue({code:'custom',message:'teacher_outcome_cannot_be_derived_from_score_or_missing_record'});});

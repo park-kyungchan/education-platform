@@ -1,0 +1,8 @@
+import type {ScopedAcademyReadPlan} from '../../lms/academyReadProtocol';
+import type {WriteAcknowledgement} from './storageRecords';
+export interface SourceAreaTask {id:string;studentId:string;teacherKey:string;collegeKey:string;request:ScopedAcademyReadPlan['request']}
+export interface SourceAreaReceipt extends SourceAreaTask {family:SourceAreaTask['request']['family'];status:'pending'|'observed'|'blocked'|'failed';reason?:string;transport?:'direct_http_api';observedAt?:string;captureDigest?:string;commands?:Array<{studentId:string;entityId:string;idempotencyKey:string;outcome:WriteAcknowledgement}>}
+export interface SourceRequestReceipt {schemaVersion:1;kind:'source_refresh_request';ownerId:string;actorId:string;requestId:string;studentId:string|null;status:'pending'|'observed'|'partial'|'blocked'|'failed';reason?:string;captureDigest?:string;date?:string;areas?:SourceAreaReceipt[];studentCount?:number;bookCount?:number;changedVersions?:number;unchangedVersions?:number;commands?:Array<{studentId:string;entityId:string;idempotencyKey:string;outcome:WriteAcknowledgement}>}
+export type SourceRequestResult=(SourceRequestReceipt&{cacheRetained:boolean;academyEffect:string;officialSaved:boolean;parentSent:boolean;replacementAcquisitionAllowed:boolean})|{status:'not_found';ownerId:string;actorId:string;requestId:string;cacheRetained:boolean;replacementAcquisitionAllowed:boolean};
+export interface SourceRequestHistory {schemaVersion:1;kind:'source_refresh_history';ownerId:string;actorId:string;order:'request_id_not_event_time';rows:SourceRequestResult[];nextCursor:string|null}
+export type SourceApplyResult=SourceRequestResult|{status:'pending';ownerId:string;actorId:string;requestId:string;cacheRetained:boolean;replacementAcquisitionAllowed:boolean};

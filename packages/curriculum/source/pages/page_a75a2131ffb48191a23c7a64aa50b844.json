@@ -1,0 +1,87 @@
+{
+  "pageId": "page_a75a2131ffb48191a23c7a64aa50b844",
+  "title": "수학 관계 변경과 복원 모의 검증",
+  "url": "https://chatgpt.com/space/page_a75a2131ffb48191a23c7a64aa50b844",
+  "blocks": [
+    {
+      "id": "c3fc8cc8-9af4-410f-8d12-6bf7efb51e2a",
+      "kind": "markdown",
+      "markdown": "분수 덧셈 → 유리수 덧셈의 관계를 related에서 helpful_prerequisite로 바꾸는 제안과, 원상태를 새로운 리비전으로 복원하는 과정을 읽기 전용으로 계산했습니다. 특정 관계 변경에 대한 사용자 승인은 기록하지 않았으며 기존 그래프는 바뀌지 않았습니다.",
+      "hash": "a4f607b9d87e4e4b67c298c92025e8dfaf7bbd6468ba60f09f7bed6cffc13be6",
+      "metadata": {}
+    },
+    {
+      "id": "7746b93c-7b08-4900-8415-18130fa4cc8d",
+      "kind": "markdown",
+      "markdown": "## 변경 예시",
+      "hash": "bc9d1e40221a6fdbb1cdcede25575357f5466d2946306ef036954f98ad7ec314",
+      "metadata": {}
+    },
+    {
+      "id": "9aeece53-1f6a-4f9d-aafb-6fb728f525c6",
+      "kind": "markdown",
+      "markdown": "| 단계 | 관계 분류 | 리비전 | 실제 반영 |\n| --- | --- | --- | --- |\n| 기준 상태 | related | 1 | 기존 샘플 복사본 |\n| 변경 후 가상 상태 | helpful_prerequisite | 2 | 없음 |\n| 보상 복원 후 가상 상태 | related | 3 | 없음 |",
+      "hash": "833360c4bb3e8474a7e45414fdf8b1bf19e4ad0369cb83d5552877ff3eba38da",
+      "metadata": {}
+    },
+    {
+      "id": "fa084b9d-9bdb-4612-9e33-b924bfc54f5d",
+      "kind": "markdown",
+      "markdown": "변경 이유: 양의 분수 덧셈을 알면 부호 있는 유리수 덧셈을 설명하는 데 도움이 된다는 교수 관점을 비교합니다. 필수 선수로 승격하거나 보편적인 유일 학습 순서로 주장하지 않습니다.",
+      "hash": "4fecea04d13d3a44831ddf1ca77d69115eed9ca7fdb2aba8010a82e81d305eac",
+      "metadata": {}
+    },
+    {
+      "id": "f1205e3d-e8c2-48e7-83fe-4f1df9ece1c0",
+      "kind": "markdown",
+      "markdown": "## 검증 결과",
+      "hash": "138db9601ef3d0b870ce42e566590cc6a987b8b83bf90183a407cabb72713137",
+      "metadata": {}
+    },
+    {
+      "id": "1a24b4b2-94c5-4038-8d39-f7935b0a7ebf",
+      "kind": "markdown",
+      "markdown": "| 검사 | 결과 | 의미 |\n| --- | --- | --- |\n| schema | 통과 | Draft 2020-12 schema and complete proposal validated |\n| typed_unique_ids | 통과 | 154 unique record IDs; discriminated record kinds |\n| hierarchy_acyclic | 통과 | All canonicalParentId chains terminate at proposal-root |\n| hierarchy_references | 통과 | Every content record has a valid typed hierarchy parent; links and evidence targets resolve |\n| official_source_mapping | 통과 | 19 official Palantir documentation sources; adaptations marked separately |\n| baseline_required_dag | 통과 | Only selected required prerequisite edges in the same perspective are checked |\n| valid_forward_preview | 통과 | related becomes helpful_prerequisite in projected state only |\n| compensating_restore | 통과 | Restoration creates projected revision 3, preserving events 1→2 and 2→3 |\n| stable_identity | 통과 | No concept-v1/v2 identity duplication |\n| approval_not_fabricated | 통과 | No particular relationship change has user approval or persisted execution |\n| apply_blocked | 통과 | Specific approval and deployed runtime are both missing; no apply call exists |\n| stale_revision | 통과 | stale_assertion_revision |\n| stale_graph | 통과 | stale_graph_revision |\n| changed_payload | 통과 | payload_hash_mismatch |\n| wrong_perspective | 통과 | perspective_mismatch |\n| missing_endpoint | 통과 | missing_endpoint |\n| required_cycle | 통과 | required_cycle |\n| required_self_cycle | 통과 | required_self_cycle |\n| unknown_relation | 통과 | invalid_relation_kind |\n| stale_before_value | 통과 | before_value_mismatch |\n| related_cycle_not_forbidden | 통과 | Two opposing related links form a non-prerequisite cycle and remain allowed |\n| schema_rejects_bad_type | 통과 | Wrong primitive type is rejected |\n| schema_rejects_unknown_field | 통과 | Unknown fields are rejected |\n| numeric_rationale_rejected | 통과 | invalid_proposal_schema |\n| typed_perspectiveId | 통과 | wrong_perspective_reference_kind |\n| typed_evidenceIds | 통과 | wrong_evidence_reference_kind |\n| baseline_not_mutated | 통과 | Pure projection leaves input state unchanged |\n| source_preserved_matheducation-sample-r2_json | 통과 | Source bytes unchanged |\n| source_preserved_dependency-ledger-r1_json | 통과 | Source bytes unchanged |",
+      "hash": "fdb1d488948bff7fb4a017532a3951ffd0bcb9d3b4a655e702d6e1adb3e25b0c",
+      "metadata": {}
+    },
+    {
+      "id": "a3620753-c867-4847-ac12-62d1c176fcb7",
+      "kind": "markdown",
+      "markdown": "## 승인과 복원의 경계",
+      "hash": "6e2aa9e8abc788786508c1028152756d161a25474d50f0a023737194c6c6192a",
+      "metadata": {}
+    },
+    {
+      "id": "d771deea-b6ad-4693-8ec6-683231edd535",
+      "kind": "markdown",
+      "markdown": "현재 적용 준비 상태는 false입니다. 예시 관계에 대한 구체적 승인과 배포된 실행 환경이 모두 없으므로 실제 변경은 수행하지 않습니다. 복원 예시는 revision 1을 덮어쓰지 않고 1→2→3 이력을 남기는 자체 계약입니다.",
+      "hash": "98ffa2f096dd58fc7a9468de483907e58fd63b4aafebd1a6be87a4e38b4717ce",
+      "metadata": {}
+    },
+    {
+      "id": "a7cfc61f-3d3a-4ab4-bf8f-a21625b73277",
+      "kind": "markdown",
+      "markdown": "Palantir 기본 Undo는 적용 사용자·시점·최신 편집·저장소 등의 제한이 있고 외부 알림이나 웹훅은 되돌리지 않습니다. Scenarios도 과거 버전 저장 도구가 아닙니다. [Action Undo](https://www.palantir.com/docs/foundry/action-types/action-reverts) · [Scenarios](https://www.palantir.com/docs/foundry/ontology/overview-ontology-scenario)",
+      "hash": "3f1dec0db754161032f7b4f9822352325abe86fad01a491fcc6ecedbe7dcef74",
+      "metadata": {}
+    },
+    {
+      "id": "4b1840f3-ed31-46fd-af4e-29bc0cb1a979",
+      "kind": "markdown",
+      "markdown": "## 검증 범위",
+      "hash": "81da7f073f7463caaad6ebcb24b6ce232f924671877ff82f55a78aec1711db14",
+      "metadata": {}
+    },
+    {
+      "id": "c3595d18-e84e-48dc-a2a9-ad582a04d8d5",
+      "kind": "markdown",
+      "markdown": "JSON 구조, 식별자, 계층, 참조, 리비전·변경 해시, 특정 관점의 필수 선수 순환을 검사했습니다. 자연어 적용 조건의 논리적 함의, 교육 효과, 배포된 권한·트랜잭션 보장은 검증 범위에 포함되지 않습니다.",
+      "hash": "eca666f95c2bd19aa111e40fbef0c20be4c111975690909a740f14692be09e4a",
+      "metadata": {}
+    }
+  ],
+  "references": [],
+  "throughSequence": 1,
+  "sourceMarkdownSha256": "62261477ac73e2e9a1c574fc979f198ecf54ff6f171a2f835c210b6162c38fbe"
+}

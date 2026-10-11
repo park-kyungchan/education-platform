@@ -1,0 +1,45 @@
+{
+  "kind": "WorkpackValidationReport",
+  "status": "pass_with_warnings",
+  "validatorVersion": "1.1.0",
+  "workpackCount": 1,
+  "recordCount": 1026,
+  "errors": [],
+  "warnings": [
+    {
+      "kind": "ValidationIssue",
+      "code": "open_content_gap",
+      "recordId": "math:gap:domain-01:pedagogical-review",
+      "message": "관계와 설명의 교육적 검토: 실제 사용에서 설명 경로와 필요한 선행을 검토하고 관점별 수정 제안·리비전으로 보존한다."
+    },
+    {
+      "kind": "ValidationIssue",
+      "code": "open_content_gap",
+      "recordId": "math:gap:domain-02:pedagogical-review",
+      "message": "후보 설명 경로의 교사 검토: 수학교육 전문가가 학습자 수준, 필수·도움 관계 및 반례의 적절성을 검토한다. 후보 관계는 아직 선택 또는 승인되지 않았다."
+    },
+    {
+      "kind": "ValidationIssue",
+      "code": "open_content_gap",
+      "recordId": "math:gap:domain-03:pedagogical-review",
+      "message": "기하 설명과 관계의 독립 검토: 도형의 대응·조건·단위와 설명 경로를 실제 사용에서 검토하고 수정 리비전을 남긴다."
+    },
+    {
+      "kind": "ValidationIssue",
+      "code": "open_content_gap",
+      "recordId": "math:gap:domain-03:figures",
+      "message": "예제에 맞는 기하 그림 보강: 현재 텍스트와 수식 예제에 대응하는 도형 그림을 추가하고 대응점·숨은 면·시점·각도 표기를 시각 검수한다."
+    }
+  ],
+  "checks": [
+    "json_schema",
+    "stable_id_uniqueness",
+    "typed_references",
+    "hierarchy_acyclic",
+    "registry_validation",
+    "boundary_alignment",
+    "scoped_required_dag"
+  ],
+  "graphSnapshotHash": "0e987dd8e3abd38b15f9fdc9d160d3d2c0b1676cf57e9006fff8cee83b40dc62",
+  "validationScope": "declared_workpack_scope"
+}

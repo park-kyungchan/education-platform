@@ -1,0 +1,1242 @@
+{
+  "kind": "ReadOnlySimulationReport",
+  "id": "matheducation-ontology-simulation",
+  "canonicalParentId": "proposal-root",
+  "schemaVersion": "1.0.0",
+  "status": "passed_read_only",
+  "runtime": "local_validation_only",
+  "specificUserApproval": null,
+  "sourceWritesPerformed": false,
+  "baseline": {
+    "kind": "ProjectedGraphState",
+    "id": "preview-state-1",
+    "canonicalParentId": "section-simulation",
+    "graphRevision": 1,
+    "executionMode": "read_only_simulation",
+    "isPersisted": false,
+    "assertions": [
+      {
+        "kind": "DependencyAssertion",
+        "id": "assertion-edge-1",
+        "canonicalParentId": "section-model",
+        "prerequisiteConceptId": "multiple",
+        "dependentConceptId": "common-multiple",
+        "relationKind": "required_prerequisite",
+        "claimBasis": "teaching_perspective",
+        "perspectiveId": "perspective-adult-reader",
+        "conditions": [
+          "초등·중등 개념을 정수와 분수의 표준 표현으로 설명하는 이 샘플 경로에서 해석한다.",
+          "필수 선행은 모든 학습자에게 보편적으로 유일한 학습 경로라는 뜻이 아니다."
+        ],
+        "rationale": "배수의 공통부분을 찾는다.",
+        "evidenceStatus": "author_hypothesis",
+        "evidenceIds": [
+          "evidence-assertion-edge-1"
+        ],
+        "approvalStatus": "proposed",
+        "revision": 1,
+        "selectedForPreview": true
+      },
+      {
+        "kind": "DependencyAssertion",
+        "id": "assertion-edge-2",
+        "canonicalParentId": "section-model",
+        "prerequisiteConceptId": "common-multiple",
+        "dependentConceptId": "lcm",
+        "relationKind": "required_prerequisite",
+        "claimBasis": "teaching_perspective",
+        "perspectiveId": "perspective-adult-reader",
+        "conditions": [
+          "초등·중등 개념을 정수와 분수의 표준 표현으로 설명하는 이 샘플 경로에서 해석한다.",
+          "필수 선행은 모든 학습자에게 보편적으로 유일한 학습 경로라는 뜻이 아니다."
+        ],
+        "rationale": "양의 공배수 중 최솟값을 찾는다.",
+        "evidenceStatus": "author_hypothesis",
+        "evidenceIds": [
+          "evidence-assertion-edge-2"
+        ],
+        "approvalStatus": "proposed",
+        "revision": 1,
+        "selectedForPreview": true
+      },
+      {
+        "kind": "DependencyAssertion",
+        "id": "assertion-edge-3",
+        "canonicalParentId": "section-model",
+        "prerequisiteConceptId": "fraction-notation",
+        "dependentConceptId": "equivalent-fractions",
+        "relationKind": "required_prerequisite",
+        "claimBasis": "teaching_perspective",
+        "perspectiveId": "perspective-adult-reader",
+        "conditions": [
+          "초등·중등 개념을 정수와 분수의 표준 표현으로 설명하는 이 샘플 경로에서 해석한다.",
+          "필수 선행은 모든 학습자에게 보편적으로 유일한 학습 경로라는 뜻이 아니다."
+        ],
+        "rationale": "분수의 값과 단위 의미를 사용한다.",
+        "evidenceStatus": "author_hypothesis",
+        "evidenceIds": [
+          "evidence-assertion-edge-3"
+        ],
+        "approvalStatus": "proposed",
+        "revision": 1,
+        "selectedForPreview": true
+      },
+      {
+        "kind": "DependencyAssertion",
+        "id": "assertion-edge-4",
+        "canonicalParentId": "section-model",
+        "prerequisiteConceptId": "common-multiple",
+        "dependentConceptId": "common-denominator",
+        "relationKind": "required_prerequisite",
+        "claimBasis": "mathematical_requirement",
+        "perspectiveId": "perspective-adult-reader",
+        "conditions": [
+          "분모를 양의 정수로 두고, 각 분수를 분자와 분모에 같은 양의 정수를 곱하는 방식으로 통분한다.",
+          "이 조건에서 공통 분모는 각 분모의 공배수이다. 교육적 학습 순서의 유일성을 증명하지 않는다."
+        ],
+        "rationale": "공통 분모를 공배수로 고른다.",
+        "evidenceStatus": "author_hypothesis",
+        "evidenceIds": [
+          "evidence-assertion-edge-4"
+        ],
+        "approvalStatus": "proposed",
+        "revision": 1,
+        "selectedForPreview": true
+      },
+      {
+        "kind": "DependencyAssertion",
+        "id": "assertion-edge-5",
+        "canonicalParentId": "section-model",
+        "prerequisiteConceptId": "equivalent-fractions",
+        "dependentConceptId": "common-denominator",
+        "relationKind": "required_prerequisite",
+        "claimBasis": "teaching_perspective",
+        "perspectiveId": "perspective-adult-reader",
+        "conditions": [
+          "초등·중등 개념을 정수와 분수의 표준 표현으로 설명하는 이 샘플 경로에서 해석한다.",
+          "필수 선행은 모든 학습자에게 보편적으로 유일한 학습 경로라는 뜻이 아니다."
+        ],
+        "rationale": "값을 보존하며 분모를 바꾼다.",
+        "evidenceStatus": "author_hypothesis",
+        "evidenceIds": [
+          "evidence-assertion-edge-5"
+        ],
+        "approvalStatus": "proposed",
+        "revision": 1,
+        "selectedForPreview": true
+      },
+      {
+        "kind": "DependencyAssertion",
+        "id": "assertion-edge-6",
+        "canonicalParentId": "section-model",
+        "prerequisiteConceptId": "common-denominator",
+        "dependentConceptId": "fraction-add",
+        "relationKind": "required_prerequisite",
+        "claimBasis": "teaching_perspective",
+        "perspectiveId": "perspective-adult-reader",
+        "conditions": [
+          "초등·중등 개념을 정수와 분수의 표준 표현으로 설명하는 이 샘플 경로에서 해석한다.",
+          "필수 선행은 모든 학습자에게 보편적으로 유일한 학습 경로라는 뜻이 아니다."
+        ],
+        "rationale": "분모가 다른 분수를 같은 단위로 맞춘다.",
+        "evidenceStatus": "author_hypothesis",
+        "evidenceIds": [
+          "evidence-assertion-edge-6"
+        ],
+        "approvalStatus": "proposed",
+        "revision": 1,
+        "selectedForPreview": true
+      },
+      {
+        "kind": "DependencyAssertion",
+        "id": "assertion-edge-7",
+        "canonicalParentId": "section-model",
+        "prerequisiteConceptId": "rational",
+        "dependentConceptId": "rational-add",
+        "relationKind": "required_prerequisite",
+        "claimBasis": "teaching_perspective",
+        "perspectiveId": "perspective-adult-reader",
+        "conditions": [
+          "초등·중등 개념을 정수와 분수의 표준 표현으로 설명하는 이 샘플 경로에서 해석한다.",
+          "필수 선행은 모든 학습자에게 보편적으로 유일한 학습 경로라는 뜻이 아니다."
+        ],
+        "rationale": "양수와 음수를 포함하는 유리수를 다룬다.",
+        "evidenceStatus": "author_hypothesis",
+        "evidenceIds": [
+          "evidence-assertion-edge-7"
+        ],
+        "approvalStatus": "proposed",
+        "revision": 1,
+        "selectedForPreview": true
+      },
+      {
+        "kind": "DependencyAssertion",
+        "id": "assertion-edge-8",
+        "canonicalParentId": "section-model",
+        "prerequisiteConceptId": "common-denominator",
+        "dependentConceptId": "rational-add",
+        "relationKind": "required_prerequisite",
+        "claimBasis": "teaching_perspective",
+        "perspectiveId": "perspective-adult-reader",
+        "conditions": [
+          "초등·중등 개념을 정수와 분수의 표준 표현으로 설명하는 이 샘플 경로에서 해석한다.",
+          "필수 선행은 모든 학습자에게 보편적으로 유일한 학습 경로라는 뜻이 아니다."
+        ],
+        "rationale": "분수로 표시한 유리수의 단위를 맞춘다.",
+        "evidenceStatus": "author_hypothesis",
+        "evidenceIds": [
+          "evidence-assertion-edge-8"
+        ],
+        "approvalStatus": "proposed",
+        "revision": 1,
+        "selectedForPreview": true
+      },
+      {
+        "kind": "DependencyAssertion",
+        "id": "assertion-edge-9",
+        "canonicalParentId": "section-model",
+        "prerequisiteConceptId": "lcm",
+        "dependentConceptId": "common-denominator",
+        "relationKind": "helpful_prerequisite",
+        "claimBasis": "teaching_perspective",
+        "perspectiveId": "perspective-adult-reader",
+        "conditions": [
+          "초등·중등 개념을 정수와 분수의 표준 표현으로 설명하는 이 샘플 경로에서 해석한다.",
+          "필수 선행은 모든 학습자에게 보편적으로 유일한 학습 경로라는 뜻이 아니다."
+        ],
+        "rationale": "가장 작은 공통 분모를 선택하는 효율화 관계이며 필수 선수로 단정하지 않는다.",
+        "evidenceStatus": "author_hypothesis",
+        "evidenceIds": [
+          "evidence-assertion-edge-9"
+        ],
+        "approvalStatus": "proposed",
+        "revision": 1,
+        "selectedForPreview": true
+      },
+      {
+        "kind": "DependencyAssertion",
+        "id": "assertion-edge-10",
+        "canonicalParentId": "section-model",
+        "prerequisiteConceptId": "fraction-notation",
+        "dependentConceptId": "rational",
+        "relationKind": "representation",
+        "claimBasis": "teaching_perspective",
+        "perspectiveId": "perspective-adult-reader",
+        "conditions": [
+          "초등·중등 개념을 정수와 분수의 표준 표현으로 설명하는 이 샘플 경로에서 해석한다.",
+          "필수 선행은 모든 학습자에게 보편적으로 유일한 학습 경로라는 뜻이 아니다."
+        ],
+        "rationale": "분수 표기가 유리수를 나타내는 표현으로 확장된다.",
+        "evidenceStatus": "author_hypothesis",
+        "evidenceIds": [
+          "evidence-assertion-edge-10"
+        ],
+        "approvalStatus": "proposed",
+        "revision": 1,
+        "selectedForPreview": true
+      },
+      {
+        "kind": "DependencyAssertion",
+        "id": "assertion-edge-11",
+        "canonicalParentId": "section-model",
+        "prerequisiteConceptId": "fraction-add",
+        "dependentConceptId": "rational-add",
+        "relationKind": "related",
+        "claimBasis": "teaching_perspective",
+        "perspectiveId": "perspective-adult-reader",
+        "conditions": [
+          "초등·중등 개념을 정수와 분수의 표준 표현으로 설명하는 이 샘플 경로에서 해석한다.",
+          "필수 선행은 모든 학습자에게 보편적으로 유일한 학습 경로라는 뜻이 아니다."
+        ],
+        "rationale": "양의 분수 덧셈과 부호 있는 수의 덧셈을 연결한다.",
+        "evidenceStatus": "author_hypothesis",
+        "evidenceIds": [
+          "evidence-assertion-edge-11"
+        ],
+        "approvalStatus": "proposed",
+        "revision": 1,
+        "selectedForPreview": true
+      },
+      {
+        "kind": "DependencyAssertion",
+        "id": "assertion-edge-12",
+        "canonicalParentId": "section-model",
+        "prerequisiteConceptId": "exponents",
+        "dependentConceptId": "square-roots",
+        "relationKind": "related",
+        "claimBasis": "teaching_perspective",
+        "perspectiveId": "perspective-adult-reader",
+        "conditions": [
+          "초등·중등 개념을 정수와 분수의 표준 표현으로 설명하는 이 샘플 경로에서 해석한다.",
+          "필수 선행은 모든 학습자에게 보편적으로 유일한 학습 경로라는 뜻이 아니다."
+        ],
+        "rationale": "제곱 연산과 역방향 관계를 연결하되 전체 지수법칙을 필수 선수로 단정하지 않는다.",
+        "evidenceStatus": "author_hypothesis",
+        "evidenceIds": [
+          "evidence-assertion-edge-12"
+        ],
+        "approvalStatus": "proposed",
+        "revision": 1,
+        "selectedForPreview": true
+      }
+    ]
+  },
+  "forwardProposal": {
+    "kind": "ChangeProposal",
+    "id": "proposal-related-to-helpful",
+    "canonicalParentId": "section-simulation",
+    "assertionId": "assertion-edge-11",
+    "expectedRevision": 1,
+    "expectedGraphRevision": 1,
+    "perspectiveId": "perspective-adult-reader",
+    "rationale": "양의 분수 덧셈을 알고 있으면 부호 있는 유리수 덧셈을 설명하는 데 도움이 된다는 별도 교수 관점이다. 필수 선수로 승격하지 않는다.",
+    "changes": [
+      {
+        "kind": "FieldChange",
+        "field": "relationKind",
+        "before": "related",
+        "after": "helpful_prerequisite"
+      }
+    ],
+    "approvalStatus": "not_requested",
+    "userApprovalEvidence": null,
+    "applied": false,
+    "reviewedPayloadHash": "24a04d296b5a29f0e1d67bef5beef510f26e326d59a5d7b84fb318ccdb23423f"
+  },
+  "projectedForward": {
+    "kind": "ProjectedGraphState",
+    "id": "preview-state-2",
+    "canonicalParentId": "section-simulation",
+    "graphRevision": 2,
+    "executionMode": "read_only_simulation",
+    "isPersisted": false,
+    "assertions": [
+      {
+        "kind": "DependencyAssertion",
+        "id": "assertion-edge-1",
+        "canonicalParentId": "section-model",
+        "prerequisiteConceptId": "multiple",
+        "dependentConceptId": "common-multiple",
+        "relationKind": "required_prerequisite",
+        "claimBasis": "teaching_perspective",
+        "perspectiveId": "perspective-adult-reader",
+        "conditions": [
+          "초등·중등 개념을 정수와 분수의 표준 표현으로 설명하는 이 샘플 경로에서 해석한다.",
+          "필수 선행은 모든 학습자에게 보편적으로 유일한 학습 경로라는 뜻이 아니다."
+        ],
+        "rationale": "배수의 공통부분을 찾는다.",
+        "evidenceStatus": "author_hypothesis",
+        "evidenceIds": [
+          "evidence-assertion-edge-1"
+        ],
+        "approvalStatus": "proposed",
+        "revision": 1,
+        "selectedForPreview": true
+      },
+      {
+        "kind": "DependencyAssertion",
+        "id": "assertion-edge-2",
+        "canonicalParentId": "section-model",
+        "prerequisiteConceptId": "common-multiple",
+        "dependentConceptId": "lcm",
+        "relationKind": "required_prerequisite",
+        "claimBasis": "teaching_perspective",
+        "perspectiveId": "perspective-adult-reader",
+        "conditions": [
+          "초등·중등 개념을 정수와 분수의 표준 표현으로 설명하는 이 샘플 경로에서 해석한다.",
+          "필수 선행은 모든 학습자에게 보편적으로 유일한 학습 경로라는 뜻이 아니다."
+        ],
+        "rationale": "양의 공배수 중 최솟값을 찾는다.",
+        "evidenceStatus": "author_hypothesis",
+        "evidenceIds": [
+          "evidence-assertion-edge-2"
+        ],
+        "approvalStatus": "proposed",
+        "revision": 1,
+        "selectedForPreview": true
+      },
+      {
+        "kind": "DependencyAssertion",
+        "id": "assertion-edge-3",
+        "canonicalParentId": "section-model",
+        "prerequisiteConceptId": "fraction-notation",
+        "dependentConceptId": "equivalent-fractions",
+        "relationKind": "required_prerequisite",
+        "claimBasis": "teaching_perspective",
+        "perspectiveId": "perspective-adult-reader",
+        "conditions": [
+          "초등·중등 개념을 정수와 분수의 표준 표현으로 설명하는 이 샘플 경로에서 해석한다.",
+          "필수 선행은 모든 학습자에게 보편적으로 유일한 학습 경로라는 뜻이 아니다."
+        ],
+        "rationale": "분수의 값과 단위 의미를 사용한다.",
+        "evidenceStatus": "author_hypothesis",
+        "evidenceIds": [
+          "evidence-assertion-edge-3"
+        ],
+        "approvalStatus": "proposed",
+        "revision": 1,
+        "selectedForPreview": true
+      },
+      {
+        "kind": "DependencyAssertion",
+        "id": "assertion-edge-4",
+        "canonicalParentId": "section-model",
+        "prerequisiteConceptId": "common-multiple",
+        "dependentConceptId": "common-denominator",
+        "relationKind": "required_prerequisite",
+        "claimBasis": "mathematical_requirement",
+        "perspectiveId": "perspective-adult-reader",
+        "conditions": [
+          "분모를 양의 정수로 두고, 각 분수를 분자와 분모에 같은 양의 정수를 곱하는 방식으로 통분한다.",
+          "이 조건에서 공통 분모는 각 분모의 공배수이다. 교육적 학습 순서의 유일성을 증명하지 않는다."
+        ],
+        "rationale": "공통 분모를 공배수로 고른다.",
+        "evidenceStatus": "author_hypothesis",
+        "evidenceIds": [
+          "evidence-assertion-edge-4"
+        ],
+        "approvalStatus": "proposed",
+        "revision": 1,
+        "selectedForPreview": true
+      },
+      {
+        "kind": "DependencyAssertion",
+        "id": "assertion-edge-5",
+        "canonicalParentId": "section-model",
+        "prerequisiteConceptId": "equivalent-fractions",
+        "dependentConceptId": "common-denominator",
+        "relationKind": "required_prerequisite",
+        "claimBasis": "teaching_perspective",
+        "perspectiveId": "perspective-adult-reader",
+        "conditions": [
+          "초등·중등 개념을 정수와 분수의 표준 표현으로 설명하는 이 샘플 경로에서 해석한다.",
+          "필수 선행은 모든 학습자에게 보편적으로 유일한 학습 경로라는 뜻이 아니다."
+        ],
+        "rationale": "값을 보존하며 분모를 바꾼다.",
+        "evidenceStatus": "author_hypothesis",
+        "evidenceIds": [
+          "evidence-assertion-edge-5"
+        ],
+        "approvalStatus": "proposed",
+        "revision": 1,
+        "selectedForPreview": true
+      },
+      {
+        "kind": "DependencyAssertion",
+        "id": "assertion-edge-6",
+        "canonicalParentId": "section-model",
+        "prerequisiteConceptId": "common-denominator",
+        "dependentConceptId": "fraction-add",
+        "relationKind": "required_prerequisite",
+        "claimBasis": "teaching_perspective",
+        "perspectiveId": "perspective-adult-reader",
+        "conditions": [
+          "초등·중등 개념을 정수와 분수의 표준 표현으로 설명하는 이 샘플 경로에서 해석한다.",
+          "필수 선행은 모든 학습자에게 보편적으로 유일한 학습 경로라는 뜻이 아니다."
+        ],
+        "rationale": "분모가 다른 분수를 같은 단위로 맞춘다.",
+        "evidenceStatus": "author_hypothesis",
+        "evidenceIds": [
+          "evidence-assertion-edge-6"
+        ],
+        "approvalStatus": "proposed",
+        "revision": 1,
+        "selectedForPreview": true
+      },
+      {
+        "kind": "DependencyAssertion",
+        "id": "assertion-edge-7",
+        "canonicalParentId": "section-model",
+        "prerequisiteConceptId": "rational",
+        "dependentConceptId": "rational-add",
+        "relationKind": "required_prerequisite",
+        "claimBasis": "teaching_perspective",
+        "perspectiveId": "perspective-adult-reader",
+        "conditions": [
+          "초등·중등 개념을 정수와 분수의 표준 표현으로 설명하는 이 샘플 경로에서 해석한다.",
+          "필수 선행은 모든 학습자에게 보편적으로 유일한 학습 경로라는 뜻이 아니다."
+        ],
+        "rationale": "양수와 음수를 포함하는 유리수를 다룬다.",
+        "evidenceStatus": "author_hypothesis",
+        "evidenceIds": [
+          "evidence-assertion-edge-7"
+        ],
+        "approvalStatus": "proposed",
+        "revision": 1,
+        "selectedForPreview": true
+      },
+      {
+        "kind": "DependencyAssertion",
+        "id": "assertion-edge-8",
+        "canonicalParentId": "section-model",
+        "prerequisiteConceptId": "common-denominator",
+        "dependentConceptId": "rational-add",
+        "relationKind": "required_prerequisite",
+        "claimBasis": "teaching_perspective",
+        "perspectiveId": "perspective-adult-reader",
+        "conditions": [
+          "초등·중등 개념을 정수와 분수의 표준 표현으로 설명하는 이 샘플 경로에서 해석한다.",
+          "필수 선행은 모든 학습자에게 보편적으로 유일한 학습 경로라는 뜻이 아니다."
+        ],
+        "rationale": "분수로 표시한 유리수의 단위를 맞춘다.",
+        "evidenceStatus": "author_hypothesis",
+        "evidenceIds": [
+          "evidence-assertion-edge-8"
+        ],
+        "approvalStatus": "proposed",
+        "revision": 1,
+        "selectedForPreview": true
+      },
+      {
+        "kind": "DependencyAssertion",
+        "id": "assertion-edge-9",
+        "canonicalParentId": "section-model",
+        "prerequisiteConceptId": "lcm",
+        "dependentConceptId": "common-denominator",
+        "relationKind": "helpful_prerequisite",
+        "claimBasis": "teaching_perspective",
+        "perspectiveId": "perspective-adult-reader",
+        "conditions": [
+          "초등·중등 개념을 정수와 분수의 표준 표현으로 설명하는 이 샘플 경로에서 해석한다.",
+          "필수 선행은 모든 학습자에게 보편적으로 유일한 학습 경로라는 뜻이 아니다."
+        ],
+        "rationale": "가장 작은 공통 분모를 선택하는 효율화 관계이며 필수 선수로 단정하지 않는다.",
+        "evidenceStatus": "author_hypothesis",
+        "evidenceIds": [
+          "evidence-assertion-edge-9"
+        ],
+        "approvalStatus": "proposed",
+        "revision": 1,
+        "selectedForPreview": true
+      },
+      {
+        "kind": "DependencyAssertion",
+        "id": "assertion-edge-10",
+        "canonicalParentId": "section-model",
+        "prerequisiteConceptId": "fraction-notation",
+        "dependentConceptId": "rational",
+        "relationKind": "representation",
+        "claimBasis": "teaching_perspective",
+        "perspectiveId": "perspective-adult-reader",
+        "conditions": [
+          "초등·중등 개념을 정수와 분수의 표준 표현으로 설명하는 이 샘플 경로에서 해석한다.",
+          "필수 선행은 모든 학습자에게 보편적으로 유일한 학습 경로라는 뜻이 아니다."
+        ],
+        "rationale": "분수 표기가 유리수를 나타내는 표현으로 확장된다.",
+        "evidenceStatus": "author_hypothesis",
+        "evidenceIds": [
+          "evidence-assertion-edge-10"
+        ],
+        "approvalStatus": "proposed",
+        "revision": 1,
+        "selectedForPreview": true
+      },
+      {
+        "kind": "DependencyAssertion",
+        "id": "assertion-edge-11",
+        "canonicalParentId": "section-model",
+        "prerequisiteConceptId": "fraction-add",
+        "dependentConceptId": "rational-add",
+        "relationKind": "helpful_prerequisite",
+        "claimBasis": "teaching_perspective",
+        "perspectiveId": "perspective-adult-reader",
+        "conditions": [
+          "초등·중등 개념을 정수와 분수의 표준 표현으로 설명하는 이 샘플 경로에서 해석한다.",
+          "필수 선행은 모든 학습자에게 보편적으로 유일한 학습 경로라는 뜻이 아니다."
+        ],
+        "rationale": "양의 분수 덧셈과 부호 있는 수의 덧셈을 연결한다.",
+        "evidenceStatus": "author_hypothesis",
+        "evidenceIds": [
+          "evidence-assertion-edge-11"
+        ],
+        "approvalStatus": "proposed",
+        "revision": 2,
+        "selectedForPreview": true
+      },
+      {
+        "kind": "DependencyAssertion",
+        "id": "assertion-edge-12",
+        "canonicalParentId": "section-model",
+        "prerequisiteConceptId": "exponents",
+        "dependentConceptId": "square-roots",
+        "relationKind": "related",
+        "claimBasis": "teaching_perspective",
+        "perspectiveId": "perspective-adult-reader",
+        "conditions": [
+          "초등·중등 개념을 정수와 분수의 표준 표현으로 설명하는 이 샘플 경로에서 해석한다.",
+          "필수 선행은 모든 학습자에게 보편적으로 유일한 학습 경로라는 뜻이 아니다."
+        ],
+        "rationale": "제곱 연산과 역방향 관계를 연결하되 전체 지수법칙을 필수 선수로 단정하지 않는다.",
+        "evidenceStatus": "author_hypothesis",
+        "evidenceIds": [
+          "evidence-assertion-edge-12"
+        ],
+        "approvalStatus": "proposed",
+        "revision": 1,
+        "selectedForPreview": true
+      }
+    ]
+  },
+  "restoreProposal": {
+    "kind": "ChangeProposal",
+    "id": "proposal-compensating-restore",
+    "canonicalParentId": "section-simulation",
+    "assertionId": "assertion-edge-11",
+    "expectedRevision": 2,
+    "expectedGraphRevision": 2,
+    "perspectiveId": "perspective-adult-reader",
+    "rationale": "모의 revision 2의 분류를 원래 related로 복원하되 revision 3을 새로 만든다. 이전 이력은 보존한다.",
+    "changes": [
+      {
+        "kind": "FieldChange",
+        "field": "relationKind",
+        "before": "helpful_prerequisite",
+        "after": "related"
+      }
+    ],
+    "approvalStatus": "not_requested",
+    "userApprovalEvidence": null,
+    "applied": false,
+    "reviewedPayloadHash": "6f8b2e0c1fa57cbac54d4df86b304dab93352fe15a1c48d3d737b04d0ddd0924"
+  },
+  "projectedRestored": {
+    "kind": "ProjectedGraphState",
+    "id": "preview-state-3",
+    "canonicalParentId": "section-simulation",
+    "graphRevision": 3,
+    "executionMode": "read_only_simulation",
+    "isPersisted": false,
+    "assertions": [
+      {
+        "kind": "DependencyAssertion",
+        "id": "assertion-edge-1",
+        "canonicalParentId": "section-model",
+        "prerequisiteConceptId": "multiple",
+        "dependentConceptId": "common-multiple",
+        "relationKind": "required_prerequisite",
+        "claimBasis": "teaching_perspective",
+        "perspectiveId": "perspective-adult-reader",
+        "conditions": [
+          "초등·중등 개념을 정수와 분수의 표준 표현으로 설명하는 이 샘플 경로에서 해석한다.",
+          "필수 선행은 모든 학습자에게 보편적으로 유일한 학습 경로라는 뜻이 아니다."
+        ],
+        "rationale": "배수의 공통부분을 찾는다.",
+        "evidenceStatus": "author_hypothesis",
+        "evidenceIds": [
+          "evidence-assertion-edge-1"
+        ],
+        "approvalStatus": "proposed",
+        "revision": 1,
+        "selectedForPreview": true
+      },
+      {
+        "kind": "DependencyAssertion",
+        "id": "assertion-edge-2",
+        "canonicalParentId": "section-model",
+        "prerequisiteConceptId": "common-multiple",
+        "dependentConceptId": "lcm",
+        "relationKind": "required_prerequisite",
+        "claimBasis": "teaching_perspective",
+        "perspectiveId": "perspective-adult-reader",
+        "conditions": [
+          "초등·중등 개념을 정수와 분수의 표준 표현으로 설명하는 이 샘플 경로에서 해석한다.",
+          "필수 선행은 모든 학습자에게 보편적으로 유일한 학습 경로라는 뜻이 아니다."
+        ],
+        "rationale": "양의 공배수 중 최솟값을 찾는다.",
+        "evidenceStatus": "author_hypothesis",
+        "evidenceIds": [
+          "evidence-assertion-edge-2"
+        ],
+        "approvalStatus": "proposed",
+        "revision": 1,
+        "selectedForPreview": true
+      },
+      {
+        "kind": "DependencyAssertion",
+        "id": "assertion-edge-3",
+        "canonicalParentId": "section-model",
+        "prerequisiteConceptId": "fraction-notation",
+        "dependentConceptId": "equivalent-fractions",
+        "relationKind": "required_prerequisite",
+        "claimBasis": "teaching_perspective",
+        "perspectiveId": "perspective-adult-reader",
+        "conditions": [
+          "초등·중등 개념을 정수와 분수의 표준 표현으로 설명하는 이 샘플 경로에서 해석한다.",
+          "필수 선행은 모든 학습자에게 보편적으로 유일한 학습 경로라는 뜻이 아니다."
+        ],
+        "rationale": "분수의 값과 단위 의미를 사용한다.",
+        "evidenceStatus": "author_hypothesis",
+        "evidenceIds": [
+          "evidence-assertion-edge-3"
+        ],
+        "approvalStatus": "proposed",
+        "revision": 1,
+        "selectedForPreview": true
+      },
+      {
+        "kind": "DependencyAssertion",
+        "id": "assertion-edge-4",
+        "canonicalParentId": "section-model",
+        "prerequisiteConceptId": "common-multiple",
+        "dependentConceptId": "common-denominator",
+        "relationKind": "required_prerequisite",
+        "claimBasis": "mathematical_requirement",
+        "perspectiveId": "perspective-adult-reader",
+        "conditions": [
+          "분모를 양의 정수로 두고, 각 분수를 분자와 분모에 같은 양의 정수를 곱하는 방식으로 통분한다.",
+          "이 조건에서 공통 분모는 각 분모의 공배수이다. 교육적 학습 순서의 유일성을 증명하지 않는다."
+        ],
+        "rationale": "공통 분모를 공배수로 고른다.",
+        "evidenceStatus": "author_hypothesis",
+        "evidenceIds": [
+          "evidence-assertion-edge-4"
+        ],
+        "approvalStatus": "proposed",
+        "revision": 1,
+        "selectedForPreview": true
+      },
+      {
+        "kind": "DependencyAssertion",
+        "id": "assertion-edge-5",
+        "canonicalParentId": "section-model",
+        "prerequisiteConceptId": "equivalent-fractions",
+        "dependentConceptId": "common-denominator",
+        "relationKind": "required_prerequisite",
+        "claimBasis": "teaching_perspective",
+        "perspectiveId": "perspective-adult-reader",
+        "conditions": [
+          "초등·중등 개념을 정수와 분수의 표준 표현으로 설명하는 이 샘플 경로에서 해석한다.",
+          "필수 선행은 모든 학습자에게 보편적으로 유일한 학습 경로라는 뜻이 아니다."
+        ],
+        "rationale": "값을 보존하며 분모를 바꾼다.",
+        "evidenceStatus": "author_hypothesis",
+        "evidenceIds": [
+          "evidence-assertion-edge-5"
+        ],
+        "approvalStatus": "proposed",
+        "revision": 1,
+        "selectedForPreview": true
+      },
+      {
+        "kind": "DependencyAssertion",
+        "id": "assertion-edge-6",
+        "canonicalParentId": "section-model",
+        "prerequisiteConceptId": "common-denominator",
+        "dependentConceptId": "fraction-add",
+        "relationKind": "required_prerequisite",
+        "claimBasis": "teaching_perspective",
+        "perspectiveId": "perspective-adult-reader",
+        "conditions": [
+          "초등·중등 개념을 정수와 분수의 표준 표현으로 설명하는 이 샘플 경로에서 해석한다.",
+          "필수 선행은 모든 학습자에게 보편적으로 유일한 학습 경로라는 뜻이 아니다."
+        ],
+        "rationale": "분모가 다른 분수를 같은 단위로 맞춘다.",
+        "evidenceStatus": "author_hypothesis",
+        "evidenceIds": [
+          "evidence-assertion-edge-6"
+        ],
+        "approvalStatus": "proposed",
+        "revision": 1,
+        "selectedForPreview": true
+      },
+      {
+        "kind": "DependencyAssertion",
+        "id": "assertion-edge-7",
+        "canonicalParentId": "section-model",
+        "prerequisiteConceptId": "rational",
+        "dependentConceptId": "rational-add",
+        "relationKind": "required_prerequisite",
+        "claimBasis": "teaching_perspective",
+        "perspectiveId": "perspective-adult-reader",
+        "conditions": [
+          "초등·중등 개념을 정수와 분수의 표준 표현으로 설명하는 이 샘플 경로에서 해석한다.",
+          "필수 선행은 모든 학습자에게 보편적으로 유일한 학습 경로라는 뜻이 아니다."
+        ],
+        "rationale": "양수와 음수를 포함하는 유리수를 다룬다.",
+        "evidenceStatus": "author_hypothesis",
+        "evidenceIds": [
+          "evidence-assertion-edge-7"
+        ],
+        "approvalStatus": "proposed",
+        "revision": 1,
+        "selectedForPreview": true
+      },
+      {
+        "kind": "DependencyAssertion",
+        "id": "assertion-edge-8",
+        "canonicalParentId": "section-model",
+        "prerequisiteConceptId": "common-denominator",
+        "dependentConceptId": "rational-add",
+        "relationKind": "required_prerequisite",
+        "claimBasis": "teaching_perspective",
+        "perspectiveId": "perspective-adult-reader",
+        "conditions": [
+          "초등·중등 개념을 정수와 분수의 표준 표현으로 설명하는 이 샘플 경로에서 해석한다.",
+          "필수 선행은 모든 학습자에게 보편적으로 유일한 학습 경로라는 뜻이 아니다."
+        ],
+        "rationale": "분수로 표시한 유리수의 단위를 맞춘다.",
+        "evidenceStatus": "author_hypothesis",
+        "evidenceIds": [
+          "evidence-assertion-edge-8"
+        ],
+        "approvalStatus": "proposed",
+        "revision": 1,
+        "selectedForPreview": true
+      },
+      {
+        "kind": "DependencyAssertion",
+        "id": "assertion-edge-9",
+        "canonicalParentId": "section-model",
+        "prerequisiteConceptId": "lcm",
+        "dependentConceptId": "common-denominator",
+        "relationKind": "helpful_prerequisite",
+        "claimBasis": "teaching_perspective",
+        "perspectiveId": "perspective-adult-reader",
+        "conditions": [
+          "초등·중등 개념을 정수와 분수의 표준 표현으로 설명하는 이 샘플 경로에서 해석한다.",
+          "필수 선행은 모든 학습자에게 보편적으로 유일한 학습 경로라는 뜻이 아니다."
+        ],
+        "rationale": "가장 작은 공통 분모를 선택하는 효율화 관계이며 필수 선수로 단정하지 않는다.",
+        "evidenceStatus": "author_hypothesis",
+        "evidenceIds": [
+          "evidence-assertion-edge-9"
+        ],
+        "approvalStatus": "proposed",
+        "revision": 1,
+        "selectedForPreview": true
+      },
+      {
+        "kind": "DependencyAssertion",
+        "id": "assertion-edge-10",
+        "canonicalParentId": "section-model",
+        "prerequisiteConceptId": "fraction-notation",
+        "dependentConceptId": "rational",
+        "relationKind": "representation",
+        "claimBasis": "teaching_perspective",
+        "perspectiveId": "perspective-adult-reader",
+        "conditions": [
+          "초등·중등 개념을 정수와 분수의 표준 표현으로 설명하는 이 샘플 경로에서 해석한다.",
+          "필수 선행은 모든 학습자에게 보편적으로 유일한 학습 경로라는 뜻이 아니다."
+        ],
+        "rationale": "분수 표기가 유리수를 나타내는 표현으로 확장된다.",
+        "evidenceStatus": "author_hypothesis",
+        "evidenceIds": [
+          "evidence-assertion-edge-10"
+        ],
+        "approvalStatus": "proposed",
+        "revision": 1,
+        "selectedForPreview": true
+      },
+      {
+        "kind": "DependencyAssertion",
+        "id": "assertion-edge-11",
+        "canonicalParentId": "section-model",
+        "prerequisiteConceptId": "fraction-add",
+        "dependentConceptId": "rational-add",
+        "relationKind": "related",
+        "claimBasis": "teaching_perspective",
+        "perspectiveId": "perspective-adult-reader",
+        "conditions": [
+          "초등·중등 개념을 정수와 분수의 표준 표현으로 설명하는 이 샘플 경로에서 해석한다.",
+          "필수 선행은 모든 학습자에게 보편적으로 유일한 학습 경로라는 뜻이 아니다."
+        ],
+        "rationale": "양의 분수 덧셈과 부호 있는 수의 덧셈을 연결한다.",
+        "evidenceStatus": "author_hypothesis",
+        "evidenceIds": [
+          "evidence-assertion-edge-11"
+        ],
+        "approvalStatus": "proposed",
+        "revision": 3,
+        "selectedForPreview": true
+      },
+      {
+        "kind": "DependencyAssertion",
+        "id": "assertion-edge-12",
+        "canonicalParentId": "section-model",
+        "prerequisiteConceptId": "exponents",
+        "dependentConceptId": "square-roots",
+        "relationKind": "related",
+        "claimBasis": "teaching_perspective",
+        "perspectiveId": "perspective-adult-reader",
+        "conditions": [
+          "초등·중등 개념을 정수와 분수의 표준 표현으로 설명하는 이 샘플 경로에서 해석한다.",
+          "필수 선행은 모든 학습자에게 보편적으로 유일한 학습 경로라는 뜻이 아니다."
+        ],
+        "rationale": "제곱 연산과 역방향 관계를 연결하되 전체 지수법칙을 필수 선수로 단정하지 않는다.",
+        "evidenceStatus": "author_hypothesis",
+        "evidenceIds": [
+          "evidence-assertion-edge-12"
+        ],
+        "approvalStatus": "proposed",
+        "revision": 1,
+        "selectedForPreview": true
+      }
+    ]
+  },
+  "projectedHistory": [
+    {
+      "kind": "RevisionEvent",
+      "id": "preview-event-2",
+      "canonicalParentId": "section-simulation",
+      "assertionId": "assertion-edge-11",
+      "fromRevision": 1,
+      "toRevision": 2,
+      "before": {
+        "kind": "DependencyAssertion",
+        "id": "assertion-edge-11",
+        "canonicalParentId": "section-model",
+        "prerequisiteConceptId": "fraction-add",
+        "dependentConceptId": "rational-add",
+        "relationKind": "related",
+        "claimBasis": "teaching_perspective",
+        "perspectiveId": "perspective-adult-reader",
+        "conditions": [
+          "초등·중등 개념을 정수와 분수의 표준 표현으로 설명하는 이 샘플 경로에서 해석한다.",
+          "필수 선행은 모든 학습자에게 보편적으로 유일한 학습 경로라는 뜻이 아니다."
+        ],
+        "rationale": "양의 분수 덧셈과 부호 있는 수의 덧셈을 연결한다.",
+        "evidenceStatus": "author_hypothesis",
+        "evidenceIds": [
+          "evidence-assertion-edge-11"
+        ],
+        "approvalStatus": "proposed",
+        "revision": 1,
+        "selectedForPreview": true
+      },
+      "after": {
+        "kind": "DependencyAssertion",
+        "id": "assertion-edge-11",
+        "canonicalParentId": "section-model",
+        "prerequisiteConceptId": "fraction-add",
+        "dependentConceptId": "rational-add",
+        "relationKind": "helpful_prerequisite",
+        "claimBasis": "teaching_perspective",
+        "perspectiveId": "perspective-adult-reader",
+        "conditions": [
+          "초등·중등 개념을 정수와 분수의 표준 표현으로 설명하는 이 샘플 경로에서 해석한다.",
+          "필수 선행은 모든 학습자에게 보편적으로 유일한 학습 경로라는 뜻이 아니다."
+        ],
+        "rationale": "양의 분수 덧셈과 부호 있는 수의 덧셈을 연결한다.",
+        "evidenceStatus": "author_hypothesis",
+        "evidenceIds": [
+          "evidence-assertion-edge-11"
+        ],
+        "approvalStatus": "proposed",
+        "revision": 2,
+        "selectedForPreview": true
+      },
+      "reason": "양의 분수 덧셈을 알고 있으면 부호 있는 유리수 덧셈을 설명하는 데 도움이 된다는 별도 교수 관점이다. 필수 선수로 승격하지 않는다.",
+      "proposalId": "proposal-related-to-helpful",
+      "executionMode": "read_only_simulation",
+      "isPersisted": false,
+      "userApprovalRecorded": false
+    },
+    {
+      "kind": "RevisionEvent",
+      "id": "preview-event-3",
+      "canonicalParentId": "section-simulation",
+      "assertionId": "assertion-edge-11",
+      "fromRevision": 2,
+      "toRevision": 3,
+      "before": {
+        "kind": "DependencyAssertion",
+        "id": "assertion-edge-11",
+        "canonicalParentId": "section-model",
+        "prerequisiteConceptId": "fraction-add",
+        "dependentConceptId": "rational-add",
+        "relationKind": "helpful_prerequisite",
+        "claimBasis": "teaching_perspective",
+        "perspectiveId": "perspective-adult-reader",
+        "conditions": [
+          "초등·중등 개념을 정수와 분수의 표준 표현으로 설명하는 이 샘플 경로에서 해석한다.",
+          "필수 선행은 모든 학습자에게 보편적으로 유일한 학습 경로라는 뜻이 아니다."
+        ],
+        "rationale": "양의 분수 덧셈과 부호 있는 수의 덧셈을 연결한다.",
+        "evidenceStatus": "author_hypothesis",
+        "evidenceIds": [
+          "evidence-assertion-edge-11"
+        ],
+        "approvalStatus": "proposed",
+        "revision": 2,
+        "selectedForPreview": true
+      },
+      "after": {
+        "kind": "DependencyAssertion",
+        "id": "assertion-edge-11",
+        "canonicalParentId": "section-model",
+        "prerequisiteConceptId": "fraction-add",
+        "dependentConceptId": "rational-add",
+        "relationKind": "related",
+        "claimBasis": "teaching_perspective",
+        "perspectiveId": "perspective-adult-reader",
+        "conditions": [
+          "초등·중등 개념을 정수와 분수의 표준 표현으로 설명하는 이 샘플 경로에서 해석한다.",
+          "필수 선행은 모든 학습자에게 보편적으로 유일한 학습 경로라는 뜻이 아니다."
+        ],
+        "rationale": "양의 분수 덧셈과 부호 있는 수의 덧셈을 연결한다.",
+        "evidenceStatus": "author_hypothesis",
+        "evidenceIds": [
+          "evidence-assertion-edge-11"
+        ],
+        "approvalStatus": "proposed",
+        "revision": 3,
+        "selectedForPreview": true
+      },
+      "reason": "모의 revision 2의 분류를 원래 related로 복원하되 revision 3을 새로 만든다. 이전 이력은 보존한다.",
+      "proposalId": "proposal-compensating-restore",
+      "executionMode": "read_only_simulation",
+      "isPersisted": false,
+      "userApprovalRecorded": false
+    }
+  ],
+  "applyReadiness": {
+    "kind": "ApplyReadiness",
+    "id": "readiness-example",
+    "canonicalParentId": "section-simulation",
+    "canApply": false,
+    "blockers": [
+      "missing_specific_user_approval",
+      "runtime_not_deployed"
+    ],
+    "actualOperationAttempted": false
+  },
+  "checks": [
+    {
+      "kind": "ValidationCheck",
+      "id": "check-schema",
+      "canonicalParentId": "section-simulation",
+      "name": "schema",
+      "result": "pass",
+      "detail": "Draft 2020-12 schema and complete proposal validated"
+    },
+    {
+      "kind": "ValidationCheck",
+      "id": "check-typed_unique_ids",
+      "canonicalParentId": "section-simulation",
+      "name": "typed_unique_ids",
+      "result": "pass",
+      "detail": "154 unique record IDs; discriminated record kinds"
+    },
+    {
+      "kind": "ValidationCheck",
+      "id": "check-hierarchy_acyclic",
+      "canonicalParentId": "section-simulation",
+      "name": "hierarchy_acyclic",
+      "result": "pass",
+      "detail": "All canonicalParentId chains terminate at proposal-root"
+    },
+    {
+      "kind": "ValidationCheck",
+      "id": "check-hierarchy_references",
+      "canonicalParentId": "section-simulation",
+      "name": "hierarchy_references",
+      "result": "pass",
+      "detail": "Every content record has a valid typed hierarchy parent; links and evidence targets resolve"
+    },
+    {
+      "kind": "ValidationCheck",
+      "id": "check-official_source_mapping",
+      "canonicalParentId": "section-simulation",
+      "name": "official_source_mapping",
+      "result": "pass",
+      "detail": "19 official Palantir documentation sources; adaptations marked separately"
+    },
+    {
+      "kind": "ValidationCheck",
+      "id": "check-baseline_required_dag",
+      "canonicalParentId": "section-simulation",
+      "name": "baseline_required_dag",
+      "result": "pass",
+      "detail": "Only selected required prerequisite edges in the same perspective are checked"
+    },
+    {
+      "kind": "ValidationCheck",
+      "id": "check-valid_forward_preview",
+      "canonicalParentId": "section-simulation",
+      "name": "valid_forward_preview",
+      "result": "pass",
+      "detail": "related becomes helpful_prerequisite in projected state only"
+    },
+    {
+      "kind": "ValidationCheck",
+      "id": "check-compensating_restore",
+      "canonicalParentId": "section-simulation",
+      "name": "compensating_restore",
+      "result": "pass",
+      "detail": "Restoration creates projected revision 3, preserving events 1→2 and 2→3"
+    },
+    {
+      "kind": "ValidationCheck",
+      "id": "check-stable_identity",
+      "canonicalParentId": "section-simulation",
+      "name": "stable_identity",
+      "result": "pass",
+      "detail": "No concept-v1/v2 identity duplication"
+    },
+    {
+      "kind": "ValidationCheck",
+      "id": "check-approval_not_fabricated",
+      "canonicalParentId": "section-simulation",
+      "name": "approval_not_fabricated",
+      "result": "pass",
+      "detail": "No particular relationship change has user approval or persisted execution"
+    },
+    {
+      "kind": "ValidationCheck",
+      "id": "check-apply_blocked",
+      "canonicalParentId": "section-simulation",
+      "name": "apply_blocked",
+      "result": "pass",
+      "detail": "Specific approval and deployed runtime are both missing; no apply call exists"
+    },
+    {
+      "kind": "ValidationCheck",
+      "id": "check-stale_revision",
+      "canonicalParentId": "section-simulation",
+      "name": "stale_revision",
+      "result": "pass",
+      "detail": "stale_assertion_revision"
+    },
+    {
+      "kind": "ValidationCheck",
+      "id": "check-stale_graph",
+      "canonicalParentId": "section-simulation",
+      "name": "stale_graph",
+      "result": "pass",
+      "detail": "stale_graph_revision"
+    },
+    {
+      "kind": "ValidationCheck",
+      "id": "check-changed_payload",
+      "canonicalParentId": "section-simulation",
+      "name": "changed_payload",
+      "result": "pass",
+      "detail": "payload_hash_mismatch"
+    },
+    {
+      "kind": "ValidationCheck",
+      "id": "check-wrong_perspective",
+      "canonicalParentId": "section-simulation",
+      "name": "wrong_perspective",
+      "result": "pass",
+      "detail": "perspective_mismatch"
+    },
+    {
+      "kind": "ValidationCheck",
+      "id": "check-missing_endpoint",
+      "canonicalParentId": "section-simulation",
+      "name": "missing_endpoint",
+      "result": "pass",
+      "detail": "missing_endpoint"
+    },
+    {
+      "kind": "ValidationCheck",
+      "id": "check-required_cycle",
+      "canonicalParentId": "section-simulation",
+      "name": "required_cycle",
+      "result": "pass",
+      "detail": "required_cycle"
+    },
+    {
+      "kind": "ValidationCheck",
+      "id": "check-required_self_cycle",
+      "canonicalParentId": "section-simulation",
+      "name": "required_self_cycle",
+      "result": "pass",
+      "detail": "required_self_cycle"
+    },
+    {
+      "kind": "ValidationCheck",
+      "id": "check-unknown_relation",
+      "canonicalParentId": "section-simulation",
+      "name": "unknown_relation",
+      "result": "pass",
+      "detail": "invalid_relation_kind"
+    },
+    {
+      "kind": "ValidationCheck",
+      "id": "check-stale_before_value",
+      "canonicalParentId": "section-simulation",
+      "name": "stale_before_value",
+      "result": "pass",
+      "detail": "before_value_mismatch"
+    },
+    {
+      "kind": "ValidationCheck",
+      "id": "check-related_cycle_not_forbidden",
+      "canonicalParentId": "section-simulation",
+      "name": "related_cycle_not_forbidden",
+      "result": "pass",
+      "detail": "Two opposing related links form a non-prerequisite cycle and remain allowed"
+    },
+    {
+      "kind": "ValidationCheck",
+      "id": "check-schema_rejects_bad_type",
+      "canonicalParentId": "section-simulation",
+      "name": "schema_rejects_bad_type",
+      "result": "pass",
+      "detail": "Wrong primitive type is rejected"
+    },
+    {
+      "kind": "ValidationCheck",
+      "id": "check-schema_rejects_unknown_field",
+      "canonicalParentId": "section-simulation",
+      "name": "schema_rejects_unknown_field",
+      "result": "pass",
+      "detail": "Unknown fields are rejected"
+    },
+    {
+      "kind": "ValidationCheck",
+      "id": "check-numeric_rationale_rejected",
+      "canonicalParentId": "section-simulation",
+      "name": "numeric_rationale_rejected",
+      "result": "pass",
+      "detail": "invalid_proposal_schema"
+    },
+    {
+      "kind": "ValidationCheck",
+      "id": "check-typed_perspectiveId",
+      "canonicalParentId": "section-simulation",
+      "name": "typed_perspectiveId",
+      "result": "pass",
+      "detail": "wrong_perspective_reference_kind"
+    },
+    {
+      "kind": "ValidationCheck",
+      "id": "check-typed_evidenceIds",
+      "canonicalParentId": "section-simulation",
+      "name": "typed_evidenceIds",
+      "result": "pass",
+      "detail": "wrong_evidence_reference_kind"
+    },
+    {
+      "kind": "ValidationCheck",
+      "id": "check-baseline_not_mutated",
+      "canonicalParentId": "section-simulation",
+      "name": "baseline_not_mutated",
+      "result": "pass",
+      "detail": "Pure projection leaves input state unchanged"
+    },
+    {
+      "kind": "ValidationCheck",
+      "id": "check-source_preserved_matheducation-sample-r2_json",
+      "canonicalParentId": "section-simulation",
+      "name": "source_preserved_matheducation-sample-r2_json",
+      "result": "pass",
+      "detail": "Source bytes unchanged"
+    },
+    {
+      "kind": "ValidationCheck",
+      "id": "check-source_preserved_dependency-ledger-r1_json",
+      "canonicalParentId": "section-simulation",
+      "name": "source_preserved_dependency-ledger-r1_json",
+      "result": "pass",
+      "detail": "Source bytes unchanged"
+    }
+  ],
+  "limitations": [
+    "This validates structure and simulated guards, not a deployed transaction or permission system.",
+    "Cycle checks are scoped to this one perspective; natural-language conditions are not a theorem prover.",
+    "No human approval has been requested or recorded for this illustrative relation change."
+  ]
+}

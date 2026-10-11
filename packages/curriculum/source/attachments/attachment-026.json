@@ -1,0 +1,165 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:matheducation:bilingual-labels:1.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "kind": {
+      "const": "BilingualDisplayLabels"
+    },
+    "ko": {
+      "type": "string",
+      "minLength": 1
+    },
+    "en": {
+      "type": "string",
+      "minLength": 1
+    },
+    "bilingual": {
+      "type": "string",
+      "minLength": 1
+    },
+    "koUsage": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "enum": [
+            "official_curriculum",
+            "standard_textbook",
+            "supplementary_descriptive"
+          ]
+        },
+        "scope": {
+          "enum": [
+            "e5_6",
+            "m1_3",
+            "e5_6_and_m1_3",
+            "supplementary_only",
+            "contextual_navigation"
+          ]
+        },
+        "sourceRefs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "sourceId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "url": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "locator": {
+                "type": "string",
+                "minLength": 1
+              },
+              "supports": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "sourceId",
+              "url",
+              "locator",
+              "supports"
+            ]
+          }
+        },
+        "scopeRole": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "scope",
+        "sourceRefs",
+        "scopeRole",
+        "notes"
+      ]
+    },
+    "english": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "translationStatus": {
+          "enum": [
+            "official_editorial_terminology",
+            "reviewed_translation",
+            "supplemental_translation"
+          ]
+        },
+        "sourceType": {
+          "enum": [
+            "moe_textbook_compilation_reference",
+            "primary_english_textbook",
+            "author_reviewed_translation"
+          ]
+        },
+        "sourceRefs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "sourceId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "url": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "locator": {
+                "type": "string",
+                "minLength": 1
+              },
+              "supports": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "sourceId",
+              "url",
+              "locator",
+              "supports"
+            ]
+          }
+        },
+        "officialCurriculumTranslation": {
+          "const": false
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "translationStatus",
+        "sourceType",
+        "sourceRefs",
+        "officialCurriculumTranslation",
+        "notes"
+      ]
+    }
+  },
+  "required": [
+    "kind",
+    "ko",
+    "en",
+    "bilingual",
+    "koUsage",
+    "english"
+  ]
+}

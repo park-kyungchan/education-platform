@@ -1,0 +1,122 @@
+{
+  "kind": "MathEducationLinuxHermesRuntimeValidationReceipt",
+  "validatedAtUtc": "2026-10-08T04:29:41.053336Z",
+  "scope": "Artifact preparation machine only; not target Hostinger container execution",
+  "preparationRuntime": {
+    "platform": "linux",
+    "architecture": "x64",
+    "bun": "1.4.2",
+    "bunRevision": "1.4.2+744846f84",
+    "typeScript": "7.0.2",
+    "nativeCompilerPackage": "@typescript/typescript-linux-x64@7.0.2",
+    "nativeCompilerElf": "x86-64 statically linked Go executable",
+    "targetArm64ExecutionTested": false
+  },
+  "checks": {
+    "freshProjectNodeModulesFrozenInstall": "passed",
+    "installLifecycleScripts": "disabled",
+    "projectLocalDependencyResolution": "passed",
+    "nativeCompilerExecutableArchitectureAndVersion": "passed",
+    "strictNoEmitTypecheck": "passed",
+    "explicitBunTypecheckWithNoNodePath": "passed",
+    "runtimeOutputAndCacheWritability": "passed",
+    "tests": {
+      "passed": 9,
+      "failed": 0,
+      "assertions": 76
+    },
+    "originalArchiveFilesVerified": 344,
+    "historicalExportDigestsVerified": 342,
+    "originalAttachmentsVerified": 56,
+    "historicalModifiedOrExcludedSourceMappingsVerified": 12,
+    "publishedAndBaselineUiViewsVerified": 48,
+    "uiPayloadBytesUnchanged": true,
+    "derivedUiProjectionCommand": {
+      "status": "passed",
+      "outputs": 48
+    },
+    "loopbackPreviewHttpSmoke": {
+      "status": "passed",
+      "index": 200,
+      "domain01": 200,
+      "unknownFile": 404,
+      "publicServerExposureAdded": false
+    }
+  },
+  "testCoverageAdditions": [
+    "explicit Bun project compiler launcher",
+    "absence/presence separation for all five canonical paths",
+    "matching checksum does not imply canonical verification",
+    "actual nested projection output is a directory",
+    "symlinked writable output/cache directory"
+  ],
+  "notRun": [
+    "target VPS connection",
+    "target VPS package installation",
+    "target VPS architecture/libc/mount/PATH verification",
+    "graphical browser or KaTeX CDN verification",
+    "canonical source acquisition or verified import",
+    "full mathematical/educational relation audit",
+    "Hermes runtime update or server configuration"
+  ],
+  "contentCoverage": {
+    "nativePageSnapshots": 73,
+    "currentUiViews": 48,
+    "baselineUiViews": 48,
+    "attachmentsExported": 56,
+    "attachmentsNotExported": 32,
+    "canonicalOriginalInputsMissingInOriginalExport": [
+      "domain-01.json",
+      "domain-02.json",
+      "domain-03.json",
+      "domain-04.json",
+      "curriculum-boundary.json"
+    ],
+    "canonicalOriginalsImportedByThisTask": false,
+    "declaredRelations": 918,
+    "priorIndividuallyReadRelations": 143,
+    "unreadRelations": 775,
+    "fullMathematicalAuditComplete": false,
+    "canonicalInputPresenceImpliesVerification": false
+  },
+  "officialHermesMainReference": {
+    "commit": "cfb9ae4f86e221ca1763fff256a44317f2cb5dcb",
+    "checkedAtUtc": "2026-10-08T04:28:14Z",
+    "targetInstalledVersionMeasured": false
+  },
+  "runtimeManifestSha256": "dc11e610822c33474926a37efffb636e41f3b52a17bc5d8ba1a87ef46ce0b9ce",
+  "verificationLogDigests": [
+    {
+      "name": "frozen-install.log",
+      "sha256": "9c81fb4dba35122cc842e8852b5dd2198cf1c27d6ec1163588427cb211963f26",
+      "bytes": 99
+    },
+    {
+      "name": "validate-final.log",
+      "sha256": "1acee8b0267e5102f30db38869bc4e5f2b6093c2d20d963eb4f876b06a01adbf",
+      "bytes": 7236
+    },
+    {
+      "name": "no-node-typecheck.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "name": "project-ui.log",
+      "sha256": "7eb71f9514d8e094a605da3529cdd8e98378606efb483a8f59932e04a75a94e4",
+      "bytes": 119
+    },
+    {
+      "name": "preview-smoke.log",
+      "sha256": "e6632ab3da9694f6d51c22626db049499a01a652d369953db3470aeef76b98cc",
+      "bytes": 266
+    }
+  ],
+  "independentReadOnlyReview": {
+    "result": "no critical issues",
+    "allOriginalBytesCompared": 344,
+    "inactiveInstructionEntryPointsConfirmed": true,
+    "nodeFreeTypecheckConfirmed": true,
+    "doctorNestedOutputAndSymlinkEdges": "fixed and covered by regression tests"
+  }
+}

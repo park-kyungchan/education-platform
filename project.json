@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "project",
+  "id": "education-platform:project:manifest",
+  "projectId": "education-platform",
+  "domainId": "education",
+  "createdAt": "2026-10-11T00:00:00.000Z",
+  "payload": {
+    "name": "Education platform",
+    "status": "active",
+    "scope": "Independent mathematical core, curriculum and education applications with explicit source and native ownership.",
+    "ontologyPackage": {
+      "name": "@palantirkc/ontology",
+      "version": "0.2.0"
+    },
+    "commands": {
+      "check": "bun run check",
+      "status": "bun run status"
+    },
+    "details": {
+      "semanticOwner": "ontology-platform",
+      "runtimeOwner": "existing-native-hermes-projects-and-profiles",
+      "visibility": "private",
+      "acceptance": "integration-authorized; domain acceptance remains separate",
+      "sourceMapRef": "architecture/source-map.json",
+      "nativeEffects": false
+    }
+  }
+}

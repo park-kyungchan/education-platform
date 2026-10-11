@@ -1,0 +1,710 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MathEducation spatial release",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "kind": {
+      "const": "MathEducationSpatialRelease"
+    },
+    "schemaVersion": {
+      "const": "1.0.0"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "status": {
+      "enum": [
+        "production_draft",
+        "superseded"
+      ]
+    },
+    "sourceSnapshotHashes": {
+      "type": "object",
+      "minProperties": 4,
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^[a-f0-9]{64}$"
+      }
+    },
+    "overviewPageUrl": {
+      "type": "string",
+      "pattern": "^https://chatgpt.com/space/page_"
+    },
+    "counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "officialDomains": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "officialGradeBands": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "officialStandards": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "authoredTopics": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "concepts": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "activeExplanations": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "notations": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "katexOutputs": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "officialDomains",
+        "officialGradeBands",
+        "officialStandards",
+        "authoredTopics",
+        "concepts",
+        "activeExplanations",
+        "notations",
+        "katexOutputs"
+      ]
+    },
+    "viewBindings": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ViewBinding"
+      }
+    },
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "htmlReadbackHashes": {
+          "type": "boolean"
+        },
+        "sourceSchemaAndProjectionChecks": {
+          "type": "boolean"
+        },
+        "notationMathmlChecks": {
+          "type": "boolean"
+        },
+        "browserRendering": {
+          "type": "boolean"
+        },
+        "hostNavigation": {
+          "type": "boolean"
+        },
+        "allExplanationProseLatex": {
+          "type": "boolean"
+        },
+        "fullCurriculumReviewComplete": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "htmlReadbackHashes",
+        "sourceSchemaAndProjectionChecks",
+        "notationMathmlChecks",
+        "browserRendering",
+        "hostNavigation",
+        "allExplanationProseLatex",
+        "fullCurriculumReviewComplete"
+      ]
+    }
+  },
+  "required": [
+    "kind",
+    "schemaVersion",
+    "revision",
+    "status",
+    "sourceSnapshotHashes",
+    "overviewPageUrl",
+    "counts",
+    "viewBindings",
+    "verification"
+  ],
+  "$defs": {
+    "SourceBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "CanonicalSourceBinding"
+        },
+        "workpackId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workpackRevision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "graphRevision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "workpackSha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "byteSize": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "sourcePageId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sourcePageUrl": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "uri"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "fileReference": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "artifactPath": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "artifactSha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "publicationStatus": {
+          "enum": [
+            "local_only",
+            "published",
+            "superseded"
+          ]
+        },
+        "recordCounts": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "reviewState": {
+          "enum": [
+            "not_reviewed",
+            "focused_checks",
+            "independent_review_in_progress",
+            "reviewed_with_gaps",
+            "superseded"
+          ]
+        },
+        "reviewWarningIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "kind",
+        "workpackId",
+        "workpackRevision",
+        "graphRevision",
+        "workpackSha256",
+        "byteSize",
+        "sourcePageId",
+        "sourcePageUrl",
+        "fileReference",
+        "publicationStatus",
+        "recordCounts",
+        "reviewState",
+        "reviewWarningIds"
+      ]
+    },
+    "Domain": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "DomainIndexEntry"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "label": {
+          "type": "string"
+        },
+        "officialGradeBandIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "topicIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "conceptIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "standardIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "sourceWorkpackIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "coverageStatus": {
+          "enum": [
+            "not_loaded",
+            "draft_mapped",
+            "partial",
+            "reviewed_with_gaps"
+          ]
+        },
+        "overviewViewId": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "label",
+        "officialGradeBandIds",
+        "topicIds",
+        "conceptIds",
+        "standardIds",
+        "sourceWorkpackIds",
+        "coverageStatus",
+        "overviewViewId"
+      ]
+    },
+    "GradeBand": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "GradeBandIndexEntry"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "label": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "label"
+      ]
+    },
+    "Topic": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "TopicIndexEntry"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "label": {
+          "type": "string"
+        },
+        "canonicalParentId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "domainId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "conceptIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "officialGradeBandIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "sourceWorkpackIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "scopeViewId": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "label",
+        "canonicalParentId",
+        "domainId",
+        "conceptIds",
+        "officialGradeBandIds",
+        "sourceWorkpackIds",
+        "scopeViewId"
+      ]
+    },
+    "Concept": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "ConceptIndexEntry"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "label": {
+          "type": "string"
+        },
+        "canonicalParentId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "viewParentTopicId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "domainIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "officialGradeBandIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "alignmentIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "sourceWorkpackId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "recordRevision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "workflowStatus": {
+          "type": "string"
+        },
+        "evidenceStatus": {
+          "type": "string"
+        },
+        "evidenceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "label",
+        "canonicalParentId",
+        "viewParentTopicId",
+        "domainIds",
+        "officialGradeBandIds",
+        "alignmentIds",
+        "sourceWorkpackId",
+        "recordRevision",
+        "workflowStatus",
+        "evidenceStatus",
+        "evidenceIds"
+      ]
+    },
+    "StandardMapping": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "StandardMappingIndexEntry"
+        },
+        "standardId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "officialGradeBandId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "domainId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "alignmentIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "conceptIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "coverageStatus": {
+          "enum": [
+            "not_loaded",
+            "unmapped",
+            "draft_mapped",
+            "partial",
+            "reviewed_with_gaps"
+          ]
+        },
+        "reviewWarningIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "kind",
+        "standardId",
+        "officialGradeBandId",
+        "domainId",
+        "alignmentIds",
+        "conceptIds",
+        "coverageStatus",
+        "reviewWarningIds"
+      ]
+    },
+    "ViewBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "ScopedViewBinding"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scopeKind": {
+          "enum": [
+            "overview",
+            "domain",
+            "topic"
+          ]
+        },
+        "scopeId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "parentViewId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "pageId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "pageUrl": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "uri"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "state": {
+          "enum": [
+            "planned",
+            "published",
+            "superseded"
+          ]
+        },
+        "sourceWorkpackIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "conceptIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "artifactSha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "artifactBytes": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "auditPageUrls": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uri"
+          },
+          "uniqueItems": true
+        },
+        "projectionPolicy": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "scopeKind",
+        "scopeId",
+        "parentViewId",
+        "pageId",
+        "pageUrl",
+        "state",
+        "sourceWorkpackIds",
+        "conceptIds",
+        "artifactSha256",
+        "artifactBytes",
+        "auditPageUrls",
+        "projectionPolicy"
+      ]
+    }
+  }
+}

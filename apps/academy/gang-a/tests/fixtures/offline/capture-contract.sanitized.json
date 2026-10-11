@@ -1,0 +1,227 @@
+{
+  "source": "uploaded_manual_capture",
+  "capture": {
+    "format": "HAR",
+    "version": "1.2",
+    "requestCount": 119,
+    "observedPostTimestamp": "2026-10-07T08:05:31.277Z",
+    "methodCounts": {
+      "GET": 118,
+      "POST": 1
+    },
+    "authenticationHeaderValuesPresent": false,
+    "cookieValuesPresent": false
+  },
+  "request": {
+    "url": "https://dc.gang-a.kr/servlet/controller.tutor.base.TestPageListServlet?p_process=StudentNameSearch",
+    "method": "POST",
+    "queryParameterNames": [
+      "p_process"
+    ],
+    "operation": "StudentNameSearch",
+    "bodyEncoding": "application/x-www-form-urlencoded",
+    "bodyParameterNames": [
+      "clg_no",
+      "book_code",
+      "stu_name",
+      "check_all_stu",
+      "sort_date",
+      "chioce_course"
+    ],
+    "canonicalFilterSource": "request.postData.text decoded with URLSearchParams",
+    "declaredParamsMayBeEncoded": true,
+    "studentField": "stu_name",
+    "initialPage": {
+      "url": "https://dc.gang-a.kr/servlet/controller.tutor.base.TestPageListServlet?p_process=Main",
+      "method": "GET"
+    }
+  },
+  "response": {
+    "status": 200,
+    "mimeType": "text/html",
+    "declaredCharset": "utf-8",
+    "format": "server-rendered HTML"
+  },
+  "observations": {
+    "initial": {
+      "entryIndex": 41,
+      "resultsTablePresent": false
+    },
+    "filtered": {
+      "entryIndex": 78,
+      "resultsTablePresent": true,
+      "dataRowCount": 27,
+      "headers": [
+        "학생이름",
+        "학습과정-단원분류",
+        "응시일",
+        "시험지",
+        "점수",
+        "클리닉",
+        "",
+        "채 오 클 분",
+        "일괄 재응시"
+      ],
+      "cellCounts": [
+        9
+      ],
+      "studentScope": {
+        "selectedMatchesExpectedAllowlistedStudent": true,
+        "distinctNameCount": 1,
+        "exactTargetNameRows": 27,
+        "containsTargetNameRows": 27,
+        "mismatchRows": 0,
+        "hasNonTargetNames": false
+      },
+      "filterEchoMatchesTarget": true,
+      "controls": [
+        {
+          "name": "clg_no",
+          "element": "input",
+          "type": "hidden",
+          "handlers": []
+        },
+        {
+          "name": "book_code",
+          "element": "input",
+          "type": "hidden",
+          "handlers": []
+        },
+        {
+          "name": "stu_name",
+          "element": "input",
+          "type": "text",
+          "handlers": [
+            "chkKey"
+          ]
+        },
+        {
+          "name": "check_all_stu",
+          "element": "input",
+          "type": "checkbox",
+          "handlers": []
+        },
+        {
+          "name": "sort_date",
+          "element": "select",
+          "type": null,
+          "handlers": []
+        },
+        {
+          "name": "chioce_course",
+          "element": "select",
+          "type": null,
+          "handlers": [
+            "onSelChange"
+          ]
+        }
+      ],
+      "dateFilter": {
+        "labels": [
+          "최근1주",
+          "최근2주",
+          "최근3주",
+          "최근 한달",
+          "1달전부터 한달간",
+          "2달전부터 한달간",
+          "3달전부터 한달간",
+          "4달전부터 한달간",
+          "5달전부터 한달간"
+        ],
+        "selectedLabels": [
+          "최근3주"
+        ],
+        "optionCount": 9,
+        "selectedValue": [
+          "3"
+        ],
+        "requestValue": "3"
+      },
+      "recordDateRange": {
+        "parsedDates": 0
+      },
+      "courseFilter": {
+        "labels": [
+          "교과 과정",
+          "22개정 중1-1 다빈치",
+          "22개정 중1-2 가우스 3권"
+        ],
+        "selectedLabels": [],
+        "optionCount": 3
+      },
+      "actionsByCell": [
+        {
+          "columnIndex": 0,
+          "header": "학생이름",
+          "calledFunctionNames": [],
+          "nonJavascriptLinkCount": 0
+        },
+        {
+          "columnIndex": 1,
+          "header": "학습과정-단원분류",
+          "calledFunctionNames": [],
+          "nonJavascriptLinkCount": 0
+        },
+        {
+          "columnIndex": 2,
+          "header": "응시일",
+          "calledFunctionNames": [],
+          "nonJavascriptLinkCount": 0
+        },
+        {
+          "columnIndex": 3,
+          "header": "시험지",
+          "calledFunctionNames": [
+            "externOnPopupTestInfoClick"
+          ],
+          "nonJavascriptLinkCount": 0
+        },
+        {
+          "columnIndex": 4,
+          "header": "점수",
+          "calledFunctionNames": [],
+          "nonJavascriptLinkCount": 0
+        },
+        {
+          "columnIndex": 5,
+          "header": "클리닉",
+          "calledFunctionNames": [],
+          "nonJavascriptLinkCount": 0
+        },
+        {
+          "columnIndex": 6,
+          "header": "",
+          "calledFunctionNames": [
+            "externOnOneSelectToggleButtonClick"
+          ],
+          "nonJavascriptLinkCount": 0
+        },
+        {
+          "columnIndex": 7,
+          "header": "채 오 클 분",
+          "calledFunctionNames": [
+            "externOnOneOXButtonClick",
+            "externOnOneClinicButtonClick",
+            "externOnOneReportButtonClick",
+            "externOnOneIncorrectButtonClick"
+          ],
+          "nonJavascriptLinkCount": 0
+        },
+        {
+          "columnIndex": 8,
+          "header": "일괄 재응시",
+          "calledFunctionNames": [
+            "onClickInitApply"
+          ],
+          "nonJavascriptLinkCount": 0
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "Only one student-filtered POST was captured.",
+    "Server-side side effects and authentication requirements cannot be proved from a HAR.",
+    "No page/offset/limit/cursor parameter was observed. This does not prove all historical records were returned.",
+    "Embedded action handlers are not executed, and are outside the captured search request."
+  ]
+}

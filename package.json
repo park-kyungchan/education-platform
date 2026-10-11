@@ -1,0 +1,23 @@
+{
+  "name": "@palantirkc/education-platform",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "bun@1.4.2",
+  "scripts": {
+    "check": "bun scripts/check.ts",
+    "typecheck": "bun node_modules/typescript/bin/tsc --noEmit",
+    "test": "bun test ./tests",
+    "status": "bun src/cli.ts status",
+    "module": "bun src/cli.ts module",
+    "verify:imports": "bun scripts/verify-imports.ts",
+    "setup": "bun scripts/setup.ts"
+  },
+  "dependencies": {
+    "@palantirkc/ontology": "file:releases/palantirkc-ontology-0.2.0.tgz"
+  },
+  "devDependencies": {
+    "@types/bun": "1.4.2",
+    "typescript": "7.0.2"
+  }
+}

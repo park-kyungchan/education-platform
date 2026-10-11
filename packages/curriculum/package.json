@@ -1,0 +1,23 @@
+{
+  "name": "math-education",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "bun@1.4.2",
+  "scripts": {
+    "doctor": "bun scripts/doctor.ts",
+    "doctor:cloud": "bun scripts/doctor.ts",
+    "typecheck": "bun ./node_modules/typescript/bin/tsc --noEmit",
+    "test": "bun test",
+    "verify:ui": "bun scripts/verify-ui-sources.ts",
+    "verify:export-history": "bun scripts/verify-export-history.ts",
+    "validate:runtime": "bun scripts/validate-runtime.ts",
+    "validate": "bun run doctor && bun run typecheck && bun run test && bun run verify:ui && bun run verify:export-history && bun run validate:runtime",
+    "project:ui": "bun scripts/project-ui.ts",
+    "preview": "bun scripts/preview.ts"
+  },
+  "devDependencies": {
+    "typescript": "7.0.2",
+    "bun-types": "1.4.2"
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "baseline": "code-only v5",
+  "policyDelta": "generic v6 assessment/schema/UI only",
+  "privateDataIncluded": false,
+  "hostingOrIdentityValuesIncluded": false,
+  "sourcePreparationScriptsIncluded": false,
+  "productionSourceTestsIncluded": false,
+  "currentEmptyCollections": [
+    "assessmentDefinitions",
+    "assessmentAttempts",
+    "gradingEvidence",
+    "teacherReviews",
+    "dailyRestudyRelations"
+  ],
+  "workerIntegrationContract": {
+    "schemaByteHash": "separate assessmentContractText/SHA before protected decode",
+    "scopePins": [
+      "selectedStudentId",
+      "sourceSnapshotSHA",
+      "priorEvidenceProjectionSHA",
+      "namespaceBindingSHA",
+      "assessmentProjectionSHA",
+      "assessmentContractSHA"
+    ],
+    "selectionRequiresCurrentPins": true,
+    "strictValidationBeforeDataResponse": true,
+    "refusesFakeAttemptsFromDiaries": true,
+    "currentData": [
+      0
+    ],
+    "diaryScope": "trusted explicitly pinned source key coverage, no name join",
+    "authentication": "unchanged managed-owner-private dispatch",
+    "networkConnected": false
+  },
+  "pendingCorrection": {
+    "DT": "DailyTest, subunit classroom-cycle activity (user-reported metadata)",
+    "DailyRestudy": "textbook section, separate entity",
+    "equivalence": "rejected_not_equivalent; no alias",
+    "activeDerivedBindingsToRemove": 9,
+    "affectedLegacyBookCells": 7,
+    "frozenSourceAndTeacherKeysPreserved": true
+  },
+  "pendingRefresh": {
+    "selectedStudentOnly": true,
+    "liveAdapterConnected": false,
+    "UI": "disabled/unavailable only",
+    "backendAttemptStarts": 0,
+    "lastAttemptNotLastSuccess": true
+  },
+  "files": [
+    {
+      "path": "src/assessment-view.css",
+      "sha256": "052e952571340c4e521d6a79e1a798e996bdfec945098d367c75c5633651f293"
+    },
+    {
+      "path": "src/assessment-view.ts",
+      "sha256": "f51482ac0b1665bd3597e821dc008055100f296c131e094d31cb0bdbc829190f"
+    },
+    {
+      "path": "src/domain/assessment.ts",
+      "sha256": "c20ede6a84b1181379b48c3538cc5092c34892c2f1f514dbd81627244aa3d626"
+    }
+  ]
+}

@@ -1,0 +1,253 @@
+{
+  "pageId": "page_cc814326987081918dc30ee6d30b2777",
+  "title": "수학 콘텐츠 타입과 변경 계약",
+  "url": "https://chatgpt.com/space/page_cc814326987081918dc30ee6d30b2777",
+  "blocks": [
+    {
+      "id": "5af18c44-c88d-4516-888a-65795dfe6da0",
+      "kind": "markdown",
+      "markdown": "## 현재 계약 · Schema와 registry 1.2",
+      "hash": "3287d2309b37bedf369dff42498b27cfff65c42aae24af4a38b319e400bf7098",
+      "metadata": {}
+    },
+    {
+      "id": "e9e10506-4dde-4b48-bd9e-6cf0fab9e7ff",
+      "kind": "markdown",
+      "markdown": "본문 수식을 위한 math:extension:math-text를 추가했습니다. 각 필드의 원문 해시, 일반 텍스트 구간, 명시적 LaTeX 구간을 저장하며 구간을 이어 붙인 결과가 원문과 정확히 같아야 합니다. 기존 1.0·1.1 원본도 계속 읽습니다.",
+      "hash": "63d9802f9e1ecfa80a303bd9a7a8484f0668bb35d4656c492d89c2f303e419f2",
+      "metadata": {}
+    },
+    {
+      "id": "ff0e0e67-4858-4f7e-b315-008f414b6406",
+      "kind": "markdown",
+      "markdown": "원문이 바뀐 필드는 기존 수식을 그대로 적용하지 않고 pending_review 상태로 돌아갑니다. 수정되지 않은 구간은 보존하고, 레코드·작업 묶음의 리비전과 이전 원본을 유지합니다. 실제 사용자 승인이나 Foundry 실행을 의미하지 않습니다.",
+      "hash": "3def25fcb5ed1979b35b5a4eec872cc0dbf65d90f83619a2f6553f9dbfc3a2aa",
+      "metadata": {}
+    },
+    {
+      "id": "4fd0051d-d0fb-4dbf-a2e3-3e0d4d8f509a",
+      "kind": "markdown",
+      "markdown": "[canonical.schema.json · 1.2](library-file:fde1_bGliZmlsZV9PTnVkdjBCeHcyeDU2QnFQT2tjVTZn_FileDrive_73e3d24e44d881918a9b9622fd5a4193)",
+      "hash": "a0805a5b6bbfffa21bcedd2a6e545d31b2d183b838ed12a7739252b93db919cf",
+      "metadata": {}
+    },
+    {
+      "id": "ff1737b9-802e-4d70-aab4-66b4a44b7e3a",
+      "kind": "markdown",
+      "markdown": "[extension-registry.json · 1.2](library-file:fde1_bGliZmlsZV80Rm9qVGFPX2EtTzdzV1BhajUtd053_FileDrive_73e3d24e44d881918a9b9622fd5a4193)",
+      "hash": "e385b4a77398e5057d3fc55dbfc0241b7836283664800810eaf137dba76b7e4e",
+      "metadata": {}
+    },
+    {
+      "id": "cc750764-7f51-457b-b183-86b575bc164b",
+      "kind": "markdown",
+      "markdown": "[math-text-extension.schema.json · 1.2](library-file:fde1_bGliZmlsZV9ueHZ2blM5Tm51ZXQ2c1ZnMXZ5TjN3_FileDrive_73e3d24e44d881918a9b9622fd5a4193)",
+      "hash": "b074180eef8494fb679c4afd0c2616d86d56f877764f50cccb7ea329598c45b8",
+      "metadata": {}
+    },
+    {
+      "id": "c4e452fd-e73a-49c4-ab78-cfeecd98fff2",
+      "kind": "markdown",
+      "markdown": "아래는 이전 1.1 계약의 설명과 보존된 파일입니다.",
+      "hash": "c19ef02cc4c453e92fb4aa2e8a8ca37e6b88fc8580b2a40dba550e8b921d751b",
+      "metadata": {}
+    },
+    {
+      "id": "ee1cedc9-067a-4f23-9b5a-28af8dae3764",
+      "kind": "markdown",
+      "markdown": "초5부터 중3까지 실제 콘텐츠를 공통 타입으로 작성하고, 이후 사용 중 발견한 관계·행동·표현을 버전 있는 계약으로 확장합니다. 현재 계약은 Schema와 registry 1.1.0이며 기존 1.0 workpack을 읽을 수 있습니다.",
+      "hash": "71e8c080032d8cb8a0a7f617183721599c6e33c4b319a3e79095d0201589b0bb",
+      "metadata": {}
+    },
+    {
+      "id": "4f6b1b2d-998c-4342-acdf-d0ea45c8bfb3",
+      "kind": "markdown",
+      "markdown": "## 재사용하는 정보",
+      "hash": "362eb5f19c7448b4d735466f62cc02f8eb39c7932ac4842fb3f1c1216d6d03f7",
+      "metadata": {}
+    },
+    {
+      "id": "4bfdc598-79f8-4d3a-b5aa-297baf9f1e5c",
+      "kind": "markdown",
+      "markdown": "| 정보 | 기존 필드 |\n| --- | --- |\n| 모델 작성과 공식 근거 구분 | EvidenceReference.sourceType |\n| 내용 검토 상태 | workflowStatus · evidenceStatus |\n| 추론과 설명 근거 | rationale · reasoning |\n| 변경 이력의 식별 | 안정된 id · revision |\n| 수식 원문 | MathNotation의 등록된 LaTeX extension |\n| 화면 배치 | 의미 관계와 분리된 view state |",
+      "hash": "831d7e95f9418d5ed819129a31879d7a364fe1522706599bbd7362cde96d14a5",
+      "metadata": {}
+    },
+    {
+      "id": "b84ffa78-d059-4f97-93ad-19240122cf2f",
+      "kind": "markdown",
+      "markdown": "## 작성과 검증",
+      "hash": "a8e50c2294a0216ac8e915f16d417c37d1f4cf0da11df1b4b14ed1f2d1db70d0",
+      "metadata": {}
+    },
+    {
+      "id": "d420f932-cc43-4903-beda-51c7965d439c",
+      "kind": "markdown",
+      "markdown": "도메인별 workpack은 공식 학년군·영역·성취기준의 ID를 참조합니다. 정확한 학년 배치는 별도 근거가 없으면 null로 둡니다. 필수 선수의 순환은 같은 관점에서 선택한 관계에만 검사합니다.",
+      "hash": "e2f1db9f8345567941c20c8ce10610a2a634ce0e3c310be4581498504b3bd3ef",
+      "metadata": {}
+    },
+    {
+      "id": "d073a391-18ec-4c51-8ad3-209db7b8b75c",
+      "kind": "markdown",
+      "markdown": "43개 회귀 검사는 잘못된 타입, 범위, 참조, 중복 ID, 리비전, 등록되지 않은 확장, 근거 없는 승인 상태, 변경 후 coverage 등을 포함합니다. 이 검사는 수학적 참이나 수업 효과를 자동으로 보증하지 않습니다.",
+      "hash": "23cee71a5f3ea9c9e410fc1195cccd36e0647d58d35357876fe5ab9a4cc38679",
+      "metadata": {}
+    },
+    {
+      "id": "147cb95e-1c47-4a5d-b46c-944003ac09cc",
+      "kind": "markdown",
+      "markdown": "## 확장과 변경",
+      "hash": "cb5734c0c055f8efd9e6bc576f59cbc3eb3b443412225a44ee4433c8889cd0bc",
+      "metadata": {}
+    },
+    {
+      "id": "9ff79593-6600-483a-807b-0853c828d11e",
+      "kind": "markdown",
+      "markdown": "새 관계·Action·확장 필드는 목적, 적용 타입, 값의 Schema, 검증 규칙과 예제를 함께 등록합니다. 기존 ID는 이름이나 학년이 바뀌어도 유지하고, 의미를 나누거나 합칠 때는 명시적인 ID 대응과 새 리비전을 남깁니다.",
+      "hash": "f653b410fab7e59c641210b82bda1fa6241cc9bd93a83013f30389a3185a2728",
+      "metadata": {}
+    },
+    {
+      "id": "ff8c3853-49a8-4daa-b814-fdd19e370b20",
+      "kind": "markdown",
+      "markdown": "현재 도구는 로컬 초안의 구조 검증용입니다. 사용자의 승인 사실을 임의 문자열로 인증하지 않으며 운영 환경의 권한·트랜잭션 시스템을 배포했다는 뜻은 아닙니다.",
+      "hash": "9486aed83df74093335267f4bd2f3b90e566c4e908d8954ca20f6ee8e6b810a4",
+      "metadata": {}
+    },
+    {
+      "id": "606eb24b-7403-4cbf-a25a-b11f982238be",
+      "kind": "markdown",
+      "markdown": "## 구조화된 계약 원본",
+      "hash": "95b703b05bdf3cfecebc9f0d03d5a523d5617e613d6be3d1fe333dff578a733e",
+      "metadata": {}
+    },
+    {
+      "id": "c6e684a8-271d-4bfe-bb46-c6e5d315680b",
+      "kind": "markdown",
+      "markdown": "[canonical.schema.json](library-file:fde1_bGliZmlsZV9tdHdiR2JiN0FMZnQwYUd4RkhIbG93_FileDrive_73e3d24e44d881918a9b9622fd5a4193)",
+      "hash": "91e887b8bf170963dff181ee97aec32be46c8999cb708805036b0583f526cef8",
+      "metadata": {}
+    },
+    {
+      "id": "c06ff4bd-d168-4f8c-ba65-081937c22e75",
+      "kind": "markdown",
+      "markdown": "[extension-registry.json](library-file:fde1_bGliZmlsZV9ySXNmX3J0dlpBcElvX0JJNF8xWndB_FileDrive_73e3d24e44d881918a9b9622fd5a4193)",
+      "hash": "90f55c6578aa077fc153fca81a71e28698a3fc84c2fc86c99ce3718f7dc5beba",
+      "metadata": {}
+    },
+    {
+      "id": "d716ec5a-9fe8-4a06-b413-1201000256d4",
+      "kind": "markdown",
+      "markdown": "[content-build-contract.json](library-file:fde1_bGliZmlsZV80d0FCakpWRDlzRXBPSXFsNXFaUnZn_FileDrive_73e3d24e44d881918a9b9622fd5a4193)",
+      "hash": "8fb4e042907d4f7d2110ea6431bba9e58eff68610fa2e46e7415cd3659984f36",
+      "metadata": {}
+    },
+    {
+      "id": "e44d66b5-9ce8-4b35-8be7-9f54005b217a",
+      "kind": "markdown",
+      "markdown": "[canonical-contract-bundle.zip](library-file:fde1_bGliZmlsZV9wOEZaU3MwMWk5Y2RGRHhDd293eW93_FileDrive_73e3d24e44d881918a9b9622fd5a4193)",
+      "hash": "01d34d23eb61629cef32f2b4fee0a27c5f659e3c43d7cb6aedbc40e6071b22ad",
+      "metadata": {}
+    },
+    {
+      "id": "6380ab42-e07e-4af1-9d99-c014ffbb6dee",
+      "kind": "markdown",
+      "markdown": "## 한영 표기 계약",
+      "hash": "ad0d2c8dcf7989e7199df85cf096c802127d401e3f7465b4512eeccb23a6e1aa",
+      "metadata": {}
+    },
+    {
+      "id": "1ffe2c60-b8ac-44ae-aa96-ddaf4c8bc58d",
+      "kind": "markdown",
+      "markdown": "[canonical.schema.json](library-file:fde1_bGliZmlsZV94V1c0elZicnRBMG5STUFVNmdrcW13_FileDrive_73e3d24e44d881918a9b9622fd5a4193)",
+      "hash": "5574103cfd1a87254b1e925a640f0abbcb5ec0d6254fd22412d338a57449a851",
+      "metadata": {}
+    },
+    {
+      "id": "71ef46a9-da2b-46e5-827e-9528e8b9c86a",
+      "kind": "markdown",
+      "markdown": "[extension-registry.json](library-file:fde1_bGliZmlsZV9fczJDdnRUQXN5QndfaDZTR0ZhRnF3_FileDrive_73e3d24e44d881918a9b9622fd5a4193)",
+      "hash": "29300207eb673455b4593c0d18f806eb3d976cf15b247471f1b98cdd153ec086",
+      "metadata": {}
+    },
+    {
+      "id": "2babff12-d5ee-4cf4-a14c-0edd03044e5b",
+      "kind": "markdown",
+      "markdown": "[bilingual-labels.schema.json](library-file:fde1_bGliZmlsZV9qd3pZYmR0bzZnT1EzZHEzVU5UN3N3_FileDrive_73e3d24e44d881918a9b9622fd5a4193)",
+      "hash": "1cc468d84afbdb25672987144226f089f4e858d0d09a91206d008a30187f3cfb",
+      "metadata": {}
+    },
+    {
+      "id": "88a8e7f1-107d-4b53-a545-79dc6ae91a1d",
+      "kind": "markdown",
+      "markdown": "한국어 표시명과 영어 표시명, 편수자료·검토 번역·보충 번역의 근거를 별도 타입으로 보존합니다. 기존 1.0부터 1.2 정본을 지원하며, 이 변경은 관계의 연결·종류·채택 상태를 바꾸지 않습니다.",
+      "hash": "58666c9f51ed70c97c87905d292e551fad5b12c107d26200e8caf0749351b604",
+      "metadata": {}
+    }
+  ],
+  "references": [
+    {
+      "reference": "library-file:fde1_bGliZmlsZV9PTnVkdjBCeHcyeDU2QnFQT2tjVTZn_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+      "metadata_available": true,
+      "mime_type": "application/json",
+      "byte_size": 40721
+    },
+    {
+      "reference": "library-file:fde1_bGliZmlsZV80Rm9qVGFPX2EtTzdzV1BhajUtd053_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+      "metadata_available": true,
+      "mime_type": "application/json",
+      "byte_size": 11500
+    },
+    {
+      "reference": "library-file:fde1_bGliZmlsZV9ueHZ2blM5Tm51ZXQ2c1ZnMXZ5TjN3_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+      "metadata_available": true,
+      "mime_type": "application/json",
+      "byte_size": 3503
+    },
+    {
+      "reference": "library-file:fde1_bGliZmlsZV9tdHdiR2JiN0FMZnQwYUd4RkhIbG93_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+      "metadata_available": true,
+      "mime_type": "application/json",
+      "byte_size": 40679
+    },
+    {
+      "reference": "library-file:fde1_bGliZmlsZV9ySXNmX3J0dlpBcElvX0JJNF8xWndB_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+      "metadata_available": true,
+      "mime_type": "application/json",
+      "byte_size": 6791
+    },
+    {
+      "reference": "library-file:fde1_bGliZmlsZV80d0FCakpWRDlzRXBPSXFsNXFaUnZn_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+      "metadata_available": true,
+      "mime_type": "application/json",
+      "byte_size": 7954
+    },
+    {
+      "reference": "library-file:fde1_bGliZmlsZV9wOEZaU3MwMWk5Y2RGRHhDd293eW93_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+      "metadata_available": true,
+      "mime_type": "application/zip",
+      "byte_size": 21101
+    },
+    {
+      "reference": "library-file:fde1_bGliZmlsZV94V1c0elZicnRBMG5STUFVNmdrcW13_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+      "metadata_available": true,
+      "mime_type": "application/json",
+      "byte_size": 40763
+    },
+    {
+      "reference": "library-file:fde1_bGliZmlsZV9fczJDdnRUQXN5QndfaDZTR0ZhRnF3_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+      "metadata_available": true,
+      "mime_type": "application/json",
+      "byte_size": 16694
+    },
+    {
+      "reference": "library-file:fde1_bGliZmlsZV9qd3pZYmR0bzZnT1EzZHEzVU5UN3N3_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+      "metadata_available": true,
+      "mime_type": "application/json",
+      "byte_size": 3707
+    }
+  ],
+  "throughSequence": 3,
+  "sourceMarkdownSha256": "5ce1b900ad646f5278b943658c37db24eb1377572e3ed9f04cd3de3ae591db26"
+}

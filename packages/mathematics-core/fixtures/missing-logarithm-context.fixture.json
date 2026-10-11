@@ -1,0 +1,101 @@
+{
+  "schema_version": "mathematics-cartography.fixture.v1",
+  "case_id": "MISSING_LOGARITHM_CONTEXT",
+  "request": {
+    "schemaVersion": "mathematics-cartography.fragment-review-request.v1",
+    "requestId": "request.missing-logarithm-context",
+    "proposalId": "proposal.missing-logarithm-context",
+    "supersedesProposalId": null,
+    "actor": "HUMAN_SEMANTIC_REVIEWER",
+    "trigger": "FRAGMENT_SUBMITTED_FOR_IDENTITY_REVIEW",
+    "fragment": {
+      "fragmentId": "fragment.missing-logarithm-context",
+      "content": "log(x) = 2",
+      "candidateKindProposal": "PROPOSITION",
+      "provenanceClass": "SUBMITTED_FRAGMENT"
+    },
+    "identityTargetAtomId": "atom.logarithm.definition",
+    "acceptedAtoms": [
+      {
+        "atomId": "atom.logarithm.definition",
+        "revision": "revision.1",
+        "statement": "For real b, x, and y, if b > 0, b != 1, and x > 0, then log_b(x) = y iff b^y = x.",
+        "provenanceClass": "ACCEPTED_ATOM_SNAPSHOT"
+      }
+    ],
+    "explicitConditions": [],
+    "evidence": [
+      {
+        "evidenceId": "evidence.fragment.missing-context",
+        "subjectId": "fragment.missing-logarithm-context",
+        "subjectRevision": null,
+        "evidenceClass": "SUBMITTED_FRAGMENT",
+        "statement": "log(x) = 2",
+        "supports": [
+          "MISSING_CONTEXT"
+        ],
+        "uncertaintyCodes": [
+          "MISSING_LOGARITHM_BASE",
+          "MISSING_REAL_DOMAIN_CONDITIONS"
+        ]
+      },
+      {
+        "evidenceId": "evidence.context.not-supplied",
+        "subjectId": "fragment.missing-logarithm-context",
+        "subjectRevision": null,
+        "evidenceClass": "USER_SUPPLIED_CONTEXT",
+        "statement": "No logarithm base or real-domain conditions were supplied.",
+        "supports": [
+          "MISSING_CONTEXT"
+        ],
+        "uncertaintyCodes": [
+          "MISSING_LOGARITHM_BASE",
+          "MISSING_REAL_DOMAIN_CONDITIONS"
+        ]
+      },
+      {
+        "evidenceId": "evidence.atom.logarithm-definition",
+        "subjectId": "atom.logarithm.definition",
+        "subjectRevision": "revision.1",
+        "evidenceClass": "ACCEPTED_ATOM_SNAPSHOT",
+        "statement": "For real b, x, and y, if b > 0, b != 1, and x > 0, then log_b(x) = y iff b^y = x.",
+        "supports": [
+          "MISSING_CONTEXT"
+        ],
+        "uncertaintyCodes": []
+      }
+    ],
+    "relationCandidates": []
+  },
+  "expected": {
+    "schemaVersion": "mathematics-cartography.fragment-review-proposal.v1",
+    "decisionRecordId": "INTERVIEW_AND_TDD_MATHEMATICAL_FRAGMENT_IDENTITY_AND_RELATION_001",
+    "proposalId": "proposal.missing-logarithm-context",
+    "requestId": "request.missing-logarithm-context",
+    "supersedesProposalId": null,
+    "actor": "HUMAN_SEMANTIC_REVIEWER",
+    "trigger": "FRAGMENT_SUBMITTED_FOR_IDENTITY_REVIEW",
+    "fragment": {
+      "fragmentId": "fragment.missing-logarithm-context",
+      "content": "log(x) = 2"
+    },
+    "candidateKind": "PROPOSITION",
+    "identityJudgment": {
+      "targetAtomId": "atom.logarithm.definition",
+      "judgment": "UNKNOWN",
+      "evidenceIds": [
+        "evidence.fragment.missing-context",
+        "evidence.context.not-supplied",
+        "evidence.atom.logarithm-definition"
+      ],
+      "uncertainty": [
+        "MISSING_LOGARITHM_BASE",
+        "MISSING_REAL_DOMAIN_CONDITIONS"
+      ]
+    },
+    "relationProposals": [],
+    "recommendedDisposition": "DEFER",
+    "humanDecision": "PENDING",
+    "canonicalApplication": "NOT_PERFORMED"
+  }
+}

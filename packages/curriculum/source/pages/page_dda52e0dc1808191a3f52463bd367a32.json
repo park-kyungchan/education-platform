@@ -1,0 +1,549 @@
+{
+  "pageId": "page_dda52e0dc1808191a3f52463bd367a32",
+  "title": "Palantir 공식 문서와 수학 모델 대응",
+  "url": "https://chatgpt.com/space/page_dda52e0dc1808191a3f52463bd367a32",
+  "blocks": [
+    {
+      "id": "eb0c905b-4678-4efa-aca3-ea201513c1cb",
+      "kind": "markdown",
+      "markdown": "공식 제품 설명과 MathEducation의 설계 선택을 구분한 대응표입니다. Palantir의 문서는 플랫폼 구성요소와 제약을 뒷받침하며, 수학 관계의 타당성이나 한국 교육과정 배치를 대신 증명하지 않습니다.",
+      "hash": "8ce46a47c26ed65d4d8284487a98c7e26cc3c4d9166702c01ebd0f72749c1d60",
+      "metadata": {}
+    },
+    {
+      "id": "0e55d18d-ccd1-4874-9040-251afd455194",
+      "kind": "markdown",
+      "markdown": "## 공식 문서와 확인 내용",
+      "hash": "04232a6d95c201f403795dba88b420d538f370b3faa7166a7e2ed8490888008b",
+      "metadata": {}
+    },
+    {
+      "id": "c6b99dcb-7f4d-49cf-ba7c-a327fcadfec7",
+      "kind": "markdown",
+      "markdown": "### Ontology overview",
+      "hash": "4f722957bf37dc567644ff97cf24caa5a75266a6ca71b8f78a80259b0ed108ad",
+      "metadata": {}
+    },
+    {
+      "id": "f0dc3c6c-8546-4e26-b0c7-8a2aa5943f34",
+      "kind": "markdown",
+      "markdown": "Objects, properties and links provide semantics; actions, functions and dynamic security provide kinetics.",
+      "hash": "f3a8c242da425831949d3d53701424629ba664808b38c5ed9644606eb8c4e3b1",
+      "metadata": {}
+    },
+    {
+      "id": "c60fb8d0-d3cd-4ce5-8329-66fb175b75db",
+      "kind": "markdown",
+      "markdown": "[공식 문서](https://www.palantir.com/docs/foundry/ontology/overview)",
+      "hash": "8b5dd951211c61f13bab34145021e22b7e20ea12dac0f17ba38224bbbe18dc30",
+      "metadata": {}
+    },
+    {
+      "id": "710868bf-e5ae-47b9-a9a1-705f14df7165",
+      "kind": "markdown",
+      "markdown": "### Ontology system",
+      "hash": "87169be0b5bb168a9840d651615f7697316c4413e62b0c5416f7f485dd3d5367",
+      "metadata": {}
+    },
+    {
+      "id": "f118db29-cc17-4a73-94a9-22517f9e0959",
+      "kind": "markdown",
+      "markdown": "The operating model integrates data, logic, action and security.",
+      "hash": "ceafc9f38dd02ec479c2cb267287c3a6c40024d657f25389205cd17d6d601788",
+      "metadata": {}
+    },
+    {
+      "id": "7d3d025e-2b56-4985-9f82-18295c8eb63e",
+      "kind": "markdown",
+      "markdown": "[공식 문서](https://www.palantir.com/docs/foundry/architecture-center/ontology-system)",
+      "hash": "94236403e90b7f28f093a1a51611853f1fdba962438c4e10750109108f05e638",
+      "metadata": {}
+    },
+    {
+      "id": "4eb616f2-32ad-4282-96d9-17e6d1e3c917",
+      "kind": "markdown",
+      "markdown": "### Object types",
+      "hash": "d935904fe666789e3255a39b31d9dc4cf4c8bdda0880e970b2f1fad0dcc9c021",
+      "metadata": {}
+    },
+    {
+      "id": "be19df76-76ee-46d4-a035-6fc3a3bef568",
+      "kind": "markdown",
+      "markdown": "Object types define schemas; objects are instances.",
+      "hash": "61220c99089f924f518414a991a076a75103ef55cc18faeeef97dfad4c86693b",
+      "metadata": {}
+    },
+    {
+      "id": "1d54ca26-f43d-4e63-b1c6-e8ed45c23d0b",
+      "kind": "markdown",
+      "markdown": "[공식 문서](https://www.palantir.com/docs/foundry/object-link-types/object-types-overview)",
+      "hash": "710516dca8b9a80de670e0c359a5df05f00319ea971e66aac5749b6352964bb6",
+      "metadata": {}
+    },
+    {
+      "id": "8e118688-63a6-437b-80e1-551f057bd863",
+      "kind": "markdown",
+      "markdown": "### Properties",
+      "hash": "aebdd7e21f097f43be10085854c737bb7689d3434faf466f13789b084bcc6492",
+      "metadata": {}
+    },
+    {
+      "id": "dbaeced7-7c0a-412f-ab39-cffe9f47302d",
+      "kind": "markdown",
+      "markdown": "A property definition differs from its value on one object.",
+      "hash": "86b351cd1f5f72c3da7b5757648cb83413d9ac478deb76ec415c00e5b7ad368a",
+      "metadata": {}
+    },
+    {
+      "id": "c6eb3ed8-0a8a-4feb-80b9-e69d9e7d1bbe",
+      "kind": "markdown",
+      "markdown": "[공식 문서](https://www.palantir.com/docs/foundry/object-link-types/properties-overview)",
+      "hash": "3eed3f4acaf6104321755bc398b2a6a9710aabd26e0eb5e96f06f06747a43a8f",
+      "metadata": {}
+    },
+    {
+      "id": "f0dd5e94-8d0a-49ec-a969-a371bcf8a735",
+      "kind": "markdown",
+      "markdown": "### Link types",
+      "hash": "05da1c05862e5c3f396ba3509ef5406c583b1d5aa94800e053bd0be8fd82ae5c",
+      "metadata": {}
+    },
+    {
+      "id": "b48f74ac-ae86-44ea-aa64-3637faa0f41e",
+      "kind": "markdown",
+      "markdown": "A link type defines a relationship; both sides can be traversed without making its domain meaning symmetric.",
+      "hash": "5e50026d61cc086a60038ab418f25b7a7464b2920ab803ee02f29b8105b52257",
+      "metadata": {}
+    },
+    {
+      "id": "09339d90-9445-42ff-bdcc-b9907bf20e69",
+      "kind": "markdown",
+      "markdown": "[공식 문서](https://www.palantir.com/docs/foundry/object-link-types/link-types-overview)",
+      "hash": "4efb63d91ce82b2798e34f543b253cacd5b6ab5201b1fcb361dc05922b9d2ff8",
+      "metadata": {}
+    },
+    {
+      "id": "73f38ccd-2044-4238-b5cb-be6016602d08",
+      "kind": "markdown",
+      "markdown": "### Interfaces",
+      "hash": "356ab25c7c604e62802bcc13540fe1451313e51f1bffcfeaf5d01b93bec4e8fe",
+      "metadata": {}
+    },
+    {
+      "id": "c47742da-0b22-49c4-8fe9-77c45aac769a",
+      "kind": "markdown",
+      "markdown": "Interfaces are abstract shared shapes and capabilities; product and language support varies.",
+      "hash": "32d000a58afb77fc1137920b46cc60625057b4e3c6fba87b69468cbc84c313b1",
+      "metadata": {}
+    },
+    {
+      "id": "8bbcc509-bf79-4c6a-9246-c4e07299523d",
+      "kind": "markdown",
+      "markdown": "[공식 문서](https://www.palantir.com/docs/foundry/interfaces/interface-overview)",
+      "hash": "5a6db0e33ce80082c51aa2db62fe076fcf5b520f7731cb41ac9ef0a067c448eb",
+      "metadata": {}
+    },
+    {
+      "id": "6389208d-41e8-439e-af90-06c06889279c",
+      "kind": "markdown",
+      "markdown": "### Ontology design principles",
+      "hash": "758874e73f08721888685a63019af05b031e95488fd8bbd376c84e94a32318de",
+      "metadata": {}
+    },
+    {
+      "id": "74e2614f-9ea3-474f-9d26-04eaac4ac9be",
+      "kind": "markdown",
+      "markdown": "Model domain entities; prefer composition over deep hierarchies.",
+      "hash": "e129b754268334cb68be176440e7398f5d509a8a86570f829715e7fb0ed0f7f1",
+      "metadata": {}
+    },
+    {
+      "id": "f54426a1-f5ad-47b6-abd1-dcde3ec04551",
+      "kind": "markdown",
+      "markdown": "[공식 문서](https://www.palantir.com/docs/foundry/ontology/ontology-best-practices)",
+      "hash": "36f58331fc8e05d2918d94793f84761e5425019039f8ba49b36854ea75ace363",
+      "metadata": {}
+    },
+    {
+      "id": "d6f25cc0-d151-447a-8f94-16c2adc62418",
+      "kind": "markdown",
+      "markdown": "### Structural guidance",
+      "hash": "f501adcd9d6de3687b759dce9bca03cce4a134168a02e26859f5fd4657d37f20",
+      "metadata": {}
+    },
+    {
+      "id": "8383059f-9727-4a13-ab0c-5ad68aa5a3cc",
+      "kind": "markdown",
+      "markdown": "Relationships carrying their own metadata can use object-backed links.",
+      "hash": "1eabadf84abcda47cc48a9bacfa0fc4926e1360abe409a87e512218fd6896bb3",
+      "metadata": {}
+    },
+    {
+      "id": "dca0de02-46ba-4368-a5cc-6d86412cd3e0",
+      "kind": "markdown",
+      "markdown": "[공식 문서](https://www.palantir.com/docs/foundry/ontology/ontology-structural-guidance)",
+      "hash": "a8514236bf44fdf9ff5484640cb4777c80a422c42e72182351988a69097d86af",
+      "metadata": {}
+    },
+    {
+      "id": "5d358b98-d43b-453a-a0f2-b3d406b0a996",
+      "kind": "markdown",
+      "markdown": "### Action types",
+      "hash": "df9d0707082b7016086fed448820294049fb25dd531c31d8c63a86b52598d054",
+      "metadata": {}
+    },
+    {
+      "id": "c6cc419f-c2a0-49c9-bf9c-ca83cab7c054",
+      "kind": "markdown",
+      "markdown": "Actions bundle meaningful edits; action types define those operations.",
+      "hash": "2b94667d340aef3ac4b52c77020f5f5552ca2581333d40fd5a52ed741f85380a",
+      "metadata": {}
+    },
+    {
+      "id": "cf2487ca-05f9-4bef-a71a-7b3b15c0cdd4",
+      "kind": "markdown",
+      "markdown": "[공식 문서](https://www.palantir.com/docs/foundry/action-types/overview)",
+      "hash": "ef69104b25c88a8fb34b789d6b0d878917145ecc8629d44502e0579725eedb65",
+      "metadata": {}
+    },
+    {
+      "id": "afe20768-3595-4371-9088-1a47141bad60",
+      "kind": "markdown",
+      "markdown": "### Functions",
+      "hash": "5ee4ba619c6e69fc88fa69197f3043a8cd8bb4ec942b26bdf2fdf3c78d52349c",
+      "metadata": {}
+    },
+    {
+      "id": "58543dd5-f344-4fbd-bc9a-ef934a4fb907",
+      "kind": "markdown",
+      "markdown": "Functions provide server-side logic for objects, links and complex edits.",
+      "hash": "fcb7380a41ade8cd6cb35744855bea14f55dc27aae2f72a738eecb4895a2f1c8",
+      "metadata": {}
+    },
+    {
+      "id": "e44d07bb-e6a9-42bd-adf0-0c9468acaa0b",
+      "kind": "markdown",
+      "markdown": "[공식 문서](https://www.palantir.com/docs/foundry/functions/overview)",
+      "hash": "bf2dc06fe31d83fe962265d9f4c13d4c72cac8dc54e93eba0c8733ea2b1686cc",
+      "metadata": {}
+    },
+    {
+      "id": "d6a32c4e-2e26-44a7-9cb3-40fab605d09f",
+      "kind": "markdown",
+      "markdown": "### Ontology edits",
+      "hash": "647b43b455e9a66075dca60de567b684d185b8991d9159c0f982f125f44822c5",
+      "metadata": {}
+    },
+    {
+      "id": "3a0fdeae-e1de-44f6-9cef-03ec588da748",
+      "kind": "markdown",
+      "markdown": "Edit functions can return edits for function-backed actions; preview execution is distinct from commit.",
+      "hash": "cfe9ca43473c085f1b8fc20bd8d736954edcf2c2c1caa82312c8b38a846cde96",
+      "metadata": {}
+    },
+    {
+      "id": "a4adeb96-9632-4e5c-99e1-d683c9ab5ac1",
+      "kind": "markdown",
+      "markdown": "[공식 문서](https://www.palantir.com/docs/foundry/functions/edits-overview)",
+      "hash": "b19752257c7174884a7185929d290a2a7637dadf3c5c6e2502862c1b517087a9",
+      "metadata": {}
+    },
+    {
+      "id": "e8a9ee1a-227e-469a-a33a-018f6b1d8f3d",
+      "kind": "markdown",
+      "markdown": "### Submission criteria",
+      "hash": "2147050ac530224acbceb85d63a88582a4085d4613294cc77d4fc784d17222a0",
+      "metadata": {}
+    },
+    {
+      "id": "36a5fefb-8716-4ff3-b99a-4014a71c4c2d",
+      "kind": "markdown",
+      "markdown": "Criteria can govern action execution using users, parameters and object state.",
+      "hash": "9bf6d26bf0df4e81c6265c6abaa4619e5bd523c05685517266541537eba8e3e9",
+      "metadata": {}
+    },
+    {
+      "id": "76d2d1fb-8482-47be-8600-05fb49bff16a",
+      "kind": "markdown",
+      "markdown": "[공식 문서](https://www.palantir.com/docs/foundry/action-types/submission-criteria)",
+      "hash": "cf3e799e57e0810148af75b9524b9c81beee74986cc695194c0ca2360eec3b16",
+      "metadata": {}
+    },
+    {
+      "id": "541878c2-23f2-4e02-9099-e5189d548d3e",
+      "kind": "markdown",
+      "markdown": "### Consistency and isolation",
+      "hash": "351494f4071cf59353c4039282f2910f214d3fa5e4198bcf4eab25e64eaa6f16",
+      "metadata": {}
+    },
+    {
+      "id": "ea6131bf-6186-44ae-b205-be2f54c930ac",
+      "kind": "markdown",
+      "markdown": "Action edit atomicity does not include external side effects such as notifications or webhooks.",
+      "hash": "635125b18bb7efb451c6fd760608ae488eec224e30e79633ac98e5b17d2d8065",
+      "metadata": {}
+    },
+    {
+      "id": "b381bb3f-b4c7-4824-a0fa-0205ce87e729",
+      "kind": "markdown",
+      "markdown": "[공식 문서](https://www.palantir.com/docs/foundry/action-types/consistency-guarantees)",
+      "hash": "bf63353abbddc829ee13b7a01141bad01ee4f6e48d2412c3bcfeddb8e7901349",
+      "metadata": {}
+    },
+    {
+      "id": "597a59c1-b553-44ae-9553-caa32e4d6d97",
+      "kind": "markdown",
+      "markdown": "### Action log",
+      "hash": "2d2dbbe5b33db5b10ce492fecd1286af9d5bbadbcb3199b1ae42338871e71eda",
+      "metadata": {}
+    },
+    {
+      "id": "a29400eb-03cd-4b38-843f-b81b371c6ee3",
+      "kind": "markdown",
+      "markdown": "Configured action logs capture successful action submissions, not every edit path or failed action.",
+      "hash": "237e92f2854bb87090ebec9a807fc8fbea4dcb05d26925dc1ae22e16d32288e3",
+      "metadata": {}
+    },
+    {
+      "id": "725cd90f-9878-4b04-9fd7-ee3e945e31a4",
+      "kind": "markdown",
+      "markdown": "[공식 문서](https://www.palantir.com/docs/foundry/action-types/action-log)",
+      "hash": "70962e4304a9953525c3a2060ed812141a2b67c116f06eddfb312adc2cf0dadc",
+      "metadata": {}
+    },
+    {
+      "id": "2d12822a-5f14-4d98-8ce5-09acb5b2376d",
+      "kind": "markdown",
+      "markdown": "### Undo or revert actions",
+      "hash": "9c793d04707689840c96a7a5dbd0e4f970f78eff25833d2b02d9b6e0bb6c0b65",
+      "metadata": {}
+    },
+    {
+      "id": "a06c1379-643f-41f9-a449-f5e732d406a1",
+      "kind": "markdown",
+      "markdown": "Built-in undo has immediate/latest-edit/user/storage restrictions and does not undo side effects.",
+      "hash": "00db3af92a7ff024c7c92ca791488071b61f2992f5f8553866991092b1ece08d",
+      "metadata": {}
+    },
+    {
+      "id": "92d0f2c9-a0a9-41f6-8e49-6989d784c064",
+      "kind": "markdown",
+      "markdown": "[공식 문서](https://www.palantir.com/docs/foundry/action-types/action-reverts)",
+      "hash": "55c74a696c0668667032e46cdc74420689562720f939dcb9cc8ac5752bafb25c",
+      "metadata": {}
+    },
+    {
+      "id": "1de86ff2-9452-4371-9635-adb1def0cdcf",
+      "kind": "markdown",
+      "markdown": "### Ontology branching",
+      "hash": "41f6873d75be7a748957220e11a285b9f9ee8b91e744445aac5f9d9c15b3be5e",
+      "metadata": {}
+    },
+    {
+      "id": "612e92d8-d6de-4f1a-b625-f0af5de559f4",
+      "kind": "markdown",
+      "markdown": "Branches and proposals govern ontology resource definition changes.",
+      "hash": "0b12a5e55302dd3fa03434c1268ae10cfe3cb539cd7db1589a372fc9220fdcd9",
+      "metadata": {}
+    },
+    {
+      "id": "8dc03f14-a50e-4a24-b6e7-44d98a432a7b",
+      "kind": "markdown",
+      "markdown": "[공식 문서](https://www.palantir.com/docs/foundry/ontologies/branching-ontology)",
+      "hash": "ac2e9867b8eeffa54ca66c8f3f5246588a722d09786ffe2aaa4dbff140d48315",
+      "metadata": {}
+    },
+    {
+      "id": "0ce0bf07-6459-4dc1-8c80-869397bcf1cd",
+      "kind": "markdown",
+      "markdown": "### Ontology scenarios",
+      "hash": "cd74e5a7918f3bf653e596b3992a9867cb819e03682277fb62a57868f5116bfb",
+      "metadata": {}
+    },
+    {
+      "id": "8007c4c3-ce00-4eab-be92-a5d86ae3e20b",
+      "kind": "markdown",
+      "markdown": "Scenarios are beta what-if sandboxes, not historical snapshots or data-versioning tools.",
+      "hash": "ccf396fa72cc869ef814fb6cbdac4397436662b2b09be8afdfcf77d9bfee98c8",
+      "metadata": {}
+    },
+    {
+      "id": "078577f3-8b7e-4383-bdf7-72e0de969bff",
+      "kind": "markdown",
+      "markdown": "[공식 문서](https://www.palantir.com/docs/foundry/ontology/overview-ontology-scenario)",
+      "hash": "0078aef2ef308e7b3dd1da4c5954aa815b2736543778a5faf730a90569508761",
+      "metadata": {}
+    },
+    {
+      "id": "b40a90e9-410d-4aa6-bd5e-f42ba9797e15",
+      "kind": "markdown",
+      "markdown": "### Ontology anti-patterns",
+      "hash": "a4dd3a7c85d32c596d2ae0b1606562486a6e60a0239368148cf1cb37cac8ced9",
+      "metadata": {}
+    },
+    {
+      "id": "dc104e1e-24bf-458b-8eba-aafe3520cd26",
+      "kind": "markdown",
+      "markdown": "Preserve one entity identity and connect history or amendment objects.",
+      "hash": "00eba595fed70cda34461d2701353a0948edbb7cfff5b74afb8de070599a96e7",
+      "metadata": {}
+    },
+    {
+      "id": "8b345e72-2dd7-432b-b391-e4f4e362ecbd",
+      "kind": "markdown",
+      "markdown": "[공식 문서](https://www.palantir.com/docs/foundry/ontology/ontology-anti-patterns)",
+      "hash": "8db89590986b0ef7f28387b95a3aea164af1e4f41a86088a736a843135906318",
+      "metadata": {}
+    },
+    {
+      "id": "ee93a974-a904-4423-80d4-a071d2c33686",
+      "kind": "markdown",
+      "markdown": "### AIP Chatbot tools",
+      "hash": "0b74dfc94880c48dc44b4b56412f53f3745744f3f797c9cc6f26b154e0d6823e",
+      "metadata": {}
+    },
+    {
+      "id": "1c6ffef6-667b-423d-992d-72db7fea6839",
+      "kind": "markdown",
+      "markdown": "LLMs can use configured object queries, functions and actions; actions may require user confirmation.",
+      "hash": "6a75465966a235130cf4d727b0c677e2db15e1bd87a5c008cb46b8d7056598ec",
+      "metadata": {}
+    },
+    {
+      "id": "f4c28814-8d0e-4851-a55b-1848c6de443d",
+      "kind": "markdown",
+      "markdown": "[공식 문서](https://www.palantir.com/docs/foundry/chatbot-studio/tools)",
+      "hash": "3755e62fa7cb9e5b11cc82732534b0051365b304a8c1802dff7d54f1a9205789",
+      "metadata": {}
+    },
+    {
+      "id": "82592983-1854-45c7-a592-59bf09e11400",
+      "kind": "markdown",
+      "markdown": "## 도메인 적용 대응",
+      "hash": "4bfa96866aa63d81494325ed07958d529e6d25df0074cfb1c3a45c822479012a",
+      "metadata": {}
+    },
+    {
+      "id": "939b5756-64d9-472e-9395-c86b66f3c112",
+      "kind": "markdown",
+      "markdown": "| 공식 문서 | 적용 대상 | 적용 의미 |\n| --- | --- | --- |\n| [Ontology overview](https://www.palantir.com/docs/foundry/ontology/overview) | proposal-root | semantic entities plus governed changes |\n| [Object types](https://www.palantir.com/docs/foundry/object-link-types/object-types-overview) | type-MathConcept | MathConcept is a type; 통분 is one object |\n| [Properties](https://www.palantir.com/docs/foundry/object-link-types/properties-overview) | type-MathNotation | notation meaning and scope are explicitly typed |\n| [Structural guidance](https://www.palantir.com/docs/foundry/ontology/ontology-structural-guidance) | type-DependencyAssertion | metadata-bearing relationship adaptation |\n| [Interfaces](https://www.palantir.com/docs/foundry/interfaces/interface-overview) | interface-KnowledgeElement | optional shared shape, not a class hierarchy of school grades |\n| [Action types](https://www.palantir.com/docs/foundry/action-types/overview) | action-ApproveAndApplyDependencyChange | cohesive domain operation |\n| [Functions](https://www.palantir.com/docs/foundry/functions/overview) | function-PreviewDependencyChange | separate logic and commit |\n| [AIP Chatbot tools](https://www.palantir.com/docs/foundry/chatbot-studio/tools) | action-ProposeDependencyChange | LLM drafts proposal; approval is separate |\n| [Action log](https://www.palantir.com/docs/foundry/action-types/action-log) | type-RevisionEvent | decision logging and all-edit history differ |\n| [Undo or revert actions](https://www.palantir.com/docs/foundry/action-types/action-reverts) | action-RestoreDependencyRevision | own compensating revision contract, not native long-term undo |\n| [Ontology branching](https://www.palantir.com/docs/foundry/ontologies/branching-ontology) | section-operations | schema review differs from curriculum data approval |\n| [Ontology scenarios](https://www.palantir.com/docs/foundry/ontology/overview-ontology-scenario) | section-simulation | read-only what-if example is not historical scenario storage |\n| [Ontology anti-patterns](https://www.palantir.com/docs/foundry/ontology/ontology-anti-patterns) | type-RevisionEvent | stable identity plus linked amendments |",
+      "hash": "1077d8cfbf46fb7f79705ed95c43a8f902790a28fcbd9308f903c18e9d3c18b6",
+      "metadata": {}
+    },
+    {
+      "id": "b8ed86a0-83cb-40ba-870b-78a2c9476ff7",
+      "kind": "markdown",
+      "markdown": "각 대응의 상태는 domain_adaptation_not_vendor_requirement입니다. DependencyAssertion, 제안 승인, 보상 복원 등의 필드와 정책은 우리 프로젝트가 선택한 계약이며 Palantir가 강제하는 수학 스키마가 아닙니다.",
+      "hash": "07b09842ebca14fa692c6a94c854010ff0f2eaa6fb5a8af829d57558eb631041",
+      "metadata": {}
+    },
+    {
+      "id": "fafa54e1-01ca-44a9-b3bb-bb5e086ce1a9",
+      "kind": "markdown",
+      "markdown": "## 그대로 가져오지 않는 가정",
+      "hash": "14388705f1bd6f37ed616e0fbe9286e3ebb3516fd9b15b1be86813143aba1e38",
+      "metadata": {}
+    },
+    {
+      "id": "5c1732d7-d38c-4941-8946-ae3f1f24f32d",
+      "kind": "markdown",
+      "markdown": "### 배포 상태",
+      "hash": "c1310f65c887fc424a530a249d1a67f28c736c4185c57598b25c43df00b76ad6",
+      "metadata": {}
+    },
+    {
+      "id": "d9cb50a9-d7f8-4eec-a190-752ba26249af",
+      "kind": "markdown",
+      "markdown": "Foundry를 실행하거나 설치하지 않았고 플랫폼 호환성도 검증하지 않았다.",
+      "hash": "086f6a5d98f77aa823eafa1521bc7703217b09d7345a9b77260e712358fba3a8",
+      "metadata": {}
+    },
+    {
+      "id": "bfdd05c8-1d5c-4f87-9b6b-c7784bb573b1",
+      "kind": "markdown",
+      "markdown": "### 적용 상태",
+      "hash": "bf8d4fd4c4eddb08c89725d33b0b558c9846d5e293f955bbdadf64231dc8570f",
+      "metadata": {}
+    },
+    {
+      "id": "d44f2e39-7b97-4959-89d9-13ef8f5f0e29",
+      "kind": "markdown",
+      "markdown": "제안 파일과 모의 검증만 게시했다. 실제 지식 그래프 변경, 사용자 승인, 운영 권한 집행은 없다.",
+      "hash": "67b471bf90dbb4303411734b625cb708a0c1ae59f411d6f01cc39e13aa51f82c",
+      "metadata": {}
+    },
+    {
+      "id": "c390b9ee-588d-4115-b7d1-19f1cf48c1c2",
+      "kind": "markdown",
+      "markdown": "### 교육과정 근거",
+      "hash": "65d14ce3648d01cb3ef42e139fd536b6fe525864f094043dd0c6f2ea8de38c0b",
+      "metadata": {}
+    },
+    {
+      "id": "ffd15258-e988-436b-b534-41fd1fb1477d",
+      "kind": "markdown",
+      "markdown": "학년과 성취기준의 공식 매핑은 미검증이며 공식 코드 인스턴스를 만들어 넣지 않았다.",
+      "hash": "f058bc13509387fc23abfd0e0c3dffac379c3c33561db9e9bad5b6ed52fadd81",
+      "metadata": {}
+    },
+    {
+      "id": "6f549bfd-d5dd-4817-95a4-8cf2e7e74209",
+      "kind": "markdown",
+      "markdown": "### 시나리오",
+      "hash": "9111596808bcb3a3245d3d8d11691957990e812ca72b19b4e91759acc0760ecd",
+      "metadata": {}
+    },
+    {
+      "id": "a43f34aa-4d87-418a-8276-405345b3a521",
+      "kind": "markdown",
+      "markdown": "Palantir Scenarios는 과거 버전 보관 도구가 아니므로 장기 복원 근거로 사용하지 않는다.",
+      "hash": "d0da904c0d720f6842b2642aa75dede0f0510d7b61cc973da72422927f504657",
+      "metadata": {}
+    },
+    {
+      "id": "2788d5af-4e16-4ad1-9b07-415b419c3537",
+      "kind": "markdown",
+      "markdown": "### 되돌리기",
+      "hash": "49de510fcf8e795288c36c3a6c9197d6ceb0ce98370b16dc52631200cdb21828",
+      "metadata": {}
+    },
+    {
+      "id": "b63008ee-c46a-4cb4-ac47-652aee4321e8",
+      "kind": "markdown",
+      "markdown": "본 예시는 새 revision을 만드는 보상 변경이다. Palantir 기본 Undo의 제약과 구별한다.",
+      "hash": "32e3abc257445a5a2a3adb878573f3518cd5ed078f6be1d1b439d041653f647c",
+      "metadata": {}
+    },
+    {
+      "id": "1cb4d806-a82a-429e-b6a4-e213721a702e",
+      "kind": "markdown",
+      "markdown": "### AIP",
+      "hash": "37352f98002d977291c8244a95745b809179e5ea9571bcd70077ffa3006eccbc",
+      "metadata": {}
+    },
+    {
+      "id": "2a0e517b-052c-4624-ab8e-3a0258dca443",
+      "kind": "markdown",
+      "markdown": "LLM 제안을 수학적 증명이나 검증된 교육 순서로 간주하지 않는다.",
+      "hash": "4c288f4962cf023c455f9807902acc97764b35d031761fd00ec190c426f59e0a",
+      "metadata": {}
+    },
+    {
+      "id": "3899d721-8950-4597-8509-34335abdbbdc",
+      "kind": "markdown",
+      "markdown": "### 스키마",
+      "hash": "7315763e63a1b2fd287f3a58dd3b126f5bda1af549d1ebe6ae378c0fa760f43a",
+      "metadata": {}
+    },
+    {
+      "id": "2cfaffcf-8458-4801-8ff3-7845af98496c",
+      "kind": "markdown",
+      "markdown": "이 JSON Schema는 자체 제안 데이터 형식이다. Foundry import나 OSDK 생성물은 아니다.",
+      "hash": "ba286106c5d25631959a851bfd52afd3c31620e146d73073b29034eebcff067e",
+      "metadata": {}
+    }
+  ],
+  "references": [],
+  "throughSequence": 0,
+  "sourceMarkdownSha256": "ec5bf89f238ef7f1cb99bc24aa373df5600b8782a7cea8ac4d62804a3a8f5152"
+}

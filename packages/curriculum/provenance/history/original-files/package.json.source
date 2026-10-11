@@ -1,0 +1,17 @@
+{
+  "name": "math-education",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "bun@1.4.2",
+  "scripts": {
+    "doctor:cloud": "bun scripts/doctor.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "bun test",
+    "verify:ui": "bun scripts/verify-ui-sources.ts",
+    "validate": "bun run typecheck && bun run test && bun run verify:ui && bun scripts/validate-export.ts",
+    "project:ui": "bun scripts/project-ui.ts",
+    "preview": "bun scripts/preview.ts"
+  },
+  "devDependencies": { "typescript": "7.0.2", "bun-types": "1.4.2" }
+}

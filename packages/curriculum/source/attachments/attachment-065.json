@@ -1,0 +1,704 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:matheducation:spatial-atlas:ui-config:1.0.0",
+  "title": "MathEducation spatial atlas UI configuration",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "kind",
+    "schemaVersion",
+    "id",
+    "variant",
+    "source",
+    "navigation",
+    "dependencies",
+    "topics",
+    "scaffoldRegions",
+    "conceptPositions",
+    "coverage",
+    "runtime"
+  ],
+  "properties": {
+    "kind": {
+      "const": "math_ui_config"
+    },
+    "schemaVersion": {
+      "const": "1.0.0"
+    },
+    "id": {
+      "const": "matheducation-spatial-atlas"
+    },
+    "variant": {
+      "const": "spatial_semantic_zoom"
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "file",
+        "sha256",
+        "revision",
+        "embedding",
+        "mutable",
+        "conceptIds",
+        "topicIds"
+      ],
+      "properties": {
+        "file": {
+          "const": "matheducation-sample-r2.json"
+        },
+        "sha256": {
+          "const": "3332d52420632f5a5afc872692f9a9bfcd81d238705d8d63918c0c9a70118308"
+        },
+        "revision": {
+          "const": 2
+        },
+        "embedding": {
+          "const": "exact_utf8_source_bytes"
+        },
+        "mutable": {
+          "const": false
+        },
+        "conceptIds": {
+          "const": [
+            "multiple",
+            "common-multiple",
+            "lcm",
+            "fraction-notation",
+            "equivalent-fractions",
+            "common-denominator",
+            "fraction-add",
+            "fraction-divide",
+            "rational",
+            "rational-add",
+            "exponents",
+            "square-roots"
+          ]
+        },
+        "topicIds": {
+          "const": [
+            "natural",
+            "fractions",
+            "rational-domain",
+            "algebra",
+            "real-domain"
+          ]
+        }
+      }
+    },
+    "navigation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "initialLevel",
+        "levels",
+        "breadcrumb",
+        "backBehavior",
+        "homeBehavior",
+        "dependencyJump",
+        "statePersistence",
+        "atomDisclosure"
+      ],
+      "properties": {
+        "initialLevel": {
+          "const": "overview"
+        },
+        "levels": {
+          "const": [
+            "overview",
+            "group",
+            "concept"
+          ]
+        },
+        "breadcrumb": {
+          "const": true
+        },
+        "backBehavior": {
+          "const": "canonical_parent_one_level"
+        },
+        "homeBehavior": {
+          "const": "clear_selection_return_overview"
+        },
+        "dependencyJump": {
+          "const": "select_target_and_its_canonical_topic"
+        },
+        "statePersistence": {
+          "const": "in_memory_only"
+        },
+        "atomDisclosure": {
+          "const": "native_details_open_by_default"
+        }
+      }
+    },
+    "dependencies": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "defaultVisible",
+        "optional",
+        "requiredAlwaysVisible",
+        "overviewEdges",
+        "groupEdges",
+        "conceptEdges",
+        "universityLenses",
+        "evidenceLabel"
+      ],
+      "properties": {
+        "defaultVisible": {
+          "const": [
+            "required_prerequisite"
+          ]
+        },
+        "optional": {
+          "const": [
+            "helpful_prerequisite",
+            "representation",
+            "related"
+          ]
+        },
+        "requiredAlwaysVisible": {
+          "const": true
+        },
+        "overviewEdges": {
+          "const": "hidden"
+        },
+        "groupEdges": {
+          "const": "within_group_required_only"
+        },
+        "conceptEdges": {
+          "const": "incident_in_side_panel"
+        },
+        "universityLenses": {
+          "const": "separate_disclosure_not_prerequisites"
+        },
+        "evidenceLabel": {
+          "const": "pedagogical_hypothesis"
+        }
+      }
+    },
+    "topics": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "topicId",
+          "columnStart",
+          "columnSpan",
+          "rowStart",
+          "rowSpan"
+        ],
+        "properties": {
+          "topicId": {
+            "type": "string",
+            "enum": [
+              "natural",
+              "fractions",
+              "rational-domain",
+              "algebra",
+              "real-domain"
+            ]
+          },
+          "columnStart": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 12
+          },
+          "columnSpan": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 12
+          },
+          "rowStart": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2
+          },
+          "rowSpan": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2
+          }
+        }
+      },
+      "allOf": [
+        {
+          "contains": {
+            "type": "object",
+            "required": [
+              "topicId"
+            ],
+            "properties": {
+              "topicId": {
+                "const": "natural"
+              }
+            }
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "type": "object",
+            "required": [
+              "topicId"
+            ],
+            "properties": {
+              "topicId": {
+                "const": "fractions"
+              }
+            }
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "type": "object",
+            "required": [
+              "topicId"
+            ],
+            "properties": {
+              "topicId": {
+                "const": "rational-domain"
+              }
+            }
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "type": "object",
+            "required": [
+              "topicId"
+            ],
+            "properties": {
+              "topicId": {
+                "const": "algebra"
+              }
+            }
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "type": "object",
+            "required": [
+              "topicId"
+            ],
+            "properties": {
+              "topicId": {
+                "const": "real-domain"
+              }
+            }
+          },
+          "minContains": 1,
+          "maxContains": 1
+        }
+      ]
+    },
+    "scaffoldRegions": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "label",
+          "status",
+          "conceptIds",
+          "columnStart",
+          "columnSpan"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "enum": [
+              "scaffold-geometry",
+              "scaffold-statistics",
+              "scaffold-extended"
+            ]
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 40
+          },
+          "status": {
+            "const": "unpopulated_ui_scaffold"
+          },
+          "conceptIds": {
+            "const": []
+          },
+          "columnStart": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 12
+          },
+          "columnSpan": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 12
+          }
+        }
+      },
+      "allOf": [
+        {
+          "contains": {
+            "type": "object",
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "const": "scaffold-geometry"
+              }
+            }
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "type": "object",
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "const": "scaffold-statistics"
+              }
+            }
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "type": "object",
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "const": "scaffold-extended"
+              }
+            }
+          },
+          "minContains": 1,
+          "maxContains": 1
+        }
+      ]
+    },
+    "conceptPositions": {
+      "type": "array",
+      "minItems": 12,
+      "maxItems": 12,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "conceptId",
+          "x",
+          "y",
+          "mobileX",
+          "mobileY"
+        ],
+        "properties": {
+          "conceptId": {
+            "type": "string",
+            "enum": [
+              "multiple",
+              "common-multiple",
+              "lcm",
+              "fraction-notation",
+              "equivalent-fractions",
+              "common-denominator",
+              "fraction-add",
+              "fraction-divide",
+              "rational",
+              "rational-add",
+              "exponents",
+              "square-roots"
+            ]
+          },
+          "x": {
+            "type": "integer",
+            "minimum": 15,
+            "maximum": 85
+          },
+          "y": {
+            "type": "integer",
+            "minimum": 15,
+            "maximum": 85
+          },
+          "mobileX": {
+            "type": "integer",
+            "minimum": 24,
+            "maximum": 76
+          },
+          "mobileY": {
+            "type": "integer",
+            "minimum": 15,
+            "maximum": 85
+          }
+        }
+      },
+      "allOf": [
+        {
+          "contains": {
+            "type": "object",
+            "required": [
+              "conceptId"
+            ],
+            "properties": {
+              "conceptId": {
+                "const": "multiple"
+              }
+            }
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "type": "object",
+            "required": [
+              "conceptId"
+            ],
+            "properties": {
+              "conceptId": {
+                "const": "common-multiple"
+              }
+            }
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "type": "object",
+            "required": [
+              "conceptId"
+            ],
+            "properties": {
+              "conceptId": {
+                "const": "lcm"
+              }
+            }
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "type": "object",
+            "required": [
+              "conceptId"
+            ],
+            "properties": {
+              "conceptId": {
+                "const": "fraction-notation"
+              }
+            }
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "type": "object",
+            "required": [
+              "conceptId"
+            ],
+            "properties": {
+              "conceptId": {
+                "const": "equivalent-fractions"
+              }
+            }
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "type": "object",
+            "required": [
+              "conceptId"
+            ],
+            "properties": {
+              "conceptId": {
+                "const": "common-denominator"
+              }
+            }
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "type": "object",
+            "required": [
+              "conceptId"
+            ],
+            "properties": {
+              "conceptId": {
+                "const": "fraction-add"
+              }
+            }
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "type": "object",
+            "required": [
+              "conceptId"
+            ],
+            "properties": {
+              "conceptId": {
+                "const": "fraction-divide"
+              }
+            }
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "type": "object",
+            "required": [
+              "conceptId"
+            ],
+            "properties": {
+              "conceptId": {
+                "const": "rational"
+              }
+            }
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "type": "object",
+            "required": [
+              "conceptId"
+            ],
+            "properties": {
+              "conceptId": {
+                "const": "rational-add"
+              }
+            }
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "type": "object",
+            "required": [
+              "conceptId"
+            ],
+            "properties": {
+              "conceptId": {
+                "const": "exponents"
+              }
+            }
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "type": "object",
+            "required": [
+              "conceptId"
+            ],
+            "properties": {
+              "conceptId": {
+                "const": "square-roots"
+              }
+            }
+          },
+          "minContains": 1,
+          "maxContains": 1
+        }
+      ]
+    },
+    "coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "conceptCount",
+        "topicCount",
+        "fullCurriculum",
+        "gradeMapping",
+        "scaffoldsAreCurriculumTaxonomy"
+      ],
+      "properties": {
+        "conceptCount": {
+          "const": 12
+        },
+        "topicCount": {
+          "const": 5
+        },
+        "fullCurriculum": {
+          "const": false
+        },
+        "gradeMapping": {
+          "const": "proposed_not_standard_mapped"
+        },
+        "scaffoldsAreCurriculumTaxonomy": {
+          "const": false
+        }
+      }
+    },
+    "runtime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rootId",
+        "network",
+        "backend",
+        "sourceWrites",
+        "automaticSync",
+        "widgetStateSync",
+        "externalLibraries"
+      ],
+      "properties": {
+        "rootId": {
+          "const": "math-spatial-atlas"
+        },
+        "network": {
+          "const": false
+        },
+        "backend": {
+          "const": false
+        },
+        "sourceWrites": {
+          "const": false
+        },
+        "automaticSync": {
+          "const": false
+        },
+        "widgetStateSync": {
+          "const": false
+        },
+        "externalLibraries": {
+          "const": []
+        }
+      }
+    }
+  }
+}

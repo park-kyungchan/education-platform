@@ -1,0 +1,24 @@
+{
+  "name": "@palantirkc/academy-native-source",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "typecheck": "bun node_modules/typescript/bin/tsc --noEmit",
+    "test": "bun test ./tests/academy ./tests/learning ./tests/storage ./tests/wholeLens ./tests/preclass ./tests/assessment",
+    "check": "bun run typecheck && bun run test",
+    "academy:serve": "bun src/academy/main.ts",
+    "academy:http": "bun harness/academy_http.ts",
+    "academy:journal-http": "bun harness/academy_journal_http.ts",
+    "academy:query": "bun harness/academy_query.ts"
+  },
+  "devDependencies": {
+    "typescript": "7.0.2",
+    "@types/bun": "1.4.2",
+    "@types/node": "26.6.4",
+    "@types/jsdom": "30.0.0"
+  },
+  "dependencies": {
+    "jsdom": "30.1.2"
+  }
+}

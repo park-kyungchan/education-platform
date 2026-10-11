@@ -1,0 +1,597 @@
+{
+  "kind": "ExtensionRegistry",
+  "id": "math:registry:core",
+  "version": "1.3.0",
+  "compatibleVersions": [
+    "1.0.0",
+    "1.1.0",
+    "1.2.0",
+    "1.3.0"
+  ],
+  "recordKinds": [
+    "Topic",
+    "MathConcept",
+    "MathTerm",
+    "MathNotation",
+    "Perspective",
+    "Explanation",
+    "RelationAssertion",
+    "CurriculumAlignment",
+    "EvidenceReference",
+    "ContentGap",
+    "CoverageClaim",
+    "ChangeProposal",
+    "RevisionEvent"
+  ],
+  "relationTypes": [
+    {
+      "kind": "RelationTypeDefinition",
+      "id": "required_prerequisite",
+      "label": "필수 선행",
+      "sourceKinds": [
+        "MathConcept"
+      ],
+      "targetKinds": [
+        "MathConcept"
+      ],
+      "directionality": "directed",
+      "dagPolicy": "selected_within_perspective",
+      "version": "1.0.0",
+      "deprecated": false
+    },
+    {
+      "kind": "RelationTypeDefinition",
+      "id": "helpful_prerequisite",
+      "label": "도움되는 선행",
+      "sourceKinds": [
+        "MathConcept"
+      ],
+      "targetKinds": [
+        "MathConcept"
+      ],
+      "directionality": "directed",
+      "dagPolicy": "none",
+      "version": "1.0.0",
+      "deprecated": false
+    },
+    {
+      "kind": "RelationTypeDefinition",
+      "id": "related",
+      "label": "관련",
+      "sourceKinds": [
+        "MathConcept"
+      ],
+      "targetKinds": [
+        "MathConcept"
+      ],
+      "directionality": "symmetric",
+      "dagPolicy": "none",
+      "version": "1.0.0",
+      "deprecated": false
+    },
+    {
+      "kind": "RelationTypeDefinition",
+      "id": "representation",
+      "label": "표현 관계",
+      "sourceKinds": [
+        "MathConcept",
+        "MathNotation"
+      ],
+      "targetKinds": [
+        "MathConcept",
+        "MathNotation"
+      ],
+      "directionality": "directed",
+      "dagPolicy": "none",
+      "version": "1.0.0",
+      "deprecated": false
+    },
+    {
+      "kind": "RelationTypeDefinition",
+      "id": "uses_term",
+      "label": "용어 사용",
+      "sourceKinds": [
+        "MathConcept"
+      ],
+      "targetKinds": [
+        "MathTerm"
+      ],
+      "directionality": "directed",
+      "dagPolicy": "none",
+      "version": "1.0.0",
+      "deprecated": false
+    },
+    {
+      "kind": "RelationTypeDefinition",
+      "id": "uses_notation",
+      "label": "기호 사용",
+      "sourceKinds": [
+        "MathConcept"
+      ],
+      "targetKinds": [
+        "MathNotation"
+      ],
+      "directionality": "directed",
+      "dagPolicy": "none",
+      "version": "1.0.0",
+      "deprecated": false
+    },
+    {
+      "kind": "RelationTypeDefinition",
+      "id": "part_of",
+      "label": "구성 부분",
+      "sourceKinds": [
+        "MathConcept"
+      ],
+      "targetKinds": [
+        "MathConcept"
+      ],
+      "directionality": "directed",
+      "dagPolicy": "none",
+      "version": "1.0.0",
+      "deprecated": false
+    }
+  ],
+  "actionTypes": [
+    {
+      "kind": "ActionTypeDefinition",
+      "id": "propose_change",
+      "label": "변경 제안",
+      "readOnly": false,
+      "runtimeState": "contract_only",
+      "parameters": [],
+      "requiredGuards": [
+        "typed_schema"
+      ],
+      "approvalPolicy": "authorized_draft_work",
+      "version": "1.0.0"
+    },
+    {
+      "kind": "ActionTypeDefinition",
+      "id": "preview_change",
+      "label": "변경 영향 미리보기",
+      "readOnly": true,
+      "runtimeState": "contract_only",
+      "parameters": [],
+      "requiredGuards": [
+        "typed_schema"
+      ],
+      "approvalPolicy": "authorized_draft_work",
+      "version": "1.0.0"
+    },
+    {
+      "kind": "ActionTypeDefinition",
+      "id": "apply_approved_change",
+      "label": "승인된 변경 반영",
+      "readOnly": false,
+      "runtimeState": "contract_only",
+      "parameters": [
+        "targetId",
+        "expectedRevision",
+        "expectedGraphRevision",
+        "expectedGraphSnapshotHash",
+        "beforeRecordHash"
+      ],
+      "requiredGuards": [
+        "typed_schema",
+        "typed_references",
+        "revision_fence",
+        "graph_revision_fence",
+        "scoped_required_dag",
+        "exact_reviewed_payload"
+      ],
+      "approvalPolicy": "specific_user_approval_for_changes_to_accepted_claims",
+      "version": "1.0.0"
+    },
+    {
+      "kind": "ActionTypeDefinition",
+      "id": "preview_restore",
+      "label": "보상 복원 미리보기",
+      "readOnly": true,
+      "runtimeState": "contract_only",
+      "parameters": [
+        "targetId",
+        "expectedRevision",
+        "expectedGraphRevision",
+        "expectedGraphSnapshotHash",
+        "beforeRecordHash"
+      ],
+      "requiredGuards": [
+        "typed_schema"
+      ],
+      "approvalPolicy": "authorized_draft_work",
+      "version": "1.0.0"
+    },
+    {
+      "kind": "ActionTypeDefinition",
+      "id": "register_extension",
+      "label": "확장 등록",
+      "readOnly": false,
+      "runtimeState": "contract_only",
+      "parameters": [],
+      "requiredGuards": [
+        "typed_schema"
+      ],
+      "approvalPolicy": "authorized_draft_work",
+      "version": "1.0.0"
+    },
+    {
+      "kind": "ActionTypeDefinition",
+      "id": "migrate_schema",
+      "label": "스키마 마이그레이션",
+      "readOnly": false,
+      "runtimeState": "contract_only",
+      "parameters": [],
+      "requiredGuards": [
+        "typed_schema"
+      ],
+      "approvalPolicy": "authorized_draft_work",
+      "version": "1.0.0"
+    }
+  ],
+  "extensionDefinitions": [
+    {
+      "kind": "ExtensionDefinition",
+      "id": "math:extension:latex",
+      "version": "1.1.0",
+      "appliesToKinds": [
+        "MathNotation"
+      ],
+      "valueSchema": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "const": "MathMarkup"
+          },
+          "dialect": {
+            "const": "latex"
+          },
+          "source": {
+            "type": "string"
+          },
+          "plainTextFallback": {
+            "type": "string"
+          },
+          "displayMode": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "kind",
+          "dialect",
+          "source",
+          "plainTextFallback",
+          "displayMode"
+        ],
+        "additionalProperties": false
+      },
+      "purpose": "Preserve LaTeX source separately from readable fallback; no global backslash rewriting."
+    },
+    {
+      "kind": "ExtensionDefinition",
+      "id": "math:extension:math-text",
+      "version": "1.2.0",
+      "appliesToKinds": [
+        "MathConcept",
+        "MathTerm",
+        "MathNotation",
+        "Explanation",
+        "RelationAssertion",
+        "CurriculumAlignment"
+      ],
+      "valueSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "urn:matheducation:math-text-extension.schema.json",
+        "type": "object",
+        "properties": {
+          "kind": {
+            "const": "MathTextAnnotations"
+          },
+          "schemaVersion": {
+            "const": "1.0.0"
+          },
+          "fields": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "MathTextField"
+                },
+                "fieldPath": {
+                  "type": "string",
+                  "pattern": "^/(definition|meaning|statement|reasoning|rationale|conditions/[0-9]+/(statement|formalExpression))$"
+                },
+                "sourceTextSha256": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                },
+                "classification": {
+                  "enum": [
+                    "math_annotated",
+                    "plain_prose",
+                    "pending_review"
+                  ]
+                },
+                "segments": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "oneOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "const": "TextSegment"
+                          },
+                          "text": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "text"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "const": "MathSegment"
+                          },
+                          "text": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "markup": {
+                            "type": "object",
+                            "properties": {
+                              "kind": {
+                                "const": "MathMarkup"
+                              },
+                              "dialect": {
+                                "const": "latex"
+                              },
+                              "source": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "plainTextFallback": {
+                                "type": "string"
+                              },
+                              "displayMode": {
+                                "type": "boolean"
+                              }
+                            },
+                            "required": [
+                              "kind",
+                              "dialect",
+                              "source",
+                              "plainTextFallback",
+                              "displayMode"
+                            ],
+                            "additionalProperties": false
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "text",
+                          "markup"
+                        ],
+                        "additionalProperties": false
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "kind",
+                "fieldPath",
+                "sourceTextSha256",
+                "classification",
+                "segments"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "kind",
+          "schemaVersion",
+          "fields"
+        ],
+        "additionalProperties": false
+      },
+      "purpose": "Explicit source-bound mathematical text segments; original prose is unchanged; no runtime formula guessing."
+    },
+    {
+      "kind": "ExtensionDefinition",
+      "id": "math:extension:bilingual-labels",
+      "version": "1.3.0",
+      "appliesToKinds": [
+        "Topic",
+        "MathConcept",
+        "MathTerm",
+        "MathNotation"
+      ],
+      "valueSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "urn:matheducation:bilingual-labels:1.0.0",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "const": "BilingualDisplayLabels"
+          },
+          "ko": {
+            "type": "string",
+            "minLength": 1
+          },
+          "en": {
+            "type": "string",
+            "minLength": 1
+          },
+          "bilingual": {
+            "type": "string",
+            "minLength": 1
+          },
+          "koUsage": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "status": {
+                "enum": [
+                  "official_curriculum",
+                  "standard_textbook",
+                  "supplementary_descriptive"
+                ]
+              },
+              "scope": {
+                "enum": [
+                  "e5_6",
+                  "m1_3",
+                  "e5_6_and_m1_3",
+                  "supplementary_only",
+                  "contextual_navigation"
+                ]
+              },
+              "sourceRefs": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "sourceId": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "url": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "locator": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "supports": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "sourceId",
+                    "url",
+                    "locator",
+                    "supports"
+                  ]
+                }
+              },
+              "scopeRole": {
+                "type": "string"
+              },
+              "notes": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "status",
+              "scope",
+              "sourceRefs",
+              "scopeRole",
+              "notes"
+            ]
+          },
+          "english": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "translationStatus": {
+                "enum": [
+                  "official_editorial_terminology",
+                  "reviewed_translation",
+                  "supplemental_translation"
+                ]
+              },
+              "sourceType": {
+                "enum": [
+                  "moe_textbook_compilation_reference",
+                  "primary_english_textbook",
+                  "author_reviewed_translation"
+                ]
+              },
+              "sourceRefs": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "sourceId": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "url": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "locator": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "supports": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "sourceId",
+                    "url",
+                    "locator",
+                    "supports"
+                  ]
+                }
+              },
+              "officialCurriculumTranslation": {
+                "const": false
+              },
+              "notes": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "translationStatus",
+              "sourceType",
+              "sourceRefs",
+              "officialCurriculumTranslation",
+              "notes"
+            ]
+          }
+        },
+        "required": [
+          "kind",
+          "ko",
+          "en",
+          "bilingual",
+          "koUsage",
+          "english"
+        ]
+      },
+      "purpose": "Korean preferred display label and separately sourced English label. Editorial terminology, reviewed translations and supplemental translations remain distinct; not an official translation of the curriculum."
+    }
+  ],
+  "migrationPolicy": {
+    "kind": "MigrationPolicy",
+    "stableIdsNeverContainRevision": true,
+    "renamePreservesId": true,
+    "splitMergeRequiresExplicitIdentityMap": true,
+    "unknownExtensionPolicy": "reject",
+    "minorChange": "additive registered fields or types with tested adapters",
+    "majorChange": "breaking record semantics or required field changes",
+    "preservePriorArtifacts": true
+  }
+}

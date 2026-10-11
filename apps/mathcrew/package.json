@@ -1,0 +1,14 @@
+{
+  "name": "mathcrew-public-site",
+  "version": "5.0.0",
+  "private": true,
+  "license": "UNLICENSED",
+  "type": "module",
+  "engines": { "bun": "1.4.1" },
+  "scripts": {
+    "build": "bun --no-env-file src/build.ts",
+    "test": "bun --no-env-file src/build.ts && bun --no-env-file test tests",
+    "check": "bun --no-env-file src/build.ts && bun --no-env-file src/check.ts",
+    "verify": "bun --no-env-file src/verify.ts"
+  }
+}
