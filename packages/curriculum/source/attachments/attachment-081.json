@@ -1,0 +1,249 @@
+{
+  "kind": "MathRendererPublication",
+  "id": "matheducation-math-render-r1",
+  "schemaVersion": "1.0.0",
+  "revision": 1,
+  "status": "parser_and_contract_checked",
+  "renderer": {
+    "kind": "RendererIdentity",
+    "name": "KaTeX",
+    "version": "0.19.0",
+    "output": "MathML",
+    "compileMode": "build_time",
+    "runtimeCompilerIncluded": false,
+    "cdnRequired": false,
+    "externalFontsRequired": false
+  },
+  "liveScope": {
+    "kind": "LiveScope",
+    "source": "matheducation-sample-r2.json",
+    "sourceSha256": "3332d52420632f5a5afc872692f9a9bfcd81d238705d8d63918c0c9a70118308",
+    "conceptCount": 12,
+    "renderedSymbolCount": 17,
+    "renderedExampleCount": 10,
+    "exampleMathSegmentCount": 11,
+    "fullE5M3CorpusLoaded": false
+  },
+  "guards": [
+    "identity",
+    "revision",
+    "parent",
+    "source text",
+    "LaTeX source",
+    "display mode",
+    "compiler options",
+    "rendered markup hash"
+  ],
+  "safety": {
+    "trust": false,
+    "strict": "error",
+    "maxSourceUTF16Units": 10000,
+    "failureMode": "visible plaintext fallback",
+    "sourceMutation": false
+  },
+  "tests": {
+    "kind": "RendererTestSummary",
+    "actualKaTeXChecks": 17,
+    "mathMLOutputsXMLChecked": 218,
+    "uiSimulationChecks": 17,
+    "canonicalNotationFixtures": 33,
+    "additionalDomain02NotationsChecked": 83,
+    "highSchoolSyntaxFixtures": 15,
+    "highSchoolFixturesAreTeachingContent": false,
+    "browserRenderingVerified": false,
+    "screenReaderVerified": false
+  },
+  "sources": [
+    {
+      "kind": "OfficialSource",
+      "title": "KaTeX API",
+      "url": "https://katex.org/docs/api"
+    },
+    {
+      "kind": "OfficialSource",
+      "title": "KaTeX options",
+      "url": "https://katex.org/docs/options"
+    },
+    {
+      "kind": "OfficialSource",
+      "title": "KaTeX security",
+      "url": "https://katex.org/docs/security"
+    }
+  ],
+  "provenance": {
+    "kind": "ProvenancePolicy",
+    "canonicalMarkup": "existing registered math:extension:latex",
+    "sampleBindings": "view-only author transcription with original ID, revision and exact source guard",
+    "noCanonicalIdentityAliasing": true
+  },
+  "artifacts": [
+    {
+      "kind": "ArtifactDigest",
+      "file": "README.md",
+      "sha256": "0ad6b918c83a1d8a7642f82784382b5d1663961d22ee4f682ad6c68be5e20c30",
+      "byteSize": 7656
+    },
+    {
+      "kind": "ArtifactDigest",
+      "file": "math-runtime.js",
+      "sha256": "6e823dc798439b5cd931ea0746001ec72f52d770181fae4933f3f76606a82068",
+      "byteSize": 9289
+    },
+    {
+      "kind": "ArtifactDigest",
+      "file": "math.css",
+      "sha256": "7c692f33959d3db199a19578bbe8c686a46e9c3a72094407a1afabc63ca49904",
+      "byteSize": 822
+    },
+    {
+      "kind": "ArtifactDigest",
+      "file": "renderer.cjs",
+      "sha256": "8db8394f39dfd1fb918071b5b077c024b0ce5aafd432d7df5d4bf40eb7965028",
+      "byteSize": 2929
+    },
+    {
+      "kind": "ArtifactDigest",
+      "file": "index.cjs",
+      "sha256": "7a322cc693168e8daf3b406046253b290c7eebfb163691e0ebff2e719e49d845",
+      "byteSize": 93
+    },
+    {
+      "kind": "ArtifactDigest",
+      "file": "integration-snippet.js",
+      "sha256": "d6feb22ac954086cbada446674f7182d3a8a1feca159ab741087b544313cc061",
+      "byteSize": 1734
+    },
+    {
+      "kind": "ArtifactDigest",
+      "file": "math-render.d.ts",
+      "sha256": "d14ae6c40b94fd31d02bbec8fa5637de9e202344f76caafd9e4e64f940a535d9",
+      "byteSize": 2643
+    },
+    {
+      "kind": "ArtifactDigest",
+      "file": "render-cache.schema.json",
+      "sha256": "5f89f0e01ab6b27684a012dd9cb37973014387ace28b991b1dfcebda31667d30",
+      "byteSize": 7074
+    },
+    {
+      "kind": "ArtifactDigest",
+      "file": "view-bindings.schema.json",
+      "sha256": "cdea32d8fc4ebe9c501357509b8e7af6b5cf7cd88949316f2d8f3356e85ee1db",
+      "byteSize": 4207
+    },
+    {
+      "kind": "ArtifactDigest",
+      "file": "example-bindings.schema.json",
+      "sha256": "883346fce53efa4efd97f95af54423899d88c58583f2f0b22f840014c014a961",
+      "byteSize": 8345
+    },
+    {
+      "kind": "ArtifactDigest",
+      "file": "sample-cache.json",
+      "sha256": "2f61f5ef895ef43128d4daa57d2a377443154003df89e3fe2f65a62d11b6d093",
+      "byteSize": 70947
+    },
+    {
+      "kind": "ArtifactDigest",
+      "file": "sample-bindings.json",
+      "sha256": "23b8ba6463220d4425b967897d96bf145f327c7245ad97905e32c86cc02f9c71",
+      "byteSize": 16378
+    },
+    {
+      "kind": "ArtifactDigest",
+      "file": "sample-example-bindings.json",
+      "sha256": "a873a341f5177b6e74200ab7edbacc2506865d1efa4192fa371e9be735d090aa",
+      "byteSize": 18808
+    },
+    {
+      "kind": "ArtifactDigest",
+      "file": "canonical-cache.json",
+      "sha256": "d781fe5c1358e6a0ee86e4c38fb5348755dfba989d4f1bf7062a963f188ba435",
+      "byteSize": 84758
+    },
+    {
+      "kind": "ArtifactDigest",
+      "file": "canonical-projection-cache.json",
+      "sha256": "0e924fe4231a5e52b05c87c7a55f7af5c9d3d278d7dfbadb6c5e8d89aa642ac1",
+      "byteSize": 84626
+    },
+    {
+      "kind": "ArtifactDigest",
+      "file": "canonical-projection-symbols.json",
+      "sha256": "826550d95164e22fdc353964c6f9ccf24e7d82f8470b08dbbcbd3993a4e3dfa6",
+      "byteSize": 23143
+    },
+    {
+      "kind": "ArtifactDigest",
+      "file": "build-report.json",
+      "sha256": "5058772234cc2b2d13fa0e640433278ae83296c955483b8168143c1133f7d404",
+      "byteSize": 975
+    },
+    {
+      "kind": "ArtifactDigest",
+      "file": "test-report.json",
+      "sha256": "c6672568922ab18f6f4da836805304adebd5eb6358fbe618d7a47fb8405cf851",
+      "byteSize": 2858
+    },
+    {
+      "kind": "ArtifactDigest",
+      "file": "schema-xml-report.json",
+      "sha256": "bdbeebe0edec386458e309f341b15fbc0ffd5282454b5997c0d4cf8537ed1c41",
+      "byteSize": 269
+    },
+    {
+      "kind": "ArtifactDigest",
+      "file": "domain-02-render-check.json",
+      "sha256": "eef72e2abb5e3852a869c85b36672e1487caf8dda457b7f14c7897957eb86a0c",
+      "byteSize": 677
+    },
+    {
+      "kind": "ArtifactDigest",
+      "file": "package.json",
+      "sha256": "67315b01b6d16bbb89c2cdd0e70d314560e2dc51f5047e6d2d950c0bc2fcb1fe",
+      "byteSize": 448
+    },
+    {
+      "kind": "ArtifactDigest",
+      "file": "package-lock.json",
+      "sha256": "c92ca31129d5a55bf44c165aad78d9805fbd151548fd135cba75d8ef09407b71",
+      "byteSize": 1131
+    },
+    {
+      "kind": "ArtifactDigest",
+      "file": "KATEX-LICENSE.txt",
+      "sha256": "766ccc1f306c885aa45542a9846bbd0a505b27a0374f146778171c2254ce18e3",
+      "byteSize": 1107
+    },
+    {
+      "kind": "ArtifactDigest",
+      "file": "test.cjs",
+      "sha256": "a5d17234bec8d52b4d5e8d7e8c71b50a788240814df64f9f83925ad0714f4833",
+      "byteSize": 10619
+    },
+    {
+      "kind": "ArtifactDigest",
+      "file": "high-school-fixtures.cjs",
+      "sha256": "7bd0645f5452cccd0e6a9524ec8b37f0978a5f2e769d68c494bfef598fc06184",
+      "byteSize": 1116
+    },
+    {
+      "kind": "ArtifactDigest",
+      "file": "build.cjs",
+      "sha256": "fad7965ad667ab2a027fe5300b78f902afd212a536d8757b1009258dfc4bc03a",
+      "byteSize": 10609
+    }
+  ],
+  "ui": {
+    "kind": "ViewBinding",
+    "revision": 3,
+    "html": "explorer-r3.html",
+    "htmlSha256": "b94bd5891c345a99d1f12ae29dba7b90323790673a575c7b20019bf914116ea8",
+    "htmlBytes": 170038
+  },
+  "limits": [
+    "Native host MathML rendering and exact narrow-width layout remain unverified.",
+    "Future canonical examples without explicit markup are not inferred by this renderer.",
+    "High-school expressions only test parser syntax; no high-school curriculum nodes are added."
+  ]
+}

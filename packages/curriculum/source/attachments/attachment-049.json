@@ -1,0 +1,1171 @@
+{
+  "type": "object",
+  "properties": {
+    "kind": {
+      "const": "OntologyAdaptationProposal"
+    },
+    "id": {
+      "type": "string"
+    },
+    "canonicalParentId": {
+      "type": "string"
+    },
+    "schemaVersion": {
+      "type": "string"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "status": {
+      "enum": [
+        "proposal_not_applied"
+      ]
+    },
+    "updatedAt": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "CurriculumScope"
+        },
+        "id": {
+          "type": "string"
+        },
+        "canonicalParentId": {
+          "type": "string"
+        },
+        "curriculumEdition": {
+          "type": "string"
+        },
+        "gradeBands": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "curriculumMappingStatus": {
+          "type": "string"
+        },
+        "advancedExplanationLevel": {
+          "type": "string"
+        },
+        "advancedLensIsCurricularPrerequisite": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "canonicalParentId",
+        "curriculumEdition",
+        "gradeBands",
+        "curriculumMappingStatus",
+        "advancedExplanationLevel",
+        "advancedLensIsCurricularPrerequisite"
+      ],
+      "additionalProperties": false
+    },
+    "hierarchy": {
+      "type": "array",
+      "items": {
+        "anyOf": [
+          {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "HierarchyNode"
+              },
+              "id": {
+                "type": "string"
+              },
+              "canonicalParentId": {
+                "type": "null"
+              },
+              "title": {
+                "type": "string"
+              },
+              "nodeRole": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "kind",
+              "id",
+              "canonicalParentId",
+              "title",
+              "nodeRole"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "HierarchyNode"
+              },
+              "id": {
+                "type": "string"
+              },
+              "canonicalParentId": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "nodeRole": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "kind",
+              "id",
+              "canonicalParentId",
+              "title",
+              "nodeRole"
+            ],
+            "additionalProperties": false
+          }
+        ]
+      }
+    },
+    "sourceSnapshots": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "const": "SourceSnapshot"
+          },
+          "fileName": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "fileName",
+          "sha256",
+          "role"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "objectTypeContracts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "const": "ObjectTypeContract"
+          },
+          "id": {
+            "type": "string"
+          },
+          "canonicalParentId": {
+            "type": "string"
+          },
+          "typeName": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "fieldCoverage": {
+            "type": "string"
+          },
+          "fields": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "FieldContract"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "valueType": {
+                  "type": "string"
+                },
+                "required": {
+                  "type": "boolean"
+                },
+                "meaning": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "kind",
+                "name",
+                "valueType",
+                "required",
+                "meaning"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "officialSourceIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "implementationStatus": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "id",
+          "canonicalParentId",
+          "typeName",
+          "role",
+          "fieldCoverage",
+          "fields",
+          "officialSourceIds",
+          "implementationStatus"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "interfaceContracts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "const": "InterfaceContract"
+          },
+          "id": {
+            "type": "string"
+          },
+          "canonicalParentId": {
+            "type": "string"
+          },
+          "interfaceName": {
+            "type": "string"
+          },
+          "implementingTypes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "sharedFields": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "abstract": {
+            "type": "boolean"
+          },
+          "runtimeSupport": {
+            "type": "string"
+          },
+          "officialSourceIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "kind",
+          "id",
+          "canonicalParentId",
+          "interfaceName",
+          "implementingTypes",
+          "sharedFields",
+          "abstract",
+          "runtimeSupport",
+          "officialSourceIds"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "linkTypeContracts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "const": "LinkTypeContract"
+          },
+          "id": {
+            "type": "string"
+          },
+          "canonicalParentId": {
+            "type": "string"
+          },
+          "fromType": {
+            "type": "string"
+          },
+          "toType": {
+            "type": "string"
+          },
+          "forwardName": {
+            "type": "string"
+          },
+          "reverseName": {
+            "type": "string"
+          },
+          "cardinality": {
+            "type": "string"
+          },
+          "meaning": {
+            "type": "string"
+          },
+          "officialSourceIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "implementationStatus": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "id",
+          "canonicalParentId",
+          "fromType",
+          "toType",
+          "forwardName",
+          "reverseName",
+          "cardinality",
+          "meaning",
+          "officialSourceIds",
+          "implementationStatus"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "actionContracts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "const": "ActionContract"
+          },
+          "id": {
+            "type": "string"
+          },
+          "canonicalParentId": {
+            "type": "string"
+          },
+          "actionName": {
+            "type": "string"
+          },
+          "parameters": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "effect": {
+            "type": "string"
+          },
+          "approvalPolicy": {
+            "type": "string"
+          },
+          "guards": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "externalSideEffects": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "implementationStatus": {
+            "type": "string"
+          },
+          "officialSourceIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "kind",
+          "id",
+          "canonicalParentId",
+          "actionName",
+          "parameters",
+          "effect",
+          "approvalPolicy",
+          "guards",
+          "externalSideEffects",
+          "implementationStatus",
+          "officialSourceIds"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "functionContracts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "const": "FunctionContract"
+          },
+          "id": {
+            "type": "string"
+          },
+          "canonicalParentId": {
+            "type": "string"
+          },
+          "functionName": {
+            "type": "string"
+          },
+          "inputs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "outputs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "readOnly": {
+            "type": "boolean"
+          },
+          "implementationStatus": {
+            "type": "string"
+          },
+          "officialSourceIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "kind",
+          "id",
+          "canonicalParentId",
+          "functionName",
+          "inputs",
+          "outputs",
+          "readOnly",
+          "implementationStatus",
+          "officialSourceIds"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "objects": {
+      "type": "array",
+      "items": {
+        "anyOf": [
+          {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "MathConcept"
+              },
+              "id": {
+                "type": "string"
+              },
+              "canonicalParentId": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "definition": {
+                "type": "string"
+              },
+              "revision": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "contentStatus": {
+                "type": "string"
+              },
+              "sourceRecordId": {
+                "type": "string"
+              },
+              "curriculumMappingStatus": {
+                "const": "unverified"
+              }
+            },
+            "required": [
+              "kind",
+              "id",
+              "canonicalParentId",
+              "title",
+              "definition",
+              "revision",
+              "contentStatus",
+              "sourceRecordId",
+              "curriculumMappingStatus"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "MathTerm"
+              },
+              "id": {
+                "type": "string"
+              },
+              "canonicalParentId": {
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              },
+              "language": {
+                "type": "string"
+              },
+              "sense": {
+                "type": "string"
+              },
+              "revision": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "contentStatus": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "kind",
+              "id",
+              "canonicalParentId",
+              "label",
+              "language",
+              "sense",
+              "revision",
+              "contentStatus"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "MathNotation"
+              },
+              "id": {
+                "type": "string"
+              },
+              "canonicalParentId": {
+                "type": "string"
+              },
+              "expression": {
+                "type": "string"
+              },
+              "interpretation": {
+                "type": "string"
+              },
+              "scope": {
+                "type": "string"
+              },
+              "revision": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "contentStatus": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "kind",
+              "id",
+              "canonicalParentId",
+              "expression",
+              "interpretation",
+              "scope",
+              "revision",
+              "contentStatus"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "Explanation"
+              },
+              "id": {
+                "type": "string"
+              },
+              "canonicalParentId": {
+                "type": "string"
+              },
+              "conceptId": {
+                "type": "string"
+              },
+              "perspectiveId": {
+                "type": "string"
+              },
+              "explanationKind": {
+                "type": "string"
+              },
+              "statement": {
+                "type": "string"
+              },
+              "body": {
+                "type": "string"
+              },
+              "evidenceStatus": {
+                "type": "string"
+              },
+              "notCurricularPrerequisite": {
+                "type": "boolean"
+              },
+              "revision": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "kind",
+              "id",
+              "canonicalParentId",
+              "conceptId",
+              "perspectiveId",
+              "explanationKind",
+              "statement",
+              "body",
+              "evidenceStatus",
+              "notCurricularPrerequisite",
+              "revision"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "Perspective"
+              },
+              "id": {
+                "type": "string"
+              },
+              "canonicalParentId": {
+                "type": "string"
+              },
+              "audience": {
+                "type": "string"
+              },
+              "explanationLevel": {
+                "type": "string"
+              },
+              "pedagogicalRoute": {
+                "type": "string"
+              },
+              "assumptions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "revision": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "kind",
+              "id",
+              "canonicalParentId",
+              "audience",
+              "explanationLevel",
+              "pedagogicalRoute",
+              "assumptions",
+              "revision"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "DependencyAssertion"
+              },
+              "id": {
+                "type": "string"
+              },
+              "canonicalParentId": {
+                "type": "string"
+              },
+              "prerequisiteConceptId": {
+                "type": "string"
+              },
+              "dependentConceptId": {
+                "type": "string"
+              },
+              "relationKind": {
+                "enum": [
+                  "required_prerequisite",
+                  "helpful_prerequisite",
+                  "representation",
+                  "related"
+                ]
+              },
+              "claimBasis": {
+                "enum": [
+                  "mathematical_requirement",
+                  "teaching_perspective"
+                ]
+              },
+              "perspectiveId": {
+                "type": "string"
+              },
+              "conditions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "rationale": {
+                "type": "string"
+              },
+              "evidenceStatus": {
+                "type": "string"
+              },
+              "evidenceIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "approvalStatus": {
+                "enum": [
+                  "proposed"
+                ]
+              },
+              "revision": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "selectedForPreview": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "kind",
+              "id",
+              "canonicalParentId",
+              "prerequisiteConceptId",
+              "dependentConceptId",
+              "relationKind",
+              "claimBasis",
+              "perspectiveId",
+              "conditions",
+              "rationale",
+              "evidenceStatus",
+              "evidenceIds",
+              "approvalStatus",
+              "revision",
+              "selectedForPreview"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "EvidenceReference"
+              },
+              "id": {
+                "type": "string"
+              },
+              "canonicalParentId": {
+                "type": "string"
+              },
+              "sourceRecordId": {
+                "type": "string"
+              },
+              "sourceUrl": {
+                "type": "string"
+              },
+              "locator": {
+                "type": "string"
+              },
+              "sourceKind": {
+                "type": "string"
+              },
+              "verificationStatus": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "kind",
+              "id",
+              "canonicalParentId",
+              "sourceRecordId",
+              "sourceUrl",
+              "locator",
+              "sourceKind",
+              "verificationStatus"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "$ref": "#/$defs/CurriculumStandard"
+          },
+          {
+            "$ref": "#/$defs/CurriculumAlignment"
+          }
+        ]
+      }
+    },
+    "proposals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "const": "ChangeProposal"
+          },
+          "id": {
+            "type": "string"
+          },
+          "canonicalParentId": {
+            "type": "string"
+          },
+          "assertionId": {
+            "type": "string"
+          },
+          "expectedRevision": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "expectedGraphRevision": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "perspectiveId": {
+            "type": "string"
+          },
+          "rationale": {
+            "type": "string"
+          },
+          "changes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "FieldChange"
+                },
+                "field": {
+                  "enum": [
+                    "relationKind",
+                    "rationale",
+                    "prerequisiteConceptId",
+                    "dependentConceptId"
+                  ]
+                },
+                "before": {
+                  "type": "string"
+                },
+                "after": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "kind",
+                "field",
+                "before",
+                "after"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "approvalStatus": {
+            "enum": [
+              "not_requested",
+              "pending",
+              "rejected"
+            ]
+          },
+          "userApprovalEvidence": {
+            "type": "null"
+          },
+          "applied": {
+            "const": false
+          },
+          "reviewedPayloadHash": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "id",
+          "canonicalParentId",
+          "assertionId",
+          "expectedRevision",
+          "expectedGraphRevision",
+          "perspectiveId",
+          "rationale",
+          "changes",
+          "approvalStatus",
+          "userApprovalEvidence",
+          "applied",
+          "reviewedPayloadHash"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "officialSources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "const": "OfficialSource"
+          },
+          "id": {
+            "type": "string"
+          },
+          "canonicalParentId": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "pattern": "^https://www\\.palantir\\.com/docs/foundry/"
+          },
+          "accessedAt": {
+            "type": "string"
+          },
+          "sourceClass": {
+            "type": "string"
+          },
+          "verifiedClaim": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "id",
+          "canonicalParentId",
+          "title",
+          "url",
+          "accessedAt",
+          "sourceClass",
+          "verifiedClaim"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "sourceMappings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "const": "SourceMapping"
+          },
+          "id": {
+            "type": "string"
+          },
+          "canonicalParentId": {
+            "type": "string"
+          },
+          "officialSourceId": {
+            "type": "string"
+          },
+          "targetId": {
+            "type": "string"
+          },
+          "mappingStatus": {
+            "type": "string"
+          },
+          "application": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "id",
+          "canonicalParentId",
+          "officialSourceId",
+          "targetId",
+          "mappingStatus",
+          "application"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "const": "Limitation"
+          },
+          "id": {
+            "type": "string"
+          },
+          "canonicalParentId": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "detail": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "id",
+          "canonicalParentId",
+          "title",
+          "detail"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "kind",
+    "id",
+    "canonicalParentId",
+    "schemaVersion",
+    "revision",
+    "status",
+    "updatedAt",
+    "scope",
+    "hierarchy",
+    "sourceSnapshots",
+    "objectTypeContracts",
+    "interfaceContracts",
+    "linkTypeContracts",
+    "actionContracts",
+    "functionContracts",
+    "objects",
+    "proposals",
+    "officialSources",
+    "sourceMappings",
+    "limitations"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MathEducation Ontology Adaptation Proposal Schema",
+  "description": "Independent proposal format. Not a Palantir import schema.",
+  "$defs": {
+    "CurriculumStandard": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "CurriculumStandard"
+        },
+        "id": {
+          "type": "string"
+        },
+        "canonicalParentId": {
+          "type": "string"
+        },
+        "curriculumEdition": {
+          "type": "string"
+        },
+        "officialCode": {
+          "type": "string"
+        },
+        "gradeBand": {
+          "type": "string"
+        },
+        "sourceUrl": {
+          "type": "string"
+        },
+        "sourceLocator": {
+          "type": "string"
+        },
+        "verificationStatus": {
+          "enum": [
+            "unverified",
+            "verified"
+          ]
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "canonicalParentId",
+        "curriculumEdition",
+        "officialCode",
+        "gradeBand",
+        "sourceUrl",
+        "sourceLocator",
+        "verificationStatus"
+      ],
+      "additionalProperties": false
+    },
+    "CurriculumAlignment": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "CurriculumAlignment"
+        },
+        "id": {
+          "type": "string"
+        },
+        "canonicalParentId": {
+          "type": "string"
+        },
+        "conceptId": {
+          "type": "string"
+        },
+        "standardId": {
+          "type": "string"
+        },
+        "rationale": {
+          "type": "string"
+        },
+        "evidenceIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "approvalStatus": {
+          "enum": [
+            "proposed"
+          ]
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "canonicalParentId",
+        "conceptId",
+        "standardId",
+        "rationale",
+        "evidenceIds",
+        "approvalStatus"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

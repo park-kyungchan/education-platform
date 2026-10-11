@@ -1,0 +1,325 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "kind": {
+      "const": "MathRendererPublication"
+    },
+    "id": {
+      "type": "string"
+    },
+    "schemaVersion": {
+      "type": "string"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "status": {
+      "type": "string"
+    },
+    "renderer": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "RendererIdentity"
+        },
+        "name": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "output": {
+          "type": "string"
+        },
+        "compileMode": {
+          "type": "string"
+        },
+        "runtimeCompilerIncluded": {
+          "type": "boolean"
+        },
+        "cdnRequired": {
+          "type": "boolean"
+        },
+        "externalFontsRequired": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "kind",
+        "name",
+        "version",
+        "output",
+        "compileMode",
+        "runtimeCompilerIncluded",
+        "cdnRequired",
+        "externalFontsRequired"
+      ]
+    },
+    "liveScope": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "LiveScope"
+        },
+        "source": {
+          "type": "string"
+        },
+        "sourceSha256": {
+          "type": "string"
+        },
+        "conceptCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "renderedSymbolCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "renderedExampleCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "exampleMathSegmentCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "fullE5M3CorpusLoaded": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "kind",
+        "source",
+        "sourceSha256",
+        "conceptCount",
+        "renderedSymbolCount",
+        "renderedExampleCount",
+        "exampleMathSegmentCount",
+        "fullE5M3CorpusLoaded"
+      ]
+    },
+    "guards": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "trust": {
+          "type": "boolean"
+        },
+        "strict": {
+          "type": "string"
+        },
+        "maxSourceUTF16Units": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "failureMode": {
+          "type": "string"
+        },
+        "sourceMutation": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "trust",
+        "strict",
+        "maxSourceUTF16Units",
+        "failureMode",
+        "sourceMutation"
+      ]
+    },
+    "tests": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "RendererTestSummary"
+        },
+        "actualKaTeXChecks": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "mathMLOutputsXMLChecked": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "uiSimulationChecks": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "canonicalNotationFixtures": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "additionalDomain02NotationsChecked": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "highSchoolSyntaxFixtures": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "highSchoolFixturesAreTeachingContent": {
+          "type": "boolean"
+        },
+        "browserRenderingVerified": {
+          "type": "boolean"
+        },
+        "screenReaderVerified": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "kind",
+        "actualKaTeXChecks",
+        "mathMLOutputsXMLChecked",
+        "uiSimulationChecks",
+        "canonicalNotationFixtures",
+        "additionalDomain02NotationsChecked",
+        "highSchoolSyntaxFixtures",
+        "highSchoolFixturesAreTeachingContent",
+        "browserRenderingVerified",
+        "screenReaderVerified"
+      ]
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "const": "OfficialSource"
+          },
+          "title": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "title",
+          "url"
+        ]
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "ProvenancePolicy"
+        },
+        "canonicalMarkup": {
+          "type": "string"
+        },
+        "sampleBindings": {
+          "type": "string"
+        },
+        "noCanonicalIdentityAliasing": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "kind",
+        "canonicalMarkup",
+        "sampleBindings",
+        "noCanonicalIdentityAliasing"
+      ]
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "const": "ArtifactDigest"
+          },
+          "file": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string"
+          },
+          "byteSize": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "kind",
+          "file",
+          "sha256",
+          "byteSize"
+        ]
+      }
+    },
+    "ui": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "ViewBinding"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "html": {
+          "type": "string"
+        },
+        "htmlSha256": {
+          "type": "string"
+        },
+        "htmlBytes": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "kind",
+        "revision",
+        "html",
+        "htmlSha256",
+        "htmlBytes"
+      ]
+    },
+    "limits": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "kind",
+    "id",
+    "schemaVersion",
+    "revision",
+    "status",
+    "renderer",
+    "liveScope",
+    "guards",
+    "safety",
+    "tests",
+    "sources",
+    "provenance",
+    "artifacts",
+    "ui",
+    "limits"
+  ],
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Math renderer publication manifest"
+}

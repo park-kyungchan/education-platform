@@ -1,0 +1,181 @@
+{
+  "kind": "ContentBuildContract",
+  "id": "math:contract:domain-authoring",
+  "version": "1.1.0",
+  "canonicalParentId": "math:project:matheducation",
+  "scope": "production_draft_content",
+  "schemaFile": "canonical.schema.json",
+  "registryFile": "extension-registry.json",
+  "boundaryBinding": {
+    "kind": "BoundaryBinding",
+    "bundleId": "kr2022:curriculum-boundary:e5-m3",
+    "schemaVersion": "1.0.0",
+    "sourceNoticeEdition": "MOE-2022-33-annex-8",
+    "sha256": "86edc5debd01c663311daea0f996ef7b26c0ad9671f94626c9c197b855ab496a",
+    "gradeBandIds": [
+      "e5_6",
+      "m1_3"
+    ],
+    "domainIds": [
+      "kr2022:domain:01",
+      "kr2022:domain:02",
+      "kr2022:domain:03",
+      "kr2022:domain:04"
+    ]
+  },
+  "idRules": [
+    {
+      "kind": "StableIdRule",
+      "recordKind": "MathConcept",
+      "pattern": "math:concept:<semantic-slug>",
+      "rule": "No grade, label text, source-system name or revision in identity. Reuse shared concepts through declared typed references."
+    },
+    {
+      "kind": "StableIdRule",
+      "recordKind": "MathTerm",
+      "pattern": "math:term:ko:<sense-slug>",
+      "rule": "Identity is a term sense, not just a printed word."
+    },
+    {
+      "kind": "StableIdRule",
+      "recordKind": "MathNotation",
+      "pattern": "math:notation:<scope-slug>:<notation-slug>",
+      "rule": "Identity includes interpretation scope; the same glyph can have different meanings."
+    },
+    {
+      "kind": "StableIdRule",
+      "recordKind": "RelationAssertion",
+      "pattern": "math:relation:<domain-key>:<stable-local-slug>",
+      "rule": "Do not encode mutable relationType or revision in ID; preserve ID when revising an assertion."
+    },
+    {
+      "kind": "StableIdRule",
+      "recordKind": "CurriculumAlignment",
+      "pattern": "math:alignment:<concept-slug>:<official-code>",
+      "rule": "Official band and inferred year are separate fields."
+    },
+    {
+      "kind": "StableIdRule",
+      "recordKind": "EvidenceReference",
+      "pattern": "math:evidence:<domain-key>:<stable-local-slug>",
+      "rule": "Use a local wrapper with boundaryEvidenceIds; never redefine an official EvidenceLocator ID."
+    }
+  ],
+  "deliverables": [
+    {
+      "kind": "DeliverableRequirement",
+      "id": "content",
+      "requirement": "One domain workpack covering both official grade bands; no prescribed concept count."
+    },
+    {
+      "kind": "DeliverableRequirement",
+      "id": "atoms",
+      "requirement": "Each concept has a precise definition, conditions, separate term senses, meaningful notation when applicable, a worked example and misconceptions; university-level structural explanations remain optional lenses, not student prerequisites."
+    },
+    {
+      "kind": "DeliverableRequirement",
+      "id": "evidence",
+      "requirement": "Each standard alignment cites official boundary evidence. Mathematics and teaching-order reasoning identify author reasoning separately."
+    },
+    {
+      "kind": "DeliverableRequirement",
+      "id": "relations",
+      "requirement": "Candidate dependencies have rationale, perspective and conditions. Use required only within an explicit explanatory route; keep helpful, related and representation separate."
+    },
+    {
+      "kind": "DeliverableRequirement",
+      "id": "coverage",
+      "requirement": "Each assigned standard gets a coherent CoverageClaim. Use partial/not_started and ContentGap rather than falsely marking incomplete content mapped_draft."
+    },
+    {
+      "kind": "DeliverableRequirement",
+      "id": "unresolved",
+      "requirement": "Declare cross-domain prerequisites as typed ExternalReferences; parent resolves them in integrated corpus. Do not fabricate missing records."
+    }
+  ],
+  "authoringPolicies": [
+    {
+      "kind": "AuthoringPolicy",
+      "id": "model-attribution",
+      "rule": "Use EvidenceReference.sourceType=author_model for model-generated reasoning and keep official_curriculum wrappers distinct. Reuse workflowStatus/evidenceStatus, rationale/reasoning, and revision rather than adding duplicate provenance fields."
+    },
+    {
+      "kind": "AuthoringPolicy",
+      "id": "latex",
+      "rule": "For MathNotation rendering, use registered math:extension:latex with MathMarkup.source containing literal LaTeX and plainTextFallback. Preserve JSON backslashes; do not globally sanitize LaTeX source."
+    },
+    {
+      "kind": "AuthoringPolicy",
+      "id": "status",
+      "rule": "Use workflowStatus=draft or under_review. The v1 validator rejects approved/applied claims because it cannot authenticate human decisions."
+    },
+    {
+      "kind": "AuthoringPolicy",
+      "id": "year",
+      "rule": "yearPlacement=null and placementBasis=not_assigned by default. Do not infer exact years from 6수 or 9수. If a year is inferred, label author_inference and attach evidence."
+    },
+    {
+      "kind": "AuthoringPolicy",
+      "id": "ownership",
+      "rule": "Only one workpack owns any stable ID. Shared core Perspective is math:perspective:structural-adult from workpacks/core.json."
+    },
+    {
+      "kind": "AuthoringPolicy",
+      "id": "conditions",
+      "rule": "Conditions are human-reviewed statements. All machineCheckable fields remain false; DAG validation conservatively combines selected DAG-policy relations within each perspective."
+    },
+    {
+      "kind": "AuthoringPolicy",
+      "id": "views",
+      "rule": "Spatial position, open panels, filters and focus are view state; they do not silently edit semantic assertions."
+    }
+  ],
+  "validationCommands": [
+    {
+      "kind": "ValidationCommand",
+      "purpose": "domain drafting",
+      "command": "python validate_workpack.py <domain.json> --boundary <curriculum-boundary.json> --context workpacks/core.json",
+      "interpretation": "Errors must be fixed. Unresolved cross-workpack references and uncovered assigned standards remain explicit warnings during drafting."
+    },
+    {
+      "kind": "ValidationCommand",
+      "purpose": "strict declared scope",
+      "command": "python validate_workpack.py <domain.json> --boundary <curriculum-boundary.json> --context workpacks/core.json --context <other-needed-pack.json> --complete",
+      "interpretation": "Requires resolved references and active direct structural coverage in declared scope; this does not certify pedagogy or mathematical truth."
+    },
+    {
+      "kind": "ValidationCommand",
+      "purpose": "full E5 to M3 assembly",
+      "command": "python validate_workpack.py workpacks/domain-01.json workpacks/domain-02.json workpacks/domain-03.json workpacks/domain-04.json --boundary <curriculum-boundary.json> --context workpacks/core.json --full-curriculum",
+      "interpretation": "Requires all official domains and both grade bands from domain_content packs; no fixed 75-object prototype assumption."
+    }
+  ],
+  "extensionWorkflow": [
+    {
+      "kind": "ExtensionStep",
+      "order": 1,
+      "action": "Propose a new field/relation/action/type with purpose, applicable kinds, value schema and example."
+    },
+    {
+      "kind": "ExtensionStep",
+      "order": 2,
+      "action": "Add a versioned registry entry and, for new core kinds or fields, a matching schema revision. Unknown extensions are rejected."
+    },
+    {
+      "kind": "ExtensionStep",
+      "order": 3,
+      "action": "Run valid and invalid fixtures; provide UI adapter handling or explicit unsupported-state behavior."
+    },
+    {
+      "kind": "ExtensionStep",
+      "order": 4,
+      "action": "Preserve old artifact bytes and stable IDs. Record a migration plan and validate new revision before replacing a consumer binding."
+    }
+  ],
+  "prototypePolicy": {
+    "kind": "PrototypePolicy",
+    "publishedProposalPreserved": true,
+    "prototypeRoot": "https://chatgpt.com/space/page_781fc2a19e808191836651a43da2f6f8",
+    "importPolicy": "Do not bulk relabel demo data as production. Reconcile IDs and evidence explicitly."
+  }
+}

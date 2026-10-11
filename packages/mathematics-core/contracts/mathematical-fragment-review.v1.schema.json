@@ -1,0 +1,466 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mathematics-cartography.local/contracts/mathematical-fragment-review.v1.schema.json",
+  "title": "Mathematics Cartography Mathematical Fragment Review Contract v1",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/request"
+    },
+    {
+      "$ref": "#/$defs/proposal"
+    }
+  ],
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 128,
+      "pattern": "^[a-z][a-z0-9.-]+$",
+      "not": {
+        "pattern": "[\\u0000-\\u001F\\u007F]"
+      }
+    },
+    "nullableIdentifier": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/identifier"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "statement": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096,
+      "pattern": "^[^\\u0000-\\u001F\\u007F]+$",
+      "not": {
+        "pattern": "[\\u0000-\\u001F\\u007F]"
+      }
+    },
+    "stringCode": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Z][A-Z0-9_]+$",
+      "not": {
+        "pattern": "[\\u0000-\\u001F\\u007F]"
+      }
+    },
+    "candidateKind": {
+      "enum": [
+        "DEFINITION",
+        "PROPOSITION"
+      ]
+    },
+    "identityJudgmentValue": {
+      "enum": [
+        "SAME",
+        "DISTINCT",
+        "UNKNOWN"
+      ],
+      "$comment": "OVERLAP remains an approved domain judgment but is deferred from this fixture-scoped executable contract."
+    },
+    "relationKind": {
+      "enum": [
+        "INVERSE_OF",
+        "REQUIRES_CONDITION",
+        "CONTRADICTS"
+      ]
+    },
+    "evidenceClass": {
+      "enum": [
+        "SUBMITTED_FRAGMENT",
+        "USER_SUPPLIED_CONTEXT",
+        "ACCEPTED_ATOM_SNAPSHOT",
+        "LOCAL_VERIFICATION"
+      ]
+    },
+    "evidenceSupport": {
+      "enum": [
+        "DEFINITIONAL_EQUIVALENCE",
+        "COUNTEREXAMPLE",
+        "MISSING_CONTEXT",
+        "RELATION"
+      ]
+    },
+    "condition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "code",
+        "statement",
+        "provenanceClass"
+      ],
+      "properties": {
+        "code": {
+          "enum": [
+            "REAL_BASE_POSITIVE",
+            "BASE_NOT_ONE",
+            "REAL_ARGUMENT_POSITIVE"
+          ]
+        },
+        "statement": {
+          "$ref": "#/$defs/statement"
+        },
+        "provenanceClass": {
+          "const": "USER_SUPPLIED_CONTEXT"
+        }
+      }
+    },
+    "fragment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fragmentId",
+        "content",
+        "candidateKindProposal",
+        "provenanceClass"
+      ],
+      "properties": {
+        "fragmentId": {
+          "$ref": "#/$defs/identifier"
+        },
+        "content": {
+          "$ref": "#/$defs/statement"
+        },
+        "candidateKindProposal": {
+          "$ref": "#/$defs/candidateKind"
+        },
+        "provenanceClass": {
+          "const": "SUBMITTED_FRAGMENT"
+        }
+      }
+    },
+    "acceptedAtom": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "atomId",
+        "revision",
+        "statement",
+        "provenanceClass"
+      ],
+      "properties": {
+        "atomId": {
+          "$ref": "#/$defs/identifier"
+        },
+        "revision": {
+          "$ref": "#/$defs/identifier"
+        },
+        "statement": {
+          "$ref": "#/$defs/statement"
+        },
+        "provenanceClass": {
+          "const": "ACCEPTED_ATOM_SNAPSHOT"
+        }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "evidenceId",
+        "subjectId",
+        "subjectRevision",
+        "evidenceClass",
+        "statement",
+        "supports",
+        "uncertaintyCodes"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "evidenceClass": {
+                "const": "ACCEPTED_ATOM_SNAPSHOT"
+              }
+            },
+            "required": [
+              "evidenceClass"
+            ]
+          },
+          "then": {
+            "properties": {
+              "subjectRevision": {
+                "$ref": "#/$defs/identifier"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "subjectRevision": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ],
+      "properties": {
+        "evidenceId": {
+          "$ref": "#/$defs/identifier"
+        },
+        "subjectId": {
+          "$ref": "#/$defs/identifier"
+        },
+        "subjectRevision": {
+          "$ref": "#/$defs/nullableIdentifier"
+        },
+        "evidenceClass": {
+          "$ref": "#/$defs/evidenceClass"
+        },
+        "statement": {
+          "$ref": "#/$defs/statement"
+        },
+        "supports": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/evidenceSupport"
+          }
+        },
+        "uncertaintyCodes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/stringCode"
+          }
+        }
+      }
+    },
+    "relation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "relationKind",
+        "sourceId",
+        "targetId",
+        "evidenceIds",
+        "uncertainty"
+      ],
+      "properties": {
+        "relationKind": {
+          "$ref": "#/$defs/relationKind"
+        },
+        "sourceId": {
+          "$ref": "#/$defs/identifier"
+        },
+        "targetId": {
+          "$ref": "#/$defs/identifier"
+        },
+        "evidenceIds": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/identifier"
+          }
+        },
+        "uncertainty": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/stringCode"
+          }
+        }
+      }
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "requestId",
+        "proposalId",
+        "supersedesProposalId",
+        "actor",
+        "trigger",
+        "fragment",
+        "identityTargetAtomId",
+        "acceptedAtoms",
+        "explicitConditions",
+        "evidence",
+        "relationCandidates"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "mathematics-cartography.fragment-review-request.v1"
+        },
+        "requestId": {
+          "$ref": "#/$defs/identifier"
+        },
+        "proposalId": {
+          "$ref": "#/$defs/identifier"
+        },
+        "supersedesProposalId": {
+          "$ref": "#/$defs/nullableIdentifier"
+        },
+        "actor": {
+          "const": "HUMAN_SEMANTIC_REVIEWER"
+        },
+        "trigger": {
+          "const": "FRAGMENT_SUBMITTED_FOR_IDENTITY_REVIEW"
+        },
+        "fragment": {
+          "$ref": "#/$defs/fragment"
+        },
+        "identityTargetAtomId": {
+          "$ref": "#/$defs/identifier"
+        },
+        "acceptedAtoms": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/acceptedAtom"
+          }
+        },
+        "explicitConditions": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/condition"
+          }
+        },
+        "evidence": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/evidence"
+          }
+        },
+        "relationCandidates": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/relation"
+          }
+        }
+      }
+    },
+    "proposalFragment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fragmentId",
+        "content"
+      ],
+      "properties": {
+        "fragmentId": {
+          "$ref": "#/$defs/identifier"
+        },
+        "content": {
+          "$ref": "#/$defs/statement"
+        }
+      }
+    },
+    "identityJudgment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "targetAtomId",
+        "judgment",
+        "evidenceIds",
+        "uncertainty"
+      ],
+      "properties": {
+        "targetAtomId": {
+          "$ref": "#/$defs/identifier"
+        },
+        "judgment": {
+          "$ref": "#/$defs/identityJudgmentValue"
+        },
+        "evidenceIds": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/identifier"
+          }
+        },
+        "uncertainty": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/stringCode"
+          }
+        }
+      }
+    },
+    "proposal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "decisionRecordId",
+        "proposalId",
+        "requestId",
+        "supersedesProposalId",
+        "actor",
+        "trigger",
+        "fragment",
+        "candidateKind",
+        "identityJudgment",
+        "relationProposals",
+        "recommendedDisposition",
+        "humanDecision",
+        "canonicalApplication"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "mathematics-cartography.fragment-review-proposal.v1"
+        },
+        "decisionRecordId": {
+          "const": "INTERVIEW_AND_TDD_MATHEMATICAL_FRAGMENT_IDENTITY_AND_RELATION_001"
+        },
+        "proposalId": {
+          "$ref": "#/$defs/identifier"
+        },
+        "requestId": {
+          "$ref": "#/$defs/identifier"
+        },
+        "supersedesProposalId": {
+          "$ref": "#/$defs/nullableIdentifier"
+        },
+        "actor": {
+          "const": "HUMAN_SEMANTIC_REVIEWER"
+        },
+        "trigger": {
+          "const": "FRAGMENT_SUBMITTED_FOR_IDENTITY_REVIEW"
+        },
+        "fragment": {
+          "$ref": "#/$defs/proposalFragment"
+        },
+        "candidateKind": {
+          "$ref": "#/$defs/candidateKind"
+        },
+        "identityJudgment": {
+          "$ref": "#/$defs/identityJudgment"
+        },
+        "relationProposals": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/relation"
+          }
+        },
+        "recommendedDisposition": {
+          "enum": [
+            "CANONICALIZE",
+            "REJECT",
+            "DEFER"
+          ]
+        },
+        "humanDecision": {
+          "const": "PENDING"
+        },
+        "canonicalApplication": {
+          "const": "NOT_PERFORMED"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,136 @@
+{
+  "schema_version": "mathematics-cartography.human-semantic-disposition-fixture.v1",
+  "fixture_authority": "TEST_ONLY_NOT_HUMAN_DISPOSITION_INSTANCES",
+  "case_count": 3,
+  "cases": [
+    {
+      "case_id": "ALIGNED_CANONICALIZE",
+      "source_fixture_path": "fixtures/logarithm-definition-evidence-review-packet.fixture.json",
+      "disposition_input": {
+        "schemaVersion": "mathematics-cartography.human-semantic-disposition-input.v1",
+        "dispositionRecordId": "disposition.fixture.logarithm-definition-equivalence.1",
+        "supersedesDispositionRecordId": null,
+        "actor": "HUMAN_SEMANTIC_REVIEWER",
+        "trigger": "EVIDENCE_REVIEW_PACKET_READY_FOR_HUMAN_DISPOSITION",
+        "requestId": "request.logarithm-definition-equivalence",
+        "proposalId": "proposal.logarithm-definition-equivalence",
+        "requestSha256": "b6361e86c6abb5871a13142a8dfd01afc9afe149afec4e6c361b633fbf39d96f",
+        "proposalSha256": "21a16c0b936cfe2137d84c2c47d7d355d5397203fc820eb716d9ce3e6067b7a6",
+        "evidenceReviewPacketSha256": "83f7be7afd9b41bd531baac1c33fe09f63b7652d67feb34eb103f7e66e7129d5",
+        "humanDisposition": "CANONICALIZE",
+        "decisionReasonCodes": [],
+        "citedEvidenceIds": [],
+        "decidedAtUtc": "2026-01-01T00:00:00Z"
+      },
+      "expected": {
+        "schemaVersion": "mathematics-cartography.human-semantic-disposition-record.v1",
+        "decisionRecordId": "IMMUTABLE_HUMAN_SEMANTIC_DISPOSITION_RECORD_001",
+        "dispositionRecordId": "disposition.fixture.logarithm-definition-equivalence.1",
+        "supersedesDispositionRecordId": null,
+        "actor": "HUMAN_SEMANTIC_REVIEWER",
+        "trigger": "EVIDENCE_REVIEW_PACKET_READY_FOR_HUMAN_DISPOSITION",
+        "requestId": "request.logarithm-definition-equivalence",
+        "proposalId": "proposal.logarithm-definition-equivalence",
+        "requestSha256": "b6361e86c6abb5871a13142a8dfd01afc9afe149afec4e6c361b633fbf39d96f",
+        "proposalSha256": "21a16c0b936cfe2137d84c2c47d7d355d5397203fc820eb716d9ce3e6067b7a6",
+        "evidenceReviewPacketSha256": "83f7be7afd9b41bd531baac1c33fe09f63b7652d67feb34eb103f7e66e7129d5",
+        "recommendedDisposition": "CANONICALIZE",
+        "humanDisposition": "CANONICALIZE",
+        "decisionReasonCodes": [],
+        "citedEvidenceIds": [],
+        "decidedAtUtc": "2026-01-01T00:00:00Z",
+        "canonicalApplication": "NOT_PERFORMED"
+      }
+    },
+    {
+      "case_id": "ALIGNED_REJECT",
+      "source_fixture_path": "fixtures/invalid-logarithm-sum-identity.fixture.json",
+      "disposition_input": {
+        "schemaVersion": "mathematics-cartography.human-semantic-disposition-input.v1",
+        "dispositionRecordId": "disposition.fixture.invalid-logarithm-sum-identity.1",
+        "supersedesDispositionRecordId": null,
+        "actor": "HUMAN_SEMANTIC_REVIEWER",
+        "trigger": "EVIDENCE_REVIEW_PACKET_READY_FOR_HUMAN_DISPOSITION",
+        "requestId": "request.invalid-logarithm-sum-identity",
+        "proposalId": "proposal.invalid-logarithm-sum-identity",
+        "requestSha256": "cd173af2b64403b5f49de492be5de70e25fc64528a4fedbc9f0307c77117723c",
+        "proposalSha256": "dcfba6e3b35e1195bff9613edc45fb6a7dd1e4891834cff17583e1b83b01804f",
+        "evidenceReviewPacketSha256": "0848bee148833acc938d7c52eac1e183da5b811c6f3186ed8d2c7218503259e2",
+        "humanDisposition": "REJECT",
+        "decisionReasonCodes": [],
+        "citedEvidenceIds": [],
+        "decidedAtUtc": "2026-01-01T00:00:01Z"
+      },
+      "expected": {
+        "schemaVersion": "mathematics-cartography.human-semantic-disposition-record.v1",
+        "decisionRecordId": "IMMUTABLE_HUMAN_SEMANTIC_DISPOSITION_RECORD_001",
+        "dispositionRecordId": "disposition.fixture.invalid-logarithm-sum-identity.1",
+        "supersedesDispositionRecordId": null,
+        "actor": "HUMAN_SEMANTIC_REVIEWER",
+        "trigger": "EVIDENCE_REVIEW_PACKET_READY_FOR_HUMAN_DISPOSITION",
+        "requestId": "request.invalid-logarithm-sum-identity",
+        "proposalId": "proposal.invalid-logarithm-sum-identity",
+        "requestSha256": "cd173af2b64403b5f49de492be5de70e25fc64528a4fedbc9f0307c77117723c",
+        "proposalSha256": "dcfba6e3b35e1195bff9613edc45fb6a7dd1e4891834cff17583e1b83b01804f",
+        "evidenceReviewPacketSha256": "0848bee148833acc938d7c52eac1e183da5b811c6f3186ed8d2c7218503259e2",
+        "recommendedDisposition": "REJECT",
+        "humanDisposition": "REJECT",
+        "decisionReasonCodes": [],
+        "citedEvidenceIds": [],
+        "decidedAtUtc": "2026-01-01T00:00:01Z",
+        "canonicalApplication": "NOT_PERFORMED"
+      }
+    },
+    {
+      "case_id": "ALIGNED_DEFER",
+      "source_fixture_path": "fixtures/missing-logarithm-context.fixture.json",
+      "disposition_input": {
+        "schemaVersion": "mathematics-cartography.human-semantic-disposition-input.v1",
+        "dispositionRecordId": "disposition.fixture.missing-logarithm-context.1",
+        "supersedesDispositionRecordId": null,
+        "actor": "HUMAN_SEMANTIC_REVIEWER",
+        "trigger": "EVIDENCE_REVIEW_PACKET_READY_FOR_HUMAN_DISPOSITION",
+        "requestId": "request.missing-logarithm-context",
+        "proposalId": "proposal.missing-logarithm-context",
+        "requestSha256": "5bce4a8ebb3d8482cc37b906cb83e0aa898733158d5ad01dbdf4822236a4874c",
+        "proposalSha256": "fdf5d1d9dcbd3cb8b7150eca641f0266d96f12ea4288798b25acd4a599db0af3",
+        "evidenceReviewPacketSha256": "640c28a58709cd703071f0613d2e0c9a8765717338050ba1b0c052851ffd16ac",
+        "humanDisposition": "DEFER",
+        "decisionReasonCodes": [
+          "MISSING_LOGARITHM_BASE",
+          "MISSING_REAL_DOMAIN_CONDITIONS"
+        ],
+        "citedEvidenceIds": [
+          "evidence.fragment.missing-context",
+          "evidence.context.not-supplied"
+        ],
+        "decidedAtUtc": "2026-01-01T00:00:02Z"
+      },
+      "expected": {
+        "schemaVersion": "mathematics-cartography.human-semantic-disposition-record.v1",
+        "decisionRecordId": "IMMUTABLE_HUMAN_SEMANTIC_DISPOSITION_RECORD_001",
+        "dispositionRecordId": "disposition.fixture.missing-logarithm-context.1",
+        "supersedesDispositionRecordId": null,
+        "actor": "HUMAN_SEMANTIC_REVIEWER",
+        "trigger": "EVIDENCE_REVIEW_PACKET_READY_FOR_HUMAN_DISPOSITION",
+        "requestId": "request.missing-logarithm-context",
+        "proposalId": "proposal.missing-logarithm-context",
+        "requestSha256": "5bce4a8ebb3d8482cc37b906cb83e0aa898733158d5ad01dbdf4822236a4874c",
+        "proposalSha256": "fdf5d1d9dcbd3cb8b7150eca641f0266d96f12ea4288798b25acd4a599db0af3",
+        "evidenceReviewPacketSha256": "640c28a58709cd703071f0613d2e0c9a8765717338050ba1b0c052851ffd16ac",
+        "recommendedDisposition": "DEFER",
+        "humanDisposition": "DEFER",
+        "decisionReasonCodes": [
+          "MISSING_LOGARITHM_BASE",
+          "MISSING_REAL_DOMAIN_CONDITIONS"
+        ],
+        "citedEvidenceIds": [
+          "evidence.fragment.missing-context",
+          "evidence.context.not-supplied"
+        ],
+        "decidedAtUtc": "2026-01-01T00:00:02Z",
+        "canonicalApplication": "NOT_PERFORMED"
+      }
+    }
+  ]
+}

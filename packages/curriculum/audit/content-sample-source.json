@@ -1,0 +1,3199 @@
+[
+  {
+    "concept": {
+      "id": "math:concept:equivalent-fractions",
+      "label": "크기가 같은 분수",
+      "definition": "같은 수를 나타내는 서로 다른 분수 표현이다. 초등의 정수 분수 표현에서는 분자와 분모에 같은 양의 자연수를 곱하거나 같은 양의 공약수로 나누어 값을 보존한다.",
+      "conditions": [
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "mathematical_domain",
+          "statement": "초등 분수·소수 모델은 음이 아닌 수를 사용하며 모든 나눗셈의 나누는 수와 분모는 0이 아니다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        },
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "pedagogical_route",
+          "statement": "공통분모가 반드시 최소공배수일 필요는 없으며 분모의 곱 등도 쓸 수 있다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        }
+      ]
+    },
+    "explanations": [
+      {
+        "id": "math:explanation:equivalent-fractions:example",
+        "kind": "example",
+        "statement": "1/2 = 2/4 = 3/6",
+        "reasoning": "초등 확장에서는 분자와 분모에 같은 양의 자연수를 곱한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "초등 분수·소수 모델은 음이 아닌 수를 사용하며 모든 나눗셈의 나누는 수와 분모는 0이 아니다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "공통분모가 반드시 최소공배수일 필요는 없으며 분모의 곱 등도 쓸 수 있다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:structural-adult",
+        "notCurricularPrerequisite": true
+      },
+      {
+        "id": "math:explanation:equivalent-fractions:misconception",
+        "kind": "misconception",
+        "statement": "분자와 분모에 같은 수를 더하면 언제나 같은 값이 된다고 생각하지 않는다.",
+        "reasoning": "정의, 적용 조건, 예제의 단위와 대조해 오개념을 구분한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "초등 분수·소수 모델은 음이 아닌 수를 사용하며 모든 나눗셈의 나누는 수와 분모는 0이 아니다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "공통분모가 반드시 최소공배수일 필요는 없으며 분모의 곱 등도 쓸 수 있다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:structural-adult",
+        "notCurricularPrerequisite": true
+      },
+      {
+        "id": "math:explanation:equivalent-fractions:advanced-lens",
+        "kind": "advanced_lens",
+        "statement": "유리수는 같은 값을 나타내는 정수쌍 표현들을 동치류로 묶어 이해할 수 있다.",
+        "reasoning": "분모가 0이 아닌 정수쌍들의 집합에서 (a,b),(c,d)에 대해 ad=bc를 동치의 기준으로 둔다. 반사·대칭성은 등식에서 따르고, ad=bc와 cf=de에서 d(af−be)=0 및 d≠0으로 af=be를 얻어 추이성을 확인한다. 크기가 같은 분수들은 같은 동치류의 다른 대표원이다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "성인·교사에게 구조를 설명하는 렌즈이며 해당 학년 학생에게 먼저 요구하지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:structural-adult",
+        "notCurricularPrerequisite": true
+      }
+    ],
+    "relations": [
+      {
+        "id": "math:relation:domain-01:fraction-unit-to-equivalent-fractions",
+        "source": "math:concept:fraction-unit",
+        "target": "math:concept:equivalent-fractions",
+        "type": "required_prerequisite",
+        "rationale": "이 경로에서 크기가 같은 분수를 설명할 때 단위분수를 이용한 분수의 표현의 의미를 사용한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "정의·기호 의미를 연결하는 이 설명 경로에 한정한다. 보편적인 유일 학습 경로나 공식 성취기준의 명시적 선수 관계라는 주장이 아니다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ]
+      },
+      {
+        "id": "math:relation:domain-01:equivalent-fractions-to-fraction-reduction",
+        "source": "math:concept:equivalent-fractions",
+        "target": "math:concept:fraction-reduction",
+        "type": "required_prerequisite",
+        "rationale": "이 경로에서 약분을 설명할 때 크기가 같은 분수의 의미를 사용한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "정의·기호 의미를 연결하는 이 설명 경로에 한정한다. 보편적인 유일 학습 경로나 공식 성취기준의 명시적 선수 관계라는 주장이 아니다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ]
+      },
+      {
+        "id": "math:relation:domain-01:equivalent-fractions-to-common-denominator",
+        "source": "math:concept:equivalent-fractions",
+        "target": "math:concept:common-denominator",
+        "type": "required_prerequisite",
+        "rationale": "이 경로에서 통분을 설명할 때 크기가 같은 분수의 의미를 사용한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "정의·기호 의미를 연결하는 이 설명 경로에 한정한다. 보편적인 유일 학습 경로나 공식 성취기준의 명시적 선수 관계라는 주장이 아니다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "concept": {
+      "id": "math:concept:common-denominator",
+      "label": "통분",
+      "definition": "분모가 다른 분수들을 값이 같은 분수로 바꾸어 분모를 같게 하는 과정이다.",
+      "conditions": [
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "mathematical_domain",
+          "statement": "초등 분수·소수 모델은 음이 아닌 수를 사용하며 모든 나눗셈의 나누는 수와 분모는 0이 아니다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        },
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "pedagogical_route",
+          "statement": "공통분모가 반드시 최소공배수일 필요는 없으며 분모의 곱 등도 쓸 수 있다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        }
+      ]
+    },
+    "explanations": [
+      {
+        "id": "math:explanation:common-denominator:example",
+        "kind": "example",
+        "statement": "1/2와 1/3을 3/6과 2/6으로 바꾼다.",
+        "reasoning": "분모 2와 3의 공배수 6을 공통분모로 고르고 각각 같은 비율로 분자와 분모를 바꾼다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "초등 분수·소수 모델은 음이 아닌 수를 사용하며 모든 나눗셈의 나누는 수와 분모는 0이 아니다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "공통분모가 반드시 최소공배수일 필요는 없으며 분모의 곱 등도 쓸 수 있다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:structural-adult",
+        "notCurricularPrerequisite": true
+      },
+      {
+        "id": "math:explanation:common-denominator:misconception",
+        "kind": "misconception",
+        "statement": "공통분모가 반드시 최소공배수여야 하는 것은 아니다. 6/12와 4/12로도 통분할 수 있다.",
+        "reasoning": "정의, 적용 조건, 예제의 단위와 대조해 오개념을 구분한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "초등 분수·소수 모델은 음이 아닌 수를 사용하며 모든 나눗셈의 나누는 수와 분모는 0이 아니다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "공통분모가 반드시 최소공배수일 필요는 없으며 분모의 곱 등도 쓸 수 있다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:structural-adult",
+        "notCurricularPrerequisite": true
+      },
+      {
+        "id": "math:explanation:common-denominator:advanced-lens",
+        "kind": "advanced_lens",
+        "statement": "통분은 서로 다른 표현을 공통 단위로 바꾸는 것이며 최소성을 요구하지 않는다.",
+        "reasoning": "분모 b,d가 양의 정수이면 bd는 항상 공통분모의 후보이다. 최소공배수는 작은 표현을 선택하는 효율화이지 값 보존 자체의 필요조건은 아니다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "성인·교사에게 구조를 설명하는 렌즈이며 해당 학년 학생에게 먼저 요구하지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:structural-adult",
+        "notCurricularPrerequisite": true
+      }
+    ],
+    "relations": [
+      {
+        "id": "math:relation:domain-01:equivalent-fractions-to-common-denominator",
+        "source": "math:concept:equivalent-fractions",
+        "target": "math:concept:common-denominator",
+        "type": "required_prerequisite",
+        "rationale": "이 경로에서 통분을 설명할 때 크기가 같은 분수의 의미를 사용한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "정의·기호 의미를 연결하는 이 설명 경로에 한정한다. 보편적인 유일 학습 경로나 공식 성취기준의 명시적 선수 관계라는 주장이 아니다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ]
+      },
+      {
+        "id": "math:relation:domain-01:common-multiple-to-common-denominator",
+        "source": "math:concept:common-multiple",
+        "target": "math:concept:common-denominator",
+        "type": "helpful_prerequisite",
+        "rationale": "이 경로에서 통분을 설명할 때 공배수의 의미를 사용한다. 효율·설명에 도움이 되며 필수성은 주장하지 않는다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "정의·기호 의미를 연결하는 이 설명 경로에 한정한다. 보편적인 유일 학습 경로나 공식 성취기준의 명시적 선수 관계라는 주장이 아니다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ]
+      },
+      {
+        "id": "math:relation:domain-01:lcm-to-common-denominator",
+        "source": "math:concept:lcm",
+        "target": "math:concept:common-denominator",
+        "type": "helpful_prerequisite",
+        "rationale": "이 경로에서 통분을 설명할 때 최소공배수의 의미를 사용한다. 효율·설명에 도움이 되며 필수성은 주장하지 않는다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "정의·기호 의미를 연결하는 이 설명 경로에 한정한다. 보편적인 유일 학습 경로나 공식 성취기준의 명시적 선수 관계라는 주장이 아니다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ]
+      },
+      {
+        "id": "math:relation:domain-01:common-denominator-to-fraction-comparison",
+        "source": "math:concept:common-denominator",
+        "target": "math:concept:fraction-comparison",
+        "type": "helpful_prerequisite",
+        "rationale": "이 경로에서 분모가 다른 분수의 크기 비교를 설명할 때 통분의 의미를 사용한다. 효율·설명에 도움이 되며 필수성은 주장하지 않는다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "정의·기호 의미를 연결하는 이 설명 경로에 한정한다. 보편적인 유일 학습 경로나 공식 성취기준의 명시적 선수 관계라는 주장이 아니다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ]
+      },
+      {
+        "id": "math:relation:domain-01:common-denominator-to-fraction-addition",
+        "source": "math:concept:common-denominator",
+        "target": "math:concept:fraction-addition",
+        "type": "required_prerequisite",
+        "rationale": "이 경로에서 분모가 다른 분수의 덧셈을 설명할 때 통분의 의미를 사용한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "정의·기호 의미를 연결하는 이 설명 경로에 한정한다. 보편적인 유일 학습 경로나 공식 성취기준의 명시적 선수 관계라는 주장이 아니다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ]
+      },
+      {
+        "id": "math:relation:domain-01:common-denominator-to-fraction-subtraction",
+        "source": "math:concept:common-denominator",
+        "target": "math:concept:fraction-subtraction",
+        "type": "required_prerequisite",
+        "rationale": "이 경로에서 분모가 다른 분수의 뺄셈을 설명할 때 통분의 의미를 사용한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "정의·기호 의미를 연결하는 이 설명 경로에 한정한다. 보편적인 유일 학습 경로나 공식 성취기준의 명시적 선수 관계라는 주장이 아니다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "concept": {
+      "id": "math:concept:reciprocal",
+      "label": "역수",
+      "definition": "0이 아닌 수와 곱하여 1이 되는 수이다. 0이 아닌 a/b의 역수는 b/a이다.",
+      "conditions": [
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "mathematical_domain",
+          "statement": "역수를 갖는 수는 0이 아니며 a/b의 역수 b/a에서 a≠0, b≠0이다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        },
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "pedagogical_route",
+          "statement": "기약분수 표현을 명시적으로 요구하지 않으면 약분 전 결과도 허용한다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        },
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "pedagogical_route",
+          "statement": "분수·소수 곱셈과 나눗셈은 계산 원리 탐구와 이해 수준을 중심으로 한다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        }
+      ]
+    },
+    "explanations": [
+      {
+        "id": "math:explanation:reciprocal:example",
+        "kind": "example",
+        "statement": "2/3의 역수는 3/2이다.",
+        "reasoning": "(2/3)×(3/2)=1을 확인한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "역수를 갖는 수는 0이 아니며 a/b의 역수 b/a에서 a≠0, b≠0이다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "기약분수 표현을 명시적으로 요구하지 않으면 약분 전 결과도 허용한다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "분수·소수 곱셈과 나눗셈은 계산 원리 탐구와 이해 수준을 중심으로 한다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:structural-adult",
+        "notCurricularPrerequisite": true
+      },
+      {
+        "id": "math:explanation:reciprocal:misconception",
+        "kind": "misconception",
+        "statement": "0의 역수는 존재하지 않는다. 부호만 바꾼 수와 혼동하지 않는다.",
+        "reasoning": "정의, 적용 조건, 예제의 단위와 대조해 오개념을 구분한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "역수를 갖는 수는 0이 아니며 a/b의 역수 b/a에서 a≠0, b≠0이다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "기약분수 표현을 명시적으로 요구하지 않으면 약분 전 결과도 허용한다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "분수·소수 곱셈과 나눗셈은 계산 원리 탐구와 이해 수준을 중심으로 한다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:structural-adult",
+        "notCurricularPrerequisite": true
+      }
+    ],
+    "relations": [
+      {
+        "id": "math:relation:domain-01:fraction-multiplication-to-reciprocal",
+        "source": "math:concept:fraction-multiplication",
+        "target": "math:concept:reciprocal",
+        "type": "helpful_prerequisite",
+        "rationale": "이 경로에서 역수를 설명할 때 분수의 곱셈의 의미를 사용한다. 효율·설명에 도움이 되며 필수성은 주장하지 않는다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "정의·기호 의미를 연결하는 이 설명 경로에 한정한다. 보편적인 유일 학습 경로나 공식 성취기준의 명시적 선수 관계라는 주장이 아니다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ]
+      },
+      {
+        "id": "math:relation:domain-01:reciprocal-to-fraction-division",
+        "source": "math:concept:reciprocal",
+        "target": "math:concept:fraction-division",
+        "type": "required_prerequisite",
+        "rationale": "이 경로에서 분수의 나눗셈을 설명할 때 역수의 의미를 사용한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "정의·기호 의미를 연결하는 이 설명 경로에 한정한다. 보편적인 유일 학습 경로나 공식 성취기준의 명시적 선수 관계라는 주장이 아니다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "concept": {
+      "id": "math:concept:fraction-division",
+      "label": "분수의 나눗셈",
+      "definition": "0이 아닌 분수로 나누는 것은 그 분수의 역수를 곱하는 것과 같다. 이 규칙은 같은 단위로 몫을 세는 해석과 연결된다.",
+      "conditions": [
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "mathematical_domain",
+          "statement": "초등 분수·소수 모델은 음이 아닌 수를 사용하며 모든 나눗셈의 나누는 수와 분모는 0이 아니다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        },
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "pedagogical_route",
+          "statement": "기약분수 표현을 명시적으로 요구하지 않으면 약분 전 결과도 허용한다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        },
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "pedagogical_route",
+          "statement": "분수·소수 곱셈과 나눗셈은 계산 원리 탐구와 이해 수준을 중심으로 한다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        }
+      ]
+    },
+    "explanations": [
+      {
+        "id": "math:explanation:fraction-division:example",
+        "kind": "example",
+        "statement": "3/4 ÷ 1/2 = 3/2",
+        "reasoning": "3/4 안에 1/2이 몇 개 있는지 보면 1.5개이며 (3/4)×2=3/2이다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "초등 분수·소수 모델은 음이 아닌 수를 사용하며 모든 나눗셈의 나누는 수와 분모는 0이 아니다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "기약분수 표현을 명시적으로 요구하지 않으면 약분 전 결과도 허용한다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "분수·소수 곱셈과 나눗셈은 계산 원리 탐구와 이해 수준을 중심으로 한다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:structural-adult",
+        "notCurricularPrerequisite": true
+      },
+      {
+        "id": "math:explanation:fraction-division:misconception",
+        "kind": "misconception",
+        "statement": "나누어지는 수까지 뒤집거나 나누면 항상 작아진다고 생각하지 않는다.",
+        "reasoning": "정의, 적용 조건, 예제의 단위와 대조해 오개념을 구분한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "초등 분수·소수 모델은 음이 아닌 수를 사용하며 모든 나눗셈의 나누는 수와 분모는 0이 아니다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "기약분수 표현을 명시적으로 요구하지 않으면 약분 전 결과도 허용한다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "분수·소수 곱셈과 나눗셈은 계산 원리 탐구와 이해 수준을 중심으로 한다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:structural-adult",
+        "notCurricularPrerequisite": true
+      },
+      {
+        "id": "math:explanation:fraction-division:advanced-lens",
+        "kind": "advanced_lens",
+        "statement": "0이 아닌 유리수의 나눗셈은 곱셈 역원을 사용하는 연산이다.",
+        "reasoning": "q≠0이면 q의 역원 q⁻¹을 곱하여 p/q를 정의할 수 있다. 0은 어떤 수와 곱해도 0이므로 1을 만드는 역원이 없다. 이 구조는 나눗셈 금지 조건의 이유를 설명한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "성인·교사에게 구조를 설명하는 렌즈이며 해당 학년 학생에게 먼저 요구하지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:structural-adult",
+        "notCurricularPrerequisite": true
+      }
+    ],
+    "relations": [
+      {
+        "id": "math:relation:domain-01:reciprocal-to-fraction-division",
+        "source": "math:concept:reciprocal",
+        "target": "math:concept:fraction-division",
+        "type": "required_prerequisite",
+        "rationale": "이 경로에서 분수의 나눗셈을 설명할 때 역수의 의미를 사용한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "정의·기호 의미를 연결하는 이 설명 경로에 한정한다. 보편적인 유일 학습 경로나 공식 성취기준의 명시적 선수 관계라는 주장이 아니다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ]
+      },
+      {
+        "id": "math:relation:domain-01:fraction-division-to-signed-division",
+        "source": "math:concept:fraction-division",
+        "target": "math:concept:signed-division",
+        "type": "helpful_prerequisite",
+        "rationale": "이 경로에서 정수와 유리수의 나눗셈을 설명할 때 분수의 나눗셈의 의미를 사용한다. 효율·설명에 도움이 되며 필수성은 주장하지 않는다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "정의·기호 의미를 연결하는 이 설명 경로에 한정한다. 보편적인 유일 학습 경로나 공식 성취기준의 명시적 선수 관계라는 주장이 아니다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "concept": {
+      "id": "math:concept:principal-square-root",
+      "label": "음이 아닌 제곱근과 근호",
+      "definition": "a≥0에서 √a는 제곱하여 a가 되는 음이 아닌 유일한 수를 나타낸다.",
+      "conditions": [
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "mathematical_domain",
+          "statement": "실수 범위에서 √a를 사용할 때 a≥0이고, 분모 또는 나누는 값은 0이 아니어야 한다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        },
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "pedagogical_route",
+          "statement": "사칙계산 외의 이항연산을 정의하여 푸는 문제는 제외한다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        }
+      ]
+    },
+    "explanations": [
+      {
+        "id": "math:explanation:principal-square-root:example",
+        "kind": "example",
+        "statement": "√9=3, √0=0",
+        "reasoning": "근호 표기는 음이 아닌 값을 하나 선택한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "실수 범위에서 √a를 사용할 때 a≥0이고, 분모 또는 나누는 값은 0이 아니어야 한다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "사칙계산 외의 이항연산을 정의하여 푸는 문제는 제외한다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:structural-adult",
+        "notCurricularPrerequisite": true
+      },
+      {
+        "id": "math:explanation:principal-square-root:misconception",
+        "kind": "misconception",
+        "statement": "√(a²)=a를 음수 a에도 무조건 적용하지 않는다. 실수에서는 √(a²)=|a|이다.",
+        "reasoning": "정의, 적용 조건, 예제의 단위와 대조해 오개념을 구분한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "실수 범위에서 √a를 사용할 때 a≥0이고, 분모 또는 나누는 값은 0이 아니어야 한다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "사칙계산 외의 이항연산을 정의하여 푸는 문제는 제외한다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:structural-adult",
+        "notCurricularPrerequisite": true
+      },
+      {
+        "id": "math:explanation:principal-square-root:advanced-lens",
+        "kind": "advanced_lens",
+        "statement": "제곱근 함수는 제곱 함수를 음이 아닌 구간에 제한했을 때의 역함수이다.",
+        "reasoning": "실수 전체의 제곱은 x와 −x를 같은 값으로 보내므로 일대일이 아니다. [0,∞)로 제한하면 제곱이 일대일 대응이 되어 √a라는 하나의 역함수 값을 정할 수 있다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "성인·교사에게 구조를 설명하는 렌즈이며 해당 학년 학생에게 먼저 요구하지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:structural-adult",
+        "notCurricularPrerequisite": true
+      }
+    ],
+    "relations": [
+      {
+        "id": "math:relation:domain-03:principal-square-root-to-pythagorean-theorem",
+        "source": "math:concept:principal-square-root",
+        "target": "math:concept:pythagorean-theorem",
+        "type": "helpful_prerequisite",
+        "rationale": "다른 영역의 같은 개념을 복제하지 않고 설명에 재사용한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "정의와 도형 구조를 연결하는 이 설명 경로에 한정한다. 공식 교육과정이 정한 유일한 선수 순서라는 주장이 아니다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ]
+      },
+      {
+        "id": "math:relation:domain-01:square-root-to-principal-square-root",
+        "source": "math:concept:square-root",
+        "target": "math:concept:principal-square-root",
+        "type": "required_prerequisite",
+        "rationale": "이 경로에서 음이 아닌 제곱근과 근호를 설명할 때 제곱근의 의미를 사용한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "정의·기호 의미를 연결하는 이 설명 경로에 한정한다. 보편적인 유일 학습 경로나 공식 성취기준의 명시적 선수 관계라는 주장이 아니다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ]
+      },
+      {
+        "id": "math:relation:domain-01:principal-square-root-to-square-root-order",
+        "source": "math:concept:principal-square-root",
+        "target": "math:concept:square-root-order",
+        "type": "required_prerequisite",
+        "rationale": "이 경로에서 제곱근의 대소 관계를 설명할 때 음이 아닌 제곱근과 근호의 의미를 사용한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "정의·기호 의미를 연결하는 이 설명 경로에 한정한다. 보편적인 유일 학습 경로나 공식 성취기준의 명시적 선수 관계라는 주장이 아니다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ]
+      },
+      {
+        "id": "math:relation:domain-01:principal-square-root-to-irrational-number",
+        "source": "math:concept:principal-square-root",
+        "target": "math:concept:irrational-number",
+        "type": "helpful_prerequisite",
+        "rationale": "이 경로에서 무리수를 설명할 때 음이 아닌 제곱근과 근호의 의미를 사용한다. 효율·설명에 도움이 되며 필수성은 주장하지 않는다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "정의·기호 의미를 연결하는 이 설명 경로에 한정한다. 보편적인 유일 학습 경로나 공식 성취기준의 명시적 선수 관계라는 주장이 아니다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ]
+      },
+      {
+        "id": "math:relation:domain-01:principal-square-root-to-radical-multiplication",
+        "source": "math:concept:principal-square-root",
+        "target": "math:concept:radical-multiplication",
+        "type": "required_prerequisite",
+        "rationale": "이 경로에서 근호가 있는 식의 곱셈을 설명할 때 음이 아닌 제곱근과 근호의 의미를 사용한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "정의·기호 의미를 연결하는 이 설명 경로에 한정한다. 보편적인 유일 학습 경로나 공식 성취기준의 명시적 선수 관계라는 주장이 아니다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ]
+      },
+      {
+        "id": "math:relation:domain-01:principal-square-root-to-radical-division",
+        "source": "math:concept:principal-square-root",
+        "target": "math:concept:radical-division",
+        "type": "required_prerequisite",
+        "rationale": "이 경로에서 근호가 있는 식의 나눗셈을 설명할 때 음이 아닌 제곱근과 근호의 의미를 사용한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "정의·기호 의미를 연결하는 이 설명 경로에 한정한다. 보편적인 유일 학습 경로나 공식 성취기준의 명시적 선수 관계라는 주장이 아니다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "concept": {
+      "id": "math:concept:simplify-radical",
+      "label": "근호 안에서 제곱 꼴의 인수를 분리하기",
+      "definition": "음이 아닌 수의 제곱근에서 제곱 꼴의 인수를 분리하여 같은 값을 더 간단한 근호 표현으로 나타낸다.",
+      "conditions": [
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "mathematical_domain",
+          "statement": "실수 범위에서 √a를 사용할 때 a≥0이고, 분모 또는 나누는 값은 0이 아니어야 한다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        },
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "pedagogical_route",
+          "statement": "사칙계산 외의 이항연산을 정의하여 푸는 문제는 제외한다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        }
+      ]
+    },
+    "explanations": [
+      {
+        "id": "math:explanation:simplify-radical:example",
+        "kind": "example",
+        "statement": "√12=2√3",
+        "reasoning": "12=4×3이고 √4=2이므로 √12=√4√3=2√3이다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "실수 범위에서 √a를 사용할 때 a≥0이고, 분모 또는 나누는 값은 0이 아니어야 한다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "사칙계산 외의 이항연산을 정의하여 푸는 문제는 제외한다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:structural-adult",
+        "notCurricularPrerequisite": true
+      },
+      {
+        "id": "math:explanation:simplify-radical:misconception",
+        "kind": "misconception",
+        "statement": "√(a+b)=√a+√b로 분리하지 않는다.",
+        "reasoning": "정의, 적용 조건, 예제의 단위와 대조해 오개념을 구분한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "실수 범위에서 √a를 사용할 때 a≥0이고, 분모 또는 나누는 값은 0이 아니어야 한다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "사칙계산 외의 이항연산을 정의하여 푸는 문제는 제외한다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:structural-adult",
+        "notCurricularPrerequisite": true
+      }
+    ],
+    "relations": [
+      {
+        "id": "math:relation:domain-01:radical-multiplication-to-simplify-radical",
+        "source": "math:concept:radical-multiplication",
+        "target": "math:concept:simplify-radical",
+        "type": "helpful_prerequisite",
+        "rationale": "이 경로에서 근호 안에서 제곱 꼴의 인수를 분리하기를 설명할 때 근호가 있는 식의 곱셈의 의미를 사용한다. 효율·설명에 도움이 되며 필수성은 주장하지 않는다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "정의·기호 의미를 연결하는 이 설명 경로에 한정한다. 보편적인 유일 학습 경로나 공식 성취기준의 명시적 선수 관계라는 주장이 아니다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ]
+      },
+      {
+        "id": "math:relation:domain-01:simplify-radical-to-radical-addition-subtraction",
+        "source": "math:concept:simplify-radical",
+        "target": "math:concept:radical-addition-subtraction",
+        "type": "helpful_prerequisite",
+        "rationale": "이 경로에서 근호가 있는 식의 덧셈과 뺄셈을 설명할 때 근호 안에서 제곱 꼴의 인수를 분리하기의 의미를 사용한다. 효율·설명에 도움이 되며 필수성은 주장하지 않는다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "정의·기호 의미를 연결하는 이 설명 경로에 한정한다. 보편적인 유일 학습 경로나 공식 성취기준의 명시적 선수 관계라는 주장이 아니다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "concept": {
+      "id": "math:concept:natural-exponent-laws",
+      "label": "지수법칙",
+      "definition": "반복 곱셈으로 정의한 자연수 지수에 대해 같은 밑의 곱은 지수를 더하고, 거듭제곱의 거듭제곱은 지수를 곱하며 곱의 거듭제곱은 각 인수에 분배한다.",
+      "conditions": [
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "mathematical_domain",
+          "statement": "m,n은 양의 정수. 나눗셈 aᵐ/aⁿ에서는 a≠0이며 m>n이면 aᵐ⁻ⁿ, m=n이면 1이다. 0·음수·분수 지수 일반화는 핵심 밖이다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        }
+      ]
+    },
+    "explanations": [
+      {
+        "id": "math:explanation:natural-exponent-laws:why",
+        "kind": "proof",
+        "statement": "반복 곱셈으로 정의한 자연수 지수에 대해 같은 밑의 곱은 지수를 더하고, 거듭제곱의 거듭제곱은 지수를 곱하며 곱의 거듭제곱은 각 인수에 분배한다.",
+        "reasoning": "반복되는 인수의 개수를 세거나 같은 인수를 약분하면 각 지수법칙이 나온다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "m,n은 양의 정수. 나눗셈 aᵐ/aⁿ에서는 a≠0이며 m>n이면 aᵐ⁻ⁿ, m=n이면 1이다. 0·음수·분수 지수 일반화는 핵심 밖이다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:domain-02:meaning-to-symbol",
+        "notCurricularPrerequisite": false
+      },
+      {
+        "id": "math:explanation:natural-exponent-laws:example",
+        "kind": "example",
+        "statement": "x³x²=x⁵, (x²)³=x⁶, (2x)³=8x³이다. x≠0에서 x⁵/x²=x³, x²/x²=1이다.",
+        "reasoning": "이 예시에 적용한 개념: 반복 곱셈으로 정의한 자연수 지수에 대해 같은 밑의 곱은 지수를 더하고, 거듭제곱의 거듭제곱은 지수를 곱하며 곱의 거듭제곱은 각 인수에 분배한다. 적용 조건: m,n은 양의 정수. 나눗셈 aᵐ/aⁿ에서는 a≠0이며 m>n이면 aᵐ⁻ⁿ, m=n이면 1이다. 0·음수·분수 지수 일반화는 핵심 밖이다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "m,n은 양의 정수. 나눗셈 aᵐ/aⁿ에서는 a≠0이며 m>n이면 aᵐ⁻ⁿ, m=n이면 1이다. 0·음수·분수 지수 일반화는 핵심 밖이다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:domain-02:meaning-to-symbol",
+        "notCurricularPrerequisite": false
+      },
+      {
+        "id": "math:explanation:natural-exponent-laws:counter",
+        "kind": "misconception",
+        "statement": "x³+x²를 x⁵로 합칠 수 없다. 지수 덧셈 법칙은 같은 밑의 곱셈에 적용한다.",
+        "reasoning": "비교 기준은 다음 정의이다: 반복 곱셈으로 정의한 자연수 지수에 대해 같은 밑의 곱은 지수를 더하고, 거듭제곱의 거듭제곱은 지수를 곱하며 곱의 거듭제곱은 각 인수에 분배한다. 특히 이 적용 조건을 확인한다: m,n은 양의 정수. 나눗셈 aᵐ/aⁿ에서는 a≠0이며 m>n이면 aᵐ⁻ⁿ, m=n이면 1이다. 0·음수·분수 지수 일반화는 핵심 밖이다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "m,n은 양의 정수. 나눗셈 aᵐ/aⁿ에서는 a≠0이며 m>n이면 aᵐ⁻ⁿ, m=n이면 1이다. 0·음수·분수 지수 일반화는 핵심 밖이다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:domain-02:meaning-to-symbol",
+        "notCurricularPrerequisite": false
+      },
+      {
+        "id": "math:explanation:natural-exponent-laws:lens",
+        "kind": "advanced_lens",
+        "statement": "자연수 지수는 반복 곱셈 반군의 연산을 표현한다. 지수 0이나 음수로의 확장은 추가 구조를 요구한다.",
+        "reasoning": "모델이 작성한 성인용 선택 렌즈이다. 공식 학생 선수 조건이나 학년 배치 근거가 아니며 핵심 개념의 위 정의를 다른 구조와 연결해 보는 데 한정한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "m,n은 양의 정수. 나눗셈 aᵐ/aⁿ에서는 a≠0이며 m>n이면 aᵐ⁻ⁿ, m=n이면 1이다. 0·음수·분수 지수 일반화는 핵심 밖이다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:structural-adult",
+        "notCurricularPrerequisite": true
+      }
+    ],
+    "relations": []
+  },
+  {
+    "concept": {
+      "id": "math:concept:polynomial-monomial-division",
+      "label": "다항식을 단항식으로 나누기",
+      "definition": "다항식의 각 항을 같은 단항식으로 나누어 몫을 더하는 계산이다.",
+      "conditions": [
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "mathematical_domain",
+          "statement": "나누는 단항식은 0이 아니며, 공식 범위에서는 각 항을 나눈 몫이 다항식이 되는 경우만 다룬다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        }
+      ]
+    },
+    "explanations": [
+      {
+        "id": "math:explanation:polynomial-monomial-division:why",
+        "kind": "proof",
+        "statement": "다항식의 각 항을 같은 단항식으로 나누어 몫을 더하는 계산이다.",
+        "reasoning": "(A+B)/M=A/M+B/M이므로 각 항의 계수와 공통 문자 인수를 나누면 된다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "나누는 단항식은 0이 아니며, 공식 범위에서는 각 항을 나눈 몫이 다항식이 되는 경우만 다룬다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:domain-02:meaning-to-symbol",
+        "notCurricularPrerequisite": false
+      },
+      {
+        "id": "math:explanation:polynomial-monomial-division:example",
+        "kind": "example",
+        "statement": "x≠0에서 (6x³-4x²)/(2x)=3x²-2x이다. 원래 식은 x=0에서 정의되지 않음을 유지한다.",
+        "reasoning": "이 예시에 적용한 개념: 다항식의 각 항을 같은 단항식으로 나누어 몫을 더하는 계산이다. 적용 조건: 나누는 단항식은 0이 아니며, 공식 범위에서는 각 항을 나눈 몫이 다항식이 되는 경우만 다룬다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "나누는 단항식은 0이 아니며, 공식 범위에서는 각 항을 나눈 몫이 다항식이 되는 경우만 다룬다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:domain-02:meaning-to-symbol",
+        "notCurricularPrerequisite": false
+      },
+      {
+        "id": "math:explanation:polynomial-monomial-division:counter",
+        "kind": "misconception",
+        "statement": "(x+1)/x=1+1/x은 몫이 다항식이 아니므로 이 성취기준의 핵심 계산 범위 밖이다.",
+        "reasoning": "비교 기준은 다음 정의이다: 다항식의 각 항을 같은 단항식으로 나누어 몫을 더하는 계산이다. 특히 이 적용 조건을 확인한다: 나누는 단항식은 0이 아니며, 공식 범위에서는 각 항을 나눈 몫이 다항식이 되는 경우만 다룬다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "나누는 단항식은 0이 아니며, 공식 범위에서는 각 항을 나눈 몫이 다항식이 되는 경우만 다룬다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:domain-02:meaning-to-symbol",
+        "notCurricularPrerequisite": false
+      },
+      {
+        "id": "math:explanation:polynomial-monomial-division:lens",
+        "kind": "advanced_lens",
+        "statement": "형식 다항식의 나눠떨어짐과 유리식 평가의 정의역은 구분한다. 약분으로 생긴 다항식이 원래 식의 정의역을 자동 확대하지 않는다.",
+        "reasoning": "모델이 작성한 성인용 선택 렌즈이다. 공식 학생 선수 조건이나 학년 배치 근거가 아니며 핵심 개념의 위 정의를 다른 구조와 연결해 보는 데 한정한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "나누는 단항식은 0이 아니며, 공식 범위에서는 각 항을 나눈 몫이 다항식이 되는 경우만 다룬다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:structural-adult",
+        "notCurricularPrerequisite": true
+      }
+    ],
+    "relations": []
+  },
+  {
+    "concept": {
+      "id": "math:concept:completing-square",
+      "label": "완전제곱식 만들기",
+      "definition": "최고차항의 계수가 1인 이차식 x²+bx를 (x+b/2)²−b²/4로 고쳐 나타내는 절차이다. 일반 이차식에서는 최고차항의 계수 a≠0을 밖으로 묶어 보존하고 적용하며, 방정식에서는 양변을 a로 나눈 뒤 적용할 수 있다.",
+      "conditions": [
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "mathematical_domain",
+          "statement": "실수 계수의 이차식에서 최고차항 계수 a≠0을 보존한다. a를 밖으로 묶은 식 안에서 x의 계수 절반의 제곱을 더하고 뺀다. 방정식은 양변을 a로 나눈 뒤 같은 값을 더할 수 있다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        }
+      ]
+    },
+    "explanations": [
+      {
+        "id": "math:explanation:completing-square:why",
+        "kind": "proof",
+        "statement": "최고차항의 계수가 1인 이차식 x²+bx를 (x+b/2)²−b²/4로 고쳐 나타내는 절차이다. 일반 이차식에서는 최고차항의 계수 a≠0을 밖으로 묶어 보존하고 적용하며, 방정식에서는 양변을 a로 나눈 뒤 적용할 수 있다.",
+        "reasoning": "(x+h)²=x²+2hx+h²이므로 h를 x계수의 절반으로 정하면 중간항이 맞는다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "실수 계수의 이차식에서 최고차항 계수 a≠0을 보존한다. a를 밖으로 묶은 식 안에서 x의 계수 절반의 제곱을 더하고 뺀다. 방정식은 양변을 a로 나눈 뒤 같은 값을 더할 수 있다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:domain-02:meaning-to-symbol",
+        "notCurricularPrerequisite": false
+      },
+      {
+        "id": "math:explanation:completing-square:example",
+        "kind": "example",
+        "statement": "x²+4x=5에서 양변에 4를 더하면 (x+2)²=9, x+2=±3, x=1 또는 -5이다.",
+        "reasoning": "이 예시에 적용한 개념: 최고차항의 계수가 1인 이차식 x²+bx를 (x+b/2)²−b²/4로 고쳐 나타내는 절차이다. 일반 이차식에서는 최고차항의 계수 a≠0을 밖으로 묶어 보존하고 적용하며, 방정식에서는 양변을 a로 나눈 뒤 적용할 수 있다. 적용 조건: 실수 계수의 이차식에서 최고차항 계수 a≠0을 보존한다. a를 밖으로 묶은 식 안에서 x의 계수 절반의 제곱을 더하고 뺀다. 방정식은 양변을 a로 나눈 뒤 같은 값을 더할 수 있다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "실수 계수의 이차식에서 최고차항 계수 a≠0을 보존한다. a를 밖으로 묶은 식 안에서 x의 계수 절반의 제곱을 더하고 뺀다. 방정식은 양변을 a로 나눈 뒤 같은 값을 더할 수 있다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:domain-02:meaning-to-symbol",
+        "notCurricularPrerequisite": false
+      },
+      {
+        "id": "math:explanation:completing-square:counter",
+        "kind": "misconception",
+        "statement": "x²+4x에 2를 더해 (x+2)²로 묶으면 상수 4가 필요하다는 조건을 어긴다.",
+        "reasoning": "비교 기준은 다음 정의이다: 최고차항의 계수가 1인 이차식 x²+bx를 (x+b/2)²−b²/4로 고쳐 나타내는 절차이다. 일반 이차식에서는 최고차항의 계수 a≠0을 밖으로 묶어 보존하고 적용하며, 방정식에서는 양변을 a로 나눈 뒤 적용할 수 있다. 특히 이 적용 조건을 확인한다: 실수 계수의 이차식에서 최고차항 계수 a≠0을 보존한다. a를 밖으로 묶은 식 안에서 x의 계수 절반의 제곱을 더하고 뺀다. 방정식은 양변을 a로 나눈 뒤 같은 값을 더할 수 있다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "실수 계수의 이차식에서 최고차항 계수 a≠0을 보존한다. a를 밖으로 묶은 식 안에서 x의 계수 절반의 제곱을 더하고 뺀다. 방정식은 양변을 a로 나눈 뒤 같은 값을 더할 수 있다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:domain-02:meaning-to-symbol",
+        "notCurricularPrerequisite": false
+      },
+      {
+        "id": "math:explanation:completing-square:lens",
+        "kind": "advanced_lens",
+        "statement": "2차형을 평행이동하여 선형항을 제거하는 한 변수의 정규형 변환이다.",
+        "reasoning": "모델이 작성한 성인용 선택 렌즈이다. 공식 학생 선수 조건이나 학년 배치 근거가 아니며 핵심 개념의 위 정의를 다른 구조와 연결해 보는 데 한정한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "실수 계수의 이차식에서 최고차항 계수 a≠0을 보존한다. a를 밖으로 묶은 식 안에서 x의 계수 절반의 제곱을 더하고 뺀다. 방정식은 양변을 a로 나눈 뒤 같은 값을 더할 수 있다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:structural-adult",
+        "notCurricularPrerequisite": true
+      }
+    ],
+    "relations": []
+  },
+  {
+    "concept": {
+      "id": "math:concept:quadratic-formula",
+      "label": "근의 공식",
+      "definition": "ax²+bx+c=0, a≠0이고 b²-4ac≥0일 때 실수 해는 (-b±√(b²-4ac))/(2a)이다.",
+      "conditions": [
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "mathematical_domain",
+          "statement": "제곱근 안이 음이 아닌 실수 해 사례만 다룬다. 분모는 2a 전체이며 ± 두 경우를 점검한다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        }
+      ]
+    },
+    "explanations": [
+      {
+        "id": "math:explanation:quadratic-formula:why",
+        "kind": "proof",
+        "statement": "ax²+bx+c=0, a≠0이고 b²-4ac≥0일 때 실수 해는 (-b±√(b²-4ac))/(2a)이다.",
+        "reasoning": "양변을 a로 나누고 완전제곱을 만들면 (2ax+b)²=b²-4ac가 되어 공식이 나온다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "제곱근 안이 음이 아닌 실수 해 사례만 다룬다. 분모는 2a 전체이며 ± 두 경우를 점검한다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:domain-02:meaning-to-symbol",
+        "notCurricularPrerequisite": false
+      },
+      {
+        "id": "math:explanation:quadratic-formula:example",
+        "kind": "example",
+        "statement": "2x²-3x-2=0이면 x=(3±√(9+16))/4=(3±5)/4이므로 2 또는 -1/2이다.",
+        "reasoning": "이 예시에 적용한 개념: ax²+bx+c=0, a≠0이고 b²-4ac≥0일 때 실수 해는 (-b±√(b²-4ac))/(2a)이다. 적용 조건: 제곱근 안이 음이 아닌 실수 해 사례만 다룬다. 분모는 2a 전체이며 ± 두 경우를 점검한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "제곱근 안이 음이 아닌 실수 해 사례만 다룬다. 분모는 2a 전체이며 ± 두 경우를 점검한다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:domain-02:meaning-to-symbol",
+        "notCurricularPrerequisite": false
+      },
+      {
+        "id": "math:explanation:quadratic-formula:counter",
+        "kind": "misconception",
+        "statement": "분모를 2만 쓰거나 -b의 부호를 그대로 b로 쓰면 공식의 유도와 맞지 않는다.",
+        "reasoning": "비교 기준은 다음 정의이다: ax²+bx+c=0, a≠0이고 b²-4ac≥0일 때 실수 해는 (-b±√(b²-4ac))/(2a)이다. 특히 이 적용 조건을 확인한다: 제곱근 안이 음이 아닌 실수 해 사례만 다룬다. 분모는 2a 전체이며 ± 두 경우를 점검한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "제곱근 안이 음이 아닌 실수 해 사례만 다룬다. 분모는 2a 전체이며 ± 두 경우를 점검한다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:domain-02:meaning-to-symbol",
+        "notCurricularPrerequisite": false
+      },
+      {
+        "id": "math:explanation:quadratic-formula:lens",
+        "kind": "advanced_lens",
+        "statement": "2차 다항식 영점을 계수의 식으로 나타낸 폐형식이며 제곱근 함수의 가지와 실수 존재 조건을 포함한다.",
+        "reasoning": "모델이 작성한 성인용 선택 렌즈이다. 공식 학생 선수 조건이나 학년 배치 근거가 아니며 핵심 개념의 위 정의를 다른 구조와 연결해 보는 데 한정한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "제곱근 안이 음이 아닌 실수 해 사례만 다룬다. 분모는 2a 전체이며 ± 두 경우를 점검한다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:structural-adult",
+        "notCurricularPrerequisite": true
+      }
+    ],
+    "relations": []
+  },
+  {
+    "concept": {
+      "id": "math:concept:repeated-quadratic-root",
+      "label": "중근",
+      "definition": "이차방정식이 a(x-r)²=0 꼴이 되어 서로 다른 실수 해가 하나 r인 경우 그 해를 중근이라 한다.",
+      "conditions": [
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "mathematical_domain",
+          "statement": "a≠0이며 해집합에서는 같은 값 r을 두 번 서로 다른 원소로 세지 않는다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        }
+      ]
+    },
+    "explanations": [
+      {
+        "id": "math:explanation:repeated-quadratic-root:why",
+        "kind": "proof",
+        "statement": "이차방정식이 a(x-r)²=0 꼴이 되어 서로 다른 실수 해가 하나 r인 경우 그 해를 중근이라 한다.",
+        "reasoning": "동일한 일차 인수가 두 번 나타나므로 근의 중복도는 2이지만 해의 값은 하나이다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "a≠0이며 해집합에서는 같은 값 r을 두 번 서로 다른 원소로 세지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:domain-02:meaning-to-symbol",
+        "notCurricularPrerequisite": false
+      },
+      {
+        "id": "math:explanation:repeated-quadratic-root:example",
+        "kind": "example",
+        "statement": "x²-4x+4=(x-2)²=0의 해는 x=2이고 중근이다.",
+        "reasoning": "이 예시에 적용한 개념: 이차방정식이 a(x-r)²=0 꼴이 되어 서로 다른 실수 해가 하나 r인 경우 그 해를 중근이라 한다. 적용 조건: a≠0이며 해집합에서는 같은 값 r을 두 번 서로 다른 원소로 세지 않는다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "a≠0이며 해집합에서는 같은 값 r을 두 번 서로 다른 원소로 세지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:domain-02:meaning-to-symbol",
+        "notCurricularPrerequisite": false
+      },
+      {
+        "id": "math:explanation:repeated-quadratic-root:counter",
+        "kind": "misconception",
+        "statement": "x²-4=0의 해 2,-2는 서로 다른 두 근이며 중근이 아니다.",
+        "reasoning": "비교 기준은 다음 정의이다: 이차방정식이 a(x-r)²=0 꼴이 되어 서로 다른 실수 해가 하나 r인 경우 그 해를 중근이라 한다. 특히 이 적용 조건을 확인한다: a≠0이며 해집합에서는 같은 값 r을 두 번 서로 다른 원소로 세지 않는다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "a≠0이며 해집합에서는 같은 값 r을 두 번 서로 다른 원소로 세지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:domain-02:meaning-to-symbol",
+        "notCurricularPrerequisite": false
+      },
+      {
+        "id": "math:explanation:repeated-quadratic-root:lens",
+        "kind": "advanced_lens",
+        "statement": "해집합과 대수적 중복도는 다른 정보이다. 그래프의 접함은 중복도와 연결된다.",
+        "reasoning": "모델이 작성한 성인용 선택 렌즈이다. 공식 학생 선수 조건이나 학년 배치 근거가 아니며 핵심 개념의 위 정의를 다른 구조와 연결해 보는 데 한정한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "a≠0이며 해집합에서는 같은 값 r을 두 번 서로 다른 원소로 세지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:structural-adult",
+        "notCurricularPrerequisite": true
+      }
+    ],
+    "relations": []
+  },
+  {
+    "concept": {
+      "id": "math:concept:linear-equation-graph",
+      "label": "일차함수와 일차방정식의 관계",
+      "definition": "ax+by=c, (a,b)≠(0,0)의 모든 해 (x,y)를 나타낸 그래프는 직선이다. b≠0이면 y=-(a/b)x+c/b로 바꿀 수 있다.",
+      "conditions": [
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "mathematical_domain",
+          "statement": "b=0이면 y축에 평행한 직선 x=c/a라서 y가 x의 함수가 아니다. a=0이면 수평선이며 학교 정의의 일차함수는 아니다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        }
+      ]
+    },
+    "explanations": [
+      {
+        "id": "math:explanation:linear-equation-graph:why",
+        "kind": "proof",
+        "statement": "ax+by=c, (a,b)≠(0,0)의 모든 해 (x,y)를 나타낸 그래프는 직선이다. b≠0이면 y=-(a/b)x+c/b로 바꿀 수 있다.",
+        "reasoning": "대수적 해집합을 좌표점으로 읽으면 방정식과 직선이 같은 관계의 두 표현이 된다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "b=0이면 y축에 평행한 직선 x=c/a라서 y가 x의 함수가 아니다. a=0이면 수평선이며 학교 정의의 일차함수는 아니다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:domain-02:meaning-to-symbol",
+        "notCurricularPrerequisite": false
+      },
+      {
+        "id": "math:explanation:linear-equation-graph:example",
+        "kind": "example",
+        "statement": "2x+y=4는 y=-2x+4이므로 일차함수 그래프이다. 2x=4는 x=2라는 y축에 평행한 직선이다.",
+        "reasoning": "이 예시에 적용한 개념: ax+by=c, (a,b)≠(0,0)의 모든 해 (x,y)를 나타낸 그래프는 직선이다. b≠0이면 y=-(a/b)x+c/b로 바꿀 수 있다. 적용 조건: b=0이면 y축에 평행한 직선 x=c/a라서 y가 x의 함수가 아니다. a=0이면 수평선이며 학교 정의의 일차함수는 아니다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "b=0이면 y축에 평행한 직선 x=c/a라서 y가 x의 함수가 아니다. a=0이면 수평선이며 학교 정의의 일차함수는 아니다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:domain-02:meaning-to-symbol",
+        "notCurricularPrerequisite": false
+      },
+      {
+        "id": "math:explanation:linear-equation-graph:counter",
+        "kind": "misconception",
+        "statement": "모든 두 미지수 일차방정식이 학교의 일차함수라고 하면 y축에 평행한 직선과 상수함수 사례를 놓친다.",
+        "reasoning": "비교 기준은 다음 정의이다: ax+by=c, (a,b)≠(0,0)의 모든 해 (x,y)를 나타낸 그래프는 직선이다. b≠0이면 y=-(a/b)x+c/b로 바꿀 수 있다. 특히 이 적용 조건을 확인한다: b=0이면 y축에 평행한 직선 x=c/a라서 y가 x의 함수가 아니다. a=0이면 수평선이며 학교 정의의 일차함수는 아니다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "b=0이면 y축에 평행한 직선 x=c/a라서 y가 x의 함수가 아니다. a=0이면 수평선이며 학교 정의의 일차함수는 아니다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:domain-02:meaning-to-symbol",
+        "notCurricularPrerequisite": false
+      },
+      {
+        "id": "math:explanation:linear-equation-graph:lens",
+        "kind": "advanced_lens",
+        "statement": "수준집합으로서의 직선과 함수 그래프는 같을 수 있으나 범주가 완전히 일치하지는 않는다.",
+        "reasoning": "모델이 작성한 성인용 선택 렌즈이다. 공식 학생 선수 조건이나 학년 배치 근거가 아니며 핵심 개념의 위 정의를 다른 구조와 연결해 보는 데 한정한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "b=0이면 y축에 평행한 직선 x=c/a라서 y가 x의 함수가 아니다. a=0이면 수평선이며 학교 정의의 일차함수는 아니다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:structural-adult",
+        "notCurricularPrerequisite": true
+      }
+    ],
+    "relations": []
+  },
+  {
+    "concept": {
+      "id": "math:concept:graph-translation",
+      "label": "평행이동",
+      "definition": "그래프의 모든 점을 같은 방향으로 같은 거리만큼 옮기는 변환이다. y=f(x)를 오른쪽 p, 위쪽 q만큼 옮기면 y=f(x-p)+q이다.",
+      "conditions": [
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "mathematical_domain",
+          "statement": "x 방향 이동은 식 안에서 x-p로 나타난다. 실제 허용 입력 범위도 함께 이동하는지 상황에 따라 확인한다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        }
+      ]
+    },
+    "explanations": [
+      {
+        "id": "math:explanation:graph-translation:why",
+        "kind": "proof",
+        "statement": "그래프의 모든 점을 같은 방향으로 같은 거리만큼 옮기는 변환이다. y=f(x)를 오른쪽 p, 위쪽 q만큼 옮기면 y=f(x-p)+q이다.",
+        "reasoning": "원래 점 (u,f(u))가 (u+p,f(u)+q)가 되어 x=u+p에서 u=x-p이다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "x 방향 이동은 식 안에서 x-p로 나타난다. 실제 허용 입력 범위도 함께 이동하는지 상황에 따라 확인한다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:domain-02:meaning-to-symbol",
+        "notCurricularPrerequisite": false
+      },
+      {
+        "id": "math:explanation:graph-translation:example",
+        "kind": "example",
+        "statement": "y=2x를 위로 3만큼 옮기면 y=2x+3이다. y=x²를 오른쪽 2, 위쪽 3 옮기면 y=(x-2)²+3이고 꼭짓점은 (2,3)이다.",
+        "reasoning": "이 예시에 적용한 개념: 그래프의 모든 점을 같은 방향으로 같은 거리만큼 옮기는 변환이다. y=f(x)를 오른쪽 p, 위쪽 q만큼 옮기면 y=f(x-p)+q이다. 적용 조건: x 방향 이동은 식 안에서 x-p로 나타난다. 실제 허용 입력 범위도 함께 이동하는지 상황에 따라 확인한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "x 방향 이동은 식 안에서 x-p로 나타난다. 실제 허용 입력 범위도 함께 이동하는지 상황에 따라 확인한다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:domain-02:meaning-to-symbol",
+        "notCurricularPrerequisite": false
+      },
+      {
+        "id": "math:explanation:graph-translation:counter",
+        "kind": "misconception",
+        "statement": "y=f(x+2)는 오른쪽 2가 아니라 왼쪽 2 이동이다.",
+        "reasoning": "비교 기준은 다음 정의이다: 그래프의 모든 점을 같은 방향으로 같은 거리만큼 옮기는 변환이다. y=f(x)를 오른쪽 p, 위쪽 q만큼 옮기면 y=f(x-p)+q이다. 특히 이 적용 조건을 확인한다: x 방향 이동은 식 안에서 x-p로 나타난다. 실제 허용 입력 범위도 함께 이동하는지 상황에 따라 확인한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "x 방향 이동은 식 안에서 x-p로 나타난다. 실제 허용 입력 범위도 함께 이동하는지 상황에 따라 확인한다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:domain-02:meaning-to-symbol",
+        "notCurricularPrerequisite": false
+      },
+      {
+        "id": "math:explanation:graph-translation:lens",
+        "kind": "advanced_lens",
+        "statement": "아핀 군 작용의 예이며 그래프의 모양을 보존하면서 좌표 표현을 바꾼다.",
+        "reasoning": "모델이 작성한 성인용 선택 렌즈이다. 공식 학생 선수 조건이나 학년 배치 근거가 아니며 핵심 개념의 위 정의를 다른 구조와 연결해 보는 데 한정한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "x 방향 이동은 식 안에서 x-p로 나타난다. 실제 허용 입력 범위도 함께 이동하는지 상황에 따라 확인한다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:structural-adult",
+        "notCurricularPrerequisite": true
+      }
+    ],
+    "relations": []
+  },
+  {
+    "concept": {
+      "id": "math:concept:similarity",
+      "label": "닮음",
+      "definition": "한 도형을 일정한 양의 비율로 확대하거나 축소한 뒤 평행이동·회전·반사하여 다른 도형과 완전히 겹칠 수 있을 때 두 도형은 닮음이다. 다각형에서는 정해진 대응에 따라 대응각의 크기가 각각 같고 대응변 길이의 비가 일정하다.",
+      "conditions": [
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "mathematical_domain",
+          "statement": "유클리드 평면 또는 공간의 비퇴화 도형을 다루고 길이·반지름·높이는 해당 도형의 조건에 맞게 양수로 둔다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        },
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "pedagogical_route",
+          "statement": "다각형과 다면체는 볼록한 모양으로 한정한다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        },
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "pedagogical_route",
+          "statement": "증명에서 가정·결론이라는 용어는 다루지 않는다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        },
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "pedagogical_route",
+          "statement": "복잡하게 변형된 도형의 둘레·넓이·겉넓이·부피 계산은 제외한다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        },
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "pedagogical_route",
+          "statement": "정당화 평가에서 지나치게 엄밀한 형식 논리 규칙을 요구하지 않는다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        }
+      ]
+    },
+    "explanations": [
+      {
+        "id": "math:explanation:similarity:example",
+        "kind": "example",
+        "statement": "변 길이가 3,4,5인 삼각형과 6,8,10인 삼각형은 닮음이다.",
+        "reasoning": "대응하는 모든 길이에 같은 배율 2가 적용된다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "유클리드 평면 또는 공간의 비퇴화 도형을 다루고 길이·반지름·높이는 해당 도형의 조건에 맞게 양수로 둔다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "다각형과 다면체는 볼록한 모양으로 한정한다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "증명에서 가정·결론이라는 용어는 다루지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "복잡하게 변형된 도형의 둘레·넓이·겉넓이·부피 계산은 제외한다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "정당화 평가에서 지나치게 엄밀한 형식 논리 규칙을 요구하지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:structural-adult",
+        "notCurricularPrerequisite": true
+      },
+      {
+        "id": "math:explanation:similarity:misconception",
+        "kind": "misconception",
+        "statement": "한 쌍의 변 길이 비만 같으면 모든 도형이 닮았다고 판단하지 않는다.",
+        "reasoning": "대응 관계, 적용 조건, 단위, 충분한 판별 조건을 원래 정의와 대조한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "유클리드 평면 또는 공간의 비퇴화 도형을 다루고 길이·반지름·높이는 해당 도형의 조건에 맞게 양수로 둔다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "다각형과 다면체는 볼록한 모양으로 한정한다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "증명에서 가정·결론이라는 용어는 다루지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "복잡하게 변형된 도형의 둘레·넓이·겉넓이·부피 계산은 제외한다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "정당화 평가에서 지나치게 엄밀한 형식 논리 규칙을 요구하지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:structural-adult",
+        "notCurricularPrerequisite": true
+      }
+    ],
+    "relations": [
+      {
+        "id": "math:relation:domain-03:similarity-to-similarity-ratio",
+        "source": "math:concept:similarity",
+        "target": "math:concept:similarity-ratio",
+        "type": "required_prerequisite",
+        "rationale": "닮음비를 설명할 때 닮음의 의미나 성질을 연결한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "정의와 도형 구조를 연결하는 이 설명 경로에 한정한다. 공식 교육과정이 정한 유일한 선수 순서라는 주장이 아니다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ]
+      },
+      {
+        "id": "math:relation:domain-03:similarity-to-triangle-similarity-criteria",
+        "source": "math:concept:similarity",
+        "target": "math:concept:triangle-similarity-criteria",
+        "type": "required_prerequisite",
+        "rationale": "삼각형의 닮음 조건을 설명할 때 닮음의 의미나 성질을 연결한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "정의와 도형 구조를 연결하는 이 설명 경로에 한정한다. 공식 교육과정이 정한 유일한 선수 순서라는 주장이 아니다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "concept": {
+      "id": "math:concept:triangle-congruence-criteria",
+      "label": "삼각형의 합동 조건",
+      "definition": "대응하는 세 변의 길이가 각각 같거나, 대응하는 두 변의 길이와 그 끼인각의 크기가 각각 같거나, 대응하는 한 변의 길이와 그 양 끝 각의 크기가 각각 같으면 두 삼각형은 합동이다.",
+      "conditions": [
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "mathematical_domain",
+          "statement": "유클리드 평면 또는 공간의 비퇴화 도형을 다루고 길이·반지름·높이는 해당 도형의 조건에 맞게 양수로 둔다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        },
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "pedagogical_route",
+          "statement": "다각형과 다면체는 볼록한 모양으로 한정한다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        },
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "pedagogical_route",
+          "statement": "증명에서 가정·결론이라는 용어는 다루지 않는다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        },
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "pedagogical_route",
+          "statement": "복잡하게 변형된 도형의 둘레·넓이·겉넓이·부피 계산은 제외한다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        },
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "pedagogical_route",
+          "statement": "정당화 평가에서 지나치게 엄밀한 형식 논리 규칙을 요구하지 않는다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        }
+      ]
+    },
+    "explanations": [
+      {
+        "id": "math:explanation:triangle-congruence-criteria:example",
+        "kind": "example",
+        "statement": "두 변이 각각 3과 4이고 그 끼인각이 60도인 두 삼각형은 합동이다.",
+        "reasoning": "주어진 요소들이 삼각형의 모양과 크기를 결정하는 조건인지 확인한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "유클리드 평면 또는 공간의 비퇴화 도형을 다루고 길이·반지름·높이는 해당 도형의 조건에 맞게 양수로 둔다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "다각형과 다면체는 볼록한 모양으로 한정한다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "증명에서 가정·결론이라는 용어는 다루지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "복잡하게 변형된 도형의 둘레·넓이·겉넓이·부피 계산은 제외한다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "정당화 평가에서 지나치게 엄밀한 형식 논리 규칙을 요구하지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:structural-adult",
+        "notCurricularPrerequisite": true
+      },
+      {
+        "id": "math:explanation:triangle-congruence-criteria:misconception",
+        "kind": "misconception",
+        "statement": "두 변과 끼인각이 아닌 각을 주는 SSA를 언제나 합동 조건으로 쓰지 않는다.",
+        "reasoning": "대응 관계, 적용 조건, 단위, 충분한 판별 조건을 원래 정의와 대조한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "유클리드 평면 또는 공간의 비퇴화 도형을 다루고 길이·반지름·높이는 해당 도형의 조건에 맞게 양수로 둔다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "다각형과 다면체는 볼록한 모양으로 한정한다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "증명에서 가정·결론이라는 용어는 다루지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "복잡하게 변형된 도형의 둘레·넓이·겉넓이·부피 계산은 제외한다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "정당화 평가에서 지나치게 엄밀한 형식 논리 규칙을 요구하지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:structural-adult",
+        "notCurricularPrerequisite": true
+      }
+    ],
+    "relations": [
+      {
+        "id": "math:relation:domain-03:congruence-to-triangle-congruence-criteria",
+        "source": "math:concept:congruence",
+        "target": "math:concept:triangle-congruence-criteria",
+        "type": "required_prerequisite",
+        "rationale": "삼각형의 합동 조건을 설명할 때 합동의 의미나 성질을 연결한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "정의와 도형 구조를 연결하는 이 설명 경로에 한정한다. 공식 교육과정이 정한 유일한 선수 순서라는 주장이 아니다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ]
+      },
+      {
+        "id": "math:relation:domain-03:triangle-congruence-criteria-to-isosceles-triangle",
+        "source": "math:concept:triangle-congruence-criteria",
+        "target": "math:concept:isosceles-triangle",
+        "type": "helpful_prerequisite",
+        "rationale": "이등변삼각형의 성질을 설명할 때 삼각형의 합동 조건의 의미나 성질을 연결한다. 도움이 되는 연결이며 보편적 필수성은 주장하지 않는다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "정의와 도형 구조를 연결하는 이 설명 경로에 한정한다. 공식 교육과정이 정한 유일한 선수 순서라는 주장이 아니다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ]
+      },
+      {
+        "id": "math:relation:domain-03:triangle-congruence-criteria-to-incenter",
+        "source": "math:concept:triangle-congruence-criteria",
+        "target": "math:concept:incenter",
+        "type": "helpful_prerequisite",
+        "rationale": "삼각형의 내심을 설명할 때 삼각형의 합동 조건의 의미나 성질을 연결한다. 도움이 되는 연결이며 보편적 필수성은 주장하지 않는다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "정의와 도형 구조를 연결하는 이 설명 경로에 한정한다. 공식 교육과정이 정한 유일한 선수 순서라는 주장이 아니다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ]
+      },
+      {
+        "id": "math:relation:domain-03:triangle-congruence-criteria-to-parallelogram-diagonals",
+        "source": "math:concept:triangle-congruence-criteria",
+        "target": "math:concept:parallelogram-diagonals",
+        "type": "helpful_prerequisite",
+        "rationale": "평행사변형의 대각선의 성질을 설명할 때 삼각형의 합동 조건의 의미나 성질을 연결한다. 도움이 되는 연결이며 보편적 필수성은 주장하지 않는다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "정의와 도형 구조를 연결하는 이 설명 경로에 한정한다. 공식 교육과정이 정한 유일한 선수 순서라는 주장이 아니다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "concept": {
+      "id": "math:concept:sphere",
+      "label": "구",
+      "definition": "공간에서 한 점으로부터 일정한 거리 이하에 있는 점들이 이루는 입체이다. 그 경계의 점들은 중심에서 같은 거리에 있다.",
+      "conditions": [
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "mathematical_domain",
+          "statement": "유클리드 평면 또는 공간의 비퇴화 도형을 다루고 길이·반지름·높이는 해당 도형의 조건에 맞게 양수로 둔다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        }
+      ]
+    },
+    "explanations": [
+      {
+        "id": "math:explanation:sphere:example",
+        "kind": "example",
+        "statement": "구의 중심에서 표면까지의 거리는 방향에 관계없이 반지름 r이다.",
+        "reasoning": "원은 평면의 도형이고 구는 공간의 입체라는 차이를 구분한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "유클리드 평면 또는 공간의 비퇴화 도형을 다루고 길이·반지름·높이는 해당 도형의 조건에 맞게 양수로 둔다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:structural-adult",
+        "notCurricularPrerequisite": true
+      },
+      {
+        "id": "math:explanation:sphere:misconception",
+        "kind": "misconception",
+        "statement": "구의 겉면을 여러 평면 다각형 면의 모임으로 이해하지 않는다.",
+        "reasoning": "대응 관계, 적용 조건, 단위, 충분한 판별 조건을 원래 정의와 대조한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "유클리드 평면 또는 공간의 비퇴화 도형을 다루고 길이·반지름·높이는 해당 도형의 조건에 맞게 양수로 둔다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:structural-adult",
+        "notCurricularPrerequisite": true
+      },
+      {
+        "id": "math:explanation:sphere:advanced-lens",
+        "kind": "advanced_lens",
+        "statement": "구의 경계면과 내부를 포함한 입체는 차원이 다른 대상이다.",
+        "reasoning": "집합으로 구분하면 중심에서 거리가 r인 점들의 집합은 구면이고, 거리가 r 이하인 점들의 집합은 내부와 경계를 포함한 닫힌 공(closed ball)이라고 설명할 수 있다. 닫힌 공은 여기서 엄밀한 집합을 구분하기 위한 보충 설명어이다. 학교 맥락의 입체인 구를 다룰 때 겉넓이는 경계, 부피는 내부를 포함한 공간의 크기라는 구분이 유용하다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "성인·교사 설명 렌즈이며 초중등 핵심 범위나 학생의 필수 선수 요구를 추가하지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:structural-adult",
+        "notCurricularPrerequisite": true
+      }
+    ],
+    "relations": [
+      {
+        "id": "math:relation:domain-03:sphere-to-sphere-surface-area",
+        "source": "math:concept:sphere",
+        "target": "math:concept:sphere-surface-area",
+        "type": "required_prerequisite",
+        "rationale": "구의 겉넓이를 설명할 때 구의 의미나 성질을 연결한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "정의와 도형 구조를 연결하는 이 설명 경로에 한정한다. 공식 교육과정이 정한 유일한 선수 순서라는 주장이 아니다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ]
+      },
+      {
+        "id": "math:relation:domain-03:sphere-to-sphere-volume",
+        "source": "math:concept:sphere",
+        "target": "math:concept:sphere-volume",
+        "type": "required_prerequisite",
+        "rationale": "구의 부피를 설명할 때 구의 의미나 성질을 연결한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "정의와 도형 구조를 연결하는 이 설명 경로에 한정한다. 공식 교육과정이 정한 유일한 선수 순서라는 주장이 아니다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "concept": {
+      "id": "math:concept:cylinder",
+      "label": "원기둥",
+      "definition": "한 원판을 그 평면에 수직인 방향으로 일정한 거리만큼 평행이동할 때 지나가는 점들이 이루는 입체이다. 두 밑면은 평행한 합동인 원판이고, 옆면은 두 밑면 원의 대응점을 잇는 서로 평행한 선분들로 이루어진다. 여기서는 밑면에 수직인 방향으로 뻗은 원기둥을 다룬다. 원판은 경계와 내부를 함께 나타내기 위한 보충 설명어이다.",
+      "conditions": [
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "mathematical_domain",
+          "statement": "유클리드 평면 또는 공간의 비퇴화 도형을 다루고 길이·반지름·높이는 해당 도형의 조건에 맞게 양수로 둔다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        }
+      ]
+    },
+    "explanations": [
+      {
+        "id": "math:explanation:cylinder:example",
+        "kind": "example",
+        "statement": "원기둥의 두 밑면은 반지름이 같고 서로 평행하다.",
+        "reasoning": "밑면의 원과 옆면의 곡면을 구분한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "유클리드 평면 또는 공간의 비퇴화 도형을 다루고 길이·반지름·높이는 해당 도형의 조건에 맞게 양수로 둔다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:structural-adult",
+        "notCurricularPrerequisite": true
+      },
+      {
+        "id": "math:explanation:cylinder:misconception",
+        "kind": "misconception",
+        "statement": "원기둥의 옆면을 평평한 다각형 면으로 보지 않는다.",
+        "reasoning": "대응 관계, 적용 조건, 단위, 충분한 판별 조건을 원래 정의와 대조한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "유클리드 평면 또는 공간의 비퇴화 도형을 다루고 길이·반지름·높이는 해당 도형의 조건에 맞게 양수로 둔다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:structural-adult",
+        "notCurricularPrerequisite": true
+      }
+    ],
+    "relations": [
+      {
+        "id": "math:relation:domain-03:cylinder-to-cylinder-net",
+        "source": "math:concept:cylinder",
+        "target": "math:concept:cylinder-net",
+        "type": "required_prerequisite",
+        "rationale": "원기둥의 전개도를 설명할 때 원기둥의 의미나 성질을 연결한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "정의와 도형 구조를 연결하는 이 설명 경로에 한정한다. 공식 교육과정이 정한 유일한 선수 순서라는 주장이 아니다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ]
+      },
+      {
+        "id": "math:relation:domain-03:cylinder-to-solid-of-revolution",
+        "source": "math:concept:cylinder",
+        "target": "math:concept:solid-of-revolution",
+        "type": "related",
+        "rationale": "회전체를 설명할 때 원기둥의 의미나 성질을 연결한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "정의와 도형 구조를 연결하는 이 설명 경로에 한정한다. 공식 교육과정이 정한 유일한 선수 순서라는 주장이 아니다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "concept": {
+      "id": "math:concept:cone",
+      "label": "원뿔",
+      "definition": "원판의 모든 점과 그 원판이 놓인 평면 밖의 한 점을 잇는 선분들이 이루는 입체이다. 그 점을 꼭짓점이라 하고, 옆면은 꼭짓점과 밑면 원 위의 점을 잇는 선분들로 이루어진다. 여기서는 꼭짓점에서 밑면에 내린 수선의 발이 밑면 원의 중심인 원뿔을 다룬다. 원판은 경계와 내부를 함께 나타내기 위한 보충 설명어이다.",
+      "conditions": [
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "mathematical_domain",
+          "statement": "유클리드 평면 또는 공간의 비퇴화 도형을 다루고 길이·반지름·높이는 해당 도형의 조건에 맞게 양수로 둔다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        }
+      ]
+    },
+    "explanations": [
+      {
+        "id": "math:explanation:cone:example",
+        "kind": "example",
+        "statement": "원뿔의 높이는 꼭짓점에서 밑면에 내린 수선의 길이이다.",
+        "reasoning": "축 방향의 높이와 곡면을 따라 그은 모선의 길이를 구분한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "유클리드 평면 또는 공간의 비퇴화 도형을 다루고 길이·반지름·높이는 해당 도형의 조건에 맞게 양수로 둔다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:structural-adult",
+        "notCurricularPrerequisite": true
+      },
+      {
+        "id": "math:explanation:cone:misconception",
+        "kind": "misconception",
+        "statement": "높이와 모선의 길이가 항상 같다고 생각하지 않는다.",
+        "reasoning": "대응 관계, 적용 조건, 단위, 충분한 판별 조건을 원래 정의와 대조한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "유클리드 평면 또는 공간의 비퇴화 도형을 다루고 길이·반지름·높이는 해당 도형의 조건에 맞게 양수로 둔다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:structural-adult",
+        "notCurricularPrerequisite": true
+      }
+    ],
+    "relations": []
+  },
+  {
+    "concept": {
+      "id": "math:concept:cone-surface-area",
+      "label": "원뿔의 겉넓이",
+      "definition": "꼭짓점에서 밑면에 내린 수선의 발이 밑면 원의 중심인 원뿔에서, 밑면의 넓이와 부채꼴 모양으로 펼친 옆면의 넓이를 더한다.",
+      "conditions": [
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "mathematical_domain",
+          "statement": "유클리드 평면 또는 공간의 비퇴화 도형을 다루고 길이·반지름·높이는 해당 도형의 조건에 맞게 양수로 둔다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        },
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "pedagogical_route",
+          "statement": "다각형과 다면체는 볼록한 모양으로 한정한다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        },
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "pedagogical_route",
+          "statement": "증명에서 가정·결론이라는 용어는 다루지 않는다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        },
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "pedagogical_route",
+          "statement": "복잡하게 변형된 도형의 둘레·넓이·겉넓이·부피 계산은 제외한다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        },
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "pedagogical_route",
+          "statement": "정당화 평가에서 지나치게 엄밀한 형식 논리 규칙을 요구하지 않는다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        }
+      ]
+    },
+    "explanations": [
+      {
+        "id": "math:explanation:cone-surface-area:example",
+        "kind": "example",
+        "statement": "반지름 3, 모선 5인 원뿔의 겉넓이는 24π이다. 여기서는 꼭짓점에서 밑면에 내린 수선의 발이 밑면 원의 중심인 원뿔이다.",
+        "reasoning": "밑넓이 9π와 옆넓이 πrℓ=15π를 더한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "유클리드 평면 또는 공간의 비퇴화 도형을 다루고 길이·반지름·높이는 해당 도형의 조건에 맞게 양수로 둔다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "다각형과 다면체는 볼록한 모양으로 한정한다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "증명에서 가정·결론이라는 용어는 다루지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "복잡하게 변형된 도형의 둘레·넓이·겉넓이·부피 계산은 제외한다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "정당화 평가에서 지나치게 엄밀한 형식 논리 규칙을 요구하지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:structural-adult",
+        "notCurricularPrerequisite": true
+      },
+      {
+        "id": "math:explanation:cone-surface-area:misconception",
+        "kind": "misconception",
+        "statement": "옆넓이 계산에 모선 대신 수직 높이를 쓰지 않는다. 원뿔 전개도를 초5∼6 핵심 범위로 소급하지 않는다.",
+        "reasoning": "대응 관계, 적용 조건, 단위, 충분한 판별 조건을 원래 정의와 대조한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "유클리드 평면 또는 공간의 비퇴화 도형을 다루고 길이·반지름·높이는 해당 도형의 조건에 맞게 양수로 둔다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "다각형과 다면체는 볼록한 모양으로 한정한다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "증명에서 가정·결론이라는 용어는 다루지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "복잡하게 변형된 도형의 둘레·넓이·겉넓이·부피 계산은 제외한다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "정당화 평가에서 지나치게 엄밀한 형식 논리 규칙을 요구하지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:structural-adult",
+        "notCurricularPrerequisite": true
+      }
+    ],
+    "relations": [
+      {
+        "id": "math:relation:domain-03:sector-area-to-cone-surface-area",
+        "source": "math:concept:sector-area",
+        "target": "math:concept:cone-surface-area",
+        "type": "helpful_prerequisite",
+        "rationale": "원뿔의 겉넓이를 설명할 때 부채꼴의 넓이의 의미나 성질을 연결한다. 도움이 되는 연결이며 보편적 필수성은 주장하지 않는다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "정의와 도형 구조를 연결하는 이 설명 경로에 한정한다. 공식 교육과정이 정한 유일한 선수 순서라는 주장이 아니다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "concept": {
+      "id": "math:concept:special-trigonometric-values",
+      "label": "간단한 삼각비의 값",
+      "definition": "특수한 직각삼각형과 경계에서의 값으로 0도부터 90도 범위의 간단한 삼각비를 이해한다.",
+      "conditions": [
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "mathematical_domain",
+          "statement": "유클리드 평면 또는 공간의 비퇴화 도형을 다루고 길이·반지름·높이는 해당 도형의 조건에 맞게 양수로 둔다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        },
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "pedagogical_route",
+          "statement": "다각형과 다면체는 볼록한 모양으로 한정한다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        },
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "pedagogical_route",
+          "statement": "증명에서 가정·결론이라는 용어는 다루지 않는다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        },
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "pedagogical_route",
+          "statement": "삼각비 사이 관계는 제외한다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        },
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "pedagogical_route",
+          "statement": "삼각비 값의 각도 범위는 0°부터 90°까지이다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        },
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "pedagogical_route",
+          "statement": "복잡하게 변형된 도형의 둘레·넓이·겉넓이·부피 계산은 제외한다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        },
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "pedagogical_route",
+          "statement": "정당화 평가에서 지나치게 엄밀한 형식 논리 규칙을 요구하지 않는다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        }
+      ]
+    },
+    "explanations": [
+      {
+        "id": "math:explanation:special-trigonometric-values:example",
+        "kind": "example",
+        "statement": "sin 30°=1/2, cos 60°=1/2, tan 45°=1이다.",
+        "reasoning": "정삼각형을 이등분한 모양과 직각이등변삼각형을 이용한다. sin 0°=0, cos 0°=1, sin 90°=1, cos 90°=0이며 tan 90°는 정의되지 않는다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "유클리드 평면 또는 공간의 비퇴화 도형을 다루고 길이·반지름·높이는 해당 도형의 조건에 맞게 양수로 둔다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "다각형과 다면체는 볼록한 모양으로 한정한다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "증명에서 가정·결론이라는 용어는 다루지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "삼각비 사이 관계는 제외한다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "삼각비 값의 각도 범위는 0°부터 90°까지이다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "복잡하게 변형된 도형의 둘레·넓이·겉넓이·부피 계산은 제외한다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "정당화 평가에서 지나치게 엄밀한 형식 논리 규칙을 요구하지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:structural-adult",
+        "notCurricularPrerequisite": true
+      },
+      {
+        "id": "math:explanation:special-trigonometric-values:misconception",
+        "kind": "misconception",
+        "statement": "0도나 90도를 실제 예각 직각삼각형의 보통 각처럼 대입하거나 삼각비 사이 관계 공식을 핵심 범위로 추가하지 않는다.",
+        "reasoning": "대응 관계, 적용 조건, 단위, 충분한 판별 조건을 원래 정의와 대조한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "유클리드 평면 또는 공간의 비퇴화 도형을 다루고 길이·반지름·높이는 해당 도형의 조건에 맞게 양수로 둔다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "다각형과 다면체는 볼록한 모양으로 한정한다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "증명에서 가정·결론이라는 용어는 다루지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "삼각비 사이 관계는 제외한다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "삼각비 값의 각도 범위는 0°부터 90°까지이다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "복잡하게 변형된 도형의 둘레·넓이·겉넓이·부피 계산은 제외한다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          },
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "정당화 평가에서 지나치게 엄밀한 형식 논리 규칙을 요구하지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:structural-adult",
+        "notCurricularPrerequisite": true
+      }
+    ],
+    "relations": [
+      {
+        "id": "math:relation:domain-03:sine-ratio-to-special-trigonometric-values",
+        "source": "math:concept:sine-ratio",
+        "target": "math:concept:special-trigonometric-values",
+        "type": "helpful_prerequisite",
+        "rationale": "간단한 삼각비의 값을 설명할 때 사인의 의미나 성질을 연결한다. 도움이 되는 연결이며 보편적 필수성은 주장하지 않는다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "정의와 도형 구조를 연결하는 이 설명 경로에 한정한다. 공식 교육과정이 정한 유일한 선수 순서라는 주장이 아니다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ]
+      },
+      {
+        "id": "math:relation:domain-03:cosine-ratio-to-special-trigonometric-values",
+        "source": "math:concept:cosine-ratio",
+        "target": "math:concept:special-trigonometric-values",
+        "type": "helpful_prerequisite",
+        "rationale": "간단한 삼각비의 값을 설명할 때 코사인의 의미나 성질을 연결한다. 도움이 되는 연결이며 보편적 필수성은 주장하지 않는다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "정의와 도형 구조를 연결하는 이 설명 경로에 한정한다. 공식 교육과정이 정한 유일한 선수 순서라는 주장이 아니다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ]
+      },
+      {
+        "id": "math:relation:domain-03:tangent-ratio-to-special-trigonometric-values",
+        "source": "math:concept:tangent-ratio",
+        "target": "math:concept:special-trigonometric-values",
+        "type": "helpful_prerequisite",
+        "rationale": "간단한 삼각비의 값을 설명할 때 탄젠트의 의미나 성질을 연결한다. 도움이 되는 연결이며 보편적 필수성은 주장하지 않는다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "pedagogical_route",
+            "statement": "정의와 도형 구조를 연결하는 이 설명 경로에 한정한다. 공식 교육과정이 정한 유일한 선수 순서라는 주장이 아니다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "concept": {
+      "id": "math:concept:theoretical-finite-probability",
+      "label": "경우의 수의 비율로 구한 확률",
+      "definition": "유한한 기본 결과들이 일어날 가능성이 모두 같을 때 사건의 확률은 사건에 속한 경우의 수를 전체 경우의 수로 나눈 값이다.",
+      "conditions": [
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "mathematical_domain",
+          "statement": "전체 경우 수 N>0이고 기본 결과가 발생할 가능성이 모두 같다는 가정을 확인한다. 각 기본 결과의 발생 가능성이 서로 다른 상황에 경우 수 비율을 그대로 적용하지 않는다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        }
+      ]
+    },
+    "explanations": [
+      {
+        "id": "math:explanation:theoretical-finite-probability:why",
+        "kind": "proof",
+        "statement": "유한한 기본 결과들이 일어날 가능성이 모두 같을 때 사건의 확률은 사건에 속한 경우의 수를 전체 경우의 수로 나눈 값이다.",
+        "reasoning": "전체 가능성을 같은 몫으로 나눈 뒤 사건에 해당하는 몫들을 합한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "전체 경우 수 N>0이고 기본 결과가 발생할 가능성이 모두 같다는 가정을 확인한다. 각 기본 결과의 발생 가능성이 서로 다른 상황에 경우 수 비율을 그대로 적용하지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:domain-04:descriptive-reasoning",
+        "notCurricularPrerequisite": false
+      },
+      {
+        "id": "math:explanation:theoretical-finite-probability:example",
+        "kind": "example",
+        "statement": "공평한 주사위에서3보다 큰 눈은4,5,6의3가지이므로 확률은3/6=1/2이다.",
+        "reasoning": "적용하는 정의: 유한한 기본 결과들이 일어날 가능성이 모두 같을 때 사건의 확률은 사건에 속한 경우의 수를 전체 경우의 수로 나눈 값이다. 조건: 전체 경우 수 N>0이고 기본 결과가 발생할 가능성이 모두 같다는 가정을 확인한다. 각 기본 결과의 발생 가능성이 서로 다른 상황에 경우 수 비율을 그대로 적용하지 않는다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "전체 경우 수 N>0이고 기본 결과가 발생할 가능성이 모두 같다는 가정을 확인한다. 각 기본 결과의 발생 가능성이 서로 다른 상황에 경우 수 비율을 그대로 적용하지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:domain-04:descriptive-reasoning",
+        "notCurricularPrerequisite": false
+      },
+      {
+        "id": "math:explanation:theoretical-finite-probability:counter",
+        "kind": "misconception",
+        "statement": "찌그러져 특정 눈이 더 잘 나오는 주사위에도 여섯 눈 이름만 세어 각각1/6이라고 단정할 수 없다.",
+        "reasoning": "적용하는 정의: 유한한 기본 결과들이 일어날 가능성이 모두 같을 때 사건의 확률은 사건에 속한 경우의 수를 전체 경우의 수로 나눈 값이다. 조건: 전체 경우 수 N>0이고 기본 결과가 발생할 가능성이 모두 같다는 가정을 확인한다. 각 기본 결과의 발생 가능성이 서로 다른 상황에 경우 수 비율을 그대로 적용하지 않는다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "전체 경우 수 N>0이고 기본 결과가 발생할 가능성이 모두 같다는 가정을 확인한다. 각 기본 결과의 발생 가능성이 서로 다른 상황에 경우 수 비율을 그대로 적용하지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:domain-04:descriptive-reasoning",
+        "notCurricularPrerequisite": false
+      },
+      {
+        "id": "math:explanation:theoretical-finite-probability:lens",
+        "kind": "advanced_lens",
+        "statement": "유한 균등 확률공간에서의 정규화된 계수 측도이며 일반 확률은 균등 모형에 한정되지 않는다.",
+        "reasoning": "대학 수준의 선택 렌즈이며 이 개념의 학생 선수 조건으로 쓰지 않는다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "전체 경우 수 N>0이고 기본 결과가 발생할 가능성이 모두 같다는 가정을 확인한다. 각 기본 결과의 발생 가능성이 서로 다른 상황에 경우 수 비율을 그대로 적용하지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:structural-adult",
+        "notCurricularPrerequisite": true
+      }
+    ],
+    "relations": []
+  },
+  {
+    "concept": {
+      "id": "math:concept:counting-multiplication-principle",
+      "label": "경우의 수의 곱",
+      "definition": "첫 단계가 m가지이고 각 첫 단계마다 둘째 단계가 항상 n가지이면 두 단계를 함께 정하는 경우는 mn가지이다.",
+      "conditions": [
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "mathematical_domain",
+          "statement": "각 첫 선택에 가능한 둘째 선택 수가 같은지 확인한다. 경우를 곱하는 조건과 사건의 확률 독립 조건을 혼동하지 않는다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        }
+      ]
+    },
+    "explanations": [
+      {
+        "id": "math:explanation:counting-multiplication-principle:why",
+        "kind": "proof",
+        "statement": "첫 단계가 m가지이고 각 첫 단계마다 둘째 단계가 항상 n가지이면 두 단계를 함께 정하는 경우는 mn가지이다.",
+        "reasoning": "첫 경우마다 n개씩 생긴 m묶음이므로 n을 m번 더한 값이다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "각 첫 선택에 가능한 둘째 선택 수가 같은지 확인한다. 경우를 곱하는 조건과 사건의 확률 독립 조건을 혼동하지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:domain-04:descriptive-reasoning",
+        "notCurricularPrerequisite": false
+      },
+      {
+        "id": "math:explanation:counting-multiplication-principle:example",
+        "kind": "example",
+        "statement": "상의2종 각각에 하의3종이 모두 가능하면2×3=6가지이다.",
+        "reasoning": "적용하는 정의: 첫 단계가 m가지이고 각 첫 단계마다 둘째 단계가 항상 n가지이면 두 단계를 함께 정하는 경우는 mn가지이다. 조건: 각 첫 선택에 가능한 둘째 선택 수가 같은지 확인한다. 경우를 곱하는 조건과 사건의 확률 독립 조건을 혼동하지 않는다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "각 첫 선택에 가능한 둘째 선택 수가 같은지 확인한다. 경우를 곱하는 조건과 사건의 확률 독립 조건을 혼동하지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:domain-04:descriptive-reasoning",
+        "notCurricularPrerequisite": false
+      },
+      {
+        "id": "math:explanation:counting-multiplication-principle:counter",
+        "kind": "misconception",
+        "statement": "첫 상의에는 하의3종, 둘째에는2종만 가능하다면2×3이 아니라3+2=5가지이다.",
+        "reasoning": "적용하는 정의: 첫 단계가 m가지이고 각 첫 단계마다 둘째 단계가 항상 n가지이면 두 단계를 함께 정하는 경우는 mn가지이다. 조건: 각 첫 선택에 가능한 둘째 선택 수가 같은지 확인한다. 경우를 곱하는 조건과 사건의 확률 독립 조건을 혼동하지 않는다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "각 첫 선택에 가능한 둘째 선택 수가 같은지 확인한다. 경우를 곱하는 조건과 사건의 확률 독립 조건을 혼동하지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:domain-04:descriptive-reasoning",
+        "notCurricularPrerequisite": false
+      },
+      {
+        "id": "math:explanation:counting-multiplication-principle:lens",
+        "kind": "advanced_lens",
+        "statement": "곱집합의 크기 또는 동일 분기 수를 가진 트리의 잎 수를 센다. 확률의 곱셈은 추가 가정을 요구한다.",
+        "reasoning": "대학 수준의 선택 렌즈이며 이 개념의 학생 선수 조건으로 쓰지 않는다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "각 첫 선택에 가능한 둘째 선택 수가 같은지 확인한다. 경우를 곱하는 조건과 사건의 확률 독립 조건을 혼동하지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:structural-adult",
+        "notCurricularPrerequisite": true
+      }
+    ],
+    "relations": []
+  },
+  {
+    "concept": {
+      "id": "math:concept:probability-frequency-connection",
+      "label": "확률과 상대도수의 연결",
+      "definition": "조건을 유지한 반복 실험의 상대도수와 모형에서 구한 확률을 비교하여 가능성을 이해하는 관점이다.",
+      "conditions": [
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "mathematical_domain",
+          "statement": "횟수가 늘어도 매번 확률에 더 가까워진다고 주장하지 않는다. 공식 핵심은 관찰과 이론의 의미 연결이며 법칙의 증명·추정오차 공식은 제외한다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        }
+      ]
+    },
+    "explanations": [
+      {
+        "id": "math:explanation:probability-frequency-connection:why",
+        "kind": "proof",
+        "statement": "조건을 유지한 반복 실험의 상대도수와 모형에서 구한 확률을 비교하여 가능성을 이해하는 관점이다.",
+        "reasoning": "이론은 모형 가정에서 계산한 값이고 실험은 실제 관측값이어서 둘의 차이를 살피면 가정과 우연 변동을 점검할 수 있다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "횟수가 늘어도 매번 확률에 더 가까워진다고 주장하지 않는다. 공식 핵심은 관찰과 이론의 의미 연결이며 법칙의 증명·추정오차 공식은 제외한다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:domain-04:descriptive-reasoning",
+        "notCurricularPrerequisite": false
+      },
+      {
+        "id": "math:explanation:probability-frequency-connection:example",
+        "kind": "example",
+        "statement": "공평 동전 모형의 앞면 확률1/2와 가상 실험20회 중12회인0.6을 비교한다. 반복 수를 늘려 경향을 관찰하되 매번0.5가 되지는 않는다.",
+        "reasoning": "적용하는 정의: 조건을 유지한 반복 실험의 상대도수와 모형에서 구한 확률을 비교하여 가능성을 이해하는 관점이다. 조건: 횟수가 늘어도 매번 확률에 더 가까워진다고 주장하지 않는다. 공식 핵심은 관찰과 이론의 의미 연결이며 법칙의 증명·추정오차 공식은 제외한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "횟수가 늘어도 매번 확률에 더 가까워진다고 주장하지 않는다. 공식 핵심은 관찰과 이론의 의미 연결이며 법칙의 증명·추정오차 공식은 제외한다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:domain-04:descriptive-reasoning",
+        "notCurricularPrerequisite": false
+      },
+      {
+        "id": "math:explanation:probability-frequency-connection:counter",
+        "kind": "misconception",
+        "statement": "앞면 상대도수가 이론값보다 높으니 다음 시행은 반드시 뒷면이어야 한다는 보상 법칙은 없다.",
+        "reasoning": "적용하는 정의: 조건을 유지한 반복 실험의 상대도수와 모형에서 구한 확률을 비교하여 가능성을 이해하는 관점이다. 조건: 횟수가 늘어도 매번 확률에 더 가까워진다고 주장하지 않는다. 공식 핵심은 관찰과 이론의 의미 연결이며 법칙의 증명·추정오차 공식은 제외한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "횟수가 늘어도 매번 확률에 더 가까워진다고 주장하지 않는다. 공식 핵심은 관찰과 이론의 의미 연결이며 법칙의 증명·추정오차 공식은 제외한다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:domain-04:descriptive-reasoning",
+        "notCurricularPrerequisite": false
+      },
+      {
+        "id": "math:explanation:probability-frequency-connection:lens",
+        "kind": "advanced_lens",
+        "statement": "확률 모형과 경험분포의 관계는 통계적 추론의 기반이지만 신뢰구간·검정은 이 범위로 가져오지 않는다.",
+        "reasoning": "대학 수준의 선택 렌즈이며 이 개념의 학생 선수 조건으로 쓰지 않는다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "횟수가 늘어도 매번 확률에 더 가까워진다고 주장하지 않는다. 공식 핵심은 관찰과 이론의 의미 연결이며 법칙의 증명·추정오차 공식은 제외한다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:structural-adult",
+        "notCurricularPrerequisite": true
+      }
+    ],
+    "relations": []
+  },
+  {
+    "concept": {
+      "id": "math:concept:descriptive-variance",
+      "label": "분산",
+      "definition": "각 자료값의 평균에 대한 편차를 제곱한 뒤 그 값들의 평균을 구한 것이다.",
+      "conditions": [
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "mathematical_domain",
+          "statement": "자료 개수 n>0이며 이 기술통계 정의의 분모는 n이다. 모집단 분산 추정을 위한 분모 보정은 핵심 내용에 넣지 않는다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        }
+      ]
+    },
+    "explanations": [
+      {
+        "id": "math:explanation:descriptive-variance:why",
+        "kind": "proof",
+        "statement": "각 자료값의 평균에 대한 편차를 제곱한 뒤 그 값들의 평균을 구한 것이다.",
+        "reasoning": "편차는 합하면0이므로 제곱하여 상쇄를 막고 큰 거리에 더 큰 값을 부여한다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "자료 개수 n>0이며 이 기술통계 정의의 분모는 n이다. 모집단 분산 추정을 위한 분모 보정은 핵심 내용에 넣지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:domain-04:descriptive-reasoning",
+        "notCurricularPrerequisite": false
+      },
+      {
+        "id": "math:explanation:descriptive-variance:example",
+        "kind": "example",
+        "statement": "가상2,4,6의 편차 제곱은4,0,4이므로 분산은8/3이다. 세 값이 모두4이면 분산은0이다.",
+        "reasoning": "적용하는 정의: 각 자료값의 평균에 대한 편차를 제곱한 뒤 그 값들의 평균을 구한 것이다. 조건: 자료 개수 n>0이며 이 기술통계 정의의 분모는 n이다. 모집단 분산 추정을 위한 분모 보정은 핵심 내용에 넣지 않는다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "자료 개수 n>0이며 이 기술통계 정의의 분모는 n이다. 모집단 분산 추정을 위한 분모 보정은 핵심 내용에 넣지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:domain-04:descriptive-reasoning",
+        "notCurricularPrerequisite": false
+      },
+      {
+        "id": "math:explanation:descriptive-variance:counter",
+        "kind": "misconception",
+        "statement": "편차의 평균0을 분산이라고 하거나 제곱합8을3으로 나누지 않으면 정의와 다르다.",
+        "reasoning": "적용하는 정의: 각 자료값의 평균에 대한 편차를 제곱한 뒤 그 값들의 평균을 구한 것이다. 조건: 자료 개수 n>0이며 이 기술통계 정의의 분모는 n이다. 모집단 분산 추정을 위한 분모 보정은 핵심 내용에 넣지 않는다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "자료 개수 n>0이며 이 기술통계 정의의 분모는 n이다. 모집단 분산 추정을 위한 분모 보정은 핵심 내용에 넣지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:domain-04:descriptive-reasoning",
+        "notCurricularPrerequisite": false
+      },
+      {
+        "id": "math:explanation:descriptive-variance:lens",
+        "kind": "advanced_lens",
+        "statement": "분산은 중심에 대한2차 모멘트이다. 추정량에서 나타나는 n-1과 여기서의 기술적 n 분모는 서로 다른 목적이다.",
+        "reasoning": "대학 수준의 선택 렌즈이며 이 개념의 학생 선수 조건으로 쓰지 않는다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "자료 개수 n>0이며 이 기술통계 정의의 분모는 n이다. 모집단 분산 추정을 위한 분모 보정은 핵심 내용에 넣지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:structural-adult",
+        "notCurricularPrerequisite": true
+      }
+    ],
+    "relations": []
+  },
+  {
+    "concept": {
+      "id": "math:concept:quartiles",
+      "label": "사분위수",
+      "definition": "자료를 크기순으로 정렬했을 때 아래에서부터 각각 약 25%, 50%, 75%에 해당하는 위치를 요약하는 값으로 제1·제2·제3사분위수라 한다. 제2사분위수는 중앙값이다.",
+      "conditions": [
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "mathematical_domain",
+          "statement": "이 예시에서는 자료가 적어도2개일 때 아래·위 절반의 중앙값을 사용하는 규약을 쓴다. 자료의 개수가 홀수일 때 전체 중앙값을 두 절반에 포함하는지 제외하는지도 함께 밝힌다. 유한 자료의 정확한 계산 규약은 도구마다 다를 수 있으므로 사용 규약을 밝힌다. 규약 차이를 계산 오류로 단정하지 않는다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        }
+      ]
+    },
+    "explanations": [
+      {
+        "id": "math:explanation:quartiles:why",
+        "kind": "proof",
+        "statement": "자료를 크기순으로 정렬했을 때 아래에서부터 각각 약 25%, 50%, 75%에 해당하는 위치를 요약하는 값으로 제1·제2·제3사분위수라 한다. 제2사분위수는 중앙값이다.",
+        "reasoning": "자료를 네 부분의 위치로 요약하면 중심과 양쪽 퍼짐을 적은 수로 비교할 수 있다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "이 예시에서는 자료가 적어도2개일 때 아래·위 절반의 중앙값을 사용하는 규약을 쓴다. 자료의 개수가 홀수일 때 전체 중앙값을 두 절반에 포함하는지 제외하는지도 함께 밝힌다. 유한 자료의 정확한 계산 규약은 도구마다 다를 수 있으므로 사용 규약을 밝힌다. 규약 차이를 계산 오류로 단정하지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:domain-04:descriptive-reasoning",
+        "notCurricularPrerequisite": false
+      },
+      {
+        "id": "math:explanation:quartiles:example",
+        "kind": "example",
+        "statement": "가상1,2,3,4,5,6,7,8에서 아래·위 절반의 중앙값을 쓰는 규약이면 Q1=2.5,Q2=4.5,Q3=6.5이다.",
+        "reasoning": "적용하는 정의: 크기순 자료의 아래쪽25%, 가운데50%, 위쪽75% 위치를 요약하는 값으로 제1·제2·제3사분위수라 한다. 제2사분위수는 중앙값이다. 조건: 이 예시에서는 자료가 적어도2개일 때 아래·위 절반의 중앙값을 사용하는 규약을 쓴다. 자료의 개수가 홀수일 때 전체 중앙값을 두 절반에 포함하는지 제외하는지도 함께 밝힌다. 유한 자료의 정확한 계산 규약은 도구마다 다를 수 있으므로 사용 규약을 밝힌다. 규약 차이를 계산 오류로 단정하지 않는다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "이 예시에서는 자료가 적어도2개일 때 아래·위 절반의 중앙값을 사용하는 규약을 쓴다. 자료의 개수가 홀수일 때 전체 중앙값을 두 절반에 포함하는지 제외하는지도 함께 밝힌다. 유한 자료의 정확한 계산 규약은 도구마다 다를 수 있으므로 사용 규약을 밝힌다. 규약 차이를 계산 오류로 단정하지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:domain-04:descriptive-reasoning",
+        "notCurricularPrerequisite": false
+      },
+      {
+        "id": "math:explanation:quartiles:counter",
+        "kind": "misconception",
+        "statement": "같은8개 자료에서 다른 보간 규약이 Q1=2.75를 준다고 무조건 오류라고 하지 않는다. 도구 규약을 먼저 확인한다.",
+        "reasoning": "적용하는 정의: 크기순 자료의 아래쪽25%, 가운데50%, 위쪽75% 위치를 요약하는 값으로 제1·제2·제3사분위수라 한다. 제2사분위수는 중앙값이다. 조건: 이 예시에서는 자료가 적어도2개일 때 아래·위 절반의 중앙값을 사용하는 규약을 쓴다. 자료의 개수가 홀수일 때 전체 중앙값을 두 절반에 포함하는지 제외하는지도 함께 밝힌다. 유한 자료의 정확한 계산 규약은 도구마다 다를 수 있으므로 사용 규약을 밝힌다. 규약 차이를 계산 오류로 단정하지 않는다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "이 예시에서는 자료가 적어도2개일 때 아래·위 절반의 중앙값을 사용하는 규약을 쓴다. 자료의 개수가 홀수일 때 전체 중앙값을 두 절반에 포함하는지 제외하는지도 함께 밝힌다. 유한 자료의 정확한 계산 규약은 도구마다 다를 수 있으므로 사용 규약을 밝힌다. 규약 차이를 계산 오류로 단정하지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:domain-04:descriptive-reasoning",
+        "notCurricularPrerequisite": false
+      },
+      {
+        "id": "math:explanation:quartiles:lens",
+        "kind": "advanced_lens",
+        "statement": "사분위수는 표본 분위수이며 경험분포의 역을 정의하는 여러 유한 표본 보간 방식이 있다.",
+        "reasoning": "대학 수준의 선택 렌즈이며 이 개념의 학생 선수 조건으로 쓰지 않는다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "이 예시에서는 자료가 적어도2개일 때 아래·위 절반의 중앙값을 사용하는 규약을 쓴다. 자료의 개수가 홀수일 때 전체 중앙값을 두 절반에 포함하는지 제외하는지도 함께 밝힌다. 유한 자료의 정확한 계산 규약은 도구마다 다를 수 있으므로 사용 규약을 밝힌다. 규약 차이를 계산 오류로 단정하지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:structural-adult",
+        "notCurricularPrerequisite": true
+      }
+    ],
+    "relations": []
+  },
+  {
+    "concept": {
+      "id": "math:concept:boxplot",
+      "label": "상자그림",
+      "definition": "사분위수로 만든 상자, 중앙값 표시와 양쪽 수염을 통해 한 수치형 자료의 분포를 요약한 그림이다.",
+      "conditions": [
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "mathematical_domain",
+          "statement": "자료가 비어 있지 않아야 한다. 공학 도구를 사용하여 그리며 사분위수·수염 규약과 축척을 확인한다. 기본형 수염은 최솟값·최댓값이지만 일부 도구는 별도 규약을 쓴다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        }
+      ]
+    },
+    "explanations": [
+      {
+        "id": "math:explanation:boxplot:why",
+        "kind": "proof",
+        "statement": "사분위수로 만든 상자, 중앙값 표시와 양쪽 수염을 통해 한 수치형 자료의 분포를 요약한 그림이다.",
+        "reasoning": "상자의 위치와 길이, 중앙선, 수염을 함께 읽어 중심과 흩어짐을 비교할 수 있다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "자료가 비어 있지 않아야 한다. 공학 도구를 사용하여 그리며 사분위수·수염 규약과 축척을 확인한다. 기본형 수염은 최솟값·최댓값이지만 일부 도구는 별도 규약을 쓴다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:domain-04:descriptive-reasoning",
+        "notCurricularPrerequisite": false
+      },
+      {
+        "id": "math:explanation:boxplot:example",
+        "kind": "example",
+        "statement": "가상1부터8까지 자료의 절반 중앙값·최소최대 수염 규약이면 상자는2.5에서6.5, 중앙선4.5, 수염 끝1과8이다.",
+        "reasoning": "적용하는 정의: 사분위수로 만든 상자, 중앙값 표시와 양쪽 수염을 통해 한 수치형 자료의 분포를 요약한 그림이다. 조건: 자료가 비어 있지 않아야 한다. 공학 도구를 사용하여 그리며 사분위수·수염 규약과 축척을 확인한다. 기본형 수염은 최솟값·최댓값이지만 일부 도구는 별도 규약을 쓴다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "자료가 비어 있지 않아야 한다. 공학 도구를 사용하여 그리며 사분위수·수염 규약과 축척을 확인한다. 기본형 수염은 최솟값·최댓값이지만 일부 도구는 별도 규약을 쓴다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:domain-04:descriptive-reasoning",
+        "notCurricularPrerequisite": false
+      },
+      {
+        "id": "math:explanation:boxplot:counter",
+        "kind": "misconception",
+        "statement": "어떤 도구의 수염이 항상 원자료의 최솟값·최댓값이라고 가정하면 다른 수염 규약에서 틀릴 수 있다.",
+        "reasoning": "적용하는 정의: 사분위수로 만든 상자, 중앙값 표시와 양쪽 수염을 통해 한 수치형 자료의 분포를 요약한 그림이다. 조건: 자료가 비어 있지 않아야 한다. 공학 도구를 사용하여 그리며 사분위수·수염 규약과 축척을 확인한다. 기본형 수염은 최솟값·최댓값이지만 일부 도구는 별도 규약을 쓴다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "자료가 비어 있지 않아야 한다. 공학 도구를 사용하여 그리며 사분위수·수염 규약과 축척을 확인한다. 기본형 수염은 최솟값·최댓값이지만 일부 도구는 별도 규약을 쓴다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:domain-04:descriptive-reasoning",
+        "notCurricularPrerequisite": false
+      },
+      {
+        "id": "math:explanation:boxplot:lens",
+        "kind": "advanced_lens",
+        "statement": "분위수 기반의 압축 시각화이며 같은 그림에 여러 원자료 분포가 대응할 수 있다.",
+        "reasoning": "대학 수준의 선택 렌즈이며 이 개념의 학생 선수 조건으로 쓰지 않는다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "자료가 비어 있지 않아야 한다. 공학 도구를 사용하여 그리며 사분위수·수염 규약과 축척을 확인한다. 기본형 수염은 최솟값·최댓값이지만 일부 도구는 별도 규약을 쓴다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:structural-adult",
+        "notCurricularPrerequisite": true
+      }
+    ],
+    "relations": []
+  },
+  {
+    "concept": {
+      "id": "math:concept:no-correlation",
+      "label": "상관관계가 없는 경우",
+      "definition": "한 변량이 커짐에 따라 다른 변량이 커지거나 작아지는 일정한 방향의 경향이 뚜렷하지 않은 경우이다.",
+      "conditions": [
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "mathematical_domain",
+          "statement": "자료 범위와 점의 수를 확인한다. 양·음 경향이 없다는 말만으로 모든 종류의 비선형 관계나 인과 영향이 없다고 단정하지 않는다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        }
+      ]
+    },
+    "explanations": [
+      {
+        "id": "math:explanation:no-correlation:why",
+        "kind": "proof",
+        "statement": "한 변량이 커짐에 따라 다른 변량이 커지거나 작아지는 일정한 방향의 경향이 뚜렷하지 않은 경우이다.",
+        "reasoning": "산점도에서 일관된 위·아래 방향을 읽기 어려우면 정성적 상관 없음으로 기술하되 다른 모양도 살핀다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "자료 범위와 점의 수를 확인한다. 양·음 경향이 없다는 말만으로 모든 종류의 비선형 관계나 인과 영향이 없다고 단정하지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:domain-04:descriptive-reasoning",
+        "notCurricularPrerequisite": false
+      },
+      {
+        "id": "math:explanation:no-correlation:example",
+        "kind": "example",
+        "statement": "가상(1,4),(2,7),(3,2),(4,6),(5,3)은 대체로 일정한 증가·감소 방향이 뚜렷하지 않다.",
+        "reasoning": "적용하는 정의: 한 변량이 커짐에 따라 다른 변량이 커지거나 작아지는 일정한 방향의 경향이 뚜렷하지 않은 경우이다. 조건: 자료 범위와 점의 수를 확인한다. 양·음 경향이 없다는 말만으로 모든 종류의 비선형 관계나 인과 영향이 없다고 단정하지 않는다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "자료 범위와 점의 수를 확인한다. 양·음 경향이 없다는 말만으로 모든 종류의 비선형 관계나 인과 영향이 없다고 단정하지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:domain-04:descriptive-reasoning",
+        "notCurricularPrerequisite": false
+      },
+      {
+        "id": "math:explanation:no-correlation:counter",
+        "kind": "misconception",
+        "statement": "U자형 점 배열은 단순 양·음 경향이 없을 수 있어도 두 변량 사이에 아무 관계도 없다는 예는 아니다.",
+        "reasoning": "적용하는 정의: 한 변량이 커짐에 따라 다른 변량이 커지거나 작아지는 일정한 방향의 경향이 뚜렷하지 않은 경우이다. 조건: 자료 범위와 점의 수를 확인한다. 양·음 경향이 없다는 말만으로 모든 종류의 비선형 관계나 인과 영향이 없다고 단정하지 않는다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "자료 범위와 점의 수를 확인한다. 양·음 경향이 없다는 말만으로 모든 종류의 비선형 관계나 인과 영향이 없다고 단정하지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:domain-04:descriptive-reasoning",
+        "notCurricularPrerequisite": false
+      },
+      {
+        "id": "math:explanation:no-correlation:lens",
+        "kind": "advanced_lens",
+        "statement": "0 상관과 독립은 일반적으로 동치가 아니다. 이 구분은 성인용 해석의 주의점이다.",
+        "reasoning": "대학 수준의 선택 렌즈이며 이 개념의 학생 선수 조건으로 쓰지 않는다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "자료 범위와 점의 수를 확인한다. 양·음 경향이 없다는 말만으로 모든 종류의 비선형 관계나 인과 영향이 없다고 단정하지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:structural-adult",
+        "notCurricularPrerequisite": true
+      }
+    ],
+    "relations": []
+  },
+  {
+    "concept": {
+      "id": "math:concept:association-not-causation",
+      "label": "상관관계와 인과관계의 구분",
+      "definition": "자료의 동반 변화가 보이더라도 그것만으로 원인과 결과를 정할 수 없음을 확인하는 해석 원칙이다.",
+      "conditions": [
+        {
+          "kind": "ApplicabilityCondition",
+          "conditionType": "mathematical_domain",
+          "statement": "관측 자료에서 제3의 조건, 대상 선택, 역방향 영향 등 다른 설명 가능성을 배제하지 않는다. 인과 효과 추정 절차를 핵심에 추가하지 않는다.",
+          "formalExpression": null,
+          "machineCheckable": false
+        }
+      ]
+    },
+    "explanations": [
+      {
+        "id": "math:explanation:association-not-causation:why",
+        "kind": "proof",
+        "statement": "자료의 동반 변화가 보이더라도 그것만으로 원인과 결과를 정할 수 없음을 확인하는 해석 원칙이다.",
+        "reasoning": "같은 배경 요인이 두 변량을 함께 바꾸거나 우연한 자료 선택이 관계를 만들 수 있다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "관측 자료에서 제3의 조건, 대상 선택, 역방향 영향 등 다른 설명 가능성을 배제하지 않는다. 인과 효과 추정 절차를 핵심에 추가하지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:domain-04:descriptive-reasoning",
+        "notCurricularPrerequisite": false
+      },
+      {
+        "id": "math:explanation:association-not-causation:example",
+        "kind": "example",
+        "statement": "가상 계절별 얼음 판매와 물놀이 횟수가 함께 늘어도 더운 날씨가 두 변량에 영향을 주었을 수 있다. 얼음이 물놀이의 직접 원인이라고 결론 내릴 수 없다.",
+        "reasoning": "적용하는 정의: 자료의 동반 변화가 보이더라도 그것만으로 원인과 결과를 정할 수 없음을 확인하는 해석 원칙이다. 조건: 관측 자료에서 제3의 조건, 대상 선택, 역방향 영향 등 다른 설명 가능성을 배제하지 않는다. 인과 효과 추정 절차를 핵심에 추가하지 않는다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "관측 자료에서 제3의 조건, 대상 선택, 역방향 영향 등 다른 설명 가능성을 배제하지 않는다. 인과 효과 추정 절차를 핵심에 추가하지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:domain-04:descriptive-reasoning",
+        "notCurricularPrerequisite": false
+      },
+      {
+        "id": "math:explanation:association-not-causation:counter",
+        "kind": "misconception",
+        "statement": "산점도에 오른쪽 위 경향이 보인다는 사실만으로 첫째 변량을 늘리면 둘째가 반드시 늘 것이라고 예측하지 않는다.",
+        "reasoning": "적용하는 정의: 자료의 동반 변화가 보이더라도 그것만으로 원인과 결과를 정할 수 없음을 확인하는 해석 원칙이다. 조건: 관측 자료에서 제3의 조건, 대상 선택, 역방향 영향 등 다른 설명 가능성을 배제하지 않는다. 인과 효과 추정 절차를 핵심에 추가하지 않는다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "관측 자료에서 제3의 조건, 대상 선택, 역방향 영향 등 다른 설명 가능성을 배제하지 않는다. 인과 효과 추정 절차를 핵심에 추가하지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:domain-04:descriptive-reasoning",
+        "notCurricularPrerequisite": false
+      },
+      {
+        "id": "math:explanation:association-not-causation:lens",
+        "kind": "advanced_lens",
+        "statement": "관찰 분포의 연관성과 개입 분포의 인과 효과는 다른 대상이다.",
+        "reasoning": "대학 수준의 선택 렌즈이며 이 개념의 학생 선수 조건으로 쓰지 않는다.",
+        "conditions": [
+          {
+            "kind": "ApplicabilityCondition",
+            "conditionType": "mathematical_domain",
+            "statement": "관측 자료에서 제3의 조건, 대상 선택, 역방향 영향 등 다른 설명 가능성을 배제하지 않는다. 인과 효과 추정 절차를 핵심에 추가하지 않는다.",
+            "formalExpression": null,
+            "machineCheckable": false
+          }
+        ],
+        "perspectiveId": "math:perspective:structural-adult",
+        "notCurricularPrerequisite": true
+      }
+    ],
+    "relations": []
+  }
+]

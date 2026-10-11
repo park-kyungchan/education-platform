@@ -1,0 +1,6 @@
+import {z} from 'zod';
+import {EntityId,NativeEntityId,EvidenceId} from './ids.ts';
+export const BookEdition=z.strictObject({bookEditionId:EntityId,bookCode:z.string().min(1),edition:z.string().min(1),nativeBookId:NativeEntityId.nullable(),labelRaw:z.string(),sourceRevision:z.string().min(1),evidenceIds:z.array(EvidenceId)});
+export const TextbookNode=z.strictObject({id:EntityId,bookEditionId:EntityId,nativeId:NativeEntityId.nullable(),parentId:EntityId.nullable(),parentRelationState:z.enum(['verified','number_prefix_grouping','unknown']),kind:z.enum(['major','middle','subunit','major_assessment','answers']),labelRaw:z.string(),order:z.number().int().nonnegative()});
+export type TextbookNode=z.infer<typeof TextbookNode>;
+export function validateBookHierarchy(inputs:readonly unknown[]):TextbookNode[]{const nodes=inputs.map(value=>TextbookNode.parse(value)),byId=new Map(nodes.map(n=>[n.id,n]));if(byId.size!==nodes.length)throw Error('duplicate_textbook_node');for(const node of nodes){const seen=new Set([node.id]);let parent=node.parentId;while(parent!==null){if(seen.has(parent))throw Error('textbook_hierarchy_cycle');seen.add(parent);const p=byId.get(parent);if(!p||p.bookEditionId!==node.bookEditionId)throw Error('textbook_parent_outside_edition');parent=p.parentId;}}return nodes;}

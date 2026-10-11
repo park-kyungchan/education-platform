@@ -1,0 +1,20 @@
+{
+  "name": "mathematics-cartography",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Source-independent Mathematics Cartography contracts and executable reference core.",
+  "type": "module",
+  "packageManager": "npm@11.17.0",
+  "engines": {
+    "node": ">=26.5.1 <27",
+    "npm": ">=11.17.0 <12"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit --pretty false",
+    "test": "node --test tests/foundation.test.mjs tests/strict-json-document-ingress.test.mjs tests/mathematical-fragment-proposal.test.mjs tests/fragment-evidence-review-packet.test.mjs tests/human-semantic-disposition-record.test.mjs",
+    "verify": "npm run typecheck && npm test"
+  },
+  "devDependencies": {
+    "typescript": "7.0.2"
+  }
+}

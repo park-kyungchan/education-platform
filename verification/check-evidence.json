@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "evidence",
+  "id": "education-platform:evidence:local-integration-check",
+  "projectId": "education-platform",
+  "domainId": "education",
+  "createdAt": "2026-10-11T06:13:44.479934Z",
+  "payload": {
+    "claim": "All admitted local education source checks passed under preserved module runtime pins.",
+    "method": "Run source-owned project check with exact project-private toolchains; preserve full output privately with hashes.",
+    "sourceUrl": "https://github.com/park-kyungchan/education-platform",
+    "fetchedAt": "2026-10-11T06:13:44.479934Z",
+    "result": {
+      "outcome": "success",
+      "processExitCode": 0,
+      "contentMatched": true,
+      "details": {
+        "privateLogOwner": "hermes-harness-engineering",
+        "privateLog": ".private/platform-rearchitecture/education-final-check.log",
+        "logSha256": "1975c5f34f2ac0b0682855785b7a7431ee93c0b17bf2916a73e5604648696bad",
+        "scope": "source-types-imports-synthetic-tests-and-builds",
+        "domainAcceptance": "not inferred",
+        "nativeEffects": 0,
+        "remoteWrites": 0
+      }
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "outcome": "success"
+      }
+    ],
+    "limitations": [
+      "Native DC PostgreSQL/live tests retain91 original prerequisite skips.",
+      "Canonical mathematical acceptance, missing curriculum originals and production serving are outside this local check.",
+      "Preserved original source/third-party bytes retain their historical whitespace and line endings."
+    ]
+  }
+}

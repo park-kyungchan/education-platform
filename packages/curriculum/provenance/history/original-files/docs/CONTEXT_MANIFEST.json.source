@@ -1,0 +1,14 @@
+{
+  "kind": "SelectiveMathEducationContextManifest",
+  "alwaysRead": ["AGENTS.md", "provenance/export-coverage.json", "docs/ACCESS_HANDOFF.json"],
+  "tasks": {
+    "math.content": ["source/contracts/release-manifest.json", "source/contracts/canonical.schema.json", "source/contracts/extension-registry.json", "source/contracts/content-build-contract.json", "canonical/required-sources.json", "selected verified original records and linked EvidenceReference, CurriculumAlignment, Perspective and ContentGap only"],
+    "math.terms_and_formulas": ["source/contracts/bilingual-labels.schema.json", "source/contracts/math-text-extension.schema.json", "selected source text and source hash", "relevant provenance/attachment-inventory.json entries"],
+    "math.relations": ["source/contracts/extension-registry.json", "audit/observed-relations.json", "audit/findings.json", "canonical/required-sources.json", "selected verified original assertion, endpoints, conditions, perspective and evidence"],
+    "math.view_state": ["derived/ui/ui-source-manifest.json", "selected HTML view", "selected source/pages snapshot", "audit/ui-coverage.json"],
+    "math.cloud_setup": ["docs/CODEX_CLOUD.md", "scripts/cloud/setup.sh", "scripts/cloud/START_SKILL.md", "package.json", "bun.lock"]
+  },
+  "missingInputBehavior": "Pause dependent canonical audit or edits; continue independent supplied-byte checks and UI work. Do not reconstruct missing workpacks from projections.",
+  "doNotBulkLoad": ["Every large workpack for every task", "all UI payloads as initial chat context", "other repository data", "account/session secrets"],
+  "exportIsNotAuthorization": true
+}

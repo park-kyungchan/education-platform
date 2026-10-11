@@ -1,0 +1,12 @@
+{
+  "name": "@palantirkc/academy",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "bun run typecheck && bun check-entrypoints.ts && bun run.ts check",
+    "demo": "bun run.ts demo",
+    "academy:serve": "bun run.ts academy:serve",
+    "typecheck": "bun ../../node_modules/typescript/bin/tsc --noEmit -p tsconfig.json"
+  }
+}

@@ -1,0 +1,338 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mathematics-cartography.local/contracts/fragment-evidence-review-packet.v1.schema.json",
+  "title": "Mathematics Cartography Fragment Evidence Review Packet v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "decisionRecordId",
+    "proposalId",
+    "requestId",
+    "supersedesProposalId",
+    "fragment",
+    "candidateKind",
+    "identityReview",
+    "relationReviews",
+    "unusedEvidenceOccurrences",
+    "recommendedDisposition",
+    "humanDecision",
+    "canonicalApplication"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "mathematics-cartography.fragment-evidence-review-packet.v1"
+    },
+    "decisionRecordId": {
+      "const": "INTERVIEW_AND_TDD_FRAGMENT_EVIDENCE_REVIEW_PACKET_001"
+    },
+    "proposalId": {
+      "$ref": "#/$defs/identifier"
+    },
+    "requestId": {
+      "$ref": "#/$defs/identifier"
+    },
+    "supersedesProposalId": {
+      "$ref": "#/$defs/nullableIdentifier"
+    },
+    "fragment": {
+      "$ref": "#/$defs/fragment"
+    },
+    "candidateKind": {
+      "enum": [
+        "DEFINITION",
+        "PROPOSITION"
+      ]
+    },
+    "identityReview": {
+      "$ref": "#/$defs/identityReview"
+    },
+    "relationReviews": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/relationReview"
+      }
+    },
+    "unusedEvidenceOccurrences": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/evidenceOccurrence"
+      }
+    },
+    "recommendedDisposition": {
+      "enum": [
+        "CANONICALIZE",
+        "REJECT",
+        "DEFER"
+      ]
+    },
+    "humanDecision": {
+      "const": "PENDING"
+    },
+    "canonicalApplication": {
+      "const": "NOT_PERFORMED"
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 128,
+      "pattern": "^[a-z][a-z0-9.-]+$",
+      "not": {
+        "pattern": "[\\u0000-\\u001F\\u007F]"
+      }
+    },
+    "nullableIdentifier": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/identifier"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "statement": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096,
+      "pattern": "^[^\\u0000-\\u001F\\u007F]+$",
+      "not": {
+        "pattern": "[\\u0000-\\u001F\\u007F]"
+      }
+    },
+    "stringCode": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 128,
+      "pattern": "^[A-Z][A-Z0-9_]+$",
+      "not": {
+        "pattern": "[\\u0000-\\u001F\\u007F]"
+      }
+    },
+    "fragment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fragmentId",
+        "content"
+      ],
+      "properties": {
+        "fragmentId": {
+          "$ref": "#/$defs/identifier"
+        },
+        "content": {
+          "$ref": "#/$defs/statement"
+        }
+      }
+    },
+    "evidenceOccurrence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "evidenceId",
+        "subjectId",
+        "subjectRevision",
+        "evidenceClass",
+        "statement",
+        "supports",
+        "uncertaintyCodes"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "evidenceClass": {
+                "const": "ACCEPTED_ATOM_SNAPSHOT"
+              }
+            },
+            "required": [
+              "evidenceClass"
+            ]
+          },
+          "then": {
+            "properties": {
+              "subjectRevision": {
+                "$ref": "#/$defs/identifier"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "subjectRevision": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ],
+      "properties": {
+        "evidenceId": {
+          "$ref": "#/$defs/identifier"
+        },
+        "subjectId": {
+          "$ref": "#/$defs/identifier"
+        },
+        "subjectRevision": {
+          "$ref": "#/$defs/nullableIdentifier"
+        },
+        "evidenceClass": {
+          "enum": [
+            "SUBMITTED_FRAGMENT",
+            "USER_SUPPLIED_CONTEXT",
+            "ACCEPTED_ATOM_SNAPSHOT",
+            "LOCAL_VERIFICATION"
+          ]
+        },
+        "statement": {
+          "$ref": "#/$defs/statement"
+        },
+        "supports": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "DEFINITIONAL_EQUIVALENCE",
+              "COUNTEREXAMPLE",
+              "MISSING_CONTEXT",
+              "RELATION"
+            ]
+          }
+        },
+        "uncertaintyCodes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/stringCode"
+          }
+        }
+      }
+    },
+    "evidenceIds": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/identifier"
+      }
+    },
+    "identityReview": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "targetAtomId",
+        "judgment",
+        "evidenceIds",
+        "evidenceOccurrences",
+        "uncertainty"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "judgment": {
+                "const": "UNKNOWN"
+              }
+            },
+            "required": [
+              "judgment"
+            ]
+          },
+          "then": {
+            "properties": {
+              "uncertainty": {
+                "minItems": 1
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "uncertainty": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      ],
+      "properties": {
+        "targetAtomId": {
+          "$ref": "#/$defs/identifier"
+        },
+        "judgment": {
+          "enum": [
+            "SAME",
+            "DISTINCT",
+            "UNKNOWN"
+          ]
+        },
+        "evidenceIds": {
+          "$ref": "#/$defs/evidenceIds"
+        },
+        "evidenceOccurrences": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/evidenceOccurrence"
+          }
+        },
+        "uncertainty": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/stringCode"
+          }
+        }
+      }
+    },
+    "relationReview": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "relationKind",
+        "sourceId",
+        "targetId",
+        "evidenceIds",
+        "evidenceOccurrences",
+        "uncertainty"
+      ],
+      "properties": {
+        "relationKind": {
+          "enum": [
+            "INVERSE_OF",
+            "REQUIRES_CONDITION",
+            "CONTRADICTS"
+          ]
+        },
+        "sourceId": {
+          "$ref": "#/$defs/identifier"
+        },
+        "targetId": {
+          "$ref": "#/$defs/identifier"
+        },
+        "evidenceIds": {
+          "$ref": "#/$defs/evidenceIds"
+        },
+        "evidenceOccurrences": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/evidenceOccurrence"
+          }
+        },
+        "uncertainty": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/stringCode"
+          }
+        }
+      }
+    }
+  }
+}

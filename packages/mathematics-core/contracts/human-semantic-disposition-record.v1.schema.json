@@ -1,0 +1,505 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mathematics-cartography.local/contracts/human-semantic-disposition-record.v1.schema.json",
+  "title": "Mathematics Cartography Human Semantic Disposition Record v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "decisionRecordId",
+    "dispositionRecordId",
+    "supersedesDispositionRecordId",
+    "actor",
+    "trigger",
+    "requestId",
+    "proposalId",
+    "requestSha256",
+    "proposalSha256",
+    "evidenceReviewPacketSha256",
+    "recommendedDisposition",
+    "humanDisposition",
+    "decisionReasonCodes",
+    "citedEvidenceIds",
+    "decidedAtUtc",
+    "canonicalApplication"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "humanDisposition": {
+            "const": "DEFER"
+          }
+        },
+        "required": [
+          "humanDisposition"
+        ]
+      },
+      "then": {
+        "properties": {
+          "decisionReasonCodes": {
+            "minItems": 1
+          },
+          "citedEvidenceIds": {
+            "minItems": 1
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "decisionReasonCodes": {
+            "minItems": 1
+          }
+        },
+        "required": [
+          "decisionReasonCodes"
+        ]
+      },
+      "then": {
+        "properties": {
+          "citedEvidenceIds": {
+            "minItems": 1
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "citedEvidenceIds": {
+            "maxItems": 0
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "anyOf": [
+          {
+            "properties": {
+              "recommendedDisposition": {
+                "const": "CANONICALIZE"
+              },
+              "humanDisposition": {
+                "const": "REJECT"
+              }
+            },
+            "required": [
+              "recommendedDisposition",
+              "humanDisposition"
+            ]
+          },
+          {
+            "properties": {
+              "recommendedDisposition": {
+                "const": "CANONICALIZE"
+              },
+              "humanDisposition": {
+                "const": "DEFER"
+              }
+            },
+            "required": [
+              "recommendedDisposition",
+              "humanDisposition"
+            ]
+          },
+          {
+            "properties": {
+              "recommendedDisposition": {
+                "const": "REJECT"
+              },
+              "humanDisposition": {
+                "const": "CANONICALIZE"
+              }
+            },
+            "required": [
+              "recommendedDisposition",
+              "humanDisposition"
+            ]
+          },
+          {
+            "properties": {
+              "recommendedDisposition": {
+                "const": "REJECT"
+              },
+              "humanDisposition": {
+                "const": "DEFER"
+              }
+            },
+            "required": [
+              "recommendedDisposition",
+              "humanDisposition"
+            ]
+          },
+          {
+            "properties": {
+              "recommendedDisposition": {
+                "const": "DEFER"
+              },
+              "humanDisposition": {
+                "const": "CANONICALIZE"
+              }
+            },
+            "required": [
+              "recommendedDisposition",
+              "humanDisposition"
+            ]
+          },
+          {
+            "properties": {
+              "recommendedDisposition": {
+                "const": "DEFER"
+              },
+              "humanDisposition": {
+                "const": "REJECT"
+              }
+            },
+            "required": [
+              "recommendedDisposition",
+              "humanDisposition"
+            ]
+          }
+        ]
+      },
+      "then": {
+        "properties": {
+          "decisionReasonCodes": {
+            "minItems": 1
+          },
+          "citedEvidenceIds": {
+            "minItems": 1
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "decisionReasonCodes": {
+            "contains": {
+              "const": "ADDITIONAL_EVIDENCE_REQUIRED"
+            },
+            "minContains": 1
+          }
+        },
+        "required": [
+          "decisionReasonCodes"
+        ]
+      },
+      "then": {
+        "properties": {
+          "humanDisposition": {
+            "const": "DEFER"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "decisionReasonCodes": {
+            "contains": {
+              "const": "EVIDENCE_CONFIRMS_RECOMMENDATION"
+            },
+            "minContains": 1
+          }
+        },
+        "required": [
+          "decisionReasonCodes"
+        ]
+      },
+      "then": {
+        "anyOf": [
+          {
+            "properties": {
+              "recommendedDisposition": {
+                "const": "CANONICALIZE"
+              },
+              "humanDisposition": {
+                "const": "CANONICALIZE"
+              }
+            },
+            "required": [
+              "recommendedDisposition",
+              "humanDisposition"
+            ]
+          },
+          {
+            "properties": {
+              "recommendedDisposition": {
+                "const": "REJECT"
+              },
+              "humanDisposition": {
+                "const": "REJECT"
+              }
+            },
+            "required": [
+              "recommendedDisposition",
+              "humanDisposition"
+            ]
+          },
+          {
+            "properties": {
+              "recommendedDisposition": {
+                "const": "DEFER"
+              },
+              "humanDisposition": {
+                "const": "DEFER"
+              }
+            },
+            "required": [
+              "recommendedDisposition",
+              "humanDisposition"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "decisionReasonCodes": {
+            "contains": {
+              "const": "HUMAN_EVIDENCE_INTERPRETATION_DIFFERS"
+            },
+            "minContains": 1
+          }
+        },
+        "required": [
+          "decisionReasonCodes"
+        ]
+      },
+      "then": {
+        "anyOf": [
+          {
+            "properties": {
+              "recommendedDisposition": {
+                "const": "CANONICALIZE"
+              },
+              "humanDisposition": {
+                "const": "REJECT"
+              }
+            },
+            "required": [
+              "recommendedDisposition",
+              "humanDisposition"
+            ]
+          },
+          {
+            "properties": {
+              "recommendedDisposition": {
+                "const": "CANONICALIZE"
+              },
+              "humanDisposition": {
+                "const": "DEFER"
+              }
+            },
+            "required": [
+              "recommendedDisposition",
+              "humanDisposition"
+            ]
+          },
+          {
+            "properties": {
+              "recommendedDisposition": {
+                "const": "REJECT"
+              },
+              "humanDisposition": {
+                "const": "CANONICALIZE"
+              }
+            },
+            "required": [
+              "recommendedDisposition",
+              "humanDisposition"
+            ]
+          },
+          {
+            "properties": {
+              "recommendedDisposition": {
+                "const": "REJECT"
+              },
+              "humanDisposition": {
+                "const": "DEFER"
+              }
+            },
+            "required": [
+              "recommendedDisposition",
+              "humanDisposition"
+            ]
+          },
+          {
+            "properties": {
+              "recommendedDisposition": {
+                "const": "DEFER"
+              },
+              "humanDisposition": {
+                "const": "CANONICALIZE"
+              }
+            },
+            "required": [
+              "recommendedDisposition",
+              "humanDisposition"
+            ]
+          },
+          {
+            "properties": {
+              "recommendedDisposition": {
+                "const": "DEFER"
+              },
+              "humanDisposition": {
+                "const": "REJECT"
+              }
+            },
+            "required": [
+              "recommendedDisposition",
+              "humanDisposition"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "decisionReasonCodes": {
+            "contains": {
+              "enum": [
+                "INSUFFICIENT_IDENTITY_EVIDENCE",
+                "MISSING_CONTEXT_UNSPECIFIED",
+                "MISSING_LOGARITHM_BASE",
+                "MISSING_REAL_DOMAIN_CONDITIONS"
+              ]
+            },
+            "minContains": 1
+          }
+        },
+        "required": [
+          "decisionReasonCodes"
+        ]
+      },
+      "then": {
+        "properties": {
+          "humanDisposition": {
+            "const": "DEFER"
+          }
+        }
+      }
+    }
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "mathematics-cartography.human-semantic-disposition-record.v1"
+    },
+    "decisionRecordId": {
+      "const": "IMMUTABLE_HUMAN_SEMANTIC_DISPOSITION_RECORD_001"
+    },
+    "dispositionRecordId": {
+      "$ref": "#/$defs/identifier"
+    },
+    "supersedesDispositionRecordId": {
+      "$ref": "#/$defs/nullableIdentifier"
+    },
+    "actor": {
+      "const": "HUMAN_SEMANTIC_REVIEWER"
+    },
+    "trigger": {
+      "const": "EVIDENCE_REVIEW_PACKET_READY_FOR_HUMAN_DISPOSITION"
+    },
+    "requestId": {
+      "$ref": "#/$defs/identifier"
+    },
+    "proposalId": {
+      "$ref": "#/$defs/identifier"
+    },
+    "requestSha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "proposalSha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "evidenceReviewPacketSha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "recommendedDisposition": {
+      "$ref": "#/$defs/disposition"
+    },
+    "humanDisposition": {
+      "$ref": "#/$defs/disposition"
+    },
+    "decisionReasonCodes": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/reasonCode"
+      }
+    },
+    "citedEvidenceIds": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/identifier"
+      }
+    },
+    "decidedAtUtc": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^(?!0000)(?:[0-9]{4}-(?:(?:01|03|05|07|08|10|12)-(?:0[1-9]|[12][0-9]|3[01])|(?:04|06|09|11)-(?:0[1-9]|[12][0-9]|30)|02-(?:0[1-9]|1[0-9]|2[0-8]))|(?:[0-9]{2}(?:0[48]|[2468][048]|[13579][26])|(?:[02468][048]|[13579][26])00)-02-29)T(?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$",
+      "minLength": 20,
+      "maxLength": 20,
+      "not": {
+        "pattern": "[\\u0000-\\u001F\\u007F]"
+      }
+    },
+    "canonicalApplication": {
+      "const": "NOT_PERFORMED"
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 128,
+      "pattern": "^[a-z][a-z0-9.-]+$",
+      "not": {
+        "pattern": "[\\u0000-\\u001F\\u007F]"
+      }
+    },
+    "nullableIdentifier": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/identifier"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "minLength": 64,
+      "maxLength": 64,
+      "not": {
+        "pattern": "[\\u0000-\\u001F\\u007F]"
+      }
+    },
+    "disposition": {
+      "enum": [
+        "CANONICALIZE",
+        "REJECT",
+        "DEFER"
+      ]
+    },
+    "reasonCode": {
+      "enum": [
+        "ADDITIONAL_EVIDENCE_REQUIRED",
+        "EVIDENCE_CONFIRMS_RECOMMENDATION",
+        "HUMAN_EVIDENCE_INTERPRETATION_DIFFERS",
+        "INSUFFICIENT_IDENTITY_EVIDENCE",
+        "MISSING_CONTEXT_UNSPECIFIED",
+        "MISSING_LOGARITHM_BASE",
+        "MISSING_REAL_DOMAIN_CONDITIONS"
+      ]
+    }
+  }
+}

@@ -1,0 +1,362 @@
+{
+  "kind": "MathEducationFirstReadOnlyAuditFindings",
+  "schemaVersion": "1.0.0",
+  "completedAt": "2026-10-07T10:09:03.803Z",
+  "outcomeKo": "구조 1패스와 핵심 내용 표본 1패스를 완료했다. 로드된 범위에서 구조 오류 및 명백한 표본 수학 오류는 발견하지 않았으며, 핀·학년군 용어 metadata·설명 깊이 검토 후보와 검증 한계를 분리해 기록했다.",
+  "scope": {
+    "structuralPasses": 1,
+    "contentPasses": "one bounded core sample recorded separately",
+    "target": "MOE 2022-33 Annex8 e5_6/m1_3; adult/university explanatory perspective",
+    "sourceWrites": false,
+    "pageWrites": false,
+    "completeEducationalValidation": false
+  },
+  "counts": {
+    "htmlFilesRead": 50,
+    "uniqueViews": 48,
+    "indexConcepts": 313,
+    "concepts": 313,
+    "terms": 421,
+    "notations": 203,
+    "explanations": 989,
+    "activeExplanations": 989,
+    "alignments": 376,
+    "observedSelectedConceptRelations": 143,
+    "manifestCanonicalRelations": 918,
+    "topics": 43,
+    "domains": 4,
+    "gradeBands": 2,
+    "officialStandardsFromPrimary": 105,
+    "indexedStandards": 105,
+    "bilingualDisplayEntriesExcludingGradeNavigation": 984,
+    "additionalGradeNavigationEntries": 2,
+    "fullBilingualProvenanceRecords": 937,
+    "annotatedFields": 6259,
+    "mathSegments": 4325
+  },
+  "mechanicalResult": {
+    "failures": 0,
+    "hardSelectedPrerequisiteEdges": 54,
+    "hardSelectedPrerequisiteCycles": 0,
+    "individuallyVerifiedRelations": 143,
+    "canonicalManifestRelations": 918,
+    "relationsNotIndividuallyRead": 775,
+    "omittedEvidenceTargets": 187,
+    "omittedPerspectiveTargets": 5
+  },
+  "contentSample": {
+    "concepts": 28,
+    "explanations": 91,
+    "incidentRelations": 33,
+    "numericalChecks": 19,
+    "numericalChecksPassed": 19,
+    "unambiguousMathematicalErrorsFound": 0,
+    "fullContentValidationCompleted": false
+  },
+  "findings": [
+    {
+      "id": "math-audit-20261007:F01",
+      "category": "verification_limit",
+      "certainty": "confirmed",
+      "severity": "medium",
+      "priority": "disclosure",
+      "titleKo": "918개 관계의 개별 전수 검증을 게시 payload만으로 완료할 수 없음",
+      "recordIds": [
+        "math:workpack:domain-01",
+        "math:workpack:domain-02",
+        "math:workpack:domain-03",
+        "math:workpack:domain-04"
+      ],
+      "evidence": [
+        {
+          "source": "https://chatgpt.com/space/page_2a433162d56c81919cf03f2121a96796",
+          "locator": "release manifest canonicalSourceBindings[*].recordCounts.RelationAssertion",
+          "observed": [
+            232,
+            195,
+            353,
+            138
+          ]
+        },
+        {
+          "source": "artifacts/structural-audit.json",
+          "locator": "/counts/observedSelectedConceptRelations",
+          "observed": 143
+        },
+        {
+          "source": "artifacts/structural-audit.json",
+          "locator": "/limits",
+          "observed": "EvidenceReference, Perspective and remaining 775 relation bodies are omitted from view payloads."
+        }
+      ],
+      "impactKo": "로드된 143개 관계의 구조 검사와 54개 선택 필수 선행의 무순환 결과를 나머지 관계나 모든 관점으로 일반화할 수 없다. 보이는 관계는 모두 teaching_perspective이므로 수학적 필연성의 전체 그래프를 검증한 결과가 아니다.",
+      "proposedNextStepKo": "현재 보고에서 이 제한을 유지한다. 후속 별도 승인 범위에서는 정본 네 파일과 공식 boundary 파일을 지원되는 경로로 확보해 관계 918개 및 evidence/perspective 본문을 검사한다."
+    },
+    {
+      "id": "math-audit-20261007:F02",
+      "category": "curriculum_boundary",
+      "certainty": "confirmed",
+      "severity": "medium",
+      "priority": "P2",
+      "titleKo": "동일 boundary bundle ID에 서로 다른 SHA256 핀이 선언됨",
+      "recordIds": [
+        "kr2022:curriculum-boundary:e5-m3",
+        "math:contract:domain-authoring",
+        "math:index:e5-m3"
+      ],
+      "evidence": [
+        {
+          "source": "space-governance-20261007/sources/mathBuild.json",
+          "locator": "/boundaryBinding/sha256",
+          "observed": "86edc5debd01c663311daea0f996ef7b26c0ad9671f94626c9c197b855ab496a"
+        },
+        {
+          "source": "https://chatgpt.com/space/page_2a433162d56c81919cf03f2121a96796",
+          "locator": "published payload /index/boundary/sha256",
+          "observed": "650bdb22a9215710ea45c19939a8e3c79d5a8ddc0707f8af4315d5a1f34d884f"
+        }
+      ],
+      "impactKo": "원본 기준 계약과 현재 탐색 인덱스가 동일한 boundary 바이트를 가리킨다고 확정할 수 없다. 내용 오류나 오래된 고시 사용을 뜻하는지는 실제 boundary 바이트를 읽지 못해 미확정이다.",
+      "proposedNextStepKo": "boundary 파일의 실제 SHA256와 핀 계산 방식을 비교하고, 의도된 버전 차이라면 버전·이전 핀·마이그레이션을 명시한다. 원인을 확인하기 전 핀을 기계적으로 덮어쓰지 않는다."
+    },
+    {
+      "id": "math-audit-20261007:F03",
+      "category": "curriculum_boundary",
+      "certainty": "inference",
+      "severity": "medium",
+      "priority": "P2",
+      "titleKo": "사분위수 한영 용어의 학년군 사용 범위가 근거보다 넓게 읽힐 수 있음",
+      "recordIds": [
+        "math:concept:quartiles",
+        "math:term:ko:quartiles",
+        "math:alignment:quartiles:9수04-08"
+      ],
+      "evidence": [
+        {
+          "source": "https://chatgpt.com/space/page_7f5b4f3b334881919c111ba17b9f81ed",
+          "locator": "quartiles bilingual extension /koUsage",
+          "observed": {
+            "scope": "e5_6_and_m1_3",
+            "scopeRole": "curricular_core",
+            "sourceRefs": [
+              {
+                "sourceId": "MOE-2022-33-annex-8",
+                "url": "https://www.moe.go.kr/boardCnts/viewRenew.do?boardID=141&boardSeq=93458&lev=0",
+                "locator": "중학교 용어와 기호 목록; ncic-layout.txt line1677",
+                "supports": "Korean usage and target-grade boundary"
+              },
+              {
+                "sourceId": "MOE-2023-TEXTBOOK-COMPILATION-III",
+                "url": "https://cdn.kosac.re.kr/files/legacy_data/jnrepo/upload/jnBrdBoard/202304/072cafc105ac4b739840c90813faa340_1680754526377.pdf",
+                "locator": "Ⅰ 수학과 2 용어; 인쇄 p30; PDF zero-based index 29; L787; quartile",
+                "supports": "Listed textbook-editorial Korean term and foreign-language equivalent; not a curriculum translation"
+              }
+            ]
+          }
+        },
+        {
+          "source": "https://chatgpt.com/space/page_7f5b4f3b334881919c111ba17b9f81ed",
+          "locator": "math:alignment:quartiles:9수04-08",
+          "observed": {
+            "standardId": "kr2022:standard:9수04-08",
+            "officialGradeBandId": "m1_3"
+          }
+        },
+        {
+          "source": "https://www.moe.go.kr/boardCnts/viewRenew.do?boardID=141&boardSeq=93458&lev=0",
+          "locator": "[별책8] 중학교 자료와 가능성 용어·기호, 사분위수; 9수04-08",
+          "observed": "Primary term occurrence is in the middle-school section; the published alignment is m1_3."
+        }
+      ],
+      "impactKo": "alignment는 중학교로 올바르게 분리되어 있으나 koUsage의 e5_6_and_m1_3/curricular_core는 초5~6의 공식 핵심 용어이기도 하다고 오해될 여지가 있다. 현재 데이터의 학년 배치 오류로 확정하지는 않는다.",
+      "proposedNextStepKo": "koUsage.scope가 용어 사용 가능 범위인지 공식 필수 학년군인지 계약 의미를 확인한다. 공식 학년군을 뜻한다면 m1_3로 좁히고, 설명용 재사용 범위를 별도 필드로 둔다."
+    },
+    {
+      "id": "math-audit-20261007:F04",
+      "category": "curriculum_boundary",
+      "certainty": "inference",
+      "severity": "medium",
+      "priority": "P2",
+      "titleKo": "계급값의 사용 가능 용어와 공식 필수 내용의 구분을 재검토할 필요",
+      "recordIds": [
+        "math:concept:class-midpoint",
+        "math:term:ko:class-midpoint",
+        "math:alignment:class-midpoint:9수04-02"
+      ],
+      "evidence": [
+        {
+          "source": "https://www.moe.go.kr/boardCnts/viewRenew.do?boardID=141&boardSeq=93458&lev=0",
+          "locator": "[별책8] 중학교 자료와 가능성 성취기준 적용 시 고려 사항",
+          "observed": "계급값은 교수·학습 상황에서 사용할 수 있는 용어로 별도 안내된다."
+        },
+        {
+          "source": "https://chatgpt.com/space/page_7f5b4f3b334881919c111ba17b9f81ed",
+          "locator": "class-midpoint bilingual extension /koUsage",
+          "observed": {
+            "scope": "e5_6_and_m1_3",
+            "scopeRole": "curricular_core",
+            "sourceRefs": [
+              {
+                "sourceId": "MOE-2022-33-annex-8",
+                "url": "https://www.moe.go.kr/boardCnts/viewRenew.do?boardID=141&boardSeq=93458&lev=0",
+                "locator": "중학교 성취기준 적용 시 고려 사항; ncic-layout.txt line1686: 계급값·경우의 수 용어는 교수학습 상황에서 사용 가능",
+                "supports": "Korean usage and target-grade boundary"
+              },
+              {
+                "sourceId": "MOE-2023-TEXTBOOK-COMPILATION-III",
+                "url": "https://cdn.kosac.re.kr/files/legacy_data/jnrepo/upload/jnBrdBoard/202304/072cafc105ac4b739840c90813faa340_1680754526377.pdf",
+                "locator": "Ⅰ 수학과 2 용어; 인쇄 p12; PDF zero-based index 11; L197; class mark",
+                "supports": "Listed textbook-editorial Korean term and foreign-language equivalent; not a curriculum translation"
+              }
+            ]
+          }
+        },
+        {
+          "source": "https://chatgpt.com/space/page_7f5b4f3b334881919c111ba17b9f81ed",
+          "locator": "math:alignment:class-midpoint:9수04-02/alignmentType",
+          "observed": "direct"
+        }
+      ],
+      "impactKo": "curricular_core와 direct 매핑을 함께 읽으면 도수분포표를 배우려면 반드시 계급값을 다뤄야 한다는 식으로 과대해석될 수 있다. 정의 자체의 수학 오류는 발견하지 않았다.",
+      "proposedNextStepKo": "공식 용어의 허용 여부와 개념의 필수성·매핑 강도를 분리해 검토한다. 저자 분해 목적의 direct를 유지한다면 공식 요구와 동일하지 않다는 근거를 명확히 표시한다."
+    },
+    {
+      "id": "math-audit-20261007:F05",
+      "category": "mathematical_content",
+      "certainty": "inference",
+      "severity": "medium",
+      "priority": "P2",
+      "titleKo": "대학 수준 설명 목표에 비해 일부 표본의 구조 설명과 증명이 짧음",
+      "recordIds": [
+        "math:concept:reciprocal",
+        "math:concept:similarity",
+        "math:concept:triangle-congruence-criteria",
+        "math:concept:cylinder",
+        "math:explanation:natural-exponent-laws:lens",
+        "math:explanation:quadratic-formula:lens",
+        "math:explanation:theoretical-finite-probability:lens",
+        "math:explanation:quartiles:lens"
+      ],
+      "evidence": [
+        {
+          "source": "artifacts/content-sample-source.json",
+          "locator": "28 concept samples",
+          "observed": {
+            "concepts": 28,
+            "explanationsRead": 91,
+            "conceptsWithoutAdvancedLens": 8,
+            "advancedLenses": 20,
+            "advancedLensReasoningWithOnlyScopeTemplate": 15
+          }
+        },
+        {
+          "source": "https://chatgpt.com/space/page_dbf941bd0b6c8191a22ccd6125e8dd52",
+          "locator": "math:explanation:natural-exponent-laws:lens/reasoning",
+          "observed": "모델이 작성한 성인용 선택 렌즈이다. 공식 학생 선수 조건이나 학년 배치 근거가 아니며 핵심 개념의 위 정의를 다른 구조와 연결해 보는 데 한정한다."
+        },
+        {
+          "source": "https://chatgpt.com/space/page_7f5b4f3b334881919c111ba17b9f81ed",
+          "locator": "math:explanation:theoretical-finite-probability:lens/reasoning",
+          "observed": "대학 수준의 선택 렌즈이며 이 개념의 학생 선수 조건으로 쓰지 않는다."
+        }
+      ],
+      "impactKo": "반군·측도·경험분포 같은 대학 개념을 언급하지만 그 구조의 정의·정당화·예외를 설명하지 않는 렌즈가 있다. 이는 명백한 공식 오류가 아니라 요구된 설명 깊이와 완성도에 대한 검토 후보이다.",
+      "proposedNextStepKo": "대표 개념에 대해 대학 수준의 정의·조건·증명/유도·반례·표현 대응을 어느 깊이까지 요구할지 확인한다. 후속 내용을 보강하더라도 학생의 공식 필수 선수나 학년 배치로 승격하지 않는다."
+    },
+    {
+      "id": "math-audit-20261007:F06",
+      "category": "typed_relation",
+      "certainty": "confirmed",
+      "severity": "low",
+      "priority": "disclosure",
+      "titleKo": "현재 개념관계 투영은 수와 연산 및 도형과 측정에만 개별 관계가 있음",
+      "recordIds": [
+        "math:workpack:domain-01",
+        "math:workpack:domain-02",
+        "math:workpack:domain-03",
+        "math:workpack:domain-04"
+      ],
+      "evidence": [
+        {
+          "source": "artifacts/observed-records.json",
+          "locator": "RelationAssertion canonicalParentId counts",
+          "observed": {
+            "domain01": 54,
+            "domain02": 0,
+            "domain03": 89,
+            "domain04": 0
+          }
+        },
+        {
+          "source": "https://chatgpt.com/space/page_2a433162d56c81919cf03f2121a96796",
+          "locator": "projection graphPolicy and omittedFields",
+          "observed": "Selected structural-adult concept-to-concept assertions only; other relations and perspectives counted and linked externally."
+        }
+      ],
+      "impactKo": "변화와 관계 및 자료와 가능성 화면에서 현재 관점의 그래프가 비어 있어도 개념 간 의존성이 없다는 뜻은 아니다. 현재 선언된 투영 정책과 일치하므로 잘못된 화살표나 데이터 손실로 판정하지 않는다.",
+      "proposedNextStepKo": "현재 그래프 범위를 보고에 밝혀 둔다. 후속 관점 검토에서는 각 영역의 의미 설명 관점과 성인 구조 관점의 관계 선택 기준을 교사와 확인한다."
+    }
+  ],
+  "priorityOrder": [
+    "F01 검증 범위 고지",
+    "F02 boundary 핀 원인 확인",
+    "F03·F04 용어 사용 범위와 공식 필수성 분리",
+    "F05 대학 수준 설명 깊이 기준 확인",
+    "F06 관점별 관계 투영 범위 고지"
+  ],
+  "interviewQuestionsIfNextPhaseIsApproved": [
+    "대학 수준 설명을 모든 개념에 동일하게 요구할까요, 아니면 핵심 개념마다 정의·조건·유도/증명·반례를 갖춘 대표 설명을 요구할까요?",
+    "용어의 공식 등장 학년군, 학생의 필수 학습 범위, 설명을 위해 재사용 가능한 범위를 별도로 구분하는 데 동의하실까요?",
+    "현재 성인 구조 관점의 선택 관계와 다른 교수 관점의 후보 관계를 함께 보여 줄 때 어느 경로를 우선 검토할까요?"
+  ],
+  "suggestedUserSummaryKo": "48개 화면의 개념313개·설명989개와 한영 연결을 다시 대조했고, 읽은143개 관계 중 필수선행54개에 순환은 없었어요. 핵심28개념 표본에서도 명백한 공식 오류는 발견하지 않았지만, 사분위수·계급값의 범위표시와 대학 수준 설명 깊이는 보완 검토가 필요해요. 전체918개 관계의 개별 검증은 별도로 남아 있어요.",
+  "sourceLinks": {
+    "root": "https://chatgpt.com/space/page_065390e2f398819182db99f21477947e",
+    "overview": "https://chatgpt.com/space/page_2a433162d56c81919cf03f2121a96796",
+    "bilingualSources": "https://chatgpt.com/space/page_90585ea9570481919b211097e7c81b27",
+    "officialCurriculum": "https://www.moe.go.kr/boardCnts/viewRenew.do?boardID=141&boardSeq=93458&lev=0",
+    "editorialTerms": "https://www.goe.go.kr/resource/old/BBSMSTR_000000030136/BBS_202304060600195200.pdf"
+  },
+  "sourceCache": {
+    "kind": "PrimarySourceCacheReceipt",
+    "readAt": "2026-10-07T09:55:22.225Z",
+    "sources": [
+      {
+        "sourceId": "MOE-2022-33-annex8",
+        "url": "https://www.moe.go.kr/boardCnts/fileDown.do?m=&s=moe&fileSeq=1512facbda6c234a1641ac7e9c156ca2",
+        "archiveSha256": "b37a372a90d6d00bb3985888bbb41caae7a35f28877dc243a6f4b28861c53146",
+        "archiveBytes": 15795889,
+        "member": "[별책8] 수학과 교육과정.hwp",
+        "memberBytes": 2094592,
+        "memberSha256": "aab8eed59ecf244223d04afad75f4cf5ac5085fadcfc3cf52c2f6d54ddfc7856",
+        "extractedSha256": "3c42e2dcfb2e2128673d74c0dbfb1ec2744582bb7d7473a83e3cd481a54e9bb9",
+        "extraction": "HWP5 CFB/deflate paragraph text; formula controls omitted. Use original member for visual/formula verification.",
+        "downloadedOnce": true
+      },
+      {
+        "sourceId": "MOE-editorial-2023-III",
+        "url": "https://www.goe.go.kr/resource/old/BBSMSTR_000000030136/BBS_202304060600195200.pdf",
+        "localFile": "editorial2023-III.pdf",
+        "primaryPublication": "Ministry of Education 2023.3; Gyeonggi Office of Education official mirror",
+        "fallbackReason": "Canonical KOSAC URL returned HTTP 502; no bytes saved there.",
+        "downloadedOnce": true,
+        "bytes": 5646489,
+        "sha256": "3dc3e08f725e8b07c2283b412d0d46e5b3a7b70df18bbfbe0efeb4f317876756"
+      }
+    ]
+  },
+  "artifacts": [
+    "structural-audit.json",
+    "content-sample-review.json",
+    "findings.json",
+    "findings.ts"
+  ],
+  "limits": [
+    "Full four canonical JSON files, all 918 RelationAssertions, EvidenceReference bodies, Perspective bodies, CoverageClaim records and full Topic provenance are not embedded and were not read.",
+    "Known evidence/perspective IDs are reported as unverified external targets, not mislabeled as broken references.",
+    "Only selected structural-adult concept-to-concept relations are individually checked; candidate/nonselected/uses_term/uses_notation relations are counted by release metadata.",
+    "Official standard IDs and grade-band correspondence were checked against primary Annex8 paragraph text; HWP equation controls are omitted in that extraction.",
+    "No exact school year placement is inferred; university explanation is not an added compulsory student prerequisite.",
+    "A structure pass plus a content sample is not complete proof review, teacher review, curricular accuracy approval or learning-effect validation."
+  ]
+}

@@ -1,0 +1,120 @@
+{
+  "kind": "MathTextReleaseAudit",
+  "id": "math:release:e5-m3:2",
+  "schemaVersion": "1.2.0",
+  "revision": 2,
+  "status": "published_sources_ready_for_scoped_ui",
+  "scope": {
+    "kind": "MathTextReleaseScope",
+    "explanationRecords": 989,
+    "coveredKinds": [
+      "MathConcept",
+      "MathTerm",
+      "MathNotation",
+      "Explanation",
+      "RelationAssertion",
+      "CurriculumAlignment"
+    ],
+    "fields": 7809,
+    "mathSegments": 4490,
+    "plainProseFields": 6024,
+    "pendingFields": 0,
+    "notationRecords": 203
+  },
+  "sourceSnapshots": [
+    {
+      "kind": "MathTextWorkpackMigration",
+      "workpackId": "math:workpack:domain-01",
+      "fromRevision": 3,
+      "toRevision": 4,
+      "sourceSha256": "67104dc3ba3b28c02734d65b38853bed39a1c851513205fbaa7ac8fecf2507bb",
+      "resultSha256": "c4ebcef203c8b70e7838ae4b96644cdc3c67401e592ac1d55ac6f77b6f24bc0c",
+      "archivePath": "/workspace/shared/matheducation-content/domain-01/archive/math-text-before-r3/domain-01.json",
+      "semanticPayloadPreserved": true,
+      "sourceTextPreserved": true,
+      "recordIdentitySetPreserved": true,
+      "fields": 1420,
+      "mathSegments": 878,
+      "plainProseFields": 1044,
+      "pendingFields": 0
+    },
+    {
+      "kind": "MathTextWorkpackMigration",
+      "workpackId": "math:workpack:domain-02",
+      "fromRevision": 3,
+      "toRevision": 4,
+      "sourceSha256": "a5d490311188666c08af74abb357d460dafc7639a7c47964e1e6eab656d6c002",
+      "resultSha256": "efb9e8ab3a8db690485d44b8601d7013185044a3b9604313d68e016c81897879",
+      "archivePath": "/workspace/shared/matheducation-content/domain-02/archive/math-text-before-r3/domain-02.json",
+      "semanticPayloadPreserved": true,
+      "sourceTextPreserved": true,
+      "recordIdentitySetPreserved": true,
+      "fields": 2099,
+      "mathSegments": 2431,
+      "plainProseFields": 1235,
+      "pendingFields": 0
+    },
+    {
+      "kind": "MathTextWorkpackMigration",
+      "workpackId": "math:workpack:domain-03",
+      "fromRevision": 2,
+      "toRevision": 3,
+      "sourceSha256": "77e1f078ce64a53c2036ea55b1a2d5711099dc863937dd47e0fe82673980e940",
+      "resultSha256": "702bf6518b5648664634871caf14fe67993aab66771ee18ba155270ca6b880ca",
+      "archivePath": "/workspace/shared/matheducation-content/domain-03/archive/math-text-before-r2/domain-03.json",
+      "semanticPayloadPreserved": true,
+      "sourceTextPreserved": true,
+      "recordIdentitySetPreserved": true,
+      "fields": 2736,
+      "mathSegments": 535,
+      "plainProseFields": 2479,
+      "pendingFields": 0
+    },
+    {
+      "kind": "MathTextWorkpackMigration",
+      "workpackId": "math:workpack:domain-04",
+      "fromRevision": 2,
+      "toRevision": 3,
+      "sourceSha256": "b1b47b4949a30f7ee4735e7c7968b5416ae41a6d7796fb71bf1edfceeaa52f3b",
+      "resultSha256": "60c9f0093b3ebc227df384411a9129750d4b18ba4a0702c22d2fd200a14eaedb",
+      "archivePath": "/workspace/shared/matheducation-content/domain-04/archive/math-text-before-r2/domain-04.json",
+      "semanticPayloadPreserved": true,
+      "sourceTextPreserved": true,
+      "recordIdentitySetPreserved": true,
+      "fields": 1554,
+      "mathSegments": 646,
+      "plainProseFields": 1266,
+      "pendingFields": 0
+    }
+  ],
+  "validation": {
+    "kind": "MathTextReleaseChecks",
+    "strictErrors": 0,
+    "completeFieldClassification": true,
+    "originalTextAndNumericExamplesUnchanged": true,
+    "fourIdempotentRebuilds": true,
+    "contractRegressionChecks": 43,
+    "mathTextContractChecks": 3240,
+    "explicitSegmentsRendered": 4490,
+    "notationOutputsRendered": 406,
+    "reviewedProseExclusions": 13,
+    "knownRemainingLexicalCandidates": 0,
+    "browserVisualInspection": false,
+    "humanPedagogicalApproval": false
+  },
+  "maintainability": {
+    "kind": "MathTextMaintenanceContract",
+    "unchangedFields": "Retain explicit source-hashed segments",
+    "changedFields": "Preserve new literal text and mark pending_review; never reinterpret at runtime",
+    "recordAndWorkpackRevisions": "Incremented for added extensions; stable identities retained",
+    "olderFormats": "Schema1.0/1.1 remain readable",
+    "publication": "Static source-bound view builds; Page prose edits do not mutate canonical JSON automatically"
+  },
+  "limitations": [
+    "Candidate discovery and transcription were model-reviewed; no claim of a human proof audit of every possible expression.",
+    "13 remaining lexical candidates are documented ordinary prose terms or ordinal names, not silently omitted equations.",
+    "Existing pedagogical and geometry-diagram gaps remain.",
+    "Host visual rendering and browser interaction remain separately unverified."
+  ],
+  "auditPageUrl": "https://chatgpt.com/space/page_e5e5a5d3284081919bf16362bad262f2"
+}

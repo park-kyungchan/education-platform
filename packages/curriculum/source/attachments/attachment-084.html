@@ -1,0 +1,1729 @@
+<div id="math-explorer-r2" lang="ko">
+<style>
+#math-explorer-r2{color-scheme:light dark;--me-bg:light-dark(#fff,#191c22);--me-panel:light-dark(#f7f8fa,#222730);--me-canvas:light-dark(#f3f5f8,#1e232c);--me-ink:light-dark(#1e293b,#e7edf5);--me-muted:light-dark(#607087,#acb9cd);--me-line:light-dark(#dbe1e9,#3b4655);--me-accent:light-dark(#315dce,#a6beff);--me-selected:light-dark(#eaf0ff,#2a395b);--me-warning:light-dark(#8a6515,#ebcd83);background:var(--me-bg);color:var(--me-ink);font:400 14px/1.55 system-ui,-apple-system,sans-serif;border:1px solid var(--me-line);border-radius:12px;min-width:0;overflow:hidden}
+#math-explorer-r2 *{box-sizing:border-box}#math-explorer-r2 button,#math-explorer-r2 input,#math-explorer-r2 select{font:inherit;color:inherit}#math-explorer-r2 button{background:transparent;border:0;text-align:left;min-height:38px}#math-explorer-r2 button:hover:not(:disabled){background:var(--me-selected)}#math-explorer-r2 button:disabled{opacity:.5}#math-explorer-r2 h2,#math-explorer-r2 h3,#math-explorer-r2 p{margin:0}#math-explorer-r2 h2{font-size:23px;font-weight:500;line-height:1.35;letter-spacing:-.4px}#math-explorer-r2 h3{font-size:14px;font-weight:500}#math-explorer-r2 .me-header{display:flex;gap:12px;justify-content:space-between;align-items:center;padding:18px 20px 13px;padding-right:100px}#math-explorer-r2 .me-brand{font-size:17px;font-weight:500;letter-spacing:-.3px}#math-explorer-r2 .me-caption{font-size:12px;color:var(--me-muted);overflow-wrap:anywhere}#math-explorer-r2 .me-toolbar{display:flex;gap:12px;padding:0 20px 14px;align-items:start;flex-wrap:wrap}#math-explorer-r2 .me-search{flex:1;min-width:210px;position:relative}#math-explorer-r2 .me-search input{width:100%;height:42px;border:1px solid var(--me-line);background:var(--me-panel);border-radius:8px;padding:9px 12px;font-size:14px}#math-explorer-r2 .me-search-results{border:1px solid var(--me-line);border-radius:8px;background:var(--me-bg);margin-top:5px;overflow:hidden}#math-explorer-r2 .me-search-results:empty{display:none}#math-explorer-r2 .me-search-result{width:100%;display:flex;justify-content:space-between;align-items:start;gap:8px;padding:10px 12px;border-bottom:1px solid var(--me-line)}#math-explorer-r2 .me-search-result[aria-pressed=true]{background:var(--me-selected)}#math-explorer-r2 .me-search-result>span{min-width:0;overflow-wrap:anywhere}#math-explorer-r2 .me-inspector-head>div{min-width:0}#math-explorer-r2 .me-search-result strong{font-weight:500}#math-explorer-r2 .me-result-match{font-size:11px;color:var(--me-muted)}#math-explorer-r2 .me-band{height:42px;max-width:100%;border:1px solid var(--me-line);border-radius:8px;background:var(--me-bg);padding:8px}#math-explorer-r2 .me-crumbbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:9px 18px;border-top:1px solid var(--me-line);border-bottom:1px solid var(--me-line);background:var(--me-panel)}#math-explorer-r2 .me-home,#math-explorer-r2 .me-back{border:1px solid var(--me-line);padding:5px 9px;border-radius:6px;background:var(--me-bg);font-size:12px}#math-explorer-r2 .me-crumbs{display:flex;gap:5px;align-items:center;flex-wrap:wrap;font-size:12px;min-width:0}#math-explorer-r2 .me-crumbs button{color:var(--me-accent);font-size:12px;padding:4px;min-height:30px}#math-explorer-r2 .me-titleline{padding:22px 22px 15px;display:flex;gap:12px;justify-content:space-between;align-items:start;flex-wrap:wrap}#math-explorer-r2 .me-domain-map{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;padding:3px 22px 22px;background:var(--me-bg)}#math-explorer-r2 .me-domain{border:1px solid var(--me-line);border-radius:13px;min-height:205px;padding:20px;display:flex;flex-direction:column;gap:14px;background:var(--me-panel)}#math-explorer-r2 .me-domain-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px}#math-explorer-r2 .me-domain-name{font-size:20px;font-weight:500;letter-spacing:-.3px}#math-explorer-r2 .me-domain-count{font-size:12px;color:var(--me-muted)}#math-explorer-r2 .me-domain-topics{display:flex;flex-wrap:wrap;gap:7px}#math-explorer-r2 .me-topic-pill{border:1px solid var(--me-line);border-radius:6px;background:var(--me-bg);padding:6px 8px;font-size:12px}#math-explorer-r2 .me-domain-open{margin-top:auto;color:var(--me-accent);font-size:12px}#math-explorer-r2 .me-empty-domain{border-style:dashed;background:transparent}#math-explorer-r2 .me-coverage-note{padding:0 22px 18px;font-size:12px;color:var(--me-muted)}#math-explorer-r2 .me-topics{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;padding:0 22px 22px}#math-explorer-r2 .me-topic-card{border:1px solid var(--me-line);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:9px;background:var(--me-panel)}#math-explorer-r2 .me-topic-card strong{font-size:18px;font-weight:500}#math-explorer-r2 .me-layout{display:grid;grid-template-columns:minmax(0,1fr)}#math-explorer-r2 .me-layout.me-has-selection{grid-template-columns:minmax(0,1fr) minmax(285px,335px)}#math-explorer-r2 .me-maparea{min-width:0;padding:0 20px 20px}#math-explorer-r2 .me-canvas{position:relative;background:var(--me-canvas);background-image:radial-gradient(var(--me-line) 1px,transparent 1px);background-size:16px 16px;border:1px solid var(--me-line);border-radius:10px;padding:24px 15px;min-height:290px}#math-explorer-r2 .me-edge-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;color:var(--me-muted)}#math-explorer-r2 .me-ranks{position:relative;display:flex;flex-direction:column;gap:54px;z-index:1}#math-explorer-r2 .me-rank{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}#math-explorer-r2 .me-node{flex:0 1 178px;min-width:110px;max-width:calc(50% - 6px);border:1px solid var(--me-line);border-radius:9px;padding:12px 10px;background:var(--me-bg);text-align:center;min-height:75px;overflow-wrap:anywhere}#math-explorer-r2 .me-node strong{font-weight:500;display:block}#math-explorer-r2 .me-node span{font-size:11px;color:var(--me-muted);display:block;margin-top:4px}#math-explorer-r2 .me-node[aria-pressed=true]{border:2px solid var(--me-accent);background:var(--me-selected);padding:11px 9px}#math-explorer-r2 .me-node.me-neighbor{border-color:var(--me-accent)}#math-explorer-r2 .me-mapbar{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:11px;color:var(--me-muted);margin:10px 0}#math-explorer-r2 .me-mini-context{display:flex;gap:5px;flex-wrap:wrap;padding-top:10px;border-top:1px solid var(--me-line)}#math-explorer-r2 .me-mini-context button{font-size:11px;min-height:32px;padding:4px 7px;border-radius:5px}#math-explorer-r2 .me-mini-context button[aria-current=true]{background:var(--me-selected);color:var(--me-accent)}#math-explorer-r2 .me-edge-filters{display:flex;gap:10px 16px;flex-wrap:wrap;border:0;padding:10px 0;margin:0}#math-explorer-r2 .me-edge-filters legend{font-size:11px;color:var(--me-muted)}#math-explorer-r2 .me-edge-filters label{display:flex;align-items:center;gap:5px;font-size:11px}#math-explorer-r2 .me-edge-filters input{margin:0;accent-color:var(--me-accent)}#math-explorer-r2 .me-edge{fill:none;stroke:var(--me-muted);stroke-width:1.4}#math-explorer-r2 .me-edge.me-highlight{stroke:var(--me-accent);stroke-width:2}#math-explorer-r2 .me-edge[data-style=dashed]{stroke-dasharray:7 4}#math-explorer-r2 .me-edge[data-style=dotted]{stroke-dasharray:2 4}#math-explorer-r2 .me-edge[data-style=dashdot]{stroke-dasharray:9 3 2 3}#math-explorer-r2 .me-inspector{border-left:1px solid var(--me-line);min-width:0;background:var(--me-panel)}#math-explorer-r2 .me-inspector-head{padding:17px 18px 11px;display:flex;justify-content:space-between;gap:8px}#math-explorer-r2 .me-inspector-head strong{font-size:18px;font-weight:500}#math-explorer-r2 .me-close{font-size:12px;color:var(--me-muted)}#math-explorer-r2 .me-tabs{display:flex;border-bottom:1px solid var(--me-line);padding:0 12px}#math-explorer-r2 .me-tabs button{padding:9px 11px;font-size:12px;border-bottom:2px solid transparent}#math-explorer-r2 .me-tabs button[aria-pressed=true]{border-color:var(--me-accent);color:var(--me-accent)}#math-explorer-r2 .me-inspector-body{padding:16px 18px}#math-explorer-r2 .me-inspector-body p{margin:9px 0}#math-explorer-r2 .me-inspector-body h3{margin:19px 0 7px}#math-explorer-r2 .me-inspector-body ul{padding-left:19px;font-size:13px}#math-explorer-r2 .me-example{border-left:3px solid var(--me-accent);padding:10px;background:var(--me-bg);font-size:13px}#math-explorer-r2 .me-atom{border-top:1px solid var(--me-line);padding:8px 0}#math-explorer-r2 .me-atom summary{font-size:13px;overflow-wrap:anywhere;min-height:30px}#math-explorer-r2 .me-atom p{font-size:12px}#math-explorer-r2 .me-atom small{color:var(--me-muted);font-size:11px;overflow-wrap:anywhere}#math-explorer-r2 .me-rel{border-top:1px solid var(--me-line);padding:9px 0}#math-explorer-r2 .me-rel button{display:block;color:var(--me-accent);text-decoration:underline;min-height:32px;font-size:13px}#math-explorer-r2 .me-rel p{font-size:12px;color:var(--me-muted)}#math-explorer-r2 .me-gap{padding:12px 0;border-top:1px solid var(--me-line);font-size:12px;color:var(--me-warning)}#math-explorer-r2 .me-empty{padding:35px 22px;color:var(--me-muted);font-size:13px}#math-explorer-r2 .me-foot{border-top:1px solid var(--me-line);padding:11px 20px;font-size:11px;color:var(--me-muted);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}#math-explorer-r2 .me-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}#math-explorer-r2 .me-pager{display:flex;gap:10px;align-items:center;font-size:12px;justify-content:center;margin:10px 0}#math-explorer-r2 .me-pager button{border:1px solid var(--me-line);padding:4px 9px;border-radius:5px}
+@media(max-width:950px){#math-explorer-r2 .me-layout.me-has-selection{grid-template-columns:1fr}#math-explorer-r2 .me-inspector{border-left:0;border-top:1px solid var(--me-line)}#math-explorer-r2 .me-inspector-body{display:block}#math-explorer-r2 .me-node{flex-basis:180px}}
+@media(max-width:600px){#math-explorer-r2 .me-header{padding:16px 90px 12px 16px}#math-explorer-r2 .me-header>.me-caption{display:none}#math-explorer-r2 .me-toolbar{padding:0 16px 12px}#math-explorer-r2 .me-search{min-width:100%;}#math-explorer-r2 .me-search input{font-size:16px}#math-explorer-r2 .me-band{width:100%}#math-explorer-r2 .me-titleline{padding:18px 16px 12px}#math-explorer-r2 .me-domain-map{grid-template-columns:1fr;padding:0 16px 16px;gap:10px}#math-explorer-r2 .me-domain{min-height:170px;padding:17px}#math-explorer-r2 .me-domain-name{font-size:19px}#math-explorer-r2 .me-topics{padding:0 16px 16px}#math-explorer-r2 .me-maparea{padding:0 12px 16px}#math-explorer-r2 .me-canvas{padding:20px 8px}#math-explorer-r2 .me-rank{gap:9px}#math-explorer-r2 .me-node{min-width:100px;max-width:calc(50% - 5px);font-size:13px}#math-explorer-r2 .me-coverage-note{padding:0 16px 16px}#math-explorer-r2 .me-crumbbar{padding:8px 12px}#math-explorer-r2 .me-crumbs{width:100%}}
+@media(pointer:coarse){#math-explorer-r2 button,#math-explorer-r2 summary,#math-explorer-r2 .me-edge-filters label{min-height:44px}}
+</style>
+<header class="me-header"><div><div class="me-brand">MathEducation</div><div class="me-caption">공간 탐색 · 개정 2</div></div><div class="me-caption" data-role="summary"></div></header>
+<div class="me-toolbar"><div class="me-search"><label class="me-sr" for="math-search-r2">개념 용어 기호 검색</label><input id="math-search-r2" type="search" autocomplete="off" placeholder="개념 · 용어 · 기호 검색   /" aria-controls="math-results-r2" aria-expanded="false"><div class="me-search-results" id="math-results-r2" aria-label="검색 결과"></div></div><label class="me-sr" for="math-band-r2">학년군</label><select class="me-band" id="math-band-r2" aria-label="학년군"></select></div>
+<nav class="me-crumbbar" aria-label="현재 계층 경로"><button class="me-home cursor-interaction" type="button" data-action="home">전체 지도</button><button class="me-back cursor-interaction" type="button" data-action="back">← 상위</button><div class="me-crumbs"></div></nav>
+<main data-role="view"></main>
+<footer class="me-foot"><span>범위와 표본 연결 분리 · 교육과정 개념 배치 검토 중</span><span>Tab 탐색 · Enter 선택 · Esc 상위 · / 검색</span></footer>
+<div class="me-sr" aria-live="polite" data-role="live"></div>
+<script type="application/json" id="math-source-r2">{
+  "kind": "math_knowledge_sample",
+  "id": "matheducation-ui-sample",
+  "schemaVersion": "1.1.0",
+  "revision": 2,
+  "status": "prototype",
+  "sourceIds": [
+    "src-author",
+    "src-moe",
+    "src-space"
+  ],
+  "updatedAt": "2026-10-06T06:05:00Z",
+  "canonicalParentId": null,
+  "scope": {
+    "curriculum": "대한민국 2022 개정 수학과 교육과정",
+    "grades": [
+      "초5",
+      "초6",
+      "중1",
+      "중2",
+      "중3"
+    ],
+    "priority": "C 지식 지도와 의존성 QA",
+    "completeness": "12_concept_ui_sample_only",
+    "publisherTocRole": "reference_only"
+  },
+  "pages": [
+    {
+      "kind": "page_binding",
+      "id": "project",
+      "pageId": "page_065390e2f398819182db99f21477947e",
+      "canonicalParentId": "page_ef63d8140d6081919ffadf17dfa06fa4",
+      "role": "project"
+    },
+    {
+      "kind": "page_binding",
+      "id": "sample",
+      "pageId": "page_ae357c7bc3b481919428ace1242eacf0",
+      "canonicalParentId": "page_065390e2f398819182db99f21477947e",
+      "role": "task"
+    },
+    {
+      "kind": "page_binding",
+      "id": "concept-detail",
+      "pageId": "page_ec8fc3aab148819188c0946e9edcc64c",
+      "canonicalParentId": "page_ae357c7bc3b481919428ace1242eacf0",
+      "role": "concept_detail"
+    }
+  ],
+  "groups": [
+    {
+      "kind": "knowledge_root",
+      "id": "knowledge-root",
+      "schemaVersion": "1.1.0",
+      "revision": 2,
+      "status": "prototype",
+      "sourceIds": [
+        "src-author"
+      ],
+      "updatedAt": "2026-10-06T06:05:00Z",
+      "canonicalParentId": null,
+      "title": "수학 개념 샘플"
+    },
+    {
+      "kind": "topic",
+      "id": "natural",
+      "schemaVersion": "1.1.0",
+      "revision": 2,
+      "status": "prototype",
+      "sourceIds": [
+        "src-author"
+      ],
+      "updatedAt": "2026-10-06T06:05:00Z",
+      "canonicalParentId": "knowledge-root",
+      "title": "자연수의 관계"
+    },
+    {
+      "kind": "topic",
+      "id": "fractions",
+      "schemaVersion": "1.1.0",
+      "revision": 2,
+      "status": "prototype",
+      "sourceIds": [
+        "src-author"
+      ],
+      "updatedAt": "2026-10-06T06:05:00Z",
+      "canonicalParentId": "knowledge-root",
+      "title": "분수와 단위"
+    },
+    {
+      "kind": "topic",
+      "id": "rational-domain",
+      "schemaVersion": "1.1.0",
+      "revision": 2,
+      "status": "prototype",
+      "sourceIds": [
+        "src-author"
+      ],
+      "updatedAt": "2026-10-06T06:05:00Z",
+      "canonicalParentId": "knowledge-root",
+      "title": "유리수로 확장"
+    },
+    {
+      "kind": "topic",
+      "id": "algebra",
+      "schemaVersion": "1.1.0",
+      "revision": 2,
+      "status": "prototype",
+      "sourceIds": [
+        "src-author"
+      ],
+      "updatedAt": "2026-10-06T06:05:00Z",
+      "canonicalParentId": "knowledge-root",
+      "title": "식과 연산"
+    },
+    {
+      "kind": "topic",
+      "id": "real-domain",
+      "schemaVersion": "1.1.0",
+      "revision": 2,
+      "status": "prototype",
+      "sourceIds": [
+        "src-author"
+      ],
+      "updatedAt": "2026-10-06T06:05:00Z",
+      "canonicalParentId": "knowledge-root",
+      "title": "실수로 확장"
+    }
+  ],
+  "concepts": [
+    {
+      "kind": "concept",
+      "id": "multiple",
+      "schemaVersion": "1.1.0",
+      "revision": 2,
+      "status": "prototype",
+      "sourceIds": [
+        "src-author"
+      ],
+      "updatedAt": "2026-10-06T06:05:00Z",
+      "canonicalParentId": "natural",
+      "title": "배수",
+      "stage": "초5–6",
+      "stageMappingStatus": "proposed_not_standard_mapped",
+      "meaning": "양의 자연수 n에 양의 자연수를 곱해 얻는 수를 n의 양의 배수라고 한다.",
+      "terms": [
+        {
+          "kind": "term",
+          "id": "multiple.term.1",
+          "schemaVersion": "1.1.0",
+          "revision": 2,
+          "status": "prototype",
+          "sourceIds": [
+            "src-author"
+          ],
+          "updatedAt": "2026-10-06T06:05:00Z",
+          "canonicalParentId": "multiple",
+          "label": "배수",
+          "meaning": "기준 수의 정수배. 이 샘플에서는 양의 배수만 다룬다."
+        }
+      ],
+      "symbols": [
+        {
+          "kind": "symbol",
+          "id": "multiple.symbol.1",
+          "schemaVersion": "1.1.0",
+          "revision": 2,
+          "status": "prototype",
+          "sourceIds": [
+            "src-author"
+          ],
+          "updatedAt": "2026-10-06T06:05:00Z",
+          "canonicalParentId": "multiple",
+          "notation": "n × k",
+          "meaning": "n을 k배 한 값",
+          "scope": "n, k는 양의 자연수"
+        }
+      ],
+      "conditions": [
+        "0을 포함하는 배수 관례와 구별한다. 최소공배수는 양의 공배수 중 최소값이다."
+      ],
+      "example": "4의 양의 배수: 4, 8, 12, 16, …",
+      "misconception": "배수와 약수의 방향을 뒤바꾸지 않는다.",
+      "evidenceStatus": "author_constructed_math_example",
+      "achievementStandardIds": [],
+      "advancedLens": null
+    },
+    {
+      "kind": "concept",
+      "id": "common-multiple",
+      "schemaVersion": "1.1.0",
+      "revision": 2,
+      "status": "prototype",
+      "sourceIds": [
+        "src-author"
+      ],
+      "updatedAt": "2026-10-06T06:05:00Z",
+      "canonicalParentId": "natural",
+      "title": "공배수",
+      "stage": "초5–6",
+      "stageMappingStatus": "proposed_not_standard_mapped",
+      "meaning": "두 양의 자연수 각각의 배수인 수를 양의 공배수라고 한다.",
+      "terms": [
+        {
+          "kind": "term",
+          "id": "common-multiple.term.1",
+          "schemaVersion": "1.1.0",
+          "revision": 2,
+          "status": "prototype",
+          "sourceIds": [
+            "src-author"
+          ],
+          "updatedAt": "2026-10-06T06:05:00Z",
+          "canonicalParentId": "common-multiple",
+          "label": "공배수",
+          "meaning": "두 배수 집합에 공통으로 들어 있는 수"
+        }
+      ],
+      "symbols": [
+        {
+          "kind": "symbol",
+          "id": "common-multiple.symbol.1",
+          "schemaVersion": "1.1.0",
+          "revision": 2,
+          "status": "prototype",
+          "sourceIds": [
+            "src-author"
+          ],
+          "updatedAt": "2026-10-06T06:05:00Z",
+          "canonicalParentId": "common-multiple",
+          "notation": "∩",
+          "meaning": "두 집합에 공통으로 들어 있는 원소의 집합",
+          "scope": "교사 설명용 표기이며 초등 성취기준 표기라는 뜻은 아니다"
+        }
+      ],
+      "conditions": [
+        "이 샘플은 두 수의 양의 공배수만 다룬다."
+      ],
+      "example": "4와 6의 양의 공배수: 12, 24, 36, …",
+      "misconception": "공배수는 하나만 존재하는 것이 아니다.",
+      "evidenceStatus": "author_constructed_math_example",
+      "achievementStandardIds": [],
+      "advancedLens": null
+    },
+    {
+      "kind": "concept",
+      "id": "lcm",
+      "schemaVersion": "1.1.0",
+      "revision": 2,
+      "status": "prototype",
+      "sourceIds": [
+        "src-author"
+      ],
+      "updatedAt": "2026-10-06T06:05:00Z",
+      "canonicalParentId": "natural",
+      "title": "최소공배수",
+      "stage": "초5–6",
+      "stageMappingStatus": "proposed_not_standard_mapped",
+      "meaning": "양의 공배수 가운데 가장 작은 수이다.",
+      "terms": [
+        {
+          "kind": "term",
+          "id": "lcm.term.1",
+          "schemaVersion": "1.1.0",
+          "revision": 2,
+          "status": "prototype",
+          "sourceIds": [
+            "src-author"
+          ],
+          "updatedAt": "2026-10-06T06:05:00Z",
+          "canonicalParentId": "lcm",
+          "label": "최소공배수",
+          "meaning": "양의 공배수 집합의 최솟값"
+        }
+      ],
+      "symbols": [
+        {
+          "kind": "symbol",
+          "id": "lcm.symbol.1",
+          "schemaVersion": "1.1.0",
+          "revision": 2,
+          "status": "prototype",
+          "sourceIds": [
+            "src-author"
+          ],
+          "updatedAt": "2026-10-06T06:05:00Z",
+          "canonicalParentId": "lcm",
+          "notation": "lcm(a,b)",
+          "meaning": "a와 b의 최소공배수",
+          "scope": "교사·데이터용 표기"
+        }
+      ],
+      "conditions": [
+        "a와 b는 양의 자연수이다."
+      ],
+      "example": "lcm(4,6) = 12",
+      "misconception": "최소공배수와 두 수의 곱은 항상 같지 않다.",
+      "evidenceStatus": "author_constructed_math_example",
+      "achievementStandardIds": [],
+      "advancedLens": null
+    },
+    {
+      "kind": "concept",
+      "id": "fraction-notation",
+      "schemaVersion": "1.1.0",
+      "revision": 2,
+      "status": "prototype",
+      "sourceIds": [
+        "src-author"
+      ],
+      "updatedAt": "2026-10-06T06:05:00Z",
+      "canonicalParentId": "fractions",
+      "title": "분수의 단위와 기호",
+      "stage": "초5–6",
+      "stageMappingStatus": "proposed_not_standard_mapped",
+      "meaning": "a/b는 단위 1/b를 a개 모은 양으로 읽을 수 있다.",
+      "terms": [
+        {
+          "kind": "term",
+          "id": "fraction-notation.term.1",
+          "schemaVersion": "1.1.0",
+          "revision": 2,
+          "status": "prototype",
+          "sourceIds": [
+            "src-author"
+          ],
+          "updatedAt": "2026-10-06T06:05:00Z",
+          "canonicalParentId": "fraction-notation",
+          "label": "분모",
+          "meaning": "하나의 전체를 같은 크기로 나눈 조각의 수"
+        },
+        {
+          "kind": "term",
+          "id": "fraction-notation.term.2",
+          "schemaVersion": "1.1.0",
+          "revision": 2,
+          "status": "prototype",
+          "sourceIds": [
+            "src-author"
+          ],
+          "updatedAt": "2026-10-06T06:05:00Z",
+          "canonicalParentId": "fraction-notation",
+          "label": "분자",
+          "meaning": "단위분수 1/b를 세는 개수"
+        },
+        {
+          "kind": "term",
+          "id": "fraction-notation.term.3",
+          "schemaVersion": "1.1.0",
+          "revision": 2,
+          "status": "prototype",
+          "sourceIds": [
+            "src-author"
+          ],
+          "updatedAt": "2026-10-06T06:05:00Z",
+          "canonicalParentId": "fraction-notation",
+          "label": "단위분수",
+          "meaning": "분자가 1인 분수"
+        }
+      ],
+      "symbols": [
+        {
+          "kind": "symbol",
+          "id": "fraction-notation.symbol.1",
+          "schemaVersion": "1.1.0",
+          "revision": 2,
+          "status": "prototype",
+          "sourceIds": [
+            "src-author"
+          ],
+          "updatedAt": "2026-10-06T06:05:00Z",
+          "canonicalParentId": "fraction-notation",
+          "notation": "a/b",
+          "meaning": "a를 b로 나눈 값이며 a개의 1/b",
+          "scope": "초등 음이 아닌 분수 모델"
+        },
+        {
+          "kind": "symbol",
+          "id": "fraction-notation.symbol.2",
+          "schemaVersion": "1.1.0",
+          "revision": 2,
+          "status": "prototype",
+          "sourceIds": [
+            "src-author"
+          ],
+          "updatedAt": "2026-10-06T06:05:00Z",
+          "canonicalParentId": "fraction-notation",
+          "notation": "/",
+          "meaning": "분수선에 대응하는 텍스트 표기",
+          "scope": "나눗셈의 뜻도 연결된다"
+        }
+      ],
+      "conditions": [
+        "초등 모델: a는 0 이상의 정수, b는 양의 정수이다.",
+        "서로 같은 전체를 기준으로 비교한다."
+      ],
+      "example": "3/4 = 1/4 + 1/4 + 1/4",
+      "misconception": "분모만 보고 분수의 크기를 결정할 수 없다.",
+      "evidenceStatus": "author_constructed_math_example",
+      "achievementStandardIds": [],
+      "advancedLens": null
+    },
+    {
+      "kind": "concept",
+      "id": "equivalent-fractions",
+      "schemaVersion": "1.1.0",
+      "revision": 2,
+      "status": "prototype",
+      "sourceIds": [
+        "src-author"
+      ],
+      "updatedAt": "2026-10-06T06:05:00Z",
+      "canonicalParentId": "fractions",
+      "title": "동치분수",
+      "stage": "초5–6",
+      "stageMappingStatus": "proposed_not_standard_mapped",
+      "meaning": "같은 수를 나타내는 서로 다른 분수 표현이다.",
+      "terms": [
+        {
+          "kind": "term",
+          "id": "equivalent-fractions.term.1",
+          "schemaVersion": "1.1.0",
+          "revision": 2,
+          "status": "prototype",
+          "sourceIds": [
+            "src-author"
+          ],
+          "updatedAt": "2026-10-06T06:05:00Z",
+          "canonicalParentId": "equivalent-fractions",
+          "label": "동치",
+          "meaning": "표현은 달라도 값이 같음"
+        },
+        {
+          "kind": "term",
+          "id": "equivalent-fractions.term.2",
+          "schemaVersion": "1.1.0",
+          "revision": 2,
+          "status": "prototype",
+          "sourceIds": [
+            "src-author"
+          ],
+          "updatedAt": "2026-10-06T06:05:00Z",
+          "canonicalParentId": "equivalent-fractions",
+          "label": "확장",
+          "meaning": "분자와 분모에 같은 양의 정수를 곱해 동치분수를 만듦"
+        }
+      ],
+      "symbols": [
+        {
+          "kind": "symbol",
+          "id": "equivalent-fractions.symbol.1",
+          "schemaVersion": "1.1.0",
+          "revision": 2,
+          "status": "prototype",
+          "sourceIds": [
+            "src-author"
+          ],
+          "updatedAt": "2026-10-06T06:05:00Z",
+          "canonicalParentId": "equivalent-fractions",
+          "notation": "=",
+          "meaning": "왼쪽과 오른쪽이 같은 수를 나타냄",
+          "scope": "계산 순서 표시가 아님"
+        },
+        {
+          "kind": "symbol",
+          "id": "equivalent-fractions.symbol.2",
+          "schemaVersion": "1.1.0",
+          "revision": 2,
+          "status": "prototype",
+          "sourceIds": [
+            "src-author"
+          ],
+          "updatedAt": "2026-10-06T06:05:00Z",
+          "canonicalParentId": "equivalent-fractions",
+          "notation": "a/b = (a × k)/(b × k)",
+          "meaning": "분자와 분모를 같은 비율로 바꿈",
+          "scope": "b ≠ 0, k ≠ 0"
+        }
+      ],
+      "conditions": [
+        "초등 확장에서는 k를 양의 자연수로 둔다.",
+        "약분할 때는 분자와 분모를 같은 0이 아닌 공약수로 나눈다."
+      ],
+      "example": "1/2 = 2/4 = 3/6",
+      "misconception": "분자와 분모에 같은 수를 더하면 일반적으로 값이 달라진다.",
+      "evidenceStatus": "author_constructed_math_example",
+      "achievementStandardIds": [],
+      "advancedLens": {
+        "kind": "advanced_explanation",
+        "audience": "university",
+        "notCurricularPrerequisite": true,
+        "statement": "정수쌍 (a,b), b ≠ 0에 대해 (a,b) ~ (c,d)를 ad=bc로 정의한다.",
+        "proof": "반사성과 대칭성은 등식의 성질에서 따른다. ad=bc, cf=de이면 adf=bcf=bde이므로 d(af−be)=0이다. d ≠ 0이고 정수에는 영인자가 없으므로 af=be이다. 따라서 추이성이 성립한다. 동치분수는 이 동치관계가 정하는 같은 동치류의 서로 다른 대표원이다."
+      }
+    },
+    {
+      "kind": "concept",
+      "id": "common-denominator",
+      "schemaVersion": "1.1.0",
+      "revision": 2,
+      "status": "prototype",
+      "sourceIds": [
+        "src-author"
+      ],
+      "updatedAt": "2026-10-06T06:05:00Z",
+      "canonicalParentId": "fractions",
+      "title": "통분",
+      "stage": "초5–6",
+      "stageMappingStatus": "proposed_not_standard_mapped",
+      "meaning": "분모가 다른 분수들을 값이 같은 분수로 바꾸어 분모를 같게 하는 과정이다.",
+      "terms": [
+        {
+          "kind": "term",
+          "id": "common-denominator.term.1",
+          "schemaVersion": "1.1.0",
+          "revision": 2,
+          "status": "prototype",
+          "sourceIds": [
+            "src-author"
+          ],
+          "updatedAt": "2026-10-06T06:05:00Z",
+          "canonicalParentId": "common-denominator",
+          "label": "통분",
+          "meaning": "공통 분모를 갖는 동치분수로 바꾸는 과정"
+        },
+        {
+          "kind": "term",
+          "id": "common-denominator.term.2",
+          "schemaVersion": "1.1.0",
+          "revision": 2,
+          "status": "prototype",
+          "sourceIds": [
+            "src-author"
+          ],
+          "updatedAt": "2026-10-06T06:05:00Z",
+          "canonicalParentId": "common-denominator",
+          "label": "공통 분모",
+          "meaning": "각 분모의 양의 공배수"
+        }
+      ],
+      "symbols": [
+        {
+          "kind": "symbol",
+          "id": "common-denominator.symbol.1",
+          "schemaVersion": "1.1.0",
+          "revision": 2,
+          "status": "prototype",
+          "sourceIds": [
+            "src-author"
+          ],
+          "updatedAt": "2026-10-06T06:05:00Z",
+          "canonicalParentId": "common-denominator",
+          "notation": "L/b",
+          "meaning": "분모 b를 공통 분모 L로 바꾸는 배수",
+          "scope": "L은 b의 양의 배수"
+        }
+      ],
+      "conditions": [
+        "분모들은 양의 정수이다.",
+        "최소공배수는 효율적인 선택이지만 통분의 필수 조건은 아니다."
+      ],
+      "example": "1/4 = 3/12, 1/6 = 2/12. 24로 통분해도 된다.",
+      "misconception": "분자가 0이 아닌 분수에서 분모만 바꾸고 분자를 그대로 두면 값이 바뀐다.",
+      "evidenceStatus": "author_constructed_math_example",
+      "achievementStandardIds": [],
+      "advancedLens": {
+        "kind": "advanced_explanation",
+        "audience": "university",
+        "notCurricularPrerequisite": true,
+        "statement": "통분은 유리수의 동치류에서 분모를 일치시키는 대표원 선택이다.",
+        "proof": "b,d가 양의 정수이고 L이 두 수의 공배수이면 u=L/b, v=L/d는 정수이다. (a,b)와 (au,L)는 aL=b(au)를 만족하므로 같은 유리수를 나타낸다. 따라서 a/b + c/d = (au+cv)/L이다. L이 최소일 필요는 없으며, 최소공배수 선택은 정규화가 아니라 계산 크기를 줄이는 선택이다."
+      }
+    },
+    {
+      "kind": "concept",
+      "id": "fraction-add",
+      "schemaVersion": "1.1.0",
+      "revision": 2,
+      "status": "prototype",
+      "sourceIds": [
+        "src-author"
+      ],
+      "updatedAt": "2026-10-06T06:05:00Z",
+      "canonicalParentId": "fractions",
+      "title": "분수 덧셈",
+      "stage": "초5–6",
+      "stageMappingStatus": "proposed_not_standard_mapped",
+      "meaning": "같은 단위로 맞춘 뒤 단위의 개수를 더한다.",
+      "terms": [
+        {
+          "kind": "term",
+          "id": "fraction-add.term.1",
+          "schemaVersion": "1.1.0",
+          "revision": 2,
+          "status": "prototype",
+          "sourceIds": [
+            "src-author"
+          ],
+          "updatedAt": "2026-10-06T06:05:00Z",
+          "canonicalParentId": "fraction-add",
+          "label": "공통 단위",
+          "meaning": "통분 뒤 두 분수가 함께 사용하는 단위분수"
+        }
+      ],
+      "symbols": [
+        {
+          "kind": "symbol",
+          "id": "fraction-add.symbol.1",
+          "schemaVersion": "1.1.0",
+          "revision": 2,
+          "status": "prototype",
+          "sourceIds": [
+            "src-author"
+          ],
+          "updatedAt": "2026-10-06T06:05:00Z",
+          "canonicalParentId": "fraction-add",
+          "notation": "a/L + b/L",
+          "meaning": "같은 단위 1/L의 개수를 합침",
+          "scope": "L은 양의 정수"
+        }
+      ],
+      "conditions": [
+        "분모가 다르면 먼저 통분한다."
+      ],
+      "example": "1/4 + 1/6 = 3/12 + 2/12 = 5/12",
+      "misconception": "1/4 + 1/6은 2/10이 아니다.",
+      "evidenceStatus": "author_constructed_math_example",
+      "achievementStandardIds": [],
+      "advancedLens": null
+    },
+    {
+      "kind": "concept",
+      "id": "fraction-divide",
+      "schemaVersion": "1.1.0",
+      "revision": 2,
+      "status": "prototype",
+      "sourceIds": [
+        "src-author"
+      ],
+      "updatedAt": "2026-10-06T06:05:00Z",
+      "canonicalParentId": "fractions",
+      "title": "분수 나눗셈",
+      "stage": "초5–6",
+      "stageMappingStatus": "proposed_not_standard_mapped",
+      "meaning": "나누는 수의 곱셈 역원을 곱해 몫을 구할 수 있다.",
+      "terms": [
+        {
+          "kind": "term",
+          "id": "fraction-divide.term.1",
+          "schemaVersion": "1.1.0",
+          "revision": 2,
+          "status": "prototype",
+          "sourceIds": [
+            "src-author"
+          ],
+          "updatedAt": "2026-10-06T06:05:00Z",
+          "canonicalParentId": "fraction-divide",
+          "label": "역수",
+          "meaning": "곱해서 1이 되는 두 수 중 한쪽에서 본 다른 수"
+        }
+      ],
+      "symbols": [
+        {
+          "kind": "symbol",
+          "id": "fraction-divide.symbol.1",
+          "schemaVersion": "1.1.0",
+          "revision": 2,
+          "status": "prototype",
+          "sourceIds": [
+            "src-author"
+          ],
+          "updatedAt": "2026-10-06T06:05:00Z",
+          "canonicalParentId": "fraction-divide",
+          "notation": "÷",
+          "meaning": "주어진 수로 나눈 몫",
+          "scope": "나누는 수는 0이 아님"
+        },
+        {
+          "kind": "symbol",
+          "id": "fraction-divide.symbol.2",
+          "schemaVersion": "1.1.0",
+          "revision": 2,
+          "status": "prototype",
+          "sourceIds": [
+            "src-author"
+          ],
+          "updatedAt": "2026-10-06T06:05:00Z",
+          "canonicalParentId": "fraction-divide",
+          "notation": "(a/b) ÷ (c/d)",
+          "meaning": "(a/b) × (d/c)",
+          "scope": "b ≠ 0, c ≠ 0, d ≠ 0"
+        }
+      ],
+      "conditions": [
+        "0의 역수는 없다.",
+        "역수를 곱하는 절차의 의미 설명과 분수 곱셈 노드는 후속 확장 항목이다."
+      ],
+      "example": "(2/3) ÷ (4/5) = (2/3) × (5/4) = 5/6",
+      "misconception": "나누어지는 수가 아니라 나누는 수의 역수를 곱한다.",
+      "evidenceStatus": "author_constructed_math_example",
+      "achievementStandardIds": [],
+      "advancedLens": null
+    },
+    {
+      "kind": "concept",
+      "id": "rational",
+      "schemaVersion": "1.1.0",
+      "revision": 2,
+      "status": "prototype",
+      "sourceIds": [
+        "src-author"
+      ],
+      "updatedAt": "2026-10-06T06:05:00Z",
+      "canonicalParentId": "rational-domain",
+      "title": "유리수",
+      "stage": "중1",
+      "stageMappingStatus": "proposed_not_standard_mapped",
+      "meaning": "정수 a와 0이 아닌 정수 b에 대해 a/b 꼴로 나타낼 수 있는 수이다.",
+      "terms": [
+        {
+          "kind": "term",
+          "id": "rational.term.1",
+          "schemaVersion": "1.1.0",
+          "revision": 2,
+          "status": "prototype",
+          "sourceIds": [
+            "src-author"
+          ],
+          "updatedAt": "2026-10-06T06:05:00Z",
+          "canonicalParentId": "rational",
+          "label": "유리수",
+          "meaning": "정수의 비로 표현 가능한 수"
+        },
+        {
+          "kind": "term",
+          "id": "rational.term.2",
+          "schemaVersion": "1.1.0",
+          "revision": 2,
+          "status": "prototype",
+          "sourceIds": [
+            "src-author"
+          ],
+          "updatedAt": "2026-10-06T06:05:00Z",
+          "canonicalParentId": "rational",
+          "label": "정수",
+          "meaning": "음의 정수, 0, 양의 정수를 포함하는 수"
+        }
+      ],
+      "symbols": [
+        {
+          "kind": "symbol",
+          "id": "rational.symbol.1",
+          "schemaVersion": "1.1.0",
+          "revision": 2,
+          "status": "prototype",
+          "sourceIds": [
+            "src-author"
+          ],
+          "updatedAt": "2026-10-06T06:05:00Z",
+          "canonicalParentId": "rational",
+          "notation": "a/b",
+          "meaning": "정수 a와 0이 아닌 정수 b의 몫",
+          "scope": "b는 음수여도 되며 양의 분모로 다시 표현 가능"
+        }
+      ],
+      "conditions": [
+        "b ≠ 0이다.",
+        "정수 a는 a/1로 쓸 수 있으므로 유리수에 포함된다."
+      ],
+      "example": "−3/4, 0 = 0/1, 2 = 2/1은 유리수이다.",
+      "misconception": "유리수는 분수 모양으로 적힌 수만을 뜻하지 않는다.",
+      "evidenceStatus": "author_constructed_math_example",
+      "achievementStandardIds": [],
+      "advancedLens": null
+    },
+    {
+      "kind": "concept",
+      "id": "rational-add",
+      "schemaVersion": "1.1.0",
+      "revision": 2,
+      "status": "prototype",
+      "sourceIds": [
+        "src-author"
+      ],
+      "updatedAt": "2026-10-06T06:05:00Z",
+      "canonicalParentId": "rational-domain",
+      "title": "유리수 덧셈",
+      "stage": "중1",
+      "stageMappingStatus": "proposed_not_standard_mapped",
+      "meaning": "부호와 공통 단위를 함께 고려해 유리수를 더한다.",
+      "terms": [
+        {
+          "kind": "term",
+          "id": "rational-add.term.1",
+          "schemaVersion": "1.1.0",
+          "revision": 2,
+          "status": "prototype",
+          "sourceIds": [
+            "src-author"
+          ],
+          "updatedAt": "2026-10-06T06:05:00Z",
+          "canonicalParentId": "rational-add",
+          "label": "부호",
+          "meaning": "0을 기준으로 양수인지 음수인지 나타내는 표시"
+        }
+      ],
+      "symbols": [
+        {
+          "kind": "symbol",
+          "id": "rational-add.symbol.1",
+          "schemaVersion": "1.1.0",
+          "revision": 2,
+          "status": "prototype",
+          "sourceIds": [
+            "src-author"
+          ],
+          "updatedAt": "2026-10-06T06:05:00Z",
+          "canonicalParentId": "rational-add",
+          "notation": "−",
+          "meaning": "음수를 나타내는 단항 기호",
+          "scope": "빼기 연산 기호와 용례를 구별"
+        }
+      ],
+      "conditions": [
+        "분수 표현에서 각 분모는 0이 아니다.",
+        "음수 연산과 수직선 해석은 후속 확장 노드이다."
+      ],
+      "example": "−1/4 + 1/6 = −3/12 + 2/12 = −1/12",
+      "misconception": "부호를 무시하고 분자들의 절댓값만 더하지 않는다.",
+      "evidenceStatus": "author_constructed_math_example",
+      "achievementStandardIds": [],
+      "advancedLens": null
+    },
+    {
+      "kind": "concept",
+      "id": "exponents",
+      "schemaVersion": "1.1.0",
+      "revision": 2,
+      "status": "prototype",
+      "sourceIds": [
+        "src-author"
+      ],
+      "updatedAt": "2026-10-06T06:05:00Z",
+      "canonicalParentId": "algebra",
+      "title": "지수법칙",
+      "stage": "중2",
+      "stageMappingStatus": "proposed_not_standard_mapped",
+      "meaning": "같은 밑의 거듭제곱을 곱할 때 지수를 더한다.",
+      "terms": [
+        {
+          "kind": "term",
+          "id": "exponents.term.1",
+          "schemaVersion": "1.1.0",
+          "revision": 2,
+          "status": "prototype",
+          "sourceIds": [
+            "src-author"
+          ],
+          "updatedAt": "2026-10-06T06:05:00Z",
+          "canonicalParentId": "exponents",
+          "label": "밑",
+          "meaning": "반복해서 곱하는 수"
+        },
+        {
+          "kind": "term",
+          "id": "exponents.term.2",
+          "schemaVersion": "1.1.0",
+          "revision": 2,
+          "status": "prototype",
+          "sourceIds": [
+            "src-author"
+          ],
+          "updatedAt": "2026-10-06T06:05:00Z",
+          "canonicalParentId": "exponents",
+          "label": "지수",
+          "meaning": "곱해지는 밑의 개수"
+        }
+      ],
+      "symbols": [
+        {
+          "kind": "symbol",
+          "id": "exponents.symbol.1",
+          "schemaVersion": "1.1.0",
+          "revision": 2,
+          "status": "prototype",
+          "sourceIds": [
+            "src-author"
+          ],
+          "updatedAt": "2026-10-06T06:05:00Z",
+          "canonicalParentId": "exponents",
+          "notation": "a^m",
+          "meaning": "a를 인수로 m개 곱한 값",
+          "scope": "이 샘플에서는 m이 양의 정수"
+        },
+        {
+          "kind": "symbol",
+          "id": "exponents.symbol.2",
+          "schemaVersion": "1.1.0",
+          "revision": 2,
+          "status": "prototype",
+          "sourceIds": [
+            "src-author"
+          ],
+          "updatedAt": "2026-10-06T06:05:00Z",
+          "canonicalParentId": "exponents",
+          "notation": "a^m × a^n = a^(m+n)",
+          "meaning": "같은 밑의 곱셈 지수법칙",
+          "scope": "m, n은 양의 정수"
+        }
+      ],
+      "conditions": [
+        "이 식은 같은 밑의 곱에 적용한다.",
+        "0·음의 정수 지수와 지수의 확장은 이 샘플 범위 밖이다."
+      ],
+      "example": "2^3 × 2^2 = 2^5 = 32",
+      "misconception": "a^m + a^n에 같은 곱셈 법칙을 적용할 수 없다.",
+      "evidenceStatus": "author_constructed_math_example",
+      "achievementStandardIds": [],
+      "advancedLens": null
+    },
+    {
+      "kind": "concept",
+      "id": "square-roots",
+      "schemaVersion": "1.1.0",
+      "revision": 2,
+      "status": "prototype",
+      "sourceIds": [
+        "src-author"
+      ],
+      "updatedAt": "2026-10-06T06:05:00Z",
+      "canonicalParentId": "real-domain",
+      "title": "제곱근과 근호",
+      "stage": "중3",
+      "stageMappingStatus": "proposed_not_standard_mapped",
+      "meaning": "x의 제곱근은 제곱해서 x가 되는 수이며, √x는 그중 음이 아닌 값을 나타낸다.",
+      "terms": [
+        {
+          "kind": "term",
+          "id": "square-roots.term.1",
+          "schemaVersion": "1.1.0",
+          "revision": 2,
+          "status": "prototype",
+          "sourceIds": [
+            "src-author"
+          ],
+          "updatedAt": "2026-10-06T06:05:00Z",
+          "canonicalParentId": "square-roots",
+          "label": "제곱근",
+          "meaning": "제곱하여 주어진 값이 되는 수"
+        },
+        {
+          "kind": "term",
+          "id": "square-roots.term.2",
+          "schemaVersion": "1.1.0",
+          "revision": 2,
+          "status": "prototype",
+          "sourceIds": [
+            "src-author"
+          ],
+          "updatedAt": "2026-10-06T06:05:00Z",
+          "canonicalParentId": "square-roots",
+          "label": "근호",
+          "meaning": "음이 아닌 제곱근을 나타내는 기호 √"
+        }
+      ],
+      "symbols": [
+        {
+          "kind": "symbol",
+          "id": "square-roots.symbol.1",
+          "schemaVersion": "1.1.0",
+          "revision": 2,
+          "status": "prototype",
+          "sourceIds": [
+            "src-author"
+          ],
+          "updatedAt": "2026-10-06T06:05:00Z",
+          "canonicalParentId": "square-roots",
+          "notation": "√x",
+          "meaning": "x의 음이 아닌 제곱근",
+          "scope": "실수 범위에서 x ≥ 0"
+        },
+        {
+          "kind": "symbol",
+          "id": "square-roots.symbol.2",
+          "schemaVersion": "1.1.0",
+          "revision": 2,
+          "status": "prototype",
+          "sourceIds": [
+            "src-author"
+          ],
+          "updatedAt": "2026-10-06T06:05:00Z",
+          "canonicalParentId": "square-roots",
+          "notation": "±",
+          "meaning": "양수와 음수 두 경우를 함께 표현",
+          "scope": "±3은 3과 −3"
+        }
+      ],
+      "conditions": [
+        "실수 범위에서 x ≥ 0이다.",
+        "x > 0의 제곱근은 둘, 0의 제곱근은 하나이다."
+      ],
+      "example": "9의 제곱근은 3과 −3이고, √9 = 3이다.",
+      "misconception": "√9를 ±3이라고 쓰면 기호의 뜻과 맞지 않는다.",
+      "evidenceStatus": "author_constructed_math_example",
+      "achievementStandardIds": [],
+      "advancedLens": null
+    }
+  ],
+  "dependencyEdges": [
+    {
+      "kind": "dependency_edge",
+      "id": "edge-1",
+      "schemaVersion": "1.1.0",
+      "revision": 2,
+      "status": "prototype",
+      "sourceIds": [
+        "src-author"
+      ],
+      "updatedAt": "2026-10-06T06:05:00Z",
+      "canonicalParentId": null,
+      "fromId": "multiple",
+      "toId": "common-multiple",
+      "edgeType": "required_prerequisite",
+      "justification": "배수의 공통부분을 찾는다.",
+      "evidenceStatus": "pedagogical_hypothesis"
+    },
+    {
+      "kind": "dependency_edge",
+      "id": "edge-2",
+      "schemaVersion": "1.1.0",
+      "revision": 2,
+      "status": "prototype",
+      "sourceIds": [
+        "src-author"
+      ],
+      "updatedAt": "2026-10-06T06:05:00Z",
+      "canonicalParentId": null,
+      "fromId": "common-multiple",
+      "toId": "lcm",
+      "edgeType": "required_prerequisite",
+      "justification": "양의 공배수 중 최솟값을 찾는다.",
+      "evidenceStatus": "pedagogical_hypothesis"
+    },
+    {
+      "kind": "dependency_edge",
+      "id": "edge-3",
+      "schemaVersion": "1.1.0",
+      "revision": 2,
+      "status": "prototype",
+      "sourceIds": [
+        "src-author"
+      ],
+      "updatedAt": "2026-10-06T06:05:00Z",
+      "canonicalParentId": null,
+      "fromId": "fraction-notation",
+      "toId": "equivalent-fractions",
+      "edgeType": "required_prerequisite",
+      "justification": "분수의 값과 단위 의미를 사용한다.",
+      "evidenceStatus": "pedagogical_hypothesis"
+    },
+    {
+      "kind": "dependency_edge",
+      "id": "edge-4",
+      "schemaVersion": "1.1.0",
+      "revision": 2,
+      "status": "prototype",
+      "sourceIds": [
+        "src-author"
+      ],
+      "updatedAt": "2026-10-06T06:05:00Z",
+      "canonicalParentId": null,
+      "fromId": "common-multiple",
+      "toId": "common-denominator",
+      "edgeType": "required_prerequisite",
+      "justification": "공통 분모를 공배수로 고른다.",
+      "evidenceStatus": "pedagogical_hypothesis"
+    },
+    {
+      "kind": "dependency_edge",
+      "id": "edge-5",
+      "schemaVersion": "1.1.0",
+      "revision": 2,
+      "status": "prototype",
+      "sourceIds": [
+        "src-author"
+      ],
+      "updatedAt": "2026-10-06T06:05:00Z",
+      "canonicalParentId": null,
+      "fromId": "equivalent-fractions",
+      "toId": "common-denominator",
+      "edgeType": "required_prerequisite",
+      "justification": "값을 보존하며 분모를 바꾼다.",
+      "evidenceStatus": "pedagogical_hypothesis"
+    },
+    {
+      "kind": "dependency_edge",
+      "id": "edge-6",
+      "schemaVersion": "1.1.0",
+      "revision": 2,
+      "status": "prototype",
+      "sourceIds": [
+        "src-author"
+      ],
+      "updatedAt": "2026-10-06T06:05:00Z",
+      "canonicalParentId": null,
+      "fromId": "common-denominator",
+      "toId": "fraction-add",
+      "edgeType": "required_prerequisite",
+      "justification": "분모가 다른 분수를 같은 단위로 맞춘다.",
+      "evidenceStatus": "pedagogical_hypothesis"
+    },
+    {
+      "kind": "dependency_edge",
+      "id": "edge-7",
+      "schemaVersion": "1.1.0",
+      "revision": 2,
+      "status": "prototype",
+      "sourceIds": [
+        "src-author"
+      ],
+      "updatedAt": "2026-10-06T06:05:00Z",
+      "canonicalParentId": null,
+      "fromId": "rational",
+      "toId": "rational-add",
+      "edgeType": "required_prerequisite",
+      "justification": "양수와 음수를 포함하는 유리수를 다룬다.",
+      "evidenceStatus": "pedagogical_hypothesis"
+    },
+    {
+      "kind": "dependency_edge",
+      "id": "edge-8",
+      "schemaVersion": "1.1.0",
+      "revision": 2,
+      "status": "prototype",
+      "sourceIds": [
+        "src-author"
+      ],
+      "updatedAt": "2026-10-06T06:05:00Z",
+      "canonicalParentId": null,
+      "fromId": "common-denominator",
+      "toId": "rational-add",
+      "edgeType": "required_prerequisite",
+      "justification": "분수로 표시한 유리수의 단위를 맞춘다.",
+      "evidenceStatus": "pedagogical_hypothesis"
+    },
+    {
+      "kind": "dependency_edge",
+      "id": "edge-9",
+      "schemaVersion": "1.1.0",
+      "revision": 2,
+      "status": "prototype",
+      "sourceIds": [
+        "src-author"
+      ],
+      "updatedAt": "2026-10-06T06:05:00Z",
+      "canonicalParentId": null,
+      "fromId": "lcm",
+      "toId": "common-denominator",
+      "edgeType": "helpful_prerequisite",
+      "justification": "가장 작은 공통 분모를 선택하는 효율화 관계이며 필수 선수로 단정하지 않는다.",
+      "evidenceStatus": "pedagogical_hypothesis"
+    },
+    {
+      "kind": "dependency_edge",
+      "id": "edge-10",
+      "schemaVersion": "1.1.0",
+      "revision": 2,
+      "status": "prototype",
+      "sourceIds": [
+        "src-author"
+      ],
+      "updatedAt": "2026-10-06T06:05:00Z",
+      "canonicalParentId": null,
+      "fromId": "fraction-notation",
+      "toId": "rational",
+      "edgeType": "representation",
+      "justification": "분수 표기가 유리수를 나타내는 표현으로 확장된다.",
+      "evidenceStatus": "pedagogical_hypothesis"
+    },
+    {
+      "kind": "dependency_edge",
+      "id": "edge-11",
+      "schemaVersion": "1.1.0",
+      "revision": 2,
+      "status": "prototype",
+      "sourceIds": [
+        "src-author"
+      ],
+      "updatedAt": "2026-10-06T06:05:00Z",
+      "canonicalParentId": null,
+      "fromId": "fraction-add",
+      "toId": "rational-add",
+      "edgeType": "related",
+      "justification": "양의 분수 덧셈과 부호 있는 수의 덧셈을 연결한다.",
+      "evidenceStatus": "pedagogical_hypothesis"
+    },
+    {
+      "kind": "dependency_edge",
+      "id": "edge-12",
+      "schemaVersion": "1.1.0",
+      "revision": 2,
+      "status": "prototype",
+      "sourceIds": [
+        "src-author"
+      ],
+      "updatedAt": "2026-10-06T06:05:00Z",
+      "canonicalParentId": null,
+      "fromId": "exponents",
+      "toId": "square-roots",
+      "edgeType": "related",
+      "justification": "제곱 연산과 역방향 관계를 연결하되 전체 지수법칙을 필수 선수로 단정하지 않는다.",
+      "evidenceStatus": "pedagogical_hypothesis"
+    }
+  ],
+  "gaps": [
+    {
+      "kind": "qa_gap",
+      "id": "curriculum-mapping",
+      "schemaVersion": "1.1.0",
+      "revision": 2,
+      "status": "prototype",
+      "sourceIds": [
+        "src-author"
+      ],
+      "updatedAt": "2026-10-06T06:05:00Z",
+      "canonicalParentId": null,
+      "title": "교육과정 대응 미확정",
+      "description": "별책 8의 성취기준 원문과 개념별 대응을 아직 확정하지 않았다. 학년 표시는 UI 배치 제안이다.",
+      "conceptIds": [
+        "multiple",
+        "common-multiple",
+        "lcm",
+        "fraction-notation",
+        "equivalent-fractions",
+        "common-denominator",
+        "fraction-add",
+        "fraction-divide",
+        "rational",
+        "rational-add",
+        "exponents",
+        "square-roots"
+      ],
+      "severity": "review",
+      "resolution": "open"
+    },
+    {
+      "kind": "qa_gap",
+      "id": "fraction-divide-prereq",
+      "schemaVersion": "1.1.0",
+      "revision": 2,
+      "status": "prototype",
+      "sourceIds": [
+        "src-author"
+      ],
+      "updatedAt": "2026-10-06T06:05:00Z",
+      "canonicalParentId": null,
+      "title": "분수 나눗셈 선수 누락",
+      "description": "분수 곱셈, 나눗셈의 의미, 곱셈 역원의 설명 노드가 추가로 필요하다.",
+      "conceptIds": [
+        "fraction-divide"
+      ],
+      "severity": "review",
+      "resolution": "open"
+    },
+    {
+      "kind": "qa_gap",
+      "id": "signed-number-prereq",
+      "schemaVersion": "1.1.0",
+      "revision": 2,
+      "status": "prototype",
+      "sourceIds": [
+        "src-author"
+      ],
+      "updatedAt": "2026-10-06T06:05:00Z",
+      "canonicalParentId": null,
+      "title": "부호 연산 선수 누락",
+      "description": "정수, 수직선, 절댓값, 반대수 노드는 후속 확장 대상이다.",
+      "conceptIds": [
+        "rational",
+        "rational-add"
+      ],
+      "severity": "review",
+      "resolution": "open"
+    },
+    {
+      "kind": "qa_gap",
+      "id": "power-prereq",
+      "schemaVersion": "1.1.0",
+      "revision": 2,
+      "status": "prototype",
+      "sourceIds": [
+        "src-author"
+      ],
+      "updatedAt": "2026-10-06T06:05:00Z",
+      "canonicalParentId": null,
+      "title": "거듭제곱 선수 누락",
+      "description": "거듭제곱 정의와 곱셈의 결합법칙 노드를 추가로 연결해야 한다.",
+      "conceptIds": [
+        "exponents"
+      ],
+      "severity": "review",
+      "resolution": "open"
+    },
+    {
+      "kind": "qa_gap",
+      "id": "root-prereq",
+      "schemaVersion": "1.1.0",
+      "revision": 2,
+      "status": "prototype",
+      "sourceIds": [
+        "src-author"
+      ],
+      "updatedAt": "2026-10-06T06:05:00Z",
+      "canonicalParentId": null,
+      "title": "제곱근 선수 누락",
+      "description": "제곱, 음이 아닌 실수, 무리수 노드의 상세를 추가해야 한다.",
+      "conceptIds": [
+        "square-roots"
+      ],
+      "severity": "review",
+      "resolution": "open"
+    },
+    {
+      "kind": "qa_gap",
+      "id": "not-full-map",
+      "schemaVersion": "1.1.0",
+      "revision": 2,
+      "status": "prototype",
+      "sourceIds": [
+        "src-author"
+      ],
+      "updatedAt": "2026-10-06T06:05:00Z",
+      "canonicalParentId": null,
+      "title": "전체 범위 미구축",
+      "description": "12개 개념만 포함하며 기하, 통계 등 전체 교과 범위를 대표하지 않는다.",
+      "conceptIds": [],
+      "severity": "review",
+      "resolution": "open"
+    }
+  ],
+  "sources": [
+    {
+      "kind": "source",
+      "id": "src-author",
+      "schemaVersion": "1.1.0",
+      "revision": 2,
+      "status": "prototype",
+      "sourceIds": [],
+      "updatedAt": "2026-10-06T06:05:00Z",
+      "canonicalParentId": null,
+      "sourceType": "author_constructed",
+      "title": "화면 비교용 직접 작성 수학 예시",
+      "url": null,
+      "authority": "prototype",
+      "note": "선수 관계는 교수학적 가설이며 공식 교육과정 그래프가 아님"
+    },
+    {
+      "kind": "source",
+      "id": "src-moe",
+      "schemaVersion": "1.1.0",
+      "revision": 2,
+      "status": "prototype",
+      "sourceIds": [],
+      "updatedAt": "2026-10-06T06:05:00Z",
+      "canonicalParentId": null,
+      "sourceType": "official_overview",
+      "title": "교육부 2022 개정 교육과정 확정 발표",
+      "url": "https://www.moe.go.kr/boardCnts/viewRenew.do?boardID=294&boardSeq=93459&lev=0&searchType=null",
+      "authority": "official_overview_only",
+      "note": "교육과정의 배경만 지원하며 개념별 성취기준 대응은 지원하지 않음"
+    },
+    {
+      "kind": "source",
+      "id": "src-space",
+      "schemaVersion": "1.1.0",
+      "revision": 2,
+      "status": "prototype",
+      "sourceIds": [],
+      "updatedAt": "2026-10-06T06:05:00Z",
+      "canonicalParentId": null,
+      "sourceType": "official_product_documentation",
+      "title": "Getting started with Space",
+      "url": "https://help.openai.com/en/articles/20001549-getting-started-with-space-in-chatgpt",
+      "authority": "official_product",
+      "note": "중첩 Page와 편집 문서, 상호작용 도구를 지원함"
+    }
+  ],
+  "viewContract": {
+    "kind": "view_contract",
+    "canonicalSource": "matheducation-sample-r2.json",
+    "schema": "matheducation-sample-r2.schema.json",
+    "mode": "embedded_snapshot",
+    "liveFileSync": false,
+    "editsInViewWriteSource": false,
+    "selectionPersistence": "local_only",
+    "hierarchySeparateFromDependencies": true,
+    "privacy": "owner_only_no_student_data"
+  }
+}
+</script>
+<script type="application/json" id="math-view-r2">{
+  "kind": "ExplorerViewContract",
+  "id": "matheducation-spatial-explorer",
+  "schemaVersion": "2.0.0",
+  "revision": 2,
+  "status": "prototype",
+  "updatedAt": "2026-10-06T06:48:00Z",
+  "previousRevision": {
+    "pageId": "page_1f2e2bc038288191b50d91fa9356dd92",
+    "htmlSha256": "af7df22654d48592f2c3c461bb030a0bfb5acb245bc50e7850dea58897690b99"
+  },
+  "source": {
+    "kind": "SourceSnapshot",
+    "adapter": "sample-r2-to-explorer-1",
+    "sourceRevision": 2,
+    "sha256": "3332d52420632f5a5afc872692f9a9bfcd81d238705d8d63918c0c9a70118308",
+    "readOnly": true,
+    "fullCurriculum": false
+  },
+  "domains": [
+    {
+      "kind": "OfficialDomainView",
+      "id": "kr2022:domain:01",
+      "label": "수와 연산",
+      "sampleTopicIds": [
+        "natural",
+        "fractions",
+        "rational-domain",
+        "real-domain"
+      ],
+      "placementStatus": "sample_assignment_proposed"
+    },
+    {
+      "kind": "OfficialDomainView",
+      "id": "kr2022:domain:02",
+      "label": "변화와 관계",
+      "sampleTopicIds": [
+        "algebra"
+      ],
+      "placementStatus": "sample_assignment_proposed"
+    },
+    {
+      "kind": "OfficialDomainView",
+      "id": "kr2022:domain:03",
+      "label": "도형과 측정",
+      "sampleTopicIds": [],
+      "placementStatus": "unpopulated"
+    },
+    {
+      "kind": "OfficialDomainView",
+      "id": "kr2022:domain:04",
+      "label": "자료와 가능성",
+      "sampleTopicIds": [],
+      "placementStatus": "unpopulated"
+    }
+  ],
+  "bands": [
+    {
+      "kind": "OfficialBandView",
+      "id": "e5_6",
+      "label": "초5–6"
+    },
+    {
+      "kind": "OfficialBandView",
+      "id": "m1_3",
+      "label": "중1–3"
+    }
+  ],
+  "relationRegistry": [
+    {
+      "kind": "RelationViewType",
+      "id": "required_prerequisite",
+      "label": "필수 선행",
+      "defaultVisible": true,
+      "layering": true,
+      "directedVisual": true,
+      "lineStyle": "solid",
+      "status": "active"
+    },
+    {
+      "kind": "RelationViewType",
+      "id": "helpful_prerequisite",
+      "label": "도움되는 선행",
+      "defaultVisible": false,
+      "layering": false,
+      "directedVisual": true,
+      "lineStyle": "dashed",
+      "status": "active"
+    },
+    {
+      "kind": "RelationViewType",
+      "id": "representation",
+      "label": "다른 표현",
+      "defaultVisible": false,
+      "layering": false,
+      "directedVisual": false,
+      "lineStyle": "dotted",
+      "status": "active"
+    },
+    {
+      "kind": "RelationViewType",
+      "id": "related",
+      "label": "관련 개념",
+      "defaultVisible": false,
+      "layering": false,
+      "directedVisual": false,
+      "lineStyle": "dashdot",
+      "status": "active"
+    }
+  ],
+  "actionRegistry": [
+    {
+      "kind": "LocalViewAction",
+      "id": "home",
+      "label": "전체 지도",
+      "handlerKey": "home",
+      "status": "active",
+      "sideEffect": "presentation_only"
+    },
+    {
+      "kind": "LocalViewAction",
+      "id": "domain",
+      "label": "영역 열기",
+      "handlerKey": "domain",
+      "status": "active",
+      "sideEffect": "presentation_only"
+    },
+    {
+      "kind": "LocalViewAction",
+      "id": "topic",
+      "label": "개념 묶음 열기",
+      "handlerKey": "topic",
+      "status": "active",
+      "sideEffect": "presentation_only"
+    },
+    {
+      "kind": "LocalViewAction",
+      "id": "concept",
+      "label": "개념 선택",
+      "handlerKey": "concept",
+      "status": "active",
+      "sideEffect": "presentation_only"
+    },
+    {
+      "kind": "LocalViewAction",
+      "id": "back",
+      "label": "한 단계 위",
+      "handlerKey": "back",
+      "status": "active",
+      "sideEffect": "presentation_only"
+    },
+    {
+      "kind": "LocalViewAction",
+      "id": "clear",
+      "label": "선택 닫기",
+      "handlerKey": "clear",
+      "status": "active",
+      "sideEffect": "presentation_only"
+    },
+    {
+      "kind": "LocalViewAction",
+      "id": "search-result",
+      "label": "검색 결과 열기",
+      "handlerKey": "search-result",
+      "status": "active",
+      "sideEffect": "presentation_only"
+    },
+    {
+      "kind": "LocalViewAction",
+      "id": "band",
+      "label": "학년군 변경",
+      "handlerKey": "band",
+      "status": "active",
+      "sideEffect": "presentation_only"
+    },
+    {
+      "kind": "LocalViewAction",
+      "id": "inspect-tab",
+      "label": "상세 탭 변경",
+      "handlerKey": "inspect-tab",
+      "status": "active",
+      "sideEffect": "presentation_only"
+    }
+  ],
+  "theme": {
+    "kind": "ViewTheme",
+    "id": "calm-graph-workspace",
+    "revision": 1,
+    "tokens": {
+      "bg": {
+        "light": "#ffffff",
+        "dark": "#191c22"
+      },
+      "panel": {
+        "light": "#f7f8fa",
+        "dark": "#222730"
+      },
+      "canvas": {
+        "light": "#f3f5f8",
+        "dark": "#1e232c"
+      },
+      "ink": {
+        "light": "#1e293b",
+        "dark": "#e7edf5"
+      },
+      "muted": {
+        "light": "#607087",
+        "dark": "#acb9cd"
+      },
+      "line": {
+        "light": "#dbe1e9",
+        "dark": "#3b4655"
+      },
+      "accent": {
+        "light": "#315dce",
+        "dark": "#a6beff"
+      },
+      "selected": {
+        "light": "#eaf0ff",
+        "dark": "#2a395b"
+      },
+      "warning": {
+        "light": "#8a6515",
+        "dark": "#ebcd83"
+      }
+    }
+  },
+  "renderer": {
+    "kind": "RendererContract",
+    "id": "native-dom-svg",
+    "version": "2.0.0",
+    "runtimeDependencies": [],
+    "remoteResources": [],
+    "layout": "required_edge_rank_with_flexible_rows",
+    "groupNodePageSize": 24,
+    "unknownRelationPolicy": "show_as_optional_unmapped",
+    "largeGraphPolicy": "progressive_domains_topics_and_paginated_nodes",
+    "futureRendererCandidate": "cytoscapejs_pending_benchmark_and_sandbox_test",
+    "canonicalAdapterStatus": "available_fixture_verified_not_active"
+  },
+  "interaction": {
+    "kind": "InteractionContract",
+    "sourceWrites": false,
+    "automaticSync": false,
+    "searchFields": [
+      "concept_title",
+      "term_label",
+      "symbol_notation"
+    ],
+    "searchResultLimit": 8,
+    "keyboard": [
+      "Tab native control order",
+      "Enter or Space activates button",
+      "ArrowUp and ArrowDown select search results",
+      "Escape closes search or moves one level up",
+      "Slash focuses search within explorer",
+      "Arrow keys move between graph node controls"
+    ],
+    "universityLens": "separate_disclosure",
+    "unknownsVisible": true,
+    "countsComputedFromData": true
+  }
+}
+</script>
+<script>
+(()=>{
+'use strict';
+const root=document.getElementById('math-explorer-r2');if(!root)return;
+const freeze=v=>{if(v&&typeof v==='object'){Object.values(v).forEach(freeze);Object.freeze(v);}return v;};
+const source=freeze(JSON.parse(root.querySelector('#math-source-r2').textContent));
+const config=freeze(JSON.parse(root.querySelector('#math-view-r2').textContent));
+const esc=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const concepts=new Map(source.concepts.map(c=>[c.id,{...c,canonicalParentId:c.viewParentId||c.canonicalParentId,bandIds:Array.isArray(c.officialBandIds)?c.officialBandIds:[c.stage==='초5–6'?'e5_6':'m1_3'],bandId:Array.isArray(c.officialBandIds)?(c.officialBandIds[0]||'unknown'):(c.stage==='초5–6'?'e5_6':'m1_3')}]));
+const topics=new Map(source.groups.filter(g=>g.kind==='topic').map(g=>[g.id,g]));
+const domains=new Map(config.domains.map(d=>[d.id,d]));
+const relations=new Map(config.relationRegistry.filter(t=>t.status!=='deprecated').map(t=>[t.id,t]));
+for(const e of source.dependencyEdges)if(!relations.has(e.edgeType))relations.set(e.edgeType,{id:e.edgeType,label:'미등록 관계 '+e.edgeType,defaultVisible:false,layering:false,directedVisual:false,lineStyle:'dotted',status:'experimental'});
+const allowedActions=new Set(config.actionRegistry.filter(a=>a.status==='active'&&a.sideEffect==='presentation_only').map(a=>a.handlerKey));
+const state={domainId:null,topicId:null,conceptId:null,atomId:null,bandId:'all',page:0,tab:'concept',query:'',searchIndex:0,visibleRelations:new Set([...relations.values()].filter(t=>t.defaultVisible).map(t=>t.id))};
+const view=root.querySelector('[data-role="view"]'),crumbs=root.querySelector('.me-crumbs'),live=root.querySelector('[data-role="live"]'),search=root.querySelector('#math-search-r2'),results=root.querySelector('#math-results-r2'),band=root.querySelector('#math-band-r2');
+for(const [token,value] of Object.entries(config.theme.tokens))root.style.setProperty('--me-'+token,`light-dark(${value.light},${value.dark})`);
+root.querySelector('[data-role="summary"]').textContent=`${concepts.size}개 표본 · ${domains.size}개 공식 영역`;
+band.innerHTML='<option value="all">모든 학년군</option>'+config.bands.map(b=>`<option value="${b.id}">${esc(b.label)}</option>`).join('');
+const inBand=c=>state.bandId==='all'||c.bandIds.includes(state.bandId);
+const topicConcepts=id=>[...concepts.values()].filter(c=>c.canonicalParentId===id&&inBand(c));
+const domainOfTopic=id=>config.domains.find(d=>d.sampleTopicIds.includes(id));
+const domainConcepts=id=>[...concepts.values()].filter(c=>domains.get(id).sampleTopicIds.includes(c.canonicalParentId)&&inBand(c));
+const bandLabel=id=>config.bands.find(b=>b.id===id)?.label||id;
+const btn=(action,id,label,cls='',extra='')=>`<button type="button" class="${cls} cursor-interaction" data-action="${action}" data-id="${esc(id||'')}" ${extra}>${label}</button>`;
+const titleline=(title,sub)=>`<div class="me-titleline"><div><h2>${esc(title)}</h2><p class="me-caption">${esc(sub)}</p></div></div>`;
+function headingPath(){let html='';if(state.domainId)html+=btn('domain',state.domainId,esc(domains.get(state.domainId).label));if(state.topicId)html+='<span aria-hidden="true">›</span>'+btn('topic',state.topicId,esc(topics.get(state.topicId).title));if(state.conceptId)html+='<span aria-hidden="true">›</span><span aria-current="page">'+esc(concepts.get(state.conceptId).title)+'</span>';crumbs.innerHTML=html||'<span aria-current="page">전체 지도</span>';root.querySelector('[data-action="back"]').disabled=!state.domainId;}
+function overview(){return titleline('전체 지형','공식 영역을 선택해 표본 개념으로 들어갑니다.')+`<div class="me-domain-map">${config.domains.map(d=>{const cs=domainConcepts(d.id);const ts=d.sampleTopicIds.map(id=>topics.get(id)).filter(t=>topicConcepts(t.id).length);return btn('domain',d.id,`<span class="me-domain-head"><span class="me-domain-name">${esc(d.label)}</span><span class="me-domain-count">${cs.length?cs.length+'개 표본':'표본 없음'}</span></span><span class="me-domain-topics">${ts.map(t=>`<span class="me-topic-pill">${esc(t.title)}</span>`).join('')||'<span class="me-caption">자료 연결 전 · 빈 영역도 범위에 포함</span>'}</span><span class="me-domain-open">${cs.length?'영역 확대 →':'영역 범위 확인 →'}</span>`,'me-domain'+(!cs.length?' me-empty-domain':''));}).join('')}</div><div class="me-coverage-note">영역명과 학년군은 공식 경계입니다. 아래 표본 개념의 영역 연결은 검토 중이며, 표본 수는 교육과정 전체 개념 수가 아닙니다.</div>`;}
+function domainView(){const d=domains.get(state.domainId);const ts=d.sampleTopicIds.map(id=>topics.get(id)).filter(t=>topicConcepts(t.id).length);return titleline(d.label,'공식 영역 안의 설명용 개념 묶음 · 교과서 단원 구분과 별개')+(ts.length?`<div class="me-topics">${ts.map(t=>{const cs=topicConcepts(t.id);return btn('topic',t.id,`<span class="me-caption">${cs.length}개 표본 · ${[...new Set(cs.flatMap(c=>c.bandIds.map(bandLabel)))].join(' / ')}</span><strong>${esc(t.title)}</strong><span class="me-caption">${cs.slice(0,4).map(c=>esc(c.title)).join(' · ')}${cs.length>4?' 외 '+(cs.length-4)+'개':''}</span><span>개념 지도 열기 →</span>`,'me-topic-card');}).join('')}</div>`:'<div class="me-empty">이 학년군의 표본 개념을 아직 연결하지 않았습니다. 실제 교육과정에 내용이 없다는 뜻은 아닙니다.</div>');}
+function ranks(nodes){const ids=new Set(nodes.map(c=>c.id)),edges=source.dependencyEdges.filter(e=>ids.has(e.fromId)&&ids.has(e.toId)&&relations.get(e.edgeType)?.layering);const incoming=new Map(nodes.map(c=>[c.id,0])),rank=new Map(nodes.map(c=>[c.id,0]));for(const e of edges)incoming.set(e.toId,incoming.get(e.toId)+1);const queue=nodes.filter(c=>incoming.get(c.id)===0).map(c=>c.id);let visited=0;while(queue.length){const id=queue.shift();visited++;for(const e of edges.filter(e=>e.fromId===id)){rank.set(e.toId,Math.max(rank.get(e.toId),rank.get(id)+1));incoming.set(e.toId,incoming.get(e.toId)-1);if(incoming.get(e.toId)===0)queue.push(e.toId);}}if(visited!==nodes.length)return {layers:[nodes],cycle:true};const levels=[...new Set(rank.values())].sort((a,b)=>a-b);return {layers:levels.map(n=>nodes.filter(c=>rank.get(c.id)===n)),cycle:false};}
+function relevantEdges(id){return source.dependencyEdges.filter(e=>(e.fromId===id||e.toId===id)&&state.visibleRelations.has(e.edgeType));}
+function graph(){const t=topics.get(state.topicId),all=topicConcepts(t.id);const size=config.renderer.groupNodePageSize;const pages=Math.max(1,Math.ceil(all.length/size));state.page=Math.min(state.page,pages-1);let nodes=all.slice(state.page*size,(state.page+1)*size);if(state.conceptId&&!nodes.some(c=>c.id===state.conceptId)){state.page=Math.floor(all.findIndex(c=>c.id===state.conceptId)/size);nodes=all.slice(state.page*size,(state.page+1)*size);}const rank=ranks(nodes);const neighbors=new Set(state.conceptId?relevantEdges(state.conceptId).flatMap(e=>[e.fromId,e.toId]):[]);const layout=`<div class="me-layout ${state.conceptId?'me-has-selection':''}"><section class="me-maparea" aria-label="개념 지도"><div class="me-canvas"><svg class="me-edge-svg" aria-hidden="true"></svg><div class="me-ranks">${rank.layers.map(layer=>`<div class="me-rank">${layer.map(c=>btn('concept',c.id,`<strong>${esc(c.title)}</strong><span>${c.terms.length} 용어 · ${c.symbols.length} 기호</span>`,'me-node'+(neighbors.has(c.id)?' me-neighbor':''),`data-node="${c.id}" aria-pressed="${state.conceptId===c.id}"`)).join('')}</div>`).join('')}</div></div><div class="me-mapbar"><span>${rank.cycle?'순환 관계 발견 · 계층 배치 보류':'필수 선행 가설을 기준으로 배치'}</span><span>${nodes.length}/${all.length}개 표시 · ${state.conceptId?'선택과 이웃 강조':'개념을 눌러 상세 보기'}</span></div>${pages>1?`<div class="me-pager"><button type="button" data-page="${state.page-1}" ${!state.page?'disabled':''}>이전</button><span>${state.page+1}/${pages}</span><button type="button" data-page="${state.page+1}" ${state.page===pages-1?'disabled':''}>다음</button></div>`:''}<fieldset class="me-edge-filters"><legend>관계 표시</legend>${[...relations.values()].map(r=>`<label><input type="checkbox" data-relation="${esc(r.id)}" ${state.visibleRelations.has(r.id)?'checked':''}>${esc(r.label)}${r.lineStyle==='dashed'?' ┄':r.lineStyle==='dotted'?' ···':r.lineStyle==='dashdot'?' ┄·':' ─'}</label>`).join('')}</fieldset><div class="me-mini-context" aria-label="전체 영역 맥락">${config.domains.map(d=>btn('domain',d.id,esc(d.label),'',`aria-current="${d.id===state.domainId}"`)).join('')}</div></section>${state.conceptId?inspector(concepts.get(state.conceptId)):''}</div>`;return titleline(t.title,domains.get(state.domainId).label+' / 설명용 묶음 · '+all.length+'개 표본')+layout;}
+function inspector(c){let body='';if(state.tab==='concept'){body=`<p>${esc(c.meaning)}</p><h3>조건</h3><ul>${c.conditions.map(x=>`<li>${esc(x)}</li>`).join('')}</ul><h3>예시</h3><div class="me-example">${esc(c.example)}</div><p class="me-caption">주의 · ${esc(c.misconception)}</p><h3>용어와 기호</h3>${c.terms.concat(c.symbols).map(a=>`<details class="me-atom" ${a.id===state.atomId?'open':''}><summary>${esc(a.label||a.notation)}</summary><p>${esc(a.meaning)}</p>${a.scope?`<p class="me-caption">${esc(a.scope)}</p>`:''}<small>${esc(a.id)}</small></details>`).join('')}${c.advancedLens?`<details class="me-atom"><summary>대학 수준 해설</summary><p>${esc(c.advancedLens.statement)}</p><p>${esc(c.advancedLens.proof)}</p><small>교육과정 선수 요건과 분리한 설명 관점</small></details>`:''}`;}else if(state.tab==='relations'){const es=relevantEdges(c.id);body=`<p class="me-caption">방향: 선행 → 후속. 다른 표현·관련 개념은 연관 표시입니다.</p>${es.map(e=>{const other=concepts.get(e.fromId===c.id?e.toId:e.fromId);return `<div class="me-rel"><div class="me-caption">${esc(relations.get(e.edgeType).label)} · ${e.toId===c.id?'이 개념으로 들어옴':'이 개념에서 이어짐'}</div>${btn('concept',other.id,esc(other.title))}<p>${esc(e.justification)}</p></div>`;}).join('')||'<div class="me-empty">표시 중인 관계 없음. 필요한 선수 지식이 없다는 뜻은 아닙니다.</div>'}`;}else{const gaps=source.gaps.filter(g=>!g.conceptIds.length||g.conceptIds.includes(c.id));body=`<p class="me-caption">${esc(c.id)} · ${bandLabel(c.bandId)} 표본 배치</p>${gaps.map(g=>`<div class="me-gap"><strong>${esc(g.title)}</strong><p>${esc(g.description)}</p></div>`).join('')}<p class="me-caption">관계 채택·수정은 별도 변경 제안 계약의 대상입니다. 이 화면은 읽기와 탐색만 수행합니다.</p>`;}return `<aside class="me-inspector" aria-label="선택한 개념 상세"><div class="me-inspector-head"><div><strong>${esc(c.title)}</strong><div class="me-caption">${esc(c.id)}</div></div>${btn('clear','','닫기','me-close')}</div><div class="me-tabs" aria-label="개념 상세 보기">${[['concept','개념'],['relations','관계'],['review','검토']].map(([id,label])=>btn('inspect-tab',id,label,'',`aria-pressed="${state.tab===id}"`)).join('')}</div><div class="me-inspector-body">${body}</div></aside>`;}
+function draw(){const canvas=root.querySelector('.me-canvas'),svg=root.querySelector('.me-edge-svg');if(!canvas||!svg)return;const box=canvas.getBoundingClientRect();if(!box.width||!box.height)return;svg.setAttribute('viewBox',`0 0 ${box.width} ${box.height}`);const nodes=new Map([...canvas.querySelectorAll('[data-node]')].map(n=>[n.dataset.node,n]));const paths=source.dependencyEdges.filter(e=>state.visibleRelations.has(e.edgeType)&&nodes.has(e.fromId)&&nodes.has(e.toId)).map(e=>{const a=nodes.get(e.fromId).getBoundingClientRect(),b=nodes.get(e.toId).getBoundingClientRect();const ax=a.left-box.left+a.width/2,ay=a.top-box.top+a.height/2,bx=b.left-box.left+b.width/2,by=b.top-box.top+b.height/2,dx=bx-ax,dy=by-ay;if(!dx&&!dy)return '';const ra=Math.min(dx?a.width/2/Math.abs(dx):Infinity,dy?a.height/2/Math.abs(dy):Infinity),rb=Math.min(dx?b.width/2/Math.abs(dx):Infinity,dy?b.height/2/Math.abs(dy):Infinity);const x1=ax+dx*ra,y1=ay+dy*ra,x2=bx-dx*rb,y2=by-dy*rb,mid=(y1+y2)/2;const r=relations.get(e.edgeType);return `<path class="me-edge ${(state.conceptId===e.fromId||state.conceptId===e.toId)?'me-highlight':''}" data-style="${r.lineStyle}" d="M${x1},${y1} C${x1},${mid} ${x2},${mid} ${x2},${y2}" ${r.directedVisual?'marker-end="url(#me-arrow-r2)"':''}/>`;}).join('');svg.innerHTML='<defs><marker id="me-arrow-r2" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M1,1 L6,3.5 L1,6" fill="none" stroke="currentColor" stroke-width="1.3"/></marker></defs>'+paths;}
+function render(){headingPath();view.innerHTML=!state.domainId?overview():!state.topicId?domainView():graph();live.textContent=state.conceptId?concepts.get(state.conceptId).title+' 선택':state.topicId?topics.get(state.topicId).title+' 개념 지도':state.domainId?domains.get(state.domainId).label+' 영역':'전체 지도';requestAnimationFrame(draw);}
+function searchHits(){const q=state.query.trim().normalize('NFKC').toLowerCase();if(!q)return [];const hits=[];for(const c of concepts.values()){if(!inBand(c))continue;const fields=[{value:c.title,kind:'개념',atomId:null},...c.terms.map(a=>({value:a.label,kind:'용어',atomId:a.id})),...c.symbols.map(a=>({value:a.notation,kind:'기호',atomId:a.id}))];let hit=null;for(const f of fields){const text=f.value.normalize('NFKC').toLowerCase();const score=text===q?3:text.startsWith(q)?2:text.includes(q)?1:0;if(score&&(!hit||score>hit.score))hit={conceptId:c.id,conceptTitle:c.title,match:f.value,kind:f.kind,atomId:f.atomId,score};}if(hit)hits.push(hit);}return hits.sort((a,b)=>b.score-a.score||a.conceptTitle.localeCompare(b.conceptTitle,'ko')).slice(0,config.interaction.searchResultLimit);}
+function renderSearch(){const hits=searchHits();state.searchIndex=Math.max(0,Math.min(state.searchIndex,hits.length-1));results.innerHTML=!state.query.trim()?'':hits.length?hits.map((h,i)=>btn('search-result',h.conceptId,`<span><strong>${esc(h.conceptTitle)}</strong><br><span class="me-result-match">${esc(h.kind+' · '+h.match)}</span></span><span class="me-result-match">${esc(topics.get(concepts.get(h.conceptId).canonicalParentId).title)} →</span>`,'me-search-result',`data-hit="${i}" aria-pressed="${i===state.searchIndex}"`)).join(''):'<p class="me-empty">검색 결과가 없습니다.</p>';search.setAttribute('aria-expanded',String(Boolean(state.query.trim())));live.textContent=state.query.trim()?hits.length+'개 검색 결과'+(hits.length?', '+hits[state.searchIndex].conceptTitle+' 선택':''):'';}
+function clearSearch(){state.query='';state.searchIndex=0;search.value='';renderSearch();}
+function selectConcept(id,atom=null){if(!concepts.has(id))return;const c=concepts.get(id);if(!inBand(c)){state.bandId='all';band.value='all';}state.conceptId=id;state.topicId=c.canonicalParentId;state.domainId=domainOfTopic(c.canonicalParentId).id;state.atomId=atom;state.tab='concept';state.page=0;}
+function navigate(action,id,hitIndex){if(!allowedActions.has(action))return;if(action==='home'){state.domainId=null;state.topicId=null;state.conceptId=null;}else if(action==='back'){if(state.conceptId)state.conceptId=null;else if(state.topicId)state.topicId=null;else state.domainId=null;}else if(action==='domain'&&domains.has(id)){state.domainId=id;state.topicId=null;state.conceptId=null;}else if(action==='topic'&&topics.has(id)){state.topicId=id;state.domainId=domainOfTopic(id).id;state.conceptId=null;}else if(action==='concept')selectConcept(id);else if(action==='clear')state.conceptId=null;else if(action==='inspect-tab'&&['concept','relations','review'].includes(id))state.tab=id;else if(action==='search-result'){const hit=searchHits()[Number(hitIndex)];if(hit)selectConcept(hit.conceptId,hit.atomId);clearSearch();}else return;state.page=0;render();const focusTarget=state.conceptId?root.querySelector('[data-action="clear"]'):root.querySelector('[data-node]')||root.querySelector('[data-action="topic"]')||root.querySelector('[data-action="domain"]');if(focusTarget)focusTarget.focus({preventScroll:true});}
+root.addEventListener('click',e=>{const button=e.target.closest('button');if(!button||!root.contains(button))return;if(button.dataset.action)navigate(button.dataset.action,button.dataset.id,button.dataset.hit);else if(button.dataset.page!==undefined){state.page=Math.max(0,Number(button.dataset.page));state.conceptId=null;render();}});
+root.addEventListener('change',e=>{if(e.target===band){state.bandId=band.value;state.domainId=null;state.topicId=null;state.conceptId=null;state.page=0;clearSearch();render();}else if(e.target.dataset.relation&&relations.has(e.target.dataset.relation)){const id=e.target.dataset.relation;if(e.target.checked)state.visibleRelations.add(id);else state.visibleRelations.delete(id);render();const target=root.querySelector('[data-relation="'+id+'"]');if(target)target.focus({preventScroll:true});}});
+search.addEventListener('input',()=>{state.query=search.value;state.searchIndex=0;renderSearch();});
+root.addEventListener('keydown',e=>{if(e.target===search){if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();const n=searchHits().length;if(n)state.searchIndex=(state.searchIndex+(e.key==='ArrowDown'?1:-1)+n)%n;renderSearch();}else if(e.key==='Enter'&&searchHits().length){e.preventDefault();navigate('search-result',null,state.searchIndex);}else if(e.key==='Escape'){e.preventDefault();clearSearch();search.blur();}return;}if(e.key==='/'&&!['INPUT','TEXTAREA','SELECT'].includes(e.target.tagName)){e.preventDefault();search.focus();}else if(e.key==='Escape'){e.preventDefault();if(state.query)clearSearch();else navigate('back');}else if(e.target.dataset?.node&&['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key)){e.preventDefault();const nodes=[...root.querySelectorAll('[data-node]')],i=nodes.indexOf(e.target),delta=['ArrowDown','ArrowRight'].includes(e.key)?1:-1;nodes[(i+delta+nodes.length)%nodes.length]?.focus();}});
+if(typeof ResizeObserver==='function')new ResizeObserver(draw).observe(view);
+/* TEST_HOOK */
+render();
+})();
+
+</script>
+</div>

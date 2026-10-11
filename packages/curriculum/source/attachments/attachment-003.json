@@ -1,0 +1,373 @@
+{
+  "type": "object",
+  "properties": {
+    "kind": {
+      "const": "MathEducationBilingualProseMathRelease"
+    },
+    "schemaVersion": {
+      "const": "1.0.0"
+    },
+    "status": {
+      "const": "published_draft"
+    },
+    "canonicalSchemaVersion": {
+      "const": "1.3.0"
+    },
+    "knowledgeStatus": {
+      "const": "draft"
+    },
+    "counts": {
+      "const": {
+        "views": 48,
+        "officialDomains": 4,
+        "officialGradeBands": 2,
+        "officialStandards": 105,
+        "authoredTopics": 43,
+        "concepts": 313,
+        "activeExplanations": 989,
+        "notations": 203,
+        "notationMathmlOutputs": 406,
+        "canonicalExplicitMathSegments": 4490,
+        "uniqueViewScopeMathSegments": 4325,
+        "bilingualDisplayEntries": 984
+      }
+    },
+    "translationProvenanceCounts": {
+      "const": {
+        "official_editorial_terminology": 295,
+        "reviewed_translation": 250,
+        "supplemental_translation": 439
+      }
+    },
+    "sourceSnapshotHashes": {
+      "type": "object",
+      "properties": {
+        "math:workpack:domain-01": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "math:workpack:domain-02": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "math:workpack:domain-03": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "math:workpack:domain-04": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "required": [
+        "math:workpack:domain-01",
+        "math:workpack:domain-02",
+        "math:workpack:domain-03",
+        "math:workpack:domain-04"
+      ],
+      "additionalProperties": false
+    },
+    "overviewPageId": {
+      "const": "page_2a433162d56c81919cf03f2121a96796"
+    },
+    "overviewPageUrl": {
+      "const": "https://chatgpt.com/space/page_2a433162d56c81919cf03f2121a96796"
+    },
+    "preservedOriginalReleasePageId": {
+      "const": "page_cb125055bc608191891f88eb9733b62d"
+    },
+    "preservedOriginalReleasePageUrl": {
+      "const": "https://chatgpt.com/space/page_cb125055bc608191891f88eb9733b62d"
+    },
+    "verification": {
+      "type": "object",
+      "properties": {
+        "browserRendering": {
+          "const": false
+        },
+        "hostNavigation": {
+          "const": false
+        },
+        "accessibility": {
+          "const": false
+        },
+        "independentTeacherReview": {
+          "const": false
+        },
+        "independentProofReview": {
+          "const": false
+        },
+        "geometryFiguresComplete": {
+          "const": false
+        },
+        "exactPortableRebuild": {
+          "const": true
+        },
+        "completeStoredHtmlReadback": {
+          "const": true
+        }
+      },
+      "required": [
+        "browserRendering",
+        "hostNavigation",
+        "accessibility",
+        "independentTeacherReview",
+        "independentProofReview",
+        "geometryFiguresComplete",
+        "exactPortableRebuild",
+        "completeStoredHtmlReadback"
+      ],
+      "additionalProperties": false
+    },
+    "viewBindings": {
+      "type": "array",
+      "minItems": 48,
+      "maxItems": 48,
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "pattern": "^(overview|domain-0[1-4]|topic-[a-z0-9-]+)$"
+          },
+          "viewId": {
+            "type": "string",
+            "pattern": "^math:view:(overview|domain:0[1-4]|topic:[a-z0-9-]+)$"
+          },
+          "pageId": {
+            "type": "string",
+            "pattern": "^page_[a-f0-9]{32}$"
+          },
+          "pageUrl": {
+            "type": "string",
+            "pattern": "^https://chatgpt\\.com/space/page_[a-f0-9]{32}$"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "htmlSha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "htmlBytes": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 262144
+          },
+          "payloadSha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "maxDecodedBytes": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16777216
+          },
+          "payloadFileSha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "gzipSha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "gzipBytes": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "scopeKind": {
+            "enum": [
+              "overview",
+              "domain",
+              "topic"
+            ]
+          },
+          "fileReference": {
+            "type": "string",
+            "pattern": "^visualize:.+$"
+          },
+          "readbackVerified": {
+            "const": true
+          },
+          "fullWidth": {
+            "const": true
+          }
+        },
+        "required": [
+          "name",
+          "viewId",
+          "pageId",
+          "pageUrl",
+          "title",
+          "htmlSha256",
+          "htmlBytes",
+          "payloadSha256",
+          "maxDecodedBytes",
+          "payloadFileSha256",
+          "gzipSha256",
+          "gzipBytes",
+          "scopeKind",
+          "fileReference",
+          "readbackVerified",
+          "fullWidth"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "publicationEvidence": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "CompletePageReadbackReceiptSet"
+        },
+        "receiptFileSha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "uniqueVerifiedViews": {
+          "const": 48
+        },
+        "storedHtmlHashesVerified": {
+          "const": true
+        },
+        "localFilesUsedAsPublicationEvidence": {
+          "const": false
+        }
+      },
+      "required": [
+        "kind",
+        "receiptFileSha256",
+        "uniqueVerifiedViews",
+        "storedHtmlHashesVerified",
+        "localFilesUsedAsPublicationEvidence"
+      ],
+      "additionalProperties": false
+    },
+    "canonicalSourceBindings": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "const": "CanonicalSourceBinding"
+          },
+          "workpackId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "workpackRevision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "graphRevision": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "workpackSha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "byteSize": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "sourcePageId": {
+            "type": "string",
+            "pattern": "^page_[a-f0-9]{32}$"
+          },
+          "sourcePageUrl": {
+            "type": "string",
+            "pattern": "^https://chatgpt\\.com/space/page_[a-f0-9]{32}$"
+          },
+          "fileReference": {
+            "type": "string",
+            "pattern": "^library-file:.+$"
+          },
+          "artifactPath": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "artifactSha256": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "publicationStatus": {
+            "const": "published"
+          },
+          "recordCounts": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "reviewState": {
+            "enum": [
+              "not_reviewed",
+              "focused_checks",
+              "independent_review_in_progress",
+              "reviewed_with_gaps",
+              "superseded"
+            ]
+          },
+          "reviewWarningIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "uniqueItems": true
+          }
+        },
+        "required": [
+          "kind",
+          "workpackId",
+          "workpackRevision",
+          "graphRevision",
+          "workpackSha256",
+          "byteSize",
+          "sourcePageId",
+          "sourcePageUrl",
+          "fileReference",
+          "publicationStatus",
+          "recordCounts",
+          "reviewState",
+          "reviewWarningIds"
+        ]
+      }
+    }
+  },
+  "required": [
+    "kind",
+    "schemaVersion",
+    "status",
+    "canonicalSchemaVersion",
+    "knowledgeStatus",
+    "counts",
+    "translationProvenanceCounts",
+    "sourceSnapshotHashes",
+    "overviewPageId",
+    "overviewPageUrl",
+    "preservedOriginalReleasePageId",
+    "preservedOriginalReleasePageUrl",
+    "verification",
+    "viewBindings",
+    "publicationEvidence",
+    "canonicalSourceBindings"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

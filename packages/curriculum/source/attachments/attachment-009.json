@@ -1,0 +1,573 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:matheducation:terminology-artifacts.schema.json",
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "TerminologyFieldPatch"
+        },
+        "schemaVersion": {
+          "const": "1.0.0"
+        },
+        "operations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/fieldCorrection"
+          }
+        }
+      },
+      "required": [
+        "kind",
+        "schemaVersion",
+        "operations"
+      ]
+    },
+    {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "ReviewedMathTextReplacementPatch"
+        },
+        "schemaVersion": {
+          "const": "1.0.0"
+        },
+        "replacements": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "ReviewedMathTextFieldReplacement"
+              },
+              "recordId": {
+                "type": "string"
+              },
+              "fieldPath": {
+                "type": "string"
+              },
+              "beforeSourceTextSha256": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              "afterSourceTextSha256": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              "field": {
+                "type": "object"
+              },
+              "reviewedPlainProseExclusions": {
+                "type": "array"
+              },
+              "allOriginalMathSegmentsByteIdentical": {
+                "const": true
+              }
+            },
+            "required": [
+              "kind",
+              "recordId",
+              "fieldPath",
+              "beforeSourceTextSha256",
+              "afterSourceTextSha256",
+              "field",
+              "allOriginalMathSegmentsByteIdentical"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "errors": {
+          "type": "array"
+        }
+      },
+      "required": [
+        "kind",
+        "schemaVersion",
+        "replacements",
+        "errors"
+      ]
+    },
+    {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "BilingualDisplayPatch"
+        },
+        "schemaVersion": {
+          "const": "1.0.0"
+        },
+        "records": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "BilingualDisplayPatchEntry"
+              },
+              "recordId": {
+                "type": "string"
+              },
+              "recordKind": {
+                "enum": [
+                  "MathConcept",
+                  "MathTerm",
+                  "MathNotation",
+                  "Topic",
+                  "CurriculumDomain"
+                ]
+              },
+              "originalKo": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "displayLabels": {
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "const": "BilingualDisplayLabels"
+                  },
+                  "ko": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "en": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "bilingual": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "koUsage": {
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "enum": [
+                          "official_curriculum",
+                          "standard_textbook",
+                          "supplementary_descriptive"
+                        ]
+                      },
+                      "scope": {
+                        "enum": [
+                          "e5_6",
+                          "m1_3",
+                          "e5_6_and_m1_3",
+                          "supplementary_only",
+                          "contextual_navigation"
+                        ]
+                      },
+                      "scopeRole": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "sourceRefs": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/$defs/sourceRef"
+                        }
+                      },
+                      "notes": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "status",
+                      "scope",
+                      "sourceRefs"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "english": {
+                    "type": "object",
+                    "properties": {
+                      "translationStatus": {
+                        "enum": [
+                          "official_editorial_terminology",
+                          "reviewed_translation",
+                          "supplemental_translation"
+                        ]
+                      },
+                      "sourceType": {
+                        "enum": [
+                          "moe_textbook_compilation_reference",
+                          "primary_english_textbook",
+                          "author_reviewed_translation"
+                        ]
+                      },
+                      "sourceRefs": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/$defs/sourceRef"
+                        }
+                      },
+                      "officialCurriculumTranslation": {
+                        "const": false
+                      },
+                      "notes": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "translationStatus",
+                      "sourceType",
+                      "sourceRefs",
+                      "officialCurriculumTranslation",
+                      "notes"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "kind",
+                  "ko",
+                  "en",
+                  "bilingual",
+                  "koUsage",
+                  "english"
+                ],
+                "additionalProperties": false
+              },
+              "reason": {
+                "type": "string"
+              },
+              "uncertainty": {
+                "type": "array"
+              },
+              "notationExpressionPreserved": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "kind",
+              "recordId",
+              "recordKind",
+              "originalKo",
+              "displayLabels",
+              "reason",
+              "uncertainty"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "kind",
+        "schemaVersion",
+        "records"
+      ]
+    },
+    {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "MathematicsTerminologyAudit"
+        },
+        "schemaVersion": {
+          "const": "1.0.0"
+        },
+        "entries": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "recordId": {
+                "type": "string"
+              },
+              "kind": {
+                "enum": [
+                  "MathConcept",
+                  "MathTerm"
+                ]
+              },
+              "beforeKo": {
+                "type": "string"
+              },
+              "afterKo": {
+                "type": "string"
+              },
+              "en": {
+                "type": "string"
+              },
+              "koreanStatus": {
+                "enum": [
+                  "official_curriculum",
+                  "standard_textbook",
+                  "supplementary_descriptive"
+                ]
+              },
+              "evidence": {
+                "type": "array"
+              },
+              "englishStatus": {
+                "type": "string"
+              },
+              "reason": {
+                "type": "string"
+              },
+              "uncertainty": {
+                "type": "array"
+              }
+            },
+            "required": [
+              "recordId",
+              "kind",
+              "beforeKo",
+              "afterKo",
+              "en",
+              "koreanStatus",
+              "evidence",
+              "englishStatus",
+              "reason",
+              "uncertainty"
+            ]
+          }
+        },
+        "proseCorrections": {
+          "type": "array"
+        }
+      },
+      "required": [
+        "kind",
+        "schemaVersion",
+        "entries",
+        "proseCorrections"
+      ]
+    },
+    {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "ExhaustiveTerminologyFieldAudit"
+        },
+        "schemaVersion": {
+          "const": "1.0.0"
+        },
+        "records": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "TerminologyRecordAudit"
+              },
+              "recordId": {
+                "type": "string"
+              },
+              "recordKind": {
+                "type": "string"
+              },
+              "domainWorkpack": {
+                "type": "string"
+              },
+              "fields": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "const": "TerminologyFieldAudit"
+                    },
+                    "fieldPath": {
+                      "type": "string"
+                    },
+                    "beforeSha256": {
+                      "type": "string",
+                      "pattern": "^[a-f0-9]{64}$"
+                    },
+                    "afterSha256": {
+                      "type": "string",
+                      "pattern": "^[a-f0-9]{64}$"
+                    },
+                    "decision": {
+                      "enum": [
+                        "targeted_reviewed_correction",
+                        "scanned_no_targeted_correction"
+                      ]
+                    },
+                    "annotationHashValidated": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "fieldPath",
+                    "beforeSha256",
+                    "afterSha256",
+                    "decision",
+                    "annotationHashValidated"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "kind",
+              "recordId",
+              "recordKind",
+              "domainWorkpack",
+              "fields"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "kind",
+        "schemaVersion",
+        "records"
+      ]
+    },
+    {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "TerminologyAuditValidationReport"
+        },
+        "schemaVersion": {
+          "const": "1.0.0"
+        },
+        "status": {
+          "enum": [
+            "pass",
+            "fail"
+          ]
+        },
+        "canonicalSourcesMutated": {
+          "const": false
+        },
+        "displayEnglishMissing": {
+          "const": 0
+        },
+        "stableIdsPreserved": {
+          "const": true
+        },
+        "relationEndpointsAndTypesPreserved": {
+          "const": true
+        },
+        "notationExpressionsPreserved": {
+          "const": true
+        },
+        "latexExtensionsByteIdentical": {
+          "const": true
+        },
+        "allOriginalMathSegmentsByteIdentical": {
+          "const": true
+        }
+      },
+      "required": [
+        "kind",
+        "schemaVersion",
+        "status",
+        "canonicalSourcesMutated",
+        "displayEnglishMissing",
+        "stableIdsPreserved",
+        "relationEndpointsAndTypesPreserved",
+        "notationExpressionsPreserved",
+        "latexExtensionsByteIdentical",
+        "allOriginalMathSegmentsByteIdentical"
+      ]
+    }
+  ],
+  "$defs": {
+    "fieldCorrection": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "RecordFieldCorrection"
+        },
+        "recordId": {
+          "type": "string"
+        },
+        "recordKind": {
+          "type": "string"
+        },
+        "fieldPath": {
+          "type": "string",
+          "pattern": "^/(label|definition|meaning|statement|reasoning|rationale|conditions/[0-9]+/(statement|formalExpression))$"
+        },
+        "before": {
+          "type": "string"
+        },
+        "after": {
+          "type": "string"
+        },
+        "beforeSha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "afterSha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "beforeRecordSha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "expectedRevision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "requiresMathTextAnnotationRegeneration": {
+          "type": "boolean"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      },
+      "required": [
+        "kind",
+        "recordId",
+        "recordKind",
+        "fieldPath",
+        "before",
+        "after",
+        "beforeSha256",
+        "beforeRecordSha256",
+        "expectedRevision",
+        "requiresMathTextAnnotationRegeneration",
+        "reason",
+        "evidence"
+      ],
+      "additionalProperties": false
+    },
+    "sourceRef": {
+      "type": "object",
+      "properties": {
+        "sourceId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "url": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "locator": {
+          "type": "string"
+        },
+        "supports": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "sourceId",
+        "url",
+        "locator",
+        "supports"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

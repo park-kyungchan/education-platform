@@ -1,0 +1,27 @@
+{
+  "kind": "WorkpackValidationReport",
+  "status": "pass_with_warnings",
+  "validatorVersion": "1.1.0",
+  "workpackCount": 1,
+  "recordCount": 680,
+  "errors": [],
+  "warnings": [
+    {
+      "kind": "ValidationIssue",
+      "code": "open_content_gap",
+      "recordId": "math:gap:domain-01:pedagogical-review",
+      "message": "관계와 설명의 교육적 검토: 실제 사용에서 설명 경로와 필요한 선행을 검토하고 관점별 수정 제안·리비전으로 보존한다."
+    }
+  ],
+  "checks": [
+    "json_schema",
+    "stable_id_uniqueness",
+    "typed_references",
+    "hierarchy_acyclic",
+    "registry_validation",
+    "boundary_alignment",
+    "scoped_required_dag"
+  ],
+  "graphSnapshotHash": "7a9d2f05f2b77b0564b8e215c46c3bf789a1ebadb0869bf0c247fe398bdc6ac8",
+  "validationScope": "declared_workpack_scope"
+}

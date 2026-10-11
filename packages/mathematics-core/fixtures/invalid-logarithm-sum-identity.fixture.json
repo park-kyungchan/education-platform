@@ -1,0 +1,144 @@
+{
+  "schema_version": "mathematics-cartography.fixture.v1",
+  "case_id": "INVALID_LOGARITHM_SUM_IDENTITY",
+  "request": {
+    "schemaVersion": "mathematics-cartography.fragment-review-request.v1",
+    "requestId": "request.invalid-logarithm-sum-identity",
+    "proposalId": "proposal.invalid-logarithm-sum-identity",
+    "supersedesProposalId": null,
+    "actor": "HUMAN_SEMANTIC_REVIEWER",
+    "trigger": "FRAGMENT_SUBMITTED_FOR_IDENTITY_REVIEW",
+    "fragment": {
+      "fragmentId": "fragment.invalid-logarithm-sum-identity",
+      "content": "log_b(x + y) = log_b(x) + log_b(y)",
+      "candidateKindProposal": "PROPOSITION",
+      "provenanceClass": "SUBMITTED_FRAGMENT"
+    },
+    "identityTargetAtomId": "atom.logarithm.no-general-sum-rule",
+    "acceptedAtoms": [
+      {
+        "atomId": "atom.logarithm.no-general-sum-rule",
+        "revision": "revision.1",
+        "statement": "There is no general real-logarithm identity log_b(x + y) = log_b(x) + log_b(y); b = 2, x = 1, and y = 1 give a counterexample.",
+        "provenanceClass": "ACCEPTED_ATOM_SNAPSHOT"
+      }
+    ],
+    "explicitConditions": [
+      {
+        "code": "REAL_BASE_POSITIVE",
+        "statement": "b = 2 > 0",
+        "provenanceClass": "USER_SUPPLIED_CONTEXT"
+      },
+      {
+        "code": "BASE_NOT_ONE",
+        "statement": "b = 2 != 1",
+        "provenanceClass": "USER_SUPPLIED_CONTEXT"
+      },
+      {
+        "code": "REAL_ARGUMENT_POSITIVE",
+        "statement": "x = 1, y = 1, and x + y = 2 are positive",
+        "provenanceClass": "USER_SUPPLIED_CONTEXT"
+      }
+    ],
+    "evidence": [
+      {
+        "evidenceId": "evidence.fragment.invalid-sum",
+        "subjectId": "fragment.invalid-logarithm-sum-identity",
+        "subjectRevision": null,
+        "evidenceClass": "SUBMITTED_FRAGMENT",
+        "statement": "log_b(x + y) = log_b(x) + log_b(y)",
+        "supports": [
+          "COUNTEREXAMPLE"
+        ],
+        "uncertaintyCodes": []
+      },
+      {
+        "evidenceId": "evidence.context.counterexample-values",
+        "subjectId": "fragment.invalid-logarithm-sum-identity",
+        "subjectRevision": null,
+        "evidenceClass": "USER_SUPPLIED_CONTEXT",
+        "statement": "b = 2; x = 1; y = 1",
+        "supports": [
+          "COUNTEREXAMPLE"
+        ],
+        "uncertaintyCodes": []
+      },
+      {
+        "evidenceId": "evidence.atom.no-general-sum-rule",
+        "subjectId": "atom.logarithm.no-general-sum-rule",
+        "subjectRevision": "revision.1",
+        "evidenceClass": "ACCEPTED_ATOM_SNAPSHOT",
+        "statement": "There is no general real-logarithm identity log_b(x + y) = log_b(x) + log_b(y); b = 2, x = 1, and y = 1 give a counterexample.",
+        "supports": [
+          "COUNTEREXAMPLE",
+          "RELATION"
+        ],
+        "uncertaintyCodes": []
+      },
+      {
+        "evidenceId": "evidence.local.counterexample-evaluation",
+        "subjectId": "fragment.invalid-logarithm-sum-identity",
+        "subjectRevision": null,
+        "evidenceClass": "LOCAL_VERIFICATION",
+        "statement": "At b = 2, x = 1, and y = 1, the left side is 1 and the right side is 0.",
+        "supports": [
+          "COUNTEREXAMPLE",
+          "RELATION"
+        ],
+        "uncertaintyCodes": []
+      }
+    ],
+    "relationCandidates": [
+      {
+        "relationKind": "CONTRADICTS",
+        "sourceId": "fragment.invalid-logarithm-sum-identity",
+        "targetId": "atom.logarithm.no-general-sum-rule",
+        "evidenceIds": [
+          "evidence.atom.no-general-sum-rule",
+          "evidence.local.counterexample-evaluation"
+        ],
+        "uncertainty": []
+      }
+    ]
+  },
+  "expected": {
+    "schemaVersion": "mathematics-cartography.fragment-review-proposal.v1",
+    "decisionRecordId": "INTERVIEW_AND_TDD_MATHEMATICAL_FRAGMENT_IDENTITY_AND_RELATION_001",
+    "proposalId": "proposal.invalid-logarithm-sum-identity",
+    "requestId": "request.invalid-logarithm-sum-identity",
+    "supersedesProposalId": null,
+    "actor": "HUMAN_SEMANTIC_REVIEWER",
+    "trigger": "FRAGMENT_SUBMITTED_FOR_IDENTITY_REVIEW",
+    "fragment": {
+      "fragmentId": "fragment.invalid-logarithm-sum-identity",
+      "content": "log_b(x + y) = log_b(x) + log_b(y)"
+    },
+    "candidateKind": "PROPOSITION",
+    "identityJudgment": {
+      "targetAtomId": "atom.logarithm.no-general-sum-rule",
+      "judgment": "DISTINCT",
+      "evidenceIds": [
+        "evidence.fragment.invalid-sum",
+        "evidence.context.counterexample-values",
+        "evidence.atom.no-general-sum-rule",
+        "evidence.local.counterexample-evaluation"
+      ],
+      "uncertainty": []
+    },
+    "relationProposals": [
+      {
+        "relationKind": "CONTRADICTS",
+        "sourceId": "fragment.invalid-logarithm-sum-identity",
+        "targetId": "atom.logarithm.no-general-sum-rule",
+        "evidenceIds": [
+          "evidence.atom.no-general-sum-rule",
+          "evidence.local.counterexample-evaluation"
+        ],
+        "uncertainty": []
+      }
+    ],
+    "recommendedDisposition": "REJECT",
+    "humanDecision": "PENDING",
+    "canonicalApplication": "NOT_PERFORMED"
+  }
+}

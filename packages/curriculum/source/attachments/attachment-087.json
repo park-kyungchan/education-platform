@@ -1,0 +1,174 @@
+{
+  "kind": "ExplorerSourceEvidence",
+  "id": "matheducation-spatial-r2-evidence",
+  "schemaVersion": "1.0.0",
+  "revision": 1,
+  "status": "research_snapshot",
+  "observedAtMinute": "2026-10-06T06:44Z",
+  "repositories": [
+    {
+      "kind": "RepositoryObservation",
+      "repository": "xyflow/xyflow",
+      "url": "https://github.com/xyflow/xyflow",
+      "apiUrl": "https://api.github.com/repos/xyflow/xyflow",
+      "stars": 38586,
+      "countMethod": "exact_GitHub_repository_API_count",
+      "licenseSpdx": "MIT",
+      "scopeNote": "React Flow와 Svelte Flow를 포함하는 monorepo"
+    },
+    {
+      "kind": "RepositoryObservation",
+      "repository": "antvis/G6",
+      "url": "https://github.com/antvis/G6",
+      "apiUrl": "https://api.github.com/repos/antvis/G6",
+      "stars": 12322,
+      "countMethod": "exact_GitHub_repository_API_count",
+      "licenseSpdx": "MIT",
+      "scopeNote": "그래프 시각화 툴킷"
+    },
+    {
+      "kind": "RepositoryObservation",
+      "repository": "jacomyal/sigma.js",
+      "url": "https://github.com/jacomyal/sigma.js",
+      "apiUrl": "https://api.github.com/repos/jacomyal/sigma.js",
+      "stars": 12180,
+      "countMethod": "exact_GitHub_repository_API_count",
+      "licenseSpdx": "MIT",
+      "scopeNote": "대규모 WebGL 그래프 시각화"
+    },
+    {
+      "kind": "RepositoryObservation",
+      "repository": "cytoscape/cytoscape.js",
+      "url": "https://github.com/cytoscape/cytoscape.js",
+      "apiUrl": "https://api.github.com/repos/cytoscape/cytoscape.js",
+      "stars": 11233,
+      "countMethod": "exact_GitHub_repository_API_count",
+      "licenseSpdx": "MIT",
+      "scopeNote": "의존성 없는 JavaScript 그래프 라이브러리"
+    }
+  ],
+  "officialDocs": [
+    {
+      "kind": "OfficialDocEvidence",
+      "id": "react-flow-a11y",
+      "url": "https://reactflow.dev/learn/advanced-use/accessibility",
+      "supports": "노드·엣지 키보드 선택, ARIA와 라이브 알림"
+    },
+    {
+      "kind": "OfficialDocEvidence",
+      "id": "react-flow-performance",
+      "url": "https://reactflow.dev/learn/advanced-use/performance",
+      "supports": "메모이제이션과 대규모 트리 접기"
+    },
+    {
+      "kind": "OfficialDocEvidence",
+      "id": "react-flow-dependencies",
+      "url": "https://github.com/xyflow/xyflow/blob/main/packages/react/package.json",
+      "supports": "React 기반 패키지 구성"
+    },
+    {
+      "kind": "OfficialDocEvidence",
+      "id": "cytoscape-loading",
+      "url": "https://js.cytoscape.org/#getting-started",
+      "supports": "일반 script와 모듈 방식, 독립 JavaScript"
+    },
+    {
+      "kind": "OfficialDocEvidence",
+      "id": "cytoscape-performance",
+      "url": "https://js.cytoscape.org/#performance",
+      "supports": "엣지·레이블·스타일의 성능 비용과 배치 처리"
+    },
+    {
+      "kind": "OfficialDocEvidence",
+      "id": "sigma-intro",
+      "url": "https://www.sigmajs.org/docs/",
+      "supports": "WebGL 기반 대규모 그래프"
+    },
+    {
+      "kind": "OfficialDocEvidence",
+      "id": "sigma-quickstart",
+      "url": "https://www.sigmajs.org/docs/quickstart/",
+      "supports": "Sigma와 Graphology 로딩"
+    },
+    {
+      "kind": "OfficialDocEvidence",
+      "id": "g6-keyboard",
+      "url": "https://g6.antv.antgroup.com/en/manual/behavior/zoom-canvas",
+      "supports": "키보드 줌 동작"
+    },
+    {
+      "kind": "OfficialDocEvidence",
+      "id": "g-a11y",
+      "url": "https://g.antv.antgroup.com/en/plugins/a11y",
+      "supports": "접근성 플러그인의 진행 중 항목"
+    },
+    {
+      "kind": "OfficialDocEvidence",
+      "id": "g6-install",
+      "url": "https://g6.antv.antgroup.com/manual/getting-started/installation",
+      "supports": "패키지 또는 CDN 설치"
+    },
+    {
+      "kind": "OfficialDocEvidence",
+      "id": "moe-curriculum",
+      "url": "https://www.moe.go.kr/boardCnts/viewRenew.do?boardID=141&boardSeq=93458&lev=0",
+      "supports": "2022 개정 교육과정 별책8, 2.가와 2.나의 영역 및 학년군"
+    }
+  ],
+  "curriculumBoundary": {
+    "kind": "CurriculumBoundaryEvidence",
+    "domainIds": [
+      "kr2022:domain:01",
+      "kr2022:domain:02",
+      "kr2022:domain:03",
+      "kr2022:domain:04"
+    ],
+    "bandIds": [
+      "e5_6",
+      "m1_3"
+    ],
+    "locator": "수학과 교육과정 2.가 및 2.나. NCIC PDF 13–16쪽, 인쇄 7–10쪽",
+    "sourceId": "moe-curriculum",
+    "conceptPlacementStatus": "sample mappings still proposed"
+  },
+  "decision": {
+    "kind": "RendererDecision",
+    "uiReference": "React Flow",
+    "implementation": "self_contained_native_DOM_and_SVG",
+    "libraryInstalled": false,
+    "patternsApplied": [
+      "search_to_focus",
+      "persistent_graph_and_inspector",
+      "selected_and_neighbor_emphasis",
+      "keyboard_navigation_and_focus",
+      "clear_context_and_breadcrumb",
+      "progressive_domain_topic_disclosure",
+      "filtered_typed_edges"
+    ],
+    "futureRendererCandidate": "Cytoscape.js pending actual corpus benchmark and sandbox test",
+    "reasons": [
+      "12개 개념 표본에 React 또는 WebGL 실행 의존성을 추가하지 않음",
+      "출처와 타입은 원본에 유지하고 UI는 읽기 전용 adapter로 연결",
+      "네트워크·CDN 로딩 없이 동작하는 독립 Page 조각 유지"
+    ],
+    "notImplemented": [
+      "React Flow runtime",
+      "large graph benchmark",
+      "true minimap or continuous pan zoom",
+      "source graph writes",
+      "automatic canonical export sync"
+    ]
+  },
+  "caveats": [
+    "GitHub 별 수는 인기도이며 접근성·성능 검증 결과가 아니다.",
+    "React Flow 문서의 접근성 기능을 참고했지만 완성된 화면의 접근성을 인증하지 않았다.",
+    "Sigma와 G6 및 Cytoscape의 실제 Space sandbox 호환성을 시험하지 않았다.",
+    "실제 브라우저 렌더링 검수는 수행하지 못했다."
+  ],
+  "validation": {
+    "kind": "EvidenceValidation",
+    "sourceClaimBoundary": "official docs facts separated from design recommendation",
+    "sourceWrites": false,
+    "userDataPublished": false
+  }
+}

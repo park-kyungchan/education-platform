@@ -1,0 +1,1748 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:matheducation:canonical:1.1.0",
+  "title": "MathEducation canonical workpack",
+  "description": "Extensible content-draft artifact. No fixed record count and no Foundry runtime compatibility assertion.",
+  "$ref": "#/$defs/Workpack",
+  "$defs": {
+    "TypedReference": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "TypedReference"
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+        },
+        "expectedKind": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "expectedKind"
+      ],
+      "additionalProperties": false
+    },
+    "ExternalReference": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "ExternalReference"
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+        },
+        "expectedKind": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "resolution": {
+          "enum": [
+            "verified_boundary",
+            "declared_cross_workpack",
+            "project_root"
+          ]
+        },
+        "reason": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "expectedKind",
+        "label",
+        "resolution",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "Condition": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "ApplicabilityCondition"
+        },
+        "conditionType": {
+          "enum": [
+            "mathematical_domain",
+            "pedagogical_route",
+            "learner_assumption",
+            "representation_scope"
+          ]
+        },
+        "statement": {
+          "type": "string"
+        },
+        "formalExpression": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "machineCheckable": {
+          "const": false
+        }
+      },
+      "required": [
+        "kind",
+        "conditionType",
+        "statement",
+        "formalExpression",
+        "machineCheckable"
+      ],
+      "additionalProperties": false
+    },
+    "ExtensionValue": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "ExtensionValue"
+        },
+        "extensionId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+        },
+        "value": {}
+      },
+      "required": [
+        "kind",
+        "extensionId",
+        "value"
+      ],
+      "additionalProperties": false
+    },
+    "ReviewDecision": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "ReviewDecision"
+        },
+        "status": {
+          "enum": [
+            "not_requested",
+            "pending",
+            "approved",
+            "rejected"
+          ]
+        },
+        "actorId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sourceMessageId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "decidedAt": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "kind",
+        "status",
+        "actorId",
+        "sourceMessageId",
+        "decidedAt"
+      ],
+      "additionalProperties": false
+    },
+    "CitationSource": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "CitationSource"
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+        },
+        "title": {
+          "type": "string"
+        },
+        "url": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "edition": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "locator": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "title",
+        "url",
+        "edition",
+        "locator"
+      ],
+      "additionalProperties": false
+    },
+    "Topic": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "Topic"
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "canonicalParentId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+        },
+        "workflowStatus": {
+          "enum": [
+            "draft",
+            "under_review",
+            "approved",
+            "rejected",
+            "superseded",
+            "withdrawn"
+          ]
+        },
+        "evidenceStatus": {
+          "enum": [
+            "unverified",
+            "source_supported",
+            "mathematically_checked",
+            "needs_review",
+            "counterexample_found"
+          ]
+        },
+        "evidenceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+          }
+        },
+        "extensions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ExtensionValue"
+          }
+        },
+        "label": {
+          "type": "string"
+        },
+        "domainId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "revision",
+        "canonicalParentId",
+        "workflowStatus",
+        "evidenceStatus",
+        "evidenceIds",
+        "extensions",
+        "label",
+        "domainId",
+        "description"
+      ],
+      "additionalProperties": false
+    },
+    "MathConcept": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "MathConcept"
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "canonicalParentId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+        },
+        "workflowStatus": {
+          "enum": [
+            "draft",
+            "under_review",
+            "approved",
+            "rejected",
+            "superseded",
+            "withdrawn"
+          ]
+        },
+        "evidenceStatus": {
+          "enum": [
+            "unverified",
+            "source_supported",
+            "mathematically_checked",
+            "needs_review",
+            "counterexample_found"
+          ]
+        },
+        "evidenceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+          }
+        },
+        "extensions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ExtensionValue"
+          }
+        },
+        "label": {
+          "type": "string"
+        },
+        "definition": {
+          "type": "string"
+        },
+        "conceptRole": {
+          "enum": [
+            "concept",
+            "procedure",
+            "property",
+            "theorem",
+            "principle"
+          ]
+        },
+        "mathematicalDomain": {
+          "type": "string"
+        },
+        "domainIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+          }
+        },
+        "aliases": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "conditions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Condition"
+          }
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "revision",
+        "canonicalParentId",
+        "workflowStatus",
+        "evidenceStatus",
+        "evidenceIds",
+        "extensions",
+        "label",
+        "definition",
+        "conceptRole",
+        "mathematicalDomain",
+        "domainIds",
+        "aliases",
+        "conditions"
+      ],
+      "additionalProperties": false
+    },
+    "MathTerm": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "MathTerm"
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "canonicalParentId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+        },
+        "workflowStatus": {
+          "enum": [
+            "draft",
+            "under_review",
+            "approved",
+            "rejected",
+            "superseded",
+            "withdrawn"
+          ]
+        },
+        "evidenceStatus": {
+          "enum": [
+            "unverified",
+            "source_supported",
+            "mathematically_checked",
+            "needs_review",
+            "counterexample_found"
+          ]
+        },
+        "evidenceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+          }
+        },
+        "extensions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ExtensionValue"
+          }
+        },
+        "label": {
+          "type": "string"
+        },
+        "language": {
+          "type": "string"
+        },
+        "meaning": {
+          "type": "string"
+        },
+        "senseKey": {
+          "type": "string"
+        },
+        "conceptIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+          }
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "revision",
+        "canonicalParentId",
+        "workflowStatus",
+        "evidenceStatus",
+        "evidenceIds",
+        "extensions",
+        "label",
+        "language",
+        "meaning",
+        "senseKey",
+        "conceptIds"
+      ],
+      "additionalProperties": false
+    },
+    "MathNotation": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "MathNotation"
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "canonicalParentId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+        },
+        "workflowStatus": {
+          "enum": [
+            "draft",
+            "under_review",
+            "approved",
+            "rejected",
+            "superseded",
+            "withdrawn"
+          ]
+        },
+        "evidenceStatus": {
+          "enum": [
+            "unverified",
+            "source_supported",
+            "mathematically_checked",
+            "needs_review",
+            "counterexample_found"
+          ]
+        },
+        "evidenceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+          }
+        },
+        "extensions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ExtensionValue"
+          }
+        },
+        "expression": {
+          "type": "string"
+        },
+        "meaning": {
+          "type": "string"
+        },
+        "notationRole": {
+          "enum": [
+            "symbol",
+            "expression",
+            "formula"
+          ]
+        },
+        "mathematicalDomain": {
+          "type": "string"
+        },
+        "conditions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Condition"
+          }
+        },
+        "conceptIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+          }
+        },
+        "componentNotationIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+          }
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "revision",
+        "canonicalParentId",
+        "workflowStatus",
+        "evidenceStatus",
+        "evidenceIds",
+        "extensions",
+        "expression",
+        "meaning",
+        "notationRole",
+        "mathematicalDomain",
+        "conditions",
+        "conceptIds",
+        "componentNotationIds"
+      ],
+      "additionalProperties": false
+    },
+    "Perspective": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "Perspective"
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "canonicalParentId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+        },
+        "workflowStatus": {
+          "enum": [
+            "draft",
+            "under_review",
+            "approved",
+            "rejected",
+            "superseded",
+            "withdrawn"
+          ]
+        },
+        "evidenceStatus": {
+          "enum": [
+            "unverified",
+            "source_supported",
+            "mathematically_checked",
+            "needs_review",
+            "counterexample_found"
+          ]
+        },
+        "evidenceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+          }
+        },
+        "extensions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ExtensionValue"
+          }
+        },
+        "label": {
+          "type": "string"
+        },
+        "audience": {
+          "enum": [
+            "student",
+            "teacher",
+            "adult_reader"
+          ]
+        },
+        "explanationLevel": {
+          "enum": [
+            "elementary",
+            "secondary",
+            "university"
+          ]
+        },
+        "pedagogicalRoute": {
+          "type": "string"
+        },
+        "assumptions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "revision",
+        "canonicalParentId",
+        "workflowStatus",
+        "evidenceStatus",
+        "evidenceIds",
+        "extensions",
+        "label",
+        "audience",
+        "explanationLevel",
+        "pedagogicalRoute",
+        "assumptions"
+      ],
+      "additionalProperties": false
+    },
+    "Explanation": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "Explanation"
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "canonicalParentId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+        },
+        "workflowStatus": {
+          "enum": [
+            "draft",
+            "under_review",
+            "approved",
+            "rejected",
+            "superseded",
+            "withdrawn"
+          ]
+        },
+        "evidenceStatus": {
+          "enum": [
+            "unverified",
+            "source_supported",
+            "mathematically_checked",
+            "needs_review",
+            "counterexample_found"
+          ]
+        },
+        "evidenceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+          }
+        },
+        "extensions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ExtensionValue"
+          }
+        },
+        "conceptId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+        },
+        "perspectiveId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+        },
+        "explanationKind": {
+          "enum": [
+            "definition",
+            "example",
+            "non_example",
+            "proof",
+            "misconception",
+            "advanced_lens"
+          ]
+        },
+        "statement": {
+          "type": "string"
+        },
+        "reasoning": {
+          "type": "string"
+        },
+        "conditions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Condition"
+          }
+        },
+        "notCurricularPrerequisite": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "revision",
+        "canonicalParentId",
+        "workflowStatus",
+        "evidenceStatus",
+        "evidenceIds",
+        "extensions",
+        "conceptId",
+        "perspectiveId",
+        "explanationKind",
+        "statement",
+        "reasoning",
+        "conditions",
+        "notCurricularPrerequisite"
+      ],
+      "additionalProperties": false
+    },
+    "RelationAssertion": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "RelationAssertion"
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "canonicalParentId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+        },
+        "workflowStatus": {
+          "enum": [
+            "draft",
+            "under_review",
+            "approved",
+            "rejected",
+            "superseded",
+            "withdrawn"
+          ]
+        },
+        "evidenceStatus": {
+          "enum": [
+            "unverified",
+            "source_supported",
+            "mathematically_checked",
+            "needs_review",
+            "counterexample_found"
+          ]
+        },
+        "evidenceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+          }
+        },
+        "extensions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ExtensionValue"
+          }
+        },
+        "source": {
+          "$ref": "#/$defs/TypedReference"
+        },
+        "target": {
+          "$ref": "#/$defs/TypedReference"
+        },
+        "relationType": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+        },
+        "perspectiveId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+        },
+        "claimBasis": {
+          "enum": [
+            "mathematical_requirement",
+            "teaching_perspective",
+            "representation",
+            "classification"
+          ]
+        },
+        "rationale": {
+          "type": "string"
+        },
+        "conditions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Condition"
+          }
+        },
+        "selectionStatus": {
+          "enum": [
+            "candidate",
+            "selected",
+            "alternative",
+            "retired"
+          ]
+        },
+        "alternativeToId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "revision",
+        "canonicalParentId",
+        "workflowStatus",
+        "evidenceStatus",
+        "evidenceIds",
+        "extensions",
+        "source",
+        "target",
+        "relationType",
+        "perspectiveId",
+        "claimBasis",
+        "rationale",
+        "conditions",
+        "selectionStatus",
+        "alternativeToId"
+      ],
+      "additionalProperties": false
+    },
+    "CurriculumAlignment": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "CurriculumAlignment"
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "canonicalParentId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+        },
+        "workflowStatus": {
+          "enum": [
+            "draft",
+            "under_review",
+            "approved",
+            "rejected",
+            "superseded",
+            "withdrawn"
+          ]
+        },
+        "evidenceStatus": {
+          "enum": [
+            "unverified",
+            "source_supported",
+            "mathematically_checked",
+            "needs_review",
+            "counterexample_found"
+          ]
+        },
+        "evidenceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+          }
+        },
+        "extensions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ExtensionValue"
+          }
+        },
+        "conceptId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+        },
+        "standardId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+        },
+        "officialGradeBandId": {
+          "enum": [
+            "e5_6",
+            "m1_3"
+          ]
+        },
+        "domainId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+        },
+        "alignmentType": {
+          "enum": [
+            "direct",
+            "supporting",
+            "extension"
+          ]
+        },
+        "rationale": {
+          "type": "string"
+        },
+        "yearPlacement": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "enum": [
+            null,
+            5,
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        "placementBasis": {
+          "enum": [
+            "not_assigned",
+            "official_source",
+            "author_inference"
+          ]
+        },
+        "placementEvidenceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+          }
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "revision",
+        "canonicalParentId",
+        "workflowStatus",
+        "evidenceStatus",
+        "evidenceIds",
+        "extensions",
+        "conceptId",
+        "standardId",
+        "officialGradeBandId",
+        "domainId",
+        "alignmentType",
+        "rationale",
+        "yearPlacement",
+        "placementBasis",
+        "placementEvidenceIds"
+      ],
+      "additionalProperties": false
+    },
+    "EvidenceReference": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "EvidenceReference"
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "canonicalParentId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+        },
+        "workflowStatus": {
+          "enum": [
+            "draft",
+            "under_review",
+            "approved",
+            "rejected",
+            "superseded",
+            "withdrawn"
+          ]
+        },
+        "evidenceStatus": {
+          "enum": [
+            "unverified",
+            "source_supported",
+            "mathematically_checked",
+            "needs_review",
+            "counterexample_found"
+          ]
+        },
+        "evidenceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+          }
+        },
+        "extensions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ExtensionValue"
+          }
+        },
+        "sourceType": {
+          "enum": [
+            "official_curriculum",
+            "official_platform",
+            "academic",
+            "textbook",
+            "author_reasoning",
+            "author_model",
+            "user_direction"
+          ]
+        },
+        "source": {
+          "$ref": "#/$defs/CitationSource"
+        },
+        "boundaryEvidenceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+          }
+        },
+        "supports": {
+          "type": "string"
+        },
+        "verificationNote": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "revision",
+        "canonicalParentId",
+        "workflowStatus",
+        "evidenceStatus",
+        "evidenceIds",
+        "extensions",
+        "sourceType",
+        "source",
+        "boundaryEvidenceIds",
+        "supports",
+        "verificationNote"
+      ],
+      "additionalProperties": false
+    },
+    "ContentGap": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "ContentGap"
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "canonicalParentId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+        },
+        "workflowStatus": {
+          "enum": [
+            "draft",
+            "under_review",
+            "approved",
+            "rejected",
+            "superseded",
+            "withdrawn"
+          ]
+        },
+        "evidenceStatus": {
+          "enum": [
+            "unverified",
+            "source_supported",
+            "mathematically_checked",
+            "needs_review",
+            "counterexample_found"
+          ]
+        },
+        "evidenceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+          }
+        },
+        "extensions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ExtensionValue"
+          }
+        },
+        "label": {
+          "type": "string"
+        },
+        "gapType": {
+          "enum": [
+            "missing_concept",
+            "missing_standard_mapping",
+            "unresolved_reference",
+            "unverified_placement",
+            "missing_evidence",
+            "out_of_scope_prerequisite",
+            "review_needed"
+          ]
+        },
+        "targetIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+          }
+        },
+        "severity": {
+          "enum": [
+            "blocker",
+            "warning",
+            "info"
+          ]
+        },
+        "resolutionStatus": {
+          "enum": [
+            "open",
+            "resolved",
+            "deferred"
+          ]
+        },
+        "nextStep": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "revision",
+        "canonicalParentId",
+        "workflowStatus",
+        "evidenceStatus",
+        "evidenceIds",
+        "extensions",
+        "label",
+        "gapType",
+        "targetIds",
+        "severity",
+        "resolutionStatus",
+        "nextStep"
+      ],
+      "additionalProperties": false
+    },
+    "CoverageClaim": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "CoverageClaim"
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "canonicalParentId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+        },
+        "workflowStatus": {
+          "enum": [
+            "draft",
+            "under_review",
+            "approved",
+            "rejected",
+            "superseded",
+            "withdrawn"
+          ]
+        },
+        "evidenceStatus": {
+          "enum": [
+            "unverified",
+            "source_supported",
+            "mathematically_checked",
+            "needs_review",
+            "counterexample_found"
+          ]
+        },
+        "evidenceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+          }
+        },
+        "extensions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ExtensionValue"
+          }
+        },
+        "standardId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+        },
+        "conceptIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+          }
+        },
+        "alignmentIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+          }
+        },
+        "coverageStatus": {
+          "enum": [
+            "mapped_draft",
+            "partial",
+            "not_started"
+          ]
+        },
+        "assessmentScope": {
+          "const": "structural_mapping_only"
+        },
+        "note": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "revision",
+        "canonicalParentId",
+        "workflowStatus",
+        "evidenceStatus",
+        "evidenceIds",
+        "extensions",
+        "standardId",
+        "conceptIds",
+        "alignmentIds",
+        "coverageStatus",
+        "assessmentScope",
+        "note"
+      ],
+      "additionalProperties": false
+    },
+    "DomainRecord": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/Topic"
+        },
+        {
+          "$ref": "#/$defs/MathConcept"
+        },
+        {
+          "$ref": "#/$defs/MathTerm"
+        },
+        {
+          "$ref": "#/$defs/MathNotation"
+        },
+        {
+          "$ref": "#/$defs/Perspective"
+        },
+        {
+          "$ref": "#/$defs/Explanation"
+        },
+        {
+          "$ref": "#/$defs/RelationAssertion"
+        },
+        {
+          "$ref": "#/$defs/CurriculumAlignment"
+        },
+        {
+          "$ref": "#/$defs/EvidenceReference"
+        },
+        {
+          "$ref": "#/$defs/ContentGap"
+        },
+        {
+          "$ref": "#/$defs/CoverageClaim"
+        }
+      ]
+    },
+    "ChangeProposal": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "ChangeProposal"
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "canonicalParentId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+        },
+        "workflowStatus": {
+          "enum": [
+            "draft",
+            "under_review",
+            "approved",
+            "rejected",
+            "superseded",
+            "withdrawn"
+          ]
+        },
+        "evidenceStatus": {
+          "enum": [
+            "unverified",
+            "source_supported",
+            "mathematically_checked",
+            "needs_review",
+            "counterexample_found"
+          ]
+        },
+        "evidenceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+          }
+        },
+        "extensions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ExtensionValue"
+          }
+        },
+        "targetId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+        },
+        "expectedRevision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "expectedGraphRevision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expectedGraphSnapshotHash": {
+          "type": "string"
+        },
+        "beforeRecordHash": {
+          "type": "string"
+        },
+        "proposedRecord": {
+          "$ref": "#/$defs/DomainRecord"
+        },
+        "rationale": {
+          "type": "string"
+        },
+        "review": {
+          "$ref": "#/$defs/ReviewDecision"
+        },
+        "applied": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "revision",
+        "canonicalParentId",
+        "workflowStatus",
+        "evidenceStatus",
+        "evidenceIds",
+        "extensions",
+        "targetId",
+        "expectedRevision",
+        "expectedGraphRevision",
+        "expectedGraphSnapshotHash",
+        "beforeRecordHash",
+        "proposedRecord",
+        "rationale",
+        "review",
+        "applied"
+      ],
+      "additionalProperties": false
+    },
+    "RevisionEvent": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "RevisionEvent"
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "canonicalParentId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+        },
+        "workflowStatus": {
+          "enum": [
+            "draft",
+            "under_review",
+            "approved",
+            "rejected",
+            "superseded",
+            "withdrawn"
+          ]
+        },
+        "evidenceStatus": {
+          "enum": [
+            "unverified",
+            "source_supported",
+            "mathematically_checked",
+            "needs_review",
+            "counterexample_found"
+          ]
+        },
+        "evidenceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+          }
+        },
+        "extensions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ExtensionValue"
+          }
+        },
+        "targetId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+        },
+        "fromRevision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "toRevision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "beforeRecord": {
+          "$ref": "#/$defs/DomainRecord"
+        },
+        "afterRecord": {
+          "$ref": "#/$defs/DomainRecord"
+        },
+        "proposalId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+        },
+        "operation": {
+          "enum": [
+            "content_update",
+            "compensating_restore",
+            "schema_migration"
+          ]
+        },
+        "executionMode": {
+          "enum": [
+            "read_only_simulation",
+            "local_draft_edit"
+          ]
+        },
+        "reason": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "revision",
+        "canonicalParentId",
+        "workflowStatus",
+        "evidenceStatus",
+        "evidenceIds",
+        "extensions",
+        "targetId",
+        "fromRevision",
+        "toRevision",
+        "beforeRecord",
+        "afterRecord",
+        "proposalId",
+        "operation",
+        "executionMode",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "Record": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/Topic"
+        },
+        {
+          "$ref": "#/$defs/MathConcept"
+        },
+        {
+          "$ref": "#/$defs/MathTerm"
+        },
+        {
+          "$ref": "#/$defs/MathNotation"
+        },
+        {
+          "$ref": "#/$defs/Perspective"
+        },
+        {
+          "$ref": "#/$defs/Explanation"
+        },
+        {
+          "$ref": "#/$defs/RelationAssertion"
+        },
+        {
+          "$ref": "#/$defs/CurriculumAlignment"
+        },
+        {
+          "$ref": "#/$defs/EvidenceReference"
+        },
+        {
+          "$ref": "#/$defs/ContentGap"
+        },
+        {
+          "$ref": "#/$defs/CoverageClaim"
+        },
+        {
+          "$ref": "#/$defs/ChangeProposal"
+        },
+        {
+          "$ref": "#/$defs/RevisionEvent"
+        }
+      ]
+    },
+    "BoundaryBinding": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "BoundaryBinding"
+        },
+        "bundleId": {
+          "type": "string"
+        },
+        "schemaVersion": {
+          "type": "string"
+        },
+        "sourceNoticeEdition": {
+          "const": "MOE-2022-33-annex-8"
+        },
+        "sha256": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "gradeBandIds": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "e5_6",
+              "m1_3"
+            ]
+          }
+        },
+        "domainIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+          }
+        }
+      },
+      "required": [
+        "kind",
+        "bundleId",
+        "schemaVersion",
+        "sourceNoticeEdition",
+        "sha256",
+        "gradeBandIds",
+        "domainIds"
+      ],
+      "additionalProperties": false
+    },
+    "Workpack": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "DomainWorkpack"
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+        },
+        "schemaVersion": {
+          "enum": [
+            "1.0.0",
+            "1.1.0"
+          ]
+        },
+        "registryVersion": {
+          "enum": [
+            "1.0.0",
+            "1.1.0"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "graphRevision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "status": {
+          "const": "production_draft"
+        },
+        "canonicalParentId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9가-힣][A-Za-z0-9가-힣:_-]*$"
+        },
+        "title": {
+          "type": "string"
+        },
+        "workpackRole": {
+          "enum": [
+            "shared_support",
+            "domain_content",
+            "contract_fixture"
+          ]
+        },
+        "boundary": {
+          "$ref": "#/$defs/BoundaryBinding"
+        },
+        "externalReferences": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ExternalReference"
+          }
+        },
+        "records": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Record"
+          }
+        },
+        "buildNote": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "schemaVersion",
+        "registryVersion",
+        "revision",
+        "graphRevision",
+        "status",
+        "canonicalParentId",
+        "title",
+        "workpackRole",
+        "boundary",
+        "externalReferences",
+        "records",
+        "buildNote"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

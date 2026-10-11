@@ -1,0 +1,9 @@
+import {readFileSync,writeFileSync,mkdirSync,rmSync} from 'node:fs';
+import {fixtureWorkerConfig} from './fixtures/synthetic-fixtures.ts';
+const root=import.meta.dir;mkdirSync(root+'/src/generated',{recursive:true});mkdirSync(root+'/test-results',{recursive:true});
+const client=await Bun.build({entrypoints:[root+'/src/app.ts'],target:'browser',format:'iife',minify:false});if(!client.success)throw Error(JSON.stringify(client.logs));
+const script=(await client.outputs[0].text()).replace(/<\/script/gi,'<\\/script'),css=['rails','app','teacher-overlay','grading-projection','evidence-view'].map(name=>readFileSync(root+'/src/'+name+'.css','utf8')).join('\n');
+const html=`<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Synthetic learning rails</title><style>${css}</style></head><body><header id="app-shell"></header><main id="c2-root"></main><section id="unresolved"></section><script>${script}</script></body></html>`;
+const config=fixtureWorkerConfig(html,root);writeFileSync(root+'/src/generated/worker-config.ts','// GENERATED SYNTHETIC FIXTURE ONLY. Do not add real data.\nexport default '+JSON.stringify(config)+';\n');
+rmSync(root+'/dist',{recursive:true,force:true});mkdirSync(root+'/dist/server',{recursive:true});const worker=await Bun.build({entrypoints:[root+'/src/worker.ts'],target:'browser',format:'esm',minify:true});if(!worker.success)throw Error(JSON.stringify(worker.logs));const js=await worker.outputs[0].text();if(/node:|Bun\./.test(js))throw Error('Non-Workers runtime dependency');writeFileSync(root+'/dist/server/index.js',js);
+console.log(JSON.stringify({built:true,fixtureOnly:true,students:config.approvedStudentIds.length,fullContractCount:Object.keys(config.contractTexts).length,liveLMSConnected:false,networkRequests:0}));

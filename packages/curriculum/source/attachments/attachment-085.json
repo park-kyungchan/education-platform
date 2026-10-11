@@ -1,0 +1,263 @@
+{
+  "kind": "ExplorerViewContract",
+  "id": "matheducation-spatial-explorer",
+  "schemaVersion": "2.0.0",
+  "revision": 2,
+  "status": "prototype",
+  "updatedAt": "2026-10-06T06:48:00Z",
+  "previousRevision": {
+    "pageId": "page_1f2e2bc038288191b50d91fa9356dd92",
+    "htmlSha256": "af7df22654d48592f2c3c461bb030a0bfb5acb245bc50e7850dea58897690b99"
+  },
+  "source": {
+    "kind": "SourceSnapshot",
+    "adapter": "sample-r2-to-explorer-1",
+    "sourceRevision": 2,
+    "sha256": "3332d52420632f5a5afc872692f9a9bfcd81d238705d8d63918c0c9a70118308",
+    "readOnly": true,
+    "fullCurriculum": false
+  },
+  "domains": [
+    {
+      "kind": "OfficialDomainView",
+      "id": "kr2022:domain:01",
+      "label": "수와 연산",
+      "sampleTopicIds": [
+        "natural",
+        "fractions",
+        "rational-domain",
+        "real-domain"
+      ],
+      "placementStatus": "sample_assignment_proposed"
+    },
+    {
+      "kind": "OfficialDomainView",
+      "id": "kr2022:domain:02",
+      "label": "변화와 관계",
+      "sampleTopicIds": [
+        "algebra"
+      ],
+      "placementStatus": "sample_assignment_proposed"
+    },
+    {
+      "kind": "OfficialDomainView",
+      "id": "kr2022:domain:03",
+      "label": "도형과 측정",
+      "sampleTopicIds": [],
+      "placementStatus": "unpopulated"
+    },
+    {
+      "kind": "OfficialDomainView",
+      "id": "kr2022:domain:04",
+      "label": "자료와 가능성",
+      "sampleTopicIds": [],
+      "placementStatus": "unpopulated"
+    }
+  ],
+  "bands": [
+    {
+      "kind": "OfficialBandView",
+      "id": "e5_6",
+      "label": "초5–6"
+    },
+    {
+      "kind": "OfficialBandView",
+      "id": "m1_3",
+      "label": "중1–3"
+    }
+  ],
+  "relationRegistry": [
+    {
+      "kind": "RelationViewType",
+      "id": "required_prerequisite",
+      "label": "필수 선행",
+      "defaultVisible": true,
+      "layering": true,
+      "directedVisual": true,
+      "lineStyle": "solid",
+      "status": "active"
+    },
+    {
+      "kind": "RelationViewType",
+      "id": "helpful_prerequisite",
+      "label": "도움되는 선행",
+      "defaultVisible": false,
+      "layering": false,
+      "directedVisual": true,
+      "lineStyle": "dashed",
+      "status": "active"
+    },
+    {
+      "kind": "RelationViewType",
+      "id": "representation",
+      "label": "다른 표현",
+      "defaultVisible": false,
+      "layering": false,
+      "directedVisual": false,
+      "lineStyle": "dotted",
+      "status": "active"
+    },
+    {
+      "kind": "RelationViewType",
+      "id": "related",
+      "label": "관련 개념",
+      "defaultVisible": false,
+      "layering": false,
+      "directedVisual": false,
+      "lineStyle": "dashdot",
+      "status": "active"
+    }
+  ],
+  "actionRegistry": [
+    {
+      "kind": "LocalViewAction",
+      "id": "home",
+      "label": "전체 지도",
+      "handlerKey": "home",
+      "status": "active",
+      "sideEffect": "presentation_only"
+    },
+    {
+      "kind": "LocalViewAction",
+      "id": "domain",
+      "label": "영역 열기",
+      "handlerKey": "domain",
+      "status": "active",
+      "sideEffect": "presentation_only"
+    },
+    {
+      "kind": "LocalViewAction",
+      "id": "topic",
+      "label": "개념 묶음 열기",
+      "handlerKey": "topic",
+      "status": "active",
+      "sideEffect": "presentation_only"
+    },
+    {
+      "kind": "LocalViewAction",
+      "id": "concept",
+      "label": "개념 선택",
+      "handlerKey": "concept",
+      "status": "active",
+      "sideEffect": "presentation_only"
+    },
+    {
+      "kind": "LocalViewAction",
+      "id": "back",
+      "label": "한 단계 위",
+      "handlerKey": "back",
+      "status": "active",
+      "sideEffect": "presentation_only"
+    },
+    {
+      "kind": "LocalViewAction",
+      "id": "clear",
+      "label": "선택 닫기",
+      "handlerKey": "clear",
+      "status": "active",
+      "sideEffect": "presentation_only"
+    },
+    {
+      "kind": "LocalViewAction",
+      "id": "search-result",
+      "label": "검색 결과 열기",
+      "handlerKey": "search-result",
+      "status": "active",
+      "sideEffect": "presentation_only"
+    },
+    {
+      "kind": "LocalViewAction",
+      "id": "band",
+      "label": "학년군 변경",
+      "handlerKey": "band",
+      "status": "active",
+      "sideEffect": "presentation_only"
+    },
+    {
+      "kind": "LocalViewAction",
+      "id": "inspect-tab",
+      "label": "상세 탭 변경",
+      "handlerKey": "inspect-tab",
+      "status": "active",
+      "sideEffect": "presentation_only"
+    }
+  ],
+  "theme": {
+    "kind": "ViewTheme",
+    "id": "calm-graph-workspace",
+    "revision": 1,
+    "tokens": {
+      "bg": {
+        "light": "#ffffff",
+        "dark": "#191c22"
+      },
+      "panel": {
+        "light": "#f7f8fa",
+        "dark": "#222730"
+      },
+      "canvas": {
+        "light": "#f3f5f8",
+        "dark": "#1e232c"
+      },
+      "ink": {
+        "light": "#1e293b",
+        "dark": "#e7edf5"
+      },
+      "muted": {
+        "light": "#607087",
+        "dark": "#acb9cd"
+      },
+      "line": {
+        "light": "#dbe1e9",
+        "dark": "#3b4655"
+      },
+      "accent": {
+        "light": "#315dce",
+        "dark": "#a6beff"
+      },
+      "selected": {
+        "light": "#eaf0ff",
+        "dark": "#2a395b"
+      },
+      "warning": {
+        "light": "#8a6515",
+        "dark": "#ebcd83"
+      }
+    }
+  },
+  "renderer": {
+    "kind": "RendererContract",
+    "id": "native-dom-svg",
+    "version": "2.0.0",
+    "runtimeDependencies": [],
+    "remoteResources": [],
+    "layout": "required_edge_rank_with_flexible_rows",
+    "groupNodePageSize": 24,
+    "unknownRelationPolicy": "show_as_optional_unmapped",
+    "largeGraphPolicy": "progressive_domains_topics_and_paginated_nodes",
+    "futureRendererCandidate": "cytoscapejs_pending_benchmark_and_sandbox_test",
+    "canonicalAdapterStatus": "available_fixture_verified_not_active"
+  },
+  "interaction": {
+    "kind": "InteractionContract",
+    "sourceWrites": false,
+    "automaticSync": false,
+    "searchFields": [
+      "concept_title",
+      "term_label",
+      "symbol_notation"
+    ],
+    "searchResultLimit": 8,
+    "keyboard": [
+      "Tab native control order",
+      "Enter or Space activates button",
+      "ArrowUp and ArrowDown select search results",
+      "Escape closes search or moves one level up",
+      "Slash focuses search within explorer",
+      "Arrow keys move between graph node controls"
+    ],
+    "universityLens": "separate_disclosure",
+    "unknownsVisible": true,
+    "countsComputedFromData": true
+  }
+}

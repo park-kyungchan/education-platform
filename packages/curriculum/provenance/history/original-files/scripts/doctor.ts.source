@@ -1,0 +1,7 @@
+import { existsSync } from 'node:fs';
+import { resolve } from 'node:path';
+const root = resolve(import.meta.dir, '..');
+const missing = ['AGENTS.md', 'bun.lock', 'provenance/export-coverage.json', 'source/contracts/canonical.schema.json', 'derived/ui/ui-source-manifest.json'].filter(p => !existsSync(resolve(root, p)));
+const versionOk = Bun.version === '1.4.2';
+console.log(JSON.stringify({ runtime: Bun.version, runtimePinned: versionOk, missing, cloudProfileDeclaration: process.env.MATH_EDUCATION_CLOUD_PROFILE ?? 'undeclared', actualCloudExecutionVerified: false, canonicalSourcesAvailable: ['domain-01.json','domain-02.json','domain-03.json','domain-04.json','curriculum-boundary.json'].every(p => existsSync(resolve(root,'canonical',p))) }, null, 2));
+if (!versionOk || missing.length) process.exit(1);

@@ -1,0 +1,12 @@
+import {test,expect} from 'bun:test';
+import {assertArtifact} from '@palantirkc/ontology';
+import {readSourceMap,validateModuleGraph,resolveModuleRoot,runModuleCheck} from '../src/modules';
+import type {EducationModule} from '../src/contracts';
+import {inspectCurriculumSources} from '../packages/curriculum/integration';
+test('source graph preserves pending domain acceptance and native ownership',async()=>{const map=await readSourceMap();expect(map.modules).toHaveLength(5);expect(map.semanticState.mathematicsHumanDecision).toBe('PENDING');expect(map.semanticState.mathematicsCanonicalApplication).toBe('NOT_PERFORMED');expect(map.modules.find(m=>m.id==='academy')?.native.ownerProfile).toBe('dc-gang-a-dev');for(const module of map.modules)expect(module.native.authority).toBe('none');});
+test('dependency validator rejects missing, duplicate and cyclic module dependencies',async()=>{const map=await readSourceMap(),one=map.modules[0]!;expect(()=>validateModuleGraph([one,one])).toThrow('duplicate_module');expect(()=>validateModuleGraph([{...one,dependsOn:['academy']}])).toThrow('unknown_dependency');expect(()=>validateModuleGraph([{...one,dependsOn:[one.id]}])).toThrow('dependency_cycle');});
+test('module routing rejects traversal and arbitrary commands',async()=>{const one=(await readSourceMap()).modules[0]!;for(const root of ['../','/opt/data','apps/../','apps\\academy'])expect(()=>resolveModuleRoot({...one,root})).toThrow();await expect(runModuleCheck(one,'academy:serve')).rejects.toThrow('unadmitted_script');});
+test('curriculum exposes missing canonical inputs as a gap rather than accepted mathematics',async()=>{const inventory=await inspectCurriculumSources();expect(inventory.status).toBe('not_available_in_this_ui_export');expect(inventory.required.length).toBeGreaterThan(0);expect(inventory.canonicalReady).toBe(false);expect(inventory.authority).toBe('none');});
+test('project consumes pinned shared artifact validator',async()=>{const project=await Bun.file(new URL('../project.json',import.meta.url)).json();expect(()=>assertArtifact(project)).not.toThrow();expect(()=>assertArtifact({...project,kind:'fake'})).toThrow();});
+
+test('academy integration exposes preserved domain facades without opening native stores',async()=>{const facade=await import(new URL('../apps/academy/integration.ts',import.meta.url).href);for(const name of ['TeacherApplication','ClinicWorkbench','SyntheticClinicStore','selectOperationalContext'])expect(typeof facade[name]).toBe('function');});
