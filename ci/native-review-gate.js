@@ -10,6 +10,8 @@ var hermesModules = ["work-context", "contracts", "current-intent", "domain-cont
 var contextPaths = ["project.json", "ontology-pin.json", "package.json", "bun.lock", "packages/work-continuity/package.json", "releases/palantirkc-ontology-0.2.0.tgz", ...contextModules.map((name) => `packages/work-continuity/src/context/${name}.ts`), "packages/work-continuity/releases/palantirkc-ontology-0.2.0.tgz"];
 var nativeCodexPaths = ["package.json", "bun.lock", "packages/native-codex-adapter/package.json", ...nativeCodexModules.map((name) => `packages/native-codex-adapter/src/native/${name}.ts`)];
 var hermesPaths = ["package.json", "bun.lock", "releases/palantirkc-ontology-0.2.0.tgz", "packages/native-hermes-adapter/package.json", "packages/native-hermes-adapter/releases/palantirkc-ontology-0.2.0.tgz", ...hermesModules.map((name) => `packages/native-hermes-adapter/src/ontology-driven/${name}.ts`), "packages/native-hermes-adapter/src/adoption/semantic-context.ts", "packages/native-hermes-adapter/src/adoption/evaluation-budget.ts"];
+var nativePluginNames = ["native-task-controls", "source-review-readonly", "ocp-readonly-review"];
+var nativePluginPaths = nativePluginNames.flatMap((name) => ["__init__.py", "plugin.yaml"].map((file) => "packages/native-hermes-adapter/native/plugins/" + name + "/" + file)).sort();
 var finiteOwnerSources = [
   ...["src/legacy/harness/owner-context-loader.ts", "src/legacy/harness/provider-closure.ts", "src/native/provider-closure.ts", ...nativeCodexModules.map((name) => `src/native/${name}.ts`)].map((path) => ({ owner: "codex-harness-engineering", path })),
   { owner: "hermes-harness-engineering", path: "src/ontology-driven/provider-source.ts" }
