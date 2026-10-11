@@ -1,0 +1,110 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "verification",
+  "id": "education-platform:verification:integration",
+  "projectId": "education-platform",
+  "domainId": "education",
+  "createdAt": "2026-10-11T06:12:48.401760Z",
+  "payload": {
+    "targetRefs": [
+      "education-platform:project:manifest"
+    ],
+    "criteria": [
+      {
+        "id": "integration-harness",
+        "status": "pass",
+        "message": "Six integration tests, source graph/routing checks, shared Ontology0.2.0 artifact validation and import/adaptation hashes pass.",
+        "evidenceRefs": [
+          "education-platform:evidence:local-integration-check"
+        ]
+      },
+      {
+        "id": "mathematics-reference",
+        "status": "pass",
+        "message": "Node26.7.0/npm11.17.0 typecheck and 59 tests pass; Bun parity remains deferred.",
+        "evidenceRefs": [
+          "education-platform:evidence:local-integration-check"
+        ]
+      },
+      {
+        "id": "curriculum",
+        "status": "pass",
+        "message": "Nine tests plus48 exact UI hashes, export history and runtime doctor pass; missing canonical inputs are reported.",
+        "evidenceRefs": [
+          "education-platform:evidence:local-integration-check"
+        ]
+      },
+      {
+        "id": "academy",
+        "status": "pass",
+        "message": "Gang-a original validate passes; native DC source typecheck plus281 tests pass/91 external PostgreSQL/live-boundary skips. Four current native entrypoint import closures build without execution.",
+        "evidenceRefs": [
+          "education-platform:evidence:local-integration-check"
+        ]
+      },
+      {
+        "id": "clinic-workbench",
+        "status": "pass",
+        "message": "138 tests plus typecheck/build, bundled two-source consumer and synthetic demo pass; no official save or parent send.",
+        "evidenceRefs": [
+          "education-platform:evidence:local-integration-check"
+        ]
+      },
+      {
+        "id": "mathcrew",
+        "status": "pass",
+        "message": "22 tests plus build/check/portability/deterministic expected-output validation pass under original Bun1.4.1; current rendered links point private successors.",
+        "evidenceRefs": [
+          "education-platform:evidence:local-integration-check"
+        ]
+      },
+      {
+        "id": "live-retirement-consumer",
+        "status": "unverified",
+        "message": "Fresh public site still emits all six predecessor repository links; exact production deployment route/source/revision is unknown and must switch before predecessor deletion.",
+        "evidenceRefs": [
+          "education-platform:evidence:mathcrew-live-predecessor-links"
+        ]
+      }
+    ],
+    "inputHashes": [
+      {
+        "path": "architecture/source-map.json",
+        "sha256": "36ca0cdee888f6bb1d087b3dd641e6452653976d0354fa8671d94634837c04ef"
+      },
+      {
+        "path": "architecture/public-successors.json",
+        "sha256": "9b45d6ac177f68de34891cef56d717256f6c4930eecf35697232595b1558f256"
+      },
+      {
+        "path": "provenance/imported-files.json",
+        "sha256": "f74723db381773b5823189f5ad1f7319566ce29f8134cace59d44a19bbce1bbc"
+      },
+      {
+        "path": "provenance/adaptations.json",
+        "sha256": "9daab6ef461686199e5b4e06698dcc01d1f28076f155e70d60ef92ac8c41cb14"
+      },
+      {
+        "path": "bun.lock",
+        "sha256": "bb598c9ccc3da2865c39a3d3a8aebda62304666a501e31965a1625ad20fa6d83"
+      }
+    ],
+    "runtime": {
+      "name": "Bun integration / Node mathematics reference",
+      "version": "1.4.2 / Node26.7.0 npm11.17.0; mathcrew Bun1.4.1"
+    },
+    "details": {
+      "verificationClass": "local-source-and-synthetic-behavior",
+      "logPrivateOwner": "hermes-harness-engineering",
+      "logSha256": "1975c5f34f2ac0b0682855785b7a7431ee93c0b17bf2916a73e5604648696bad",
+      "logBytes": 113103,
+      "importedSourceFiles": 886,
+      "nativeEffects": 0,
+      "remoteWrites": 0,
+      "acceptanceDecisionCreated": false,
+      "domainAcceptance": "mathematics human decision PENDING; canonical application NOT_PERFORMED",
+      "productionVerified": false,
+      "toolchainReceiptSha256": "f450d11af2fcd7a1facf1f082c6a60381bd33b7f1a82220513130b66a5b806ae"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+name: Static site checks
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Use runner temporary directory
+        run: printf 'TMPDIR=%s\n' "$RUNNER_TEMP" >> "$GITHUB_ENV"
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: '1.4.1'
+      - run: bun --no-env-file run build
+      - run: bun --no-env-file run test
+      - run: bun --no-env-file run check
+      - run: bun --no-env-file run verify

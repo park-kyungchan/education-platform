@@ -1,0 +1,3 @@
+import {z} from 'zod';
+import {Id,Hash,Instant} from '../schema/v1/ids.ts';
+export const StudentRef=z.strictObject({studentId:Id,nativeStudentId:Id.nullable(),nativeIdentityVerified:z.boolean(),managementState:z.enum(['user_confirmed','unknown','withdrawn']),validFrom:Instant.nullable(),validTo:Instant.nullable(),rosterRevision:Id}).superRefine((x,c)=>{if(x.nativeIdentityVerified&&x.nativeStudentId===null)c.addIssue({code:'custom',message:'verified_native_identity_requires_native_id'});if(x.validFrom&&x.validTo&&Date.parse(x.validFrom)>=Date.parse(x.validTo))c.addIssue({code:'custom',message:'invalid_validity_interval'});});

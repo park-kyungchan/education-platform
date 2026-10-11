@@ -1,0 +1,5 @@
+import {z} from 'zod';
+export const SchemaVersions=z.strictObject({evidence:z.literal('academy.evidence/2.0.1'),decision:z.literal('academy.decision/2.0.0'),legacyProjection:z.literal('1.0.0'),runtimeTransport:z.literal('academy.runtime/1.0.0')});
+export const CURRENT_SCHEMA_VERSIONS=SchemaVersions.parse({evidence:'academy.evidence/2.0.1',decision:'academy.decision/2.0.0',legacyProjection:'1.0.0',runtimeTransport:'academy.runtime/1.0.0'});
+export const MigrationManifest=z.strictObject({migrationId:z.string().min(1),from:z.string().min(1),to:z.string().min(1),reversible:z.boolean(),preservesOriginalBytes:z.literal(true),nativeIdentityPromoted:z.literal(false),sourceVerificationPromoted:z.literal(false),rollback:z.strictObject({kind:z.literal('restore_pinned_original'),originalSha256:z.string().regex(/^[a-f0-9]{64}$/),requiresRevisionLease:z.literal(true)}),breakingChanges:z.array(z.string()),blockedReasons:z.array(z.string())});
+export type MigrationManifest=z.infer<typeof MigrationManifest>;

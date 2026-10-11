@@ -1,0 +1,542 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "kind",
+    "id",
+    "schemaVersion",
+    "revision",
+    "status",
+    "updatedAt",
+    "canonicalParentId",
+    "sourceIds",
+    "sourceSnapshot",
+    "assertions",
+    "proposals",
+    "revisionHistory",
+    "rollbackContract",
+    "validation"
+  ],
+  "properties": {
+    "kind": {
+      "const": "DependencyLedger"
+    },
+    "id": {
+      "type": "string"
+    },
+    "schemaVersion": {
+      "const": "1.0.0"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "status": {
+      "type": "string"
+    },
+    "updatedAt": {
+      "type": "string"
+    },
+    "canonicalParentId": {
+      "type": "string"
+    },
+    "sourceIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "sourceSnapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "reference",
+        "revision",
+        "sha256"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string"
+        },
+        "reference": {
+          "type": "string"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "sha256": {
+          "type": "string"
+        }
+      }
+    },
+    "assertions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "kind",
+          "id",
+          "revision",
+          "fromId",
+          "toId",
+          "type",
+          "rationale",
+          "conditions",
+          "evidence",
+          "status",
+          "perspective",
+          "claimBasis",
+          "sourceEdgeId",
+          "selectedForPreview",
+          "alternativeToId",
+          "supersedesRevision"
+        ],
+        "properties": {
+          "kind": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "fromId": {
+            "type": "string"
+          },
+          "toId": {
+            "type": "string"
+          },
+          "type": {
+            "enum": [
+              "required_prerequisite",
+              "helpful_prerequisite",
+              "representation",
+              "related"
+            ]
+          },
+          "rationale": {
+            "type": "string"
+          },
+          "conditions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "sourceId",
+                "strength",
+                "locator"
+              ],
+              "properties": {
+                "kind": {
+                  "type": "string"
+                },
+                "sourceId": {
+                  "type": "string"
+                },
+                "strength": {
+                  "type": "string"
+                },
+                "locator": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "status": {
+            "enum": [
+              "adopted",
+              "proposed",
+              "deprecated"
+            ]
+          },
+          "perspective": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "id",
+              "audience",
+              "explanationLevel",
+              "pedagogicalRoute"
+            ],
+            "properties": {
+              "kind": {
+                "type": "string"
+              },
+              "id": {
+                "type": "string"
+              },
+              "audience": {
+                "type": "string"
+              },
+              "explanationLevel": {
+                "type": "string"
+              },
+              "pedagogicalRoute": {
+                "type": "string"
+              }
+            }
+          },
+          "claimBasis": {
+            "enum": [
+              "mathematical_requirement",
+              "teaching_perspective"
+            ]
+          },
+          "sourceEdgeId": {
+            "type": "string"
+          },
+          "selectedForPreview": {
+            "type": "boolean"
+          },
+          "alternativeToId": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "supersedesRevision": {
+            "type": [
+              "string",
+              "integer",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "proposals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "kind",
+          "id",
+          "revision",
+          "status",
+          "isHypothetical",
+          "reason",
+          "baseSourceRevision",
+          "baseLedgerRevision",
+          "assertionId",
+          "alternativeAssertionId",
+          "diff",
+          "userDecision",
+          "impactAnalysis",
+          "appliedRevisionId"
+        ],
+        "properties": {
+          "kind": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "status": {
+            "enum": [
+              "example_only",
+              "proposed",
+              "accepted",
+              "rejected",
+              "applied",
+              "withdrawn"
+            ]
+          },
+          "isHypothetical": {
+            "type": "boolean"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "baseSourceRevision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "baseLedgerRevision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "assertionId": {
+            "type": "string"
+          },
+          "alternativeAssertionId": {
+            "type": "string"
+          },
+          "diff": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "path",
+                "before",
+                "after"
+              ],
+              "properties": {
+                "kind": {
+                  "type": "string"
+                },
+                "path": {
+                  "type": "string"
+                },
+                "before": {
+                  "type": "string"
+                },
+                "after": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "userDecision": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "status",
+              "decidedAt",
+              "messageId"
+            ],
+            "properties": {
+              "kind": {
+                "type": "string"
+              },
+              "status": {
+                "enum": [
+                  "not_requested",
+                  "pending",
+                  "accepted",
+                  "rejected"
+                ]
+              },
+              "decidedAt": {
+                "type": [
+                  "string",
+                  "integer",
+                  "null"
+                ]
+              },
+              "messageId": {
+                "type": [
+                  "string",
+                  "integer",
+                  "null"
+                ]
+              }
+            }
+          },
+          "impactAnalysis": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "affectedConceptIds",
+              "requiredPrerequisiteEdgesChanged",
+              "requiredDagStatus",
+              "alternativeRelationsMayCycle",
+              "sourceWritePerformed"
+            ],
+            "properties": {
+              "kind": {
+                "type": "string"
+              },
+              "affectedConceptIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "requiredPrerequisiteEdgesChanged": {
+                "type": "boolean"
+              },
+              "requiredDagStatus": {
+                "type": "string"
+              },
+              "alternativeRelationsMayCycle": {
+                "type": "boolean"
+              },
+              "sourceWritePerformed": {
+                "type": "boolean"
+              }
+            }
+          },
+          "appliedRevisionId": {
+            "type": [
+              "string",
+              "integer",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "revisionHistory": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "kind",
+          "id",
+          "revision",
+          "parentRevisionId",
+          "status",
+          "reason",
+          "proposalIds",
+          "assertionRevisions"
+        ],
+        "properties": {
+          "kind": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "parentRevisionId": {
+            "type": [
+              "string",
+              "integer",
+              "null"
+            ]
+          },
+          "status": {
+            "enum": [
+              "recorded",
+              "superseded",
+              "restored"
+            ]
+          },
+          "reason": {
+            "type": "string"
+          },
+          "proposalIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "assertionRevisions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "revision"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "revision": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "rollbackContract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "mode",
+        "executable",
+        "restorePolicy",
+        "beforeRestoreChecks",
+        "approvalPolicy"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string"
+        },
+        "mode": {
+          "type": "string"
+        },
+        "executable": {
+          "type": "boolean"
+        },
+        "restorePolicy": {
+          "type": "string"
+        },
+        "beforeRestoreChecks": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "approvalPolicy": {
+          "type": "string"
+        }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "idUniqueness",
+        "conceptEndpoints",
+        "alternativeReferences",
+        "requiredPrerequisiteDag",
+        "cycleCheckScope",
+        "proposalApplied",
+        "sourceSnapshotPreserved"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string"
+        },
+        "idUniqueness": {
+          "type": "string"
+        },
+        "conceptEndpoints": {
+          "type": "string"
+        },
+        "alternativeReferences": {
+          "type": "string"
+        },
+        "requiredPrerequisiteDag": {
+          "type": "string"
+        },
+        "cycleCheckScope": {
+          "type": "string"
+        },
+        "proposalApplied": {
+          "type": "boolean"
+        },
+        "sourceSnapshotPreserved": {
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MathEducation dependency ledger schema"
+}

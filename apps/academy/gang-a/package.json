@@ -1,0 +1,30 @@
+{
+  "name": "academy-learning-rails-code",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "description": "Typed code-only academy modules, strict owner-scoped runtime and synthetic regressions",
+  "scripts": {
+    "build": "bun build.ts",
+    "typecheck": "tsc -p tsconfig.json",
+    "lint": "bun tests/architecture.test.ts && bun scan-export.ts",
+    "test:regression": "bun test-demo.ts && bun test-client-security.ts && bun test-teacher-overlay-ui.ts && bun test-domain.ts && bun test-evidence-schema.ts",
+    "test:contracts": "bun tests/golden/refactor.test.ts && bun tests/offline.test.ts && bun tests/operational-context.test.ts && bun tests/book-certification.test.ts && bun tests/certification-catalog.test.ts && bun tests/architecture.test.ts",
+    "test": "bun run build && bun run test:regression && bun run test:contracts && bun scan-export.ts",
+    "validate": "bun run test && bun run typecheck"
+  },
+  "dependencies": {
+    "acorn": "8.19.0",
+    "parse5": "8.0.1",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@types/bun": "1.4.2",
+    "@types/node": "26.6.4",
+    "happy-dom": "20.14.5",
+    "typescript": "7.0.2"
+  },
+  "engines": {
+    "bun": ">=1.4.2"
+  }
+}

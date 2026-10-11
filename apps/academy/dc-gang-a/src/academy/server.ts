@@ -1,0 +1,228 @@
+import type { TeacherApplication, TrustedTeacherContext } from './application';
+import { readCookie, secretDigest, signTeacherSession, verifyTeacherSession } from './auth';
+import { assertExactKeys } from '../learning/model';
+import { validateWebMcpTrialToken } from './originTrial';
+import {ClinicCommandRefusal} from './learningWork';
+import {matchesTeacherActionHeaders} from './teacherActionScope';
+import {ObservationCommandRefusal} from './records';
+import {renderDesignLab} from './web/designLab';
+import {teacherFontAssets} from './web/fontAssets';
+
+export interface LoginIdentity { readonly actorId:string; readonly username:string; readonly passwordHash:string }
+export interface TeacherServerOptions {
+  readonly app:TeacherApplication; readonly origin:string; readonly sessionKey:string;
+  readonly identity:LoginIdentity|null; readonly invitationDigest:string|null;
+  readonly currentAuthentication?:()=>{identity:LoginIdentity|null;sessionKey:string};
+  readonly passwordRecovery?:{
+    claim:(token:string)=>Promise<{id:string;expiresAt:number}>;
+    status:(id:string)=>Promise<{id:string;expiresAt:number}>;
+    complete:(id:string,passwordHash:string)=>Promise<{identity:LoginIdentity;sessionKey:string}>;
+  };
+  readonly saveIdentity:(identity:LoginIdentity)=>Promise<void>;
+  readonly consumeInvitation?:()=>Promise<void>;
+  readonly page?:string; readonly script?:string;
+  readonly originTrialToken?:string;
+  readonly refresh?:(context:TrustedTeacherContext,selection:{studentId:string|null;requestId:string;date?:string})=>Promise<unknown>;
+  readonly refreshResult?:(context:TrustedTeacherContext,requestId:string)=>Promise<unknown>;
+  readonly refreshPending?:(context:TrustedTeacherContext)=>Promise<unknown>;
+  readonly refreshHistory?:(context:TrustedTeacherContext,cursor:string|null)=>Promise<unknown>;
+}
+const securityHeaders={ 'Cache-Control':'no-store','X-Content-Type-Options':'nosniff','Referrer-Policy':'no-referrer','X-Frame-Options':'DENY',
+  'Content-Security-Policy':"default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'" };
+function json(value:unknown,status=200,headers:Record<string,string>={}){return new Response(JSON.stringify(value),{status,headers:{...securityHeaders,'Content-Type':'application/json; charset=utf-8',...headers}});}
+const cookie=(name:string,value:string,age=3600)=>`${name}=${value}; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=${age}`;
+export function createTeacherServerHandler(options:TeacherServerOptions){
+  const trial=options.originTrialToken?validateWebMcpTrialToken(options.originTrialToken,options.origin):null;
+  const admittedHost=new URL(options.origin).hostname;
+  let identity=options.identity,sessionKey=options.sessionKey,invitationDigest=options.invitationDigest,setupRunning=false,resetRunning=false;
+  const loginAttempts=new Map<string,{count:number;windowStart:number}>();
+  const authenticationRateLimit=(key:string,now:number,error:'login_rate_limited'|'recovery_rate_limited'):Response|null=>{
+    for(const [expiredKey,attempt] of loginAttempts)if(now-attempt.windowStart>=900000)loginAttempts.delete(expiredKey);
+    const prior=loginAttempts.get(key);
+    if(!prior&&loginAttempts.size>=2048)return json({error},429);
+    const attempt=prior??{count:0,windowStart:now};
+    attempt.count++;loginAttempts.set(key,attempt);
+    return attempt.count>5?json({error},429,{'Retry-After':'900'}):null;
+  };
+  const context=(req:Request):TrustedTeacherContext|null=>{
+    const raw=readCookie(req.headers.get('Cookie'),'dc_teacher');
+    const session=raw?verifyTeacherSession(sessionKey,raw):null;
+    return session&&identity&&session.ownerId===options.app.ownerId&&session.actorId===identity.actorId?{ownerId:session.ownerId,actorId:session.actorId,role:'teacher'}:null;
+  };
+  const body=async(req:Request):Promise<Record<string,unknown>>=>{
+    if(req.headers.get('Content-Type')?.split(';')[0]!=='application/json')throw Error('json_required');
+    // 16000 UTF-16 text units may occupy 96000 JSON bytes after escaping; keep a bounded envelope.
+    const limit=['/api/teacher-observation','/api/teacher-clinic','/api/record'].includes(new URL(req.url).pathname)?128000:20000;
+    const length=req.headers.get('Content-Length');
+    if(length!==null&&(!/^\d+$/.test(length)||Number(length)>limit))throw Error('input_too_large');
+    const reader=req.body?.getReader();if(!reader)throw Error('invalid_input');
+    const decoder=new TextDecoder('utf-8',{fatal:true});let bytes=0,text='';
+    try{
+      while(true){
+        const chunk=await reader.read();if(chunk.done)break;
+        bytes+=chunk.value.byteLength;
+        if(bytes>limit){await reader.cancel();throw Error('input_too_large');}
+        text+=decoder.decode(chunk.value,{stream:true});
+      }
+      text+=decoder.decode();
+    }finally{reader.releaseLock();}
+    const data:unknown=JSON.parse(text);if(!data||typeof data!=='object'||Array.isArray(data))throw Error('invalid_input');return data as Record<string,unknown>;
+  };
+  return async(req:Request):Promise<Response>=>{
+    const url=new URL(req.url),path=url.pathname;
+    if(!['GET','POST'].includes(req.method))return json({error:'method_not_allowed'},405);
+    if(req.method==='POST'&&req.headers.get('Origin')!==options.origin)return json({error:'origin_denied'},403);
+    try{
+      if(options.currentAuthentication){const current=options.currentAuthentication();identity=current.identity;sessionKey=current.sessionKey;}
+      if(path==='/health'&&req.method==='GET')return json({status:'running',studentDisclosure:false});
+      if((path==='/'||path==='/setup'||path==='/reset')&&req.method==='GET')return new Response(options.page??'Private teacher application',{headers:{...securityHeaders,'Content-Type':'text/html; charset=utf-8',
+        ...(trial&&url.hostname===admittedHost&&Date.parse(trial.expiresAt)>Date.now()?{'Origin-Trial':trial.token}:{})}});
+      if(path==='/client.js'&&req.method==='GET')return new Response(options.script??'',{headers:{...securityHeaders,'Content-Type':'text/javascript; charset=utf-8'}});
+      if(path==='/teacher-ko-76f45ef4.ttf'&&req.method==='GET')return new Response(Bun.file(new URL('./web/assets/NanumGothic-Regular.ttf',import.meta.url)),{headers:{...securityHeaders,'Content-Type':'font/ttf','Cache-Control':'public, max-age=31536000, immutable'}});
+      if(Object.hasOwn(teacherFontAssets,path)&&req.method==='GET'){
+        const asset=teacherFontAssets[path as keyof typeof teacherFontAssets];
+        return new Response(Bun.file(new URL('./web/assets/'+asset.file,import.meta.url)),{headers:{...securityHeaders,'Content-Type':'font/woff2','Cache-Control':'public, max-age=31536000, immutable'}});
+      }
+      if(path==='/api/setup-session'&&req.method==='POST'){
+        const data=await body(req);assertExactKeys(data,['invitation']);
+        if(identity||!invitationDigest||typeof data.invitation!=='string'||secretDigest(data.invitation)!==invitationDigest)return json({error:'setup_not_admitted'},403);
+        invitationDigest=null;
+        await options.consumeInvitation?.();
+        const token=signTeacherSession(sessionKey,options.app.ownerId,'bootstrap-owner',undefined,900);
+        return json({status:'owner_setup_admitted'},200,{'Set-Cookie':cookie('dc_setup',token,900)});
+      }
+      if(path==='/api/setup-user'&&req.method==='POST'){
+        const token=readCookie(req.headers.get('Cookie'),'dc_setup');const grant=token?verifyTeacherSession(sessionKey,token):null;
+        if(identity||setupRunning||!grant||grant.ownerId!==options.app.ownerId||grant.actorId!=='bootstrap-owner')return json({error:'setup_not_admitted'},403);
+        const data=await body(req);assertExactKeys(data,['username','password']);
+        if(typeof data.username!=='string'||!data.username.trim()||data.username.length>200||typeof data.password!=='string'||data.password.length<10||data.password.length>1024)return json({error:'invalid_credentials_shape'},400);
+        // Body intake yielded: another request or the authoritative store may have consumed admission.
+        if(options.currentAuthentication){const current=options.currentAuthentication();identity=current.identity;sessionKey=current.sessionKey;}
+        const currentGrant=token?verifyTeacherSession(sessionKey,token):null;
+        if(identity||setupRunning||!currentGrant||currentGrant.ownerId!==options.app.ownerId||currentGrant.actorId!=='bootstrap-owner')return json({error:'setup_not_admitted'},403);
+        setupRunning=true;
+        try{
+          const newIdentity:LoginIdentity={actorId:crypto.randomUUID(),username:data.username,passwordHash:await Bun.password.hash(data.password)};
+          await options.saveIdentity(newIdentity);identity=newIdentity;
+          return json({status:'teacher_registered'},200,{'Set-Cookie':cookie('dc_teacher',signTeacherSession(sessionKey,options.app.ownerId,newIdentity.actorId))});
+        }finally{setupRunning=false;}
+      }
+      if(path==='/api/login'&&req.method==='POST'){
+        const now=Date.now(),remote=(req.headers.get('CF-Connecting-IP')??'direct-loopback').slice(0,64);
+        const rateLimit=authenticationRateLimit(remote,now,'login_rate_limited');if(rateLimit)return rateLimit;
+        const data=await body(req);assertExactKeys(data,['username','password']);
+        const loginIdentity=identity,loginKey=sessionKey;
+        if(!loginIdentity||typeof data.username!=='string'||typeof data.password!=='string'||data.password.length>1024||data.username!==loginIdentity.username||!await Bun.password.verify(data.password,loginIdentity.passwordHash))return json({error:'login_required'},401);
+        const current=options.currentAuthentication?.()??{identity,sessionKey};
+        if(current.sessionKey!==loginKey||current.identity?.actorId!==loginIdentity.actorId||current.identity.passwordHash!==loginIdentity.passwordHash||current.identity.username!==loginIdentity.username)return json({error:'login_required'},401);
+        return json({status:'teacher_authenticated'},200,{'Set-Cookie':cookie('dc_teacher',signTeacherSession(loginKey,options.app.ownerId,loginIdentity.actorId))});
+      }
+      if(path==='/api/password-recovery-request'&&req.method==='POST'){
+        if(!identity||!options.passwordRecovery)return json({error:'password_recovery_denied'},403);
+        const now=Date.now(),remote='recovery-request:'+(req.headers.get('CF-Connecting-IP')??'direct-loopback').slice(0,64);
+        const rateLimit=authenticationRateLimit(remote,now,'recovery_rate_limited');if(rateLimit)return rateLimit;
+        const data=await body(req);assertExactKeys(data,[]);
+        const requestRef=crypto.randomUUID(),expiresAt=Math.floor(now/1000)+900;
+        return json({status:'owner_approval_required',requestRef,expiresAt,referenceGrantsAccess:false},200,{'Set-Cookie':cookie('dc_password_recovery',signTeacherSession(sessionKey,options.app.ownerId,'password-recovery:'+requestRef,undefined,900),900)});
+      }
+      if(path==='/api/password-recovery-session'&&req.method==='POST'){
+        if(!identity||!options.passwordRecovery)return json({error:'password_recovery_denied'},403);
+        const now=Date.now(),remote='recovery:'+(req.headers.get('CF-Connecting-IP')??'direct-loopback').slice(0,64);
+        const rateLimit=authenticationRateLimit(remote,now,'recovery_rate_limited');if(rateLimit)return rateLimit;
+        const data=await body(req);assertExactKeys(data,['token']);
+        if(typeof data.token!=='string'||!/^[A-Za-z0-9_-]{43}$/.test(data.token))return json({error:'password_recovery_denied'},403);
+        const grant=await options.passwordRecovery.claim(data.token);
+        const lifetime=grant.expiresAt-Math.floor(Date.now()/1000);
+        if(lifetime<1||lifetime>900)throw Error('password_recovery_denied');
+        return json({status:'password_recovery_admitted',username:identity.username},200,{'Set-Cookie':cookie('dc_password_recovery',signTeacherSession(sessionKey,options.app.ownerId,'password-recovery:'+grant.id,undefined,lifetime),lifetime)});
+      }
+      if(path==='/api/password-recovery-status'&&req.method==='GET'){
+        const raw=readCookie(req.headers.get('Cookie'),'dc_password_recovery'),grant=raw?verifyTeacherSession(sessionKey,raw):null;
+        if(!options.passwordRecovery||!identity||!grant||grant.ownerId!==options.app.ownerId||!grant.actorId.startsWith('password-recovery:'))return json({error:'password_recovery_denied'},403);
+        await options.passwordRecovery.status(grant.actorId.slice('password-recovery:'.length));
+        return json({status:'password_recovery_admitted',username:identity.username});
+      }
+      if(path==='/api/password-reset'&&req.method==='POST'){
+        const raw=readCookie(req.headers.get('Cookie'),'dc_password_recovery'),grant=raw?verifyTeacherSession(sessionKey,raw):null;
+        if(!options.passwordRecovery||!identity||resetRunning||!grant||grant.ownerId!==options.app.ownerId||!grant.actorId.startsWith('password-recovery:'))return json({error:'password_recovery_denied'},403);
+        const data=await body(req);assertExactKeys(data,['password']);
+        if(typeof data.password!=='string'||data.password.length<10||data.password.length>1024)return json({error:'invalid_credentials_shape'},400);
+        if(resetRunning)return json({error:'password_recovery_denied'},403);
+        resetRunning=true;
+        try{
+          const next=await options.passwordRecovery.complete(grant.actorId.slice('password-recovery:'.length),await Bun.password.hash(data.password));
+          identity=next.identity;sessionKey=next.sessionKey;
+          return json({status:'teacher_password_reset',username:identity.username,requiresLogin:true},200,{'Set-Cookie':cookie('dc_password_recovery','',0)});
+        }finally{resetRunning=false;}
+      }
+      if(path==='/design-lab'){
+        if(req.method!=='GET')return json({error:'method_not_allowed'},405);
+        if(!context(req))return new Response('<!doctype html><html lang="ko"><meta charset="utf-8"><title>교사 로그인 필요</title><h1>교사 로그인이 필요합니다</h1><p>디자인 샘플은 교사 전용입니다.</p><a href="/">로그인 화면으로 이동</a></html>',{status:401,headers:{...securityHeaders,'Content-Type':'text/html; charset=utf-8'}});
+        return new Response(renderDesignLab(url.searchParams),{headers:{...securityHeaders,'Content-Type':'text/html; charset=utf-8'}});
+      }
+      if(path.startsWith('/api/')){
+        const actor=context(req);if(!actor)return json({error:'teacher_authentication_required'},401);
+        if(['/api/teacher-observation','/api/teacher-clinic','/api/refresh'].includes(path)&&req.method==='POST'){
+          const conflict=()=>json({error:'teacher_scene_actor_conflict',originalRetained:false,automaticRetry:false},409);
+          if(!matchesTeacherActionHeaders(req.headers,actor))return conflict();
+          const input=await body(req);
+          // Body intake can yield while authentication changes in another tab.
+          if(options.currentAuthentication){const current=options.currentAuthentication();identity=current.identity;sessionKey=current.sessionKey;}
+          const currentActor=context(req);if(!currentActor)return json({error:'teacher_authentication_required'},401);
+          if(!matchesTeacherActionHeaders(req.headers,currentActor))return conflict();
+          if(path==='/api/refresh'){
+            assertExactKeys(input,Object.hasOwn(input,'date')?['studentId','requestId','date']:['studentId','requestId']);
+            if(input.date!==undefined&&(typeof input.date!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(input.date)||!Number.isFinite(Date.parse(input.date+'T00:00:00Z'))||new Date(input.date+'T00:00:00Z').toISOString().slice(0,10)!==input.date))return json({error:'invalid_refresh_date'},400);
+            if(input.studentId!==null&&typeof input.studentId!=='string')return json({error:'invalid_refresh_scope'},400);
+            if(typeof input.requestId!=='string'||!/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/.test(input.requestId))return json({error:'source_request_id_required'},400);
+            if(!options.refresh)return json({status:'blocked',reason:'native_source_connector_unavailable',cacheRetained:true},503);
+            return json(await options.refresh(currentActor,{studentId:input.studentId as string|null,requestId:input.requestId,...(input.date?{date:input.date as string}:{})}));
+          }
+          return json(path==='/api/teacher-observation'?await options.app.saveObservation(currentActor,input):await options.app.saveClinicDecision(currentActor,input));
+        }
+        if(path==='/api/teacher-clinic-result'&&req.method==='GET'){
+          if([...url.searchParams.keys()].some(key=>!['studentId','requestId'].includes(key))||url.searchParams.getAll('studentId').length!==1||url.searchParams.getAll('requestId').length!==1)return json({error:'unexpected_query_scope'},400);
+          return json(await options.app.clinicResult(actor,url.searchParams.get('studentId')!,url.searchParams.get('requestId')!));
+        }
+        if(path==='/api/teacher-observation-result'&&req.method==='GET'){
+          if([...url.searchParams.keys()].some(key=>!['studentId','requestId'].includes(key))||url.searchParams.getAll('studentId').length!==1||url.searchParams.getAll('requestId').length!==1)return json({error:'unexpected_query_scope'},400);
+          return json(await options.app.observationResult(actor,url.searchParams.get('studentId')!,url.searchParams.get('requestId')!));
+        }
+        if(path==='/api/cohort'&&req.method==='GET')return json(await options.app.cohort(actor));
+        if(path==='/api/source-refresh-result'&&req.method==='GET'){
+          if([...url.searchParams.keys()].some(key=>key!=='requestId')||url.searchParams.getAll('requestId').length!==1||!options.refreshResult)return json({error:'unexpected_query_scope'},400);
+          return json(await options.refreshResult(actor,url.searchParams.get('requestId')!));
+        }
+        if(path==='/api/source-refresh-pending'&&req.method==='GET'){
+          if(url.searchParams.size!==0||!options.refreshPending)return json({error:'unexpected_query_scope'},400);
+          return json(await options.refreshPending(actor));
+        }
+        if(path==='/api/source-refresh-history'&&req.method==='GET'){
+          if([...url.searchParams.keys()].some(key=>key!=='cursor')||url.searchParams.getAll('cursor').length>1||!options.refreshHistory)return json({error:'unexpected_query_scope'},400);
+          return json(await options.refreshHistory(actor,url.searchParams.get('cursor')));
+        }
+        if(path==='/api/class'&&req.method==='GET'){
+          if([...url.searchParams.keys()].some(key=>key!=='date')||url.searchParams.getAll('date').length!==1)return json({error:'unexpected_query_scope'},400);
+          const date=url.searchParams.get('date');if(!date)return json({error:'date_required'},400);
+          return json(await options.app.classPreparation(actor,date));
+        }
+        if(path==='/api/student'&&req.method==='GET'){
+          if([...url.searchParams.keys()].some(key=>key!=='id'&&key!=='date')||url.searchParams.getAll('id').length!==1||url.searchParams.getAll('date').length>1)return json({error:'unexpected_query_scope'},400);
+          const id=url.searchParams.get('id');if(!id)return json({error:'student_required'},400);
+          return json(await options.app.student(actor,id,url.searchParams.get('date')??undefined));
+        }
+
+        return json({error:'unknown_operation'},404);
+      }
+      return json({error:'not_found'},404);
+    }catch(error){
+      const code=error instanceof Error?error.message:'operation_failed';
+      if(error instanceof ClinicCommandRefusal||error instanceof ObservationCommandRefusal)return json({error:code,originalRetained:error.originalRetained,automaticRetry:false},409);
+      if(['stale_base','stale_evidence_basis','idempotency_reuse','observation_basis_conflict','work_assignment_basis_conflict','work_attempt_basis_conflict','work_item_binding_conflict','clinic_target_identity_conflict','unresolved_clinic_request','unresolved_observation_request'].includes(code))return json({error:code,originalRetained:false,automaticRetry:false},409);
+      if(code==='committed_outcome_uncertain')return json({error:code,automaticRetry:false,readOriginalRequestBeforeNewIntent:true},503);
+      if(code==='observation_result_not_found'||code==='clinic_result_not_found')return json({error:code,automaticRetry:false},404);
+      const safe=['owner_scope_conflict','student_scope_conflict','invalid_student_selector','invalid_input','json_required','input_too_large','password_recovery_denied','unexpected or missing domain fields'].includes(code)?code:'operation_failed';
+      return json({error:safe},safe.includes('scope_conflict')||safe==='password_recovery_denied'?403:400);
+    }
+  };
+}

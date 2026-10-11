@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MathEducation validation report schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "kind",
+    "schemaVersion",
+    "revision",
+    "status",
+    "updatedAt",
+    "checks",
+    "counts",
+    "notVerified",
+    "sha256",
+    "behavior"
+  ],
+  "properties": {
+    "kind": {
+      "const": "validation_report"
+    },
+    "schemaVersion": {
+      "const": "1.1.0"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "status": {
+      "const": "validated"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "checks": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "counts": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "notVerified": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "sha256": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{64}$"
+      }
+    },
+    "behavior": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "canonicalRevision",
+        "schemaVersion",
+        "defaultVisibleEdges",
+        "optionalEdgeTypes",
+        "automaticFileSync",
+        "studentDataIncluded"
+      ],
+      "properties": {
+        "canonicalRevision": {
+          "const": 2
+        },
+        "schemaVersion": {
+          "const": "1.1.0"
+        },
+        "defaultVisibleEdges": {
+          "const": [
+            "required_prerequisite"
+          ]
+        },
+        "optionalEdgeTypes": {
+          "const": [
+            "helpful_prerequisite",
+            "representation",
+            "related"
+          ]
+        },
+        "automaticFileSync": {
+          "const": false
+        },
+        "studentDataIncluded": {
+          "const": false
+        }
+      }
+    }
+  }
+}

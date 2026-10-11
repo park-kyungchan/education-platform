@@ -1,0 +1,108 @@
+{
+  "pageId": "page_553b42d209688191b2eb0259d5b74cd5",
+  "title": "수학 객체와 관계 변경 계약",
+  "url": "https://chatgpt.com/space/page_553b42d209688191b2eb0259d5b74cd5",
+  "blocks": [
+    {
+      "id": "5c25e1c2-639b-4011-afc2-062e47f3394c",
+      "kind": "markdown",
+      "markdown": "개념·용어·기호의 객체 정체성과 관계·변경의 계약을 분리합니다. 아래 내용은 자체 도메인 설계이며 Palantir 배포 설정이나 import 파일이 아닙니다.",
+      "hash": "e30e046812387e724e394575913d8970e48251be66228d6491a2c0d519f16bc5",
+      "metadata": {}
+    },
+    {
+      "id": "da5a44a3-4af4-42cc-ba47-f4bdc6645436",
+      "kind": "markdown",
+      "markdown": "## 객체 타입과 인스턴스",
+      "hash": "7014e461e8863fb9fefcbc091fa9474db19ab90af8416e55b450948c1868e1bb",
+      "metadata": {}
+    },
+    {
+      "id": "a6413a7f-b863-4e42-8478-91db7069a8d7",
+      "kind": "markdown",
+      "markdown": "MathConcept는 타입이고 ‘통분’은 그 인스턴스입니다. 학년, 단원 목차, 설명의 깊이를 객체 타입의 상속 계층으로 만들지 않습니다. [공식 Object types](https://www.palantir.com/docs/foundry/object-link-types/object-types-overview)",
+      "hash": "1824ae592052a9a020edf9d716c8dac8eccafd632afddbe1f04dbb964a81533e",
+      "metadata": {}
+    },
+    {
+      "id": "cd4880c4-75bc-4c11-97f3-6d768a913fee",
+      "kind": "markdown",
+      "markdown": "| 객체 타입 | 최소 의미 필드 |\n| --- | --- |\n| MathConcept | id String · title String · definition String · revision Integer · curriculumMappingStatus Enum |\n| MathTerm | id String · label String · language String · sense String |\n| MathNotation | id String · expression String · interpretation String · scope String |\n| Explanation | id String · conceptId ObjectReference · perspectiveId ObjectReference · body String · notCurricularPrerequisite Boolean |\n| CurriculumStandard | id String · curriculumEdition String · officialCode String · gradeBand String · sourceUrl String · verificationStatus Enum |\n| CurriculumAlignment | id String · conceptId ObjectReference · standardId ObjectReference · rationale String · approvalStatus Enum |\n| Perspective | id String · audience String · explanationLevel Enum · pedagogicalRoute String |\n| DependencyAssertion | id String · prerequisiteConceptId ObjectReference · dependentConceptId ObjectReference · relationKind Enum · claimBasis Enum · perspectiveId ObjectReference · conditions StringArray · rationale String · evidenceIds ObjectReferenceArray · approvalStatus Enum · revision Integer |\n| EvidenceReference | id String · sourceUrl String · locator String · verificationStatus Enum |\n| ChangeProposal | id String · assertionId ObjectReference · expectedRevision Integer · changes FieldChangeArray · reviewedPayloadHash String · approvalStatus Enum |\n| RevisionEvent | id String · assertionId ObjectReference · fromRevision Integer · toRevision Integer · reason String · executionMode Enum |",
+      "hash": "71935bac483a96a42ed46daf1fc70ce16112fdecb3b6048f5344ce02bd490bb4",
+      "metadata": {}
+    },
+    {
+      "id": "f6c1424e-e7be-4a62-9cee-09305dddfa6a",
+      "kind": "markdown",
+      "markdown": "공통 식별·계층·상태 필드까지 포함한 전체 레코드 형식은 연결된 JSON Schema에 있습니다. CurriculumStandard와 CurriculumAlignment는 계약만 정의했으며, 검증하지 않은 공식 성취기준 인스턴스는 생성하지 않았습니다.",
+      "hash": "a2a8e3a02f34624c9c424712e290957480f8ae946d21aadbe92c4c703c479811",
+      "metadata": {}
+    },
+    {
+      "id": "2781fb77-de0e-40df-a4cb-c4dc385d88b1",
+      "kind": "markdown",
+      "markdown": "## 관계 계약",
+      "hash": "03ed2dc23a10a8048e1d8e59fc193a309d18b520073e3a4ec2f2057a95f28dd5",
+      "metadata": {}
+    },
+    {
+      "id": "535f64fd-99c2-4f9a-bdd8-6e64926509de",
+      "kind": "markdown",
+      "markdown": "| 관계 | 양쪽 탐색명 | 연결 수 |\n| --- | --- | --- |\n| MathConcept → MathTerm | namedBy / namesConcept | one_to_many |\n| MathConcept → MathNotation | usesNotation / usedByConcept | one_to_many |\n| MathConcept → Explanation | explanations / explainsConcept | one_to_many |\n| DependencyAssertion → MathConcept | prerequisiteConcept / outgoingAssertions | many_to_one |\n| DependencyAssertion → MathConcept | dependentConcept / incomingAssertions | many_to_one |\n| DependencyAssertion → Perspective | perspective / dependencyAssertions | many_to_one |\n| DependencyAssertion → EvidenceReference | evidence / supportsAssertions | many_to_many |\n| CurriculumAlignment → MathConcept | concept / curriculumAlignments | many_to_one |\n| CurriculumAlignment → CurriculumStandard | standard / conceptAlignments | many_to_one |\n| ChangeProposal → DependencyAssertion | target / proposals | many_to_one |\n| RevisionEvent → DependencyAssertion | target / history | many_to_one |",
+      "hash": "e80d3603705d03a0acfc7ec7bff29703b28db0e84917ab2a3a24805aef388dbe",
+      "metadata": {}
+    },
+    {
+      "id": "28407437-4709-4c47-9b79-4ef5709b4556",
+      "kind": "markdown",
+      "markdown": "선행 관계의 의미는 방향을 갖습니다. Foundry가 링크 양쪽 탐색을 지원한다는 사실과 관계의 대칭성은 다릅니다. 관점·조건·근거가 있는 DependencyAssertion은 메타데이터를 가진 관계를 연결 객체로 두는 공식 패턴의 수학 도메인 응용입니다. [Link types](https://www.palantir.com/docs/foundry/object-link-types/link-types-overview) · [Object backed links](https://www.palantir.com/docs/foundry/ontology/ontology-structural-guidance)",
+      "hash": "c5cbb78eb4292dace8287bea8762454021b507fbec3d67c0f966fba51e2df4be",
+      "metadata": {}
+    },
+    {
+      "id": "df24e316-751d-4bb8-b0f0-f89137b79d63",
+      "kind": "markdown",
+      "markdown": "## 행동 계약",
+      "hash": "4fbca5168ae998cac89f2ec7ecef9ad09595fbf93a02307d2bea145b3b6270fc",
+      "metadata": {}
+    },
+    {
+      "id": "dc3ccebf-df4d-4ea5-aa76-048fcc8679de",
+      "kind": "markdown",
+      "markdown": "| 행동 | 효과 | 승인 |\n| --- | --- | --- |\n| ProposeDependencyChange | create proposal without changing selected graph | not_needed_for_draft |\n| ApproveAndApplyDependencyChange | update current assertion and append RevisionEvent together | explicit_user_approval_required |\n| RejectDependencyChange | record rejection and preserve selected graph | explicit_decision_required |\n| RestoreDependencyRevision | append compensating revision preserving previous history | explicit_user_approval_required |",
+      "hash": "391e6704fb0d47c6fb8a115473b3b5286df57913a6febaca31da3ed9aaf09540",
+      "metadata": {}
+    },
+    {
+      "id": "a1bc216b-b988-47c8-914d-357b7ad18062",
+      "kind": "markdown",
+      "markdown": "실제 승인 반영과 복원은 정확한 변경 내용의 승인, expectedRevision과 expectedGraphRevision의 일치, 참조 타입·무결성, 관점 범위, 필수 선수 DAG 검증을 통과하도록 설계합니다. 전체 그래프 리비전 검사는 다른 관계의 동시 변경도 감지하기 위한 계약입니다. 현재는 설계 계약이며 운영 집행 장치가 아닙니다. [Action types](https://www.palantir.com/docs/foundry/action-types/overview) · [Submission criteria](https://www.palantir.com/docs/foundry/action-types/submission-criteria)",
+      "hash": "1151ffcd3fc2aa3f8db313d6f6404fb8f8b6460db1b6dc89255ea88ac28e0ca8",
+      "metadata": {}
+    },
+    {
+      "id": "03383de1-5325-456c-994e-1dd5b33b1a8c",
+      "kind": "markdown",
+      "markdown": "## 읽기 전용 함수 계약",
+      "hash": "1bae317a004a84b09292e81960ca56cfcf5703db20fe972ac0027fd6ea047781",
+      "metadata": {}
+    },
+    {
+      "id": "980ff9a8-e9ee-44eb-bfa0-fecc0f761780",
+      "kind": "markdown",
+      "markdown": "| 함수 | 입력 | 출력 |\n| --- | --- | --- |\n| ValidateTypedData | proposal · schema | schemaErrors |\n| ValidateReferences | objects · links | missingReferences |\n| PreviewDependencyChange | baseline · proposal | projectedState · impact |\n| DetectRequiredCycles | selectedAssertions · perspectiveId | cyclePath |\n| ComparePerspectives | perspectives · assertions | differences |\n| PreviewCompensatingRestore | projectedState · priorState | restoreProposal · projectedRestoredState |",
+      "hash": "ccfc8434ddaed368c95aa51d72992916bf0fbe107ca513dc7bb34897cd76cf5d",
+      "metadata": {}
+    },
+    {
+      "id": "e54e3ab3-59d5-4aa5-95ff-3f689015a235",
+      "kind": "markdown",
+      "markdown": "KnowledgeElement 인터페이스는 개념·용어·기호의 공통 속성을 표현하는 선택적 계약입니다. Foundry의 언어·도구별 지원이 다르므로 이 인터페이스의 실행 지원을 MVP 전제로 두지 않습니다. [Interfaces](https://www.palantir.com/docs/foundry/interfaces/interface-overview)",
+      "hash": "a5492793e527a10db6c9c2593624be85788afb592229f752e06adcc12b53c1da",
+      "metadata": {}
+    }
+  ],
+  "references": [],
+  "throughSequence": 1,
+  "sourceMarkdownSha256": "7d265ca7145eea2dc6c21d354fee3a8a2f9e7836283c9ff86edca2b7f4887f11"
+}

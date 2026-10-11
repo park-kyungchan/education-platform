@@ -1,0 +1,174 @@
+{
+  "pageId": "page_781fc2a19e808191836651a43da2f6f8",
+  "title": "Palantir Ontology 수학 적용 제안",
+  "url": "https://chatgpt.com/space/page_781fc2a19e808191836651a43da2f6f8",
+  "blocks": [
+    {
+      "id": "85412065-538e-48b4-aa93-2f8bc7c69b77",
+      "kind": "markdown",
+      "markdown": "Palantir의 객체·관계·행동 모델을 MathEducation에 적용한 타입 기반 제안입니다. 내용 정체성, 교육과정 배치, 설명 관점, 관계 주장을 분리하고, 변경과 복원은 읽기 전용 모의 상태로 검증합니다.",
+      "hash": "2149ff6deeea53211a6057c9e91c1598f905b90f9a4ea415bd3ab8034d9bf9e2",
+      "metadata": {}
+    },
+    {
+      "id": "f02fcb6d-cc42-4317-9397-28daf847e289",
+      "kind": "markdown",
+      "markdown": "## 적용 상태",
+      "hash": "909d7a4b35bb48bdecb5f720dc9ec3aeb99f89417dfeb1b7dae331ca74e20870",
+      "metadata": {}
+    },
+    {
+      "id": "6485b6ef-8301-4fae-a71b-738b99af2119",
+      "kind": "markdown",
+      "markdown": "| 항목 | 상태 |\n| --- | --- |\n| 저장 형식 | 타입 지정 JSON과 엄격한 JSON Schema |\n| 구성 | 객체 75개 · 객체 타입 계약 11개 · 공식 문서 19개 |\n| 검증 | 구조와 변경 모의 검증 29개 통과 |\n| 기존 자료 | 개념 UI 샘플과 관계 ledger 원본 보존 |\n| 변경 예시 | 관련 관계를 도움되는 선행으로 바꾸는 미승인 제안 |\n| 운영 상태 | Foundry 미배포 · 호환성 미검증 · 실제 승인과 반영 없음 |",
+      "hash": "ccd463f366ee31b3e53eefb2a9375e93e02d2faa6237627c071068e0fdbdcfff",
+      "metadata": {}
+    },
+    {
+      "id": "cf4c95fe-b1fb-457e-a356-277e1b40f1a1",
+      "kind": "markdown",
+      "markdown": "## 모델의 네 축",
+      "hash": "65f3e2f29c5d1fe5cc4052a70d77d81fb0a8d33fa828a65cd9908baa229a56ad",
+      "metadata": {}
+    },
+    {
+      "id": "6e9338da-f110-467f-bc6e-f531008873be",
+      "kind": "markdown",
+      "markdown": "| 축 | 타입 | 역할 |\n| --- | --- | --- |\n| 내용 정체성 | MathConcept · MathTerm · MathNotation | 개념과 용어·기호를 독립 식별자로 관리 |\n| 교육과정 배치 | CurriculumStandard · CurriculumAlignment | 공식 기준과 매핑 주장을 구분 |\n| 설명 관점 | Perspective · Explanation | 초5부터 중3까지의 내용에 대학 수준 설명도 연결 |\n| 관계와 변경 | DependencyAssertion · ChangeProposal · RevisionEvent | 조건·근거·제안·변경 이력을 보존 |",
+      "hash": "f3891e39c86eaa45ceb6024cbcb548be4c3b95f91f684a7bd8c656a27ea55409",
+      "metadata": {}
+    },
+    {
+      "id": "9cddd902-f114-4e8a-93d5-37356db99cfc",
+      "kind": "markdown",
+      "markdown": "학년 배치와 성취기준 연결은 아직 공식 원문 대조 전입니다. 대학 수준 설명은 해당 학습자의 필수 선수로 처리하지 않습니다.",
+      "hash": "648666892aaed74aaae63c0319aaebee54cff56e307e1d21b92edff7318b1283",
+      "metadata": {}
+    },
+    {
+      "id": "89fc811a-105c-4b16-88d0-279859f14b2a",
+      "kind": "markdown",
+      "markdown": "## 계약과 검증",
+      "hash": "0f0b2ae03f3752da25f86905eb6295f3545c836f952b3f35ea4c133ea023a0cc",
+      "metadata": {}
+    },
+    {
+      "id": "19b02599-a18f-423b-bbc6-1027cf1fa5a1",
+      "kind": "markdown",
+      "markdown": "[수학 객체와 관계 변경 계약](page:page_553b42d209688191b2eb0259d5b74cd5)",
+      "hash": "c458ace23501b833dba606057edee7998461032cdd43af167d44ac366b169958",
+      "metadata": {}
+    },
+    {
+      "id": "a1588c7a-6443-4193-9709-0b1e07915220",
+      "kind": "markdown",
+      "markdown": "[수학 관계 변경과 복원 모의 검증](page:page_a75a2131ffb48191a23c7a64aa50b844)",
+      "hash": "f7087509dd5ac7ee89eadb3576d605d09870a5ddd7f65904e965b6ff7fd77cc5",
+      "metadata": {}
+    },
+    {
+      "id": "e35998e6-05e6-4bb7-bf76-34d2dac267de",
+      "kind": "markdown",
+      "markdown": "[Palantir 공식 문서와 수학 모델 대응](page:page_dda52e0dc1808191a3f52463bd367a32)",
+      "hash": "b4d904529d4f2144aa772a1217fdc757aa770e4b0dd992b9dd802e2813110f52",
+      "metadata": {}
+    },
+    {
+      "id": "218d531c-1b20-4c2a-be44-12a9b61a8fd4",
+      "kind": "markdown",
+      "markdown": "## 구조화된 원본",
+      "hash": "3c5616d79d451bb8f1f8a627d8b371778c4a13a81ec322918a0ac24291b91f20",
+      "metadata": {}
+    },
+    {
+      "id": "3c2fa907-b559-4a4c-8705-0bff6dde99c2",
+      "kind": "markdown",
+      "markdown": "[matheducation-ontology-proposal.json](library-file:fde1_bGliZmlsZV82QmgwN1ZvR09fcGhjcFBaeHB4MjF3_FileDrive_73e3d24e44d881918a9b9622fd5a4193)",
+      "hash": "880bcb5f83321b83027c877e742b1a4a26af69822c2237a366cdc2f9809242ad",
+      "metadata": {}
+    },
+    {
+      "id": "8fb406f7-c102-4766-ae49-ea58773df49c",
+      "kind": "markdown",
+      "markdown": "[matheducation-ontology-proposal.schema.json](library-file:fde1_bGliZmlsZV93Sm1VOS1pTVZPSXdwOWFSNUlDQjlB_FileDrive_73e3d24e44d881918a9b9622fd5a4193)",
+      "hash": "2200415741703f54aa87191d200b4347376d9e5bc568b19ffaff03bcefbf6b95",
+      "metadata": {}
+    },
+    {
+      "id": "25c2b101-197a-4b50-90b7-edbd5889edf7",
+      "kind": "markdown",
+      "markdown": "[matheducation-ontology-simulation.json](library-file:fde1_bGliZmlsZV96cjlmOEFscmo1Y3VVWWdES1VTWmxR_FileDrive_73e3d24e44d881918a9b9622fd5a4193)",
+      "hash": "0ecf355f80820cb1b7871c43e3b18a9e45d0b24773de26db0eaa52236fdc8718",
+      "metadata": {}
+    },
+    {
+      "id": "3083ab63-62a5-4861-aaf6-e6b26113deac",
+      "kind": "markdown",
+      "markdown": "[matheducation-ontology-simulation.schema.json](library-file:fde1_bGliZmlsZV92Nkdxd2ZaX081MTZGNnpfV1YwYmhn_FileDrive_73e3d24e44d881918a9b9622fd5a4193)",
+      "hash": "0444e256ba42be1a1364def1f532d75bd771e3be9895d13e2d59cef0b08b2318",
+      "metadata": {}
+    },
+    {
+      "id": "871e3e4e-60fd-4a2d-a8c5-35a2b781917e",
+      "kind": "markdown",
+      "markdown": "[matheducation-ontology-proposal-bundle.zip](library-file:fde1_bGliZmlsZV9Kd01qQnNfZVJ6V1IyUmhudjRONmFB_FileDrive_73e3d24e44d881918a9b9622fd5a4193)",
+      "hash": "f26122eed629a6f1300237ff8ce667bd824c9227c8e8361f62b7b6b2929391c0",
+      "metadata": {}
+    },
+    {
+      "id": "3325fa2b-f643-430b-b796-ba91eb935e1d",
+      "kind": "markdown",
+      "markdown": "ZIP에는 원본 제안·Schema·모의 결과·재검증 스크립트와 보존된 입력 스냅샷이 들어 있습니다. 스크립트는 로컬 복사본만 다루며 Foundry나 Space를 변경하는 API를 포함하지 않습니다.",
+      "hash": "38df781b0737a3dd3e4b41f8ddcb946352603a447d7cf37c2147e675483ff233",
+      "metadata": {}
+    },
+    {
+      "id": "70409504-ff68-4a5e-81e1-4671b4b9f2f0",
+      "kind": "markdown",
+      "markdown": "## 읽는 방법",
+      "hash": "c8f458c1bb765df2e6c47a702139cd06d1150c03d1d34f228c79cd412a082014",
+      "metadata": {}
+    },
+    {
+      "id": "eee09d80-498f-4224-83e5-eb4f07b0e392",
+      "kind": "markdown",
+      "markdown": "기존 [개념 지도 UI 샘플](page:page_ae357c7bc3b481919428ace1242eacf0)은 그대로 유지합니다. 이 제안의 JSON이 타입과 계약의 원본이고, 아래 문서들은 그 구조를 읽기 쉽게 보여 주는 화면입니다.",
+      "hash": "b86e94a128a6e416634e154b3a5154475cd6a326f0d633a2a4d3bdb9af8ad499",
+      "metadata": {}
+    }
+  ],
+  "references": [
+    {
+      "reference": "library-file:fde1_bGliZmlsZV82QmgwN1ZvR09fcGhjcFBaeHB4MjF3_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+      "metadata_available": true,
+      "mime_type": "application/json",
+      "byte_size": 80062
+    },
+    {
+      "reference": "library-file:fde1_bGliZmlsZV93Sm1VOS1pTVZPSXdwOWFSNUlDQjlB_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+      "metadata_available": true,
+      "mime_type": "application/json",
+      "byte_size": 27833
+    },
+    {
+      "reference": "library-file:fde1_bGliZmlsZV96cjlmOEFscmo1Y3VVWWdES1VTWmxR_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+      "metadata_available": true,
+      "mime_type": "application/json",
+      "byte_size": 50673
+    },
+    {
+      "reference": "library-file:fde1_bGliZmlsZV92Nkdxd2ZaX081MTZGNnpfV1YwYmhn_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+      "metadata_available": true,
+      "mime_type": "application/json",
+      "byte_size": 20143
+    },
+    {
+      "reference": "library-file:fde1_bGliZmlsZV9Kd01qQnNfZVJ6V1IyUmhudjRONmFB_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+      "metadata_available": true,
+      "mime_type": "application/zip",
+      "byte_size": 35053
+    }
+  ],
+  "throughSequence": 2,
+  "sourceMarkdownSha256": "52c30735bea8b8a00d769462c6717e0f440b9c9d8ffce816e518e66e8b4b5272"
+}

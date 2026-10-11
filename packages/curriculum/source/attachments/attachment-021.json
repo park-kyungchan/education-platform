@@ -1,0 +1,279 @@
+{
+  "kind": "ExtensionRegistry",
+  "id": "math:registry:core",
+  "version": "1.1.0",
+  "compatibleVersions": [
+    "1.0.0",
+    "1.1.0"
+  ],
+  "recordKinds": [
+    "Topic",
+    "MathConcept",
+    "MathTerm",
+    "MathNotation",
+    "Perspective",
+    "Explanation",
+    "RelationAssertion",
+    "CurriculumAlignment",
+    "EvidenceReference",
+    "ContentGap",
+    "CoverageClaim",
+    "ChangeProposal",
+    "RevisionEvent"
+  ],
+  "relationTypes": [
+    {
+      "kind": "RelationTypeDefinition",
+      "id": "required_prerequisite",
+      "label": "필수 선행",
+      "sourceKinds": [
+        "MathConcept"
+      ],
+      "targetKinds": [
+        "MathConcept"
+      ],
+      "directionality": "directed",
+      "dagPolicy": "selected_within_perspective",
+      "version": "1.0.0",
+      "deprecated": false
+    },
+    {
+      "kind": "RelationTypeDefinition",
+      "id": "helpful_prerequisite",
+      "label": "도움되는 선행",
+      "sourceKinds": [
+        "MathConcept"
+      ],
+      "targetKinds": [
+        "MathConcept"
+      ],
+      "directionality": "directed",
+      "dagPolicy": "none",
+      "version": "1.0.0",
+      "deprecated": false
+    },
+    {
+      "kind": "RelationTypeDefinition",
+      "id": "related",
+      "label": "관련",
+      "sourceKinds": [
+        "MathConcept"
+      ],
+      "targetKinds": [
+        "MathConcept"
+      ],
+      "directionality": "symmetric",
+      "dagPolicy": "none",
+      "version": "1.0.0",
+      "deprecated": false
+    },
+    {
+      "kind": "RelationTypeDefinition",
+      "id": "representation",
+      "label": "표현 관계",
+      "sourceKinds": [
+        "MathConcept",
+        "MathNotation"
+      ],
+      "targetKinds": [
+        "MathConcept",
+        "MathNotation"
+      ],
+      "directionality": "directed",
+      "dagPolicy": "none",
+      "version": "1.0.0",
+      "deprecated": false
+    },
+    {
+      "kind": "RelationTypeDefinition",
+      "id": "uses_term",
+      "label": "용어 사용",
+      "sourceKinds": [
+        "MathConcept"
+      ],
+      "targetKinds": [
+        "MathTerm"
+      ],
+      "directionality": "directed",
+      "dagPolicy": "none",
+      "version": "1.0.0",
+      "deprecated": false
+    },
+    {
+      "kind": "RelationTypeDefinition",
+      "id": "uses_notation",
+      "label": "기호 사용",
+      "sourceKinds": [
+        "MathConcept"
+      ],
+      "targetKinds": [
+        "MathNotation"
+      ],
+      "directionality": "directed",
+      "dagPolicy": "none",
+      "version": "1.0.0",
+      "deprecated": false
+    },
+    {
+      "kind": "RelationTypeDefinition",
+      "id": "part_of",
+      "label": "구성 부분",
+      "sourceKinds": [
+        "MathConcept"
+      ],
+      "targetKinds": [
+        "MathConcept"
+      ],
+      "directionality": "directed",
+      "dagPolicy": "none",
+      "version": "1.0.0",
+      "deprecated": false
+    }
+  ],
+  "actionTypes": [
+    {
+      "kind": "ActionTypeDefinition",
+      "id": "propose_change",
+      "label": "변경 제안",
+      "readOnly": false,
+      "runtimeState": "contract_only",
+      "parameters": [],
+      "requiredGuards": [
+        "typed_schema"
+      ],
+      "approvalPolicy": "authorized_draft_work",
+      "version": "1.0.0"
+    },
+    {
+      "kind": "ActionTypeDefinition",
+      "id": "preview_change",
+      "label": "변경 영향 미리보기",
+      "readOnly": true,
+      "runtimeState": "contract_only",
+      "parameters": [],
+      "requiredGuards": [
+        "typed_schema"
+      ],
+      "approvalPolicy": "authorized_draft_work",
+      "version": "1.0.0"
+    },
+    {
+      "kind": "ActionTypeDefinition",
+      "id": "apply_approved_change",
+      "label": "승인된 변경 반영",
+      "readOnly": false,
+      "runtimeState": "contract_only",
+      "parameters": [
+        "targetId",
+        "expectedRevision",
+        "expectedGraphRevision",
+        "expectedGraphSnapshotHash",
+        "beforeRecordHash"
+      ],
+      "requiredGuards": [
+        "typed_schema",
+        "typed_references",
+        "revision_fence",
+        "graph_revision_fence",
+        "scoped_required_dag",
+        "exact_reviewed_payload"
+      ],
+      "approvalPolicy": "specific_user_approval_for_changes_to_accepted_claims",
+      "version": "1.0.0"
+    },
+    {
+      "kind": "ActionTypeDefinition",
+      "id": "preview_restore",
+      "label": "보상 복원 미리보기",
+      "readOnly": true,
+      "runtimeState": "contract_only",
+      "parameters": [
+        "targetId",
+        "expectedRevision",
+        "expectedGraphRevision",
+        "expectedGraphSnapshotHash",
+        "beforeRecordHash"
+      ],
+      "requiredGuards": [
+        "typed_schema"
+      ],
+      "approvalPolicy": "authorized_draft_work",
+      "version": "1.0.0"
+    },
+    {
+      "kind": "ActionTypeDefinition",
+      "id": "register_extension",
+      "label": "확장 등록",
+      "readOnly": false,
+      "runtimeState": "contract_only",
+      "parameters": [],
+      "requiredGuards": [
+        "typed_schema"
+      ],
+      "approvalPolicy": "authorized_draft_work",
+      "version": "1.0.0"
+    },
+    {
+      "kind": "ActionTypeDefinition",
+      "id": "migrate_schema",
+      "label": "스키마 마이그레이션",
+      "readOnly": false,
+      "runtimeState": "contract_only",
+      "parameters": [],
+      "requiredGuards": [
+        "typed_schema"
+      ],
+      "approvalPolicy": "authorized_draft_work",
+      "version": "1.0.0"
+    }
+  ],
+  "extensionDefinitions": [
+    {
+      "kind": "ExtensionDefinition",
+      "id": "math:extension:latex",
+      "version": "1.1.0",
+      "appliesToKinds": [
+        "MathNotation"
+      ],
+      "valueSchema": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "const": "MathMarkup"
+          },
+          "dialect": {
+            "const": "latex"
+          },
+          "source": {
+            "type": "string"
+          },
+          "plainTextFallback": {
+            "type": "string"
+          },
+          "displayMode": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "kind",
+          "dialect",
+          "source",
+          "plainTextFallback",
+          "displayMode"
+        ],
+        "additionalProperties": false
+      },
+      "purpose": "Preserve LaTeX source separately from readable fallback; no global backslash rewriting."
+    }
+  ],
+  "migrationPolicy": {
+    "kind": "MigrationPolicy",
+    "stableIdsNeverContainRevision": true,
+    "renamePreservesId": true,
+    "splitMergeRequiresExplicitIdentityMap": true,
+    "unknownExtensionPolicy": "reject",
+    "minorChange": "additive registered fields or types with tested adapters",
+    "majorChange": "breaking record semantics or required field changes",
+    "preservePriorArtifacts": true
+  }
+}

@@ -1,0 +1,601 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "kind",
+    "id",
+    "schemaVersion",
+    "revision",
+    "status",
+    "updatedAt",
+    "previousRevision",
+    "source",
+    "domains",
+    "bands",
+    "relationRegistry",
+    "actionRegistry",
+    "theme",
+    "renderer",
+    "interaction",
+    "mathRenderer"
+  ],
+  "properties": {
+    "kind": {
+      "const": "ExplorerViewContract"
+    },
+    "id": {
+      "type": "string"
+    },
+    "schemaVersion": {
+      "type": "string"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "status": {
+      "type": "string"
+    },
+    "updatedAt": {
+      "type": "string"
+    },
+    "previousRevision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "pageId",
+        "htmlSha256"
+      ],
+      "properties": {
+        "pageId": {
+          "type": "string"
+        },
+        "htmlSha256": {
+          "type": "string"
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "adapter",
+        "sourceRevision",
+        "sha256",
+        "readOnly",
+        "fullCurriculum"
+      ],
+      "properties": {
+        "kind": {
+          "const": "SourceSnapshot"
+        },
+        "adapter": {
+          "type": "string"
+        },
+        "sourceRevision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "sha256": {
+          "type": "string"
+        },
+        "readOnly": {
+          "const": true
+        },
+        "fullCurriculum": {
+          "type": "boolean"
+        }
+      }
+    },
+    "domains": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "kind",
+          "id",
+          "label",
+          "sampleTopicIds",
+          "placementStatus"
+        ],
+        "properties": {
+          "kind": {
+            "const": "OfficialDomainView"
+          },
+          "id": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "sampleTopicIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "placementStatus": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "bands": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "kind",
+          "id",
+          "label"
+        ],
+        "properties": {
+          "kind": {
+            "const": "OfficialBandView"
+          },
+          "id": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "relationRegistry": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "kind",
+          "id",
+          "label",
+          "defaultVisible",
+          "layering",
+          "directedVisual",
+          "lineStyle",
+          "status"
+        ],
+        "properties": {
+          "kind": {
+            "const": "RelationViewType"
+          },
+          "id": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "defaultVisible": {
+            "type": "boolean"
+          },
+          "layering": {
+            "type": "boolean"
+          },
+          "directedVisual": {
+            "type": "boolean"
+          },
+          "lineStyle": {
+            "enum": [
+              "solid",
+              "dashed",
+              "dotted",
+              "dashdot"
+            ]
+          },
+          "status": {
+            "enum": [
+              "active",
+              "deprecated",
+              "experimental"
+            ]
+          }
+        }
+      }
+    },
+    "actionRegistry": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "kind",
+          "id",
+          "label",
+          "handlerKey",
+          "status",
+          "sideEffect"
+        ],
+        "properties": {
+          "kind": {
+            "const": "LocalViewAction"
+          },
+          "id": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "handlerKey": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "active",
+              "deprecated",
+              "experimental"
+            ]
+          },
+          "sideEffect": {
+            "const": "presentation_only"
+          }
+        }
+      }
+    },
+    "theme": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "id",
+        "revision",
+        "tokens"
+      ],
+      "properties": {
+        "kind": {
+          "const": "ViewTheme"
+        },
+        "id": {
+          "type": "string"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "tokens": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "bg",
+            "panel",
+            "canvas",
+            "ink",
+            "muted",
+            "line",
+            "accent",
+            "selected",
+            "warning"
+          ],
+          "properties": {
+            "bg": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "light",
+                "dark"
+              ],
+              "properties": {
+                "light": {
+                  "type": "string"
+                },
+                "dark": {
+                  "type": "string"
+                }
+              }
+            },
+            "panel": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "light",
+                "dark"
+              ],
+              "properties": {
+                "light": {
+                  "type": "string"
+                },
+                "dark": {
+                  "type": "string"
+                }
+              }
+            },
+            "canvas": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "light",
+                "dark"
+              ],
+              "properties": {
+                "light": {
+                  "type": "string"
+                },
+                "dark": {
+                  "type": "string"
+                }
+              }
+            },
+            "ink": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "light",
+                "dark"
+              ],
+              "properties": {
+                "light": {
+                  "type": "string"
+                },
+                "dark": {
+                  "type": "string"
+                }
+              }
+            },
+            "muted": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "light",
+                "dark"
+              ],
+              "properties": {
+                "light": {
+                  "type": "string"
+                },
+                "dark": {
+                  "type": "string"
+                }
+              }
+            },
+            "line": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "light",
+                "dark"
+              ],
+              "properties": {
+                "light": {
+                  "type": "string"
+                },
+                "dark": {
+                  "type": "string"
+                }
+              }
+            },
+            "accent": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "light",
+                "dark"
+              ],
+              "properties": {
+                "light": {
+                  "type": "string"
+                },
+                "dark": {
+                  "type": "string"
+                }
+              }
+            },
+            "selected": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "light",
+                "dark"
+              ],
+              "properties": {
+                "light": {
+                  "type": "string"
+                },
+                "dark": {
+                  "type": "string"
+                }
+              }
+            },
+            "warning": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "light",
+                "dark"
+              ],
+              "properties": {
+                "light": {
+                  "type": "string"
+                },
+                "dark": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "renderer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "id",
+        "version",
+        "runtimeDependencies",
+        "remoteResources",
+        "layout",
+        "groupNodePageSize",
+        "unknownRelationPolicy",
+        "largeGraphPolicy",
+        "futureRendererCandidate",
+        "canonicalAdapterStatus"
+      ],
+      "properties": {
+        "kind": {
+          "const": "RendererContract"
+        },
+        "id": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "runtimeDependencies": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "remoteResources": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "layout": {
+          "type": "string"
+        },
+        "groupNodePageSize": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "unknownRelationPolicy": {
+          "type": "string"
+        },
+        "largeGraphPolicy": {
+          "type": "string"
+        },
+        "futureRendererCandidate": {
+          "type": "string"
+        },
+        "canonicalAdapterStatus": {
+          "type": "string"
+        }
+      }
+    },
+    "interaction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "sourceWrites",
+        "automaticSync",
+        "searchFields",
+        "searchResultLimit",
+        "keyboard",
+        "universityLens",
+        "unknownsVisible",
+        "countsComputedFromData"
+      ],
+      "properties": {
+        "kind": {
+          "const": "InteractionContract"
+        },
+        "sourceWrites": {
+          "const": false
+        },
+        "automaticSync": {
+          "type": "boolean"
+        },
+        "searchFields": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "searchResultLimit": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "keyboard": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "universityLens": {
+          "type": "string"
+        },
+        "unknownsVisible": {
+          "type": "boolean"
+        },
+        "countsComputedFromData": {
+          "type": "boolean"
+        }
+      }
+    },
+    "mathRenderer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "engine",
+        "version",
+        "pipeline",
+        "runtimeTeXParsing",
+        "cdnRequired",
+        "externalFontsRequired",
+        "canonicalExtensionId",
+        "trust",
+        "modes",
+        "fallback",
+        "sourceGuards",
+        "liveContent"
+      ],
+      "properties": {
+        "kind": {
+          "const": "MathRendererContract"
+        },
+        "engine": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "pipeline": {
+          "type": "string"
+        },
+        "runtimeTeXParsing": {
+          "type": "boolean"
+        },
+        "cdnRequired": {
+          "type": "boolean"
+        },
+        "externalFontsRequired": {
+          "type": "boolean"
+        },
+        "canonicalExtensionId": {
+          "type": "string"
+        },
+        "trust": {
+          "type": "boolean"
+        },
+        "modes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "fallback": {
+          "type": "string"
+        },
+        "sourceGuards": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "liveContent": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MathEducation explorer view contract"
+}

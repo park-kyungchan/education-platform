@@ -1,0 +1,134 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "verification",
+  "id": "education-platform:verification:consumer-parity",
+  "projectId": "education-platform",
+  "domainId": "education",
+  "createdAt": "2026-10-11T06:12:48.401760Z",
+  "payload": {
+    "targetRefs": [
+      "education-platform:project:manifest"
+    ],
+    "criteria": [
+      {
+        "id": "original-history-custody",
+        "status": "pass",
+        "message": "Six complete Git bundles --all and exact refs verified privately; native dirty source and inspected gang-a archive separately preserved.",
+        "evidenceRefs": [
+          "education-platform:evidence:local-integration-check"
+        ]
+      },
+      {
+        "id": "current-local-public-source-navigation",
+        "status": "pass",
+        "message": "Both generated languages link only exact successor module/archive paths; original public URLs remain typed provenance only.",
+        "evidenceRefs": [
+          "education-platform:evidence:local-integration-check"
+        ]
+      },
+      {
+        "id": "native-data-and-profile-ownership",
+        "status": "pass",
+        "message": "Original native roots, active profiles, sessions, credentials, databases and operational/student originals were not relocated or modified.",
+        "evidenceRefs": [
+          "education-platform:evidence:local-integration-check"
+        ]
+      },
+      {
+        "id": "serving-public-site",
+        "status": "unverified",
+        "message": "GET https://kcpalantir.tech/ still renders six old source hrefs. Cloudflare edge200 is not source/deployment identity.",
+        "evidenceRefs": [
+          "education-platform:evidence:mathcrew-live-predecessor-links"
+        ]
+      },
+      {
+        "id": "human-mathematical-acceptance",
+        "status": "unverified",
+        "message": "R4 pending new exact review authority; no Human instance or canonical application performed.",
+        "evidenceRefs": [
+          "education-platform:evidence:local-integration-check"
+        ]
+      },
+      {
+        "id": "canonical-curriculum-availability",
+        "status": "unverified",
+        "message": "Four workpacks and curriculum-boundary original are absent; boundary expected-hash conflict unresolved.",
+        "evidenceRefs": [
+          "education-platform:evidence:local-integration-check"
+        ]
+      },
+      {
+        "id": "academy-live-runtime",
+        "status": "unverified",
+        "message": "91 PostgreSQL/live integration tests skipped by their original prerequisites; GUI/native serving behavior not accepted by local source tests.",
+        "evidenceRefs": [
+          "education-platform:evidence:local-integration-check"
+        ]
+      },
+      {
+        "id": "gang-a-native-binding",
+        "status": "unverified",
+        "message": "Inspected native archive d604 remains reference-only; imported upstream7b5c differs by9 changed/26 added/1 removed code/spec files and does not silently replace native binding.",
+        "evidenceRefs": [
+          "education-platform:evidence:local-integration-check"
+        ]
+      }
+    ],
+    "inputHashes": [
+      {
+        "path": "architecture/source-map.json",
+        "sha256": "36ca0cdee888f6bb1d087b3dd641e6452653976d0354fa8671d94634837c04ef"
+      },
+      {
+        "path": "architecture/public-successors.json",
+        "sha256": "9b45d6ac177f68de34891cef56d717256f6c4930eecf35697232595b1558f256"
+      },
+      {
+        "path": "provenance/imported-files.json",
+        "sha256": "f74723db381773b5823189f5ad1f7319566ce29f8134cace59d44a19bbce1bbc"
+      },
+      {
+        "path": "provenance/adaptations.json",
+        "sha256": "9daab6ef461686199e5b4e06698dcc01d1f28076f155e70d60ef92ac8c41cb14"
+      },
+      {
+        "path": "bun.lock",
+        "sha256": "bb598c9ccc3da2865c39a3d3a8aebda62304666a501e31965a1625ad20fa6d83"
+      }
+    ],
+    "runtime": {
+      "name": "Bun integration / Node mathematics reference",
+      "version": "1.4.2 / Node26.7.0 npm11.17.0; mathcrew Bun1.4.1"
+    },
+    "details": {
+      "predecessorDeletionReady": false,
+      "nativeRootRetirementReady": false,
+      "publicFunctionSourcePreserved": true,
+      "blockingConsumer": {
+        "url": "https://kcpalantir.tech/",
+        "htmlSha256": "b0b464d407b616a649e7a5512515846de7b4434f5c59a119225bbcbfc616b5f8",
+        "bytes": 12633,
+        "oldSourceLinkCount": 6,
+        "edge": "cloudflare",
+        "httpStatus": 200,
+        "deploymentOwner": "not established",
+        "sourceCommit": "not established",
+        "requiredAction": "Use the existing authorized public-site deployment owner/route to promote exact new mathcrew source; verify both languages, functionality and absence of predecessor hrefs before deletion."
+      },
+      "nativeBindingSemantics": "Native Projects/WorkStudio/Tasks retain stable IDs; historical task locator is not active Work permission. No source map creates new native identity.",
+      "sourceOnlyCurrentEntrypoints": [
+        "academy:serve",
+        "academy:http",
+        "academy:journal-http",
+        "academy:query"
+      ],
+      "nonDefaultChecksExcluded": [
+        "SPT-linked sheet migration tests",
+        "unselected legacy harness execution",
+        "private source/store originals"
+      ],
+      "historyCustodyRef": "provenance/history-custody.json"
+    }
+  }
+}

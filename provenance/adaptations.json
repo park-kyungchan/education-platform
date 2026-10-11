@@ -1,0 +1,56 @@
+{
+  "schema": "education.adaptations.v1",
+  "files": [
+    {
+      "path": "apps/academy/dc-gang-a/package.json",
+      "reason": "select source-only checks and required dependencies; preserve original manifest privately and in provenance",
+      "sourceSha256": "942eee55d34bc7933c3d841638c7d347271913eef8de1b30961d1602dc66ee1c",
+      "integrationSha256": "a3df6bb85c171a292db567cc47da01095d4c6fe7c5baaca53bbf1b2604af4f01"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/tsconfig.json",
+      "reason": "typecheck imported code/spec only",
+      "sourceSha256": "e72219c42fa942df384413de6e56a786440491a3f38b8ecae7ad31905bc2091f",
+      "integrationSha256": "3ac6de5b089ec06dd68f935dfc844426ef5df542b916593f20315f3457663783"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/bun.lock",
+      "reason": "lock selected source/test dependency set",
+      "sourceSha256": "40f4af6131887dcf9f1c6f1dda63ed9230612b5ef271f9a540ca4559e55b6e9d",
+      "integrationSha256": "750dab0d2d4996451f97544c58c93e8f34d6c256bebce509c0657681fe0112d4"
+    },
+    {
+      "path": "apps/mathcrew/src/development-sources.ts",
+      "reason": "annotate historical snapshots and private successor ownership",
+      "sourceSha256": "266a8e0f71385d21f90cb1af67f37f05c13964a66d09e1cce129b9a56ee9220a",
+      "integrationSha256": "a7859b0cd25325eae136d436266b011de1dea1ad80fd3298330fdc94bd29b85a"
+    },
+    {
+      "path": "apps/mathcrew/tests/fixtures/expected-dist.json",
+      "reason": "pin intentional two-page successor-copy change",
+      "sourceSha256": "9dd5cce97d0267e2d155830c2a6fdfe8df35670d5a59e1dad9af727063a32fcd",
+      "integrationSha256": "2232ef45fab46282163a6ea241042fc4b24a48a6559d69412d934cb3ddbe396f"
+    },
+    {
+      "path": "apps/mathcrew/src/render.ts",
+      "reason": "render exact maintained private successor navigation while dating retained historical snapshots",
+      "sourceSha256": "aee3a86ce72a0b078e90cac5b978e361ab3f8740d23915dca6e4de8499307699",
+      "integrationSha256": "76cf3ffc7a85aad26013e8b24ab5341ed18da4b4ab7375297286b0f3c89994ac"
+    },
+    {
+      "path": "apps/mathcrew/tests/development.test.ts",
+      "reason": "verify two exact private successor links require access and never become remote assets",
+      "sourceSha256": "7e946ba4cc97263ee50fc1bea4ad9caf96d64ccbbb2465b69bee4bb127fbc677",
+      "integrationSha256": "651c0eb4f88b957431737314d8f263f10b42d26432e3bdca5c21dafcb17ef1f2"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/server.ts",
+      "reason": "evict expired authentication throttle keys before enforcing shared capacity; preserve active per-client limits",
+      "sourceSha256": "12f5687ee2b378a97a8345712086d458301d37dbcb12a9638abaae844ecf4946",
+      "integrationSha256": "f5e002416aaef0ea249d4db3e3539939facc3a5506db93f8dedd9cffb156fcef",
+      "reviewRef": "https://github.com/park-kyungchan/education-platform/pull/1#discussion_r4240579621"
+    }
+  ],
+  "mathematicalMeaningChanged": false,
+  "nativeRuntimeChanged": false
+}

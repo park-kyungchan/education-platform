@@ -1,0 +1,126 @@
+{
+  "schema_version": "mathematics-cartography.immutable-human-semantic-disposition-repair-receipt.v1",
+  "program_unit_id": "IMMUTABLE_HUMAN_SEMANTIC_DISPOSITION_RECORD",
+  "attempt_id": "IMMUTABLE_HUMAN_SEMANTIC_DISPOSITION_RECORD-R4",
+  "recorded_at_utc": "2026-09-04T05:03:37Z",
+  "status": "CLOSED_LOCAL_GREEN_REPAIR_CANDIDATE_FROZEN_PENDING_NEW_EXACT_REVIEW_AUTHORITY",
+  "success_boundary": "TWO_PARENT_VERIFIED_R3_FINDINGS_REPAIRED_WITH_THREE_RED_GREEN_CYCLES_AND_FULL_LOCAL_VERIFICATION_WITHOUT_SECOND_REVIEW_HUMAN_INSTANCE_CANONICAL_APPLICATION_COMMIT_PUSH_OR_EXTERNAL_ACTION",
+  "authority": {
+    "project_tdd": "PROJECT_TDD_AUTHORITY = GRANTED_FOR_APPROVED_DISPOSITION_CONTRACT_SHA256:4021e5bdd5a7c9bb499c708ddb56d1620b77088c9eb160be23733f5129bb40c5",
+    "consumed_route_transaction": "NATIVE_ROUTE_MUTATION_AUTHORITY_CONSUMED_BY_R3_AND_RESTORED",
+    "consumed_review_continuation": "R3_EXACT_CANDIDATE_REVIEW_ATTEMPT_CONSUMED",
+    "human_disposition_instance_authority": "NOT_GRANTED",
+    "canonical_application_authority": "NOT_GRANTED",
+    "local_commit_authority": "NOT_GRANTED",
+    "remote_git_authority": "NOT_GRANTED"
+  },
+  "r3_review": {
+    "reviewer_reported_verdict": "PASS",
+    "reviewer_result_sha256": "479731523422cba4523164ceef194db0958236da3cb7ebb7f5abaf34e0eb7c96",
+    "verified_route": "gpt-5.6-luna-900k/openai-codex/max",
+    "parent_admitted_verdict": "FAIL",
+    "parent_admission_sha256": "2a3b82a5b0c68d605e8c6c9b428ab2ec1d09ba89458714d129e013ab5b3396c4",
+    "blocking_finding_ids": [
+      "PARENT-R3-F001",
+      "PARENT-R3-F002"
+    ],
+    "same_tuple_retry": "FORBIDDEN"
+  },
+  "r4_repair": {
+    "tdd_record_sha256": "6a64c80b52ec6f27a04f2cff1f1707ae7407d73f0be013a34559cfc0fb12f351",
+    "vertical_cycle_count": 3,
+    "changed_paths": [
+      "contracts/human-semantic-disposition-record.v1.schema.json",
+      "fixtures/logarithm-human-semantic-disposition.fixture.json",
+      "tests/human-semantic-disposition-record.test.mjs"
+    ],
+    "behavior": "Exact three-case packet/golden binding plus strict-string and local conditional schema/runtime parity."
+  },
+  "candidate": {
+    "manifest_path": "audit/IMMUTABLE_HUMAN_SEMANTIC_DISPOSITION_RECORD-R4/candidate-manifest.json",
+    "manifest_sha256": "885ebeadef418cc1bdceb7bcf9d6d69e85c21050e4a5dd1f66887ea8e148f3d4",
+    "aggregate_sha256": "aa4b5b0d2c2b19b0f0e1e455fe8ca9b897143e44d06c6ff854b5aec4b7c18ac9",
+    "path_count": 7,
+    "frozen": true,
+    "review_status": "NOT_REVIEWED_NEW_EXACT_AUTHORITY_REQUIRED"
+  },
+  "verification": {
+    "record_path": "audit/IMMUTABLE_HUMAN_SEMANTIC_DISPOSITION_RECORD-R4/verification-record.json",
+    "record_sha256": "ece0b864d77a82f55dcd12ccb30589feba6cdfb395bff0a36517c700fb9aa005",
+    "dependency_restore": "PASS_2_CACHE_HITS_ZERO_FETCH_ZERO_POST_ZERO_ADVISORY",
+    "typecheck": "PASS",
+    "tests": "PASS_59_OF_59",
+    "verify": "PASS_59_OF_59",
+    "hermes_verify": "PASS_OK_TRUE_59_OF_59",
+    "schema_instances": "PASS_13_OF_13",
+    "schema_negative_controls": "PASS_31_OF_31",
+    "exact_tuple_bindings": "PASS_3_OF_3",
+    "secret_pii_effect_scan": "PASS_ZERO_SIGNALS"
+  },
+  "classifier": {
+    "policy": "ONE_SHOT_PREWRITE_REPAIR",
+    "invocation_count": 1,
+    "classification": "SOFT_SHARED_RUNTIME",
+    "input_sha256": "956eeef68f4a77fca1edc734184f473f4912373aaaad4f494f935b79491c6077",
+    "raw_output_sha256": "29bc279e3cf53ae80568d6974fa00365654180c24e9152e1ffb54fa2b6607fee",
+    "capture_sha256": "2b4d53c0310218497217ed3c4d74d7c1142296ecafeda24fd3c05e5c965717f3"
+  },
+  "runtime_restore": {
+    "delegation_semantics_restored": true,
+    "config_raw_equal_to_before": false,
+    "config_before_sha256": "50b20ef6782182dc241c52f598ee37c21c7046a109155c0544bc8af3ea6d1e3d",
+    "config_final_sha256": "2f4d35593410122f9d5ce719de0f0ee6dc062c13b3515b1e4d460b8fd40cf610",
+    "env_unchanged": true
+  },
+  "handoff": {
+    "path": "handoffs/IMMUTABLE_HUMAN_SEMANTIC_DISPOSITION_RECORD-R4.json",
+    "bytes": 6160,
+    "sha256": "d695f56ec77817bd29366631be98e7b6754d9611465932f49b204a4463f56d2c",
+    "status": "LOCAL_GREEN_REPAIR_CANDIDATE_FROZEN_PENDING_NEW_EXACT_REVIEW_AUTHORITY"
+  },
+  "effects": {
+    "native_route_set_command_count": 3,
+    "native_route_unset_command_count": 3,
+    "final_delegation_semantic_delta_count": 0,
+    "persistent_config_raw_identity_delta_count": 1,
+    "resource_classifier_invocation_count": 1,
+    "r4_product_write_path_count": 3,
+    "dependency_restore_count": 1,
+    "r4_reviewer_dispatch_count": 0,
+    "actual_human_disposition_instance_count": 0,
+    "canonical_application_count": 0,
+    "external_domain_action_count": 0,
+    "stage_count": 0,
+    "commit_count": 0,
+    "push_count": 0,
+    "remote_addition_count": 0,
+    "amend_count": 0,
+    "history_rewrite_count": 0
+  },
+  "closeout": {
+    "path_count": 11,
+    "paths": [
+      "audit/IMMUTABLE_HUMAN_SEMANTIC_DISPOSITION_RECORD-R4/execution-envelope.json",
+      "audit/IMMUTABLE_HUMAN_SEMANTIC_DISPOSITION_RECORD-R4/classifier-raw-output.json",
+      "audit/IMMUTABLE_HUMAN_SEMANTIC_DISPOSITION_RECORD-R4/classifier-output.json",
+      "audit/IMMUTABLE_HUMAN_SEMANTIC_DISPOSITION_RECORD-R4/change-set-plan.json",
+      "audit/IMMUTABLE_HUMAN_SEMANTIC_DISPOSITION_RECORD-R4/npm-ci-debug-log.txt",
+      "audit/IMMUTABLE_HUMAN_SEMANTIC_DISPOSITION_RECORD-R4/tdd-record.json",
+      "audit/IMMUTABLE_HUMAN_SEMANTIC_DISPOSITION_RECORD-R4/candidate-manifest.json",
+      "audit/IMMUTABLE_HUMAN_SEMANTIC_DISPOSITION_RECORD-R4/verification-record.json",
+      "receipts/IMMUTABLE_HUMAN_SEMANTIC_DISPOSITION_RECORD-R4.json",
+      "receipts/IMMUTABLE_HUMAN_SEMANTIC_DISPOSITION_RECORD-R4.json.sha256",
+      "handoffs/IMMUTABLE_HUMAN_SEMANTIC_DISPOSITION_RECORD-R4.json"
+    ],
+    "pre_closeout_dirty_path_count": 52,
+    "pre_closeout_porcelain_v1_z_sha256": "150682e7fdea528339fcc7691ef43fb1d91c932da498cd78c6237af2034144f1",
+    "expected_final_dirty_path_count": 55,
+    "receipt_sidecar_path": "receipts/IMMUTABLE_HUMAN_SEMANTIC_DISPOSITION_RECORD-R4.json.sha256",
+    "receipt_sidecar_verification_required": true
+  },
+  "next_required_authority_lines": [
+    "NATIVE_ROUTE_MUTATION_AUTHORITY = GRANTED_FOR_ONE_BOUNDED_DEFAULT_PROFILE_DELEGATION_ROUTE_TRANSACTION:gpt-5.6-luna-900k/openai-codex/max:RESTORE_PREVIOUS_VALUES",
+    "FROZEN_CANDIDATE_REVIEW_CONTINUATION_AUTHORITY = GRANTED_FOR_EXACT_CANDIDATE_AGGREGATE_SHA256:aa4b5b0d2c2b19b0f0e1e455fe8ca9b897143e44d06c6ff854b5aec4b7c18ac9:ONE_FRESH_REVIEW_ATTEMPT_AFTER_R4_REPAIR"
+  ],
+  "stop_condition": "R4_LOCAL_GREEN_FROZEN_PENDING_NEW_EXACT_LUNA_REVIEW_AUTHORITY_NO_HUMAN_INSTANCE_NO_CANONICAL_APPLICATION_NO_COMMIT_NO_PUSH"
+}

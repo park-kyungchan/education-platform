@@ -1,0 +1,2378 @@
+{
+  "kind": "OntologyAdaptationProposal",
+  "id": "matheducation-palantir-proposal",
+  "canonicalParentId": "page_065390e2f398819182db99f21477947e",
+  "schemaVersion": "1.0.0",
+  "revision": 1,
+  "status": "proposal_not_applied",
+  "updatedAt": "2026-10-06T06:27:00Z",
+  "scope": {
+    "kind": "CurriculumScope",
+    "id": "scope-kr2022-e5-m3",
+    "canonicalParentId": "proposal-root",
+    "curriculumEdition": "KR-2022",
+    "gradeBands": [
+      "초5",
+      "초6",
+      "중1",
+      "중2",
+      "중3"
+    ],
+    "curriculumMappingStatus": "unverified",
+    "advancedExplanationLevel": "university",
+    "advancedLensIsCurricularPrerequisite": false
+  },
+  "hierarchy": [
+    {
+      "kind": "HierarchyNode",
+      "id": "proposal-root",
+      "canonicalParentId": null,
+      "title": "Palantir Ontology 수학 적용 제안",
+      "nodeRole": "proposal"
+    },
+    {
+      "kind": "HierarchyNode",
+      "id": "section-model",
+      "canonicalParentId": "proposal-root",
+      "title": "타입과 객체",
+      "nodeRole": "section"
+    },
+    {
+      "kind": "HierarchyNode",
+      "id": "section-links",
+      "canonicalParentId": "proposal-root",
+      "title": "관계 계약",
+      "nodeRole": "section"
+    },
+    {
+      "kind": "HierarchyNode",
+      "id": "section-operations",
+      "canonicalParentId": "proposal-root",
+      "title": "행동과 함수",
+      "nodeRole": "section"
+    },
+    {
+      "kind": "HierarchyNode",
+      "id": "section-evidence",
+      "canonicalParentId": "proposal-root",
+      "title": "공식 문서 대응",
+      "nodeRole": "section"
+    },
+    {
+      "kind": "HierarchyNode",
+      "id": "section-simulation",
+      "canonicalParentId": "proposal-root",
+      "title": "변경과 복원 모의 검증",
+      "nodeRole": "section"
+    }
+  ],
+  "sourceSnapshots": [
+    {
+      "kind": "SourceSnapshot",
+      "fileName": "matheducation-sample-r2.json",
+      "sha256": "3332d52420632f5a5afc872692f9a9bfcd81d238705d8d63918c0c9a70118308",
+      "role": "read_only_preserved"
+    },
+    {
+      "kind": "SourceSnapshot",
+      "fileName": "dependency-ledger-r1.json",
+      "sha256": "d20064d3fcc552a60fbfdceccf4adbf0e6e68442f9b0d5ff6672f3420cbee4ca",
+      "role": "read_only_preserved"
+    }
+  ],
+  "objectTypeContracts": [
+    {
+      "kind": "ObjectTypeContract",
+      "id": "type-MathConcept",
+      "canonicalParentId": "section-model",
+      "typeName": "MathConcept",
+      "role": "domain_adaptation",
+      "fieldCoverage": "minimum_domain_fields_full_record_in_json_schema",
+      "fields": [
+        {
+          "kind": "FieldContract",
+          "name": "id",
+          "valueType": "String",
+          "required": true,
+          "meaning": "stable concept identity"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "title",
+          "valueType": "String",
+          "required": true,
+          "meaning": "display name"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "definition",
+          "valueType": "String",
+          "required": true,
+          "meaning": "current scoped meaning"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "revision",
+          "valueType": "Integer",
+          "required": true,
+          "meaning": "content revision"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "curriculumMappingStatus",
+          "valueType": "Enum",
+          "required": true,
+          "meaning": "unverified or verified by curriculum sources"
+        }
+      ],
+      "officialSourceIds": [
+        "src-objects"
+      ],
+      "implementationStatus": "proposed_not_deployed"
+    },
+    {
+      "kind": "ObjectTypeContract",
+      "id": "type-MathTerm",
+      "canonicalParentId": "section-model",
+      "typeName": "MathTerm",
+      "role": "domain_adaptation",
+      "fieldCoverage": "minimum_domain_fields_full_record_in_json_schema",
+      "fields": [
+        {
+          "kind": "FieldContract",
+          "name": "id",
+          "valueType": "String",
+          "required": true,
+          "meaning": "stable term-sense identity"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "label",
+          "valueType": "String",
+          "required": true,
+          "meaning": "lexical label"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "language",
+          "valueType": "String",
+          "required": true,
+          "meaning": "language"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "sense",
+          "valueType": "String",
+          "required": true,
+          "meaning": "meaning in context"
+        }
+      ],
+      "officialSourceIds": [
+        "src-objects"
+      ],
+      "implementationStatus": "proposed_not_deployed"
+    },
+    {
+      "kind": "ObjectTypeContract",
+      "id": "type-MathNotation",
+      "canonicalParentId": "section-model",
+      "typeName": "MathNotation",
+      "role": "domain_adaptation",
+      "fieldCoverage": "minimum_domain_fields_full_record_in_json_schema",
+      "fields": [
+        {
+          "kind": "FieldContract",
+          "name": "id",
+          "valueType": "String",
+          "required": true,
+          "meaning": "identity of notation in context"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "expression",
+          "valueType": "String",
+          "required": true,
+          "meaning": "notation or formula"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "interpretation",
+          "valueType": "String",
+          "required": true,
+          "meaning": "meaning"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "scope",
+          "valueType": "String",
+          "required": true,
+          "meaning": "domain and restrictions"
+        }
+      ],
+      "officialSourceIds": [
+        "src-objects"
+      ],
+      "implementationStatus": "proposed_not_deployed"
+    },
+    {
+      "kind": "ObjectTypeContract",
+      "id": "type-Explanation",
+      "canonicalParentId": "section-model",
+      "typeName": "Explanation",
+      "role": "domain_adaptation",
+      "fieldCoverage": "minimum_domain_fields_full_record_in_json_schema",
+      "fields": [
+        {
+          "kind": "FieldContract",
+          "name": "id",
+          "valueType": "String",
+          "required": true,
+          "meaning": "explanation identity"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "conceptId",
+          "valueType": "ObjectReference",
+          "required": true,
+          "meaning": "explained MathConcept"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "perspectiveId",
+          "valueType": "ObjectReference",
+          "required": true,
+          "meaning": "explanatory perspective"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "body",
+          "valueType": "String",
+          "required": true,
+          "meaning": "reasoned explanation"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "notCurricularPrerequisite",
+          "valueType": "Boolean",
+          "required": true,
+          "meaning": "advanced lens is not learner prerequisite"
+        }
+      ],
+      "officialSourceIds": [
+        "src-design"
+      ],
+      "implementationStatus": "proposed_not_deployed"
+    },
+    {
+      "kind": "ObjectTypeContract",
+      "id": "type-CurriculumStandard",
+      "canonicalParentId": "section-model",
+      "typeName": "CurriculumStandard",
+      "role": "domain_adaptation",
+      "fieldCoverage": "minimum_domain_fields_full_record_in_json_schema",
+      "fields": [
+        {
+          "kind": "FieldContract",
+          "name": "id",
+          "valueType": "String",
+          "required": true,
+          "meaning": "curriculum and code identity"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "curriculumEdition",
+          "valueType": "String",
+          "required": true,
+          "meaning": "curriculum version"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "officialCode",
+          "valueType": "String",
+          "required": true,
+          "meaning": "verified official standard code"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "gradeBand",
+          "valueType": "String",
+          "required": true,
+          "meaning": "grade placement"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "sourceUrl",
+          "valueType": "String",
+          "required": true,
+          "meaning": "official curriculum source"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "verificationStatus",
+          "valueType": "Enum",
+          "required": true,
+          "meaning": "verification state"
+        }
+      ],
+      "officialSourceIds": [
+        "src-design"
+      ],
+      "implementationStatus": "proposed_not_deployed"
+    },
+    {
+      "kind": "ObjectTypeContract",
+      "id": "type-CurriculumAlignment",
+      "canonicalParentId": "section-model",
+      "typeName": "CurriculumAlignment",
+      "role": "domain_adaptation",
+      "fieldCoverage": "minimum_domain_fields_full_record_in_json_schema",
+      "fields": [
+        {
+          "kind": "FieldContract",
+          "name": "id",
+          "valueType": "String",
+          "required": true,
+          "meaning": "mapping assertion identity"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "conceptId",
+          "valueType": "ObjectReference",
+          "required": true,
+          "meaning": "MathConcept"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "standardId",
+          "valueType": "ObjectReference",
+          "required": true,
+          "meaning": "CurriculumStandard"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "rationale",
+          "valueType": "String",
+          "required": true,
+          "meaning": "why aligned"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "approvalStatus",
+          "valueType": "Enum",
+          "required": true,
+          "meaning": "proposal status"
+        }
+      ],
+      "officialSourceIds": [
+        "src-object-backed-links"
+      ],
+      "implementationStatus": "proposed_not_deployed"
+    },
+    {
+      "kind": "ObjectTypeContract",
+      "id": "type-Perspective",
+      "canonicalParentId": "section-model",
+      "typeName": "Perspective",
+      "role": "domain_adaptation",
+      "fieldCoverage": "minimum_domain_fields_full_record_in_json_schema",
+      "fields": [
+        {
+          "kind": "FieldContract",
+          "name": "id",
+          "valueType": "String",
+          "required": true,
+          "meaning": "shared view identity"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "audience",
+          "valueType": "String",
+          "required": true,
+          "meaning": "intended reader"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "explanationLevel",
+          "valueType": "Enum",
+          "required": true,
+          "meaning": "explanation depth"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "pedagogicalRoute",
+          "valueType": "String",
+          "required": true,
+          "meaning": "route assumptions"
+        }
+      ],
+      "officialSourceIds": [
+        "src-design"
+      ],
+      "implementationStatus": "proposed_not_deployed"
+    },
+    {
+      "kind": "ObjectTypeContract",
+      "id": "type-DependencyAssertion",
+      "canonicalParentId": "section-model",
+      "typeName": "DependencyAssertion",
+      "role": "domain_adaptation",
+      "fieldCoverage": "minimum_domain_fields_full_record_in_json_schema",
+      "fields": [
+        {
+          "kind": "FieldContract",
+          "name": "id",
+          "valueType": "String",
+          "required": true,
+          "meaning": "stable relationship assertion identity"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "prerequisiteConceptId",
+          "valueType": "ObjectReference",
+          "required": true,
+          "meaning": "directed source"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "dependentConceptId",
+          "valueType": "ObjectReference",
+          "required": true,
+          "meaning": "directed target"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "relationKind",
+          "valueType": "Enum",
+          "required": true,
+          "meaning": "required, helpful, representation or related"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "claimBasis",
+          "valueType": "Enum",
+          "required": true,
+          "meaning": "mathematical requirement or teaching perspective"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "perspectiveId",
+          "valueType": "ObjectReference",
+          "required": true,
+          "meaning": "scope of interpretation"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "conditions",
+          "valueType": "StringArray",
+          "required": true,
+          "meaning": "applicability conditions"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "rationale",
+          "valueType": "String",
+          "required": true,
+          "meaning": "reason"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "evidenceIds",
+          "valueType": "ObjectReferenceArray",
+          "required": true,
+          "meaning": "evidence references"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "approvalStatus",
+          "valueType": "Enum",
+          "required": true,
+          "meaning": "review state, distinct from truth"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "revision",
+          "valueType": "Integer",
+          "required": true,
+          "meaning": "independent assertion revision"
+        }
+      ],
+      "officialSourceIds": [
+        "src-object-backed-links"
+      ],
+      "implementationStatus": "proposed_not_deployed"
+    },
+    {
+      "kind": "ObjectTypeContract",
+      "id": "type-EvidenceReference",
+      "canonicalParentId": "section-model",
+      "typeName": "EvidenceReference",
+      "role": "domain_adaptation",
+      "fieldCoverage": "minimum_domain_fields_full_record_in_json_schema",
+      "fields": [
+        {
+          "kind": "FieldContract",
+          "name": "id",
+          "valueType": "String",
+          "required": true,
+          "meaning": "evidence identity"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "sourceUrl",
+          "valueType": "String",
+          "required": true,
+          "meaning": "retrievable source"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "locator",
+          "valueType": "String",
+          "required": true,
+          "meaning": "precise source location"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "verificationStatus",
+          "valueType": "Enum",
+          "required": true,
+          "meaning": "quality or verification state"
+        }
+      ],
+      "officialSourceIds": [
+        "src-design"
+      ],
+      "implementationStatus": "proposed_not_deployed"
+    },
+    {
+      "kind": "ObjectTypeContract",
+      "id": "type-ChangeProposal",
+      "canonicalParentId": "section-model",
+      "typeName": "ChangeProposal",
+      "role": "domain_adaptation",
+      "fieldCoverage": "minimum_domain_fields_full_record_in_json_schema",
+      "fields": [
+        {
+          "kind": "FieldContract",
+          "name": "id",
+          "valueType": "String",
+          "required": true,
+          "meaning": "proposal identity"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "assertionId",
+          "valueType": "ObjectReference",
+          "required": true,
+          "meaning": "target assertion"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "expectedRevision",
+          "valueType": "Integer",
+          "required": true,
+          "meaning": "stale-state guard"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "changes",
+          "valueType": "FieldChangeArray",
+          "required": true,
+          "meaning": "reviewable typed diff"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "reviewedPayloadHash",
+          "valueType": "String",
+          "required": true,
+          "meaning": "binds review to exact changes"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "approvalStatus",
+          "valueType": "Enum",
+          "required": true,
+          "meaning": "not_requested in this proposal"
+        }
+      ],
+      "officialSourceIds": [
+        "src-design"
+      ],
+      "implementationStatus": "proposed_not_deployed"
+    },
+    {
+      "kind": "ObjectTypeContract",
+      "id": "type-RevisionEvent",
+      "canonicalParentId": "section-model",
+      "typeName": "RevisionEvent",
+      "role": "domain_adaptation",
+      "fieldCoverage": "minimum_domain_fields_record_in_simulation_schema",
+      "fields": [
+        {
+          "kind": "FieldContract",
+          "name": "id",
+          "valueType": "String",
+          "required": true,
+          "meaning": "change event identity"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "assertionId",
+          "valueType": "ObjectReference",
+          "required": true,
+          "meaning": "stable entity"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "fromRevision",
+          "valueType": "Integer",
+          "required": true,
+          "meaning": "base revision"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "toRevision",
+          "valueType": "Integer",
+          "required": true,
+          "meaning": "new revision"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "reason",
+          "valueType": "String",
+          "required": true,
+          "meaning": "change or restoration reason"
+        },
+        {
+          "kind": "FieldContract",
+          "name": "executionMode",
+          "valueType": "Enum",
+          "required": true,
+          "meaning": "read_only_simulation for examples"
+        }
+      ],
+      "officialSourceIds": [
+        "src-history"
+      ],
+      "implementationStatus": "proposed_not_deployed"
+    }
+  ],
+  "interfaceContracts": [
+    {
+      "kind": "InterfaceContract",
+      "id": "interface-KnowledgeElement",
+      "canonicalParentId": "section-model",
+      "interfaceName": "KnowledgeElement",
+      "implementingTypes": [
+        "MathConcept",
+        "MathTerm",
+        "MathNotation"
+      ],
+      "sharedFields": [
+        "id",
+        "revision",
+        "contentStatus"
+      ],
+      "abstract": true,
+      "runtimeSupport": "unverified_not_required_for_mvp",
+      "officialSourceIds": [
+        "src-interfaces"
+      ]
+    }
+  ],
+  "linkTypeContracts": [
+    {
+      "kind": "LinkTypeContract",
+      "id": "link-concept-terms",
+      "canonicalParentId": "section-links",
+      "fromType": "MathConcept",
+      "toType": "MathTerm",
+      "forwardName": "namedBy",
+      "reverseName": "namesConcept",
+      "cardinality": "one_to_many",
+      "meaning": "semantic_relationship",
+      "officialSourceIds": [
+        "src-links"
+      ],
+      "implementationStatus": "proposed_not_deployed"
+    },
+    {
+      "kind": "LinkTypeContract",
+      "id": "link-concept-notations",
+      "canonicalParentId": "section-links",
+      "fromType": "MathConcept",
+      "toType": "MathNotation",
+      "forwardName": "usesNotation",
+      "reverseName": "usedByConcept",
+      "cardinality": "one_to_many",
+      "meaning": "semantic_relationship",
+      "officialSourceIds": [
+        "src-links"
+      ],
+      "implementationStatus": "proposed_not_deployed"
+    },
+    {
+      "kind": "LinkTypeContract",
+      "id": "link-concept-explanations",
+      "canonicalParentId": "section-links",
+      "fromType": "MathConcept",
+      "toType": "Explanation",
+      "forwardName": "explanations",
+      "reverseName": "explainsConcept",
+      "cardinality": "one_to_many",
+      "meaning": "semantic_relationship",
+      "officialSourceIds": [
+        "src-links"
+      ],
+      "implementationStatus": "proposed_not_deployed"
+    },
+    {
+      "kind": "LinkTypeContract",
+      "id": "link-assertion-source",
+      "canonicalParentId": "section-links",
+      "fromType": "DependencyAssertion",
+      "toType": "MathConcept",
+      "forwardName": "prerequisiteConcept",
+      "reverseName": "outgoingAssertions",
+      "cardinality": "many_to_one",
+      "meaning": "semantic_relationship",
+      "officialSourceIds": [
+        "src-links"
+      ],
+      "implementationStatus": "proposed_not_deployed"
+    },
+    {
+      "kind": "LinkTypeContract",
+      "id": "link-assertion-target",
+      "canonicalParentId": "section-links",
+      "fromType": "DependencyAssertion",
+      "toType": "MathConcept",
+      "forwardName": "dependentConcept",
+      "reverseName": "incomingAssertions",
+      "cardinality": "many_to_one",
+      "meaning": "semantic_relationship",
+      "officialSourceIds": [
+        "src-links"
+      ],
+      "implementationStatus": "proposed_not_deployed"
+    },
+    {
+      "kind": "LinkTypeContract",
+      "id": "link-assertion-perspective",
+      "canonicalParentId": "section-links",
+      "fromType": "DependencyAssertion",
+      "toType": "Perspective",
+      "forwardName": "perspective",
+      "reverseName": "dependencyAssertions",
+      "cardinality": "many_to_one",
+      "meaning": "semantic_relationship",
+      "officialSourceIds": [
+        "src-links"
+      ],
+      "implementationStatus": "proposed_not_deployed"
+    },
+    {
+      "kind": "LinkTypeContract",
+      "id": "link-assertion-evidence",
+      "canonicalParentId": "section-links",
+      "fromType": "DependencyAssertion",
+      "toType": "EvidenceReference",
+      "forwardName": "evidence",
+      "reverseName": "supportsAssertions",
+      "cardinality": "many_to_many",
+      "meaning": "semantic_relationship",
+      "officialSourceIds": [
+        "src-links"
+      ],
+      "implementationStatus": "proposed_not_deployed"
+    },
+    {
+      "kind": "LinkTypeContract",
+      "id": "link-alignment-concept",
+      "canonicalParentId": "section-links",
+      "fromType": "CurriculumAlignment",
+      "toType": "MathConcept",
+      "forwardName": "concept",
+      "reverseName": "curriculumAlignments",
+      "cardinality": "many_to_one",
+      "meaning": "semantic_relationship",
+      "officialSourceIds": [
+        "src-links"
+      ],
+      "implementationStatus": "proposed_not_deployed"
+    },
+    {
+      "kind": "LinkTypeContract",
+      "id": "link-alignment-standard",
+      "canonicalParentId": "section-links",
+      "fromType": "CurriculumAlignment",
+      "toType": "CurriculumStandard",
+      "forwardName": "standard",
+      "reverseName": "conceptAlignments",
+      "cardinality": "many_to_one",
+      "meaning": "semantic_relationship",
+      "officialSourceIds": [
+        "src-links"
+      ],
+      "implementationStatus": "proposed_not_deployed"
+    },
+    {
+      "kind": "LinkTypeContract",
+      "id": "link-proposal-target",
+      "canonicalParentId": "section-links",
+      "fromType": "ChangeProposal",
+      "toType": "DependencyAssertion",
+      "forwardName": "target",
+      "reverseName": "proposals",
+      "cardinality": "many_to_one",
+      "meaning": "semantic_relationship",
+      "officialSourceIds": [
+        "src-links"
+      ],
+      "implementationStatus": "proposed_not_deployed"
+    },
+    {
+      "kind": "LinkTypeContract",
+      "id": "link-revision-target",
+      "canonicalParentId": "section-links",
+      "fromType": "RevisionEvent",
+      "toType": "DependencyAssertion",
+      "forwardName": "target",
+      "reverseName": "history",
+      "cardinality": "many_to_one",
+      "meaning": "semantic_relationship",
+      "officialSourceIds": [
+        "src-links"
+      ],
+      "implementationStatus": "proposed_not_deployed"
+    }
+  ],
+  "actionContracts": [
+    {
+      "kind": "ActionContract",
+      "id": "action-ProposeDependencyChange",
+      "canonicalParentId": "section-operations",
+      "actionName": "ProposeDependencyChange",
+      "parameters": [
+        "assertionId",
+        "expectedRevision",
+        "changes",
+        "rationale"
+      ],
+      "effect": "create proposal without changing selected graph",
+      "approvalPolicy": "not_needed_for_draft",
+      "guards": [
+        "typed_diff",
+        "reference_integrity"
+      ],
+      "externalSideEffects": [],
+      "implementationStatus": "design_contract_only",
+      "officialSourceIds": [
+        "src-actions",
+        "src-criteria",
+        "src-transactions"
+      ]
+    },
+    {
+      "kind": "ActionContract",
+      "id": "action-ApproveAndApplyDependencyChange",
+      "canonicalParentId": "section-operations",
+      "actionName": "ApproveAndApplyDependencyChange",
+      "parameters": [
+        "proposalId",
+        "reviewedPayloadHash",
+        "expectedRevision",
+        "expectedGraphRevision"
+      ],
+      "effect": "update current assertion and append RevisionEvent together",
+      "approvalPolicy": "explicit_user_approval_required",
+      "guards": [
+        "exact_payload_approval",
+        "stale_revision",
+        "stale_graph_revision",
+        "reference_integrity",
+        "perspective_scope",
+        "required_dag"
+      ],
+      "externalSideEffects": [],
+      "implementationStatus": "design_contract_only",
+      "officialSourceIds": [
+        "src-actions",
+        "src-criteria",
+        "src-transactions"
+      ]
+    },
+    {
+      "kind": "ActionContract",
+      "id": "action-RejectDependencyChange",
+      "canonicalParentId": "section-operations",
+      "actionName": "RejectDependencyChange",
+      "parameters": [
+        "proposalId",
+        "reason"
+      ],
+      "effect": "record rejection and preserve selected graph",
+      "approvalPolicy": "explicit_decision_required",
+      "guards": [
+        "proposal_exists"
+      ],
+      "externalSideEffects": [],
+      "implementationStatus": "design_contract_only",
+      "officialSourceIds": [
+        "src-actions",
+        "src-criteria",
+        "src-transactions"
+      ]
+    },
+    {
+      "kind": "ActionContract",
+      "id": "action-RestoreDependencyRevision",
+      "canonicalParentId": "section-operations",
+      "actionName": "RestoreDependencyRevision",
+      "parameters": [
+        "assertionId",
+        "targetRevision",
+        "expectedRevision",
+        "expectedGraphRevision",
+        "reason"
+      ],
+      "effect": "append compensating revision preserving previous history",
+      "approvalPolicy": "explicit_user_approval_required",
+      "guards": [
+        "exact_payload_approval",
+        "stale_revision",
+        "stale_graph_revision",
+        "reference_integrity",
+        "required_dag",
+        "history_preservation"
+      ],
+      "externalSideEffects": [],
+      "implementationStatus": "design_contract_only",
+      "officialSourceIds": [
+        "src-actions",
+        "src-criteria",
+        "src-transactions"
+      ]
+    }
+  ],
+  "functionContracts": [
+    {
+      "kind": "FunctionContract",
+      "id": "function-ValidateTypedData",
+      "canonicalParentId": "section-operations",
+      "functionName": "ValidateTypedData",
+      "inputs": [
+        "proposal",
+        "schema"
+      ],
+      "outputs": [
+        "schemaErrors"
+      ],
+      "readOnly": true,
+      "implementationStatus": "local_validation_or_design_only",
+      "officialSourceIds": [
+        "src-functions",
+        "src-edit-functions"
+      ]
+    },
+    {
+      "kind": "FunctionContract",
+      "id": "function-ValidateReferences",
+      "canonicalParentId": "section-operations",
+      "functionName": "ValidateReferences",
+      "inputs": [
+        "objects",
+        "links"
+      ],
+      "outputs": [
+        "missingReferences"
+      ],
+      "readOnly": true,
+      "implementationStatus": "local_validation_or_design_only",
+      "officialSourceIds": [
+        "src-functions",
+        "src-edit-functions"
+      ]
+    },
+    {
+      "kind": "FunctionContract",
+      "id": "function-PreviewDependencyChange",
+      "canonicalParentId": "section-operations",
+      "functionName": "PreviewDependencyChange",
+      "inputs": [
+        "baseline",
+        "proposal"
+      ],
+      "outputs": [
+        "projectedState",
+        "impact"
+      ],
+      "readOnly": true,
+      "implementationStatus": "local_validation_or_design_only",
+      "officialSourceIds": [
+        "src-functions",
+        "src-edit-functions"
+      ]
+    },
+    {
+      "kind": "FunctionContract",
+      "id": "function-DetectRequiredCycles",
+      "canonicalParentId": "section-operations",
+      "functionName": "DetectRequiredCycles",
+      "inputs": [
+        "selectedAssertions",
+        "perspectiveId"
+      ],
+      "outputs": [
+        "cyclePath"
+      ],
+      "readOnly": true,
+      "implementationStatus": "local_validation_or_design_only",
+      "officialSourceIds": [
+        "src-functions",
+        "src-edit-functions"
+      ]
+    },
+    {
+      "kind": "FunctionContract",
+      "id": "function-ComparePerspectives",
+      "canonicalParentId": "section-operations",
+      "functionName": "ComparePerspectives",
+      "inputs": [
+        "perspectives",
+        "assertions"
+      ],
+      "outputs": [
+        "differences"
+      ],
+      "readOnly": true,
+      "implementationStatus": "local_validation_or_design_only",
+      "officialSourceIds": [
+        "src-functions",
+        "src-edit-functions"
+      ]
+    },
+    {
+      "kind": "FunctionContract",
+      "id": "function-PreviewCompensatingRestore",
+      "canonicalParentId": "section-operations",
+      "functionName": "PreviewCompensatingRestore",
+      "inputs": [
+        "projectedState",
+        "priorState"
+      ],
+      "outputs": [
+        "restoreProposal",
+        "projectedRestoredState"
+      ],
+      "readOnly": true,
+      "implementationStatus": "local_validation_or_design_only",
+      "officialSourceIds": [
+        "src-functions",
+        "src-edit-functions"
+      ]
+    }
+  ],
+  "objects": [
+    {
+      "kind": "MathConcept",
+      "id": "multiple",
+      "canonicalParentId": "section-model",
+      "title": "배수",
+      "definition": "양의 자연수 n에 양의 자연수를 곱해 얻는 수를 n의 양의 배수라고 한다.",
+      "revision": 1,
+      "contentStatus": "prototype",
+      "sourceRecordId": "multiple",
+      "curriculumMappingStatus": "unverified"
+    },
+    {
+      "kind": "MathTerm",
+      "id": "multiple.term.1",
+      "canonicalParentId": "multiple",
+      "label": "배수",
+      "language": "ko",
+      "sense": "기준 수의 정수배. 이 샘플에서는 양의 배수만 다룬다.",
+      "revision": 1,
+      "contentStatus": "prototype"
+    },
+    {
+      "kind": "MathNotation",
+      "id": "multiple.symbol.1",
+      "canonicalParentId": "multiple",
+      "expression": "n × k",
+      "interpretation": "n을 k배 한 값",
+      "scope": "n, k는 양의 자연수",
+      "revision": 1,
+      "contentStatus": "prototype"
+    },
+    {
+      "kind": "MathConcept",
+      "id": "common-multiple",
+      "canonicalParentId": "section-model",
+      "title": "공배수",
+      "definition": "두 양의 자연수 각각의 배수인 수를 양의 공배수라고 한다.",
+      "revision": 1,
+      "contentStatus": "prototype",
+      "sourceRecordId": "common-multiple",
+      "curriculumMappingStatus": "unverified"
+    },
+    {
+      "kind": "MathTerm",
+      "id": "common-multiple.term.1",
+      "canonicalParentId": "common-multiple",
+      "label": "공배수",
+      "language": "ko",
+      "sense": "두 배수 집합에 공통으로 들어 있는 수",
+      "revision": 1,
+      "contentStatus": "prototype"
+    },
+    {
+      "kind": "MathNotation",
+      "id": "common-multiple.symbol.1",
+      "canonicalParentId": "common-multiple",
+      "expression": "∩",
+      "interpretation": "두 집합에 공통으로 들어 있는 원소의 집합",
+      "scope": "교사 설명용 표기이며 초등 성취기준 표기라는 뜻은 아니다",
+      "revision": 1,
+      "contentStatus": "prototype"
+    },
+    {
+      "kind": "MathConcept",
+      "id": "lcm",
+      "canonicalParentId": "section-model",
+      "title": "최소공배수",
+      "definition": "양의 공배수 가운데 가장 작은 수이다.",
+      "revision": 1,
+      "contentStatus": "prototype",
+      "sourceRecordId": "lcm",
+      "curriculumMappingStatus": "unverified"
+    },
+    {
+      "kind": "MathTerm",
+      "id": "lcm.term.1",
+      "canonicalParentId": "lcm",
+      "label": "최소공배수",
+      "language": "ko",
+      "sense": "양의 공배수 집합의 최솟값",
+      "revision": 1,
+      "contentStatus": "prototype"
+    },
+    {
+      "kind": "MathNotation",
+      "id": "lcm.symbol.1",
+      "canonicalParentId": "lcm",
+      "expression": "lcm(a,b)",
+      "interpretation": "a와 b의 최소공배수",
+      "scope": "교사·데이터용 표기",
+      "revision": 1,
+      "contentStatus": "prototype"
+    },
+    {
+      "kind": "MathConcept",
+      "id": "fraction-notation",
+      "canonicalParentId": "section-model",
+      "title": "분수의 단위와 기호",
+      "definition": "a/b는 단위 1/b를 a개 모은 양으로 읽을 수 있다.",
+      "revision": 1,
+      "contentStatus": "prototype",
+      "sourceRecordId": "fraction-notation",
+      "curriculumMappingStatus": "unverified"
+    },
+    {
+      "kind": "MathTerm",
+      "id": "fraction-notation.term.1",
+      "canonicalParentId": "fraction-notation",
+      "label": "분모",
+      "language": "ko",
+      "sense": "하나의 전체를 같은 크기로 나눈 조각의 수",
+      "revision": 1,
+      "contentStatus": "prototype"
+    },
+    {
+      "kind": "MathTerm",
+      "id": "fraction-notation.term.2",
+      "canonicalParentId": "fraction-notation",
+      "label": "분자",
+      "language": "ko",
+      "sense": "단위분수 1/b를 세는 개수",
+      "revision": 1,
+      "contentStatus": "prototype"
+    },
+    {
+      "kind": "MathTerm",
+      "id": "fraction-notation.term.3",
+      "canonicalParentId": "fraction-notation",
+      "label": "단위분수",
+      "language": "ko",
+      "sense": "분자가 1인 분수",
+      "revision": 1,
+      "contentStatus": "prototype"
+    },
+    {
+      "kind": "MathNotation",
+      "id": "fraction-notation.symbol.1",
+      "canonicalParentId": "fraction-notation",
+      "expression": "a/b",
+      "interpretation": "a를 b로 나눈 값이며 a개의 1/b",
+      "scope": "초등 음이 아닌 분수 모델",
+      "revision": 1,
+      "contentStatus": "prototype"
+    },
+    {
+      "kind": "MathNotation",
+      "id": "fraction-notation.symbol.2",
+      "canonicalParentId": "fraction-notation",
+      "expression": "/",
+      "interpretation": "분수선에 대응하는 텍스트 표기",
+      "scope": "나눗셈의 뜻도 연결된다",
+      "revision": 1,
+      "contentStatus": "prototype"
+    },
+    {
+      "kind": "MathConcept",
+      "id": "equivalent-fractions",
+      "canonicalParentId": "section-model",
+      "title": "동치분수",
+      "definition": "같은 수를 나타내는 서로 다른 분수 표현이다.",
+      "revision": 1,
+      "contentStatus": "prototype",
+      "sourceRecordId": "equivalent-fractions",
+      "curriculumMappingStatus": "unverified"
+    },
+    {
+      "kind": "MathTerm",
+      "id": "equivalent-fractions.term.1",
+      "canonicalParentId": "equivalent-fractions",
+      "label": "동치",
+      "language": "ko",
+      "sense": "표현은 달라도 값이 같음",
+      "revision": 1,
+      "contentStatus": "prototype"
+    },
+    {
+      "kind": "MathTerm",
+      "id": "equivalent-fractions.term.2",
+      "canonicalParentId": "equivalent-fractions",
+      "label": "확장",
+      "language": "ko",
+      "sense": "분자와 분모에 같은 양의 정수를 곱해 동치분수를 만듦",
+      "revision": 1,
+      "contentStatus": "prototype"
+    },
+    {
+      "kind": "MathNotation",
+      "id": "equivalent-fractions.symbol.1",
+      "canonicalParentId": "equivalent-fractions",
+      "expression": "=",
+      "interpretation": "왼쪽과 오른쪽이 같은 수를 나타냄",
+      "scope": "계산 순서 표시가 아님",
+      "revision": 1,
+      "contentStatus": "prototype"
+    },
+    {
+      "kind": "MathNotation",
+      "id": "equivalent-fractions.symbol.2",
+      "canonicalParentId": "equivalent-fractions",
+      "expression": "a/b = (a × k)/(b × k)",
+      "interpretation": "분자와 분모를 같은 비율로 바꿈",
+      "scope": "b ≠ 0, k ≠ 0",
+      "revision": 1,
+      "contentStatus": "prototype"
+    },
+    {
+      "kind": "Explanation",
+      "id": "equivalent-fractions.advanced",
+      "canonicalParentId": "equivalent-fractions",
+      "conceptId": "equivalent-fractions",
+      "perspectiveId": "perspective-adult-reader",
+      "explanationKind": "advanced_lens",
+      "statement": "정수쌍 (a,b), b ≠ 0에 대해 (a,b) ~ (c,d)를 ad=bc로 정의한다.",
+      "body": "반사성과 대칭성은 등식의 성질에서 따른다. ad=bc, cf=de이면 adf=bcf=bde이므로 d(af−be)=0이다. d ≠ 0이고 정수에는 영인자가 없으므로 af=be이다. 따라서 추이성이 성립한다. 동치분수는 이 동치관계가 정하는 같은 동치류의 서로 다른 대표원이다.",
+      "evidenceStatus": "author_constructed",
+      "notCurricularPrerequisite": true,
+      "revision": 1
+    },
+    {
+      "kind": "MathConcept",
+      "id": "common-denominator",
+      "canonicalParentId": "section-model",
+      "title": "통분",
+      "definition": "분모가 다른 분수들을 값이 같은 분수로 바꾸어 분모를 같게 하는 과정이다.",
+      "revision": 1,
+      "contentStatus": "prototype",
+      "sourceRecordId": "common-denominator",
+      "curriculumMappingStatus": "unverified"
+    },
+    {
+      "kind": "MathTerm",
+      "id": "common-denominator.term.1",
+      "canonicalParentId": "common-denominator",
+      "label": "통분",
+      "language": "ko",
+      "sense": "공통 분모를 갖는 동치분수로 바꾸는 과정",
+      "revision": 1,
+      "contentStatus": "prototype"
+    },
+    {
+      "kind": "MathTerm",
+      "id": "common-denominator.term.2",
+      "canonicalParentId": "common-denominator",
+      "label": "공통 분모",
+      "language": "ko",
+      "sense": "각 분모의 양의 공배수",
+      "revision": 1,
+      "contentStatus": "prototype"
+    },
+    {
+      "kind": "MathNotation",
+      "id": "common-denominator.symbol.1",
+      "canonicalParentId": "common-denominator",
+      "expression": "L/b",
+      "interpretation": "분모 b를 공통 분모 L로 바꾸는 배수",
+      "scope": "L은 b의 양의 배수",
+      "revision": 1,
+      "contentStatus": "prototype"
+    },
+    {
+      "kind": "Explanation",
+      "id": "common-denominator.advanced",
+      "canonicalParentId": "common-denominator",
+      "conceptId": "common-denominator",
+      "perspectiveId": "perspective-adult-reader",
+      "explanationKind": "advanced_lens",
+      "statement": "통분은 유리수의 동치류에서 분모를 일치시키는 대표원 선택이다.",
+      "body": "b,d가 양의 정수이고 L이 두 수의 공배수이면 u=L/b, v=L/d는 정수이다. (a,b)와 (au,L)는 aL=b(au)를 만족하므로 같은 유리수를 나타낸다. 따라서 a/b + c/d = (au+cv)/L이다. L이 최소일 필요는 없으며, 최소공배수 선택은 정규화가 아니라 계산 크기를 줄이는 선택이다.",
+      "evidenceStatus": "author_constructed",
+      "notCurricularPrerequisite": true,
+      "revision": 1
+    },
+    {
+      "kind": "MathConcept",
+      "id": "fraction-add",
+      "canonicalParentId": "section-model",
+      "title": "분수 덧셈",
+      "definition": "같은 단위로 맞춘 뒤 단위의 개수를 더한다.",
+      "revision": 1,
+      "contentStatus": "prototype",
+      "sourceRecordId": "fraction-add",
+      "curriculumMappingStatus": "unverified"
+    },
+    {
+      "kind": "MathTerm",
+      "id": "fraction-add.term.1",
+      "canonicalParentId": "fraction-add",
+      "label": "공통 단위",
+      "language": "ko",
+      "sense": "통분 뒤 두 분수가 함께 사용하는 단위분수",
+      "revision": 1,
+      "contentStatus": "prototype"
+    },
+    {
+      "kind": "MathNotation",
+      "id": "fraction-add.symbol.1",
+      "canonicalParentId": "fraction-add",
+      "expression": "a/L + b/L",
+      "interpretation": "같은 단위 1/L의 개수를 합침",
+      "scope": "L은 양의 정수",
+      "revision": 1,
+      "contentStatus": "prototype"
+    },
+    {
+      "kind": "MathConcept",
+      "id": "fraction-divide",
+      "canonicalParentId": "section-model",
+      "title": "분수 나눗셈",
+      "definition": "나누는 수의 곱셈 역원을 곱해 몫을 구할 수 있다.",
+      "revision": 1,
+      "contentStatus": "prototype",
+      "sourceRecordId": "fraction-divide",
+      "curriculumMappingStatus": "unverified"
+    },
+    {
+      "kind": "MathTerm",
+      "id": "fraction-divide.term.1",
+      "canonicalParentId": "fraction-divide",
+      "label": "역수",
+      "language": "ko",
+      "sense": "곱해서 1이 되는 두 수 중 한쪽에서 본 다른 수",
+      "revision": 1,
+      "contentStatus": "prototype"
+    },
+    {
+      "kind": "MathNotation",
+      "id": "fraction-divide.symbol.1",
+      "canonicalParentId": "fraction-divide",
+      "expression": "÷",
+      "interpretation": "주어진 수로 나눈 몫",
+      "scope": "나누는 수는 0이 아님",
+      "revision": 1,
+      "contentStatus": "prototype"
+    },
+    {
+      "kind": "MathNotation",
+      "id": "fraction-divide.symbol.2",
+      "canonicalParentId": "fraction-divide",
+      "expression": "(a/b) ÷ (c/d)",
+      "interpretation": "(a/b) × (d/c)",
+      "scope": "b ≠ 0, c ≠ 0, d ≠ 0",
+      "revision": 1,
+      "contentStatus": "prototype"
+    },
+    {
+      "kind": "MathConcept",
+      "id": "rational",
+      "canonicalParentId": "section-model",
+      "title": "유리수",
+      "definition": "정수 a와 0이 아닌 정수 b에 대해 a/b 꼴로 나타낼 수 있는 수이다.",
+      "revision": 1,
+      "contentStatus": "prototype",
+      "sourceRecordId": "rational",
+      "curriculumMappingStatus": "unverified"
+    },
+    {
+      "kind": "MathTerm",
+      "id": "rational.term.1",
+      "canonicalParentId": "rational",
+      "label": "유리수",
+      "language": "ko",
+      "sense": "정수의 비로 표현 가능한 수",
+      "revision": 1,
+      "contentStatus": "prototype"
+    },
+    {
+      "kind": "MathTerm",
+      "id": "rational.term.2",
+      "canonicalParentId": "rational",
+      "label": "정수",
+      "language": "ko",
+      "sense": "음의 정수, 0, 양의 정수를 포함하는 수",
+      "revision": 1,
+      "contentStatus": "prototype"
+    },
+    {
+      "kind": "MathNotation",
+      "id": "rational.symbol.1",
+      "canonicalParentId": "rational",
+      "expression": "a/b",
+      "interpretation": "정수 a와 0이 아닌 정수 b의 몫",
+      "scope": "b는 음수여도 되며 양의 분모로 다시 표현 가능",
+      "revision": 1,
+      "contentStatus": "prototype"
+    },
+    {
+      "kind": "MathConcept",
+      "id": "rational-add",
+      "canonicalParentId": "section-model",
+      "title": "유리수 덧셈",
+      "definition": "부호와 공통 단위를 함께 고려해 유리수를 더한다.",
+      "revision": 1,
+      "contentStatus": "prototype",
+      "sourceRecordId": "rational-add",
+      "curriculumMappingStatus": "unverified"
+    },
+    {
+      "kind": "MathTerm",
+      "id": "rational-add.term.1",
+      "canonicalParentId": "rational-add",
+      "label": "부호",
+      "language": "ko",
+      "sense": "0을 기준으로 양수인지 음수인지 나타내는 표시",
+      "revision": 1,
+      "contentStatus": "prototype"
+    },
+    {
+      "kind": "MathNotation",
+      "id": "rational-add.symbol.1",
+      "canonicalParentId": "rational-add",
+      "expression": "−",
+      "interpretation": "음수를 나타내는 단항 기호",
+      "scope": "빼기 연산 기호와 용례를 구별",
+      "revision": 1,
+      "contentStatus": "prototype"
+    },
+    {
+      "kind": "MathConcept",
+      "id": "exponents",
+      "canonicalParentId": "section-model",
+      "title": "지수법칙",
+      "definition": "같은 밑의 거듭제곱을 곱할 때 지수를 더한다.",
+      "revision": 1,
+      "contentStatus": "prototype",
+      "sourceRecordId": "exponents",
+      "curriculumMappingStatus": "unverified"
+    },
+    {
+      "kind": "MathTerm",
+      "id": "exponents.term.1",
+      "canonicalParentId": "exponents",
+      "label": "밑",
+      "language": "ko",
+      "sense": "반복해서 곱하는 수",
+      "revision": 1,
+      "contentStatus": "prototype"
+    },
+    {
+      "kind": "MathTerm",
+      "id": "exponents.term.2",
+      "canonicalParentId": "exponents",
+      "label": "지수",
+      "language": "ko",
+      "sense": "곱해지는 밑의 개수",
+      "revision": 1,
+      "contentStatus": "prototype"
+    },
+    {
+      "kind": "MathNotation",
+      "id": "exponents.symbol.1",
+      "canonicalParentId": "exponents",
+      "expression": "a^m",
+      "interpretation": "a를 인수로 m개 곱한 값",
+      "scope": "이 샘플에서는 m이 양의 정수",
+      "revision": 1,
+      "contentStatus": "prototype"
+    },
+    {
+      "kind": "MathNotation",
+      "id": "exponents.symbol.2",
+      "canonicalParentId": "exponents",
+      "expression": "a^m × a^n = a^(m+n)",
+      "interpretation": "같은 밑의 곱셈 지수법칙",
+      "scope": "m, n은 양의 정수",
+      "revision": 1,
+      "contentStatus": "prototype"
+    },
+    {
+      "kind": "MathConcept",
+      "id": "square-roots",
+      "canonicalParentId": "section-model",
+      "title": "제곱근과 근호",
+      "definition": "x의 제곱근은 제곱해서 x가 되는 수이며, √x는 그중 음이 아닌 값을 나타낸다.",
+      "revision": 1,
+      "contentStatus": "prototype",
+      "sourceRecordId": "square-roots",
+      "curriculumMappingStatus": "unverified"
+    },
+    {
+      "kind": "MathTerm",
+      "id": "square-roots.term.1",
+      "canonicalParentId": "square-roots",
+      "label": "제곱근",
+      "language": "ko",
+      "sense": "제곱하여 주어진 값이 되는 수",
+      "revision": 1,
+      "contentStatus": "prototype"
+    },
+    {
+      "kind": "MathTerm",
+      "id": "square-roots.term.2",
+      "canonicalParentId": "square-roots",
+      "label": "근호",
+      "language": "ko",
+      "sense": "음이 아닌 제곱근을 나타내는 기호 √",
+      "revision": 1,
+      "contentStatus": "prototype"
+    },
+    {
+      "kind": "MathNotation",
+      "id": "square-roots.symbol.1",
+      "canonicalParentId": "square-roots",
+      "expression": "√x",
+      "interpretation": "x의 음이 아닌 제곱근",
+      "scope": "실수 범위에서 x ≥ 0",
+      "revision": 1,
+      "contentStatus": "prototype"
+    },
+    {
+      "kind": "MathNotation",
+      "id": "square-roots.symbol.2",
+      "canonicalParentId": "square-roots",
+      "expression": "±",
+      "interpretation": "양수와 음수 두 경우를 함께 표현",
+      "scope": "±3은 3과 −3",
+      "revision": 1,
+      "contentStatus": "prototype"
+    },
+    {
+      "kind": "Perspective",
+      "id": "perspective-adult-reader",
+      "canonicalParentId": "section-model",
+      "audience": "adult_reader",
+      "explanationLevel": "university",
+      "pedagogicalRoute": "symbol_meaning_and_structural_explanation",
+      "assumptions": [
+        "한국 2022 교육과정 초5부터 중3까지의 내용 범위",
+        "설명의 깊이와 학년 배치를 구분함"
+      ],
+      "revision": 1
+    },
+    {
+      "kind": "DependencyAssertion",
+      "id": "assertion-edge-1",
+      "canonicalParentId": "section-model",
+      "prerequisiteConceptId": "multiple",
+      "dependentConceptId": "common-multiple",
+      "relationKind": "required_prerequisite",
+      "claimBasis": "teaching_perspective",
+      "perspectiveId": "perspective-adult-reader",
+      "conditions": [
+        "초등·중등 개념을 정수와 분수의 표준 표현으로 설명하는 이 샘플 경로에서 해석한다.",
+        "필수 선행은 모든 학습자에게 보편적으로 유일한 학습 경로라는 뜻이 아니다."
+      ],
+      "rationale": "배수의 공통부분을 찾는다.",
+      "evidenceStatus": "author_hypothesis",
+      "evidenceIds": [
+        "evidence-assertion-edge-1"
+      ],
+      "approvalStatus": "proposed",
+      "revision": 1,
+      "selectedForPreview": true
+    },
+    {
+      "kind": "EvidenceReference",
+      "id": "evidence-assertion-edge-1",
+      "canonicalParentId": "section-evidence",
+      "sourceRecordId": "edge-1",
+      "sourceUrl": "https://chatgpt.com/space/page_ae357c7bc3b481919428ace1242eacf0",
+      "locator": "dependency-ledger-r1.json / assertion-edge-1",
+      "sourceKind": "author_constructed_sample",
+      "verificationStatus": "hypothesis"
+    },
+    {
+      "kind": "DependencyAssertion",
+      "id": "assertion-edge-2",
+      "canonicalParentId": "section-model",
+      "prerequisiteConceptId": "common-multiple",
+      "dependentConceptId": "lcm",
+      "relationKind": "required_prerequisite",
+      "claimBasis": "teaching_perspective",
+      "perspectiveId": "perspective-adult-reader",
+      "conditions": [
+        "초등·중등 개념을 정수와 분수의 표준 표현으로 설명하는 이 샘플 경로에서 해석한다.",
+        "필수 선행은 모든 학습자에게 보편적으로 유일한 학습 경로라는 뜻이 아니다."
+      ],
+      "rationale": "양의 공배수 중 최솟값을 찾는다.",
+      "evidenceStatus": "author_hypothesis",
+      "evidenceIds": [
+        "evidence-assertion-edge-2"
+      ],
+      "approvalStatus": "proposed",
+      "revision": 1,
+      "selectedForPreview": true
+    },
+    {
+      "kind": "EvidenceReference",
+      "id": "evidence-assertion-edge-2",
+      "canonicalParentId": "section-evidence",
+      "sourceRecordId": "edge-2",
+      "sourceUrl": "https://chatgpt.com/space/page_ae357c7bc3b481919428ace1242eacf0",
+      "locator": "dependency-ledger-r1.json / assertion-edge-2",
+      "sourceKind": "author_constructed_sample",
+      "verificationStatus": "hypothesis"
+    },
+    {
+      "kind": "DependencyAssertion",
+      "id": "assertion-edge-3",
+      "canonicalParentId": "section-model",
+      "prerequisiteConceptId": "fraction-notation",
+      "dependentConceptId": "equivalent-fractions",
+      "relationKind": "required_prerequisite",
+      "claimBasis": "teaching_perspective",
+      "perspectiveId": "perspective-adult-reader",
+      "conditions": [
+        "초등·중등 개념을 정수와 분수의 표준 표현으로 설명하는 이 샘플 경로에서 해석한다.",
+        "필수 선행은 모든 학습자에게 보편적으로 유일한 학습 경로라는 뜻이 아니다."
+      ],
+      "rationale": "분수의 값과 단위 의미를 사용한다.",
+      "evidenceStatus": "author_hypothesis",
+      "evidenceIds": [
+        "evidence-assertion-edge-3"
+      ],
+      "approvalStatus": "proposed",
+      "revision": 1,
+      "selectedForPreview": true
+    },
+    {
+      "kind": "EvidenceReference",
+      "id": "evidence-assertion-edge-3",
+      "canonicalParentId": "section-evidence",
+      "sourceRecordId": "edge-3",
+      "sourceUrl": "https://chatgpt.com/space/page_ae357c7bc3b481919428ace1242eacf0",
+      "locator": "dependency-ledger-r1.json / assertion-edge-3",
+      "sourceKind": "author_constructed_sample",
+      "verificationStatus": "hypothesis"
+    },
+    {
+      "kind": "DependencyAssertion",
+      "id": "assertion-edge-4",
+      "canonicalParentId": "section-model",
+      "prerequisiteConceptId": "common-multiple",
+      "dependentConceptId": "common-denominator",
+      "relationKind": "required_prerequisite",
+      "claimBasis": "mathematical_requirement",
+      "perspectiveId": "perspective-adult-reader",
+      "conditions": [
+        "분모를 양의 정수로 두고, 각 분수를 분자와 분모에 같은 양의 정수를 곱하는 방식으로 통분한다.",
+        "이 조건에서 공통 분모는 각 분모의 공배수이다. 교육적 학습 순서의 유일성을 증명하지 않는다."
+      ],
+      "rationale": "공통 분모를 공배수로 고른다.",
+      "evidenceStatus": "author_hypothesis",
+      "evidenceIds": [
+        "evidence-assertion-edge-4"
+      ],
+      "approvalStatus": "proposed",
+      "revision": 1,
+      "selectedForPreview": true
+    },
+    {
+      "kind": "EvidenceReference",
+      "id": "evidence-assertion-edge-4",
+      "canonicalParentId": "section-evidence",
+      "sourceRecordId": "edge-4",
+      "sourceUrl": "https://chatgpt.com/space/page_ae357c7bc3b481919428ace1242eacf0",
+      "locator": "dependency-ledger-r1.json / assertion-edge-4",
+      "sourceKind": "author_constructed_sample",
+      "verificationStatus": "hypothesis"
+    },
+    {
+      "kind": "DependencyAssertion",
+      "id": "assertion-edge-5",
+      "canonicalParentId": "section-model",
+      "prerequisiteConceptId": "equivalent-fractions",
+      "dependentConceptId": "common-denominator",
+      "relationKind": "required_prerequisite",
+      "claimBasis": "teaching_perspective",
+      "perspectiveId": "perspective-adult-reader",
+      "conditions": [
+        "초등·중등 개념을 정수와 분수의 표준 표현으로 설명하는 이 샘플 경로에서 해석한다.",
+        "필수 선행은 모든 학습자에게 보편적으로 유일한 학습 경로라는 뜻이 아니다."
+      ],
+      "rationale": "값을 보존하며 분모를 바꾼다.",
+      "evidenceStatus": "author_hypothesis",
+      "evidenceIds": [
+        "evidence-assertion-edge-5"
+      ],
+      "approvalStatus": "proposed",
+      "revision": 1,
+      "selectedForPreview": true
+    },
+    {
+      "kind": "EvidenceReference",
+      "id": "evidence-assertion-edge-5",
+      "canonicalParentId": "section-evidence",
+      "sourceRecordId": "edge-5",
+      "sourceUrl": "https://chatgpt.com/space/page_ae357c7bc3b481919428ace1242eacf0",
+      "locator": "dependency-ledger-r1.json / assertion-edge-5",
+      "sourceKind": "author_constructed_sample",
+      "verificationStatus": "hypothesis"
+    },
+    {
+      "kind": "DependencyAssertion",
+      "id": "assertion-edge-6",
+      "canonicalParentId": "section-model",
+      "prerequisiteConceptId": "common-denominator",
+      "dependentConceptId": "fraction-add",
+      "relationKind": "required_prerequisite",
+      "claimBasis": "teaching_perspective",
+      "perspectiveId": "perspective-adult-reader",
+      "conditions": [
+        "초등·중등 개념을 정수와 분수의 표준 표현으로 설명하는 이 샘플 경로에서 해석한다.",
+        "필수 선행은 모든 학습자에게 보편적으로 유일한 학습 경로라는 뜻이 아니다."
+      ],
+      "rationale": "분모가 다른 분수를 같은 단위로 맞춘다.",
+      "evidenceStatus": "author_hypothesis",
+      "evidenceIds": [
+        "evidence-assertion-edge-6"
+      ],
+      "approvalStatus": "proposed",
+      "revision": 1,
+      "selectedForPreview": true
+    },
+    {
+      "kind": "EvidenceReference",
+      "id": "evidence-assertion-edge-6",
+      "canonicalParentId": "section-evidence",
+      "sourceRecordId": "edge-6",
+      "sourceUrl": "https://chatgpt.com/space/page_ae357c7bc3b481919428ace1242eacf0",
+      "locator": "dependency-ledger-r1.json / assertion-edge-6",
+      "sourceKind": "author_constructed_sample",
+      "verificationStatus": "hypothesis"
+    },
+    {
+      "kind": "DependencyAssertion",
+      "id": "assertion-edge-7",
+      "canonicalParentId": "section-model",
+      "prerequisiteConceptId": "rational",
+      "dependentConceptId": "rational-add",
+      "relationKind": "required_prerequisite",
+      "claimBasis": "teaching_perspective",
+      "perspectiveId": "perspective-adult-reader",
+      "conditions": [
+        "초등·중등 개념을 정수와 분수의 표준 표현으로 설명하는 이 샘플 경로에서 해석한다.",
+        "필수 선행은 모든 학습자에게 보편적으로 유일한 학습 경로라는 뜻이 아니다."
+      ],
+      "rationale": "양수와 음수를 포함하는 유리수를 다룬다.",
+      "evidenceStatus": "author_hypothesis",
+      "evidenceIds": [
+        "evidence-assertion-edge-7"
+      ],
+      "approvalStatus": "proposed",
+      "revision": 1,
+      "selectedForPreview": true
+    },
+    {
+      "kind": "EvidenceReference",
+      "id": "evidence-assertion-edge-7",
+      "canonicalParentId": "section-evidence",
+      "sourceRecordId": "edge-7",
+      "sourceUrl": "https://chatgpt.com/space/page_ae357c7bc3b481919428ace1242eacf0",
+      "locator": "dependency-ledger-r1.json / assertion-edge-7",
+      "sourceKind": "author_constructed_sample",
+      "verificationStatus": "hypothesis"
+    },
+    {
+      "kind": "DependencyAssertion",
+      "id": "assertion-edge-8",
+      "canonicalParentId": "section-model",
+      "prerequisiteConceptId": "common-denominator",
+      "dependentConceptId": "rational-add",
+      "relationKind": "required_prerequisite",
+      "claimBasis": "teaching_perspective",
+      "perspectiveId": "perspective-adult-reader",
+      "conditions": [
+        "초등·중등 개념을 정수와 분수의 표준 표현으로 설명하는 이 샘플 경로에서 해석한다.",
+        "필수 선행은 모든 학습자에게 보편적으로 유일한 학습 경로라는 뜻이 아니다."
+      ],
+      "rationale": "분수로 표시한 유리수의 단위를 맞춘다.",
+      "evidenceStatus": "author_hypothesis",
+      "evidenceIds": [
+        "evidence-assertion-edge-8"
+      ],
+      "approvalStatus": "proposed",
+      "revision": 1,
+      "selectedForPreview": true
+    },
+    {
+      "kind": "EvidenceReference",
+      "id": "evidence-assertion-edge-8",
+      "canonicalParentId": "section-evidence",
+      "sourceRecordId": "edge-8",
+      "sourceUrl": "https://chatgpt.com/space/page_ae357c7bc3b481919428ace1242eacf0",
+      "locator": "dependency-ledger-r1.json / assertion-edge-8",
+      "sourceKind": "author_constructed_sample",
+      "verificationStatus": "hypothesis"
+    },
+    {
+      "kind": "DependencyAssertion",
+      "id": "assertion-edge-9",
+      "canonicalParentId": "section-model",
+      "prerequisiteConceptId": "lcm",
+      "dependentConceptId": "common-denominator",
+      "relationKind": "helpful_prerequisite",
+      "claimBasis": "teaching_perspective",
+      "perspectiveId": "perspective-adult-reader",
+      "conditions": [
+        "초등·중등 개념을 정수와 분수의 표준 표현으로 설명하는 이 샘플 경로에서 해석한다.",
+        "필수 선행은 모든 학습자에게 보편적으로 유일한 학습 경로라는 뜻이 아니다."
+      ],
+      "rationale": "가장 작은 공통 분모를 선택하는 효율화 관계이며 필수 선수로 단정하지 않는다.",
+      "evidenceStatus": "author_hypothesis",
+      "evidenceIds": [
+        "evidence-assertion-edge-9"
+      ],
+      "approvalStatus": "proposed",
+      "revision": 1,
+      "selectedForPreview": true
+    },
+    {
+      "kind": "EvidenceReference",
+      "id": "evidence-assertion-edge-9",
+      "canonicalParentId": "section-evidence",
+      "sourceRecordId": "edge-9",
+      "sourceUrl": "https://chatgpt.com/space/page_ae357c7bc3b481919428ace1242eacf0",
+      "locator": "dependency-ledger-r1.json / assertion-edge-9",
+      "sourceKind": "author_constructed_sample",
+      "verificationStatus": "hypothesis"
+    },
+    {
+      "kind": "DependencyAssertion",
+      "id": "assertion-edge-10",
+      "canonicalParentId": "section-model",
+      "prerequisiteConceptId": "fraction-notation",
+      "dependentConceptId": "rational",
+      "relationKind": "representation",
+      "claimBasis": "teaching_perspective",
+      "perspectiveId": "perspective-adult-reader",
+      "conditions": [
+        "초등·중등 개념을 정수와 분수의 표준 표현으로 설명하는 이 샘플 경로에서 해석한다.",
+        "필수 선행은 모든 학습자에게 보편적으로 유일한 학습 경로라는 뜻이 아니다."
+      ],
+      "rationale": "분수 표기가 유리수를 나타내는 표현으로 확장된다.",
+      "evidenceStatus": "author_hypothesis",
+      "evidenceIds": [
+        "evidence-assertion-edge-10"
+      ],
+      "approvalStatus": "proposed",
+      "revision": 1,
+      "selectedForPreview": true
+    },
+    {
+      "kind": "EvidenceReference",
+      "id": "evidence-assertion-edge-10",
+      "canonicalParentId": "section-evidence",
+      "sourceRecordId": "edge-10",
+      "sourceUrl": "https://chatgpt.com/space/page_ae357c7bc3b481919428ace1242eacf0",
+      "locator": "dependency-ledger-r1.json / assertion-edge-10",
+      "sourceKind": "author_constructed_sample",
+      "verificationStatus": "hypothesis"
+    },
+    {
+      "kind": "DependencyAssertion",
+      "id": "assertion-edge-11",
+      "canonicalParentId": "section-model",
+      "prerequisiteConceptId": "fraction-add",
+      "dependentConceptId": "rational-add",
+      "relationKind": "related",
+      "claimBasis": "teaching_perspective",
+      "perspectiveId": "perspective-adult-reader",
+      "conditions": [
+        "초등·중등 개념을 정수와 분수의 표준 표현으로 설명하는 이 샘플 경로에서 해석한다.",
+        "필수 선행은 모든 학습자에게 보편적으로 유일한 학습 경로라는 뜻이 아니다."
+      ],
+      "rationale": "양의 분수 덧셈과 부호 있는 수의 덧셈을 연결한다.",
+      "evidenceStatus": "author_hypothesis",
+      "evidenceIds": [
+        "evidence-assertion-edge-11"
+      ],
+      "approvalStatus": "proposed",
+      "revision": 1,
+      "selectedForPreview": true
+    },
+    {
+      "kind": "EvidenceReference",
+      "id": "evidence-assertion-edge-11",
+      "canonicalParentId": "section-evidence",
+      "sourceRecordId": "edge-11",
+      "sourceUrl": "https://chatgpt.com/space/page_ae357c7bc3b481919428ace1242eacf0",
+      "locator": "dependency-ledger-r1.json / assertion-edge-11",
+      "sourceKind": "author_constructed_sample",
+      "verificationStatus": "hypothesis"
+    },
+    {
+      "kind": "DependencyAssertion",
+      "id": "assertion-edge-12",
+      "canonicalParentId": "section-model",
+      "prerequisiteConceptId": "exponents",
+      "dependentConceptId": "square-roots",
+      "relationKind": "related",
+      "claimBasis": "teaching_perspective",
+      "perspectiveId": "perspective-adult-reader",
+      "conditions": [
+        "초등·중등 개념을 정수와 분수의 표준 표현으로 설명하는 이 샘플 경로에서 해석한다.",
+        "필수 선행은 모든 학습자에게 보편적으로 유일한 학습 경로라는 뜻이 아니다."
+      ],
+      "rationale": "제곱 연산과 역방향 관계를 연결하되 전체 지수법칙을 필수 선수로 단정하지 않는다.",
+      "evidenceStatus": "author_hypothesis",
+      "evidenceIds": [
+        "evidence-assertion-edge-12"
+      ],
+      "approvalStatus": "proposed",
+      "revision": 1,
+      "selectedForPreview": true
+    },
+    {
+      "kind": "EvidenceReference",
+      "id": "evidence-assertion-edge-12",
+      "canonicalParentId": "section-evidence",
+      "sourceRecordId": "edge-12",
+      "sourceUrl": "https://chatgpt.com/space/page_ae357c7bc3b481919428ace1242eacf0",
+      "locator": "dependency-ledger-r1.json / assertion-edge-12",
+      "sourceKind": "author_constructed_sample",
+      "verificationStatus": "hypothesis"
+    }
+  ],
+  "proposals": [
+    {
+      "kind": "ChangeProposal",
+      "id": "proposal-related-to-helpful",
+      "canonicalParentId": "section-simulation",
+      "assertionId": "assertion-edge-11",
+      "expectedRevision": 1,
+      "expectedGraphRevision": 1,
+      "perspectiveId": "perspective-adult-reader",
+      "rationale": "양의 분수 덧셈을 알고 있으면 부호 있는 유리수 덧셈을 설명하는 데 도움이 된다는 별도 교수 관점이다. 필수 선수로 승격하지 않는다.",
+      "changes": [
+        {
+          "kind": "FieldChange",
+          "field": "relationKind",
+          "before": "related",
+          "after": "helpful_prerequisite"
+        }
+      ],
+      "approvalStatus": "not_requested",
+      "userApprovalEvidence": null,
+      "applied": false,
+      "reviewedPayloadHash": "24a04d296b5a29f0e1d67bef5beef510f26e326d59a5d7b84fb318ccdb23423f"
+    }
+  ],
+  "officialSources": [
+    {
+      "kind": "OfficialSource",
+      "id": "src-overview",
+      "canonicalParentId": "section-evidence",
+      "title": "Ontology overview",
+      "url": "https://www.palantir.com/docs/foundry/ontology/overview",
+      "accessedAt": "2026-10-06T06:27:00Z",
+      "sourceClass": "official_palantir_documentation",
+      "verifiedClaim": "Objects, properties and links provide semantics; actions, functions and dynamic security provide kinetics."
+    },
+    {
+      "kind": "OfficialSource",
+      "id": "src-architecture",
+      "canonicalParentId": "section-evidence",
+      "title": "Ontology system",
+      "url": "https://www.palantir.com/docs/foundry/architecture-center/ontology-system",
+      "accessedAt": "2026-10-06T06:27:00Z",
+      "sourceClass": "official_palantir_documentation",
+      "verifiedClaim": "The operating model integrates data, logic, action and security."
+    },
+    {
+      "kind": "OfficialSource",
+      "id": "src-objects",
+      "canonicalParentId": "section-evidence",
+      "title": "Object types",
+      "url": "https://www.palantir.com/docs/foundry/object-link-types/object-types-overview",
+      "accessedAt": "2026-10-06T06:27:00Z",
+      "sourceClass": "official_palantir_documentation",
+      "verifiedClaim": "Object types define schemas; objects are instances."
+    },
+    {
+      "kind": "OfficialSource",
+      "id": "src-properties",
+      "canonicalParentId": "section-evidence",
+      "title": "Properties",
+      "url": "https://www.palantir.com/docs/foundry/object-link-types/properties-overview",
+      "accessedAt": "2026-10-06T06:27:00Z",
+      "sourceClass": "official_palantir_documentation",
+      "verifiedClaim": "A property definition differs from its value on one object."
+    },
+    {
+      "kind": "OfficialSource",
+      "id": "src-links",
+      "canonicalParentId": "section-evidence",
+      "title": "Link types",
+      "url": "https://www.palantir.com/docs/foundry/object-link-types/link-types-overview",
+      "accessedAt": "2026-10-06T06:27:00Z",
+      "sourceClass": "official_palantir_documentation",
+      "verifiedClaim": "A link type defines a relationship; both sides can be traversed without making its domain meaning symmetric."
+    },
+    {
+      "kind": "OfficialSource",
+      "id": "src-interfaces",
+      "canonicalParentId": "section-evidence",
+      "title": "Interfaces",
+      "url": "https://www.palantir.com/docs/foundry/interfaces/interface-overview",
+      "accessedAt": "2026-10-06T06:27:00Z",
+      "sourceClass": "official_palantir_documentation",
+      "verifiedClaim": "Interfaces are abstract shared shapes and capabilities; product and language support varies."
+    },
+    {
+      "kind": "OfficialSource",
+      "id": "src-design",
+      "canonicalParentId": "section-evidence",
+      "title": "Ontology design principles",
+      "url": "https://www.palantir.com/docs/foundry/ontology/ontology-best-practices",
+      "accessedAt": "2026-10-06T06:27:00Z",
+      "sourceClass": "official_palantir_documentation",
+      "verifiedClaim": "Model domain entities; prefer composition over deep hierarchies."
+    },
+    {
+      "kind": "OfficialSource",
+      "id": "src-object-backed-links",
+      "canonicalParentId": "section-evidence",
+      "title": "Structural guidance",
+      "url": "https://www.palantir.com/docs/foundry/ontology/ontology-structural-guidance",
+      "accessedAt": "2026-10-06T06:27:00Z",
+      "sourceClass": "official_palantir_documentation",
+      "verifiedClaim": "Relationships carrying their own metadata can use object-backed links."
+    },
+    {
+      "kind": "OfficialSource",
+      "id": "src-actions",
+      "canonicalParentId": "section-evidence",
+      "title": "Action types",
+      "url": "https://www.palantir.com/docs/foundry/action-types/overview",
+      "accessedAt": "2026-10-06T06:27:00Z",
+      "sourceClass": "official_palantir_documentation",
+      "verifiedClaim": "Actions bundle meaningful edits; action types define those operations."
+    },
+    {
+      "kind": "OfficialSource",
+      "id": "src-functions",
+      "canonicalParentId": "section-evidence",
+      "title": "Functions",
+      "url": "https://www.palantir.com/docs/foundry/functions/overview",
+      "accessedAt": "2026-10-06T06:27:00Z",
+      "sourceClass": "official_palantir_documentation",
+      "verifiedClaim": "Functions provide server-side logic for objects, links and complex edits."
+    },
+    {
+      "kind": "OfficialSource",
+      "id": "src-edit-functions",
+      "canonicalParentId": "section-evidence",
+      "title": "Ontology edits",
+      "url": "https://www.palantir.com/docs/foundry/functions/edits-overview",
+      "accessedAt": "2026-10-06T06:27:00Z",
+      "sourceClass": "official_palantir_documentation",
+      "verifiedClaim": "Edit functions can return edits for function-backed actions; preview execution is distinct from commit."
+    },
+    {
+      "kind": "OfficialSource",
+      "id": "src-criteria",
+      "canonicalParentId": "section-evidence",
+      "title": "Submission criteria",
+      "url": "https://www.palantir.com/docs/foundry/action-types/submission-criteria",
+      "accessedAt": "2026-10-06T06:27:00Z",
+      "sourceClass": "official_palantir_documentation",
+      "verifiedClaim": "Criteria can govern action execution using users, parameters and object state."
+    },
+    {
+      "kind": "OfficialSource",
+      "id": "src-transactions",
+      "canonicalParentId": "section-evidence",
+      "title": "Consistency and isolation",
+      "url": "https://www.palantir.com/docs/foundry/action-types/consistency-guarantees",
+      "accessedAt": "2026-10-06T06:27:00Z",
+      "sourceClass": "official_palantir_documentation",
+      "verifiedClaim": "Action edit atomicity does not include external side effects such as notifications or webhooks."
+    },
+    {
+      "kind": "OfficialSource",
+      "id": "src-logs",
+      "canonicalParentId": "section-evidence",
+      "title": "Action log",
+      "url": "https://www.palantir.com/docs/foundry/action-types/action-log",
+      "accessedAt": "2026-10-06T06:27:00Z",
+      "sourceClass": "official_palantir_documentation",
+      "verifiedClaim": "Configured action logs capture successful action submissions, not every edit path or failed action."
+    },
+    {
+      "kind": "OfficialSource",
+      "id": "src-reverts",
+      "canonicalParentId": "section-evidence",
+      "title": "Undo or revert actions",
+      "url": "https://www.palantir.com/docs/foundry/action-types/action-reverts",
+      "accessedAt": "2026-10-06T06:27:00Z",
+      "sourceClass": "official_palantir_documentation",
+      "verifiedClaim": "Built-in undo has immediate/latest-edit/user/storage restrictions and does not undo side effects."
+    },
+    {
+      "kind": "OfficialSource",
+      "id": "src-branches",
+      "canonicalParentId": "section-evidence",
+      "title": "Ontology branching",
+      "url": "https://www.palantir.com/docs/foundry/ontologies/branching-ontology",
+      "accessedAt": "2026-10-06T06:27:00Z",
+      "sourceClass": "official_palantir_documentation",
+      "verifiedClaim": "Branches and proposals govern ontology resource definition changes."
+    },
+    {
+      "kind": "OfficialSource",
+      "id": "src-scenarios",
+      "canonicalParentId": "section-evidence",
+      "title": "Ontology scenarios",
+      "url": "https://www.palantir.com/docs/foundry/ontology/overview-ontology-scenario",
+      "accessedAt": "2026-10-06T06:27:00Z",
+      "sourceClass": "official_palantir_documentation",
+      "verifiedClaim": "Scenarios are beta what-if sandboxes, not historical snapshots or data-versioning tools."
+    },
+    {
+      "kind": "OfficialSource",
+      "id": "src-history",
+      "canonicalParentId": "section-evidence",
+      "title": "Ontology anti-patterns",
+      "url": "https://www.palantir.com/docs/foundry/ontology/ontology-anti-patterns",
+      "accessedAt": "2026-10-06T06:27:00Z",
+      "sourceClass": "official_palantir_documentation",
+      "verifiedClaim": "Preserve one entity identity and connect history or amendment objects."
+    },
+    {
+      "kind": "OfficialSource",
+      "id": "src-aip",
+      "canonicalParentId": "section-evidence",
+      "title": "AIP Chatbot tools",
+      "url": "https://www.palantir.com/docs/foundry/chatbot-studio/tools",
+      "accessedAt": "2026-10-06T06:27:00Z",
+      "sourceClass": "official_palantir_documentation",
+      "verifiedClaim": "LLMs can use configured object queries, functions and actions; actions may require user confirmation."
+    }
+  ],
+  "sourceMappings": [
+    {
+      "kind": "SourceMapping",
+      "id": "mapping-1",
+      "canonicalParentId": "section-evidence",
+      "officialSourceId": "src-overview",
+      "targetId": "proposal-root",
+      "mappingStatus": "domain_adaptation_not_vendor_requirement",
+      "application": "semantic entities plus governed changes"
+    },
+    {
+      "kind": "SourceMapping",
+      "id": "mapping-2",
+      "canonicalParentId": "section-evidence",
+      "officialSourceId": "src-objects",
+      "targetId": "type-MathConcept",
+      "mappingStatus": "domain_adaptation_not_vendor_requirement",
+      "application": "MathConcept is a type; 통분 is one object"
+    },
+    {
+      "kind": "SourceMapping",
+      "id": "mapping-3",
+      "canonicalParentId": "section-evidence",
+      "officialSourceId": "src-properties",
+      "targetId": "type-MathNotation",
+      "mappingStatus": "domain_adaptation_not_vendor_requirement",
+      "application": "notation meaning and scope are explicitly typed"
+    },
+    {
+      "kind": "SourceMapping",
+      "id": "mapping-4",
+      "canonicalParentId": "section-evidence",
+      "officialSourceId": "src-object-backed-links",
+      "targetId": "type-DependencyAssertion",
+      "mappingStatus": "domain_adaptation_not_vendor_requirement",
+      "application": "metadata-bearing relationship adaptation"
+    },
+    {
+      "kind": "SourceMapping",
+      "id": "mapping-5",
+      "canonicalParentId": "section-evidence",
+      "officialSourceId": "src-interfaces",
+      "targetId": "interface-KnowledgeElement",
+      "mappingStatus": "domain_adaptation_not_vendor_requirement",
+      "application": "optional shared shape, not a class hierarchy of school grades"
+    },
+    {
+      "kind": "SourceMapping",
+      "id": "mapping-6",
+      "canonicalParentId": "section-evidence",
+      "officialSourceId": "src-actions",
+      "targetId": "action-ApproveAndApplyDependencyChange",
+      "mappingStatus": "domain_adaptation_not_vendor_requirement",
+      "application": "cohesive domain operation"
+    },
+    {
+      "kind": "SourceMapping",
+      "id": "mapping-7",
+      "canonicalParentId": "section-evidence",
+      "officialSourceId": "src-functions",
+      "targetId": "function-PreviewDependencyChange",
+      "mappingStatus": "domain_adaptation_not_vendor_requirement",
+      "application": "separate logic and commit"
+    },
+    {
+      "kind": "SourceMapping",
+      "id": "mapping-8",
+      "canonicalParentId": "section-evidence",
+      "officialSourceId": "src-aip",
+      "targetId": "action-ProposeDependencyChange",
+      "mappingStatus": "domain_adaptation_not_vendor_requirement",
+      "application": "LLM drafts proposal; approval is separate"
+    },
+    {
+      "kind": "SourceMapping",
+      "id": "mapping-9",
+      "canonicalParentId": "section-evidence",
+      "officialSourceId": "src-logs",
+      "targetId": "type-RevisionEvent",
+      "mappingStatus": "domain_adaptation_not_vendor_requirement",
+      "application": "decision logging and all-edit history differ"
+    },
+    {
+      "kind": "SourceMapping",
+      "id": "mapping-10",
+      "canonicalParentId": "section-evidence",
+      "officialSourceId": "src-reverts",
+      "targetId": "action-RestoreDependencyRevision",
+      "mappingStatus": "domain_adaptation_not_vendor_requirement",
+      "application": "own compensating revision contract, not native long-term undo"
+    },
+    {
+      "kind": "SourceMapping",
+      "id": "mapping-11",
+      "canonicalParentId": "section-evidence",
+      "officialSourceId": "src-branches",
+      "targetId": "section-operations",
+      "mappingStatus": "domain_adaptation_not_vendor_requirement",
+      "application": "schema review differs from curriculum data approval"
+    },
+    {
+      "kind": "SourceMapping",
+      "id": "mapping-12",
+      "canonicalParentId": "section-evidence",
+      "officialSourceId": "src-scenarios",
+      "targetId": "section-simulation",
+      "mappingStatus": "domain_adaptation_not_vendor_requirement",
+      "application": "read-only what-if example is not historical scenario storage"
+    },
+    {
+      "kind": "SourceMapping",
+      "id": "mapping-13",
+      "canonicalParentId": "section-evidence",
+      "officialSourceId": "src-history",
+      "targetId": "type-RevisionEvent",
+      "mappingStatus": "domain_adaptation_not_vendor_requirement",
+      "application": "stable identity plus linked amendments"
+    }
+  ],
+  "limitations": [
+    {
+      "kind": "Limitation",
+      "id": "lim-1",
+      "canonicalParentId": "proposal-root",
+      "title": "배포 상태",
+      "detail": "Foundry를 실행하거나 설치하지 않았고 플랫폼 호환성도 검증하지 않았다."
+    },
+    {
+      "kind": "Limitation",
+      "id": "lim-2",
+      "canonicalParentId": "proposal-root",
+      "title": "적용 상태",
+      "detail": "제안 파일과 모의 검증만 게시했다. 실제 지식 그래프 변경, 사용자 승인, 운영 권한 집행은 없다."
+    },
+    {
+      "kind": "Limitation",
+      "id": "lim-3",
+      "canonicalParentId": "proposal-root",
+      "title": "교육과정 근거",
+      "detail": "학년과 성취기준의 공식 매핑은 미검증이며 공식 코드 인스턴스를 만들어 넣지 않았다."
+    },
+    {
+      "kind": "Limitation",
+      "id": "lim-4",
+      "canonicalParentId": "proposal-root",
+      "title": "시나리오",
+      "detail": "Palantir Scenarios는 과거 버전 보관 도구가 아니므로 장기 복원 근거로 사용하지 않는다."
+    },
+    {
+      "kind": "Limitation",
+      "id": "lim-5",
+      "canonicalParentId": "proposal-root",
+      "title": "되돌리기",
+      "detail": "본 예시는 새 revision을 만드는 보상 변경이다. Palantir 기본 Undo의 제약과 구별한다."
+    },
+    {
+      "kind": "Limitation",
+      "id": "lim-6",
+      "canonicalParentId": "proposal-root",
+      "title": "AIP",
+      "detail": "LLM 제안을 수학적 증명이나 검증된 교육 순서로 간주하지 않는다."
+    },
+    {
+      "kind": "Limitation",
+      "id": "lim-7",
+      "canonicalParentId": "proposal-root",
+      "title": "스키마",
+      "detail": "이 JSON Schema는 자체 제안 데이터 형식이다. Foundry import나 OSDK 생성물은 아니다."
+    }
+  ]
+}

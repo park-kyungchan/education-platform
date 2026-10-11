@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><title>Synthetic parser fixture</title></head>
+<body>
+<!-- This fixture is synthetic. No real names, account values, scores, dates, IDs, or codes were copied. -->
+<form id="search" name="search" method="post">
+  <input type="hidden" name="clg_no" value=123>
+  <input type="hidden" id="book_code" name="book_code" value=0>
+  <input type="text" id="stu_name" name="stu_name" value="예제학생" onkeydown="chkKey(event);">
+  <input type="checkbox" name="check_all_stu" value="1" checked>
+  <select id="sort_date" name="sort_date"><option value="1">최근1주</option><option value="3" selected>최근3주</option></select>
+  <select id="chioce_course" name="chioce_course" onchange="onSelChange();"><option value="0">교과 과정</option><option value="321">예제 교재</option></select>
+</form>
+<table class="content-table">
+  <thead><tr><th>학생이름</th><th>학습과정-단원분류</th><th>응시일</th><th>시험지</th><th>점수</th><th>클리닉</th><th></th><th>채 오 클 분</th><th>일괄 재응시</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>예제학생</td>
+      <td class="txt-left pl-5"><p>예제 교재</p><span>[실전 유형(1회차)]</span><p>2-1 예제 단원(1차시) - 예제학생</p></td>
+      <td>01-02 10:00</td>
+      <td><img alt="시험지" onclick="externOnPopupTestInfoClick(0, 1);"></td>
+      <td>80</td>
+      <td class="txt-left pl-20"><p>예제 클리닉</p><img alt="상태"><span>완료</span></td>
+      <td><label><span><input type="checkbox" name="one_check" onclick="externOnOneSelectToggleButtonClick(0);"></span></label></td>
+      <td><span onclick="externOnOneOXButtonClick(0);">채</span><span onclick="externOnOneClinicButtonClick(0);">클</span><span onclick="externOnOneReportButtonClick(0);">분</span></td>
+      <td><button onclick="onClickInitApply(0);">재응시</button></td>
+    </tr>
+    <tr>
+      <td>예제학생</td>
+      <td class="txt-left pl-5"><p>예제 교재</p><span>[총괄]</span><p>3. 다른 예제 단원 - 예제학생</p></td>
+      <td>01-03 10:00</td>
+      <td><img alt="시험지" onclick="externOnPopupTestInfoClick(1, 0);"></td>
+      <td>60</td>
+      <td class="txt-left pl-20"><p>예제 클리닉</p><span>미완료</span></td>
+      <td><label><span><input type="checkbox" name="one_check" onclick="externOnOneSelectToggleButtonClick(1);"></span></label></td>
+      <td><span onclick="externOnOneIncorrectButtonClick(1);">오</span></td>
+      <td><button onclick="onClickInitApply(1);">재응시</button></td>
+    </tr>
+  </tbody>
+</table>
+<!-- Row onclick numbers are indices, not native attempt IDs. Bootstrap field names and static-JSON.parse shape were observed; all following values are fictional. -->
+<script>
+var EXTERN_DIALOG = {
+  testResultList: JSON.parse('[{"scoreFlg":1,"testingNo":90001,"testNo":70001,"categName":"2-1 예제 단원(1차시)","applyFlg":1,"userName":"예제학생","assNo":400,"pNo":80001,"score":80,"courseName":"예제 교재","similarClinic":"","testTypeName":"실전 유형(1회차)","priNo":100,"studentName":"예제학생","developClinic":"","courseKey":321,"_id":"synthetic-A","applyDate":"01-02 10:00","levelOrder":1},{"scoreFlg":1,"testingNo":90002,"testNo":70002,"categName":"3. 다른 예제 단원","applyFlg":1,"userName":"예제학생","assNo":400,"pNo":80002,"score":60,"courseName":"예제 교재","similarClinic":"","testTypeName":"총괄","priNo":100,"studentName":"예제학생","developClinic":"","courseKey":321,"_id":"synthetic-B","applyDate":"01-03 10:00","levelOrder":2}]')
+};
+</script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+import {z} from 'zod';
+import {Id,Hash,Instant} from '../schema/v1/ids.ts';
+export const GradingUnit=z.strictObject({id:Id,studentId:Id,nativeId:Id,sourceId:Id,sourceLabelRaw:z.string(),nativeHierarchyPath:z.array(Id),sourceRevision:Id});
+import {EvidenceRef} from '../schema/v1/evidence-ref.ts';
+export const IncludedContent=z.strictObject({id:Id,studentId:Id,sourceLabelRaw:z.string(),printedSectionRef:Id.nullable(),historicalStandaloneRecordRef:Id.nullable(),includedInGradingUnitId:Id.nullable(),inclusionState:z.enum(['native_metadata_verified','user_confirmed_scope_native_binding_pending']),evidence:EvidenceRef,countsAsIndependentProgress:z.literal(false)}).superRefine((x,c)=>{if(x.inclusionState==='native_metadata_verified'&&(x.includedInGradingUnitId===null||x.evidence.sourceClass!=='native_metadata_observed'))c.addIssue({code:'custom',message:'native_inclusion_requires_observed_native_binding'});if(x.inclusionState==='user_confirmed_scope_native_binding_pending'&&x.evidence.sourceClass!=='user_confirmed_statement')c.addIssue({code:'custom',message:'user_inclusion_requires_user_evidence'});});

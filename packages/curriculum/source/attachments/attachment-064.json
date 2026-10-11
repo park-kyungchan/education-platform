@@ -1,0 +1,229 @@
+{
+  "kind": "math_ui_config",
+  "schemaVersion": "1.0.0",
+  "id": "matheducation-spatial-atlas",
+  "variant": "spatial_semantic_zoom",
+  "source": {
+    "file": "matheducation-sample-r2.json",
+    "sha256": "3332d52420632f5a5afc872692f9a9bfcd81d238705d8d63918c0c9a70118308",
+    "revision": 2,
+    "embedding": "exact_utf8_source_bytes",
+    "mutable": false,
+    "conceptIds": [
+      "multiple",
+      "common-multiple",
+      "lcm",
+      "fraction-notation",
+      "equivalent-fractions",
+      "common-denominator",
+      "fraction-add",
+      "fraction-divide",
+      "rational",
+      "rational-add",
+      "exponents",
+      "square-roots"
+    ],
+    "topicIds": [
+      "natural",
+      "fractions",
+      "rational-domain",
+      "algebra",
+      "real-domain"
+    ]
+  },
+  "navigation": {
+    "initialLevel": "overview",
+    "levels": [
+      "overview",
+      "group",
+      "concept"
+    ],
+    "breadcrumb": true,
+    "backBehavior": "canonical_parent_one_level",
+    "homeBehavior": "clear_selection_return_overview",
+    "dependencyJump": "select_target_and_its_canonical_topic",
+    "statePersistence": "in_memory_only",
+    "atomDisclosure": "native_details_open_by_default"
+  },
+  "dependencies": {
+    "defaultVisible": [
+      "required_prerequisite"
+    ],
+    "optional": [
+      "helpful_prerequisite",
+      "representation",
+      "related"
+    ],
+    "requiredAlwaysVisible": true,
+    "overviewEdges": "hidden",
+    "groupEdges": "within_group_required_only",
+    "conceptEdges": "incident_in_side_panel",
+    "universityLenses": "separate_disclosure_not_prerequisites",
+    "evidenceLabel": "pedagogical_hypothesis"
+  },
+  "topics": [
+    {
+      "topicId": "natural",
+      "columnStart": 1,
+      "columnSpan": 4,
+      "rowStart": 1,
+      "rowSpan": 1
+    },
+    {
+      "topicId": "fractions",
+      "columnStart": 5,
+      "columnSpan": 5,
+      "rowStart": 1,
+      "rowSpan": 2
+    },
+    {
+      "topicId": "rational-domain",
+      "columnStart": 10,
+      "columnSpan": 3,
+      "rowStart": 1,
+      "rowSpan": 1
+    },
+    {
+      "topicId": "algebra",
+      "columnStart": 1,
+      "columnSpan": 4,
+      "rowStart": 2,
+      "rowSpan": 1
+    },
+    {
+      "topicId": "real-domain",
+      "columnStart": 10,
+      "columnSpan": 3,
+      "rowStart": 2,
+      "rowSpan": 1
+    }
+  ],
+  "scaffoldRegions": [
+    {
+      "id": "scaffold-geometry",
+      "label": "기하",
+      "status": "unpopulated_ui_scaffold",
+      "conceptIds": [],
+      "columnStart": 1,
+      "columnSpan": 4
+    },
+    {
+      "id": "scaffold-statistics",
+      "label": "통계",
+      "status": "unpopulated_ui_scaffold",
+      "conceptIds": [],
+      "columnStart": 5,
+      "columnSpan": 4
+    },
+    {
+      "id": "scaffold-extended",
+      "label": "그 밖의 확장 영역",
+      "status": "unpopulated_ui_scaffold",
+      "conceptIds": [],
+      "columnStart": 9,
+      "columnSpan": 4
+    }
+  ],
+  "conceptPositions": [
+    {
+      "conceptId": "multiple",
+      "x": 17,
+      "y": 50,
+      "mobileX": 50,
+      "mobileY": 18
+    },
+    {
+      "conceptId": "common-multiple",
+      "x": 50,
+      "y": 50,
+      "mobileX": 50,
+      "mobileY": 50
+    },
+    {
+      "conceptId": "lcm",
+      "x": 83,
+      "y": 50,
+      "mobileX": 50,
+      "mobileY": 82
+    },
+    {
+      "conceptId": "fraction-notation",
+      "x": 25,
+      "y": 19,
+      "mobileX": 26,
+      "mobileY": 17
+    },
+    {
+      "conceptId": "equivalent-fractions",
+      "x": 72,
+      "y": 19,
+      "mobileX": 74,
+      "mobileY": 17
+    },
+    {
+      "conceptId": "common-denominator",
+      "x": 49,
+      "y": 50,
+      "mobileX": 50,
+      "mobileY": 50
+    },
+    {
+      "conceptId": "fraction-add",
+      "x": 27,
+      "y": 82,
+      "mobileX": 26,
+      "mobileY": 83
+    },
+    {
+      "conceptId": "fraction-divide",
+      "x": 76,
+      "y": 82,
+      "mobileX": 74,
+      "mobileY": 83
+    },
+    {
+      "conceptId": "rational",
+      "x": 30,
+      "y": 50,
+      "mobileX": 50,
+      "mobileY": 28
+    },
+    {
+      "conceptId": "rational-add",
+      "x": 70,
+      "y": 50,
+      "mobileX": 50,
+      "mobileY": 72
+    },
+    {
+      "conceptId": "exponents",
+      "x": 50,
+      "y": 50,
+      "mobileX": 50,
+      "mobileY": 50
+    },
+    {
+      "conceptId": "square-roots",
+      "x": 50,
+      "y": 50,
+      "mobileX": 50,
+      "mobileY": 50
+    }
+  ],
+  "coverage": {
+    "conceptCount": 12,
+    "topicCount": 5,
+    "fullCurriculum": false,
+    "gradeMapping": "proposed_not_standard_mapped",
+    "scaffoldsAreCurriculumTaxonomy": false
+  },
+  "runtime": {
+    "rootId": "math-spatial-atlas",
+    "network": false,
+    "backend": false,
+    "sourceWrites": false,
+    "automaticSync": false,
+    "widgetStateSync": false,
+    "externalLibraries": []
+  }
+}

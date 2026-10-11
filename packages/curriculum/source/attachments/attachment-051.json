@@ -1,0 +1,830 @@
+{
+  "type": "object",
+  "properties": {
+    "kind": {
+      "const": "ReadOnlySimulationReport"
+    },
+    "id": {
+      "type": "string"
+    },
+    "canonicalParentId": {
+      "type": "string"
+    },
+    "schemaVersion": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "runtime": {
+      "type": "string"
+    },
+    "specificUserApproval": {
+      "const": null
+    },
+    "sourceWritesPerformed": {
+      "const": false
+    },
+    "baseline": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "ProjectedGraphState"
+        },
+        "id": {
+          "type": "string"
+        },
+        "canonicalParentId": {
+          "type": "string"
+        },
+        "graphRevision": {
+          "type": "integer"
+        },
+        "executionMode": {
+          "const": "read_only_simulation"
+        },
+        "isPersisted": {
+          "const": false
+        },
+        "assertions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "DependencyAssertion"
+              },
+              "id": {
+                "type": "string"
+              },
+              "canonicalParentId": {
+                "type": "string"
+              },
+              "prerequisiteConceptId": {
+                "type": "string"
+              },
+              "dependentConceptId": {
+                "type": "string"
+              },
+              "relationKind": {
+                "type": "string"
+              },
+              "claimBasis": {
+                "type": "string"
+              },
+              "perspectiveId": {
+                "type": "string"
+              },
+              "conditions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "rationale": {
+                "type": "string"
+              },
+              "evidenceStatus": {
+                "type": "string"
+              },
+              "evidenceIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "approvalStatus": {
+                "type": "string"
+              },
+              "revision": {
+                "type": "integer"
+              },
+              "selectedForPreview": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "kind",
+              "id",
+              "canonicalParentId",
+              "prerequisiteConceptId",
+              "dependentConceptId",
+              "relationKind",
+              "claimBasis",
+              "perspectiveId",
+              "conditions",
+              "rationale",
+              "evidenceStatus",
+              "evidenceIds",
+              "approvalStatus",
+              "revision",
+              "selectedForPreview"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "canonicalParentId",
+        "graphRevision",
+        "executionMode",
+        "isPersisted",
+        "assertions"
+      ],
+      "additionalProperties": false
+    },
+    "forwardProposal": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "ChangeProposal"
+        },
+        "id": {
+          "type": "string"
+        },
+        "canonicalParentId": {
+          "type": "string"
+        },
+        "assertionId": {
+          "type": "string"
+        },
+        "expectedRevision": {
+          "type": "integer"
+        },
+        "expectedGraphRevision": {
+          "type": "integer"
+        },
+        "perspectiveId": {
+          "type": "string"
+        },
+        "rationale": {
+          "type": "string"
+        },
+        "changes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "FieldChange"
+              },
+              "field": {
+                "type": "string"
+              },
+              "before": {
+                "type": "string"
+              },
+              "after": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "kind",
+              "field",
+              "before",
+              "after"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "approvalStatus": {
+          "type": "string"
+        },
+        "userApprovalEvidence": {
+          "type": "null"
+        },
+        "applied": {
+          "const": false
+        },
+        "reviewedPayloadHash": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "canonicalParentId",
+        "assertionId",
+        "expectedRevision",
+        "expectedGraphRevision",
+        "perspectiveId",
+        "rationale",
+        "changes",
+        "approvalStatus",
+        "userApprovalEvidence",
+        "applied",
+        "reviewedPayloadHash"
+      ],
+      "additionalProperties": false
+    },
+    "projectedForward": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "ProjectedGraphState"
+        },
+        "id": {
+          "type": "string"
+        },
+        "canonicalParentId": {
+          "type": "string"
+        },
+        "graphRevision": {
+          "type": "integer"
+        },
+        "executionMode": {
+          "const": "read_only_simulation"
+        },
+        "isPersisted": {
+          "const": false
+        },
+        "assertions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "DependencyAssertion"
+              },
+              "id": {
+                "type": "string"
+              },
+              "canonicalParentId": {
+                "type": "string"
+              },
+              "prerequisiteConceptId": {
+                "type": "string"
+              },
+              "dependentConceptId": {
+                "type": "string"
+              },
+              "relationKind": {
+                "type": "string"
+              },
+              "claimBasis": {
+                "type": "string"
+              },
+              "perspectiveId": {
+                "type": "string"
+              },
+              "conditions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "rationale": {
+                "type": "string"
+              },
+              "evidenceStatus": {
+                "type": "string"
+              },
+              "evidenceIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "approvalStatus": {
+                "type": "string"
+              },
+              "revision": {
+                "type": "integer"
+              },
+              "selectedForPreview": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "kind",
+              "id",
+              "canonicalParentId",
+              "prerequisiteConceptId",
+              "dependentConceptId",
+              "relationKind",
+              "claimBasis",
+              "perspectiveId",
+              "conditions",
+              "rationale",
+              "evidenceStatus",
+              "evidenceIds",
+              "approvalStatus",
+              "revision",
+              "selectedForPreview"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "canonicalParentId",
+        "graphRevision",
+        "executionMode",
+        "isPersisted",
+        "assertions"
+      ],
+      "additionalProperties": false
+    },
+    "restoreProposal": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "ChangeProposal"
+        },
+        "id": {
+          "type": "string"
+        },
+        "canonicalParentId": {
+          "type": "string"
+        },
+        "assertionId": {
+          "type": "string"
+        },
+        "expectedRevision": {
+          "type": "integer"
+        },
+        "expectedGraphRevision": {
+          "type": "integer"
+        },
+        "perspectiveId": {
+          "type": "string"
+        },
+        "rationale": {
+          "type": "string"
+        },
+        "changes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "FieldChange"
+              },
+              "field": {
+                "type": "string"
+              },
+              "before": {
+                "type": "string"
+              },
+              "after": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "kind",
+              "field",
+              "before",
+              "after"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "approvalStatus": {
+          "type": "string"
+        },
+        "userApprovalEvidence": {
+          "type": "null"
+        },
+        "applied": {
+          "const": false
+        },
+        "reviewedPayloadHash": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "canonicalParentId",
+        "assertionId",
+        "expectedRevision",
+        "expectedGraphRevision",
+        "perspectiveId",
+        "rationale",
+        "changes",
+        "approvalStatus",
+        "userApprovalEvidence",
+        "applied",
+        "reviewedPayloadHash"
+      ],
+      "additionalProperties": false
+    },
+    "projectedRestored": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "ProjectedGraphState"
+        },
+        "id": {
+          "type": "string"
+        },
+        "canonicalParentId": {
+          "type": "string"
+        },
+        "graphRevision": {
+          "type": "integer"
+        },
+        "executionMode": {
+          "const": "read_only_simulation"
+        },
+        "isPersisted": {
+          "const": false
+        },
+        "assertions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "DependencyAssertion"
+              },
+              "id": {
+                "type": "string"
+              },
+              "canonicalParentId": {
+                "type": "string"
+              },
+              "prerequisiteConceptId": {
+                "type": "string"
+              },
+              "dependentConceptId": {
+                "type": "string"
+              },
+              "relationKind": {
+                "type": "string"
+              },
+              "claimBasis": {
+                "type": "string"
+              },
+              "perspectiveId": {
+                "type": "string"
+              },
+              "conditions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "rationale": {
+                "type": "string"
+              },
+              "evidenceStatus": {
+                "type": "string"
+              },
+              "evidenceIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "approvalStatus": {
+                "type": "string"
+              },
+              "revision": {
+                "type": "integer"
+              },
+              "selectedForPreview": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "kind",
+              "id",
+              "canonicalParentId",
+              "prerequisiteConceptId",
+              "dependentConceptId",
+              "relationKind",
+              "claimBasis",
+              "perspectiveId",
+              "conditions",
+              "rationale",
+              "evidenceStatus",
+              "evidenceIds",
+              "approvalStatus",
+              "revision",
+              "selectedForPreview"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "canonicalParentId",
+        "graphRevision",
+        "executionMode",
+        "isPersisted",
+        "assertions"
+      ],
+      "additionalProperties": false
+    },
+    "projectedHistory": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "const": "RevisionEvent"
+          },
+          "id": {
+            "type": "string"
+          },
+          "canonicalParentId": {
+            "type": "string"
+          },
+          "assertionId": {
+            "type": "string"
+          },
+          "fromRevision": {
+            "type": "integer"
+          },
+          "toRevision": {
+            "type": "integer"
+          },
+          "before": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "DependencyAssertion"
+              },
+              "id": {
+                "type": "string"
+              },
+              "canonicalParentId": {
+                "type": "string"
+              },
+              "prerequisiteConceptId": {
+                "type": "string"
+              },
+              "dependentConceptId": {
+                "type": "string"
+              },
+              "relationKind": {
+                "type": "string"
+              },
+              "claimBasis": {
+                "type": "string"
+              },
+              "perspectiveId": {
+                "type": "string"
+              },
+              "conditions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "rationale": {
+                "type": "string"
+              },
+              "evidenceStatus": {
+                "type": "string"
+              },
+              "evidenceIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "approvalStatus": {
+                "type": "string"
+              },
+              "revision": {
+                "type": "integer"
+              },
+              "selectedForPreview": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "kind",
+              "id",
+              "canonicalParentId",
+              "prerequisiteConceptId",
+              "dependentConceptId",
+              "relationKind",
+              "claimBasis",
+              "perspectiveId",
+              "conditions",
+              "rationale",
+              "evidenceStatus",
+              "evidenceIds",
+              "approvalStatus",
+              "revision",
+              "selectedForPreview"
+            ],
+            "additionalProperties": false
+          },
+          "after": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "DependencyAssertion"
+              },
+              "id": {
+                "type": "string"
+              },
+              "canonicalParentId": {
+                "type": "string"
+              },
+              "prerequisiteConceptId": {
+                "type": "string"
+              },
+              "dependentConceptId": {
+                "type": "string"
+              },
+              "relationKind": {
+                "type": "string"
+              },
+              "claimBasis": {
+                "type": "string"
+              },
+              "perspectiveId": {
+                "type": "string"
+              },
+              "conditions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "rationale": {
+                "type": "string"
+              },
+              "evidenceStatus": {
+                "type": "string"
+              },
+              "evidenceIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "approvalStatus": {
+                "type": "string"
+              },
+              "revision": {
+                "type": "integer"
+              },
+              "selectedForPreview": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "kind",
+              "id",
+              "canonicalParentId",
+              "prerequisiteConceptId",
+              "dependentConceptId",
+              "relationKind",
+              "claimBasis",
+              "perspectiveId",
+              "conditions",
+              "rationale",
+              "evidenceStatus",
+              "evidenceIds",
+              "approvalStatus",
+              "revision",
+              "selectedForPreview"
+            ],
+            "additionalProperties": false
+          },
+          "reason": {
+            "type": "string"
+          },
+          "proposalId": {
+            "type": "string"
+          },
+          "executionMode": {
+            "const": "read_only_simulation"
+          },
+          "isPersisted": {
+            "const": false
+          },
+          "userApprovalRecorded": {
+            "const": false
+          }
+        },
+        "required": [
+          "kind",
+          "id",
+          "canonicalParentId",
+          "assertionId",
+          "fromRevision",
+          "toRevision",
+          "before",
+          "after",
+          "reason",
+          "proposalId",
+          "executionMode",
+          "isPersisted",
+          "userApprovalRecorded"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "applyReadiness": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "ApplyReadiness"
+        },
+        "id": {
+          "type": "string"
+        },
+        "canonicalParentId": {
+          "type": "string"
+        },
+        "canApply": {
+          "type": "boolean"
+        },
+        "blockers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "actualOperationAttempted": {
+          "const": false
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "canonicalParentId",
+        "canApply",
+        "blockers",
+        "actualOperationAttempted"
+      ],
+      "additionalProperties": false
+    },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "const": "ValidationCheck"
+          },
+          "id": {
+            "type": "string"
+          },
+          "canonicalParentId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "result": {
+            "type": "string"
+          },
+          "detail": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "id",
+          "canonicalParentId",
+          "name",
+          "result",
+          "detail"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "kind",
+    "id",
+    "canonicalParentId",
+    "schemaVersion",
+    "status",
+    "runtime",
+    "specificUserApproval",
+    "sourceWritesPerformed",
+    "baseline",
+    "forwardProposal",
+    "projectedForward",
+    "restoreProposal",
+    "projectedRestored",
+    "projectedHistory",
+    "applyReadiness",
+    "checks",
+    "limitations"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Read-only MathEducation dependency simulation"
+}

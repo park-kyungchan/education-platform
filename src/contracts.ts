@@ -1,0 +1,5 @@
+export const moduleIds = ['mathematics-core','curriculum','academy','clinic-workbench','mathcrew'] as const;
+export type ModuleId = typeof moduleIds[number];
+export interface NativeBinding {ownerProfile:string|null;projectId:string|null;projectRoot:string|null;workIssueIds:string[];pendingWork?:string;ontologyRootKind?:string;workIssueMeaning?:string;bindingMeaning?:string;authority:'none'}
+export interface EducationModule {id:ModuleId;root:string;projectId:string;sourceKind:string;commit:string;runtime:'bun'|'node-npm';runtimePin?:string;dependsOn:ModuleId[];checks:string[];entrypoints:string[];native:NativeBinding}
+export interface SourceMap {schema:'education.source-map.v1';projectId:'education-platform';ontologyVersion:'0.2.0';authority:'none';modules:EducationModule[];semanticState:{mathematicsHumanDecision:'PENDING';mathematicsCanonicalApplication:'NOT_PERFORMED';r4Review:'PENDING_NEW_EXACT_REVIEW_AUTHORITY';bunParity:'DEFERRED';curriculumCanonicalInputs:'not_available_in_this_ui_export'}}

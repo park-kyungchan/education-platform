@@ -1,0 +1,21 @@
+export const publicVision = {
+  schema: 'mathcrew.public-vision.v4',
+  authority: 'Owner-approved public project direction, adapted for privacy and current-vs-planned clarity',
+  sourceNarrative: 'Reviewed public project direction; private originals are not part of this package',
+  exactPublicTarget: 'https://kcpalantir.tech',
+  onlyPublicProductLink: 'https://dc.kcpalantir.tech',
+  brand: { primary: 'mathCrew', operator: 'kcpalantir', founder: 'KyungChan-Park', city: 'Seoul', companyMail: 'kcpalantir@kcpalantir.tech' },
+  purpose: 'A mathematics learning environment that develops independent reasoning and conceptual understanding.',
+  plannedApproach: ['3D thought experiments', 'Real-world digital twins', 'Concept relationships connected to classroom context', 'Thoughtful questioning and exploratory learning'],
+  plannedClaudeRole: 'Connect concept relationships and classroom context to guide inquiry and help teachers interpret learning evidence. A planned Claude-native direction, not an already available integration.',
+  evaluationPurpose: 'Test conceptual understanding, learner independence, grounded reliability and cost-efficient assistance; publish no measured gains or outcome guarantees without evidence.',
+  humanBoundary: 'Teachers retain instructional and final educational judgment. Protect privacy; do not offer direct student AI access or collect records through this public site.',
+  currentReality: 'The founder currently uses the separate authenticated dc student-management application. External users, active Claude API integration, delivered 3D/digital-twin functionality and commercial traction are not claimed.',
+  repositoryContinuity: { maintained: ['dc product source', 'related product source'], observation: 'Integrated maintenance is a project direction, not a claim that private source or historical records are published here.', publicRepositoryLinks: false },
+  publicCopy: {
+    en: { title: 'Mathematics made thinkable.', intro: 'mathCrew is building a teacher-guided mathematics learning environment for independent reasoning. Our direction combines 3D thought experiments and real-world digital twins with the context of real teaching.', current: 'Start with dc: the founder’s private student-management workspace.', planned: 'In development: conceptual inquiry, 3D exploration and reality-connected mathematical experiments.', ai: 'Claude-native inquiry and evidence-grounded teacher insight are planned. Claude API is not currently integrated.', authority: 'Protect privacy. Let learners reason. Keep instructional judgment with teachers.' },
+    ko: { title: '생각할 수 있는 수학.', intro: 'mathCrew는 스스로 추론하는 힘을 기르는 교사 주도의 수학 학습 환경을 만들고 있습니다. 3D 사고실험과 현실 세계의 디지털 트윈을 실제 수업의 맥락과 연결하는 것이 방향입니다.', current: '현재의 출발점은 창업자가 직접 사용하는 비공개 dc 학생 관리 도구입니다.', planned: '개발 방향: 개념을 탐구하는 질문, 3D 탐색, 현실과 연결된 수학 사고실험.', ai: 'Claude 기반 탐구 지원과 근거를 살피는 교사 보조는 향후 계획이며, Claude API는 아직 통합되어 있지 않습니다.', authority: '개인정보를 보호하고, 학습자가 스스로 추론하며, 수업의 판단은 교사가 맡습니다.' },
+  },
+  design: 'Retain the user-admitted bold coordinate-world identity and readable local Korean font. Add an original spatial/3D construction cue if helpful; label it as an illustration of the planned direction, not a functioning digital twin or private product screenshot. No stock dashboards, fake telemetry or heavy runtime.',
+  delivery: 'Apex public landing with real EN/KO, company contact, privacy/site-use and only dc teacher sign-in. Never expose private projects, application identity or subscription history.',
+} as const;

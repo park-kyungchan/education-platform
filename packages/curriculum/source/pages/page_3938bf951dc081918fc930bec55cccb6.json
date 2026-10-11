@@ -1,0 +1,196 @@
+{
+  "pageId": "page_3938bf951dc081918fc930bec55cccb6",
+  "title": "공간 지도 수식 렌더링 개정 3",
+  "url": "https://chatgpt.com/space/page_3938bf951dc081918fc930bec55cccb6",
+  "blocks": [
+    {
+      "id": "d373f893-3ab6-401e-8299-48bd14b35c79",
+      "kind": "markdown",
+      "markdown": "## 보존된 샘플의 수학 정정",
+      "hash": "5a43b97e43824b8dea8b7da51a045d9fc49f9f5c1eb3a32e65746d1adc280831",
+      "metadata": {}
+    },
+    {
+      "id": "37524b67-fde9-4f96-a5d3-d6b2f0b39b9d",
+      "kind": "markdown",
+      "markdown": "샘플 r2의 ‘공통 분모 = 원래 각 분모의 양의 공배수’라는 표현은 일반 정의로는 너무 좁습니다. 공통 분모는 값이 같은 분수들로 나타냈을 때 함께 쓰는 분모입니다. 공배수를 택하는 것은 통분하는 한 방법이며, 2/4와 3/6은 모두 1/2로 나타낼 수 있습니다.",
+      "hash": "5df25be80b5740f9b0d09865f1e4e5954238c82af4602e27e7979cb27dbdd47e",
+      "metadata": {}
+    },
+    {
+      "id": "9ed1723b-ecd3-4c59-9317-39d17ae10581",
+      "kind": "markdown",
+      "markdown": "기존 화면·JSON은 당시 샘플로 보존합니다. ‘공배수 필수 선행’은 공배수로 통분하는 설명 경로의 주장으로 읽어야 합니다. 수정된 정의·조건·관계는 [수와 연산 콘텐츠 원본](page:page_ee8dd4415f888191a764bacae70b0e43) 리비전 3에 반영했습니다.",
+      "hash": "b237ab121c1382be0af41769bdd867fc286272030cc6d15b682f9271849eac38",
+      "metadata": {}
+    },
+    {
+      "id": "daf684c4-f24c-41e0-b8c6-2f126090cf00",
+      "kind": "markdown",
+      "markdown": "KaTeX로 분수·근호·거듭제곱을 실제 MathML 수식으로 생성한 개정판입니다. 기호를 펼치면 큰 수식과 의미를 함께 보고, 예시의 한국어 문장은 유지하면서 수학 부분을 렌더링합니다.",
+      "hash": "c6dfdc02a48a9d3036f0093ca60c5d3abb7a3206dd5cbed0205c24ee1745fc78",
+      "metadata": {}
+    },
+    {
+      "id": "e9cfae15-2b10-4102-b18a-e9117620ac85",
+      "kind": "markdown",
+      "markdown": "현재 내용은 기존 12개 개념 표본입니다. 전체 초5–중3 자료와 고등학교 내용이 모두 연결된 상태는 아닙니다. 고등학교 표기는 렌더러 문법 시험에만 사용했습니다.",
+      "hash": "2f838aad71603df08c1d03b7cf817005e12b8d1a9c3ad0f5c26e11d85376aebc",
+      "metadata": {}
+    },
+    {
+      "id": "c5ed15ad-a824-426d-b045-2e6aadd26655",
+      "kind": "markdown",
+      "markdown": "![MathEducation 수식 렌더링 지도](visualize:fde1_bGliZmlsZV8tSWtSQVpPVjAzUW1DUUxNcEZtNENn_FileDrive_73e3d24e44d881918a9b9622fd5a4193)",
+      "hash": "712cf187a494704ae6938fa9cf66d6bbe2209f068d70051a37d76fee09af2e32",
+      "metadata": {
+        "layout": "full-width"
+      }
+    },
+    {
+      "id": "0c94eb6e-3170-468b-be83-48abeb29dc6d",
+      "kind": "markdown",
+      "markdown": "## 수식 확인",
+      "hash": "f7d3c86d7a89b48dfd30a6cc54ca68700a52691febb39ba473c2b6633543d1bc",
+      "metadata": {}
+    },
+    {
+      "id": "0599ae1b-1c3a-4748-8a70-5f22e0c17182",
+      "kind": "markdown",
+      "markdown": "검색창에서 통분, 동치분수, 제곱근과 근호, 지수법칙을 찾아 기호를 펼쳐 보세요. 17개 기호와 10개 예시의 수학 부분을 KaTeX로 변환했습니다. 인라인과 큰 수식 표시를 함께 지원합니다.",
+      "hash": "f8f204739f6a449ef78195b45416d30f7db224494cad84f08296e3d209e2f01f",
+      "metadata": {}
+    },
+    {
+      "id": "ab93be80-48de-4e0e-90a7-74a0b1512784",
+      "kind": "markdown",
+      "markdown": "## 렌더링과 추적",
+      "hash": "b971a97976005ccfa8f6e0dd79c1619c8711901b85feab0e0c48ba0f921cea70",
+      "metadata": {}
+    },
+    {
+      "id": "00b8c409-d504-480f-bc46-ce75542c012f",
+      "kind": "markdown",
+      "markdown": "[KaTeX 0.19.0](https://katex.org/docs/api)의 실제 파서로 LaTeX를 MathML로 사전 생성합니다. LaTeX 원문과 기호 ID·리비전·부모·원문 해시, 렌더러 옵션 및 결과 해시를 함께 보관합니다. 화면 실행에 CDN이나 외부 글꼴이 필요하지 않습니다.",
+      "hash": "76db3c721ceddaa6af1029666feae8e609e9e854468b8c919f57798343d6a7c9",
+      "metadata": {}
+    },
+    {
+      "id": "3b10b3ee-3ca5-4e1b-8eaa-58d80d8d580c",
+      "kind": "markdown",
+      "markdown": "원문이나 리비전이 달라지면 이전 수식을 그대로 사용하지 않고 확인 표시와 원문을 보여 줍니다. 지원하지 않는 명령과 잘못된 LaTeX도 같은 방식으로 드러냅니다. 원본을 바꾼 뒤에는 렌더링 자료를 다시 생성해야 합니다.",
+      "hash": "1e0cdbf6e3a8de0bb1ed9571aa11bdecb32508be5da1b32ca51e56e261e02e83",
+      "metadata": {}
+    },
+    {
+      "id": "ad369fa1-dd10-4f47-aac4-d2a2c7a13662",
+      "kind": "markdown",
+      "markdown": "## 타입 기반 원본과 재검증 자료",
+      "hash": "45e3b6bbbddf6950bc3623dc1958d0d31fe293a64768ee2cfacf1ff596588a54",
+      "metadata": {}
+    },
+    {
+      "id": "c9abf878-c74f-4fb5-b1a8-cb9debf60d55",
+      "kind": "markdown",
+      "markdown": "[수식 지도 화면 계약 r3](library-file:fde1_bGliZmlsZV92LXFoWmFKRk8tS2JPWUI1aHl5MG9n_FileDrive_73e3d24e44d881918a9b9622fd5a4193)",
+      "hash": "9213bdc09cf04bb38c9d62989b7fb3dc1935300347aa745495bb02f1161e08e2",
+      "metadata": {}
+    },
+    {
+      "id": "b37a3484-2053-43dc-bb88-32d7f22e973f",
+      "kind": "markdown",
+      "markdown": "[수식 지도 화면 계약 Schema](library-file:fde1_bGliZmlsZV9NUHV0TzRJc25OT2RjRXNBWUg0cnFB_FileDrive_73e3d24e44d881918a9b9622fd5a4193)",
+      "hash": "7ae0ffa1d53c53db7b4dfcd4abb648bd8f07e5dd90627b2cc38f15f40953773c",
+      "metadata": {}
+    },
+    {
+      "id": "5532fafb-2e79-47c3-ba59-4fa11fd7648f",
+      "kind": "markdown",
+      "markdown": "[KaTeX 렌더링과 감사 기록](library-file:fde1_bGliZmlsZV9WMHJ6eW1yQnFaYW5wU0JIdkIyN2V3_FileDrive_73e3d24e44d881918a9b9622fd5a4193)",
+      "hash": "85c74005a04732624a6e4220960c99481a7762b4a855ccc6452f4a14eaa2ebe8",
+      "metadata": {}
+    },
+    {
+      "id": "272ab88f-0992-4c6e-a98f-d2a0b766a4a5",
+      "kind": "markdown",
+      "markdown": "[렌더링 감사 기록 Schema](library-file:fde1_bGliZmlsZV9CS2NNZFllWFcxS3hibjFKZnRHQkJR_FileDrive_73e3d24e44d881918a9b9622fd5a4193)",
+      "hash": "863bf13a942f17fccac7467e3d7687e1f0c8b6fe34bda5aff5b84266964542c5",
+      "metadata": {}
+    },
+    {
+      "id": "cb9bcb12-e34e-48a6-9376-feaf8007e216",
+      "kind": "markdown",
+      "markdown": "[수식 렌더러와 재검증 자료](library-file:fde1_bGliZmlsZV9KMkFuOC1CNmNfQlpYXy04RlhqbHpB_FileDrive_73e3d24e44d881918a9b9622fd5a4193)",
+      "hash": "c209c6b9f8c1f65171cfe4bdbf11a817e6ae310f8469ab44512b6450ec50f2f0",
+      "metadata": {}
+    },
+    {
+      "id": "df565073-a882-4364-9635-edebede250f1",
+      "kind": "markdown",
+      "markdown": "## 검증 범위",
+      "hash": "81da7f073f7463caaad6ebcb24b6ce232f924671877ff82f55a78aec1711db14",
+      "metadata": {}
+    },
+    {
+      "id": "1f73d018-c173-40fe-9a5e-366d0c6ea4ec",
+      "kind": "markdown",
+      "markdown": "실제 KaTeX 렌더러 검사 17개, MathML 출력 218개의 XML 검사, 화면 모의 검사 17개를 통과했습니다. 별도로 canonical 표기 33개와 다른 영역 표기 83개를 검사했습니다. 고등학교 표기 15개는 문법 시험용이며 현재 교육 내용에 추가하지 않았습니다.",
+      "hash": "4c7ed3aee8f8705d1a4f5980eb830f9e8adc8d14ef1a9a3bdf5ed071b78cada1",
+      "metadata": {}
+    },
+    {
+      "id": "71560958-56a4-4569-8622-feb9ee67fbf4",
+      "kind": "markdown",
+      "markdown": "호스트의 실제 MathML 표시, 작은 화면의 수식 스크롤, 스크린리더 발음과 실제 키보드 동작은 아직 검증하지 못했습니다. 현재 지도에는 기존 12개 개념만 연결돼 있습니다.",
+      "hash": "88a4798f2d5e1562b8f0f1ae0aff098ba9585c3c2135fb3b04a3ed594ff29c8c",
+      "metadata": {}
+    },
+    {
+      "id": "aa1fe5be-b176-42cc-920f-fb2b62d8b63a",
+      "kind": "markdown",
+      "markdown": "[이전 개정 2](page:page_d32f088302b48191af2c378e5c82cd7a) · [개념 원본과 검증](page:page_ae357c7bc3b481919428ace1242eacf0) · [canonical 데이터와 변경 계약](page:page_cc814326987081918dc30ee6d30b2777)",
+      "hash": "290215bd536cca647cd7712fd44b88b8d5879eba25c5c4d234b1bd528e3869d1",
+      "metadata": {}
+    }
+  ],
+  "references": [
+    {
+      "reference": "visualize:fde1_bGliZmlsZV8tSWtSQVpPVjAzUW1DUUxNcEZtNENn_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+      "metadata_available": true,
+      "mime_type": "text/html",
+      "byte_size": 170038
+    },
+    {
+      "reference": "library-file:fde1_bGliZmlsZV92LXFoWmFKRk8tS2JPWUI1aHl5MG9n_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+      "metadata_available": true,
+      "mime_type": "application/json",
+      "byte_size": 7201
+    },
+    {
+      "reference": "library-file:fde1_bGliZmlsZV9NUHV0TzRJc25OT2RjRXNBWUg0cnFB_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+      "metadata_available": true,
+      "mime_type": "application/json",
+      "byte_size": 13204
+    },
+    {
+      "reference": "library-file:fde1_bGliZmlsZV9WMHJ6eW1yQnFaYW5wU0JIdkIyN2V3_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+      "metadata_available": true,
+      "mime_type": "application/json",
+      "byte_size": 7574
+    },
+    {
+      "reference": "library-file:fde1_bGliZmlsZV9CS2NNZFllWFcxS3hibjFKZnRHQkJR_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+      "metadata_available": true,
+      "mime_type": "application/json",
+      "byte_size": 6863
+    },
+    {
+      "reference": "library-file:fde1_bGliZmlsZV9KMkFuOC1CNmNfQlpYXy04RlhqbHpB_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+      "metadata_available": true,
+      "mime_type": "application/zip",
+      "byte_size": 92973
+    }
+  ],
+  "throughSequence": 3,
+  "sourceMarkdownSha256": "81f1e692e46525b42e138f3c3e222c00995f68ac4271f5f728ec82544197eee7"
+}

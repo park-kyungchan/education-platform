@@ -1,0 +1,382 @@
+{
+  "schema_version": "mathematics-cartography.logarithm-cluster-evidence-review-packets.v1",
+  "program_unit_id": "IMMUTABLE_HUMAN_SEMANTIC_DISPOSITION_RECORD",
+  "attempt_id": "IMMUTABLE_HUMAN_SEMANTIC_DISPOSITION_RECORD-R1",
+  "packet_json_text_serialization": "JSON.stringify(packet) without LF",
+  "source_proposal_result_path": "results/INTERVIEW_AND_TDD_MATHEMATICAL_FRAGMENT_IDENTITY_AND_RELATION_001-R2/logarithm-cluster.proposals.json",
+  "source_proposal_result_sha256": "6f03729ff34e043b2e2dd4cd6beb96661278f316fc1df4f4ae6424199d06e49c",
+  "packet_count": 3,
+  "cases": [
+    {
+      "case_id": "LOGARITHM_DEFINITION_EQUIVALENCE",
+      "source_fixture_path": "fixtures/logarithm-definition-evidence-review-packet.fixture.json",
+      "source_fixture_sha256": "690ae219582abf3d15b82bd3b0e91025fbafe273681c7c04d78500df8e897863",
+      "request_id": "request.logarithm-definition-equivalence",
+      "proposal_id": "proposal.logarithm-definition-equivalence",
+      "identity_judgment": "SAME",
+      "recommended_disposition": "CANONICALIZE",
+      "request_sha256": "b6361e86c6abb5871a13142a8dfd01afc9afe149afec4e6c361b633fbf39d96f",
+      "proposal_sha256": "21a16c0b936cfe2137d84c2c47d7d355d5397203fc820eb716d9ce3e6067b7a6",
+      "packet_sha256": "83f7be7afd9b41bd531baac1c33fe09f63b7652d67feb34eb103f7e66e7129d5",
+      "packet": {
+        "schemaVersion": "mathematics-cartography.fragment-evidence-review-packet.v1",
+        "decisionRecordId": "INTERVIEW_AND_TDD_FRAGMENT_EVIDENCE_REVIEW_PACKET_001",
+        "proposalId": "proposal.logarithm-definition-equivalence",
+        "requestId": "request.logarithm-definition-equivalence",
+        "supersedesProposalId": null,
+        "fragment": {
+          "fragmentId": "fragment.logarithm-definition-equivalence",
+          "content": "log_b(x) = y iff b^y = x"
+        },
+        "candidateKind": "DEFINITION",
+        "identityReview": {
+          "targetAtomId": "atom.logarithm.definition",
+          "judgment": "SAME",
+          "evidenceIds": [
+            "evidence.fragment.exact",
+            "evidence.context.real-logarithm",
+            "evidence.atom.logarithm-definition"
+          ],
+          "evidenceOccurrences": [
+            {
+              "evidenceId": "evidence.fragment.exact",
+              "subjectId": "fragment.logarithm-definition-equivalence",
+              "subjectRevision": null,
+              "evidenceClass": "SUBMITTED_FRAGMENT",
+              "statement": "log_b(x) = y iff b^y = x",
+              "supports": [
+                "DEFINITIONAL_EQUIVALENCE"
+              ],
+              "uncertaintyCodes": []
+            },
+            {
+              "evidenceId": "evidence.context.real-logarithm",
+              "subjectId": "fragment.logarithm-definition-equivalence",
+              "subjectRevision": null,
+              "evidenceClass": "USER_SUPPLIED_CONTEXT",
+              "statement": "b > 0; b != 1; x > 0",
+              "supports": [
+                "DEFINITIONAL_EQUIVALENCE",
+                "RELATION"
+              ],
+              "uncertaintyCodes": []
+            },
+            {
+              "evidenceId": "evidence.atom.logarithm-definition",
+              "subjectId": "atom.logarithm.definition",
+              "subjectRevision": "revision.1",
+              "evidenceClass": "ACCEPTED_ATOM_SNAPSHOT",
+              "statement": "For real b, x, and y, if b > 0, b != 1, and x > 0, then log_b(x) = y iff b^y = x.",
+              "supports": [
+                "DEFINITIONAL_EQUIVALENCE"
+              ],
+              "uncertaintyCodes": []
+            }
+          ],
+          "uncertainty": []
+        },
+        "relationReviews": [
+          {
+            "relationKind": "INVERSE_OF",
+            "sourceId": "fragment.logarithm-definition-equivalence",
+            "targetId": "atom.exponentiation.function",
+            "evidenceIds": [
+              "evidence.context.real-logarithm",
+              "evidence.atom.exponentiation-function"
+            ],
+            "evidenceOccurrences": [
+              {
+                "evidenceId": "evidence.context.real-logarithm",
+                "subjectId": "fragment.logarithm-definition-equivalence",
+                "subjectRevision": null,
+                "evidenceClass": "USER_SUPPLIED_CONTEXT",
+                "statement": "b > 0; b != 1; x > 0",
+                "supports": [
+                  "DEFINITIONAL_EQUIVALENCE",
+                  "RELATION"
+                ],
+                "uncertaintyCodes": []
+              },
+              {
+                "evidenceId": "evidence.atom.exponentiation-function",
+                "subjectId": "atom.exponentiation.function",
+                "subjectRevision": "revision.1",
+                "evidenceClass": "ACCEPTED_ATOM_SNAPSHOT",
+                "statement": "For fixed real b > 0 with b != 1, exponentiation y -> b^y and logarithm x -> log_b(x) are inverse functions on their real domains.",
+                "supports": [
+                  "RELATION"
+                ],
+                "uncertaintyCodes": []
+              }
+            ],
+            "uncertainty": []
+          },
+          {
+            "relationKind": "REQUIRES_CONDITION",
+            "sourceId": "fragment.logarithm-definition-equivalence",
+            "targetId": "atom.logarithm.real-domain-conditions",
+            "evidenceIds": [
+              "evidence.context.real-logarithm",
+              "evidence.atom.real-domain-conditions"
+            ],
+            "evidenceOccurrences": [
+              {
+                "evidenceId": "evidence.context.real-logarithm",
+                "subjectId": "fragment.logarithm-definition-equivalence",
+                "subjectRevision": null,
+                "evidenceClass": "USER_SUPPLIED_CONTEXT",
+                "statement": "b > 0; b != 1; x > 0",
+                "supports": [
+                  "DEFINITIONAL_EQUIVALENCE",
+                  "RELATION"
+                ],
+                "uncertaintyCodes": []
+              },
+              {
+                "evidenceId": "evidence.atom.real-domain-conditions",
+                "subjectId": "atom.logarithm.real-domain-conditions",
+                "subjectRevision": "revision.1",
+                "evidenceClass": "ACCEPTED_ATOM_SNAPSHOT",
+                "statement": "A real logarithm log_b(x) requires b > 0, b != 1, and x > 0.",
+                "supports": [
+                  "RELATION"
+                ],
+                "uncertaintyCodes": []
+              }
+            ],
+            "uncertainty": []
+          }
+        ],
+        "unusedEvidenceOccurrences": [
+          {
+            "evidenceId": "evidence.relation.scope-uncertain",
+            "subjectId": "fragment.logarithm-definition-equivalence",
+            "subjectRevision": null,
+            "evidenceClass": "LOCAL_VERIFICATION",
+            "statement": "The scope of a separate relation is unresolved.",
+            "supports": [
+              "RELATION"
+            ],
+            "uncertaintyCodes": [
+              "AMBIGUOUS_RELATION_SCOPE"
+            ]
+          }
+        ],
+        "recommendedDisposition": "CANONICALIZE",
+        "humanDecision": "PENDING",
+        "canonicalApplication": "NOT_PERFORMED"
+      }
+    },
+    {
+      "case_id": "INVALID_LOGARITHM_SUM_IDENTITY",
+      "source_fixture_path": "fixtures/invalid-logarithm-sum-identity.fixture.json",
+      "source_fixture_sha256": "b48fa94997ab4bbfd6f3c61040433183f37d76992d44604c1bc94167a6407607",
+      "request_id": "request.invalid-logarithm-sum-identity",
+      "proposal_id": "proposal.invalid-logarithm-sum-identity",
+      "identity_judgment": "DISTINCT",
+      "recommended_disposition": "REJECT",
+      "request_sha256": "cd173af2b64403b5f49de492be5de70e25fc64528a4fedbc9f0307c77117723c",
+      "proposal_sha256": "dcfba6e3b35e1195bff9613edc45fb6a7dd1e4891834cff17583e1b83b01804f",
+      "packet_sha256": "0848bee148833acc938d7c52eac1e183da5b811c6f3186ed8d2c7218503259e2",
+      "packet": {
+        "schemaVersion": "mathematics-cartography.fragment-evidence-review-packet.v1",
+        "decisionRecordId": "INTERVIEW_AND_TDD_FRAGMENT_EVIDENCE_REVIEW_PACKET_001",
+        "proposalId": "proposal.invalid-logarithm-sum-identity",
+        "requestId": "request.invalid-logarithm-sum-identity",
+        "supersedesProposalId": null,
+        "fragment": {
+          "fragmentId": "fragment.invalid-logarithm-sum-identity",
+          "content": "log_b(x + y) = log_b(x) + log_b(y)"
+        },
+        "candidateKind": "PROPOSITION",
+        "identityReview": {
+          "targetAtomId": "atom.logarithm.no-general-sum-rule",
+          "judgment": "DISTINCT",
+          "evidenceIds": [
+            "evidence.fragment.invalid-sum",
+            "evidence.context.counterexample-values",
+            "evidence.atom.no-general-sum-rule",
+            "evidence.local.counterexample-evaluation"
+          ],
+          "evidenceOccurrences": [
+            {
+              "evidenceId": "evidence.fragment.invalid-sum",
+              "subjectId": "fragment.invalid-logarithm-sum-identity",
+              "subjectRevision": null,
+              "evidenceClass": "SUBMITTED_FRAGMENT",
+              "statement": "log_b(x + y) = log_b(x) + log_b(y)",
+              "supports": [
+                "COUNTEREXAMPLE"
+              ],
+              "uncertaintyCodes": []
+            },
+            {
+              "evidenceId": "evidence.context.counterexample-values",
+              "subjectId": "fragment.invalid-logarithm-sum-identity",
+              "subjectRevision": null,
+              "evidenceClass": "USER_SUPPLIED_CONTEXT",
+              "statement": "b = 2; x = 1; y = 1",
+              "supports": [
+                "COUNTEREXAMPLE"
+              ],
+              "uncertaintyCodes": []
+            },
+            {
+              "evidenceId": "evidence.atom.no-general-sum-rule",
+              "subjectId": "atom.logarithm.no-general-sum-rule",
+              "subjectRevision": "revision.1",
+              "evidenceClass": "ACCEPTED_ATOM_SNAPSHOT",
+              "statement": "There is no general real-logarithm identity log_b(x + y) = log_b(x) + log_b(y); b = 2, x = 1, and y = 1 give a counterexample.",
+              "supports": [
+                "COUNTEREXAMPLE",
+                "RELATION"
+              ],
+              "uncertaintyCodes": []
+            },
+            {
+              "evidenceId": "evidence.local.counterexample-evaluation",
+              "subjectId": "fragment.invalid-logarithm-sum-identity",
+              "subjectRevision": null,
+              "evidenceClass": "LOCAL_VERIFICATION",
+              "statement": "At b = 2, x = 1, and y = 1, the left side is 1 and the right side is 0.",
+              "supports": [
+                "COUNTEREXAMPLE",
+                "RELATION"
+              ],
+              "uncertaintyCodes": []
+            }
+          ],
+          "uncertainty": []
+        },
+        "relationReviews": [
+          {
+            "relationKind": "CONTRADICTS",
+            "sourceId": "fragment.invalid-logarithm-sum-identity",
+            "targetId": "atom.logarithm.no-general-sum-rule",
+            "evidenceIds": [
+              "evidence.atom.no-general-sum-rule",
+              "evidence.local.counterexample-evaluation"
+            ],
+            "evidenceOccurrences": [
+              {
+                "evidenceId": "evidence.atom.no-general-sum-rule",
+                "subjectId": "atom.logarithm.no-general-sum-rule",
+                "subjectRevision": "revision.1",
+                "evidenceClass": "ACCEPTED_ATOM_SNAPSHOT",
+                "statement": "There is no general real-logarithm identity log_b(x + y) = log_b(x) + log_b(y); b = 2, x = 1, and y = 1 give a counterexample.",
+                "supports": [
+                  "COUNTEREXAMPLE",
+                  "RELATION"
+                ],
+                "uncertaintyCodes": []
+              },
+              {
+                "evidenceId": "evidence.local.counterexample-evaluation",
+                "subjectId": "fragment.invalid-logarithm-sum-identity",
+                "subjectRevision": null,
+                "evidenceClass": "LOCAL_VERIFICATION",
+                "statement": "At b = 2, x = 1, and y = 1, the left side is 1 and the right side is 0.",
+                "supports": [
+                  "COUNTEREXAMPLE",
+                  "RELATION"
+                ],
+                "uncertaintyCodes": []
+              }
+            ],
+            "uncertainty": []
+          }
+        ],
+        "unusedEvidenceOccurrences": [],
+        "recommendedDisposition": "REJECT",
+        "humanDecision": "PENDING",
+        "canonicalApplication": "NOT_PERFORMED"
+      }
+    },
+    {
+      "case_id": "MISSING_LOGARITHM_CONTEXT",
+      "source_fixture_path": "fixtures/missing-logarithm-context.fixture.json",
+      "source_fixture_sha256": "c72e086466186449671680cffbf106532c0dfec75c19f806d793899be5de66f3",
+      "request_id": "request.missing-logarithm-context",
+      "proposal_id": "proposal.missing-logarithm-context",
+      "identity_judgment": "UNKNOWN",
+      "recommended_disposition": "DEFER",
+      "request_sha256": "5bce4a8ebb3d8482cc37b906cb83e0aa898733158d5ad01dbdf4822236a4874c",
+      "proposal_sha256": "fdf5d1d9dcbd3cb8b7150eca641f0266d96f12ea4288798b25acd4a599db0af3",
+      "packet_sha256": "640c28a58709cd703071f0613d2e0c9a8765717338050ba1b0c052851ffd16ac",
+      "packet": {
+        "schemaVersion": "mathematics-cartography.fragment-evidence-review-packet.v1",
+        "decisionRecordId": "INTERVIEW_AND_TDD_FRAGMENT_EVIDENCE_REVIEW_PACKET_001",
+        "proposalId": "proposal.missing-logarithm-context",
+        "requestId": "request.missing-logarithm-context",
+        "supersedesProposalId": null,
+        "fragment": {
+          "fragmentId": "fragment.missing-logarithm-context",
+          "content": "log(x) = 2"
+        },
+        "candidateKind": "PROPOSITION",
+        "identityReview": {
+          "targetAtomId": "atom.logarithm.definition",
+          "judgment": "UNKNOWN",
+          "evidenceIds": [
+            "evidence.fragment.missing-context",
+            "evidence.context.not-supplied",
+            "evidence.atom.logarithm-definition"
+          ],
+          "evidenceOccurrences": [
+            {
+              "evidenceId": "evidence.fragment.missing-context",
+              "subjectId": "fragment.missing-logarithm-context",
+              "subjectRevision": null,
+              "evidenceClass": "SUBMITTED_FRAGMENT",
+              "statement": "log(x) = 2",
+              "supports": [
+                "MISSING_CONTEXT"
+              ],
+              "uncertaintyCodes": [
+                "MISSING_LOGARITHM_BASE",
+                "MISSING_REAL_DOMAIN_CONDITIONS"
+              ]
+            },
+            {
+              "evidenceId": "evidence.context.not-supplied",
+              "subjectId": "fragment.missing-logarithm-context",
+              "subjectRevision": null,
+              "evidenceClass": "USER_SUPPLIED_CONTEXT",
+              "statement": "No logarithm base or real-domain conditions were supplied.",
+              "supports": [
+                "MISSING_CONTEXT"
+              ],
+              "uncertaintyCodes": [
+                "MISSING_LOGARITHM_BASE",
+                "MISSING_REAL_DOMAIN_CONDITIONS"
+              ]
+            },
+            {
+              "evidenceId": "evidence.atom.logarithm-definition",
+              "subjectId": "atom.logarithm.definition",
+              "subjectRevision": "revision.1",
+              "evidenceClass": "ACCEPTED_ATOM_SNAPSHOT",
+              "statement": "For real b, x, and y, if b > 0, b != 1, and x > 0, then log_b(x) = y iff b^y = x.",
+              "supports": [
+                "MISSING_CONTEXT"
+              ],
+              "uncertaintyCodes": []
+            }
+          ],
+          "uncertainty": [
+            "MISSING_LOGARITHM_BASE",
+            "MISSING_REAL_DOMAIN_CONDITIONS"
+          ]
+        },
+        "relationReviews": [],
+        "unusedEvidenceOccurrences": [],
+        "recommendedDisposition": "DEFER",
+        "humanDecision": "PENDING",
+        "canonicalApplication": "NOT_PERFORMED"
+      }
+    }
+  ],
+  "human_disposition_instance_count": 0,
+  "canonical_application_count": 0,
+  "external_effect_count": 0
+}

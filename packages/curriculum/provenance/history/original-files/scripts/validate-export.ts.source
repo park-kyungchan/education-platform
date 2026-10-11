@@ -1,0 +1,22 @@
+import { readFileSync, existsSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { createHash } from 'node:crypto';
+import assert from 'node:assert/strict';
+type Entry = { status:string; path?:string; sourceSha256?:string; sourceByteSize?:number };
+type Digest = { path:string; sha256:string; bytes:number };
+const root = resolve(import.meta.dir,'..');
+const json = (p:string):unknown => JSON.parse(readFileSync(resolve(root,p),'utf8'));
+const inventory = json('provenance/attachment-inventory.json') as Entry[];
+for (const item of inventory) {
+  if (item.status !== 'exported') continue;
+  assert(item.path); const b = readFileSync(resolve(root,item.path));
+  assert.equal(b.length,item.sourceByteSize,item.path);
+  assert.equal(createHash('sha256').update(b).digest('hex'),item.sourceSha256,item.path);
+}
+const digests = json('provenance/file-digests.json') as Digest[];
+for (const d of digests) { const b = readFileSync(resolve(root,d.path)); assert.equal(b.length,d.bytes,d.path); assert.equal(createHash('sha256').update(b).digest('hex'),d.sha256,d.path); }
+const c = json('provenance/export-coverage.json') as { canonicalRelationsDeclared:number;relationAssertionsIndividuallyRead:number;relationAssertionsUnread:number;canonicalWorkpacksExported:number;cloudTaskLaunched:boolean };
+assert.equal(c.canonicalRelationsDeclared,c.relationAssertionsIndividuallyRead+c.relationAssertionsUnread);
+assert.equal(c.canonicalWorkpacksExported,0); assert.equal(c.cloudTaskLaunched,false);
+for (const name of ['domain-01.json','domain-02.json','domain-03.json','domain-04.json','curriculum-boundary.json']) assert.equal(existsSync(resolve(root,'canonical',name)),false,`Unexpected canonical file requires verified import: ${name}`);
+console.log(JSON.stringify({ exportFileDigestsVerified:digests.length, originalAttachmentsVerified:inventory.filter(e=>e.status==='exported').length, fullRelationAudit:'blocked_pending_exact_originals', actualCloudTask:'not_run' }));

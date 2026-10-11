@@ -1,0 +1,8 @@
+import {z} from 'zod';
+import {SourceId,Sha256,Instant} from '../domain/ids.ts';
+export const VerifiedParserContract=z.strictObject({sourceId:SourceId,contractVersion:z.string().min(1),parserVersion:z.string().min(1),responseSchemaFingerprint:Sha256,verifiedAt:Instant,readEffectsVerified:z.boolean(),authenticationVerified:z.boolean()});
+export function planSourceReinspection(previousInput:unknown,currentInput:unknown){const previous=VerifiedParserContract.parse(previousInput),current=z.strictObject({sourceId:SourceId,contractVersion:z.string().min(1),parserVersion:z.string().min(1),responseSchemaFingerprint:Sha256,schemaValidation:z.enum(['passed','failed','unknown']),unrecognizedFields:z.array(z.string()),protectedQueryStatus:z.enum(['healthy','auth_required','failed','not_connected'])}).parse(currentInput);
+ if(previous.sourceId!==current.sourceId)throw Error('source_contract_scope_mismatch');
+ const reasons:string[]=[];if(previous.contractVersion!==current.contractVersion)reasons.push('contract_version_changed');if(previous.parserVersion!==current.parserVersion)reasons.push('parser_version_changed');if(previous.responseSchemaFingerprint!==current.responseSchemaFingerprint)reasons.push('response_structure_changed');if(current.schemaValidation!=='passed')reasons.push('response_schema_not_verified');if(current.unrecognizedFields.length)reasons.push('new_unverified_fields');
+ return {mode:reasons.length?'narrow_source_reinspection':'reuse_verified_parser_contract',screenMeasurementEveryRefresh:false,inspectionReasons:reasons,liveExecutionAllowed:previous.readEffectsVerified&&previous.authenticationVerified&&current.protectedQueryStatus==='healthy'&&!reasons.length,networkInvoked:false};
+}

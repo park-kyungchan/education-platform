@@ -1,0 +1,229 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "kind",
+    "id",
+    "schemaVersion",
+    "revision",
+    "status",
+    "observedAtMinute",
+    "repositories",
+    "officialDocs",
+    "curriculumBoundary",
+    "decision",
+    "caveats",
+    "validation"
+  ],
+  "properties": {
+    "kind": {
+      "const": "ExplorerSourceEvidence"
+    },
+    "id": {
+      "type": "string"
+    },
+    "schemaVersion": {
+      "type": "string"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "status": {
+      "type": "string"
+    },
+    "observedAtMinute": {
+      "type": "string"
+    },
+    "repositories": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "kind",
+          "repository",
+          "url",
+          "apiUrl",
+          "stars",
+          "countMethod",
+          "licenseSpdx",
+          "scopeNote"
+        ],
+        "properties": {
+          "kind": {
+            "const": "RepositoryObservation"
+          },
+          "repository": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "apiUrl": {
+            "type": "string"
+          },
+          "stars": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "countMethod": {
+            "type": "string"
+          },
+          "licenseSpdx": {
+            "type": "string"
+          },
+          "scopeNote": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "officialDocs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "kind",
+          "id",
+          "url",
+          "supports"
+        ],
+        "properties": {
+          "kind": {
+            "const": "OfficialDocEvidence"
+          },
+          "id": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "supports": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "curriculumBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "domainIds",
+        "bandIds",
+        "locator",
+        "sourceId",
+        "conceptPlacementStatus"
+      ],
+      "properties": {
+        "kind": {
+          "const": "CurriculumBoundaryEvidence"
+        },
+        "domainIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "bandIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "locator": {
+          "type": "string"
+        },
+        "sourceId": {
+          "type": "string"
+        },
+        "conceptPlacementStatus": {
+          "type": "string"
+        }
+      }
+    },
+    "decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "uiReference",
+        "implementation",
+        "libraryInstalled",
+        "patternsApplied",
+        "futureRendererCandidate",
+        "reasons",
+        "notImplemented"
+      ],
+      "properties": {
+        "kind": {
+          "const": "RendererDecision"
+        },
+        "uiReference": {
+          "type": "string"
+        },
+        "implementation": {
+          "type": "string"
+        },
+        "libraryInstalled": {
+          "type": "boolean"
+        },
+        "patternsApplied": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "futureRendererCandidate": {
+          "type": "string"
+        },
+        "reasons": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "notImplemented": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "caveats": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "sourceClaimBoundary",
+        "sourceWrites",
+        "userDataPublished"
+      ],
+      "properties": {
+        "kind": {
+          "const": "EvidenceValidation"
+        },
+        "sourceClaimBoundary": {
+          "type": "string"
+        },
+        "sourceWrites": {
+          "type": "boolean"
+        },
+        "userDataPublished": {
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Explorer source evidence schema"
+}
