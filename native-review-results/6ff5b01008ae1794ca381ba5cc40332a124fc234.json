@@ -1,0 +1,279 @@
+{
+  "schema": "education.native-independent-source-review-result.v1",
+  "recordClass": "verification",
+  "observedAt": "2026-10-14T19:36:00.369Z",
+  "repository": "park-kyungchan/education-platform",
+  "headSha": "6ff5b01008ae1794ca381ba5cc40332a124fc234",
+  "reviewedTreeSha": "5e206a641b07e0ee454b12707a61a8abdbf27b7c",
+  "comparisonBase": "98520d2abadbf72d7f9674bc2e845b67407b216e",
+  "reviewer": {
+    "runtime": "native-codex",
+    "taskId": "/root/academy_teacher_workspace/workspace_independent_review"
+  },
+  "author": {
+    "runtime": "native-codex",
+    "taskId": "/root/academy_teacher_workspace"
+  },
+  "contributors": [
+    {
+      "taskId": "/root",
+      "role": "Root authored the exam core and owns delivery; source authorship and independent review remain distinct."
+    }
+  ],
+  "reviewAuthorship": {
+    "reviewStatementAuthor": "/root/academy_teacher_workspace/workspace_independent_review",
+    "serializationOwner": "/root/academy_teacher_workspace/workspace_independent_review",
+    "basis": "Directly authored by the same native independent source reviewer who reviewed540 production and rejected695. Private reproduction scripts were authored by the reviewer and adapted into maintained tests by the implementation owner; reviewer made no committed source edits."
+  },
+  "conclusion": "pass",
+  "unresolvedFindings": 0,
+  "reviewKind": "independent-exact-test-provenance-successor-binding",
+  "successorBinding": {
+    "predecessorHeadSha": "54019b85dc2a98cf656e4ed157d6a8a1a3cbeaed",
+    "predecessorReviewedTreeSha": "84613c1bbacfe8ecf3b465eb607022f3e3686227",
+    "predecessorResult": {
+      "path": "academy-teacher-workspace-validation/independent-review-54019b85.json",
+      "sha256": "431c9fdb5a8b9c7e755618f5045607bcacb9a8d830b3a53a01c87c3538cc127f",
+      "reviewer": {
+        "runtime": "native-codex",
+        "taskId": "/root/academy_teacher_workspace/workspace_independent_review"
+      }
+    },
+    "changedPathsSincePredecessor": [
+      "apps/academy/dc-gang-a/tests/academy/teacherReadSnapshot.test.ts",
+      "provenance/adaptations.json"
+    ],
+    "productionBytesIdentical": true,
+    "cleanWorktree": true,
+    "explicitReuseMeaning": "All production/source/runtime/documentation files are identical to the independently passed540 candidate. The final6ff commit changes only an existing read-facade regression test and its source provenance record; the new exact SHA/tree binding does not establish native deployment or whole-Goal acceptance."
+  },
+  "sourceReview": [
+    "Independently verified exact6ff HEAD/tree and clean worktree; complete540..6ff path diff contains only the two declared test/provenance paths.",
+    "Read snapshot regression now includes the intentionally added studentWorkspaces reader in its exact frozen allowlist and asserts empty scoped reads plus expired-reader rejection after callback success and exception. Existing prohibition of db/append/migrate remains.",
+    "Matching provenance adaptation records original and integrated test hashes without changing production bytes; independent scripts/verify-imports.ts passes868 unchanged imported files plus explicit adaptations.",
+    "Delivery receipt digest matches the supplied pin; all26 listed source-file byte lengths/SHA256 values and all12 listed evidence artifact lengths/SHA256 values were independently rehashed and matched.",
+    "Original threeP2 findings remain fixed through production-byte equivalence and independent rerun of the four maintained UI/acknowledgement regressions; no new P1/P2 issue was found."
+  ],
+  "changedFileManifest": [
+    {
+      "path": "apps/academy/dc-gang-a/docs/teacher-exam-selection-contract.ts",
+      "sha256": "e28478e6730dcacef9ab464e5b30d1697f7155fdb03d366591c0008008933700",
+      "byteLength": 2010,
+      "gitBlob": "65c17291b8df25180000ce97cf27782726bed681"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/docs/teacher-workspace-contract.ts",
+      "sha256": "8ddef24a631d2ca21c653791575ba9f483dbc81f29d593628554eb91708b5963",
+      "byteLength": 6389,
+      "gitBlob": "f611e13daac6b820c92f3c39679d6c49da1f2240"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/application.ts",
+      "sha256": "60fef83ebe9159f3746eb1764458a64dbb9bed5010e8140b5c0f5d7c3dfde12b",
+      "byteLength": 3899,
+      "gitBlob": "80b3538d9142cc4ea1eb6cc580c271d0c223f55c"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/contracts/teacherOperations.ts",
+      "sha256": "f68fa81c8d74263054cdf0472f1b94600fd8c5b50a51bacc4c42aa7025df55d7",
+      "byteLength": 4281,
+      "gitBlob": "5dd44efce6185626946b71d5a310b978136cc35f"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/examSelection.ts",
+      "sha256": "a79e128420f9081cd45af76b2b84b9458f08eb7f5d43ab003c06a32571003e86",
+      "byteLength": 8627,
+      "gitBlob": "d4bf2f6d2332455b2432fb0d70216369d05c89c3"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/operatingWorkspace.ts",
+      "sha256": "56a47ca4efce742bdda038fc9b91db8c3c74dafcc64452486046bd4a6dfc6d27",
+      "byteLength": 1224,
+      "gitBlob": "99657072ac312c7eb4b55dd845f0f47c82577b57"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/ownerWorkspaceStore.ts",
+      "sha256": "1e91f40e42ae154a5096692229c5974c34585c241c72564cb1f6f51ca5d53f21",
+      "byteLength": 16307,
+      "gitBlob": "12463899b2030e8ba981695036582b6cc7126de4"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/ports/teacherStore.ts",
+      "sha256": "379812d9011d075b100070a3b938514c84578bd98481f6f8a01b7d6892ce6f94",
+      "byteLength": 1741,
+      "gitBlob": "ede2ae30bd79d89ea3dc81287e76ee8697701ede"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/postgresStore.ts",
+      "sha256": "1c173173fad5faaf65c2759821da6e58d0263a1abb86fdd5f4d32d8b94722dee",
+      "byteLength": 59061,
+      "gitBlob": "c9e2234d9b6b64800a00b2e3f9623693c9742113"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/server.ts",
+      "sha256": "51390628046c679ee57914a2239288e658e17aa664ff2257242b773fae3c801f",
+      "byteLength": 26563,
+      "gitBlob": "cec4c2363fb5e9a673cd78d2b2ca97c3e3fc225e"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/teacherExamWorkspace.ts",
+      "sha256": "e18e6deb40f2fb29cca9a4cf66ef8749600aba0889d973bb03759560e08b64c2",
+      "byteLength": 1514,
+      "gitBlob": "8426adacb2211d574624dac703c836994048f21a"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/teacherWorkspace.ts",
+      "sha256": "da3d9f66ea1a48a367bc940623e610a379446575acb696029382cde8279e7944",
+      "byteLength": 13787,
+      "gitBlob": "615174fd3f662bd323890e6cf58708d61527d90b"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/usecases/studentScene.ts",
+      "sha256": "4880bba11a8d9f367b5dec0c6d41df2f45e25bc869a54fd41fe3e1ed503adaf6",
+      "byteLength": 10481,
+      "gitBlob": "73f4b7fba06e3e16994c5a479c40682991e5a5a9"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/usecases/teacherWorkspace.ts",
+      "sha256": "2d00f46c7311491ebae330cc54163e95bb813f522f77bb4d9f58b1e58472c267",
+      "byteLength": 7935,
+      "gitBlob": "4de12fb77a9271923e3f41c189f3048552bdf5af"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/web/client.ts",
+      "sha256": "4985abeb7618eb1e5a71fdbf14c17eb2704fb3826788d6f8019ea9d7e553f3cc",
+      "byteLength": 33743,
+      "gitBlob": "6ef393ec339df2ff5f74d3899dbdc7bf92800674"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/web/examWorkspaceView.ts",
+      "sha256": "1e2115c8fcf88a499e8694618d0ebe13d6443653111713eb9a21651b904e294e",
+      "byteLength": 9016,
+      "gitBlob": "ea28736c0b8b517594f4cc80b94d4b5ecc8cf044"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/web/operatingWorkspaceView.ts",
+      "sha256": "f233f6e3855eea2dac4d86f5301b72ac260e5a1d272ce461a9118d1aab2f8ac0",
+      "byteLength": 8399,
+      "gitBlob": "c2744df91e8dd219723d7e116957fe70073712d3"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/web/teacherStyles.ts",
+      "sha256": "ba31f6c5efbeee6a054a043fffcac7eac8e63e6890d27e62255681963d2ab29c",
+      "byteLength": 10757,
+      "gitBlob": "9decb79d06b96edb99f3b574bfd5d2bc90e8131d"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/web/teacherWorkspaceView.ts",
+      "sha256": "7e63d3683fdc4d59d91d2cec1da3ab89525184c060644cdce406f82854187206",
+      "byteLength": 15294,
+      "gitBlob": "6d2e43d1d6fb812309e00d1105bd087835bf17b2"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/web/workspaceEditor.ts",
+      "sha256": "a5340ff3c2d952b26261f95e962e8d1481351d61a70cfe732ec1d28b4a1c2538",
+      "byteLength": 10041,
+      "gitBlob": "77abb9779772affa174c77fc0437ceac37152577"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/tests/academy/examSelection.test.ts",
+      "sha256": "5c5551f272628d338e7da305e4c5ebc7eaf25e547f621089c53cf8fe9a9f088a",
+      "byteLength": 6741,
+      "gitBlob": "d3ec388fe8033eae14ca7ae60de7e30f80b40e11"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/tests/academy/teacherReadSnapshot.test.ts",
+      "sha256": "e14d6db543787003c291de2c2e73119b79464220dca7d237758f9013aa107be3",
+      "byteLength": 5859,
+      "gitBlob": "c96e41922b2a72f890201a209af176e89b405650"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/tests/academy/teacherWorkspace.test.ts",
+      "sha256": "669732c33e964105d5de07f6081038d276423fe381d53a7f9e6e8aae5d46ddc0",
+      "byteLength": 19138,
+      "gitBlob": "479e5b51e05b733a2aa3adaedb375a680e6fa4e3"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/tests/academy/teacherWorkspaceBrowser.ts",
+      "sha256": "f6280ae6d582dff2c759a85e9f40aa64ccc38f9c7ff5bdd906eebac1f11581fb",
+      "byteLength": 13256,
+      "gitBlob": "71fa244d73cd3396b2267a9a02a283fc3aa1ee82"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/tests/academy/teacherWorkspaceEditor.test.ts",
+      "sha256": "fa631987bcd38ea6e732565ed25560215aeed446eb9fc62fbbd41ac412cd48c8",
+      "byteLength": 12053,
+      "gitBlob": "f4928cf52a4fe820c58003773fbcfc94470ee879"
+    },
+    {
+      "path": "provenance/adaptations.json",
+      "sha256": "e0bc992184dde43287ca5fc161b7c0ec5ded8fb021bf822422348706ef1edd2f",
+      "byteLength": 8463,
+      "gitBlob": "4131a9ed838bcc81b74601fb48a5aa3dce055735"
+    }
+  ],
+  "historicalFindings": [
+    {
+      "head": "695d20c08afaae15604f227b4b714e9341b2e8df",
+      "resultSha256": "67eda725f6ce73e97db95170e46cc6ea91596ee9a2a3aec9d608a3a65c87bda1",
+      "findings": [
+        "P2 semantic refusal left pending forever",
+        "P2 delayed candidate reply mutated preserved pending request",
+        "P2 parent evidence rebase retained old reviewed state"
+      ],
+      "resolution": "Independently resolved in540; final6ff production bytes are identical and all four maintained acknowledgement/editor regressions pass."
+    }
+  ],
+  "existingVerificationEvidence": {
+    "deliveryReceipt": {
+      "path": "academy-teacher-workspace-validation/delivery-6ff5b010.json",
+      "sha256": "a51536781688ba7e57bf69a5e1521912ce3d8a6250ce0a7f5f79b6b040f730c6",
+      "allSourceManifestEntriesVerified": 26,
+      "allEvidenceManifestEntriesVerified": 12
+    },
+    "independentExecution": {
+      "runtime": "Bun1.4.2 (744846f84)",
+      "command": "env -u DC_ACADEMY_TEST_SOCKET bun test tests/academy/teacherWorkspaceEditor.test.ts tests/academy/teacherReadSnapshot.test.ts",
+      "passed": 4,
+      "skipped": 4,
+      "failed": 0,
+      "assertions": 25,
+      "skipMeaning": "Reviewer did not start/use PostgreSQL; all four read-snapshot PostgreSQL cases were explicitly skipped.",
+      "importProvenanceCheck": "scripts/verify-imports.ts passed;868 unchanged imports"
+    },
+    "authorExecutedEvidence": {
+      "attribution": "Pinned author delivery and actual log/receipt readback; not independently executed by this reviewer.",
+      "fullRootCheck": "Exact6ff root-check log ends status pass with nativeEffects0/productionVerifiedfalse/humanAcceptancepending.",
+      "focusedSyntheticPostgresAndEditor": "21pass127assertions per author receipt and pinned log.",
+      "legacyPostgresIntegration": "Pinned successor log reports21pass156assertions, including all four changed read-snapshot cases.",
+      "actualBrowser": "Pinned Chrome146 sevenflow receipt retains existing auth bytes, exact985 same-postwrite-database legacy server/browser rollback and reupgrade; nativeProductionActivationfalse/teacherAcceptancefalse."
+    }
+  },
+  "evidenceCustody": {
+    "requiredLegacyReceiptOwner": "hermes-harness-engineering",
+    "currentArtifactPlacement": "Academy Work private current-session review staging; Root owns exact-byte copy into actual legacy owner evidence custody before publication.",
+    "nativeReviewerRuntime": "native-codex",
+    "noHermesNativeReviewerInvented": true,
+    "nativePermissionGranted": false
+  },
+  "limits": [
+    "Independent bounded source/test/provenance successor review only; exact production540 review is explicitly reused.",
+    "No reviewer-run PostgreSQL, browser, native production service, source Academy connection, private student data, deployment, acceptance or model evaluation occurred.",
+    "Source delivery and synthetic rollback evidence do not establish actual VPS rollback, source truth, teacher acceptance or completion of the broader Academy backlog/integrated Goal."
+  ],
+  "effects": {
+    "newReviewArtifactsOnly": true,
+    "sourceEdits": 0,
+    "gitMutations": 0,
+    "networkCalls": 0,
+    "nativeConfigWrites": 0,
+    "nativeActivation": 0,
+    "databaseOrServiceEffects": 0,
+    "sourceAcademyRequests": 0,
+    "modelEvaluationRequests": 0,
+    "testsRun": 4
+  },
+  "authority": "none",
+  "nativePermissionGranted": false,
+  "acceptanceDecision": null
+}
