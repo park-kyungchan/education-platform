@@ -72,8 +72,11 @@ export function createTeacherServerHandler(options:TeacherServerOptions){
   };
   return async(req:Request):Promise<Response>=>{
     const url=new URL(req.url),path=url.pathname;
+    const conceptWrite=req.method==='POST'&&['/api/concept-definition','/api/concept-link'].includes(path);
+    // Origin and authentication gates return before application dispatch; status alone never proves a write outcome.
+    const preDispatchRefusal=(error:string,status:number)=>json({error,...(conceptWrite?{requestOutcome:'rejected_before_commit',automaticRetry:false}:{})},status);
     if(!['GET','POST'].includes(req.method))return json({error:'method_not_allowed'},405);
-    if(req.method==='POST'&&req.headers.get('Origin')!==options.origin)return json({error:'origin_denied'},403);
+    if(req.method==='POST'&&req.headers.get('Origin')!==options.origin)return preDispatchRefusal('origin_denied',403);
     try{
       if(options.currentAuthentication){const current=options.currentAuthentication();identity=current.identity;sessionKey=current.sessionKey;}
       if(path==='/health'&&req.method==='GET')return json({status:'running',studentDisclosure:false});
@@ -163,14 +166,14 @@ export function createTeacherServerHandler(options:TeacherServerOptions){
         return new Response(renderDesignLab(url.searchParams),{headers:{...securityHeaders,'Content-Type':'text/html; charset=utf-8'}});
       }
       if(path.startsWith('/api/')){
-        const actor=context(req);if(!actor)return json({error:'teacher_authentication_required'},401);
+        const actor=context(req);if(!actor)return preDispatchRefusal('teacher_authentication_required',401);
         if(['/api/teacher-observation','/api/teacher-clinic','/api/teacher-workspace','/api/owner-workspace','/api/exam-candidate','/api/concept-definition','/api/concept-link','/api/refresh'].includes(path)&&req.method==='POST'){
           const conflict=()=>json({error:'teacher_scene_actor_conflict',originalRetained:false,automaticRetry:false},409);
           if(!matchesTeacherActionHeaders(req.headers,actor))return conflict();
           let input:Record<string,unknown>;try{input=await body(req);}catch(error){if(['/api/teacher-workspace','/api/owner-workspace','/api/concept-definition','/api/concept-link'].includes(path)){const code=error instanceof Error&&['json_required','input_too_large','invalid_input'].includes(error.message)?error.message:'invalid_input';return json({error:code,requestOutcome:'rejected_before_commit',automaticRetry:false},400);}throw error;}
           // Body intake can yield while authentication changes in another tab.
           if(options.currentAuthentication){const current=options.currentAuthentication();identity=current.identity;sessionKey=current.sessionKey;}
-          const currentActor=context(req);if(!currentActor)return json({error:'teacher_authentication_required'},401);
+          const currentActor=context(req);if(!currentActor)return preDispatchRefusal('teacher_authentication_required',401);
           if(!matchesTeacherActionHeaders(req.headers,currentActor))return conflict();
           if(path==='/api/refresh'){
             assertExactKeys(input,Object.hasOwn(input,'date')?['studentId','requestId','date']:['studentId','requestId']);
