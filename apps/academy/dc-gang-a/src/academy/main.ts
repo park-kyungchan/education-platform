@@ -6,6 +6,7 @@ import { createTeacherServerHandler } from './server';
 import { TeacherAuthStore } from './teacherAuthStore';
 import { teacherPage } from './web/page';
 import { createRetainedTeacherRuntime } from './retainedRuntime';
+import {loadPrivateArtifactCatalog} from './privateArtifactCatalog';
 
 interface OwnerRuntime { ownerId:string;hostname:string;postgresSocket:string;database:string;teacherLabel:string;teacherSourceKey:string;collegeSourceKey:string;expectedStudentNames:string[];sourceUsername?:string }
 
@@ -42,10 +43,12 @@ const runtime=retainedOnly?createRetainedTeacherRuntime(store,config.ownerId):aw
     refreshResult:source.coordinator.result.bind(source.coordinator),refreshPending:source.coordinator.pending.bind(source.coordinator),refreshHistory:source.coordinator.history.bind(source.coordinator)};
 })();
 const {app,connection,close:closeSource}=runtime;
+const privateArtifacts=await loadPrivateArtifactCatalog(directory,config.ownerId,async(ownerId,studentId)=>(await store.students(ownerId)).some(student=>student.id===studentId));
 const handler=createTeacherServerHandler({app,origin:'https://'+config.hostname,sessionKey:auth.sessionKey,identity:auth.identity,invitationDigest:auth.invitationDigest,page:teacherPage,script,
   currentAuthentication:()=>authStore.readExistingIdentity(),
   passwordRecovery:{claim:async token=>authStore.claimRecovery(token),status:async id=>authStore.recoveryStatus(id),complete:async(id,hash)=>authStore.completeRecovery(id,hash)},
   originTrialToken,
+  privateArtifacts,
   refresh:runtime.refresh,
   refreshResult:runtime.refreshResult,
   refreshPending:runtime.refreshPending,

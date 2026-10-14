@@ -8,6 +8,7 @@ import {matchesTeacherActionHeaders} from './teacherActionScope';
 import {ObservationCommandRefusal} from './records';
 import {renderDesignLab} from './web/designLab';
 import {teacherFontAssets} from './web/fontAssets';
+import type {PrivateArtifactAccess} from './privateArtifactCatalog';
 
 export interface LoginIdentity { readonly actorId:string; readonly username:string; readonly passwordHash:string }
 export interface TeacherServerOptions {
@@ -27,6 +28,7 @@ export interface TeacherServerOptions {
   readonly refreshResult?:(context:TrustedTeacherContext,requestId:string)=>Promise<unknown>;
   readonly refreshPending?:(context:TrustedTeacherContext)=>Promise<unknown>;
   readonly refreshHistory?:(context:TrustedTeacherContext,cursor:string|null)=>Promise<unknown>;
+  readonly privateArtifacts?:PrivateArtifactAccess;
 }
 const securityHeaders={ 'Cache-Control':'no-store','X-Content-Type-Options':'nosniff','Referrer-Policy':'no-referrer','X-Frame-Options':'DENY',
   'Content-Security-Policy':"default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'" };
@@ -167,6 +169,26 @@ export function createTeacherServerHandler(options:TeacherServerOptions){
       }
       if(path.startsWith('/api/')){
         const actor=context(req);if(!actor)return preDispatchRefusal('teacher_authentication_required',401);
+        if(['/api/private-artifacts','/api/private-artifact'].includes(path)&&req.method==='GET'){
+          if(path==='/api/private-artifacts'&&url.searchParams.size||path==='/api/private-artifact'&&([...url.searchParams.keys()].some(key=>key!=='id')||url.searchParams.getAll('id').length!==1))return json({error:'unexpected_query_scope'},400);
+          if(!options.privateArtifacts)return path==='/api/private-artifacts'?json({state:'not_configured',sourceIdentity:'unverified_preservation',artifacts:[]}):json({error:'private_artifact_unavailable'},503);
+          const stillAuthorized=()=>{
+            if(options.currentAuthentication){const current=options.currentAuthentication();identity=current.identity;sessionKey=current.sessionKey;}
+            const current=context(req);return current?.ownerId===actor.ownerId&&current.actorId===actor.actorId;
+          };
+          try{
+            if(path==='/api/private-artifacts'){const result=await options.privateArtifacts.list(actor);return stillAuthorized()?json(result):json({error:'teacher_authentication_required'},401);}
+            const result=await options.privateArtifacts.read(actor,url.searchParams.get('id')!);
+            if(!stillAuthorized())return json({error:'teacher_authentication_required'},401);
+            return new Response(result.body,{headers:{...securityHeaders,...result.headers}});
+          }catch(error){
+            const code=error instanceof Error?error.message:'';
+            if(['owner_scope_conflict','artifact_student_scope_conflict'].includes(code))return json({error:'artifact_scope_conflict'},403);
+            if(code==='private_artifact_not_found')return json({error:'private_artifact_not_found'},404);
+            if(code==='invalid_artifact_selector')return json({error:'invalid_artifact_selector'},400);
+            return json({error:'private_artifact_unavailable'},503);
+          }
+        }
         if(['/api/teacher-observation','/api/teacher-clinic','/api/teacher-workspace','/api/owner-workspace','/api/exam-candidate','/api/concept-definition','/api/concept-link','/api/refresh'].includes(path)&&req.method==='POST'){
           const conflict=()=>json({error:'teacher_scene_actor_conflict',originalRetained:false,automaticRetry:false},409);
           if(!matchesTeacherActionHeaders(req.headers,actor))return conflict();

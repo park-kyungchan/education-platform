@@ -1,0 +1,15 @@
+export const teacherPrivateArtifactBrowserVerification={
+ schema:'academy.private-artifact-browser-contract.v1',
+ author:'/root/academy_teacher_workspace',
+ sourceAuthor:'/root',
+ immutableIntegrationBase:'7f55068ca3819690876eb23f14509a4301d2c009',
+ scope:'Maintained actual Chrome/HTTPS/form-login/local PostgreSQL verification; production source changes require a separately demonstrated bug',
+ entrypoints:{browser:'bun run test:private-artifact-browser',strictFixtureTypecheck:'bun run typecheck:private-artifact-browser'},
+ requiredEnvironment:['DC_ACADEMY_TEST_SOCKET: explicitly owned /tmp/academy-a13-* Unix socket','DC_ACADEMY_BROWSER_OUTPUT: private task-only directory','DC_ACADEMY_ROLLBACK_ROOT: clean exacte005cc79 source worktree'],
+ fixtures:'Invented owner/student rows, JSON/Markdown/TXT bytes, accepted-custody claim and pinned optional control files; no actual archive, password or source identity used',
+ composition:'Existing TeacherAuthStore, createRetainedTeacherRuntime, PostgresAcademyStore, private catalog loader, server handler and browser client; no second business backend',
+ verification:['Original bytes/SHA/RFC5987/attachment/no-store/nosniff/sandbox','Anonymous/foreign owner cookie/query/unknown selector/foreign student partition','Declared missing/withdrawn and physically missing/corrupt bytes','Pinned index changes refuse fresh reads without cached successful qualification','Raw HTML-like filename stays text; payload URLs/scripts never load or execute','Absent/invalid optional admission never bootstraps owner/auth','Exacte005 old handler/library/browser against same postwrite DB/auth, then reupgrade/restart','DB tables/row counts/row digests and original auth/owner/index pins unchanged'],
+ revocationProbe:'Fixture-only signal and await barrier after actual TeacherAuthStore reads. Authentication bytes remain unchanged; actual handler post-await reauthentication is exercised without a native authentication mutation.',
+ filenameObservation:'The HTTP attachment header retains the original filename; Chrome may normalize unsafe filesystem characters in its suggested saved name.',
+ limits:{actualPrivateCustodyQualified:false,nativeProductBehaviorQualified:false,sourceIdentity:'unverified_preservation',sourceAcademyQueries:0,modelEvaluationRequests:0,wholeA13Acceptance:false},
+} as const;
