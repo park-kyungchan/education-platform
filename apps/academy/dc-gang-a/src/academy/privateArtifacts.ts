@@ -7,7 +7,7 @@ import type {TrustedTeacherContext} from './contracts/teacherOperations';
 
 export interface ReconciledPrivateArtifact {
  id:string;ownerId:string;studentId:string|null;sourceRecordId:string;
- mime:'application/pdf'|'image/png'|'image/jpeg'|'video/mp4'|'video/webm'|'text/plain';
+ mime:'application/json'|'application/pdf'|'image/png'|'image/jpeg'|'video/mp4'|'video/webm'|'text/plain';
  filename:string;bytes:number;sha256:string;archivePath:string;reconciliationReceiptSha256:string;
 }
 export interface PrivateArtifactOwner {
@@ -20,6 +20,7 @@ const sha=(value:Uint8Array)=>createHash('sha256').update(value).digest('hex');
 const selector=(value:unknown):value is string=>typeof value==='string'&&/^[A-Za-z0-9][A-Za-z0-9:._-]{0,199}$/.test(value);
 const hex=(value:unknown):value is string=>typeof value==='string'&&/^[a-f0-9]{64}$/.test(value);
 function matchesMime(bytes:Buffer,mime:ReconciledPrivateArtifact['mime']){
+ if(mime==='application/json')try{JSON.parse(new TextDecoder('utf-8',{fatal:true}).decode(bytes));return true;}catch{return false;}
  if(mime==='application/pdf')return bytes.subarray(0,5).toString('ascii')==='%PDF-';
  if(mime==='image/png')return bytes.subarray(0,8).equals(Buffer.from([137,80,78,71,13,10,26,10]));
  if(mime==='image/jpeg')return bytes[0]===255&&bytes[1]===216&&bytes[2]===255;
@@ -56,7 +57,7 @@ export function createPrivateArtifactReader(config:PrivateArtifactOwner){
   if(!Number.isSafeInteger(metadata.bytes)||metadata.bytes<1||metadata.bytes>maxBytes)throw Error('artifact_size_refused');
   requireText(metadata.filename,'artifact filename');
   if(metadata.filename.length>200||/[\u0000-\u001f\u007f/\\]/u.test(metadata.filename))throw Error('invalid_artifact_filename');
-  const extensions:Record<ReconciledPrivateArtifact['mime'],RegExp>={'application/pdf':/\.pdf$/i,'image/png':/\.png$/i,'image/jpeg':/\.jpe?g$/i,'video/mp4':/\.mp4$/i,'video/webm':/\.webm$/i,'text/plain':/\.txt$/i};
+  const extensions:Record<ReconciledPrivateArtifact['mime'],RegExp>={'application/json':/\.json$/i,'application/pdf':/\.pdf$/i,'image/png':/\.png$/i,'image/jpeg':/\.jpe?g$/i,'video/mp4':/\.mp4$/i,'video/webm':/\.webm$/i,'text/plain':/\.txt$/i};
   if(!Object.hasOwn(extensions,metadata.mime)||!extensions[metadata.mime].test(metadata.filename))throw Error('artifact_filename_mime_conflict');
   if(typeof metadata.archivePath!=='string'||metadata.archivePath.length>1024||/[\u0000-\u001f\u007f\\:?#]/u.test(metadata.archivePath))throw Error('invalid_artifact_path');
   const parts=metadata.archivePath.split('/');

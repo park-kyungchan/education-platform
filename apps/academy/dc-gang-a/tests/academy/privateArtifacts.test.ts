@@ -32,6 +32,13 @@ test('every read verifies source digest, byte length and MIME without a successf
 test('download filenames keep valid UTF8 escaping and cannot advertise an executable extension',async()=>{
  const f=await fixture();try{f.metadata.filename="Synthetic '한글'(copy).txt";const result=await f.reader().read(context,f.metadata.id);expect(result.headers['Content-Disposition']).toContain('%27');expect(result.headers['Content-Disposition']).toContain('%28copy%29');f.metadata.filename='Synthetic source.html';await expect(f.reader().read(context,f.metadata.id)).rejects.toThrow('artifact_filename_mime_conflict');}finally{await f.cleanup();}
 });
+test('preserved JSON source artifacts retain original bytes and require actual JSON syntax',async()=>{
+ const f=await fixture();try{
+  const json=Buffer.from('{ "synthetic": "<script>inert data</script>" }\n');await writeFile(join(f.root,'objects','source.txt'),json);Object.assign(f.metadata,{mime:'application/json',filename:'Synthetic preserved source.json',bytes:json.length,sha256:createHash('sha256').update(json).digest('hex')});
+  const result=await f.reader().read(context,f.metadata.id);expect(result.body.equals(json)).toBe(true);expect(result.headers['Content-Type']).toBe('application/json');expect(result.headers['Content-Disposition']).toStartWith('attachment;');
+  const bad=Buffer.from('not JSON');await writeFile(join(f.root,'objects','source.txt'),bad);Object.assign(f.metadata,{bytes:bad.length,sha256:createHash('sha256').update(bad).digest('hex')});await expect(f.reader().read(context,f.metadata.id)).rejects.toThrow('artifact_mime_refused');
+ }finally{await f.cleanup();}
+});
 test('an actual FIFO is rejected before any blocking read',async()=>{
  const f=await fixture();try{
   const fifo=join(f.root,'objects','pipe');expect(Bun.spawnSync(['mkfifo','-m','600','--',fifo]).exitCode).toBe(0);f.metadata.archivePath='objects/pipe';
