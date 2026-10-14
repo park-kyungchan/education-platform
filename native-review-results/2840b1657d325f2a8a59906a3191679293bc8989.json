@@ -1,0 +1,74 @@
+{
+  "schema": "education.native-independent-source-review-result.v1",
+  "recordClass": "verification",
+  "observedAt": "2026-10-14T17:34:39.761Z",
+  "repository": "park-kyungchan/education-platform",
+  "headSha": "2840b1657d325f2a8a59906a3191679293bc8989",
+  "reviewedTreeSha": "aefc8824ce55b2cd9f8d51c57c3960996e81453d",
+  "comparisonBase": "c2b626166d9253658543b2598fe6d54cd10a1599",
+  "reviewer": {
+    "runtime": "native-codex",
+    "taskId": "/root/academy_delivery_preflight/owner_lifecycle_contract"
+  },
+  "author": {
+    "runtime": "native-codex",
+    "taskId": "/root/academy_delivery_preflight"
+  },
+  "contributors": [
+    {
+      "taskId": "/root",
+      "role": "Preserved preexisting source custody; merged current main and removed two unrelated dangling root entrypoints"
+    }
+  ],
+  "reviewAuthorship": {
+    "reviewStatementAuthor": "/root/academy_delivery_preflight/owner_lifecycle_contract",
+    "serializationOwner": "/root",
+    "basis": "Actual native bounded independent reviewer messages delivered in this session; serializer is not represented as the independent reviewer"
+  },
+  "conclusion": "pass",
+  "unresolvedFindings": 0,
+  "historicalFindings": [
+    {
+      "head": "06d1c0a6cb807ab1d415aa0919ea7c4c82cc42c3",
+      "severity": "P2",
+      "finding": "Two carried-forward root entrypoints advertised untracked curriculum targets: package.json curriculum:verify and README curriculum-reference link",
+      "resolution": "In exact2840, root README.md/package.json are byte-identical to current mainc2, while all nine retained implementation files are byte-identical to reviewed06. Original canonical dirty files, af481 and06 source custody are preserved."
+    }
+  ],
+  "sourceReview": [
+    "Exact immutable Git identity/status/base diff; nine retained implementation files only",
+    "Retained mode is selected before sourceRuntime construction; no refresh callback; existing owner/actor scoped request history remains available",
+    "Normal direct runtime coordinator bindings preserve existing behavior",
+    "Existing auth, storage and clinic recovery implementations unchanged from current main",
+    "Browser code uses actual form login and HTTPS; aborts post-commit acknowledgement, recovers same result with one POST in that phase, preserves unknown second item, restarts a new process with same auth/origin, performs exact replay and independent one-revision DB readback",
+    "Four implementation provenance hashes and two generated CI projection hashes match exact declared bytes",
+    "Clean-clone unrelated entrypoint finding independently resolved in successor"
+  ],
+  "leadVerification": {
+    "exactHeadFullRootCheck": "passed",
+    "generatedCIProjection": "passed",
+    "rootCheckStdoutSha256": "2bd424f8d7ddab2d36ff4b6140ec4282f5fe95a339ef9d47280d2ae582fc38a8",
+    "rootCheckStderrSha256": "6204d254bfae5e4d93a8a5877156eea99abe0d70ea98c5f9119e33e6fa05d4bd",
+    "workerOrdinaryEngineeringReceiptSha256": "3ca7b2052586284f7b0a65082ff0c03af0f7789f19d610bcdbfa1ff0b05c8029",
+    "realBrowserPostgresSyntheticCases": 5,
+    "broaderIsolatedPostgresRegression": {
+      "passed": 362,
+      "skipped": 6,
+      "failed": 3,
+      "failureBoundary": "Fixed native /opt/data profile scratch path absent in isolated checkout; failures preserved and not reclassified as passes"
+    },
+    "aggregateRootTestDatabaseSuites": "No DC socket set; native/Postgres suites truthfully skipped; exact browser DB tests separately passed"
+  },
+  "limits": [
+    "Source review and synthetic software verification only",
+    "Does not launch native-gated main, establish serving PostgreSQL18.6 behavior, actual current student/source truth, off-host recovery, production activation or teacher/whole-Goal acceptance",
+    "Reviewer ran no new tests, installs, network, credential/private-input reads or mutations"
+  ],
+  "evidenceCustody": {
+    "owner": "hermes-harness-engineering",
+    "basis": "Legacy education CI projection requires this source evidence custodian. Exact sanitized review bytes are preserved under that owning project's private local custody and same education repository immutable evidence branch; no Hermes native reviewer, runtime session or activation is invented.",
+    "nativeReviewerRuntime": "native-codex",
+    "nativePermissionGranted": false
+  },
+  "acceptanceDecision": null
+}
