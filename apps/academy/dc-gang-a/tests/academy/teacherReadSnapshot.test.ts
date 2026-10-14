@@ -36,13 +36,16 @@ describe.skipIf(!socket)('coherent teacher read snapshot',()=>{
    const store=new PostgresAcademyStore(db);await store.migrate();let escaped:TeacherReadStore|undefined;
    await store.readSnapshot(async snapshot=>{
     escaped=snapshot;expect(Object.isFrozen(snapshot)).toBe(true);
-    expect(Object.keys(snapshot).sort()).toEqual(['catalog','clinicRequest','clinicResult','current','history','observationRequest','observationResult','pinnedCatalog','preparationRevisions','students'].sort());
+    expect(Object.keys(snapshot).sort()).toEqual(['catalog','clinicRequest','clinicResult','current','history','observationRequest','observationResult','pinnedCatalog','preparationRevisions','studentWorkspaces','students'].sort());
     expect('db' in snapshot||'append' in snapshot||'migrate' in snapshot).toBe(false);
     await snapshot.students('fixture-no-students');
+    expect(await snapshot.studentWorkspaces!('fixture-no-students','fixture-no-student')).toEqual([]);
    });
    await expect(escaped!.students('fixture-no-students')).rejects.toThrow('read_snapshot_closed');
+   await expect(escaped!.studentWorkspaces!('fixture-no-students','fixture-no-student')).rejects.toThrow('read_snapshot_closed');
    await expect(store.readSnapshot(async snapshot=>{escaped=snapshot;throw Error('fixture_callback_exception');})).rejects.toThrow('fixture_callback_exception');
    await expect(escaped!.students('fixture-no-students')).rejects.toThrow('read_snapshot_closed');
+   await expect(escaped!.studentWorkspaces!('fixture-no-students','fixture-no-student')).rejects.toThrow('read_snapshot_closed');
    expect(await store.students('fixture-no-students')).toEqual([]);
   }finally{await db.close();}
  });
