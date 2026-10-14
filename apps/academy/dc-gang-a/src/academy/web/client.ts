@@ -16,6 +16,8 @@ import {sameClinicTarget} from '../learningWork';
 import {sameTeacherScope,teacherActionHeaders} from '../teacherActionScope';
 import {SourceRefreshRequest,type SourceRefreshReply} from './sourceRefreshRequest';
 import {privateArtifactView} from './privateArtifactView';
+import {preservedHistoryView} from './preservedHistoryView';
+import {curatedConceptCandidatesView} from './curatedConceptCandidatesView';
 
 const element=<T extends HTMLElement=HTMLElement>(id:string)=>document.getElementById(id) as T;
 const status=(text:string)=>{element('status').textContent=text;};
@@ -174,6 +176,10 @@ async function loadWorkspace(){
   element('workspace').querySelector('main')!.append(examWorkspaceView(cohort.teacherScope,api,<T>(path:string,value:unknown)=>api<T>(path,{method:'POST',headers:{'Content-Type':'application/json',...teacherActionHeaders(cohort.teacherScope)},body:JSON.stringify(value)})));
   document.getElementById('private-artifact-workspace')?.remove();
   element('workspace').querySelector('main')!.append(privateArtifactView(()=>api('/api/private-artifacts')));
+  document.getElementById('preserved-history-workspace')?.remove();
+  element('workspace').querySelector('main')!.append(preservedHistoryView(api));
+  document.getElementById('curated-concept-candidates-workspace')?.remove();
+  element('workspace').querySelector('main')!.append(curatedConceptCandidatesView(()=>api('/api/curated-concept-candidates')));
   if(!document.getElementById('recover-source-refresh')){
     const recover=node('button','기존 갱신 요청·결과 확인') as HTMLButtonElement;recover.id='recover-source-refresh';recover.type='button';
     recover.addEventListener('click',()=>recoverSourceRefresh());element('refresh-all').insertAdjacentElement('afterend',recover);

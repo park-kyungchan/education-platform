@@ -1,0 +1,67 @@
+{
+  "schema": "academy.preserved-history-source-provenance.v1",
+  "taskRef": "ACADEMY-PRESERVED-HISTORY",
+  "taskRegistration": "local_source_task_reference_not_global_or_native_registration",
+  "baselineEducationCommit": "31bc2920ecc13e7f4df68437fd7a7c1ad9766373",
+  "referenceProject": "academy-workbench",
+  "observedReferenceHead": "4e99ec37f00f121e5369d49ed0bd52459b9293aa",
+  "sourceReferences": [
+    {
+      "path": "app/standalone/src/server/contracts.ts",
+      "sha256": "37eb92845c37e60aa27baac7ffc1ea44411123aa45f3e4e9047246798429cf83"
+    },
+    {
+      "path": "app/standalone/src/server/read-models.ts",
+      "sha256": "b921841a594067d1408aa18af83c788a3eb85b8976abe7d3aa188edeab9b2f91"
+    },
+    {
+      "path": "app/standalone/docs/private-import-contract.md",
+      "sha256": "a0cdd8af745c2bf9225e95241ecea5fcd12184ea0a95b2c7170bef5e35400099"
+    },
+    {
+      "path": "app/offline-import-adapter/src/adapter.ts",
+      "sha256": "50100f6fe215abb1bacc8576c42f51f1b52363a8790864d04422e7601cc81ae7"
+    },
+    {
+      "path": "app/offline-import-adapter/README.md",
+      "sha256": "fb3bd8c60b95634ef6b2e3e1b43ff30b07365715625defc5f4aa7de2ec66ab59"
+    }
+  ],
+  "adaptation": "Domain types and validation are implemented locally from the portable-dataset contract. No original private state, native store, source client or current-state projection code is copied into this repository.",
+  "privateInput": "Fixed authenticated A13 selector preserved-portable-dataset; exact private bytes remain outside source control.",
+  "scope": "Owner-global archived namespace academy.sites.academy-rails-current.student, distinct from native PostgreSQL StudentBinding; archived ownerId is preserved import-label metadata only.",
+  "bounds": {
+    "datasetBytes": 33554432,
+    "students": 10000,
+    "records": 50000,
+    "artifacts": 128,
+    "recordDetailBytes": 2097152,
+    "pageRecords": 20,
+    "summaryByteBudget": 262144,
+    "jsonDepth": 40,
+    "jsonNodes": 1000000
+  },
+  "preservation": [
+    "Original array order and every saved record remain accessible; explicit supersedes/retracts/conflicts are not applied as current state.",
+    "Source-event correction fields retain exact values and unknown semantics; no correction expands into whole-record invalidation.",
+    "Raw JSON, source clocks, provenance verification/completeness/pagination and source archive paths remain inert claims.",
+    "Original artifact IDs and filenames survive; download requires unique owner-global A13 SHA/byte/MIME equality plus a fresh exact-byte read; this verifies byte custody only.",
+    "Native opaque student keys and archived names/IDs/source namespaces are never joined."
+  ],
+  "effects": {
+    "newDatabaseTables": 0,
+    "sourceRequests": 0,
+    "nativeConfigurationWrites": 0,
+    "nativeActivation": 0,
+    "externalSendsOrPrints": 0,
+    "modelEvaluationRequests": 0
+  },
+  "acceptance": "Local source and synthetic browser verification only; real native custody, currentness, complete source roster, factual student identity and human teacher acceptance remain separate unqualified gates.",
+  "canonicalParentTaskRef": "ACADEMY-RETAINED-OWNER-RUNTIME",
+  "backlogItem": "A02",
+  "governingSpecRevision": 6,
+  "governingPlanRevision": 6,
+  "workId": "ontology-driven-harness-operation",
+  "canonicalTaskAllocationPerformed": false,
+  "canonicalTaskCompletionClaimed": false
+}

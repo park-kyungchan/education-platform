@@ -14,7 +14,9 @@
     "academy:journal-http": "bun harness/academy_journal_http.ts",
     "academy:query": "bun harness/academy_query.ts",
     "test:private-artifact-browser": "bun tests/academy/privateArtifactBrowser.ts",
-    "typecheck:private-artifact-browser": "bun node_modules/typescript/bin/tsc -p tsconfig.private-artifact-browser.json"
+    "typecheck:private-artifact-browser": "bun node_modules/typescript/bin/tsc -p tsconfig.private-artifact-browser.json",
+    "test:preserved-history-browser": "bun tests/academy/preservedHistoryBrowser.ts",
+    "typecheck:preserved-history-tests": "bun node_modules/typescript/bin/tsc -p tsconfig.preserved-history-tests.json"
   },
   "devDependencies": {
     "playwright": "1.64.1",
