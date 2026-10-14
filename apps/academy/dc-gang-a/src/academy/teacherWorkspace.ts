@@ -2,6 +2,7 @@ import {assertDate,assertExactKeys,assertInstant,assertRefs,canonicalJson,requir
 import {validateSourceKey,type SourceKey} from './domain';
 import type {LearningWorkAssignment} from './learningWork';
 
+export class TeacherWorkspaceRefusal extends Error {readonly rejectedBeforeCommit=true;constructor(code:string,readonly phase:'intake'|'transaction'){super(/^[a-z][a-z0-9_]{0,100}$/.test(code)?code:'workspace_request_refused');}}
 interface WorkspaceBase {studentBinding:{studentId:string;sourceStudent:SourceKey};sourceStudent:SourceKey;reportedAt:string;evidenceRevisionIds:string[]}
 /** Teacher-reported stages remain independent; a local final is never app grading or a whole-book conclusion. */
 export interface TeacherActivityReview extends WorkspaceBase {

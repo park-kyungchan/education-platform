@@ -2,7 +2,7 @@ import {validateTeacherExamDraft,type TeacherExamSelectionDraft} from './teacher
 import type {SQL} from 'bun';
 import {assertExactKeys,assertInstant,canonicalJson,digest,requireText,stableId} from '../learning/model';
 import {academyOperatingSelection} from './operatingWorkspace';
-import {validateTeacherWorkspace,workspaceEntityId,isTeacherWorkspaceRecord,type TeacherOperationalCase,type TeacherWorkspaceRecord} from './teacherWorkspace';
+import {TeacherWorkspaceRefusal,validateTeacherWorkspace,workspaceEntityId,isTeacherWorkspaceRecord,type TeacherOperationalCase,type TeacherWorkspaceRecord} from './teacherWorkspace';
 import type {WriteAcknowledgement} from './contracts/storageRecords';
 export type OwnerWorkspaceRecord=TeacherWorkspaceRecord|TeacherOperationalCase|TeacherExamSelectionDraft;
 export function ownerWorkspaceEntityId(payload:OwnerWorkspaceRecord){return payload.kind==='teacher_exam_selection_draft'?'teacher-exam-selection-'+payload.draftId:workspaceEntityId(payload);}
@@ -34,12 +34,14 @@ export async function assertOwnerWorkspacesReady(db:SQL){
  if(row?.ready!==true||row.triggers!==1)throw Error('owner_workspace_storage_unavailable');
 }
 export async function appendOwnerWorkspace(db:SQL,command:OwnerWorkspaceCommand):Promise<WriteAcknowledgement>{
+ command=JSON.parse(canonicalJson(command)) as OwnerWorkspaceCommand;
  assertExactKeys(command,['ownerId','actorId','idempotencyKey','expectedRevisionId','payload']);canonicalJson(command);validateOwnerWorkspace(command.payload);
  for(const id of [command.ownerId,command.actorId,command.idempotencyKey]){requireText(id,'workspace identity');if(id.length>200)throw Error('invalid_workspace_identity');}
  if(command.expectedRevisionId!==null){requireText(command.expectedRevisionId,'workspace predecessor');if(command.expectedRevisionId.length>200)throw Error('invalid_workspace_identity');}
  const recordedAt=new Date().toISOString();assertInstant(command.payload.reportedAt);if(Date.parse(command.payload.reportedAt)>Date.parse(recordedAt))throw Error('future_source_observation');
  const entityId=ownerWorkspaceEntityId(command.payload),contentDigest=digest(command.payload),commandDigest=digest(command);
- return db.begin(async tx=>{
+ let callbackFailed=false;
+ try{return await db.begin(async tx=>{try{
   // Owner outcome and optional student evidence share the same existing transaction owner.
   if(command.payload.studentBinding)await tx`SELECT pg_advisory_xact_lock(hashtextextended(${canonicalJson(['student-records',command.ownerId,command.payload.studentBinding.studentId])},0))`;
   await tx`SELECT pg_advisory_xact_lock(hashtextextended(${canonicalJson(['owner-workspaces',command.ownerId])},0))`;
@@ -81,7 +83,7 @@ export async function appendOwnerWorkspace(db:SQL,command:OwnerWorkspaceCommand)
   await tx`INSERT INTO academy.owner_workspace_heads(owner_id,entity_id,sequence) VALUES(${body.ownerId},${entityId},${body.sequence}) ON CONFLICT(owner_id,entity_id) DO UPDATE SET sequence=EXCLUDED.sequence`;
   const result:WriteAcknowledgement={status:'saved',revisionId:body.revisionId,sequence:body.sequence,recordedAt,contentDigest,officialSaved:false,parentSent:false};
   await tx`INSERT INTO academy.owner_workspace_outcomes(owner_id,actor_id,idempotency_key,command_digest,acknowledgement) VALUES(${command.ownerId},${command.actorId},${command.idempotencyKey},${commandDigest},${canonicalJson(result)}::text::jsonb)`;return result;
- }) as Promise<WriteAcknowledgement>;
+ }catch(error){callbackFailed=true;throw error;}}) as WriteAcknowledgement;}catch(error){if(callbackFailed)throw new TeacherWorkspaceRefusal(error instanceof Error?error.message:'workspace_transaction_refused','transaction');throw error;}
 }
 export async function ownerWorkspaces(db:SQL,ownerId:string){
  requireText(ownerId,'owner');const rows=await db`SELECT v.* FROM academy.owner_workspace_heads h JOIN academy.owner_workspace_versions v USING(owner_id,entity_id,sequence) WHERE h.owner_id=${ownerId} ORDER BY entity_id LIMIT 1001`;if(rows.length>1000)throw Error('owner_workspace_scope_too_large');return rows.map(version);
