@@ -1,0 +1,186 @@
+{
+  "schema": "education.native-independent-source-review-result.v1",
+  "recordClass": "verification",
+  "observedAt": "2026-10-14T17:50:14.272Z",
+  "repository": "park-kyungchan/education-platform",
+  "headSha": "98520d2abadbf72d7f9674bc2e845b67407b216e",
+  "reviewedTreeSha": "aefc8824ce55b2cd9f8d51c57c3960996e81453d",
+  "comparisonBase": "c2b626166d9253658543b2598fe6d54cd10a1599",
+  "reviewer": {
+    "runtime": "native-codex",
+    "taskId": "/root/academy_delivery_preflight/owner_lifecycle_contract"
+  },
+  "author": {
+    "runtime": "native-codex",
+    "taskId": "/root/academy_delivery_preflight"
+  },
+  "contributors": [
+    {
+      "taskId": "/root",
+      "role": "Exact-head reviewed PR3 merge owner; source serialization and publication remain distinct from this independent reviewer."
+    }
+  ],
+  "reviewAuthorship": {
+    "reviewStatementAuthor": "/root/academy_delivery_preflight/owner_lifecycle_contract",
+    "serializationOwner": "/root/academy_delivery_preflight/owner_lifecycle_contract",
+    "basis": "This successor JSON is directly authored by the same actual native independent source reviewer of2840."
+  },
+  "conclusion": "pass",
+  "unresolvedFindings": 0,
+  "reviewKind": "independent-exact-merge-successor-binding",
+  "successorBinding": {
+    "predecessorHeadSha": "2840b1657d325f2a8a59906a3191679293bc8989",
+    "predecessorReviewedTreeSha": "aefc8824ce55b2cd9f8d51c57c3960996e81453d",
+    "predecessorResult": {
+      "path": "academy-retained-independent-review-2840b165.json",
+      "sha256": "698507d1ff81e1fca0248e0312d8a9a56d026521330bac606c0820088b81b1e8",
+      "reviewer": {
+        "runtime": "native-codex",
+        "taskId": "/root/academy_delivery_preflight/owner_lifecycle_contract"
+      },
+      "immutablePublishedResultRef": "https://github.com/park-kyungchan/education-platform/blob/db4ff68f01d3610afad93ebb9d33f6195c608d39/native-review-results/2840b1657d325f2a8a59906a3191679293bc8989.json",
+      "publicationAttribution": "Immutable predecessor publication reference is read from preserved local receipt; no network verification was performed by this reviewer."
+    },
+    "mergeParents": [
+      "c2b626166d9253658543b2598fe6d54cd10a1599",
+      "2840b1657d325f2a8a59906a3191679293bc8989"
+    ],
+    "identicalReviewedTree": true,
+    "emptySourceDiff": true,
+    "cleanWorktree": true,
+    "changedPathsAgainstBase": [
+      "apps/academy/dc-gang-a/README.md",
+      "apps/academy/dc-gang-a/bun.lock",
+      "apps/academy/dc-gang-a/package.json",
+      "apps/academy/dc-gang-a/src/academy/main.ts",
+      "apps/academy/dc-gang-a/src/academy/retainedRuntime.ts",
+      "apps/academy/dc-gang-a/src/academy/web/connectionView.ts",
+      "apps/academy/dc-gang-a/tests/academy/retainedOwnerBrowser.ts",
+      "apps/academy/dc-gang-a/tests/academy/retainedOwnerServer.ts",
+      "provenance/adaptations.json"
+    ],
+    "explicitReuseMeaning": "Exact reviewed source tree reuse with a new immutable merge-head binding and current zero-unresolved-finding state; no new source/runtime acceptance."
+  },
+  "historicalFindings": [
+    {
+      "head": "06d1c0a6cb807ab1d415aa0919ea7c4c82cc42c3",
+      "severity": "P2",
+      "finding": "Two carried-forward root entrypoints advertised untracked curriculum targets: package.json curriculum:verify and README curriculum-reference link",
+      "resolution": "In exact2840, root README.md/package.json are byte-identical to current mainc2, while all nine retained implementation files are byte-identical to reviewed06. Original canonical dirty files, af481 and06 source custody are preserved."
+    }
+  ],
+  "sourceReview": [
+    "Exact immutable Git identity/status/base diff; nine retained implementation files only",
+    "Retained mode is selected before sourceRuntime construction; no refresh callback; existing owner/actor scoped request history remains available",
+    "Normal direct runtime coordinator bindings preserve existing behavior",
+    "Existing auth, storage and clinic recovery implementations unchanged from current main",
+    "Browser code uses actual form login and HTTPS; aborts post-commit acknowledgement, recovers same result with one POST in that phase, preserves unknown second item, restarts a new process with same auth/origin, performs exact replay and independent one-revision DB readback",
+    "Four implementation provenance hashes and two generated CI projection hashes match exact declared bytes",
+    "Clean-clone unrelated entrypoint finding independently resolved in successor"
+  ],
+  "changedFileManifest": [
+    {
+      "path": "apps/academy/dc-gang-a/README.md",
+      "sha256": "9822d919c212f60acfec70edc4ddd38728d961bed75fcb4a8a883c3b681252de",
+      "byteLength": 2728,
+      "gitBlob": "cb157d9f878e4103bceb211fa7afadc17e1aeb4e"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/bun.lock",
+      "sha256": "32a3f043840b475a2892cc4477b393d32d597b2a65616c076be2b74bb45c9aa5",
+      "byteLength": 15820,
+      "gitBlob": "21e6aaa7e02992fff711d8503be31c3fdf9af1f0"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/package.json",
+      "sha256": "7fa0fcd61357ea43418d32dc16ad367171e4239d6edcac1515b89ff2d55eda3a",
+      "byteLength": 959,
+      "gitBlob": "92a57329a824f015adbad4163c9b07862ab066b9"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/main.ts",
+      "sha256": "135ad5e095e318c6a3d37af65609cf150df2d902a5934b55535bd7d8417946e3",
+      "byteLength": 4797,
+      "gitBlob": "fc484dee11af7fbccf5b1581c90aed0850932f28"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/retainedRuntime.ts",
+      "sha256": "5b040e55708c8bebcc1691c0d3202fda2a2274759bb35dadc6fe66b52e2ced88",
+      "byteLength": 1614,
+      "gitBlob": "27729866ae17f8458096a728db7123c41537696b"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/web/connectionView.ts",
+      "sha256": "c6995d4b0521484274db246b8891494eac441e5af4eba86e6c8b7f7d29f7926e",
+      "byteLength": 2848,
+      "gitBlob": "0ff05f551e9ca66b3b0b66eb3d33eda781aabbe9"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/tests/academy/retainedOwnerBrowser.ts",
+      "sha256": "deccffbdbe4c54a4c231d9814b2f6d0243eab8665b770df4b96905124518f982",
+      "byteLength": 9894,
+      "gitBlob": "7aec3e9e58cf124885564b0d26fff2fcc207789e"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/tests/academy/retainedOwnerServer.ts",
+      "sha256": "c35fe54cb539daa7ec07ad79f48ac46e06a5c6e74ff84e2243e41616d2f050b3",
+      "byteLength": 3026,
+      "gitBlob": "9667fed9480447387f16e74a27b366f1334cda7d"
+    },
+    {
+      "path": "provenance/adaptations.json",
+      "sha256": "80457cf26ffbec29a846895617cde68805815ea56d4d18a5513fda7798e2919f",
+      "byteLength": 4142,
+      "gitBlob": "700f19ac5f8c6ab7464d827efec327ff64d2a782"
+    }
+  ],
+  "evidenceCustody": {
+    "requiredLegacyReceiptOwner": "hermes-harness-engineering",
+    "currentArtifactPlacement": "Academy Work current-session review staging; Root owns exact-byte copy into actual Hermes project private evidence custody before legacy receipt publication.",
+    "predecessorResultHasRecordedHermesPrivateCustody": true,
+    "nativeReviewerRuntime": "native-codex",
+    "noHermesNativeReviewerInvented": true,
+    "nativePermissionGranted": false
+  },
+  "existingVerificationEvidence": {
+    "exact2840LeadVerification": {
+      "exactHeadFullRootCheck": "passed",
+      "generatedCIProjection": "passed",
+      "rootCheckStdoutSha256": "2bd424f8d7ddab2d36ff4b6140ec4282f5fe95a339ef9d47280d2ae582fc38a8",
+      "rootCheckStderrSha256": "6204d254bfae5e4d93a8a5877156eea99abe0d70ea98c5f9119e33e6fa05d4bd",
+      "workerOrdinaryEngineeringReceiptSha256": "3ca7b2052586284f7b0a65082ff0c03af0f7789f19d610bcdbfa1ff0b05c8029",
+      "realBrowserPostgresSyntheticCases": 5,
+      "broaderIsolatedPostgresRegression": {
+        "passed": 362,
+        "skipped": 6,
+        "failed": 3,
+        "failureBoundary": "Fixed native /opt/data profile scratch path absent in isolated checkout; failures preserved and not reclassified as passes"
+      },
+      "aggregateRootTestDatabaseSuites": "No DC socket set; native/Postgres suites truthfully skipped; exact browser DB tests separately passed"
+    },
+    "attribution": "Preserved prior result and current Root report; this reviewer ran no new tests or CI/network requests. Identical tree preserves its exact source relationship."
+  },
+  "method": [
+    "Verified exact merge head/tree and ordered parentsc2+2840 from local immutable Git objects.",
+    "Verified empty2840..985 source diff, clean isolated worktree and same nine retained implementation paths againstc2.",
+    "Verified rootREADME/package remain identical to base and preserved original06d1 finding resolution.",
+    "Read and hashed original2840 independent result, preserving actual reviewer/author identities and separate lead validation attribution."
+  ],
+  "limits": [
+    "Source merge-successor review only; no newly executed runtime, source tests or remote CI reads.",
+    "No native-gated launch, production PostgreSQL18.6 behavior, real student/source truth, off-host recovery, production activation, teacher acceptance or whole backlog/Goal completion is established.",
+    "No network requests, source/Git edits, credential/private operational input reads or native runtime effects occurred."
+  ],
+  "effects": {
+    "newReviewArtifactsOnly": true,
+    "sourceEdits": 0,
+    "gitMutations": 0,
+    "networkCalls": 0,
+    "nativeConfigWrites": 0,
+    "nativeActivation": 0,
+    "testsRun": 0
+  },
+  "authority": "none",
+  "nativePermissionGranted": false,
+  "acceptanceDecision": null
+}
