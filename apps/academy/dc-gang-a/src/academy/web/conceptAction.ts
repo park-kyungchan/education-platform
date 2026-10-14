@@ -1,0 +1,31 @@
+import {canonicalJson} from '../../learning/model';
+import type {TrustedTeacherContext} from '../contracts/teacherOperations';
+import type {ConceptWorkspaceVersion} from '../conceptWorkspace';
+import {workspaceNode as node} from './workspaceEditor';
+
+type Scope=Pick<TrustedTeacherContext,'ownerId'|'actorId'>;
+interface Pending {input:any;path:string;studentId:string|null;kind:'definition'|'link'}
+interface ActionState {pending:Pending|null;message:string;busy:boolean;blocked:boolean;listeners:Set<()=>void>}
+const actions=new Map<string,ActionState>();
+/** Page-lifetime pending originals only. The provider owns committed outcomes and all history. */
+export function conceptAction(key:string,scope:Scope,studentId:string|null,kind:'definition'|'link',parent:HTMLElement,prepare:()=>any,read:<T>(path:string)=>Promise<T>,write:<T>(path:string,value:unknown)=>Promise<T>,signal?:AbortSignal,onSaved?:(record:ConceptWorkspaceVersion)=>void,onReconcile?:()=>Promise<void>){
+ let state=actions.get(key);if(!state){state={pending:null,message:'',busy:false,blocked:false,listeners:new Set()};actions.set(key,state);}const value=state;
+ const save=node('button',kind==='definition'?'정의 후보 / 검토 저장':'선택 관계 저장') as HTMLButtonElement,recover=node('button','원본 요청 결과 확인') as HTMLButtonElement,reconcile=node('button','현재 근거를 다시 확인하고 내 입력으로 수정 검토') as HTMLButtonElement,status=node('p');save.type=recover.type=reconcile.type='button';reconcile.dataset.role='concept-reconcile';save.dataset.role='concept-save';recover.dataset.role='concept-recover';status.dataset.role='concept-status';status.setAttribute('role','status');
+ const sync=()=>{save.disabled=value.busy||!!value.pending||value.blocked||!!signal?.aborted;recover.hidden=!value.pending;recover.disabled=value.busy||!!signal?.aborted;reconcile.hidden=!value.blocked||!onReconcile;reconcile.disabled=value.busy||!!value.pending||!!signal?.aborted;parent.querySelectorAll<HTMLInputElement|HTMLTextAreaElement|HTMLSelectElement>('input,textarea,select').forEach(input=>{input.disabled=value.busy||!!value.pending;});status.textContent=value.message||'후보와 교사 판정은 별도입니다. 저장하지 않은 입력은 현재 화면에만 남습니다.';};
+ value.listeners.add(sync);signal?.addEventListener('abort',()=>value.listeners.delete(sync),{once:true});const notify=()=>{for(const listener of value.listeners)listener();};
+ const accept=(receipt:any,pending:Pending)=>{
+  const record=receipt.record as ConceptWorkspaceVersion,input=pending.input;if(!record||receipt.officialSaved!==false||receipt.parentSent!==false||record.ownerId!==scope.ownerId||record.actorId!==scope.actorId||record.studentId!==pending.studentId||record.kind!==pending.kind||record.idempotencyKey!==input.idempotencyKey||record.previousRevisionId!==input.expectedRevisionId||record.revisionId!==receipt.revisionId)throw Error('concept_readback_conflict');
+  if(pending.kind==='definition'){
+   if(record.payload.kind!=='atomic_concept_revision')throw Error('concept_readback_conflict');const {semanticReview,kind,id,revisionId,...definition}=record.payload;if(canonicalJson(definition)!==canonicalJson(input.definition)||input.review.decision==='candidate'&&semanticReview.state!=='unknown'||input.review.decision==='reviewed_definition'&&(semanticReview.state!=='known'||semanticReview.value.reviewerId!==scope.actorId||semanticReview.value.definitionDigest!==input.review.expectedDefinitionDigest||semanticReview.value.sourceRef!==input.review.sourceRef||semanticReview.value.reviewedAt!==input.reportedAt))throw Error('concept_readback_conflict');
+  }else {
+   if(record.payload.kind!=='student_concept_link_revision'||record.payload.evidenceRevisionId!==input.evidenceRevisionId||record.payload.conceptRevisionId!==input.conceptRevisionId||record.payload.status!==input.status||canonicalJson(record.payload.basisRefs)!==canonicalJson(input.basisRefs))throw Error('concept_readback_conflict');
+   if(input.status!=='candidate'&&(record.payload.teacherReview.state!=='known'||record.payload.teacherReview.value.actorId!==scope.actorId||record.payload.teacherReview.value.reportedAt!==input.reportedAt||record.payload.teacherReview.value.sourceRef!==input.reviewSourceRef))throw Error('concept_readback_conflict');
+  }
+  value.pending=null;value.blocked=false;value.message='저장 확인 · '+record.revisionId+' · 정본 개념 채택·숙련도·인과관계·공식 저장·전송을 뜻하지 않습니다.';notify();onSaved?.(record);
+ };
+ save.addEventListener('click',async()=>{if(save.disabled)return;let input;try{input=structuredClone(prepare());}catch(error){value.message=(error as Error).message;sync();return;}
+  const pending:Pending={input,path:kind==='definition'?'/api/concept-definition':'/api/concept-link',studentId,kind};value.pending=pending;value.busy=true;value.message='원본 요청 저장 결과 확인 중…';notify();try{accept(await write(pending.path,input),pending);}catch(error){const code=(error as Error).message;if((error as Error&{requestOutcome?:string}).requestOutcome==='rejected_before_commit'||code==='teacher_scene_actor_conflict'){value.pending=null;value.blocked=['stale_base','stale_evidence_basis','stale_concept_revision','teacher_scene_actor_conflict'].includes(code);value.message='저장 거부 · '+code+' · 입력은 유지했습니다. 현재 근거를 다시 조회한 뒤 범위를 확인하세요.';}else value.message='저장 응답 미확인 · 새 요청을 보내지 말고 원본 요청의 결과를 확인하세요.';}finally{value.busy=false;notify();}});
+ recover.addEventListener('click',async()=>{const pending=value.pending;if(!pending||value.busy||signal?.aborted)return;value.busy=true;notify();try{const resultPath='/api/concept-result?requestId='+encodeURIComponent(pending.input.idempotencyKey)+(pending.studentId?'&studentId='+encodeURIComponent(pending.studentId):'');accept(await read(resultPath),pending);}catch(error){value.message='원본 요청 결과 확인 보류 · '+(error as Error).message+' · 자동 재전송하지 않았습니다.';}finally{value.busy=false;notify();}});
+ reconcile.addEventListener('click',async()=>{if(value.busy||value.pending||!onReconcile||signal?.aborted)return;value.busy=true;notify();try{await onReconcile();value.blocked=false;value.message='현재 버전을 다시 확인했습니다. 입력은 유지하며 교사 판정은 다시 명시적으로 확인해야 합니다.';}catch(error){value.message='현재 근거 확인 보류 · '+(error as Error).message;}finally{value.busy=false;notify();}});
+ parent.append(save,recover,reconcile,status);sync();return {state:value,sync};
+}

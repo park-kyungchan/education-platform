@@ -68,7 +68,7 @@ export function createConceptRevision(body: ConceptDefinition): ConceptRevision 
   validateDefinition(body);const id=stableId('atomic_concept',body.sourceKey.namespace,body.sourceKey.literalKey);
   return immutableCopy({...body,kind:'atomic_concept_revision',id,revisionId:stableId('concept_revision',id,digest(body))});
 }
-function validateConcept(concept: ConceptRevision) {
+export function validateConcept(concept: ConceptRevision) {
   canonicalJson(concept);assertExactKeys(concept,['sourceKey','label','definition','curriculumEdition','sourceRefs','semanticReview','kind','id','revisionId']);
   const {kind,id,revisionId,...body}=concept,expected=createConceptRevision(body);
   if(kind!==expected.kind||id!==expected.id||revisionId!==expected.revisionId)throw Error('concept_revision_conflict');
@@ -99,7 +99,7 @@ export function createConceptLinkRevision(body: ConceptLinkBody, previous: Conce
   const value={...body,kind:'student_concept_link_revision' as const,id,previousRevisionId:previous?.revisionId??null,sequence:(previous?.sequence??0)+1};
   return immutableCopy({...value,revisionId:stableId('concept_link_revision',id,digest(value))});
 }
-function validateLink(link: ConceptLinkRevision) {
+export function validateLink(link: ConceptLinkRevision) {
   canonicalJson(link);assertExactKeys(link,['ownerId','studentId','evidenceRevisionId','conceptRevisionId','status','basisRefs','teacherReview','kind','id','revisionId','previousRevisionId','sequence']);
   const {kind,id,revisionId,previousRevisionId,sequence,...body}=link;validateLinkBody(body);
   if(kind!=='student_concept_link_revision'||!Number.isSafeInteger(sequence)||sequence<1||(sequence===1?previousRevisionId!==null:typeof previousRevisionId!=='string'))throw Error('invalid_concept_link_chain');
