@@ -42,6 +42,13 @@
       "reason": "verify two exact private successor links require access and never become remote assets",
       "sourceSha256": "7e946ba4cc97263ee50fc1bea4ad9caf96d64ccbbb2465b69bee4bb127fbc677",
       "integrationSha256": "651c0eb4f88b957431737314d8f263f10b42d26432e3bdca5c21dafcb17ef1f2"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/server.ts",
+      "reason": "evict expired authentication throttle keys before enforcing shared capacity; preserve active per-client limits",
+      "sourceSha256": "12f5687ee2b378a97a8345712086d458301d37dbcb12a9638abaae844ecf4946",
+      "integrationSha256": "f5e002416aaef0ea249d4db3e3539939facc3a5506db93f8dedd9cffb156fcef",
+      "reviewRef": "https://github.com/park-kyungchan/education-platform/pull/1#discussion_r4240579621"
     }
   ],
   "mathematicalMeaningChanged": false,

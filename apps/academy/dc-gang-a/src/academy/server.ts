@@ -36,6 +36,14 @@ export function createTeacherServerHandler(options:TeacherServerOptions){
   const admittedHost=new URL(options.origin).hostname;
   let identity=options.identity,sessionKey=options.sessionKey,invitationDigest=options.invitationDigest,setupRunning=false,resetRunning=false;
   const loginAttempts=new Map<string,{count:number;windowStart:number}>();
+  const authenticationRateLimit=(key:string,now:number,error:'login_rate_limited'|'recovery_rate_limited'):Response|null=>{
+    for(const [expiredKey,attempt] of loginAttempts)if(now-attempt.windowStart>=900000)loginAttempts.delete(expiredKey);
+    const prior=loginAttempts.get(key);
+    if(!prior&&loginAttempts.size>=2048)return json({error},429);
+    const attempt=prior??{count:0,windowStart:now};
+    attempt.count++;loginAttempts.set(key,attempt);
+    return attempt.count>5?json({error},429,{'Retry-After':'900'}):null;
+  };
   const context=(req:Request):TrustedTeacherContext|null=>{
     const raw=readCookie(req.headers.get('Cookie'),'dc_teacher');
     const session=raw?verifyTeacherSession(sessionKey,raw):null;
@@ -101,11 +109,7 @@ export function createTeacherServerHandler(options:TeacherServerOptions){
       }
       if(path==='/api/login'&&req.method==='POST'){
         const now=Date.now(),remote=(req.headers.get('CF-Connecting-IP')??'direct-loopback').slice(0,64);
-        const prior=loginAttempts.get(remote);
-        const attempt=prior&&now-prior.windowStart<900000?prior:{count:0,windowStart:now};
-        if(!prior&&loginAttempts.size>=2048)return json({error:'login_rate_limited'},429);
-        attempt.count++;loginAttempts.set(remote,attempt);
-        if(attempt.count>5)return json({error:'login_rate_limited'},429,{'Retry-After':'900'});
+        const rateLimit=authenticationRateLimit(remote,now,'login_rate_limited');if(rateLimit)return rateLimit;
         const data=await body(req);assertExactKeys(data,['username','password']);
         const loginIdentity=identity,loginKey=sessionKey;
         if(!loginIdentity||typeof data.username!=='string'||typeof data.password!=='string'||data.password.length>1024||data.username!==loginIdentity.username||!await Bun.password.verify(data.password,loginIdentity.passwordHash))return json({error:'login_required'},401);
@@ -115,22 +119,16 @@ export function createTeacherServerHandler(options:TeacherServerOptions){
       }
       if(path==='/api/password-recovery-request'&&req.method==='POST'){
         if(!identity||!options.passwordRecovery)return json({error:'password_recovery_denied'},403);
-        const now=Date.now(),remote='recovery-request:'+(req.headers.get('CF-Connecting-IP')??'direct-loopback').slice(0,64),prior=loginAttempts.get(remote);
-        const attempt=prior&&now-prior.windowStart<900000?prior:{count:0,windowStart:now};
-        if(!prior&&loginAttempts.size>=2048)return json({error:'recovery_rate_limited'},429);
-        attempt.count++;loginAttempts.set(remote,attempt);
-        if(attempt.count>5)return json({error:'recovery_rate_limited'},429,{'Retry-After':'900'});
+        const now=Date.now(),remote='recovery-request:'+(req.headers.get('CF-Connecting-IP')??'direct-loopback').slice(0,64);
+        const rateLimit=authenticationRateLimit(remote,now,'recovery_rate_limited');if(rateLimit)return rateLimit;
         const data=await body(req);assertExactKeys(data,[]);
         const requestRef=crypto.randomUUID(),expiresAt=Math.floor(now/1000)+900;
         return json({status:'owner_approval_required',requestRef,expiresAt,referenceGrantsAccess:false},200,{'Set-Cookie':cookie('dc_password_recovery',signTeacherSession(sessionKey,options.app.ownerId,'password-recovery:'+requestRef,undefined,900),900)});
       }
       if(path==='/api/password-recovery-session'&&req.method==='POST'){
         if(!identity||!options.passwordRecovery)return json({error:'password_recovery_denied'},403);
-        const now=Date.now(),remote='recovery:'+(req.headers.get('CF-Connecting-IP')??'direct-loopback').slice(0,64),prior=loginAttempts.get(remote);
-        const attempt=prior&&now-prior.windowStart<900000?prior:{count:0,windowStart:now};
-        if(!prior&&loginAttempts.size>=2048)return json({error:'recovery_rate_limited'},429);
-        attempt.count++;loginAttempts.set(remote,attempt);
-        if(attempt.count>5)return json({error:'recovery_rate_limited'},429,{'Retry-After':'900'});
+        const now=Date.now(),remote='recovery:'+(req.headers.get('CF-Connecting-IP')??'direct-loopback').slice(0,64);
+        const rateLimit=authenticationRateLimit(remote,now,'recovery_rate_limited');if(rateLimit)return rateLimit;
         const data=await body(req);assertExactKeys(data,['token']);
         if(typeof data.token!=='string'||!/^[A-Za-z0-9_-]{43}$/.test(data.token))return json({error:'password_recovery_denied'},403);
         const grant=await options.passwordRecovery.claim(data.token);
