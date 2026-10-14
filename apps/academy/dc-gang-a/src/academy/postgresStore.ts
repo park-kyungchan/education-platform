@@ -1,3 +1,4 @@
+import {migrateOwnerWorkspaces,assertOwnerWorkspacesReady,appendOwnerWorkspace,ownerWorkspaces,ownerWorkspaceHistory,ownerWorkspaceResult,studentWorkspaces,type OwnerWorkspaceCommand} from './ownerWorkspaceStore';
 import type { SQL } from 'bun';
 import { assertExactKeys, assertInstant, assertRefs, canonicalJson, digest, requireText, stableId } from '../learning/model';
 import { traceHierarchy, validateHierarchy, validateSourceKey, type CatalogNode, type SourceKey } from './domain';
@@ -42,6 +43,7 @@ export class PostgresAcademyStore implements TeacherStore,SourceRefreshStore {
       const scoped=new PostgresAcademyStore(tx as unknown as SQL,sourceTransaction);let active=true;
       const query=<R>(operation:()=>Promise<R>):Promise<R>=>active?operation():Promise.reject(Error('read_snapshot_closed'));
       const view:TeacherReadStore={
+        studentWorkspaces:(...args)=>query(()=>scoped.studentWorkspaces(...args)),
         students:(...args)=>query(()=>scoped.students(...args)),
         current:(...args)=>query(()=>scoped.current(...args)),
         history:(...args)=>query(()=>scoped.history(...args)),
@@ -135,6 +137,13 @@ export class PostgresAcademyStore implements TeacherStore,SourceRefreshStore {
       REVOKE ALL ON ALL TABLES IN SCHEMA academy FROM PUBLIC;
     `);
   }
+  async migrateTeacherWorkspaces(){if(this.transactionScope)throw Error('migration_in_snapshot');await migrateOwnerWorkspaces(this.db);await assertOwnerWorkspacesReady(this.db);}
+  assertTeacherWorkspacesReady(){return assertOwnerWorkspacesReady(this.db);}
+  appendOwnerWorkspace(command:OwnerWorkspaceCommand){if(this.transactionScope)throw Error('write_in_snapshot');return appendOwnerWorkspace(this.db,command);}
+  ownerWorkspaces(ownerId:string){return ownerWorkspaces(this.db,ownerId);}
+  ownerWorkspaceHistory(ownerId:string,entityId:string,afterSequence=0){return ownerWorkspaceHistory(this.db,ownerId,entityId,afterSequence);}
+  ownerWorkspaceResult(ownerId:string,actorId:string,requestId:string){return ownerWorkspaceResult(this.db,ownerId,actorId,requestId);}
+  studentWorkspaces(ownerId:string,studentId:string){return studentWorkspaces(this.db,ownerId,studentId);}
   async registerStudent(input: StudentRegistration): Promise<void> {
     assertExactKeys(input, ['ownerId', 'id', 'displayName', 'sourceKey', 'proofRefs']);
     canonicalJson(input); validateSourceKey(input.sourceKey); assertRefs(input.proofRefs);

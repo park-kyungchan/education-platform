@@ -1,3 +1,4 @@
+import type {StudentWorkspaceVersion} from '../ownerWorkspaceStore';
 import type {CatalogNode,SourceKey,catalogLevels} from '../domain';
 import type {AcademyRecord,TeacherObservation,TeacherObservationRequest} from '../records';
 import type {TeacherClinicRevision,TeacherClinicRequest} from '../learningWork';
@@ -17,6 +18,7 @@ export type ObservationReceipt=WriteAcknowledgement&{record:RecordVersion;teache
 export type ClinicReceipt=WriteAcknowledgement&{record:RecordVersion};
 export interface TeacherCohort {schemaVersion:1;kind:'teacher_cohort';scope:'registered_teacher_owned_students_not_scheduled_date_completeness';rowCount:number;teacherScope:Scope;availableLessonDates:string[];students:{id:string;displayName:string;registeredAt:string}[];connection:AcademySourceConnection;academyEffect:'read_only';officialSaved:false;parentSent:false}
 export interface StudentLearningScene {
+ teacherWorkspaces?:StudentWorkspaceVersion[];
  schemaVersion:1;kind:'student_learning_scene';student:{id:string;displayName:string;sourceKey:SourceKey;proofRefs:readonly string[]};sceneRevision:string;teacherScope:Scope;
  observationRecovery:{input:ObservationInput;actorId:string;ownerId:string;resolution:TeacherObservationRequest['resolution'];refusal:string|null}[];
  clinicRecovery:{input:ClinicDecisionInput;actorId:string;ownerId:string;resolution:TeacherClinicRequest['resolution'];refusal:string|null}[];

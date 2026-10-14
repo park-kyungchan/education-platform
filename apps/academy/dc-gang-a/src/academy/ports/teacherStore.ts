@@ -1,7 +1,9 @@
+import type {StudentWorkspaceVersion} from '../ownerWorkspaceStore';
 import type {CatalogNode} from '../domain';
 import type {AppendCommand,CurrentRecord,PinnedCatalogNode,RecordVersion,StoredStudent,WriteAcknowledgement} from '../contracts/storageRecords';
 /** Scoped reads only; no driver, schema migration or generic connection access. */
 export interface TeacherReadStore {
+  studentWorkspaces?(ownerId:string,studentId:string):Promise<StudentWorkspaceVersion[]>;
   students(ownerId:string):Promise<StoredStudent[]>;
   current(ownerId:string,studentId:string):Promise<CurrentRecord[]>;
   history(ownerId:string,studentId:string,entityId:string,afterSequence?:number,limit?:number):Promise<RecordVersion[]>;

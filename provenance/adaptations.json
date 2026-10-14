@@ -45,10 +45,11 @@
     },
     {
       "path": "apps/academy/dc-gang-a/src/academy/server.ts",
-      "reason": "evict expired authentication throttle keys before enforcing shared capacity; preserve active per-client limits",
+      "reason": "Integrate authenticated scoped activity, parent drafts, exact71-policy cases and exam drafts through additive workspace tables in the same provider; preserve legacy985 reader rollback",
       "sourceSha256": "12f5687ee2b378a97a8345712086d458301d37dbcb12a9638abaae844ecf4946",
-      "integrationSha256": "f5e002416aaef0ea249d4db3e3539939facc3a5506db93f8dedd9cffb156fcef",
-      "reviewRef": "https://github.com/park-kyungchan/education-platform/pull/1#discussion_r4240579621"
+      "integrationSha256": "51390628046c679ee57914a2239288e658e17aa664ff2257242b773fae3c801f",
+      "reviewRef": "https://github.com/park-kyungchan/education-platform/pull/1#discussion_r4240579621",
+      "taskRef": "ACADEMY-TEACHER-WORKSPACE"
     },
     {
       "path": "apps/academy/dc-gang-a/src/academy/main.ts",
@@ -63,6 +64,62 @@
       "integrationSha256": "c6995d4b0521484274db246b8891494eac441e5af4eba86e6c8b7f7d29f7926e",
       "reason": "explicit retained-only owner runtime; preserve existing direct source behavior and private owners",
       "taskRef": "ACADEMY-RETAINED-OWNER-RUNTIME"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/application.ts",
+      "sourceSha256": "80173db42792cf5a1d80c0cbf0ce620792047b6b6523b5c3cc6dfc01be3ec469",
+      "integrationSha256": "60fef83ebe9159f3746eb1764458a64dbb9bed5010e8140b5c0f5d7c3dfde12b",
+      "reason": "Integrate authenticated scoped teacher activity review, local parent draft, original71-policy operational cases and source-pinned exam drafts in the existing owner application and PostgreSQL ledger",
+      "taskRef": "ACADEMY-TEACHER-WORKSPACE"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/postgresStore.ts",
+      "sourceSha256": "66688bb706c057df85dcae229a34c7952484b369490c845e143c83c775ae7f20",
+      "integrationSha256": "1c173173fad5faaf65c2759821da6e58d0263a1abb86fdd5f4d32d8b94722dee",
+      "reason": "Integrate authenticated scoped activity, parent drafts, exact71-policy cases and exam drafts through additive workspace tables in the same provider; preserve legacy985 reader rollback",
+      "taskRef": "ACADEMY-TEACHER-WORKSPACE"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/usecases/studentScene.ts",
+      "sourceSha256": "e411a21275f7dc5fd94f1adc7db7e4a6596c91598af05b8ef249885e5ae3e1ec",
+      "integrationSha256": "4880bba11a8d9f367b5dec0c6d41df2f45e25bc869a54fd41fe3e1ed503adaf6",
+      "reason": "Integrate authenticated scoped activity, parent drafts, exact71-policy cases and exam drafts through additive workspace tables in the same provider; preserve legacy985 reader rollback",
+      "taskRef": "ACADEMY-TEACHER-WORKSPACE"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/web/client.ts",
+      "sourceSha256": "8ce1494a794246b560f2e2693ea4a8225f37b55c7978dffd76b01d9cd0dc836f",
+      "integrationSha256": "4985abeb7618eb1e5a71fdbf14c17eb2704fb3826788d6f8019ea9d7e553f3cc",
+      "reason": "Integrate authenticated scoped teacher activity review, local parent draft, original71-policy operational cases and source-pinned exam drafts in the existing owner application and PostgreSQL ledger",
+      "taskRef": "ACADEMY-TEACHER-WORKSPACE"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/web/teacherStyles.ts",
+      "sourceSha256": "45fb9b6f1284a959cbb88d11ff309106d22f54405f9ad396e6ac3be78280997a",
+      "integrationSha256": "ba31f6c5efbeee6a054a043fffcac7eac8e63e6890d27e62255681963d2ab29c",
+      "reason": "Integrate authenticated scoped teacher activity review, local parent draft, original71-policy operational cases and source-pinned exam drafts in the existing owner application and PostgreSQL ledger",
+      "taskRef": "ACADEMY-TEACHER-WORKSPACE"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/contracts/teacherOperations.ts",
+      "sourceSha256": "fdbaf7ffbe55d9d089330dbb98c7c5ddb1bd2cd8efeb73cce0a63add01472e50",
+      "integrationSha256": "f68fa81c8d74263054cdf0472f1b94600fd8c5b50a51bacc4c42aa7025df55d7",
+      "reason": "Integrate authenticated scoped activity, parent drafts, exact71-policy cases and exam drafts through additive workspace tables in the same provider; preserve legacy985 reader rollback",
+      "taskRef": "ACADEMY-TEACHER-WORKSPACE"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/ports/teacherStore.ts",
+      "sourceSha256": "c558301d5e96dd90e32f2845802fae3c1c0268c46e67ec32953b56485ace9765",
+      "integrationSha256": "379812d9011d075b100070a3b938514c84578bd98481f6f8a01b7d6892ce6f94",
+      "reason": "Integrate authenticated scoped activity, parent drafts, exact71-policy cases and exam drafts through additive workspace tables in the same provider; preserve legacy985 reader rollback",
+      "taskRef": "ACADEMY-TEACHER-WORKSPACE"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/tests/academy/teacherReadSnapshot.test.ts",
+      "sourceSha256": "e34ca1f9a327499e8c71e3a9a86a9a7eaf643889968f41df29e4bae5cad3c785",
+      "integrationSha256": "e14d6db543787003c291de2c2e73119b79464220dca7d237758f9013aa107be3",
+      "reason": "Extend existing frozen read-facade allowlist and verify the additive student workspace reader expires with the same read-only snapshot; retain prohibition of driver and mutation access",
+      "taskRef": "ACADEMY-TEACHER-WORKSPACE"
     }
   ],
   "mathematicalMeaningChanged": false,

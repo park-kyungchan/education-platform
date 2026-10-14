@@ -1,3 +1,7 @@
+import {teacherActivitySummary} from '../teacherWorkspace';
+import {examWorkspaceView} from './examWorkspaceView';
+import {teacherWorkspaceView} from './teacherWorkspaceView';
+import {operatingWorkspaceView} from './operatingWorkspaceView';
 import type { StudentLearningScene as Scene,TeacherCohort as Cohort } from '../contracts/teacherOperations';
 import { dateClassView, occurrenceIdentity, requestGate, type DateClassPreparation, type DateClassRow } from './dateClassView';
 import {preparationView} from './preparationView';
@@ -47,7 +51,7 @@ async function recoverSourceRefresh(cursor:string|null=null){
 }
 async function api<T>(path:string,options:RequestInit={}):Promise<T>{
   const response=await fetch(path,{credentials:'same-origin',cache:'no-store',...options});
-  const data=await response.json();if(!response.ok)throw Error(data.error??data.reason??'request_failed');return data as T;
+  const data=await response.json();if(!response.ok)throw Object.assign(Error(data.error??data.reason??'request_failed'),{requestOutcome:data.requestOutcome??null});return data as T;
 }
 const post=<T>(path:string,value:unknown)=>api<T>(path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(value)});
 function node(tag:string,text:string,className=''):HTMLElement{const result=document.createElement(tag);result.textContent=text;result.className=className;return result;}
@@ -108,6 +112,7 @@ function renderScene(scene:Scene){
     history.append(detail);}
   target.append(history);
   target.append(observationEditor(scene,selectedOccurrence,api,write,lifetime.signal,adoptScene));
+  target.append(teacherWorkspaceView(scene,api,write,lifetime.signal));
   const evidence=node('section','','card');evidence.append(node('h3','수업·문항·채점 근거'));
   evidence.append(node('p',scene.evidence.length?'원문 source와 독립 상태를 유지한 근거가 있습니다.':'아직 연결된 수업·문항·성적 근거가 없습니다. 미수행으로 판정하지 않습니다.','muted'));
   for(const row of scene.evidence){const detail=node('details','');detail.append(node('summary',row.payload.kind+' · '+new Date(row.lastVerifiedAt).toLocaleString('ko-KR')),node('pre',JSON.stringify(row.payload,null,2)));evidence.append(detail);}target.append(evidence);
@@ -157,6 +162,11 @@ async function loadWorkspace(){
   document.getElementById('source-area-results')?.remove();
   if(!cohortScope||!sameTeacherScope(cohortScope,cohort.teacherScope))element('refresh-status').textContent='';
   cohortScope=cohort.teacherScope;
+  document.getElementById('operating-workspace')?.remove();
+  const operating=operatingWorkspaceView(cohort.teacherScope,api,<T>(path:string,value:unknown)=>api<T>(path,{method:'POST',headers:{'Content-Type':'application/json',...teacherActionHeaders(cohort.teacherScope)},body:JSON.stringify(value)}));
+  element('workspace').querySelector('main')!.append(operating);
+  document.getElementById('exam-workspace')?.remove();
+  element('workspace').querySelector('main')!.append(examWorkspaceView(cohort.teacherScope,api,<T>(path:string,value:unknown)=>api<T>(path,{method:'POST',headers:{'Content-Type':'application/json',...teacherActionHeaders(cohort.teacherScope)},body:JSON.stringify(value)})));
   if(!document.getElementById('recover-source-refresh')){
     const recover=node('button','기존 갱신 요청·결과 확인') as HTMLButtonElement;recover.id='recover-source-refresh';recover.type='button';
     recover.addEventListener('click',()=>recoverSourceRefresh());element('refresh-all').insertAdjacentElement('afterend',recover);
@@ -243,7 +253,7 @@ async function registerSemanticTools(){
     revealClinicProposal(element('clinic-work'),input);
     return {content:[{type:'text',text:JSON.stringify({status:'awaiting_teacher_confirmation',target:input,recorded:false,officialSaved:false,parentSent:false})}]};
   }});
-  await modelContext.registerTool({name:'query_student_learning',description:'Read protected retained student evidence and typed practical DATA/LOGIC/ACTION/GOVERNANCE context: content hierarchy, distinct student/teacher stages, original evidence, source clocks, available operations and blocked effects. This query does not refresh the academy, complete a clinic, save a journal or send a parent report.',inputSchema:{type:'object',additionalProperties:false,required:['studentId'],properties:{studentId:{type:'string',maxLength:200,description:'An authorized student ID from the current teacher cohort.'},date:{type:'string',maxLength:10,description:'ISO lesson date; defaults to the selected teacher date.'}}},annotations:{readOnlyHint:true,untrustedContentHint:true},execute:async(input:{studentId:string;date?:string})=>{const date=input.date??element<HTMLInputElement>('lesson-date').value;const scene=await api<Scene>('/api/student?id='+encodeURIComponent(input.studentId)+'&date='+encodeURIComponent(date));return {content:[{type:'text',text:JSON.stringify({student:scene.student.displayName,studentId:scene.student.id,sceneRevision:scene.sceneRevision,workContext:scene.workContext,connection:scene.connection,allowedOperations:scene.allowedOperations,books:scene.books.map(book=>({revisionId:book.revisionId,sourceObservedAt:book.sourceObservedAt,lastVerifiedAt:book.lastVerifiedAt})),preparation:scene.preparation,unknownLevels:scene.hierarchy.unknownLevels,knowledge:scene.knowledge,limits:scene.limits})}]};}});
+  await modelContext.registerTool({name:'query_student_learning',description:'Read protected retained student evidence and typed practical DATA/LOGIC/ACTION/GOVERNANCE context: content hierarchy, distinct student/teacher stages, original evidence, source clocks, available operations and blocked effects. This query does not refresh the academy, complete a clinic, save a journal or send a parent report.',inputSchema:{type:'object',additionalProperties:false,required:['studentId'],properties:{studentId:{type:'string',maxLength:200,description:'An authorized student ID from the current teacher cohort.'},date:{type:'string',maxLength:10,description:'ISO lesson date; defaults to the selected teacher date.'}}},annotations:{readOnlyHint:true,untrustedContentHint:true},execute:async(input:{studentId:string;date?:string})=>{const date=input.date??element<HTMLInputElement>('lesson-date').value;const scene=await api<Scene>('/api/student?id='+encodeURIComponent(input.studentId)+'&date='+encodeURIComponent(date));return {content:[{type:'text',text:JSON.stringify({student:scene.student.displayName,studentId:scene.student.id,sceneRevision:scene.sceneRevision,workContext:scene.workContext,connection:scene.connection,allowedOperations:scene.allowedOperations,books:scene.books.map(book=>({revisionId:book.revisionId,sourceObservedAt:book.sourceObservedAt,lastVerifiedAt:book.lastVerifiedAt})),preparation:scene.preparation,teacherWorkspaces:(scene.teacherWorkspaces??[]).map(row=>({entityId:row.entityId,revisionId:row.revisionId,kind:row.payload.kind,summary:row.payload.kind==='teacher_activity_review'?teacherActivitySummary(row.payload):{date:row.payload.date,state:row.payload.state,teacherReviewed:row.payload.teacherReviewed,officialSaved:false,parentSent:false}})),unknownLevels:scene.hierarchy.unknownLevels,knowledge:scene.knowledge,limits:scene.limits})}]};}});
   await modelContext.registerTool({name:'query_date_class',description:'Read every protected retained lesson occurrence for the selected date with original fields, source clocks, preparation, coverage unknowns and connection blockers. No academy refresh, official save or parent send.',inputSchema:{type:'object',additionalProperties:false,properties:{date:{type:'string',maxLength:10,description:'ISO lesson date; defaults to the selected teacher date.'}}},annotations:{readOnlyHint:true,untrustedContentHint:true},execute:async(input:{date?:string})=>{const date=input.date??element<HTMLInputElement>('lesson-date').value;const source=await api<DateClassPreparation>('/api/class?date='+encodeURIComponent(date));dateClassView(source,date,cohortStudents);return {content:[{type:'text',text:JSON.stringify(source)}]};}});
 }
 (async()=>{
