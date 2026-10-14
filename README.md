@@ -1,7 +1,5 @@
 # Education platform
 
-The reusable elementary/middle 2022 mathematics reference is documented in [docs/curriculum-reference.md](docs/curriculum-reference.md). Run `bun run curriculum:verify` to verify the exact source-owned baseline candidate before consumption.
-
 Private source integration of independent mathematics, curriculum and education applications. Shared upper contracts consume the immutable `@palantirkc/ontology` **0.2.0** release. Native Hermes retains profiles, Projects, WorkStudio, tasks, sessions, credential consumers and operational data.
 
 Run from this repository:
