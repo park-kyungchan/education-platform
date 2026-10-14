@@ -15,7 +15,7 @@ export interface OwnerWorkspaceStore {
  ownerWorkspaceHistory(ownerId:string,entityId:string,afterSequence?:number):Promise<OwnerWorkspaceVersion[]>;
  ownerWorkspaceResult(ownerId:string,actorId:string,requestId:string):Promise<OwnerWorkspaceVersion|null>;
 }
-function version(row:any):OwnerWorkspaceVersion {
+export function ownerWorkspaceVersionFrom(row:any):OwnerWorkspaceVersion {
  const result:OwnerWorkspaceVersion={ownerId:row.owner_id,entityId:row.entity_id,sequence:Number(row.sequence),revisionId:row.revision_id,previousRevisionId:row.previous_revision_id,previousDigest:row.previous_digest,payload:row.payload,contentDigest:row.content_digest,integrityDigest:row.integrity_digest,recordedAt:new Date(row.recorded_at).toISOString(),actorId:row.actor_id,idempotencyKey:row.idempotency_key,commandDigest:row.command_digest};
  validateOwnerWorkspace(result.payload);const {integrityDigest,...body}=result;if(!Number.isSafeInteger(result.sequence)||result.sequence<1||digest(body)!==integrityDigest||digest(result.payload)!==result.contentDigest)throw Error('stored_owner_workspace_integrity');return result;
 }
@@ -73,7 +73,7 @@ export async function appendOwnerWorkspace(db:SQL,command:OwnerWorkspaceCommand)
    if((payload.mindmap.state!=='not_requested'||payload.mindmap.explanation!==null)&&assignment.activity!=='concept_blank_test')throw Error('mindmap_activity_scope_conflict');
   }
   const [row]=await tx`SELECT v.* FROM academy.owner_workspace_heads h JOIN academy.owner_workspace_versions v USING(owner_id,entity_id,sequence) WHERE h.owner_id=${command.ownerId} AND h.entity_id=${entityId}`;
-  const prior=row?version(row):null;if((prior?.revisionId??null)!==command.expectedRevisionId)throw Error('stale_base');
+  const prior=row?ownerWorkspaceVersionFrom(row):null;if((prior?.revisionId??null)!==command.expectedRevisionId)throw Error('stale_base');
   if(prior&&(prior.payload.kind!==command.payload.kind||ownerWorkspaceEntityId(prior.payload)!==entityId||canonicalJson(prior.payload.studentBinding)!==canonicalJson(binding)||prior.payload.kind==='teacher_operational_case'&&command.payload.kind==='teacher_operational_case'&&prior.payload.category!==command.payload.category||Date.parse(prior.payload.reportedAt)>Date.parse(command.payload.reportedAt)))throw Error('owner_workspace_identity_changed');
   if(prior?.payload.kind==='teacher_activity_review'&&command.payload.kind==='teacher_activity_review'&&prior.payload.final.decision==='accepted'&&(command.payload.final.decision==='pending'||command.payload.final.decision!=='reopen'&&canonicalJson(prior.payload.selectedItemIds)!==canonicalJson(command.payload.selectedItemIds)))throw Error('explicit_reopen_required');
   if(prior?.payload.kind==='teacher_operational_case'&&command.payload.kind==='teacher_operational_case'&&prior.payload.state==='locally_closed'&&!['locally_closed','reopened'].includes(command.payload.state))throw Error('explicit_case_reopen_required');
@@ -86,13 +86,13 @@ export async function appendOwnerWorkspace(db:SQL,command:OwnerWorkspaceCommand)
  }catch(error){callbackFailed=true;throw error;}}) as WriteAcknowledgement;}catch(error){if(callbackFailed)throw new TeacherWorkspaceRefusal(error instanceof Error?error.message:'workspace_transaction_refused','transaction');throw error;}
 }
 export async function ownerWorkspaces(db:SQL,ownerId:string){
- requireText(ownerId,'owner');const rows=await db`SELECT v.* FROM academy.owner_workspace_heads h JOIN academy.owner_workspace_versions v USING(owner_id,entity_id,sequence) WHERE h.owner_id=${ownerId} ORDER BY entity_id LIMIT 1001`;if(rows.length>1000)throw Error('owner_workspace_scope_too_large');return rows.map(version);
+ requireText(ownerId,'owner');const rows=await db`SELECT v.* FROM academy.owner_workspace_heads h JOIN academy.owner_workspace_versions v USING(owner_id,entity_id,sequence) WHERE h.owner_id=${ownerId} ORDER BY entity_id LIMIT 1001`;if(rows.length>1000)throw Error('owner_workspace_scope_too_large');return rows.map(ownerWorkspaceVersionFrom);
 }
 export async function ownerWorkspaceHistory(db:SQL,ownerId:string,entityId:string,afterSequence=0){
- if(!Number.isSafeInteger(afterSequence)||afterSequence<0)throw Error('invalid_history_range');requireText(ownerId,'owner');requireText(entityId,'entity');const rows=await db`SELECT * FROM academy.owner_workspace_versions WHERE owner_id=${ownerId} AND entity_id=${entityId} AND sequence>${afterSequence} ORDER BY sequence LIMIT 200`;return rows.map(version);
+ if(!Number.isSafeInteger(afterSequence)||afterSequence<0)throw Error('invalid_history_range');requireText(ownerId,'owner');requireText(entityId,'entity');const rows=await db`SELECT * FROM academy.owner_workspace_versions WHERE owner_id=${ownerId} AND entity_id=${entityId} AND sequence>${afterSequence} ORDER BY sequence LIMIT 200`;return rows.map(ownerWorkspaceVersionFrom);
 }
 export async function ownerWorkspaceResult(db:SQL,ownerId:string,actorId:string,requestId:string){
- const rows=await db`SELECT v.* FROM academy.owner_workspace_outcomes o JOIN academy.owner_workspace_versions v ON v.owner_id=o.owner_id AND v.actor_id=o.actor_id AND v.revision_id=o.acknowledgement->>'revisionId' AND v.idempotency_key=o.idempotency_key AND v.command_digest=o.command_digest WHERE o.owner_id=${ownerId} AND o.actor_id=${actorId} AND o.idempotency_key=${requestId}`;return rows.length===1?version(rows[0]):null;
+ const rows=await db`SELECT v.* FROM academy.owner_workspace_outcomes o JOIN academy.owner_workspace_versions v ON v.owner_id=o.owner_id AND v.actor_id=o.actor_id AND v.revision_id=o.acknowledgement->>'revisionId' AND v.idempotency_key=o.idempotency_key AND v.command_digest=o.command_digest WHERE o.owner_id=${ownerId} AND o.actor_id=${actorId} AND o.idempotency_key=${requestId}`;return rows.length===1?ownerWorkspaceVersionFrom(rows[0]):null;
 }
 
 export type StudentWorkspaceVersion=OwnerWorkspaceVersion&{payload:TeacherWorkspaceRecord;studentId:string};
@@ -101,5 +101,5 @@ export function asStudentWorkspace(row:OwnerWorkspaceVersion,studentId:string):S
 }
 export async function studentWorkspaces(db:SQL,ownerId:string,studentId:string):Promise<StudentWorkspaceVersion[]>{
  const [ready]=await db`SELECT to_regclass('academy.owner_workspace_heads') IS NOT NULL AS ready`;if(!ready?.ready)return [];
- const rows=await db`SELECT v.* FROM academy.owner_workspace_heads h JOIN academy.owner_workspace_versions v USING(owner_id,entity_id,sequence) WHERE h.owner_id=${ownerId} AND v.payload->'studentBinding'->>'studentId'=${studentId} AND v.payload->>'kind' IN ('teacher_activity_review','teacher_parent_draft') ORDER BY entity_id LIMIT 1001`;if(rows.length>1000)throw Error('student_workspace_scope_too_large');return rows.map((row:any)=>asStudentWorkspace(version(row),studentId));
+ const rows=await db`SELECT v.* FROM academy.owner_workspace_heads h JOIN academy.owner_workspace_versions v USING(owner_id,entity_id,sequence) WHERE h.owner_id=${ownerId} AND v.payload->'studentBinding'->>'studentId'=${studentId} AND v.payload->>'kind' IN ('teacher_activity_review','teacher_parent_draft') ORDER BY entity_id LIMIT 1001`;if(rows.length>1000)throw Error('student_workspace_scope_too_large');return rows.map((row:any)=>asStudentWorkspace(ownerWorkspaceVersionFrom(row),studentId));
 }

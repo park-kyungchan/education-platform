@@ -1,3 +1,5 @@
+import {ConceptWorkspaceCommands} from './usecases/conceptWorkspace';
+import type {BookCertificationRetainedPort} from './bookCertificationEvidence';
 import {TeacherWorkspaceCommands} from './usecases/teacherWorkspace';
 import type {TeacherStore} from './ports/teacherStore';
 import {academyConnectionStatus,type AcademySourceConnection} from './nativeConnector';
@@ -9,14 +11,23 @@ import {TeacherQueries} from './usecases/studentScene';
 export type {TrustedTeacherContext,ObservationInput,ClinicDecisionInput} from './contracts/teacherOperations';
 /** Stable human/agent facade. Business slices own behavior; adapters own transactional enforcement. */
 export class TeacherApplication {
+  private readonly concepts:ConceptWorkspaceCommands;
   private readonly workspaces:TeacherWorkspaceCommands;
   private readonly observations:TeacherObservationCommands;
   private readonly clinics:TeacherClinicCommands;
-  constructor(readonly store:TeacherStore,readonly ownerId:string,readonly connection:()=>AcademySourceConnection=()=>academyConnectionStatus){
+  constructor(readonly store:TeacherStore,readonly ownerId:string,readonly connection:()=>AcademySourceConnection=()=>academyConnectionStatus,readonly certification?:BookCertificationRetainedPort){
+    this.concepts=new ConceptWorkspaceCommands(store,ownerId,certification);
     this.workspaces=new TeacherWorkspaceCommands(store,ownerId);
     this.observations=new TeacherObservationCommands(store,ownerId);
     this.clinics=new TeacherClinicCommands(store,ownerId);
   }
+  saveConceptDefinition(context:TrustedTeacherContext,input:unknown){return this.concepts.saveDefinition(context,input);}
+  saveStudentConceptLink(context:TrustedTeacherContext,input:unknown){return this.concepts.saveLink(context,input);}
+  studentConceptGraph(context:TrustedTeacherContext,studentId:string){return this.concepts.graph(context,studentId);}
+  conceptEvidence(context:TrustedTeacherContext,studentId:string,revisionId:string){return this.concepts.evidence(context,studentId,revisionId);}
+  conceptResult(context:TrustedTeacherContext,requestId:string,studentId:string|null){return this.concepts.result(context,requestId,studentId);}
+  conceptHistory(context:TrustedTeacherContext,entityId:string,studentId:string|null,afterSequence=0){return this.concepts.history(context,entityId,studentId,afterSequence);}
+  bookCertification(context:TrustedTeacherContext,studentId:string,registrationRevisionId:string){return this.concepts.bookCertification(context,studentId,registrationRevisionId);}
   saveTeacherWorkspace(context:TrustedTeacherContext,input:unknown){return this.workspaces.save(context,input);}
   teacherWorkspaceResult(context:TrustedTeacherContext,studentId:string,requestId:string){return this.workspaces.result(context,studentId,requestId);}
   teacherWorkspaceHistory(context:TrustedTeacherContext,studentId:string,entityId:string,afterSequence=0){return this.workspaces.history(context,studentId,entityId,afterSequence);}

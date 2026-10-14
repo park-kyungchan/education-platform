@@ -54,7 +54,7 @@ export function createTeacherServerHandler(options:TeacherServerOptions){
     if(req.headers.get('Content-Type')?.split(';')[0]!=='application/json')throw Error('json_required');
     // 16000 UTF-16 text units may occupy 96000 JSON bytes after escaping; keep a bounded envelope.
     const intakePath=new URL(req.url).pathname;
-    const limit=intakePath==='/api/owner-workspace'?4_194_304:intakePath==='/api/exam-candidate'?262_144:['/api/teacher-observation','/api/teacher-clinic','/api/teacher-workspace','/api/owner-workspace','/api/record'].includes(new URL(req.url).pathname)?128000:20000;
+    const limit=intakePath==='/api/owner-workspace'?4_194_304:['/api/exam-candidate','/api/concept-definition'].includes(intakePath)?262_144:['/api/teacher-observation','/api/teacher-clinic','/api/teacher-workspace','/api/owner-workspace','/api/record'].includes(new URL(req.url).pathname)?128000:20000;
     const length=req.headers.get('Content-Length');
     if(length!==null&&(!/^\d+$/.test(length)||Number(length)>limit))throw Error('input_too_large');
     const reader=req.body?.getReader();if(!reader)throw Error('invalid_input');
@@ -72,8 +72,11 @@ export function createTeacherServerHandler(options:TeacherServerOptions){
   };
   return async(req:Request):Promise<Response>=>{
     const url=new URL(req.url),path=url.pathname;
+    const conceptWrite=req.method==='POST'&&['/api/concept-definition','/api/concept-link'].includes(path);
+    // Origin and authentication gates return before application dispatch; status alone never proves a write outcome.
+    const preDispatchRefusal=(error:string,status:number)=>json({error,...(conceptWrite?{requestOutcome:'rejected_before_commit',automaticRetry:false}:{})},status);
     if(!['GET','POST'].includes(req.method))return json({error:'method_not_allowed'},405);
-    if(req.method==='POST'&&req.headers.get('Origin')!==options.origin)return json({error:'origin_denied'},403);
+    if(req.method==='POST'&&req.headers.get('Origin')!==options.origin)return preDispatchRefusal('origin_denied',403);
     try{
       if(options.currentAuthentication){const current=options.currentAuthentication();identity=current.identity;sessionKey=current.sessionKey;}
       if(path==='/health'&&req.method==='GET')return json({status:'running',studentDisclosure:false});
@@ -163,14 +166,14 @@ export function createTeacherServerHandler(options:TeacherServerOptions){
         return new Response(renderDesignLab(url.searchParams),{headers:{...securityHeaders,'Content-Type':'text/html; charset=utf-8'}});
       }
       if(path.startsWith('/api/')){
-        const actor=context(req);if(!actor)return json({error:'teacher_authentication_required'},401);
-        if(['/api/teacher-observation','/api/teacher-clinic','/api/teacher-workspace','/api/owner-workspace','/api/exam-candidate','/api/refresh'].includes(path)&&req.method==='POST'){
+        const actor=context(req);if(!actor)return preDispatchRefusal('teacher_authentication_required',401);
+        if(['/api/teacher-observation','/api/teacher-clinic','/api/teacher-workspace','/api/owner-workspace','/api/exam-candidate','/api/concept-definition','/api/concept-link','/api/refresh'].includes(path)&&req.method==='POST'){
           const conflict=()=>json({error:'teacher_scene_actor_conflict',originalRetained:false,automaticRetry:false},409);
           if(!matchesTeacherActionHeaders(req.headers,actor))return conflict();
-          let input:Record<string,unknown>;try{input=await body(req);}catch(error){if(['/api/teacher-workspace','/api/owner-workspace'].includes(path)){const code=error instanceof Error&&['json_required','input_too_large','invalid_input'].includes(error.message)?error.message:'invalid_input';return json({error:code,requestOutcome:'rejected_before_commit',automaticRetry:false},400);}throw error;}
+          let input:Record<string,unknown>;try{input=await body(req);}catch(error){if(['/api/teacher-workspace','/api/owner-workspace','/api/concept-definition','/api/concept-link'].includes(path)){const code=error instanceof Error&&['json_required','input_too_large','invalid_input'].includes(error.message)?error.message:'invalid_input';return json({error:code,requestOutcome:'rejected_before_commit',automaticRetry:false},400);}throw error;}
           // Body intake can yield while authentication changes in another tab.
           if(options.currentAuthentication){const current=options.currentAuthentication();identity=current.identity;sessionKey=current.sessionKey;}
-          const currentActor=context(req);if(!currentActor)return json({error:'teacher_authentication_required'},401);
+          const currentActor=context(req);if(!currentActor)return preDispatchRefusal('teacher_authentication_required',401);
           if(!matchesTeacherActionHeaders(req.headers,currentActor))return conflict();
           if(path==='/api/refresh'){
             assertExactKeys(input,Object.hasOwn(input,'date')?['studentId','requestId','date']:['studentId','requestId']);
@@ -181,9 +184,26 @@ export function createTeacherServerHandler(options:TeacherServerOptions){
             return json(await options.refresh(currentActor,{studentId:input.studentId as string|null,requestId:input.requestId,...(input.date?{date:input.date as string}:{})}));
           }
           if(path==='/api/teacher-workspace')return json(await options.app.saveTeacherWorkspace(currentActor,input));
+          if(path==='/api/concept-definition')return json(await options.app.saveConceptDefinition(currentActor,input));
+          if(path==='/api/concept-link')return json(await options.app.saveStudentConceptLink(currentActor,input));
           if(path==='/api/exam-candidate')return json(await options.app.projectExamCandidate(currentActor,input));
           if(path==='/api/owner-workspace')return json(await options.app.saveOwnerWorkspace(currentActor,input));
           return json(path==='/api/teacher-observation'?await options.app.saveObservation(currentActor,input):await options.app.saveClinicDecision(currentActor,input));
+        }
+        if(path==='/api/concept-graph'&&req.method==='GET'){
+          if([...url.searchParams.keys()].some(key=>key!=='studentId')||url.searchParams.getAll('studentId').length!==1)return json({error:'unexpected_query_scope'},400);return json(await options.app.studentConceptGraph(actor,url.searchParams.get('studentId')!));
+        }
+        if(path==='/api/concept-evidence'&&req.method==='GET'){
+          if([...url.searchParams.keys()].some(key=>!['studentId','revisionId'].includes(key))||url.searchParams.getAll('studentId').length!==1||url.searchParams.getAll('revisionId').length!==1)return json({error:'unexpected_query_scope'},400);return json(await options.app.conceptEvidence(actor,url.searchParams.get('studentId')!,url.searchParams.get('revisionId')!));
+        }
+        if(path==='/api/concept-result'&&req.method==='GET'){
+          if([...url.searchParams.keys()].some(key=>!['studentId','requestId'].includes(key))||url.searchParams.getAll('requestId').length!==1||url.searchParams.getAll('studentId').length>1)return json({error:'unexpected_query_scope'},400);return json(await options.app.conceptResult(actor,url.searchParams.get('requestId')!,url.searchParams.get('studentId')));
+        }
+        if(path==='/api/concept-history'&&req.method==='GET'){
+          if([...url.searchParams.keys()].some(key=>!['studentId','entityId','afterSequence'].includes(key))||url.searchParams.getAll('entityId').length!==1||url.searchParams.getAll('studentId').length>1||url.searchParams.getAll('afterSequence').length>1)return json({error:'unexpected_query_scope'},400);return json(await options.app.conceptHistory(actor,url.searchParams.get('entityId')!,url.searchParams.get('studentId'),Number(url.searchParams.get('afterSequence')??0)));
+        }
+        if(path==='/api/book-certification'&&req.method==='GET'){
+          if([...url.searchParams.keys()].some(key=>!['studentId','registrationRevisionId'].includes(key))||url.searchParams.getAll('studentId').length!==1||url.searchParams.getAll('registrationRevisionId').length!==1)return json({error:'unexpected_query_scope'},400);return json(await options.app.bookCertification(actor,url.searchParams.get('studentId')!,url.searchParams.get('registrationRevisionId')!));
         }
         if(path==='/api/teacher-workspace-result'&&req.method==='GET'){
           if([...url.searchParams.keys()].some(key=>!['studentId','requestId'].includes(key))||url.searchParams.getAll('studentId').length!==1||url.searchParams.getAll('requestId').length!==1)return json({error:'unexpected_query_scope'},400);
@@ -249,10 +269,10 @@ export function createTeacherServerHandler(options:TeacherServerOptions){
       if(error instanceof ClinicCommandRefusal||error instanceof ObservationCommandRefusal)return json({error:code,originalRetained:error.originalRetained,automaticRetry:false},409);
       if(['stale_base','stale_evidence_basis','idempotency_reuse','observation_basis_conflict','work_assignment_basis_conflict','work_attempt_basis_conflict','work_item_binding_conflict','clinic_target_identity_conflict','unresolved_clinic_request','unresolved_observation_request','workspace_target_identity_conflict','operational_revision_conflict','operational_step_binding_conflict','operational_evidence_scope_conflict','operational_assignment_confirmation_required','operational_deferred_boundary','owner_workspace_identity_changed','explicit_reopen_required','explicit_case_reopen_required','workspace_identity_changed','work_paper_binding_conflict','mindmap_activity_scope_conflict'].includes(code))return json({error:code,originalRetained:false,requestOutcome:'rejected_before_commit',automaticRetry:false},409);
       if(code==='committed_outcome_uncertain')return json({error:code,automaticRetry:false,readOriginalRequestBeforeNewIntent:true},503);
-      if(code==='observation_result_not_found'||code==='clinic_result_not_found'||code==='workspace_result_not_found')return json({error:code,automaticRetry:false},404);
+      if(code==='observation_result_not_found'||code==='clinic_result_not_found'||code==='workspace_result_not_found'||code==='concept_result_not_found'||code==='concept_evidence_not_found')return json({error:code,automaticRetry:false},404);
       const workspaceCodes=['invalid_workspace_input','unexpected_workspace_attribution','unsupported_teacher_workspace','unsupported_owner_workspace','parent_internal_language_excluded','parent_line_format','parent_line_evidence_conflict','explicit_teacher_understanding_required','explicit_reopen_reason_required','video_upload_review_conflict','invalid_paper_scope','invalid_activity_score','invalid_parent_draft','invalid_workspace_references','invalid_workspace_text','invalid_workspace_state','invalid_operational_boundary','invalid_operational_checklist','invalid_operational_revision','invalid_operational_case','mindmap_explanation_link_required','original_wrong_applicability_conflict','invalid_unknown_subset','duplicate_selected_policy','selected_operational_policy_missing','workspace_history_scope_conflict','invalid_history_range'];
       if(workspaceCodes.includes(code))return json({error:code,automaticRetry:false},400);
-      if(req.method==='POST'&&['/api/teacher-workspace','/api/owner-workspace'].includes(new URL(req.url).pathname))return json({error:'workspace_outcome_uncertain',automaticRetry:false,readOriginalRequestBeforeNewIntent:true},503);
+      if(req.method==='POST'&&['/api/teacher-workspace','/api/owner-workspace','/api/concept-definition','/api/concept-link'].includes(new URL(req.url).pathname))return json({error:'workspace_outcome_uncertain',automaticRetry:false,readOriginalRequestBeforeNewIntent:true},503);
       const safe=['owner_scope_conflict','student_scope_conflict','invalid_student_selector','invalid_input','json_required','input_too_large','password_recovery_denied','unexpected or missing domain fields'].includes(code)?code:'operation_failed';
       return json({error:safe},safe.includes('scope_conflict')||safe==='password_recovery_denied'?403:400);
     }

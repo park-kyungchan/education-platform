@@ -1,3 +1,7 @@
+import {migrateConceptWorkspace,assertConceptWorkspaceReady,appendConceptDefinition,appendStudentConceptLink,readStudentConceptGraph,conceptResult,conceptHistory} from './conceptWorkspaceStore';
+import type {ConceptCommandContext,ConceptDefinitionInput,ConceptLinkInput} from './conceptWorkspace';
+import type {ConceptEvidenceRead} from './conceptEvidenceAdapter';
+import {ownerWorkspaceVersionFrom,asStudentWorkspace} from './ownerWorkspaceStore';
 import {migrateOwnerWorkspaces,assertOwnerWorkspacesReady,appendOwnerWorkspace,ownerWorkspaces,ownerWorkspaceHistory,ownerWorkspaceResult,studentWorkspaces,type OwnerWorkspaceCommand} from './ownerWorkspaceStore';
 import type { SQL } from 'bun';
 import { assertExactKeys, assertInstant, assertRefs, canonicalJson, digest, requireText, stableId } from '../learning/model';
@@ -144,6 +148,35 @@ export class PostgresAcademyStore implements TeacherStore,SourceRefreshStore {
   ownerWorkspaceHistory(ownerId:string,entityId:string,afterSequence=0){return ownerWorkspaceHistory(this.db,ownerId,entityId,afterSequence);}
   ownerWorkspaceResult(ownerId:string,actorId:string,requestId:string){return ownerWorkspaceResult(this.db,ownerId,actorId,requestId);}
   studentWorkspaces(ownerId:string,studentId:string){return studentWorkspaces(this.db,ownerId,studentId);}
+  migrateConceptWorkspace(){if(this.transactionScope)throw Error('migration_in_snapshot');return migrateConceptWorkspace(this.db);}
+  assertConceptWorkspaceReady(){return assertConceptWorkspaceReady(this.db);}
+  appendConceptDefinition(context:ConceptCommandContext,input:ConceptDefinitionInput){if(this.transactionScope)throw Error('write_in_snapshot');return appendConceptDefinition(this.db,context,input);}
+  appendStudentConceptLink(context:ConceptCommandContext,input:ConceptLinkInput){if(this.transactionScope)throw Error('write_in_snapshot');return appendStudentConceptLink(this.db,context,input,(tx,ownerId,studentId,refs)=>this.conceptEvidenceRead(tx,ownerId,studentId,refs));}
+  readStudentConceptGraph(ownerId:string,studentId:string){return readStudentConceptGraph(this.db,ownerId,studentId,(tx,owner,id,refs)=>this.conceptEvidenceRead(tx,owner,id,refs));}
+  conceptResult(ownerId:string,actorId:string,requestId:string,studentId:string|null){return conceptResult(this.db,ownerId,actorId,requestId,studentId);}
+  conceptHistory(ownerId:string,studentId:string|null,entityId:string,afterSequence=0){return conceptHistory(this.db,ownerId,studentId,entityId,afterSequence);}
+  async conceptEvidenceDetail(ownerId:string,studentId:string,revisionId:string){
+    return this.db.begin(async tx=>{await tx`SET TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY`;const read=await this.conceptEvidenceRead(tx as unknown as SQL,ownerId,studentId,[revisionId]);const record=[...read.legacy,...read.workspaces].find(row=>row.revisionId===revisionId);if(!record)throw Error('concept_evidence_not_found');return {record,current:read.currentRevisionIds.includes(revisionId),officialSaved:false,parentSent:false};});
+  }
+  private async conceptEvidenceRead(tx:SQL,ownerId:string,studentId:string,additionalRevisionIds:string[]=[]):Promise<ConceptEvidenceRead>{
+    if(additionalRevisionIds.length>2000)throw Error('concept_graph_cap');
+    const scoped=new PostgresAcademyStore(tx,sourceTransaction),student=(await scoped.students(ownerId)).find(row=>row.id===studentId);if(!student)throw Error('student_scope_conflict');
+    const [legacySize]=await tx`SELECT count(*)::int AS rows,coalesce(sum(pg_column_size(v.payload)),0)::bigint AS bytes FROM academy.record_heads h JOIN academy.record_versions v USING(owner_id,student_id,entity_id,sequence) WHERE h.owner_id=${ownerId} AND h.student_id=${studentId}`;
+    if(legacySize.rows>2000||Number(legacySize.bytes)>16_777_216)throw Error('concept_evidence_scope_too_large');
+    const [workspaceReady]=await tx`SELECT to_regclass('academy.owner_workspace_versions') IS NOT NULL AS ready`;
+    if(workspaceReady?.ready){const [size]=await tx`SELECT count(*)::int AS rows,coalesce(sum(pg_column_size(v.payload)),0)::bigint AS bytes FROM academy.owner_workspace_heads h JOIN academy.owner_workspace_versions v USING(owner_id,entity_id,sequence) WHERE h.owner_id=${ownerId} AND v.payload->'studentBinding'->>'studentId'=${studentId}`;if(size.rows>1000||Number(size.bytes)>16_777_216)throw Error('concept_evidence_scope_too_large');}
+    const [current,workspaces]=await Promise.all([scoped.current(ownerId,studentId),scoped.studentWorkspaces(ownerId,studentId)]);
+    const legacy=new Map<string,RecordVersion>(current.map(row=>[row.revisionId,row])),local=new Map(workspaces.map(row=>[row.revisionId,row]));
+    const load=async(refs:string[])=>{const unique=[...new Set(refs)];if(!unique.length)return;
+      const [size]=await tx`SELECT count(*)::int AS rows,coalesce(sum(pg_column_size(payload)),0)::bigint AS bytes FROM academy.record_versions WHERE owner_id=${ownerId} AND student_id=${studentId} AND revision_id IN ${tx(unique)}`;if(size.rows>2000||Number(size.bytes)>16_777_216)throw Error('concept_evidence_scope_too_large');
+      const oldRows=await tx`SELECT * FROM academy.record_versions WHERE owner_id=${ownerId} AND student_id=${studentId} AND revision_id IN ${tx(unique)}`;for(const row of oldRows){const record=versionFrom(row);legacy.set(record.revisionId,record);}
+      const [ready]=await tx`SELECT to_regclass('academy.owner_workspace_versions') IS NOT NULL AS ready`;
+      if(ready?.ready){const [size]=await tx`SELECT count(*)::int AS rows,coalesce(sum(pg_column_size(payload)),0)::bigint AS bytes FROM academy.owner_workspace_versions WHERE owner_id=${ownerId} AND payload->'studentBinding'->>'studentId'=${studentId} AND revision_id IN ${tx(unique)}`;if(size.rows>2000||Number(size.bytes)>16_777_216)throw Error('concept_evidence_scope_too_large');const rows=await tx`SELECT * FROM academy.owner_workspace_versions WHERE owner_id=${ownerId} AND payload->'studentBinding'->>'studentId'=${studentId} AND payload->>'kind' IN ('teacher_activity_review','teacher_parent_draft') AND revision_id IN ${tx(unique)}`;for(const row of rows){const record=asStudentWorkspace(ownerWorkspaceVersionFrom(row),studentId);local.set(record.revisionId,record);}}
+    };
+    await load(additionalRevisionIds);
+    const assignmentRefs=[...legacy.values()].flatMap(row=>row.payload.kind==='learning_work_attempt'?[row.payload.assignmentRevisionId]:[]).concat([...local.values()].flatMap(row=>row.payload.kind==='teacher_activity_review'?[row.payload.assignmentRevisionId]:[]));await load(assignmentRefs);
+    return {student,legacy:[...legacy.values()],workspaces:[...local.values()],currentRevisionIds:[...current,...workspaces].map(row=>row.revisionId)};
+  }
   async registerStudent(input: StudentRegistration): Promise<void> {
     assertExactKeys(input, ['ownerId', 'id', 'displayName', 'sourceKey', 'proofRefs']);
     canonicalJson(input); validateSourceKey(input.sourceKey); assertRefs(input.proofRefs);
