@@ -34,7 +34,7 @@ async student(context:TrustedTeacherContext,studentId:string,date=new Intl.DateT
     assertPreparationDate(date);
     const student=(await this.store.students(this.ownerId)).find(row=>row.id===studentId);
     if(!student)throw Error('student_scope_conflict');
-    const [storedCurrent,catalog,revisions]=await Promise.all([this.store.current(this.ownerId,studentId),this.store.catalog(this.ownerId),this.store.preparationRevisions(this.ownerId,studentId,date)]);
+    const [storedCurrent,catalog,revisions,teacherWorkspaces]=await Promise.all([this.store.current(this.ownerId,studentId),this.store.catalog(this.ownerId),this.store.preparationRevisions(this.ownerId,studentId,date),this.store.studentWorkspaces?this.store.studentWorkspaces(this.ownerId,studentId):Promise.resolve([])]);
     const current=storedCurrent.filter(v=>v.payload.kind!=='teacher_clinic_request'&&v.payload.kind!=='teacher_observation_request');
     const observationRecovery:{input:ObservationInput;actorId:string;ownerId:string;resolution:TeacherObservationRequest['resolution'];refusal:string|null}[]=[];
     for(const row of storedCurrent){
@@ -61,12 +61,13 @@ async student(context:TrustedTeacherContext,studentId:string,date=new Intl.DateT
       return false;
     };
     const selectedCatalog=catalog.filter(belongs);
-    const sceneRevision=digest({studentId,date,heads:current.map(row=>({revisionId:row.revisionId,lastVerifiedAt:row.lastVerifiedAt})),teacherRevisions:revisions.map(v=>v.revisionId),catalog:selectedCatalog,workContextSchema:'1-source-results-r1',policyRevision:classroomCyclePolicy.operationalContextRevision});
+    const sceneRevision=digest({studentId,date,heads:current.map(row=>({revisionId:row.revisionId,lastVerifiedAt:row.lastVerifiedAt})),teacherRevisions:revisions.map(v=>v.revisionId),teacherWorkspaceRevisions:teacherWorkspaces.map(v=>v.revisionId),catalog:selectedCatalog,workContextSchema:'1-source-results-r1',policyRevision:classroomCyclePolicy.operationalContextRevision});
     const preparation=buildStudentPreparation(student.sourceKey,preparationVersions,date);
     const connection=this.connection();
     const workContext=buildTeacherWorkContext({studentId,studentKey:student.sourceKey,date,revision:sceneRevision,catalog:selectedCatalog,preparation,versions:current,exactWork,sourceAcquisition:connection.acquisition});
     return {schemaVersion:1,kind:'student_learning_scene',student:{id:student.id,displayName:student.displayName,sourceKey:student.sourceKey,proofRefs:student.proofRefs},
       sceneRevision,
+      teacherWorkspaces,
       teacherScope:{ownerId:this.ownerId,actorId:context.actorId},
       observationRecovery,
       clinicRecovery,
@@ -76,7 +77,7 @@ async student(context:TrustedTeacherContext,studentId:string,date=new Intl.DateT
       workContext,
       hierarchy:{levels:catalogLevels,unknownLevels:catalogLevels.filter(kind=>!selectedCatalog.some(node=>node.kind===kind))},
       knowledge:{mastery:'not_established',teacherInspection:'unknown',effectiveEnrollment:'unknown',scheduledLessonCompleteness:'unknown',sourceFreshness:'last_successful_acquisition_not_view_time'},
-      connection,allowedOperations:['query_student_learning','query_date_class','record_teacher_observation'],
+      connection,allowedOperations:['query_student_learning','query_date_class','record_teacher_observation','record_scoped_activity_review','record_local_parent_draft','query_operating_context','record_local_operational_case'],
       teacherObservationPolicy:operationalContractShape.meaning.teacherAcceptance,
       limits:['Source registration/learning range is not effective enrollment or book-slot judgment','No missing evidence becomes nonperformance','Printed paper, board and video labels remain separate source namespaces','Current sources do not prove full historical/native-app coverage'],
       officialSaved:false,parentSent:false};

@@ -52,7 +52,7 @@ export function createTeacherServerHandler(options:TeacherServerOptions){
   const body=async(req:Request):Promise<Record<string,unknown>>=>{
     if(req.headers.get('Content-Type')?.split(';')[0]!=='application/json')throw Error('json_required');
     // 16000 UTF-16 text units may occupy 96000 JSON bytes after escaping; keep a bounded envelope.
-    const limit=['/api/teacher-observation','/api/teacher-clinic','/api/record'].includes(new URL(req.url).pathname)?128000:20000;
+    const limit=['/api/teacher-observation','/api/teacher-clinic','/api/teacher-workspace','/api/owner-workspace','/api/record'].includes(new URL(req.url).pathname)?128000:20000;
     const length=req.headers.get('Content-Length');
     if(length!==null&&(!/^\d+$/.test(length)||Number(length)>limit))throw Error('input_too_large');
     const reader=req.body?.getReader();if(!reader)throw Error('invalid_input');
@@ -162,7 +162,7 @@ export function createTeacherServerHandler(options:TeacherServerOptions){
       }
       if(path.startsWith('/api/')){
         const actor=context(req);if(!actor)return json({error:'teacher_authentication_required'},401);
-        if(['/api/teacher-observation','/api/teacher-clinic','/api/refresh'].includes(path)&&req.method==='POST'){
+        if(['/api/teacher-observation','/api/teacher-clinic','/api/teacher-workspace','/api/owner-workspace','/api/exam-candidate','/api/refresh'].includes(path)&&req.method==='POST'){
           const conflict=()=>json({error:'teacher_scene_actor_conflict',originalRetained:false,automaticRetry:false},409);
           if(!matchesTeacherActionHeaders(req.headers,actor))return conflict();
           const input=await body(req);
@@ -178,7 +178,33 @@ export function createTeacherServerHandler(options:TeacherServerOptions){
             if(!options.refresh)return json({status:'blocked',reason:'native_source_connector_unavailable',cacheRetained:true},503);
             return json(await options.refresh(currentActor,{studentId:input.studentId as string|null,requestId:input.requestId,...(input.date?{date:input.date as string}:{})}));
           }
+          if(path==='/api/teacher-workspace')return json(await options.app.saveTeacherWorkspace(currentActor,input));
+          if(path==='/api/exam-candidate')return json(await options.app.projectExamCandidate(currentActor,input));
+          if(path==='/api/owner-workspace')return json(await options.app.saveOwnerWorkspace(currentActor,input));
           return json(path==='/api/teacher-observation'?await options.app.saveObservation(currentActor,input):await options.app.saveClinicDecision(currentActor,input));
+        }
+        if(path==='/api/teacher-workspace-result'&&req.method==='GET'){
+          if([...url.searchParams.keys()].some(key=>!['studentId','requestId'].includes(key))||url.searchParams.getAll('studentId').length!==1||url.searchParams.getAll('requestId').length!==1)return json({error:'unexpected_query_scope'},400);
+          return json(await options.app.teacherWorkspaceResult(actor,url.searchParams.get('studentId')!,url.searchParams.get('requestId')!));
+        }
+        if(path==='/api/teacher-workspace-history'&&req.method==='GET'){
+          if([...url.searchParams.keys()].some(key=>!['studentId','entityId','afterSequence'].includes(key))||url.searchParams.getAll('studentId').length!==1||url.searchParams.getAll('entityId').length!==1||url.searchParams.getAll('afterSequence').length>1)return json({error:'unexpected_query_scope'},400);
+          return json(await options.app.teacherWorkspaceHistory(actor,url.searchParams.get('studentId')!,url.searchParams.get('entityId')!,Number(url.searchParams.get('afterSequence')??0)));
+        }
+        if(path==='/api/operating-catalog'&&req.method==='GET'){
+          if(url.searchParams.size)return json({error:'unexpected_query_scope'},400);return json(await options.app.operatingCatalog(actor));
+        }
+        if(path==='/api/operating-context'&&req.method==='GET'){
+          if([...url.searchParams.keys()].some(key=>!['policyId','revision'].includes(key))||url.searchParams.getAll('revision').length!==1)return json({error:'unexpected_query_scope'},400);return json(await options.app.operatingSelection(actor,url.searchParams.getAll('policyId'),url.searchParams.get('revision')!));
+        }
+        if(path==='/api/owner-workspaces'&&req.method==='GET'){
+          if(url.searchParams.size)return json({error:'unexpected_query_scope'},400);return json(await options.app.ownerWorkspaces(actor));
+        }
+        if(path==='/api/owner-workspace-result'&&req.method==='GET'){
+          if([...url.searchParams.keys()].some(key=>key!=='requestId')||url.searchParams.getAll('requestId').length!==1)return json({error:'unexpected_query_scope'},400);return json(await options.app.ownerWorkspaceResult(actor,url.searchParams.get('requestId')!));
+        }
+        if(path==='/api/owner-workspace-history'&&req.method==='GET'){
+          if([...url.searchParams.keys()].some(key=>!['entityId','afterSequence'].includes(key))||url.searchParams.getAll('entityId').length!==1||url.searchParams.getAll('afterSequence').length>1)return json({error:'unexpected_query_scope'},400);return json(await options.app.ownerWorkspaceHistory(actor,url.searchParams.get('entityId')!,Number(url.searchParams.get('afterSequence')??0)));
         }
         if(path==='/api/teacher-clinic-result'&&req.method==='GET'){
           if([...url.searchParams.keys()].some(key=>!['studentId','requestId'].includes(key))||url.searchParams.getAll('studentId').length!==1||url.searchParams.getAll('requestId').length!==1)return json({error:'unexpected_query_scope'},400);
@@ -218,9 +244,11 @@ export function createTeacherServerHandler(options:TeacherServerOptions){
     }catch(error){
       const code=error instanceof Error?error.message:'operation_failed';
       if(error instanceof ClinicCommandRefusal||error instanceof ObservationCommandRefusal)return json({error:code,originalRetained:error.originalRetained,automaticRetry:false},409);
-      if(['stale_base','stale_evidence_basis','idempotency_reuse','observation_basis_conflict','work_assignment_basis_conflict','work_attempt_basis_conflict','work_item_binding_conflict','clinic_target_identity_conflict','unresolved_clinic_request','unresolved_observation_request'].includes(code))return json({error:code,originalRetained:false,automaticRetry:false},409);
+      if(['stale_base','stale_evidence_basis','idempotency_reuse','observation_basis_conflict','work_assignment_basis_conflict','work_attempt_basis_conflict','work_item_binding_conflict','clinic_target_identity_conflict','unresolved_clinic_request','unresolved_observation_request','workspace_target_identity_conflict','operational_revision_conflict','operational_step_binding_conflict','operational_evidence_scope_conflict','operational_assignment_confirmation_required','operational_deferred_boundary','owner_workspace_identity_changed','explicit_reopen_required','explicit_case_reopen_required','workspace_identity_changed','work_paper_binding_conflict','mindmap_activity_scope_conflict'].includes(code))return json({error:code,originalRetained:false,automaticRetry:false},409);
       if(code==='committed_outcome_uncertain')return json({error:code,automaticRetry:false,readOriginalRequestBeforeNewIntent:true},503);
-      if(code==='observation_result_not_found'||code==='clinic_result_not_found')return json({error:code,automaticRetry:false},404);
+      if(code==='observation_result_not_found'||code==='clinic_result_not_found'||code==='workspace_result_not_found')return json({error:code,automaticRetry:false},404);
+      const workspaceCodes=['invalid_workspace_input','unexpected_workspace_attribution','unsupported_teacher_workspace','unsupported_owner_workspace','parent_internal_language_excluded','parent_line_format','parent_line_evidence_conflict','explicit_teacher_understanding_required','explicit_reopen_reason_required','video_upload_review_conflict','invalid_paper_scope','invalid_activity_score','invalid_parent_draft','invalid_workspace_references','invalid_workspace_text','invalid_workspace_state','invalid_operational_boundary','invalid_operational_checklist','invalid_operational_revision','invalid_operational_case','mindmap_explanation_link_required','original_wrong_applicability_conflict','invalid_unknown_subset','duplicate_selected_policy','selected_operational_policy_missing','workspace_history_scope_conflict','invalid_history_range'];
+      if(workspaceCodes.includes(code))return json({error:code,automaticRetry:false},400);
       const safe=['owner_scope_conflict','student_scope_conflict','invalid_student_selector','invalid_input','json_required','input_too_large','password_recovery_denied','unexpected or missing domain fields'].includes(code)?code:'operation_failed';
       return json({error:safe},safe.includes('scope_conflict')||safe==='password_recovery_denied'?403:400);
     }

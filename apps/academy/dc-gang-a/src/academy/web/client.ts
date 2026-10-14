@@ -1,3 +1,6 @@
+import {examWorkspaceView} from './examWorkspaceView';
+import {teacherWorkspaceView} from './teacherWorkspaceView';
+import {operatingWorkspaceView} from './operatingWorkspaceView';
 import type { StudentLearningScene as Scene,TeacherCohort as Cohort } from '../contracts/teacherOperations';
 import { dateClassView, occurrenceIdentity, requestGate, type DateClassPreparation, type DateClassRow } from './dateClassView';
 import {preparationView} from './preparationView';
@@ -108,6 +111,7 @@ function renderScene(scene:Scene){
     history.append(detail);}
   target.append(history);
   target.append(observationEditor(scene,selectedOccurrence,api,write,lifetime.signal,adoptScene));
+  target.append(teacherWorkspaceView(scene,api,write,lifetime.signal));
   const evidence=node('section','','card');evidence.append(node('h3','수업·문항·채점 근거'));
   evidence.append(node('p',scene.evidence.length?'원문 source와 독립 상태를 유지한 근거가 있습니다.':'아직 연결된 수업·문항·성적 근거가 없습니다. 미수행으로 판정하지 않습니다.','muted'));
   for(const row of scene.evidence){const detail=node('details','');detail.append(node('summary',row.payload.kind+' · '+new Date(row.lastVerifiedAt).toLocaleString('ko-KR')),node('pre',JSON.stringify(row.payload,null,2)));evidence.append(detail);}target.append(evidence);
@@ -157,6 +161,11 @@ async function loadWorkspace(){
   document.getElementById('source-area-results')?.remove();
   if(!cohortScope||!sameTeacherScope(cohortScope,cohort.teacherScope))element('refresh-status').textContent='';
   cohortScope=cohort.teacherScope;
+  document.getElementById('operating-workspace')?.remove();
+  const operating=operatingWorkspaceView(cohort.teacherScope,api,<T>(path:string,value:unknown)=>api<T>(path,{method:'POST',headers:{'Content-Type':'application/json',...teacherActionHeaders(cohort.teacherScope)},body:JSON.stringify(value)}));
+  element('workspace').querySelector('main')!.append(operating);
+  document.getElementById('exam-workspace')?.remove();
+  element('workspace').querySelector('main')!.append(examWorkspaceView(cohort.teacherScope,api,<T>(path:string,value:unknown)=>api<T>(path,{method:'POST',headers:{'Content-Type':'application/json',...teacherActionHeaders(cohort.teacherScope)},body:JSON.stringify(value)})));
   if(!document.getElementById('recover-source-refresh')){
     const recover=node('button','기존 갱신 요청·결과 확인') as HTMLButtonElement;recover.id='recover-source-refresh';recover.type='button';
     recover.addEventListener('click',()=>recoverSourceRefresh());element('refresh-all').insertAdjacentElement('afterend',recover);
