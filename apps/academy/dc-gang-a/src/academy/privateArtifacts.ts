@@ -57,7 +57,7 @@ export function createPrivateArtifactReader(config:PrivateArtifactOwner){
   if(!Number.isSafeInteger(metadata.bytes)||metadata.bytes<1||metadata.bytes>maxBytes)throw Error('artifact_size_refused');
   requireText(metadata.filename,'artifact filename');
   if(metadata.filename.length>200||/[\u0000-\u001f\u007f/\\]/u.test(metadata.filename))throw Error('invalid_artifact_filename');
-  const extensions:Record<ReconciledPrivateArtifact['mime'],RegExp>={'application/json':/\.json$/i,'application/pdf':/\.pdf$/i,'image/png':/\.png$/i,'image/jpeg':/\.jpe?g$/i,'video/mp4':/\.mp4$/i,'video/webm':/\.webm$/i,'text/plain':/\.txt$/i};
+  const extensions:Record<ReconciledPrivateArtifact['mime'],RegExp>={'application/json':/\.json$/i,'application/pdf':/\.pdf$/i,'image/png':/\.png$/i,'image/jpeg':/\.jpe?g$/i,'video/mp4':/\.mp4$/i,'video/webm':/\.webm$/i,'text/plain':/\.(txt|md)$/i};
   if(!Object.hasOwn(extensions,metadata.mime)||!extensions[metadata.mime].test(metadata.filename))throw Error('artifact_filename_mime_conflict');
   if(typeof metadata.archivePath!=='string'||metadata.archivePath.length>1024||/[\u0000-\u001f\u007f\\:?#]/u.test(metadata.archivePath))throw Error('invalid_artifact_path');
   const parts=metadata.archivePath.split('/');

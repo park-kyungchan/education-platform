@@ -39,6 +39,9 @@ test('preserved JSON source artifacts retain original bytes and require actual J
   const bad=Buffer.from('not JSON');await writeFile(join(f.root,'objects','source.txt'),bad);Object.assign(f.metadata,{bytes:bad.length,sha256:createHash('sha256').update(bad).digest('hex')});await expect(f.reader().read(context,f.metadata.id)).rejects.toThrow('artifact_mime_refused');
  }finally{await f.cleanup();}
 });
+test('preserved Markdown is downloaded as inert plain text with original bytes',async()=>{
+ const f=await fixture();try{f.metadata.filename='Synthetic preservation notes.md';const result=await f.reader().read(context,f.metadata.id);expect(result.body.equals(body)).toBe(true);expect(result.headers['Content-Type']).toBe('text/plain');expect(result.headers['Content-Disposition']).toStartWith('attachment;');expect(result.headers['Content-Security-Policy']).toContain('sandbox');}finally{await f.cleanup();}
+});
 test('an actual FIFO is rejected before any blocking read',async()=>{
  const f=await fixture();try{
   const fifo=join(f.root,'objects','pipe');expect(Bun.spawnSync(['mkfifo','-m','600','--',fifo]).exitCode).toBe(0);f.metadata.archivePath='objects/pipe';
