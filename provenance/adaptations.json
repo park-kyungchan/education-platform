@@ -3,9 +3,9 @@
   "files": [
     {
       "path": "apps/academy/dc-gang-a/package.json",
-      "reason": "select source-only checks and required dependencies; preserve original manifest privately and in provenance",
+      "reason": "select source-only checks and required dependencies; preserve original manifest privately and in provenance; add explicit retained-only owner runtime and genuine browser verification",
       "sourceSha256": "942eee55d34bc7933c3d841638c7d347271913eef8de1b30961d1602dc66ee1c",
-      "integrationSha256": "a3df6bb85c171a292db567cc47da01095d4c6fe7c5baaca53bbf1b2604af4f01"
+      "integrationSha256": "7fa0fcd61357ea43418d32dc16ad367171e4239d6edcac1515b89ff2d55eda3a"
     },
     {
       "path": "apps/academy/dc-gang-a/tsconfig.json",
@@ -15,9 +15,9 @@
     },
     {
       "path": "apps/academy/dc-gang-a/bun.lock",
-      "reason": "lock selected source/test dependency set",
+      "reason": "lock selected source/test dependency set; add explicit retained-only owner runtime and genuine browser verification",
       "sourceSha256": "40f4af6131887dcf9f1c6f1dda63ed9230612b5ef271f9a540ca4559e55b6e9d",
-      "integrationSha256": "750dab0d2d4996451f97544c58c93e8f34d6c256bebce509c0657681fe0112d4"
+      "integrationSha256": "32a3f043840b475a2892cc4477b393d32d597b2a65616c076be2b74bb45c9aa5"
     },
     {
       "path": "apps/mathcrew/src/development-sources.ts",
@@ -49,8 +49,23 @@
       "sourceSha256": "12f5687ee2b378a97a8345712086d458301d37dbcb12a9638abaae844ecf4946",
       "integrationSha256": "f5e002416aaef0ea249d4db3e3539939facc3a5506db93f8dedd9cffb156fcef",
       "reviewRef": "https://github.com/park-kyungchan/education-platform/pull/1#discussion_r4240579621"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/main.ts",
+      "sourceSha256": "ce5bdb632676b3734df0100ce7450a13de923f01993a734639c4228f3ca2fc68",
+      "integrationSha256": "135ad5e095e318c6a3d37af65609cf150df2d902a5934b55535bd7d8417946e3",
+      "reason": "explicit retained-only owner runtime; preserve existing direct source behavior and private owners",
+      "taskRef": "ACADEMY-RETAINED-OWNER-RUNTIME"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/web/connectionView.ts",
+      "sourceSha256": "998e35e7e8e59157d674a6e541ece70c8ab3cd17d12a71b68a886d2591223466",
+      "integrationSha256": "c6995d4b0521484274db246b8891494eac441e5af4eba86e6c8b7f7d29f7926e",
+      "reason": "explicit retained-only owner runtime; preserve existing direct source behavior and private owners",
+      "taskRef": "ACADEMY-RETAINED-OWNER-RUNTIME"
     }
   ],
   "mathematicalMeaningChanged": false,
-  "nativeRuntimeChanged": false
+  "nativeRuntimeChanged": false,
+  "nativeRuntimeChangeMeaning": "Source composition changed; no native production runtime was activated or configured by this task."
 }
