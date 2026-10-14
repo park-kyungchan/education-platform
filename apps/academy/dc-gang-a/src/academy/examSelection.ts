@@ -125,5 +125,6 @@ export function inspectExamSelection(workspace: ExamSelectionWorkspace, candidat
   return immutableCopy({kind:'exam_selection_inspection' as const, requirement:elementaryExamRequirement,
     selectedQuestions:rows.length, selectedPoints:workspace.selections.reduce((total, selection) => total+selection.points, 0), bands, rows, issues,
     readiness:issues.length===0?'ready_for_teacher_review' as const:'incomplete' as const,
+    sourceVerification:'not_performed_by_this_projection' as const,
     teacherAccepted:false as const, printed:false as const, published:false as const, academyWrites:0 as const});
 }

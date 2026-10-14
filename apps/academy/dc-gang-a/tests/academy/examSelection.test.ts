@@ -21,6 +21,7 @@ describe('private exam candidate inspection',()=>{
     expect(result.selectedQuestions).toBe(24); expect(result.selectedPoints).toBe(100);
     expect(result.bands.map(band=>band.selected)).toEqual([12,8,4]); expect(result.readiness).toBe('ready_for_teacher_review');
     expect([result.teacherAccepted,result.printed,result.published]).toEqual([false,false,false]); expect(result.academyWrites).toBe(0);
+    expect(result.sourceVerification).toBe('not_performed_by_this_projection');
     expect(Object.isFrozen(result.rows[0]!.candidate.content)).toBe(true);
     expect(Object.isFrozen(elementaryExamRequirement.pointBands[0])).toBe(true);
   });
