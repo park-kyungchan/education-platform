@@ -1,0 +1,154 @@
+{
+  "schema": "education.academy-curated-concept-candidate-source-provenance.v1",
+  "ontologyVersion": "0.2.0",
+  "taskRef": "ACADEMY-CURATED-CONCEPT-CANDIDATES-A11",
+  "sourceBase": "31bc2920ecc13e7f4df68437fd7a7c1ad9766373",
+  "qualification": "curated_candidate_snapshot",
+  "originalResearch": {
+    "catalogSha256": "8d3c7f084eb1f43b49a0938493593ca858fcf968864064b8e4dc259defac1f16",
+    "sealedAuthorReceiptSha256": "c338a1f4f7c3296a42b93b5f7b60666e02a21b1f78e88472853f70e563814901",
+    "originalsChanged": false,
+    "privateResearchCustodyPublished": false
+  },
+  "snapshot": {
+    "path": "apps/academy/dc-gang-a/data/curated-concepts/elementary-2022-candidates.json",
+    "sha256": "a69c85a8b38fc194ff23e34103f86833516e93533973c1c4c9d8fc912e67d053",
+    "projection": "Public curriculum scope, candidate definitions and exact original source pointers only; excludes task actor and host locators",
+    "revisionMeaning": "Immutable source snapshot identity; not teacher ledger revision or accepted mathematical ontology"
+  },
+  "officialSource": {
+    "edition": {
+      "namespace": "official_curriculum_edition",
+      "literalKey": "KR:MOE:2022-33:annex8:mathematics"
+    },
+    "mathZip": {
+      "url": "https://www.moe.go.kr/boardCnts/fileDown.do?m=0404&s=moe&fileSeq=1512facbda6c234a1641ac7e9c156ca2",
+      "sha256": "b37a372a90d6d00bb3985888bbb41caae7a35f28877dc243a6f4b28861c53146",
+      "retrievedAtUtc": "2026-10-14T22:33:05.085Z"
+    },
+    "mathMember": {
+      "name": "[별책8] 수학과 교육과정.hwp",
+      "sha256": "aab8eed59ecf244223d04afad75f4cf5ac5085fadcfc3cf52c2f6d54ddfc7856",
+      "locators": "Exact HWP BodyText stream, record ordinal, decompressed byte offset and payload SHA256; physical pages unknown"
+    },
+    "amendment": {
+      "url": "https://www.ne.go.kr/component/file/ND_fileDownload.do?q_fileSn=666&q_fileId=b741961e-773c-4f93-a396-1f3a9608ea11",
+      "sha256": "343e41fa969209381eabebcc8cf852e4e37d91810cf59e7b8f25cb71285ef9af",
+      "retrievedAtUtc": "2026-10-14T22:24:04.993Z",
+      "pdfPages": [
+        3,
+        4,
+        7
+      ],
+      "observed2026Annexes": [
+        1,
+        2,
+        3,
+        4,
+        15
+      ],
+      "inference": "This order does not replace mathematics Annex8; all other later Annex8 amendments are not exhaustively ruled out"
+    },
+    "captureBodiesPublished": false
+  },
+  "coverage": {
+    "candidates": 52,
+    "officialCodesObserved": 121,
+    "officialCodesReferenced": 59,
+    "explicitlyUnmapped": 62,
+    "bandDomainCells": 12,
+    "meaning": "Source scope pointers; not full atomic decomposition or learner attainment"
+  },
+  "interface": {
+    "method": "GET",
+    "path": "/api/curated-concept-candidates",
+    "authentication": "Existing exact owner/actor teacher session",
+    "parameters": "none",
+    "sourceReads": "Fixed task-reviewed source snapshot only; no URL, path, edition, owner or student selector",
+    "writeActions": "none"
+  },
+  "preservation": {
+    "teacherReportedFlow": "unchanged; no curated snapshot is stored as a teacher report",
+    "teacherReviewsCreated": 0,
+    "studentLinksCreated": 0,
+    "mastery": "not_inferred",
+    "causality": "not_inferred",
+    "publisherPlacement": "unknown; separate crosswalk proposals not imported",
+    "oldImmutablePinsReplaced": false,
+    "retiredCurriculumInitiativeResumed": false,
+    "databaseChanges": 0,
+    "nativeRuntimeEffects": 0,
+    "modelEvaluationRequests": 0
+  },
+  "acceptance": {
+    "sourceCandidate": "subject to exact independent review",
+    "mathematicalAtomicity": "unknown",
+    "semanticAcceptance": "unknown",
+    "teacherAcceptance": "not-established",
+    "deployedBehavior": "not-established"
+  },
+  "files": [
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/server.ts",
+      "sha256": "94b2fe1eb66c617097cf4eed9ffdff483c21b64b5fd7f1e18b2411dde7c0946d",
+      "bytes": 36027
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/web/client.ts",
+      "sha256": "b844ee9e5bc525a4e876d6c9be8f2b5d52e4f869d9d7752d93bebf23b5578ecb",
+      "bytes": 35515
+    },
+    {
+      "path": "apps/academy/dc-gang-a/data/curated-concepts/elementary-2022-candidates.json",
+      "sha256": "a69c85a8b38fc194ff23e34103f86833516e93533973c1c4c9d8fc912e67d053",
+      "bytes": 204720
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/contracts/curatedConceptCandidates.ts",
+      "sha256": "517b5c3f401638a00fc44aac91895f1ef904c0b62b4ba917ca4f3830973a4436",
+      "bytes": 4298
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/curatedConceptCandidates.ts",
+      "sha256": "88bbe84eb2c99a29adc2bf9542933ebabc2d649d4df3aed2871859a37921ecd4",
+      "bytes": 9460
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/web/curatedConceptCandidatesView.ts",
+      "sha256": "6837fb75a8c8ee0b17c0b673ec2dd303ff28269eb037e8489d334beee8570772",
+      "bytes": 8762
+    },
+    {
+      "path": "apps/academy/dc-gang-a/tests/academy/curatedConceptCandidates.test.ts",
+      "sha256": "7c53da8481cfba0eee3d4d9d037f74e2fd8b0cd02ba51feff73358cd2c44dfd8",
+      "bytes": 12385
+    },
+    {
+      "path": "apps/academy/dc-gang-a/tests/academy/curatedConceptCandidatesBrowser.ts",
+      "sha256": "4d7ebf7e4fde0984daedc59a3cccea771f40f4aa1108e07750e0c1441e1d413c",
+      "bytes": 10745
+    },
+    {
+      "path": "apps/academy/dc-gang-a/tests/academy/curatedConceptCandidatesBrowserEntry.ts",
+      "sha256": "3192407db5e55680375408c669abc6eb9d642f6c639328cbcae1c9de6161432a",
+      "bytes": 1102
+    }
+  ],
+  "taskRefMeaning": "local-source-record-only; no canonical Task allocation or completion",
+  "canonicalParentTaskRef": {
+    "workId": "ontology-driven-harness-operation",
+    "taskId": "ACADEMY-RETAINED-OWNER-RUNTIME",
+    "specRevision": 6,
+    "planRevision": 6,
+    "authority": "source-only; native effects remain separately admitted by the parent"
+  },
+  "integration": {
+    "actor": "/root",
+    "preservedHistoryHead": "74e69da01234bc950c9972d2e447f98295d9ba22",
+    "curatedCandidateHead": "30f0c05b0df066e2ab30a62748c4ddca9d381a33",
+    "resolution": "Additive authenticated server routes and separate inert workspace mounts; recalculate current source hash vectors",
+    "teacherReportsCreated": 0,
+    "studentLinksCreated": 0,
+    "databaseMigrations": 0
+  }
+}

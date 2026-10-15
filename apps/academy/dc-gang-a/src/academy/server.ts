@@ -9,6 +9,9 @@ import {ObservationCommandRefusal} from './records';
 import {renderDesignLab} from './web/designLab';
 import {teacherFontAssets} from './web/fontAssets';
 import type {PrivateArtifactAccess} from './privateArtifactCatalog';
+import {createPreservedHistoryReader} from './preservedHistory';
+import type {PreservedSelection} from './contracts/preservedHistory';
+import {createCuratedConceptCandidateAccess} from './curatedConceptCandidates';
 
 export interface LoginIdentity { readonly actorId:string; readonly username:string; readonly passwordHash:string }
 export interface TeacherServerOptions {
@@ -29,12 +32,15 @@ export interface TeacherServerOptions {
   readonly refreshPending?:(context:TrustedTeacherContext)=>Promise<unknown>;
   readonly refreshHistory?:(context:TrustedTeacherContext,cursor:string|null)=>Promise<unknown>;
   readonly privateArtifacts?:PrivateArtifactAccess;
+  readonly curatedConceptCandidates?:ReturnType<typeof createCuratedConceptCandidateAccess>;
 }
 const securityHeaders={ 'Cache-Control':'no-store','X-Content-Type-Options':'nosniff','Referrer-Policy':'no-referrer','X-Frame-Options':'DENY',
   'Content-Security-Policy':"default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'" };
 function json(value:unknown,status=200,headers:Record<string,string>={}){return new Response(JSON.stringify(value),{status,headers:{...securityHeaders,'Content-Type':'application/json; charset=utf-8',...headers}});}
 const cookie=(name:string,value:string,age=3600)=>`${name}=${value}; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=${age}`;
 export function createTeacherServerHandler(options:TeacherServerOptions){
+  const preservedHistory=options.privateArtifacts?createPreservedHistoryReader(options.privateArtifacts,options.app.ownerId):null;
+  const curatedConceptCandidates=options.curatedConceptCandidates??createCuratedConceptCandidateAccess(options.app.ownerId);
   const trial=options.originTrialToken?validateWebMcpTrialToken(options.originTrialToken,options.origin):null;
   const admittedHost=new URL(options.origin).hostname;
   let identity=options.identity,sessionKey=options.sessionKey,invitationDigest=options.invitationDigest,setupRunning=false,resetRunning=false;
@@ -169,6 +175,35 @@ export function createTeacherServerHandler(options:TeacherServerOptions){
       }
       if(path.startsWith('/api/')){
         const actor=context(req);if(!actor)return preDispatchRefusal('teacher_authentication_required',401);
+        if(['/api/preserved-history','/api/preserved-history-records','/api/preserved-history-record','/api/preserved-history-artifact'].includes(path)){
+          if(req.method!=='GET')return json({error:'method_not_allowed'},405);
+          const required=path==='/api/preserved-history'?[]:path==='/api/preserved-history-artifact'?['id','snapshot']:['namespace','scope','snapshot',...(url.searchParams.get('scope')==='student'?['studentId']:[]),...(path==='/api/preserved-history-record'?['recordId']:[])];
+          const allowed=[...required,...(path==='/api/preserved-history-records'?['cursor']:[])];
+          if([...url.searchParams.keys()].some(key=>!allowed.includes(key))||required.some(key=>url.searchParams.getAll(key).length!==1)||allowed.some(key=>url.searchParams.getAll(key).length>1))return json({error:'unexpected_query_scope'},400);
+          if(!preservedHistory)return json({error:'preserved_history_unavailable'},503);
+          const stillAuthorized=()=>{if(options.currentAuthentication){const current=options.currentAuthentication();identity=current.identity;sessionKey=current.sessionKey;}const current=context(req);return current?.ownerId===actor.ownerId&&current.actorId===actor.actorId;};
+          try{
+            if(path==='/api/preserved-history'){const value=await preservedHistory.index(actor);return stillAuthorized()?json(value):json({error:'teacher_authentication_required'},401);}
+            const snapshot=url.searchParams.get('snapshot')!;
+            if(path==='/api/preserved-history-artifact'){const value=await preservedHistory.artifact(actor,url.searchParams.get('id')!,snapshot);return stillAuthorized()?new Response(value.body,{headers:{...securityHeaders,...value.headers}}):json({error:'teacher_authentication_required'},401);}
+            const scope=url.searchParams.get('scope'),selection:PreservedSelection={namespace:url.searchParams.get('namespace')!,scope:scope as PreservedSelection['scope'],...(scope==='student'?{studentId:url.searchParams.get('studentId')!}:{})};
+            const value=path==='/api/preserved-history-record'?await preservedHistory.detail(actor,selection,url.searchParams.get('recordId')!,snapshot):await preservedHistory.page(actor,selection,url.searchParams.get('cursor'),snapshot);
+            return stillAuthorized()?json(value):json({error:'teacher_authentication_required'},401);
+          }catch(error){
+            if(!stillAuthorized())return json({error:'teacher_authentication_required'},401);
+            const code=error instanceof Error?error.message:'';
+            if(['owner_scope_conflict','preserved_namespace_conflict','preserved_student_scope_conflict','preserved_record_scope_conflict','preserved_artifact_scope_conflict','artifact_student_scope_conflict'].includes(code))return json({error:'preserved_history_scope_conflict'},403);
+            if(['preserved_snapshot_conflict','preserved_cursor_scope_conflict'].includes(code))return json({error:'preserved_history_snapshot_conflict'},409);
+            if(['preserved_selection_invalid','preserved_cursor_invalid','preserved_record_selector_invalid','preserved_artifact_selector_invalid'].includes(code))return json({error:'invalid_preserved_history_selector'},400);
+            return json({error:'preserved_history_unavailable'},503);
+          }
+        }
+        if(path==='/api/curated-concept-candidates'){
+          if(req.method!=='GET')return json({error:'method_not_allowed'},405);
+          if(url.searchParams.size)return json({error:'unexpected_query_scope'},400);
+          try{return json(curatedConceptCandidates.read(actor));}
+          catch{return json({error:'curated_concept_candidates_unavailable',teacherPersistence:false,studentLinksCreated:0},503);}
+        }
         if(['/api/private-artifacts','/api/private-artifact'].includes(path)&&req.method==='GET'){
           if(path==='/api/private-artifacts'&&url.searchParams.size||path==='/api/private-artifact'&&([...url.searchParams.keys()].some(key=>key!=='id')||url.searchParams.getAll('id').length!==1))return json({error:'unexpected_query_scope'},400);
           if(!options.privateArtifacts)return path==='/api/private-artifacts'?json({state:'not_configured',sourceIdentity:'unverified_preservation',artifacts:[]}):json({error:'private_artifact_unavailable'},503);
