@@ -2,7 +2,7 @@
 
 Runtime package derived from the preserved 2026-10-07 start pack. Mathematical data, source snapshots, attachments, contracts and rendered UI bytes are unchanged.
 
-Runtime: Bun 1.4.2, TypeScript 7.0.2 and bun-types 1.4.2. The typechecker launcher explicitly uses the project-local compiler through Bun. Executable commands, source hashes and target-state metadata are recorded in runtime.manifest.json.
+Runtime: Bun 1.4.3, TypeScript 7.0.2 and bun-types 1.4.2. The typechecker launcher explicitly uses the project-local compiler through Bun. Executable commands, source hashes and target-state metadata are recorded in runtime.manifest.json.
 
 Original Codex startup entrypoints and changed operational files are retained as inactive .source historical records. Historical source verification and current runtime validation are separate.
 

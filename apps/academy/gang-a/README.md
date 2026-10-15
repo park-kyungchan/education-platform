@@ -6,7 +6,7 @@ This refactor starts from private main `b64d13196247530cb940109ed6ba065ad87e5a80
 
 ## Reproduce
 
-Use Bun 1.4.2. This is one Bun package with one lockfile and one build chain. The `packages/` folders are logical modules, not independently deployed packages.
+Use Bun 1.4.3. This is one Bun package with one lockfile and one build chain. The `packages/` folders are logical modules, not independently deployed packages.
 
 1. `bun install --frozen-lockfile --ignore-scripts`
 2. `bun run validate`

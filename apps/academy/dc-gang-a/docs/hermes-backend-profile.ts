@@ -71,7 +71,7 @@ export const hermesBackendProfile = {
     product: 'repository',
     automaticCrossProfileSync: false,
   },
-  runtime: { bun: '1.4.2', typescript: '7.0.2', hermesModelDefault: 'gpt-6.1-sol', provider: 'openai-codex', reasoning: 'xhigh', selectionScope: 'declared_defaults_not_assignment_controls', effectiveContextCapacity: null },
+  runtime: { bun: '1.4.3', typescript: '7.0.2', hermesModelDefault: 'gpt-6.1-sol', provider: 'openai-codex', reasoning: 'xhigh', selectionScope: 'declared_defaults_not_assignment_controls', effectiveContextCapacity: null },
   autonomousGit: ['branch', 'worktree', 'commit', 'push', 'pull_request', 'review', 'exact_head_ci', 'merge', 'merge_readback', 'owned_merged_branch_worktree_cleanup'],
   recurringOperations: {
     mode: 'initial_approved_envelope',

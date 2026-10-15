@@ -1,6 +1,7 @@
 import {realpathSync} from 'node:fs';
-import {resolve,sep} from 'node:path';
+import {dirname,delimiter,resolve,sep} from 'node:path';
 import type {EducationModule,ModuleId,SourceMap} from './contracts';
+import {assertBunRuntime} from './runtime';
 export const projectRoot=resolve(import.meta.dir,'..');
 export function validateModuleGraph(modules:readonly EducationModule[]):EducationModule[]{
  const byId=new Map<string,EducationModule>();
@@ -20,13 +21,19 @@ export async function readSourceMap():Promise<SourceMap>{
  for(const module of validateModuleGraph(input.modules)){resolveModuleRoot(module);if(module.native.authority!=='none'||!/^\w{40}$/.test(module.commit))throw Error('invalid_source_identity');}
  return input;
 }
-export async function runModuleCheck(module:EducationModule,script:string):Promise<number>{
+export function moduleCheckExecution(module:EducationModule,script:string,invoker={executable:process.execPath,version:Bun.version,path:process.env.PATH}){
  if(!module.checks.includes(script))throw Error('unadmitted_script');
  const runtimeRoot=resolve(projectRoot,'.private/runtimes');
- const bun=resolve(runtimeRoot,module.id==='mathcrew'?'bun-1.4.1/bin/bun':'bun-1.4.2/bin/bun');
  const node=resolve(runtimeRoot,'node-26.7.0/bin/node'),npm=resolve(runtimeRoot,'npm-11.17.0/bin/npm-cli.js');
- const command=module.runtime==='node-npm'?[node,npm,'run',script]:[bun,'run',script];
- const env={...process.env,PATH:resolve(runtimeRoot,'node-26.7.0/bin')+':'+resolve(runtimeRoot,module.id==='mathcrew'?'bun-1.4.1/bin':'bun-1.4.2/bin')+':'+process.env.PATH};
+ if(module.runtime==='bun')assertBunRuntime(invoker.version);
+ const command=module.runtime==='node-npm'?[node,npm,'run',script]:[invoker.executable,'run',script];
+ const bins=[dirname(invoker.executable),resolve(runtimeRoot,'node-26.7.0/bin')];
+ if(module.runtime==='node-npm')bins.reverse();
+ const env={...process.env,PATH:[...bins,invoker.path??''].join(delimiter)};
+ return {command,env};
+}
+export async function runModuleCheck(module:EducationModule,script:string):Promise<number>{
+ const {command,env}=moduleCheckExecution(module,script);
  const proc=Bun.spawn(command,{cwd:resolveModuleRoot(module),env,stdin:'ignore',stdout:'inherit',stderr:'inherit'});return proc.exited;
 }
 export async function findModule(id:string):Promise<EducationModule>{const found=(await readSourceMap()).modules.find(m=>m.id===id);if(!found)throw Error('unknown_module');return found;}

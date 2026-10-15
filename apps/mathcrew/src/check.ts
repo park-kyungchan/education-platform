@@ -12,7 +12,7 @@ import { readdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 const root = new URL('../', import.meta.url);
-assert.equal(Bun.version, '1.4.1');
+assert.equal(Bun.version, '1.4.3');
 assert.equal(identity.origin, publicVision.exactPublicTarget);
 assert.equal(identity.productURL, publicVision.onlyPublicProductLink);
 assert.deepEqual(Object.keys(copy.en).sort(), Object.keys(copy.ko).sort());
