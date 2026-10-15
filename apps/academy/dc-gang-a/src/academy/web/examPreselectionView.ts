@@ -22,7 +22,7 @@ export function examPreselectionView(workspace:ExamSelectionWorkspace,candidates
     section.dataset.state='analysis';
     section.append(node('p',`초등 ${requirement.grade}학년 · ${requirement.month}월 · 서술형 ${requirement.questions}문항 · ${requirement.totalPoints}점`),
       node('p',analysis.scoring.bands.map(band=>`${band.points}점 ${band.questions}문항`).join(' / ')+` · 합계 ${analysis.scoring.calculatedPoints}점. 배점은 난이도를 증명하지 않습니다.`),
-      node('p',`${analysis.timing.localStartTime} 시작 · ${analysis.timing.durationMinutes}분 · ${analysis.timing.localExamEndTime} 시험 종료. ${analysis.timing.localSessionEndTime}까지 ${analysis.timing.gradingAndPeerHavrutaMinutes}분은 채점 후 학생 간 하브루타 시간입니다.`),
+      node('p',`${analysis.timing.localStartTime} 시작 · ${analysis.timing.durationMinutes}분 · ${analysis.timing.localExamEndTime} 시험 종료. 시험 종료부터 ${analysis.timing.localSessionEndTime}까지 남은 ${analysis.timing.gradingAndPeerHavrutaMinutes}분에 채점과 학생 간 하브루타를 진행합니다. 실제 시간 배분은 미확정입니다.`),
       node('p','시험일: '+(analysis.timing.examDate.state==='known'?analysis.timing.examDate.value:analysis.timing.examDate.reason)+' · 시간대: '+(analysis.timing.timeZone.state==='known'?analysis.timing.timeZone.value:analysis.timing.timeZone.reason)),
       node('p',`현재 입력 근거: ${analysis.coverage.distinctSourceItems}개 원문 식별자 / ${analysis.coverage.observedCandidateRevisions}개 개정. 전체 원천 문항수나 단원 coverage를 뜻하지 않습니다.`));
     const distribution=node('details');distribution.append(node('summary','단원별 문항수 제안 · 검토 전'));

@@ -18,6 +18,8 @@ test('analysis is immediately visible without creating a draft or calling a writ
   const view=card.querySelector('[data-role=exam-preselection]')!;
   expect(view.getAttribute('data-state')).toBe('analysis');expect(view.textContent).toContain('월말평가 · 문항 선택 전 분석');
   expect(view.textContent).toContain('16:20');expect(view.textContent).toContain('선택한 문항 0개');
+  expect(view.textContent).toContain('80분 · 16:20 시험 종료');
+  expect(view.textContent).toContain('시험 종료부터 18:00까지 남은 100분에 채점과 학생 간 하브루타를 진행합니다. 실제 시간 배분은 미확정입니다.');
   expect(view.querySelectorAll('button,input,textarea,select,form')).toHaveLength(0);
   (view.querySelector('summary') as HTMLElement).click();
   expect(reads).toBe(1);expect(writes).toBe(0);expect(card.querySelector('[data-entity-id]')).toBeNull();
