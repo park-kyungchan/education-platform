@@ -1,0 +1,139 @@
+{
+  "schema": "agent-platform.independent-review-result.v1",
+  "recordClass": "verification",
+  "binding": {
+    "codeOwner": "agent-platform",
+    "evidenceOwner": "codex-harness-engineering",
+    "scope": "canonical-source-ci-quality"
+  },
+  "headSha": "2eb2a1b5aa5398c84992c436c0b055eb1ecdfe8a",
+  "reviewedTreeSha": "98853f1b1970efd828027526a8f691f6db3c2f5d",
+  "reviewedSourceManifestSha256": "726593ef58799e7cab9b5355a04e10c57a6d97a4dc835a6795108ce9370d5551",
+  "reviewer": {
+    "runtime": "native-codex",
+    "taskId": "EDUCATION-SOURCE-INDEPENDENT-REVIEW"
+  },
+  "author": {
+    "runtime": "native-codex",
+    "taskId": "INTERRUPTION-RECOVERY-AND-PRESELECTION"
+  },
+  "conclusion": "pass",
+  "unresolvedFindings": 0,
+  "reviewedAtUtc": "2026-10-15 23:17:57 UTC",
+  "reviewerContext": {
+    "realNativeSessionID": "unknown",
+    "herdrReviewPane": "w3p6",
+    "paneSource": "User-provided current review pane; no Herdr controls invoked.",
+    "identityMeaning": "SOURCE logical Task IDs supplied by Root; no native allocation asserted."
+  },
+  "baseline": {
+    "headSha": "df7793a4d26b73a57ad53405e2d817bd908ceb16",
+    "treeSha": "a50dfcf4f7c95c23963f7fb33258f41525208ab8",
+    "networkFetchPerformed": false
+  },
+  "priorBinding": {
+    "immediateHeadSha": "f962ded21bb47ba0090c5388b26ddf29aea7cd94",
+    "immediateTreeSha": "ef06a013c7617545aae78ca46a9d1c33199e82eb",
+    "artifactPath": "/tmp/education-source-review-f962-result-20261016.json",
+    "artifactSha256": "dbb0ff328b0961b3cca2dec30edf0855a7a9732c0fcb246ef2af34acdf6cf915",
+    "originalFullReviewHeadSha": "a09bc2fce8927f67ed2d7cef720790a25e8604a2",
+    "originalFullReviewTreeSha": "0cff22a7f90969c55fa1db4a814895751405e273",
+    "meaning": "Prior full source review and the independently reviewed two-file clarification are explicitly carried forward to this exact head/tree, supplemented by independent review of the complete new five-file delta. Historical results remain preserved; unchanged settled scope was not fully repeated."
+  },
+  "successor": {
+    "authorCommit": "b1834a0dda80e0143a3aa7a6dd87676e6046ab18",
+    "filesChanged": 5,
+    "insertions": 556,
+    "deletions": 29,
+    "matchesAuthorFiles": true,
+    "paths": [
+      "architecture/common-ci-provider.json",
+      "ci/generate-projection.ts",
+      "ci/native-review-gate.js",
+      "ci/verify-projection.ts",
+      "tests/native-review-projection.test.ts"
+    ],
+    "assessment": "Canonical shared agent-platform predicates are compiled from a buffered virtual graph containing three immutable Git-object sources and the unchanged local entry. No source copies or second receipt-validator implementation are introduced. V1 retains its historical Hermes-only predicate; V2 requires Codex evidence ownership, exact head/tree/manifest, independent identities and immutable same-repository result bytes. Status creator, authenticated reads, immutable receipt URL and root workflow checks remain unchanged. This binding concerns shared CI quality ownership and does not transfer education domain ownership."
+  },
+  "canonicalProjection": {
+    "commit": "3cb565efdcf9634b057fa77948f4222b93255604",
+    "tree": "d230c84acc159461d9ee3f16096cd49da7ce4ca4",
+    "sourceInputs": 3,
+    "compiledInputs": 4,
+    "bundleSha256": "9510bff7c86689b532b5bd37d687d1276f1a76c1dc97974f27468334a8d6a03e",
+    "validatorSha256": "d4795b86a387b126face7039f0c6dcdfb5ca6034c05e6233bf2d848d7a208986",
+    "localCanonicalValidatorMatchesPinnedGitObject": true
+  },
+  "manifestDerivation": {
+    "method": "Canonical deriveReviewedSourceManifest over git ls-tree -r -t -z --full-tree of the exact reviewed Git tree; includes tree entries and blobs.",
+    "entryCount": 1148,
+    "blobCount": 998
+  },
+  "actualChecks": [
+    {
+      "command": "bun test ./tests/native-review-projection.test.ts",
+      "exitCode": 0,
+      "passed": 9,
+      "failed": 0,
+      "assertions": 27,
+      "scope": "Eight mocked-fetch gate scenarios plus one local projection-proof fixture."
+    },
+    {
+      "command": "bun ci/verify-projection.ts",
+      "exitCode": 0
+    },
+    {
+      "command": "bun ci/generate-projection.ts /home/palantirkc/code/shared/agent-platform",
+      "exitCode": 0,
+      "mode": "verify; no --write",
+      "scope": "Pinned compiler and immutable three-file closure reproduced the exact generated bundle and graph."
+    },
+    {
+      "command": "bun run typecheck",
+      "exitCode": 0
+    },
+    {
+      "command": "bun --no-env-file --eval <in-memory legacy fixture and canonical manifest derivation>",
+      "exitCode": 0,
+      "scope": "Valid historical V1 accepted by generated gate with exactly three mocked reads, no V2 tree/result acquisition; canonical validator matches pin; actual Git-tree manifest derived."
+    },
+    {
+      "command": "bun run status",
+      "exitCode": 0
+    },
+    {
+      "command": "bun run verify:imports",
+      "exitCode": 0,
+      "unchangedImports": 855,
+      "explicitAdaptations": 31
+    },
+    {
+      "command": "git diff --check f962ded HEAD",
+      "exitCode": 0
+    },
+    {
+      "command": "git diff --exit-code b1834a0dda80e0143a3aa7a6dd87676e6046ab18 HEAD -- <five successor paths>",
+      "exitCode": 0
+    },
+    {
+      "command": "git diff --exit-code f962ded HEAD -- .github/workflows/source.yml ci/native-review.entry.ts src/runtime.ts scripts/setup.ts package.json bun.lock",
+      "exitCode": 0
+    },
+    {
+      "command": "git status --porcelain; git rev-parse HEAD HEAD^{tree}",
+      "exitCode": 0,
+      "workingTreeClean": true,
+      "headAndTreeUnchanged": true
+    }
+  ],
+  "currentFindingCount": 0,
+  "findings": [],
+  "verdict": "Pass for independent exact-source review; no actionable findings. Prior review plus both inspected successor deltas binds the candidate against the recorded baseline. Publication and explicit integration remain Root-owned.",
+  "limits": [
+    "Canonical binding is the shared source CI-quality contract, not native permission, deployment authority or portfolio completion.",
+    "Unchanged root Actions retain Bun1.4.2 only for source-only setup bootstrap via GITHUB_PATH and the separate generated native-review JavaScript job. Maintained checks and projection compilation use Bun1.4.3. Actual Bun1.4.2 execution, real Actions execution and setup downloads were not tested.",
+    "Full portfolio integration remains unverified at the preserved Node26.7.0 prerequisite. Node26.7.0/npm11.17.0 remain mathematics reference, Bun parity DEFERRED, human semantic disposition PENDING and canonical application NOT_PERFORMED.",
+    "No network, install, native activation, PostgreSQL/database access, Goal/evaluation, source/lock edit or remote/publication action was performed. Synthetic fixtures used temporary local files only.",
+    "No real source coverage, production/runtime operation or teacher acceptance is established. Earlier dependency failures and Root-reported module checks remain separately attributed historical evidence."
+  ]
+}
