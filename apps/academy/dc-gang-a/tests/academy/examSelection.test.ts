@@ -1,6 +1,8 @@
 import {describe, expect, test} from 'bun:test';
 import {known, unknown} from '../../src/learning/model';
-import {createExamCandidate, elementaryExamRequirement, inspectExamSelection, validateExamCandidate, type ExamCandidateBody, type ExamSelectionWorkspace} from '../../src/academy/examSelection';
+import {createExamCandidate, elementaryExamRequirement, inspectExamSelection, inspectExamPreselection, validateExamCandidate, type ExamCandidateBody, type ExamSelectionWorkspace, type ExamPreselectionUnitScope} from '../../src/academy/examSelection';
+import {teacherExamSelectionContract} from '../../docs/teacher-exam-selection-contract';
+import type {CatalogNode} from '../../src/academy/domain';
 
 function body(index: number): ExamCandidateBody {
   const ref='synthetic-evidence:'+index;
@@ -64,5 +66,69 @@ describe('private exam candidate inspection',()=>{
     Object.defineProperty(candidate,'content',{enumerable:true,get(){reads++;return candidates[0]!.content;}});
     expect(()=>validateExamCandidate(candidate)).toThrow('accessors are not JSON data');expect(reads).toBe(0);
     expect(()=>createExamCandidate({...body(1),content:unknown('x'.repeat(1001))})).toThrow('invalid_exam_text');
+  });
+});
+
+function preselection():ExamSelectionWorkspace {
+  return {...workspace(),examDate:unknown('Exact date absent from original'),timeZone:unknown('Time zone absent from original'),selections:[]};
+}
+function unitScope():ExamPreselectionUnitScope {
+  const catalog:CatalogNode[]=[{id:'edition',kind:'book_edition',sourceKey:{namespace:'synthetic_edition',literalKey:'edition-a'},label:'Synthetic edition',parent:unknown('Edition root')}];
+  for(let index=0;index<3;index++)catalog.push({id:'unit-'+index,kind:'major_unit',sourceKey:{namespace:'synthetic_unit',literalKey:String(index)},label:'Synthetic unit '+index,parent:known('edition',['synthetic-catalog'])});
+  return known({catalog,unitIds:['unit-0','unit-1','unit-2']},['synthetic-catalog']);
+}
+
+describe('selection-free month-end analysis',()=>{
+  test('original requirement/scoring/timing and provenance are handed off with no chosen items',()=>{
+    const before=JSON.stringify(candidates),result=inspectExamPreselection(preselection(),candidates);
+    expect(result.requirement).toEqual(teacherExamSelectionContract.acceptedRequirement);
+    expect(result.requirement).toMatchObject({grade:3,month:10,questions:24,totalPoints:100,responseMode:'constructed_response'});
+    expect(result.scoring.calculatedPoints).toBe(100);
+    expect(result.scoring.difficultyFromPoints).toBe(false);
+    expect(result.timing).toMatchObject({localStartTime:'15:00',localExamEndTime:'16:20',localSessionEndTime:'18:00',gradingAndPeerHavrutaMinutes:100,calendarInstantResolved:false});
+    expect(result.originalSource).toEqual(teacherExamSelectionContract.source);
+    expect(result.originalSource.originalTextSha256).toEqual(['25711d3b49e2be397e9ed0e938837c37dfc852e5ca5b9215ac5528e980b57fe0','d2270ffdc888101090883df70130fe43b9c3abf8f6f88bd335a342f077259172']);
+    expect(result.unknowns).toContain('exam_date_unknown');expect(result.unknowns).toContain('exam_timezone_unknown');
+    expect(result).toMatchObject({selectedQuestions:0,selectedPoints:0,finalMembershipCreated:false,candidateCreation:false,teacherAccepted:false,printed:false,published:false,academyWrites:0});
+    expect(JSON.stringify(candidates)).toBe(before);expect(Object.isFrozen(result.originalSource.sourceKeys)).toBe(true);
+  });
+  test('even complete declared candidates never qualify actual source, unit coverage or a final exam',()=>{
+    const result=inspectExamPreselection(preselection(),candidates);
+    expect(result.coverage.observedCandidateRevisions).toBe(24);expect(result.coverage.distinctSourceItems).toBe(24);
+    expect(result.coverage.inventoryCompleteness.state).toBe('unknown');expect(result.coverage.itemToUnitCoverage.state).toBe('unknown');
+    expect(result.proposals.unitDistribution.state).toBe('unknown');expect(result.sourceVerification).toBe('not_performed_by_this_projection');
+    expect(result.unknowns).toContain('source_currentness_unverified');expect(result.unknowns).toContain('teacher_judgment_unobserved');
+    const incomplete=createExamCandidate({...body(1),edition:unknown('No edition'),answer:unknown('No answer'),difficulty:unknown('No difficulty'),responseMode:unknown('No format')});
+    const partial=inspectExamPreselection(preselection(),[incomplete]);
+    expect(partial.coverage.rows[0]!.missingFields).toEqual(['edition','answer','difficulty','responseMode']);
+    expect(partial.unknowns).toContain('constructed_response_unverified');expect(partial.unknowns).toContain('edition_unknown');
+  });
+  test('nonempty selection, wrong requirement and forged source revisions fail closed',()=>{
+    expect(()=>inspectExamPreselection(workspace(),candidates)).toThrow('exam_preselection_requires_empty_selections');
+    expect(()=>inspectExamPreselection({...preselection(),requirementRevision:'unaccepted' as any},[])).toThrow('exam_requirement_conflict');
+    expect(()=>inspectExamPreselection(preselection(),[{...candidates[0]!,sourceRef:'forged-source-receipt'}])).toThrow('exam_candidate_revision_conflict');
+    expect(()=>inspectExamPreselection(preselection(),[candidates[0]!,candidates[0]!])).toThrow('duplicate_exam_candidate_revision');
+    expect(()=>inspectExamPreselection(preselection(),Array(2001).fill(candidates[0]!))).toThrow('exam_candidate_cap');
+    let reads=0;const source={...candidates[0]!};Object.defineProperty(source,'sourceRef',{enumerable:true,get(){reads++;return 'forged';}});
+    expect(()=>inspectExamPreselection(preselection(),[source])).toThrow('accessors are not JSON data');expect(reads).toBe(0);
+  });
+  test('exact unit hierarchy supports a labelled quota proposal, never item or difficulty allocation',()=>{
+    const result=inspectExamPreselection(preselection(),[],unitScope()),proposal=result.proposals.unitDistribution;
+    expect(proposal.state).toBe('known');if(proposal.state!=='known')throw Error('expected synthetic quota proposal');
+    expect(proposal.value.allocations.map(row=>row.questions)).toEqual([8,8,8]);expect(proposal.value.allocations[0]!.pathIds).toEqual(['edition','unit-0']);
+    expect(result.proposals.reviewStatus).toBe('proposal_only');expect(result.coverage.itemToUnitCoverage.state).toBe('unknown');expect(result.selectedQuestions).toBe(0);
+    expect(proposal.value.allocations.every(row=>!('candidateId' in row)&&!('points' in row))).toBe(true);
+    expect(Object.isFrozen(proposal.value.allocations[0])).toBe(true);
+  });
+  test('missing ancestry remains unknown; unavailable, repeated and overlapping scope is refused',()=>{
+    const declared=unitScope();if(declared.state!=='known')throw Error('expected synthetic scope');
+    const missing=declared.value.catalog.map(node=>node.id==='unit-0'?{...node,parent:unknown('Parent not acquired')}:node);
+    expect(inspectExamPreselection(preselection(),[],known({...declared.value,catalog:missing},['synthetic'])).proposals.unitDistribution.state).toBe('unknown');
+    expect(()=>inspectExamPreselection(preselection(),[],known({...declared.value,unitIds:['unavailable']},['synthetic']))).toThrow('exam_scope_unit_unavailable');
+    expect(()=>inspectExamPreselection(preselection(),[],known({...declared.value,unitIds:['unit-0','unit-0']},['synthetic']))).toThrow('duplicate_exam_scope_unit');
+    const duplicate=declared.value.catalog.map(node=>node.id==='unit-1'?{...node,sourceKey:{namespace:'synthetic_unit',literalKey:'0'}}:node);
+    expect(()=>inspectExamPreselection(preselection(),[],known({...declared.value,catalog:duplicate},['synthetic']))).toThrow('duplicate_exam_scope_source_unit');
+    const middle:CatalogNode={id:'middle',kind:'middle_unit',sourceKey:{namespace:'synthetic_unit',literalKey:'middle'},label:'Synthetic middle',parent:known('unit-0',['synthetic'])};
+    expect(()=>inspectExamPreselection(preselection(),[],known({catalog:[...declared.value.catalog,middle],unitIds:['unit-0','middle']},['synthetic']))).toThrow('overlapping_exam_scope_units');
   });
 });
