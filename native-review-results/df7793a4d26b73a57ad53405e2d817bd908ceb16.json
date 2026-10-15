@@ -1,0 +1,503 @@
+{
+  "schema": "education.native-independent-source-review-result.v1",
+  "recordClass": "verification",
+  "observedAt": "2026-10-15T00:09:47.159Z",
+  "repository": "park-kyungchan/education-platform",
+  "headSha": "df7793a4d26b73a57ad53405e2d817bd908ceb16",
+  "reviewedTreeSha": "a50dfcf4f7c95c23963f7fb33258f41525208ab8",
+  "comparisonBase": "31bc2920ecc13e7f4df68437fd7a7c1ad9766373",
+  "reviewedSourceManifestSha256": "d520257eac6682bdb5366545734f63e3ca0651457de0d7c25eabab2347fed14f",
+  "reviewer": {
+    "runtime": "native-codex",
+    "taskId": "/root/academy_teacher_workspace"
+  },
+  "author": {
+    "runtime": "native-codex",
+    "taskId": "/root"
+  },
+  "contributors": [
+    {
+      "taskId": "/root/academy_delivery_preflight",
+      "head": "74e69da01234bc950c9972d2e447f98295d9ba22",
+      "scope": "A02 preserved history"
+    },
+    {
+      "taskId": "/root/integrated_program_context",
+      "head": "30f0c05b0df066e2ab30a62748c4ddca9d381a33",
+      "scope": "A11 read-only official curriculum candidates"
+    }
+  ],
+  "reviewAuthorship": {
+    "reviewStatementAuthor": "/root/academy_teacher_workspace",
+    "serializationOwner": "/root",
+    "basis": "Root binds main df7793 to the exact independently reviewed197 tree a50df. Actual original whole reviewer remains /root/academy_teacher_workspace; original whole22 review and all execution attribution are retained. No fresh peer review or test execution is claimed.",
+    "successorBindingAuthor": "/root",
+    "freshReviewPerformed": false,
+    "freshTestsPerformed": false
+  },
+  "conclusion": "pass",
+  "unresolvedFindings": 0,
+  "findings": [],
+  "reviewKind": "identical-tree-successor-binding-of-independent-whole-source-and-synthetic-verification",
+  "completeSourceManifest": {
+    "schema": "agent-platform.reviewed-source-manifest.v1",
+    "reviewedTreeSha": "a50dfcf4f7c95c23963f7fb33258f41525208ab8",
+    "entryCount": 1141,
+    "blobCount": 991,
+    "sha256": "d520257eac6682bdb5366545734f63e3ca0651457de0d7c25eabab2347fed14f",
+    "derivation": "Root exact local Git recursive tree; must independently match published exact tree at readback."
+  },
+  "originalWholeReview": {
+    "schema": "academy.a02-a11-independent-whole-source-review.v1",
+    "recordClass": "IndependentWholeChangedSourceReview",
+    "observedAtUtc": "2026-10-15T00:00:00.247599+00:00",
+    "actor": "/root/academy_teacher_workspace",
+    "sourceAuthors": [
+      "/root/academy_delivery_preflight",
+      "/root/integrated_program_context",
+      "/root"
+    ],
+    "canonicalParentTaskRef": "ACADEMY-RETAINED-OWNER-RUNTIME",
+    "localScopeRefs": [
+      "ACADEMY-PRESERVED-HISTORY",
+      "ACADEMY-CURATED-CONCEPT-CANDIDATES-A11"
+    ],
+    "candidate": {
+      "deliveryWorktree": "/home/palantirkc/code/shared/academy-workbench/.local/reorganization-kickoff/current-session/worktrees/academy-a02-a11-delivery",
+      "reviewWorktree": "/home/palantirkc/code/shared/academy-workbench/.local/reorganization-kickoff/current-session/worktrees/academy-a02-a11-independent-review",
+      "base": "31bc2920ecc13e7f4df68437fd7a7c1ad9766373",
+      "head": "197058fdb92dd1c8802081371a429e9a5e00b0bb",
+      "tree": "a50dfcf4f7c95c23963f7fb33258f41525208ab8",
+      "changedFiles": 22,
+      "cleanSourceReadback": true,
+      "correctedFc5ce54TreeIdentical": true,
+      "rejectedD5fCommitInDeliveryAncestry": false
+    },
+    "result": "PASS",
+    "findings": [],
+    "scope": "All 22 changed files and their integrated auth/read-only API/UI and provenance relationships; source and local synthetic behavior only. Existing baseline native/source ownership and private custody are not newly qualified.",
+    "sourceManifest": {
+      "path": "/home/palantirkc/code/shared/academy-workbench/.local/reorganization-kickoff/current-session/academy-a02-a11-independent-review-197058f/source-manifest.json",
+      "bytes": 6961,
+      "sha256": "62208afa02f8de8373573ebc9e730b6c6efc3ee458b788639a7f1f5c44b8326b"
+    },
+    "reviewInputs": {
+      "path": "/home/palantirkc/code/shared/academy-workbench/.local/reorganization-kickoff/current-session/academy-a02-a11-independent-review-197058f/review-inputs.json",
+      "bytes": 9917,
+      "sha256": "3f522de0534aece311c3e62d35bc4b7e13337e0bbeaf86b60d6385f4d19fd54e"
+    },
+    "independentlyExecuted": {
+      "whole22SourceHashReadbackBothWorktrees": true,
+      "adaptationPins": 18,
+      "A11IntegratedProvenancePins": 9,
+      "A02OriginalPortableContractPins": 5,
+      "gitDiffCheck": "PASS",
+      "strictFixtureTypecheck": "PASS",
+      "rootStatus": "PASS",
+      "focusedTests": {
+        "passed": 35,
+        "failed": 0,
+        "assertions": 354,
+        "files": 7
+      },
+      "fullRootSourceCheck": {
+        "status": "PASS",
+        "rootTests": 6,
+        "curriculumTests": 9,
+        "academyPassed": 364,
+        "academySkipped": 105,
+        "academyFailed": 0,
+        "gangAApplicationTests": 138,
+        "mathcrewTests": 22,
+        "skipMeaning": "Default unchanged external-PG boundary skips; not native-source or PG suite acceptance."
+      },
+      "actualCombinedBrowser": {
+        "browser": "155.0.8059.79",
+        "https": true,
+        "actualPasswordLoginAndTeacherAuthStore": true,
+        "ownSyntheticPg": true,
+        "cases": [
+          "actual_password_login_full_retained_owner_page_and_separate_archived_namespace_without_name_join",
+          "unknown_scoped_correction_and_raw_JSON_render_as_inert_preserved_text",
+          "combined_full_teacher_client_mounts_archived_history_and_52_curriculum_candidates_without_replacing_legacy_student_or_manual_teacher_flows",
+          "combined_UI_preserves_exact_official_edition_binary_locator_unknown_semantics_and_all_unmapped_codes",
+          "combined_handler_authentication_selector_and_mutation_refusals_for_fixed_curriculum_catalog",
+          "source_hold_clears_stale_curriculum_candidates_while_preserving_separate_archived_detail",
+          "finite_saved_scope_pages_reach_all_43_records_without_suppressing_superseded_originals",
+          "source_file_ref_links_to_unique_original_artifact_and_exact_original_bytes_attachment",
+          "native_current_student_ID_foreign_archived_record_namespace_and_arbitrary_paths_are_refused_without_current_roster_change",
+          "actual_HTTPS_async_dataset_read_rechecks_existing_auth_after_fixture_revocation_without_auth_bytes_mutation",
+          "fresh_server_process_reads_same_archive_and_real_session_with_exact_PG_table_counts_digests_owner_auth_and_custody_bytes_unchanged"
+        ],
+        "screenshotsVisuallyInspected": [
+          "/home/palantirkc/code/shared/academy-workbench/.local/reorganization-kickoff/current-session/academy-a02-a11-independent-review-197058f/browser/combined-ready.png",
+          "/home/palantirkc/code/shared/academy-workbench/.local/reorganization-kickoff/current-session/academy-a02-a11-independent-review-197058f/browser/combined-held.png",
+          "/home/palantirkc/code/shared/academy-workbench/.local/reorganization-kickoff/current-session/academy-a02-a11-independent-review-197058f/browser/preserved-history-ready.png",
+          "/home/palantirkc/code/shared/academy-workbench/.local/reorganization-kickoff/current-session/academy-a02-a11-independent-review-197058f/browser/preserved-history-after-restart.png"
+        ],
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "pgTableCount": 12,
+        "pgRowsAndDigestsUnchangedAfterFixtureSetup": true,
+        "ownerAuthAndCustodyBytesUnchanged": true,
+        "applicationOutboundFetchCalls": 0,
+        "actualPrivatePayloadUsed": false,
+        "adapterAttribution": "Reviewer executed maintained A02 regression through own copied fixture adapter and added four integrated A11 checks; candidate app/source bytes remain exact and unchanged."
+      },
+      "lateAwaitAuthNegatives": {
+        "cases": [
+          "list:identity-null:no_metadata_attachment_or_private_failure_disclosure",
+          "list:actor-changed:no_metadata_attachment_or_private_failure_disclosure",
+          "list:key-rotated:no_metadata_attachment_or_private_failure_disclosure",
+          "original-read:identity-null:no_metadata_attachment_or_private_failure_disclosure",
+          "original-read:actor-changed:no_metadata_attachment_or_private_failure_disclosure",
+          "original-read:key-rotated:no_metadata_attachment_or_private_failure_disclosure",
+          "original-read-reject:identity-null:no_metadata_attachment_or_private_failure_disclosure",
+          "original-read-reject:actor-changed:no_metadata_attachment_or_private_failure_disclosure",
+          "original-read-reject:key-rotated:no_metadata_attachment_or_private_failure_disclosure"
+        ],
+        "authMutations": "Fixture in-memory identity-null, actor-changed and session-key-rotated; no existing auth files changed.",
+        "boundaries": "Owner artifact catalog list, final original-byte read and rejected original-byte read; every response 401 without attachment, metadata or private failure reflection."
+      },
+      "localPgStop": {
+        "path": "/home/palantirkc/code/shared/academy-workbench/.local/reorganization-kickoff/current-session/academy-a02-a11-independent-review-197058f/local-pg-stop.json",
+        "bytes": 610,
+        "sha256": "39d25a6defa20ed5e08a4e57c677581edc59b8449beef06bea34d3dcd31f6395"
+      }
+    },
+    "independentPeer": {
+      "actor": "/root/academy_teacher_workspace/a11_semantic_review",
+      "receipt": {
+        "path": "/home/palantirkc/code/shared/academy-workbench/.local/reorganization-kickoff/current-session/academy-a11-peer-review-197058f/scoped-review.json",
+        "bytes": 11106,
+        "sha256": "c76458b268b2f8dbda828696da49a2cda2c18ac8b8235a35d885559031920c0d"
+      },
+      "result": "PASS",
+      "findings": 0,
+      "executedSummary": {
+        "sealedResearchPins": 72,
+        "exactRawHwpPointers": 65,
+        "canonicalCandidateAndRevisionIds": 52,
+        "officialCodes": 121,
+        "referencedCodes": 59,
+        "unmappedCodes": 62,
+        "sourceNegatives": 5,
+        "domChecks": 8
+      },
+      "wholeReviewIntegration": "Peer scoped A11 semantics; this receipt owns all22 and actual combined auth/browser execution."
+    },
+    "reviewObservations": [
+      {
+        "area": "A02 identity and correction semantics",
+        "conclusion": "Archived namespace, owner label, raw record/provenance and correction references remain preserved claims. No current student name/ID join or current teacher judgment promotion; currentStudentBinding remains null and correctionSemantics preserved_not_applied.",
+        "sourceRefs": [
+          "apps/academy/dc-gang-a/src/academy/preservedHistory.ts:23",
+          "apps/academy/dc-gang-a/src/academy/preservedHistory.ts:52",
+          "apps/academy/dc-gang-a/src/academy/web/preservedHistoryView.ts:7"
+        ]
+      },
+      {
+        "area": "A02 authorization, paging and original download",
+        "conclusion": "Fixed A13 dataset selector, exact snapshot and owner/selection cursor binding, finite row/byte budgets, archived cross-scope relation checks and unique owner-global original-byte hash/MIME/size binding. Authentication is refreshed after awaited output work and failures before response; references render as text or fixed encoded owner API selectors.",
+        "sourceRefs": [
+          "apps/academy/dc-gang-a/src/academy/preservedHistory.ts:69",
+          "apps/academy/dc-gang-a/src/academy/preservedHistory.ts:81",
+          "apps/academy/dc-gang-a/src/academy/server.ts:178",
+          "apps/academy/dc-gang-a/src/academy/web/preservedHistoryView.ts:13"
+        ]
+      },
+      {
+        "area": "A11 source, edition and unknown acceptance",
+        "conclusion": "Exact fixed public source bytes precede bounded parsing. Edition remains KR:MOE:2022-33:annex8:mathematics; binary HWP locators do not invent physical pages. All52 definitions remain candidate/semantic unknown and publisher placement unknown. No teacher/student persistence or mastery/causality inference. Source hold clears stale candidate UI.",
+        "sourceRefs": [
+          "apps/academy/dc-gang-a/src/academy/curatedConceptCandidates.ts:197",
+          "apps/academy/dc-gang-a/src/academy/server.ts:201",
+          "apps/academy/dc-gang-a/src/academy/web/curatedConceptCandidatesView.ts:39"
+        ]
+      },
+      {
+        "area": "Whole integration and provenance",
+        "conclusion": "Root additive mounts/routes coexist in the exact full teacher client; legacy application/store/strict records/auth/main/private artifact and concept core bytes are unchanged relativebase. All18 adaptations and9A11 pins match; no merge markers or rejected intermediate ancestry.",
+        "sourceRefs": [
+          "apps/academy/dc-gang-a/src/academy/web/client.ts:175",
+          "provenance/adaptations.json",
+          "provenance/academy-preserved-history.json",
+          "provenance/academy-curated-concept-candidates.json"
+        ]
+      }
+    ],
+    "authorEvidenceOnly": {
+      "A02Receipt": {
+        "path": "/home/palantirkc/code/shared/academy-workbench/.local/reorganization-kickoff/current-session/academy-preserved-history-validation/review-handoff.json",
+        "bytes": 15410,
+        "sha256": "640d0765dd6e750a022c0c8cb817fa05acd662d4b35209bd172167164743f262"
+      },
+      "A02Private815": "Author reports 5 archived students,815details,13exactdownloads,45pages; reviewer rehashed the author private-envelope verification receipt, not actual private dataset/original payloads or that execution.",
+      "A11Receipt": {
+        "path": "/home/palantirkc/code/shared/academy-workbench/.local/reorganization-kickoff/current-session/academy-curated-catalog-integration/source-candidate-author-receipt.json",
+        "bytes": 7851,
+        "sha256": "1c57f2172eaf07b21786516828c466bc8f642e78db09aff64785f31c30a4cd41"
+      },
+      "A02NativeHardcodedRehearsalFailures": "Author opt-in broad PG check has 3 unchanged /opt scratch fixture failures preserved; reviewer did not fabricate native paths or claim these passed."
+    },
+    "preservedReviewExecutionFailure": [
+      {
+        "log": "/home/palantirkc/code/shared/academy-workbench/.local/reorganization-kickoff/current-session/academy-a02-a11-independent-review-197058f/focused.log",
+        "exitCode": 127,
+        "cause": "Reviewer first invoked a root-relative runtime path from app cwd. Corrected to pinned absolute task runtime; no source edit, v2 focused execution passed."
+      }
+    ],
+    "unimplementedActualSourceAndAcceptanceGates": [
+      {
+        "gate": "A02 current identity/roster/currentness",
+        "state": "UNQUALIFIED",
+        "measurable": "No current student binding created. The5preserved private student labels and815records remain source-owned archived claims; exact byte preservation is not current roster or factual identity acceptance."
+      },
+      {
+        "gate": "A02 native private custody and live delivery",
+        "state": "UNPERFORMED_BY_THIS_REVIEW",
+        "measurable": "13original artifact custody/download outcomes are author-local evidence only; no real native admission/config/route execution by reviewer."
+      },
+      {
+        "gate": "A11 mathematical/curricular semantic acceptance and placement",
+        "state": "UNKNOWN",
+        "measurable": "All52candidate semantic reviews and publisher placements remain unknown;62of121observed official codes remain explicitly unmapped. Candidate atomicity is not a teacher or mathematical AcceptanceDecision."
+      },
+      {
+        "gate": "A11 source freshness and amendment exhaustiveness",
+        "state": "NOT_NEWLY_VERIFIED",
+        "measurable": "Local sealed72inputs and originalHWP bytes verified by peer; no new outbound capture and no exhaustive later amendment search or publisher mapping."
+      },
+      {
+        "gate": "Existing baseline auth/source/native qualification",
+        "state": "OUTSIDE_NEW_SOURCE_REVIEW",
+        "measurable": "Changed22review plus synthetic auth behavior does not qualify prior native auth/config/source baselines or production/runtime acceptance."
+      }
+    ],
+    "effects": {
+      "deliverySourceMutations": 0,
+      "maintainedSourceMutations": 0,
+      "nativeVpsEffects": 0,
+      "actualAcademySourceApiRequests": 0,
+      "externalApplicationFetchRequests": 0,
+      "realTeacherJudgmentsAuthored": 0,
+      "actualPrivatePayloadReadByReviewer": false,
+      "existingAuthConfigMutations": 0,
+      "publicationOrGitHubEffects": 0,
+      "modelRequests": 0,
+      "taskLocalOnlyEffects": [
+        "Detached exact-head worktree and dependency copies after manifest equality",
+        "New synthetic PG cluster plus test-only fixture schema/data setup, positively stopped own processes",
+        "Synthetic fixture auth/TLS/private-byte files and local HTTPS/Chrome resources",
+        "English review source/JSON/log/screenshot artifacts"
+      ]
+    },
+    "nextBoundary": "Root exact-source delivery/admission decision. This PASS is source/synthetic review only; no native activation, private custody, semantic acceptance or backlog-wide completion granted."
+  },
+  "originalChangedSourceManifest": {
+    "schema": "academy.independent-source-manifest.v1",
+    "reviewer": "/root/academy_teacher_workspace",
+    "scope": "A02+A11 whole changed source",
+    "base": "31bc2920ecc13e7f4df68437fd7a7c1ad9766373",
+    "head": "197058fdb92dd1c8802081371a429e9a5e00b0bb",
+    "tree": "a50dfcf4f7c95c23963f7fb33258f41525208ab8",
+    "entries": [
+      {
+        "path": "apps/academy/dc-gang-a/data/curated-concepts/elementary-2022-candidates.json",
+        "bytes": 204720,
+        "sha256": "a69c85a8b38fc194ff23e34103f86833516e93533973c1c4c9d8fc912e67d053"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/package.json",
+        "bytes": 1373,
+        "sha256": "9ac019a191b7c68a21802d135a12fa37ce71967a21b70dfc3f6e79b96ab5b755"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/contracts/curatedConceptCandidates.ts",
+        "bytes": 4298,
+        "sha256": "517b5c3f401638a00fc44aac91895f1ef904c0b62b4ba917ca4f3830973a4436"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/contracts/preservedHistory.ts",
+        "bytes": 2303,
+        "sha256": "efcb67cdfc1c33b620a34cca6bd28b26b787be3ce9e390c89ff4e083d444369e"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/curatedConceptCandidates.ts",
+        "bytes": 9460,
+        "sha256": "88bbe84eb2c99a29adc2bf9542933ebabc2d649d4df3aed2871859a37921ecd4"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/preservedHistory.ts",
+        "bytes": 13500,
+        "sha256": "794e038af6b23a2865d5f4d3593fb21fed93718f4cc4e77ed7ec5e362a476d02"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/server.ts",
+        "bytes": 36027,
+        "sha256": "94b2fe1eb66c617097cf4eed9ffdff483c21b64b5fd7f1e18b2411dde7c0946d"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/web/client.ts",
+        "bytes": 35515,
+        "sha256": "b844ee9e5bc525a4e876d6c9be8f2b5d52e4f869d9d7752d93bebf23b5578ecb"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/web/curatedConceptCandidatesView.ts",
+        "bytes": 8762,
+        "sha256": "6837fb75a8c8ee0b17c0b673ec2dd303ff28269eb037e8489d334beee8570772"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/web/preservedHistoryView.ts",
+        "bytes": 8402,
+        "sha256": "c16ec107bc81c70d8393b306a5e9fbf27974a6186af1794e4d9e050417202ace"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/tests/academy/curatedConceptCandidates.test.ts",
+        "bytes": 12385,
+        "sha256": "7c53da8481cfba0eee3d4d9d037f74e2fd8b0cd02ba51feff73358cd2c44dfd8"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/tests/academy/curatedConceptCandidatesBrowser.ts",
+        "bytes": 10745,
+        "sha256": "4d7ebf7e4fde0984daedc59a3cccea771f40f4aa1108e07750e0c1441e1d413c"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/tests/academy/curatedConceptCandidatesBrowserEntry.ts",
+        "bytes": 1102,
+        "sha256": "3192407db5e55680375408c669abc6eb9d642f6c639328cbcae1c9de6161432a"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/tests/academy/preservedHistory.test.ts",
+        "bytes": 7901,
+        "sha256": "94f6aff2e49aa1f33b5fd5bba47e5557620d34db4f73e207f5cb8f08d859af2b"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/tests/academy/preservedHistoryBrowser.ts",
+        "bytes": 12582,
+        "sha256": "4dac6cf93686f87ca980464ed47eebe6b9e15566ebf7878e41f487c5e93ff49e"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/tests/academy/preservedHistoryFixtures.ts",
+        "bytes": 4366,
+        "sha256": "69a742ffc89365257707a292866370917e323345d9b57cdf6e1597dfce6abd7d"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/tests/academy/preservedHistoryServer.test.ts",
+        "bytes": 5796,
+        "sha256": "86b782b353a830083c3ff42379ea0e31fba9ac33bb088f542c3b3a89bc2d8469"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/tests/academy/preservedHistoryView.test.ts",
+        "bytes": 3725,
+        "sha256": "3253731738ea5028f34849a2193095bbb102d74dcd26113e97eb87b18870b053"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/tsconfig.preserved-history-tests.json",
+        "bytes": 135,
+        "sha256": "49f0b4dca85ccb5198c4dea9eb4d54834f215fe9dbda056eb39aa7a90cd27c99"
+      },
+      {
+        "path": "provenance/academy-curated-concept-candidates.json",
+        "bytes": 6315,
+        "sha256": "c072a49e41868971d4787f677629418dbfeeee12c7db54452b0e292585e1be53"
+      },
+      {
+        "path": "provenance/academy-preserved-history.json",
+        "bytes": 3394,
+        "sha256": "fb1ef20b8ea37f0e20f130287cbcfbd0d0c31b66ebe1dbdc7f3ecc9c4fc16bda"
+      },
+      {
+        "path": "provenance/adaptations.json",
+        "bytes": 11665,
+        "sha256": "024377b945f49c9ee13969e269b1da6b8792ec1c968377976202b323e881fe86"
+      }
+    ],
+    "dependencyManifestEquality": [
+      {
+        "path": "package.json",
+        "sha256": "cf35fff7d62b806c87f870f773e1f00da913475c330e9e3aaa945b271562d730"
+      },
+      {
+        "path": "bun.lock",
+        "sha256": "bb598c9ccc3da2865c39a3d3a8aebda62304666a501e31965a1625ad20fa6d83"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/package.json",
+        "sha256": "9ac019a191b7c68a21802d135a12fa37ce71967a21b70dfc3f6e79b96ab5b755"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/bun.lock",
+        "sha256": "32a3f043840b475a2892cc4477b393d32d597b2a65616c076be2b74bb45c9aa5"
+      },
+      {
+        "path": "apps/mathcrew/package.json",
+        "sha256": "b9ac10d8eab81481d9f496143fa832e023547773cb453697c10621d512538db0"
+      },
+      {
+        "path": "packages/mathematics-core/package.json",
+        "sha256": "c5e968d6f47873934166ba7342ad7764c92f7c7582d6bd63ddf413b91adf187a"
+      },
+      {
+        "path": "packages/mathematics-core/package-lock.json",
+        "sha256": "cbbff3fb22e176749673a36a52725399a3601019328d092080648cea23329417"
+      },
+      {
+        "path": "packages/curriculum/package.json",
+        "sha256": "4317699ff7818ba5f353939d64225f58cf5ef4dbc50bf489a0dbc95899092b3a"
+      },
+      {
+        "path": "packages/curriculum/bun.lock",
+        "sha256": "a52cb658ab1cf6a721e40c0a769df035dec8992c97faa46dd5e3568d8b4c07b3"
+      },
+      {
+        "path": "examples/clinic-workbench/package.json",
+        "sha256": "afd97ad8f0a00dbf21e7c500a073dbfac90288c550e11e16957fcbab942ca039"
+      },
+      {
+        "path": "examples/clinic-workbench/bun.lock",
+        "sha256": "1a36ec99d3fb9ee83246db7532235b878221d971f790eafb9f2bbdea998f9e9d"
+      },
+      {
+        "path": "apps/academy/package.json",
+        "sha256": "87fb94ea8c9e5317f99f1b7146577410137e26b1df1cd2ac38f6847d4f02d51f"
+      },
+      {
+        "path": "apps/academy/gang-a/package.json",
+        "sha256": "29b52ae2ae637db8a37d78eff33a03bf10161a2875c8e5fa541602e5d3bbd540"
+      },
+      {
+        "path": "apps/academy/gang-a/bun.lock",
+        "sha256": "8e83adfc345d885345ffb18007184ab31c5bbad03d4796c1a9a981e5cc612efb"
+      },
+      {
+        "path": "apps/mathcrew/package.json",
+        "sha256": "b9ac10d8eab81481d9f496143fa832e023547773cb453697c10621d512538db0"
+      }
+    ],
+    "dependencyTransport": "task-local copy from exact-head delivery after manifest equality; no install scripts or network",
+    "nativeEffects": 0,
+    "modelRequests": 0
+  },
+  "evidenceCustody": {
+    "requiredLegacyReceiptOwner": "hermes-harness-engineering",
+    "meaning": "Legacy evidence custody field only; actual reviewer is native Codex and native Hermes review is not claimed."
+  },
+  "nativePermissionGranted": false,
+  "acceptanceDecision": null,
+  "wholeGoalAcceptance": false,
+  "originalReviewedHead": "197058fdb92dd1c8802081371a429e9a5e00b0bb",
+  "successorBinding": {
+    "parents": [
+      "31bc2920ecc13e7f4df68437fd7a7c1ad9766373",
+      "197058fdb92dd1c8802081371a429e9a5e00b0bb"
+    ],
+    "treeIdentical": true,
+    "sourceChangesSinceReview": 0,
+    "originalResultRef": "https://github.com/park-kyungchan/education-platform/blob/6e7696724404f3b51277d44a19c6628068ae43ee/native-review-results/197058fdb92dd1c8802081371a429e9a5e00b0bb.json",
+    "originalResultSha256": "91dfa06041d14ec251e814a984aae54ca08dc71a27a25bc5840b6a94b8383a7d",
+    "bindingAuthor": "/root"
+  }
+}
