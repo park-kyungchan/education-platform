@@ -3,7 +3,7 @@ import {constants,openSync,fstatSync,lstatSync,readSync,closeSync,realpathSync} 
 import {resolve,dirname} from 'node:path';
 import {createHash} from 'node:crypto';
 const owner=resolve(import.meta.dir,'../../..'),boundary=resolve(owner,'runtime/product-control');
-const files={canonical:resolve(boundary,'native-product-os.py'),io:resolve(boundary,'running-p1/readonly_io.py'),root:resolve(boundary,'running-p1/root_observer.py'),native:resolve(boundary,'running-p1/native_observer.py'),orchestrator:resolve(import.meta.dir,'running-p1-observer.ts'),bootstrap:resolve(import.meta.path)};
+const files={canonical:resolve(boundary,'native-product-os.py'),io:resolve(boundary,'running-p1/readonly_io.py'),root:resolve(boundary,'running-p1/root_observer.py'),native:resolve(boundary,'running-p1/native_observer.py'),orchestrator:resolve(import.meta.dir,'running-p1-observer.ts'),bootstrap:resolve(import.meta.path),sshBoundary:resolve(boundary,'running-p1/local_ssh_boundary.py'),osBoundary:resolve(boundary,'running-p1/local-ssh-os-boundary.json')};
 const graphPath=resolve(boundary,'running-p1/source-graph.json'),hash=(v:Uint8Array|string)=>createHash('sha256').update(v).digest('hex');
 function need(v:unknown,code:string):asserts v{if(!v)throw Error(code);}
 const image=(s:ReturnType<typeof fstatSync>)=>[s.dev,s.ino,s.mode,s.uid,s.gid,s.nlink,s.size,s.mtimeMs,s.ctimeMs].join(':');

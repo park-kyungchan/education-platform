@@ -26,6 +26,7 @@ def observe_native(request):
  need(observe_original_pg_endpoint(c,before_pg,endpoint)==endpoint,'running_pg_endpoint_drift')
  activation=admission_metadata(read_regular(LEGACY+'/activation-admission.json',10000,20000),c['taskId'],digest)
  migration=admission_metadata(read_regular(LEGACY+'/migration-admission.json',10000,20000),c['taskId'],digest,migration=True)
+ need(observe_original_pg_endpoint(c,before_pg,endpoint)==endpoint,'running_pg_final_endpoint_drift')
  need(identity(manager['pid'])==before_manager and identity(child['pid'])==before_pg and parent_pid(child['pid'])==manager['pid'],'running_pg_final_birth_drift')
  for pid in [manager['pid'],child['pid']]:
   owner=os.stat('/proc/'+str(pid),follow_symlinks=False);need(owner.st_uid==10000 and owner.st_gid==10000,'native_process_final_owner_changed')

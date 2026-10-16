@@ -33,7 +33,7 @@ def refuses(label,run):
 result=observe();assert result['running'] is True and result['nativeGatedReceiptSha256']!=result['nativeRunningReceiptSha256'];checks.append('valid-pre-retirement-running-observation-with-distinct-gated-running-pins')
 assert result['nativeActivation']['operations']==sorted(activation['operations']) and result['nativeActivation']['retired'] is False;checks.append('old-unretired-Bun-and-consumed-migration-permissions-observed-without-retirement')
 assert result['postgresEndpoint']['filesystem']['ctimeNs']=='1780000000000000001' and result['postgresEndpoint']['filesystem']['inode']=='888' and result['postgresEndpoint']['kernelInode']=='777';checks.append('precise-decimal-metadata-and-distinct-inode-spaces')
-assert finishes and endpoints;checks.append('before-after-descriptor-and-canonical-endpoint-comparator-used')
+assert finishes and len(endpoints)==2;checks.append('before-after-and-final-descriptor-canonical-endpoint-comparator-used')
 for key,value in [('phase','exited'),('generation','b'*24),('expectedArgv',['/foreign']),('identity',{**pg,'startTicks':'3'})]:
  files[path]=wire({**running,key:value});refuses('receipt-'+key+'-drift',observe);files[path]=receipt_raw
 bad=copy.deepcopy(request);bad['authority']['nativeReceiptSha256']=digest(receipt_raw);refuses('running-hash-cannot-replace-historical-gated-authority',lambda:observe(bad))
@@ -42,6 +42,15 @@ live[101]={**manager,'startTicks':'changed'};refuses('manager-birth-drift',obser
 ns['parent_pid']=lambda pid:999;refuses('foreign-PG-parent',observe);ns['parent_pid']=lambda pid:101
 ns['observe_original_pg_endpoint']=lambda *args:(_ for _ in ()).throw(RuntimeError('rebound'));refuses('unobservable-or-rebound-endpoint',observe);ns['observe_original_pg_endpoint']=lambda c,p,e:e
 files[legacy+'/activation-admission.json']=wire({**activation,'operations':['unknown:credential']});refuses('unknown-admission-operation-held',observe);files[legacy+'/activation-admission.json']=wire(activation)
+original_read=ns['read_regular'];permission_state={'rebound':False}
+def permission_rebind_reader(path,*args):
+ value=original_read(path,*args)
+ if path==legacy+'/migration-admission.json':permission_state['rebound']=True
+ return value
+ns['read_regular']=permission_rebind_reader
+ns['observe_original_pg_endpoint']=lambda c,p,e:(_ for _ in ()).throw(RuntimeError('endpoint rebound during permission metadata read')) if permission_state['rebound'] else e
+refuses('endpoint-rebind-during-permission-read-refused-at-final-boundary',observe)
+ns['read_regular']=original_read;ns['observe_original_pg_endpoint']=lambda c,p,e:e
 ns['finish']=lambda:(_ for _ in ()).throw(RuntimeError('drift'));refuses('named-file-parent-drift-held',observe)
 # Source scopes exclude lifecycle primitives and business/native-module imports.
 for file in ['native_observer.py','root_observer.py']:
