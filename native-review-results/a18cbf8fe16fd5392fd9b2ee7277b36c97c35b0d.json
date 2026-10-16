@@ -1,0 +1,65 @@
+{
+  "schema": "agent-platform.independent-review-result.v1",
+  "recordClass": "verification",
+  "binding": {
+    "codeOwner": "agent-platform",
+    "evidenceOwner": "codex-harness-engineering",
+    "scope": "canonical-source-ci-quality"
+  },
+  "headSha": "a18cbf8fe16fd5392fd9b2ee7277b36c97c35b0d",
+  "reviewedTreeSha": "cf94ce39515e9ae7c69eac0fb15683af6d725284",
+  "reviewedSourceManifestSha256": "05a3fe39ff0e3cf5019d0323a619dfaa3c570f5457d9ad1b25d0dd775cbc0950",
+  "reviewer": {
+    "runtime": "native-codex",
+    "taskId": "ACADEMY-CONTROL-CANONICAL-REVIEW"
+  },
+  "author": {
+    "runtime": "native-codex",
+    "taskId": "ACADEMY-PRODUCT-CONTROL-SOURCE-ADOPTION"
+  },
+  "conclusion": "pass",
+  "unresolvedFindings": 0,
+  "reviewedAtUtc": "2026-10-16T01:08:29.720Z",
+  "reviewerContext": {
+    "pane": "w3:p9",
+    "terminal": "term_65deabbfae62e9",
+    "context": "fresh-independent-native-CLI",
+    "nativeSessionId": "unavailable; not inferred",
+    "identityMeaning": "SOURCE Task IDs are logical attribution, not native allocations"
+  },
+  "reviewSource": "Actual settled native reviewer response, read back by Root; serialized without changing the verdict.",
+  "baseline": "f8bb222963e61314be994e7ed233438963773348",
+  "findings": [],
+  "sourceFilesReviewed": 15,
+  "fiveSourcesExactV2": true,
+  "fictionalFixturesOnlyImportPathRemap": true,
+  "frozenV1V2AndOriginalHoldPreserved": true,
+  "actualChecks": {
+    "bunTests": 33,
+    "pythonPreservation": 82,
+    "pythonEndpoint": 11,
+    "rootIntegrationAndRuntime": 13,
+    "typechecks": "Root/Academy/owner/targeted PASS",
+    "syntaxAndImportBuilds": "Python syntax, product control and four Academy entrypoint no-execution import builds PASS",
+    "sourceHashesAndDiff": "PASS"
+  },
+  "limits": [
+    "Full root check not rerun: project-private Node26.7.0 absent. Broader owner suite not independently rerun.",
+    "No actual RUNNING P1, permission retirement, ABI qualification, native publication, pointer/app/tunnel effects, model evaluation or Acceptance.",
+    "No source edits/installs/network/native execution/store/trust actions performed by reviewer."
+  ],
+  "nativeReviewTranscript": "› Fresh independent source review. Do not assume prior re…\n    architecture/source-map.json:181:    \"existingPrivileg…\n    provenance/adaptations.json:6:      \"reason\": \"select …\n    + 52 lines (^t to expand)\n\n• Ran bun run typecheck; bun run verify:imports; bun test …\n  └  0 fail\n     82 expect() calls\n    Ran 13 tests across 2 files. [1178.00ms]\n    + 23 lines (^t to expand)\n\n• Ran bun check-entrypoints.ts; bun ../../node_modules/typ…\n  └ {\"scope\":\"native-academy-current-entrypoint-import-clo…\n    + 1 line (^t to expand)\n\n• The five source files match frozen v2 byte for byte. The\n  three fixture diffs contain only import or file-lookup\n  remaps, and the frozen v1 files and original HOLD review\n  still match their recorded hashes.\n\n  The 33 Bun tests and 82+11 Python checks pass, along with\n  owner and targeted typechecks, Python syntax checks, and\n  the product-control import build without execution. Root\n  and Academy integration checks are finishing.\n\n• Ran cat provenance/adaptations.json; cat tests/integrati…\n  └  }finally{rmSync(root,{recursive:true,force:true});}\n    });\n    project_private_Node26_7_0_present=False\n    + 352 lines (^t to expand)\n\n• Zero actionable findings — PASS_SOURCE_ONLY. Fresh review\n  of all 15 files for SOURCE Task ACADEMY-CONTROL-\n  CANONICAL-REVIEW, author SOURCE Task ACADEMY-PRODUCT-\n  CONTROL-SOURCE-ADOPTION.\n\n  Exact reviewed binding:\n\n  • HEAD: 38076613d5e2d21f2b53498581ccadded61dd88a\n\n  • Tree: cf94ce39515e9ae7c69eac0fb15683af6d725284\n\n  • Baseline: f8bb222963e61314be994e7ed233438963773348\n\n  • Source adoption record (apps/academy/dc-gang-a/runtime/\n    product-control/source-adoption.json) SHA256:\n    3cab691a76c9b1f813b45033eecd588a82596938b217090c4e201f3\n    13f763bd9\n\n  All five source files equal frozen v2 bytes. All three\n  fixtures differ only in imports/path lookup. Supplied\n  manifest, independent-review and author-proof hashes\n  match; all 38 v2 files, 27 v1 files and the original HOLD\n  review retain their recorded hashes.\n\n  Existing Academy owner reuse, TS/Python boundaries,\n  package routing and provenance pins are consistent. No\n  private real/derived contract, authority, credential or\n  store bodies, new scheduler/allocation, or automatic\n  native effects were found.\n\n  Fresh validation passed: 33 Bun tests, Python 82+11\n  checks, 13 root integration/runtime tests, root/Academy/\n  owner/targeted typechecks, Python syntax, product-control\n  and four Academy entrypoint import builds without\n  execution, imported-source hashes and diff checks.\n\n  Limits: full root check was not run; project-private\n  Node26.7.0 is absent, and no substitute was used. The\n  broader owner suite was not rerun. This verdict grants no\n  RUNNING P1 qualification, retirement, compiler ABI\n  qualification, publication, pointer/app/tunnel effects,\n  evaluation or Acceptance. status:postgres remains absence\n  evidence only.\n\n  No source edits, installs, network access, native\n  execution or store/trust actions were performed.\n\n  Worked for 2m 13s • 10:06\n\n\n› Ask Codex to do anything\n\n  GPT-6.1-Sol high · ~/code/worktrees/academy-product-cont…\n  ? for shortcuts\n",
+  "reviewReuse": {
+    "recordClass": "AccountableLeadReviewedTreeSuccessorBinding",
+    "boundBy": "/root",
+    "boundAtUtc": "2026-10-16T01:09:11.917Z",
+    "priorIndependentHead": "38076613d5e2d21f2b53498581ccadded61dd88a",
+    "priorIndependentResultSha256": "149a54d434d039ed481e75acac4ab6cbce202e2ddc5eadbf71916a38ece37a5f",
+    "currentDeliveryBaseline": "65dbc3b25c257e1baf82f9f88617c26c84f40195",
+    "identicalTree": "cf94ce39515e9ae7c69eac0fb15683af6d725284",
+    "identicalManifest": "05a3fe39ff0e3cf5019d0323a619dfaa3c570f5457d9ad1b25d0dd775cbc0950",
+    "currentUnresolvedFindings": 0,
+    "reviewerRerun": false,
+    "meaning": "Fresh independent native CLI reviewed exact380 source. Cherry-pick onto freshly synchronized main yields identical tree; Lead binds prior independent tree review to this delivery commit. No runtime verification or new independent execution claimed."
+  }
+}
