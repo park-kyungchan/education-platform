@@ -1,0 +1,184 @@
+{
+  "schema": "agent-platform.independent-review-result.v1",
+  "recordClass": "verification",
+  "binding": {
+    "codeOwner": "agent-platform",
+    "evidenceOwner": "codex-harness-engineering",
+    "scope": "canonical-source-ci-quality"
+  },
+  "headSha": "f8bb222963e61314be994e7ed233438963773348",
+  "reviewedTreeSha": "7ec8c69e8637ce969f03958dd95be41cff7d349f",
+  "reviewer": {
+    "runtime": "native-codex",
+    "taskId": "EDUCATION-SOURCE-INDEPENDENT-REVIEW"
+  },
+  "author": {
+    "runtime": "native-codex",
+    "taskId": "INTERRUPTION-RECOVERY-AND-PRESELECTION"
+  },
+  "conclusion": "pass",
+  "unresolvedFindings": 0,
+  "reviewedAtUtc": "2026-10-16T00:12:26Z",
+  "reviewerContext": {
+    "realNativeSessionID": "unknown",
+    "herdrReviewPane": "w3p6",
+    "identityMeaning": "Supplied SOURCE logical Task IDs, not native allocations; continuing review pane previously supplied by Root."
+  },
+  "baseline": {
+    "headSha": "df7793a4d26b73a57ad53405e2d817bd908ceb16",
+    "treeSha": "a50dfcf4f7c95c23963f7fb33258f41525208ab8",
+    "networkFetchPerformed": false
+  },
+  "priorBinding": {
+    "headSha": "2eb2a1b5aa5398c84992c436c0b055eb1ecdfe8a",
+    "reviewedTreeSha": "98853f1b1970efd828027526a8f691f6db3c2f5d",
+    "artifactPath": "/tmp/education-source-review-2eb2-result-20261016.json",
+    "artifactSha256": "5f1b306128046f42b992ca00c6702a16a65ab01df536d3675ff7e4e8126f05b7",
+    "meaning": "Prior full source review and inspected successor chain are explicitly carried forward to f8bb after independent review of all seven changed files, with both later material findings independently reassessed and source-remediated. The old PASS is preserved as a historical review observation and does not override the later FAIL or substitute for current closure proof.",
+    "historicalObservations": [
+      {
+        "kind": "independent-source-review",
+        "headSha": "2eb2a1b5aa5398c84992c436c0b055eb1ecdfe8a",
+        "conclusion": "pass",
+        "source": "Preserved prior artifact."
+      },
+      {
+        "kind": "later-automated-review",
+        "headSha": "2eb2a1b5aa5398c84992c436c0b055eb1ecdfe8a",
+        "materialP2CommentIds": [
+          "4289414859",
+          "4289414868"
+        ],
+        "source": "Root-reported; no network read."
+      },
+      {
+        "kind": "later-exact-head-status",
+        "headSha": "2eb2a1b5aa5398c84992c436c0b055eb1ecdfe8a",
+        "status": "FAIL",
+        "statusId": "56482735175",
+        "merge": "Refused by unresolved-thread policy; no merge reported.",
+        "source": "Root-reported; not independently queried."
+      }
+    ]
+  },
+  "successor": {
+    "filesChanged": 7,
+    "insertions": 51,
+    "deletions": 3,
+    "authorCommits": [
+      "7e3eb97c7528cdcd08766903407021b64a4de92b",
+      "33dda6598adcb6c62c7aef53df83c7007462994d"
+    ],
+    "matchesIsolatedAuthorFiles": true,
+    "paths": [
+      "apps/academy/dc-gang-a/src/academy/examSelection.ts",
+      "apps/academy/dc-gang-a/tests/academy/examSelection.test.ts",
+      "apps/academy/gang-a/.github/workflows/ci.yml",
+      "apps/mathcrew/.github/workflows/ci.yml",
+      "examples/clinic-workbench/.github/workflows/check.yml",
+      "provenance/adaptations.json",
+      "tests/runtime.test.ts"
+    ]
+  },
+  "fixedCommentIDs": [
+    {
+      "id": "4289414859",
+      "severity": "P2",
+      "disposition": "source-remediated",
+      "proof": "Mathcrew standalone setup-bun now selects 1.4.3, matching its package/runtime assertion. Adjacent clinic and gang-a templates also select 1.4.3. Enumeration finds exactly four maintained nested templates; parsed actual YAML regression checks all four, including curriculum. Original imported hashes and updated adaptation hashes verify."
+    },
+    {
+      "id": "4289414868",
+      "severity": "P2",
+      "disposition": "source-remediated",
+      "proof": "After complete ancestry is established, canonical JSON of each book_edition root SourceKey (namespace plus literalKey) must be equal before producing a known proposal. Different literal keys within one namespace and equal literal keys across different namespaces are rejected. Single-edition 12/12 remains proposal-only; missing ancestry stays unknown. Coverage/source verification/teacher acceptance and no-membership boundaries are unchanged."
+    }
+  ],
+  "actualChecks": [
+    {
+      "command": "bun test ./tests/runtime.test.ts",
+      "exitCode": 0,
+      "passed": 7,
+      "failed": 0,
+      "assertions": 55,
+      "scope": "Actual standalone YAML pins, invoking Bun routing, preserved Node/npm reference, source-only Actions bootstrap policy and PATH append fixtures."
+    },
+    {
+      "command": "bun test ./tests/academy/examSelection.test.ts ./tests/academy/examPreselectionView.test.ts",
+      "cwd": "apps/academy/dc-gang-a",
+      "exitCode": 0,
+      "passed": 16,
+      "failed": 0,
+      "assertions": 105
+    },
+    {
+      "command": "bun run typecheck",
+      "cwd": ".",
+      "exitCode": 0
+    },
+    {
+      "command": "bun run typecheck",
+      "cwd": "apps/academy/dc-gang-a",
+      "exitCode": 0
+    },
+    {
+      "command": "bun run verify:imports",
+      "exitCode": 0,
+      "unchangedImports": 852,
+      "explicitAdaptations": 34
+    },
+    {
+      "command": "bun ci/verify-projection.ts",
+      "exitCode": 0
+    },
+    {
+      "command": "git ls-files '*.yml' '*.yaml'",
+      "exitCode": 0,
+      "trackedRootWorkflows": 1,
+      "trackedNestedTemplates": 4
+    },
+    {
+      "command": "git diff --exit-code <each author commit> HEAD -- <its respective successor paths>",
+      "exitCode": 0
+    },
+    {
+      "command": "git diff --exit-code 2eb2a1b5aa5398c84992c436c0b055eb1ecdfe8a HEAD -- .github/workflows/source.yml ci src/runtime.ts scripts/setup.ts package.json bun.lock",
+      "exitCode": 0
+    },
+    {
+      "command": "git diff --check 2eb2a1b5 HEAD",
+      "exitCode": 0
+    },
+    {
+      "command": "bun --no-env-file src/check.ts",
+      "cwd": "apps/mathcrew",
+      "exitCode": 1,
+      "status": "incomplete-prerequisite",
+      "reason": "Bun1.4.3 assertion completed, then ENOENT for absent dist/index.html. Build output was not generated during this review. This direct check is not recorded as passing."
+    },
+    {
+      "command": "git status --porcelain; git rev-parse HEAD HEAD^{tree}",
+      "exitCode": 0,
+      "workingTreeClean": true,
+      "headAndTreeUnchanged": true
+    }
+  ],
+  "currentFindingCount": 0,
+  "findings": [],
+  "verdict": "Pass for this exact source successor: both reported material P2s are source-remediated and no current actionable findings remain. Prior reviewed unchanged scope plus the independently reviewed seven-file delta binds the candidate against the recorded baseline. Review-thread resolution, publication and PR update remain Root-owned.",
+  "limits": [
+    "Historical 2eb PASS, later Root-reported 2eb FAIL, and this f8bb source PASS are distinct observations. No remote status, PR head, thread resolution or merge was queried or changed.",
+    "Root Actions and trust/auth inputs are byte-unchanged. Bun1.4.2 remains limited to the existing source-only Actions setup bootstrap via GITHUB_PATH and separate generated native-review JavaScript compatibility job. Maintained checks require Bun1.4.3; actual old executable and real Actions execution were not tested.",
+    "All four nested templates were inspected and checked as source YAML; standalone hosted CI executions were not performed. Direct Mathcrew source check remains incomplete because its prior build output is absent.",
+    "Canonical source-key equality establishes declared edition identity only; original source inventory and item-to-unit coverage remain unknown. Proposals confer no source verification, teacher acceptance or permission to select/create final exam membership.",
+    "No unrelated full portfolio repeat. Node26.7.0/npm11.17.0 mathematics execution and full integration remain unverified; Bun parity DEFERRED, human semantic disposition PENDING and canonical application NOT_PERFORMED.",
+    "No source/lock edits, installs, network, native business/database actions, Goal/evaluation operations, pushes, status publication, policy changes or thread resolution performed. Only local synthetic fixtures and the requested review artifact were written."
+  ],
+  "reviewedSourceManifestSha256": "40d2a7a5b2bff7b927611a09b9e1dca7107828ebb3a264861cc80ff1c196475d",
+  "manifestDerivation": {
+    "method": "Canonical deriveReviewedSourceManifest over git ls-tree -r -t -z --full-tree of exact candidate tree",
+    "entryCount": 1148,
+    "blobCount": 998,
+    "validatorSha256": "d4795b86a387b126face7039f0c6dcdfb5ca6034c05e6233bf2d848d7a208986"
+  }
+}
