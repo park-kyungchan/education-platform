@@ -1,7 +1,6 @@
-/** Server-only official SDK transport. Never import into a browser entrypoint. */
+/** Server-only source adapter. Configured process launch stays held; never import into a browser. */
 import {compareScopeMetadata} from '../scope-compatibility.ts';
-import {Client} from '@modelcontextprotocol/client';
-import {StdioClientTransport} from '@modelcontextprotocol/client/stdio';
+import type {Client} from '@modelcontextprotocol/client';
 import {open,realpath} from 'node:fs/promises';
 import {constants} from 'node:fs';
 import {isAbsolute} from 'node:path';
@@ -25,6 +24,23 @@ export interface McpLaunchConfiguration {
   bundle:PinnedFile;
   source:{mode:'native-readonly';bridge:PinnedFile}|{mode:'synthetic';snapshot:PinnedFile};
 }
+/** Own every launch value synchronously; no caller object survives a pinning await. */
+export function snapshotMcpLaunchConfiguration(value:McpLaunchConfiguration):Readonly<McpLaunchConfiguration>{
+  let configuration:McpLaunchConfiguration;
+  try{configuration=clone(value);}catch{throw Error('mcp_launch_configuration_invalid');}
+  if(!configuration||Object.keys(configuration).sort().join(',')!=='bundle,executable,source'||!configuration.source||!['native-readonly','synthetic'].includes(configuration.source.mode))throw Error('mcp_launch_configuration_invalid');
+  const source=configuration.source;
+  if(Object.keys(source).sort().join(',')!==(source.mode==='native-readonly'?'bridge,mode':'mode,snapshot'))throw Error('mcp_launch_source_invalid');
+  for(const file of [configuration.executable,configuration.bundle,source.mode==='native-readonly'?source.bridge:source.snapshot]){
+    if(!file||Object.keys(file).sort().join(',')!=='path,sha256'||typeof file.path!=='string'||!isAbsolute(file.path)||typeof file.sha256!=='string'||!/^[a-f0-9]{64}$/.test(file.sha256))throw Error('mcp_launch_pin_invalid');
+  }
+  return frozen(configuration);
+}
+/** Missing or malformed count metadata is unknown, never an observed zero. */
+export function sourceQuestionCount(value:unknown):number|null{
+  const count=typeof value==='number'?value:typeof value==='string'&&/^[0-9]{1,16}$/.test(value)?Number(value):null;
+  return typeof count==='number'&&Number.isSafeInteger(count)&&count>=0?count:null;
+}
 /** Pin bytes using a bounded descriptor, no symlink, implicit discovery, dotenv or credential access. */
 async function pinned(file:PinnedFile,max:number){
   if(!file||Object.keys(file).sort().join(',')!=='path,sha256'||!isAbsolute(file.path)||!/^[a-f0-9]{64}$/.test(file.sha256)||await realpath(file.path)!==file.path)throw Error('mcp_launch_pin_invalid');
@@ -37,22 +53,33 @@ async function pinned(file:PinnedFile,max:number){
 }
 export async function createMcpSourcePort(configuration:McpLaunchConfiguration|undefined,projection:Projection):Promise<SourcePort>{
   if(!configuration)return {mode:'unavailable',async scope(){return {mode:'unavailable',availability:'unavailable',context:null,categories:[],labels:[],limitations:['Academy read adapter is not configured.']}},async find(){throw Error('academy_unavailable')},async review(){throw Error('academy_unavailable')}};
-  if(Object.keys(configuration).sort().join(',')!=='bundle,executable,source'||!['native-readonly','synthetic'].includes(configuration.source.mode))throw Error('mcp_launch_configuration_invalid');
+  const owned=snapshotMcpLaunchConfiguration(configuration);
   if(projection.owner!=='math-research-module'||projection.revision!=='07edb2dea2e5997aea4318f0fa2efa21dde633df'||!projection.manifest.length)throw Error('research_projection_pin_required');
-  await pinned(configuration.executable,160*1024*1024);await pinned(configuration.bundle,32*1024*1024);
-  const source=configuration.source;if(Object.keys(source).sort().join(',')!==(source.mode==='native-readonly'?'bridge,mode':'mode,snapshot'))throw Error('mcp_launch_source_invalid');const selected=source.mode==='native-readonly'?source.bridge:source.snapshot;
+  await pinned(owned.executable,160*1024*1024);await pinned(owned.bundle,32*1024*1024);
+  const source=owned.source,selected=source.mode==='native-readonly'?source.bridge:source.snapshot;
   await pinned(selected,4*1024*1024);
-  const args=['--no-env-file',configuration.bundle.path,...(source.mode==='native-readonly'?['--native-bridge',selected.path,'--native-bridge-sha256',selected.sha256]:['--label-snapshot',selected.path,'--label-sha256',selected.sha256])];
-  const transport=new StdioClientTransport({command:configuration.executable.path,args,env:{PATH:'/usr/bin:/bin'},stderr:'pipe'});
-  transport.stderr?.on('data',()=>{});
-  const client=new Client({name:'month-end-readonly-source-port',version:'1.0.0'});
+  // The SDK only launches paths; verified descriptors cannot be handed to it.
+  // No last-second reread/copy makes those paths immutable at execution. Keep
+  // every configured subprocess mode held until a native owner supplies a sound
+  // verified-artifact execution boundary. Pin reads are diagnostics, not admission.
+  throw Error('mcp_verified_execution_boundary_unavailable');
+}
+export type SyntheticMcpClient=Pick<Client,'listTools'|'callTool'|'close'>;
+/** Explicit in-process engineering seam; main.ts never admits it from JSON/config. */
+export async function createSyntheticMcpSourcePort(client:SyntheticMcpClient,projection:Projection):Promise<SourcePort>{
+  if(!client||typeof client.listTools!=='function'||typeof client.callTool!=='function'||typeof client.close!=='function')throw Error('synthetic_mcp_client_required');
+  if(projection.owner!=='math-research-module'||projection.revision!=='07edb2dea2e5997aea4318f0fa2efa21dde633df'||!projection.manifest.length)throw Error('research_projection_pin_required');
+  const owned=Object.freeze({listTools:client.listTools.bind(client),callTool:client.callTool.bind(client),close:client.close.bind(client)});
+  return createConnectedMcpSourcePort(owned,frozen(clone(projection)),'synthetic');
+}
+async function createConnectedMcpSourcePort(client:SyntheticMcpClient,projection:Projection,mode:'synthetic'|'native-readonly'):Promise<SourcePort>{
   let refused=false,closed=false,tail:Promise<unknown>=Promise.resolve();
   const contexts=new Map<string,SourceContext>(),observationContexts=new Map<string,SourceContext>(),labels=new Map<string,{label:AcademyTypeLabel;mcpId:string}>(),visited=new Set<string>(),labelCapabilities=new Map<string,boolean|null>(),cursors=new Map<string,{context:SourceContext;pat:string;page:number;offset:number;binding:string}>();
   const pins=clone(projection.manifest),revision=projection.revision;
   const binding=(context:SourceContext|null,study:SourceFindRequest['study']|null=null,intent:SourceFindRequest['intent']|null=null)=>({schemaVersion:'academy.assessment-binding/1',research:{owner:'math-research-module',revision,pins:pins.map(p=>({path:p.path,sha256:p.sha256}))},sourceContext:context?{owner:context.owner,sourceRevision:context.sourceRevision,scopeId:context.scopeId,edition:context.edition,unit:context.unit,...(context.observationHash?{observationHash:context.observationHash}:{}),...(context.sourceHandle?{sourceHandle:context.sourceHandle}:{}),...(context.observedAt?{observedAt:context.observedAt}:{})}:null,study:study?{scope:{researchTypeIds:study.scope.researchTypeIds,researchRevision:study.scope.researchRevision,edition:study.scope.edition,unit:study.scope.unit},studied:study.studied,summary:study.summary,evidenceNotes:study.evidenceNotes,attribution:study.attribution,acceptance:study.acceptance}:null,intent:intent?{axes:Object.fromEntries(axes.map(axis=>[axis,intent.axes[axis]])),notes:intent.notes}:null});
   const known=(c:SourceContext)=>{if(!c.sourceHandle||!same(contexts.get(c.sourceHandle),c))throw Error('exact_adapter_source_context_required');};
   const prepared=(r:SourceFindRequest|SourceReviewRequest)=>{known(r.context);if(r.study?.studied!==true||r.study.attribution!=='teacher-reported'||r.study.acceptance!==false||r.study.scope.researchRevision!==revision||!r.study.scope.researchTypeIds.length||r.study.scope.researchTypeIds.some(id=>!projection.types.some(t=>t.id===id))||axes.some(a=>typeof r.intent?.axes?.[a]!=='string'))throw Error('exact_research_study_intent_required');const compatibility=compareScopeMetadata(r.study.scope,r.context);if(compatibility.state==='conflict')throw Error('exact_research_study_intent_required');return compatibility;};
-  const close=async()=>{if(closed)return;closed=true;await client.close().catch(()=>{});await transport.close().catch(()=>{});contexts.clear();observationContexts.clear();labels.clear();visited.clear();labelCapabilities.clear();cursors.clear();};
+  const close=async()=>{if(closed)return;closed=true;await client.close().catch(()=>{});contexts.clear();observationContexts.clear();labels.clear();visited.clear();labelCapabilities.clear();cursors.clear();};
   const call=(operation:keyof typeof tools,input:Record<string,unknown>)=>{
     const promise=tail.then(async()=>{if(refused||closed)throw Error('mcp_source_requires_owner_resolution');
       try{const result=await client.callTool({name:tools[operation],arguments:input},{timeout:125000,maxTotalTimeout:125000});if(result.isError)throw Error('mcp_read_refused');
@@ -60,15 +87,13 @@ export async function createMcpSourcePort(configuration:McpLaunchConfiguration|u
       }catch{refused=true;await close();throw Error('mcp_source_requires_owner_resolution');}});
     tail=promise.catch(()=>{});return promise;
   };
-  try{await client.connect(transport);const listed=await client.listTools();for(const name of Object.values(tools)){const tool=listed.tools.find(t=>t.name===name);if(!tool||tool.annotations?.readOnlyHint!==true||tool.annotations?.destructiveHint!==false)throw Error('mcp_read_tool_contract_required');}}
+  try{const listed=await client.listTools();for(const name of Object.values(tools)){const tool=listed.tools.find(t=>t.name===name);if(!tool||tool.annotations?.readOnlyHint!==true||tool.annotations?.destructiveHint!==false)throw Error('mcp_read_tool_contract_required');}}
   catch{await close();throw Error('mcp_connection_unavailable');}
   const qualify=async<T>(run:()=>T):Promise<T>=>{try{return run();}catch{refused=true;await close();throw Error('mcp_source_requires_owner_resolution');}};
-  const mode=source.mode;
-  const limitations=['Bounded immutable process observations; currentness and whole inventory remain unknown.','Lexical retrieval is provisional evidence; mathematical suitability and final question selection remain with the teacher.'];
+  const limitations=['Explicit in-process synthetic engineering source; no native observation or process admission.','Lexical retrieval is provisional evidence; mathematical suitability and final question selection remain with the teacher.'];
   const label=(row:Record<string,any>,context:SourceContext):AcademyTypeLabel=>{
     const pat=nativeId(row.nativeId),id=text(row.id),categoryId=text(row.hierarchyId??context.scopeId);if(categoryId!==context.scopeId)throw Error('mcp_label_scope_conflict');
-    const count=typeof row.sourceQuestionCountRaw==='number'?row.sourceQuestionCountRaw:typeof row.sourceQuestionCountRaw==='string'?Number(row.sourceQuestionCountRaw):null;
-    const result={pat_no:pat,name:text(row.labelExact),categoryId,sourceRevision:context.sourceRevision,questionCount:Number.isSafeInteger(count)&&count!>=0?count:null};
+    const result={pat_no:pat,name:text(row.labelExact),categoryId,sourceRevision:context.sourceRevision,questionCount:sourceQuestionCount(row.sourceQuestionCountRaw)};
     const key=JSON.stringify([context.sourceHandle,pat]),prior=labels.get(key);if(labels.size>=20000&&!prior)throw Error('mcp_type_limit');if(prior&&prior.mcpId!==id)throw Error('mcp_type_identity_conflict');labels.set(key,{label:result,mcpId:id});return result;
   };
   return {mode,close,
