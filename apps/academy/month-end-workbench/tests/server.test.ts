@@ -1,0 +1,36 @@
+import { expect, test } from 'bun:test';
+import { createRequestHandler } from '../src/server.ts';
+import { createApplication } from '../src/application.ts';
+import { researchProjection } from '../src/research.ts';
+const origin='http://127.0.0.1:54321';
+function harness(cap=3){const handler=createRequestHandler({applicationFactory:()=>createApplication(researchProjection),allowedOrigin:origin,maxSessions:cap});const req=(path:string,init:RequestInit={})=>handler(new Request(origin+path,{...init,headers:{host:'127.0.0.1:54321',...init.headers}}));return {handler,req};}
+test('loopback Host/Origin/session/action guard and bounded exact routes',async()=>{
+ const {handler,req}=harness();expect((await handler(new Request('http://evil.invalid/api/session',{headers:{host:'evil.invalid'}}))).status).toBe(403);expect((await req('/api/session',{headers:{origin:'https://evil.invalid'}})).status).toBe(403);expect((await req('/api/context')).status).toBe(401);
+ const session=await req('/api/session'),payload=await session.json();const cookie=session.headers.get('set-cookie')!.split(';')[0]!;const headers={cookie,origin,'content-type':'application/json','x-month-end-csrf':payload.data.csrfToken};
+ expect((await req('/api/context',{headers:{cookie}})).status).toBe(200);expect((await req('/api/send',{method:'POST',headers,body:'{}'})).status).toBe(404);expect((await req('/api/review?url=https://evil.invalid',{method:'POST',headers,body:'{}'})).status).toBe(405);expect((await req('/api/scope',{method:'POST',headers:{...headers,'x-month-end-csrf':'wrong'},body:'{}'})).status).toBe(403);expect((await req('/api/scope',{method:'POST',headers,body:JSON.stringify({context:null,command:'write'})})).status).toBe(400);expect((await req('/api/scope',{method:'POST',headers,body:JSON.stringify({context:null,padding:'x'.repeat(33000)})})).status).toBe(413);
+ const unavailable=await req('/api/scope',{method:'POST',headers,body:JSON.stringify({context:null})});expect((await unavailable.json()).data.availability).toBe('unavailable');
+});
+test('bounded sessions never share study and private transport exceptions are sanitized',async()=>{
+ const {req}=harness(1);expect((await req('/api/session')).status).toBe(200);expect((await req('/api/session')).status).toBe(503);
+});
+test('transport exceptions never expose private owner paths or credential text',async()=>{
+ const handler=createRequestHandler({applicationFactory:()=>{const app=createApplication(researchProjection);app.sourceScope=async()=>{throw new Error('private-key SECRET /private/credential-store');};return app;},allowedOrigin:origin});
+ const session=await handler(new Request(origin+'/api/session',{headers:{host:'127.0.0.1:54321'}}));const token=(await session.json()).data.csrfToken,cookie=session.headers.get('set-cookie')!.split(';')[0]!;
+ const response=await handler(new Request(origin+'/api/scope',{method:'POST',headers:{host:'127.0.0.1:54321',origin,cookie,'x-month-end-csrf':token,'content-type':'application/json'},body:'{"context":null}'}));expect(response.status).toBe(400);const body=await response.text();expect(body).not.toContain('SECRET');expect(body).not.toContain('/private/');
+});
+
+test('malformed percent-encoded asset path returns bounded400 without rejecting handler',async()=>{
+ const handler=createRequestHandler({applicationFactory:()=>createApplication(researchProjection),allowedOrigin:origin,frontendRoot:import.meta.dir});
+ const response=await handler(new Request(origin+'/%FF',{headers:{host:'127.0.0.1:54321'}}));expect(response.status).toBe(400);expect((await response.json()).error).toBe('Invalid asset path');
+});
+test('alignment is an exact guarded ephemeral action and state read reports its proposal',async()=>{
+ const {createSyntheticSourcePort}=await import('../src/synthetic.ts');const handler=createRequestHandler({applicationFactory:()=>createApplication(researchProjection,createSyntheticSourcePort()),allowedOrigin:origin});const send=(path:string,init:RequestInit={})=>handler(new Request(origin+path,{...init,headers:{host:'127.0.0.1:54321',...init.headers}}));const session=await send('/api/session'),cookie=session.headers.get('set-cookie')!.split(';')[0]!,token=(await session.json()).data.csrfToken;const headers={cookie,origin,'content-type':'application/json','x-month-end-csrf':token};const post=async(path:string,body:any)=>{const response=await send(path,{method:'POST',headers,body:JSON.stringify(body)});return {status:response.status,...await response.json()};};
+ const scope={researchTypeIds:['HM11-d1-T01'],researchRevision:researchProjection.revision,edition:null,unit:null},study={scope,studied:true,summary:'Teacher studied original and design.',evidenceNotes:[],attribution:'teacher-reported',acceptance:false},intent={axes:{structure:'place value',reasoning:'',representation:'',conditions:'',errors:'',transfer:''},notes:''};await post('/api/study-scope',scope);await post('/api/study',study);await post('/api/intent',intent);const context=(await post('/api/scope',{context:null})).data.context;const page=(await post('/api/review',{context,study,intent,pat_no:'syn-pat-101',cursor:null,limit:2})).data;const ref={lecture_key:page.questions[0].lecture_key,sourceRevision:page.questions[0].sourceRevision};const axes=Object.fromEntries(['structure','reasoning','representation','conditions','errors','transfer'].map(axis=>[axis,{state:axis==='structure'?'supports':'unknown',note:axis==='structure'?'Teacher comparison grounded in inspected synthetic question.':'',questionRefs:axis==='structure'?[ref]:[]}]))
+ const body={context,study,intent,pat_no:'syn-pat-101',axes};expect((await post('/api/alignment',{...body,finalMembership:true})).status).toBe(400);const proposal=await post('/api/alignment',body);expect(proposal.status).toBe(200);expect(proposal.data.acceptance).toBe(false);const state=await send('/api/state',{headers:{cookie}});expect((await state.json()).data.alignmentProposals).toHaveLength(1);
+});
+test('static allowlist and canonical descriptor guard refuse unlisted paths and allowed asset symlinks outside root',async()=>{
+ const {mkdtemp,mkdir,writeFile,symlink,rm}=await import('node:fs/promises');const {tmpdir}=await import('node:os');const {join}=await import('node:path');const dir=await mkdtemp(join(tmpdir(),'month-end-static-'));
+ try{const root=join(dir,'dist');await mkdir(root);await writeFile(join(dir,'sentinel.txt'),'synthetic outside-root sentinel');await writeFile(join(root,'index.html'),'<p>Safe synthetic root</p>');await symlink(join(dir,'sentinel.txt'),join(root,'app.js'));await symlink(join(dir,'sentinel.txt'),join(root,'leaked.txt'));await symlink(dir,join(root,'fonts'));const handler=createRequestHandler({applicationFactory:()=>createApplication(researchProjection),allowedOrigin:origin,frontendRoot:root});const read=(path:string)=>handler(new Request(origin+path,{headers:{host:'127.0.0.1:54321'}}));
+  expect((await read('/')).status).toBe(200);expect((await read('/app.js')).status).toBe(404);expect((await read('/leaked.txt')).status).toBe(404);expect((await read('/fonts/NotoSansKR-variable.woff2')).status).toBe(404);const body=await (await read('/app.js')).text();expect(body).not.toContain('outside-root sentinel');
+ }finally{await rm(dir,{recursive:true,force:true});}
+});

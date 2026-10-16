@@ -1,0 +1,22 @@
+{
+  "name": "@palantirkc/academy-month-end-workbench",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "bun@1.4.3",
+  "scripts": {
+    "start": "bun src/main.ts",
+    "test": "bun test ./tests",
+    "typecheck": "bun ../../../node_modules/typescript/bin/tsc --noEmit -p tsconfig.json",
+    "check": "bun run typecheck && bun run test && bun scripts/verify-projection.ts",
+    "source:verify": "bun scripts/import-research.ts --verify",
+    "source:import": "bun scripts/import-research.ts --write"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/client": "2.3.1"
+  },
+  "devDependencies": {
+    "@modelcontextprotocol/server": "2.3.1",
+    "zod": "4.4.3"
+  }
+}
