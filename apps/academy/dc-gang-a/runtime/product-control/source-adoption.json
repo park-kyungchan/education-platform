@@ -1,0 +1,73 @@
+{
+  "schema": "academy.product-control-canonical-source-adoption.v1",
+  "ontologyVersion": "0.2.0",
+  "owner": "education-platform/apps/academy/dc-gang-a",
+  "recordClass": "SourceOwnerAdoption",
+  "basis": {
+    "recordClass": "AccountableLeadSourceOwnerAdoptionDecision",
+    "decisionSha256": "10fe88b8aff4bd0fccee8cb0fde99b0f15f5eff776ac29ac8c27a445f82f190c",
+    "candidateManifestSha256": "e51c05e56e6a6f44efac65cfba4eb755baab0d25290af0416c0a17741419669d",
+    "independentSourceReviewSha256": "a625b5987838273eaf31c110b8859fc3200912523fe038adf819252393b73a98",
+    "independentReviewVerdict": "PASS_SOURCE_ONLY"
+  },
+  "sourceLineage": {
+    "originalBootstrapSha256": "cdaab87e6517273fe3d316832e649ca4dc424f4d9fe5271ed7a40c8ed393633c",
+    "originalNativeOSSha256": "97cf419d17b6e2bd013f9966a38c86704c103f00272177df402487c3aa6c6b18",
+    "originalControllerSha256": "9599c1f3d6a7be8bde01f6db65528a51002c6e17da0a6fe1be8d9dfc983e0e18",
+    "originalReadbackExtractionSourceSha256": "af83a5ca0cc8d5323f844431eb7b846e21f05b013b01406554755744f63d2dfb",
+    "meaning": "Historical installed source captures are provenance only. This explicit reviewed adoption establishes the maintained source owner; no historical deployed copy or original import manifest is rewritten."
+  },
+  "files": [
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/product-control/product-domain-controller.ts",
+      "reviewedCandidatePath": "source/product-domain-controller.ts",
+      "sha256": "17089bcbe3902af7ea9ad92121e5ec155aad71f88b25c6a0d8d235446a8b15f0",
+      "adoptionChange": "none; exact reviewed source bytes"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/product-control/guarded-io.ts",
+      "reviewedCandidatePath": "source/guarded-io.ts",
+      "sha256": "e2bedd294b1a7d9973e38d63871629539c9b26fb8179d21c659e12b133e0f3de",
+      "adoptionChange": "none; exact reviewed source bytes"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/product-control/product-readback.ts",
+      "reviewedCandidatePath": "source/product-readback.ts",
+      "sha256": "1675cfc59bd4f3ec4c51f77e7dc1d060411f7bc3c796ad85bdce40eee55398ef",
+      "adoptionChange": "none; exact reviewed source bytes"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/runtime/product-control/root-product-bootstrap.py",
+      "reviewedCandidatePath": "source/root-product-bootstrap.py",
+      "sha256": "90434f2c40dcde79cf964d179e943c919295faea737db773946400be8b1c596c",
+      "adoptionChange": "none; exact reviewed source bytes"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/runtime/product-control/native-product-os.py",
+      "reviewedCandidatePath": "source/native-product-os.py",
+      "sha256": "21456f088b6224f8f9e91d2df1d57bb272929347fb88d38f233edb1a5b5380c9",
+      "adoptionChange": "none; exact reviewed source bytes"
+    }
+  ],
+  "fictionalTests": {
+    "typescript": "tests/academy/productControl.test.ts",
+    "python": [
+      "tests/academy/product-control/native_boundary_fixtures.py",
+      "tests/academy/product-control/endpoint_fixtures.py"
+    ],
+    "adaptation": "Import/file lookup paths remapped to canonical source; fixture logic and expectations retained. All OS/proc/receipts/SQL ports are fictional or intercepted; temporary pointer entries are local only."
+  },
+  "runtimeBoundary": {
+    "sourceAdoptionOnly": true,
+    "runtimeOrNativeAdmission": false,
+    "realPrivateContractsCommitted": false,
+    "nativeAuthoritiesCommitted": false,
+    "credentialsProfilesOrStoresCopied": false,
+    "historicalDeployedVersionsMutated": false,
+    "newTaskOrScheduler": false,
+    "sourceCompatibilityLocators": "Fixed native filesystem literals in reviewed source and fake intercepted path tests retain historical protocol guards; they do not copy profile/config/store values or admit effects.",
+    "runningP1Route": "UNIDENTIFIED_UNAVAILABLE_HOLD",
+    "actualQualificationMetadata": "HOLD",
+    "privateRuntimeAcceptance": false
+  }
+}
