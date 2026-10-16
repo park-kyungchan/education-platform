@@ -1,0 +1,41 @@
+{
+  "schema": "academy.running-p1-safe-diagnostic-source-correction.v1",
+  "recordClass": "SourceCorrectionProvenance",
+  "owner": "education-platform/apps/academy/dc-gang-a",
+  "baseline": "2c2540b56c03b84275b8a82c8a3cce28fadf7d8e",
+  "rootSourceDecisionSha256": "32fa045f331bd8a9f48901f88150338648696aa4684ff1fda9ac51b6dc6b3369",
+  "approvedProposalSha256": "3786be5bd8c6ac6cc03bb0eb49280b758bce58301806a5fc1bcbfe13151e8f41",
+  "actualOnce1IndependentReconciliationSha256": "c403e65d41c2f66e78c61c13c11083ab109ed50373d4b3493a03c86be4e8d5a9",
+  "actualOnce1AggregateSha256": "6bd075e268cff521ca27933c34faf5efe8f2d94aad83a3add5e712d1feb044af",
+  "observedDefect": "Existing once driver proves owner API invocation but discards its opaque rejection; no qualified existing independent audit route was found. Source improvement cannot diagnose that historical failure.",
+  "once1State": "CONSUMED_UNKNOWN_0_OR_1_NEVER_REPLAY",
+  "successProjectionChanged": false,
+  "runtimeExportNamesChanged": false,
+  "sourceGraphImages": 8,
+  "originalFiveCanonicalFilesChanged": false,
+  "RootNativePythonAndOriginalPGContractsChanged": false,
+  "diagnosticContract": {
+    "schema": "academy.running-p1-safe-hold.v1",
+    "carrier": "Nonenumerable immutable safeP1Hold data on a fixed-message Error with no stack/cause; consume only checked metadata, never serialize an Error.",
+    "maxSerializedBytes": 4096,
+    "stageMeaning": "Entered local source stage only; primary failure separate from first cleanup failure. Child/ACK/exit never proves SSH exec, auth or target work.",
+    "stderrBytesObservedMeaning": "Bounded bytes observed, possibly partial; cancellation without observed bytes remains UNREAD/null. No stderr text/hash retained.",
+    "cleanupMeaning": "CONFIRMED means that local resource step completed; NOT_REACHED or UNKNOWN remains explicit. No native/remote cleanup claim.",
+    "sourcePinsMeaning": "Hash-shaped declarations from explicit expected input, not proof that source qualification succeeded.",
+    "unknownLegacyFailure": "A caller projection must return explicit UNKNOWN for untagged, malformed or accessor-based errors.",
+    "fieldsForbidden": [
+      "raw exception/message/stack/cause",
+      "raw stderr/stdout",
+      "argv or error paths",
+      "config/credentials",
+      "contract/authority/receipt bodies",
+      "auth/remote/P1 success assertions"
+    ]
+  },
+  "sourceOnly": true,
+  "newActualObservationApproved": false,
+  "nativePermissionGranted": false,
+  "P1Accepted": false,
+  "AcceptanceDecision": null,
+  "independentExactSourceReview": "PENDING"
+}
