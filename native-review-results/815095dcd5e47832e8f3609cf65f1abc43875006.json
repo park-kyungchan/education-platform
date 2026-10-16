@@ -1,0 +1,264 @@
+{
+  "schema": "agent-platform.independent-review-result.v1",
+  "recordClass": "verification",
+  "binding": {
+    "codeOwner": "agent-platform",
+    "evidenceOwner": "codex-harness-engineering",
+    "scope": "canonical-source-ci-quality"
+  },
+  "headSha": "815095dcd5e47832e8f3609cf65f1abc43875006",
+  "reviewedTreeSha": "d347a0af339162dde82105c7e2dc5fcffb3113bc",
+  "reviewedSourceManifestSha256": "38d57802a84745e91f0d0b9f8bb2ec484854ff3b628770a7459bf69e82fde0d4",
+  "reviewer": {
+    "runtime": "native-codex",
+    "taskId": "ACADEMY-P1-ENV-FIX-INDEPENDENT-REVIEW"
+  },
+  "author": {
+    "runtime": "native-codex",
+    "taskId": "ACADEMY-RUNNING-P1-SOURCE"
+  },
+  "conclusion": "pass",
+  "unresolvedFindings": 0,
+  "scope": {
+    "sourceOwner": "education-platform/apps/academy/dc-gang-a",
+    "sourceWorktree": "/home/palantirkc/code/worktrees/academy-running-p1-env-fix-20261016",
+    "logicalWork": {
+      "domainId": "native-harness",
+      "projectId": "codex-harness-engineering",
+      "workId": "ontology-driven-harness-operation",
+      "specRevision": 7,
+      "planRevision": 7
+    },
+    "freshIndependentDeltaFiles": [
+      "apps/academy/dc-gang-a/runtime/product-control/running-p1/README.md",
+      "apps/academy/dc-gang-a/runtime/product-control/running-p1/proposal.json",
+      "apps/academy/dc-gang-a/runtime/product-control/running-p1/source-graph.json",
+      "apps/academy/dc-gang-a/src/academy/product-control/running-p1-observer.ts",
+      "apps/academy/dc-gang-a/tests/academy/runningP1Observer.test.ts"
+    ],
+    "manifest": {
+      "schema": "agent-platform.reviewed-source-manifest.v1",
+      "reviewedTreeSha": "d347a0af339162dde82105c7e2dc5fcffb3113bc",
+      "entryCount": 1178,
+      "blobCount": 1022,
+      "sha256": "38d57802a84745e91f0d0b9f8bb2ec484854ff3b628770a7459bf69e82fde0d4"
+    },
+    "wholeSourceProposal": "PASS_0_SOURCE_ONLY",
+    "method": "Fresh independent five-file source inspection and finding closure plus explicit exact-blob reuse of unchanged prior full fifteen-file review; not a claim of fresh rereview of every repository file.",
+    "nativeIdentityMeaning": "Task IDs are logical source review correlation identifiers. They do not create or authenticate native allocations, credentials, permissions or runtime ownership."
+  },
+  "priorReviewReuse": {
+    "path": "/home/palantirkc/operations/harness-continuation-20261016/completed-reviewers-20261016/academy-p1-26816-independent-review.json",
+    "bytes": 13785,
+    "sha256": "b9479e0cd793b68f4146106f93aedc8898175d9d16de8b2cc9d075d9146b3104",
+    "reviewedHead": "26816efe00cec117015eec4339b388f84072fdd6",
+    "reviewedTree": "2b8c409e54008c56247c0505c82b5618dbfa63be",
+    "priorConclusion": "HOLD with one P2 finding P1-SSH-ENV-001",
+    "priorFullChangedFileCount": 15,
+    "reusedUnchangedPriorReviewFiles": [
+      "apps/academy/dc-gang-a/runtime/product-control/running-p1/native_observer.py",
+      "apps/academy/dc-gang-a/runtime/product-control/running-p1/readonly_io.py",
+      "apps/academy/dc-gang-a/runtime/product-control/running-p1/root_observer.py",
+      "apps/academy/dc-gang-a/scripts/check-product-control.ts",
+      "apps/academy/dc-gang-a/scripts/check-running-p1.ts",
+      "apps/academy/dc-gang-a/src/academy/product-control/running-p1-bootstrap.ts",
+      "apps/academy/dc-gang-a/tests/academy/product-control/running_p1_fixtures.py",
+      "apps/academy/dc-gang-a/tests/academy/product-control/running_p1_io_fixtures.py",
+      "apps/academy/dc-gang-a/tsconfig.product-control.json",
+      "architecture/source-map.json"
+    ],
+    "allOtherCandidateBlobsIdenticalToPriorHead": true,
+    "unchangedBlobCount": 1017,
+    "meaning": "Prior HOLD is historical evidence. This fresh successor decision closes its sole finding and binds all five delta files; the old receipt is not reused as an identical-tree PASS."
+  },
+  "authorEvidence": {
+    "path": "/tmp/academy-running-p1-env-fix-freeze-report-20261016.json",
+    "bytes": 5687,
+    "sha256": "9dea75d0173f910fd12e217c025b588f8088145be8af1c8f678e6e0631cfbdcb",
+    "allFiveFileSizesAndHashesIndependentlyVerified": true,
+    "sourceGraphSha256": "719f06ed8658b261f36ece8055a5a3b0ba0c826bb02939f8953ab626a8fa260b",
+    "observerSha256": "452e8f375549bfaa272f300f18c005f422c81ae3d5dca85efffabd4b63159e05",
+    "bootstrapSha256": "e15a7325f024a528545c16c8f06b41dde7123b0ae130ca2898de8b34c54d19de"
+  },
+  "findings": [],
+  "closure": [
+    {
+      "findingId": "P1-SSH-ENV-001",
+      "priorPriority": "P2",
+      "status": "CLOSED_FOR_EXACT_SOURCE_SUCCESSOR",
+      "sourceEvidence": {
+        "path": "apps/academy/dc-gang-a/src/academy/product-control/running-p1-observer.ts",
+        "line": 58,
+        "explicitEnvironment": {
+          "HOME": "/home/palantirkc",
+          "PATH": "/usr/bin:/bin",
+          "LANG": "C.UTF-8",
+          "LC_ALL": "C.UTF-8"
+        }
+      },
+      "reason": "The sole SSH Bun.spawn now supplies exactly four fixed environment variables; no ambient merge, arbitrary environment/path API, agent/credential bridge or target route was added.",
+      "nativeSSHMeaning": "Absolute /usr/bin/ssh and explicit -F /home/palantirkc/.ssh/config remain unchanged; fixed HOME is a locator only. Existing config/identity/known-host ownership remains native. No SSH_AUTH_SOCK or inherited loader/Python/shell/GitHub/model variable is supplied. Private config-dependent behavior and authentication under this fixed env remain unqualified and held."
+    }
+  ],
+  "independentProof": {
+    "path": "/tmp/academy-p1-env-independent-proof-20261016.json",
+    "bytes": 904,
+    "sha256": "e82bfedab7f54cdc56de7ad177c2247044673e48bfbc4e7c8bcd1e1e6c82eaf5",
+    "schema": "academy.p1-env-independent-ast-proof.v1",
+    "sourceSha256": "452e8f375549bfaa272f300f18c005f422c81ae3d5dca85efffabd4b63159e05",
+    "method": "AST-extracted complete real runReviewedOnce and real strict projection validator with fictional qualification/transport; immutable compiled data URL",
+    "successfulInterceptedSpawns": 1,
+    "events": [
+      "prepare",
+      "recheck",
+      "spawn"
+    ],
+    "repeatedOccurrenceRefused": true,
+    "strictProjectionValidated": true,
+    "exactEnvironment": {
+      "HOME": "/home/palantirkc",
+      "PATH": "/usr/bin:/bin",
+      "LANG": "C.UTF-8",
+      "LC_ALL": "C.UTF-8"
+    },
+    "actualLocalHarmlessBunChildren": 1,
+    "actualBunEnvironmentReplacement": {
+      "keys": [
+        "HOME",
+        "LANG",
+        "LC_ALL",
+        "PATH"
+      ],
+      "sentinelPresent": false
+    },
+    "actualSSH": 0,
+    "actualConfigOrProfileReads": 0,
+    "actualTargets": 0,
+    "P1Accepted": false,
+    "script": {
+      "path": "/tmp/academy-p1-env-independent-proof-20261016.ts",
+      "bytes": 4868,
+      "sha256": "7aae7958bd2f364192e7b3e309c5b3a701d9d17fcb749816f261b98660928b65"
+    },
+    "limits": "Qualification and transport are fictional ports. Real strict projection validator and complete real launch body execute from retained AST source compiled to immutable data URL. One harmless local Bun child verifies real explicit-env replacement; no SSH, credential usability, loader injection or target behavior is tested."
+  },
+  "checks": {
+    "bunVersion": "1.4.3",
+    "targetedTests": {
+      "command": "bun test tests/academy/runningP1Observer.test.ts tests/academy/productControl.test.ts",
+      "cwd": "apps/academy/dc-gang-a",
+      "pass": 50,
+      "fail": 0,
+      "p1": 17,
+      "oldPreservation": 33,
+      "expectCalls": 92,
+      "log": {
+        "path": "/tmp/academy-p1-env-independent-tests-20261016.log",
+        "bytes": 4897,
+        "sha256": "aa3060b761688bc96b9bf364d2dfae42a38b09202433933065748fd5358458c4"
+      }
+    },
+    "ownerCheck": {
+      "command": "bun run check:product-control",
+      "cwd": "apps/academy/dc-gang-a",
+      "exitCode": 0,
+      "strictProductControlTypeScript": "pass",
+      "controllerImportClosureBuildWithoutExecution": "pass",
+      "originalFiveAdoptionHashes": "pass",
+      "pythonSyntaxWithoutProgramExecution": "pass",
+      "oldNativeFictional": 82,
+      "oldEndpointFictional": 11,
+      "newNativeFictional": 17,
+      "newRootFictional": 5,
+      "newDescriptorFictional": 7,
+      "endpointCaptureEquivalence": "pass",
+      "sourceGraphPins": "pass",
+      "log": {
+        "path": "/tmp/academy-p1-env-independent-owner-check-20261016.log",
+        "bytes": 6874,
+        "sha256": "cea17deecaaa0d606bf74d52cfc6388eb7146f067c4ba91523f023fb338d12e5"
+      }
+    },
+    "firstConsumption": "Unchanged bootstrap bytes independently inspected; immutable bootstrap consumption and observer/helper/late-build/late-source canaries pass.",
+    "preservation": "Exact git blob equality verifies all other source unchanged, including original five sources and all non-orchestrator graph members; all five changed sizes and hashes match author freeze.",
+    "setupNotes": [
+      "Initial extra AST probe import attempted the owner TypeScript7 package, which has no default compiler API; it failed before executing the probe. Repointing to the already installed common TypeScript AST API succeeded without installation or network.",
+      "Common harness --help returned its usage with exit1; no Work mutation or native action occurred."
+    ]
+  },
+  "limitations": [
+    "This is source finding closure and a compositional exact-candidate review, with explicit reuse of unchanged prior review scope.",
+    "No full owner422 or root Node reference suite rerun; no install, download or unrelated repeat. Prior root22/typecheck/import verification remains prior evidence, not a fresh execution claim.",
+    "Root must consume the bootstrap from its independently verified immutable buffer, never hash then import a mutable path. Actual Root trusted first-reader invocation remains unissued.",
+    "No private SSH config, profile, authority/contract/receipt body, credential, student data, live store or actual process target was read.",
+    "No real SSH/Docker/native/PG/DB/SQL/HTTP/target write/signal/start-stop/migration/admission/retirement/push/merge/Goal/eval operation occurred.",
+    "No actual runtime availability, fixed-env authentication, private P1 observation/reconciliation, P1 acceptance, native activation, domain/evaluation/Goal Acceptance or production completion is qualified.",
+    "A local result file is not authenticated publication, native allocation or permission; exact common receipt binding is a source review contract only."
+  ],
+  "remainingHolds": [
+    "Root current private source/config/profile/credential-route qualification under the exact fixed environment.",
+    "Separately reviewed and admitted once readonly occurrence; actual independent reconciliation and Root-owned P1 decision before any retirement.",
+    "All original native/publication/compiler/teacher/domain/evaluation/Goal Acceptance boundaries remain separate."
+  ],
+  "effects": {
+    "sourceEdits": 0,
+    "actualSSH": 0,
+    "actualDocker": 0,
+    "actualRootNativeTargetCalls": 0,
+    "actualDBOrHTTP": 0,
+    "actualPGActions": 0,
+    "actualTargetWrites": 0,
+    "actualConfigOrProfileReads": 0,
+    "privateProfilesCreated": 0,
+    "remoteActions": 0,
+    "nativeAdmissionIssued": false,
+    "retirementPerformed": false,
+    "nativeAllocations": 0,
+    "GoalOrEval": 0,
+    "pushOrMerge": 0,
+    "P1Accepted": false,
+    "reviewerLocalArtifactsWritten": true,
+    "actualHarmlessLocalBunChildren": 1
+  },
+  "reviewReuse": {
+    "schema": "native-source-identical-tree-successor-binding.v1",
+    "recordClass": "AccountableLeadAuthorizedReviewReuse",
+    "boundAtUtc": "2026-10-16T02:52:57.128Z",
+    "deliveryHead": "815095dcd5e47832e8f3609cf65f1abc43875006",
+    "originalReviewHead": "fee7f4c2e1a05a241914503d6d3ce280960b93f9",
+    "reviewedTreeSha": "d347a0af339162dde82105c7e2dc5fcffb3113bc",
+    "reviewedSourceManifestSha256": "38d57802a84745e91f0d0b9f8bb2ec484854ff3b628770a7459bf69e82fde0d4",
+    "originalReview": {
+      "path": "/tmp/academy-p1-env-fee7-independent-review-20261016.json",
+      "bytes": 11423,
+      "sha256": "aad346651a9163ca973686455e58c4452f2465032dfcd93d7e9da9615deb62d1",
+      "authoredReviewDateTime": null,
+      "authoredReviewDateTimeDisclosure": "The original reviewer result has no authored review timestamp. None is invented; the original exact result bytes and all recorded review fields are retained.",
+      "fileModificationTimeUtc": "2026-10-16T02:33:12.260Z",
+      "fileTimeMeaning": "Filesystem observation only; not authenticated authored review time"
+    },
+    "originalReviewer": {
+      "runtime": "native-codex",
+      "taskId": "ACADEMY-P1-ENV-FIX-INDEPENDENT-REVIEW"
+    },
+    "originalAuthor": {
+      "runtime": "native-codex",
+      "taskId": "ACADEMY-RUNNING-P1-SOURCE"
+    },
+    "authority": "Current Root Accountable Lead instruction authorizes exact identical-tree reuse for source815 delivery after byte/currentness verification.",
+    "proof": {
+      "originalAndDeliveryGitTreeIdentical": true,
+      "all1178TreeEntriesAnd1022BlobsIdentical": true,
+      "manifestIdentical": true,
+      "originalResultBytesVerified": true,
+      "originalConclusion": "pass",
+      "currentUnresolvedFindings": 0,
+      "originalFindingsEmpty": true,
+      "sourceAndAuditInitiallyClean": true
+    },
+    "meaning": "A delivery successor binding of an actual completed independent source review, not a new review execution, native allocation, native occurrence, authentication, or AcceptanceDecision.",
+    "nativeEffects": 0,
+    "nativePermissionGranted": false,
+    "acceptanceDecision": null
+  }
+}
