@@ -21,7 +21,7 @@ let endpointFixture=readFileSync(resolve(owner,'tests/academy/product-control/en
 const original="source=ast.parse((b/'runtime/product-control/native-product-os.py').read_text())";if(!endpointFixture.includes(original))throw Error('endpoint_fixture_projection_changed');
 endpointFixture=endpointFixture.replace('import ast,json,stat,io,copy','import ast,json,stat,io,copy,sys').replace("b=Path(__file__).resolve().parents[3]","b=Path.cwd()").replace(original,'source=ast.parse(sys.stdin.read())').replace("['need','observe_original_pg_endpoint']","['need','observe_original_pg_endpoint','capture_original_pg_endpoint']");
 endpointFixture+="\nstate.clear();assert ns['capture_original_pg_endpoint'](c,child)==expected;print('{\"observationalEndpointCapture\":\"pass\",\"actualNativeCalls\":0}')\n";
-for(const args of [['-c',endpointFixture],['tests/academy/product-control/running_p1_fixtures.py'],['tests/academy/product-control/running_p1_io_fixtures.py']]){
+for(const args of [['-c',endpointFixture],['tests/academy/product-control/running_p1_fixtures.py'],['tests/academy/product-control/running_p1_io_fixtures.py'],['tests/academy/product-control/running_p1_transport_fixtures.py']]){
  const child=Bun.spawn(['python3','-I','-S','-B',...args],{cwd:owner,stdin:args[0]==='-c'?Buffer.from(projection):'ignore',stdout:'inherit',stderr:'inherit'});if(await child.exited!==0)throw Error('running_p1_fictional_check_failed');
 }
 console.log(JSON.stringify({scope:'finite-running-p1-source-and-fictional-port-checks',actualSSH:0,actualNativeEffects:0,actualP1Accepted:false,originalProductSourcesUnmodified:true}));

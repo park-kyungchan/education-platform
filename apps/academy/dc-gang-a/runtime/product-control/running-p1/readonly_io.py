@@ -51,8 +51,9 @@ def admission_metadata(raw,task,contract_sha,host_sha=None,migration=False):
 
 def bounded_transport(argv,body,seconds=15,cap=24576):
  # Cancel only directly owned docker CLI transport, never a PG/service process.
- need(len(body)<=20000,'native_transport_input_cap');child=subprocess.Popen(argv,stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.PIPE,close_fds=True,env={'PATH':'/usr/bin:/bin','LANG':'C.UTF-8','LC_ALL':'C.UTF-8'});selector=selectors.DefaultSelector();streams={'stdout':bytearray(),'stderr':bytearray()};deadline=time.monotonic()+seconds;offset=0
+ need(len(body)<=20000,'native_transport_input_cap');child=subprocess.Popen(argv,stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.PIPE,close_fds=True,env={'PATH':'/usr/bin:/bin','LANG':'C.UTF-8','LC_ALL':'C.UTF-8'});selector=None
  try:
+  selector=selectors.DefaultSelector();streams={'stdout':bytearray(),'stderr':bytearray()};deadline=time.monotonic()+seconds;offset=0
   for name,stream in [('stdout',child.stdout),('stderr',child.stderr)]:os.set_blocking(stream.fileno(),False);selector.register(stream,selectors.EVENT_READ,name)
   os.set_blocking(child.stdin.fileno(),False)
   if body:selector.register(child.stdin,selectors.EVENT_WRITE,'stdin')
@@ -69,10 +70,27 @@ def bounded_transport(argv,body,seconds=15,cap=24576):
     streams[key.data].extend(chunk);need(len(streams[key.data])<=limit,'owned_transport_output_cap')
   need(child.wait(timeout=max(0.01,deadline-time.monotonic()))==0 and not streams['stderr'],'owned_transport_hold');return bytes(streams['stdout'])
  finally:
-  selector.close()
-  if child.poll() is None:
-   child.kill()
-   try:child.wait(timeout=2)
-   except subprocess.TimeoutExpired:pass
-  for stream in [child.stdin,child.stdout,child.stderr]:
-   if stream and not stream.closed:stream.close()
+  # Ownership begins immediately after Popen; no selector/pipe cleanup can bypass reap.
+  try:
+   try:
+    if child.poll() is None:
+     try:child.kill()
+     except ProcessLookupError:pass
+   finally:
+    try:child.wait(timeout=2)
+    except (subprocess.TimeoutExpired,InterruptedError):
+     # Kernel-uncertain exit retains this waiter; never complete while the child is unreaped.
+     while True:
+      try:child.wait();break
+      except InterruptedError:continue
+  finally:
+   try:
+    if selector is not None:selector.close()
+   finally:
+    error=None
+    for stream in [child.stdin,child.stdout,child.stderr]:
+     try:
+      if stream and not stream.closed:stream.close()
+     except BaseException as failure:
+      if error is None:error=failure
+    if error is not None:raise error
