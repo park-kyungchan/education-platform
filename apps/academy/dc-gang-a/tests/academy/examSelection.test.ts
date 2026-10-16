@@ -120,6 +120,23 @@ describe('selection-free month-end analysis',()=>{
     expect(proposal.value.allocations.every(row=>!('candidateId' in row)&&!('points' in row))).toBe(true);
     expect(Object.isFrozen(proposal.value.allocations[0])).toBe(true);
   });
+  test('two complete edition roots cannot yield one known proposal; the same single-edition scope still can',()=>{
+    const declared=unitScope();if(declared.state!=='known')throw Error('expected synthetic scope');
+    const edition=declared.value.catalog[0]!;
+    // Equal labels or literal keys across namespaces do not establish equal source editions.
+    for(const sourceKey of [{namespace:'synthetic_edition',literalKey:'edition-b'},{namespace:'other_synthetic_edition',literalKey:'edition-a'}]){
+      const other:CatalogNode={...edition,id:'other-edition',sourceKey};
+      const mixed=declared.value.catalog.map(node=>node.id==='unit-1'?{...node,parent:known(other.id,['synthetic-other-edition'])}:node);
+      expect(()=>inspectExamPreselection(preselection(),[],known({catalog:[...mixed,other],unitIds:['unit-0','unit-1']},['synthetic-mixed-edition']))).toThrow('mixed_exam_scope_editions');
+    }
+    const original=inspectExamPreselection(preselection(),[],known({...declared.value,unitIds:['unit-0','unit-1']},declared.evidenceRefs));
+    expect(original.proposals.unitDistribution.state).toBe('known');
+    if(original.proposals.unitDistribution.state!=='known')throw Error('expected synthetic single-edition proposal');
+    expect(original.proposals.unitDistribution.value.allocations.map(row=>row.questions)).toEqual([12,12]);
+    expect(original.proposals.reviewStatus).toBe('proposal_only');expect(original.coverage.itemToUnitCoverage.state).toBe('unknown');expect(original.teacherAccepted).toBe(false);
+    const missing=declared.value.catalog.map(node=>node.id==='unit-1'?{...node,parent:unknown('Edition not acquired')}:node);
+    expect(inspectExamPreselection(preselection(),[],known({catalog:missing,unitIds:['unit-0','unit-1']},['synthetic-partial-edition'])).proposals.unitDistribution.state).toBe('unknown');
+  });
   test('missing ancestry remains unknown; unavailable, repeated and overlapping scope is refused',()=>{
     const declared=unitScope();if(declared.state!=='known')throw Error('expected synthetic scope');
     const missing=declared.value.catalog.map(node=>node.id==='unit-0'?{...node,parent:unknown('Parent not acquired')}:node);

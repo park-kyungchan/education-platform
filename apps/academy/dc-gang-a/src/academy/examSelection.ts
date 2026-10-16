@@ -170,6 +170,8 @@ export function inspectExamPreselection(
     if (new Set(units.map(({unit}) => canonicalJson(unit.sourceKey))).size !== units.length) throw Error('duplicate_exam_scope_source_unit');
     if (units.some(({path}) => path.state !== 'known')) unitDistribution = unknown('Declared unit ancestry or edition is incomplete');
     else {
+      const editions = new Set(units.map(({path}) => canonicalJson(path.path[0]!.sourceKey)));
+      if (editions.size !== 1) throw Error('mixed_exam_scope_editions');
       for (const {unit, path} of units) if (path.path.some(node => node.id !== unit.id && unitIds.includes(node.id))) throw Error('overlapping_exam_scope_units');
       const base = Math.floor(elementaryExamRequirement.questions / units.length), remainder = elementaryExamRequirement.questions % units.length;
       unitDistribution = known({basis:'equal_count_in_declared_order', allocations:units.map(({unit,path},index) => ({unitId:unit.id, sourceKey:unit.sourceKey, label:unit.label, pathIds:path.path.map(node => node.id), questions:base + (index < remainder ? 1 : 0)}))}, unitScope.evidenceRefs);
