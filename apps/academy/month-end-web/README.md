@@ -1,23 +1,19 @@
-# 문항실 · independent month-end frontend
+# 월말평가 연구 작업실
 
-A repository-owned static frontend for studying detailed question types, exploring existing labels, and reviewing month-end requirements. MagicPath, Sites, a remote design runtime, external fonts, accounts and API credentials are not runtime dependencies.
+고정된 `math-research-module@07edb2d`의 연구 원본을 공부하고 기존 Academy 유형과 문항을 읽는 교사용 작업실입니다. 초3 핵심105유형, 상위 연결46유형, 기본·변형170예제,151연구설계,1216행동을 원본 ID·버전·근거와 함께 표시합니다. 연구 원본은 실제 연구이며 Academy 합성 연결의 예시와 구분됩니다.
 
 ```sh
-cd apps/academy/month-end-web
 bun run check
 bun run preview
+bun run test:browser
 ```
 
-Open `http://127.0.0.1:4173/` or `http://127.0.0.1:4173/education-platform/`. The second route exercises GitHub project-page asset resolution. The build is `dist/`; serve that directory with any ordinary static server. Paths are relative, and local licensed Noto Sans KR/Noto Serif KR assets are included with their OFL licenses.
+`preview`는 소유된 loopback HTTP backend와 같은 origin의 API를 사용합니다. 기본은 연구 전용이며 Academy는 미연결입니다. `MONTH_END_SOURCE_MODE=synthetic bun run preview`는 명시적 공학 검토용 합성 연결입니다. 실제 Academy 인증이나 native 연결 설정을 이 패키지가 만들거나 변경하지 않습니다.
 
-`dist/review.html` is a self-contained review file with embedded script, styles, fonts and licenses. Open it directly in a browser without a server. Its inline script/styles are authorized by exact CSP hashes; external connections remain blocked.
+`dist/review.html`은 폰트·라이선스·고정 연구 projection·동일한 순수 application 로직을 포함한 단일 파일입니다. 직접 열면 네트워크 없이 연구 탐색과 교사 보고를 검토할 수 있습니다. Academy는 기본 미연결이며 합성 검토 모드를 사용자가 명시적으로 선택할 수 있습니다. 개인 기록·학생 자료·원천 문제 스냅샷·자격 증명은 포함하지 않습니다.
 
-The preview deliberately contains eight newly authored synthetic UI examples. They are neither Academy source questions nor an automatically generated examination paper. Real inventory, edition/unit scope, source currentness, and exact exam date/timezone remain unknown. Filtering preserves input order. No ranking, final membership, source requests, printing, storage or official writes occur in the browser. `connect-src 'none'` blocks remote data access. Real labels and authentication belong to the private custom MCP/backend, never to this public bundle.
+연구 유형·버전·판본·단원에 공부 보고를 연결하며 의도 변경 시 비교 결과를 다시 읽습니다. 열람한 문항을 직접 선택해 여섯 축의 유형 연결 검토 메모를 기록할 수 있습니다. 각 축은 미확인으로 시작하며 지지·충돌에는 이유와 현재 맥락에서 열람한 정확한 문항 버전이 필요합니다. 메모는 교사의 미수락 제안으로 현재 세션에만 남고, 맥락 변경 후에는 이전 제안 이력으로 보존됩니다. 연구 분류와 Academy 분류, 연구 유형 ID와 native `pat_no`, 문항 `lecture_key`는 별개입니다. 단어 검색은 잠정 후보 검색이며 의미 확률이나 자동 추천이 아닙니다. 교사가 판본·단원을 입력했어도 원천의 해당 정보가 미확인이면 그 값을 원천에 채우지 않습니다. 경고와 함께 잠정 읽기를 지원하며, 양쪽에서 확인한 값이 실제로 다르면 비교를 보류합니다. 알려진 `HC11-d1-T02` 교정 제안은 미적용 상태로 표시합니다.
 
-`build.ts` consumes the existing `inspectExamPreselection` owner and `teacherExamSelectionContract`. It does not fork grading or selection logic. The separate frontend TypeScript project uses the native Academy module's strict compiler policy because its imported domain closure is not authored under the integration harness's `noUncheckedIndexedAccess` option.
+정확한24문항·100점(12×3+8×5+4×6),80분·15:00 시작,10월19일 준비 마감을 보존합니다. 시험 날짜·시간대·판본·최종 범위는 미확인이고 날짜와 시간대 입력은 독립적입니다. 이 화면은 현재 창의 공부 보고·검토만 다루며 최종 문항 편성·공식 저장·출력·발송 경로가 없습니다. 구조·브라우저 검증은 수학·교수학 전면 감사나 학습효과 검증, 교사의 수락을 뜻하지 않습니다.
 
-`bun run test:browser` uses the existing Academy Playwright dependency. Install its browser in the repository-private `.private/browsers` directory, or use a host with the supported Playwright runtime. The source tests exercise actual Chromium search/filter/detail flows, untrusted text, unknown inventory, independent date/timezone changes, no API/storage effects and desktop-to-320px layouts. On a minimal Debian host, optional runtime libraries and Fontconfig can be unpacked under `.private/browser-libs`; no OS install or existing browser profile is required.
-
-`.github/workflows/month-end-pages.yml` runs only on manual dispatch. Its default builds an artifact; deployment additionally requires `publish=true`. No push, PR, merge, workflow dispatch or Pages configuration has been performed. Repository Pages availability/plan and deployment protection remain a later reviewed release step. GitHub's [custom workflow documentation](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages) describes the Pages configuration and deployment permissions.
-
-The supplied MagicPath project could not be inspected: the connected API reported exhausted quota, and the ordinary project URL redirected to the homepage. This implementation reconstructs the source-owned workflow and recorded visual preferences; pixel equivalence to that private MagicPath project is not established.
+API와 도메인 의미는 인접한 `month-end-workbench/API.md`, `src/contracts.ts`, `src/application.ts`가 소유합니다. frontend는 source transport·해싱·인증·도메인 규칙을 별도로 구현하지 않습니다.

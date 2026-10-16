@@ -1,19 +1,10 @@
-import {resolve, sep} from 'node:path';
-import {realpath} from 'node:fs/promises';
-const root = await realpath(resolve(import.meta.dir,'dist'));
-const port = Number(Bun.env.PORT ?? 4173);
-const server = Bun.serve({hostname:'127.0.0.1',port,async fetch(request) {
-  if (request.method !== 'GET' && request.method !== 'HEAD') return new Response('Method not allowed',{status:405});
-  let path:string;
-  try {
-    const pathname = decodeURIComponent(new URL(request.url).pathname);
-    // Exercise GitHub project-page asset paths locally as well as the root URL.
-    const relative = pathname.replace(/^\/education-platform(?=\/|$)/,'').replace(/^\//,'') || 'index.html';
-    if (relative.split('/').some(part=>part.startsWith('.'))) return new Response('Not found',{status:404});
-    path = await realpath(resolve(root,relative));
-    if (!path.startsWith(root + sep)) return new Response('Not found',{status:404});
-  } catch {return new Response('Not found',{status:404});}
-  const file = Bun.file(path);
-  return new Response(request.method === 'HEAD' ? null : file,{headers:{'Content-Type':file.type,'X-Content-Type-Options':'nosniff'}});
-}});
-console.log(`Month-end preview: ${server.url} (loopback only; synthetic data)`);
+import {resolve} from 'node:path';
+import {createApplication} from '../month-end-workbench/src/application';
+import {researchProjection} from '../month-end-workbench/src/research';
+import {createSyntheticSourcePort} from '../month-end-workbench/src/synthetic';
+import {createRequestHandler} from '../month-end-workbench/src/server';
+const port=Number(Bun.env.PORT??4173);if(!Number.isInteger(port)||port<1024||port>65535)throw Error('Invalid loopback port');
+const mode=Bun.env.MONTH_END_SOURCE_MODE??'unavailable';if(mode!=='unavailable'&&mode!=='synthetic')throw Error('Frontend preview only supports unavailable or explicit synthetic Academy');
+const origin=`http://127.0.0.1:${port}`;
+const handler=createRequestHandler({allowedOrigin:origin,frontendRoot:resolve(import.meta.dir,'dist'),applicationFactory:()=>createApplication(researchProjection,mode==='synthetic'?createSyntheticSourcePort():undefined)});
+const server=Bun.serve({hostname:'127.0.0.1',port,fetch:handler});console.log(`Month-end workbench: ${server.url} (Academy: ${mode}; loopback only)`);

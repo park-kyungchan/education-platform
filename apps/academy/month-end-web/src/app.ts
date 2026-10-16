@@ -1,162 +1,95 @@
-import {filterItems, missingFields, requirePreviewData, validDate, validTimeZone, type DisplayItem} from './model';
+import {createClient,readBootstrap} from './client';
+import {append,button,details,el,field,label,recordFields,safeLink,sourceDetails,text,valueNode} from './view';
+import {validDate,validTimeZone} from './model';
+import type {Application,AssessmentContext,NavigationResult,ResearchDetail,SourceScopeResult,SourceFindResult,SourceReviewResult,DesiredQuestionIntent,ComparisonAxis,Json,StudyScope,AlignmentProposalRequest,AlignmentAxisInput} from '../../month-end-workbench/src/contracts';
 
-const app = document.querySelector<HTMLElement>('#app')!;
-function el<K extends keyof HTMLElementTagNameMap>(tag:K, text = '', className = ''): HTMLElementTagNameMap[K] {
-  const node = document.createElement(tag); node.textContent = text; node.className = className; return node;
+const boot=readBootstrap(),projection=boot.projection,host=document.querySelector('#app')!;
+let app:Application,context:AssessmentContext,nav:NavigationResult,selected:ResearchDetail|null=null,compared:ResearchDetail|null=null;
+let view:'research'|'academy'|'assessment'='research',step=0,scopeResult:SourceScopeResult|null=null,findResult:SourceFindResult|null=null,reviewResult:SourceReviewResult|null=null;
+let sourceParent:string|null=null,categoryId:string|null=null,message='',examDate='',timeZone='',reviewEpoch=0,studyDirty=false,intentDirty=false,scopeDirty=false,labelScopeReady=false;
+const axisNames:Record<ComparisonAxis,string>={structure:'수학 구조',reasoning:'설명·추론',representation:'표현·대응',conditions:'조건·경계',errors:'오류의 이유',transfer:'다른 사례로 전이'};
+const modeName=()=>context.sourceMode==='synthetic'?'공학 검토용 합성 Academy':context.sourceMode==='unavailable'?'연구 자료 · Academy 미연결':'Academy 읽기 전용';
+const errorMessage=(error:unknown)=>error instanceof Error?error.message:String(error);
+window.addEventListener('workbench-error',event=>{message='검토 보류: '+(event as CustomEvent).detail;const status=document.querySelector('.status-message')??el('p','status-message error');status.setAttribute('role','status');status.textContent=message;if(!status.parentNode)document.querySelector('.tabs')?.after(status);});
+const resetDependent=()=>{reviewEpoch++;findResult=null;reviewResult=null;message='';};
+function markDraft(kind:'study'|'intent'|'scope'){if(kind==='study')studyDirty=true;else if(kind==='intent')intentDirty=true;else scopeDirty=true;resetDependent();for(const node of host.querySelectorAll('[data-source-result]'))node.remove();for(const node of host.querySelectorAll('[data-alignment-status]'))node.textContent='입력 수정 중 · 이전 맥락의 제안 재검토 필요';const status=document.querySelector('.status-message')??el('p','status-message');status.setAttribute('role','status');status.textContent='입력이 바뀌어 이전 유형·문항 비교를 보류했습니다. 공부 보고 또는 특징·범위를 적용한 뒤 다시 읽으세요.';if(!status.parentNode)document.querySelector('.tabs')?.after(status);}
+function currentScope(ids=selected?[selected.type.id]:[]):StudyScope{const previous=app.snapshot().scope;return {...previous,researchTypeIds:ids,researchRevision:projection.revision};}
+async function go(path:string[]){studyDirty=false;intentDirty=false;scopeDirty=false;nav=await app.navigate(path);selected=null;step=0;resetDependent();await app.setScope(currentScope([]));render();}
+async function selectType(id:string){studyDirty=false;intentDirty=false;scopeDirty=false;selected=await app.research({typeId:id});step=0;resetDependent();await app.setScope(currentScope([id]));render();}
+function note(title:string,body:string,className='notice'){return append(el('aside',className),el('strong','',title),el('p','',body));}
+function section(title:string,...children:Node[]){return append(el('section'),el('h3','',title),...children);}
+function render(){const opened=new Set([...host.querySelectorAll('details[open]')].map(node=>(node.closest('[data-detail-type]')?.getAttribute('data-detail-type')??view)+'|'+node.querySelector(':scope > summary')?.textContent).filter(key=>!key.includes('원본·버전·근거 위치 확인')));host.replaceChildren();const main=el('main','app-shell');main.id='main';
+ const header=append(el('header','masthead'),append(el('div','brand'),el('span','','수학 연구 작업실'),el('small','','MONTH-END · TEACHER RESEARCH')),el('span','mode',modeName()));
+ const intro=append(el('section','intro'),append(el('div'),el('div','eyebrow','연구에서 질문으로, 근거에서 판단으로'),el('h1','','어떤 풀이가, 어떤 이해를 보여 줄까요?'),el('p','','세분 유형의 구조와 설계 이유를 공부하고, 관찰할 행동을 정리합니다. 그 맥락으로 기존 학원 유형을 찾아 문항의 근거를 검토합니다.')),el('div','scope-note',`초3 핵심 ${context.coverage.grade3Types}유형 · 상위 연결 ${context.coverage.upperTypes}유형\n창작 예제 ${context.coverage.basicExamples+context.coverage.variantExamples}개 · 풀이 행동 ${context.coverage.microsteps}개\n연구 설계·해석이며 학습효과와 학생 이해는 미검증`));
+ const c=context.constraints;const strip=el('section','constraint-strip');strip.setAttribute('aria-label','월말평가 준비 조건');for(const [value,caption]of [[`${c.items}문항 · ${c.points}점`,'서술·구성 응답'],[`${c.durationMinutes}분 · ${c.startTime}`,'평가 시간 · 시작 시각'],[c.bands.map(b=>`${b.count}×${b.points}`).join(' + '),'배점 ≠ 난이도'],['10월 19일 월요일','준비 마감 · 시험일 미확정']])strip.append(append(el('div','constraint'+(caption.startsWith('준비')?' deadline':'')),el('strong','',value),el('small','',caption)));
+ const tabs=el('nav','tabs');tabs.setAttribute('aria-label','작업 단계');for(const [key,title]of [['research','01 유형 연구·비교'],['academy','02 기존 유형·문항 검토'],['assessment','03 평가 조건·판단 근거']]as const)tabs.append(button(title,()=>{view=key;render();},'',{'aria-pressed':String(view===key),'data-view':key}));
+ append(main,intro,strip,tabs);if(message){const status=el('p','status-message',message);status.setAttribute('role','status');main.append(status);}
+ if(view==='research')main.append(researchView());else if(view==='academy')main.append(academyView());else main.append(assessmentView());
+ main.append(el('footer','footer',`연구 자료 원본 ${projection.revision.slice(0,12)} · 교사의 연구 보고와 분석 초안은 현재 창에서만 유지합니다. 최종 문항 편성·출력·발송 권한은 별도이며 이 작업실에서 실행되지 않습니다.`));append(host as HTMLElement,header,main);for(const node of host.querySelectorAll('details')){const key=(node.closest('[data-detail-type]')?.getAttribute('data-detail-type')??view)+'|'+node.querySelector(':scope > summary')?.textContent;if(opened.has(key))node.open=true;}
 }
-function button(text:string, action:()=>void, className = '') {
-  const node = el('button',text,className);node.type='button';node.addEventListener('click',action);return node;
-}
-function field(label:string, input:HTMLElement) {const wrapper=el('label',label,'field');wrapper.append(input);return wrapper;}
-function pill(text:string, tone='') {return el('span',text,`pill ${tone}`);}
-const data = requirePreviewData(JSON.parse(document.querySelector('#preview-data')!.textContent!));
-const requirement=data.requirement;
-let view: 'pool'|'match'|'assessment'|'source' = 'pool';
-let examples = true;
-let query = '', unit = '', completeness = '';
-let openItem: string|null = null;
-let examDate = '', timeZone = '', desired = '', learned = '';
-const tabs = [['pool','라벨 탐색'],['match','유사 라벨 찾기'],['assessment','월말평가 분석'],['source','연결 상태']] as const;
+function navigation(){const map=append(el('section','context-map'),el('h2','','선택한 경로와 주변 유형'),el('p','','이전 단계의 다른 항목도 남아 있습니다. 작은 카드를 눌러 맥락을 바꾸고 비교하세요.'));map.setAttribute('aria-label','이전 단계와 형제 항목');
+ nav.levels.forEach((level,index)=>{const cards=el('div','sibling-cards');level.siblings.forEach(unit=>cards.append(button(unit.title,()=>go([...nav.pathIds.slice(0,index),unit.id]),'sibling-card',{'aria-pressed':String(level.selectedId===unit.id),'data-research-node':unit.id})));map.append(append(el('div','sibling-row'),el('div','level-label',level.level),cards));});
+ if(nav.types.length){const cards=el('div','sibling-cards');for(const type of nav.types)cards.append(button(type.title,()=>selectType(type.id),'sibling-card',{'aria-pressed':String(selected?.type.id===type.id),'data-research-type':type.id}));map.append(append(el('div','sibling-row'),el('div','level-label','세분 유형'),cards));}return map;}
+function researchView(){const column=append(el('div','research-column'),navigation());if(selected){column.append(detailView(selected));}else column.append(unitView());
+ return append(el('div','workspace'),column,append(el('aside','sidebar'),studyPanel(),ontologyPanel()));}
 
-const sidebar=el('aside','','sidebar'), brand=el('div','','brand');
-brand.append(el('span','강아','brand-mark'),el('span','문항실','brand-title'),el('span','TEACHER WORKBENCH','eyebrow'));
-const nav=el('nav','','main-nav');nav.setAttribute('aria-label','주 메뉴');
-const navButtons = tabs.map(([key,label],index)=>{
-  const node=button('',()=>{view=key;openItem=null;render();});
-  node.append(el('span',String(index+1).padStart(2,'0'),'nav-index'),el('span',label));
-  node.dataset.view=key;nav.append(node);return node;
-});
-const sideNote=el('div','','side-note');sideNote.append(el('span','OCTOBER / GRADE 3','eyebrow'),el('p','잘 고른 한 문항이\n깊은 배움으로.'),el('small','기존 문항과 라벨의 근거를 살펴보고,\n교사의 판단으로 평가를 준비합니다.'));
-const sideFooter=el('div','','side-footer');sideFooter.append(el('span','●','connection-dot'),el('span','독립 화면 미리보기'),el('small','원천 연결 전 · 합성 자료'));
-sidebar.append(brand,nav,sideNote,sideFooter);
-const frame=el('div','','frame'),topbar=el('header','','topbar');
-const breadcrumbs=el('div','','breadcrumbs');breadcrumbs.append(el('span','학원 워크벤치'),el('span','/'),el('strong','문항실'));
-topbar.append(breadcrumbs,pill('읽기 전용 미리보기','green'));
-const main=el('main','','main');main.id='main';
-const footer=el('footer','','footer');footer.append(el('span','문항의 출처와 교사의 판단을 함께 보존합니다.'),el('span','ACADEMY · INDEPENDENT PREVIEW'));
-frame.append(topbar,main,footer);app.append(sidebar,frame);
-
-function heading(kicker:string,title:string,description:string) {
-  const section=el('div','','page-heading'),copy=el('div');
-  copy.append(el('p',kicker,'eyebrow'),el('h1',title),el('p',description,'subtitle'));section.append(copy);return section;
+function pathFor(id:string){const path:string[]=[];let unit=projection.units.find(item=>item.id===id);while(unit){path.unshift(unit.id);unit=projection.units.find(item=>item.id===unit?.parentId);}return path;}
+function contextualConnections(unitId:string){const unit=projection.units.find(item=>item.id===unitId),ids=new Set([unitId,...(unit?.originalContentIds??[])]),links=projection.links.filter(link=>(ids.has(link.from)||ids.has(link.to))&&(link.relation==='prerequisite'||link.relation==='content-connection'));const body=el('div');if(unit?.originalContentIds?.length)body.append(field('이 탐색 단원이 참조하는 원본 내용 ID · 동일 정체성 아님',unit.originalContentIds));for(const link of links){const targetId=ids.has(link.from)?link.to:link.from,content=projection.contentObjects.find(item=>item.id===targetId),targets=projection.units.filter(item=>item.id===targetId||item.originalContentIds?.includes(targetId));const row=append(el('section','field'),el('h4','',(link.relation==='prerequisite'?'선수 학습 제안':'내용 간 연결 제안')+` · ${link.from} → ${link.to}`),field('연결 이유',link.rationale),field('적용 범위·조건',link.scopeCondition),field('원본의 관계 구분',link.originalRelation));if(content)row.append(details('연결된 원본 내용',recordFields(content)));if(targets.length){const controls=el('div','sibling-cards');for(const target of targets)controls.append(button(target.title,()=>go(pathFor(target.id)),'sibling-card'));row.append(controls);}else row.append(el('p','muted','이 연결은 선수·지원 내용의 요약일 수 있습니다. 전체 문항 범위가 연결됐다고 보지 않습니다.'));row.append(sourceDetails(link.source));body.append(row);}if(!links.length)body.append(el('p','muted','이 위치에 직접 연결된 선수·내용 관계가 현재 투영에 없습니다. 관계의 부재가 수학적 무관함을 증명하지 않습니다.'));return details('소속과 다른 선수·내용 연결 · 원본 근거 확인',note('관계의 의미를 구분','위쪽 작은 카드는 탐색용 분류의 소속 관계입니다. 선수·후속 연결은 조건이 있는 연구 제안이며 유일한 교육과정 순서가 아닙니다.'),body);}
+function unitView(){const unit=projection.units.find(item=>item.id===nav.pathIds.at(-1));const article=append(el('article','reading'),el('h2','',unit?.title??'차이를 살펴볼 유형을 선택하세요'),el('p','muted','곱셈·나눗셈·원에서 시작해 작은 단원으로 들어갑니다. 연구 유형을 선택하면 기본·변형 예제, 중심 연구 문항, 설계 근거와 풀이 행동을 볼 수 있습니다.'));if(unit)article.append(el('p','identity',`연구 단원 ID ${unit.id} · ${unit.level}`),contextualConnections(unit.id),sourceDetails(unit.source));return article;}
+function detailView(detail:ResearchDetail,comparison=false){const type=detail.type,d=detail.design;const article=el('article','reading');article.dataset.detailType=type.id;
+ append(article,append(el('div','type-heading'),el('div','eyebrow',type.scope==='grade3'?'초3 핵심 · 연구자 과제 분석':'초4–6 연결 · 평가 범위 확장 아님'),el('h2','',type.title),el('p','identity',`연구 유형 ID ${type.id} · ${type.source.revision.slice(0,12)}`)));
+ article.append(contextualConnections(type.detailId));
+ for(const warning of detail.warnings)article.append(append(note('교정 검토 중 · 원본 미적용',warning.title+'\n'+warning.conclusion,'warning'),sourceDetails(warning.source)));
+ if(!comparison){const toolbar=el('div','toolbar');toolbar.append(button(compared?.type.id===type.id?'비교 대상 해제':'이 유형을 비교 대상으로 유지',()=>{compared=compared?.type.id===type.id?null:detail;render();}));if(compared&&compared.type.id!==type.id)toolbar.append(button('두 유형 나란히 읽기',()=>{const old=document.querySelector('#comparison');old?.remove();const area=append(el('section','split'),detailView(detail,true),detailView(compared!,true));area.id='comparison';document.querySelector('.research-column')!.append(area);area.scrollIntoView({block:'start',behavior:'smooth'});}));article.append(toolbar);}
+ article.append(note('자료의 성격','문항과 예상 전략은 연구자가 작성한 설계입니다. 정답만으로 특정 능력을 확정하지 않습니다. 아이의 설명·표현·오류 흔적을 확인한 뒤 해석을 수정합니다.'));
+ if(d){append(article,recordFields(d.original,['targetStructure','generalizationDomain']),section('중심 연구 문항',el('p','prompt',text((d.original.revisedExample as Record<string,Json>|undefined)?.prompt))),details('중심 문항 정답·구조 풀이',valueNode(d.original.revisedExample),field('불변 구조',d.original.invariant)),details('왜 이렇게 설계했나 · 상황·수치·조건·표현',field('조직할 현상',d.original.phenomenonToOrganize),valueNode(d.original.designRationale),field('인접 유형과의 차이',d.original.adjacentTypeContrast)));
+ article.append(actionView(detail));article.append(details('전이·경계 사례 · 정답과 바뀐 조건',field('전이',d.original.transfer),field('경계',d.original.boundaryCase)),details('지도·관찰 계획 · 예상과 실제를 구분',recordFields(d.original,['expectedStrategies','anticipatedErrors','guidanceSequence','prerequisites','observationPlan','grade4_6Connection'])));
+ const excluded=new Set(['targetStructure','generalizationDomain','revisedExample','invariant','phenomenonToOrganize','designRationale','adjacentTypeContrast','actionDesign','transfer','boundaryCase','expectedStrategies','anticipatedErrors','guidanceSequence','prerequisites','observationPlan','grade4_6Connection']);article.append(details('설계의 나머지 원본 필드',recordFields(d.original,Object.keys(d.original).filter(key=>!excluded.has(key))),sourceDetails(d.source)));}
+ const examples=el('div');for(const example of type.examples)examples.append(details(`${example.kind==='basic'?'기본 대표 예제':'변형 예제'} · ${example.id}`,el('p','prompt',example.prompt),details('정답·원본 예제 근거',el('p','',example.answer),sourceDetails(example.source))));article.append(details(`기존 기본·변형 예제 ${type.examples.length}개`,examples,details('보존된 기존 풀이·오개념 설명',recordFields(type.original))));
+ article.append(details('능력 후보·근거 관계 · 진단 결과 아님',el('p','muted','연구자의 과제 분석입니다. 실제 학생의 수행이나 능력 확정과 구분합니다.'),valueNode(detail.capabilityMappings),...detail.links.map(link=>append(el('section','field'),el('h4','',`${link.relation} · ${link.from} → ${link.to}`),el('p','muted',link.status==='proposal'?'제안 관계 · 미수락':'원본 연구 관계'),sourceDetails(link.source)))),sourceDetails(type.source));return article;}
+function actionView(detail:ResearchDetail){const design=detail.design!;const actions=design.microsteps;if(!actions.length)return note('행동 자료 미연결','이 설계의 풀이 행동은 아직 연결되지 않았습니다.');const index=Math.min(step,actions.length-1),action=actions[index];const list=el('nav','action-list');list.setAttribute('aria-label','풀이 행동 선택');actions.forEach((a,i)=>list.append(button(`${String(i+1).padStart(2,'0')} · ${text(a.original.childFacingSegment??a.original.cue)}`,()=>{step=i;render();},'',{'aria-pressed':String(index===i),'data-step':String(i)})));
+ const body=append(el('div','action-detail'),el('div','section-label',`행동 ${index+1} / ${actions.length}`),el('h3','',text(action.original.childFacingSegment??action.original.cue)),recordFields(action.original,['cue','observableStudentAction','expectedUnderstanding']),details('판단의 근거와 한계',recordFields(action.original,['teacherCheck','mathematicalPurpose','designIntent','separationReason'])),details('오류·도움·학습심리 근거',recordFields(action.original,['likelyError','scaffold','fading','evidence'])),sourceDetails(action.source));
+ return details(`풀이를 ${actions.length}개 행동으로 읽기 · 관찰과 가설 구분`,note('예상 이해는 관찰 전 가설','관찰 행동, 해석을 지지하는 근거, 이것만으로 부족한 근거를 함께 검토하세요.'),append(el('div','actions-layout'),list,body),field('전체 행동 설계·전이·해석 한계',design.original.actionDesign));}
+function studyPanel(){const state=app.snapshot(),panel=append(el('section','side-panel sticky'),el('div','section-label','교사의 연구 맥락'),el('h2','','이 유형에서 무엇을 확인했나요?'),el('p','','공부한 범위를 직접 보고하고, 문항에서 찾고 싶은 특징을 적습니다. 유형·판본·단원이 바뀌면 이전 보고를 그대로 적용하지 않습니다.'));
+ const scopeLabel=selected?selected.type.title:'아직 연구 유형을 선택하지 않았습니다.';append(panel,el('p','identity',scopeLabel),el('div','study-state',state.study?.studied?'교사 보고: 이 범위를 공부함 · 수학적 수락 아님':'현재 범위의 공부 보고 없음'));
+ const summary=el('textarea');summary.value=state.study?.summary??'';summary.id='study-summary';append(panel,append(el('label','','공부한 구조와 남은 질문'),summary));summary.setAttribute('aria-label','공부한 구조와 남은 질문');summary.addEventListener('input',()=>markDraft('study'));
+ panel.append(button('현재 범위를 공부했다고 보고',async()=>{if(!selected)throw Error('연구 유형을 먼저 선택하세요.');if(!summary.value.trim())throw Error('공부한 구조와 남은 질문을 기록하세요.');await app.study({scope:app.snapshot().scope,studied:true,summary:summary.value.trim(),evidenceNotes:[summary.value.trim()],attribution:'teacher-reported',acceptance:false});studyDirty=false;resetDependent();message='현재 연구 버전과 범위에 교사 공부 보고를 연결했습니다.';render();},'primary'));
+ const fields={}as Record<ComparisonAxis,HTMLTextAreaElement>;for(const axis of Object.keys(axisNames)as ComparisonAxis[]){const input=el('textarea');input.value=state.intent.axes[axis];input.rows=2;input.style.minHeight='65px';input.setAttribute('aria-label',axisNames[axis]);fields[axis]=input;input.addEventListener('input',()=>markDraft('intent'));append(panel,append(el('label','',axisNames[axis]),input));}
+ const hypothesis=el('textarea');hypothesis.value=state.intent.notes;hypothesis.setAttribute('aria-label','교사의 잠정 해석과 다음 확인');hypothesis.addEventListener('input',()=>markDraft('intent'));append(panel,append(el('label','','교사의 잠정 해석과 다음 확인'),hypothesis),el('p','','어떤 설명·표현이 해석을 지지하거나 뒤집을지 기록하세요. 실제 학생 관찰이 없으면 예상이라고 표시합니다.'));panel.append(button('찾고 싶은 특징 적용',async()=>{const intent:DesiredQuestionIntent={axes:Object.fromEntries(Object.entries(fields).map(([key,input])=>[key,input.value.trim()]))as DesiredQuestionIntent['axes'],notes:hypothesis.value.trim()};await app.intent(intent);intentDirty=false;resetDependent();message='특징을 갱신했습니다. 이전 비교 결과는 다시 검토해야 합니다.';render();},'primary'));
+ panel.append(button('기존 Academy 유형으로 이어가기',()=>{view='academy';render();}));return panel;}
+function ontologyPanel(){const panel=append(el('section','side-panel'),el('div','section-label','판단을 연결하는 연구 객체'),el('h2','','자료 → 해석 → 행동 → 검토'),el('p','','각 층의 하위 대상을 열어 관계를 확인합니다. 소속·선수·근거·가설은 다른 관계이며, 검토 기준은 모든 층을 가로지릅니다.'));
+ const groups=[['DATA · 자료와 맥락','연구 유형·기본/변형 예제·관찰 대상',selected?recordFields(selected.type.original):el('p','','연구 유형을 선택하면 원본 구조를 확인합니다.')],['LOGIC · 구조와 경쟁 해석','수학 구조·예상 전략·능력 후보',selected?append(el('div'),field('구조',selected.design?.original.targetStructure),field('예상 전략',selected.design?.original.expectedStrategies),field('능력 후보',selected.capabilityMappings)):el('p','','아직 선택한 해석 대상이 없습니다.')],['ACTION · 풀이와 교사 결정','관찰할 행동·충분하지 않은 근거·다음 질문',selected?field('원본 행동 정의',selected.design?.original.actionDesign):el('p','','행동 정의와 실제 관찰 결과를 구분합니다.')],['GOVERNANCE · 근거와 권한','원본 버전·교정 제안·교사 보고·최종 편성 권한',append(el('div'),el('p','','공부 보고는 교사 귀속입니다. 예상 이해는 연구 가설이며 문항 확정은 사용자 권한입니다.'),field('현재 공부 보고',app.snapshot().study as unknown as Json),field('교사의 잠정 해석과 다음 확인',app.snapshot().intent.notes),field('현재 원본 버전',projection.revision))]]as const;
+ for(const [title,subtitle,body]of groups)panel.append(details(title,el('p','muted',subtitle),body));panel.append(details('연구의 구조 설계 원본',valueNode(projection.assessmentResearch)));return panel;}
+async function loadSource(parentId:string|null=null,offset=0){if(scopeDirty)throw Error('변경한 판본·단원 범위를 먼저 적용하세요.');resetDependent();const epoch=reviewEpoch;const result=await app.sourceScope({context:app.snapshot().sourceContext,view:'hierarchy',parentId,offset,limit:100});if(epoch!==reviewEpoch)return;scopeResult=result;labelScopeReady=result.labels.some(item=>item.categoryId===result.context?.scopeId);sourceParent=parentId;categoryId=null;render();}
+async function loadLabels(id:string,offset=0){if(scopeDirty)throw Error('변경한 판본·단원 범위를 먼저 적용하세요.');resetDependent();const epoch=reviewEpoch;const result=await app.sourceScope({context:app.snapshot().sourceContext,view:'labels',hierarchyId:id,offset,limit:100});if(epoch!==reviewEpoch)return;scopeResult=result;labelScopeReady=true;categoryId=id;render();}
+function sourceBound(){if(!labelScopeReady)throw Error('유형 읽기를 지원하는 원천 단원에서 유형을 먼저 확인하세요.');if(studyDirty||intentDirty||scopeDirty)throw Error('수정한 공부 보고·특징·범위를 먼저 적용하세요.');const state=app.snapshot();if(!state.sourceContext)throw Error('Academy의 실제 분류 범위를 먼저 확인하세요.');if(!state.study?.studied)throw Error('선택한 연구 범위에 공부 보고를 연결하세요.');return {context:state.sourceContext,study:state.study,intent:state.intent};}
+async function reviewType(pat_no:string,cursor:string|null=null){const epoch=reviewEpoch;const result=await app.review({...sourceBound(),pat_no,cursor,limit:20});if(epoch!==reviewEpoch)return;reviewResult=result;render();}
+function academyView(){const panel=append(el('section','panel'),el('div','section-label','Academy 원천 분류 · 연구 분류와 구분'),el('h2','','기존 유형을 찾고, 그 유형의 문항을 읽습니다'),el('p','muted','유형 이름의 단어가 비슷하다는 사실은 구조가 같다는 증거가 아닙니다. 연구 맥락과 원하는 특징을 기준으로 원천 근거를 따로 검토하세요.'));
+ append(panel,note('원천 상태',modeName()+'. 원천의 전체 문항 수·현재성·판본·수학적 대응은 각각 확인해야 합니다. 미확인은 0개라는 뜻이 아닙니다.'),append(el('div','flow'),el('span','','연구 유형·버전'),el('span','','교사 공부 보고'),el('span','','원하는 특징'),el('span','','Academy 분류·유형'),el('span','','유형 아래 문항')));
+ const state=app.snapshot();panel.append(el('div','study-state',`현재 연구: ${state.scope.researchTypeIds.join(', ')||'미선택'} · 공부 보고: ${state.study?.studied?'있음':'없음'} · Academy 유형과 동일 ID 아님`));
+ const bindings=el('div','form-grid');for(const [key,title]of [['edition','확인한 교재 판본 · 모르면 비워 둠'],['unit','확인한 단원 범위 · 모르면 비워 둠']]as const){const input=el('input');input.value=state.scope[key]??'';input.setAttribute('aria-label',title);input.dataset.scopeField=key;input.addEventListener('input',()=>markDraft('scope'));bindings.append(append(el('label','',title),input));}panel.append(bindings,button('판본·단원 맥락 적용',async()=>{const edition=(document.querySelector('[data-scope-field=edition]')as HTMLInputElement).value.trim()||null,unit=(document.querySelector('[data-scope-field=unit]')as HTMLInputElement).value.trim()||null;await app.setScope({...app.snapshot().scope,edition,unit});scopeDirty=false;studyDirty=false;resetDependent();scopeResult=null;message='판본·단원 맥락을 변경했습니다. 해당 범위의 공부와 원천 연결을 다시 확인하세요.';render();}),button('Academy 원천 분류 확인',()=>loadSource()));
+ if(boot.delivery==='standalone'||location.protocol==='file:')panel.append(button(context.sourceMode==='synthetic'?'합성 연결 종료 · 연구만 보기':'합성 Academy로 흐름 검토',async()=>{app=await createClient(boot,context.sourceMode!=='synthetic');context=await app.context();nav=await app.navigate([]);selected=null;scopeResult=null;resetDependent();message='합성 연결 모드 변경으로 연구·공부 맥락을 초기화했습니다. 실제 Academy 자료가 아닙니다.';render();}));
+ if(scopeResult){const result=scopeResult;for(const limitation of result.limitations)panel.append(el('p','notice',limitation));if(result.context)panel.append(details('원천의 관찰 버전·범위',valueNode(result.context as unknown as Json)));if(result.sourceEvidence)panel.append(details('읽은 범위·현재성·누락 근거',valueNode(result.sourceEvidence)));
+ const categories=el('div','sibling-cards');for(const category of result.categories){const labelRead=button('이 범위의 유형',()=>{if(category.canReadLabels===true)return loadLabels(category.id);},'sibling-card',{'data-native-label-scope':category.id});labelRead.disabled=category.canReadLabels!==true;labelRead.title=category.canReadLabels===false?'이 단계는 분류 탐색만 지원합니다. 하위 단원으로 이동하세요.':category.canReadLabels===true?'이 원천 범위는 유형 읽기를 지원합니다.':'유형 읽기 가능 여부가 미확인되어 보류합니다.';const row=append(el('div'),button(category.name,()=>loadSource(category.id),'sibling-card',{'data-native-category':category.id}),labelRead,el('p','identity',`Academy 분류 ID ${category.id}${category.depth!==undefined?' · 원천 단계 '+category.depth:''}`),el('p','muted',category.canReadLabels===true?'유형 읽기 지원 확인':category.canReadLabels===false?'분류 탐색 단계 · 하위 단원에서 유형 확인':'유형 읽기 지원 미확인 · 보류'));if(category.nativeScope)row.append(details('원천 분류 좌표 근거',valueNode(category.nativeScope as unknown as Json)));categories.append(row);}if(result.categories.length)panel.append(section('원천 분류의 하위 항목',categories));if(sourceParent)panel.append(button('원천 분류 처음으로',()=>loadSource()));
+ if(result.labels.length){const labels=el('div','review-grid');for(const item of result.labels)labels.append(append(el('article','compare-card'),el('span','badge neutral','원천 유형 라벨 · 수학적 대응 미확인'),el('h3','',item.name),el('p','identity',`Academy 유형 pat_no: ${item.pat_no}\n분류: ${item.categoryId}\n관찰 버전: ${item.sourceRevision}`),el('p','muted',item.questionCount===null?'유형 아래 문항 수 미확인':`관찰된 문항 수 ${item.questionCount} · 전체 현재성 별도`),button('이 유형의 기존 문항 검토',()=>reviewType(item.pat_no),'',{'data-review-type':item.pat_no})));panel.append(section('해당 원천 범위의 유형',labels));}
+ if(result.availability!=='available')panel.append(append(el('div','empty'),el('h3','','Academy 자료를 아직 읽을 수 없습니다'),el('p','','연구 자료는 계속 공부할 수 있습니다. 이 상태에서 가상 문항을 실제 원천 자료처럼 채우지 않습니다.')));
+ if(result.nextOffset!==undefined&&result.nextOffset!==null)panel.append(button('다음 원천 분류·유형 페이지',()=>categoryId?loadLabels(categoryId,result.nextOffset!):loadSource(sourceParent,result.nextOffset!)));if(result.context&&!labelScopeReady)panel.append(note('유형 검색의 준비 단계','하위 분류를 탐색한 뒤 ‘유형 읽기 지원 확인’인 범위에서 유형을 먼저 읽으세요. 상위 분류나 지원 미확인 범위에서는 유형 검색을 실행하지 않습니다.'));if(result.context&&labelScopeReady){const query=el('input');query.type='search';query.setAttribute('aria-label','기존 유형 이름 검색');query.placeholder='예: 자릿값, 나머지, 중심';query.addEventListener('input',()=>{resetDependent();for(const node of host.querySelectorAll('[data-source-result]'))node.remove();});panel.append(append(el('div','toolbar'),query,button('공부 맥락으로 유형 찾기',async()=>{const epoch=reviewEpoch;const result=await app.find({...sourceBound(),query:query.value.trim(),categoryId,limit:20});if(epoch!==reviewEpoch)return;findResult=result;reviewResult=null;render();},'primary')));}}
+ if(findResult){const list=el('div','review-grid');for(const candidate of findResult.candidates){const card=append(el('article','compare-card'),el('span','badge warn','잠정 후보 · 교사 검토 필요'),el('h3','',candidate.label.name),el('p','identity',`Academy 유형 pat_no ${candidate.label.pat_no} · 분류 ${candidate.label.categoryId}`),el('p','',candidate.retrieval==='lexical-only'?'단어 기반 검색 결과 · 의미 확률이나 추천 순위 아님':'열람 근거가 연결된 후보 · 최종 대응 미확정'),field('검색에 겹친 단어',candidate.lexicalTerms));for(const axis of candidate.axes){const axisBody=append(el('section','field'),el('h4','',axisNames[axis.axis]+' · '+(axis.state==='unknown'?'미확인':axis.state==='conflicting'?'충돌':'근거 있음')),el('p','',axis.note));for(const ref of axis.sourceRefs)axisBody.append(sourceDetails(ref));card.append(axisBody);}append(card,field('보류·제한 이유',candidate.reasons),button('이 유형의 문항을 읽고 판단',()=>reviewType(candidate.label.pat_no),'',{'data-review-type':candidate.label.pat_no}));list.append(card);}const results=section('근거 축으로 비교할 잠정 유형',list);results.dataset.sourceResult='true';panel.append(results);for(const limitation of findResult.limitations)panel.append(el('p','notice',limitation));if(!findResult.candidates.length)panel.append(note('이번 검색에 노출된 후보 없음','단어가 겹치지 않는 구조적으로 같은 유형이 있을 수 있습니다. 의미상 부재나 부적합을 뜻하지 않습니다.'));}
+ if(reviewResult){const result=reviewResult,list=el('div');for(const question of result.questions){const card=append(el('article','compare-card'),el('span','badge neutral','기존 원천 문항 · 최종 편성 아님'),el('h3','',`문항 ${question.lecture_key}`),el('p','identity',`Academy 문항 lecture_key ${question.lecture_key}\n소속 유형 pat_no ${question.pat_no}\n문항 관찰 버전 ${question.sourceRevision}`),recordFields(question.metadata),details('정답·미리보기 가용성',field('정답',question.answer),field('미리보기 상태',question.preview.state),el('p','muted','원천 참조가 있어도 내용 취득·권한·현재성은 별도입니다.')));if(question.preview.state==='available'&&question.preview.url)card.append(safeLink(question.preview.url,'허용된 원천 미리보기 참조 열기'));if(question.q_code||question.paperKey)card.append(details('다른 원천 키 · 별개 정체성',field('모바일 q_code',question.q_code??null),field('시험지 paper key',question.paperKey??null)));list.append(card);}const results=section(`선택한 유형 ${result.pat_no} 아래 문항`,list);results.dataset.sourceResult='true';panel.append(results);for(const limitation of result.limitations)panel.append(el('p','notice',limitation));if(result.nextCursor)panel.append(button('다음 문항 페이지 읽기',()=>reviewType(result.pat_no,result.nextCursor)));if(result.questions.length)panel.append(alignmentEditor(result));}panel.append(alignmentHistory());
+ return append(el('div','workspace'),panel,append(el('aside','sidebar'),studyPanel()));}
+function alignmentEditor(result:SourceReviewResult){
+ const panel=append(el('section','alignment-editor'),el('h3','','유형 연결 검토 메모'),el('p','muted','열람한 문항을 근거로 연구 유형과 원천 유형의 연결을 제안합니다. 기본값은 미확인입니다. 지지·충돌 판단에는 문항을 직접 선택하고 이유를 기록하세요. 의미 확률이나 최종 문항 편성이 아닙니다.'));
+ panel.dataset.sourceResult='true';panel.append(el('p','identity',`연구 ${app.snapshot().scope.researchTypeIds.join(', ')} · ${projection.revision}\nAcademy 유형 pat_no ${result.pat_no} · ${result.context.sourceRevision}`));
+ const refs=result.questions.map(question=>{const input=el('input');input.type='checkbox';input.dataset.alignmentQuestion=question.lecture_key;input.setAttribute('aria-label',`연결 근거 문항 ${question.lecture_key}`);panel.append(append(el('label','check-row'),input,el('span','',`근거로 연결: ${question.lecture_key} · ${question.sourceRevision}`)));return {input,question};});
+ const rows={}as Record<ComparisonAxis,{state:HTMLSelectElement;note:HTMLTextAreaElement}>;
+ for(const axis of Object.keys(axisNames)as ComparisonAxis[]){const state=el('select');state.setAttribute('aria-label',`${axisNames[axis]} 연결 판단`);for(const [value,title]of [['unknown','미확인'],['supports','연결을 지지'],['conflicts','연결과 충돌']]){const option=el('option','',title);option.value=value;state.append(option);}const input=el('textarea');input.rows=2;input.setAttribute('aria-label',`${axisNames[axis]} 연결 이유`);input.placeholder='지지하거나 뒤집는 구조·조건·표현과 근거의 한계';rows[axis]={state,note:input};panel.append(append(el('div','alignment-axis'),append(el('label','',axisNames[axis]),state),input));}
+ panel.append(note('근거의 범위','문항의 원천에서 실제로 반환된 필드와 열람 버전에 한정된 메모입니다. 본문·정답이 미확인인 경우 그 한계를 남기세요. 교사의 제안이며 수학적 대응이나 학습효과가 수락된 것은 아닙니다.'));
+ panel.append(button('연결 검토 제안 기록',async()=>{const binding=sourceBound(),epoch=reviewEpoch;const questionRefs=refs.filter(ref=>ref.input.checked).map(({question})=>({lecture_key:question.lecture_key,sourceRevision:question.sourceRevision}));const axes={}as AlignmentProposalRequest['axes'];for(const axis of Object.keys(axisNames)as ComparisonAxis[]){const row=rows[axis],state=row.state.value as AlignmentAxisInput['state'],note=row.note.value.trim();if(state!=='unknown'&&(!note||!questionRefs.length))throw Error(`${axisNames[axis]}의 판단 이유와 열람한 근거 문항을 선택하세요.`);axes[axis]={state,note,questionRefs:state==='unknown'?[]:questionRefs};}await app.alignmentProposal({...binding,pat_no:result.pat_no,axes});if(epoch!==reviewEpoch)return;message='교사의 연결 검토 제안을 기록했습니다. 수락·최종 문항 편성은 이루어지지 않았습니다.';render();},'primary',{'data-alignment-submit':'true'}));return panel;
 }
-function banner() {
-  const node=el('div','','preview-banner');
-  node.append(el('span','예시 모드','banner-label'),el('p',examples
-    ? '지금 보이는 8개 라벨과 문항은 화면 검증용 합성 예시입니다. 실제 학원 pool과 연결되지 않았습니다.'
-    : '실제 학원 pool의 문항·라벨·위계는 아직 입력되지 않았습니다. 전체 개수와 현재 상태는 미확인입니다.'));
-  node.append(button(examples?'실제 자료 상태 보기':'합성 예시로 화면 보기',()=>{examples=!examples;openItem=null;query='';unit='';completeness='';render();},'text-button'));
-  return node;
+function alignmentHistory(){const panel=append(el('section','alignment-history'),el('h3','','유형 연결 제안 이력'));panel.dataset.alignmentHistory='true';const proposals=app.snapshot().alignmentProposals;if(!proposals.length){panel.append(el('p','muted','아직 교사가 기록한 연결 제안이 없습니다. 문항을 읽은 뒤 명시적으로 작성할 수 있습니다.'));return panel;}
+ for(const proposal of [...proposals].reverse()){const current=proposal.current&&!studyDirty&&!intentDirty&&!scopeDirty;const status=el('span','badge '+(current?'neutral':'warn'),current?'현재 맥락의 제안 · 미수락':'이전 맥락의 제안 · 재사용 보류');status.dataset.alignmentStatus='true';const card=append(el('article','alignment-proposal'),status,el('h4','',`연구 유형 ↔ Academy 유형 ${proposal.pat_no}`),el('p','identity',`제안 ID ${proposal.id}\n연구 ${proposal.studyScope.researchTypeIds.join(', ')} · ${proposal.studyScope.researchRevision}\nAcademy ${proposal.context.owner} · ${proposal.context.sourceRevision}`),el('p','muted','교사 제안 · 수락 아님 · 최종 문항 편성 없음'));card.dataset.alignmentProposal=proposal.id;for(const axis of Object.keys(axisNames)as ComparisonAxis[]){const value=proposal.axes[axis];card.append(field(`${axisNames[axis]} · ${value.state==='supports'?'연결을 지지':value.state==='conflicts'?'연결과 충돌':'미확인'}`,value.note||'판단 근거 미기록'));}const evidence=el('div');for(const ref of proposal.researchRefs)evidence.append(sourceDetails(ref));for(const ref of proposal.inspectedQuestions)evidence.append(field('열람한 문항·버전',`${ref.question.lecture_key} · ${ref.question.sourceRevision}`),sourceDetails(ref.source));card.append(details('연구·원천 문항의 연결 근거와 버전',evidence,field('이전 맥락으로 남긴 이유',proposal.historicalReason),field('해석의 한계',proposal.limitations)));panel.append(card);}return panel;
 }
-function assessmentSummary() {
-  const aside=el('aside','','assessment-rail');aside.setAttribute('aria-label','월말평가 조건');
-  aside.append(el('p','ASSESSMENT NOTE','eyebrow'),el('h2','10월 월말평가'),el('p','초등 3학년 · 서술형','muted'));
-  const numbers=el('div','','assessment-numbers');
-  for(const [value,label] of [['24','문항'],['100','점'],['80','분']]){const cell=el('div');cell.append(el('strong',value),el('span',label));numbers.append(cell);}
-  aside.append(numbers);
-  const bands=el('div','','bands');for(const band of requirement.pointBands){const row=el('div');row.append(el('span',`${band.points}점`),el('span',`${band.questions}문항`));bands.append(row);}
-  aside.append(bands,el('p','15:00 시작 → 16:20 시험 종료','timing-note'),el('p','정확한 날짜 · 시간대 미확정','small-note'));
-  const progress=el('div','','selection-note');progress.append(el('span','선택된 시험 문항'),el('strong','0 / 24'),el('small','라벨 탐색은 시험 문항 선택과 구분합니다.'));
-  aside.append(progress,button('평가 조건 살펴보기 ↗',()=>{view='assessment';render();},'secondary-button'));
-  const note=el('div','','rail-note');note.append(el('span','먼저, 유형을 이해하기','serif-note'),el('p','세부 유형을 학습한 뒤 원하는 문항의 특징을 정리하고, 기존 위계에서 유사한 라벨을 찾습니다.'));
-  aside.append(note);return aside;
-}
-function itemDetail(item:DisplayItem) {
-  const panel=el('section','','item-detail');panel.dataset.role='item-detail';
-  panel.append(el('p',`${item.label} · 합성 예시`,'eyebrow'),el('h3','문항과 라벨의 근거'));
-  const candidate=item.candidate;
-  panel.append(el('p',candidate.content.state==='known'?candidate.content.value:'원문 미확인','question-body'));
-  const answer=el('details','','answer');answer.append(el('summary','정답 예시 확인'),el('p',candidate.answer.state==='known'?candidate.answer.value:'정답 근거가 입력되지 않았습니다.'));
-  panel.append(answer);
-  const info=el('dl','','detail-facts');
-  for(const [label,value] of [
-    ['예시 라벨',item.tags.join(' · ')],['예시 단원',item.unitLabel],['라벨 ID',candidate.sourceItem.literalKey],
-    ['출처','처음부터 만든 화면 검증용 자료'],['난이도',candidate.difficulty.state==='known'?`${candidate.difficulty.value.level} · 합성 원천 주장`:'근거 미확인'],
-    ['판본',candidate.edition.state==='known'?candidate.edition.value.literalKey:'미확인'],
-  ]){info.append(el('dt',label),el('dd',value));}
-  panel.append(info,el('p','위 라벨과 단원은 실제 학원 분류체계가 아닙니다. 배점으로 난이도나 유사도를 추정하지 않습니다.','small-note'));
-  return panel;
-}
-function renderPool() {
-  const head=heading('QUESTION LABEL LIBRARY','익숙한 유형에서,\n찾고 싶은 문항까지.','라벨과 원문을 나란히 살펴보고, 원하는 문항의 특징을 구체화하세요.');
-  head.append(button('유사 라벨 찾기 ↗',()=>{view='match';render();},'primary-button'));
-  main.append(head,banner());
-  const layout=el('div','','workspace-layout'),work=el('section','','pool-work');
-  const filters=el('div','','filters');
-  const search=el('input');search.type='search';search.placeholder='라벨, 문항, 유형 키워드 검색';search.value=query;search.id='label-search';
-  const select=el('select');select.setAttribute('aria-label','예시 단원');select.append(new Option('모든 예시 단원',''));
-  for(const label of [...new Set(data.examples.map(item=>item.unitLabel))])select.append(new Option(label,label));select.value=unit;
-  const status=el('select');status.setAttribute('aria-label','근거 상태');status.append(new Option('모든 근거 상태',''),new Option('입력 항목 있음','complete'),new Option('미확인 항목 있음','partial'));status.value=completeness;
-  filters.append(field('문자 검색',search),field('예시 범위',select),field('근거 상태',status));work.append(filters);
-  const count=el('p','','result-count');count.setAttribute('aria-live','polite');
-  const list=el('div','','item-list');list.dataset.role='item-list';
-  const update=()=>{
-    const visible=examples?filterItems(data.examples,{query,unit,completeness}):[];
-    count.textContent=examples?`합성 예시 ${visible.length}개 / ${data.examples.length}개 · 원래 입력 순서 · 실제 pool 개수 미확인`:'실제 pool 미연결 · 조회 결과가 0개라는 뜻이 아닙니다.';
-    list.replaceChildren();
-    if(!visible.length){const empty=el('div','','empty-state');empty.append(el('span','—','empty-symbol'),el('h2',examples?'일치하는 예시가 없습니다.':'아직 원천 라벨을 불러오지 않았습니다.'),el('p',examples?'검색어나 필터를 바꾸어 살펴보세요.':'기존 MCP의 라벨 조회 도구와 연결하면 원래 ID와 위계를 그대로 표시합니다.'));if(examples)empty.append(button('검색과 필터 초기화',()=>{query='';unit='';completeness='';render();},'secondary-button'));list.append(empty);}
-    for(const item of visible){
-      const row=el('article','','item-row'),left=el('div','','item-number');left.append(el('span',item.label.replace('예시 ','')),el('small','DEMO'));
-      const body=el('div','','item-copy');body.append(el('p',`${item.unitLabel} / 화면 검증용 판본`,'item-path'),el('h2',item.tags.filter(tag=>!tag.includes('미확인')).join(' · ')),el('p',item.candidate.content.state==='known'?item.candidate.content.value:'원문 미확인','item-excerpt'));
-      const tags=el('div','','tags');tags.append(pill('서술형'),pill(missingFields(item).length?'근거 미확인':'합성 근거 입력',missingFields(item).length?'amber':'green'));body.append(tags);
-      const action=button(openItem===item.candidate.id?'닫기 −':'근거 보기 ＋',()=>{openItem=openItem===item.candidate.id?null:item.candidate.id;update();},'detail-button');action.setAttribute('aria-expanded',String(openItem===item.candidate.id));
-      const detailId=`detail-${item.candidate.sourceItem.literalKey}`;action.setAttribute('aria-controls',detailId);
-      row.append(left,body,action);if(openItem===item.candidate.id){const detail=itemDetail(item);detail.id=detailId;row.append(detail);}list.append(row);
-    }
-  };
-  search.addEventListener('input',()=>{query=search.value;update();});select.addEventListener('change',()=>{unit=select.value;update();});status.addEventListener('change',()=>{completeness=status.value;update();});
-  work.append(count,list);update();layout.append(work,assessmentSummary());main.append(layout);
-}
-
-function renderMatch() {
-  main.append(heading('FROM UNDERSTANDING TO DISCOVERY','어떤 문항을 찾고 있나요?','학습한 세부 유형과 원하는 문항의 특징을 먼저 정리합니다. 실제 라벨의 비교는 기존 위계를 기준으로 합니다.'),banner());
-  const layout=el('div','','workspace-layout'),form=el('section','','form-panel');
-  form.append(el('p','01 · 탐색 의도','eyebrow'),el('h2','유형을 이해한 다음, 라벨 찾기'));
-  const learnedInput=el('input');learnedInput.placeholder='학습한 세부 유형 또는 정확한 위계 ID';learnedInput.value=learned;learnedInput.addEventListener('input',()=>{learned=learnedInput.value;});
-  const desiredInput=el('textarea');desiredInput.rows=5;desiredInput.placeholder='예: 계산값보다 풀이의 오류를 설명하는 문항을 찾고 싶어요.\n수의 범위, 필요한 사고, 표현 방식 등을 적어 주세요.';desiredInput.value=desired;desiredInput.addEventListener('input',()=>{desired=desiredInput.value;});
-  form.append(field('학습한 세부 유형',learnedInput),field('찾고 싶은 문항의 특징',desiredInput));
-  const result=el('div','','query-status');result.setAttribute('role','status');
-  form.append(button('조회 준비 확인',()=>{
-    result.replaceChildren();
-    if(!learned.trim()||!desired.trim()){result.append(el('p','학습한 세부 유형과 원하는 문항의 특징을 모두 입력해 주세요.'));return;}
-    result.append(el('strong','탐색 의도를 정리했습니다.'),el('p','실제 라벨 스냅샷과 원래 위계 ID가 아직 연결되지 않아 조회는 실행하지 않았습니다. 입력 내용은 이 화면의 메모리에만 유지됩니다.'),el('p','MCP 조회 → 동일 위계 내 라벨 후보 → 원문 비교 근거 → 교사 판단 순서로 이어집니다.'));
-  },'primary-button'),result);
-  const steps=el('ol','','match-steps');for(const [title,note] of [
-    ['유형 학습','완료 여부는 교사가 판단합니다.'],['기존 위계로 범위 지정','새 위계나 라벨 ID를 추정하지 않습니다.'],['유사 라벨 비교','검색 방식과 비교 근거를 함께 확인합니다.'],['문항 원문 검토','라벨 유사도는 최종 문항 적합성 판단과 다릅니다.'],
-  ]){const step=el('li');step.append(el('strong',title),el('p',note));steps.append(step);}
-  form.append(steps);layout.append(form,assessmentSummary());main.append(layout);
-}
-
-function renderAssessment() {
-  main.append(heading('OCTOBER ASSESSMENT','평가의 조건부터, 명확하게.','이미 확인된 조건과 교사의 결정이 필요한 정보를 한곳에서 살펴봅니다.'));
-  const grid=el('div','','metric-grid');for(const [value,label,note] of [['24','서술형 문항','초등 3학년 · 10월'],['100','총 배점','3점×12 + 5점×8 + 6점×4'],['80','시험 시간 / 분','15:00 시작 · 16:20 종료']]){const metric=el('section','','metric');metric.append(el('span',label,'eyebrow'),el('strong',value),el('p',note));grid.append(metric);}main.append(grid);
-  const layout=el('div','','workspace-layout'),panel=el('section','','form-panel');panel.append(el('p','CALENDAR & SCOPE','eyebrow'),el('h2','날짜와 시간대는 각각 확인합니다.'));
-  const dateInput=el('input');dateInput.type='date';dateInput.value=examDate;dateInput.dataset.role='exam-date';
-  const zoneInput=el('input');zoneInput.type='text';zoneInput.placeholder='확인된 IANA 시간대';zoneInput.value=timeZone;zoneInput.dataset.role='exam-timezone';zoneInput.setAttribute('list','timezone-options');
-  const options=el('datalist');options.id='timezone-options';for(const value of ['Asia/Seoul','Etc/UTC'])options.append(new Option(value,value));
-  const status=el('p','','calendar-status');status.setAttribute('role','status');
-  const update=()=>{
-    const dateState=examDate?(validDate(examDate)?examDate:'잘못된 날짜'):'시험일 미확정';
-    const zoneState=timeZone?(validTimeZone(timeZone)?timeZone:'유효한 시간대인지 확인해 주세요'):'시간대 미확정';
-    status.textContent=`${dateState} · ${zoneState} · 화면 메모이며 저장되지 않습니다.`;
-  };
-  dateInput.addEventListener('input',()=>{examDate=dateInput.value;update();});zoneInput.addEventListener('input',()=>{timeZone=zoneInput.value;update();});update();
-  const fields=el('div','','calendar-fields');fields.append(field('시험일 · 확정 전에는 빈칸',dateInput),field('시간대 · 별도로 입력',zoneInput));panel.append(fields,options,status);
-  const timeline=el('div','','timeline');for(const [time,title,note] of [['15:00','시험 시작','80분 동안 서술형 평가'],['16:20','시험 종료','채점과 학생 간 하브루타'],['18:00','수업 종료','시험 후 100분의 세부 배분 미확정']]){const row=el('div');row.append(el('strong',time),el('span',title),el('small',note));timeline.append(row);}panel.append(timeline);
-  const unresolved=el('section','','unresolved');unresolved.append(el('h3','다음에 확인할 정보'));const ul=el('ul');for(const text of ['정확한 교재 판본과 겹치지 않는 단원 범위','실제 라벨·문항 목록과 문항→유형 연결 근거','난이도 원천 주장 또는 교사 판단 근거','원천 자료의 현재 상태와 조회 범위'])ul.append(el('li',text));unresolved.append(ul);panel.append(unresolved);
-  layout.append(panel,assessmentSummary());main.append(layout);
-}
-
-function renderSource() {
-  main.append(heading('SOURCE & CONNECTION','근거는 이어가고, 의존성은 줄입니다.','화면은 MagicPath 없이 정적 파일만으로 실행됩니다. 실제 학원 조회와 교사의 판단은 각각의 소유자를 유지합니다.'));
-  const panel=el('section','','source-panel');panel.append(el('h2','현재 연결 상태'));
-  const rows=[['독립 프론트엔드','실행 가능','정적 HTML · CSS · JavaScript · 로컬 폰트'],['실제 문항 라벨 pool','화면 미연결','전체 문항수 · 평가 단원 범위 · 원문 현재 상태 미확인'],['기존 custom MCP','별도 조회 검증','기존 위계 → 유형 라벨 → 문항 정보·미리보기 참조'],['라벨 유사도 조회','별도 도구 준비','유형 학습 완료 후 기존 위계 안에서 원문 라벨 대조'],['MagicPath 원본 화면','접근 미확인','API 한도 소진 · 공개 주소는 홈페이지로 이동'],['시험 문항 구성','사용자 결정 전','선택 0개 · 생성·최종 구성·저장 없음']];
-  const table=el('table');const caption=el('caption','화면 실행과 실제 원천 연결은 별도 상태입니다.');table.append(caption);const thead=el('thead'),header=el('tr');for(const title of ['영역','상태','확인 범위'])header.append(el('th',title));thead.append(header);table.append(thead);const tbody=el('tbody');for(const [name,state,note] of rows){const row=el('tr');row.append(el('th',name),el('td',state),el('td',note));tbody.append(row);}table.append(tbody);panel.append(table);
-  const details=el('details','','source-details');details.append(el('summary','DATA / LOGIC / ACTION / GOVERNANCE 경계'));const dl=el('dl');for(const [title,note] of [['DATA','기존 라벨 ID·위계·원문·개정·조회 범위를 보존합니다.'],['LOGIC','라벨 비교 근거와 최종 문항 적합성을 구분합니다.'],['ACTION','이번 미리보기는 탐색·필터·근거 확인만 제공합니다.'],['GOVERNANCE','학원 원천은 읽기 전용이며 실제 자료와 자격증명을 정적 페이지에 넣지 않습니다.']])dl.append(el('dt',title),el('dd',note));details.append(dl);panel.append(details);main.append(panel);
-}
-function render() {
-  main.replaceChildren();for(const node of navButtons){const selected=node.dataset.view===view;node.classList.toggle('active',selected);if(selected)node.setAttribute('aria-current','page');else node.removeAttribute('aria-current');}
-  document.title=`${tabs.find(([key])=>key===view)![1]} · 문항실`;
-  if(view==='pool')renderPool();else if(view==='match')renderMatch();else if(view==='assessment')renderAssessment();else renderSource();
-}
-render();
+function assessmentView(){const panel=append(el('section','panel'),el('div','section-label','완료 점수가 아닌 검토 조건'),el('h2','','정해진 조건과 남은 판단을 구분합니다'),el('p','muted','24문항·100점의 형식 조건을 충족해도 출제 범위나 수학적 적합성, 교사의 최종 편성이 확정되는 것은 아닙니다.'));
+ const form=el('div','form-grid'),date=el('input'),zone=el('input');date.type='date';date.value=examDate;date.setAttribute('aria-label','정확한 시험일');date.dataset.role='exam-date';zone.value=timeZone;zone.placeholder='직접 확인한 시간대';zone.setAttribute('aria-label','독립적인 시간대');zone.dataset.role='exam-timezone';date.addEventListener('input',()=>{examDate=date.value;date.setCustomValidity(!examDate||validDate(examDate)?'':'달력 날짜를 확인하세요.');});zone.addEventListener('input',()=>{timeZone=zone.value;zone.setCustomValidity(!timeZone||validTimeZone(timeZone)?'':'시간대를 확인하세요.');});append(form,append(el('label','','정확한 시험일 · 미확정이면 비움'),date),append(el('label','','시간대 · 날짜와 독립적으로 확인'),zone));panel.append(form,note('준비 마감과 평가 날짜를 구분','2026년 10월 19일은 준비 마감입니다. 시험 날짜를 자동으로 채우지 않습니다. 날짜를 지우거나 바꾸어도 별도로 입력한 시간대는 유지합니다.'));
+ const facts=el('div','fact-grid');for(const [title,value]of [['최종 문항 편성','사용자 권한 · 이 작업실에서 생성하지 않음'],['전체 원천 문항 재고','미확인 · 0개가 아님'],['교재 판본·단원 대응','근거와 별도 확인 필요'],['학생의 실제 이해·학습효과','미검증 · 연구 예상과 구분'],['현재 연구 공부 보고',app.snapshot().study?.studied?'교사 보고 있음 · 해당 범위에 한함':'없음'],['공식 저장·출력·발송','이 작업실에 실행 경로 없음']])facts.append(append(el('div','fact'),el('small','',title),el('strong','',value)));panel.append(facts,alignmentHistory(),details('이 창의 맥락 변경·보고 이력',valueNode(app.snapshot().history),el('p','muted','이전 범위의 보고와 원천 관찰·문항 버전은 이력으로 남으며 최신 판단으로 재사용하지 않습니다.')),details('평가 연구의 맥락과 연결 구조',valueNode(projection.assessmentResearch)),details('문헌 출처와 확인 범위',...projection.sources.map(source=>recordFields(source))));return panel;}
+void (async()=>{try{app=await createClient(boot);context=await app.context();nav=await app.navigate([]);render();}catch(error){host.replaceChildren(note('연구 작업실을 열지 못했습니다',errorMessage(error),'warning'));}})();

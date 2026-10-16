@@ -1,5 +1,7 @@
 # Independent source reconstruction · 2026-10-16
 
+Historical prototype evidence. The user subsequently rejected that frontend as insufficiently grounded in their research context. The current implementation and source decisions are described in [the source-context entrypoint](../../month-end-workbench/docs/source-context.md). Earlier APK/static observations retain their original limits; this record is not current frontend acceptance.
+
 This work follows the user's independent month-end source instruction. Academy remains read-only. Local commits are review artifacts; push, PR, merge and deployment await the user's later approval. No Harness changes, shared main edits, private database migration or final exam membership are part of this source change.
 
 ## Sources and reconstruction
