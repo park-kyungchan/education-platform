@@ -1,0 +1,1016 @@
+{
+  "schema": "owner-scoped-native-review-output.v1",
+  "reviewStatus": "complete",
+  "binding": {
+    "repository": "park-kyungchan/education-platform",
+    "projectId": "education-platform",
+    "domainId": "education",
+    "semanticOwner": "education-platform",
+    "scope": "month-end-source-redesign"
+  },
+  "headSha": "4126f26072299279c34e9b20918d39941b1aeada",
+  "reviewedTreeSha": "c7ccc58448ad4d3580f7365fe6ef3b70788d9ce3",
+  "reviewedSourceManifestSha256": "4bc52c4cbb364af9665a1b8e6e1b5879f147ebdcd4d4524c10c22bbb842bd721",
+  "reviewer": {
+    "runtime": "native-codex",
+    "taskId": "/root/review_owner_api"
+  },
+  "author": {
+    "runtime": "native-codex",
+    "taskId": "01a14419-af50-72d3-b918-cc32a50a1913"
+  },
+  "conclusion": "pass",
+  "unresolvedFindings": 0,
+  "findings": [],
+  "completedAtUtc": "2026-10-16T23:01:54.276Z",
+  "authorAttribution": {
+    "successorIntegration": "Observed Root native UUID; no Git/PID/inherited-environment authentication inference",
+    "originalMonthEndRoot": "01a14419-cb13-7202-a688-b4c1670da4cb",
+    "sourceRepairs": "01a144db-2ddf-7990-9fba-3a175265e424",
+    "ciAndPortabilityAuthor": "/root/closure_plan",
+    "unchangedOriginalContributionsRetained": true
+  },
+  "exactSource": {
+    "root": "/home/palantirkc/code/worktrees/education-reviewed-closeout-20261017",
+    "baseline": "05382dc0a0297e9c9bd4ed374ed1d9b802f533ad",
+    "manifest": {
+      "schema": "agent-platform.reviewed-source-manifest.v1",
+      "reviewedTreeSha": "c7ccc58448ad4d3580f7365fe6ef3b70788d9ce3",
+      "entryCount": 1258,
+      "blobCount": 1088,
+      "sha256": "4bc52c4cbb364af9665a1b8e6e1b5879f147ebdcd4d4524c10c22bbb842bd721"
+    },
+    "changedPathCount": 77,
+    "changedSourceClosure": [
+      {
+        "path": ".github/workflows/month-end-pages.yml",
+        "mode": "100644",
+        "gitBlobSha": "ada36c66f0e133828cae9ec6e0395b091dea04ba",
+        "sha256": "72bdfa42117302ede3d0ac5d4176615aa71c5750e46fee9d05efdb3f03087d00",
+        "bytes": 1363
+      },
+      {
+        "path": ".github/workflows/source.yml",
+        "mode": "100644",
+        "gitBlobSha": "5458e0c08d0215cd5675744e54479218547781b3",
+        "sha256": "dddd5cb7e58fa269e531349e97b5b7781afc7e886f47d9329873d9af5a6ab823",
+        "bytes": 2161
+      },
+      {
+        "path": "AGENTS.md",
+        "mode": "100644",
+        "gitBlobSha": "c89eaece62f2020582936b5e17cd13f9ec356277",
+        "sha256": "41ab811f94a4873d6b8a264fd95850a6c1523767bdd293138fd62a351fedaab0",
+        "bytes": 2261
+      },
+      {
+        "path": "apps/academy/dc-gang-a/bun.lock",
+        "mode": "100644",
+        "gitBlobSha": "da6c64ff2df9796bd27f088c2b2291117190e794",
+        "sha256": "d53986a01470c2b85224a79de64c4d8b86b166b37cee6d329aa8cf50fd589288",
+        "bytes": 16019
+      },
+      {
+        "path": "apps/academy/dc-gang-a/docs/daily-record-authoring-policy.md",
+        "mode": "100644",
+        "gitBlobSha": "fc7e3a81c4f464886ddb3975e5b0681c7ffae15b",
+        "sha256": "1ae5f207b485f9df09f3ee617b332743e1fe6e047eda0ed99ea1385dc6e56fd1",
+        "bytes": 6129
+      },
+      {
+        "path": "apps/academy/dc-gang-a/harness/test_pool_inspect.ts",
+        "mode": "100644",
+        "gitBlobSha": "714dbc9fca5095b12b01dfdd193e4a6c0cd0d13c",
+        "sha256": "2fb756b7285fba4fb34e7481091ba66d3f5b0e6daae9e210f8ef38029699d295",
+        "bytes": 4033
+      },
+      {
+        "path": "apps/academy/dc-gang-a/package.json",
+        "mode": "100644",
+        "gitBlobSha": "e14a6ef8e143cdfb14ae7c1ccd11cf4b7a0f7452",
+        "sha256": "abed535e865716bd43ea1b86882be110c25307ffedfc97948356a62f9241d012",
+        "bytes": 1579
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/teacherWorkspace.ts",
+        "mode": "100644",
+        "gitBlobSha": "2d765fd26e6d7ef9382f85ba780574857669acd2",
+        "sha256": "277fe96d67970052c6d7e2e20861fa89ac18ceb10eecfa449ac3774b5782a496",
+        "bytes": 13826
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/lms/academyHttpClient.ts",
+        "mode": "100644",
+        "gitBlobSha": "b84cc58f5e6177db19dc561e0fe7ae1dd3dec9c8",
+        "sha256": "da1e223b9ea99b94b26124bf974f8d9fbc522218de02dd9fe76515c13f667fe5",
+        "bytes": 43864
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/lms/lessonJournalTemplates.ts",
+        "mode": "100644",
+        "gitBlobSha": "e94f3f974d73ccd360455bb7b3a3866d32c66050",
+        "sha256": "cc491ee32125f329265ecbcafc69fd8dbd243e8cf3a575db3091b285d8ccb472",
+        "bytes": 8380
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/lms/testPoolInspection.ts",
+        "mode": "100644",
+        "gitBlobSha": "6291e22940fb8ffa9f02e6d0ef27675b33373cac",
+        "sha256": "6169ca82d0289105f4aa215a826afb60e80a31fb18787ae1321ceac2538c1377",
+        "bytes": 7553
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/lms/testPoolQuestionPreview.ts",
+        "mode": "100644",
+        "gitBlobSha": "2ad8f1f1d4e23a7ddb638b68bd55e9d4fb055dd7",
+        "sha256": "009bf76ee70fe19c6a988e07c8b77b6137b13170f5266e6af7bdf3e5d1b4c65a",
+        "bytes": 1279
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/lms/testPoolReadProtocol.ts",
+        "mode": "100644",
+        "gitBlobSha": "8b3230a2ab4f18731b6e6d9ad609ca9cb6432acd",
+        "sha256": "819075ee60a0319a3227e6fe12dcfbedfbe207bc53b8ccfdc4a319c04ba877ba",
+        "bytes": 10200
+      },
+      {
+        "path": "apps/academy/dc-gang-a/tests/academy/teacherWorkspace.test.ts",
+        "mode": "100644",
+        "gitBlobSha": "83d886c5baeb94901c6818cf5e84ad1ab4ce587b",
+        "sha256": "b5a9b0440d3af76ce9635c10f292e231a4e2eeaebd1a657dfdeb6cd7e1c71a24",
+        "bytes": 19225
+      },
+      {
+        "path": "apps/academy/dc-gang-a/tests/lms/lessonJournalTemplates.test.ts",
+        "mode": "100644",
+        "gitBlobSha": "043eaee9a76b6cac743397e89a54f6a724ba1c21",
+        "sha256": "48123c51b0e0f879979f83bd63e222763ecd54b02fe19733431270d095e2e3f6",
+        "bytes": 6660
+      },
+      {
+        "path": "apps/academy/dc-gang-a/tests/lms/testPoolInspection.test.ts",
+        "mode": "100644",
+        "gitBlobSha": "17a58ca224314ed0f17dac9677a99a9519f34a5a",
+        "sha256": "cc1c0fca21fe6d961b0c7e6823f0e3d793be3db1c5a96bbbaf2ffd5ace764d4e",
+        "bytes": 2282
+      },
+      {
+        "path": "apps/academy/dc-gang-a/tests/lms/testPoolReadProtocol.test.ts",
+        "mode": "100644",
+        "gitBlobSha": "a1cba1ae6e37218fb50f6ea7f5767c163b166b76",
+        "sha256": "6cc764d1bdf07bf26eafe3a022a72bc898ff87fc5aa512e2b7ded9cabbae0226",
+        "bytes": 6052
+      },
+      {
+        "path": "apps/academy/month-end-web/README.md",
+        "mode": "100644",
+        "gitBlobSha": "7afe76847995d1dc7f0c03e87681f794d918b322",
+        "sha256": "1553c6dda304070f281a5edb1977674fa352be103a9099a96bef977f2eb16400",
+        "bytes": 3091
+      },
+      {
+        "path": "apps/academy/month-end-web/build.ts",
+        "mode": "100644",
+        "gitBlobSha": "ee96cf9ab7725e35c9e823106897715a7203a3e5",
+        "sha256": "9e2bfbf89ca09542a64f24c4390ac6b95c33d4d1c0a8e6c27e7ce905d6707e30",
+        "bytes": 2968
+      },
+      {
+        "path": "apps/academy/month-end-web/docs/frontend-verification-20261016.json",
+        "mode": "100644",
+        "gitBlobSha": "65887e20dd23fbf62887598ce81e760bef8f3781",
+        "sha256": "0e61367b88016f3af407d18796215d4d3ff3f1c8c2fb39f26869c3db2623cb6f",
+        "bytes": 1333
+      },
+      {
+        "path": "apps/academy/month-end-web/docs/frontend-verification-20261017.json",
+        "mode": "100644",
+        "gitBlobSha": "f25da0d3a17fe6307632a82b1e0e65a88cf7c1b7",
+        "sha256": "6c56125530a1023b09815936ea05f5fde1f7e1c22e6f1133e4ced41566601c17",
+        "bytes": 4316
+      },
+      {
+        "path": "apps/academy/month-end-web/docs/live-read-verification-20261016.json",
+        "mode": "100644",
+        "gitBlobSha": "be621138036fe6591ae6a8aadb3b272347b05b42",
+        "sha256": "0e963e7a934c84909ef3acec492dd118214e45c3c77d7f410d35f451bfdd27b9",
+        "bytes": 1789
+      },
+      {
+        "path": "apps/academy/month-end-web/docs/reverse-engineering-20261016.md",
+        "mode": "100644",
+        "gitBlobSha": "0db5432b06ec7448c982f1ea92912317c406214b",
+        "sha256": "b46dbfa7599324b2a03553b1760bf25b68333220fb342f1182cb6e11b970a258",
+        "bytes": 9197
+      },
+      {
+        "path": "apps/academy/month-end-web/index.html",
+        "mode": "100644",
+        "gitBlobSha": "1ee9a9cac35d6c286bcc37fe91f47ea05ee72441",
+        "sha256": "d98d21334e2a9c9f2c6302e903d4e1b26bccee4a8decc72c8b8878b9379b126c",
+        "bytes": 1249
+      },
+      {
+        "path": "apps/academy/month-end-web/package.json",
+        "mode": "100644",
+        "gitBlobSha": "87be92cfabfb2af9067912150f4e692c267c34e2",
+        "sha256": "1dae2816a73989dcef15fdf05d5ce85cbe846226c9fea857553d6b81409b3fb0",
+        "bytes": 433
+      },
+      {
+        "path": "apps/academy/month-end-web/preview.ts",
+        "mode": "100644",
+        "gitBlobSha": "9c7ccaa7b050e1a4928eba8d69cc1abb387930bd",
+        "sha256": "a6f61b8ec3c5690a43992def03e85695082f07a8c4282046d031344fb2e3cbeb",
+        "bytes": 1063
+      },
+      {
+        "path": "apps/academy/month-end-web/src/app.ts",
+        "mode": "100644",
+        "gitBlobSha": "e9cf5960c173ceac6c0db6fd1b76a36fcb48dec8",
+        "sha256": "c75b7ed8e561f5aafd427e02405e6c0127ba531246437761bda164f434b52c15",
+        "bytes": 40542
+      },
+      {
+        "path": "apps/academy/month-end-web/src/client.ts",
+        "mode": "100644",
+        "gitBlobSha": "6c3fb6d5e8022edabd577eefed9d4f5c70b1ab0e",
+        "sha256": "a8a42e16e133c412c19e68c65b554841255046caa962a015f5ab2b1465933325",
+        "bytes": 2949
+      },
+      {
+        "path": "apps/academy/month-end-web/src/model.ts",
+        "mode": "100644",
+        "gitBlobSha": "a6c2e8d315b28000c8929c137945eefb7b0aac12",
+        "sha256": "db5e264e3bd74ec5663fa01f3d053f0045b41bc6f67cc3752bd8abf80ed62235",
+        "bytes": 454
+      },
+      {
+        "path": "apps/academy/month-end-web/src/styles.css",
+        "mode": "100644",
+        "gitBlobSha": "fc13c0bed8229670a583d725b366c4e6d02a8414",
+        "sha256": "bc633002257842e113eac60483216412315053b4f6aac7eb46e4495b5a5f377a",
+        "bytes": 10756
+      },
+      {
+        "path": "apps/academy/month-end-web/src/view.ts",
+        "mode": "100644",
+        "gitBlobSha": "e03821bef09c847a2a1f2e81287d12ca3534b8d0",
+        "sha256": "2f9b22f70f347c494a9e71f696017b04855c68b7575a6bbe161035a41add7dcc",
+        "bytes": 5992
+      },
+      {
+        "path": "apps/academy/month-end-web/tests/browser.ts",
+        "mode": "100644",
+        "gitBlobSha": "07dcbb403450119446aed96b83f91b29ee08fb8e",
+        "sha256": "836b19b094557c6aa67219c9f9be5e0e3b561f1eadd306b18d9980b45618ad5e",
+        "bytes": 21773
+      },
+      {
+        "path": "apps/academy/month-end-web/tests/model.test.ts",
+        "mode": "100644",
+        "gitBlobSha": "e778829426aee133b12b1fa6d148748ad0ca5b19",
+        "sha256": "f13e4e2ece7d921fcb0652c66886aa7f6a21b02f804059a41e8834c173bbfda0",
+        "bytes": 503
+      },
+      {
+        "path": "apps/academy/month-end-web/tsconfig.json",
+        "mode": "100644",
+        "gitBlobSha": "f63a9595f0d02205190c866bde46d34627606d38",
+        "sha256": "d298cfde789f97314c689e79376c027f2e7de9ddef66832eeba6c392dc49969f",
+        "bytes": 215
+      },
+      {
+        "path": "apps/academy/month-end-web/work/month-end-context-rebuild-20261017/architecture.md",
+        "mode": "100644",
+        "gitBlobSha": "05c5f67ef9dda9cfbd34c1913cfd6b265a7eb7e2",
+        "sha256": "4f9212a0c316eb00d640f206fb0d82909e5edcf75233a82726fb57fb9f5e48d0",
+        "bytes": 9184
+      },
+      {
+        "path": "apps/academy/month-end-web/work/month-end-context-rebuild-20261017/checkpoint.json",
+        "mode": "100644",
+        "gitBlobSha": "44f0abc6ba2d37b6a3eb2aff5749d920192e663b",
+        "sha256": "ca3c5b15ce1656d5430afdf38f4ef9dddba8ccef2a18268e463f722071900efc",
+        "bytes": 15753
+      },
+      {
+        "path": "apps/academy/month-end-workbench/API.md",
+        "mode": "100644",
+        "gitBlobSha": "1b6ce15fcaaff0bda49bf72eed8403f8f02193c4",
+        "sha256": "f1193b975653301c90bbc018021a3d04fc02693ee8bd15b0802efc324f66b374",
+        "bytes": 3690
+      },
+      {
+        "path": "apps/academy/month-end-workbench/README.md",
+        "mode": "100644",
+        "gitBlobSha": "923663dcabe89842c7d5f208f6ffffdc5a61f599",
+        "sha256": "18142658ebb4df89496fdd484beb6dae99584b2033bd3c55afdd2de1d46a3d8f",
+        "bytes": 6447
+      },
+      {
+        "path": "apps/academy/month-end-workbench/bun.lock",
+        "mode": "100644",
+        "gitBlobSha": "cc1b1a5ffdcf5f98b52c5f027c8e87a9aea6c987",
+        "sha256": "dc405a84e0ecb417c967d29e09b0be926756fc0b9e684656cdaa68840dc713df",
+        "bytes": 3118
+      },
+      {
+        "path": "apps/academy/month-end-workbench/data/projection-receipt.json",
+        "mode": "100644",
+        "gitBlobSha": "574c5aebf4963f715f0cc206b382eab3f6ccd7a2",
+        "sha256": "edb6d4386e6c7907066668a9c26e053c49ccf6515d53ff28c8b02895a02d0b97",
+        "bytes": 335
+      },
+      {
+        "path": "apps/academy/month-end-workbench/data/research-projection.json",
+        "mode": "100644",
+        "gitBlobSha": "ea770c3cef930ba0e9b7378911a059c2da65c018",
+        "sha256": "6df2682464fd06d37831af341fa3d9ab95890d0baf00175505e63af73d9646fb",
+        "bytes": 12648933
+      },
+      {
+        "path": "apps/academy/month-end-workbench/data/source-lock.json",
+        "mode": "100644",
+        "gitBlobSha": "06435baf306f4e380d8c3145e5533fdc9973cfbe",
+        "sha256": "2dfa597d8f6085046fc92e9a6dede2b9d5c69c33329f2cce11707a4e33563f2b",
+        "bytes": 38197
+      },
+      {
+        "path": "apps/academy/month-end-workbench/docs/delivery-20261017.json",
+        "mode": "100644",
+        "gitBlobSha": "1580bc4c55599d489764d273f1241f37482d4cc1",
+        "sha256": "0cbe259959eba24d5a9f9b49ca2c3e6aea6bd8585e79689ecb9351e5e49da462",
+        "bytes": 771
+      },
+      {
+        "path": "apps/academy/month-end-workbench/docs/handoff-20261017.json",
+        "mode": "100644",
+        "gitBlobSha": "a3c9b204f6fe493ca656ea1a04c36250a79a0e37",
+        "sha256": "810a5091ecad7ff32aabe0daf0b69389be4f95e2ef574d17d85b55bd7967fcbb",
+        "bytes": 831
+      },
+      {
+        "path": "apps/academy/month-end-workbench/docs/live-read-verification-20261017.json",
+        "mode": "100644",
+        "gitBlobSha": "7f7264b91e07967f5a1baec500454f7a89b889d1",
+        "sha256": "e5549f7df58804056006f5d60bb348ecd016cc2f0db0a6a952e024afe82eefe7",
+        "bytes": 3016
+      },
+      {
+        "path": "apps/academy/month-end-workbench/docs/redesign-verification-20261017.json",
+        "mode": "100644",
+        "gitBlobSha": "e5aa992759725d34298672ec8209a4e4f1e3611c",
+        "sha256": "c4052c1ad7dcecd9fc946aacba4343edaab1868bf8fb8f7ede7789079f454794",
+        "bytes": 3072
+      },
+      {
+        "path": "apps/academy/month-end-workbench/docs/source-context.md",
+        "mode": "100644",
+        "gitBlobSha": "1b28678ed2bceb03a6a07cc3af7eb89583b12441",
+        "sha256": "5fc2a7a813a9beea1267dd6f18bdece164b9a3145dff665e27c76917599f2e36",
+        "bytes": 7221
+      },
+      {
+        "path": "apps/academy/month-end-workbench/package.json",
+        "mode": "100644",
+        "gitBlobSha": "62a5824fa196447fccd7b971416a1650d1e10e46",
+        "sha256": "e288965177fdcfc208664df85d6dcafc259ab725239d14b9565a4ca66c45f1fb",
+        "bytes": 698
+      },
+      {
+        "path": "apps/academy/month-end-workbench/scripts/import-research.ts",
+        "mode": "100644",
+        "gitBlobSha": "d6df0e28d30fe57fd3287ace6fd75f6462084e5d",
+        "sha256": "ed4c4069ae936f466eccbda5a2d6d349d93e7e632336db8602eed964d4951a19",
+        "bytes": 8546
+      },
+      {
+        "path": "apps/academy/month-end-workbench/scripts/verify-projection.ts",
+        "mode": "100644",
+        "gitBlobSha": "072e73ec97b20e34e61ebe9dbb6d5be487b12666",
+        "sha256": "6b744af43eb5f981cf88800bc823841c75d97782430c9077e5fa10d72ff63940",
+        "bytes": 910
+      },
+      {
+        "path": "apps/academy/month-end-workbench/src/application.ts",
+        "mode": "100644",
+        "gitBlobSha": "91b00fb417d8695b0ef3221584d04b4c2968568e",
+        "sha256": "11c5cf4fcc4e62b6bf5657d29e8c726f09c4941c0c3d92d4a8a0d1b79056e675",
+        "bytes": 20089
+      },
+      {
+        "path": "apps/academy/month-end-workbench/src/contracts.ts",
+        "mode": "100644",
+        "gitBlobSha": "0246377aca8cc2f4c6be6ef2a7f4cf173eb98fe5",
+        "sha256": "3af6439ed94d3315aff2c376ed0d073f9aa0be38e7d7cf50c96a8a914bc2a5bd",
+        "bytes": 8539
+      },
+      {
+        "path": "apps/academy/month-end-workbench/src/integrations/README.md",
+        "mode": "100644",
+        "gitBlobSha": "10f135424b54659f408b040707b8ddd64b11ce74",
+        "sha256": "33d30496a1b884b09d8567b6baf6b73f90e16d9a38e0b485677e0c45c0fc7e53",
+        "bytes": 3899
+      },
+      {
+        "path": "apps/academy/month-end-workbench/src/integrations/mcp-source-port.ts",
+        "mode": "100644",
+        "gitBlobSha": "df09b4158e33dcd191e25af021567412248d1f2a",
+        "sha256": "5a3901f1a0a50cfa9e21da8bbc5264a088a3745ad2d75a415499c7242a48a5cd",
+        "bytes": 20892
+      },
+      {
+        "path": "apps/academy/month-end-workbench/src/main.ts",
+        "mode": "100644",
+        "gitBlobSha": "6717d32e862d528f4bc3c2613da0941a164c9da1",
+        "sha256": "7385f0a6c875c3d82c3bfae74112a9ff45e041d9b3e7e73aa2e229a958d86315",
+        "bytes": 1698
+      },
+      {
+        "path": "apps/academy/month-end-workbench/src/research.ts",
+        "mode": "100644",
+        "gitBlobSha": "3e4149d3aeb702ec1d5384606d9f05429cd85c61",
+        "sha256": "d374cd845f7be392435b87bc3479ee2e4799a9f885b34aeb693846ea1c688006",
+        "bytes": 395
+      },
+      {
+        "path": "apps/academy/month-end-workbench/src/scope-compatibility.ts",
+        "mode": "100644",
+        "gitBlobSha": "59e5b4f9fe743cc9833ef69200cf0a9b4f526f0d",
+        "sha256": "7f4f59489946bb4b154510b3758dda9e0d91a8fbaaea6dcf91e456a2a924f1f6",
+        "bytes": 1614
+      },
+      {
+        "path": "apps/academy/month-end-workbench/src/server.ts",
+        "mode": "100644",
+        "gitBlobSha": "7a04d6317687c3218cde6ef8550a490ec411dbde",
+        "sha256": "fb689c7a7a1a727444f200196387ad143f94e00e0b81b58bb443ae98d4cdbbee",
+        "bytes": 8275
+      },
+      {
+        "path": "apps/academy/month-end-workbench/src/synthetic.ts",
+        "mode": "100644",
+        "gitBlobSha": "5a454c5453dbac09b8ec9a50ae370ebb73b6661c",
+        "sha256": "9e34a924c8341eb1cc3aa17a74dbc6a728d2be41d1be243218e0797c5849e56a",
+        "bytes": 4060
+      },
+      {
+        "path": "apps/academy/month-end-workbench/src/validation.ts",
+        "mode": "100644",
+        "gitBlobSha": "8909d2b9bee5e6b55ca84d40bcdc8d3c1ffacc4f",
+        "sha256": "57a6c52ced29504564df0f8a9f9bdbda4a160faa2f7959738e445e0ff2f628aa",
+        "bytes": 10534
+      },
+      {
+        "path": "apps/academy/month-end-workbench/tests/application.test.ts",
+        "mode": "100644",
+        "gitBlobSha": "2aa29980d5b73cbeca4ee2335e90f682888dd613",
+        "sha256": "9cdf4878c5400fb22142c8f6e91c56e4471dd1604b42f4f716187aebbbf8be67",
+        "bytes": 21317
+      },
+      {
+        "path": "apps/academy/month-end-workbench/tests/integrations/fixture-mcp.ts",
+        "mode": "100644",
+        "gitBlobSha": "46cd9f45692eba2f6d0f214d6eb13f75f6297a49",
+        "sha256": "72af0c93ee39c46d60c117854f1a331cac3f516b6e8883ea677544b1e6dd30d9",
+        "bytes": 2884
+      },
+      {
+        "path": "apps/academy/month-end-workbench/tests/integrations/in-memory.ts",
+        "mode": "100644",
+        "gitBlobSha": "91de5957c6aa1cadc74aea9574c21cf5b362b172",
+        "sha256": "d0afc421d5b2c10a86a99295f43ecffee94059371e32866b3b5423dde5648f5b",
+        "bytes": 1631
+      },
+      {
+        "path": "apps/academy/month-end-workbench/tests/integrations/launch-safety.test.ts",
+        "mode": "100644",
+        "gitBlobSha": "b9d341ae25e4229e8985bfad51e595a2f44655a1",
+        "sha256": "32b0d57ead9519c83d394f87f0ce199b6e4849bbaaddde92fba73fc28e657b44",
+        "bytes": 4045
+      },
+      {
+        "path": "apps/academy/month-end-workbench/tests/integrations/mcp-source-port.test.ts",
+        "mode": "100644",
+        "gitBlobSha": "6228436638571ecc1eb49cf5db9cfd1fca2e6826",
+        "sha256": "303d97f75a6408376f681e3768c8ddfd92de7291776b3b41822a9cb7ec3baeda",
+        "bytes": 13365
+      },
+      {
+        "path": "apps/academy/month-end-workbench/tests/server.test.ts",
+        "mode": "100644",
+        "gitBlobSha": "cf7e4e68ab8deb349d1bf88f419a37b069550749",
+        "sha256": "8bc7fdbbf955c13aaf5f517e5fa2f58133357db22ac24de49311e648b4c208e5",
+        "bytes": 7269
+      },
+      {
+        "path": "apps/academy/month-end-workbench/tsconfig.json",
+        "mode": "100644",
+        "gitBlobSha": "eafd7688bcd9b4fef723c20ebd58a2e8c83c82c4",
+        "sha256": "e7be8682b13baa0c034c797959fa056d3d682893073436cd26d285330a9de4f9",
+        "bytes": 331
+      },
+      {
+        "path": "apps/academy/month-end-workbench/verification.json",
+        "mode": "100644",
+        "gitBlobSha": "a7a792d8861f829ec50c4043fe6cb5d302959407",
+        "sha256": "44861c6682aaa3cec49292ee20b9ab4edfd050da742875e180e5aa95af4646e6",
+        "bytes": 5184
+      },
+      {
+        "path": "architecture/common-ci-provider.json",
+        "mode": "100644",
+        "gitBlobSha": "6a39b08c136a88de1a2b41cf39c422ca236d4a75",
+        "sha256": "3b96c6325270d920c1ef838fc5a32a6373293eaed0ccaad2c1456f06567bbcde",
+        "bytes": 171672
+      },
+      {
+        "path": "ci/OWNER-REVIEW.md",
+        "mode": "100644",
+        "gitBlobSha": "2c93ad69e6072b48e2382f91378b40d4b5d484a6",
+        "sha256": "a7b3bb799006e391abaa6dd5ed5f72da3a83333c7e6883819952bb32aa265bda",
+        "bytes": 2410
+      },
+      {
+        "path": "ci/THIRD-PARTY-LICENSES.txt",
+        "mode": "100644",
+        "gitBlobSha": "d5f79c88c89c96327cab0a4916058766ed76c791",
+        "sha256": "30db8ed117f9c495c9b991b08f339235d442307b4c0949b3f41b4d449ef08093",
+        "bytes": 7525
+      },
+      {
+        "path": "ci/generate-projection.ts",
+        "mode": "100644",
+        "gitBlobSha": "6fccaf8335a5cf9f3bb5534303aa96f124f2d5f1",
+        "sha256": "3aba8d5ed99afa78aa2cb6c520b87460c6a4e74c68509d0282c66ffbf9c7f57a",
+        "bytes": 12418
+      },
+      {
+        "path": "ci/native-review-gate.js",
+        "mode": "100644",
+        "gitBlobSha": "25ce54cefd1be4911c26db85b7a08d510d6a0231",
+        "sha256": "1d4a7509df49602d84e9d053a1a80d63f64b747091b7a1f8268b80908b1d17f8",
+        "bytes": 359586
+      },
+      {
+        "path": "ci/native-review.entry.ts",
+        "mode": "100644",
+        "gitBlobSha": "236e16828f2336df62d2b9f8d8e5ce01fe62476b",
+        "sha256": "95945b2f4516b28d44783310b0d2b2b674d679fc47d6692049ee826d5a671152",
+        "bytes": 1095
+      },
+      {
+        "path": "ci/verify-projection.ts",
+        "mode": "100644",
+        "gitBlobSha": "526e1fd750e83e32010887f8f1ea29d9c885e750",
+        "sha256": "4853a1bce6301556eb48e3f10a32a5a3bc9eb87be310f97f1aa30418cf4489a3",
+        "bytes": 8041
+      },
+      {
+        "path": "provenance/adaptations.json",
+        "mode": "100644",
+        "gitBlobSha": "e2e14ef01b79d978ee8a5dd9442d1163850c0fc4",
+        "sha256": "c5756e7fda903239b1253f867172eb3f2768f74410d7f1dfd3f3bcb6a56e9fec",
+        "bytes": 22010
+      },
+      {
+        "path": "tests/native-review-projection.test.ts",
+        "mode": "100644",
+        "gitBlobSha": "dd40d8c19b83e923505087d1482f621f9b22d427",
+        "sha256": "da3f6298f13b05567778f3f614f7ea90224dd98984fc8d8f7a54e8290130d256",
+        "bytes": 11982
+      }
+    ],
+    "allChangedGitBlobsEqualLiveBytes": true,
+    "trackedTreeCleanAtSerialization": true
+  },
+  "priorReview": {
+    "path": "/home/palantirkc/operations/repository-closeout-20261016-211321/education-native-7c00681.json",
+    "sha256": "906fa3a9874c8ef760680ae64d6048e8a2edf751096f428284ea00ace682fc45",
+    "bytes": 39610,
+    "head": "7c006812af58b40e26e73ec95a8f549ae8159db2",
+    "conclusion": "hold",
+    "unresolvedFindings": 3,
+    "preservedWithoutRelabeling": true
+  },
+  "predecessorFindingDispositions": [
+    {
+      "id": "MONTH-END-EDUCATION-P1-MUTABLE-LAUNCH-CONFIGURATION",
+      "status": "resolved-in-reviewed-successor",
+      "evidence": "Entire finite launch configuration is synchronously cloned, exactly shape-validated and deeply frozen. Delayed configuration replacement cannot redirect any pin read; all configured launch modes remain explicitly refused."
+    },
+    {
+      "id": "MONTH-END-EDUCATION-P1-VERIFIED-PATH-REOPEN",
+      "status": "resolved-by-enforced-execution-hold",
+      "evidence": "The launcher has no StdioClientTransport or subprocess execution path. Even verified unchanged paths and replacements refuse mcp_verified_execution_boundary_unavailable. A future safe immutable execution mechanism needs separate qualification; this report does not claim native launch restored."
+    },
+    {
+      "id": "MONTH-END-EDUCATION-P2-BLANK-COUNT-AS-ZERO",
+      "status": "resolved-in-reviewed-successor",
+      "evidence": "Only explicit decimal strings or safe nonnegative numeric counts become counts. Blank/whitespace/malformed/unsupported values remain null; in-process official SDK response negatives passed."
+    }
+  ],
+  "intentAndSemanticReview": {
+    "canonicalEntry": "Education apps/academy/month-end-workbench/docs/source-context.md",
+    "mathSourceOwner": "park-kyungchan/math-research-module",
+    "mathRevision": "07edb2dea2e5997aea4318f0fa2efa21dde633df",
+    "ownerInstructionsContextRequirementsHistoryChronologyCoverageAndArchiveRead": true,
+    "purpose": "Teacher studies mathematical types, original examples/designs/microsteps and competing hypotheses, declares desired question features, then finds original Academy labels and inspects actual questions. No final selection or learning diagnosis inferred.",
+    "coverage": {
+      "grade3Types": 105,
+      "upperConnections": 46,
+      "examples": 170,
+      "designs": 151,
+      "microsteps": 1216
+    },
+    "navigation": "Earlier-level siblings retained; containment, prerequisites, content connections, membership and evidence remain distinct",
+    "identities": "Research IDs, pat_no, lecture_key, paper keys and q_code stay distinct",
+    "alignment": "Six-axis annotations are exact inspected-question-bound, ephemeral, teacher-proposed and unaccepted; lexical overlap is retrieval only",
+    "exam": {
+      "items": 24,
+      "points": 100,
+      "bands": "12×3 + 8×5 + 4×6",
+      "durationMinutes": 80,
+      "startTime": "15:00",
+      "preparationDeadline": "2026-10-19",
+      "examDate": "UNKNOWN",
+      "timezone": "UNKNOWN",
+      "textbookEdition": "UNKNOWN",
+      "finalUnitAndItemInventory": "UNKNOWN"
+    },
+    "scopeMetadata": "Teacher declarations and native observations remain separate; null is unknown, known mismatches hold; equal literals do not prove identity",
+    "knownCorrection": "HC11-d1-T02 remains proposed_not_applied",
+    "mathematicalPedagogicalLearningTeacherAndProductionAcceptanceInferred": false
+  },
+  "launchAndEffects": {
+    "configuredEducationSubprocessLaunch": "unavailable-until-separately-qualified-verified-execution-boundary",
+    "pinReads": "Diagnostics only, not execution admission",
+    "syntheticSdkSeam": "Explicit in-process function export; main.ts/JSON/config cannot select an injected client or promote synthetic observations to native",
+    "mainSourceModes": "Unavailable default; explicit synthetic mode; native-readonly configured route refuses safely",
+    "nativeOwnersPreserved": true,
+    "liveAcademyCredentialGetterOrSshInvoked": false,
+    "dailyRecordSourceAdapters": "Unavailable by default; source service emits no business writes/sends or approval consumption",
+    "finalItemMembershipGenerationPrintingPersistenceAndSendRoutesAbsent": true
+  },
+  "canonicalReviewProjection": {
+    "source": {
+      "repository": "https://github.com/park-kyungchan/agent-platform.git",
+      "commit": "7eabcdb20e358955c771e5aa0dc500448fa84534",
+      "tree": "82aad84ada5d2d67df1f609c1084811752d7c6b9",
+      "inputs": [
+        {
+          "path": "ci/quality/receipt-validation-gate.ts",
+          "sha256": "a32d9653cc14fd0015464c895cd84194549dc076a4e94852782801a42eb3dcad"
+        },
+        {
+          "path": "ci/quality/receipt-validator.ts",
+          "sha256": "d9b4492a08e3e801107fd17ba8a8ee3cc39cf875767e5b111635de18b394a725"
+        }
+      ]
+    },
+    "policy": {
+      "repository": "park-kyungchan/education-platform",
+      "projectId": "education-platform",
+      "domainId": "education",
+      "semanticOwner": "education-platform",
+      "scope": "month-end-source-redesign",
+      "statusContext": "native-independent-review",
+      "publisher": {
+        "id": "241037670",
+        "login": "park-kyungchan",
+        "type": "User"
+      }
+    },
+    "compiler": {
+      "name": "Bun",
+      "version": "1.4.3",
+      "revision": "c6da4a4d3010e5553438c60f6bd76d981976867c",
+      "sha256": "7ce7d6b654eddeec20afddf2396317fba6dc19ab52788a27e894e1806bf8f24b",
+      "bytes": 88979072
+    },
+    "compiledInputCount": 108,
+    "ontologyVersion": "0.2.0",
+    "ontologyArchiveSha256": "3f9995d0b91d2ad39dfc7cedbb6e35b1cb9d29c2e57223ca0c076d2030319406",
+    "ontologyFiles": 38,
+    "externalPackages": [
+      {
+        "name": "ajv",
+        "version": "8.20.0",
+        "archiveIntegrity": "sha512-Thbli+OlOj+iMPYFBVBfJ3OmCAnaSyNn4M1vz9T6Gka5Jt9ba/HIR56joy65tY6kx/FCF5VXNB819Y7/GUrBGA==",
+        "archiveSha256": "b2f0b3a893bbb8cc5efb6814f08b1499e19e31d5dd73683f5893382f48f6e7b3"
+      },
+      {
+        "name": "ajv-formats",
+        "version": "3.0.1",
+        "archiveIntegrity": "sha512-8iUql50EUR+uUcdRQ3HDqa6EVyo3docL8g5WJ3FNcWmu62IbkGUue/pEyLBW8VGKKucTPgqeks4fIU1DA4yowQ==",
+        "archiveSha256": "f4d6980fd367381fd29199066911e863db8d97496613b6c2c5b91563a150acc5"
+      },
+      {
+        "name": "fast-deep-equal",
+        "version": "3.1.3",
+        "archiveIntegrity": "sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==",
+        "archiveSha256": "b019a0980f27638dc3f85836b0e478f188e00d7a6e5852c0819fa86f56e47b8f"
+      },
+      {
+        "name": "fast-uri",
+        "version": "3.1.8",
+        "archiveIntegrity": "sha512-GZMtZUTNRpOVIECoXwLNZS5xUGE+mVNbTB8h/7Rwh2TFWcBQiPzTgyZi05BF9UMZKkLJv8XBRJTlU7zg8+ZfMg==",
+        "archiveSha256": "86be033b406a7737c0521edc8fe3e15c7ac0cb6b5e509478cc9539a2efaa086c"
+      },
+      {
+        "name": "json-schema-traverse",
+        "version": "1.0.0",
+        "archiveIntegrity": "sha512-NM8/P9n3XjXhIZn1lLhkFaACTOURQXjWhV4BA/RnOv8xvgqtqpAX9IO4mRQxSx1Rlo4tqzeqb0sOlruaOy3dug==",
+        "archiveSha256": "023222622df29fc274bde5d3590e47aa1d4a8e3c1d6e2aba029948ed79799b21"
+      },
+      {
+        "name": "require-from-string",
+        "version": "2.0.2",
+        "archiveIntegrity": "sha512-Xf0nWe6RseziFMu+Ap9biiUbmplq6S9/p+7w7YXP/JBHhrUDDUhwa+vANyubuqfZWTveU//DYVGsDG7RKL/vEw==",
+        "archiveSha256": "cb694a4965908f7775a0c757f00cf4e624d193cd71d77988fbcca0f597b88d82"
+      }
+    ],
+    "generationInputs": [
+      {
+        "path": "ci/generate-projection.ts",
+        "sha256": "3aba8d5ed99afa78aa2cb6c520b87460c6a4e74c68509d0282c66ffbf9c7f57a"
+      },
+      {
+        "path": "ci/native-review.entry.ts",
+        "sha256": "95945b2f4516b28d44783310b0d2b2b674d679fc47d6692049ee826d5a671152"
+      },
+      {
+        "path": "ci/verify-projection.ts",
+        "sha256": "4853a1bce6301556eb48e3f10a32a5a3bc9eb87be310f97f1aa30418cf4489a3"
+      }
+    ],
+    "generated": [
+      {
+        "path": "ci/native-review-gate.js",
+        "sha256": "1d4a7509df49602d84e9d053a1a80d63f64b747091b7a1f8268b80908b1d17f8"
+      },
+      {
+        "path": "ci/THIRD-PARTY-LICENSES.txt",
+        "sha256": "30db8ed117f9c495c9b991b08f339235d442307b4c0949b3f41b4d449ef08093"
+      }
+    ],
+    "reproducible": true,
+    "canonicalPredicatesNotForked": true,
+    "reviewJobNeedsPrivateCheckoutOrRuntimeDependencyInstall": false,
+    "sourceOnlyNotNativeActivation": true,
+    "ciAuthorResult": {
+      "path": "/home/palantirkc/code/worktrees/education-owner-review-ci-20261017/.private/owner-review-ci/result.json",
+      "sha256": "59d81cb56095259792a6822558e009facd08ee8d37d60ee92f72a00f0362e81d",
+      "bytes": 19282
+    },
+    "allNineCiAuthorPathsEqualComposedSource": true
+  },
+  "preservation": {
+    "historicalSourceAndWorkRecords": [
+      {
+        "path": "/home/palantirkc/code/worktrees/education-reviewed-closeout-20261017/apps/academy/month-end-web/work/month-end-context-rebuild-20261017/checkpoint.json",
+        "sha256": "ca3c5b15ce1656d5430afdf38f4ef9dddba8ccef2a18268e463f722071900efc",
+        "bytes": 15753
+      },
+      {
+        "path": "/home/palantirkc/code/worktrees/education-reviewed-closeout-20261017/apps/academy/month-end-web/work/month-end-context-rebuild-20261017/architecture.md",
+        "sha256": "4f9212a0c316eb00d640f206fb0d82909e5edcf75233a82726fb57fb9f5e48d0",
+        "bytes": 9184
+      },
+      {
+        "path": "/home/palantirkc/code/worktrees/education-reviewed-closeout-20261017/apps/academy/month-end-workbench/data/source-lock.json",
+        "sha256": "2dfa597d8f6085046fc92e9a6dede2b9d5c69c33329f2cce11707a4e33563f2b",
+        "bytes": 38197
+      },
+      {
+        "path": "/home/palantirkc/code/worktrees/education-reviewed-closeout-20261017/apps/academy/month-end-workbench/data/research-projection.json",
+        "sha256": "6df2682464fd06d37831af341fa3d9ab95890d0baf00175505e63af73d9646fb",
+        "bytes": 12648933
+      },
+      {
+        "path": "/home/palantirkc/code/worktrees/education-reviewed-closeout-20261017/apps/academy/month-end-workbench/data/projection-receipt.json",
+        "sha256": "edb6d4386e6c7907066668a9c26e053c49ccf6515d53ff28c8b02895a02d0b97",
+        "bytes": 335
+      },
+      {
+        "path": "/home/palantirkc/code/worktrees/education-reviewed-closeout-20261017/apps/academy/month-end-workbench/docs/delivery-20261017.json",
+        "sha256": "0cbe259959eba24d5a9f9b49ca2c3e6aea6bd8585e79689ecb9351e5e49da462",
+        "bytes": 771
+      },
+      {
+        "path": "/home/palantirkc/code/worktrees/education-reviewed-closeout-20261017/apps/academy/month-end-workbench/docs/live-read-verification-20261017.json",
+        "sha256": "e5549f7df58804056006f5d60bb348ecd016cc2f0db0a6a952e024afe82eefe7",
+        "bytes": 3016
+      },
+      {
+        "path": "/home/palantirkc/code/worktrees/education-reviewed-closeout-20261017/apps/academy/month-end-workbench/docs/redesign-verification-20261017.json",
+        "sha256": "c4052c1ad7dcecd9fc946aacba4343edaab1868bf8fb8f7ede7789079f454794",
+        "bytes": 3072
+      }
+    ],
+    "workVersion": 9,
+    "workPhase": "completed_source_delivery",
+    "completedEffects": [
+      {
+        "id": "dailyrecord-20261016-completed-additional-fields",
+        "state": "completed",
+        "replayPolicy": "never-replay-recorded-dispatch"
+      },
+      {
+        "id": "math-research-reviewed-merge",
+        "state": "completed",
+        "replayPolicy": "never-replay-recorded-dispatch"
+      },
+      {
+        "id": "native-readonly-engineering-v2",
+        "state": "completed",
+        "replayPolicy": "never-replay-recorded-dispatch"
+      },
+      {
+        "id": "drive-redesign-delivery",
+        "state": "completed",
+        "replayPolicy": "never-replay-recorded-dispatch"
+      },
+      {
+        "id": "harness-context-handoff",
+        "state": "completed",
+        "replayPolicy": "never-replay-recorded-dispatch"
+      },
+      {
+        "id": "owned-dailyrecord-pane-close",
+        "state": "completed",
+        "replayPolicy": "never-replay-recorded-dispatch"
+      }
+    ],
+    "frontendSourceUnchangedSince7c": true,
+    "rootCoreMetadataAndImmutableOntologyUnchanged": true,
+    "originalLocalDeliveredHtml": {
+      "path": "/home/palantirkc/code/worktrees/month-end-independent-20261016-092054/apps/academy/month-end-web/dist/review.html",
+      "sha256": "a4c221565ce4543c048825da2868ec273fa9c7312ef714b961cb9dda3d7d41d2",
+      "bytes": 23524298
+    },
+    "remoteDriveReadbackNotRepeated": true
+  },
+  "checks": [
+    {
+      "command": "Bun1.4.2 test ./tests/native-review-projection.test.ts",
+      "status": "pass",
+      "tests": 16,
+      "assertions": 31,
+      "scope": "Self-contained generated gate, mocked exact owner evidence chain and negative admission; no dependencies/network"
+    },
+    {
+      "command": "Bun1.4.2 ci/verify-projection.ts",
+      "status": "pass",
+      "compiledInputs": 108,
+      "ontologyFiles": 38,
+      "dependencyPackages": 6
+    },
+    {
+      "command": "Bun1.4.3 ci/generate-projection.ts exact-common-Git locked-archive-root",
+      "status": "pass",
+      "mode": "verify-not-write",
+      "reproducedBytesExactly": true,
+      "compilerBinarySha256": "7ce7d6b654eddeec20afddf2396317fba6dc19ab52788a27e894e1806bf8f24b"
+    },
+    {
+      "command": "Bun1.4.3 test --no-env-file --preload reviewer-deny-effects ./tests",
+      "status": "pass",
+      "tests": 41,
+      "assertions": 243,
+      "source": "Byte-identical private copies from exact final head, complete copy hashes retained",
+      "isolation": "All process/network/listener creation denied; official SDK transport stays in process"
+    },
+    {
+      "command": "Existing pinned TypeScript7.0.2 --noEmit -p exact copied package/tsconfig.json",
+      "status": "pass",
+      "noDependenciesInstalled": true
+    },
+    {
+      "command": "git diff --check baseline selected-head",
+      "status": "pass"
+    },
+    {
+      "command": "Bun frontend model tests",
+      "status": "pass",
+      "tests": 2,
+      "assertions": 6
+    },
+    {
+      "command": "Pinned math source importer --verify canonical clone07ed",
+      "status": "pass",
+      "sourceBlobs": 238,
+      "archiveBlobs": 109,
+      "deterministicProjection": "exact-match"
+    }
+  ],
+  "qaCustody": {
+    "sourceCopy": {
+      "path": "/home/palantirkc/code/worktrees/education-reviewed-closeout-20261017/.private/review-monthend-final/source-copy.json",
+      "sha256": "1a2e9c1280876f50c6c9a93a4214fe0ed8899f3e9e70ed57c8069b613ad4e6e1",
+      "bytes": 9436
+    },
+    "extraSourceCopy": null,
+    "existingDependencyVersions": {
+      "path": "/home/palantirkc/operations/repository-closeout-20261016-211321/monthend-final-review-existing-qa-dependencies.json",
+      "sha256": "c99595b8c9ff344ad6602db9d8fc6753b93cc2146082a4057b7423ce05f6699b",
+      "bytes": 4271
+    },
+    "sdkClient": "2.3.1",
+    "sdkServer": "2.3.1",
+    "zod": "4.4.3",
+    "typescript": "7.0.2",
+    "noInstallation": true,
+    "sourceMoveIsNotRuntimeQualification": true,
+    "preliminaryFailures": "Retained initial private-copy failures for missing external viewer/catalog files and unset explicit MCP sibling QA locator. Added only exact Git support files and used existing test-only sibling locator. Early package-script runs did not establish parent preload; corrected direct-run logs are the accepted tests. Academy over-strict process-deny attempt blocked four intentional synthetic stdio tests; final tests retain their tracked child network-deny."
+  },
+  "evidence": [
+    {
+      "path": "/home/palantirkc/code/worktrees/education-reviewed-closeout-20261017/.private/review-monthend-final/frontend-model.log",
+      "sha256": "87d91f0c1172142bfbcb06cc9baa387c3b6fe4f22e1c7e3a1862d2e83b96fda7",
+      "bytes": 313
+    },
+    {
+      "path": "/home/palantirkc/code/worktrees/education-reviewed-closeout-20261017/.private/review-monthend-final/source-copy.json",
+      "sha256": "1a2e9c1280876f50c6c9a93a4214fe0ed8899f3e9e70ed57c8069b613ad4e6e1",
+      "bytes": 9436
+    },
+    {
+      "path": "/home/palantirkc/code/worktrees/education-reviewed-closeout-20261017/.private/review-monthend-final/domain-typescript-initial.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/home/palantirkc/code/worktrees/education-reviewed-closeout-20261017/.private/review-monthend-final/research-source-verify.log",
+      "sha256": "a37ed73476de790ed61ddb1195f3a2f107e48bf03bcc6b1f8c005c5286d49248",
+      "bytes": 64
+    },
+    {
+      "path": "/home/palantirkc/code/worktrees/education-reviewed-closeout-20261017/.private/review-monthend-final/domain-tests.log",
+      "sha256": "e823161355c70c45cebfc0d1cdb24c11c4228cd515c2ba86b42c19587b40383e",
+      "bytes": 5226
+    },
+    {
+      "path": "/home/palantirkc/code/worktrees/education-reviewed-closeout-20261017/.private/review-monthend-final/domain-tests-initial.log",
+      "sha256": "df989e1f0c122606f0adf2ca40c7f0e40c3b54babaabee93d41640a3b48e05cf",
+      "bytes": 5867
+    },
+    {
+      "path": "/home/palantirkc/code/worktrees/education-reviewed-closeout-20261017/.private/review-monthend-final/domain-tests-no-preload-proof.log",
+      "sha256": "7ac344985f4442c1753fabb966cc294aaf7e80ea59c73afc880d99b454f0083c",
+      "bytes": 5261
+    },
+    {
+      "path": "/home/palantirkc/code/worktrees/education-reviewed-closeout-20261017/.private/review-monthend-final/ci-verify.log",
+      "sha256": "090f0d4820e4334f2668e2b0590d0fe8b652d1f2e863fa0fbeaab2dd59b1e7b2",
+      "bytes": 219
+    },
+    {
+      "path": "/home/palantirkc/code/worktrees/education-reviewed-closeout-20261017/.private/review-monthend-final/ci-reproducibility.log",
+      "sha256": "5b84c096de6ca9e81b25aa51654cd87dfaefd018c805a6dd20dd7ad379702e6f",
+      "bytes": 208
+    },
+    {
+      "path": "/home/palantirkc/code/worktrees/education-reviewed-closeout-20261017/.private/review-monthend-final/owner-ci-tests.log",
+      "sha256": "2519d430d2abf396af0486584d9f8168fbdc21251fb2198f73721a34c230dd13",
+      "bytes": 1474
+    },
+    {
+      "path": "/home/palantirkc/operations/repository-closeout-20261016-211321/monthend-source-repair-author-result-20261017.json",
+      "sha256": "dc61d53039bcddcf4937a45ddcfaa1f414487ec0062764818fc0e3471339aa05",
+      "bytes": 15543
+    },
+    {
+      "path": "/home/palantirkc/operations/repository-closeout-20261016-211321/monthend-final-review-network-deny.ts",
+      "sha256": "4ec153078576d9b657184c738a75be7f3923039ad410425fd462bc6b955c82b0",
+      "bytes": 208
+    },
+    {
+      "path": "/home/palantirkc/operations/repository-closeout-20261016-211321/monthend-final-review-deny-effects.ts",
+      "sha256": "e66b8609c9652ec46644b55fd098a5fa24400f6281a89bb57257778e9b5a8fec",
+      "bytes": 804
+    }
+  ],
+  "limitations": [
+    "Full-tree manifest binds every Git entry; review covers the complete changed source composition and relevant canonical/consumer closures, not an exhaustive unrelated baseline or mathematical/pedagogical audit.",
+    "Historical actual readonly HTTP/SDK and browser/Drive receipts are preserved. They were not replayed and do not qualify the repaired configured native launch, current teacher completion or production acceptance.",
+    "No browser suite, broad native/domain/full cloud suite or actual source request was newly run. Current finite independent tests are enumerated exactly; earlier author/native receipts remain separately bound.",
+    "Current source CI follows its existing module map; final month-end/MCP package-specific checks above are independently measured local QA, not a claim that every such suite is in hosted CI.",
+    "These exact final source PASS reports authorize no native activation, business effects or whole Harness Goal completion. Root still owns authenticated raw/evidence/receipt publication, fresh owning-main CAS, current hosted checks and explicit expected-head merges."
+  ],
+  "effects": {
+    "trackedSourceEdits": false,
+    "installOrSharedMutation": false,
+    "nativeConfigurationTrustCredentialsStoresDatabaseServicesEffects": false,
+    "actualAcademyCalls": false,
+    "modelCalls": false,
+    "publication": false,
+    "goalOrPaneControls": false,
+    "historicalReplay": false,
+    "privateSourceCopiesSyntheticQaAndReviewerOutputsOnly": true
+  },
+  "nativeAuthenticationEstablished": false,
+  "nativePermissionGranted": false,
+  "acceptanceEstablished": false
+}
