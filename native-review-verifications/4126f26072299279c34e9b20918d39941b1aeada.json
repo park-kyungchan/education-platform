@@ -1,0 +1,66 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "verification",
+  "id": "education-platform:verification:independent-review-4126f26072299279c34e9b20918d39941b1aeada",
+  "projectId": "education-platform",
+  "domainId": "education",
+  "createdAt": "2026-10-16T23:03:22.773Z",
+  "payload": {
+    "targetRefs": [
+      "education-platform:evidence:independent-review-4126f26072299279c34e9b20918d39941b1aeada"
+    ],
+    "criteria": [
+      {
+        "id": "independent-native-source-review",
+        "status": "pass",
+        "message": "Exact independent source review is complete with zero findings.",
+        "evidenceRefs": [
+          "education-platform:evidence:independent-review-4126f26072299279c34e9b20918d39941b1aeada"
+        ]
+      }
+    ],
+    "inputHashes": [
+      {
+        "path": "native-review-results/4126f26072299279c34e9b20918d39941b1aeada.json",
+        "sha256": "e7e8df989cab62bb04130919371be533ff240be121cc48fcf59acfd0f3236e64"
+      },
+      {
+        "path": "native-review-evidence/4126f26072299279c34e9b20918d39941b1aeada.json",
+        "sha256": "d5d1affd41e509d4ee288f507fc1d555f9a61bafb05d4c5c88b02d76798a5ea1"
+      },
+      {
+        "path": "native-review-raw/4126f26072299279c34e9b20918d39941b1aeada.json",
+        "sha256": "35918c054d5e4c899f865d93347591ec6188aa9eeebdfa63f7d3273cd49b00d2"
+      }
+    ],
+    "runtime": {
+      "name": "native-codex",
+      "version": "recorded-in-unchanged-review-output"
+    },
+    "details": {
+      "semanticOwner": "education-platform",
+      "review": {
+        "binding": {
+          "repository": "park-kyungchan/education-platform",
+          "projectId": "education-platform",
+          "domainId": "education",
+          "semanticOwner": "education-platform",
+          "scope": "month-end-source-redesign"
+        },
+        "headSha": "4126f26072299279c34e9b20918d39941b1aeada",
+        "reviewedTreeSha": "c7ccc58448ad4d3580f7365fe6ef3b70788d9ce3",
+        "reviewedSourceManifestSha256": "4bc52c4cbb364af9665a1b8e6e1b5879f147ebdcd4d4524c10c22bbb842bd721",
+        "reviewer": {
+          "runtime": "native-codex",
+          "taskId": "/root/review_owner_api"
+        },
+        "author": {
+          "runtime": "native-codex",
+          "taskId": "01a14419-af50-72d3-b918-cc32a50a1913"
+        },
+        "conclusion": "pass",
+        "unresolvedFindings": 0
+      }
+    }
+  }
+}
