@@ -37,5 +37,15 @@
   "nativePermissionGranted": false,
   "P1Accepted": false,
   "AcceptanceDecision": null,
-  "independentExactSourceReview": "PENDING"
+  "independentExactSourceReview": "PENDING",
+  "canonicalTaskId": "ACADEMY-RETAINED-OWNER-RUNTIME",
+  "operationalStepLabel": "ACADEMY-RUNNING-P1-ABI",
+  "taskBindingMeaning": "Existing canonical Task only. Operational step label is not a GitTask/native ID; no duplicate Task registration.",
+  "readerCleanupReviewClosure": {
+    "finding": "SAFE-DIAG-REVIEW-001",
+    "reviewSha256": "160451f8bfc53d612d6955d463e9ebb37129f3743af892ff09dc6c150a22c272",
+    "priorSourceHead": "0d8eea86631a8a35409cf56ee6022002dc40086b",
+    "change": "Inspect cancellation settlement status only. Any rejection or lock-release error leaves readers UNKNOWN and first cleanup hold readers; await read settlement, attempt every lock release, then continue permitted FD cleanup. A primary read rejection alone is not a cleanup failure.",
+    "independentClosure": "PENDING"
+  }
 }
