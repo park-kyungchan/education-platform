@@ -7,8 +7,8 @@
   },
   "projectId": "education-platform",
   "workId": "month-end-context-rebuild-20261017",
-  "version": 8,
-  "updatedAtUtc": "2026-10-16T16:38:26.309032+00:00",
+  "version": 9,
+  "updatedAtUtc": "2026-10-16T16:41:07.050853+00:00",
   "intent": {
     "objective": "Rebuild the month-end backend and connected frontend from authoritative math-research-module user context with Palantir-style ontology, evidence, decisions and governed actions; review/merge math PRs before cloning; deliver a self-contained Drive review and final harness-lead context handoff.",
     "successCriteria": [
@@ -41,7 +41,7 @@
       "No copied native credentials/private runtime stores, no public student originals or sensitive context."
     ]
   },
-  "phase": "final_context_handoff",
+  "phase": "completed_source_delivery",
   "plan": [
     {
       "step": "Review math PR3/related branches, verify merge readiness, merge, then clone and pin context.",
@@ -73,21 +73,13 @@
     },
     {
       "step": "Close completed workers/panes, hand off required context to live harness-lead and complete native Goal.",
-      "status": "in_progress"
+      "status": "completed"
     }
   ],
   "sourcePins": [
     {
       "ref": "Education pre-redesign baseline (historical)",
       "revision": "c327373a5837ee8c401969d6d408fb85da85665f"
-    },
-    {
-      "ref": "academy-workbench initial custody baseline (historical)",
-      "revision": "704d6433456df1d0d0cba66efeab2aa9c3ebae6a plus16 uncommitted files; private custody manifest retained"
-    },
-    {
-      "ref": "math-research-module pre-merge main (historical)",
-      "revision": "4d66eec0cf058a87f788b28d7cda2e845674524c"
     },
     {
       "ref": "math-research-module PR3",
@@ -116,14 +108,18 @@
     {
       "ref": "academy-workbench context-bound MCP local HEAD",
       "revision": "fdd013cffebd8a9dffc876abf26ede83a1e3c750; clean; no push"
+    },
+    {
+      "ref": "Education authenticated delivery/checkpoint commit",
+      "revision": "339971c; final continuity-only commit follows"
     }
   ],
   "runtime": {
     "nativeThreadRef": "01a14419-cb13-7202-a688-b4c1670da4cb",
     "nativeGoalRef": "current-thread-active-goal",
-    "goalObservation": "active; user expressly requested create_goal; no token budget supplied",
+    "goalObservation": "Last native Goal observation active; all required implementation, review, local commit, Drive delivery and context handoff finished. Native completion follows final continuity custody commit; no token budget set.",
     "herdrContextRef": "srv1873899-herdr w3:pK w3:t7",
-    "observedAtUtc": "2026-10-16T16:38:26.309032+00:00"
+    "observedAtUtc": "2026-10-16T16:41:07.050853+00:00"
   },
   "delegations": [
     {
@@ -208,11 +204,11 @@
     {
       "id": "harness-context-handoff",
       "scope": "Final user-required context instruction to observed live harness-lead; no integration/resume/effect request.",
-      "state": "planned",
+      "state": "completed",
       "receiptRefs": [
-        ".private/month-end-redesign/harness-handoff.json"
+        "apps/academy/month-end-workbench/docs/handoff-20261017.json"
       ],
-      "nextSafeObservation": "After source commit and Drive verification, discover live target and submit bounded context pointers once.",
+      "nextSafeObservation": "Live harness-lead w3:pJ acknowledged source/context read and unchanged authority at completionSeq257; no repeat prompt or integration requested.",
       "replayPolicy": "never-replay-recorded-dispatch"
     },
     {
@@ -238,19 +234,9 @@
       "result": "Previous synthetic prototype delivered and checksum verified; now rejected as insufficient user-context design, not accepted final redesign."
     },
     {
-      "ref": ".private/month-end-redesign/review/math-pr-review.json",
-      "classification": "verification",
-      "result": "Exact PR3 candidate source checks+identity/context/harness and byte closure pass; no blocking finding, one P3 follow-up; no hosted CI success claimed."
-    },
-    {
       "ref": ".private/month-end-redesign/review/intent-dossier.json",
       "classification": "observation",
       "result": "34 source references verified; teacher research/assessment workflow and sibling navigation, not generic labeling."
-    },
-    {
-      "ref": ".private/month-end-redesign/review/existing-architecture-audit.json",
-      "classification": "verification",
-      "result": "Nine prioritized findings and ten falsifiable criteria; disconnected synthetic UI/type-item confusion/context absent."
     },
     {
       "ref": "apps/academy/month-end-web/work/month-end-context-rebuild-20261017/architecture.md",
@@ -296,6 +282,11 @@
       "ref": "apps/academy/month-end-workbench/docs/delivery-20261017.json",
       "classification": "verification",
       "result": "New Drive source-backed HTML delivered; all23524298bytes and SHA256 a4c22156 verified by authenticated raw readback; sharing unchanged, no Pages deployment."
+    },
+    {
+      "ref": "apps/academy/month-end-workbench/docs/handoff-20261017.json",
+      "classification": "verification",
+      "result": "User-required context notice submitted once and acknowledged by live harness-lead; canonical records read and source HEAD verified. Future behavior/adoption not proven."
     }
   ],
   "holds": [
@@ -324,5 +315,5 @@
       "releaseCondition": "Independent authentic exact-head gate evidence and dependency access, not inferred from PR3 validation."
     }
   ],
-  "nextSafeAction": "Submit user-required context instruction once to freshly observed live harness-lead w3:pJ; record receipt/adoption scope, finalize continuity/local commit and complete current Goal. No source/runtime effects remain authorized beyond final handoff."
+  "nextSafeAction": "User reviews the new verified Drive HTML and local Education/MCP commits. No further source changes, push/PR/merge, public deployment, business write, final selection or replay is authorized by this completed source task. Rehydrate canonical context before any later repo work."
 }
