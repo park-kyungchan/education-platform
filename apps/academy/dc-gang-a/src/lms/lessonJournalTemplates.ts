@@ -1,8 +1,9 @@
 import {assertDate,assertExactKeys,requireText} from '../learning/model';
+import {parentInternalLanguage} from '../academy/teacherWorkspace';
 
 /** Versioned teacher-feedback consumer. Rendering is not approval, a source join or a writer. */
 export const lessonJournalTemplates={
-  revision:'2',
+  revision:'3',
   formatting:{bullet:'- ',separator:'\n',entryBoundary:'one_attributable_activity_assignment_or_notice_not_each_sentence',dueDate:'first_homework_entry_only',existingTeacherText:'preserve_meaning_no_automatic_reapplication',authority:'teacher_final_format_feedback_2026_10_06'},
   progress:{order:['mapped_content','activity','attributable_outcome','specific_detail'],mappingRules:['Resolve edition + literal minor-unit code + name from scoped source/teacher evidence.','An internal inspection code never appears in parent text.','Keep solving, grading, correction and inspection separate.','Use an attributable topic only when an exact printed unit is unresolved; do not manufacture it.']},
   homework:{order:['due_date','mapped_content','selected_range','action'],mappingRules:['Preserve exact due date and teacher-selected partial range.','Unverified type/header blocks this field, not independent student fields.','Never infer a clinic ordinal from its original item ordinal.']},
@@ -58,6 +59,8 @@ export function renderLessonJournal(input:JournalTemplateInput){
   const memo=bulletEntries(renderedNotices.map(notice=>notice.text));
   if([progress,homework,memo].some(text=>/P[123]/.test(text)))throw Error('internal_code_in_parent_text');
   const blockers:string[]=[];
+  // Historical vocabulary remains inspectable, but cannot silently pass the parent draft policy.
+  for(const [field,text] of Object.entries({progress,homework,memo}))if(parentInternalLanguage.test(text))blockers.push(`${field}:parent_internal_language_excluded`);
   if(hw.qualification==='unresolved_header')blockers.push('homework:unresolved_original_header');
   for(const [field,text] of Object.entries({progress,homework,memo}))if(journalWireWidth(text)>400)blockers.push(`${field}:source_width_exceeded`);
   return {templateRevision:lessonJournalTemplates.revision,progress,homework,memo,blockers,evidenceRefs:[...new Set([...input.progress.flatMap(x=>[...x.evidenceRefs,...x.content.flatMap(m=>m.evidenceRefs)]),...hw.tasks.flatMap(x=>[...x.evidenceRefs,...x.content.flatMap(m=>m.evidenceRefs)]),...renderedNotices.flatMap(x=>x.evidenceRefs)])],approval:'not_granted_by_rendering' as const};

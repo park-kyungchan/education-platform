@@ -1,0 +1,10 @@
+import {resolve} from 'node:path';
+import {createApplication} from '../month-end-workbench/src/application';
+import {researchProjection} from '../month-end-workbench/src/research';
+import {createSyntheticSourcePort} from '../month-end-workbench/src/synthetic';
+import {createRequestHandler} from '../month-end-workbench/src/server';
+const port=Number(Bun.env.PORT??4173);if(!Number.isInteger(port)||port<1024||port>65535)throw Error('Invalid loopback port');
+const mode=Bun.env.MONTH_END_SOURCE_MODE??'unavailable';if(mode!=='unavailable'&&mode!=='synthetic')throw Error('Frontend preview only supports unavailable or explicit synthetic Academy');
+const origin=`http://127.0.0.1:${port}`;
+const handler=createRequestHandler({allowedOrigin:origin,frontendRoot:resolve(import.meta.dir,'dist'),applicationFactory:()=>createApplication(researchProjection,mode==='synthetic'?createSyntheticSourcePort():undefined)});
+const server=Bun.serve({hostname:'127.0.0.1',port,fetch:handler});console.log(`Month-end workbench: ${server.url} (Academy: ${mode}; loopback only)`);

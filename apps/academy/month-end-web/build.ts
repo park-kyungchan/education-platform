@@ -1,0 +1,18 @@
+import {mkdir,readFile,writeFile,copyFile} from 'node:fs/promises';
+import {resolve} from 'node:path';
+import {createHash} from 'node:crypto';
+import {researchProjection} from '../month-end-workbench/src/research';
+import type {Bootstrap} from './src/client';
+const root=import.meta.dir,output=resolve(root,'dist');await mkdir(output,{recursive:true});
+const result=await Bun.build({entrypoints:[resolve(root,'src/app.ts')],outdir:output,target:'browser',naming:'app.js',format:'iife',minify:true,sourcemap:'none'});if(!result.success)throw new AggregateError(result.logs,'browser_build_failed');
+const bootstrap:Bootstrap={schema:'month-end.web.v2',projection:researchProjection,delivery:'http'};
+const serialize=(value:unknown)=>JSON.stringify(value).replaceAll('<','\\u003c');
+const template=await readFile(resolve(root,'index.html'),'utf8');await writeFile(resolve(output,'index.html'),template.replace('<!--PREVIEW_DATA-->',serialize(bootstrap)));
+await copyFile(resolve(root,'src/styles.css'),resolve(output,'styles.css'));await mkdir(resolve(output,'fonts'),{recursive:true});
+for(const name of ['NotoSansKR-variable.woff2','NotoSerifKR-variable.woff2','NotoSansKR-OFL.txt','NotoSerifKR-OFL.txt'])await copyFile(resolve(root,'../dc-gang-a/src/academy/web/assets',name),resolve(output,'fonts',name));
+let css=await readFile(resolve(output,'styles.css'),'utf8');for(const name of ['NotoSansKR-variable.woff2','NotoSerifKR-variable.woff2'])css=css.replace(`./fonts/${name}`,`data:font/woff2;base64,${(await readFile(resolve(output,'fonts',name))).toString('base64')}`);
+const script=(await readFile(resolve(output,'app.js'),'utf8')).replaceAll('</script','<\\/script');const sha=(value:string)=>createHash('sha256').update(value).digest('base64');
+const policy=`default-src 'none'; script-src 'sha256-${sha(script)}'; style-src 'sha256-${sha(css)}'; font-src data:; img-src data:; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'; frame-src 'none'`;
+let standalone=template.replace('<!--PREVIEW_DATA-->',serialize({...bootstrap,delivery:'standalone'})).replace(/content="default-src[^"\n]*"/,`content="${policy}"`).replace('<link rel="stylesheet" href="./styles.css">',()=>`<style>${css}</style>`).replace('<script defer src="./app.js"></script>','').replace('</body>',()=>`<script>${script}</script></body>`);
+const licenses=(await Promise.all(['NotoSansKR-OFL.txt','NotoSerifKR-OFL.txt'].map(name=>readFile(resolve(output,'fonts',name),'utf8')))).join('\n\n').replaceAll('--','- -');standalone=standalone.replace('</html>',()=>`<!-- Embedded font licenses:\n${licenses}\n-->\n</html>`);await writeFile(resolve(output,'review.html'),standalone);await writeFile(resolve(output,'.nojekyll'),'');
+console.log(JSON.stringify({status:'built',sourceRevision:researchProjection.revision,coverage:researchProjection.coverage,standaloneAcademy:'unavailable-unless-explicit-synthetic',privateOperationalPayloads:0,finalMembershipCreated:false}));

@@ -1,0 +1,76 @@
+{
+  "schema": "month-end.backend-verification.v1",
+  "observedAtUtc": "2026-10-16T16:33:04.862840+00:00",
+  "sourceRevision": "07edb2dea2e5997aea4318f0fa2efa21dde633df",
+  "scope": "Owned source-backed backend/domain and local synthetic HTTP/SDK integration",
+  "checks": [
+    {
+      "command": "bun run check",
+      "cwd": "apps/academy/month-end-workbench",
+      "result": "pass",
+      "tests": 38,
+      "assertions": 199,
+      "typecheck": "pass",
+      "projectionReceipt": "pass"
+    },
+    {
+      "command": "bun run source:verify -- /pinned/math-research-module",
+      "cwd": "apps/academy/month-end-workbench",
+      "result": "pass",
+      "pinnedRepositoryBlobs": 238,
+      "archiveFiles": 109,
+      "deterministicProjection": "exact match"
+    },
+    {
+      "check": "pinned source clone git status",
+      "result": "clean"
+    },
+    {
+      "check": "curated projection privacy field scan",
+      "result": "no originalText/studentId/loginState/api_key/password/authorizationToken matches",
+      "limitation": "Heuristic, not comprehensive certification"
+    }
+  ],
+  "behavior": [
+    "Original105grade3+46upper types,151basic+19variant examples,151research designs and1216microsteps retained",
+    "Four core hierarchy levels retain siblings; original core content prerequisites and upper connections remain separate from containment",
+    "Teacher study completion binds exact research type/version/edition/unit; scope changes invalidate completion",
+    "Lexical false positive and zero-overlap structural candidate retain unknown mathematical axes",
+    "Native type pat_no and question lecture_key remain distinct roles even when their numeric literals are equal",
+    "Question reviews require observed scoped type; foreign membership, duplicate question identity and arbitrary preview origins are refused",
+    "All actions have exact input keys, no final item membership or write/send route",
+    "Loopback Host/Origin/CSRF/session/body/route guards verified; private transport exceptions sanitized",
+    "Authority escalation anywhere in admitted records, dangling source/identity references, assistant proposal/report promotion and pin drift are rejected",
+    "Async source reads recheck dependency epochs after transport; stale intent/study/scope and out-of-order scope responses publish no result/history",
+    "Whole source response admission is atomic: rejected candidate/scope pages establish no context or type-review authority",
+    "Malformed percent-encoded asset paths return bounded400 without rejecting the HTTP handler",
+    "Same-session GET/api/state exposes ephemeral current evidence/history",
+    "Empty navigation scopes clear prior completion but cannot support study reports or source matching/review",
+    "Category capability metadata retains source native tuple/depth and explicit labelable state; synthetic fixture distinguishes labelable units and nonlabelable grade",
+    "Ephemeral six-axis teacher alignment proposal derives evidence hashes from admitted question projections and research refs from pinned objects; no caller hashes, acceptance or final membership",
+    "Alignment requires current bound study/intent/context and exact inspected pat/question revision; proposal remains historical after dependency changes",
+    "Alignment action admission and digest publication are atomic and epoch-checked; cross-pat, stale, uninspected and claimed-acceptance counterexamples refused",
+    "Ephemeral retained evidence is bounded to100question projections/2MiB and40alignment proposals per session",
+    "Static delivery permits only the9built assets and rejects symlinked files/parents using canonical containment, lstat and pinned descriptor identity; synthetic outside-root sentinel counterexample denied",
+    "Alignment proposal cap rechecked immediately before publication;41concurrent valid submissions produce40proposals and1refusal",
+    "Three-state teacher/native metadata comparison permits unknown-side provisional reads without filling native nulls, warns explicitly in Korean, and holds known mismatches",
+    "Exact handles/research study/intent/cursor binding remains strict when teacher-declared edition/unit differs only through source unknown metadata"
+  ],
+  "limits": [
+    "Backend worker performed no native source query, credential access, source/native write, remote mutation or commit",
+    "Root owns separately authorized real readonly integration, browser QA, top-level status/check, delivery and commits",
+    "Full mathematical/pedagogical audit, learning effects and real teacher completion remain unverified",
+    "math-core R4 human semantic disposition pending; canonical application not performed; no production acceptance inferred"
+  ],
+  "nativeEffects": 0,
+  "remoteWrites": 0,
+  "acceptanceInferred": false,
+  "rootFinalReadback": {
+    "backendCheck": "38pass/199assertions",
+    "mcpCheck": "60pass/1425assertions",
+    "browser": "21flows pass",
+    "sourceVerify": "238exactblobs/deterministicprojection",
+    "independentReview": ".private/month-end-redesign/review/final-closure-v2.json",
+    "nativeReadonlyReceipt": "docs/live-read-verification-20261017.json"
+  }
+}

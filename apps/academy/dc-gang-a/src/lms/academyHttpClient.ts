@@ -8,6 +8,9 @@ import {applyJournalHttpAction,validateJournalHttpAction,assertJournalWireQualif
 import {parseItemMetadata} from './itemMetadataRead';
 import {selectSourceFunction} from './sourceFunctionText';
 import {inspectAssessmentSearchMetadata} from './assessmentReadProtocol';
+import {inspectTestPoolDocument,readTestPoolDocument,testPoolSelectorDefaults} from './testPoolInspection';
+import {testPoolQuestionPreviewReferences,testPoolPreviewSourcePins} from './testPoolQuestionPreview';
+import {emptyTestPoolScope,testPoolScope,testPoolReadRequest,parseTestPoolCategories,qualifyTestPoolTypeTemplate,parseTestPoolTypeLabels,extractTestPoolLabelPayload,qualifyTestPoolQuestionTemplate,parseTestPoolQuestions,type TestPoolScope} from './testPoolReadProtocol';
 
 export const ACADEMY_ORIGIN='https://dc.gang-a.kr' as const;
 export interface AcademyPrincipal {teacherLabel:string;teacherKey:string;collegeKey:string}
@@ -26,12 +29,13 @@ export class AcademyHttpClient {
   #loginAttempted=false;
   #principal:AcademyPrincipal;
   #transport:SourceTransport;
+  #testPoolProtocol:{defaults:Record<string,string>;selectorSha256:string;html:string}|null=null;
   constructor(principal:AcademyPrincipal,transport:SourceTransport=fetch){
     this.#principal={teacherLabel:readLiteralName(principal.teacherLabel),teacherKey:readLiteralKey(principal.teacherKey),collegeKey:readLiteralKey(principal.collegeKey)};
     this.#transport=transport;
   }
   get authenticated(){return this.#authenticated;}
-  close(){this.#cookies.clear();this.#authenticated=false;}
+  close(){this.#cookies.clear();this.#authenticated=false;this.#testPoolProtocol=null;}
   async #request(path:string,init:RequestInit={},followLoginRedirect=false,sourceOperation?:string):Promise<Response>{
     const url=new URL(path,ACADEMY_ORIGIN);
     if(url.origin!==ACADEMY_ORIGIN||url.username||url.password||url.hash)throw Error('fixed_academy_origin_required');
@@ -115,6 +119,127 @@ export class AcademyHttpClient {
       students.push({name,courseRows,bookRows,observedAt:new Date().toISOString()});
     }
     return {schemaVersion:1,teacherLabel:input.teacherLabel,principalKey:principal,collegeKey:college,source:'direct_http_api',observedAt:new Date().toISOString(),academyMutations:0,students};
+  }
+  /** Explicit read of the user's TestPool index; no tab/form/creation handler is invoked. */
+  async inspectTestPoolIndex(){
+    if(!this.#authenticated)throw Error('authentication_required');
+    const path='/servlet/controller.tutor.etest.TestPoolServlet?reqCmd=Main';
+    const response=await this.#request(path,{method:'GET'},false,'test_pool_index');
+    try{return {...inspectTestPoolDocument(await response.text(),sourceDomParser.parseFromString),
+      sourceOperation:'test_pool_index' as const,observedAt:new Date().toISOString()};}
+    catch(error){if(error instanceof Error&&error.message==='test_pool_authentication_required')this.close();throw error;}
+  }
+  /** Inspect the user-designated tab as inert text. Never invoke create, save, delete or print handlers. */
+  async inspectTestPoolTab(){
+    if(!this.#authenticated)throw Error('authentication_required');
+    const response=await this.#request('/common/etest_pool.jsp',{method:'GET'},false,'test_pool_tab_document');
+    try{return {...inspectTestPoolDocument(await response.text(),sourceDomParser.parseFromString),
+      sourceOperation:'test_pool_tab_document' as const,observedAt:new Date().toISOString()};}
+    catch(error){if(error instanceof Error&&error.message==='test_pool_authentication_required')this.close();throw error;}
+  }
+  /** Read the source-referenced type-selection document; no selection/generation request is sent. */
+  async inspectTestPoolSelector(){
+    if(!this.#authenticated)throw Error('authentication_required');
+    const response=await this.#request('/common/testpage/testpage_select_hwp.jsp',{method:'GET'},false,'test_pool_type_selector_document');
+    try{return {...inspectTestPoolDocument(await response.text(),sourceDomParser.parseFromString),
+      sourceOperation:'test_pool_type_selector_document' as const,observedAt:new Date().toISOString()};}
+    catch(error){if(error instanceof Error&&error.message==='test_pool_authentication_required')this.close();throw error;}
+  }
+  /** Only the fixed scripts referenced by the original question preview; inspect without executing. */
+  async inspectTestPoolQuestionProtocol(){
+    const selector=await this.inspectTestPoolSelector();
+    const scripts=[];
+    for(const path of ['/js/common.js','/js/common_function.js']){
+      if(!selector.externalScripts.some(script=>script.sameOrigin&&script.path===path))throw Error('test_pool_preview_script_unqualified');
+      const text=await (await this.#request(path,{method:'GET'},false,'test_pool_preview_script')).text();
+      const inspection=inspectTestPoolDocument('',sourceDomParser.parseFromString,[text]);
+      scripts.push({path,sourceSha256:digest(text),functions:inspection.readFunctionSources.filter(row=>['getExamPath','getExamCardImageFileName'].includes(row.name))});
+    }
+    return {selector,scripts,sourceHandlersExecuted:false,academyWrites:0};
+  }
+  /** Exact CategoryList read discovered in the current type-selector source; never creates a paper. */
+  async #poolProtocol(){
+    if(!this.#authenticated)throw Error('authentication_required');
+    if(this.#testPoolProtocol)return this.#testPoolProtocol;
+    const selectorText=await (await this.#request('/common/testpage/testpage_select_hwp.jsp',{method:'GET'},false,'test_pool_type_selector_document')).text();
+    try{readTestPoolDocument(selectorText,sourceDomParser.parseFromString);}
+    catch(error){if(error instanceof Error&&error.message==='test_pool_authentication_required')this.close();throw error;}
+    const defaults=testPoolSelectorDefaults(selectorText);
+    return this.#testPoolProtocol=Object.freeze({defaults:Object.freeze(defaults),selectorSha256:digest(selectorText),html:selectorText});
+  }
+  async inspectTestPoolCategoryTree(requestedScope:TestPoolScope=emptyTestPoolScope,expectedSelectorSha256?:string){
+    const scope=testPoolScope(requestedScope),protocol=await this.#poolProtocol(),defaults=protocol.defaults;
+    if(expectedSelectorSha256!==undefined&&expectedSelectorSha256!==protocol.selectorSha256)throw Error('test_pool_selector_source_changed');
+    const params=new URLSearchParams({p_process:'CategoryList',...defaults,...Object.fromEntries(Object.entries(scope).map(([key,value])=>[key,String(value)]))});
+    const response=await this.#request('/servlet/controller.common.TestPageShowServlet?'+params,{method:'GET'},false,'test_pool_category_list');
+    const text=await response.text();if(Buffer.byteLength(text)>2_000_000)throw Error('test_pool_response_too_large');
+    if(/normal_session_error\.jsp|세션이 만료/.test(text)){this.close();throw Error('test_pool_authentication_required');}
+    const value=JSON.parse(text);
+    const nodes=parseTestPoolCategories(value,scope);
+    return {sourceOperation:'test_pool_category_list' as const,sourceSha256:digest(text),observedAt:new Date().toISOString(),
+      selectorDefaults:defaults,selectorSha256:protocol.selectorSha256,scope,nodes,
+      sourceHandlersExecuted:false,academyWrites:0};
+  }
+  async readTestPoolTypeLabels(requestedScope:TestPoolScope,expectedSelectorSha256?:string){
+    const scope=testPoolScope(requestedScope);if(!scope.cl3)throw Error('test_pool_type_scope_requires_source_level3');
+    const protocol=await this.#poolProtocol(),template=qualifyTestPoolTypeTemplate(protocol.html);
+    if(expectedSelectorSha256!==undefined&&expectedSelectorSha256!==protocol.selectorSha256)throw Error('test_pool_selector_source_changed');
+    const params=new URLSearchParams({p_process:'GetTypeTotal',category_iden:protocol.defaults.category_iden!,make_school_key:protocol.defaults.make_school_key!,...Object.fromEntries(Object.entries(scope).map(([key,value])=>[key,String(value)]))});
+    const response=await this.#request('/servlet/controller.common.TestPageShowExServlet?'+params,{method:'GET'},false,'test_pool_type_labels');
+    const text=await response.text();if(Buffer.byteLength(text)>2_000_000)throw Error('test_pool_response_too_large');
+    if(/normal_session_error\.jsp|세션이 만료/.test(text)){this.close();throw Error('test_pool_authentication_required');}
+    // The original iframe consumer reads document.body.innerHTML before parsing its value.
+    const htmlEnvelope=/text\/html/i.test(response.headers.get('content-type')??'')||/^\s*</.test(text);
+    const payload=htmlEnvelope?sourceDomParser.parseFromString(text,'text/html').body.innerHTML:text;
+    let labels:ReturnType<typeof parseTestPoolTypeLabels>,payloadSha256:string;
+    try{const framed=extractTestPoolLabelPayload(payload);payloadSha256=framed.payloadSha256;labels=parseTestPoolTypeLabels(framed.value);}
+    catch(error){const kind=(value:string)=>!value.trim()?'empty':value.trim().startsWith('<')?'markup':value.trim().startsWith('{')?'object':value.trim().startsWith('[')?'array':'other';
+      const code=error instanceof Error&&/^[a-z_]+$/.test(error.message)?error.message:'test_pool_label_parse_failed';
+      throw Object.assign(Error(code),{safeResponseMetadata:{contentType:(response.headers.get('content-type')??'unknown').split(';')[0],wireKind:kind(text),payloadKind:kind(payload),
+        wireBytes:Buffer.byteLength(text),payloadBytes:Buffer.byteLength(payload),bodyElementTags:htmlEnvelope?[...sourceDomParser.parseFromString(text,'text/html').body.children].slice(0,8).map(node=>node.tagName):[]}});}
+    return {sourceOperation:'test_pool_type_labels' as const,sourceSha256:digest(text),observedAt:new Date().toISOString(),
+      selectorSha256:protocol.selectorSha256,template,categoryIden:protocol.defaults.category_iden,scope,labels,
+      wireFormat:htmlEnvelope?'sentinel_framed_html_body':'sentinel_framed_body',payloadSha256,
+      coverage:'returned_scoped_response_only',wholePoolCompleteness:'unknown',sourceHandlersExecuted:false,academyWrites:0,finalItemMembershipCreated:false};
+  }
+  /** Unranked existing questions under one exact source-returned type; never final exam membership. */
+  async readTestPoolQuestions(requestedScope:TestPoolScope,patNo:string,page:number,limit:number,expectedSelectorSha256?:string,offset=0){
+    const request=testPoolReadRequest({operation:'questions',scope:requestedScope,patNo,page,limit,expectedSelectorSha256,offset});
+    const labels=await this.readTestPoolTypeLabels(request.scope,request.expectedSelectorSha256);
+    const label=labels.labels.find(row=>String(row.nativeId)===patNo);if(!label)throw Error('test_pool_question_type_not_in_scope');
+    const protocol=await this.#poolProtocol(),template=qualifyTestPoolQuestionTemplate(protocol.html);
+    const params=new URLSearchParams({p_process:'GetExamList',category_iden:protocol.defaults.category_iden!,make_school_key:protocol.defaults.make_school_key!,
+      ...Object.fromEntries(Object.entries(request.scope).map(([key,value])=>[key,String(value)])),
+      exam_type:template.defaults.g_examtype_filter!,difficulty:template.defaults.searchConditionDifficulty!,beh_no:template.defaults.searchConditionBehAreaNo!,pat_no:patNo,
+      rows:'50',page:String(page),sidx:'',sord:'asc',_search:'false'});
+    const response=await this.#request('/servlet/controller.common.TestPageShowExServlet?'+params,{method:'GET'},false,'test_pool_type_questions');
+    const text=await response.text();if(Buffer.byteLength(text)>2_000_000)throw Error('test_pool_response_too_large');
+    if(/normal_session_error\.jsp|세션이 만료/.test(text)){this.close();throw Error('test_pool_authentication_required');}
+    const value=JSON.parse(text);let parsed:ReturnType<typeof parseTestPoolQuestions>;
+    try{parsed=parseTestPoolQuestions(value,patNo,page,50);}catch(error){
+      throw Object.assign(error instanceof Error?error:Error('test_pool_question_parse_failed'),{safeResponseMetadata:{
+        responseKeys:value&&typeof value==='object'?Object.keys(value).slice(0,40):[],rowsIsArray:Array.isArray(value?.rows),rowCount:Array.isArray(value?.rows)?value.rows.length:null,
+        firstRowFieldNames:value?.rows?.[0]&&typeof value.rows[0]==='object'?Object.keys(value.rows[0]).slice(0,50):[],
+        paginationFields:Object.fromEntries(['page','total','records'].map(key=>[key,typeof value?.[key]==='number'||typeof value?.[key]==='string'&&/^[0-9]{1,16}$/.test(value[key])?value[key]:null]))}});
+    }
+    if(offset>parsed.questions.length)throw Error('test_pool_question_offset_out_of_range');
+    const end=Math.min(offset+limit,parsed.questions.length),sourceRowCount=parsed.questions.length;
+    let previewReferencesState:'qualified_original_source'|'source_changed_unqualified'='source_changed_unqualified';
+    const previews=new Map<string,ReturnType<typeof testPoolQuestionPreviewReferences>>();
+    if(protocol.selectorSha256===testPoolPreviewSourcePins.selector){
+      const helpers=await (await this.#request('/js/common_function.js',{method:'GET'},false,'test_pool_preview_helpers')).text();
+      if(Buffer.byteLength(helpers)>2_000_000)throw Error('test_pool_response_too_large');
+      const helpersSha256=digest(helpers);
+      if(helpersSha256===testPoolPreviewSourcePins.helpers){
+        previewReferencesState='qualified_original_source';
+        for(const question of parsed.questions)previews.set(question.lectureKey,testPoolQuestionPreviewReferences(question.lectureKey,question.sourceFields,protocol.selectorSha256,helpersSha256));
+      }
+    }
+    return {sourceOperation:'test_pool_type_questions' as const,selectorSha256:protocol.selectorSha256,sourceSha256:digest(text),observedAt:new Date().toISOString(),
+      scope:request.scope,patNo,labelExact:label.labelExact,templateSha256:template.sourceSha256,...parsed,questions:parsed.questions.slice(offset,end).map(question=>({...question,previewReferences:previews.get(question.lectureKey)??[]})),previewReferencesState,
+      sourcePageSize:50,sourceRowCount,offset,nextOffset:end<sourceRowCount?end:null,
+      coverage:'returned_type_page_only',questionContent:'source_metadata_and_answer_only',sourceOrderPreserved:true,
+      sourceHandlersExecuted:false,academyWrites:0,finalItemMembershipCreated:false};
   }
   async inspectDayRecordWire(input:unknown){
     const plan=createAcademyReadPlan(input);

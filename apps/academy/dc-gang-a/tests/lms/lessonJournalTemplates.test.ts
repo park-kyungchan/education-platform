@@ -11,12 +11,12 @@ test('parent journal maps internal paper codes to attributable edition/unit name
   expect(result.homework).toContain('집에서는 채점하지 않고');
   expect(result.memo).toBe('- Invented announcement');
   expect(JSON.stringify([result.progress,result.homework,result.memo])).not.toContain('P1');
-  expect(result.blockers).toEqual([]);expect(result.approval).toBe('not_granted_by_rendering');
+  expect(result.blockers).toEqual(['progress:parent_internal_language_excluded','homework:parent_internal_language_excluded']);expect(result.approval).toBe('not_granted_by_rendering');
 });
 test('unknown clinic header blocks homework only and memo respects lesson part',async()=>{
   const {renderLessonJournal}=await import('../../src/lms/lessonJournalTemplates');
   const result=renderLessonJournal({...input,part:2,homework:{...input.homework,qualification:'unresolved_header'}});
-  expect(result.blockers).toEqual(['homework:unresolved_original_header']);expect(result.progress).toContain('검사 완료');expect(result.memo).toBe('');
+  expect(result.blockers).toEqual(['progress:parent_internal_language_excluded','homework:parent_internal_language_excluded','homework:unresolved_original_header']);expect(result.progress).toContain('검사 완료');expect(result.memo).toBe('');
 });
 test('unattributed mappings and literal internal codes fail closed instead of reaching parent text',async()=>{
   const {renderLessonJournal}=await import('../../src/lms/lessonJournalTemplates');
@@ -49,6 +49,13 @@ test('activity wording does not repeat problem solving and excluded memo evidenc
 test('teacher-format revision gives each semantic entry one hyphen line, not each sentence',async()=>{
  const {renderLessonJournal}=await import('../../src/lms/lessonJournalTemplates');
  const result=renderLessonJournal({...input,progress:[input.progress[0]!,{...input.progress[0]!,activity:'daily_test',outcome:'not_performed'}],homework:{...input.homework,tasks:[input.homework.tasks[0]!,{...input.homework.tasks[0]!,action:'prestudy'}]},memo:[...input.memo,{text:'- Invented second notice. Its explanation stays in this entry.',parts:[1],evidenceRefs:['teacher:invented-notice']}]});
- expect(result.templateRevision).toBe('2');for(const value of [result.progress,result.homework,result.memo]){expect(value.split('\n')).toHaveLength(2);expect(value.split('\n').every(line=>line.startsWith('- ')&&!line.startsWith('- - '))).toBe(true);}
+ expect(result.templateRevision).toBe('3');for(const value of [result.progress,result.homework,result.memo]){expect(value.split('\n')).toHaveLength(2);expect(value.split('\n').every(line=>line.startsWith('- ')&&!line.startsWith('- - '))).toBe(true);}
  expect(result.homework.match(/01\/07/g)).toHaveLength(1);expect(result.homework.split('\n')[0]).toContain('집에서는 채점하지 않고');expect(result.memo.split('\n')[1]).toBe('- Invented second notice. Its explanation stays in this entry.');
+});
+
+test('parent blockers preserve source wording and isolate independently valid fields',async()=>{
+  const {renderLessonJournal}=await import('../../src/lms/lessonJournalTemplates');
+  const result=renderLessonJournal({...input,progress:[{...input.progress[0]!,activity:'correction',outcome:'completed'}],homework:{...input.homework,tasks:[{...input.homework.tasks[0]!,action:'solve'}]},memo:[{text:'교사 최종 완료판정 대기',parts:[1],evidenceRefs:['teacher:invented-memo']}]});
+  expect(result.progress).toContain('오답 정리 완료');expect(result.homework).toContain('문제풀이 해오기');
+  expect(result.memo).toBe('- 교사 최종 완료판정 대기');expect(result.blockers).toEqual(['memo:parent_internal_language_excluded']);
 });

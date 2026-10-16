@@ -1,0 +1,11 @@
+import { createHash } from 'node:crypto';
+import { readFile } from 'node:fs/promises';
+import lock from '../data/source-lock.json';
+import receipt from '../data/projection-receipt.json';
+import { researchProjection } from '../src/research.ts';
+import { requireValue } from '../src/validation.ts';
+const bytes=await readFile(new URL('../data/research-projection.json',import.meta.url));
+requireValue(createHash('sha256').update(bytes).digest('hex')===receipt.projectionSha256,'Committed curated projection byte drift');
+requireValue(JSON.stringify(lock.files)===JSON.stringify(researchProjection.manifest),'Projection source lock mismatch');
+requireValue(receipt.sourceRevision===lock.revision,'Receipt revision mismatch');
+console.log(`Pinned curated research projection:105+46 types,170 examples,151 designs,1216 microsteps; ${lock.files.length} source blobs retained. No mathematical acceptance inferred.`);
