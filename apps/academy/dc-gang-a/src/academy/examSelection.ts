@@ -1,11 +1,15 @@
-import {assertExactKeys, assertInstant, assertKnowledge, assertRefs, canonicalJson, digest, immutableCopy, requireText, stableId, type Knowledge} from '../learning/model';
-import {validateSourceKey, type SourceKey} from './domain';
+import {assertExactKeys, assertInstant, assertKnowledge, assertRefs, canonicalJson, digest, immutableCopy, known, unknown, requireText, stableId, type Knowledge} from '../learning/model';
+import {validateSourceKey, validateHierarchy, traceHierarchy, type CatalogNode, type SourceKey} from './domain';
+import {teacherExamSelectionContract} from '../../docs/teacher-exam-selection-contract';
 
 /** The accepted elementary exam shape. Point bands do not establish difficulty. */
 export const elementaryExamRequirement = immutableCopy({
-  revision: 'elementary-written-24-100-v1', responseMode: 'constructed_response',
-  questions: 24, points: 100, durationMinutes: 80,
-  pointBands: [{points: 3, questions: 12}, {points: 5, questions: 8}, {points: 6, questions: 4}],
+  revision: 'elementary-written-24-100-v1',
+  responseMode: teacherExamSelectionContract.acceptedRequirement.responseMode,
+  questions: teacherExamSelectionContract.acceptedRequirement.questions,
+  points: teacherExamSelectionContract.acceptedRequirement.totalPoints,
+  durationMinutes: teacherExamSelectionContract.acceptedRequirement.durationMinutes,
+  pointBands: teacherExamSelectionContract.acceptedRequirement.pointBands,
 } as const);
 
 export interface ExamCandidateBody {
@@ -127,4 +131,83 @@ export function inspectExamSelection(workspace: ExamSelectionWorkspace, candidat
     readiness:issues.length===0?'ready_for_teacher_review' as const:'incomplete' as const,
     sourceVerification:'not_performed_by_this_projection' as const,
     teacherAccepted:false as const, printed:false as const, published:false as const, academyWrites:0 as const});
+}
+
+/** Declared unit scope uses the existing edition hierarchy, not a second exam catalog. */
+export type ExamPreselectionUnitScope = Knowledge<{
+  readonly catalog: readonly CatalogNode[];
+  readonly unitIds: readonly string[];
+}>;
+
+/** Pure analysis before item selection. Declared source claims never authenticate source truth. */
+export function inspectExamPreselection(
+  workspace: ExamSelectionWorkspace,
+  candidates: readonly ExamCandidate[],
+  unitScope: ExamPreselectionUnitScope = unknown('Exact exam unit scope and edition have not been supplied'),
+) {
+  validateExamWorkspace(workspace);
+  if (workspace.selections.length) throw Error('exam_preselection_requires_empty_selections');
+  // Reuse the existing candidate/revision validator without proposing any selected rows.
+  inspectExamSelection(workspace, candidates);
+  canonicalJson(unitScope);
+  boundedKnowledge(unitScope, scope => {
+    assertExactKeys(scope, ['catalog', 'unitIds']);
+    if (!Array.isArray(scope.catalog) || scope.catalog.length > 1000 || !Array.isArray(scope.unitIds) || !scope.unitIds.length || scope.unitIds.length > elementaryExamRequirement.questions) throw Error('exam_unit_scope_cap');
+    validateHierarchy(scope.catalog);
+    scope.unitIds.forEach(id => boundedText(id, 200));
+    if (new Set(scope.unitIds).size !== scope.unitIds.length) throw Error('duplicate_exam_scope_unit');
+  });
+  type Allocation = {unitId:string;sourceKey:SourceKey;label:string;pathIds:string[];questions:number};
+  let unitDistribution: Knowledge<{basis:'equal_count_in_declared_order';allocations:Allocation[]}> = unknown('Exact exam unit scope and edition have not been supplied');
+  if (unitScope.state === 'unknown') unitDistribution = unitScope;
+  else {
+    const {catalog, unitIds} = unitScope.value;
+    const units = unitIds.map(id => {
+      const unit = catalog.find(node => node.id === id);
+      if (!unit || !['major_unit','middle_unit','minor_unit'].includes(unit.kind)) throw Error('exam_scope_unit_unavailable');
+      return {unit, path:traceHierarchy(catalog, id)};
+    });
+    if (new Set(units.map(({unit}) => canonicalJson(unit.sourceKey))).size !== units.length) throw Error('duplicate_exam_scope_source_unit');
+    if (units.some(({path}) => path.state !== 'known')) unitDistribution = unknown('Declared unit ancestry or edition is incomplete');
+    else {
+      const editions = new Set(units.map(({path}) => canonicalJson(path.path[0]!.sourceKey)));
+      if (editions.size !== 1) throw Error('mixed_exam_scope_editions');
+      for (const {unit, path} of units) if (path.path.some(node => node.id !== unit.id && unitIds.includes(node.id))) throw Error('overlapping_exam_scope_units');
+      const base = Math.floor(elementaryExamRequirement.questions / units.length), remainder = elementaryExamRequirement.questions % units.length;
+      unitDistribution = known({basis:'equal_count_in_declared_order', allocations:units.map(({unit,path},index) => ({unitId:unit.id, sourceKey:unit.sourceKey, label:unit.label, pathIds:path.path.map(node => node.id), questions:base + (index < remainder ? 1 : 0)}))}, unitScope.evidenceRefs);
+    }
+  }
+  const fields = ['edition','content','answer','difficulty','responseMode'] as const;
+  const rows = candidates.map(candidate => ({
+    candidateId:candidate.id, candidateRevisionId:candidate.revisionId,
+    sourceItem:candidate.sourceItem, sourceRef:candidate.sourceRef, evidenceRefs:candidate.evidenceRefs,
+    observedAt:candidate.observedAt, edition:candidate.edition,
+    missingFields:fields.filter(field => candidate[field].state === 'unknown'),
+    constructedResponseClaim:candidate.responseMode.state === 'known' && candidate.responseMode.value === elementaryExamRequirement.responseMode,
+  }));
+  const requirement = teacherExamSelectionContract.acceptedRequirement;
+  const minutes = (time:string) => Number(time.slice(0,2)) * 60 + Number(time.slice(3));
+  const end = minutes(requirement.localStartTime) + requirement.durationMinutes;
+  const localExamEndTime = String(Math.floor(end / 60)).padStart(2,'0') + ':' + String(end % 60).padStart(2,'0');
+  const unknowns = ['source_currentness_unverified','source_inventory_completeness_unverified','item_to_unit_coverage_unverified','teacher_judgment_unobserved'];
+  if (workspace.examDate.state === 'unknown') unknowns.push('exam_date_unknown');
+  if (workspace.timeZone.state === 'unknown') unknowns.push('exam_timezone_unknown');
+  if (unitDistribution.state === 'unknown') unknowns.push('unit_distribution_unknown');
+  for (const field of fields) if (rows.some(row => row.missingFields.includes(field))) unknowns.push(field + '_unknown');
+  if (rows.some(row => !row.constructedResponseClaim)) unknowns.push('constructed_response_unverified');
+  return immutableCopy({
+    kind:'exam_preselection_analysis' as const,
+    requirement, requirementRevision:elementaryExamRequirement.revision,
+    originalSource:teacherExamSelectionContract.source,
+    boundary:teacherExamSelectionContract.preselection,
+    scoring:{bands:requirement.pointBands, calculatedPoints:requirement.pointBands.reduce((sum,band) => sum + band.points * band.questions, 0), difficultyFromPoints:false as const},
+    timing:{localStartTime:requirement.localStartTime, durationMinutes:requirement.durationMinutes, localExamEndTime, localSessionEndTime:requirement.localSessionEndTime, gradingAndPeerHavrutaMinutes:minutes(requirement.localSessionEndTime) - end, examDate:workspace.examDate, timeZone:workspace.timeZone, calendarInstantResolved:false as const},
+    coverage:{observedCandidateRevisions:rows.length, distinctSourceItems:new Set(candidates.map(candidate => candidate.id)).size, rows,
+      inventoryCompleteness:unknown('No independently qualified complete source inventory is supplied'),
+      itemToUnitCoverage:unknown('Candidate records do not establish exact item-to-unit coverage')},
+    proposals:{unitDistribution, reviewStatus:'proposal_only' as const, basis:'Equal counts are a starting proposal, not a difficulty or source-coverage judgment; teacher review may change them.'},
+    unknowns, selectedQuestions:0 as const, selectedPoints:0 as const, finalMembershipCreated:false as const,
+    candidateCreation:false as const, sourceVerification:'not_performed_by_this_projection' as const,
+    teacherAccepted:false as const, printed:false as const, published:false as const, academyWrites:0 as const,
+  });
 }

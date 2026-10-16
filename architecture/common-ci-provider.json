@@ -1,21 +1,166 @@
 {
-  "schema": "education.common-ci-projection.v1",
+  "schema": "education.common-ci-projection.v2",
   "codeOwner": "agent-platform",
   "source": {
-    "path": "../agent-platform/ci/source-check.ts",
-    "sha256": "fdd14ae070e3b3385a9c8e99aaf2cf1b8d160d5513fed8e3e39b3fc6991f91c0"
+    "repository": "https://github.com/park-kyungchan/agent-platform.git",
+    "commit": "3cb565efdcf9634b057fa77948f4222b93255604",
+    "tree": "d230c84acc159461d9ee3f16096cd49da7ce4ca4",
+    "path": "ci/source-check.ts",
+    "sha256": "9be7146129adb2082dc0733b248a05fd68108473856f0be7e409c149ab1014f8",
+    "inputs": [
+      {
+        "path": "ci/source-check.ts",
+        "sha256": "9be7146129adb2082dc0733b248a05fd68108473856f0be7e409c149ab1014f8"
+      },
+      {
+        "path": "ci/quality/receipt-validation-gate.ts",
+        "sha256": "5e1d0317e3d4e9ce6cd5d9e8435baeb3d9bf31d8a8b0625bba4a27412951da76"
+      },
+      {
+        "path": "ci/quality/receipt-validator.ts",
+        "sha256": "d4795b86a387b126face7039f0c6dcdfb5ca6034c05e6233bf2d848d7a208986"
+      }
+    ]
   },
   "generationEntry": "ci/native-review.entry.ts",
-  "generated": [
-    {
-      "path": "ci/native-review-gate.js",
-      "sha256": "6b80f654fb052f607711baf90b8f5abd1b7a8264ba5e88fc74a2eeb77c68cb01"
-    },
+  "generator": "ci/generate-projection.ts",
+  "generationInputs": [
     {
       "path": "ci/native-review.entry.ts",
       "sha256": "9cfa144bd598b8b8c43ff1d16f57e85ba9f98461552a4140792d7eee32224312"
+    },
+    {
+      "path": "ci/generate-projection.ts",
+      "sha256": "9d2faa3bab202c89d29978fd21ba1576c4a1e5ca01ddd9787a8ecc6da7b568ba"
     }
   ],
+  "compiler": {
+    "name": "Bun",
+    "version": "1.4.3",
+    "revision": "c6da4a4d3010e5553438c60f6bd76d981976867c",
+    "sha256": "7ce7d6b654eddeec20afddf2396317fba6dc19ab52788a27e894e1806bf8f24b",
+    "bytes": 88979072
+  },
+  "build": {
+    "target": "bun",
+    "format": "esm",
+    "minify": false,
+    "splitting": false,
+    "tsconfigSha256": "eaf8ebfd7d8606ddc71ba3aac3a180791e5f3a8bc864a39c98fab7cb24530ce0"
+  },
+  "generated": [
+    {
+      "path": "ci/native-review-gate.js",
+      "sha256": "9510bff7c86689b532b5bd37d687d1276f1a76c1dc97974f27468334a8d6a03e"
+    }
+  ],
+  "compiledInputs": [
+    {
+      "path": "agent-platform:ci/quality/receipt-validation-gate.ts",
+      "sha256": "5e1d0317e3d4e9ce6cd5d9e8435baeb3d9bf31d8a8b0625bba4a27412951da76",
+      "bytes": 1577,
+      "imports": [
+        {
+          "path": "agent-platform:ci/quality/receipt-validator.ts",
+          "kind": "import-statement",
+          "original": "./receipt-validator"
+        }
+      ],
+      "format": "esm"
+    },
+    {
+      "path": "agent-platform:ci/quality/receipt-validator.ts",
+      "sha256": "d4795b86a387b126face7039f0c6dcdfb5ca6034c05e6233bf2d848d7a208986",
+      "bytes": 9782,
+      "imports": [
+        {
+          "path": "crypto",
+          "kind": "import-statement",
+          "original": "node:crypto",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    {
+      "path": "agent-platform:ci/source-check.ts",
+      "sha256": "9be7146129adb2082dc0733b248a05fd68108473856f0be7e409c149ab1014f8",
+      "bytes": 32857,
+      "imports": [
+        {
+          "path": "agent-platform:ci/quality/receipt-validation-gate.ts",
+          "kind": "import-statement",
+          "original": "./quality/receipt-validation-gate"
+        },
+        {
+          "path": "agent-platform:ci/quality/receipt-validator.ts",
+          "kind": "import-statement",
+          "original": "./quality/receipt-validator"
+        },
+        {
+          "path": "crypto",
+          "kind": "import-statement",
+          "original": "node:crypto",
+          "external": true
+        },
+        {
+          "path": "fs/promises",
+          "kind": "import-statement",
+          "original": "node:fs/promises",
+          "external": true
+        },
+        {
+          "path": "os",
+          "kind": "import-statement",
+          "original": "node:os",
+          "external": true
+        },
+        {
+          "path": "path",
+          "kind": "import-statement",
+          "original": "node:path",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    {
+      "path": "education-entry:ci/native-review.entry.ts",
+      "sha256": "9cfa144bd598b8b8c43ff1d16f57e85ba9f98461552a4140792d7eee32224312",
+      "bytes": 172,
+      "imports": [
+        {
+          "path": "agent-platform:ci/source-check.ts",
+          "kind": "import-statement",
+          "original": "../../agent-platform/ci/source-check"
+        }
+      ],
+      "format": "esm"
+    }
+  ],
+  "supersedes": {
+    "schema": "education.common-ci-projection.v1",
+    "source": {
+      "path": "../agent-platform/ci/source-check.ts",
+      "sha256": "fdd14ae070e3b3385a9c8e99aaf2cf1b8d160d5513fed8e3e39b3fc6991f91c0"
+    },
+    "generated": [
+      {
+        "path": "ci/native-review-gate.js",
+        "sha256": "6b80f654fb052f607711baf90b8f5abd1b7a8264ba5e88fc74a2eeb77c68cb01"
+      },
+      {
+        "path": "ci/native-review.entry.ts",
+        "sha256": "9cfa144bd598b8b8c43ff1d16f57e85ba9f98461552a4140792d7eee32224312"
+      }
+    ]
+  },
   "generatedOnly": true,
-  "nativePermissionGranted": false
+  "nativePermissionGranted": false,
+  "runtimeAuthority": false,
+  "compatibility": {
+    "nativeReviewBootstrapVersion": "1.4.2",
+    "actualActionsExecutionPerformed": false,
+    "meaning": "Generated standard JavaScript retains the unchanged Actions bootstrap; local verification uses Bun1.4.3 and synthetic fetch only."
+  }
 }

@@ -6,7 +6,7 @@ A reviewed static bilingual mathCrew frontend, built with TypeScript and Bun. En
 
 This source was developed with AI assistance through Hermes and locally reviewed and tested. This package is the scoped public-site source, not a native Hermes profile export, the whole Hermes installation, a private product export, or an AI-provider SDK. It contains no Claude API integration, model evaluation results, student metrics or claims of external traction.
 
-Use Bun 1.4.1 on PATH. No dependency installation is needed.
+Use Bun 1.4.3 on PATH. No dependency installation is needed.
 Tests use TMPDIR when set, otherwise the platform temporary directory returned by node:os. The portability regression allocates one unique temporary base, copies only explicitly listed public files into a synthetic checkout containing spaces and Korean characters, runs build/check/verify, and rejects percent-encoded sibling writes without recursively spawning itself. CI explicitly uses the runner's temporary directory.
 
     bun --no-env-file run build

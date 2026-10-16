@@ -16,7 +16,7 @@ This is semantic integration, not two independent packages placed next to one an
 
 ## Run
 
-Required: Bun 1.4.2. TypeScript 7.0.2 and all selected dependencies are locked.
+Required: Bun 1.4.3. TypeScript 7.0.2 and all selected dependencies are locked.
 
     bun install --frozen-lockfile --ignore-scripts
     bun run check
