@@ -67,6 +67,16 @@ test('only the existing Actions source step can use Bun1.4.2 as setup bootstrap'
  expect(()=>setupRuntime({version:'1.4.2',actions:'true',path:'/fixture/path\n/other'})).toThrow('invalid_actions_path');
 });
 
+test('standalone module CI templates provision the maintained Bun runtime before checks',()=>{
+ const paths=['apps/mathcrew/.github/workflows/ci.yml','examples/clinic-workbench/.github/workflows/check.yml','apps/academy/gang-a/.github/workflows/ci.yml','packages/curriculum/.github/workflows/validate.yml'];
+ for(const path of paths){
+  const workflow=Bun.YAML.parse(readFileSync(resolve(projectRoot,path),'utf8')) as {jobs:Record<string,{steps:{uses?:string;with?:Record<string,unknown>}[]}>};
+  const setup=Object.values(workflow.jobs).flatMap(job=>job.steps).filter(step=>step.uses?.startsWith('oven-sh/setup-bun@'));
+  expect(setup).toHaveLength(1);
+  expect(setup[0]!.with?.['bun-version']).toBe(bunToolchain.version);
+ }
+});
+
 test('setup publishes Bun1.4.3 to later Actions steps without overwriting existing PATH entries',()=>{
  const root=mkdtempSync(join(tmpdir(),'education-actions-path-'));
  try{
