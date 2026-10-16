@@ -1,0 +1,25 @@
+{
+  "schema": "academy.running-p1-local-os-boundary-pins.v1",
+  "pins": {
+    "python": {
+      "path": "/usr/bin/python3.11",
+      "sha256": "9bee109da0dce17a7c9eeaca9f420cc6770a9fe143b9382d73bd22fe59b21a5f",
+      "bytes": 6809944,
+      "uid": 0,
+      "gid": 0,
+      "mode": 493,
+      "nlink": 1
+    },
+    "ssh": {
+      "path": "/usr/bin/ssh",
+      "sha256": "04f2ff5f506a3f332e7adeb1478a4c551ae74acdd328e6fb5c2495664d4064e6",
+      "bytes": 1129504,
+      "uid": 0,
+      "gid": 0,
+      "mode": 493,
+      "nlink": 1
+    }
+  },
+  "qualification": "PROPOSED_EXISTING_ROOT_OWNED_OS_BOUNDARY_ONLY",
+  "meaning": "No installation or native/runtime/auth qualification. Existing root-owned Python system standard library and SSH dependencies remain an explicit trusted OS boundary requiring Root current qualification."
+}

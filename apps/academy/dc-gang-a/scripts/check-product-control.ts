@@ -14,3 +14,5 @@ for(const args of [['-c',syntax],['tests/academy/product-control/native_boundary
  if(await child.exited!==0)throw Error('product_control_source_fixture_failed');
 }
 console.log(JSON.stringify({scope:'product-control-reviewed-source-adoption-and-fictional-guards',sourceFiles:adoption.files.length,importClosureExecuted:false,nativeModuleImported:false,realContractAuthorityOrProfileOpened:false,actualRuntimeQualification:false,nativeEffects:0}));
+
+const observerCheck=Bun.spawn([process.execPath,'scripts/check-running-p1.ts'],{cwd:owner,stdin:'ignore',stdout:'inherit',stderr:'inherit'});if(await observerCheck.exited!==0)throw Error('running_p1_source_check_failed');

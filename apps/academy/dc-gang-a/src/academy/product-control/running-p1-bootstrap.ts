@@ -1,0 +1,25 @@
+/** Root must first consume THESE exact reviewed bootstrap bytes, never import a mutable path. */
+import {constants,openSync,fstatSync,lstatSync,readSync,closeSync,realpathSync} from 'node:fs';
+import {resolve,dirname} from 'node:path';
+import {createHash} from 'node:crypto';
+const owner=resolve(import.meta.dir,'../../..'),boundary=resolve(owner,'runtime/product-control');
+const files={canonical:resolve(boundary,'native-product-os.py'),io:resolve(boundary,'running-p1/readonly_io.py'),root:resolve(boundary,'running-p1/root_observer.py'),native:resolve(boundary,'running-p1/native_observer.py'),orchestrator:resolve(import.meta.dir,'running-p1-observer.ts'),bootstrap:resolve(import.meta.path),sshBoundary:resolve(boundary,'running-p1/local_ssh_boundary.py'),osBoundary:resolve(boundary,'running-p1/local-ssh-os-boundary.json')};
+const graphPath=resolve(boundary,'running-p1/source-graph.json'),hash=(v:Uint8Array|string)=>createHash('sha256').update(v).digest('hex');
+function need(v:unknown,code:string):asserts v{if(!v)throw Error(code);}
+const image=(s:ReturnType<typeof fstatSync>)=>[s.dev,s.ino,s.mode,s.uid,s.gid,s.nlink,s.size,s.mtimeMs,s.ctimeMs].join(':');
+function snapshot(path:string,digest:string,cap:number){const fd=openSync(path,constants.O_RDONLY|constants.O_NOFOLLOW|constants.O_NONBLOCK);try{const before=fstatSync(fd);need(before.isFile()&&before.nlink===1&&before.size>0&&before.size<=cap&&(before.uid===process.getuid?.()||before.uid===0)&&(before.mode&0o022)===0&&realpathSync(path)===path,'bootstrap_source_descriptor_refused');const bytes=Buffer.alloc(before.size+1);let offset=0;while(offset<bytes.length){const n=readSync(fd,bytes,offset,bytes.length-offset,null);if(!n)break;offset+=n;}need(offset===before.size&&hash(bytes.subarray(0,offset))===digest&&image(fstatSync(fd))===image(before)&&image(lstatSync(path))===image(before),'bootstrap_source_image_drift');return bytes.subarray(0,offset);}finally{closeSync(fd);}}
+interface BootstrapPins {bootstrapSha256:string;selfSha256:string;graphSha256:string}
+export async function consumeReviewedObserver(pins:BootstrapPins){
+ // These checks protect the observer graph before its FIRST import. They cannot retroactively protect this bootstrap's own import.
+ const expected=Object.freeze({...pins});need(Object.values(expected).every(v=>/^[a-f0-9]{64}$/.test(v)),'bootstrap_reviewed_pins_required');snapshot(files.bootstrap,expected.bootstrapSha256,20000);
+ const graph=JSON.parse(snapshot(graphPath,expected.graphSha256,5000).toString()) as {schema:string;files:Record<string,string>};need(graph.schema==='academy.running-p1-source-graph.v1'&&Object.keys(graph).length===2&&graph.files&&Object.keys(graph.files).length===Object.keys(files).length&&Object.keys(files).every(id=>/^[a-f0-9]{64}$/.test(graph.files[id]??''))&&graph.files.bootstrap===expected.bootstrapSha256&&graph.files.orchestrator===expected.selfSha256,'bootstrap_graph_binding_required');
+ const retained={} as Record<keyof typeof files,Buffer>;for(const id of Object.keys(files) as (keyof typeof files)[])retained[id]=snapshot(files[id],graph.files[id]!,50000);
+ const current=()=>{snapshot(graphPath,expected.graphSha256,5000);for(const id of Object.keys(files) as (keyof typeof files)[])snapshot(files[id],graph.files[id]!,50000);};
+ const entry=files.orchestrator;
+ const built=await Bun.build({entrypoints:[entry],target:'bun',format:'esm',define:{'import.meta.dir':JSON.stringify(dirname(entry)),'import.meta.path':JSON.stringify(entry)},plugins:[{name:'fixed-verified-p1-observer-image',setup(build){build.onLoad({filter:/.*/},args=>{need(args.path===entry,'unreviewed_module_load_refused');return {contents:retained.orchestrator.toString(),loader:'ts',resolveDir:dirname(entry)};});build.onResolve({filter:/.*/},args=>{if(['entry-point','entry-point-build'].includes(args.kind)){need(args.path===entry,'unreviewed_entry_refused');return {path:entry};}need(['node:fs','node:path','node:crypto','fs','path','crypto'].includes(args.path),'unreviewed_module_import_refused');return {path:args.path.startsWith('node:')?args.path:'node:'+args.path,external:true};});}}]});
+ need(built.success&&built.outputs.length===1,'immutable_observer_build_hold');const code=await built.outputs[0]!.text();current();
+ // Consume the built immutable bytes. No import of observer/helper filesystem paths occurs.
+ const module=await import('data:text/javascript;base64,'+Buffer.from(code).toString('base64'));
+ need(Object.keys(module).sort().join(',')==='canonicalProjection,prepareReviewed,runReviewedOnce,validateP1Projection','unexpected_observer_exports');return {module,compiledSourceSha256:hash(code),sourceGraphSha256:expected.graphSha256};
+}
+if(import.meta.main){need(process.argv.length===2,'cold_bootstrap_entrypoint_only');console.log(JSON.stringify({schema:'academy.running-p1-bootstrap-source.v1',actualSSH:0,actualNativeEffects:0,executionAdmission:false,firstTrustBoundary:'Root must consume exact reviewed bootstrap source buffer using its trusted source reader/virtual graph before invoking this API.'}));}
