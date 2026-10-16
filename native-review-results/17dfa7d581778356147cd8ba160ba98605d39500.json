@@ -1,0 +1,558 @@
+{
+  "schema": "agent-platform.independent-review-result.v1",
+  "recordClass": "verification",
+  "binding": {
+    "codeOwner": "agent-platform",
+    "evidenceOwner": "codex-harness-engineering",
+    "scope": "canonical-source-ci-quality"
+  },
+  "headSha": "17dfa7d581778356147cd8ba160ba98605d39500",
+  "reviewedTreeSha": "5d4f0b775607098acd0ea81a9c49dc48343ffb72",
+  "reviewedSourceManifestSha256": "985b15576a2a31dd10cdcb2697cc23b3b65e3ba4bdf4f0b3100308de078a5ca2",
+  "reviewer": {
+    "runtime": "native-codex",
+    "taskId": "/root/academy_p1_latefix_independent_review"
+  },
+  "author": {
+    "runtime": "native-codex",
+    "taskId": "/root/academy_next_action"
+  },
+  "conclusion": "pass",
+  "unresolvedFindings": 0,
+  "findings": [],
+  "observedAtUtc": "2026-10-16T04:34:28.097Z",
+  "reviewReuse": {
+    "schema": "native-source-identical-tree-successor-binding.v1",
+    "recordClass": "AccountableLeadAuthorizedReviewReuse",
+    "boundAtUtc": "2026-10-16T04:45:12.168Z",
+    "deliveryHead": "17dfa7d581778356147cd8ba160ba98605d39500",
+    "originalReviewHead": "600821e423425ae5c2197653ac1a308dbeae5edf",
+    "reviewedTreeSha": "5d4f0b775607098acd0ea81a9c49dc48343ffb72",
+    "reviewedSourceManifestSha256": "985b15576a2a31dd10cdcb2697cc23b3b65e3ba4bdf4f0b3100308de078a5ca2",
+    "originalReview": {
+      "path": "/tmp/academy-p1-600821-independent-review-20261016.json",
+      "bytes": 23834,
+      "sha256": "0cbd471502b3af348c8e500f489806a8fba800f4c4e561745aef17780dc9f26c",
+      "observedAtUtc": "2026-10-16T04:34:28.097Z"
+    },
+    "authority": "Root explicitly binds this identical reviewed tree to source17d delivery under the current selected Work; no new independent execution or native authority.",
+    "proof": {
+      "exactWholeTreeIdentical": true,
+      "entryCount": 1182,
+      "blobCount": 1026,
+      "completePlannedSourceFiles": 19,
+      "originalResultBytesVerified": true,
+      "currentCandidateUnresolvedFindings": 0,
+      "allPriorSourceFindingsMappedClosed": true
+    },
+    "priorPRState": {
+      "head": "815095dcd5e47832e8f3609cf65f1abc43875006",
+      "unresolvedLegacyComments": [
+        4290430179,
+        4290430182,
+        4290430187
+      ],
+      "meaning": "Old head remains PENDING. Comments are mapped closed for reviewed successor SOURCE only; resolve and reread actual PR state after successor status and head publication. No zero-thread claim is made for old815."
+    },
+    "nativePermissionGranted": false,
+    "actualP1": false,
+    "AcceptanceDecision": null
+  },
+  "originalIndependentReview": {
+    "path": "native-review-details/600821e423425ae5c2197653ac1a308dbeae5edf-original.json",
+    "sha256": "0cbd471502b3af348c8e500f489806a8fba800f4c4e561745aef17780dc9f26c",
+    "bytes": 23834,
+    "sameResultCommit": true,
+    "observedAtUtc": "2026-10-16T04:34:28.097Z"
+  },
+  "independentReview": {
+    "schema": "academy.running-p1-independent-source-review.v1",
+    "recordClass": "IndependentSourceReviewSuccessor",
+    "observedAtUtc": "2026-10-16T04:34:28.097Z",
+    "reviewer": "Same independent reviewer continuing its own prior complete source review; lifecycle author is a distinct agent.",
+    "verdict": "PASS_SOURCE_ONLY",
+    "blockingFindings": 0,
+    "currentUnresolvedSourceFindings": 0,
+    "findings": [],
+    "source": {
+      "worktree": "/home/palantirkc/code/worktrees/academy-running-p1-lifecycle-fix-20261016",
+      "head": "600821e423425ae5c2197653ac1a308dbeae5edf",
+      "tree": "5d4f0b775607098acd0ea81a9c49dc48343ffb72",
+      "parent": "11d4e17f4cff084c8e5eaf3bc911b654c18348fb",
+      "plannedPR10BaselineMain": "1ee923795a5c589e64c210cbfd6dda17a5e26d39",
+      "plannedPR10ChangedFiles": 19,
+      "lifecycleDeltaFiles": 8,
+      "identicalPreviouslyReviewedFiles": 11,
+      "workingTreeCleanBeforeAndAfter": true,
+      "all19CommittedBytesMatchFilesystem": true,
+      "all8ManifestEntriesExactlyMatch": true,
+      "sourceGraphSha256": "31c1e651b01094713717d641134bf80d72e23cb3a6cfe08ed9280ad315f81583",
+      "sourceGraphImages": 8,
+      "sourceGraphPins": {
+        "canonical": "21456f088b6224f8f9e91d2df1d57bb272929347fb88d38f233edb1a5b5380c9",
+        "io": "77748766a35bd8fbaa45993ef537e2ef678bb346725f13e76ce03409a3378b25",
+        "root": "0b6b385a76c41f6397242c2c5289c9af7ec2f9bf0ebb7732401bb543b0b3657b",
+        "native": "6dda835b53ac9f0c27d0d4d7c857deb2c617770f8fc66f84b87f71d1318eee77",
+        "orchestrator": "832331a352fa70e74fde19e5955af0630261e86856682796a7830e1cd5939af6",
+        "bootstrap": "a9a223d93b5434767004f3778c7e9236e7d5e9c95b0969e5c2b7f353bff7a8d6",
+        "sshBoundary": "0386b3e41688b86828f73c1ab4aa62ed7ff42b012859658b2273bd9c928eb95d",
+        "osBoundary": "c6274bcaba1fae63963b7d8ab6e974d5668a9dbc00ad65f2e35ed7620c2e6f88"
+      },
+      "originalCanonicalPR9FiveUnchanged": [
+        {
+          "path": "apps/academy/dc-gang-a/src/academy/product-control/product-domain-controller.ts",
+          "sha256": "17089bcbe3902af7ea9ad92121e5ec155aad71f88b25c6a0d8d235446a8b15f0",
+          "unchangedFromMain": true
+        },
+        {
+          "path": "apps/academy/dc-gang-a/src/academy/product-control/guarded-io.ts",
+          "sha256": "e2bedd294b1a7d9973e38d63871629539c9b26fb8179d21c659e12b133e0f3de",
+          "unchangedFromMain": true
+        },
+        {
+          "path": "apps/academy/dc-gang-a/src/academy/product-control/product-readback.ts",
+          "sha256": "1675cfc59bd4f3ec4c51f77e7dc1d060411f7bc3c796ad85bdce40eee55398ef",
+          "unchangedFromMain": true
+        },
+        {
+          "path": "apps/academy/dc-gang-a/runtime/product-control/root-product-bootstrap.py",
+          "sha256": "90434f2c40dcde79cf964d179e943c919295faea737db773946400be8b1c596c",
+          "unchangedFromMain": true
+        },
+        {
+          "path": "apps/academy/dc-gang-a/runtime/product-control/native-product-os.py",
+          "sha256": "21456f088b6224f8f9e91d2df1d57bb272929347fb88d38f233edb1a5b5380c9",
+          "unchangedFromMain": true
+        }
+      ]
+    },
+    "priorReviewBinding": {
+      "path": "/tmp/academy-p1-11d4-independent-review-20261016.json",
+      "sha256": "73fbf1fadd939db7e544ee676c54fa07787d673d791401c00a86298ac8c0d44e",
+      "head": "11d4e17f4cff084c8e5eaf3bc911b654c18348fb",
+      "tree": "5c6414ad6faab43c42de0b6ed0bd736fbc95b079",
+      "verdict": "HOLD_SOURCE_TWO_BLOCKING_LIFECYCLE_FINDINGS",
+      "preservedUnmodified": true,
+      "method": "This is a fresh exact600821 SOURCE verdict, not identical-tree PASS reuse. All8 delta files were inspected in full/diff with current composition;11 unchanged planned files were matched by Git blobOID plus SHA256 to the prior complete18-file review. Added fixture raises current planned total to19. Prior HOLD remains historical truth; current closure requires the fresh independent proofs below."
+    },
+    "mappedClosures": [
+      {
+        "id": "comment4290430179",
+        "topic": "Mutable primary SSH -F config TOCTOU",
+        "priorStatus": "CLOSED_SOURCE_ONLY",
+        "currentStatus": "CLOSED_SOURCE_ONLY",
+        "locations": [
+          "src/academy/product-control/running-p1-observer.ts:47",
+          "src/academy/product-control/running-p1-observer.ts:60",
+          "src/academy/product-control/running-p1-observer.ts:65",
+          "runtime/product-control/running-p1/local_ssh_boundary.py:13"
+        ],
+        "basis": "Config capture/pre-spawn copy/FD3 ready+ACK/birth/hash/metadata/parent-retained sealed0600 image remain unchanged outside the reviewed lifecycle delta. Shim, OS pin declaration and bootstrap Git blobs equal11d. Child verifies known Bun-parent readonly descriptor and seals then execs fixed SSH samePID; original stdin stays separate. Current harmless kernel/fakeexec test passes; no actual SSH or private configuration read.",
+        "qualificationLimit": "Only primary config image/source boundary is closed; actual client/includes/credentials/auth/std-library compatibility remains Root-held."
+      },
+      {
+        "id": "comment4290430182",
+        "topic": "Final endpoint after all permission reads",
+        "priorStatus": "CLOSED_SOURCE_ONLY",
+        "currentStatus": "CLOSED_SOURCE_ONLY",
+        "locations": [
+          "runtime/product-control/running-p1/native_observer.py:27",
+          "runtime/product-control/running-p1/native_observer.py:29"
+        ],
+        "basis": "native_observer is an identical Git blob to prior review. Final unchanged canonical endpoint comparator still runs after activation and migration permission reads and before final births/owner/descriptor currentness. Current18 native fixtures reprove permission-read endpoint rebind refusal; original endpoint11 plus capture equivalence pass."
+      },
+      {
+        "id": "comment4290430187",
+        "topic": "Exceptional Bun transport child not awaited/reaped",
+        "priorStatus": "PARTIALLY_CLOSED_SOURCE_HOLD",
+        "currentStatus": "CLOSED_SOURCE_ONLY",
+        "locations": [
+          "src/academy/product-control/running-p1-observer.ts:63",
+          "src/academy/product-control/running-p1-observer.ts:75",
+          "src/academy/product-control/running-p1-observer.ts:78",
+          "src/academy/product-control/running-p1-observer.ts:80"
+        ],
+        "basis": "Prior seven exceptional paths remain passing; new deadline promise participates in race with stdout/stderr/exited, so timer rejection actively enters finally even if TERM is ignored. TERM once, grace, KILL if needed, definitive child.exited, reader cancellation, retained-image/socket cleanup and once-consumed refusal are independently proven. R1 closure below completes this old finding."
+      },
+      {
+        "id": "P1-11D4-LIFECYCLE-001",
+        "topic": "Deadline never reaches escalation while streams/exit pending",
+        "priorStatus": "BLOCKING_P2",
+        "currentStatus": "CLOSED_SOURCE_ONLY",
+        "locations": [
+          "src/academy/product-control/running-p1-observer.ts:63",
+          "src/academy/product-control/running-p1-observer.ts:75"
+        ],
+        "implementation": "45s timer sets timeout, sends TERM once and rejects deadlineFailure; Promise.race with complete operation enters owned finally. The1s grace/KILL path no longer depends on read or exit settlement. Definitive exited still gates caller completion and descriptor cleanup.",
+        "independentProof": {
+          "sourceSha256": "832331a352fa70e74fde19e5955af0630261e86856682796a7830e1cd5939af6",
+          "script": "/tmp/academy-p1-600821-lifecycle-repro.ts",
+          "result": "/tmp/academy-p1-600821-deadline-proof.json",
+          "method": "Reviewer original11d reproducer adapted to exact600821 function bytes; fictional OS/process/streams;45000/1000ms mapped to5ms; no function-body rewriting.",
+          "observed": "At40ms signals=[SIGTERM,SIGKILL], caller pending and no owned image/socket close while fake child is still unreaped. Release of only fake definitive exit yields owned_ssh_deadline_hold_no_retry; cancel stdout/stderr and image/socket close occur after reap. A second call refuses once_occurrence_already_attempted.",
+          "contrastWithPrior": "11d exact proof produced only SIGTERM and never reached KILL; preserved old report/proof unchanged."
+        }
+      },
+      {
+        "id": "P1-11D4-LIFECYCLE-002",
+        "topic": "Root Docker selector-init escape and suppressed reap uncertainty",
+        "priorStatus": "BLOCKING_P2",
+        "currentStatus": "CLOSED_SOURCE_ONLY",
+        "locations": [
+          "runtime/product-control/running-p1/readonly_io.py:54",
+          "runtime/product-control/running-p1/readonly_io.py:55",
+          "runtime/product-control/running-p1/readonly_io.py:72"
+        ],
+        "implementation": "Immediately after successful Popen, selector=None and protected try own selector construction, registration and I/O. finally kills only this owned Docker CLI if needed, then waits2s; TimeoutExpired/InterruptedError retain a blocking waiter (InterruptedError retries) until definitive exit. Selector and each pipe cleanup follow reaping via nested finally, and one close failure cannot skip the remaining streams.",
+        "independentProof": {
+          "sourceSha256": "77748766a35bd8fbaa45993ef537e2ef678bb346725f13e76ce03409a3378b25",
+          "script": "/tmp/academy-p1-600821-root-lifecycle-proof.py",
+          "result": "/tmp/academy-p1-600821-root-lifecycle-proof.json",
+          "method": "Reviewer-created exact SHA-pinned AST under fake Popen/selector/OS/time; five scenarios, thread/event-controlled delayed wait. Zero real child spawns.",
+          "observed": "EMFILE selector-init, registration failure and interrupted waiter each send KILL once; wait2 timeout leads to waitNone and caller remains incomplete with no cleanup before explicit release. Release marks reaped before all streams close. Selector-close and stdin-close failures still occur only after reaping and do not skip remaining stream cleanup. Current seven author-owned lifecycle fixtures also independently rerun PASS."
+        }
+      },
+      {
+        "id": "priorNonblockingMemoryIdentity",
+        "topic": "Captured memfd identity overwritten before comparison",
+        "priorStatus": "NONBLOCKING_OBSERVATION",
+        "currentStatus": "CLOSED_SOURCE_ONLY",
+        "locations": [
+          "src/academy/product-control/running-p1-observer.ts:70",
+          "src/academy/product-control/running-p1-observer.ts:81",
+          "src/academy/product-control/running-p1-observer.ts:82"
+        ],
+        "basis": "Cleanup now compares to the original captured identity without reassigning it. Nested finally guarantees verified socket cleanup after memfd refusal. Reviewer exact-source reused-inode and foreign-device variants after delayed fake reap each return owned_memfd_identity_changed, never close fd74, still close verified socket73 after exit. Current authored memory-reused/memory-foreign cases also pass."
+      }
+    ],
+    "compositionAssessment": {
+      "firstConsumption": "Unchanged verified immutable bootstrap/source graph and builtin-only virtual observer/dataURL import retained; current canaries before first import and during build pass. Source reader must still trust/consume bootstrap before its first import.",
+      "memoryAndTransport": "No change to sealed fixed local OS primitive, bounded config<=4096/handshake<=1024/deadlines, known parent checks or samePID SSH route. New cancellation only affects directly owned local Python→SSH and Root Docker CLI; no PG/service signal, retry, new scheduler or config parser.",
+      "currentnessAndPermissions": "Original authority/gated/running lineage, source/config synchronous rechecks, descriptor/named-parent currentness, root/native births/container joins and post-permission final endpoint remain intact. All relevant old/new fixtures pass.",
+      "projection": "Strict metadata allowlist and false P1/retirement/PG effect flags remain; no raw body/environment/credential/store export or automatic contract population.",
+      "localOSBoundary": "Root-owned fixed Python/SSH binary pins and explicit trusted system stdlib/ELF dependency boundary unchanged. Current source PASS neither qualifies installed dependencies nor authenticates SSH/native ability."
+    },
+    "verification": [
+      {
+        "command": "git rev-parse HEAD HEAD^{tree} HEAD^; git status --porcelain=v1; git diff prior HEAD; git diff --check baseline HEAD",
+        "result": "PASS exact600821/tree/11d parent, clean,8 delta files,19 planned source files, no whitespace errors. Every current file compared to its committed blob;11 unchanged prior files have equal blobOID and SHA."
+      },
+      {
+        "command": "sha256sum lifecycle manifest/freeze/proof/prior independent report; read all8 lifecycle delta files, prior complete review, full current readonly_io/observer lifecycle and changed fixture/source wiring",
+        "result": "PASS exact supplied artifact hashes; actual source manifest entries independently match; prior11d worktree/head/tree/report remain unchanged."
+      },
+      {
+        "command": "bun test tests/academy/runningP1Observer.test.ts tests/academy/productControl.test.ts",
+        "cwd": "/home/palantirkc/code/worktrees/academy-running-p1-lifecycle-fix-20261016/apps/academy/dc-gang-a",
+        "exitCode": 0,
+        "result": "60 pass,0 fail,365 expect calls;27 P1/33 preservation tests, deadline and two FD identity regressions plus existing bootstrap and harmless kernel/fakeexec proof."
+      },
+      {
+        "command": "bun scripts/check-product-control.ts",
+        "cwd": "/home/palantirkc/code/worktrees/academy-running-p1-lifecycle-fix-20261016/apps/academy/dc-gang-a",
+        "exitCode": 0,
+        "result": "Canonical5 hashes/import closure; original native82/endpoint11; capture equivalence; nativeP1 18/Root5/descriptor7; new Docker lifecycle7; generated local/root/native syntax PASS. No native execution."
+      },
+      {
+        "command": "bun node_modules/typescript/bin/tsc --noEmit -p apps/academy/dc-gang-a/tsconfig.product-control.json",
+        "cwd": "/home/palantirkc/code/worktrees/academy-running-p1-lifecycle-fix-20261016",
+        "exitCode": 0,
+        "result": "Strict affected TypeScript PASS."
+      },
+      {
+        "command": "bun run typecheck",
+        "cwd": "/home/palantirkc/code/worktrees/academy-running-p1-lifecycle-fix-20261016",
+        "exitCode": 0,
+        "result": "Root TypeScript PASS."
+      },
+      {
+        "command": "bun run verify:imports",
+        "cwd": "/home/palantirkc/code/worktrees/academy-running-p1-lifecycle-fix-20261016",
+        "exitCode": 0,
+        "result": "Root imported source integrity PASS852 unchanged files plus explicit adaptations."
+      },
+      {
+        "command": "bun /tmp/academy-p1-600821-lifecycle-repro.ts deadline; reused; foreign (separate invocations)",
+        "exitCode": 0,
+        "result": "Reviewer exact-source independent deadline, delayed-reap and FD-reuse proofs PASS; no real child or target access."
+      },
+      {
+        "command": "python3 -I -S -B /tmp/academy-p1-600821-root-lifecycle-proof.py",
+        "exitCode": 0,
+        "result": "Reviewer independent5 Root transport exceptional lifecycle/delayed-reap/cleanup-error proofs PASS with fake processes only."
+      }
+    ],
+    "workContext": {
+      "domainId": "native-harness",
+      "projectId": "codex-harness-engineering",
+      "workId": "ontology-driven-harness-operation",
+      "specRevision": 7,
+      "planRevision": 7,
+      "sourceContextCommit": "4d498063637d1473d0a8665a240a12cd357547f6",
+      "basis": "Same-topic continuation reuses already-read owner/common instructions, selected Work Spec7/Plan7 and native harness source context from prior review. New Education AGENTS/project were reread; architecture/verification/owner docs have unchanged current composition. No Goal, Work transition or historical-effect replay.",
+      "nativeAuthorshipFromGitInferred": false
+    },
+    "fileCoverage": [
+      {
+        "path": "apps/academy/dc-gang-a/runtime/product-control/running-p1/README.md",
+        "bytes": 10941,
+        "sha256": "34123fa5a6e88a13c986cd1ac2f5456f27575e81931ffe9a65183c14047e4241",
+        "reviewCoverage": "fresh-delta",
+        "changeClass": "modified"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/runtime/product-control/running-p1/local-ssh-os-boundary.json",
+        "bytes": 828,
+        "sha256": "c6274bcaba1fae63963b7d8ab6e974d5668a9dbc00ad65f2e35ed7620c2e6f88",
+        "blobOid": "85039d63a588b8c44b4a39fe06beba3c4b5196d9",
+        "reviewCoverage": "prior-source-identical-blob",
+        "identicalPriorBlob": true
+      },
+      {
+        "path": "apps/academy/dc-gang-a/runtime/product-control/running-p1/local_ssh_boundary.py",
+        "bytes": 4659,
+        "sha256": "0386b3e41688b86828f73c1ab4aa62ed7ff42b012859658b2273bd9c928eb95d",
+        "blobOid": "00728e6f9f6ba6eb788af7082401e699b5439af6",
+        "reviewCoverage": "prior-source-identical-blob",
+        "identicalPriorBlob": true
+      },
+      {
+        "path": "apps/academy/dc-gang-a/runtime/product-control/running-p1/native_observer.py",
+        "bytes": 5709,
+        "sha256": "6dda835b53ac9f0c27d0d4d7c857deb2c617770f8fc66f84b87f71d1318eee77",
+        "blobOid": "32c31965f0a021d9b2cb642f05ae0da65a0bb34a",
+        "reviewCoverage": "prior-source-identical-blob",
+        "identicalPriorBlob": true
+      },
+      {
+        "path": "apps/academy/dc-gang-a/runtime/product-control/running-p1/proposal.json",
+        "bytes": 8901,
+        "sha256": "22c6cf297562f466cc4649b9646eca438fb60f71fec8683087e95beb667644df",
+        "reviewCoverage": "fresh-delta",
+        "changeClass": "modified"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/runtime/product-control/running-p1/readonly_io.py",
+        "bytes": 7468,
+        "sha256": "77748766a35bd8fbaa45993ef537e2ef678bb346725f13e76ce03409a3378b25",
+        "reviewCoverage": "fresh-delta",
+        "changeClass": "modified"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/runtime/product-control/running-p1/root_observer.py",
+        "bytes": 8358,
+        "sha256": "0b6b385a76c41f6397242c2c5289c9af7ec2f9bf0ebb7732401bb543b0b3657b",
+        "blobOid": "2f932004778dc045f11d59c2fbc01c1816b3e4e7",
+        "reviewCoverage": "prior-source-identical-blob",
+        "identicalPriorBlob": true
+      },
+      {
+        "path": "apps/academy/dc-gang-a/runtime/product-control/running-p1/source-graph.json",
+        "bytes": 741,
+        "sha256": "31c1e651b01094713717d641134bf80d72e23cb3a6cfe08ed9280ad315f81583",
+        "reviewCoverage": "fresh-delta",
+        "changeClass": "modified"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/scripts/check-product-control.ts",
+        "bytes": 2579,
+        "sha256": "2e32c9f164ae47e097edfeb910be41fbff61cd823d300a3958ae6ffe04b94417",
+        "blobOid": "0b19bb2bfc3d24525c98d3f2f293344d43b58101",
+        "reviewCoverage": "prior-source-identical-blob",
+        "identicalPriorBlob": true
+      },
+      {
+        "path": "apps/academy/dc-gang-a/scripts/check-running-p1.ts",
+        "bytes": 4395,
+        "sha256": "118a4584825cd0552825808fbbdfc1a5521bcc98ce91b842d655b5903329b82d",
+        "reviewCoverage": "fresh-delta",
+        "changeClass": "modified"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/product-control/running-p1-bootstrap.ts",
+        "bytes": 5061,
+        "sha256": "a9a223d93b5434767004f3778c7e9236e7d5e9c95b0969e5c2b7f353bff7a8d6",
+        "blobOid": "1aeceb8a7c4b3eed0ed1b1d069567420dfc254c1",
+        "reviewCoverage": "prior-source-identical-blob",
+        "identicalPriorBlob": true
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/product-control/running-p1-observer.ts",
+        "bytes": 20413,
+        "sha256": "832331a352fa70e74fde19e5955af0630261e86856682796a7830e1cd5939af6",
+        "reviewCoverage": "fresh-delta",
+        "changeClass": "modified"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/tests/academy/product-control/local_ssh_boundary_fixtures.py",
+        "bytes": 3361,
+        "sha256": "d8b7d9a5b02815067b667b1e588a35d6f0aa8d66cd83edcce6b8ab7f11e5c60c",
+        "blobOid": "3a8f06a9b6b1e10422456c0b83b12c436bd92f78",
+        "reviewCoverage": "prior-source-identical-blob",
+        "identicalPriorBlob": true
+      },
+      {
+        "path": "apps/academy/dc-gang-a/tests/academy/product-control/running_p1_fixtures.py",
+        "bytes": 14072,
+        "sha256": "250a6039db8c8bfec3208b05ac392e5fdcb1bf266c19280c7473da7c979b69f9",
+        "blobOid": "378c0201fb176f46eb7d8e7724192d7c33b9f3b5",
+        "reviewCoverage": "prior-source-identical-blob",
+        "identicalPriorBlob": true
+      },
+      {
+        "path": "apps/academy/dc-gang-a/tests/academy/product-control/running_p1_io_fixtures.py",
+        "bytes": 2303,
+        "sha256": "e414b943a424382ff2371cb3849f8e3ba25d2e9dbb9a9292eb5bb023d72ee23c",
+        "blobOid": "e8bcc04362d134471324a2da61fc76297a0c0b24",
+        "reviewCoverage": "prior-source-identical-blob",
+        "identicalPriorBlob": true
+      },
+      {
+        "path": "apps/academy/dc-gang-a/tests/academy/product-control/running_p1_transport_fixtures.py",
+        "bytes": 4451,
+        "sha256": "ce6b990b7c33420018beff5056c8e00cda01ac6b725bdd974105454cb9b2d58a",
+        "reviewCoverage": "fresh-delta",
+        "changeClass": "new-fixture"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/tests/academy/runningP1Observer.test.ts",
+        "bytes": 21471,
+        "sha256": "c6f61cbbceb52cc5f015ce96c3a8d99df5e15d625b1cce909373379105deff9a",
+        "reviewCoverage": "fresh-delta",
+        "changeClass": "modified"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/tsconfig.product-control.json",
+        "bytes": 263,
+        "sha256": "91d1ecd877e34e33e8ca394b4a9b1d695a348e3f77f7c618e35f53faf0abf871",
+        "blobOid": "5f840ff71c0ecc24b62e5fd70ad62850fc62d8da",
+        "reviewCoverage": "prior-source-identical-blob",
+        "identicalPriorBlob": true
+      },
+      {
+        "path": "architecture/source-map.json",
+        "bytes": 6151,
+        "sha256": "e719cadacc3d186391fa1ff181b6ad845097446144331a812728eab1eefaa6e0",
+        "blobOid": "ed747b5b836b6d1250b18489fd72ffbc67bb1270",
+        "reviewCoverage": "prior-source-identical-blob",
+        "identicalPriorBlob": true
+      }
+    ],
+    "artifacts": [
+      {
+        "path": "/tmp/academy-p1-11d4-independent-review-20261016.json",
+        "bytes": 23752,
+        "sha256": "73fbf1fadd939db7e544ee676c54fa07787d673d791401c00a86298ac8c0d44e"
+      },
+      {
+        "path": "/tmp/academy-p1-lifecycle-source-manifest-20261016.json",
+        "bytes": 3397,
+        "sha256": "6f00922dfca12f505f7b2027a419220584d56cfefefd18b25cada58754424f2a"
+      },
+      {
+        "path": "/tmp/academy-p1-lifecycle-freeze-receipt-20261016.json",
+        "bytes": 4347,
+        "sha256": "32243bbb3ee56640803055f4679a2ce1a87ba821a8c25e5b3a5c3578af61f0ef"
+      },
+      {
+        "path": "/tmp/academy-p1-lifecycle-proof-20261016.json",
+        "bytes": 5870,
+        "sha256": "eb28087cafee18562772f131a45435bb7882fc02dd27116081f7aa7adda8aee2"
+      },
+      {
+        "path": "/tmp/academy-p1-600821-independent-targeted.log",
+        "bytes": 5585,
+        "sha256": "047f50f4d0f63713dd9eacc88696f2b0a25c009c58a08fb0a9224799012d9533"
+      },
+      {
+        "path": "/tmp/academy-p1-600821-independent-source-check.log",
+        "bytes": 8473,
+        "sha256": "0b279d2db2bff90c319887016334ae6cf2a928ec5b552501ea1a016ab3668d9c"
+      },
+      {
+        "path": "/tmp/academy-p1-600821-independent-strict-typecheck.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "/tmp/academy-p1-600821-independent-root-typecheck.log",
+        "bytes": 47,
+        "sha256": "20a7f6ddac8dfddfae008432d479755c5a411ed34c10316ad6e9ef2d44f4a5a9"
+      },
+      {
+        "path": "/tmp/academy-p1-600821-independent-imports.log",
+        "bytes": 1707,
+        "sha256": "95195195e88fa1380e6906db763dfc5f360ea363376658f1955f098c3a4973dc"
+      },
+      {
+        "path": "/tmp/academy-p1-600821-lifecycle-repro.ts",
+        "bytes": 5614,
+        "sha256": "c2b22864e4d51b1d9cc74dd849d3e90c6ca425839bc68a50f6c6965585ff60dc"
+      },
+      {
+        "path": "/tmp/academy-p1-600821-deadline-proof.json",
+        "bytes": 1039,
+        "sha256": "babc680db0197ebea1b6d3c48bb83f00684ad3371352bd109b3e27e5d1a35517"
+      },
+      {
+        "path": "/tmp/academy-p1-600821-fd-reused-proof.json",
+        "bytes": 1022,
+        "sha256": "64414cd8911055e25e5251a81894ae26c192eec8f549f06e9cab2a6021a3a6a2"
+      },
+      {
+        "path": "/tmp/academy-p1-600821-fd-foreign-proof.json",
+        "bytes": 1023,
+        "sha256": "9d2f52503a96da6deab069f8be4cacac479398f06b1fc35f65c5ba14bc8e7be7"
+      },
+      {
+        "path": "/tmp/academy-p1-600821-root-lifecycle-proof.py",
+        "bytes": 4157,
+        "sha256": "91ab33ae4c266dbca58711411dbad4b5e35a5694438580e037b292b02723e282"
+      },
+      {
+        "path": "/tmp/academy-p1-600821-root-lifecycle-proof.json",
+        "bytes": 2446,
+        "sha256": "831481c7df4df725f7f8a4725bd1551ff78ce4b249a78873e472e8dc19a6d0d8"
+      }
+    ],
+    "preservation": {
+      "prior11dSourceAndHOLDReport": "UNCHANGED_VERIFIED",
+      "canonicalFive": "UNCHANGED_VERIFIED",
+      "sealedShimOSPinsBootstrapNativeEndpoint": "IDENTICAL_GIT_BLOBS_TO_PRIOR",
+      "privateEightPreparation": "STALE_FROZEN; not opened or changed by reviewer",
+      "privatePreparationManifestSha256": "ed6e519515a4d81a627a71bd2a3fce07567c5bee2dcc3a22d0d3024441873a01",
+      "privateByteVerificationScope": "Reference identity only from previous source receipt; no private bodies accessed."
+    },
+    "limitations": [
+      "SOURCE PASS only; no actual SSH/private config/profile/credential/Root/native/PG/SQL/HTTP/data/session/store read or route qualification.",
+      "Harmless Linux fixture executes only test-owned OS primitives with intercepted exec; installed SSH and real authentication/config/include/credential behavior remain untested and held.",
+      "Root current Python standard-library/ELF dependency, immutable first-bootstrap consumption and actual OS/config/client compatibility qualification remain separate required boundaries.",
+      "Persistent wait on kernel-uncertain exit deliberately prevents false completion; this is not a guarantee that a stuck kernel can be forced to reap.",
+      "Complete current planned source review is composed from fresh8-file delta plus verified11 unchanged blob correspondences to prior complete18-file review; no claim of identical whole-tree review reuse.",
+      "No independent remote-main fetch, publication or authenticated review status created; supplied fresh-main baseline is reviewed by exact local Git object.",
+      "Full unrelated mathematics Node26.7 environment-sensitive suite was not repeated; affected source checks pass.",
+      "Private preparation refresh, once Root admission, actual independent P1 reconciliation/acceptance, permission retirement, compiler ABI and native publication/select/start/teacher/whole-Work Acceptance remain separately held."
+    ],
+    "effects": {
+      "actualSSH": 0,
+      "actualPrivateConfigCredentialReads": 0,
+      "actualRootNativeTargetCalls": 0,
+      "actualPGSQLHTTPDataProfileReads": 0,
+      "actualTargetWrites": 0,
+      "actualQualificationAdmissionRetirement": 0,
+      "sourceEdits": 0,
+      "pushStatusPRMerge": 0,
+      "GoalOrWorkChanges": 0,
+      "nativeModelEvaluations": 0,
+      "localArtifacts": "Reviewer /tmp source-proof scripts/reports/logs and task-owned synthetic fixture files only; focused test helper processes are harmless local fixtures."
+    },
+    "actualP1": false,
+    "P1Accepted": false,
+    "nativePermissionGranted": false,
+    "authority": "none",
+    "AcceptanceDecision": null
+  },
+  "nativePermissionGranted": false,
+  "actualP1": false,
+  "AcceptanceDecision": null
+}
