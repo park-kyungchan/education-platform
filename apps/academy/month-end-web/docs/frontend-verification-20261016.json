@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "academy.independent-frontend-verification/1",
+  "scope": "local_synthetic_review_only",
+  "rootStatus": "pass",
+  "rootCheck": "pass_local_source_and_synthetic_module_integration",
+  "nativeFocusedTests": 31,
+  "customMcpPackageTests": 34,
+  "frontendModelTests": 3,
+  "browserCases": [
+    "search_filter_detail_and_untrusted_text",
+    "actual_inventory_unknown_not_zero",
+    "date_edit_and_clear_preserve_independent_timezone",
+    "query_intent_does_not_fake_live_search",
+    "desktop_tablet_and_narrow_mobile_layout",
+    "no_remote_api_storage_or_page_errors",
+    "single_html_review_opens_without_hosting"
+  ],
+  "widths": [
+    1440,
+    1100,
+    768,
+    390,
+    320
+  ],
+  "publicAssetsAllowlist": "pass_9_files",
+  "sourcePrivateDataIncluded": false,
+  "sourceCallsFromBrowser": 0,
+  "storageWritesFromBrowser": 0,
+  "magicPathRuntimeDependencies": 0,
+  "reviewHtmlSha256": "5772ffb793719e740ee35ae9c53828aa424b7cba1bab6bb8d2454e5feb5757cc",
+  "githubPagesPublished": false,
+  "pushPrMergePerformed": false,
+  "productionAcceptance": "pending",
+  "notes": [
+    "Root check preserves mathematics Node/npm reference and pending R4 disposition.",
+    "Browser check uses a fresh isolated Chromium profile and synthetic inputs.",
+    "Public frontend is separate from private read-only MCP."
+  ]
+}

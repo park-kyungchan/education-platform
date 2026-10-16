@@ -1,0 +1,14 @@
+{
+  "name": "@palantirkc/academy-month-end-web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "bun build.ts",
+    "preview": "bun preview.ts",
+    "test": "bun test tests/model.test.ts",
+    "test:browser": "bun tests/browser.ts",
+    "check": "bun ../../../node_modules/typescript/bin/tsc --noEmit -p tsconfig.json && bun run test && bun run build"
+  },
+  "packageManager": "bun@1.4.3"
+}
