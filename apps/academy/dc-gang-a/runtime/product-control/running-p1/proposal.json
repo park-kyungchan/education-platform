@@ -1,0 +1,86 @@
+{
+  "schema": "academy.running-pg-p1-observer-source-proposal.v1",
+  "ontologyVersion": "0.2.0",
+  "owner": "education-platform/apps/academy/dc-gang-a",
+  "recordClass": "SourceProposal",
+  "baseline": "38076613d5e2d21f2b53498581ccadded61dd88a",
+  "sourceGraphRef": "runtime/product-control/running-p1/source-graph.json",
+  "bootstrapRef": "src/academy/product-control/running-p1-bootstrap.ts",
+  "orchestratorRef": "src/academy/product-control/running-p1-observer.ts",
+  "sourceAdoptionRef": "runtime/product-control/source-adoption.json",
+  "originalFiveSourcesChanged": false,
+  "firstConsumption": {
+    "rootTrustAnchor": "Root trusted source reader must verify and retain the exact reviewed bootstrap source bytes before executing them. Consume bootstrap via Bun.build virtual onLoad contents with original source origin bound, then data-URL import; never hash then import a mutable filesystem module.",
+    "bootstrapBoundary": "consumeReviewedObserver verifies and retains every finite source image before FIRST observer import, virtual-builds only the observer snapshot with fixed builtin imports, rechecks currentness after build, consumes immutable built bytes.",
+    "observerBoundary": "prepareReviewed checks after import are currentness and effect guards only; runReviewedOnce repeats all source/config checks immediately before sole SSH spawn.",
+    "canaryTests": [
+      "mutated observer before first import",
+      "mutated helper before first import",
+      "late observer change during virtual build",
+      "late helper change before SSH"
+    ]
+  },
+  "targets": {
+    "rootFiles": [
+      "host-contract.json",
+      "state/authority-postgres.json",
+      "activation-admission.json",
+      "migration-admission.json",
+      "docker-empty/config.json"
+    ],
+    "nativeFiles": [
+      "deployment-contract.json",
+      "activation-admission.json",
+      "migration-admission.json",
+      "state/process-postgres-GENERATION.json (exact validated original 24-hex generation only)"
+    ],
+    "additional": "Fixed container and /opt/data mount projection; original Root manager/transport and native manager/PG process metadata; PG socket entry and bounded Unix-listener/FD inventory; before/after named parent/descriptor/current birth consistency.",
+    "followReferencedFiles": false,
+    "DBOrHTTP": false,
+    "nativeBunControllerOrClient": false
+  },
+  "metadataOnly": {
+    "bodyExport": false,
+    "outputAllowlist": "Strict fixed hashes, container/process births, receipt generation/path, decimal-precise filesystem socket metadata and separate kernel inode/PG FD ownership, bounded known permission operation names, stability and false-effect/acceptance flags.",
+    "unknownMalformedInaccessibleOrDrift": "HOLD; no automatic retry",
+    "rawAuthorityReceiptContractOrPermissionRetainedInGit": false
+  },
+  "effectMatrix": [
+    {
+      "operation": "local source compilation/fictional fixtures",
+      "state": "source-only authorized; completed validation separately recorded"
+    },
+    {
+      "operation": "read actual Root/native PG and permission metadata",
+      "state": "NOT_ADMITTED; independent source and Root once occurrence review required"
+    },
+    {
+      "operation": "P1 acceptance",
+      "state": "NOT_INFERRED; separately Root-owned after actual independent reconciliation"
+    },
+    {
+      "operation": "permission retirement or native publication/select/start/PG/migration/AFTER",
+      "state": "NOT_AUTHORIZED; no effects in this observer"
+    }
+  ],
+  "actual": {
+    "sshOccurrences": 0,
+    "nativeCalls": 0,
+    "nativeWrites": 0,
+    "P1Accepted": false,
+    "rootAuthoritySha256": null,
+    "nativeGatedReceiptSha256": null,
+    "nativeRunningReceiptSha256": null,
+    "postgresEndpoint": null,
+    "currentSSHConfigSha256": null,
+    "privateExecutionProfile": null,
+    "runtimeAvailability": "HOLD"
+  },
+  "remaining": [
+    "independent source review of exact integrated tree and immutable first-consumption bootstrap",
+    "Root private current source/config profile qualification and separately admitted once readonly occurrence",
+    "actual independent reconciliation and Root P1 decision before any retirement",
+    "current compiler ABI/dependencies and original permission retirement remain separate held phases",
+    "native publication/pointer/app/tunnel effects and teacher/private acceptance remain held"
+  ]
+}
