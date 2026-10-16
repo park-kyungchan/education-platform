@@ -6,11 +6,13 @@ import {createHash} from 'node:crypto';
 import {createMcpSourcePort,type PinnedFile} from '../../src/integrations/mcp-source-port.ts';
 import type {Projection,SourcePort,SourceContext,StudyReport,DesiredQuestionIntent} from '../../src/contracts.ts';
 const revision='07edb2dea2e5997aea4318f0fa2efa21dde633df';
+// Synthetic interoperability consumes the maintained sibling owner, never a copied implementation.
+const academyMcpRoot=resolve(process.env.MONTH_END_QA_ACADEMY_MCP_ROOT??resolve(import.meta.dir,'../../../../../../academy-workbench'));
 const projection={owner:'math-research-module',revision,manifest:[{path:'synthetic/types.json',sha256:'c'.repeat(64)}],types:[{id:'T-synthetic'}]} as unknown as Projection;
 const pin=async(path:string):Promise<PinnedFile>=>({path:await realpath(path),sha256:createHash('sha256').update(await readFile(path)).digest('hex')});
 async function setup(entrypoint=resolve(import.meta.dir,'fixture-mcp.ts'),snapshotData:unknown={synthetic:true}){
  const directory=await mkdtemp(resolve(tmpdir(),'month-end-mcp-synthetic-'));const bundle=resolve(directory,'mcp.bundle.js'),snapshot=resolve(directory,'synthetic.json');
- let selectedEntry=entrypoint;if(!entrypoint.endsWith('fixture-mcp.ts')){selectedEntry=resolve(directory,'network-denied-entry.ts');await writeFile(selectedEntry,`import ${JSON.stringify(resolve(import.meta.dir,'../../../../../.private/source-refs/academy-workbench/tools/academy-mcp/tests/network-deny.ts'))};\nimport ${JSON.stringify(entrypoint)};\n`);}
+ let selectedEntry=entrypoint;if(!entrypoint.endsWith('fixture-mcp.ts')){selectedEntry=resolve(directory,'network-denied-entry.ts');await writeFile(selectedEntry,`import ${JSON.stringify(resolve(academyMcpRoot,'tools/academy-mcp/tests/network-deny.ts'))};\nimport ${JSON.stringify(entrypoint)};\n`);}
  const build=await Bun.build({entrypoints:[selectedEntry],target:'bun',outdir:directory,naming:'mcp.bundle.js'});if(!build.success)throw Error(build.logs.join('\n'));
  await writeFile(snapshot,JSON.stringify(snapshotData));const configuration={executable:await pin(process.execPath),bundle:await pin(bundle),source:{mode:'synthetic' as const,snapshot:await pin(snapshot)}};
  return {directory,configuration,async cleanup(port?:SourcePort){await port?.close?.();await rm(directory,{recursive:true,force:true});}};
@@ -44,7 +46,7 @@ test('pin drift, symlink, arbitrary credentials and superseded revision fail bef
 },20000);
 test('actual bundled six-tool label entrypoint preserves bound context and existing DailyRecord registration',async()=>{
  const snapshot={schemaVersion:'academy.item-label-snapshot/1',source:{kind:'synthetic_fixture',origin:'https://dc.gang-a.kr',entryPath:'/servlet/controller.tutor.etest.TestPoolServlet?reqCmd=Main',tabPath:'/common/etest_pool.jsp',revision:'synthetic',observedAt:'2026-10-17T00:00:00Z',evidenceRefs:['synthetic-only'],coverage:'partial',scopeHierarchyIds:['category-3']},hierarchy:[{id:'category-3',parentId:null,labelExact:'합성 분류',evidenceRefs:['synthetic-only']}],labels:[{id:'academy-pat:fixture:string:7',nativeId:'7',hierarchyId:'category-3',labelExact:'합성 유형',aliases:[],evidenceRefs:['synthetic-only']}]};
- const entry=resolve(import.meta.dir,'../../../../../.private/source-refs/academy-workbench/tools/academy-mcp/src/label-server.ts');
+ const entry=resolve(academyMcpRoot,'tools/academy-mcp/src/label-server.ts');
  const fixture=await setup(entry,snapshot);let port:SourcePort|undefined;
  try{port=await createMcpSourcePort(fixture.configuration,projection);const context=await scope(port),r=request(context);const found=await port.find({...r,study:{acceptance:false,attribution:'teacher-reported',evidenceNotes:[],summary:r.study.summary,studied:true,scope:{...r.study.scope,edition:'teacher-edition',unit:'teacher-unit'}},query:'합성',categoryId:null,limit:10});expect(found.candidates[0].label.pat_no).toBe('7');expect(found.context.edition).toBeNull();expect(found.context.unit).toBeNull();expect(found.limitations).toContain('학습 범위는 입력했지만 학원 원천의 판본·단원은 아직 확인되지 않아 적합성은 미확인입니다.');}
  finally{await fixture.cleanup(port);}
