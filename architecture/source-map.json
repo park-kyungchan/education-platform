@@ -184,5 +184,27 @@
     "admissionOrAcceptanceInferred": false,
     "runningP1ObserverProposalRef": "apps/academy/dc-gang-a/runtime/product-control/running-p1/proposal.json",
     "runningP1ActualObservationAccepted": false
+  },
+  "academyGangSourceMaintenance": {
+    "maintainedCodeRoot": "apps/academy/gang-a",
+    "retainedSourceRepository": "park-kyungchan/gang-a",
+    "retainedBaseline": {
+      "commit": "7b5cf56dd6f19ffe56d180b61c03d8366f5f98b1",
+      "tree": "72736bdc69f26a233736f19cff7bfe948ba2226b",
+      "trackedPaths": 129,
+      "frozenImplementationAndSourcePaths": 127,
+      "allowedGovernanceChanges": [
+        "README.md",
+        ".github/workflows/ci.yml"
+      ]
+    },
+    "importSourceRef": "gang-a-upstream",
+    "inspectedNativeReferenceRef": "gang-a-inspected-reference",
+    "ownershipBoundary": "Implementation maintenance is here. The standalone repository retains compatibility/source-policy bytes; original, policy, teacher, native and student-data owners remain unchanged.",
+    "retainedValidation": "Existing standalone Bun1.4.2 compatibility CI plus same-repository exact retained-source freeze; canonical module keeps its own Bun1.4.3 checks.",
+    "nativeSourceParity": "unverified; inspected d604 is historical reference only",
+    "runtimeAuthority": "none",
+    "nativeOrDataCutoverPerformed": false,
+    "retirementAuthorized": false
   }
 }
