@@ -1,0 +1,83 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectId": "education-platform",
+  "domainId": "education",
+  "createdAt": "2026-10-18T12:35:39.013Z",
+  "kind": "evidence",
+  "id": "education-platform:evidence:owner-source-review-reuse-m8611a84705f1-20261018",
+  "payload": {
+    "claim": "Explicit accountable Lead reuse of unchanged original Education owner source review for actual identical merged tree",
+    "method": "native-codex-independent-source-review",
+    "sourceUrl": "https://github.com/park-kyungchan/education-platform/blob/72d389f36faa03646013b9f6a2223a0c75d4a883/native-review-raw/8611a84705f1fe796d6d9a1a3efe8fc1d26a1c9e.json",
+    "fetchedAt": "2026-10-18T12:35:39.013Z",
+    "upstreamRevision": "8611a84705f1fe796d6d9a1a3efe8fc1d26a1c9e",
+    "result": {
+      "outcome": "success",
+      "processExitCode": null,
+      "contentMatched": true
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "outcome": "success"
+      }
+    ],
+    "limitations": [
+      "Root identical-tree review reuse; not fresh peer review or native execution.",
+      "Created/fetched timestamps describe local custody preparation; original peer review time and native entity Task/Run IDs remain unknown.",
+      "Publication locators are prepared, not remotely observed; source-H status is not M status.",
+      "No main CI success, retry, native activation, permission or Acceptance established."
+    ],
+    "details": {
+      "semanticOwner": "education-platform",
+      "review": {
+        "binding": {
+          "repository": "park-kyungchan/education-platform",
+          "projectId": "education-platform",
+          "domainId": "education",
+          "semanticOwner": "education-platform",
+          "scope": "month-end-source-redesign"
+        },
+        "headSha": "8611a84705f1fe796d6d9a1a3efe8fc1d26a1c9e",
+        "reviewedTreeSha": "5d53eee61d926dcd3494647a9fa129a97587dfd4",
+        "reviewedSourceManifestSha256": "a347f0ea1a7f25c0aeb7ecd21fcabcb2e0099df722b5beb9394c1db11071a63f",
+        "reviewer": {
+          "runtime": "native-codex",
+          "taskId": "/root/gang_successor_review"
+        },
+        "author": {
+          "runtime": "native-codex",
+          "taskId": "/root"
+        },
+        "conclusion": "pass",
+        "unresolvedFindings": 0
+      },
+      "sourceReviewReuse": {
+        "classification": "root-identical-tree-review-projection",
+        "rootProjectionOnly": true,
+        "reviewReusedForIdenticalTree": true,
+        "newIndependentReviewPerformed": false,
+        "projectionProducerRole": "accountable-lead",
+        "originalHeadSha": "6bc31886fea36d441f7f88bf880d0e61189b952f",
+        "originalResultSha256": "587ba36d7f23c2700260696c9b09144ad93c787fe0fb6aa52f52e6f113d1bc78",
+        "originalRawNativeResult": {
+          "commit": "edc3710f6da451f9787eb7ec7faa093dc4da2ba1",
+          "path": "native-review-raw/6bc31886fea36d441f7f88bf880d0e61189b952f.json",
+          "sha256": "587ba36d7f23c2700260696c9b09144ad93c787fe0fb6aa52f52e6f113d1bc78"
+        },
+        "originalReviewReceipt": {
+          "commit": "afe354bae388fc71cf1be362dd252a3373b177b9",
+          "path": "native-reviews/6bc31886fea36d441f7f88bf880d0e61189b952f.json",
+          "sha256": "51c7b3939485e04d32902fe86f66cee9495aefafeea6e5fb0ceab8c124730dba"
+        },
+        "originalStatusId": 56629241903,
+        "originalReviewRecordedAtUtc": null,
+        "rootReuseBindingSha256": "388efb3ef325b953b8dff8325bfbff18387182f6a1158fa9694e374c6489aebd",
+        "currentSourceFindingAdjudicationSha256": "388efb3ef325b953b8dff8325bfbff18387182f6a1158fa9694e374c6489aebd",
+        "sourcePeerCurrentFindingsSha256": "2c77ff1f7d04b8d7a2c4f027cafc56b63ee88c791166ea5e94ae57ab142a59b4",
+        "nativeAuthenticationEstablished": false,
+        "nativePermissionGranted": false
+      }
+    }
+  }
+}
