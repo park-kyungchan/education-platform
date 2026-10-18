@@ -1,0 +1,60 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "evidence",
+  "id": "education-platform:evidence:independent-source-review:6bc31886fea36d441f7f88bf880d0e61189b952f",
+  "projectId": "education-platform",
+  "domainId": "education",
+  "createdAt": "2026-10-18T10:57:09.832Z",
+  "payload": {
+    "claim": "Actual separately delegated peer emitted passing exact-source review; unchanged literal bytes and fixed owner/source binding are locally observed.",
+    "method": "native-codex-independent-source-review",
+    "sourceUrl": "https://github.com/park-kyungchan/education-platform/blob/edc3710f6da451f9787eb7ec7faa093dc4da2ba1/native-review-raw/6bc31886fea36d441f7f88bf880d0e61189b952f.json",
+    "fetchedAt": "2026-10-18T10:57:09.832Z",
+    "upstreamRevision": "6bc31886fea36d441f7f88bf880d0e61189b952f",
+    "result": {
+      "outcome": "success",
+      "processExitCode": null,
+      "contentMatched": true
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "outcome": "success",
+        "details": {
+          "scope": "local literal raw custody validation; not a native execution attempt"
+        }
+      }
+    ],
+    "limitations": [
+      "Source custody does not authenticate a native process or publisher.",
+      "Created/fetched timestamps describe this local custody observation; peer execution time/exit code are not inferred.",
+      "Immutable publication locators are prepared and have not been observed remotely.",
+      "Root exact-source adjudication, publication, permissions, merge, activation and Acceptance remain separate."
+    ],
+    "details": {
+      "semanticOwner": "education-platform",
+      "review": {
+        "binding": {
+          "repository": "park-kyungchan/education-platform",
+          "projectId": "education-platform",
+          "domainId": "education",
+          "semanticOwner": "education-platform",
+          "scope": "month-end-source-redesign"
+        },
+        "headSha": "6bc31886fea36d441f7f88bf880d0e61189b952f",
+        "reviewedTreeSha": "5d53eee61d926dcd3494647a9fa129a97587dfd4",
+        "reviewedSourceManifestSha256": "a347f0ea1a7f25c0aeb7ecd21fcabcb2e0099df722b5beb9394c1db11071a63f",
+        "reviewer": {
+          "runtime": "native-codex",
+          "taskId": "/root/gang_successor_review"
+        },
+        "author": {
+          "runtime": "native-codex",
+          "taskId": "/root"
+        },
+        "conclusion": "pass",
+        "unresolvedFindings": 0
+      }
+    }
+  }
+}

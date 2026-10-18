@@ -1,0 +1,66 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "verification",
+  "id": "education-platform:verification:independent-source-review:6bc31886fea36d441f7f88bf880d0e61189b952f",
+  "projectId": "education-platform",
+  "domainId": "education",
+  "createdAt": "2026-10-18T10:57:09.832Z",
+  "payload": {
+    "targetRefs": [
+      "education-platform:evidence:independent-source-review:6bc31886fea36d441f7f88bf880d0e61189b952f"
+    ],
+    "criteria": [
+      {
+        "id": "independent-native-source-review",
+        "status": "pass",
+        "message": "Actual literal peer exact-source output and canonical local custody components validate; publisher/native authentication is not inferred.",
+        "evidenceRefs": [
+          "education-platform:evidence:independent-source-review:6bc31886fea36d441f7f88bf880d0e61189b952f"
+        ]
+      }
+    ],
+    "inputHashes": [
+      {
+        "path": "native-review-results/6bc31886fea36d441f7f88bf880d0e61189b952f.json",
+        "sha256": "6610bbd85694e2ce9fd4b3f42f49f9aadf362bdf5c4be9e6727dee6e9a3ef816"
+      },
+      {
+        "path": "native-review-evidence/6bc31886fea36d441f7f88bf880d0e61189b952f.json",
+        "sha256": "5a92527ef90ce93a1c8000f413016c88abe19e48ef8cc96f20be6e13335d3cb0"
+      },
+      {
+        "path": "native-review-raw/6bc31886fea36d441f7f88bf880d0e61189b952f.json",
+        "sha256": "587ba36d7f23c2700260696c9b09144ad93c787fe0fb6aa52f52e6f113d1bc78"
+      }
+    ],
+    "runtime": {
+      "name": "Bun",
+      "version": "1.4.3"
+    },
+    "details": {
+      "semanticOwner": "education-platform",
+      "review": {
+        "binding": {
+          "repository": "park-kyungchan/education-platform",
+          "projectId": "education-platform",
+          "domainId": "education",
+          "semanticOwner": "education-platform",
+          "scope": "month-end-source-redesign"
+        },
+        "headSha": "6bc31886fea36d441f7f88bf880d0e61189b952f",
+        "reviewedTreeSha": "5d53eee61d926dcd3494647a9fa129a97587dfd4",
+        "reviewedSourceManifestSha256": "a347f0ea1a7f25c0aeb7ecd21fcabcb2e0099df722b5beb9394c1db11071a63f",
+        "reviewer": {
+          "runtime": "native-codex",
+          "taskId": "/root/gang_successor_review"
+        },
+        "author": {
+          "runtime": "native-codex",
+          "taskId": "/root"
+        },
+        "conclusion": "pass",
+        "unresolvedFindings": 0
+      }
+    }
+  }
+}
