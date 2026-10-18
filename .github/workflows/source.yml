@@ -26,9 +26,14 @@ jobs:
       - name: Install checksum-verified private toolchains and frozen dependencies
         run: bun scripts/setup.ts
       - name: Verify generated CI projection and scoped module integration
-        run: |
-          bun ci/verify-projection.ts
-          bun run check
+        uses: park-kyungchan/agent-platform/.github/actions/bun-source@6933ca88c815f5e6e5490f9232c81e0dc5663af5
+        with:
+          project-id: education-platform
+          repository: park-kyungchan/education-platform
+          source-sha: ${{ github.event.pull_request.head.sha || github.sha }}
+          bun-version: 1.4.3
+          install-dependencies: 'false'
+          scripts: '["check:ci-projection","check"]'
   native-review:
     name: Exact head native independent review
     runs-on: ubuntu-latest

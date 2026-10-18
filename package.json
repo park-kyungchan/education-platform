@@ -11,7 +11,8 @@
     "status": "bun src/cli.ts status",
     "module": "bun src/cli.ts module",
     "verify:imports": "bun scripts/verify-imports.ts",
-    "setup": "bun scripts/setup.ts"
+    "setup": "bun scripts/setup.ts",
+    "check:ci-projection": "bun ci/verify-projection.ts"
   },
   "dependencies": {
     "@palantirkc/ontology": "file:releases/palantirkc-ontology-0.2.0.tgz"
