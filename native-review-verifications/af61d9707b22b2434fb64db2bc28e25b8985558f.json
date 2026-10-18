@@ -1,0 +1,91 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectId": "education-platform",
+  "domainId": "education",
+  "createdAt": "2026-10-18T10:21:06.739Z",
+  "kind": "verification",
+  "id": "education-platform:verification:source-review-reuse-maf61d9707b22-20261018",
+  "payload": {
+    "targetRefs": [
+      "education-platform:evidence:source-review-reuse-maf61d9707b22-20261018"
+    ],
+    "criteria": [
+      {
+        "id": "independent-native-source-review",
+        "status": "pass",
+        "message": "Original exact-tree review plus explicit current zero-finding Lead reuse adjudication",
+        "evidenceRefs": [
+          "education-platform:evidence:source-review-reuse-maf61d9707b22-20261018"
+        ]
+      }
+    ],
+    "inputHashes": [
+      {
+        "path": "native-review-raw/af61d9707b22b2434fb64db2bc28e25b8985558f.json",
+        "sha256": "9674ae14af2065ece23790939461ab42d75d81b62ec3add5bb1d912fc0bd34a7"
+      },
+      {
+        "path": "native-review-results/af61d9707b22b2434fb64db2bc28e25b8985558f.json",
+        "sha256": "0a71ee6425919825d5adb919247617d5c6d6abb6d808d757081e5f933541e297"
+      },
+      {
+        "path": "native-review-evidence/af61d9707b22b2434fb64db2bc28e25b8985558f.json",
+        "sha256": "95768af2577fb3d14ba6b0309d8b6feee7a5467830f62d4c1895bd67b5ea7703"
+      }
+    ],
+    "runtime": {
+      "name": "root-identical-tree-review-reuse",
+      "version": "1"
+    },
+    "details": {
+      "semanticOwner": "education-platform",
+      "review": {
+        "binding": {
+          "repository": "park-kyungchan/education-platform",
+          "projectId": "education-platform",
+          "domainId": "education",
+          "semanticOwner": "education-platform",
+          "scope": "month-end-source-redesign"
+        },
+        "headSha": "af61d9707b22b2434fb64db2bc28e25b8985558f",
+        "reviewedTreeSha": "139fdb3504adf55f6e7bec772c56bb047b7dcd10",
+        "reviewedSourceManifestSha256": "085442c59e9f4f7e76e1fc8c262bd48e965d71ad204ce7f1e6137db7f98a53a2",
+        "reviewer": {
+          "runtime": "native-codex",
+          "taskId": "/root/math_candidate_review"
+        },
+        "author": {
+          "runtime": "native-codex",
+          "taskId": "/root"
+        },
+        "conclusion": "pass",
+        "unresolvedFindings": 0
+      },
+      "sourceReviewReuse": {
+        "classification": "root-identical-tree-review-projection",
+        "rootProjectionOnly": true,
+        "reviewReusedForIdenticalTree": true,
+        "newIndependentReviewPerformed": false,
+        "projectionProducerRole": "accountable-lead",
+        "originalHeadSha": "fa8f67b045669ff91fb04093eb4f54b2480f2530",
+        "originalResultSha256": "2a51b2a73438b6002d2e10f4f985707aebb74956d045dc5ca89788e275b8030d",
+        "originalRawNativeResult": {
+          "commit": "542ae83eca10b027e009b46a2bf03df97318daca",
+          "path": "native-review-raw/fa8f67b045669ff91fb04093eb4f54b2480f2530.json",
+          "sha256": "2a51b2a73438b6002d2e10f4f985707aebb74956d045dc5ca89788e275b8030d"
+        },
+        "originalReviewReceipt": {
+          "commit": "0fed4075d3694e08e588f21f903458d70f4639c2",
+          "path": "native-reviews/fa8f67b045669ff91fb04093eb4f54b2480f2530.json",
+          "sha256": "acca0b71396785389ec841ded674c2e6c0f8fb504c74223a2d37b4d499cff3dc"
+        },
+        "originalStatusId": 56625809743,
+        "originalReviewRecordedAtUtc": null,
+        "rootReuseBindingSha256": "29ee796a2e2f0c591b6254b96b7923b0aa7ebe5d492b87114b54d4d321cbaeae",
+        "currentSourceFindingAdjudicationSha256": "2f7f678fb3107171ec63173f52aff86a185ab8a1d316200996adb9f684a3c868",
+        "nativeAuthenticationEstablished": false,
+        "nativePermissionGranted": false
+      }
+    }
+  }
+}
