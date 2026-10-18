@@ -4,6 +4,7 @@ import {tmpdir} from 'node:os';
 import {delimiter,join,resolve} from 'node:path';
 import {moduleCheckExecution,projectRoot,readSourceMap} from '../src/modules';
 import {assertBunRuntime,bunToolchain,setupRuntime,publishActionsBunPath} from '../src/runtime';
+import {educationSourceCi} from '../src/source-ci';
 
 test('Bun checks refuse old invokers and unadmitted scripts before spawning',async()=>{
  const module=(await readSourceMap()).modules.find(m=>m.id==='mathcrew')!;
@@ -89,4 +90,42 @@ test('setup publishes Bun1.4.3 to later Actions steps without overwriting existi
   publishActionsBunPath('/not-published',undefined);
   expect(readFileSync(path,'utf8')).toBe('/existing/tool/bin\n'+bin+'\n');
  }finally{rmSync(root,{recursive:true,force:true});}
+});
+
+test('root source CI keeps setup bootstrap, maintained runtime, owner review and gate boundaries',async()=>{
+ const contract=educationSourceCi;
+ const workflow=Bun.YAML.parse(readFileSync(resolve(projectRoot,contract.workflow),'utf8')) as any;
+ expect(workflow.permissions).toEqual(contract.permissions);
+ const project=await Bun.file(resolve(projectRoot,'project.json')).json();
+ expect(project.projectId).toBe(contract.owner.projectId);expect(project.domainId).toBe(contract.owner.domainId);
+ const source=workflow.jobs[contract.source.jobId];
+ const checkout=source.steps.find((step:any)=>step.uses?.startsWith('actions/checkout@'));
+ expect(checkout.with.ref).toBe(contract.sourceSha);expect(checkout.with['persist-credentials']).toBe(false);
+ const bootstrap=source.steps.find((step:any)=>step.uses?.startsWith('oven-sh/setup-bun@'));
+ expect(bootstrap.with['bun-version']).toBe(contract.setup.bootstrapBun);
+ const setupIndex=source.steps.findIndex((step:any)=>step.run===contract.setup.command);
+ expect(setupIndex).toBeGreaterThan(source.steps.indexOf(bootstrap));
+ const shared=source.steps.filter((step:any)=>step.uses===contract.source.action);
+ expect(shared).toHaveLength(1);expect(source.steps.indexOf(shared[0])).toBeGreaterThan(setupIndex);
+ expect(shared[0].with).toEqual({
+  'project-id':contract.owner.projectId,repository:contract.owner.repository,
+  'source-sha':contract.sourceSha,'bun-version':contract.source.bun,
+  'install-dependencies':contract.source.installDependencies,scripts:JSON.stringify(contract.source.scripts),
+ });
+ expect(shared[0].env).toBeUndefined();expect(contract.source.bun).toBe(bunToolchain.version);
+ const manifest=await Bun.file(resolve(projectRoot,'package.json')).json();
+ expect(manifest.scripts[contract.source.scripts[0]]).toBe('bun ci/verify-projection.ts');
+ expect(manifest.scripts[contract.source.scripts[1]]).toBe('bun scripts/check.ts');
+ const review=workflow.jobs[contract.nativeReview.jobId];
+ expect(review.steps.find((step:any)=>step.uses?.startsWith('oven-sh/setup-bun@')).with['bun-version']).toBe(contract.setup.bootstrapBun);
+ expect(review.steps.filter((step:any)=>step.run).map((step:any)=>step.run)).toEqual(['bun ci/verify-projection.ts','bun ci/native-review-gate.js']);
+ const provider=await Bun.file(resolve(projectRoot,contract.nativeReview.policyPath)).json();
+ expect(provider.policy.repository).toBe(contract.owner.repository);expect(provider.policy.projectId).toBe(contract.owner.projectId);
+ expect(provider.policy.domainId).toBe(contract.owner.domainId);expect(provider.policy.semanticOwner).toBe(contract.owner.projectId);
+ const gate=workflow.jobs[contract.gate.jobId];
+ expect(gate.if).toBe('${{ always() }}');expect(gate.needs).toEqual(contract.gate.needs);
+ for(const source of ['success','failure','cancelled','skipped'])for(const review of ['success','failure','cancelled','skipped']){
+  const child=Bun.spawn(['bash','-c',gate.steps[0].run],{env:{SOURCE_RESULT:source,REVIEW_RESULT:review},stdout:'pipe',stderr:'pipe'});
+  expect((await child.exited)===0).toBe(source==='success'&&review==='success');
+ }
 });
