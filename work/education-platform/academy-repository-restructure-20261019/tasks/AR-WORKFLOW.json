@@ -6,7 +6,7 @@
   "kind": "task",
   "id": "AR-WORKFLOW",
   "title": "Unify common Work validation and bounded task-context workflow",
-  "nextAction": "Run the existing pinned canonical reader against this exact committed Work; preserve all old Work/effect/native identities.",
+  "nextAction": "Common Work workflow is locally source-verified. Continue the separate ownership Task; shared publication, independent review and native activation are not established.",
   "logical": {
     "domainId": "education",
     "projectId": "education-platform",
@@ -19,11 +19,11 @@
     "taskId": "AR-WORKFLOW"
   },
   "state": {
-    "execution": "planned",
-    "verification": "pending",
-    "localAudit": "intent-durable",
+    "execution": "complete",
+    "verification": "passed",
+    "localAudit": "result-durable",
     "sharedAudit": "pending",
-    "formalCompletion": "pending"
+    "formalCompletion": "audit-synchronization-pending"
   },
   "executionClass": "source-only",
   "dependsOn": [],
@@ -32,5 +32,7 @@
     "AR-PRIORITY"
   ],
   "effectIds": [],
-  "verificationEvidenceIds": []
+  "verificationEvidenceIds": [
+    "AR-WORKFLOW-VERIFICATION"
+  ]
 }
