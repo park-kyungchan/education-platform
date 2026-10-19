@@ -6,7 +6,7 @@
   "kind": "task",
   "id": "AR-OWNERSHIP",
   "title": "Clarify repository source ownership and check routes",
-  "nextAction": "Consume source-owner maps and verify explicit retained/maintained routes without moving domain implementation or native data.",
+  "nextAction": "Repository routing and preservation are locally source-verified. Preserve separate project identities and existing native/domain owners. Independent review/shared publication remain pending; do not send status to the Orchestrator or resume held/external feature work.",
   "logical": {
     "domainId": "education",
     "projectId": "education-platform",
@@ -19,11 +19,11 @@
     "taskId": "AR-OWNERSHIP"
   },
   "state": {
-    "execution": "planned",
-    "verification": "pending",
-    "localAudit": "intent-durable",
+    "execution": "complete",
+    "verification": "passed",
+    "localAudit": "result-durable",
     "sharedAudit": "pending",
-    "formalCompletion": "pending"
+    "formalCompletion": "audit-synchronization-pending"
   },
   "executionClass": "source-only",
   "dependsOn": [
@@ -38,5 +38,7 @@
     "AR-NO-STEERING"
   ],
   "effectIds": [],
-  "verificationEvidenceIds": []
+  "verificationEvidenceIds": [
+    "AR-OWNERSHIP-VERIFICATION"
+  ]
 }
