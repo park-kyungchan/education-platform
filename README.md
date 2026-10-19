@@ -1,5 +1,7 @@
 # Education platform
 
+Academy repository work starts with the typed [repository ownership and check plan](architecture/academy-repositories.json) and [common Git Work workflow](architecture/academy-workflow.json). `bun run academy:repositories` prints the plan without running module checks. `bun run harness:work validate <snapshot.json> --provider <pinned-agent-platform-root>` and `context <request.json>` use the existing canonical reader; the provider commit and clean source must match the explicit pin. The three maintained projects keep separate qualified Work identities. Existing module dependency locks, native profiles and historical Work remain with their owners. MCP and month-end feature implementation is handled by a separate PR owner.
+
 Private source integration of independent mathematics, curriculum and education applications. Shared upper contracts consume the immutable `@palantirkc/ontology` **0.2.0** release. Native Hermes retains profiles, Projects, WorkStudio, tasks, sessions, credential consumers and operational data.
 
 Run from this repository:

@@ -1,0 +1,119 @@
+{
+  "schema": "education.academy-workflow.v1",
+  "scope": "Source-only common Git Work and repository ownership workflow. No native activation or external feature implementation.",
+  "priority": [
+    "common-workflow",
+    "repository-ownership"
+  ],
+  "commonOwner": {
+    "repositoryId": "park-kyungchan/agent-platform",
+    "repository": "agent-platform",
+    "commit": "ff8e5d56612fab5ce41d4ed9e8b4947987943d4a",
+    "entrypoint": "scripts/harness.ts",
+    "schema": "common.git-work.v1",
+    "originalDocumentation": "docs/git-work.md",
+    "consumerLocksUnchanged": true
+  },
+  "transportOwner": {
+    "repositoryId": "park-kyungchan/education-platform",
+    "source": "src/academy-repositories.ts",
+    "cli": "scripts/academy-repositories.ts",
+    "meaning": "Checks exact provider checkout identity and dispatches the existing canonical CLI; never interprets or forks common Work validation. Rechecks provider identity after the child exits. This source check is not an immutable native execution boundary."
+  },
+  "preparation": {
+    "worktreeMode": "Separate Git branches/worktrees can share Git object storage. Existing checkouts and historical branches are preserved.",
+    "dependencies": [
+      "Use each owner frozen lock and ignore install scripts.",
+      "Install only dependencies needed by the selected serial source check.",
+      "The common reader uses its own pinned provider checkout and dependencies; no automatic update to historical module Artifact/WorkContext locks."
+    ],
+    "source": "Canonical validation reads committed Git objects. Dirty bytes must be committed on their owning branch before qualification."
+  },
+  "steps": [
+    {
+      "id": "select-work",
+      "action": "Select the exact repositoryId/commit and qualified domain/project/work/task. Same bare workId under different projects is not one global Work.",
+      "requestFields": {
+        "snapshot": [
+          "repositoryRoot",
+          "repositoryId",
+          "commit",
+          "projectId",
+          "workId"
+        ],
+        "context": [
+          "taskId",
+          "latestRelevant",
+          "maxChars",
+          "maxRecords"
+        ]
+      }
+    },
+    {
+      "id": "validate",
+      "command": [
+        "bun",
+        "run",
+        "harness:work",
+        "validate",
+        "SNAPSHOT_JSON",
+        "--provider",
+        "PINNED_AGENT_PLATFORM_ROOT"
+      ],
+      "cwd": "EDUCATION_ROOT",
+      "interpretation": "The canonical reader validates common records and actual answer/source bindings."
+    },
+    {
+      "id": "context",
+      "command": [
+        "bun",
+        "run",
+        "harness:work",
+        "context",
+        "CONTEXT_REQUEST_JSON",
+        "--provider",
+        "PINNED_AGENT_PLATFORM_ROOT"
+      ],
+      "cwd": "EDUCATION_ROOT",
+      "interpretation": "Preserve source currentness: unknown/unavailable is a dependent hold, never silently current."
+    },
+    {
+      "id": "owner-plan",
+      "command": [
+        "bun",
+        "run",
+        "academy:repositories"
+      ],
+      "cwd": "EDUCATION_ROOT",
+      "interpretation": "Print source-backed ownership and existing check routes without dispatching them. Select owner commands explicitly, one at a time."
+    },
+    {
+      "id": "integration",
+      "command": [
+        "bun",
+        "run",
+        "harness:work",
+        "transition",
+        "BEFORE_JSON",
+        "AFTER_JSON",
+        "--provider",
+        "PINNED_AGENT_PLATFORM_ROOT"
+      ],
+      "cwd": "EDUCATION_ROOT",
+      "interpretation": "Run the canonical semantic transition check before integrating source changes. Never infer review, publication, native use or acceptance from source qualification."
+    }
+  ],
+  "placeholders": {
+    "EDUCATION_ROOT": "Explicit caller-selected isolated Education worktree",
+    "PINNED_AGENT_PLATFORM_ROOT": "Explicit clean provider worktree at the exact commit above",
+    "SNAPSHOT_JSON": "A bounded file containing the caller-selected exact Git Work selection",
+    "CONTEXT_REQUEST_JSON": "A bounded file with snapshot and context; maxChars <=24000 and explicit latestRelevant",
+    "BEFORE_JSON": "Exact previous immutable committed selection",
+    "AFTER_JSON": "Exact successor immutable committed selection"
+  },
+  "heldEffects": [
+    "MCP and month-end feature implementation is other-owner PR scope.",
+    "Old WorkLeads, frontend/Bot Screen, real student data, Jev inference and old ledgers remain held.",
+    "No automatic repository retirement, native/data cutover, runtime configuration, deployment, publication or merge."
+  ]
+}
