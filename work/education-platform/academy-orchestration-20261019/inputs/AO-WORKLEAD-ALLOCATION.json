@@ -1,0 +1,210 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "academy-orchestration-20261019",
+  "kind": "input",
+  "id": "AO-WORKLEAD-ALLOCATION",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "education-platform",
+    "locator": "academy-orchestrator:prioritized-worklead-allocation",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "schema": "academy.worklead-allocation.v1",
+    "parent": {
+      "domainId": "education",
+      "projectId": "education-platform",
+      "workId": "academy-orchestration-20261019"
+    },
+    "actualDecisionId": "AO-ASSESSMENT24-DIRECTION",
+    "requiredModel": "typesafe-ai/jev-1.14.0",
+    "wholeOutcome": "Select24 actual Academy grade3 multiplication/division/circle questions with highest research-backed similarity and native difficulty at least 중; use Jev-1.14. Root assigns scope and integrates, domain WorkLeads implement.",
+    "works": [
+      {
+        "shortId": "W1",
+        "domainId": "mathematics-education",
+        "projectId": "math-research-module",
+        "workId": "month-end-type-evidence-rubric-20261019",
+        "role": "ResearchLead",
+        "priority": "P0",
+        "dependsOn": [],
+        "source": {
+          "repositoryId": "park-kyungchan/math-research-module",
+          "commit": "346fb9cdb7b303024b5e7c3d24166ac2ed0f8cb6",
+          "branch": "work/month-end-type-evidence-rubric-20261019",
+          "hostWorktree": "/home/palantirkc/worktrees/month-end-type-evidence-rubric-20261019",
+          "nativeRoot": "/opt/data/workspace/month-end-type-evidence-rubric-20261019",
+          "workPath": "work/math-research-module/month-end-type-evidence-rubric-20261019/work.json",
+          "handoffPath": "work/math-research-module/month-end-type-evidence-rubric-20261019/inputs/W1-HANDOFF.json"
+        },
+        "runtime": {
+          "kind": "native-hermes",
+          "container": "hermes-agent-2q3y-hermes-serve-1",
+          "profile": "default",
+          "herdrWorkspace": "w4",
+          "herdrTab": "w4:t3",
+          "herdrPane": "w4:p4",
+          "nativeTaskId": null,
+          "nativeRunId": null,
+          "storedSessionKey": null,
+          "modelPromptDispatched": false,
+          "launchState": "shell-ready-on-demand",
+          "initialLaunchWasStoppedForMemoryPressure": true
+        },
+        "localSourceRegisteredOnly": true,
+        "globalNativeRegistrationClaimed": false
+      },
+      {
+        "shortId": "W2",
+        "domainId": "academy-operations",
+        "projectId": "academy-workbench",
+        "workId": "month-end-real-pool-read-20261019",
+        "role": "MCPLead",
+        "priority": "P0",
+        "dependsOn": [],
+        "source": {
+          "repositoryId": "park-kyungchan/academy-workbench",
+          "commit": "8ace9dbd293ebc70034f30fcb1b5b04e6a514834",
+          "branch": "work/month-end-real-pool-read-20261019",
+          "hostWorktree": "/home/palantirkc/worktrees/month-end-real-pool-read-20261019",
+          "nativeRoot": "/opt/data/workspace/month-end-real-pool-read-20261019",
+          "workPath": "work/academy-workbench/month-end-real-pool-read-20261019/work.json",
+          "handoffPath": "work/academy-workbench/month-end-real-pool-read-20261019/inputs/W2-HANDOFF.json"
+        },
+        "runtime": {
+          "kind": "native-hermes",
+          "container": "hermes-agent-2q3y-hermes-serve-1",
+          "profile": "dc-gang-a-dev",
+          "herdrWorkspace": "w4",
+          "herdrTab": "w4:t4",
+          "herdrPane": "w4:p5",
+          "nativeTaskId": null,
+          "nativeRunId": null,
+          "storedSessionKey": null,
+          "modelPromptDispatched": false,
+          "launchState": "shell-ready-on-demand",
+          "initialLaunchWasStoppedForMemoryPressure": true
+        },
+        "localSourceRegisteredOnly": true,
+        "globalNativeRegistrationClaimed": false
+      },
+      {
+        "shortId": "W3",
+        "domainId": "education",
+        "projectId": "education-platform",
+        "workId": "month-end-jev114-selection24-20261019",
+        "role": "AssessmentLead",
+        "priority": "P0 design/P1 inference",
+        "dependsOn": [
+          "W1",
+          "W2"
+        ],
+        "source": {
+          "repositoryId": "park-kyungchan/education-platform",
+          "commit": "e3662f7984608a5ac17b35cb3090ba79dd855276",
+          "branch": "work/month-end-jev114-selection24-20261019",
+          "hostWorktree": "/home/palantirkc/worktrees/month-end-jev114-selection24-20261019",
+          "nativeRoot": "/opt/data/workspace/month-end-jev114-selection24-20261019",
+          "workPath": "work/education-platform/month-end-jev114-selection24-20261019/work.json",
+          "handoffPath": "work/education-platform/month-end-jev114-selection24-20261019/inputs/LEAD-HANDOFF.json"
+        },
+        "runtime": {
+          "kind": "native-hermes",
+          "container": "hermes-agent-2q3y-hermes-serve-1",
+          "profile": "default",
+          "herdrWorkspace": "w4",
+          "herdrTab": "w4:t2",
+          "herdrPane": "w4:p3",
+          "nativeTaskId": null,
+          "nativeRunId": null,
+          "storedSessionKey": null,
+          "modelPromptDispatched": false,
+          "launchState": "shell-ready-on-demand",
+          "initialLaunchWasStoppedForMemoryPressure": true
+        },
+        "localSourceRegisteredOnly": true,
+        "globalNativeRegistrationClaimed": false
+      },
+      {
+        "shortId": "W4",
+        "domainId": "education",
+        "projectId": "education-platform",
+        "workId": "month-end-bot-screen-review-20261019",
+        "role": "FrontendLead",
+        "priority": "parallel UI/final after W3",
+        "dependsOn": [
+          "W3"
+        ],
+        "source": {
+          "repositoryId": "park-kyungchan/education-platform",
+          "commit": "23fae6c8d51a14eb8602ad02051cdb99c8ef63d7",
+          "branch": "work/month-end-bot-screen-review-20261019",
+          "hostWorktree": "/home/palantirkc/worktrees/month-end-bot-screen-review-20261019",
+          "nativeRoot": "/opt/data/workspace/academy-frontend-20261019",
+          "workPath": "work/education-platform/month-end-bot-screen-review-20261019/work.json",
+          "handoffPath": "work/education-platform/month-end-bot-screen-review-20261019/inputs/LEAD-HANDOFF.json"
+        },
+        "runtime": {
+          "kind": "native-hermes",
+          "container": "hermes-agent-2q3y-hermes-serve-1",
+          "profile": "dc-gang-a-dev",
+          "herdrWorkspace": "w4",
+          "herdrTab": "w4:t1",
+          "herdrPane": "w4:p2",
+          "nativeTaskId": null,
+          "nativeRunId": null,
+          "storedSessionKey": null,
+          "modelPromptDispatched": false,
+          "launchState": "ready-tui",
+          "initialLaunchWasStoppedForMemoryPressure": false
+        },
+        "localSourceRegisteredOnly": true,
+        "globalNativeRegistrationClaimed": false
+      }
+    ],
+    "dependencyEdges": [
+      {
+        "from": "W1",
+        "to": "W3",
+        "requires": "versioned research type evidence and comparison rubric"
+      },
+      {
+        "from": "W2",
+        "to": "W3",
+        "requires": "actual question content, identity/source evidence, native difficulty mapping and qualified read transport"
+      },
+      {
+        "from": "W3",
+        "to": "W4",
+        "requires": "actual Jev judgments and24 unique selections for final review"
+      }
+    ],
+    "criticalUnknowns": [
+      "final per-subject/per-difficulty quotas; 9/9/6 remains only a past proposal",
+      "similarity definition/weights and duplicate/near-duplicate rule",
+      "verified native difficulty code mapping and exact grade3 unit/edition hierarchy",
+      "current immutable MCP execution boundary",
+      "academy-specific Jev accounting/admission/budget; never use old ODI ledger"
+    ],
+    "handoffState": "Four canonical Work contracts and per-Work panes are prepared. Only requested frontend Hermes TUI remains running; W1/W2/W3 own shell panes await on-demand WorkLead startup after measured memory pressure. No Academy live query or Jev inference was dispatched by root.",
+    "runtimeRecovery": {
+      "cause": "Observed memory pressure after additional native TUI startup; no unrelated service restart or configuration change by this task.",
+      "stoppedOwnedNativeLaunchers": [
+        2788039,
+        2789494,
+        2789460
+      ],
+      "stoppedOwnedTuiChildren": [
+        2788086,
+        2789567,
+        2789568
+      ],
+      "observedAfter": "W1/W2/W3 exact owned panes returned to their original shell PIDs; frontend retained.",
+      "availableMemoryMbAfter": 3356,
+      "worktreeContractsPreserved": true,
+      "launchRetryPolicy": "Explicit new on-demand launch only after current process/pane/resource observation; never blind replay."
+    }
+  }
+}
