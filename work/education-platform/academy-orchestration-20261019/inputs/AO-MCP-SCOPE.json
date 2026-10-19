@@ -1,0 +1,56 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "academy-orchestration-20261019",
+  "kind": "input",
+  "id": "AO-MCP-SCOPE",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "education-platform",
+    "locator": "academy-mcp-source-contract-inspection:2026-10-19",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "status": "source-inspected-awaiting-user-first-workflow",
+    "sourceCommit": "1aa414537434054104a50e41bf193e2fefe1227c",
+    "sourceOwner": "park-kyungchan/academy-workbench/tools/academy-mcp",
+    "groups": [
+      {
+        "id": "saved-evidence",
+        "tools": [
+          "academy_capabilities",
+          "academy_query",
+          "academy_source_status"
+        ],
+        "data": "owner-preserved local evidence; not current live student state"
+      },
+      {
+        "id": "assessment",
+        "tools": [
+          "academy_item_label_scope",
+          "academy_find_item_labels",
+          "academy_review_type_questions"
+        ],
+        "data": "unavailable by default; explicit retained snapshot or selected native read bridge; no image fetch inside question review"
+      },
+      {
+        "id": "dailyrecord-cism",
+        "tools": [
+          "academy_dailyrecord_intake",
+          "academy_dailyrecord_review",
+          "academy_cism_section"
+        ],
+        "data": "all executable entrypoints use null source backend; supplied text review available without save/send"
+      }
+    ],
+    "consumerHold": {
+      "owner": "education-platform/apps/academy/month-end-workbench",
+      "reason": "mcp_verified_execution_boundary_unavailable",
+      "scope": "configured MCP subprocess launch in this consumer; not a claim that all source MCP tools are absent"
+    },
+    "pendingQuestion": "Which live read workflow should be connected and verified first?",
+    "liveReadAttempted": false,
+    "credentialsRequested": false
+  }
+}

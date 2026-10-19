@@ -38,10 +38,12 @@
     "revision": 1
   },
   "governingDecisionIds": [
-    "AO-DIRECTION"
+    "AO-DIRECTION",
+    "AO-MCP-FIRST"
   ],
   "historicalFenceIds": [
-    "AO-HISTORICAL-MONTH-END-FENCE"
+    "AO-HISTORICAL-MONTH-END-FENCE",
+    "AO-RUNTIME-SETUP-FENCE"
   ],
   "continuity": {
     "schema": "common.git-work-continuity.v1",
@@ -56,6 +58,11 @@
       {
         "kind": "snapshot",
         "path": "work/education-platform/academy-orchestration-20261019/inputs/AO-CONSUMED-INVENTORY.json",
+        "fragment": "#/content/inventory"
+      },
+      {
+        "kind": "snapshot",
+        "path": "work/education-platform/academy-orchestration-20261019/inputs/AO-RUNTIME-CONSUMED.json",
         "fragment": "#/content/inventory"
       }
     ]
