@@ -1,0 +1,329 @@
+{
+  "schemaVersion": "assessment.portable-math-review/1",
+  "classification": "sanitized_derivative_of_private_independent_math_analysis",
+  "originalReceipt": "private-artifact:cross-unit-math-review.json",
+  "analysis": {
+    "schemaVersion": "academy.cross-unit-math-review/1",
+    "observedAt": "2026-10-19T06:20:47.723Z",
+    "attribution": "independent_assistant_analysis",
+    "scope": "Four actual local returned PNGs and pinned research type/design sources only",
+    "images": [
+      {
+        "unit": "division",
+        "id": "1416308",
+        "stem": "img_div_1416308_des",
+        "researchTypeId": "HD32-d1-T01",
+        "promptObservation": "Six42cm tapes are joined with the same overlap at every adjacent join, producing total visible length137cm; asks one overlap length and a written solution.",
+        "derivation": {
+          "grossLength": 252,
+          "visibleLength": 137,
+          "totalOverlap": 115,
+          "joinCount": 5,
+          "oneOverlap": 23,
+          "unit": "cm",
+          "equation": "(42×6−137)÷(6−1)=115÷5=23cm",
+          "inverseCheck": "6×42−5×23=137cm"
+        },
+        "officialObservation": "Blue source answer23cm; it computes252−137=115cm over5joins and115÷5=23cm.",
+        "image": {
+          "path": "private-artifact:img_div_1416308_des-1.png",
+          "resultFile": "private-artifact:img_div_1416308_des.json",
+          "sha256": "81660cf89c7a67c1b9a30118e675f39ef32f04ea0334f40cffb3df8a75982b9f",
+          "inspection": "view_image_actual_full_png",
+          "sourceAnswerAndExplanation": "visually_inspected_in_same_image"
+        },
+        "researchSource": {
+          "id": "HD32-d1-T01",
+          "titleExact": "등분 상황 모델링",
+          "typeSource": {
+            "owner": "math-research-module",
+            "revision": "07edb2dea2e5997aea4318f0fa2efa21dde633df",
+            "path": "source/archive/research_review/original_170_examples_and_hierarchy.json",
+            "sha256": "e4215602b70359eb3fdfc152fb42932ba2c996d651a80bfb1df933844ac872ed",
+            "pointer": "/details/34/types/0"
+          },
+          "originalExample": {
+            "prompt": "구슬 24개를 6명에게 똑같이 나누면 한 명당 몇 개인가요?",
+            "answer": "4개",
+            "solution": "전체 24를 사람 수 6으로 나누어 한 사람의 양을 구한다.",
+            "misconception": "답 단위를 명으로 씀.",
+            "authorship": "original",
+            "numericChecks": [
+              "24/6=4"
+            ]
+          },
+          "designSource": {
+            "owner": "math-research-module",
+            "revision": "07edb2dea2e5997aea4318f0fa2efa21dde633df",
+            "path": "source/archive/research_review/division_designs.json",
+            "sha256": "49b15fe9872521486fdda29f41431ca568f67fc020ce025311740f2246dfb29b",
+            "pointer": "/designs/28"
+          },
+          "targetStructureExact": "등분제: 전체와 몫의 수를 알 때 한 몫의 크기를 구한다",
+          "generalizationExact": {
+            "invariant": "등분제에서는 집단 수가 고정되고 각 집단의 동일한 크기가 미지이다.",
+            "explanation": "24÷6이라는 식만으로 상황의 의미가 모두 드러나지 않는다. 6이 사람 수이고 4가 한 사람의 개수라는 역할을 그림과 단위로 보충해야 한다."
+          }
+        },
+        "arithmeticMatchesDisplayedSource": true
+      },
+      {
+        "unit": "division",
+        "id": "1390885",
+        "stem": "img_div_1390885_des",
+        "researchTypeId": "HD32-d1-T01",
+        "promptObservation": "Eight38cm strips of cloth overlap by a common amount at adjacent joins, leaving visible length199cm; asks one overlap length and its solution process.",
+        "derivation": {
+          "grossLength": 304,
+          "visibleLength": 199,
+          "totalOverlap": 105,
+          "joinCount": 7,
+          "oneOverlap": 15,
+          "unit": "cm",
+          "equation": "(38×8−199)÷(8−1)=105÷7=15cm",
+          "inverseCheck": "8×38−7×15=199cm"
+        },
+        "officialObservation": "Blue source solution computes304−199=105cm,7joins and105÷7=15cm.",
+        "image": {
+          "path": "private-artifact:img_div_1390885_des-1.png",
+          "resultFile": "private-artifact:img_div_1390885_des.json",
+          "sha256": "06467c9a3871a1ea1d163fb1ec2b2ef041e3c87cfd2a1b2f8d97cc634768e7ea",
+          "inspection": "view_image_actual_full_png",
+          "sourceAnswerAndExplanation": "visually_inspected_in_same_image"
+        },
+        "researchSource": {
+          "id": "HD32-d1-T01",
+          "titleExact": "등분 상황 모델링",
+          "typeSource": {
+            "owner": "math-research-module",
+            "revision": "07edb2dea2e5997aea4318f0fa2efa21dde633df",
+            "path": "source/archive/research_review/original_170_examples_and_hierarchy.json",
+            "sha256": "e4215602b70359eb3fdfc152fb42932ba2c996d651a80bfb1df933844ac872ed",
+            "pointer": "/details/34/types/0"
+          },
+          "originalExample": {
+            "prompt": "구슬 24개를 6명에게 똑같이 나누면 한 명당 몇 개인가요?",
+            "answer": "4개",
+            "solution": "전체 24를 사람 수 6으로 나누어 한 사람의 양을 구한다.",
+            "misconception": "답 단위를 명으로 씀.",
+            "authorship": "original",
+            "numericChecks": [
+              "24/6=4"
+            ]
+          },
+          "designSource": {
+            "owner": "math-research-module",
+            "revision": "07edb2dea2e5997aea4318f0fa2efa21dde633df",
+            "path": "source/archive/research_review/division_designs.json",
+            "sha256": "49b15fe9872521486fdda29f41431ca568f67fc020ce025311740f2246dfb29b",
+            "pointer": "/designs/28"
+          },
+          "targetStructureExact": "등분제: 전체와 몫의 수를 알 때 한 몫의 크기를 구한다",
+          "generalizationExact": {
+            "invariant": "등분제에서는 집단 수가 고정되고 각 집단의 동일한 크기가 미지이다.",
+            "explanation": "24÷6이라는 식만으로 상황의 의미가 모두 드러나지 않는다. 6이 사람 수이고 4가 한 사람의 개수라는 역할을 그림과 단위로 보충해야 한다."
+          }
+        },
+        "arithmeticMatchesDisplayedSource": true
+      },
+      {
+        "unit": "multiplication",
+        "id": "1386465",
+        "stem": "img_mul_1386465_des",
+        "researchTypeId": "HM32-d3-T01",
+        "promptObservation": "Thirty-nine27cm tapes overlap8cm at each adjacent join in a pictured chain; asks the total joined length and a written solution.",
+        "derivation": {
+          "grossLength": 1053,
+          "joinCount": 38,
+          "oneOverlap": 8,
+          "aggregateDeduction": 304,
+          "visibleLength": 749,
+          "unit": "cm",
+          "equation": "27×39−8×(39−1)=1053−304=749cm",
+          "inverseCheck": "749+8×38=1053cm=27×39"
+        },
+        "officialObservation": "Blue source explanation counts38overlaps, computes27×39=1053cm and8×38=304cm, then gives749cm.",
+        "image": {
+          "path": "private-artifact:img_mul_1386465_des-1.png",
+          "resultFile": "private-artifact:img_mul_1386465_des.json",
+          "sha256": "67bbed3913a9e8d70669b5a373eeca79a8c4be6ec60078fe34d499d6e4e3de2d",
+          "inspection": "view_image_actual_full_png",
+          "sourceAnswerAndExplanation": "visually_inspected_in_same_image"
+        },
+        "researchSource": {
+          "id": "HM32-d3-T01",
+          "titleExact": "곱한 뒤 빼기",
+          "typeSource": {
+            "owner": "math-research-module",
+            "revision": "07edb2dea2e5997aea4318f0fa2efa21dde633df",
+            "path": "source/archive/research_review/original_170_examples_and_hierarchy.json",
+            "sha256": "e4215602b70359eb3fdfc152fb42932ba2c996d651a80bfb1df933844ac872ed",
+            "pointer": "/details/19/types/0"
+          },
+          "originalExample": {
+            "prompt": "한 묶음에 공책 12권이 있다. 8묶음에서 17권을 나누어 주었다. 남은 공책은?",
+            "answer": "79권",
+            "solution": "12×8=96, 96-17=79이다.",
+            "misconception": "12×(8-17)로 계산함.",
+            "authorship": "original",
+            "numericChecks": [
+              "12*8=96",
+              "96-17=79"
+            ]
+          },
+          "designSource": {
+            "owner": "math-research-module",
+            "revision": "07edb2dea2e5997aea4318f0fa2efa21dde633df",
+            "path": "source/archive/research_review/multiplication_designs.json",
+            "sha256": "88d3c74c8c1427c0a72dd95416faeb126d3de77e699293b8e630ede05d7ffd05",
+            "pointer": "/HM32-d3-T01"
+          },
+          "targetStructureExact": "초기 같은 묶음 전체를 먼저 구성하고 그 전체에서 빠진 양을 제거한다.",
+          "generalizationExact": {
+            "invariant": "제거량의 적용 범위가 전체이면 곱한 전체에서 한 번 뺀다.",
+            "explanation": "문장에 나온 수의 순서보다 각 연산이 어느 양에 작용하는지가 식의 구조를 결정한다."
+          }
+        },
+        "arithmeticMatchesDisplayedSource": true
+      },
+      {
+        "unit": "multiplication",
+        "id": "1314582",
+        "stem": "img_mul_1314582_des",
+        "researchTypeId": "HM32-d3-T01",
+        "promptObservation": "Twenty-five13cm tapes are joined with3cm overlaps shown in the diagram; asks the whole joined length and a written solution.",
+        "derivation": {
+          "grossLength": 325,
+          "joinCount": 24,
+          "oneOverlap": 3,
+          "aggregateDeduction": 72,
+          "visibleLength": 253,
+          "unit": "cm",
+          "equation": "13×25−3×(25−1)=325−72=253cm",
+          "inverseCheck": "253+3×24=325cm=13×25"
+        },
+        "officialObservation": "Blue source explanation uses24joins, total raw length325cm and overlap deduction72cm, yielding253cm.",
+        "image": {
+          "path": "private-artifact:img_mul_1314582_des-1.png",
+          "resultFile": "private-artifact:img_mul_1314582_des.json",
+          "sha256": "a0c724f9989418106f8a0132fbd5548ac5b89457e5e7fdf290e6b59029e634fe",
+          "inspection": "view_image_actual_full_png",
+          "sourceAnswerAndExplanation": "visually_inspected_in_same_image"
+        },
+        "researchSource": {
+          "id": "HM32-d3-T01",
+          "titleExact": "곱한 뒤 빼기",
+          "typeSource": {
+            "owner": "math-research-module",
+            "revision": "07edb2dea2e5997aea4318f0fa2efa21dde633df",
+            "path": "source/archive/research_review/original_170_examples_and_hierarchy.json",
+            "sha256": "e4215602b70359eb3fdfc152fb42932ba2c996d651a80bfb1df933844ac872ed",
+            "pointer": "/details/19/types/0"
+          },
+          "originalExample": {
+            "prompt": "한 묶음에 공책 12권이 있다. 8묶음에서 17권을 나누어 주었다. 남은 공책은?",
+            "answer": "79권",
+            "solution": "12×8=96, 96-17=79이다.",
+            "misconception": "12×(8-17)로 계산함.",
+            "authorship": "original",
+            "numericChecks": [
+              "12*8=96",
+              "96-17=79"
+            ]
+          },
+          "designSource": {
+            "owner": "math-research-module",
+            "revision": "07edb2dea2e5997aea4318f0fa2efa21dde633df",
+            "path": "source/archive/research_review/multiplication_designs.json",
+            "sha256": "88d3c74c8c1427c0a72dd95416faeb126d3de77e699293b8e630ede05d7ffd05",
+            "pointer": "/HM32-d3-T01"
+          },
+          "targetStructureExact": "초기 같은 묶음 전체를 먼저 구성하고 그 전체에서 빠진 양을 제거한다.",
+          "generalizationExact": {
+            "invariant": "제거량의 적용 범위가 전체이면 곱한 전체에서 한 번 뺀다.",
+            "explanation": "문장에 나온 수의 순서보다 각 연산이 어느 양에 작용하는지가 식의 구조를 결정한다."
+          }
+        },
+        "arithmeticMatchesDisplayedSource": true
+      }
+    ],
+    "divisionMapping": {
+      "researchTypeId": "HD32-d1-T01",
+      "structure": "partial",
+      "reasoning": "partial",
+      "conclusion": "The mapping is defensible as an explicit partitive substructure, not an exact match to the basic equal-sharing item.",
+      "basis": "After deriving the total overlap length W and fixed number of equal overlap groups g=n−1, the unknown is the size W/g of one overlap. Group count is known and group size is unknown, matching the information direction of partitive division.",
+      "requiredDifferences": [
+        "The whole is derived using multiplication and subtraction rather than supplied directly.",
+        "The group count is inferred as n−1adjacent joins rather than supplied as a fixed number of people.",
+        "The candidate partitions continuous length in centimeters rather than discrete marbles.",
+        "The source distribution/remainder microsteps are not all tested merely because the final division is exact."
+      ],
+      "supportedResearchActions": [
+        "HD32-d1-T01-A01:identify the derived overlap whole",
+        "HD32-d1-T01-A02:identify the fixed number of equal join groups",
+        "HD32-d1-T01-A05:record the size of one join with cm units",
+        "HD32-d1-T01-A08:write the equal-partition division with quotient units",
+        "HD32-d1-T01-A09:check join count times one-overlap length equals total overlap"
+      ],
+      "rejectedAlternative": {
+        "typeId": "HD32-d5-T02",
+        "reason": "The candidate forms its dividend by gross-length multiplication and subtraction, not by combining two independently supplied wholes. Labeling it add-then-divide would misstate the solution structure."
+      }
+    },
+    "multiplicationMapping": {
+      "researchTypeId": "HM32-d3-T01",
+      "structure": "partial",
+      "reasoning": "partial",
+      "conclusion": "The mapping is defensible as gross repeated whole minus one aggregate deduction, with a material additional n−1count/product step.",
+      "basis": "Compute the repeated raw whole L×n, construct aggregate overlap o×(n−1), and remove that aggregate once from the whole. This preserves product-then-subtraction scope but extends the source basic12×8−17 and design24×6−17.",
+      "requiredDifferences": [
+        "The source gives a single aggregate removal amount17directly; the candidate derives the aggregate removal from overlap length and n−1joins.",
+        "The candidate has two products and a join-count deduction, rather than only one product followed by subtraction.",
+        "Subtracting an overlap for every tape would remove one extra overlap; n−1is essential."
+      ],
+      "supportedResearchActions": [
+        "HM32-d3-T01-A01:label raw strip length and number of strips separately",
+        "HM32-d3-T01-A02:interpret one aggregate loss from the completed raw whole",
+        "HM32-d3-T01-A03:compute the raw repeated whole",
+        "HM32-d3-T01-A04:subtract the aggregate overlap deduction",
+        "HM32-d3-T01-A06:restore the removed aggregate to check the raw whole"
+      ]
+    },
+    "issues": [
+      {
+        "severity": "required_mapping_limitation",
+        "code": "partial_substructure_not_exact_type_equivalence",
+        "appliesTo": [
+          "1416308",
+          "1390885",
+          "1386465",
+          "1314582"
+        ],
+        "message": "Both core axes should remain partial and explicitly retain the extra preparatory product/subtraction or join-count reasoning; do not present the research basic item and overlap task as identical."
+      },
+      {
+        "severity": "required_reasoning",
+        "code": "n_minus_one_not_n",
+        "appliesTo": [
+          "1416308",
+          "1390885",
+          "1386465",
+          "1314582"
+        ],
+        "message": "The number of adjacent joins is one fewer than the number of pieces. Each manual solution and recommendation must preserve that count."
+      }
+    ],
+    "verdict": "mathematics_verified_partial_mapping_supported_with_stated_differences",
+    "governance": {
+      "sourceCalls": 0,
+      "sshInvocations": 0,
+      "academyWrites": 0,
+      "finalMembership": false,
+      "acceptance": "not_inferred"
+    }
+  },
+  "portableImageBytesIncluded": false,
+  "claim": "The preserved analysis concerns the cited examples and mappings; it is not a new mathematical audit of all57 candidates.",
+  "acceptanceDecision": null
+}

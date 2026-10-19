@@ -12,6 +12,10 @@ The user explicitly rejected the previous generic label prototype as insufficien
 
 PR2 portable-onboarding remains unmerged because its canonical-contract, exact-head native-review and aggregate hosted gates failed. PR1 is already merged. Do not fabricate passing statuses, change trust/credentials or couple independent assessment work to completing the separate Harness Goal. Source pins are not runtime authority.
 
+The later [2026-10-19 candidate-preparation handoff](../work/month-end-candidate-preparation-20261019/README.md) records the current confirmed allocation, 24 distinct research types and 57 original question identities. Its dated decisions take precedence over earlier retained unknowns for this preparation. The portable bundle contains metadata and attributed analysis; original Academy images, raw responses and native runtime state remain in private operator custody. Core comparison judgments are four strong matches and 53 partial matches, with differences retained per candidate.
+
+The dedicated pool MCP is owned by `academy-workbench/tools/academy-mcp`. This dated preparation does not lift the existing month-end backend's native-launch hold or create final examination membership. The current publication scope is commit, push and PR creation; the designated Herdr owner on `srv1873899` reviews the exact published heads and performs any merge.
+
 ## Purpose and semantics
 
 The workbench supports a teacher studying detailed mathematical types, comparing original examples and research designs, tracing observable solution microsteps, considering competing interpretation/capability hypotheses, and specifying desired question features. The teacher then discovers original Academy type labels and inspects questions under a chosen type. Lexical overlap is only provisional retrieval evidence. Evidence-backed alignment notes are explicitly unaccepted teacher proposals, not semantic probabilities, diagnoses or final question choices.

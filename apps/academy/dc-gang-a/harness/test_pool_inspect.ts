@@ -4,7 +4,8 @@ import {testPoolReadRequest} from '../src/lms/testPoolReadProtocol';
 
 /** Runs only as an explicit native credential child. It never reads or writes DB/auth/session stores. */
 if(process.argv.includes('--help')){console.log(JSON.stringify({scope:'read_only_TestPool_metadata_and_labels',credentialOwner:'supported_native_profile_getter',
-  operations:['index','--tab-document','--selector-document','--category-tree','--probe-label-schema'],sourceHandlersExecuted:false,sourceWrites:false}));process.exit(0);}
+  operations:['index','--tab-document','--selector-document','--category-tree','--probe-label-schema','--question-protocol','--presentation-protocol'],
+  nativeRequestOperations:['categories','labels','questions','protocol'],sourceHandlersExecuted:false,sourceWrites:false}));process.exit(0);}
 if(process.env.HERMES_HOME!=='/opt/data/profiles/dc-gang-a-dev'||!process.env.DC_ACADEMY_HTTP_PASSWORD)throw Error('supported_native_credential_child_required');
 const requestedRead=process.env.ACADEMY_POOL_READ_REQUEST?testPoolReadRequest(JSON.parse(process.env.ACADEMY_POOL_READ_REQUEST)):null;
 const owner=JSON.parse(readFileSync('/opt/data/profiles/dc-gang-a-dev/academy/owner.json','utf8'));
@@ -20,7 +21,8 @@ try{
   await client.authenticate({username:owner.sourceUsername,password:process.env.DC_ACADEMY_HTTP_PASSWORD});
   let page:unknown;
   if(requestedRead){
-    if(requestedRead.operation==='categories')page=await client.inspectTestPoolCategoryTree(requestedRead.scope,requestedRead.expectedSelectorSha256);
+    if(requestedRead.operation==='protocol')page=await client.inspectTestPoolPresentationProtocol(requestedRead.expectedSelectorSha256);
+    else if(requestedRead.operation==='categories')page=await client.inspectTestPoolCategoryTree(requestedRead.scope,requestedRead.expectedSelectorSha256);
     else if(requestedRead.operation==='questions')page=await client.readTestPoolQuestions(requestedRead.scope,requestedRead.patNo,requestedRead.page,requestedRead.limit,requestedRead.expectedSelectorSha256,requestedRead.offset);
     else page=await client.readTestPoolTypeLabels(requestedRead.scope,requestedRead.expectedSelectorSha256);
   }else if(process.argv.includes('--probe-label-schema')){
@@ -32,7 +34,7 @@ try{
       node=next;path.push(node);}
     const labels=await client.readTestPoolTypeLabels(node.scope);
     page={purpose:'bounded_live_label_schema_probe_not_teacher_exam_scope',path,labelResult:labels,examUnitScope:'not_selected'};
-  }else page=process.argv.includes('--question-protocol')?await client.inspectTestPoolQuestionProtocol():process.argv.includes('--category-tree')?await client.inspectTestPoolCategoryTree():process.argv.includes('--selector-document')?await client.inspectTestPoolSelector():process.argv.includes('--tab-document')?await client.inspectTestPoolTab():await client.inspectTestPoolIndex();
+  }else page=process.argv.includes('--presentation-protocol')?await client.inspectTestPoolPresentationProtocol():process.argv.includes('--question-protocol')?await client.inspectTestPoolQuestionProtocol():process.argv.includes('--category-tree')?await client.inspectTestPoolCategoryTree():process.argv.includes('--selector-document')?await client.inspectTestPoolSelector():process.argv.includes('--tab-document')?await client.inspectTestPoolTab():await client.inspectTestPoolIndex();
   console.log(JSON.stringify({status:'observed',authentication:'fresh_supported_native_getter',page,requests,operations,
     passwordExported:false,cookiesExported:false,rawSourceRetained:false,academyWrites:0,directDatabaseConnections:0}));
 }catch(error){console.log(JSON.stringify({status:'blocked',code:error instanceof Error&&/^[a-z_]+$/.test(error.message)?error.message:'test_pool_inspection_failed',

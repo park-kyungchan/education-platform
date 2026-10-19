@@ -10,6 +10,7 @@ import {selectSourceFunction} from './sourceFunctionText';
 import {inspectAssessmentSearchMetadata} from './assessmentReadProtocol';
 import {inspectTestPoolDocument,readTestPoolDocument,testPoolSelectorDefaults} from './testPoolInspection';
 import {testPoolQuestionPreviewReferences,testPoolPreviewSourcePins} from './testPoolQuestionPreview';
+import {inspectTestPoolPresentationProtocol as inspectPoolPresentationProtocol} from './testPoolPresentationProtocol';
 import {emptyTestPoolScope,testPoolScope,testPoolReadRequest,parseTestPoolCategories,qualifyTestPoolTypeTemplate,parseTestPoolTypeLabels,extractTestPoolLabelPayload,qualifyTestPoolQuestionTemplate,parseTestPoolQuestions,type TestPoolScope} from './testPoolReadProtocol';
 
 export const ACADEMY_ORIGIN='https://dc.gang-a.kr' as const;
@@ -21,7 +22,16 @@ export class AcademyHttpFailure extends Error {
   constructor(readonly httpStatus:number,readonly sourceOperation:string){super('source_http_failed');this.name='AcademyHttpFailure';}
 }
 /** Inert standards DOM: no resources, scripts or event handlers execute. */
-export const sourceDomParser={parseFromString:(text:string,mime:DOMParserSupportedType):Document=>new JSDOM(text,{contentType:mime}).window.document as unknown as Document};
+export const sourceDomParser={
+  parseFromString:(text:string,mime:DOMParserSupportedType):Document=>new JSDOM(text,{contentType:mime}).window.document as unknown as Document,
+  parseWithSourceLocations:(text:string)=>{
+    const dom=new JSDOM(text,{contentType:'text/html',includeNodeLocations:true});
+    return {document:dom.window.document as unknown as Document,sourceRange:(node:Node)=>{
+      const location=dom.nodeLocation(node);
+      return location?{start:location.startOffset,end:location.endOffset}:null;
+    }};
+  },
+};
 /** Fresh client-issued session only. No vault/cookie export, persistent jar or automatic login retry. */
 export class AcademyHttpClient {
   #cookies=new Map<string,{value:string;path:string}>();
@@ -156,6 +166,15 @@ export class AcademyHttpClient {
       scripts.push({path,sourceSha256:digest(text),functions:inspection.readFunctionSources.filter(row=>['getExamPath','getExamCardImageFileName'].includes(row.name))});
     }
     return {selector,scripts,sourceHandlersExecuted:false,academyWrites:0};
+  }
+  /** Inert presentation controls and formatter evidence; revisions never authorize automatic re-pinning. */
+  async inspectTestPoolPresentationProtocol(expectedSelectorSha256?:string){
+    const protocol=await this.#poolProtocol();
+    if(expectedSelectorSha256!==undefined&&expectedSelectorSha256!==protocol.selectorSha256)throw Error('test_pool_selector_source_changed');
+    const selector=inspectTestPoolDocument(protocol.html,sourceDomParser.parseFromString);
+    if(!selector.externalScripts.some(script=>script.sameOrigin&&script.path==='/js/common_function.js'))throw Error('test_pool_preview_script_unqualified');
+    const helpers=await (await this.#request('/js/common_function.js',{method:'GET'},false,'test_pool_presentation_helpers')).text();
+    return {...inspectPoolPresentationProtocol(protocol.html,helpers,sourceDomParser.parseWithSourceLocations),observedAt:new Date().toISOString()};
   }
   /** Exact CategoryList read discovered in the current type-selector source; never creates a paper. */
   async #poolProtocol(){
