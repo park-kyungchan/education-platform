@@ -92,7 +92,7 @@ test('setup publishes Bun1.4.3 to later Actions steps without overwriting existi
  }finally{rmSync(root,{recursive:true,force:true});}
 });
 
-test('root source CI keeps setup bootstrap, maintained runtime, owner review and gate boundaries',async()=>{
+test('root source CI guards owner setup inside the shared action and preserves runtime, review and gate boundaries',async()=>{
  const contract=educationSourceCi;
  const workflow=Bun.YAML.parse(readFileSync(resolve(projectRoot,contract.workflow),'utf8')) as any;
  expect(workflow.permissions).toEqual(contract.permissions);
@@ -101,12 +101,15 @@ test('root source CI keeps setup bootstrap, maintained runtime, owner review and
  const source=workflow.jobs[contract.source.jobId];
  const checkout=source.steps.find((step:any)=>step.uses?.startsWith('actions/checkout@'));
  expect(checkout.with.ref).toBe(contract.sourceSha);expect(checkout.with['persist-credentials']).toBe(false);
+ expect(checkout.with['fetch-depth']).toBe(contract.source.fetchDepth);
  const bootstrap=source.steps.find((step:any)=>step.uses?.startsWith('oven-sh/setup-bun@'));
  expect(bootstrap.with['bun-version']).toBe(contract.setup.bootstrapBun);
- const setupIndex=source.steps.findIndex((step:any)=>step.run===contract.setup.command);
- expect(setupIndex).toBeGreaterThan(source.steps.indexOf(bootstrap));
  const shared=source.steps.filter((step:any)=>step.uses===contract.source.action);
- expect(shared).toHaveLength(1);expect(source.steps.indexOf(shared[0])).toBeGreaterThan(setupIndex);
+ expect(shared).toHaveLength(1);
+ const sharedIndex=source.steps.indexOf(shared[0]);
+ expect(source.steps.slice(0,sharedIndex).map((step:any)=>step.uses)).toEqual([checkout.uses,bootstrap.uses]);
+ expect(sharedIndex).toBe(source.steps.length-1);
+ expect(source.steps.filter((step:any)=>step.run)).toEqual([]);
  expect(shared[0].with).toEqual({
   'project-id':contract.owner.projectId,repository:contract.owner.repository,
   'source-sha':contract.sourceSha,'bun-version':contract.source.bun,
@@ -114,8 +117,10 @@ test('root source CI keeps setup bootstrap, maintained runtime, owner review and
  });
  expect(shared[0].env).toBeUndefined();expect(contract.source.bun).toBe(bunToolchain.version);
  const manifest=await Bun.file(resolve(projectRoot,'package.json')).json();
- expect(manifest.scripts[contract.source.scripts[0]]).toBe('bun ci/verify-projection.ts');
- expect(manifest.scripts[contract.source.scripts[1]]).toBe('bun scripts/check.ts');
+ expect(contract.source.scripts[0]).toBe(contract.setup.script);
+ expect(manifest.scripts[contract.source.scripts[0]]).toBe('bun scripts/setup.ts');
+ expect(manifest.scripts[contract.source.scripts[1]]).toBe('bun ci/verify-projection.ts');
+ expect(manifest.scripts[contract.source.scripts[2]]).toBe('bun scripts/check.ts');
  const review=workflow.jobs[contract.nativeReview.jobId];
  expect(review.steps.find((step:any)=>step.uses?.startsWith('oven-sh/setup-bun@')).with['bun-version']).toBe(contract.setup.bootstrapBun);
  expect(review.steps.filter((step:any)=>step.run).map((step:any)=>step.run)).toEqual(['bun ci/verify-projection.ts','bun ci/native-review-gate.js']);
