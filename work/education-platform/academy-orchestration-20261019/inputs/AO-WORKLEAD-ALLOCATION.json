@@ -157,8 +157,25 @@
           "nativeRunId": null,
           "storedSessionKey": null,
           "modelPromptDispatched": false,
-          "launchState": "ready-tui",
-          "initialLaunchWasStoppedForMemoryPressure": false
+          "launchState": "shell-ready-user-held",
+          "initialLaunchWasStoppedForMemoryPressure": false,
+          "frontendHold": {
+            "schema": "academy.frontend-hold.v1",
+            "requestedBy": "current-user",
+            "status": "paused-until-user-review",
+            "frontendTui": "stopped-native-quit",
+            "researchPreview": "stopped-SIGTERM-owned-process",
+            "browser": "observed-stopped",
+            "botScreen": "observed-stopped",
+            "restartCondition": "Only a later explicit user request to review or resume frontend work. Resource recovery, dependency completion, handoff or another WorkLead starting does not release this hold.",
+            "preserve": [
+              "Work IDs",
+              "source Work records",
+              "worktrees",
+              "native saved sessions"
+            ],
+            "automaticRestart": false
+          }
         },
         "localSourceRegisteredOnly": true,
         "globalNativeRegistrationClaimed": false
@@ -188,7 +205,7 @@
       "current immutable MCP execution boundary",
       "academy-specific Jev accounting/admission/budget; never use old ODI ledger"
     ],
-    "handoffState": "Four canonical Work contracts and per-Work panes are prepared. Only requested frontend Hermes TUI remains running; W1/W2/W3 own shell panes await on-demand WorkLead startup after measured memory pressure. No Academy live query or Jev inference was dispatched by root.",
+    "handoffState": "All assigned WorkLead panes are shells; frontend runtime stopped and held until explicit user review. No automatic frontend restart.",
     "runtimeRecovery": {
       "cause": "Observed memory pressure after additional native TUI startup; no unrelated service restart or configuration change by this task.",
       "stoppedOwnedNativeLaunchers": [
@@ -211,7 +228,7 @@
       "priority": "Preserve headroom for other user work and minimize academy memory pressure.",
       "maxAdditionalActiveWorkLeadTuis": 1,
       "maxConcurrentHeavyAcademyJobs": 1,
-      "retainedFrontend": "Keep the requested existing frontend TUI/Bot Screen available; do not duplicate it.",
+      "retainedFrontend": "Frontend runtime is off and held by current user instruction. Start only on a later explicit frontend review/resume request.",
       "idleWorkers": "Keep unneeded WorkLead panes at shell prompts; terminate owned completed worker runtimes after durable results.",
       "beforeEachLaunch": [
         "Observe current host MemAvailable, memory PSI and own active processes.",
@@ -232,7 +249,41 @@
         "Unrelated user jobs/services/data remain under their own owners.",
         "No swap, cgroup, global model/configuration/permissions or system service changes through this policy."
       ],
-      "implementation": "Source-owned WorkLead instructions and manual orchestration checks; no monitoring daemon, scheduler or alternate runtime."
+      "implementation": "Source-owned WorkLead instructions and manual orchestration checks; no monitoring daemon, scheduler or alternate runtime.",
+      "frontendHold": {
+        "schema": "academy.frontend-hold.v1",
+        "requestedBy": "current-user",
+        "status": "paused-until-user-review",
+        "frontendTui": "stopped-native-quit",
+        "researchPreview": "stopped-SIGTERM-owned-process",
+        "browser": "observed-stopped",
+        "botScreen": "observed-stopped",
+        "restartCondition": "Only a later explicit user request to review or resume frontend work. Resource recovery, dependency completion, handoff or another WorkLead starting does not release this hold.",
+        "preserve": [
+          "Work IDs",
+          "source Work records",
+          "worktrees",
+          "native saved sessions"
+        ],
+        "automaticRestart": false
+      }
+    },
+    "frontendHold": {
+      "schema": "academy.frontend-hold.v1",
+      "requestedBy": "current-user",
+      "status": "paused-until-user-review",
+      "frontendTui": "stopped-native-quit",
+      "researchPreview": "stopped-SIGTERM-owned-process",
+      "browser": "observed-stopped",
+      "botScreen": "observed-stopped",
+      "restartCondition": "Only a later explicit user request to review or resume frontend work. Resource recovery, dependency completion, handoff or another WorkLead starting does not release this hold.",
+      "preserve": [
+        "Work IDs",
+        "source Work records",
+        "worktrees",
+        "native saved sessions"
+      ],
+      "automaticRestart": false
     }
   }
 }
