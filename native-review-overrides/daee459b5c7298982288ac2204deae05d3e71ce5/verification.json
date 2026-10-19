@@ -1,0 +1,56 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "verification",
+  "id": "education-platform:verification:pr15-independent-review-user-exception-20261019",
+  "projectId": "education-platform",
+  "domainId": "education",
+  "createdAt": "2026-10-19T09:28:17.831334Z",
+  "payload": {
+    "targetRefs": [
+      "education-platform:evidence:pr15-independent-review-user-exception-20261019"
+    ],
+    "criteria": [
+      {
+        "id": "independent-native-source-review",
+        "status": "pass",
+        "message": "Actual independent reviewer reported no required source findings for exact head/tree.",
+        "evidenceRefs": [
+          "education-platform:evidence:pr15-independent-review-user-exception-20261019"
+        ]
+      }
+    ],
+    "inputHashes": [
+      {
+        "path": "native-review-overrides/daee459b5c7298982288ac2204deae05d3e71ce5/independent-review.json",
+        "sha256": "061bb98add6e8b70663fd3a54db63a22cb0663956352c41ef618a6ba97f3ab9e"
+      },
+      {
+        "path": "native-review-overrides/daee459b5c7298982288ac2204deae05d3e71ce5/decision.json",
+        "sha256": "0ed568eefe1e48b7e794d3a6b62e5dd23d25316e8162cbfc75aa26c42820fda6"
+      },
+      {
+        "path": "native-review-overrides/daee459b5c7298982288ac2204deae05d3e71ce5/evidence.json",
+        "sha256": "562583d41c34a95b8344e98f84b69a12574c23adb2287041a3d4aff69bf3d838"
+      }
+    ],
+    "runtime": {
+      "name": "native-codex",
+      "version": "unknown"
+    },
+    "details": {
+      "semanticOwner": "education-platform",
+      "headSha": "daee459b5c7298982288ac2204deae05d3e71ce5",
+      "reviewedTreeSha": "737776905e1526171eae3a4b00b6393684c15d7c",
+      "reviewedSourceManifestSha256": "cdf9378ea2e360ca76c5b7468d73faded7a5d08a368a26145d9febf2a261d472",
+      "reviewerThreadId": "01a15358-42e5-7770-bb93-cd081b0b7601",
+      "reviewerNativeTaskId": null,
+      "reviewerNativeRunId": null,
+      "authorNativeIdentity": null,
+      "authorProvenanceUserException": true,
+      "normalNativeGatePassClaimed": false,
+      "nativeAuthenticationEstablished": false,
+      "nativePermissionGranted": false,
+      "acceptanceEstablished": false
+    }
+  }
+}

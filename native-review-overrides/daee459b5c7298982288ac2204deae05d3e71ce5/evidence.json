@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "evidence",
+  "id": "education-platform:evidence:pr15-independent-review-user-exception-20261019",
+  "projectId": "education-platform",
+  "domainId": "education",
+  "createdAt": "2026-10-19T09:28:17.831334Z",
+  "payload": {
+    "claim": "Independent review passed for exact PR15 source; actual user separately excepted absent original native-author metadata.",
+    "method": "native-codex-independent-source-review",
+    "sourceUrl": "https://github.com/park-kyungchan/education-platform/blob/73101374f18c3b79f6b602d5fffb6227870bad85/native-review-overrides/daee459b5c7298982288ac2204deae05d3e71ce5/independent-review.json",
+    "fetchedAt": "2026-10-19T09:28:17.831334Z",
+    "upstreamRevision": "daee459b5c7298982288ac2204deae05d3e71ce5",
+    "result": {
+      "outcome": "success",
+      "processExitCode": 0,
+      "contentMatched": true
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "outcome": "success"
+      }
+    ],
+    "limitations": [
+      "Original native author identity remains unobserved; no legacy native gate PASS claimed.",
+      "Source review does not prove native activation, teacher acceptance or final examination membership."
+    ],
+    "details": {
+      "semanticOwner": "education-platform",
+      "headSha": "daee459b5c7298982288ac2204deae05d3e71ce5",
+      "reviewedTreeSha": "737776905e1526171eae3a4b00b6393684c15d7c",
+      "reviewedSourceManifestSha256": "cdf9378ea2e360ca76c5b7468d73faded7a5d08a368a26145d9febf2a261d472",
+      "reviewerThreadId": "01a15358-42e5-7770-bb93-cd081b0b7601",
+      "reviewerNativeTaskId": null,
+      "reviewerNativeRunId": null,
+      "authorNativeIdentity": null,
+      "authorProvenanceUserException": true,
+      "normalNativeGatePassClaimed": false,
+      "nativeAuthenticationEstablished": false,
+      "nativePermissionGranted": false,
+      "acceptanceEstablished": false
+    }
+  }
+}
