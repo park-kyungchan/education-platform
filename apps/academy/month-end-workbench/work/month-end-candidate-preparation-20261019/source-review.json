@@ -1,0 +1,136 @@
+{
+  "schemaVersion": "assessment.portable-source-review/1",
+  "classification": "sanitized_analysis_receipt_not_raw_source_response",
+  "originalReceipt": "private-artifact:protocol-semantics-review.json",
+  "sourceObservedAt": "2026-10-19T05:59:19.537Z",
+  "sourcePins": {
+    "expectedSelectorSha256": "dbe508a27dc8ea46dbdf5de697733e4c4c56afc5c766bacfa202997070e84992",
+    "expectedHelpersSha256": "a42379a32fa0183f4a9f97f00d088cd09f4eb38e89f8d43a7432f3fb74483c50",
+    "selectorMatches": true,
+    "helpersMatch": true,
+    "qualification": "qualified_original_source"
+  },
+  "selectorCanonicalJsonStringSha256": "dbe508a27dc8ea46dbdf5de697733e4c4c56afc5c766bacfa202997070e84992",
+  "helperCanonicalJsonStringSha256": "a42379a32fa0183f4a9f97f00d088cd09f4eb38e89f8d43a7432f3fb74483c50",
+  "rangeUnit": "utf16_code_units",
+  "difficulty": {
+    "status": "source_derived_formatter_association",
+    "functionName": "dbFormatterDifficultyCell",
+    "functionSourceSha256": "f6b714411a999e93a1666100d9dd1b4cb0853a2740064343d2eb394046819375",
+    "functionRange": {
+      "start": 46627,
+      "end": 47602
+    },
+    "mappings": [
+      {
+        "code": 2,
+        "labelExact": "중",
+        "labelEnglish": "middle",
+        "codeLiteralRanges": [
+          {
+            "start": 47179,
+            "end": 47180
+          }
+        ],
+        "displayLiteralRanges": [
+          {
+            "start": 47195,
+            "end": 47348
+          }
+        ],
+        "branchControlFlowIndependentlyVerified": false
+      },
+      {
+        "code": 3,
+        "labelExact": "상",
+        "labelEnglish": "high",
+        "codeLiteralRanges": [
+          {
+            "start": 46980,
+            "end": 46981
+          }
+        ],
+        "displayLiteralRanges": [
+          {
+            "start": 46996,
+            "end": 47149
+          }
+        ],
+        "branchControlFlowIndependentlyVerified": false
+      },
+      {
+        "code": 4,
+        "labelExact": "최상",
+        "labelEnglish": "highest",
+        "codeLiteralRanges": [
+          {
+            "start": 46780,
+            "end": 46781
+          }
+        ],
+        "displayLiteralRanges": [
+          {
+            "start": 46796,
+            "end": 46950
+          }
+        ],
+        "branchControlFlowIndependentlyVerified": false
+      }
+    ],
+    "pointsMapping": {
+      "status": "user_decision_not_native_metadata",
+      "중": 3,
+      "상": 5,
+      "최상": 6
+    },
+    "rawFieldCoercion": "not_verified_from_literal_projection"
+  },
+  "responseFormats": {
+    "status": "source_derived_formatter_association",
+    "functionName": "dbFormatterTypesCell",
+    "functionSourceSha256": "cacc7a2e4781e409713ca50eafe838347d97f8c4b0831b733dc78b02aa618daa",
+    "functionRange": {
+      "start": 47611,
+      "end": 50287
+    },
+    "mappings": [
+      {
+        "variant": "obj",
+        "field": "obj_option",
+        "labelExact": "객관식",
+        "responseMode": "other",
+        "policy": "exclude_from_requested_constructed_descriptive_exam",
+        "branchControlFlowIndependentlyVerified": false
+      },
+      {
+        "variant": "sbj",
+        "field": "sbj_option",
+        "labelExact": "주관식",
+        "responseMode": "constructed",
+        "policy": "eligible_only_after_actual_prompt_and_solution_process_review",
+        "branchControlFlowIndependentlyVerified": false
+      },
+      {
+        "variant": "des",
+        "field": "des_option",
+        "labelExact": "서술형",
+        "responseMode": "descriptive",
+        "policy": "eligible_only_after_actual_prompt_and_solution_process_review",
+        "branchControlFlowIndependentlyVerified": false
+      }
+    ],
+    "flagMeaning": "D_vs_Y_default_or_selection_semantics_not_inferred",
+    "contentRole": "obj_sbj_des_are_response_format_variants_not_problem_answer_solution_roles",
+    "defaultVariantWarning": "The source row sel_type may denote obj even when sbj_option is Y. A raw answer from the default object variant may be a choice index and is not an established answer or solution for the converted sbj image."
+  },
+  "unknowns": [
+    "The retained projection contains exact function hashes/ranges and literals but omits comparison operators, member access and return/branch AST relationships. These code-to-label associations are derived; independent branch verification requires already retained original formatter text or an additional bounded AST evidence projection.",
+    "Raw numeric-string coercion and D/Y distinctions are not established.",
+    "No selector handler or formatter was executed by this review.",
+    "No question image, official solution, semantic match or native difficulty of an individual question was inspected in this task.",
+    "Current protocol reports no relevant literal controls and question_grid_configuration_dynamic; those parser coverage limits remain.",
+    "The relation between row sel_type, raw answer and a requested sbj/des variant must be checked against the actual image; a converted variant does not inherit verified answer semantics from the default row."
+  ],
+  "sourceHandlersExecuted": false,
+  "acceptanceDecision": null
+}

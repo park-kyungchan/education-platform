@@ -13,12 +13,14 @@ export const emptyTestPoolScope:Readonly<TestPoolScope>=Object.freeze({cl1:0,cl2
 export function testPoolReadRequest(value:unknown) {
   if(!value||typeof value!=='object'||Array.isArray(value))throw Error('test_pool_read_request_invalid');
   const request=value as Record<string,unknown>;
-  if(Object.keys(request).some(key=>!['operation','scope','expectedSelectorSha256',...(request.operation==='questions'?['patNo','page','limit','offset']:[])].includes(key))||typeof request.operation!=='string'||!['categories','labels','questions'].includes(request.operation))throw Error('test_pool_read_request_invalid');
+  if(Object.keys(request).some(key=>!['operation','scope','expectedSelectorSha256',...(request.operation==='questions'?['patNo','page','limit','offset']:[])].includes(key))||typeof request.operation!=='string'||!['categories','labels','questions','protocol'].includes(request.operation))throw Error('test_pool_read_request_invalid');
   if(request.expectedSelectorSha256!==undefined&&(typeof request.expectedSelectorSha256!=='string'||!/^[a-f0-9]{64}$/.test(request.expectedSelectorSha256)))throw Error('test_pool_selector_pin_invalid');
-  const scope=testPoolScope(request.scope);if(request.operation!=='categories'&&!scope.cl3)throw Error('test_pool_type_scope_requires_source_level3');
+  const scope=testPoolScope(request.scope);
+  if(request.operation==='protocol'&&Object.values(scope).some(Boolean))throw Error('test_pool_protocol_root_scope_required');
+  if(request.operation!=='categories'&&request.operation!=='protocol'&&!scope.cl3)throw Error('test_pool_type_scope_requires_source_level3');
   if(request.operation==='questions'&&(typeof request.patNo!=='string'||!/^[1-9][0-9]{0,15}$/.test(request.patNo)||!Number.isSafeInteger(request.page)||(request.page as number)<1||(request.page as number)>100000||!Number.isInteger(request.limit)||(request.limit as number)<1||(request.limit as number)>50))throw Error('test_pool_question_request_invalid');
   if(request.operation==='questions'&&request.offset!==undefined&&(!Number.isInteger(request.offset)||(request.offset as number)<0||(request.offset as number)>49))throw Error('test_pool_question_offset_invalid');
-  return {operation:request.operation as 'categories'|'labels'|'questions',scope,expectedSelectorSha256:request.expectedSelectorSha256 as string|undefined,patNo:request.patNo as string,page:request.page as number,limit:request.limit as number,offset:request.offset as number|undefined};
+  return {operation:request.operation as 'categories'|'labels'|'questions'|'protocol',scope,expectedSelectorSha256:request.expectedSelectorSha256 as string|undefined,patNo:request.patNo as string,page:request.page as number,limit:request.limit as number,offset:request.offset as number|undefined};
 }
 function exactText(value:unknown):string {if(typeof value!=='string'||!value.trim()||value.length>4096||/[\u0000-\u0008\u000b\u000c\u000e-\u001f]/.test(value))throw Error('test_pool_source_text_invalid');return value;}
 function nativeId(value:unknown):string|number {if(typeof value==='string'&&value.length>0&&value.length<256)return value;if(Number.isSafeInteger(value)&&(value as number)>=0)return value as number;throw Error('test_pool_native_id_invalid');}

@@ -1,0 +1,1333 @@
+{
+  "schemaVersion": "academy.pool-candidate-index/1",
+  "preparedAt": "2026-10-19T06:28:55.645Z",
+  "status": "proposal_for_teacher_review",
+  "basis": "Original source difficulty and response variants; visual inspection of original prompt/solution cards; assistant mathematical comparison.",
+  "rankingScope": "inspected_candidates_only",
+  "counts": {
+    "slots": 24,
+    "points": 100,
+    "candidateOptions": 57,
+    "distinctCandidateNativeQuestions": 57,
+    "distinctPrimaryResearchTypes": 24,
+    "difficultyAssignments": {
+      "중": 12,
+      "상": 8,
+      "최상": 4
+    },
+    "unitCoverage": [
+      {
+        "unitId": "U-M",
+        "slots": 8,
+        "primaryTypes": 8,
+        "details": 8,
+        "smallUnits": 5,
+        "middleUnits": 3,
+        "difficultyAssignments": {
+          "중": 4,
+          "상": 3,
+          "최상": 1
+        }
+      },
+      {
+        "unitId": "U-D",
+        "slots": 8,
+        "primaryTypes": 8,
+        "details": 8,
+        "smallUnits": 5,
+        "middleUnits": 3,
+        "difficultyAssignments": {
+          "중": 4,
+          "상": 2,
+          "최상": 2
+        }
+      },
+      {
+        "unitId": "U-C",
+        "slots": 8,
+        "primaryTypes": 8,
+        "details": 7,
+        "smallUnits": 6,
+        "middleUnits": 3,
+        "difficultyAssignments": {
+          "중": 4,
+          "상": 3,
+          "최상": 1
+        }
+      }
+    ],
+    "assistantCoreMatchJudgments": {
+      "bothAxesStrong": 4,
+      "oneOrBothAxesPartial": 53
+    }
+  },
+  "matchQualification": "A reviewable evidence proposal does not establish equivalence to the complete research teaching task. Partial candidates retain their missing activities and changed conditions.",
+  "finalMembership": false,
+  "academyWrites": 0,
+  "acceptanceDecision": null,
+  "slots": [
+    {
+      "slot": 1,
+      "id": "slot-01",
+      "unitId": "U-M",
+      "difficulty": "중",
+      "points": 3,
+      "primaryResearchTypeId": "HM11-d3-T01",
+      "researchTitleOriginal": "부분곱 합산",
+      "preferred": "1332685",
+      "alternates": [
+        "1389269",
+        "1389268"
+      ],
+      "options": [
+        {
+          "lecture_key": "1332685",
+          "pat_no": "21962",
+          "labelOriginal": "올림이 없는 (세 자리 수)×(한 자리 수)",
+          "responseMode": "constructed",
+          "role": "preferred",
+          "ordinal": 1,
+          "rationale": "Preferred among the inspected no-carry prospects because every displayed multiplication must be evaluated or compared, with no misleading claimed answer supplied.",
+          "structureMatch": "partial",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The native prompt asks for judgment or ordering of complete products rather than explicitly supplying separate partial products.",
+            "The prompt permits other strategies or shortcuts and does not require the research decomposition or an explanation of partial-product conservation."
+          ],
+          "officialSolutionState": "inspected"
+        },
+        {
+          "lecture_key": "1389269",
+          "pat_no": "21962",
+          "labelOriginal": "올림이 없는 (세 자리 수)×(한 자리 수)",
+          "responseMode": "constructed",
+          "role": "alternate",
+          "ordinal": 2,
+          "rationale": "Alternate preserves three-digit by one-digit no-carry arithmetic, but the final judgment can be reached by a shorter error check instead of demonstrating the research partial-sum process.",
+          "structureMatch": "partial",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The native prompt asks for judgment or ordering of complete products rather than explicitly supplying separate partial products.",
+            "The prompt permits other strategies or shortcuts and does not require the research decomposition or an explanation of partial-product conservation."
+          ],
+          "officialSolutionState": "inspected"
+        },
+        {
+          "lecture_key": "1389268",
+          "pat_no": "21962",
+          "labelOriginal": "올림이 없는 (세 자리 수)×(한 자리 수)",
+          "responseMode": "constructed",
+          "role": "alternate",
+          "ordinal": 3,
+          "rationale": "A second alternate with the same basic arithmetic and a reversed correctness judgment; it supplies no direct evidence that a learner used partial sums.",
+          "structureMatch": "partial",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The native prompt asks for judgment or ordering of complete products rather than explicitly supplying separate partial products.",
+            "The prompt permits other strategies or shortcuts and does not require the research decomposition or an explanation of partial-product conservation."
+          ],
+          "officialSolutionState": "inspected"
+        }
+      ]
+    },
+    {
+      "slot": 2,
+      "id": "slot-02",
+      "unitId": "U-M",
+      "difficulty": "중",
+      "points": 3,
+      "primaryResearchTypeId": "HM21-d2-T02",
+      "researchTitleOriginal": "몇십×몇십 단위",
+      "preferred": "1292730",
+      "alternates": [
+        "1416288",
+        "1390871"
+      ],
+      "options": [
+        {
+          "lecture_key": "1292730",
+          "pat_no": "21968",
+          "labelOriginal": "(몇십)×(몇십)",
+          "responseMode": "descriptive",
+          "role": "preferred",
+          "ordinal": 1,
+          "rationale": "Preferred for direct repeated tens-by-tens structure and numeric written outputs. It has nine subanswers, so teacher review should consider workload and the still unspecified partial-credit rubric.",
+          "structureMatch": "strong",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The native prompts do not require explaining why ten times ten makes one hundred or building the research array blocks."
+          ],
+          "officialSolutionState": "inspected"
+        },
+        {
+          "lecture_key": "1416288",
+          "pat_no": "22642",
+          "labelOriginal": "(몇십)×(몇십)의 활용",
+          "responseMode": "constructed",
+          "role": "alternate",
+          "ordinal": 2,
+          "rationale": "Alternate transfers the same tens-by-tens computation to an equal-length context and explicitly excludes overlap; it does not ask for the hundred-unit explanation.",
+          "structureMatch": "strong",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The native prompts do not require explaining why ten times ten makes one hundred or building the research array blocks."
+          ],
+          "officialSolutionState": "inspected"
+        },
+        {
+          "lecture_key": "1390871",
+          "pat_no": "21968",
+          "labelOriginal": "(몇십)×(몇십)",
+          "responseMode": "constructed",
+          "role": "alternate",
+          "ordinal": 3,
+          "rationale": "A further alternate makes the hundred scaling explicit through the blank00 notation, with an added equal-value classification demand.",
+          "structureMatch": "strong",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The native prompts do not require explaining why ten times ten makes one hundred or building the research array blocks."
+          ],
+          "officialSolutionState": "inspected"
+        }
+      ]
+    },
+    {
+      "slot": 3,
+      "id": "slot-03",
+      "unitId": "U-M",
+      "difficulty": "중",
+      "points": 3,
+      "primaryResearchTypeId": "HM32-d2-T01",
+      "researchTitleOriginal": "빈 인수 추론",
+      "preferred": "1332988",
+      "alternates": [
+        "1332987",
+        "1332986"
+      ],
+      "options": [
+        {
+          "lecture_key": "1332988",
+          "pat_no": "21966",
+          "labelOriginal": "곱셈식에서 □안에 알맞은 수 구하기(1)",
+          "responseMode": "constructed",
+          "role": "preferred",
+          "ordinal": 1,
+          "rationale": "Preferred for a single unambiguous missing factor with no added context or misleading operations.",
+          "structureMatch": "strong",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The native item is a bare equation, without the research context of identical full boxes or its suggested known-five-groups strategy."
+          ],
+          "officialSolutionState": "inspected"
+        },
+        {
+          "lecture_key": "1332987",
+          "pat_no": "21966",
+          "labelOriginal": "곱셈식에서 □안에 알맞은 수 구하기(1)",
+          "responseMode": "constructed",
+          "role": "alternate",
+          "ordinal": 2,
+          "rationale": "Alternate preserves the exact unknown-factor information direction with a different multiplier and slightly more place-value computation.",
+          "structureMatch": "strong",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The native item is a bare equation, without the research context of identical full boxes or its suggested known-five-groups strategy."
+          ],
+          "officialSolutionState": "inspected"
+        },
+        {
+          "lecture_key": "1332986",
+          "pat_no": "26166",
+          "labelOriginal": "곱셈식에서 □안에 알맞은 수 구하기(2)",
+          "responseMode": "constructed",
+          "role": "alternate",
+          "ordinal": 3,
+          "rationale": "A simpler alternate with the same inverse-factor structure and an explicit natural-number constraint.",
+          "structureMatch": "strong",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The native item is a bare equation, without the research context of identical full boxes or its suggested known-five-groups strategy."
+          ],
+          "officialSolutionState": "inspected"
+        }
+      ]
+    },
+    {
+      "slot": 4,
+      "id": "slot-04",
+      "unitId": "U-M",
+      "difficulty": "중",
+      "points": 3,
+      "primaryResearchTypeId": "HM32-d1-T01",
+      "researchTitleOriginal": "같은 묶음",
+      "preferred": "1318182",
+      "alternates": [
+        "1317284",
+        "1386443"
+      ],
+      "options": [
+        {
+          "lecture_key": "1318182",
+          "pat_no": "26160",
+          "labelOriginal": "일의 자리에서만 올림이 있는 (세 자리 수)×(한 자리 수)의 활용",
+          "responseMode": "descriptive",
+          "role": "preferred",
+          "ordinal": 1,
+          "rationale": "Preferred because both the repeated equal quantity and total are explicit and the prompt independently asks for the solution process.",
+          "structureMatch": "strong",
+          "reasoningMatch": "strong",
+          "differences": [],
+          "officialSolutionState": "inspected"
+        },
+        {
+          "lecture_key": "1317284",
+          "pat_no": "26160",
+          "labelOriginal": "일의 자리에서만 올림이 있는 (세 자리 수)×(한 자리 수)의 활용",
+          "responseMode": "descriptive",
+          "role": "alternate",
+          "ordinal": 2,
+          "rationale": "Alternate has the same equal-group model with a guided identification of quantities; it is more scaffolded than an independent written explanation.",
+          "structureMatch": "strong",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The native card supplies substantial intermediate structure, so it gives less independent evidence of modeling than the research design."
+          ],
+          "officialSolutionState": "inspected"
+        },
+        {
+          "lecture_key": "1386443",
+          "pat_no": "22641",
+          "labelOriginal": "백의 자리에서 올림이 있는 (세 자리 수)×(한 자리 수)의 활용",
+          "responseMode": "constructed",
+          "role": "alternate",
+          "ordinal": 3,
+          "rationale": "A further alternate preserves the repeated quantity but adds a metre-to-kilometre conversion, which is a material extra condition.",
+          "structureMatch": "strong",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The final answer additionally requires conversion to mixed kilometre and metre units."
+          ],
+          "officialSolutionState": "inspected"
+        }
+      ]
+    },
+    {
+      "slot": 5,
+      "id": "slot-05",
+      "unitId": "U-M",
+      "difficulty": "상",
+      "points": 5,
+      "primaryResearchTypeId": "HM12-d3-T01",
+      "researchTitleOriginal": "연속 올림 처리",
+      "preferred": "1416286",
+      "alternates": [
+        "1318311"
+      ],
+      "options": [
+        {
+          "lecture_key": "1416286",
+          "pat_no": "26161",
+          "labelOriginal": "십의 자리에서 올림이 있는 (세 자리 수)×(한 자리 수)의 활용",
+          "responseMode": "descriptive",
+          "role": "preferred",
+          "ordinal": 1,
+          "rationale": "Preferred of the inspected carry prospects because the card explicitly requests a written process and includes a genuine 128 times 6 carry chain; the additional two-category total remains disclosed.",
+          "structureMatch": "partial",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The complete native task includes additional modeling beyond the research focus on one carry chain.",
+            "The prompt does not isolate or demand the carry explanation; this is an analyst-derived possible process, not evidence that a learner used it."
+          ],
+          "officialSolutionState": "inspected"
+        },
+        {
+          "lecture_key": "1318311",
+          "pat_no": "21965",
+          "labelOriginal": "백의 자리에서 올림이 있는 (세 자리 수)×(한 자리 수)",
+          "responseMode": "constructed",
+          "role": "alternate",
+          "ordinal": 2,
+          "rationale": "Alternate contains the matching carry chain but adds interpretation of an unfamiliar operation, so it is a less direct assessment of the research target.",
+          "structureMatch": "partial",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The complete native task includes additional modeling beyond the research focus on one carry chain.",
+            "The prompt does not isolate or demand the carry explanation; this is an analyst-derived possible process, not evidence that a learner used it."
+          ],
+          "officialSolutionState": "inspected"
+        }
+      ]
+    },
+    {
+      "slot": 6,
+      "id": "slot-06",
+      "unitId": "U-M",
+      "difficulty": "상",
+      "points": 5,
+      "primaryResearchTypeId": "HM23-d2-T02",
+      "researchTitleOriginal": "십 부분곱 빈칸",
+      "preferred": "1314512",
+      "alternates": [
+        "1292716"
+      ],
+      "options": [
+        {
+          "lecture_key": "1314512",
+          "pat_no": "26166",
+          "labelOriginal": "곱셈식에서 □안에 알맞은 수 구하기(2)",
+          "responseMode": "constructed",
+          "role": "preferred",
+          "ordinal": 1,
+          "rationale": "Preferred because the complete visible 1400 row makes the actual tens value explicit and directly distinguishes digit 4 from multiplier 40.",
+          "structureMatch": "strong",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The native item recovers several factor or result digits rather than directly asking only for the missing full tens partial product."
+          ],
+          "officialSolutionState": "inspected"
+        },
+        {
+          "lecture_key": "1292716",
+          "pat_no": "26166",
+          "labelOriginal": "곱셈식에서 □안에 알맞은 수 구하기(2)",
+          "responseMode": "descriptive",
+          "role": "alternate",
+          "ordinal": 2,
+          "rationale": "Alternate preserves the tens-row interpretation but adds several result blanks and additional carry/column constraints.",
+          "structureMatch": "strong",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The native item recovers several factor or result digits rather than directly asking only for the missing full tens partial product."
+          ],
+          "officialSolutionState": "inspected"
+        }
+      ]
+    },
+    {
+      "slot": 7,
+      "id": "slot-07",
+      "unitId": "U-M",
+      "difficulty": "상",
+      "points": 5,
+      "primaryResearchTypeId": "HM23-d3-T01",
+      "researchTitleOriginal": "부분곱 자리 맞추기",
+      "preferred": "1318371",
+      "alternates": [
+        "1314517"
+      ],
+      "options": [
+        {
+          "lecture_key": "1318371",
+          "pat_no": "26166",
+          "labelOriginal": "곱셈식에서 □안에 알맞은 수 구하기(2)",
+          "responseMode": "constructed",
+          "role": "preferred",
+          "ordinal": 1,
+          "rationale": "Preferred because the visible two-digit by two-digit rows and partly missing final sum make alignment indispensable to the full reconstruction.",
+          "structureMatch": "strong",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The native question is a multi-blank constraint puzzle; it does not independently ask the learner to explain alignment or diagnose an unshifted row."
+          ],
+          "officialSolutionState": "inspected"
+        },
+        {
+          "lecture_key": "1314517",
+          "pat_no": "26166",
+          "labelOriginal": "곱셈식에서 □안에 알맞은 수 구하기(2)",
+          "responseMode": "constructed",
+          "role": "alternate",
+          "ordinal": 2,
+          "rationale": "Alternate applies the same column-alignment principle but uses a one-digit multiplicand and an additional inverse-digit choice.",
+          "structureMatch": "partial",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The research basic example is two-digit by two-digit multiplication, while this native item has a one-digit multiplicand and a two-digit multiplier.",
+            "The native question is a multi-blank constraint puzzle; it does not independently ask the learner to explain alignment or diagnose an unshifted row."
+          ],
+          "officialSolutionState": "inspected"
+        }
+      ]
+    },
+    {
+      "slot": 8,
+      "id": "slot-08",
+      "unitId": "U-M",
+      "difficulty": "최상",
+      "points": 6,
+      "primaryResearchTypeId": "HM32-d3-T01",
+      "researchTitleOriginal": "곱한 뒤 빼기",
+      "preferred": "1314582",
+      "alternates": [
+        "1386465"
+      ],
+      "options": [
+        {
+          "lecture_key": "1314582",
+          "pat_no": "22645",
+          "labelOriginal": "올림이 있는 (몇십몇)×(몇십몇)의 활용",
+          "responseMode": "descriptive",
+          "role": "preferred",
+          "ordinal": 1,
+          "rationale": "Preferred for a direct whole-minus-duplicated-length model with a concise diagram and smaller routine arithmetic, leaving the overlap-count reasoning clear.",
+          "structureMatch": "partial",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The removed amount is not a supplied constant: it requires a second product and an adjacent-overlap count one less than the tape count.",
+            "The research basic example has one product followed by one subtraction; the native prompt adds diagram interpretation, an off-by-one overlap count and a second multiplication."
+          ],
+          "officialSolutionState": "inspected"
+        },
+        {
+          "lecture_key": "1386465",
+          "pat_no": "22645",
+          "labelOriginal": "올림이 있는 (몇십몇)×(몇십몇)의 활용",
+          "responseMode": "descriptive",
+          "role": "alternate",
+          "ordinal": 2,
+          "rationale": "Alternate has exactly the same overlap/removal structure with larger products and more carrying; it is an alternative within this one research slot, not added type breadth.",
+          "structureMatch": "partial",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The removed amount is not a supplied constant: it requires a second product and an adjacent-overlap count one less than the tape count.",
+            "The research basic example has one product followed by one subtraction; the native prompt adds diagram interpretation, an off-by-one overlap count and a second multiplication."
+          ],
+          "officialSolutionState": "inspected"
+        }
+      ]
+    },
+    {
+      "slot": 9,
+      "id": "slot-09",
+      "unitId": "U-D",
+      "difficulty": "중",
+      "points": 3,
+      "primaryResearchTypeId": "HD11-d2-T02",
+      "researchTitleOriginal": "수모형 교환 후 나누기",
+      "preferred": "1389401",
+      "alternates": [
+        "1389400",
+        "1370158"
+      ],
+      "options": [
+        {
+          "lecture_key": "1389401",
+          "pat_no": "21979",
+          "labelOriginal": "내림이 있는 (몇십)÷(몇)",
+          "responseMode": "constructed",
+          "role": "preferred",
+          "ordinal": 1,
+          "rationale": "Preferred because the final 60/5 calculation has one remaining ten and a short, transparent exchange derivation.",
+          "structureMatch": "partial",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The native prompt supplies numbers or expressions rather than a concrete unit model; a correct answer does not establish that the student used an exchange model.",
+            "Selecting extreme values or ordering quotients is an additional task absent from the direct research example.",
+            "The answer-only prompt does not require an explanation, unit-model drawing, or explicit exchange; those microactions describe the analyst derivation only."
+          ],
+          "officialSolutionState": "inspected"
+        },
+        {
+          "lecture_key": "1389400",
+          "pat_no": "21979",
+          "labelOriginal": "내림이 있는 (몇십)÷(몇)",
+          "responseMode": "constructed",
+          "role": "alternate",
+          "ordinal": 2,
+          "rationale": "Alternate changes the exchanged quantity from one ten to three tens while retaining the same arithmetic structure.",
+          "structureMatch": "partial",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The native prompt supplies numbers or expressions rather than a concrete unit model; a correct answer does not establish that the student used an exchange model.",
+            "Selecting extreme values or ordering quotients is an additional task absent from the direct research example.",
+            "The answer-only prompt does not require an explanation, unit-model drawing, or explicit exchange; those microactions describe the analyst derivation only."
+          ],
+          "officialSolutionState": "inspected"
+        },
+        {
+          "lecture_key": "1370158",
+          "pat_no": "21979",
+          "labelOriginal": "내림이 있는 (몇십)÷(몇)",
+          "responseMode": "constructed",
+          "role": "alternate",
+          "ordinal": 3,
+          "rationale": "Third option adds a genuine no-exchange boundary and comparison workload instead of repeating only the operand-selection format.",
+          "structureMatch": "partial",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The final requested object is a sorted label sequence across four calculations, not a unit-model explanation of one calculation.",
+            "The prompt does not require the exchange reasoning or the no-exchange contrast to be explained.",
+            "The four-expression comparison adds workload beyond the direct research task."
+          ],
+          "officialSolutionState": "inspected"
+        }
+      ]
+    },
+    {
+      "slot": 10,
+      "id": "slot-10",
+      "unitId": "U-D",
+      "difficulty": "중",
+      "points": 3,
+      "primaryResearchTypeId": "HD21-d2-T01",
+      "researchTitleOriginal": "백을 십으로 교환",
+      "preferred": "1325631",
+      "alternates": [
+        "1325628"
+      ],
+      "options": [
+        {
+          "lecture_key": "1325631",
+          "pat_no": "21986",
+          "labelOriginal": "나머지가 없는 (몇백몇십몇)÷(몇)",
+          "responseMode": "constructed",
+          "role": "preferred",
+          "ordinal": 1,
+          "rationale": "Preferred because both branches visibly exercise the selected exchange structure rather than relying on only one subpart.",
+          "structureMatch": "strong",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The diagram first requires inverting a multiplication arrow.",
+            "The prompt asks for numbers rather than an explanation of hundred-to-ten equivalence."
+          ],
+          "officialSolutionState": "inspected"
+        },
+        {
+          "lecture_key": "1325628",
+          "pat_no": "21986",
+          "labelOriginal": "나머지가 없는 (몇백몇십몇)÷(몇)",
+          "responseMode": "constructed",
+          "role": "alternate",
+          "ordinal": 2,
+          "rationale": "Alternate supplies a conventional calculation layout, with an explicit limitation that only one of its two subparts targets this exchange.",
+          "structureMatch": "strong",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The compound item also includes 196/4, whose first quotient begins at the tens position.",
+            "The native response does not explicitly require the place-value explanation."
+          ],
+          "officialSolutionState": "inspected"
+        }
+      ]
+    },
+    {
+      "slot": 11,
+      "id": "slot-11",
+      "unitId": "U-D",
+      "difficulty": "중",
+      "points": 3,
+      "primaryResearchTypeId": "HD22-d1-T01",
+      "researchTitleOriginal": "세 자리 나머지 계산",
+      "preferred": "1370121",
+      "alternates": [
+        "1325589",
+        "1325588"
+      ],
+      "options": [
+        {
+          "lecture_key": "1370121",
+          "pat_no": "22653",
+          "labelOriginal": "나머지가 있는 (몇백몇십몇)÷(몇)",
+          "responseMode": "constructed",
+          "role": "preferred",
+          "ordinal": 1,
+          "rationale": "Preferred because it includes a zero-remainder boundary and the largest valid remainder for divisor nine.",
+          "structureMatch": "strong",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The source asks for a label after comparing several divisions, not an explanation of one place-value calculation.",
+            "Multiple divisions add workload beyond the direct research exemplar."
+          ],
+          "officialSolutionState": "inspected"
+        },
+        {
+          "lecture_key": "1325589",
+          "pat_no": "22653",
+          "labelOriginal": "나머지가 있는 (몇백몇십몇)÷(몇)",
+          "responseMode": "constructed",
+          "role": "alternate",
+          "ordinal": 2,
+          "rationale": "Alternate changes the selection to the smallest remainder and reduces the comparison set to five divisions.",
+          "structureMatch": "strong",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The source asks for a label after comparing several divisions, not an explanation of one place-value calculation.",
+            "Multiple divisions add workload beyond the direct research exemplar."
+          ],
+          "officialSolutionState": "inspected"
+        },
+        {
+          "lecture_key": "1325588",
+          "pat_no": "22653",
+          "labelOriginal": "나머지가 있는 (몇백몇십몇)÷(몇)",
+          "responseMode": "constructed",
+          "role": "alternate",
+          "ordinal": 3,
+          "rationale": "Third option changes the dividend set and supplies an exact-division boundary while keeping the same target type.",
+          "structureMatch": "strong",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The source asks for a label after comparing several divisions, not an explanation of one place-value calculation.",
+            "Multiple divisions add workload beyond the direct research exemplar."
+          ],
+          "officialSolutionState": "inspected"
+        }
+      ]
+    },
+    {
+      "slot": 12,
+      "id": "slot-12",
+      "unitId": "U-D",
+      "difficulty": "중",
+      "points": 3,
+      "primaryResearchTypeId": "HD32-d2-T01",
+      "researchTitleOriginal": "나눗셈의 나머지를 최종 답으로 선택",
+      "preferred": "1317360",
+      "alternates": [
+        "1317372"
+      ],
+      "options": [
+        {
+          "lecture_key": "1317360",
+          "pat_no": "22651",
+          "labelOriginal": "내림이 있고 나머지가 있는 (몇십몇)÷(몇)의 활용",
+          "responseMode": "descriptive",
+          "role": "preferred",
+          "ordinal": 1,
+          "rationale": "Preferred because its final answer isolates the remainder and the prompt explicitly requires a written process.",
+          "structureMatch": "strong",
+          "reasoningMatch": "strong",
+          "differences": [],
+          "officialSolutionState": "inspected"
+        },
+        {
+          "lecture_key": "1317372",
+          "pat_no": "22649",
+          "labelOriginal": "내림이 없고 나머지가 있는 (몇십몇)÷(몇)의 활용",
+          "responseMode": "descriptive",
+          "role": "alternate",
+          "ordinal": 2,
+          "rationale": "Alternate tests explicit quotient-versus-remainder unit discrimination in a grouping context.",
+          "structureMatch": "strong",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The source asks for both quotient and remainder, whereas the research focus selects only the leftover quantity."
+          ],
+          "officialSolutionState": "inspected"
+        }
+      ]
+    },
+    {
+      "slot": 13,
+      "id": "slot-13",
+      "unitId": "U-D",
+      "difficulty": "상",
+      "points": 5,
+      "primaryResearchTypeId": "HD32-d3-T01",
+      "researchTitleOriginal": "완성된 묶음만 세기",
+      "preferred": "1315179",
+      "alternates": [
+        "1315075"
+      ],
+      "options": [
+        {
+          "lecture_key": "1315179",
+          "pat_no": "21993",
+          "labelOriginal": "나눗셈의 결과 확인하기",
+          "responseMode": "constructed",
+          "role": "preferred",
+          "ordinal": 1,
+          "rationale": "Preferred because its positive remainder makes the complete-group interpretation necessary rather than relying on an exact-division boundary.",
+          "structureMatch": "partial",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The total is not given directly; the student must reconstruct it from another quotient-and-remainder story first.",
+            "The prompt also requests the remaining quantity in addition to the full-group count.",
+            "An inverse multiply-and-add step precedes the complete-group interpretation.",
+            "The answer-only format does not require the exclusion reason to be explained."
+          ],
+          "officialSolutionState": "inspected"
+        },
+        {
+          "lecture_key": "1315075",
+          "pat_no": "21993",
+          "labelOriginal": "나눗셈의 결과 확인하기",
+          "responseMode": "constructed",
+          "role": "alternate",
+          "ordinal": 2,
+          "rationale": "Alternate provides a transparent exact-division boundary, with the lost positive-remainder diagnostic explicitly disclosed.",
+          "structureMatch": "partial",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The source first reconstructs the total instead of supplying it directly.",
+            "The target division is exact, so an incomplete-group exclusion decision is absent.",
+            "A zero remainder cannot test the research distinction between discarding a positive leftover and adding a container.",
+            "The prompt asks only for the final person count."
+          ],
+          "officialSolutionState": "inspected"
+        }
+      ]
+    },
+    {
+      "slot": 14,
+      "id": "slot-14",
+      "unitId": "U-D",
+      "difficulty": "상",
+      "points": 5,
+      "primaryResearchTypeId": "HD31-d2-T02",
+      "researchTitleOriginal": "나누어지는 수 복원",
+      "preferred": "1370134",
+      "alternates": [
+        "1317328"
+      ],
+      "options": [
+        {
+          "lecture_key": "1370134",
+          "pat_no": "21989",
+          "labelOriginal": "몫과 나머지를 이용한 어떤 수 구하기",
+          "responseMode": "descriptive",
+          "role": "preferred",
+          "ordinal": 1,
+          "rationale": "Preferred because it states the original division information directly and requires the reconstructed whole explicitly.",
+          "structureMatch": "strong",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The native item adds a second division by a new divisor after the reconstruction."
+          ],
+          "officialSolutionState": "inspected"
+        },
+        {
+          "lecture_key": "1317328",
+          "pat_no": "21989",
+          "labelOriginal": "몫과 나머지를 이용한 어떤 수 구하기",
+          "responseMode": "descriptive",
+          "role": "alternate",
+          "ordinal": 2,
+          "rationale": "Alternate retains the same inverse relation while adding a meaningful wrong-divisor interpretation demand.",
+          "structureMatch": "strong",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The wrong-divisor story adds deciding which divisor belongs to each calculation.",
+            "A second division is required after the core reconstruction."
+          ],
+          "officialSolutionState": "inspected"
+        }
+      ]
+    },
+    {
+      "slot": 15,
+      "id": "slot-15",
+      "unitId": "U-D",
+      "difficulty": "최상",
+      "points": 6,
+      "primaryResearchTypeId": "HD22-d2-T01",
+      "researchTitleOriginal": "등식과 범위 함께 검산",
+      "preferred": "1416303",
+      "alternates": [
+        "1315087"
+      ],
+      "options": [
+        {
+          "lecture_key": "1416303",
+          "pat_no": "21984",
+          "labelOriginal": "내림이 있고 나머지가 있는 (몇십몇)÷(몇)",
+          "responseMode": "descriptive",
+          "role": "preferred",
+          "ordinal": 1,
+          "rationale": "Preferred because the range condition rejects actual common-divisor candidates one and two, making the two checks visibly independent.",
+          "structureMatch": "partial",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The divisor is unknown and shared by three dividends, instead of checking a supplied quotient/remainder result.",
+            "The native item adds common-divisor search and choosing the smallest one-digit solution.",
+            "Searching common divisors is additional reasoning beyond the research direct verification task."
+          ],
+          "officialSolutionState": "inspected"
+        },
+        {
+          "lecture_key": "1315087",
+          "pat_no": "21984",
+          "labelOriginal": "내림이 있고 나머지가 있는 (몇십몇)÷(몇)",
+          "responseMode": "descriptive",
+          "role": "alternate",
+          "ordinal": 2,
+          "rationale": "Alternate uses a unique valid one-digit divisor rather than a smallest-choice condition, while retaining the same two-condition logic.",
+          "structureMatch": "partial",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The unknown-divisor/common-divisor search extends the research supplied-result verification task.",
+            "The source requires a shared-divisor inference across three inputs, beyond one direct reconstruction check."
+          ],
+          "officialSolutionState": "inspected"
+        }
+      ]
+    },
+    {
+      "slot": 16,
+      "id": "slot-16",
+      "unitId": "U-D",
+      "difficulty": "최상",
+      "points": 6,
+      "primaryResearchTypeId": "HD32-d1-T01",
+      "researchTitleOriginal": "등분 상황 모델링",
+      "preferred": "1416308",
+      "alternates": [
+        "1390885",
+        "1325646"
+      ],
+      "options": [
+        {
+          "lecture_key": "1416308",
+          "pat_no": "21978",
+          "labelOriginal": "(세 자리 수)÷(한 자리 수)의 활용",
+          "responseMode": "descriptive",
+          "role": "preferred",
+          "ordinal": 1,
+          "rationale": "Preferred because its six-strip open chain makes the five equal overlap groups explicit in the checked derivation.",
+          "structureMatch": "partial",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The total to be shared is derived through multiplication and subtraction rather than supplied directly.",
+            "The native quantity is a continuous length in centimetres rather than discrete objects shared among people.",
+            "The open-chain geometry requires deriving 5 joins from 6 strips.",
+            "The student must first form 42*6-137=115 and justify n-1=5 joins; these are additional required steps before sharing.",
+            "Continuous overlap lengths replace discrete objects, and the prompt does not require the research concrete distribution model or an explanation of remainder-zero conditions."
+          ],
+          "officialSolutionState": "inspected"
+        },
+        {
+          "lecture_key": "1390885",
+          "pat_no": "21978",
+          "labelOriginal": "(세 자리 수)÷(한 자리 수)의 활용",
+          "responseMode": "descriptive",
+          "role": "alternate",
+          "ordinal": 2,
+          "rationale": "Alternate changes the strip count and numerical scale while retaining the same open-chain partitive overlap structure.",
+          "structureMatch": "partial",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The total to be shared is derived through multiplication and subtraction rather than supplied directly.",
+            "The native quantity is a continuous length in centimetres rather than discrete objects shared among people.",
+            "The open-chain geometry requires deriving 7 joins from 8 strips.",
+            "The student must first form 38*8-199=105 and justify n-1=7 joins; these are additional required steps before sharing.",
+            "Continuous overlap lengths replace discrete objects, and the prompt does not require the research concrete distribution model or an explanation of remainder-zero conditions."
+          ],
+          "officialSolutionState": "inspected"
+        },
+        {
+          "lecture_key": "1325646",
+          "pat_no": "21978",
+          "labelOriginal": "(세 자리 수)÷(한 자리 수)의 활용",
+          "responseMode": "descriptive",
+          "role": "alternate",
+          "ordinal": 3,
+          "rationale": "Third option changes the topology to a closed loop, where the join count is n rather than n-1; this difference must be retained.",
+          "structureMatch": "partial",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The total to be shared is derived through multiplication and subtraction rather than supplied directly.",
+            "The native quantity is a continuous length in centimetres rather than discrete objects shared among people.",
+            "The closed-loop geometry requires deriving 7 joins from 7 strips.",
+            "The student must first form 38*7-154=112 and justify n=7 joins; these are additional required steps before sharing.",
+            "Continuous overlap lengths replace discrete objects, and the prompt does not require the research concrete distribution model or an explanation of remainder-zero conditions."
+          ],
+          "officialSolutionState": "inspected"
+        }
+      ]
+    },
+    {
+      "slot": 17,
+      "id": "slot-17",
+      "unitId": "U-C",
+      "difficulty": "중",
+      "points": 3,
+      "primaryResearchTypeId": "HC11-d1-T01",
+      "researchTitleOriginal": "중심 명칭 식별",
+      "preferred": "1380977",
+      "alternates": [
+        "1340767"
+      ],
+      "options": [
+        {
+          "lecture_key": "1380977",
+          "pat_no": "21994",
+          "labelOriginal": "원의 중심, 반지름, 지름",
+          "responseMode": "constructed",
+          "role": "preferred",
+          "ordinal": 1,
+          "rationale": "Prefer this direct diagram-to-definition item because it visibly distinguishes the fixed center from the radius segment.",
+          "structureMatch": "strong",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The research design asks the learner to justify an invariant distance during drawing; these short written items assess definition recognition more directly."
+          ],
+          "officialSolutionState": "inspected"
+        },
+        {
+          "lecture_key": "1340767",
+          "pat_no": "21996",
+          "labelOriginal": "원 그리기",
+          "responseMode": "constructed",
+          "role": "alternate",
+          "ordinal": 2,
+          "rationale": "Keep as an alternate because it checks the fixed-point role and uniqueness, while relying on verbal statement evaluation rather than the preferred diagram labels.",
+          "structureMatch": "strong",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The research design asks the learner to justify an invariant distance during drawing; these short written items assess definition recognition more directly."
+          ],
+          "officialSolutionState": "inspected"
+        }
+      ]
+    },
+    {
+      "slot": 18,
+      "id": "slot-18",
+      "unitId": "U-C",
+      "difficulty": "중",
+      "points": 3,
+      "primaryResearchTypeId": "HC12-d2-T02",
+      "researchTitleOriginal": "기울어진 지름 식별",
+      "preferred": "1340773",
+      "alternates": [
+        "1416615"
+      ],
+      "options": [
+        {
+          "lecture_key": "1340773",
+          "pat_no": "22702",
+          "labelOriginal": "원의 지름의 성질",
+          "responseMode": "constructed",
+          "role": "preferred",
+          "ordinal": 1,
+          "rationale": "Prefer this candidate because it contrasts tilted and vertical valid diameters with offset lines, directly addressing orientation and defining conditions.",
+          "structureMatch": "strong",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The research task asks to rotate a tilted diameter and discuss preserved conditions; the candidates classify a fold or calculate a diameter difference from static diagrams."
+          ],
+          "officialSolutionState": "inspected"
+        },
+        {
+          "lecture_key": "1416615",
+          "pat_no": "21994",
+          "labelOriginal": "원의 중심, 반지름, 지름",
+          "responseMode": "constructed",
+          "role": "alternate",
+          "ordinal": 2,
+          "rationale": "Use as an alternate because the diameter classification is necessary, but a subtraction target extends beyond the source orientation argument.",
+          "structureMatch": "strong",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The research task asks to rotate a tilted diameter and discuss preserved conditions; the candidates classify a fold or calculate a diameter difference from static diagrams."
+          ],
+          "officialSolutionState": "inspected"
+        }
+      ]
+    },
+    {
+      "slot": 19,
+      "id": "slot-19",
+      "unitId": "U-C",
+      "difficulty": "중",
+      "points": 3,
+      "primaryResearchTypeId": "HC21-d3-T02",
+      "researchTitleOriginal": "지름에서 반지름",
+      "preferred": "1416655",
+      "alternates": [
+        "1416654"
+      ],
+      "options": [
+        {
+          "lecture_key": "1416655",
+          "pat_no": "22700",
+          "labelOriginal": "원의 지름과 반지름의 관계",
+          "responseMode": "constructed",
+          "role": "preferred",
+          "ordinal": 1,
+          "rationale": "Prefer this item because assembling the correct full diameter and then halving it makes the required inverse relation observable.",
+          "structureMatch": "partial",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The preferred image first assembles a full diameter from two lengths; the alternate asks how many displayed segments have the inferred radius length.",
+            "Additional diagram filtering or counting is required; the research basic example asks only for one radius length."
+          ],
+          "officialSolutionState": "inspected"
+        },
+        {
+          "lecture_key": "1416654",
+          "pat_no": "22700",
+          "labelOriginal": "원의 지름과 반지름의 관계",
+          "responseMode": "constructed",
+          "role": "alternate",
+          "ordinal": 2,
+          "rationale": "Keep as an alternate requiring the same halving relationship, while recording its additional segment-counting target as a partial difference.",
+          "structureMatch": "partial",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The preferred image first assembles a full diameter from two lengths; the alternate asks how many displayed segments have the inferred radius length.",
+            "Additional diagram filtering or counting is required; the research basic example asks only for one radius length."
+          ],
+          "officialSolutionState": "inspected"
+        }
+      ]
+    },
+    {
+      "slot": 20,
+      "id": "slot-20",
+      "unitId": "U-C",
+      "difficulty": "중",
+      "points": 3,
+      "primaryResearchTypeId": "HC22-d1-T01",
+      "researchTitleOriginal": "반지름·지름을 같은 기준으로 바꾸어 비교",
+      "preferred": "1416631",
+      "alternates": [
+        "1416629"
+      ],
+      "options": [
+        {
+          "lecture_key": "1416631",
+          "pat_no": "22005",
+          "labelOriginal": "원의 크기 비교",
+          "responseMode": "constructed",
+          "role": "preferred",
+          "ordinal": 1,
+          "rationale": "Prefer this direct common-measure comparison because two raw values14 look equal while their geometric meanings differ.",
+          "structureMatch": "strong",
+          "reasoningMatch": "strong",
+          "differences": [],
+          "officialSolutionState": "inspected"
+        },
+        {
+          "lecture_key": "1416629",
+          "pat_no": "22005",
+          "labelOriginal": "원의 크기 비교",
+          "responseMode": "constructed",
+          "role": "alternate",
+          "ordinal": 2,
+          "rationale": "Keep as an alternate because it assesses the same conversion principle with a three-way ordering target instead of equal-size identification.",
+          "structureMatch": "strong",
+          "reasoningMatch": "strong",
+          "differences": [],
+          "officialSolutionState": "inspected"
+        }
+      ]
+    },
+    {
+      "slot": 21,
+      "id": "slot-21",
+      "unitId": "U-C",
+      "difficulty": "상",
+      "points": 5,
+      "primaryResearchTypeId": "HC32-d2-T01",
+      "researchTitleOriginal": "지름 지정 작도",
+      "preferred": "1369979",
+      "alternates": [
+        "1315680"
+      ],
+      "options": [
+        {
+          "lecture_key": "1369979",
+          "pat_no": "21996",
+          "labelOriginal": "원 그리기",
+          "responseMode": "constructed",
+          "role": "preferred",
+          "ordinal": 1,
+          "rationale": "Prefer this upper-band construction-setting item because it explicitly asks for the compass opening and supports a clear inverse-relation check.",
+          "structureMatch": "partial",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The research task specifies a center and diameter for an actual construction; these items ask for the opening only and add a square-inscription condition.",
+            "Center fixing, actual rotation and final diameter verification are not requested in these pool items."
+          ],
+          "officialSolutionState": "inspected"
+        },
+        {
+          "lecture_key": "1315680",
+          "pat_no": "21996",
+          "labelOriginal": "원 그리기",
+          "responseMode": "constructed",
+          "role": "alternate",
+          "ordinal": 2,
+          "rationale": "Use as an alternate with the same geometric-to-tool conversion and a different odd-centimeter side length.",
+          "structureMatch": "partial",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The research task specifies a center and diameter for an actual construction; these items ask for the opening only and add a square-inscription condition.",
+            "Center fixing, actual rotation and final diameter verification are not requested in these pool items."
+          ],
+          "officialSolutionState": "inspected"
+        }
+      ]
+    },
+    {
+      "slot": 22,
+      "id": "slot-22",
+      "unitId": "U-C",
+      "difficulty": "상",
+      "points": 5,
+      "primaryResearchTypeId": "HC33-d1-T02",
+      "researchTitleOriginal": "크기 유지·중심 변화 무늬",
+      "preferred": "1416639",
+      "alternates": [
+        "1416638",
+        "1416641"
+      ],
+      "options": [
+        {
+          "lecture_key": "1416639",
+          "pat_no": "22006",
+          "labelOriginal": "규칙에 따라 원 그리기",
+          "responseMode": "descriptive",
+          "role": "preferred",
+          "ordinal": 1,
+          "rationale": "Prefer this explicit explanation task because it exposes the constant-radius placement plan and the need to avoid double-counting shared corner centers.",
+          "structureMatch": "strong",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The research task asks for a construction plan and preservation of radius; the pool adds a quantitative border or overlapping-row counting argument."
+          ],
+          "officialSolutionState": "inspected"
+        },
+        {
+          "lecture_key": "1416638",
+          "pat_no": "22006",
+          "labelOriginal": "규칙에 따라 원 그리기",
+          "responseMode": "descriptive",
+          "role": "alternate",
+          "ordinal": 2,
+          "rationale": "Use as a close alternate with the same invariance and corner-counting structure but a different square-side/radius ratio.",
+          "structureMatch": "strong",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The research task asks for a construction plan and preservation of radius; the pool adds a quantitative border or overlapping-row counting argument."
+          ],
+          "officialSolutionState": "inspected"
+        },
+        {
+          "lecture_key": "1416641",
+          "pat_no": "22006",
+          "labelOriginal": "규칙에 따라 원 그리기",
+          "responseMode": "descriptive",
+          "role": "alternate",
+          "ordinal": 3,
+          "rationale": "Keep as a more demanding alternate that changes the placement pattern from a square border to overlapping circles while preserving constant radius and changed centers.",
+          "structureMatch": "strong",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The research task asks for a construction plan and preservation of radius; the pool adds a quantitative border or overlapping-row counting argument."
+          ],
+          "officialSolutionState": "inspected"
+        }
+      ]
+    },
+    {
+      "slot": 23,
+      "id": "slot-23",
+      "unitId": "U-C",
+      "difficulty": "상",
+      "points": 5,
+      "primaryResearchTypeId": "HC33-d2-T01",
+      "researchTitleOriginal": "외접한 두 원 중심 거리",
+      "preferred": "1370039",
+      "alternates": [
+        "1370038"
+      ],
+      "options": [
+        {
+          "lecture_key": "1370039",
+          "pat_no": "21998",
+          "labelOriginal": "여러 개의 원으로만 이루어진 모양에서 선분의 길이",
+          "responseMode": "constructed",
+          "role": "preferred",
+          "ordinal": 1,
+          "rationale": "Prefer this clean external-contact center-distance item because its entire solution follows the research two-radius decomposition. This comparison is conditional on the pictured external-contact and collinearity interpretation, confirmed by the source explanation.",
+          "structureMatch": "partial",
+          "reasoningMatch": "partial",
+          "differences": [
+            "External contact and center/contact collinearity are encoded in the diagram rather than explicitly stated in the candidate text; the displayed official explanation confirms the intended configuration.",
+            "The research example supplies separate radii and names the contact point; these diagrams supply a combined diameter sum and leave the contact unnamed."
+          ],
+          "officialSolutionState": "inspected"
+        },
+        {
+          "lecture_key": "1370038",
+          "pat_no": "21998",
+          "labelOriginal": "여러 개의 원으로만 이루어진 모양에서 선분의 길이",
+          "responseMode": "constructed",
+          "role": "alternate",
+          "ordinal": 2,
+          "rationale": "Use as an alternate showing the same relationship with the larger circle on the opposite side and a different combined diameter. This comparison is conditional on the pictured external-contact and collinearity interpretation, confirmed by the source explanation.",
+          "structureMatch": "partial",
+          "reasoningMatch": "partial",
+          "differences": [
+            "External contact and center/contact collinearity are encoded in the diagram rather than explicitly stated in the candidate text; the displayed official explanation confirms the intended configuration.",
+            "The research example supplies separate radii and names the contact point; these diagrams supply a combined diameter sum and leave the contact unnamed."
+          ],
+          "officialSolutionState": "inspected"
+        }
+      ]
+    },
+    {
+      "slot": 24,
+      "id": "slot-24",
+      "unitId": "U-C",
+      "difficulty": "최상",
+      "points": 6,
+      "primaryResearchTypeId": "HC33-d1-T01",
+      "researchTitleOriginal": "중심 유지·크기 변화 무늬",
+      "preferred": "1416647",
+      "alternates": [
+        "1392524",
+        "1400708"
+      ],
+      "options": [
+        {
+          "lecture_key": "1416647",
+          "pat_no": "22007",
+          "labelOriginal": "규칙에 따라 그린 원에서의 선분의 길이",
+          "responseMode": "descriptive",
+          "role": "preferred",
+          "ordinal": 1,
+          "rationale": "Prefer this highest-band fixed-center item because the common center is stated explicitly and the radius-to-diameter/index reasoning can be audited in seven terms.",
+          "structureMatch": "strong",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The research design constructs two selected radii and discusses the control variables; these highest-band items ask for repeated radial increments or a later circle index."
+          ],
+          "officialSolutionState": "inspected"
+        },
+        {
+          "lecture_key": "1392524",
+          "pat_no": "22007",
+          "labelOriginal": "규칙에 따라 그린 원에서의 선분의 길이",
+          "responseMode": "descriptive",
+          "role": "alternate",
+          "ordinal": 2,
+          "rationale": "Use as a close alternate maintaining the same center-control and inverse diameter-to-index structure with different alternating gaps.",
+          "structureMatch": "strong",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The research design constructs two selected radii and discusses the control variables; these highest-band items ask for repeated radial increments or a later circle index."
+          ],
+          "officialSolutionState": "inspected"
+        },
+        {
+          "lecture_key": "1400708",
+          "pat_no": "22007",
+          "labelOriginal": "규칙에 따라 그린 원에서의 선분의 길이",
+          "responseMode": "descriptive",
+          "role": "alternate",
+          "ordinal": 3,
+          "rationale": "Keep as a transfer alternate that reverses the requested quantity: a given later index determines the diameter, requiring paired-increment reasoning.",
+          "structureMatch": "strong",
+          "reasoningMatch": "partial",
+          "differences": [
+            "The research design constructs two selected radii and discusses the control variables; these highest-band items ask for repeated radial increments or a later circle index."
+          ],
+          "officialSolutionState": "inspected"
+        }
+      ]
+    }
+  ]
+}

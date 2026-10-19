@@ -1,0 +1,85 @@
+{
+  "schemaVersion": "assessment.portable-candidate-handoff/1",
+  "projectId": "education-platform",
+  "workId": "month-end-candidate-preparation-20261019",
+  "ontologyVersion": "0.2.0",
+  "purpose": "Durable metadata and analysis for review of the selected57 original question identities in24 proposed slots. Original source cards, responses and native runtime state remain private outside Git.",
+  "entrypoints": {
+    "decisions": "decisions.json",
+    "proposal": "candidate-set.json",
+    "conciseIndex": "candidate-index.json",
+    "portablePureReview": "portable-review.json",
+    "sourceAnalysis": "source-review.json",
+    "mathAnalysis": "math-review.json",
+    "manifest": "manifest.json"
+  },
+  "privateVisualReview": {
+    "reference": "private-artifact:candidate-review.html",
+    "included": false,
+    "questions": 57,
+    "embeddedOriginalPngs": 57,
+    "availability": "Not in this repository. A separate authorized private-artifact handoff is required for original visual/source readback.",
+    "automaticRetrieval": false
+  },
+  "identityBoundaries": [
+    "Research type IDs, native pat_no labels and lecture_key questions are distinct namespaces.",
+    "private-artifact locators are stable opaque references, not local paths, URLs, commands, credentials or native activation instructions."
+  ],
+  "mergeResponsibility": {
+    "owner": "VPS Host Herdr Orchestrator",
+    "host": "srv1873899",
+    "automaticMergeAllowed": false,
+    "parentAgentMayMerge": false,
+    "requiredStep": "The designated VPS owner independently reviews the exact published PR heads before deciding whether to merge."
+  },
+  "crossRepositoryPeer": {
+    "repository": "park-kyungchan/academy-workbench",
+    "branch": null,
+    "commit": "9fdcca39eba163b154e80df351f94ae3e284a8fa",
+    "tree": "1e2480e6201b7e4737fd5c43815c8c20bd76e62e",
+    "base": "1aa414537434054104a50e41bf193e2fefe1227c",
+    "pullRequest": null,
+    "status": "local_commit_observed_by_parent; remote_publication_and_PR_not_yet_recorded",
+    "observationSource": "Parent reports completed exact staged-file hash audit and local commit; this agent performed no Git action."
+  },
+  "publicationBoundary": {
+    "repositoryVisibilityRequired": "private",
+    "role": "metadata_and_analysis_only",
+    "rawImagesIncluded": false,
+    "rawSourceResponsesIncluded": false,
+    "sourceUrlsIncluded": false,
+    "credentialsOrNativeIdentityIncluded": false,
+    "sourceRuntimeActivation": false,
+    "originalPausedGoalResumed": false
+  },
+  "sourceCustody": {
+    "researchOwner": "math-research-module",
+    "researchRevision": "07edb2dea2e5997aea4318f0fa2efa21dde633df",
+    "privateOriginalCanonical": "private-artifact:candidate-set.proposal.json",
+    "privateOriginalSdkResult": "private-artifact:candidate-set.review.mcp.json",
+    "privateOriginalSdkHashReceipt": "private-artifact:proposal-mcp-review.actual.json",
+    "privateOriginalFinalReadback": "private-artifact:final-independent-readback.json",
+    "portableBytesHaveNewIdentity": true,
+    "oldSdkReceiptValidatesPortableBytes": false
+  },
+  "currentState": {
+    "readiness": "reviewable",
+    "slots": 24,
+    "points": 100,
+    "distinctCandidates": 57,
+    "distinctPrimaryResearchTypes": 24,
+    "assistantCoreMatchJudgments": {
+      "bothAxesStrong": 4,
+      "oneOrBothAxesPartial": 53
+    },
+    "officialSolutionStates": "All57 source solution observations were recorded as inspected and remain bound to private image digests. This portable metadata bundle does not contain the source image bytes.",
+    "limitations": [
+      "53 candidates have a partial match on at least one core axis; they are not equivalent to complete research teaching tasks.",
+      "Original image and raw response references cannot be re-read from this Git bundle alone.",
+      "Pure schema/evidence-shape readiness is separate from current source authentication, native runtime readiness, mathematical acceptance and final exam membership."
+    ]
+  },
+  "academyWrites": 0,
+  "finalMembership": false,
+  "acceptanceDecision": null
+}

@@ -10,6 +10,8 @@ import {selectSourceFunction} from './sourceFunctionText';
 import {inspectAssessmentSearchMetadata} from './assessmentReadProtocol';
 import {inspectTestPoolDocument,readTestPoolDocument,testPoolSelectorDefaults} from './testPoolInspection';
 import {testPoolQuestionPreviewReferences,testPoolPreviewSourcePins} from './testPoolQuestionPreview';
+import {inspectTestPoolPresentationProtocol as inspectPoolPresentationProtocol} from './testPoolPresentationProtocol';
+import {qualifyNativePaperInputReference,qualifyNativePaperOptionsTemplate,inspectNativePaperOptionsResponse} from './nativePaperReadProtocol';
 import {emptyTestPoolScope,testPoolScope,testPoolReadRequest,parseTestPoolCategories,qualifyTestPoolTypeTemplate,parseTestPoolTypeLabels,extractTestPoolLabelPayload,qualifyTestPoolQuestionTemplate,parseTestPoolQuestions,type TestPoolScope} from './testPoolReadProtocol';
 
 export const ACADEMY_ORIGIN='https://dc.gang-a.kr' as const;
@@ -21,7 +23,16 @@ export class AcademyHttpFailure extends Error {
   constructor(readonly httpStatus:number,readonly sourceOperation:string){super('source_http_failed');this.name='AcademyHttpFailure';}
 }
 /** Inert standards DOM: no resources, scripts or event handlers execute. */
-export const sourceDomParser={parseFromString:(text:string,mime:DOMParserSupportedType):Document=>new JSDOM(text,{contentType:mime}).window.document as unknown as Document};
+export const sourceDomParser={
+  parseFromString:(text:string,mime:DOMParserSupportedType):Document=>new JSDOM(text,{contentType:mime}).window.document as unknown as Document,
+  parseWithSourceLocations:(text:string)=>{
+    const dom=new JSDOM(text,{contentType:'text/html',includeNodeLocations:true});
+    return {document:dom.window.document as unknown as Document,sourceRange:(node:Node)=>{
+      const location=dom.nodeLocation(node);
+      return location?{start:location.startOffset,end:location.endOffset}:null;
+    }};
+  },
+};
 /** Fresh client-issued session only. No vault/cookie export, persistent jar or automatic login retry. */
 export class AcademyHttpClient {
   #cookies=new Map<string,{value:string;path:string}>();
@@ -137,6 +148,27 @@ export class AcademyHttpClient {
       sourceOperation:'test_pool_tab_document' as const,observedAt:new Date().toISOString()};}
     catch(error){if(error instanceof Error&&error.message==='test_pool_authentication_required')this.close();throw error;}
   }
+  /** Source-referenced input document only; no question-row, save, print or generation request. */
+  async inspectNativePaperInputDocument(){
+    if(!this.#authenticated)throw Error('authentication_required');
+    const reference=qualifyNativePaperInputReference(await this.inspectTestPoolTab());
+    const response=await this.#request(reference.path,{method:'GET'},false,'native_paper_input_document');
+    try{return {...inspectTestPoolDocument(await response.text(),sourceDomParser.parseFromString),sourceOperation:'native_paper_input_document' as const,
+      tabSourceSha256:reference.tabSourceSha256,path:reference.path,selectedQuestionReadContract:'not_qualified' as const,observedAt:new Date().toISOString()};}
+    catch(error){if(error instanceof Error&&error.message==='test_pool_authentication_required')this.close();throw error;}
+  }
+  /** Observe current native paper-option metadata through the exact original fixed GET template. */
+  async readNativePaperOptions(){
+    if(!this.#authenticated)throw Error('authentication_required');
+    try{
+      const html=await (await this.#request('/common/etest_pool.jsp',{method:'GET'},false,'native_paper_options_source')).text();
+      const template=qualifyNativePaperOptionsTemplate(html,sourceDomParser.parseFromString);
+      const query=new URLSearchParams(template.query);
+      const text=await (await this.#request(template.path+'?'+query,{method:'GET'},false,'native_paper_options')).text();
+      return {...inspectNativePaperOptionsResponse(text),sourceOperation:'native_paper_options' as const,
+        sourceTemplate:template,observedAt:new Date().toISOString()};
+    }catch(error){if(error instanceof Error&&error.message==='test_pool_authentication_required')this.close();throw error;}
+  }
   /** Read the source-referenced type-selection document; no selection/generation request is sent. */
   async inspectTestPoolSelector(){
     if(!this.#authenticated)throw Error('authentication_required');
@@ -156,6 +188,15 @@ export class AcademyHttpClient {
       scripts.push({path,sourceSha256:digest(text),functions:inspection.readFunctionSources.filter(row=>['getExamPath','getExamCardImageFileName'].includes(row.name))});
     }
     return {selector,scripts,sourceHandlersExecuted:false,academyWrites:0};
+  }
+  /** Inert presentation controls and formatter evidence; revisions never authorize automatic re-pinning. */
+  async inspectTestPoolPresentationProtocol(expectedSelectorSha256?:string){
+    const protocol=await this.#poolProtocol();
+    if(expectedSelectorSha256!==undefined&&expectedSelectorSha256!==protocol.selectorSha256)throw Error('test_pool_selector_source_changed');
+    const selector=inspectTestPoolDocument(protocol.html,sourceDomParser.parseFromString);
+    if(!selector.externalScripts.some(script=>script.sameOrigin&&script.path==='/js/common_function.js'))throw Error('test_pool_preview_script_unqualified');
+    const helpers=await (await this.#request('/js/common_function.js',{method:'GET'},false,'test_pool_presentation_helpers')).text();
+    return {...inspectPoolPresentationProtocol(protocol.html,helpers,sourceDomParser.parseWithSourceLocations),observedAt:new Date().toISOString()};
   }
   /** Exact CategoryList read discovered in the current type-selector source; never creates a paper. */
   async #poolProtocol(){
