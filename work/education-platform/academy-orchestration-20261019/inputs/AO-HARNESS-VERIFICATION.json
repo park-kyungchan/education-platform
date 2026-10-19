@@ -1,0 +1,201 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "academy-orchestration-20261019",
+  "kind": "input",
+  "id": "AO-HARNESS-VERIFICATION",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "education-platform",
+    "locator": "source-verification:755d0df65fef7b975c376dfc06b8cdfa20ea3c62",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "schemaVersion": "1.0.0",
+    "kind": "verification",
+    "id": "education-platform:verification:academy-orchestration-20261019:harness",
+    "projectId": "education-platform",
+    "domainId": "education",
+    "createdAt": "2026-10-19T03:22:16.220938+00:00",
+    "payload": {
+      "targetRefs": [
+        "common-harness:task:05668d75eac4917282424a9b49ac8bcf2b6e595171309d360e549caf71b761fb"
+      ],
+      "criteria": [
+        {
+          "id": "records-valid",
+          "status": "pass",
+          "message": "Canonical reader returned the expected source qualification or intentional refusal; exact result and output hash are preserved in AO-HARNESS-CHECKS.",
+          "evidenceRefs": [
+            "education-platform:evidence:academy-orchestration-20261019:harness-checks"
+          ]
+        },
+        {
+          "id": "harness-source-qualified",
+          "status": "pass",
+          "message": "Canonical reader returned the expected source qualification or intentional refusal; exact result and output hash are preserved in AO-HARNESS-CHECKS.",
+          "evidenceRefs": [
+            "education-platform:evidence:academy-orchestration-20261019:harness-checks"
+          ]
+        },
+        {
+          "id": "currentness-unknown-held",
+          "status": "pass",
+          "message": "Canonical reader returned the expected source qualification or intentional refusal; exact result and output hash are preserved in AO-HARNESS-CHECKS.",
+          "evidenceRefs": [
+            "education-platform:evidence:academy-orchestration-20261019:harness-checks"
+          ]
+        },
+        {
+          "id": "interview-prerequisites-held",
+          "status": "pass",
+          "message": "Canonical reader returned the expected source qualification or intentional refusal; exact result and output hash are preserved in AO-HARNESS-CHECKS.",
+          "evidenceRefs": [
+            "education-platform:evidence:academy-orchestration-20261019:harness-checks"
+          ]
+        },
+        {
+          "id": "continuation-qualified",
+          "status": "pass",
+          "message": "Canonical reader returned the expected source qualification or intentional refusal; exact result and output hash are preserved in AO-HARNESS-CHECKS.",
+          "evidenceRefs": [
+            "education-platform:evidence:academy-orchestration-20261019:harness-checks"
+          ]
+        },
+        {
+          "id": "changed-work-identity-refused",
+          "status": "pass",
+          "message": "Canonical reader returned the expected source qualification or intentional refusal; exact result and output hash are preserved in AO-HARNESS-CHECKS.",
+          "evidenceRefs": [
+            "education-platform:evidence:academy-orchestration-20261019:harness-checks"
+          ]
+        }
+      ],
+      "inputHashes": [
+        {
+          "path": "work/education-platform/academy-orchestration-20261019/decisions/AO-DIRECTION.json",
+          "sha256": "514b7f61949457b9ed756d71d654953de6c2ca1f0665da4d8851d78ec0786926"
+        },
+        {
+          "path": "work/education-platform/academy-orchestration-20261019/evidence/AO-BASELINE-OBSERVATION.json",
+          "sha256": "69f8d1c0e35a21a9f9b39312189d8eca473c5aab0c51caea186ec7fe512b1082"
+        },
+        {
+          "path": "work/education-platform/academy-orchestration-20261019/evidence/AO-INTERVIEW-PREPARATION.json",
+          "sha256": "98294213f3bdc09a6aa3003fb819bd0f67d4dee38222860479e05926c502df1f"
+        },
+        {
+          "path": "work/education-platform/academy-orchestration-20261019/evidence/AO-OWNER-OBSERVATION.json",
+          "sha256": "2f0889c6d12e162afecc336f190528c42a69d7be1c967a7e10335c9531889807"
+        },
+        {
+          "path": "work/education-platform/academy-orchestration-20261019/evidence/AO-PROVIDER-OBSERVATION.json",
+          "sha256": "d78c71c7fc746c4b113aec170c8468fddd234a0e33a059f7e8979d719378f324"
+        },
+        {
+          "path": "work/education-platform/academy-orchestration-20261019/evidence/AO-REPOSITORY-METADATA.json",
+          "sha256": "1d7a11ad16ec659b763ec09f2fd535b6fede50467abad8c78b550afe6a89951f"
+        },
+        {
+          "path": "work/education-platform/academy-orchestration-20261019/fences/AO-HISTORICAL-MONTH-END-FENCE.json",
+          "sha256": "5b632a9201d301be5a82bd875f33caac8e1172e2e9981b8273ca74e73acb58e7"
+        },
+        {
+          "path": "work/education-platform/academy-orchestration-20261019/inputs/AO-BASELINE.json",
+          "sha256": "62cb4db1e0c47ab448a5ebf432a9435e24536bda7354226197b2116ffdc70b8d"
+        },
+        {
+          "path": "work/education-platform/academy-orchestration-20261019/inputs/AO-CONSUMED-INVENTORY.json",
+          "sha256": "afe42018564fb83052e9f9a55ef323909cd6c40db04422295ee7309b9e921b64"
+        },
+        {
+          "path": "work/education-platform/academy-orchestration-20261019/inputs/AO-INTERVIEW-STATE.json",
+          "sha256": "4d025f6dc5d65de5ba0bd9fc14952de47d96b2919b548f2ef7e77468577a31f2"
+        },
+        {
+          "path": "work/education-platform/academy-orchestration-20261019/inputs/AO-OWNERS.json",
+          "sha256": "1b88ff8d60220ba36898a4811e5b692cf946b16500c47c0d8a11a56514d0104c"
+        },
+        {
+          "path": "work/education-platform/academy-orchestration-20261019/inputs/AO-PROVIDER.json",
+          "sha256": "fcb83ab7f9d3ffd46b2cfc738b95178b84cd8fd7fb9facfa7faf260e2e72f2d8"
+        },
+        {
+          "path": "work/education-platform/academy-orchestration-20261019/inputs/AO-PURPOSE.json",
+          "sha256": "c91055137e645e121eaa3b7e43b9bef31fbf03467a3dbe949e14e3bf6096257c"
+        },
+        {
+          "path": "work/education-platform/academy-orchestration-20261019/inputs/AO-READER-GUIDE.json",
+          "sha256": "28dfcd4e6d2841e4b5dbf0a3f91b870058bb57213b148e1067b58ade3d4ec019"
+        },
+        {
+          "path": "work/education-platform/academy-orchestration-20261019/inputs/AO-REPOSITORY-OBSERVATION.json",
+          "sha256": "8133bdc0d86019a5cc0dd239f8ffb59ec8dac8e226254d5da6defc907982fdb6"
+        },
+        {
+          "path": "work/education-platform/academy-orchestration-20261019/inputs/AO-USER-REQUEST.json",
+          "sha256": "f00c5278e40355affd3ec503a0bf7d88f684089688c5bcf90f60a0ba88bec95c"
+        },
+        {
+          "path": "work/education-platform/academy-orchestration-20261019/plans/AO-PLAN@1.json",
+          "sha256": "8024c1e81ffc79bac1bf2eed9d82defdf9c5cc33df644598d5b34f61d754d85b"
+        },
+        {
+          "path": "work/education-platform/academy-orchestration-20261019/relations/AO-CONTAINS-HARNESS.json",
+          "sha256": "4384f26893a079479a22cd9a362ab66c9642939fe3a31d5aecd9473f57c06531"
+        },
+        {
+          "path": "work/education-platform/academy-orchestration-20261019/relations/AO-INTERVIEW-DEPENDS-AO-FRONTEND.json",
+          "sha256": "33f810d1f6cb88d5b6bdc4ac25cfc10dd725857d819fe4a3a2e5ca426c8a2d0b"
+        },
+        {
+          "path": "work/education-platform/academy-orchestration-20261019/relations/AO-INTERVIEW-DEPENDS-AO-HARNESS.json",
+          "sha256": "5122168cb53f0b654f062b208cdc1282162ed7a418a1c288deda8615a151ba20"
+        },
+        {
+          "path": "work/education-platform/academy-orchestration-20261019/relations/AO-INTERVIEW-DEPENDS-AO-REPOSITORIES.json",
+          "sha256": "6991b31a027198461eb91dcb1340a24a3e666b7a27c4dc3c8114ea78f6c748bd"
+        },
+        {
+          "path": "work/education-platform/academy-orchestration-20261019/specs/AO-SPEC@1.json",
+          "sha256": "11a7d6f78c5800ef703d8492ffbc28f6f2abf3251c25dcd53bc90d6b7959235f"
+        },
+        {
+          "path": "work/education-platform/academy-orchestration-20261019/tasks/AO-FRONTEND.json",
+          "sha256": "47f46b17fd50c59ba132647dd77fa8805bc6946a2c8784674d476b1aeca98fa0"
+        },
+        {
+          "path": "work/education-platform/academy-orchestration-20261019/tasks/AO-HARNESS.json",
+          "sha256": "0681a34b74dacbf8ca2844db502490f6cdfe1e2723a705c513c04d8933684002"
+        },
+        {
+          "path": "work/education-platform/academy-orchestration-20261019/tasks/AO-INTERVIEW.json",
+          "sha256": "5c7dc37e08a058d7ae588c5be7060ac9d56b071519aaeb5a96770e391cf228ea"
+        },
+        {
+          "path": "work/education-platform/academy-orchestration-20261019/tasks/AO-REPOSITORIES.json",
+          "sha256": "dab331e835a3d3755099ac1a4fed2a738f5a899ff48efcc98f039844472d475f"
+        },
+        {
+          "path": "work/education-platform/academy-orchestration-20261019/work.json",
+          "sha256": "af44c0167983c4cca0e934ce6595acc38c9cb236eafde6800c1d1e26e7dd3918"
+        }
+      ],
+      "runtime": {
+        "name": "Bun",
+        "version": "1.4.3"
+      },
+      "details": {
+        "testedCommit": "755d0df65fef7b975c376dfc06b8cdfa20ea3c62",
+        "providerCommit": "b59c5230cd435fc94fc757474ca74f45a124817e",
+        "verificationClass": "committed-git-source-and-qualification-boundaries",
+        "independentReviewPerformed": false,
+        "workStatus": "active-in-progress",
+        "nativeActivation": false,
+        "modelEvaluation": false,
+        "semanticAcceptanceEstablished": false
+      }
+    }
+  }
+}

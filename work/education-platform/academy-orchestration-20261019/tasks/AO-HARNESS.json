@@ -6,7 +6,7 @@
   "kind": "task",
   "id": "AO-HARNESS",
   "title": "Apply the maintained common Git Work harness to this new source Work",
-  "nextAction": "Commit only this new Work subtree, then validate the exact commit and selected contexts with the pinned canonical provider; preserve all historical owners and fences.",
+  "nextAction": "Preserve the verified common source integration and pending shared delivery. Parent integrates repository/frontend native receipts and actual user interview answers without changing existing source/provider/native owners.",
   "logical": {
     "domainId": "education",
     "projectId": "education-platform",
@@ -19,11 +19,11 @@
     "taskId": "AO-HARNESS"
   },
   "state": {
-    "execution": "running",
-    "verification": "pending",
-    "localAudit": "intent-durable",
+    "execution": "complete",
+    "verification": "passed",
+    "localAudit": "result-durable",
     "sharedAudit": "pending",
-    "formalCompletion": "pending"
+    "formalCompletion": "audit-synchronization-pending"
   },
   "executionClass": "source-only",
   "dependsOn": [],
@@ -31,5 +31,7 @@
     "AO-DIRECTION"
   ],
   "effectIds": [],
-  "verificationEvidenceIds": []
+  "verificationEvidenceIds": [
+    "AO-HARNESS-VERIFICATION"
+  ]
 }
