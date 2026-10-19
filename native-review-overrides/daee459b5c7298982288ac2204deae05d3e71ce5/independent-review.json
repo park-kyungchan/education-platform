@@ -1,0 +1,285 @@
+{
+  "schema": "host-orchestrator.education-pr15-independent-source-review.v1",
+  "atUtc": "2026-10-19T09:25:16.298865Z",
+  "actualReviewer": {
+    "runtime": "native-codex",
+    "threadId": "01a15358-42e5-7770-bb93-cd081b0b7601",
+    "taskPath": "/root/native_unattended_prerequisites",
+    "nativeTaskId": null,
+    "nativeRunId": null,
+    "role": "Actual independent exact-source reviewer; not source producer, MAIN, native/domain acceptance owner or publisher"
+  },
+  "actualAssignment": {
+    "kind": "user-approved-independent-source-review",
+    "parentLogicalWork": {
+      "domainId": "native-harness",
+      "projectId": "codex-harness-engineering",
+      "workId": "ontology-driven-platform-integration-20261017",
+      "taskId": "ODI-HOST-INTEGRATION"
+    },
+    "subjectBinding": {
+      "repository": "park-kyungchan/education-platform",
+      "projectId": "education-platform",
+      "domainId": "education",
+      "semanticOwner": "education-platform",
+      "scope": "month-end-source-redesign"
+    },
+    "purpose": "Preserve original user purpose, decisions and WHY through useful source/native/domain operation; this bounded review supports explicit MAIN integration without substituting source checks for native or human acceptance.",
+    "effectOwnership": "MAIN retains publication/merge, native/runtime application, retries, integration and completion; actual source/native/domain owners remain."
+  },
+  "reviewedSource": {
+    "worktree": "/home/palantirkc/worktrees/review-education-platform-pr15-20261019",
+    "pullRequest": 15,
+    "baseSha": "8611a84705f1fe796d6d9a1a3efe8fc1d26a1c9e",
+    "headSha": "daee459b5c7298982288ac2204deae05d3e71ce5",
+    "reviewedTreeSha": "737776905e1526171eae3a4b00b6393684c15d7c",
+    "recursiveManifest": {
+      "schema": "agent-platform.reviewed-source-manifest.v1",
+      "entryCount": 1272,
+      "blobCount": 1100,
+      "sha256": "cdf9378ea2e360ca76c5b7468d73faded7a5d08a368a26145d9febf2a261d472",
+      "method": "Actual exported deriveReviewedSourceManifest from verified generated owner gate, using git ls-tree -r -t immutable tree entries."
+    },
+    "changedFiles": [
+      {
+        "path": "apps/academy/dc-gang-a/harness/test_pool_inspect.ts",
+        "bytes": 4397,
+        "sha256": "ddbaf73af9b33af60b654d4dfc44a063333919951eef7fc902531800fa3c4ff7"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/package.json",
+        "bytes": 1806,
+        "sha256": "06e77b238a5429b29b9094215e845eac53af6f43b7d4981a0e04a7997b3f832c"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/lms/academyHttpClient.ts",
+        "bytes": 45255,
+        "sha256": "cec0b50f23b52ce3e36b6b1631de207b5df2274b3e8923e6cbde6f9c8db1121b"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/lms/testPoolPresentationProtocol.ts",
+        "bytes": 16332,
+        "sha256": "7f6de71c3b198ab4b77876da8c8ec7b3cab7be86d34d9024194281e14fbb8e14"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/lms/testPoolReadProtocol.ts",
+        "bytes": 10384,
+        "sha256": "0ae0ad9e061efe048cbd9a3952f4f06355aa5a5f185732f30ecb2a5b82c86cab"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/tests/lms/testPoolPresentationProtocol.test.ts",
+        "bytes": 11005,
+        "sha256": "c74d67d923bb8c347a8290651a23794637857b86d46f080b354b7762603c1efd"
+      },
+      {
+        "path": "apps/academy/month-end-workbench/docs/source-context.md",
+        "bytes": 8176,
+        "sha256": "eabe623e6fdc03d7f143852e6f687648f73dd20ab2017ea21b453d266591ab10"
+      },
+      {
+        "path": "apps/academy/month-end-workbench/work/month-end-candidate-preparation-20261019/README.md",
+        "bytes": 2534,
+        "sha256": "ce7f672b9da8216b157c7bafbe8c320120d233470499e061f9dc08c6296d2d98"
+      },
+      {
+        "path": "apps/academy/month-end-workbench/work/month-end-candidate-preparation-20261019/candidate-index.json",
+        "bytes": 57291,
+        "sha256": "da7804a510b2ee9de7a8479c399db5fdabea25ee4fdb1decceda2b8cdff4b51b"
+      },
+      {
+        "path": "apps/academy/month-end-workbench/work/month-end-candidate-preparation-20261019/candidate-set.json",
+        "bytes": 787457,
+        "sha256": "33a03a8744bd7c86c87b5fbaff0789924e9791a31725bccf91ddb3829a6195af"
+      },
+      {
+        "path": "apps/academy/month-end-workbench/work/month-end-candidate-preparation-20261019/decisions.json",
+        "bytes": 3095,
+        "sha256": "3d6cd40758d36bca636b2601185efbade20a2ee69f47b20e783adc372ccc516d"
+      },
+      {
+        "path": "apps/academy/month-end-workbench/work/month-end-candidate-preparation-20261019/handoff.json",
+        "bytes": 4057,
+        "sha256": "c9a316e496fc2d08f36711c1f48ac6d07d7803435ed1e64cd494b754c902a0ff"
+      },
+      {
+        "path": "apps/academy/month-end-workbench/work/month-end-candidate-preparation-20261019/manifest.json",
+        "bytes": 43269,
+        "sha256": "caa07c05824afc65da56da00444a9b7f7981c0a16960c87ce4cd0cec3e8e1de1"
+      },
+      {
+        "path": "apps/academy/month-end-workbench/work/month-end-candidate-preparation-20261019/math-review.json",
+        "bytes": 16749,
+        "sha256": "3f24031ad3f5684184db530e997a7ff3190e76b5f4745478a5148c0e80d1af1c"
+      },
+      {
+        "path": "apps/academy/month-end-workbench/work/month-end-candidate-preparation-20261019/portable-review.json",
+        "bytes": 62524,
+        "sha256": "d162c2392c7836f8e80527156246abe4e19a975b588fcfc539653df6d8f038a1"
+      },
+      {
+        "path": "apps/academy/month-end-workbench/work/month-end-candidate-preparation-20261019/source-review.json",
+        "bytes": 5159,
+        "sha256": "737c20b92eb7ab0ee89d91ead158262dda3958f791a5041475bc0a140bfae3f9"
+      },
+      {
+        "path": "provenance/adaptations.json",
+        "bytes": 22529,
+        "sha256": "4fa0ecb9ddbebd7e91ebcd85d3f45c39fb689d1493ec714d86b17a0518e8034a"
+      }
+    ],
+    "trackedAndUntrackedClean": true
+  },
+  "conclusion": "PASS_EXACT_SOURCE_ONLY_INDEPENDENT_REVIEW",
+  "findings": [],
+  "requiredFindings": [],
+  "unresolvedFindings": 0,
+  "justification": "No required source, correctness or scoped semantic defect found in the exact 17-file change. The new presentation reader statically parses bounded original selector/helper evidence without executing handlers. Current fresh-auth and fixed-origin contracts are retained. Portable metadata is internally exact and explicitly preserves partial matches, opaque original custody, unknown mappings and final-selection authority.",
+  "sourceAndMeaningReview": {
+    "instructionsConsumed": [
+      "AGENTS.md",
+      "project.json",
+      "architecture/source-map.json",
+      "verification/integration.json",
+      "apps/academy/integration.ts",
+      "apps/academy/month-end-workbench/docs/source-context.md",
+      "apps/academy/month-end-web/work/month-end-context-rebuild-20261017/checkpoint.json",
+      "apps/academy/month-end-web/work/month-end-context-rebuild-20261017/architecture.md",
+      "math-research-module module instructions/continuation/ownership and monthly requirements/history/chronology/coverage at original source scope"
+    ],
+    "reader": "Inert JSDOM with source locations plus Acorn AST inspection; byte/node/AST/control/option/function/literal/result bounds; exact source ranges and digests; unknown or dynamic source remains unqualified. Original difficulty/response meaning is not inferred from literal labels, points, row answer or variant flags.",
+    "http": "New operation requires an already authenticated ephemeral client, the fixed selector route, same-origin declared common helper and optional exact selector pin. No caller URL, credentials, cookie export, automatic reauthentication or source business write is added. Existing one-attempt principal qualification remains unchanged.",
+    "requestScope": "protocol is admitted only with the root category tuple and exact allowlisted fields; question-only fields and arbitrary URL/password fields refuse.",
+    "portableBundle": "24 slots, 100 points, 57 distinct original question identities and 24 distinct primary research types; options remain proposals. Exactly 4 strong core matches and 53 partial core matches are retained with differences. Exam timing, preparation deadline and final membership remain separate.",
+    "sourceCustody": "All 238 research pins match the unchanged Education projection and exact immutable math-research-module 07edb2dea2e5997aea4318f0fa2efa21dde633df Git blobs. All 105 type source pointers and all 146 candidate microstep source pointers/IDs resolve exactly. All 153 private-artifact references are opaque, excluded from Git and retain referenced image/response digests.",
+    "reviews": "Eight bundle manifest file hashes/lengths and portable review input hash match. The pure-review function blob at peer commit 9fdcca39eba163b154e80df351f94ae3e284a8fa hashes exactly ff2d025bf829526a8d25db5c2464a5a67a9837a03686292034c6092cd2d6de0c as declared. The original private MCP receipt is explicitly not reused as validation of rebased portable bytes.",
+    "retainedLimits": [
+      "Source formatter associations retain missing branch/control-flow/coercion evidence.",
+      "Sanitized mathematical review covers four cited originals, not a new audit of all 57 candidates.",
+      "Original PNG/HTML/raw responses are not in this Git bundle; actual visual/current-source reinspection remains a separate private-custody operation.",
+      "No final exam selection, teacher learning completion, mathematics R4 human disposition or canonical application is created.",
+      "The existing month-end backend immutable native-launch hold remains unchanged."
+    ]
+  },
+  "independentChecks": {
+    "generatedReviewClosure": {
+      "status": "PASS",
+      "command": "bun ci/verify-projection.ts",
+      "canonicalOwnerCommit": "7eabcdb20e358955c771e5aa0dc500448fa84534",
+      "compiledInputs": 108,
+      "dependencyPackages": 6,
+      "ontologyFiles": 38
+    },
+    "metadataAndSourceOracle": {
+      "status": "PASS",
+      "checks": 20,
+      "failures": 0,
+      "covered": [
+        "8 manifest file hashes/lengths",
+        "exact portable review input",
+        "24 slots/57 unique questions/24 research types",
+        "2-3 options per slot",
+        "12/8/4 difficulties and 100 points",
+        "three exact 8-slot unit allocations",
+        "index/decision/candidate identity agreement",
+        "238 immutable source hashes",
+        "105 type source pointers",
+        "153 opaque private references",
+        "candidate evidence digest custody",
+        "4 strong/53 partial core judgments",
+        "57 recorded inspected solution states",
+        "constructed/descriptive modes only",
+        "no final membership/acceptance",
+        "146 exact microstep pointers/evidence references",
+        "two changed adaptation hashes"
+      ]
+    },
+    "changedReaderSyntheticOracle": {
+      "status": "PASS",
+      "independentAssertions": 13,
+      "fixture": "In-memory synthetic HTML/helpers only, actual changed source imports",
+      "runtime": "Bun1.4.3 c6da4a4d3",
+      "existingDependencyVersions": {
+        "jsdom": "30.1.2",
+        "acorn": "8.19.0"
+      },
+      "dependencyRoot": "/home/palantirkc/worktrees/academy-restructure-20261019/education-platform/apps/academy/dc-gang-a/node_modules",
+      "dependencyResolution": "In-memory Bun plugin resolves only these existing exact direct dependencies; no installation, symlink or source edit.",
+      "covered": [
+        "source/helper canaries remain unexecuted",
+        "irrelevant private hidden control omitted",
+        "exact literal whitespace/source ranges",
+        "changed source remains unqualified",
+        "unknown code semantics retained",
+        "password challenge refuses",
+        "oversized source refuses",
+        "malformed script retains unknown",
+        "unauthenticated presentation read refuses before transport"
+      ],
+      "networkCalls": 0,
+      "sourceHandlersExecuted": false
+    },
+    "existingPoolTestCLI": {
+      "status": "ENVIRONMENT_BLOCKED_NOT_CODE_FAILURE",
+      "detail": "The isolated worktree has no node_modules. The initial four-file bun test invocation could not resolve jsdom from subject files (9 passed, 20 failed and 2 loader errors). NODE_PATH resolves direct eval imports but not this test import graph. Ephemeral stdin/descriptor preloader attempts terminated before useful assertions. No package/dependency setup or source changes were made. Independent changed-source synthetic oracles above use an explicit in-memory resolution and passed. No full aggregate suite was run."
+    },
+    "hostedSourceCI": {
+      "status": "GREEN_REPORTED_BY_ASSIGNING_MAIN",
+      "independentlyRefetched": false
+    },
+    "diffWhitespace": {
+      "status": "PASS",
+      "command": "git diff --check BASE HEAD"
+    },
+    "metadataSensitivePatternScan": {
+      "status": "PASS_BOUNDED_HEURISTIC",
+      "hits": 0,
+      "qualification": "Checked credential/private-runtime/source-URL/image-data patterns without printing question/student bodies; not a security certification."
+    }
+  },
+  "independence": {
+    "actualReviewerThread": "01a15358-42e5-7770-bb93-cd081b0b7601",
+    "sourceProducer": false,
+    "candidateOrProductionWrites": 0,
+    "sourceNativeAuthorIdentity": null,
+    "gitAuthorIsNotNativeIdentity": true,
+    "nativeCallerTaskRunRemainNull": true
+  },
+  "nativeReviewArtifactDisposition": {
+    "status": "RAW_NOT_EMITTED_MISSING_ACTUAL_SOURCE_AUTHOR_PROVENANCE_USER_EXCEPTION_RECORDED",
+    "rawPath": null,
+    "reason": "Actual source-author native identity was intentionally absent from Git/assigned local evidence. Reviewer must not invent it or publish a false gate PASS. Latest direct user instruction, relayed by MAIN, explicitly excepts that original provenance requirement for these WSL2-created PRs; this does not turn unknown identity into observed identity.",
+    "actualUserOverrideText": "이 부분은 내 WSL2 로컬에서 진행했으니까 user override로 그냥 진행해",
+    "sourceReviewComplete": true,
+    "ordinaryGatePassClaimed": false,
+    "mergeDecisionOwner": "Actual MAIN under current direct user exception; this report does not merge or change a status.",
+    "legacyTaskIdSemantics": "Pinned NativeReviewIdentity only exposes runtime plus a taskId string; pinned fixtures use native-reviewer-thread/native-author-thread. This is a historical review identity slot, not evidence of a caller native Task/Run resource. Even if an actual thread is explicitly recorded as this legacy review identity, unexposed caller Task/Run must remain null. Actual author provenance is still unavailable here.",
+    "normalFutureArtifactRequirements": {
+      "fixedPolicy": "park-kyungchan/education-platform, education-platform, education, semanticOwner education-platform, month-end-source-redesign; status native-independent-review; publisher241037670/park-kyungchan/User",
+      "nativeRaw": "Actual reviewer-emitted owner-scoped-native-review-output.v1, reviewStatus complete, findings empty, distinct observed native reviewer/author identities, exact head/tree/recursive manifest, conclusion pass, unresolved0; retain byte-for-byte.",
+      "publication": "Same-repository direct single-parent ancestry H -> R0(raw) -> E(normalized result plus canonical Evidence/Verification) -> R1(receipt). Exact role paths native-review-raw/HEAD.json, native-review-results/HEAD.json, native-review-evidence/HEAD.json, native-review-verifications/HEAD.json and native-reviews/HEAD.json.",
+      "evidence": "Normalized result binds unchanged raw hash and authenticated publisher. Canonical Evidence describes native-codex-independent-source-review with immutable raw URL and source H. Verification hashes raw/result/evidence and has passing independent-native-source-review criterion. Latest authenticated exact-head status links immutable R1; newer held/failing status refuses older pass.",
+      "newUserRequirement": "Future common harness CI metadata is now mandatory per current user instruction. MAIN owns that separate canonical workflow change; do not fabricate these original author facts retroactively."
+    }
+  },
+  "effects": {
+    "onlyAssignedPrivateResultWritten": true,
+    "rawNativeReviewWritten": false,
+    "sourceCodeOrConfigEdits": 0,
+    "productionNativeOrDataEffects": 0,
+    "remoteStatusCommentPushMerge": 0,
+    "providerEvaluationOrManualJevCalls": 0,
+    "goalLifecycleChanges": 0,
+    "modelEffortAuthPermissionsTrustChanges": 0,
+    "consumedOrUncertainEffectReplay": 0
+  },
+  "acceptance": {
+    "sourceReview": "PASS",
+    "nativeActivationVerified": false,
+    "actualTeacherUseVerified": false,
+    "mathematicsR4HumanDisposition": "PENDING_UNCHANGED",
+    "canonicalMathematicsApplication": "NOT_PERFORMED_UNCHANGED",
+    "finalQuestionMembership": false,
+    "humanAcceptanceDecision": null,
+    "wholeODIComplete": false
+  }
+}
