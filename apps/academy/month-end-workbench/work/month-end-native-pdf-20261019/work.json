@@ -1,0 +1,71 @@
+{
+  "schemaVersion": "education.local-work-handoff/1",
+  "projectId": "education-platform",
+  "workId": "month-end-native-pdf-20261019",
+  "domainId": "education",
+  "registration": "local-record",
+  "globallyRegistered": false,
+  "nativeRegistrationPerformed": false,
+  "ontologyVersion": "0.2.0",
+  "purpose": "Prepare the exact user-selected 24 questions using the original official Academy typesetting path for a student PDF and separate teacher explanation PDF.",
+  "title": "초등 3학년 10월 월말평가",
+  "teacherSelectionRef": "selection.json",
+  "relatedCorrectiveCase": "../../cases/candidate-explanation-20261019/README.md",
+  "relatedHistoricalWorkId": "month-end-candidate-preparation-20261019",
+  "producerConstraint": {
+    "requiredProducer": "Official Academy original typesetting workflow, including its installed official program",
+    "studentOutput": "one integrated 24-question student PDF in user-supplied order",
+    "teacherOutput": "separate original Academy answer and explanation PDF",
+    "localPdfRenderingAllowed": false,
+    "templateCopyAllowed": false,
+    "originalQuestionContentRequired": true,
+    "personalization": "No supplied student, class or exam date; retain native blank fields.",
+    "officialInstalledTypesetterAllowed": true,
+    "customPdfRendererAllowed": false,
+    "localPdfRenderingMeaning": "Custom reconstruction is prohibited; the official installed Academy typesetter is explicitly permitted by the later user clarification.",
+    "physicalPrintingAllowed": false
+  },
+  "allocation": {
+    "questions": 24,
+    "points": 100,
+    "difficultyPointValues": {
+      "중": 3,
+      "상": 5,
+      "최상": 6
+    },
+    "perUnitDifficultyCounts": {
+      "U-M": {
+        "중": 4,
+        "상": 3,
+        "최상": 1
+      },
+      "U-D": {
+        "중": 4,
+        "상": 2,
+        "최상": 2
+      },
+      "U-C": {
+        "중": 4,
+        "상": 3,
+        "최상": 1
+      }
+    }
+  },
+  "status": "portable-selection-handoff; native generation is not observed by this record",
+  "nativeExecutionEvidence": [],
+  "sourceSecurity": {
+    "rawOriginalsIncluded": false,
+    "pdfBytesIncluded": false,
+    "nativeConfigurationIncluded": false,
+    "credentialsIncluded": false,
+    "privatePathsIncluded": false
+  },
+  "mergeOwner": {
+    "role": "VPS Host Herdr Orchestrator",
+    "host": "srv1873899",
+    "automaticMergeAllowed": false
+  },
+  "priorRankingAcceptanceInferred": false,
+  "teacherAcceptanceOfPdf": null,
+  "acceptanceDecision": null
+}

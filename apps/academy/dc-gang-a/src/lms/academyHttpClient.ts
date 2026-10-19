@@ -11,6 +11,7 @@ import {inspectAssessmentSearchMetadata} from './assessmentReadProtocol';
 import {inspectTestPoolDocument,readTestPoolDocument,testPoolSelectorDefaults} from './testPoolInspection';
 import {testPoolQuestionPreviewReferences,testPoolPreviewSourcePins} from './testPoolQuestionPreview';
 import {inspectTestPoolPresentationProtocol as inspectPoolPresentationProtocol} from './testPoolPresentationProtocol';
+import {qualifyNativePaperInputReference,qualifyNativePaperOptionsTemplate,inspectNativePaperOptionsResponse} from './nativePaperReadProtocol';
 import {emptyTestPoolScope,testPoolScope,testPoolReadRequest,parseTestPoolCategories,qualifyTestPoolTypeTemplate,parseTestPoolTypeLabels,extractTestPoolLabelPayload,qualifyTestPoolQuestionTemplate,parseTestPoolQuestions,type TestPoolScope} from './testPoolReadProtocol';
 
 export const ACADEMY_ORIGIN='https://dc.gang-a.kr' as const;
@@ -146,6 +147,27 @@ export class AcademyHttpClient {
     try{return {...inspectTestPoolDocument(await response.text(),sourceDomParser.parseFromString),
       sourceOperation:'test_pool_tab_document' as const,observedAt:new Date().toISOString()};}
     catch(error){if(error instanceof Error&&error.message==='test_pool_authentication_required')this.close();throw error;}
+  }
+  /** Source-referenced input document only; no question-row, save, print or generation request. */
+  async inspectNativePaperInputDocument(){
+    if(!this.#authenticated)throw Error('authentication_required');
+    const reference=qualifyNativePaperInputReference(await this.inspectTestPoolTab());
+    const response=await this.#request(reference.path,{method:'GET'},false,'native_paper_input_document');
+    try{return {...inspectTestPoolDocument(await response.text(),sourceDomParser.parseFromString),sourceOperation:'native_paper_input_document' as const,
+      tabSourceSha256:reference.tabSourceSha256,path:reference.path,selectedQuestionReadContract:'not_qualified' as const,observedAt:new Date().toISOString()};}
+    catch(error){if(error instanceof Error&&error.message==='test_pool_authentication_required')this.close();throw error;}
+  }
+  /** Observe current native paper-option metadata through the exact original fixed GET template. */
+  async readNativePaperOptions(){
+    if(!this.#authenticated)throw Error('authentication_required');
+    try{
+      const html=await (await this.#request('/common/etest_pool.jsp',{method:'GET'},false,'native_paper_options_source')).text();
+      const template=qualifyNativePaperOptionsTemplate(html,sourceDomParser.parseFromString);
+      const query=new URLSearchParams(template.query);
+      const text=await (await this.#request(template.path+'?'+query,{method:'GET'},false,'native_paper_options')).text();
+      return {...inspectNativePaperOptionsResponse(text),sourceOperation:'native_paper_options' as const,
+        sourceTemplate:template,observedAt:new Date().toISOString()};
+    }catch(error){if(error instanceof Error&&error.message==='test_pool_authentication_required')this.close();throw error;}
   }
   /** Read the source-referenced type-selection document; no selection/generation request is sent. */
   async inspectTestPoolSelector(){

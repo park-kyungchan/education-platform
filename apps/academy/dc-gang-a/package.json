@@ -18,7 +18,7 @@
     "test:preserved-history-browser": "bun tests/academy/preservedHistoryBrowser.ts",
     "typecheck:preserved-history-tests": "bun node_modules/typescript/bin/tsc -p tsconfig.preserved-history-tests.json",
     "check:product-control": "bun node_modules/typescript/bin/tsc --noEmit -p tsconfig.product-control.json && bun scripts/check-product-control.ts",
-    "test:pool-read": "bun test ./tests/lms/academyHttpClient.test.ts ./tests/lms/testPoolReadProtocol.test.ts ./tests/lms/testPoolInspection.test.ts ./tests/lms/testPoolPresentationProtocol.test.ts"
+    "test:pool-read": "bun test ./tests/lms/academyHttpClient.test.ts ./tests/lms/testPoolReadProtocol.test.ts ./tests/lms/testPoolInspection.test.ts ./tests/lms/testPoolPresentationProtocol.test.ts ./tests/lms/nativePaperReadProtocol.test.ts"
   },
   "devDependencies": {
     "playwright": "1.64.1",
