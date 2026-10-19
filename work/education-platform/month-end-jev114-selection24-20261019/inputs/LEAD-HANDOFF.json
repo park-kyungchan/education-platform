@@ -1,0 +1,120 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "month-end-jev114-selection24-20261019",
+  "kind": "input",
+  "id": "LEAD-HANDOFF",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "education-platform",
+    "locator": "academy-orchestrator:worklead-handoff",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "role": "Hermes AssessmentLead",
+    "priority": "P1 execution; P0 input/rubric/accounting design",
+    "sourceBase": "8611a84705f1fe796d6d9a1a3efe8fc1d26a1c9e",
+    "allowedSourceRoots": [
+      "apps/academy/month-end-workbench"
+    ],
+    "upstreamWorks": [
+      {
+        "domainId": "mathematics-education",
+        "projectId": "math-research-module",
+        "workId": "month-end-type-evidence-rubric-20261019",
+        "sourceCommit": null,
+        "delivery": "pending-producer"
+      },
+      {
+        "domainId": "academy-operations",
+        "projectId": "academy-workbench",
+        "workId": "month-end-real-pool-read-20261019",
+        "sourceCommit": null,
+        "delivery": "pending-producer"
+      }
+    ],
+    "coordinator": {
+      "domainId": "education",
+      "projectId": "education-platform",
+      "workId": "academy-orchestration-20261019"
+    },
+    "next": "User requested priority/IDs and will hand the rest to the WorkLead. Native TUI is prepared for that followup; no implementation, live Academy read or Jev inference is dispatched by this scaffold.",
+    "unknowns": [
+      "subject and difficulty quotas",
+      "definition/weighting of mathematical similarity",
+      "academy-specific Jev accounting/budget/admission",
+      "image/diagram transport boundary"
+    ],
+    "constraints": [
+      "Harness skill-selection probabilities are not domain similarity.",
+      "The current native harness caller only supports Noul/Choice text and binds the old ODI ledger; never call that ledger for this academy Work.",
+      "The live catalog supports the exact version with text and image input, but that does not qualify the installed native adapter.",
+      "Prefer the existing native provider/credential owner and reviewed transport extension; no credential bridge or parallel provider client."
+    ],
+    "requiredModel": "typesafe-ai/jev-1.14.0",
+    "modelCatalogObservation": {
+      "schema": "academy.jev-model-observation.v1",
+      "observedAt": "2026-10-19T03:28:08.657921+00:00",
+      "url": "https://ai-gateway.vercel.sh/v1/models",
+      "retrieval": "native HTTP for public JSON model catalog; no inference",
+      "selected": {
+        "id": "typesafe-ai/jev-1.14.0",
+        "object": "model",
+        "created": 1755815280,
+        "released": 1792022400,
+        "owned_by": "typesafe-ai",
+        "name": "Jev 1.14.0",
+        "description": "Jev 1.14.0 is TypeSafe AI’s System One evaluation model for fast, structured decisions in software. It evaluates shared state against typed questions and returns choices, scores, and boolean probabilities, supporting classification, routing, rubric-based assessment, and automated verification. Multiple questions can be evaluated in parallel within a single request.",
+        "context_window": 32000,
+        "max_tokens": 0,
+        "type": "evaluation",
+        "zdr": "all",
+        "no_training": "all",
+        "tags": [
+          "vision"
+        ],
+        "supported_specifications": [
+          "v4"
+        ],
+        "modalities": {
+          "input": [
+            "text",
+            "image"
+          ],
+          "output": [
+            "text"
+          ]
+        },
+        "pricing": {
+          "input": "0.000000042",
+          "output": "0"
+        }
+      },
+      "userRequiredVersion": "Jev-1.14",
+      "genericAliasAllowed": false,
+      "liveInferenceMade": false,
+      "priorOdiLedgerReusable": false
+    },
+    "knownExam": {
+      "count": 24,
+      "grade": 3,
+      "subjects": [
+        "multiplication",
+        "division",
+        "circle"
+      ],
+      "eligibleNativeDifficulty": [
+        "중",
+        "상",
+        "최상"
+      ],
+      "pointPattern": "12x3+8x5+4x6=100; points do not determine difficulty",
+      "durationMinutes": 80,
+      "startTime": "15:00",
+      "examDate": null,
+      "timeZone": null,
+      "oldSubject9_9_6": "proposal-only"
+    }
+  }
+}
