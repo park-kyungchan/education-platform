@@ -9,6 +9,96 @@
   "source": {
     "kind": "snapshot",
     "path": "work/education-platform/academy-repository-restructure-20261019/inputs/AR-WORKFLOW-CHECKS.json",
-    "fragment": "#/content/checks"
+    "fragment": "#/content/observation"
+  },
+  "artifact": {
+    "schemaVersion": "1.0.0",
+    "kind": "evidence",
+    "id": "education-platform:evidence:academy-restructure:workflow-checks",
+    "projectId": "education-platform",
+    "domainId": "education",
+    "createdAt": "2026-10-19T05:57:54.973Z",
+    "payload": {
+      "claim": "The canonical committed Work reader accepted the selected Work and current context, and preserved the two expected source-only holds.",
+      "method": "Serial invocation of the unchanged pinned common CLI through the Education source transport; capture exact output hashes and exit statuses.",
+      "sourceUrl": "urn:git:sha1:7267693ebc735893588ffd4cd5f900a7fdcda41d",
+      "fetchedAt": "2026-10-19T05:57:54.973Z",
+      "upstreamRevision": "7267693ebc735893588ffd4cd5f900a7fdcda41d",
+      "result": {
+        "outcome": "success",
+        "processExitCode": 0,
+        "contentMatched": true
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "outcome": "success"
+        }
+      ],
+      "limitations": [
+        "Local committed-source proof only; no shared delivery, independent review, native effect or semantic acceptance.",
+        "Broader integration stopped at the missing required Node26.7.0 executable; source typecheck,37 root tests and import checks passed."
+      ],
+      "details": {
+        "checks": [
+          {
+            "repository": "education-platform",
+            "label": "validate",
+            "snapshotCommit": "7267693ebc735893588ffd4cd5f900a7fdcda41d",
+            "exitCode": 0,
+            "expectedExitCode": 0,
+            "status": null,
+            "valid": true,
+            "findings": [],
+            "holds": null,
+            "outputSha256": "10e556a039be47aec25f2986272ba577482903f204e652ec58cc8a22c600c0eb",
+            "outputBytes": 139,
+            "stderr": ""
+          },
+          {
+            "repository": "education-platform",
+            "label": "context",
+            "snapshotCommit": "7267693ebc735893588ffd4cd5f900a7fdcda41d",
+            "exitCode": 0,
+            "expectedExitCode": 0,
+            "status": "source-qualified",
+            "valid": null,
+            "findings": null,
+            "holds": null,
+            "outputSha256": "f655b4cca74ca918d00fe432e2d7bcb2f332d464daf5c057159b7fdd869c5d82",
+            "outputBytes": 9097,
+            "stderr": ""
+          },
+          {
+            "repository": "education-platform",
+            "label": "context-unknown",
+            "snapshotCommit": "7267693ebc735893588ffd4cd5f900a7fdcda41d",
+            "exitCode": 1,
+            "expectedExitCode": 1,
+            "status": "held",
+            "valid": null,
+            "findings": null,
+            "holds": null,
+            "outputSha256": "c5cd5925b2d9167cedb93afd23a8cc5e8018eb8409de808b713c5a55bfaf7cfc",
+            "outputBytes": 9126,
+            "stderr": ""
+          },
+          {
+            "repository": "education-platform",
+            "label": "context-ownership-held",
+            "snapshotCommit": "7267693ebc735893588ffd4cd5f900a7fdcda41d",
+            "exitCode": 1,
+            "expectedExitCode": 1,
+            "status": "held",
+            "valid": null,
+            "findings": null,
+            "holds": null,
+            "outputSha256": "f92172f786e34c08d42e95260aaf7059c9435da1f248f33da6dd888b08abb416",
+            "outputBytes": 10573,
+            "stderr": ""
+          }
+        ]
+      }
+    }
   }
 }
