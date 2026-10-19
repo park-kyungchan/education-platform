@@ -1,0 +1,44 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "academy-orchestration-20261019",
+  "kind": "input",
+  "id": "AO-INTERVIEW-STATE",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "education-platform",
+    "locator": "authored-interview-readiness:academy-orchestration-20261019",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "status": "prepared-draft-awaiting-parent-readiness-and-user-answers",
+    "userAnswers": [],
+    "questions": [
+      "Which academy workflow and concrete result should the orchestrator prioritize first?",
+      "Which current month-end frontend screen and interaction should we review together first?",
+      "Which read-only Academy MCP capabilities are necessary for that workflow, given the current successor launch hold?",
+      "Which exam date, timezone, textbook edition, unit scope and final item inventory are currently decided?",
+      "What boundaries and completion criteria should govern later implementation Tasks?"
+    ],
+    "knownContext": {
+      "assessment": "24 constructed/descriptive response items, 100 points (12x3 + 8x5 + 4x6), 80 minutes from 15:00.",
+      "preparationDeadline": "2026-10-19 is a preparation deadline, not the exam date.",
+      "unknown": [
+        "Exact examination date and timezone",
+        "Textbook edition",
+        "Final unit/item inventory",
+        "Current teacher review outcome and revised workflow priority"
+      ],
+      "authority": "Teacher research and assessment preparation; final item selection remains user-owned.",
+      "mcpHold": "Configured subprocess launch currently refuses with mcp_verified_execution_boundary_unavailable; historical read receipts do not establish successor launch clearance."
+    },
+    "requiredReading": [
+      "AGENTS.md",
+      "apps/academy/month-end-workbench/docs/source-context.md",
+      "apps/academy/month-end-web/work/month-end-context-rebuild-20261017/checkpoint.json",
+      "math-research-module: AGENTS.md, README.md, project.json, harness/records.json, docs/ownership-and-identity.md, context/monthly-assessment-20261016/README.md and current chronology/coverage/source references"
+    ],
+    "limitation": "These are coordinator proposals for the next interview, not new user decisions or complete current research-source review."
+  }
+}

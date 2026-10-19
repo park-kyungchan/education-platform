@@ -1,0 +1,36 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "academy-orchestration-20261019",
+  "kind": "input",
+  "id": "AO-CONSUMED-INVENTORY",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "education-platform",
+    "locator": "apps/academy/month-end-web/work/month-end-context-rebuild-20261017/checkpoint.json",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "inventory": {
+      "completedEffectIds": [
+        "dailyrecord-20261016-completed-additional-fields",
+        "math-research-reviewed-merge",
+        "native-readonly-engineering-v2",
+        "drive-redesign-delivery",
+        "harness-context-handoff",
+        "owned-dailyrecord-pane-close"
+      ],
+      "uncertainEffectIds": []
+    },
+    "sourceReceipt": {
+      "repositoryId": "park-kyungchan/education-platform",
+      "commit": "8611a84705f1fe796d6d9a1a3efe8fc1d26a1c9e",
+      "path": "apps/academy/month-end-web/work/month-end-context-rebuild-20261017/checkpoint.json",
+      "sha256": "ca3c5b15ce1656d5430afdf38f4ef9dddba8ccef2a18268e463f722071900efc",
+      "checkpointVersion": 9,
+      "phase": "completed_source_delivery"
+    },
+    "limitation": "Historical source-observed consumed effects are preserved as fences. No native occurrence, new dispatch, live read or new authorization is inferred."
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "academy-orchestration-20261019",
+  "kind": "task",
+  "id": "AO-FRONTEND",
+  "title": "Prepare the named frontend Hermes TUI pane and Bot Screen route",
+  "nextAction": "Receive the parent native readiness receipt for hermes-agent-2q3y and dc-gang-a-dev with exact TUI pane and Bot Screen identities; reconcile any ambiguous launch before retry.",
+  "logical": {
+    "domainId": "education",
+    "projectId": "education-platform",
+    "workId": "academy-orchestration-20261019",
+    "issueId": "AO-ISSUE-20261019",
+    "specId": "AO-SPEC",
+    "specRevision": 1,
+    "planId": "AO-PLAN",
+    "planRevision": 1,
+    "taskId": "AO-FRONTEND"
+  },
+  "state": {
+    "execution": "running",
+    "verification": "pending",
+    "localAudit": "intent-durable",
+    "sharedAudit": "pending",
+    "formalCompletion": "pending"
+  },
+  "executionClass": "native-effect",
+  "dependsOn": [],
+  "decisionIds": [
+    "AO-DIRECTION"
+  ],
+  "effectIds": [],
+  "verificationEvidenceIds": [],
+  "pendingEffectIds": [
+    "AO-FRONTEND-TUI-READINESS"
+  ]
+}
