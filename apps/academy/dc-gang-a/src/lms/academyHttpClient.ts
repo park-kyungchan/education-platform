@@ -11,7 +11,7 @@ import {inspectAssessmentSearchMetadata} from './assessmentReadProtocol';
 import {inspectTestPoolDocument,readTestPoolDocument,testPoolSelectorDefaults} from './testPoolInspection';
 import {testPoolQuestionPreviewReferences,testPoolPreviewSourcePins} from './testPoolQuestionPreview';
 import {inspectTestPoolPresentationProtocol as inspectPoolPresentationProtocol} from './testPoolPresentationProtocol';
-import {qualifyNativePaperInputReference,qualifyNativePaperOptionsTemplate,inspectNativePaperOptionsResponse} from './nativePaperReadProtocol';
+import {qualifyNativePaperInputReference,qualifyNativePaperOptionsTemplate,inspectNativePaperOptionsResponse,readNativePaperLectureKeys,qualifyNativePaperSelectedQuestionsTemplate,nativePaperSelectedQuestionQuery,inspectNativePaperSelectedQuestionsResponse} from './nativePaperReadProtocol';
 import {emptyTestPoolScope,testPoolScope,testPoolReadRequest,parseTestPoolCategories,qualifyTestPoolTypeTemplate,parseTestPoolTypeLabels,extractTestPoolLabelPayload,qualifyTestPoolQuestionTemplate,parseTestPoolQuestions,type TestPoolScope} from './testPoolReadProtocol';
 
 export const ACADEMY_ORIGIN='https://dc.gang-a.kr' as const;
@@ -168,6 +168,28 @@ export class AcademyHttpClient {
       return {...inspectNativePaperOptionsResponse(text),sourceOperation:'native_paper_options' as const,
         sourceTemplate:template,observedAt:new Date().toISOString()};
     }catch(error){if(error instanceof Error&&error.message==='test_pool_authentication_required')this.close();throw error;}
+  }
+  /** Source-qualified exact selected-row GET. No UI grid mutation, defaults, save or native handoff. */
+  async readNativePaperSelectedQuestions(lectureKeys:readonly string[]){
+    if(!this.#authenticated)throw Error('authentication_required');
+    const requested=readNativePaperLectureKeys(lectureKeys);
+    try{
+      const reference=qualifyNativePaperInputReference(await this.inspectTestPoolTab());
+      const html=await (await this.#request(reference.path,{method:'GET'},false,'native_paper_selected_input_source')).text();
+      const template=qualifyNativePaperSelectedQuestionsTemplate(html,sourceDomParser.parseFromString);
+      const request=nativePaperSelectedQuestionQuery(requested,Date.now());
+      const text=await (await this.#request(request.path+'?'+request.query,{method:'GET'},false,'native_paper_selected_questions')).text();
+      return {...inspectNativePaperSelectedQuestionsResponse(text,requested,sourceDomParser.parseFromString),sourceOperation:'native_paper_selected_questions' as const,
+        sourceTemplate:{...template,tabSourceSha256:reference.tabSourceSha256,tabSourceDigestMeaning:'canonical_json_string_sha256' as const},
+        requestBinding:{method:request.method,path:request.path,p_process:'GetLectureList' as const,lectureKeys:requested,uniq:request.uniq,querySha256:request.querySha256,queryDigestMeaning:'raw_utf8_sha256' as const},
+        observedAt:new Date().toISOString()};
+    }catch(error){
+      if(error instanceof AcademyHttpFailure&&[401,403].includes(error.httpStatus)
+        ||error instanceof Error&&['source_redirect_rejected','foreign_source_redirect_rejected'].includes(error.message)){
+        this.close();throw Error('test_pool_authentication_refused');
+      }
+      if(error instanceof Error&&error.message==='test_pool_authentication_required')this.close();throw error;
+    }
   }
   /** Read the source-referenced type-selection document; no selection/generation request is sent. */
   async inspectTestPoolSelector(){

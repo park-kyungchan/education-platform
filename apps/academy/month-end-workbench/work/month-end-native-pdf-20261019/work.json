@@ -51,8 +51,34 @@
       }
     }
   },
-  "status": "portable-selection-handoff; native generation is not observed by this record",
-  "nativeExecutionEvidence": [],
+  "status": "official-baseline-delivered; next-generation-pending",
+  "nativeExecutionEvidence": [
+    {
+      "kind": "private-native-generation-and-independent-output-readback",
+      "recordedAt": "2026-10-19T10:44:56.547786+00:00",
+      "student": {
+        "bytes": 2926676,
+        "sha256": "5f92616ab3b53edfd8b72580db61fe60b3ae12de4f867bfb015be2acc5fdf6ae",
+        "pages": 4
+      },
+      "teacher": {
+        "bytes": 5965466,
+        "sha256": "b0bad82adabca23a24b0891150d2bccfe2db4a4fee3fc5adac0a6893e6a6bfef",
+        "pages": 6
+      },
+      "producer": "Official installed Academy ETestMaker/Haru path",
+      "orderedQuestions": 24,
+      "variants": {
+        "sbj": 16,
+        "des": 8
+      },
+      "desktopDeliveryByteEqual": true,
+      "allStudentAndTeacherPagesVisuallyReviewed": true,
+      "independentVisualReviewScope": "Student1-4; teacher2,4,5,6; root separately reviewed everyteacher page.",
+      "nativeEffectsReplayed": false,
+      "acceptanceDecision": null
+    }
+  ],
   "sourceSecurity": {
     "rawOriginalsIncluded": false,
     "pdfBytesIncluded": false,
@@ -67,5 +93,16 @@
   },
   "priorRankingAcceptanceInferred": false,
   "teacherAcceptanceOfPdf": null,
-  "acceptanceDecision": null
+  "acceptanceDecision": null,
+  "nextRequestedGeneration": {
+    "status": "pending-after-baseline-publication",
+    "studentQuestionsPerPage": 2,
+    "expectedStudentPages": 12,
+    "teacherPageConstraint": null,
+    "producerConstraintUnchanged": true,
+    "questionMembershipOrderAndVariantsUnchanged": true,
+    "nativeLayoutSourceCandidate": "Official d2 / two-partition option; actual 12-page output remains to verify.",
+    "optimization": "Reduce total tokens and elapsed time under preserved mathematical judgment quality; expand Jev-1.14 and existing Academy custom MCP tools."
+  },
+  "backlogRef": "backlog.json"
 }
