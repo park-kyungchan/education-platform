@@ -3,7 +3,7 @@ import {readLiteralKey,readLiteralName} from './academyReadProtocol';
 import {journalWireWidth} from './lessonJournalTemplates';
 export const journalHttpFields=['progress','homework','lessonMemo','attendance','dailyTestAssessment','previousHomeworkAssessment'] as const;
 export type JournalHttpField=typeof journalHttpFields[number];
-/** Dated current field-wire qualification, not effect authority, generic source access or a CAS token. */
+/** Historical field-wire contract; dated qualifications below are not effect authority or a CAS token. */
 export const JOURNAL_HTTP_SOURCE_CONTRACT={
  revision:'2026-10-06-direct-dayrecord-v1',observedOn:'2026-10-06',
  staticWireDigest:'c7afa7e2975397c54801af3a417c44caeb7850de70e67a6806f61da8c97d5b4b',
@@ -25,7 +25,14 @@ export const JOURNAL_HTTP_SOURCE_CONTRACT={
  readback:'new_direct_HTTP_Main_and_selected_occurrence; exact field plus unchanged-field preservation; not browser UI echo or causal proof',
  scope:'Six explicitly approved fields only; no persistent memo, unit selection, generation, printing, finalization or sender',
 } as const;
-export function assertJournalWireQualified(wireDigest:string){if(wireDigest!==JOURNAL_HTTP_SOURCE_CONTRACT.staticWireDigest)throw Error('journal_mutation_wire_not_qualified');}
+/** Exact inert-source observations reviewed against the same six field contracts. No caller override. */
+export const JOURNAL_HTTP_SOURCE_QUALIFICATIONS=Object.freeze([
+ Object.freeze({observedOn:'2026-10-06',wireDigest:JOURNAL_HTTP_SOURCE_CONTRACT.staticWireDigest,sourceReceipt:JOURNAL_HTTP_SOURCE_CONTRACT.sourceReceipt}),
+ Object.freeze({observedOn:'2026-10-19',wireDigest:'2d43a2f0346040f81d0809c293b5830b234da7169be917f91145e80610aa56c2',
+  sourceResponseSha256:'f1cb526392572ecb4e9ee82bab80d499c41f68c291054e5d1ca9558b41b21ef9',
+  reviewScope:'Six inert handler definitions, the two assessment radio POST callbacks, literal assessment options and passive target tuples; unrelated popup context is excluded. No handlers or effects executed by review.'}),
+] as const);
+export function assertJournalWireQualified(wireDigest:string){if(!JOURNAL_HTTP_SOURCE_QUALIFICATIONS.some(source=>source.wireDigest===wireDigest))throw Error('journal_mutation_wire_not_qualified');}
 export function assertJournalAssessmentOptions(options:{field:string;value:string;label:string}[]){
  const expected=Object.entries(JOURNAL_HTTP_SOURCE_CONTRACT.assessmentLabels).flatMap(([field,values])=>Object.entries(values).map(([value,label])=>({field,value,label})));
  const sort=(rows:{field:string;value:string;label:string}[])=>[...rows].sort((a,b)=>(a.field+':'+a.value).localeCompare(b.field+':'+b.value));

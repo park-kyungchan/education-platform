@@ -51,7 +51,7 @@
       }
     }
   },
-  "status": "exact-r2-PDFs-and-new24site-item332306-verified; separateusage-history-result-unknown-held",
+  "status": "exact-r2-PDFs-new24site-item332306-and24usage-history-increments-verified",
   "nativeExecutionEvidence": [
     {
       "kind": "private-native-generation-and-independent-output-readback",
@@ -210,8 +210,22 @@
     "MainSourceSha256": "c305409f8d2e43e1fd996a491b487df9b2b2559c30d2a2fd4ee598fce6aa4238",
     "membershipSourceSha256": "9416ef4f2fd0e0123206db917f15c14daec5d4b65c084f77fe6ca33fadc638db",
     "oldWrongItemTouched": false,
-    "usageLogStatus": "POSTsubmitted-once;incrementreadbackunqualified;unknownheld,noautomaticreplay",
-    "usageLogWrites": "unknown",
-    "creationReplayAllowed": false
+    "usageLogStatus": "single POST; all24 exact-memo/date single increments verified by retained body hashes plus one fresh original history read",
+    "usageLogWrites": 1,
+    "creationReplayAllowed": false,
+    "usageLogReadback": {
+      "questionCount": 24,
+      "calendarDate": "2026-10-19",
+      "observedDateGrammar": "YYYY.MM.DD",
+      "retainedPostwriteBodies": 24,
+      "freshHistoryReads": 1,
+      "allRetainedBodyHashesEqualFreshTargetResponse": true,
+      "originalBodySha256": "4bd398100f653ed9ea88f8a5c2dac41528468c3943be7345021a823c356b06e3",
+      "reconciliationReceiptSha256": "264486d64a9786c091b011ca08513571ffc70c4d16f6e6fc93b7095b4764f175",
+      "writeReplays": 0,
+      "historicalUnknownReceiptsOrHoldsChanged": false,
+      "teacherAttribution": "not_returned_by_qualified_history",
+      "causalAttribution": "not_independently_proven"
+    }
   }
 }

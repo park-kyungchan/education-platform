@@ -777,6 +777,14 @@ test('XML usage payload is decoded as literals, filtered to exact memo/date and 
  expect(()=>inspectLectureUsageHistory('x'.repeat(2_000_001),expected.lectureKeys[0]!,expected,sourceDomParser.parseFromString)).toThrow('response_invalid');
 });
 
+test('observed dotted history calendar dates match exact memo and day without accepting other date grammars',()=>{
+ const input={...usageInput(),date:'2026-10-19'},expected=lectureUsageExpectation(input),key=expected.lectureKeys[0]!;
+ const inspect=(date:string)=>inspectLectureUsageHistory(usageXml([{ass_no:0,title:input.keywordTitle,use_date:date}]),key,expected,sourceDomParser.parseFromString);
+ expect(inspect('2026.10.19')).toMatchObject({matched:[{assNo:0,title:input.keywordTitle,useDate:'2026.10.19'}],unknownTargetDateCount:0,dateFormatCounts:{accepted:1,unqualified:0}});
+ expect(inspect('2026.10.18').matched).toHaveLength(0);
+ for(const date of ['2026.02.30','2026.13.19','2026.10.19.','2026.10.19 10:00:00','2026/10/19',' 2026.10.19'])expect(inspect(date)).toMatchObject({matched:[],unknownTargetDateCount:1,dateFormatCounts:{accepted:0,unqualified:1}});
+});
+
 test('only observed result_fail with one exactly empty list means no history; other failure shapes stay refused',()=>{
  const expected=lectureUsageExpectation(usageInput()),key=expected.lectureKeys[0]!;
  const xml='<root><result>result_fail</result><lectureList></lectureList></root>';

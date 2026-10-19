@@ -204,6 +204,11 @@ export function qualifyLectureUsageTab(html:string,parseDocument:ParseDocument){
 }
 type UsageRecord={assNo:string|number;title:string;useDate:string};
 function recordDate(value:string){
+ // GetLectureListLog returned an exact YYYY.MM.DD calendar date on2026-10-19.
+ // Accept that observed date-only grammar; do not infer timestamps or a timezone.
+ if(/^20[0-9]{2}\.[0-9]{2}\.[0-9]{2}$/.test(value)){
+  const date=value.replaceAll('.','-');return validDate(date)?date:null;
+ }
  // An explicit accepted grammar, not a claim about unobserved server date formats.
  const match=/^(20[0-9]{2}-[0-9]{2}-[0-9]{2})(?:[ T]([0-9]{2}):([0-9]{2})(?::([0-9]{2}))?)?$/.exec(value);
  if(!match||!validDate(match[1])||match[2]&&Number(match[2])>23||match[3]&&Number(match[3])>59||match[4]&&Number(match[4])>59)return null;
