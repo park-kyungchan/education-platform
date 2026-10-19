@@ -16,7 +16,7 @@
     "priority": "Preserve headroom for other user work and minimize academy memory pressure.",
     "maxAdditionalActiveWorkLeadTuis": 1,
     "maxConcurrentHeavyAcademyJobs": 1,
-    "retainedFrontend": "Keep the requested existing frontend TUI/Bot Screen available; do not duplicate it.",
+    "retainedFrontend": "Frontend runtime is off and held by current user instruction. Start only on a later explicit frontend review/resume request.",
     "idleWorkers": "Keep unneeded WorkLead panes at shell prompts; terminate owned completed worker runtimes after durable results.",
     "beforeEachLaunch": [
       "Observe current host MemAvailable, memory PSI and own active processes.",
@@ -37,6 +37,23 @@
       "Unrelated user jobs/services/data remain under their own owners.",
       "No swap, cgroup, global model/configuration/permissions or system service changes through this policy."
     ],
-    "implementation": "Source-owned WorkLead instructions and manual orchestration checks; no monitoring daemon, scheduler or alternate runtime."
+    "implementation": "Source-owned WorkLead instructions and manual orchestration checks; no monitoring daemon, scheduler or alternate runtime.",
+    "frontendHold": {
+      "schema": "academy.frontend-hold.v1",
+      "requestedBy": "current-user",
+      "status": "paused-until-user-review",
+      "frontendTui": "stopped-native-quit",
+      "researchPreview": "stopped-SIGTERM-owned-process",
+      "browser": "observed-stopped",
+      "botScreen": "observed-stopped",
+      "restartCondition": "Only a later explicit user request to review or resume frontend work. Resource recovery, dependency completion, handoff or another WorkLead starting does not release this hold.",
+      "preserve": [
+        "Work IDs",
+        "source Work records",
+        "worktrees",
+        "native saved sessions"
+      ],
+      "automaticRestart": false
+    }
   }
 }
