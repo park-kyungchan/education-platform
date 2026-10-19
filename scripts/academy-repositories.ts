@@ -12,7 +12,7 @@ try {
     const code = await child.exited;
     await qualifyCommonProvider(workflow, providerRoot);
     process.exitCode = code;
-  } else throw Error('usage: plan [repository] | work <canonical-command> <request.json> [after.json] --provider <pinned-agent-platform-root>');
+  } else throw Error('usage: plan [repository] | work <canonical-command> <request.json> [after.json|source-path] --provider <pinned-agent-platform-root>');
 } catch (error) {
   console.error(error instanceof Error ? error.message : 'academy_repository_workflow_failed');
   process.exitCode = 1;

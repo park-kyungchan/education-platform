@@ -98,9 +98,10 @@ export async function qualifyCommonProvider(workflow: AcademyRepositories, provi
   if (relative(root, target).startsWith('..') || isAbsolute(relative(root, target))) throw Error('common_provider_entrypoint_escape');
   return entrypoint;
 }
-export const commonCommands = ['validate', 'context', 'transition', 'start'] as const;
+export const commonCommands = ['validate', 'context', 'transition', 'start', 'source'] as const;
 export async function commonInvocation(workflow: AcademyRepositories, providerRoot: string, command: string, requests: string[]): Promise<string[]> {
-  if (!(commonCommands as readonly string[]).includes(command) || requests.length !== (command === 'transition' ? 2 : 1) || requests.some(p => !p || p.startsWith('-'))) throw Error('usage: work validate|context|start <request.json> --provider <root>; work transition <before.json> <after.json> --provider <root>');
+  if (!(commonCommands as readonly string[]).includes(command) || requests.length !== (command === 'transition' || command === 'source' ? 2 : 1) || requests.some(p => !p || p.startsWith('-'))) throw Error('usage: work validate|context|start <request.json> --provider <root>; work transition <before.json> <after.json> --provider <root>; work source <snapshot.json> <repository-relative-path> --provider <root>');
+  if (command === 'source') localPath(requests[1]);
   const entrypoint = await qualifyCommonProvider(workflow, providerRoot);
-  return [process.execPath, '--no-env-file', entrypoint, command, ...requests.map(p => resolve(p))];
+  return [process.execPath, '--no-env-file', entrypoint, command, ...(command === 'source' ? [resolve(requests[0]!), requests[1]!] : requests.map(p => resolve(p)))];
 }

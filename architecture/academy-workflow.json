@@ -78,6 +78,21 @@
       "interpretation": "Preserve source currentness: unknown/unavailable is a dependent hold, never silently current."
     },
     {
+      "id": "original-source",
+      "command": [
+        "bun",
+        "run",
+        "harness:work",
+        "source",
+        "SNAPSHOT_JSON",
+        "REPOSITORY_RELATIVE_SOURCE_PATH",
+        "--provider",
+        "PINNED_AGENT_PLATFORM_ROOT"
+      ],
+      "cwd": "EDUCATION_ROOT",
+      "interpretation": "The canonical context includes source pointers, not copies of original answers. Resolve pathBase against the selected Work/repository, then read the exact original through the canonical source reader before a consequential decision. Never infer the original answer from a paraphrase."
+    },
+    {
       "id": "owner-plan",
       "command": [
         "bun",
@@ -109,7 +124,8 @@
     "SNAPSHOT_JSON": "A bounded file containing the caller-selected exact Git Work selection",
     "CONTEXT_REQUEST_JSON": "A bounded file with snapshot and context; maxChars <=24000 and explicit latestRelevant",
     "BEFORE_JSON": "Exact previous immutable committed selection",
-    "AFTER_JSON": "Exact successor immutable committed selection"
+    "AFTER_JSON": "Exact successor immutable committed selection",
+    "REPOSITORY_RELATIVE_SOURCE_PATH": "Exact repository-relative path resolved from the canonical context source receipt; keep snapshot identity/commit and source fragment interpretation unchanged."
   },
   "heldEffects": [
     "MCP and month-end feature implementation is other-owner PR scope.",

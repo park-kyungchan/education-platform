@@ -33,6 +33,7 @@ test('routing rejects missing owners, duplicate repositories, traversal, and a c
 test('canonical command transport rejects arbitrary commands and wrong request arity before dispatch', async () => {
   const workflow = await readRepositoryWorkflow();
   for (const [command, paths] of [['run', ['x']], ['validate', ['x', 'y']], ['transition', ['x']], ['context', ['--eval']]] as const) await expect(commonInvocation(workflow, '/does-not-exist', command, [...paths])).rejects.toThrow('usage:');
+  await expect(commonInvocation(workflow, '/does-not-exist', 'source', ['request.json', '../native.json'])).rejects.toThrow('invalid_repository_path');
 });
 test('provider qualification binds the exact Git root, commit and clean source', async () => {
   const root = await mkdtemp(join(tmpdir(), 'academy-provider-'));
@@ -50,6 +51,8 @@ test('provider qualification binds the exact Git root, commit and clean source',
     expect(await qualifyCommonProvider(workflow, root)).toBe(join(root, 'scripts/harness.ts'));
     const argv = await commonInvocation(workflow, root, 'validate', ['request.json']);
     expect(argv.slice(1, 4)).toEqual(['--no-env-file', join(root, 'scripts/harness.ts'), 'validate']);
+    const sourceArgv = await commonInvocation(workflow, root, 'source', ['request.json', 'work/project/selected/inputs/original.json']);
+    expect(sourceArgv.at(-1)).toBe('work/project/selected/inputs/original.json');
     await expect(qualifyCommonProvider(workflow, join(root, 'scripts'))).rejects.toThrow('root_mismatch');
     await writeFile(join(root, 'untracked.ts'), 'export {};\n');
     await expect(qualifyCommonProvider(workflow, root)).rejects.toThrow('worktree_dirty');
