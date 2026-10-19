@@ -1,4 +1,4 @@
-import {commonInvocation, qualifyCommonProvider, readRepositoryWorkflow, repositoryPlan} from '../src/academy-repositories.ts';
+import {commonGitEnvironment, commonInvocation, qualifyCommonProvider, readRepositoryWorkflow, repositoryPlan} from '../src/academy-repositories.ts';
 
 const [mode, ...args] = Bun.argv.slice(2);
 try {
@@ -8,7 +8,7 @@ try {
     const providerRoot = args.at(-1)!;
     const command = await commonInvocation(workflow, providerRoot, args[0]!, args.slice(1, -2));
     // The canonical CLI alone interprets Work records, dependencies and source currentness.
-    const child = Bun.spawn(command, {stdin: 'ignore', stdout: 'inherit', stderr: 'inherit'});
+    const child = Bun.spawn(command, {env: commonGitEnvironment(), stdin: 'ignore', stdout: 'inherit', stderr: 'inherit'});
     const code = await child.exited;
     await qualifyCommonProvider(workflow, providerRoot);
     process.exitCode = code;

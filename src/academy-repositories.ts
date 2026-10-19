@@ -1,4 +1,6 @@
-import {readFile, realpath} from 'node:fs/promises';
+import {readFile, realpath, lstat, open} from 'node:fs/promises';
+import {constants} from 'node:fs';
+import {createHash} from 'node:crypto';
 import {resolve, relative, isAbsolute} from 'node:path';
 import {spawnSync} from 'node:child_process';
 
@@ -82,17 +84,81 @@ export function repositoryPlan(workflow: AcademyRepositories, repository?: strin
   if (!selected.length) throw Error('unknown_repository');
   return {schema: 'education.academy-repository-plan.v1', priority: workflow.priority, featureImplementation: workflow.featureImplementation, execution: 'plan-only', runtimeActivation: false, dependencies: workflow.dependencies.filter(d => !repository || d.consumer === repository || d.provider === repository), repositories: selected};
 }
-function git(root: string, args: string[]): string {
-  const result = spawnSync('git', ['-C', root, ...args], {encoding: 'utf8', maxBuffer: 1_048_576});
-  if (result.error || result.status !== 0) throw Error('common_provider_git_verification_failed');
-  return result.stdout.trim();
+/** Transport-local environment only; importing the provider to obtain it would precede qualification. */
+export function commonGitEnvironment(input: NodeJS.ProcessEnv = process.env): NodeJS.ProcessEnv {
+  const env = Object.fromEntries(Object.entries(input).filter(([key]) => !/^GIT_/i.test(key)));
+  return {...env, GIT_TERMINAL_PROMPT: '0', GIT_OPTIONAL_LOCKS: '0', GIT_CONFIG_NOSYSTEM: '1', GIT_CONFIG_GLOBAL: '/dev/null', GIT_ATTR_NOSYSTEM: '1', GIT_NO_REPLACE_OBJECTS: '1', GIT_NO_LAZY_FETCH: '1'};
 }
-/** Pin transport source; never import/copy the canonical reader into this repository. */
+function git(root: string, args: string[]): string {
+  const result = spawnSync('git', ['--no-replace-objects', '--no-pager', '--literal-pathspecs', '-c', 'core.fsmonitor=false', '-C', root, ...args], {env: commonGitEnvironment(), encoding: 'utf8', maxBuffer: 1_048_576, timeout: 10_000});
+  if (result.error || result.status !== 0) throw Error('common_provider_git_verification_failed');
+  return result.stdout;
+}
+interface TrackedBlob {path: string; mode: string; oid: string; size: number}
+function trackedTree(root: string, commit: string): TrackedBlob[] {
+  const rows = git(root, ['ls-tree', '-r', '-z', '--long', commit]).split('\0').filter(Boolean);
+  if (!rows.length || rows.length > 4096) throw Error('common_provider_source_limit');
+  let total = 0;
+  return rows.map(row => {
+    const match = /^(100644|100755) blob ([0-9a-f]{40}|[0-9a-f]{64}) +([0-9]+)\t([^\0\r\n]+)$/.exec(row);
+    if (!match) throw Error('common_provider_source_type');
+    const [, mode, oid, length, path] = match;
+    localPath(path);
+    const size = Number(length); total += size;
+    if (!Number.isSafeInteger(size) || size > 2_097_152 || total > 67_108_864) throw Error('common_provider_source_limit');
+    return {path, mode: mode!, oid: oid!, size};
+  });
+}
+function checkedIndex(root: string, tree: TrackedBlob[]): string {
+  const raw = git(root, ['ls-files', '--stage', '-v', '-f', '-z']), rows = raw.split('\0').filter(Boolean);
+  const expected = new Map(tree.map(row => [row.path, row]));
+  for (const row of rows) {
+    // Lowercase tags mean assume-unchanged/fsmonitor-valid; S means skip-worktree.
+    const match = /^H (100644|100755) ([0-9a-f]{40}|[0-9a-f]{64}) 0\t([^\0\r\n]+)$/.exec(row);
+    if (!match) throw Error('common_provider_index_flags_or_stage');
+    const source = expected.get(match[3]!);
+    if (!source || source.mode !== match[1] || source.oid !== match[2]) throw Error('common_provider_worktree_dirty');
+    expected.delete(source.path);
+  }
+  if (expected.size) throw Error('common_provider_worktree_dirty');
+  return raw;
+}
+/** Linux descriptor walk confines reads to regular tracked files, including import/package/lock sources. */
+async function verifyPhysicalBlob(root: string, source: TrackedBlob): Promise<void> {
+  const target = resolve(root, source.path);
+  if (await realpath(target) !== target) throw Error('common_provider_source_escape');
+  let directory = await open(root, constants.O_RDONLY | constants.O_DIRECTORY | constants.O_NOFOLLOW);
+  try {
+    if (await realpath('/proc/self/fd/' + directory.fd) !== root) throw Error('common_provider_source_escape');
+    const parts = source.path.split('/');
+    for (const part of parts.slice(0, -1)) {
+      const next = await open('/proc/self/fd/' + directory.fd + '/' + part, constants.O_RDONLY | constants.O_DIRECTORY | constants.O_NOFOLLOW);
+      await directory.close(); directory = next;
+    }
+    const file = await open('/proc/self/fd/' + directory.fd + '/' + parts.at(-1), constants.O_RDONLY | constants.O_NOFOLLOW | constants.O_NONBLOCK);
+    try {
+      const before = await file.stat();
+      if (!before.isFile() || before.size !== source.size || Boolean(before.mode & 0o111) !== (source.mode === '100755')) throw Error('common_provider_worktree_dirty');
+      const bytes = Buffer.alloc(source.size + 1); let count = 0;
+      while (count < bytes.length) { const next = await file.read(bytes, count, bytes.length - count, null); if (!next.bytesRead) break; count += next.bytesRead; }
+      const after = await file.stat(), named = await lstat(target);
+      if (count !== source.size || after.size !== before.size || after.mtimeMs !== before.mtimeMs || after.ctimeMs !== before.ctimeMs || after.mode !== before.mode || named.dev !== before.dev || named.ino !== before.ino || await realpath(target) !== target) throw Error('common_provider_source_changed');
+      const blob = createHash(source.oid.length === 40 ? 'sha1' : 'sha256').update('blob ' + count + '\0').update(bytes.subarray(0, count)).digest('hex');
+      if (blob !== source.oid) throw Error('common_provider_worktree_dirty');
+    } finally { await file.close(); }
+  } finally { await directory.close(); }
+}
+/** Verify the entire tracked source tree without importing provider code. Installed dependencies and
+ * the interval before native execution remain separate boundaries, not an immutable execution claim. */
 export async function qualifyCommonProvider(workflow: AcademyRepositories, providerRoot: string): Promise<string> {
   const root = await realpath(providerRoot);
-  if (await realpath(git(root, ['rev-parse', '--show-toplevel'])) !== root) throw Error('common_provider_root_mismatch');
-  if (git(root, ['rev-parse', 'HEAD']) !== workflow.provider.commit) throw Error('common_provider_commit_mismatch');
-  if (git(root, ['status', '--porcelain', '--untracked-files=normal'])) throw Error('common_provider_worktree_dirty');
+  if (await realpath(git(root, ['rev-parse', '--show-toplevel']).trim()) !== root) throw Error('common_provider_root_mismatch');
+  if (git(root, ['rev-parse', '--verify', 'HEAD^{commit}']).trim() !== workflow.provider.commit) throw Error('common_provider_commit_mismatch');
+  const tree = trackedTree(root, workflow.provider.commit), index = checkedIndex(root, tree);
+  if (git(root, ['ls-files', '--others', '--exclude-standard', '-z'])) throw Error('common_provider_worktree_dirty');
+  if (!tree.some(row => row.path === workflow.provider.entrypoint)) throw Error('common_provider_entrypoint_untracked');
+  for (const source of tree) await verifyPhysicalBlob(root, source);
+  if (checkedIndex(root, tree) !== index || git(root, ['rev-parse', '--verify', 'HEAD^{commit}']).trim() !== workflow.provider.commit || git(root, ['ls-files', '--others', '--exclude-standard', '-z'])) throw Error('common_provider_source_changed');
   const entrypoint = resolve(root, workflow.provider.entrypoint);
   const target = await realpath(entrypoint);
   if (relative(root, target).startsWith('..') || isAbsolute(relative(root, target))) throw Error('common_provider_entrypoint_escape');
