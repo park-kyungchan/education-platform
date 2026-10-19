@@ -1,0 +1,197 @@
+{
+  "schemaVersion": "education.local-work-handoff/1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "academy-jev-cost-reduction-20261019",
+  "registration": "local-record",
+  "globallyRegistered": false,
+  "nativeRegistrationPerformed": false,
+  "ontologyVersion": "0.2.0",
+  "purpose": "Design a reusable cost reduction capability with quality preserved; validate month-end question/PDF review and DailyRecord first, then CISM.",
+  "status": "bounded-native-pilot-completed; proposal-awaits-task-specific-calibration-and-reusable-runtime-integration",
+  "userDecisions": {
+    "priority": [
+      "mathematical-and-factual-quality",
+      "total-cost",
+      "elapsed-time"
+    ],
+    "flows": [
+      "question-research-and-native-PDF-review",
+      "DailyRecord-and-CISM"
+    ],
+    "documents": "Maintain all110 supplied URLs; retrieve only needed sources.",
+    "imageReview": "Jev first; Codex reviews uncertain, conflicting and high-risk findings.",
+    "identity": "Preserve original student names and source IDs in authorized private task inputs.",
+    "automation": [
+      "analysis",
+      "draft",
+      "review"
+    ],
+    "caseSpecificApproval": [
+      "record-save",
+      "parent-send"
+    ],
+    "currentAuthorizedEffects": "Existing specific PDF generation/copy, same-entry24question correction and dated DailyRecord input remain authorized.",
+    "budgetCapUsd": "10.00",
+    "credentialOwner": "Existing srv1873899 native Vercel AI Gateway owner"
+  },
+  "model": {
+    "requestedAndReturned": "typesafe-ai/jev-1.14.0",
+    "endpoint": "https://ai-gateway.vercel.sh/typesafe/v1/systemone",
+    "imageHeader": {
+      "TypeSafe-Danger-Zone-Images": "true"
+    },
+    "catalogObservedAt": "2026-10-19T10:48:38.004662+00:00",
+    "catalogUsdPerMillionInputTokens": "0.042",
+    "catalogUsdPerMillionOutputTokens": "0",
+    "catalogContextWindow": 32000,
+    "pricingIsTimeSpecific": true,
+    "imageInput": "Experimental documented native assets; image UUID occurs once in state, questions reference its path.",
+    "docs": [
+      "https://docs.typesafe.ai/images",
+      "https://docs.typesafe.ai/api",
+      "https://docs.typesafe.ai/confidence",
+      "https://docs.typesafe.ai/patterns/confidence-routing",
+      "https://vercel.com/docs/ai-gateway/modalities/decision"
+    ],
+    "decisionPrimitives": {
+      "choice": "Select among caller-supplied candidate labels.",
+      "score": "Score caller-supplied ordered rubric levels.",
+      "noul": "Return a yes/no decision score.",
+      "freeTextGenerationClaimed": false,
+      "draftProduction": "Code renders approved text templates from verified facts and selected clauses; Codex handles new unconstrained wording."
+    }
+  },
+  "actualPilot": {
+    "responseSha256": "281a0d80f8a95499469f0bc1ec1d13346cf8f7d9f9044d8db3d6240b6491e578",
+    "calls": 3,
+    "inputTokens": 35401,
+    "outputTokens": 1254,
+    "gatewayReportedUsd": "0.001486842",
+    "requestElapsedMs": 3582,
+    "providerInvoiceIndependentlyVerified": false,
+    "documentGoldMatched": {
+      "matched": 5,
+      "total": 5
+    },
+    "teacherFactGoldMatched": {
+      "matched": 10,
+      "total": 10
+    },
+    "imageMath": {
+      "correctChoices": 3,
+      "total": 4,
+      "correctAndConfidenceAtLeastPoint8": 1,
+      "wrongChoiceConfidence": "0.21",
+      "studentPagesReviewed": [
+        5,
+        6,
+        12
+      ],
+      "all18PagesReviewedByJev": false
+    },
+    "stopReason": "Strict image pilot gate failed; five remaining planned calls were not submitted.",
+    "unknownBillingHeld": false,
+    "dailyRecordSnapshot": "Teacher corrections received after this frozen pilot supersede its historical planned-test facts.",
+    "savingsComparedWithBaseline": "not-measured",
+    "acceptedMathematicalAutomation": false
+  },
+  "routingProposal": {
+    "deterministic": [
+      "Source and row identity",
+      "Question count/order and difficulty quotas",
+      "PDF physical-page count and starts per page",
+      "Title-field equality",
+      "Source/image hashes and cache invalidation",
+      "Budget admission and request accounting",
+      "Actual save/usage-history independent readback"
+    ],
+    "jevFirst": [
+      "Necessary-document and source-section classification",
+      "Select among source-extracted facts and flag contradictions with source pointers",
+      "Candidate research-microstep coverage and pairwise choices",
+      "Select prepared record clauses and check drafts against teacher facts",
+      "Layout and diagram-condition screening on source-bound images",
+      "CISM draft consistency checks after actual report inputs are selected"
+    ],
+    "codexEscalation": [
+      "Low confidence or unknown result",
+      "Disagreement with deterministic facts or official source",
+      "Mathematical derivation and diagram correctness until local calibration passes",
+      "Potentially omitted facts or contradictory dated teacher instructions",
+      "New protocol or unsupported response shape"
+    ],
+    "nativeExecutorOnly": [
+      "Authentication",
+      "Original Academy source-qualified writes",
+      "Official ETestMaker rendering",
+      "Native credential and effect journals"
+    ],
+    "confidenceRule": "Use task-specific validation. Confidence is not an established probability of correctness; this four-item sample establishes no universal threshold."
+  },
+  "optimizationProposal": [
+    {
+      "id": "O1",
+      "data": "Exact source revision, response hash, question membership and image-pixel hash.",
+      "logic": "Invalidate only changed inputs; reuse already qualified content evidence.",
+      "action": "Render each changed PDF once and keep page images once.",
+      "governance": "Do not label reused evidence as a fresh full visual review."
+    },
+    {
+      "id": "O2",
+      "data": "110URL index plus bounded captured sections.",
+      "logic": "Code filters paths; Jev chooses relevant sections and source-support labels through Choice/Noul.",
+      "action": "Scrapling fetches selected URLs; Jev never performs network access itself.",
+      "governance": "Preserve raw response separately from model findings and cite exact sources."
+    },
+    {
+      "id": "O3",
+      "data": "Research DATA/LOGIC/ACTION/GOVERNANCE units, original item and solution.",
+      "logic": "Jev selects per-unit explicit/implicit/not-elicited/unknown labels, prepared reason codes and comparison winners; source pointers are supplied and validated by code.",
+      "action": "Code applies quotas and uniqueness; teacher chooses final membership.",
+      "governance": "Reasons must distinguish structural match, solution steps, omissions and confidence; never invent historical ranking reasons."
+    },
+    {
+      "id": "O4",
+      "data": "Dated teacher facts, original student IDs, exact book-major-subunit-activity-round mapping.",
+      "logic": "Jev flags contradictions and selects among source-bound candidate field values or wording clauses; code renders the draft and Codex handles new free text.",
+      "action": "Code validates current/prior record identity and writes only the specifically approved values.",
+      "governance": "Draft, saved record and actual parent transmission stay separate."
+    },
+    {
+      "id": "O5",
+      "data": "Small frozen gold sets for text, layout and mathematical decisions.",
+      "logic": "Evaluate selective accuracy, missed-issue rate and escalation coverage separately.",
+      "action": "Record model cost plus Codex/escalation tokens, wall time and human-review time.",
+      "governance": "Current3calls establish feasibility and a quality limit, not a measured total-cost reduction."
+    },
+    {
+      "id": "O6",
+      "data": "A versioned maintained Academy capability contract plus the existing native authenticated owner.",
+      "logic": "Avoid rebuilding authentication and transport helpers for each query or form field. Keep source protocol checks in the maintained adapter and compare only changed code.",
+      "action": "After source review and owner integration, reuse the native MCP connection for bounded read/draft/review operations; admit each specifically authorized save with a durable effect receipt.",
+      "governance": "This is a future integration proposal, not permission widening or a second agent runtime. Preserve unknown outcomes without replay. Measure authentication roundtrips, duplicated source reads/compiles, orchestration time and model escalation cost."
+    }
+  ],
+  "nextValidation": {
+    "separateTasks": [
+      "document-routing",
+      "teacher-fact-mapping",
+      "image-layout",
+      "mathematical-diagram-judgment"
+    ],
+    "measure": [
+      "same-input baseline quality",
+      "total model cost including escalations",
+      "end-to-end elapsed time",
+      "missed issues",
+      "selective accuracy and human escalation workload",
+      "Deterministic template coverage and cases requiring new free text"
+    ],
+    "doNotDo": "Do not repeat known completed calls or silently broaden paid experiments.",
+    "CISM": "No actual CISM report-period validation has been performed."
+  },
+  "linuxDirectDB": "Backlog only; source structure and a Linux native client still require separate reverse engineering. No direct DB access or implementation is claimed.",
+  "runtimeAuthority": "none-from-this-record",
+  "acceptanceDecision": null
+}

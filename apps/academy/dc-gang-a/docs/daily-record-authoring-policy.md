@@ -1,6 +1,6 @@
 # DailyRecord authoring policy
 
-Revision: 2026-10-16. Owner: Academy DailyRecord workflow in this Education source checkout. This file records recurring user instructions; it is not a credential, effect approval, current student record or parent delivery receipt. It does not configure Hermes, Codex, Harness, a database or a global MCP client.
+Revision: 2026-10-19. Owner: Academy DailyRecord workflow in this Education source checkout. This file records recurring user instructions; it is not a credential, effect approval, current student record or parent delivery receipt. It does not configure Hermes, Codex, Harness, a database or a global MCP client.
 
 ## Intake and field ownership
 
@@ -17,6 +17,20 @@ For each requested student and lesson date, include progress, homework, the prev
 Use explicit user answers or qualified existing values. When a required value is absent, ambiguous or not attributable to the exact student/record, interview the user before writing that field. Never derive assessment codes, homework performance or attendance from a score, correct-answer rate, question count, activity narrative or assumed routine. Preserve values the user has already entered; do not replace them with a calculation or an older snapshot. Interview only for genuinely missing information, without repeating answers already supplied for that lesson.
 
 Always ask about **today's student-specific memo** when no current content or explicit no-addition answer has been supplied. A prior lesson's “no memo” answer is not a permanent preference. “No memo” means no additional memo; it is not permission to erase an existing memo. Clearing or replacing existing text requires an explicit instruction for that field and record.
+
+## Teacher-confirmed textbook and activity mapping
+
+The teacher confirmed this notation on 2026-10-19. A textbook code such as `5-2-1` means grade5, semester2, series1. The last component is the series/volume, not a unit or test round. School stage, publisher and source namespace must come from the attributed source context; the numeric code alone does not identify them.
+
+A unit code such as `2-1` means major unit2, subunit1. Do not introduce an intermediate unit. Keep the hierarchy `student -> textbook(stage/grade/semester/series) -> major unit -> subunit -> activity -> round`. Map the activity track separately from the textbook identity; vocabulary such as a clinic track name must not silently change the named publisher or book.
+
+Do not interpret an ambiguous historical three-component unit label by stripping a prefix or treating a suffix as a round. Preserve its original literal and obtain an exact teacher/source binding. Apply a correction only to its identified activity and scope; do not remap all of a student's textbook history. Different activities can legitimately belong to different series.
+
+Unless the teacher explicitly limits a DailyTest completion report to one round, it includes both basic and advanced rounds for each identified subunit. This default does not invent scores, a test date, physical print counts or completion of another activity. Correction of a previous DailyTest is separate from conducting a new DailyTest today. Class practice is separate from a homework assignment or an excluded homework activity.
+
+A reported homework completion percentage does not establish a native letter grade. Obtain a teacher-bound grade for that case; do not turn one answer into a general conversion table. Keep internal conversion details out of the parent-facing memo unless the teacher explicitly requests them.
+
+The machine-readable counterpart is `contracts/learning-activity-mapping-policy.json`. These rules describe interpretation, not verified native book/student/record IDs or permission to save or send.
 
 ## Parent-facing wording
 

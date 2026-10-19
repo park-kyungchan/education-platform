@@ -8,13 +8,13 @@
   "nativeRegistrationPerformed": false,
   "ontologyVersion": "0.2.0",
   "purpose": "Prepare the exact user-selected 24 questions using the original official Academy typesetting path for a student PDF and separate teacher explanation PDF.",
-  "title": "초등 3학년 10월 월말평가",
+  "title": "2026년 10월 3학년 월말평가",
   "teacherSelectionRef": "selection.json",
   "relatedCorrectiveCase": "../../cases/candidate-explanation-20261019/README.md",
   "relatedHistoricalWorkId": "month-end-candidate-preparation-20261019",
   "producerConstraint": {
     "requiredProducer": "Official Academy original typesetting workflow, including its installed official program",
-    "studentOutput": "one integrated 24-question student PDF in user-supplied order",
+    "studentOutput": "One integrated24question student PDF; global native difficulty 중12→상8→최상4, stable teacher-selected order within each tier,2questions perphysical page.",
     "teacherOutput": "separate original Academy answer and explanation PDF",
     "localPdfRenderingAllowed": false,
     "templateCopyAllowed": false,
@@ -51,7 +51,7 @@
       }
     }
   },
-  "status": "official-baseline-delivered; next-generation-pending",
+  "status": "exact-r2-PDFs-and-new24site-item332306-verified; separateusage-history-result-unknown-held",
   "nativeExecutionEvidence": [
     {
       "kind": "private-native-generation-and-independent-output-readback",
@@ -77,6 +77,74 @@
       "independentVisualReviewScope": "Student1-4; teacher2,4,5,6; root separately reviewed everyteacher page.",
       "nativeEffectsReplayed": false,
       "acceptanceDecision": null
+    },
+    {
+      "kind": "official-student-two-questions-per-page-regeneration",
+      "recordedAt": "2026-10-19T10:56:37.334553+00:00",
+      "student": {
+        "bytes": 3940548,
+        "sha256": "edc84e9ba1185156dc407fc6de107a8885b15ff9b522b814f0f36a7c78d4e164",
+        "pages": 12,
+        "questionsPerPage": 2,
+        "totalQuestions": 24
+      },
+      "producer": "Official installed Academy ETestMaker/Haru path",
+      "onlyNativeOptionChange": {
+        "field": "exam_dispose_type",
+        "before": "line",
+        "after": "d2"
+      },
+      "selectedQuestionOrderAndVariantsUnchanged": true,
+      "all12PagesVisuallyReviewedByRootAndIndependentReviewer": true,
+      "desktopDeliveryByteEqual": true,
+      "teacher": "Previously generated6page teacherPDF retained; no new teacherPrint.",
+      "nativeEffectsReplayed": false,
+      "acceptanceDecision": null
+    },
+    {
+      "kind": "exact-header-global-difficulty-official-revision-r2",
+      "recordedAt": "2026-10-19T12:43:20.537714+00:00",
+      "student": {
+        "sha256": "bc5825a0688b61590150369a7e19918359164de354824ca8bfff99ff51636c99",
+        "bytes": 3941547,
+        "pages": 12,
+        "questionsPerPage": 2,
+        "questions": 24
+      },
+      "teacher": {
+        "sha256": "375e955908f4aa1346fd3e6650edfccd2dbd95bdf23a47a8259b1d6d6d849df0",
+        "bytes": 5966502,
+        "pages": 6
+      },
+      "producer": "Official installed Academy ETestMaker/Haru path",
+      "headers": "Exact title1/title2 on first physical page",
+      "desktopDeliveryByteEqual": true,
+      "contentComparison": "Per-role decoded image-pixel occurrence multiset and display-size multiset equal previously reviewed official originals.",
+      "structuralReview": "All18page image bounds checked; no out-of-bounds image placement.",
+      "freshIndependentVisualPages": {
+        "student": [
+          1,
+          6
+        ],
+        "teacher": [
+          1,
+          2,
+          3,
+          6
+        ]
+      },
+      "freshAll18PagesVisuallyReviewed": false,
+      "modelReviewedPages": {
+        "student": [
+          5,
+          6,
+          12
+        ],
+        "teacher": []
+      },
+      "modelFullOutputReviewQualified": false,
+      "nativeEffectsReplayed": false,
+      "acceptanceDecision": null
     }
   ],
   "sourceSecurity": {
@@ -95,14 +163,55 @@
   "teacherAcceptanceOfPdf": null,
   "acceptanceDecision": null,
   "nextRequestedGeneration": {
-    "status": "pending-after-baseline-publication",
+    "status": "completed-exact-header-r2-generated-and-desktop-delivered",
     "studentQuestionsPerPage": 2,
     "expectedStudentPages": 12,
     "teacherPageConstraint": null,
     "producerConstraintUnchanged": true,
-    "questionMembershipOrderAndVariantsUnchanged": true,
-    "nativeLayoutSourceCandidate": "Official d2 / two-partition option; actual 12-page output remains to verify.",
-    "optimization": "Reduce total tokens and elapsed time under preserved mathematical judgment quality; expand Jev-1.14 and existing Academy custom MCP tools."
+    "questionMembershipAndVariantsUnchanged": true,
+    "order": "Global native difficulty2/3/4 mapped to중/상/최상, stable teacher selection within each tier.",
+    "sitePersistence": "New24question reusable item directly authorized; old wrong2question item left for manual deletion by user.",
+    "separateUsageLog": "Exact usage note requires original separate SaveLectureUseLog and perquestion readback."
   },
-  "backlogRef": "backlog.json"
+  "backlogRef": "backlog.json",
+  "optimizationInterview": {
+    "status": "user-decisions-complete; bounded-native-pilot-observed",
+    "relatedWorkId": "academy-jev-cost-reduction-20261019",
+    "relatedWorkRef": "../academy-jev-cost-reduction-20261019/work.json",
+    "scope": "Month-end research/PDF/image review plus DailyRecord/CISM.",
+    "model": "typesafe-ai/jev-1.14.0",
+    "userBudgetUsd": 10,
+    "modelCallsPerformed": 3,
+    "gatewayReportedUsd": "0.001486842",
+    "providerInvoiceIndependentlyVerified": false,
+    "textGoldMatched": 15,
+    "textGoldTotal": 15,
+    "imageCorrectChoices": 3,
+    "imageGoldTotal": 4,
+    "imagePilotGate": "failed_known; follow-on requests stopped",
+    "measuredTotalSavings": "not_measured",
+    "futureSaveSendPolicy": "Case-specific user approval; current specific paper and DailyRecord effects already authorized."
+  },
+  "nativeFormFields": {
+    "title1": "2026년 10월 3학년 월말평가",
+    "title2": "1. 곱셈 / 2. 나눗셈 / 3. 원",
+    "keyword_title": "2026년 10월 3학년 월말평가",
+    "creator": "Authenticated Academy account; expected 박경찬, must read back actual list row."
+  },
+  "actualSitePersistence": {
+    "status": "new24question-item-created-and-read-back",
+    "poolNo": "332306",
+    "title1": "2026년 10월 3학년 월말평가",
+    "title2": "1. 곱셈 / 2. 나눗셈 / 3. 원",
+    "creator": "박경찬",
+    "questionCount": 24,
+    "orderedMembershipOuterKeysVariantsVerified": true,
+    "MainQuestionCountVerified": true,
+    "MainSourceSha256": "c305409f8d2e43e1fd996a491b487df9b2b2559c30d2a2fd4ee598fce6aa4238",
+    "membershipSourceSha256": "9416ef4f2fd0e0123206db917f15c14daec5d4b65c084f77fe6ca33fadc638db",
+    "oldWrongItemTouched": false,
+    "usageLogStatus": "POSTsubmitted-once;incrementreadbackunqualified;unknownheld,noautomaticreplay",
+    "usageLogWrites": "unknown",
+    "creationReplayAllowed": false
+  }
 }

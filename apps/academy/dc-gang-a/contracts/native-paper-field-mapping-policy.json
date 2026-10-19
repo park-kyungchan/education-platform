@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "academy.native-paper-field-mapping-policy/1",
+  "decisionDate": "2026-10-19",
+  "decisionSource": "Direct teacher interview defining the original Academy form fields.",
+  "classification": "confirmed-input-mapping-not-an-execution-receipt",
+  "fields": [
+    {
+      "uiLabel": "문제지 큰 제목",
+      "websiteField": "title1",
+      "nativePrintField": "examset_title",
+      "meaning": "The complete requested evaluation title; do not split it into date and grade or replace it with a class/session name.",
+      "example": "2026년 10월 3학년 월말평가"
+    },
+    {
+      "uiLabel": "문제지 작은 제목",
+      "websiteField": "title2",
+      "nativePrintField": "sub_title",
+      "meaning": "The teacher-specified ordered unit caption, preserving punctuation and spacing.",
+      "example": "1. 곱셈 / 2. 나눗셈 / 3. 원"
+    },
+    {
+      "uiLabel": "문항 사용이력 남김말",
+      "websiteField": "keyword_title",
+      "nativePrintField": null,
+      "meaning": "The teacher-specified usage note. In this workflow it is the complete evaluation title. It is not a creator field or an extra native Print-item field.",
+      "example": "2026년 10월 3학년 월말평가"
+    }
+  ],
+  "reusableSave": {
+    "formField": "pool_value",
+    "separator": "|,|",
+    "orderedComponents": ["title1", "title2", "search_word1", "search_word2", "keyword_title"],
+    "doesNotByItselfWriteLectureUsageHistory": true
+  },
+  "usageHistory": {
+    "separateOfficialOperation": "SaveLectureUseLog",
+    "noteField": "keyword_title",
+    "verification": "Source-qualified exact question histories and current target note; HTTP success alone does not establish a saved usage entry."
+  },
+  "creator": {
+    "callerCreatorParameterObserved": false,
+    "verification": "Read the saved target row under the authenticated Academy account; do not infer server-visible authorship from a local owner label."
+  },
+  "futureChanges": "Require explicit values for these distinct form fields. Retain immutable old revisions and regenerate through the original Academy program when printable fields change.",
+  "nativeExecutionAuthority": "none",
+  "acceptanceDecision": null
+}
