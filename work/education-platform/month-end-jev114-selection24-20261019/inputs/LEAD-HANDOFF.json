@@ -115,6 +115,35 @@
       "examDate": null,
       "timeZone": null,
       "oldSubject9_9_6": "proposal-only"
+    },
+    "resourcePolicyInputId": "RESOURCE-POLICY-20261019",
+    "resourcePolicy": {
+      "schema": "academy.resource-policy.v1",
+      "priority": "Preserve headroom for other user work and minimize academy memory pressure.",
+      "maxAdditionalActiveWorkLeadTuis": 1,
+      "maxConcurrentHeavyAcademyJobs": 1,
+      "retainedFrontend": "Keep the requested existing frontend TUI/Bot Screen available; do not duplicate it.",
+      "idleWorkers": "Keep unneeded WorkLead panes at shell prompts; terminate owned completed worker runtimes after durable results.",
+      "beforeEachLaunch": [
+        "Observe current host MemAvailable, memory PSI and own active processes.",
+        "Assess headroom for the next concrete workload; a past observation or free swap is not launch approval.",
+        "Defer the new workload when available headroom is insufficient or memory pressure is rising."
+      ],
+      "workloads": [
+        "Start WorkLeads sequentially instead of simultaneous native/MCP initialization.",
+        "Serialize browser/build/test/indexing and model-input preparation batches; keep question/image batches bounded.",
+        "Reuse existing source dependencies and previews instead of duplicating servers/browsers or broad indexes."
+      ],
+      "pressureResponse": [
+        "Stop additional launches first.",
+        "Checkpoint and retire only owned optional idle workers after exact process verification.",
+        "Reconcile uncertain operations before any later new launch; do not blindly retry."
+      ],
+      "preserved": [
+        "Unrelated user jobs/services/data remain under their own owners.",
+        "No swap, cgroup, global model/configuration/permissions or system service changes through this policy."
+      ],
+      "implementation": "Source-owned WorkLead instructions and manual orchestration checks; no monitoring daemon, scheduler or alternate runtime."
     }
   }
 }
