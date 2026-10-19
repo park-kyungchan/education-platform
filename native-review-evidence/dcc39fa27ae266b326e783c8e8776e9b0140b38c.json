@@ -1,0 +1,56 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "evidence",
+  "id": "education-platform:evidence:education-main-native-review-20261019",
+  "projectId": "education-platform",
+  "domainId": "education",
+  "createdAt": "2026-10-19T10:07:32.282Z",
+  "payload": {
+    "claim": "Independent reviewer explicitly reused the identical reviewed source tree for the exact actual main merge with current zero unresolved findings.",
+    "method": "native-codex-independent-source-review",
+    "sourceUrl": "https://github.com/park-kyungchan/education-platform/blob/10423f7eb110e8e28132add0e9efa3813b8b2be9/native-review-raw/dcc39fa27ae266b326e783c8e8776e9b0140b38c.json",
+    "fetchedAt": "2026-10-19T10:07:32.282Z",
+    "upstreamRevision": "dcc39fa27ae266b326e783c8e8776e9b0140b38c",
+    "result": {
+      "outcome": "success",
+      "processExitCode": 0,
+      "contentMatched": true
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "outcome": "success"
+      }
+    ],
+    "limitations": [
+      "Main successor binding explicitly verifies unchanged tree/all source blobs and actual merge ancestry; no new source-author identity or original WSL identity is invented.",
+      "Native thread IDs use legacy review identity fields; actual Task/Run remain null.",
+      "Authenticated source custody supplies no native/domain/teacher acceptance or new runtime permission."
+    ],
+    "details": {
+      "semanticOwner": "education-platform",
+      "review": {
+        "binding": {
+          "repository": "park-kyungchan/education-platform",
+          "projectId": "education-platform",
+          "domainId": "education",
+          "semanticOwner": "education-platform",
+          "scope": "month-end-source-redesign"
+        },
+        "headSha": "dcc39fa27ae266b326e783c8e8776e9b0140b38c",
+        "reviewedTreeSha": "5373aaf152a1c2a149276ab0c1e37e26d6eacf6c",
+        "reviewedSourceManifestSha256": "2114c6895fd9b6546d0ec95b5d7cb66aeea310a5736fb75f8f05fc5aea0eeb0d",
+        "reviewer": {
+          "runtime": "native-codex",
+          "taskId": "01a15324-7b8d-7051-a126-b391f113ffa9"
+        },
+        "author": {
+          "runtime": "native-codex",
+          "taskId": "01a15321-24b7-7ad1-b1c3-ed528822cf5a"
+        },
+        "conclusion": "pass",
+        "unresolvedFindings": 0
+      }
+    }
+  }
+}
