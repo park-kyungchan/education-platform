@@ -20,20 +20,19 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           persist-credentials: false
+          fetch-depth: 0
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
         with:
           bun-version: 1.4.2
-      - name: Install checksum-verified private toolchains and frozen dependencies
-        run: bun scripts/setup.ts
       - name: Verify generated CI projection and scoped module integration
-        uses: park-kyungchan/agent-platform/.github/actions/bun-source@6933ca88c815f5e6e5490f9232c81e0dc5663af5
+        uses: park-kyungchan/agent-platform/.github/actions/bun-source@8a91a8837d3b6454d7bba5e90d25651cb898f69b
         with:
           project-id: education-platform
           repository: park-kyungchan/education-platform
           source-sha: ${{ github.event.pull_request.head.sha || github.sha }}
           bun-version: 1.4.3
           install-dependencies: 'false'
-          scripts: '["check:ci-projection","check"]'
+          scripts: '["setup","check:ci-projection","check"]'
   native-review:
     name: Exact head native independent review
     runs-on: ubuntu-latest
