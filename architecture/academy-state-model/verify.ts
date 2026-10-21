@@ -3,7 +3,7 @@ import {createHash} from 'node:crypto';
 import {readFileSync} from 'node:fs';
 import {resolve} from 'node:path';
 const root=resolve(import.meta.dir,'../..');
-const output='work/education-platform/academy-state-model-20261021/checks/DOM-01-CHECKS-R1.json';
+const output='architecture/academy-state-model/observations/DOM-01-CHECKS-R1.json';
 if(await Bun.file(resolve(root,output)).exists())throw Error('immutable_check_receipt_exists');
 const sha=(v:string|Uint8Array)=>createHash('sha256').update(v).digest('hex');
 const records:object[]=[

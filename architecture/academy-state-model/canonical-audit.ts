@@ -12,13 +12,14 @@ const before=await openGitWork({...selection,commit:base}),after=await openGitWo
 const task=await after.readRecord({kind:'task',id:'education-platform:task:academy-state-model-20261021-dom-01'}) as TaskRecord;
 const target=taskVerificationTarget(task);
 const snapshot=await validateGitWorkRecords(after),transition=await validateGitWorkTransition(before,after);
-const resultPath=after.workPath+'/inputs/DOM-01-RESULT-R1.json';
+const entry=(await after.readSource({kind:'snapshot',path:'architecture/academy-state-model/entrypoint.json'})).value as any;
+const resultPath=entry.resultInput;
 const result=await after.readSource({kind:'snapshot',path:resultPath});
-const verificationInput=await after.readRecord({kind:'input',id:'DOM-01-VERIFICATION-R1'}) as InputRecord;
+const verificationInput=await after.readRecord({kind:'input',id:'DOM-01-VERIFICATION-R2'}) as InputRecord;
 const verification=(verificationInput.content as any).verification;
-const binding={actualTaskVerificationTarget:target,targetMatched:verification.payload.targetRefs.includes(target),resultObservationCited:verification.payload.criteria.some((r:any)=>r.evidenceRefs.includes('education-platform:evidence:dom-01-result-observation-r1')),exactResultInputHashBound:verification.payload.inputHashes.some((r:any)=>r.path===resultPath&&r.sha256===result.sha256),resultInputSha256:result.sha256};
-const receipt={schema:'academy.dom01-canonical-audit.v1',createdAt:new Date().toISOString(),auditor:{repositoryRoot:auditor,commit:pin,api:'openGitWork/readRecord/readSource/taskVerificationTarget/validateGitWorkRecords/validateGitWorkTransition',consumerLockChanged:false},before:{commit:base,tree:git(root,['rev-parse',base+'^{tree}'])},after:{commit,tree:git(root,['rev-parse',commit+'^{tree}'])},snapshot,semanticTransition:transition,binding,authority:'source-only; no shared audit/native authentication/operational acceptance'};
+const binding={actualTaskVerificationTarget:target,targetMatched:verification.payload.targetRefs.includes(target),resultObservationCited:verification.payload.criteria.some((r:any)=>r.evidenceRefs.includes(entry.resultEvidenceId)),exactResultInputHashBound:verification.payload.inputHashes.some((r:any)=>r.path===resultPath&&r.sha256===result.sha256),resultInputSha256:result.sha256};
+const receipt={schema:'academy.dom01-canonical-audit.v1',createdAt:new Date().toISOString(),auditor:{repositoryRoot:auditor,commit:pin,api:'openGitWork/readRecord/readSource/taskVerificationTarget/validateGitWorkRecords/validateGitWorkTransition',consumerLockChanged:false},before:{commit:base,tree:git(root,['rev-parse',base+'^{tree}'])},after:{commit,tree:git(root,['rev-parse',commit+'^{tree}'])},rejectedIntermediateCandidate:{commit:'1ccae7f3222380ad1c2bf337d7d8856ad990d5c7',reason:'UNRECOGNIZED_WORK_RECORD_PATH',transitionThroughCandidateClaimed:false},snapshot,semanticTransition:transition,binding,authority:'source-only; no shared audit/native authentication/operational acceptance'};
 const output=process.argv[3];
-if(output){if(!output.startsWith('work/education-platform/academy-state-model-20261021/checks/')||!output.endsWith('.json')||output.includes('..')||await Bun.file(resolve(root,output)).exists())throw Error('new_owned_receipt_path_required');await Bun.write(resolve(root,output),JSON.stringify(receipt,null,2)+'\n');}
+if(output){if(!output.startsWith('architecture/academy-state-model/observations/')||!output.endsWith('.json')||output.includes('..')||await Bun.file(resolve(root,output)).exists())throw Error('new_owned_receipt_path_required');await Bun.write(resolve(root,output),JSON.stringify(receipt,null,2)+'\n');}
 console.log(JSON.stringify(receipt,null,2));
 if(!snapshot.valid||!transition.valid||!binding.targetMatched||!binding.resultObservationCited||!binding.exactResultInputHashBound)process.exitCode=1;
