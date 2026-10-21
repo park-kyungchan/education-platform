@@ -1,0 +1,42 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "academy-query-integration-20261021",
+  "kind": "task",
+  "id": "education-platform:task:academy-query-integration-20261021-qry-boundary",
+  "logical": {
+    "domainId": "education",
+    "projectId": "education-platform",
+    "workId": "academy-query-integration-20261021",
+    "issueId": "QRY-ISSUE-20261021",
+    "specId": "QRY-SPEC",
+    "specRevision": 1,
+    "planId": "QRY-PLAN",
+    "planRevision": 1,
+    "taskId": "education-platform:task:academy-query-integration-20261021-qry-boundary"
+  },
+  "title": "Resolve and verify application/read-adapter contract boundary",
+  "state": {
+    "execution": "planned",
+    "verification": "pending",
+    "localAudit": "intent-durable",
+    "sharedAudit": "pending",
+    "formalCompletion": "pending"
+  },
+  "executionClass": "source-only",
+  "dependsOn": [
+    {
+      "taskId": "education-platform:task:academy-query-integration-20261021-qry-01",
+      "milestone": "execution-and-verification"
+    },
+    {
+      "taskId": "education-platform:task:academy-query-integration-20261021-qry-boundary-qualify-dom-01",
+      "milestone": "execution-and-verification"
+    }
+  ],
+  "decisionIds": [],
+  "effectIds": [],
+  "verificationEvidenceIds": [],
+  "nextAction": "Hold until exact qualified prerequisites and root admission; never fabricate native receipts."
+}

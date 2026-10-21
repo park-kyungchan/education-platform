@@ -1,0 +1,38 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "academy-query-integration-20261021",
+  "kind": "task",
+  "id": "education-platform:task:academy-query-integration-20261021-qry-01",
+  "logical": {
+    "domainId": "education",
+    "projectId": "education-platform",
+    "workId": "academy-query-integration-20261021",
+    "issueId": "QRY-ISSUE-20261021",
+    "specId": "QRY-SPEC",
+    "specRevision": 1,
+    "planId": "QRY-PLAN",
+    "planRevision": 1,
+    "taskId": "education-platform:task:academy-query-integration-20261021-qry-01"
+  },
+  "title": "Qualify maintained source and query ports and coverage",
+  "state": {
+    "execution": "planned",
+    "verification": "pending",
+    "localAudit": "intent-durable",
+    "sharedAudit": "pending",
+    "formalCompletion": "pending"
+  },
+  "executionClass": "source-only",
+  "dependsOn": [
+    {
+      "taskId": "education-platform:task:academy-query-integration-20261021-qry-01-qualify-aar-05",
+      "milestone": "execution-and-verification"
+    }
+  ],
+  "decisionIds": [],
+  "effectIds": [],
+  "verificationEvidenceIds": [],
+  "nextAction": "Only QRY-01 admitted initially. Deliver exact source result and Verification; wait for DOM-01 qualification before QRY-BOUNDARY."
+}
