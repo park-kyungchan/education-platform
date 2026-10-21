@@ -1,0 +1,57 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "evidence",
+  "id": "education-platform:evidence:pr18-independent-review-a6ffe13",
+  "projectId": "education-platform",
+  "domainId": "education",
+  "createdAt": "2026-10-21T14:29:04.027Z",
+  "payload": {
+    "claim": "The actual independent collaboration reviewer completed the current exact source-head review with no unresolved findings.",
+    "method": "native-codex-independent-source-review",
+    "sourceUrl": "https://github.com/park-kyungchan/education-platform/blob/3a5c39470059433562d27d35b855fe07da0ebb40/native-review-raw/a6ffe1323f9d9ae3892fc97919a8ed06d6d2f2df.json",
+    "fetchedAt": "2026-10-21T14:29:04.027Z",
+    "upstreamRevision": "a6ffe1323f9d9ae3892fc97919a8ed06d6d2f2df",
+    "result": {
+      "outcome": "success",
+      "processExitCode": 0,
+      "contentMatched": true
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "outcome": "success"
+      }
+    ],
+    "limitations": [
+      "The actual independent reviewer is collaboration agent /root/academy_delivery_review. Its inherited CODEX_THREAD_ID is not a distinct session identity.",
+      "Publisher custody and canonical structural proof validation are not cryptographic native authentication, runtime permission, deployment authority or teacher acceptance.",
+      "This is source review. Synthetic regression tests do not prove live operational correctness. The reviewer executed no Academy operation and did not rerun the full root check; parent-reported full checks and actual SDK observations are separate evidence.",
+      "The source-owned runtime integration must supply a genuine current user-event reader and exclusive durable consumption. Interface declarations and provenance locators alone do not authenticate user intent."
+    ],
+    "details": {
+      "semanticOwner": "education-platform",
+      "review": {
+        "binding": {
+          "repository": "park-kyungchan/education-platform",
+          "projectId": "education-platform",
+          "domainId": "education",
+          "semanticOwner": "education-platform",
+          "scope": "month-end-source-redesign"
+        },
+        "headSha": "a6ffe1323f9d9ae3892fc97919a8ed06d6d2f2df",
+        "reviewedTreeSha": "313020bba676ca07cea196290866e0c5c5f3007a",
+        "reviewedSourceManifestSha256": "feb63a69e15507863b47b73863562153faa156f42dc057ba6d09ea993d7ad4c3",
+        "reviewer": {
+          "runtime": "native-codex",
+          "taskId": "/root/academy_delivery_review"
+        },
+        "author": {
+          "runtime": "native-codex",
+          "taskId": "01a15e77-5f49-7461-a6ba-8efa2b888a39"
+        },
+        "conclusion": "pass",
+        "unresolvedFindings": 0
+      }
+    }
+  }
+}
