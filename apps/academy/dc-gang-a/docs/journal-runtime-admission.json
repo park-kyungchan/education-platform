@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "academy.journal-runtime-admission/1",
+  "purpose": "Connect an actual current user save instruction through a trusted runtime-owned port, without making Hermes clarify a business requirement.",
+  "owner": "src/lms/journalRequestAdmission.ts",
+  "canonicalEffectGuard": "src/lms/lessonJournalHttp.ts:applyJournalHttpAction",
+  "ports": {
+    "readCurrentRequest": "The runtime owner independently retrieves the actual current user event and qualifies its intent and exact admitted scope. New or cancelled instructions hold execution. Tool arguments, caller approval flags and a saved provenance document cannot supply this port.",
+    "consumeOnce": "Durable exclusive creation and fsync before dispatch. The stable identity binds runtime, actual request, exact target, effect record, field and proposed value; caller-selected attempt IDs and output paths cannot renew consumption."
+  },
+  "preservedChecks": ["current authenticated principal", "exact owned student/date/current and previous record", "qualified source wire and literal options", "fresh before value", "exact reviewed action digest", "one-time consumption", "independent source readback and unchanged-field checks", "unknown-effect reconciliation without automatic retries"],
+  "legacyCompatibility": "harness/academy_journal_http.ts retains its Hermes-specific adapter. Its clarify lookup is not a requirement of the generic source action guard or the new runtime-owned port. No native session database, engine configuration, approval policy or credential getter is rewritten.",
+  "scope": "No source save, current user authority, credential access, parent send, global registration or deployment is granted by this document. Runtime operation receipts remain private outside the source repository."
+}
