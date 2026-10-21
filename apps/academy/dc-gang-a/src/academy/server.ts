@@ -177,7 +177,7 @@ export function createTeacherServerHandler(options:TeacherServerOptions){
         const actor=context(req);if(!actor)return preDispatchRefusal('teacher_authentication_required',401);
         if(path==='/api/retained-query'){
           if(req.method!=='POST'||url.search)return json({error:'unexpected_query_scope'},400);
-          const input=await body(req);
+          let input:Record<string,unknown>;try{input=await body(req);}catch{return json({error:'retained_query_input_invalid'},400);}
           if(options.currentAuthentication){const current=options.currentAuthentication();identity=current.identity;sessionKey=current.sessionKey;}
           const currentActor=context(req);if(!currentActor||currentActor.ownerId!==actor.ownerId||currentActor.actorId!==actor.actorId)return json({error:'teacher_authentication_required'},401);
           const reply=await options.app.retainedQuery(currentActor,input);

@@ -7,6 +7,8 @@ import {readRetainedDocument} from '../../src/academy/retainedQueryClient';
 import {retainedQueryLimits,type RetainedQueryPage,type RetainedSelector,type RetainedQueryReply} from '../../src/academy/contracts/retainedQuery';
 import {createTeacherServerHandler} from '../../src/academy/server';
 import {signTeacherSession} from '../../src/academy/auth';
+import {known,unknown} from '../../src/learning/model';
+import type {StudentWorkspaceVersion} from '../../src/academy/ownerWorkspaceStore';
 import {retainedFixture} from './retainedQueryFixtures';
 
 const bytes=(value:unknown)=>Buffer.byteLength(JSON.stringify(value));
@@ -63,7 +65,7 @@ describe('retained current-state production query path',()=>{
     const f=retainedFixture();let called=false;const input={get selector(){called=true;return {kind:'cohort'};}};expect((await f.app.retainedQuery(f.actor,input)).status).toBe('refused');expect(called).toBe(false);expect(f.counters.snapshots).toBe(0);
   });
   test('fixed metadata and oversized atomic record refusals themselves stay small',async()=>{
-    const f=retainedFixture(),facade:any={ownerId:f.owner,student:async()=>({sceneRevision:'😀'.repeat(5000)}),cohort:async()=>({rows:['😀'.repeat(40_000)]}),classPreparation:async()=>{throw Error('unused');}};
+    const f=retainedFixture(),facade:any={ownerId:f.owner,student:async()=>({sceneRevision:'😀'.repeat(5000)}),cohort:async()=>({rowCount:1,rows:['😀'.repeat(40_000)]}),classPreparation:async()=>{throw Error('unused');}};
     const reader=createRetainedQueryReader(facade);const fixed=await reader.page(f.actor,{selector:{kind:'student',studentId:'s',date:f.date},maxBytes:4096});expect(fixed).toMatchObject({code:'retained_fixed_metadata_exceeds_json_page_budget'});expect(bytes(fixed)).toBeLessThan(1024);
     const first=await reader.page(f.actor,{selector:{kind:'cohort'},maxBytes:4096});if(first.status!=='page')throw Error('container page expected');
     const atomic=await reader.page(f.actor,{selector:{kind:'cohort'},maxBytes:4096,cursor:first.page.nextCursor});expect(atomic).toMatchObject({code:'retained_record_exceeds_json_page_budget'});expect(bytes(atomic)).toBeLessThan(1024);
@@ -78,6 +80,10 @@ describe('retained current-state production query path',()=>{
   });
   test('identity rotation during awaited facade read prevents HTTP result disclosure',async()=>{
     const f=retainedFixture(),h=handler(f);f.setDuringRead(()=>h.setCurrent({identity:null,sessionKey:'rotated'}));expect((await h.call({selector:{kind:'cohort'}})).status).toBe(401);
+  });
+  test('HTTP malformed JSON refuses with bounded fixed metadata and no source load',async()=>{
+    const f=retainedFixture(),h=handler(f),response=await h.fetch(new Request('https://query.invalid/api/retained-query',{method:'POST',headers:{Origin:'https://query.invalid','Content-Type':'application/json',Cookie:'dc_teacher='+signTeacherSession('synthetic-session-key',f.owner,f.actor.actorId)},body:'{"synthetic-untrusted":"'+ 'x'.repeat(1000)}));
+    expect(response.status).toBe(400);const text=await response.text();expect(text).not.toContain('synthetic-untrusted');expect(Buffer.byteLength(text)).toBeLessThan(1024);expect(f.counters.snapshots).toBe(0);
   });
   test('pagination client refuses reordered, changed or replayed pages',async()=>{
     const f=retainedFixture(),selector={kind:'student',studentId:f.student.id,date:f.date} as const;
@@ -100,5 +106,18 @@ describe('retained current-state production query path',()=>{
       const reply=await f.app.retainedQuery(f.actor,input);if(reply.status==='page'){const value=(reply.records[0] as any).value;value.students[0].displayName=value.students[0].displayName.replace('Invented','Xnvented');reply.page.serializedBytes=bytes(reply);}
       return reply;
     })).rejects.toThrow('retained_document_digest_conflict');
+  });
+  test('canonical replacement, exact attempt teacher final and independent physical stages survive paging',async()=>{
+    const f=retainedFixture(1,10),work=f.rows.find(r=>r.entityId==='work-A')!,attempt=f.rows.find(r=>r.entityId==='attempt-A')!,explicit=f.rows.find(r=>r.entityId==='explicit')!,withdrawn=f.rows.find(r=>r.entityId==='withdrawn')!;
+    if(explicit.payload.kind!=='learning_work_assignment'||work.payload.kind!=='learning_work_assignment')throw Error('fixture assignment');
+    explicit.payload={...explicit.payload,replaces:known({assignmentRevisionId:withdrawn.revisionId},[withdrawn.revisionId]),evidenceRefs:[...explicit.payload.evidenceRefs,withdrawn.revisionId]};
+    const payload:any={kind:'teacher_activity_review',studentBinding:{studentId:f.student.id,sourceStudent:f.student.sourceKey},sourceStudent:f.student.sourceKey,reportedAt:f.time,evidenceRevisionIds:[work.revisionId,attempt.revisionId],assignmentRevisionId:work.revisionId,selectedItemIds:work.payload.items.map(i=>i.assignedItemId),coverage:'whole_assigned_items',originalScore:100,originalWrong:'not_applicable',similarPrinted:'unknown',similar:'unknown',appEntry:'not_entered',paper:{issuance:work.payload.paper,corrections:[],stages:{printed:unknown('Not observed'),distributed:known({issuanceKey:(work.payload.paper as any).value.issuanceKey,state:'done',observedAt:f.time},['synthetic-distribution'])}},video:{upload:'unknown',reference:'',review:'not_reviewed',note:''},mindmap:{state:'not_requested',note:'',explanation:null},final:{decision:'accepted',checkedSolutionAndUnderstanding:true,note:'Invented scoped final'},attemptBinding:known({attemptEntityId:attempt.entityId,attemptRevisionId:attempt.revisionId},[attempt.revisionId])};
+    const workspace={ownerId:f.owner,studentId:f.student.id,entityId:'synthetic-review',revisionId:'synthetic-review-r1',payload,sequence:1,recordedAt:f.time} as StudentWorkspaceVersion;
+    // Test-only store extension; the production adapter still calls the same canonical facade.
+    const original=f.store.readSnapshot.bind(f.store);f.store.readSnapshot=callback=>original(read=>callback({...read,studentWorkspaces:async()=>[workspace]}));
+    const expected=await f.app.student(f.actor,f.student.id,f.date),{result}=await collect(f,{kind:'student',studentId:f.student.id,date:f.date});
+    expect(canonicalJson(result)).toBe(canonicalJson(expected));expect(result.teacherWorkspaces[0].payload.attemptBinding.value.attemptRevisionId).toBe(attempt.revisionId);
+    expect(result.teacherWorkspaces[0].payload.paper.stages.printed.state).toBe('unknown');expect(result.teacherWorkspaces[0].payload.paper.stages.distributed.state).toBe('known');expect(result.teacherWorkspaces[0].payload.final.decision).toBe('accepted');
+    expect(result.evidence.find((r:any)=>r.entityId==='explicit').payload.replaces.value.assignmentRevisionId).toBe(withdrawn.revisionId);
   });
 });

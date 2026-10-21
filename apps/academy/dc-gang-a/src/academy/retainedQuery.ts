@@ -3,6 +3,7 @@ import {canonicalJson,digest} from '../learning/model';
 import {readInputRecord} from '../contracts/readInputRecord';
 import {assertPreparationDate} from './preparationHistory';
 import {assertTeacherScope} from './usecases/requestRecovery';
+import {validateRetainedQueryReply} from './retainedQueryValidation';
 import type {TeacherApplication} from './application';
 import type {TrustedTeacherContext} from './contracts/teacherOperations';
 import {retainedQueryLimits as bounds,type RetainedSelector,type RetainedQueryRequest,type RetainedQueryReply,type RetainedQueryPage,type RetainedFragment,type QueryJson,type RetainedPath} from './contracts/retainedQuery';
@@ -87,7 +88,7 @@ export function createRetainedQueryReader(facade:Facade,options:{cursorKey?:Uint
       if(!base.records.length)return refusal('retained_record_exceeds_json_page_budget');
       const next=offset+base.records.length;base.page.returned=base.records.length;base.page.exhausted=next===records.length;base.page.nextCursor=base.page.exhausted?null:cursorFor(binding,snapshot,next);
       if(measure()>selected.maxBytes)return refusal('retained_fixed_metadata_exceeds_json_page_budget');
-      return base;
+      validateRetainedQueryReply(base);return base;
     }catch(error){return refusal(error instanceof Error&&error.message==='retained_document_scope_too_large'?error.message:'retained_query_unavailable');}
   }};
 }

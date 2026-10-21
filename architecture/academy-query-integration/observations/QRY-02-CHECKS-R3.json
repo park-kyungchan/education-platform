@@ -1,0 +1,109 @@
+{
+  "schema": "academy.qry02-review-fix-checks.v1",
+  "createdAt": "2026-10-21T09:16:57.069Z",
+  "implementationBase": "29510c7ee9a5f8e6fc68bb6dbe5cf320bb66fc95",
+  "preservedWipCommit": "959920b0cf90201f878e719c284fea417da8289e",
+  "nativeThreadId": "01a15d3e-8769-7061-983f-880f73d33289",
+  "review": {
+    "path": "/home/palantirkc/worktrees/academy-architecture-orchestration-20261021/architecture/academy-reorganization/reviews/AAR-REVIEW-005/AAR-REVIEW-005.json",
+    "sha256": "95f03cd5391fcc1e32ae42bf7c82327c464eca3619aeaa11eaf1cbf070fba9db",
+    "reviewedCommit": "959920b0cf90201f878e719c284fea417da8289e",
+    "successorIndependentlyReviewed": false
+  },
+  "fixes": [
+    "F1 value-based scope comparisons and stable owner/actor/student/workspace tuple keys with legacy recovery-key normalization; no new parent effects",
+    "F2 complete browser-safe page/refusal union validation before accumulation, also applied to producer egress; corrected-byte/digest malformed variants refuse without echo"
+  ],
+  "rows": [
+    {
+      "id": "final-dc-typecheck",
+      "args": [
+        "bun",
+        "run",
+        "typecheck"
+      ],
+      "cwd": "apps/academy/dc-gang-a",
+      "startedAt": "2026-10-21T09:16:47.728Z",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "$ bun node_modules/typescript/bin/tsc --noEmit\n",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "20a7f6ddac8dfddfae008432d479755c5a411ed34c10316ad6e9ef2d44f4a5a9"
+    },
+    {
+      "id": "focused-typecheck",
+      "args": [
+        "bun",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "-p",
+        "architecture/academy-query-integration/qry02-tsconfig.json"
+      ],
+      "cwd": ".",
+      "startedAt": "2026-10-21T09:16:49.625Z",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "actual-views-envelope-core-and-affected-paths",
+      "args": [
+        "bun",
+        "test",
+        "tests/academy/retainedQuery.test.ts",
+        "tests/academy/retainedQueryReviewFixes.test.ts",
+        "tests/academy/teacherWorkspaceEditor.test.ts",
+        "tests/academy/teacherObservation.test.ts",
+        "tests/academy/preparationView.test.ts",
+        "tests/academy/teacherReadSnapshot.test.ts"
+      ],
+      "cwd": "apps/academy/dc-gang-a",
+      "startedAt": "2026-10-21T09:16:51.385Z",
+      "exitCode": 0,
+      "stdout": "bun test v1.4.3 (c6da4a4d3)\n",
+      "stderr": "\ntests/academy/retainedQueryReviewFixes.test.ts:\n(pass) F1 actual activity view reconciles reordered scope and preserves edited text with legacy recovery keys [276.46ms]\n(pass) F1 actual parent view reconciles reordered scope and preserves edited text with legacy recovery keys [116.51ms]\n(pass) F1 actual activity view preserves the identical pending request across retained and legacy scenes [163.98ms]\n(pass) F1 actual parent view preserves the identical pending request across retained and legacy scenes [101.16ms]\n(pass) F1 actual view still refuses genuinely changed ownerId and keeps draft scopes separate [111.35ms]\n(pass) F1 actual view still refuses genuinely changed actorId and keeps draft scopes separate [128.00ms]\n(pass) F2 rejects exhausted string false with correct JSON byte count and unchanged valid document hash [6.18ms]\n(pass) F2 rejects exhausted string true with correct JSON byte count and unchanged valid document hash [1.95ms]\n(pass) F2 rejects missing binding with correct JSON byte count and unchanged valid document hash [1.96ms]\n(pass) F2 rejects bad binding with correct JSON byte count and unchanged valid document hash [1.43ms]\n(pass) F2 rejects missing coverage with correct JSON byte count and unchanged valid document hash [2.08ms]\n(pass) F2 rejects missing effects with correct JSON byte count and unchanged valid document hash [3.43ms]\n(pass) F2 rejects source writes with correct JSON byte count and unchanged valid document hash [1.89ms]\n(pass) F2 rejects source acquisition with correct JSON byte count and unchanged valid document hash [2.23ms]\n(pass) F2 rejects parent send with correct JSON byte count and unchanged valid document hash [2.47ms]\n(pass) F2 rejects empty clock with correct JSON byte count and unchanged valid document hash [1.85ms]\n(pass) F2 rejects invalid clock with correct JSON byte count and unchanged valid document hash [1.82ms]\n(pass) F2 rejects clock wrong scalar with correct JSON byte count and unchanged valid document hash [1.70ms]\n(pass) F2 rejects missing coverage clock with correct JSON byte count and unchanged valid document hash [2.05ms]\n(pass) F2 rejects false authoritative currentness with correct JSON byte count and unchanged valid document hash [1.07ms]\n(pass) F2 rejects missing effect flag with correct JSON byte count and unchanged valid document hash [2.79ms]\n(pass) F2 rejects unsafe total with correct JSON byte count and unchanged valid document hash [3.45ms]\n(pass) F2 rejects infinite total with correct JSON byte count and unchanged valid document hash [2.21ms]\n(pass) F2 rejects fractional offset with correct JSON byte count and unchanged valid document hash [1.51ms]\n(pass) F2 rejects returned string with correct JSON byte count and unchanged valid document hash [1.79ms]\n(pass) F2 rejects negative source count with correct JSON byte count and unchanged valid document hash [1.38ms]\n(pass) F2 rejects missing cursor with correct JSON byte count and unchanged valid document hash [3.33ms]\n(pass) F2 rejects contradictory cursor with correct JSON byte count and unchanged valid document hash [6.73ms]\n(pass) F2 rejects fractional max bytes with correct JSON byte count and unchanged valid document hash [2.32ms]\n(pass) F2 rejects missing selector date with correct JSON byte count and unchanged valid document hash [1.95ms]\n(pass) F2 rejects unknown metadata with correct JSON byte count and unchanged valid document hash [1.46ms]\n(pass) F2 rejects wrong record kind with correct JSON byte count and unchanged valid document hash [1.80ms]\n(pass) F2 rejects malformed refusal without echoing its fields [0.25ms]\n(pass) F2 rejects malformed refusal without echoing its fields [0.09ms]\n(pass) F2 rejects malformed refusal without echoing its fields [0.02ms]\n(pass) F2 genuine refusal keeps its bounded code and never returns a retained document [0.17ms]\n\ntests/academy/retainedQuery.test.ts:\n(pass) retained current-state production query path > reconstructs every requested student field through real facade/snapshot/projections with exact DOM02 meaning [169.52ms]\n(pass) retained current-state production query path > cohort preserves canonical fields and original source clocks [51.26ms]\n(pass) retained current-state production query path > class_preparation preserves canonical fields and original source clocks [14.86ms]\n(pass) retained current-state production query path > class selector uses exact observed group without equating missing rows to absence [6.09ms]\n(pass) retained current-state production query path > page JSON bytes include fixed metadata, Unicode, escapes and actual continuation without truncation [2372.78ms]\n(pass) retained current-state production query path > cursor refuses changed actor before facade read [36.77ms]\n(pass) retained current-state production query path > cursor refuses changed owner before facade read [23.27ms]\n(pass) retained current-state production query path > cursor refuses changed selector before facade read [22.79ms]\n(pass) retained current-state production query path > cursor refuses changed date before facade read [20.47ms]\n(pass) retained current-state production query path > cursor refuses changed limit before facade read [26.12ms]\n(pass) retained current-state production query path > cursor refuses changed budget before facade read [24.91ms]\n(pass) retained current-state production query path > cursor refuses changed forged before facade read [19.14ms]\n(pass) retained current-state production query path > source/verification/teacher revision drift refuses an old continuation after one canonical snapshot [37.87ms]\n(pass) retained current-state production query path > caller mutation during a yielded read does not redirect the selection [22.57ms]\n(pass) retained current-state production query path > rejects exact input violations before source loads: {\"ownerId\":\"override\"} [2.34ms]\n(pass) retained current-state production query path > rejects exact input violations before source loads: {\"url\":\"https://invalid\"} [1.77ms]\n(pass) retained current-state production query path > rejects exact input violations before source loads: {\"cursor\":\"x\",\"maxBytes\":1} [1.85ms]\n(pass) retained current-state production query path > rejects exact input violations before source loads: {\"limit\":251} [2.15ms]\n(pass) retained current-state production query path > rejects exact input violations before source loads: {\"selector\":{\"kind\":\"student\",\"studentId\":\"x\",\"date\":\"2090-02-30\"}} [2.00ms]\n(pass) retained current-state production query path > rejects exact input violations before source loads: {\"selector\":{\"kind\":\"cohort\",\"ownerId\":\"x\"}} [1.80ms]\n(pass) retained current-state production query path > accessor request is refused without invocation or source loads [2.17ms]\n(pass) retained current-state production query path > fixed metadata and oversized atomic record refusals themselves stay small [11.27ms]\n(pass) retained current-state production query path > HTTP authenticated production route and shared client retain the exact document [183.70ms]\n(pass) retained current-state production query path > anonymous/origin/owner override inputs cannot authenticate themselves or read source [2.06ms]\n(pass) retained current-state production query path > identity rotation during awaited facade read prevents HTTP result disclosure [2.74ms]\n(pass) retained current-state production query path > HTTP malformed JSON refuses with bounded fixed metadata and no source load [2.21ms]\n(pass) retained current-state production query path > pagination client refuses reordered, changed or replayed pages [40.21ms]\n(pass) retained current-state production query path > web/CLI production consumers use common reader; legacy GET and final WebMCP packaging remain distinct [0.44ms]\n(pass) retained current-state production query path > new reader instances refuse old cursors without storing a scene or session [24.69ms]\n(pass) retained current-state production query path > oversized retained documents refuse with bounded metadata and no truncation [29.00ms]\n(pass) retained current-state production query path > transport digest detects content changes even if page serialization size still matches [2.79ms]\n(pass) retained current-state production query path > canonical replacement, exact attempt teacher final and independent physical stages survive paging [119.38ms]\n\ntests/academy/preparationView.test.ts:\n(pass) teacher presentation preserves unknown coverage and rejects another selected date [0.37ms]\n\ntests/academy/teacherReadSnapshot.test.ts:\n(skip) coherent teacher read snapshot > keeps one read-only snapshot while a separate writer commits\n(skip) coherent teacher read snapshot > exposes a frozen read facade and expires it at callback completion or exception\n(skip) coherent teacher read snapshot > PostgreSQL refuses an actual write inside the adapter snapshot transaction\n(skip) coherent teacher read snapshot > all scene query consumers enter the snapshot after authentication\n\ntests/academy/teacherObservation.test.ts:\n(pass) exported observation ingress rejects nested accessors before any store call [1.36ms]\n(pass) valid maximal Korean observations cross HTTP byte ingress and oversized bodies refuse before application calls [2.20ms]\n(skip) source-bound teacher observation through the actual HTTP/application/PostgreSQL path > fresh identical observation requests retain their own revisions, predecessors and actor-bound recovery\n(skip) source-bound teacher observation through the actual HTTP/application/PostgreSQL path > saves an original, replays its exact request, appends a correction and reads persisted revisions after reopen\n\ntests/academy/teacherWorkspaceEditor.test.ts:\n(pass) a proven semantic intake refusal keeps the draft editable instead of pending forever [43.41ms]\n(pass) a candidate reply after save cannot mutate the exact pending request and remains an unsaved edit after valid acknowledgement [109.93ms]\n(pass) rebasing a parent draft onto changed evidence preserves wording and invalidates the old teacher review [38.18ms]\n(pass) postcommit readback failure stays uncertain even when its error name resembles a precommit refusal [47.51ms]\n\n6 tests skipped:\n(skip) coherent teacher read snapshot > keeps one read-only snapshot while a separate writer commits\n(skip) coherent teacher read snapshot > exposes a frozen read facade and expires it at callback completion or exception\n(skip) coherent teacher read snapshot > PostgreSQL refuses an actual write inside the adapter snapshot transaction\n(skip) coherent teacher read snapshot > all scene query consumers enter the snapshot after authentication\n(skip) source-bound teacher observation through the actual HTTP/application/PostgreSQL path > fresh identical observation requests retain their own revisions, predecessors and actor-bound recovery\n(skip) source-bound teacher observation through the actual HTTP/application/PostgreSQL path > saves an original, replays its exact request, appends a correction and reads persisted revisions after reopen\n\n 75 pass\n 6 skip\n 0 fail\n 675 expect() calls\nRan 81 tests across 6 files. [5.02s]\n",
+      "stdoutSha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+      "stderrSha256": "aabba3b5f0643b6a26a20375845c743067ac55d46e7e95a881b83c88542c6df0"
+    },
+    {
+      "id": "final-synthetic-http-loads-and-bytes",
+      "args": [
+        "bun",
+        "architecture/academy-query-integration/qry02-measure.ts",
+        "architecture/academy-query-integration/observations/QRY-02-MEASUREMENTS-R3.json"
+      ],
+      "cwd": ".",
+      "startedAt": "2026-10-21T09:16:56.433Z",
+      "exitCode": 0,
+      "stdout": "{\"status\":\"pass\",\"output\":\"architecture/academy-query-integration/observations/QRY-02-MEASUREMENTS-R3.json\",\"measurements\":[{\"kind\":\"student\",\"pages\":5,\"maxBytes\":65526,\"totalBytes\":264447,\"facadeCalls\":5},{\"kind\":\"cohort\",\"pages\":3,\"maxBytes\":44072,\"totalBytes\":124109,\"facadeCalls\":3},{\"kind\":\"class_preparation\",\"pages\":1,\"maxBytes\":3342,\"totalBytes\":3342,\"facadeCalls\":1}]}\n",
+      "stderr": "",
+      "stdoutSha256": "2b9870b49e581b4fb11ad033aa0daeceb8a947edddcab283dc242dc46ee61834",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "final-browser-entrypoints-memory-build",
+      "exitCode": 0,
+      "outputFilesWritten": false,
+      "bytes": 1267333,
+      "logs": []
+    }
+  ],
+  "reusedPasses": [
+    "Unchanged month-end actual provider/frontend50-bound source continuation,120hierarchy+120labels/6calls, R1",
+    "Unchanged month-end web typecheck, R1",
+    "DOM02 root-qualified domain tests and known47DBskips; no replay"
+  ],
+  "knownLimitations": [
+    "No real browser/device/native CLI/database behavior observed",
+    "No native source or source-currentness/latency verified",
+    "Downstream MCP duplicated512KiB packaging is CON-owned and unqualified here",
+    "Root-reserved import/provenance and missing catalog/SDK declaration gaps retained"
+  ],
+  "passed": true,
+  "gitMutation": 0,
+  "nativeActivation": false,
+  "teacherAcceptance": false,
+  "formalAcceptance": false
+}

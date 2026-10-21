@@ -1,4 +1,5 @@
 import {retainedQueryLimits as bounds,type RetainedSelector,type RetainedQueryRequest,type RetainedQueryReply,type RetainedFragment,type QueryJson} from './contracts/retainedQuery';
+import {validateRetainedQueryReply} from './retainedQueryValidation';
 /** Transport reconstruction only; no domain projections, eligibility or teacher-state logic. */
 export async function readRetainedDocument<T>(selector:RetainedSelector,fetchPage:(request:RetainedQueryRequest)=>Promise<RetainedQueryReply>):Promise<T>{
   selector=JSON.parse(JSON.stringify(selector));
@@ -6,7 +7,7 @@ export async function readRetainedDocument<T>(selector:RetainedSelector,fetchPag
   const fragments:RetainedFragment[]=[],seen=new Set<string>();let transferred=0;
   const identity=(s:RetainedSelector)=>JSON.stringify(Object.entries(s).sort(([a],[b])=>a.localeCompare(b)));
   for(let pageIndex=0;pageIndex<1024;pageIndex++){
-    const page=await fetchPage({selector,cursor,limit:bounds.maxPageRecords,maxBytes:bounds.pageBytes});
+    const page=validateRetainedQueryReply(await fetchPage({selector,cursor,limit:bounds.maxPageRecords,maxBytes:bounds.pageBytes}));
     if(page.status!=='page')throw Error(page.code);
     const bytes=new TextEncoder().encode(JSON.stringify(page)).byteLength;transferred+=bytes;
     if(page.schema!=='academy.retained-query.v1'||identity(page.selector)!==identity(selector)||page.page.offset!==fragments.length||page.page.returned!==page.records.length||!page.records.length||page.records.length>bounds.maxPageRecords||page.page.maxBytes!==bounds.pageBytes||bytes!==page.page.serializedBytes||bytes>bounds.pageBytes||transferred>32*1024*1024||fragments.length+page.records.length>bounds.documentRecords)throw Error('retained_page_contract_conflict');

@@ -1,0 +1,85 @@
+{
+  "schema": "academy.qry02-checks-refinement.v1",
+  "createdAt": "2026-10-21T09:06:09.278Z",
+  "sourceBase": "29510c7ee9a5f8e6fc68bb6dbe5cf320bb66fc95",
+  "nativeThreadId": "01a15d3e-8769-7061-983f-880f73d33289",
+  "priorReceipt": "architecture/academy-query-integration/observations/QRY-02-CHECKS-R1.json",
+  "corrections": "Measurement script control-flow narrowing corrected; query HTTP intake now returns a short fixed refusal for malformed JSON. Successful measured production path rerun at final source; no domain logic changed.",
+  "rows": [
+    {
+      "id": "corrected-focused-typecheck",
+      "args": [
+        "bun",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "-p",
+        "architecture/academy-query-integration/qry02-tsconfig.json"
+      ],
+      "cwd": ".",
+      "startedAt": "2026-10-21T09:06:01.709Z",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "final-dc-typecheck",
+      "args": [
+        "bun",
+        "run",
+        "typecheck"
+      ],
+      "cwd": "apps/academy/dc-gang-a",
+      "startedAt": "2026-10-21T09:06:03.352Z",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "$ bun node_modules/typescript/bin/tsc --noEmit\n",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "20a7f6ddac8dfddfae008432d479755c5a411ed34c10316ad6e9ef2d44f4a5a9"
+    },
+    {
+      "id": "final-production-query-adversarial",
+      "args": [
+        "bun",
+        "test",
+        "tests/academy/retainedQuery.test.ts"
+      ],
+      "cwd": "apps/academy/dc-gang-a",
+      "startedAt": "2026-10-21T09:06:05.081Z",
+      "exitCode": 0,
+      "stdout": "bun test v1.4.3 (c6da4a4d3)\n",
+      "stderr": "\ntests/academy/retainedQuery.test.ts:\n(pass) retained current-state production query path > reconstructs every requested student field through real facade/snapshot/projections with exact DOM02 meaning [195.32ms]\n(pass) retained current-state production query path > cohort preserves canonical fields and original source clocks [51.90ms]\n(pass) retained current-state production query path > class_preparation preserves canonical fields and original source clocks [17.61ms]\n(pass) retained current-state production query path > class selector uses exact observed group without equating missing rows to absence [7.13ms]\n(pass) retained current-state production query path > page JSON bytes include fixed metadata, Unicode, escapes and actual continuation without truncation [2617.91ms]\n(pass) retained current-state production query path > cursor refuses changed actor before facade read [26.15ms]\n(pass) retained current-state production query path > cursor refuses changed owner before facade read [19.09ms]\n(pass) retained current-state production query path > cursor refuses changed selector before facade read [28.63ms]\n(pass) retained current-state production query path > cursor refuses changed date before facade read [27.10ms]\n(pass) retained current-state production query path > cursor refuses changed limit before facade read [23.59ms]\n(pass) retained current-state production query path > cursor refuses changed budget before facade read [28.31ms]\n(pass) retained current-state production query path > cursor refuses changed forged before facade read [32.67ms]\n(pass) retained current-state production query path > source/verification/teacher revision drift refuses an old continuation after one canonical snapshot [43.60ms]\n(pass) retained current-state production query path > caller mutation during a yielded read does not redirect the selection [23.38ms]\n(pass) retained current-state production query path > rejects exact input violations before source loads: {\"ownerId\":\"override\"} [2.32ms]\n(pass) retained current-state production query path > rejects exact input violations before source loads: {\"url\":\"https://invalid\"} [1.64ms]\n(pass) retained current-state production query path > rejects exact input violations before source loads: {\"cursor\":\"x\",\"maxBytes\":1} [1.78ms]\n(pass) retained current-state production query path > rejects exact input violations before source loads: {\"limit\":251} [2.01ms]\n(pass) retained current-state production query path > rejects exact input violations before source loads: {\"selector\":{\"kind\":\"student\",\"studentId\":\"x\",\"date\":\"2090-02-30\"}} [2.53ms]\n(pass) retained current-state production query path > rejects exact input violations before source loads: {\"selector\":{\"kind\":\"cohort\",\"ownerId\":\"x\"}} [3.10ms]\n(pass) retained current-state production query path > accessor request is refused without invocation or source loads [3.38ms]\n(pass) retained current-state production query path > fixed metadata and oversized atomic record refusals themselves stay small [7.33ms]\n(pass) retained current-state production query path > HTTP authenticated production route and shared client retain the exact document [175.12ms]\n(pass) retained current-state production query path > anonymous/origin/owner override inputs cannot authenticate themselves or read source [4.01ms]\n(pass) retained current-state production query path > identity rotation during awaited facade read prevents HTTP result disclosure [3.57ms]\n(pass) retained current-state production query path > HTTP malformed JSON refuses with bounded fixed metadata and no source load [1.85ms]\n(pass) retained current-state production query path > pagination client refuses reordered, changed or replayed pages [37.52ms]\n(pass) retained current-state production query path > web/CLI production consumers use common reader; legacy GET and final WebMCP packaging remain distinct [0.65ms]\n(pass) retained current-state production query path > new reader instances refuse old cursors without storing a scene or session [31.03ms]\n(pass) retained current-state production query path > oversized retained documents refuse with bounded metadata and no truncation [24.87ms]\n(pass) retained current-state production query path > transport digest detects content changes even if page serialization size still matches [3.35ms]\n(pass) retained current-state production query path > canonical replacement, exact attempt teacher final and independent physical stages survive paging [113.99ms]\n\n 32 pass\n 0 fail\n 549 expect() calls\nRan 32 tests across 1 file. [3.65s]\n",
+      "stdoutSha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+      "stderrSha256": "b42704ffff3da2719ab7652426fdefc2b856cae06a66fa9b17d0d95244d70034"
+    },
+    {
+      "id": "final-http-measurements",
+      "args": [
+        "bun",
+        "architecture/academy-query-integration/qry02-measure.ts",
+        "architecture/academy-query-integration/observations/QRY-02-MEASUREMENTS-R2.json"
+      ],
+      "cwd": ".",
+      "startedAt": "2026-10-21T09:06:08.749Z",
+      "exitCode": 0,
+      "stdout": "{\"status\":\"pass\",\"output\":\"architecture/academy-query-integration/observations/QRY-02-MEASUREMENTS-R2.json\",\"measurements\":[{\"kind\":\"student\",\"pages\":5,\"maxBytes\":65526,\"totalBytes\":264447,\"facadeCalls\":5},{\"kind\":\"cohort\",\"pages\":3,\"maxBytes\":44072,\"totalBytes\":124109,\"facadeCalls\":3},{\"kind\":\"class_preparation\",\"pages\":1,\"maxBytes\":3342,\"totalBytes\":3342,\"facadeCalls\":1}]}\n",
+      "stderr": "",
+      "stdoutSha256": "c3dc6a589d0772a2400a2133b42285aaafe8c30626752489c528d94f4ecd496f",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "reusedPasses": [
+    "R1 affected observation/preparation/snapshot tests (3pass/6DBskips beyond QRY tests)",
+    "R1 month-end in-process provider/frontend continuation (1pass)",
+    "R1 month-end web typecheck and both actual browser memory bundles"
+  ],
+  "knownLimitations": [
+    "Native source/currentness/latency not verified",
+    "Whole canonical catalog input/provenance and SDK declaration gaps retained",
+    "Downstream MCP duplicated tool result budget remains CON-owned"
+  ],
+  "passed": true,
+  "gitMutations": 0,
+  "nativeActivation": false
+}

@@ -1,0 +1,481 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "academy-query-integration-20261021",
+  "kind": "input",
+  "id": "QRY-02-RESULT-R1",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "education-query-sublead",
+    "locator": "root-admitted-bounded-query-successor:01a15d3e-8769-7061-983f-880f73d33289",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "schema": "academy.qry02-result.v1",
+    "createdAt": "2026-10-21T09:21:15.683Z",
+    "taskId": "education-platform:task:academy-query-integration-20261021-qry-02",
+    "nativeThreadId": "01a15d3e-8769-7061-983f-880f73d33289",
+    "nativeIdentitySource": "Observed CODEX_THREAD_ID environment variable; never derived from logical IDs.",
+    "implementationBase": "29510c7ee9a5f8e6fc68bb6dbe5cf320bb66fc95",
+    "preservedRootWipCommit": "959920b0cf90201f878e719c284fea417da8289e",
+    "authority": {
+      "kind": "root-source-owner-delegation-under-existing-approved-architecture",
+      "directUserInterviewAnswer": false,
+      "admissionInput": "QRY-02-ADMISSION-R1",
+      "qualifiedDependencyInputs": [
+        "QRY-DOM02-QUALIFICATION-R1",
+        "QRY-DOM02-ADOPTION-R1"
+      ],
+      "reviewFixAdmission": "Direct root coordination admitted AAR-REVIEW-005 F1 and F2 within QRY-02; no new permissions/native effects."
+    },
+    "qualifiedDomain": {
+      "commit": "e52d008e0272f58a5a880f00696624361184aa22",
+      "tree": "3cca8c1aeee097570b1f64f81127b5d51f3ab123",
+      "evidence": "education-platform:evidence:dom-02-result-observation-r1",
+      "rootVerification": "education-platform:evidence:dom-02-root-verification-r1",
+      "adoption": "10 exact business/test files preserved;1 UI file has only exact-authorized F1 scope/key changes",
+      "neutralLeaves": "5 exact-byte leaves preserved"
+    },
+    "implementation": {
+      "entrypoint": "TeacherApplication.retainedQuery(context,input)",
+      "selectors": [
+        "cohort",
+        "student with exact studentId/date",
+        "date/class_preparation with optional exact observed groupId"
+      ],
+      "stateOwner": "Canonical TeacherApplication student/cohort/classPreparation -> readSnapshot -> maintained TeacherQueries/DOM02 projections; no duplicate reducer.",
+      "transport": "Lossless typed JSON fragments with ordinal/path/container/value; shared browser/CLI reconstruction verifies complete reply union before accumulation and exact canonical content hash after reassembly.",
+      "continuation": "Stateless HMAC cursor binds authenticated owner/actor/role, exact selector/date/group, limit/byte budget and full canonical document hash. No native/session data shadow store; process replacement invalidates cursors. Snapshot/caller/selector drift refuses, never auto-refreshes or silently restarts.",
+      "semantics": "Namespaces, book/registration revisions, assignment/attempt/item/occurrence identities, source/teacher clocks, teacher finals, withdrawals/replacements and independent physical stages survive exact document reconstruction. Verified100 default eligibility does not cancel explicit assignments.",
+      "budget": {
+        "jsonPageDefaultBytes": 65536,
+        "jsonPageMaxBytes": 131072,
+        "jsonPageMinBytes": 1024,
+        "maxPageRecords": 250,
+        "maxDocumentBytes": 8388608,
+        "maxFragmentRecords": 100000,
+        "maxDepth": 64,
+        "clientMaxPages": 1024,
+        "clientAccumulatedJsonBytes": 33554432,
+        "meaning": "Hard scope refusals, never truncation or inferred complete roster/history/currentness."
+      },
+      "currentness": "Unknown authoritative currentness and complete roster/history remain explicit; retrievedAt is page-delivery time, never native verification.",
+      "sourceFiles": [
+        "apps/academy/dc-gang-a/harness/academy_query.ts",
+        "apps/academy/dc-gang-a/src/academy/application.ts",
+        "apps/academy/dc-gang-a/src/academy/contracts/retainedQuery.ts",
+        "apps/academy/dc-gang-a/src/academy/retainedQuery.ts",
+        "apps/academy/dc-gang-a/src/academy/retainedQueryClient.ts",
+        "apps/academy/dc-gang-a/src/academy/retainedQueryValidation.ts",
+        "apps/academy/dc-gang-a/src/academy/server.ts",
+        "apps/academy/dc-gang-a/src/academy/web/client.ts",
+        "apps/academy/dc-gang-a/src/academy/web/teacherWorkspaceView.ts",
+        "apps/academy/dc-gang-a/src/academy/web/workspaceEditor.ts",
+        "apps/academy/dc-gang-a/src/academy/web/examWorkspaceView.ts",
+        "apps/academy/dc-gang-a/src/academy/web/operatingWorkspaceView.ts",
+        "apps/academy/dc-gang-a/tests/academy/retainedQuery.test.ts",
+        "apps/academy/dc-gang-a/tests/academy/retainedQueryFixtures.ts",
+        "apps/academy/dc-gang-a/tests/academy/retainedQueryReviewFixes.test.ts",
+        "apps/academy/month-end-web/src/app.ts",
+        "apps/academy/month-end-web/src/source-page.ts"
+      ],
+      "consumerCoverage": [
+        {
+          "surface": "Teacher browser initial student/date-class/cohort, post-save scene refresh and browser semantic query reads",
+          "state": "Uses retained pages; original typed document reconstructed before existing views.",
+          "remaining": "Browser modelContext final text envelope remains an aggregated output, separate from JSON page cap."
+        },
+        {
+          "surface": "Teacher activity/parent stale reconciliation and clinic recovery",
+          "state": "Legacy GET compatible; value scope comparisons and stable tuple draft keys preserve pending/edited identity.",
+          "remaining": "Legacy GET itself remains unbounded compatibility surface; no automatic business-effect replay."
+        },
+        {
+          "surface": "Native operator CLI cohort/student",
+          "state": "Source wired to same retained facade/collector; original aggregate stdout shape retained.",
+          "remaining": "CLI native entrypoint/config/database not executed; stdout aggregate is not a JSON page budget."
+        },
+        {
+          "surface": "Month-end web hierarchy/label -> Application/SourcePort",
+          "state": "Actual web page helpers use50 with source-owned nextOffset; source-only synthetic120hierarchy+120labels traversal proved.",
+          "remaining": "Research/teacher final selection remain unchanged; no TeacherApplication student-state integration. Native MCP launch guard remains held."
+        },
+        {
+          "surface": "Workbench CON external MCP/report consumer",
+          "state": "Not connected by this Work.",
+          "remaining": "CON owns producer qualification and actual duplicated CallToolResult512KiB production packaging; source byte budget is not that contract."
+        }
+      ]
+    },
+    "review005": {
+      "reportSha256": "95f03cd5391fcc1e32ae42bf7c82327c464eca3619aeaa11eaf1cbf070fba9db",
+      "reviewedCommit": "959920b0cf90201f878e719c284fea417da8289e",
+      "F1": "Value-based sameTeacherScope; stable owner/actor/student/workspace tuple keys across teacher/activity/parent/owner views; old object-key recovery references normalize to same existing draft. Actual view tests retain edited text and exact pending identity; real actor/owner changes refuse.",
+      "F2": "Browser-safe strict runtime validation of entire declared page/refusal union, finite-safe counters, boolean/cursor consistency, binding/hash/selector, clocks/coverage/omissions/effect flags and JSON fragment data. Corrected byte counts and valid content hash cannot bypass missing/contradictory metadata. Producer egress also validates.",
+      "sourceFixTests": "36 new review-fix tests plus4 existing workspace-editor recovery tests pass; no parent transmission/features added.",
+      "exactSuccessorIndependentReview": "pending Root; prior report does not qualify newer bytes"
+    },
+    "checks": {
+      "finalReceipt": "architecture/academy-query-integration/observations/QRY-02-CHECKS-R3.json",
+      "dcCompiler": "actual TypeScript7.0.2 / Bun1.4.3",
+      "dcTypecheck": "pass",
+      "focusedTypecheck": "pass",
+      "finalFocusedTests": {
+        "pass": 75,
+        "skip": 6,
+        "fail": 0,
+        "expectations": 675,
+        "scope": "Retained query production path, complete-envelope adversarial tests, actual JSDOM views, existing editor/observation/preparation/snapshot cases. Database skips explicit."
+      },
+      "monthEnd": "Unchanged transport helper/real in-process provider continuation:1pass,120hierarchy+120labels/6calls at50; R1 reused. Current Application/research meaning and final selection unchanged.",
+      "web": "DC and month-end actual browser entrypoints bundle in memory; month-end web typecheck passed; no browser/native server launched.",
+      "earlierReceipts": "INITIAL/R1/R2 preserved; R1 failed only on measurement-script TypeScript narrowing, corrected in R2. Initial synthetic audit fixture failure corrected without domain relaxation.",
+      "sourcePreservation": "architecture/academy-query-integration/qry02-source-evidence.json",
+      "rootReservedGaps": [
+        "Native currentness/authentication/latency and real DB/browser/CLI not qualified",
+        "Root-reserved provenance/import closure plus prior canonical catalog and foreign SDK declaration gaps remain explicit",
+        "Full history and missing native source families are omitted, not empty/absent/complete claims"
+      ]
+    },
+    "measurements": {
+      "receipt": "architecture/academy-query-integration/observations/QRY-02-MEASUREMENTS-R3.json",
+      "equivalentCanonicalDocuments": true,
+      "rows": [
+        {
+          "selectorKind": "student",
+          "fixture": {
+            "students": 1,
+            "notes": 120,
+            "realData": false
+          },
+          "equivalentCanonicalDocument": true,
+          "singleFacadeRead": {
+            "facadeCalls": 1,
+            "sourceLoads": {
+              "snapshots": 1,
+              "students": 1,
+              "current": 1,
+              "catalog": 1,
+              "preparationRevisions": 1,
+              "pinnedCatalog": 1,
+              "studentWorkspaces": 1,
+              "append": 0
+            },
+            "jsonBytes": 243015
+          },
+          "pagedHttp": {
+            "pages": 5,
+            "facadeCalls": 5,
+            "sourceLoads": {
+              "snapshots": 5,
+              "students": 5,
+              "current": 5,
+              "catalog": 5,
+              "preparationRevisions": 5,
+              "pinnedCatalog": 5,
+              "studentWorkspaces": 5,
+              "append": 0
+            },
+            "pageBytes": [
+              64395,
+              64632,
+              64673,
+              65526,
+              5221
+            ],
+            "totalJsonBytes": 264447,
+            "maxPageBytes": 65526,
+            "recordCounts": [
+              43,
+              37,
+              37,
+              85,
+              12
+            ],
+            "totalRecords": 214,
+            "snapshotCount": 1
+          },
+          "interpretation": "Stateless bounded delivery reloads the full canonical facade once per page; more calls/bytes than one unbounded JSON response are expected. No native source request, latency reduction or production latency measured."
+        },
+        {
+          "selectorKind": "cohort",
+          "fixture": {
+            "students": 700,
+            "notes": 120,
+            "realData": false
+          },
+          "equivalentCanonicalDocument": true,
+          "singleFacadeRead": {
+            "facadeCalls": 1,
+            "sourceLoads": {
+              "snapshots": 1,
+              "students": 1,
+              "current": 700,
+              "catalog": 0,
+              "preparationRevisions": 0,
+              "pinnedCatalog": 0,
+              "studentWorkspaces": 0,
+              "append": 0
+            },
+            "jsonBytes": 75991
+          },
+          "pagedHttp": {
+            "pages": 3,
+            "facadeCalls": 3,
+            "sourceLoads": {
+              "snapshots": 3,
+              "students": 3,
+              "current": 2100,
+              "catalog": 0,
+              "preparationRevisions": 0,
+              "pinnedCatalog": 0,
+              "studentWorkspaces": 0,
+              "append": 0
+            },
+            "pageBytes": [
+              42784,
+              44072,
+              37253
+            ],
+            "totalJsonBytes": 124109,
+            "maxPageBytes": 44072,
+            "recordCounts": [
+              250,
+              250,
+              212
+            ],
+            "totalRecords": 712,
+            "snapshotCount": 1
+          },
+          "interpretation": "Stateless bounded delivery reloads the full canonical facade once per page; more calls/bytes than one unbounded JSON response are expected. No native source request, latency reduction or production latency measured."
+        },
+        {
+          "selectorKind": "class_preparation",
+          "fixture": {
+            "students": 1,
+            "notes": 120,
+            "realData": false
+          },
+          "equivalentCanonicalDocument": true,
+          "singleFacadeRead": {
+            "facadeCalls": 1,
+            "sourceLoads": {
+              "snapshots": 1,
+              "students": 1,
+              "current": 1,
+              "catalog": 0,
+              "preparationRevisions": 1,
+              "pinnedCatalog": 0,
+              "studentWorkspaces": 0,
+              "append": 0
+            },
+            "jsonBytes": 2235
+          },
+          "pagedHttp": {
+            "pages": 1,
+            "facadeCalls": 1,
+            "sourceLoads": {
+              "snapshots": 1,
+              "students": 1,
+              "current": 1,
+              "catalog": 0,
+              "preparationRevisions": 1,
+              "pinnedCatalog": 0,
+              "studentWorkspaces": 0,
+              "append": 0
+            },
+            "pageBytes": [
+              3342
+            ],
+            "totalJsonBytes": 3342,
+            "maxPageBytes": 3342,
+            "recordCounts": [
+              1
+            ],
+            "totalRecords": 1,
+            "snapshotCount": 1
+          },
+          "interpretation": "Stateless bounded delivery reloads the full canonical facade once per page; more calls/bytes than one unbounded JSON response are expected. No native source request, latency reduction or production latency measured."
+        }
+      ],
+      "interpretation": "Full facade reloaded once per page; student5/cohort3/class1 loads vs one direct load. This increases calls/total JSON bytes and proves bounded delivery, not native latency improvement.",
+      "maxObservedJsonPageBytes": 65526,
+      "downstreamMcp": "JSON page budget is separate from duplicated MCP CallToolResult512KiB; Workbench CON must qualify its actual production packager. Browser modelContext/CLI final aggregation and old GET compatibility remain separate unbounded output surfaces."
+    },
+    "artifacts": [
+      {
+        "path": "apps/academy/dc-gang-a/harness/academy_query.ts",
+        "sha256": "574512398a50300519e8c23141999e57214c7475cc50cbe55fc719480ae59646",
+        "bytes": 2155
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/application.ts",
+        "sha256": "20f8a75e264c1dc4626dd095cb9381e58a80815706f44edbdd63af9f2cbec0ce",
+        "bytes": 5547
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/contracts/retainedQuery.ts",
+        "sha256": "390d83478a73afdcc0863b75c5b013ca9e065deb25c763cf2f19622caf9a9965",
+        "bytes": 1878
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/retainedQuery.ts",
+        "sha256": "084615bbfe033cb3098371a491cf5ca82d807d3268b3c85adb947a009e666cb4",
+        "bytes": 9731
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/retainedQueryClient.ts",
+        "sha256": "c458e74bce4ef63530c5480e2148646cacd81f5ceeb56ed1ec6570823b26288d",
+        "bytes": 4695
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/retainedQueryValidation.ts",
+        "sha256": "b5c1c09cd288a6d380776dbd67acb0b78b49cc125c020f7517f771d27b81ad9d",
+        "bytes": 6293
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/server.ts",
+        "sha256": "45033f49f65896690adcb2c4d9dd57aa3e0116d1c94570459f55b9e8f6f06de7",
+        "bytes": 37044
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/web/client.ts",
+        "sha256": "a7e774aeb73d3c046792ed97d33275e637f91f732a9a86d8d5d52b0f49248efd",
+        "bytes": 35698
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/web/teacherWorkspaceView.ts",
+        "sha256": "ac830eca4c3dab80cb21cdd00a7e07351c02dbb9cec5dd349a7f4abbbd7a3501",
+        "bytes": 15504
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/web/workspaceEditor.ts",
+        "sha256": "b492b7d0b324b2551dd09e2331be7548e56e907fa748e9481308f6e4fea829b3",
+        "bytes": 10743
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/web/examWorkspaceView.ts",
+        "sha256": "e80d95b9aebd6c824b81fed2d575bff6ad13c5c69fba4b8ec6f8fbfff1aee234",
+        "bytes": 9685
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/web/operatingWorkspaceView.ts",
+        "sha256": "5f415dc5a756d1d0970399436656592c38c814d0378ed857c5f93e493a018370",
+        "bytes": 8423
+      },
+      {
+        "path": "apps/academy/dc-gang-a/tests/academy/retainedQuery.test.ts",
+        "sha256": "067e109f3fe86f9aa505181bb6da7c423e887d5e01014aa0859790ec52772b7f",
+        "bytes": 17324
+      },
+      {
+        "path": "apps/academy/dc-gang-a/tests/academy/retainedQueryFixtures.ts",
+        "sha256": "a2f9ff6abda9a4d51c2763f1ae350789b9f8c9e6dca70b2b4c2f13bdc7fa2cd3",
+        "bytes": 5940
+      },
+      {
+        "path": "apps/academy/dc-gang-a/tests/academy/retainedQueryReviewFixes.test.ts",
+        "sha256": "5beaab5e22b03d4249ccb6bc942e1fbc87d4a418e49a0d2196edaa04a9dbcbeb",
+        "bytes": 9274
+      },
+      {
+        "path": "apps/academy/month-end-web/src/app.ts",
+        "sha256": "44a9b92ad05430e8df5bba7246d1abfbbe3a51708ae3b67c00df312bf6d23263",
+        "bytes": 40564
+      },
+      {
+        "path": "apps/academy/month-end-web/src/source-page.ts",
+        "sha256": "02f8e1bcc8c32ebf09c4d5f94333ebeecf286ba52f82a12dd1ec456c5b11908a",
+        "bytes": 585
+      },
+      {
+        "path": "architecture/academy-query-integration/qry02-source-evidence.json",
+        "sha256": "0de03286ab84efedca70e37da9f16cf87cf376d638717ff200584a99a9502183",
+        "bytes": 20632
+      },
+      {
+        "path": "architecture/academy-query-integration/qry02-entrypoint.json",
+        "sha256": "508bdb515f3c6f3a25db7dfc627b1467c295c70ba37b37d0d1abd2258e67cb18",
+        "bytes": 1658
+      },
+      {
+        "path": "architecture/academy-query-integration/qry02-tsconfig.json",
+        "sha256": "bb9306e903271218bfb918bb2f67b0b165e6dccc91745e4a93783b34e1638057",
+        "bytes": 172
+      },
+      {
+        "path": "architecture/academy-query-integration/qry02-month-end.test.ts",
+        "sha256": "176f3fee604876f386c7843c5a3d1d7b27f9eace3a418022b8e12a88f1ad12c6",
+        "bytes": 2859
+      },
+      {
+        "path": "architecture/academy-query-integration/qry02-checks.ts",
+        "sha256": "b2f3eb18dc9b22717cdf5e1fb741a991d46eb8c34e2ca84e0e345caad12c345a",
+        "bytes": 4240
+      },
+      {
+        "path": "architecture/academy-query-integration/qry02-measure.ts",
+        "sha256": "f91eae50aac19f2710569aa3380788a5116c4f0e987fa6311a962618489f10cc",
+        "bytes": 5100
+      },
+      {
+        "path": "architecture/academy-query-integration/observations/QRY-02-INITIAL-CHECKS-R1.json",
+        "sha256": "fcf7ac69e35854bd15c582d749f35aa746717df44e6ed29fd0f6e1ddbb1812fa",
+        "bytes": 502
+      },
+      {
+        "path": "architecture/academy-query-integration/observations/QRY-02-CHECKS-R1.json",
+        "sha256": "030dbdbe1d2400de9d81282ca27958cd6d369f35e86b9964d24ba13c5dfdf227",
+        "bytes": 14397
+      },
+      {
+        "path": "architecture/academy-query-integration/observations/QRY-02-MEASUREMENTS-R1.json",
+        "sha256": "55bade5e724a36cf58133f1e073a4b27f1b3f049237909c0ef8401b6b96fe01e",
+        "bytes": 5088
+      },
+      {
+        "path": "architecture/academy-query-integration/observations/QRY-02-CHECKS-R2.json",
+        "sha256": "3687340a65658fe3b6f4b34aa3fff2cfc6a48830aeb9efa4d237048bea08155e",
+        "bytes": 8294
+      },
+      {
+        "path": "architecture/academy-query-integration/observations/QRY-02-MEASUREMENTS-R2.json",
+        "sha256": "ec344f64c97ddb5ac6efbedcd01b47092240cb8d8ad0a367d5a4c57b6170f045",
+        "bytes": 5088
+      },
+      {
+        "path": "architecture/academy-query-integration/observations/QRY-02-CHECKS-R3.json",
+        "sha256": "579587f1d80af9915d4ab61e343ded3796dc7e3208c553d5bde11894489e3253",
+        "bytes": 15970
+      },
+      {
+        "path": "architecture/academy-query-integration/observations/QRY-02-MEASUREMENTS-R3.json",
+        "sha256": "12ae58719b9be2194fe91f5899b38086136c4d04f01e47d3c073fa425aaf9b3d",
+        "bytes": 5088
+      }
+    ],
+    "state": {
+      "execution": "complete-for-bounded-source-preparation",
+      "verification": "passed-for-focused-source-and-synthetic-paths",
+      "localDurability": "result-durable",
+      "sharedDelivery": "unsynchronized; Root exact checkpoint pending",
+      "nativeAdoption": false,
+      "nativeUse": "not qualified",
+      "teacherAcceptance": false,
+      "formalAcceptance": false,
+      "wholeWorkComplete": false
+    },
+    "effects": {
+      "gitMutationBySubLead": 0,
+      "rootWipCommitObserved": true,
+      "realPrivateOriginalReads": 0,
+      "realBusinessWrites": 0,
+      "nativeActivation": 0,
+      "publicationMergeDeploy": 0,
+      "printingSending": 0,
+      "syntheticWriteCallbacks": "Test-only mock callbacks, no native or parent persistence/transmission."
+    },
+    "nextSafeAction": "READY_FOR_ROOT_SOURCE_CHECKPOINT; WAIT for Root exact successor review and canonical checkpoint. No downstream admission, native adoption or formal acceptance inferred."
+  }
+}
