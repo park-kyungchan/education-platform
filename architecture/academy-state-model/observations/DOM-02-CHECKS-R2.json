@@ -1,0 +1,593 @@
+{
+  "schema": "academy.dom02-source-checks.v1",
+  "createdAt": "2026-10-21T08:10:21.379Z",
+  "sourceHead": "fabce64cb5338101328900644462b98fa8209be9",
+  "implementationBase": "3adb273aa1125aa8d6beff7dc51a4c5076710d9f",
+  "actualCodexThreadId": "01a15d19-e804-7a12-87c2-07c0b82d9807",
+  "checks": [
+    {
+      "id": "initial-dom02-dc-typecheck",
+      "exitCode": 1,
+      "meaning": "Retained first implementation check failure. Fixed owned TypeScript narrowing/implicit parameter annotations; no runtime policy or compiler flag bypass.",
+      "findings": [
+        "postgresStore.ts: implicit any for old assignment predicate",
+        "teacherWorkspace.ts: mutable AcademyRecord property lost narrowing inside item callback; implicit item parameter"
+      ]
+    },
+    {
+      "id": "root-source-status",
+      "args": [
+        "bun",
+        "run",
+        "status"
+      ],
+      "cwd": ".",
+      "startedAt": "2026-10-21T08:10:16.684Z",
+      "finishedAt": "2026-10-21T08:10:16.705Z",
+      "exitCode": 0,
+      "metrics": {
+        "pass": 0,
+        "fail": 0,
+        "skip": 0,
+        "expectations": 0
+      },
+      "stdoutSha256": "091598231c7a429dabf7c45c2f9d79b80373ad1515485b2958b1e5cbd172ebf9",
+      "stderrSha256": "357f5ac18959b62e4623f2f89ac33e249d9803fcb3bceb2b45b88780906873cb",
+      "stdoutBytes": 3370,
+      "stderrBytes": 24,
+      "stdoutTail": "{\n  \"projectId\": \"education-platform\",\n  \"authority\": \"none\",\n  \"ontologyVersion\": \"0.2.0\",\n  \"modules\": [\n    {\n      \"id\": \"mathematics-core\",\n      \"root\": \"packages/mathematics-core\",\n      \"runtime\": \"node-npm\",\n      \"sourceCommit\": \"b8766843f3f83b9d36cc5888f65f6b1ea56f3c52\",\n      \"native\": {\n        \"ownerProfile\": \"default\",\n        \"projectId\": \"p_8a30d5d4\",\n        \"projectRoot\": \"/opt/data/workspace/mathematics-cartography\",\n        \"workIssueIds\": [],\n        \"pendingWork\": \"IMMUTABLE_HUMAN_SEMANTIC_DISPOSITION_RECORD-R4\",\n        \"authority\": \"none\",\n        \"ontologyRootKind\": \"WorkStudio\"\n      },\n      \"entrypoints\": [\n        \"src/compile-fragment-review-proposal.ts\",\n        \"src/compile-fragment-evidence-review-packet.ts\",\n        \"src/compile-human-semantic-disposition-record.ts\"\n      ]\n    },\n    {\n      \"id\": \"curriculum\",\n      \"root\": \"packages/curriculum\",\n      \"runtime\": \"bun\",\n      \"runtimePin\": \"1.4.3\",\n      \"sourceCommit\": \"4a666ef6ff568f15495ff8219db583bf6dfbfe2a\",\n      \"native\": {\n        \"ownerProfile\": null,\n        \"projectId\": null,\n        \"projectRoot\": null,\n        \"workIssueIds\": [],\n        \"authority\": \"none\"\n      },\n      \"entrypoints\": [\n        \"scripts/preview.ts\",\n        \"scripts/project-ui.ts\"\n      ]\n    },\n    {\n      \"id\": \"academy\",\n      \"root\": \"apps/academy\",\n      \"runtime\": \"bun\",\n      \"runtimePin\": \"1.4.3\",\n      \"sourceCommit\": \"5074aeb5649c1a97ad06d33b9f895296fb4c3ad6\",\n      \"native\": {\n        \"ownerProfile\": \"dc-gang-a-dev\",\n        \"projectId\": \"p_a5676068\",\n        \"projectRoot\": \"/opt/data/workspace/dc-gang-a\",\n        \"workIssueIds\": [\n          \"t_ce34cba7\"\n        ],\n        \"authority\": \"none\",\n        \"workIssueMeaning\": \"historical task locator; not active status or permission\"\n      },\n      \"entrypoints\": [\n        \"dc-gang-a/src/academy/application.ts\",\n        \"dc-gang-a/src/academy/main.ts\",\n        \"gang-a/packages/application/select-operational-context.ts\"\n      ]\n    },\n    {\n      \"id\": \"clinic-workbench\",\n      \"root\": \"examples/clinic-workbench\",\n      \"runtime\": \"bun\",\n      \"runtimePin\": \"1.4.3\",\n      \"sourceCommit\": \"a99605e9ea4bcbfa28130456e0d1ab8e41e7001a\",\n      \"native\": {\n        \"ownerProfile\": \"dc-gang-a-dev\",\n        \"projectId\": null,\n        \"projectRoot\": null,\n        \"workIssueIds\": [],\n        \"authority\": \"none\"\n      },\n      \"entrypoints\": [\n        \"src/index.ts\",\n        \"scripts/demo.ts\"\n      ]\n    },\n    {\n      \"id\": \"mathcrew\",\n      \"root\": \"apps/mathcrew\",\n      \"runtime\": \"bun\",\n      \"runtimePin\": \"1.4.3\",\n      \"sourceCommit\": \"929f2ec058846fd45be4b6ba479966264be4e5e9\",\n      \"native\": {\n        \"ownerProfile\": \"default\",\n        \"projectId\": \"p_566ac0ba\",\n        \"projectRoot\": \"/opt/data/workspace/backend-ontology\",\n        \"workIssueIds\": [],\n        \"authority\": \"none\",\n        \"bindingMeaning\": \"profile-associated backend project; public product source remains module-owned\"\n      },\n      \"entrypoints\": [\n        \"src/build.ts\",\n        \"src/preview-handler.ts\"\n      ]\n    }\n  ],\n  \"semanticState\": {\n    \"mathematicsHumanDecision\": \"PENDING\",\n    \"mathematicsCanonicalApplication\": \"NOT_PERFORMED\",\n    \"r4Review\": \"PENDING_NEW_EXACT_REVIEW_AUTHORITY\",\n    \"bunParity\": \"DEFERRED\",\n    \"curriculumCanonicalInputs\": \"not_available_in_this_ui_export\"\n  },\n  \"productionVerified\": false\n}\n",
+      "stderrTail": "$ bun src/cli.ts status\n"
+    },
+    {
+      "id": "compiler-version",
+      "args": [
+        "bun",
+        "node_modules/typescript/bin/tsc",
+        "--version"
+      ],
+      "cwd": ".",
+      "startedAt": "2026-10-21T08:10:16.705Z",
+      "finishedAt": "2026-10-21T08:10:16.729Z",
+      "exitCode": 0,
+      "metrics": {
+        "pass": 0,
+        "fail": 0,
+        "skip": 0,
+        "expectations": 0
+      },
+      "stdoutSha256": "41024334022fa58f9c7337359517de307cbcfc6055c19f2b734245eacc2fe97a",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 14,
+      "stderrBytes": 0,
+      "stdoutTail": "Version 7.0.2\n",
+      "stderrTail": ""
+    },
+    {
+      "id": "dc-compiler-version",
+      "args": [
+        "bun",
+        "node_modules/typescript/bin/tsc",
+        "--version"
+      ],
+      "cwd": "apps/academy/dc-gang-a",
+      "startedAt": "2026-10-21T08:10:16.729Z",
+      "finishedAt": "2026-10-21T08:10:16.752Z",
+      "exitCode": 0,
+      "metrics": {
+        "pass": 0,
+        "fail": 0,
+        "skip": 0,
+        "expectations": 0
+      },
+      "stdoutSha256": "41024334022fa58f9c7337359517de307cbcfc6055c19f2b734245eacc2fe97a",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 14,
+      "stderrBytes": 0,
+      "stdoutTail": "Version 7.0.2\n",
+      "stderrTail": ""
+    },
+    {
+      "id": "root-typecheck",
+      "args": [
+        "bun",
+        "run",
+        "typecheck"
+      ],
+      "cwd": ".",
+      "startedAt": "2026-10-21T08:10:16.752Z",
+      "finishedAt": "2026-10-21T08:10:17.038Z",
+      "exitCode": 0,
+      "metrics": {
+        "pass": 0,
+        "fail": 0,
+        "skip": 0,
+        "expectations": 0
+      },
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "20a7f6ddac8dfddfae008432d479755c5a411ed34c10316ad6e9ef2d44f4a5a9",
+      "stdoutBytes": 0,
+      "stderrBytes": 47,
+      "stdoutTail": "",
+      "stderrTail": "$ bun node_modules/typescript/bin/tsc --noEmit\n"
+    },
+    {
+      "id": "dc-typecheck",
+      "args": [
+        "bun",
+        "run",
+        "typecheck"
+      ],
+      "cwd": "apps/academy/dc-gang-a",
+      "startedAt": "2026-10-21T08:10:17.039Z",
+      "finishedAt": "2026-10-21T08:10:18.559Z",
+      "exitCode": 0,
+      "metrics": {
+        "pass": 0,
+        "fail": 0,
+        "skip": 0,
+        "expectations": 0
+      },
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "20a7f6ddac8dfddfae008432d479755c5a411ed34c10316ad6e9ef2d44f4a5a9",
+      "stdoutBytes": 0,
+      "stderrBytes": 47,
+      "stdoutTail": "",
+      "stderrTail": "$ bun node_modules/typescript/bin/tsc --noEmit\n"
+    },
+    {
+      "id": "dom02-test-typecheck",
+      "args": [
+        "bun",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "-p",
+        "architecture/academy-state-model/tsconfig.dom02.json"
+      ],
+      "cwd": ".",
+      "startedAt": "2026-10-21T08:10:18.559Z",
+      "finishedAt": "2026-10-21T08:10:19.622Z",
+      "exitCode": 0,
+      "metrics": {
+        "pass": 0,
+        "fail": 0,
+        "skip": 0,
+        "expectations": 0
+      },
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 0,
+      "stderrBytes": 0,
+      "stdoutTail": "",
+      "stderrTail": ""
+    },
+    {
+      "id": "dom02-adversarial-tests",
+      "args": [
+        "bun",
+        "test",
+        "tests/academy/learningWorkRefinements.test.ts"
+      ],
+      "cwd": "apps/academy/dc-gang-a",
+      "startedAt": "2026-10-21T08:10:19.623Z",
+      "finishedAt": "2026-10-21T08:10:19.852Z",
+      "exitCode": 0,
+      "metrics": {
+        "pass": 40,
+        "fail": 0,
+        "skip": 0,
+        "expectations": 123
+      },
+      "stdoutSha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+      "stderrSha256": "5d2b6f46ff669c0420902b47d8d6b7c907034adaeb44633368c2b74469507fca",
+      "stdoutBytes": 28,
+      "stderrBytes": 5763,
+      "stdoutTail": "bun test v1.4.3 (c6da4a4d3)\n",
+      "stderrTail": "\ntests/academy/learningWorkRefinements.test.ts:\n(pass) DOM-02 exact assessment default targets > verified exact100 excludes BOTH defaults while scores, teacher review, explicit assignments and payload digests stay independent [7.11ms]\n(pass) DOM-02 exact assessment default targets > score%s never auto-assigns a clinic or closes teacher review, even with zero source wrong items [1.96ms]\n(pass) DOM-02 exact assessment default targets > score%s never auto-assigns a clinic or closes teacher review, even with zero source wrong items [1.98ms]\n(pass) DOM-02 exact assessment default targets > score%s never auto-assigns a clinic or closes teacher review, even with zero source wrong items [1.83ms]\n(pass) DOM-02 exact assessment default targets > legacy and explicit unknown bindings remain accepted without inserting new fields [6.46ms]\n(pass) DOM-02 exact assessment default targets > source wrong-attempt cannot exclude targets [6.03ms]\n(pass) DOM-02 exact assessment default targets > source wrong-student cannot exclude targets [2.59ms]\n(pass) DOM-02 exact assessment default targets > source wrong-book cannot exclude targets [2.65ms]\n(pass) DOM-02 exact assessment default targets > source wrong-course cannot exclude targets [1.62ms]\n(pass) DOM-02 exact assessment default targets > source wrong-paper cannot exclude targets [1.76ms]\n(pass) DOM-02 exact assessment default targets > source ambiguous cannot exclude targets [2.03ms]\n(pass) DOM-02 exact assessment default targets > source blocked cannot exclude targets [1.92ms]\n(pass) DOM-02 exact assessment default targets > old source/attempt heads, paper namespaces and mismatched attempt binding stay unknown [1.65ms]\n(pass) DOM-02 exact assessment default targets > a schema-valid score mutation with the original source digest cannot become verified100 [1.49ms]\n(pass) DOM-02 attempt-specific teacher originals and paper stages > legacy final remains assignment-scoped; exact new review binds one attempt without promoting every attempt [16.20ms]\n(pass) DOM-02 attempt-specific teacher originals and paper stages > grade revision preserves final for its prior exact revision and cannot inherit its inspection [2.06ms]\n(pass) DOM-02 attempt-specific teacher originals and paper stages > review cutoff follows the academy business date without rewriting its original report clock [6.27ms]\n(pass) DOM-02 attempt-specific teacher originals and paper stages > new exact review refuses missing scope drift using the transaction guard [2.06ms]\n(pass) DOM-02 attempt-specific teacher originals and paper stages > new exact review refuses assignment scope drift using the transaction guard [1.30ms]\n(pass) DOM-02 attempt-specific teacher originals and paper stages > new exact review refuses student scope drift using the transaction guard [0.89ms]\n(pass) DOM-02 attempt-specific teacher originals and paper stages > new exact review refuses owner scope drift using the transaction guard [2.44ms]\n(pass) DOM-02 attempt-specific teacher originals and paper stages > new exact review refuses entity scope drift using the transaction guard [0.71ms]\n(pass) DOM-02 attempt-specific teacher originals and paper stages > new exact review refuses revision scope drift using the transaction guard [0.66ms]\n(pass) DOM-02 attempt-specific teacher originals and paper stages > new exact review refuses item scope drift using the transaction guard [0.57ms]\n(pass) DOM-02 attempt-specific teacher originals and paper stages > new exact review refuses issuance scope drift using the transaction guard [0.58ms]\n(pass) DOM-02 attempt-specific teacher originals and paper stages > known attempt source is evidence-bound and independent of a teacher-reported score [1.93ms]\n(pass) DOM-02 attempt-specific teacher originals and paper stages > distribution and print are independent observed stages; paper identity alone establishes neither [1.51ms]\n(pass) DOM-02 attempt-specific teacher originals and paper stages > known print never proves distribution; foreign issuance and future stage observations are refused [1.27ms]\n(pass) DOM-02 replacement/withdrawal lineage > validated exact replacement removes only its predecessor from active obligations, retaining history and originals [4.70ms]\n(pass) DOM-02 replacement/withdrawal lineage > withdrawal does not resurrect its replaced predecessor; a later distinct predecessor revision is not silently cancelled [5.12ms]\n(pass) DOM-02 replacement/withdrawal lineage > a future successor revision cannot hide an already-effective replacement from transaction guards [5.50ms]\n(pass) DOM-02 replacement/withdrawal lineage > unknown replacement cannot create a false cancellation [2.49ms]\n(pass) DOM-02 replacement/withdrawal lineage > missing replacement cannot create a false cancellation [2.46ms]\n(pass) DOM-02 replacement/withdrawal lineage > foreign-book replacement cannot create a false cancellation [2.81ms]\n(pass) DOM-02 replacement/withdrawal lineage > foreign-student replacement cannot create a false cancellation [0.88ms]\n(pass) DOM-02 replacement/withdrawal lineage > foreign-owner replacement cannot create a false cancellation [2.10ms]\n(pass) DOM-02 replacement/withdrawal lineage > self replacement cannot create a false cancellation [0.70ms]\n(pass) DOM-02 replacement/withdrawal lineage > entity cycles and ambiguous competing successors are rejected by guards and never cancel read obligations [6.26ms]\n(pass) actual TeacherApplication composes the refinements through its scoped readSnapshot without acquiring source or rewriting records [10.31ms]\n(pass) a replaced-target refusal retains the actual clinic request original and its terminal outcome without retrying a decision [2.43ms]\n\n 40 pass\n 0 fail\n 123 expect() calls\nRan 40 tests across 1 file. [221.00ms]\n"
+    },
+    {
+      "id": "maintained-affected-consumers",
+      "args": [
+        "bun",
+        "test",
+        "tests/academy/learningWork.test.ts",
+        "tests/academy/teacherWorkspace.test.ts",
+        "tests/academy/teacherWorkspaceEditor.test.ts",
+        "tests/academy/teacherClinic.test.ts",
+        "tests/academy/teacherClinicUi.test.ts",
+        "tests/academy/teacherClinicReviewBlockers.test.ts",
+        "tests/academy/teacherWorkContext.test.ts",
+        "tests/academy/teacherReadSnapshot.test.ts",
+        "tests/academy/preparationHistory.test.ts",
+        "tests/academy/preparationView.test.ts",
+        "tests/academy/learningWorkView.test.ts",
+        "tests/academy/application.test.ts",
+        "tests/academy/sourceEvidence.test.ts"
+      ],
+      "cwd": "apps/academy/dc-gang-a",
+      "startedAt": "2026-10-21T08:10:19.852Z",
+      "finishedAt": "2026-10-21T08:10:20.981Z",
+      "exitCode": 0,
+      "metrics": {
+        "pass": 28,
+        "fail": 0,
+        "skip": 47,
+        "expectations": 145
+      },
+      "stdoutSha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+      "stderrSha256": "a1171fdd8718e32f90fe3715c3fd1764d09f9defd9429ace4d8e3e4848c7b969",
+      "stdoutBytes": 28,
+      "stderrBytes": 18911,
+      "stdoutTail": "bun test v1.4.3 (c6da4a4d3)\n",
+      "stderrTail": "\ntests/academy/learningWorkView.test.ts:\n(pass) course-bound learning workbench source rendering > renders original source grades as safe inline rails without turning score into teacher completion [134.64ms]\n(pass) course-bound learning workbench source rendering > keeps every course duty identifiable when a shared book tree has no clinic records [46.80ms]\n(pass) course-bound learning workbench source rendering > names the region and exposes exact per-course provenance without a freshness or completion claim [24.11ms]\n\ntests/academy/preparationView.test.ts:\n(pass) teacher presentation preserves unknown coverage and rejects another selected date [0.23ms]\n\ntests/academy/teacherReadSnapshot.test.ts:\n(skip) coherent teacher read snapshot > keeps one read-only snapshot while a separate writer commits\n(skip) coherent teacher read snapshot > exposes a frozen read facade and expires it at callback completion or exception\n(skip) coherent teacher read snapshot > PostgreSQL refuses an actual write inside the adapter snapshot transaction\n(skip) coherent teacher read snapshot > all scene query consumers enter the snapshot after authentication\n\ntests/academy/teacherClinicReviewBlockers.test.ts:\n(skip) UNRESOLVED final-review blockers — expected RED until repaired > R10: offered reconciliation must refresh the policy without manual student reselection\n(skip) UNRESOLVED final-review blockers — expected RED until repaired > R12: valid refused observation originals must remain retrievable after a new scene query\n(skip) UNRESOLVED final-review blockers — expected RED until repaired > R13: a changed authenticated actor must not propose or commit the displayed actors draft\n\ntests/academy/sourceEvidence.test.ts:\n(pass) splits actual-source snapshots into stable student/book/attempt evidence without promoting grades or incomplete dates [2.38ms]\n(pass) rejects duplicate source identities across batches instead of allowing competing writes [0.55ms]\n(pass) refuses foreign student, owner, course and book bindings before any intake effect [0.69ms]\n(pass) refuses effectful or unknown item correctness snapshots through the original audit contract [0.13ms]\n(pass) retains verified lesson occurrences without aliasing calendar course keys to learning-course keys [1.22ms]\n\ntests/academy/teacherWorkContext.test.ts:\n(skip) typed teacher work context in the existing PostgreSQL/application consumer > projects exact retained source grades for both UI and agent without a label-based section or completion join\n(skip) typed teacher work context in the existing PostgreSQL/application consumer > retained minor-unit completion stays scoped and cannot certify section, paper or item completion\n(skip) typed teacher work context in the existing PostgreSQL/application consumer > shared query refuses foreign scope and renderer refuses another scene without treating source text as markup\n(skip) typed teacher work context in the existing PostgreSQL/application consumer > actual client and semantic callback consume the same context through synthetic DOM registration, not native WebMCP\n(skip) typed teacher work context in the existing PostgreSQL/application consumer > the existing query consumes compact identity metadata and changes scene revision without rewriting source records\n(skip) typed teacher work context in the existing PostgreSQL/application consumer > returns scoped DATA/LOGIC/ACTION/GOVERNANCE without converting a section into assigned or completed work\n(pass) context projection refuses mismatched dates and cannot mutate its shared policy owner [1.03ms]\n\ntests/academy/learningWork.test.ts:\n(pass) exact assigned sections/items and printed ordering are retained as a validated record [1.79ms]\n(pass) repeated source items retain distinct assigned occurrences and printed positions [0.38ms]\n(skip) persisted exact work bindings > R1: source-item identity must match its pinned problem while repeated assigned occurrences may share that exact source\n(skip) persisted exact work bindings > attempts bind an exact assigned revision and issuance; repeats and source-grade revisions remain distinct\n(skip) persisted exact work bindings > registration pins, assignment identity and paper reissuance cannot be silently rebound\n(skip) persisted exact work bindings > assignment refuses unknown catalog versions and unregistered course before storing anything\n\ntests/academy/teacherClinicUi.test.ts:\n(skip) actual teacher clinic UI and shared semantic proposal > forward device clock retains editable observation draft and permits a newly confirmed corrected request\n(skip) actual teacher clinic UI and shared semantic proposal > forward device clock retains editable clinic draft and permits a newly confirmed corrected request\n(skip) actual teacher clinic UI and shared semantic proposal > held reconciliation cannot overtake newer actor selection\n(skip) actual teacher clinic UI and shared semantic proposal > held reconciliation cannot overtake newer occurrence selection\n(skip) actual teacher clinic UI and shared semantic proposal > R10: policy drift before first submission retains the refused original and requires fresh visible reconciliation\n(skip) actual teacher clinic UI and shared semantic proposal > proposal opens exact item without a write; explicit teacher controls save and reopen the same target\n\ntests/academy/teacherWorkspaceEditor.test.ts:\n(pass) a proven semantic intake refusal keeps the draft editable instead of pending forever [42.21ms]\n(pass) a candidate reply after save cannot mutate the exact pending request and remains an unsaved edit after valid acknowledgement [103.09ms]\n(pass) rebasing a parent draft onto changed evidence preserves wording and invalidates the old teacher review [47.94ms]\n(pass) postcommit readback failure stays uncertain even when its error name resembles a precommit refusal [33.81ms]\n\ntests/academy/teacherClinic.test.ts:\n(skip) exact teacher clinic decisions > a clock refusal cannot discard a previously protected pending clinic command\n(skip) exact teacher clinic decisions > attempt revision drift preserves prior completion without asserting inspection of the new evidence\n(skip) exact teacher clinic decisions > R8: a regressing report clock retains a terminal refusal instead of stranding the target pending\n(skip) exact teacher clinic decisions > R7: same-effective-date replacement retains prior exact assignment attempts and teacher histories read-only\n(skip) exact teacher clinic decisions > R6: rejected originals and exact refusals remain actor-scoped and visible after reconnection\n(skip) exact teacher clinic decisions > R4: policy drift rejects an unresolved original without rewriting its policy or teacher text\n(skip) exact teacher clinic decisions > R4: policy drift still permits exact readback and replay of an already committed outcome\n(skip) exact teacher clinic decisions > R3: an unresolved protected original blocks a fresh same-actor target across connections but permits exact retry\n(skip) exact teacher clinic decisions > R2: informational teacher grading retains completion until an explicit correction, explanation or reopen instruction\n(skip) exact teacher clinic decisions > protected original intent survives an interrupted commit and is recovered without browser persistence\n(skip) exact teacher clinic decisions > shared query folds only exact item decisions; grades, other attempts and later effective corrections cannot fabricate completion\n(skip) exact teacher clinic decisions > protected HTTP refuses forged scope and stale binding; concurrent writers have one winner and recovery survives reconnection\n(skip) exact teacher clinic decisions > teacher completes one item, preserves identical fresh intent and reopens with exact original-request recovery\n\ntests/academy/preparationHistory.test.ts:\n(pass) persistent preparation compatibility and teacher authority > retains explicit historical completion without fabricating an upload or claiming homework grading [1.40ms]\n(pass) persistent preparation compatibility and teacher authority > a later unsolicited source upload is reference-only after teacher completion [4.49ms]\n(pass) persistent preparation compatibility and teacher authority > only an explicit applicable teacher instruction reopens work while retaining acceptance evidence [2.23ms]\n(pass) persistent preparation compatibility and teacher authority > uses a qualified full unit inventory and explicit audit scope without treating progress scalars as app grading [1.09ms]\n(pass) persistent preparation compatibility and teacher authority > ordinary prose, a source-reviewed label and empty comment composer do not issue teacher acceptance [0.58ms]\n(pass) persistent preparation compatibility and teacher authority > foreign legacy subjects and incompatible teacher authority fail closed [0.37ms]\n(pass) persistent preparation compatibility and teacher authority > source observation cutoff uses the Korean lesson date rather than the UTC date [0.97ms]\n(pass) persistent preparation compatibility and teacher authority > notebook and clinic judgments remain independent and Davinci never acquires a video duty [1.02ms]\n(pass) persistent preparation compatibility and teacher authority > a teacher revision cannot disappear behind an unqualified minor-unit join [0.30ms]\n\ntests/academy/application.test.ts:\n(skip) shared teacher/application query boundary > (unnamed)\n(skip) shared teacher/application query boundary > existing student and date-class queries consume retained teacher completion without rewriting legacy records\n(skip) shared teacher/application query boundary > serves a date-first official-source scene without hiding another scheduled student or inventing preparation joins\n(skip) shared teacher/application query boundary > serves the same bounded source-grounded scene and refuses caller-owned foreign partitions\n\ntests/academy/teacherWorkspace.test.ts:\n(pass) teacher workspace source meaning > score100, paper review, app absence, video upload and optional mindmap do not complete a review [1.16ms]\n(pass) teacher workspace source meaning > parent text has three traceable sections and cannot leak excluded language into memo [1.32ms]\n(pass) teacher workspace source meaning > loads all71 original policies with exact byte pin and preserves selected source supersession [156.79ms]\n(skip) real PostgreSQL authenticated workspace durability > activity scope is checked in the transaction, CAS races once, exact lost-ack lookup and restart retain final/reopen history\n(skip) real PostgreSQL authenticated workspace durability > unknown paper membership stays partial and optional mindmap binds transactionally only to the exact concept explanation scope\n(skip) real PostgreSQL authenticated workspace durability > parent original edits survive revisions, actor outcome replay, and stale or cross-student references are rejected\n(skip) real PostgreSQL authenticated workspace durability > owner-only onboarding needs no fake student, keeps immutable case history and enforces policy/student/step boundaries\n(skip) real PostgreSQL authenticated workspace durability > exam selection drafts persist in owner ledger with exact source candidate pins and never claim source or teacher acceptance\n(skip) real PostgreSQL authenticated workspace durability > a real committed PostgreSQL owner command survives a misleading postcommit readback exception without being classified as rejected\n(skip) real PostgreSQL authenticated workspace durability > existing authenticated ingress rejects anonymous/foreign actor and accepts scoped local-only save\n\n47 tests skipped:\n(skip) coherent teacher read snapshot > keeps one read-only snapshot while a separate writer commits\n(skip) coherent teacher read snapshot > exposes a frozen read facade and expires it at callback completion or exception\n(skip) coherent teacher read snapshot > PostgreSQL refuses an actual write inside the adapter snapshot transaction\n(skip) coherent teacher read snapshot > all scene query consumers enter the snapshot after authentication\n(skip) UNRESOLVED final-review blockers — expected RED until repaired > R10: offered reconciliation must refresh the policy without manual student reselection\n(skip) UNRESOLVED final-review blockers — expected RED until repaired > R12: valid refused observation originals must remain retrievable after a new scene query\n(skip) UNRESOLVED final-review blockers — expected RED until repaired > R13: a changed authenticated actor must not propose or commit the displayed actors draft\n(skip) typed teacher work context in the existing PostgreSQL/application consumer > projects exact retained source grades for both UI and agent without a label-based section or completion join\n(skip) typed teacher work context in the existing PostgreSQL/application consumer > retained minor-unit completion stays scoped and cannot certify section, paper or item completion\n(skip) typed teacher work context in the existing PostgreSQL/application consumer > shared query refuses foreign scope and renderer refuses another scene without treating source text as markup\n(skip) typed teacher work context in the existing PostgreSQL/application consumer > actual client and semantic callback consume the same context through synthetic DOM registration, not native WebMCP\n(skip) typed teacher work context in the existing PostgreSQL/application consumer > the existing query consumes compact identity metadata and changes scene revision without rewriting source records\n(skip) typed teacher work context in the existing PostgreSQL/application consumer > returns scoped DATA/LOGIC/ACTION/GOVERNANCE without converting a section into assigned or completed work\n(skip) persisted exact work bindings > R1: source-item identity must match its pinned problem while repeated assigned occurrences may share that exact source\n(skip) persisted exact work bindings > attempts bind an exact assigned revision and issuance; repeats and source-grade revisions remain distinct\n(skip) persisted exact work bindings > registration pins, assignment identity and paper reissuance cannot be silently rebound\n(skip) persisted exact work bindings > assignment refuses unknown catalog versions and unregistered course before storing anything\n(skip) actual teacher clinic UI and shared semantic proposal > forward device clock retains editable observation draft and permits a newly confirmed corrected request\n(skip) actual teacher clinic UI and shared semantic proposal > forward device clock retains editable clinic draft and permits a newly confirmed corrected request\n(skip) actual teacher clinic UI and shared semantic proposal > held reconciliation cannot overtake newer actor selection\n(skip) actual teacher clinic UI and shared semantic proposal > held reconciliation cannot overtake newer occurrence selection\n(skip) actual teacher clinic UI and shared semantic proposal > R10: policy drift before first submission retains the refused original and requires fresh visible reconciliation\n(skip) actual teacher clinic UI and shared semantic proposal > proposal opens exact item without a write; explicit teacher controls save and reopen the same target\n(skip) exact teacher clinic decisions > a clock refusal cannot discard a previously protected pending clinic command\n(skip) exact teacher clinic decisions > attempt revision drift preserves prior completion without asserting inspection of the new evidence\n(skip) exact teacher clinic decisions > R8: a regressing report clock retains a terminal refusal instead of stranding the target pending\n(skip) exact teacher clinic decisions > R7: same-effective-date replacement retains prior exact assignment attempts and teacher histories read-only\n(skip) exact teacher clinic decisions > R6: rejected originals and exact refusals remain actor-scoped and visible after reconnection\n(skip) exact teacher clinic decisions > R4: policy drift rejects an unresolved original without rewriting its policy or teacher text\n(skip) exact teacher clinic decisions > R4: policy drift still permits exact readback and replay of an already committed outcome\n(skip) exact teacher clinic decisions > R3: an unresolved protected original blocks a fresh same-actor target across connections but permits exact retry\n(skip) exact teacher clinic decisions > R2: informational teacher grading retains completion until an explicit correction, explanation or reopen instruction\n(skip) exact teacher clinic decisions > protected original intent survives an interrupted commit and is recovered without browser persistence\n(skip) exact teacher clinic decisions > shared query folds only exact item decisions; grades, other attempts and later effective corrections cannot fabricate completion\n(skip) exact teacher clinic decisions > protected HTTP refuses forged scope and stale binding; concurrent writers have one winner and recovery survives reconnection\n(skip) exact teacher clinic decisions > teacher completes one item, preserves identical fresh intent and reopens with exact original-request recovery\n(skip) shared teacher/application query boundary > (unnamed)\n(skip) shared teacher/application query boundary > existing student and date-class queries consume retained teacher completion without rewriting legacy records\n(skip) shared teacher/application query boundary > serves a date-first official-source scene without hiding another scheduled student or inventing preparation joins\n(skip) shared teacher/application query boundary > serves the same bounded source-grounded scene and refuses caller-owned foreign partitions\n(skip) real PostgreSQL authenticated workspace durability > activity scope is checked in the transaction, CAS races once, exact lost-ack lookup and restart retain final/reopen history\n(skip) real PostgreSQL authenticated workspace durability > unknown paper membership stays partial and optional mindmap binds transactionally only to the exact concept explanation scope\n(skip) real PostgreSQL authenticated workspace durability > parent original edits survive revisions, actor outcome replay, and stale or cross-student references are rejected\n(skip) real PostgreSQL authenticated workspace durability > owner-only onboarding needs no fake student, keeps immutable case history and enforces policy/student/step boundaries\n(skip) real PostgreSQL authenticated workspace durability > exam selection drafts persist in owner ledger with exact source candidate pins and never claim source or teacher acceptance\n(skip) real PostgreSQL authenticated workspace durability > a real committed PostgreSQL owner command survives a misleading postcommit readback exception without being classified as rejected\n(skip) real PostgreSQL authenticated workspace durability > existing authenticated ingress rejects anonymous/foreign actor and accepts scoped local-only save\n\n 28 pass\n 47 skip\n 0 fail\n 145 expect() calls\nRan 75 tests across 13 files. [1111.00ms]\n"
+    },
+    {
+      "id": "root-import-provenance",
+      "args": [
+        "bun",
+        "run",
+        "verify:imports"
+      ],
+      "cwd": ".",
+      "startedAt": "2026-10-21T08:10:20.981Z",
+      "finishedAt": "2026-10-21T08:10:21.014Z",
+      "exitCode": 1,
+      "metrics": {
+        "pass": 0,
+        "fail": 0,
+        "skip": 0,
+        "expectations": 0
+      },
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "1771c3fef0a8a14165b3622acaaf5b54208799a2b63c521fe5c97481b1f16fb5",
+      "stdoutBytes": 0,
+      "stderrBytes": 1837,
+      "stdoutTail": "",
+      "stderrTail": "$ bun scripts/verify-imports.ts\n4 | import {projectRoot} from '../src/modules';\n5 | interface File {module:string;path:string;sha256:string;bytes:number}\n6 | const manifest=await Bun.file(resolve(projectRoot,'provenance/imported-files.json')).json() as {files:File[]};\n7 | const changes=await Bun.file(resolve(projectRoot,'provenance/adaptations.json')).json() as {files:{path:string;sourceSha256:string;integrationSha256:string}[]};\n8 | const adaptations=new Map(changes.files.map(file=>[file.path,file]));\n9 | let unchanged=0;for(const file of manifest.files){const p=file.module+'/'+file.path;const adaptation=adaptations.get(p);if(adaptation){if(adaptation.sourceSha256!==file.sha256||createHash('sha256').update(readFileSync(resolve(projectRoot,p))).digest('hex')!==adaptation.integrationSha256)throw Error('adaptation_hash_mismatch:'+p);continue;}const path=resolve(projectRoot,p);if(!existsSync(path))throw Error('missing_import:'+p);if(createHash('sha256').update(readFileSync(path)).digest('hex')!==file.sha256)throw Error('import_hash_mismatch:'+p);unchanged++;}\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ^\nerror: import_hash_mismatch:apps/academy/dc-gang-a/src/academy/domain.ts\n      at /home/palantirkc/worktrees/academy-state-model-20261021/scripts/verify-imports.ts:9:515\n\nBun v1.4.3 (Linux x64)\nerror: script \"verify:imports\" exited with code 1\n"
+    },
+    {
+      "id": "whitespace-diff",
+      "args": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "cwd": ".",
+      "startedAt": "2026-10-21T08:10:21.014Z",
+      "finishedAt": "2026-10-21T08:10:21.027Z",
+      "exitCode": 0,
+      "metrics": {
+        "pass": 0,
+        "fail": 0,
+        "skip": 0,
+        "expectations": 0
+      },
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 0,
+      "stderrBytes": 0,
+      "stdoutTail": "",
+      "stderrTail": ""
+    },
+    {
+      "id": "teacher-web-memory-build",
+      "success": true,
+      "artifacts": 1,
+      "bytes": 1208658,
+      "logs": [],
+      "outputFilesWritten": false
+    }
+  ],
+  "preservedPins": [
+    {
+      "path": "package.json",
+      "sha256": "8e95b949a3b7a4f78a763eb5b29df0bcb8bb322fd62b7ac7027e2bdc58cb0039"
+    },
+    {
+      "path": "bun.lock",
+      "sha256": "bb598c9ccc3da2865c39a3d3a8aebda62304666a501e31965a1625ad20fa6d83"
+    },
+    {
+      "path": "releases/palantirkc-ontology-0.2.0.tgz",
+      "sha256": "3f9995d0b91d2ad39dfc7cedbb6e35b1cb9d29c2e57223ca0c076d2030319406"
+    },
+    {
+      "path": "architecture/source-map.json",
+      "sha256": "216c6449ae2e7ad07a5b851fc583aa3a9fa64808a8084eff39cc80425063ea4c"
+    },
+    {
+      "path": "apps/academy/run.ts",
+      "sha256": "39e3931f5556389e6a915a28f6eaa9305fb2b9e45529aa4389f6bee0be53a678"
+    },
+    {
+      "path": "provenance/imported-files.json",
+      "sha256": "f74723db381773b5823189f5ad1f7319566ce29f8134cace59d44a19bbce1bbc"
+    },
+    {
+      "path": "provenance/adaptations.json",
+      "sha256": "40af536dcb6ea279b0fc15e9da814ef50bef400ec565aeb7c258b17b01ef7a58"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/package.json",
+      "sha256": "70ac030925bc3d5896a2b44c4ce08885a9e82d241562c528c2b335e48531b59b"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/bun.lock",
+      "sha256": "d53986a01470c2b85224a79de64c4d8b86b166b37cee6d329aa8cf50fd589288"
+    },
+    {
+      "path": "apps/academy/gang-a/package.json",
+      "sha256": "c96949ee48da4409539f1848ddd7cb1046a4b1314c4e01b73229cb3fbf27012f"
+    },
+    {
+      "path": "apps/academy/gang-a/bun.lock",
+      "sha256": "8e83adfc345d885345ffb18007184ab31c5bbad03d4796c1a9a981e5cc612efb"
+    }
+  ],
+  "neutralLeaves": [
+    {
+      "path": "apps/academy/dc-gang-a/src/contracts/catalogLevels.ts",
+      "sha256": "fb582c9e4d292537db98d818e78fdd1c5e6fe7bf895f2959a75ae9c447c78c17",
+      "qualifiedProducerBytesPreserved": true
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/contracts/operationalContractShape.ts",
+      "sha256": "85c5c0c65c26f0ed7b842bed9c6908470eb746e2d6633b5459ddb6bb90645403",
+      "qualifiedProducerBytesPreserved": true
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/contracts/parentInternalLanguage.ts",
+      "sha256": "60742973557e383b57c065dc7ef9cb806677f15ca4a571f48f7b2184f93aa456",
+      "qualifiedProducerBytesPreserved": true
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/contracts/readInputRecord.ts",
+      "sha256": "ba2eda95e601ccd9eba44fc77c43ed5fde50801d34c8f77ea0f9d0dedd65db0c",
+      "qualifiedProducerBytesPreserved": true
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/contracts/sourceDiscovery.ts",
+      "sha256": "40b28459db5aa1adff04c27e66245984f9f452842f67069b4bab045fcb369257",
+      "qualifiedProducerBytesPreserved": true
+    }
+  ],
+  "preservedInputs": [
+    {
+      "path": "work/education-platform/academy-state-model-20261021/inputs/DOM-02-ADMISSION-R1.json",
+      "sha256": "6d50deee09bbba29329c4f533441583f4354a7c5c2ccd7bc70c78e4495909671"
+    },
+    {
+      "path": "work/education-platform/academy-state-model-20261021/inputs/DOM-01-RESULT-R1.json",
+      "sha256": "c9e4db697cacc1de7ce54711f56a471411c5e7845c9db7251b8eed395cd0f6f2"
+    },
+    {
+      "path": "work/education-platform/academy-state-model-20261021/inputs/DOM-01-VERIFICATION-R2.json",
+      "sha256": "b8d9cdcd7b0d32d1d07cd31c9758b30c677f164b04837ffeb351d276937cbf1f"
+    },
+    {
+      "path": "work/education-platform/academy-state-model-20261021/inputs/DOM-QRY-BOUNDARY-QUALIFICATION-R1.json",
+      "sha256": "802b2c17738aed53831bff8999865f013b4894174068edb6dfac5f21e15ca58d"
+    },
+    {
+      "path": "work/education-platform/academy-state-model-20261021/inputs/DOM-QRY-BOUNDARY-QUALIFICATION-VERIFICATION-R1.json",
+      "sha256": "bee32060d54a2d1d346f23a56e41dfc0e659c79de30e91895ff0e4c6925aa081"
+    },
+    {
+      "path": "work/education-platform/academy-state-model-20261021/inputs/DOM-ROOT-QUALIFICATION-R1.json",
+      "sha256": "abdf282846ede7c1bc60c7c3edc0605b5cde21b3ae8e86dd098809cce0cb6d71"
+    },
+    {
+      "path": "work/education-platform/academy-state-model-20261021/inputs/DOM-01-RESULT-R2.json",
+      "sha256": "57ec1d6f7e18af67c3b9add0cd674c0d29e58c29b7e865db70048058a4788298"
+    },
+    {
+      "path": "work/education-platform/academy-state-model-20261021/inputs/DOM-01-VERIFICATION-R1.json",
+      "sha256": "e9325a087075e7741f8189ed5812e047251299dc39da1d6c0e8e1b7fefa22a65"
+    },
+    {
+      "path": "work/education-platform/academy-state-model-20261021/inputs/DOM-ROOT-QUALIFICATION-VERIFICATION-R1.json",
+      "sha256": "03150bbe11d86db66ec80c0b0eecf88abf8b655760ca36da26776c7ee8a6bc89"
+    },
+    {
+      "path": "work/education-platform/academy-state-model-20261021/inputs/DOM-QRY-BOUNDARY-ADOPTION-R1.json",
+      "sha256": "71c0fbe385606454af0910853e8af1d55f3864ea82cc93d663d6a059e45a8e9e"
+    },
+    {
+      "path": "work/education-platform/academy-state-model-20261021/inputs/DOM-DELEGATED-SCOPE-R1.json",
+      "sha256": "79ecf9b872c44c9635635ee46283c51dea1396077c5cc62451dd4534051092de"
+    }
+  ],
+  "importGaps": [
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/domain.ts",
+      "expectedSha256": "c99a9a9b74899117156e7dd165dbdf3763a0eb050f6ae4d3d619d2d19a6c8607",
+      "startingHeadSha256": "eb8ee7f8bace1799fd1b1a97ffcd44e507c671811fc4b123cde77f06d6737493",
+      "preparedSha256": "eb8ee7f8bace1799fd1b1a97ffcd44e507c671811fc4b123cde77f06d6737493",
+      "classification": "preexisting_starting_head_gap"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/learningWork.ts",
+      "expectedSha256": "7598a30b6c3ad9e3c6cb9c9f1cb78753e18ca202349ec8660f033ed350c065ea",
+      "startingHeadSha256": "7598a30b6c3ad9e3c6cb9c9f1cb78753e18ca202349ec8660f033ed350c065ea",
+      "preparedSha256": "747f44cb2eda9844d6fdc266f51d89eeb71f7d8c90618a11c4f967dd3f120261",
+      "classification": "DOM02_source_change_requires_root_owned_provenance_reconciliation"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/learningWorkProjection.ts",
+      "expectedSha256": "8dd95e4e4457940b6c3ad7a5fe4253f97aadf2fe495db3de3bac2b80a8b12e2b",
+      "startingHeadSha256": "8dd95e4e4457940b6c3ad7a5fe4253f97aadf2fe495db3de3bac2b80a8b12e2b",
+      "preparedSha256": "bb2a6435379692009d7a688dfbf3cfc57fbdf35e57e0bb6936be8fe758e9d9d2",
+      "classification": "DOM02_source_change_requires_root_owned_provenance_reconciliation"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/nativeBookSource.ts",
+      "expectedSha256": "988c0ade8691f6e906305a56f0c354aa6588874ac4e9207991a4776e8e048e63",
+      "startingHeadSha256": "76970846283dac9538505ee9a18f21274c1b248ee4a5c5ec7104a943fe735ee3",
+      "preparedSha256": "76970846283dac9538505ee9a18f21274c1b248ee4a5c5ec7104a943fe735ee3",
+      "classification": "preexisting_starting_head_gap"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/nativeConnector.ts",
+      "expectedSha256": "c4509e9b9bab0266c1f7f4ec8f301fc124e676e6bd6d20b05a41fbbb9697d94d",
+      "startingHeadSha256": "2dcb6607a35ea5e8c005fadaedb95da86395417ea9b829c33232b73a0ffd3016",
+      "preparedSha256": "2dcb6607a35ea5e8c005fadaedb95da86395417ea9b829c33232b73a0ffd3016",
+      "classification": "preexisting_starting_head_gap"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/nativeDirectSource.ts",
+      "expectedSha256": "f681fe4e5ff7821cc734b6c98763b55fbf18c7cab3ea6442e0e157a9f268ae2f",
+      "startingHeadSha256": "fea68cbb3c87c54c3c5891e29013f6b0aeb0b156ed9195e9f9ee1ee630fbd15d",
+      "preparedSha256": "fea68cbb3c87c54c3c5891e29013f6b0aeb0b156ed9195e9f9ee1ee630fbd15d",
+      "classification": "preexisting_starting_head_gap"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/operationalContract.ts",
+      "expectedSha256": "920501253d9eafb4640177d196366c3b4324d79b252d6f0001cae4af2b213ebe",
+      "startingHeadSha256": "f3d1f79d0b93d2db1626aca1969f754113abcb42b38f31bcc66521f8113b9b75",
+      "preparedSha256": "f3d1f79d0b93d2db1626aca1969f754113abcb42b38f31bcc66521f8113b9b75",
+      "classification": "preexisting_starting_head_gap"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/postgresStore.ts",
+      "expectedSha256": "724e51152009b8ba766543aecea30f34ea57d3ee2718654a125acbdb4a19ba79",
+      "startingHeadSha256": "a9bb7d1bab38b505e7a4ae4bec64988e7bb0e67b4b3aaec338d61930f6ac9c14",
+      "preparedSha256": "f74213e45b6e81ad992d629a08e706707fc11dacb50c8a2c865e87c0c16b22c9",
+      "classification": "DOM02_source_change_requires_root_owned_provenance_reconciliation"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/refresh.ts",
+      "expectedSha256": "86034ac02de404044b173608c6ab5bb9f15f0bea89c8015233d92c6acbe27a7f",
+      "startingHeadSha256": "4b4e5f7cc44730ee7c24a6c5bb66e1d0cc7f7aa26e55a86e469a0ad8eb0a5511",
+      "preparedSha256": "4b4e5f7cc44730ee7c24a6c5bb66e1d0cc7f7aa26e55a86e469a0ad8eb0a5511",
+      "classification": "preexisting_starting_head_gap"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/sourceBridge.ts",
+      "expectedSha256": "56d966ceed393f0dff33c405e16186c2d513c916864119d37d329e3b4ae562ef",
+      "startingHeadSha256": "e328b3cb41b15c31e1cf2788bbf218d87f00af39f1fe225f01c62a39084359fa",
+      "preparedSha256": "e328b3cb41b15c31e1cf2788bbf218d87f00af39f1fe225f01c62a39084359fa",
+      "classification": "preexisting_starting_head_gap"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/sourceEvidence.ts",
+      "expectedSha256": "07f1455c9b396a765db0a1e02bdef93ef45e04ab4164b29d068474b75487418b",
+      "startingHeadSha256": "c94f96db81b5c61f1d1a277e0f055def5ae25e4964b9230795f28a5c78dce5cb",
+      "preparedSha256": "c94f96db81b5c61f1d1a277e0f055def5ae25e4964b9230795f28a5c78dce5cb",
+      "classification": "preexisting_starting_head_gap"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/sourceSynchronization.ts",
+      "expectedSha256": "69f0981f47f89288f8c9e156e4c0fdcf233b504fddc137834ad22263d1595e8a",
+      "startingHeadSha256": "ed09a845da5a0d15e9f76b0952615ab8484da7941d5361e4cee4763801537124",
+      "preparedSha256": "ed09a845da5a0d15e9f76b0952615ab8484da7941d5361e4cee4763801537124",
+      "classification": "preexisting_starting_head_gap"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/teacherWorkContext.ts",
+      "expectedSha256": "e91c53f1c64b29642e1218d0d92a40ffa82eb3511eb12ea95ae33ab990d1ca02",
+      "startingHeadSha256": "aec375d98594846c0db9f269750ddb6d2c66d58a1156ac5352d97f7c120164a8",
+      "preparedSha256": "79e85dbb464b96252b2547dba94d237fac992b692d40861e5ca791cb7bedd38e",
+      "classification": "DOM02_source_change_requires_root_owned_provenance_reconciliation"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/usecases/studentScene.ts",
+      "expectedSha256": "4880bba11a8d9f367b5dec0c6d41df2f45e25bc869a54fd41fe3e1ed503adaf6",
+      "startingHeadSha256": "45e855f92bb8fb078c300472f4d6f4a87a18d63d2db7f5e5fe44ecb2b4170d93",
+      "preparedSha256": "4ff2876a57a295a371795e0db28366b69f7aeef3bbbde5db338a33ff0c188b63",
+      "classification": "DOM02_source_change_requires_root_owned_provenance_reconciliation"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/usecases/teacherClinic.ts",
+      "expectedSha256": "9592374e97fe9870f7826ce157d6b08c556da6777f57562c1e38cf80ccc1a686",
+      "startingHeadSha256": "85ca55edadc7e95e42a734a8476eb04ad52630ee767fcf85454a0c9ec6d8b559",
+      "preparedSha256": "85ca55edadc7e95e42a734a8476eb04ad52630ee767fcf85454a0c9ec6d8b559",
+      "classification": "preexisting_starting_head_gap"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/usecases/teacherObservation.ts",
+      "expectedSha256": "b3f7636b3c4d480b87b7a71ec4b7871c568d1c9d8b7a533bed8e6a481c73eda9",
+      "startingHeadSha256": "f328d4a35ed209e3bb07bcf6c7a9ad615b92176902fec30a7c08b173316ba528",
+      "preparedSha256": "f328d4a35ed209e3bb07bcf6c7a9ad615b92176902fec30a7c08b173316ba528",
+      "classification": "preexisting_starting_head_gap"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/web/learningWorkView.ts",
+      "expectedSha256": "9d2ac212e699bf0d05ed7310eae9250f8b52a3d7edc7f592e05d9c2c89c572ab",
+      "startingHeadSha256": "9d2ac212e699bf0d05ed7310eae9250f8b52a3d7edc7f592e05d9c2c89c572ab",
+      "preparedSha256": "eb86537b86ba3f480532e831a2b0901404bdfbbfd898187b24161dfc0dcb4cec",
+      "classification": "DOM02_source_change_requires_root_owned_provenance_reconciliation"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/canonical/rosterRecovery.ts",
+      "expectedSha256": "e715c70e3639b574de99f5fbbe5e038ec8a3bc5aab9c6453973dc1f92a8c1a0e",
+      "startingHeadSha256": "6c0f83970875f20fc8d37d15e1a7fee8577eb050e7d473d2ff5eb70da7ce82b2",
+      "preparedSha256": "6c0f83970875f20fc8d37d15e1a7fee8577eb050e7d473d2ff5eb70da7ce82b2",
+      "classification": "preexisting_starting_head_gap"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/lms/academyHttpClient.ts",
+      "expectedSha256": "4badc8034591445041f98f98b156e15fb4dd69bdb13faf07d54ffcb3949e6174",
+      "startingHeadSha256": "82c55826723182b8294b44009c587b9f9914980e4a33c0cae2d062167c43a76d",
+      "preparedSha256": "82c55826723182b8294b44009c587b9f9914980e4a33c0cae2d062167c43a76d",
+      "classification": "preexisting_starting_head_gap"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/lms/academyReadProtocol.ts",
+      "expectedSha256": "9082ccf9cb91ec3dbd08ec3931acc330ee24725e0b8679c3b367d745e36857f3",
+      "startingHeadSha256": "ac462984b3a0fbaef4ea8c802f0c962b5a0bbbaa3f2e46e0a3cb1576c88d82fc",
+      "preparedSha256": "ac462984b3a0fbaef4ea8c802f0c962b5a0bbbaa3f2e46e0a3cb1576c88d82fc",
+      "classification": "preexisting_starting_head_gap"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/lms/academySourceAudit.ts",
+      "expectedSha256": "8ca076aa8df8bbf5441c5148024ee55f183880b0cbdbeae27619eb229177bb83",
+      "startingHeadSha256": "33aa474df60db400f12513e6050ef1f1e4c48bef1eee4fd134ff1128658ffd74",
+      "preparedSha256": "33aa474df60db400f12513e6050ef1f1e4c48bef1eee4fd134ff1128658ffd74",
+      "classification": "preexisting_starting_head_gap"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/lms/endpointCatalog.ts",
+      "expectedSha256": "88ed24f454b97b7f3074eb77104b3c31ea5f6484456c5045072163de511c1025",
+      "startingHeadSha256": "63798afbab187e39ac18612faaca1853810c9a54e41046afccb4cffb0926713c",
+      "preparedSha256": "63798afbab187e39ac18612faaca1853810c9a54e41046afccb4cffb0926713c",
+      "classification": "preexisting_starting_head_gap"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/lms/itemAnswerAudit.ts",
+      "expectedSha256": "b819c1180c04a4328ec77be9001df4ee3d0864019fe13bfaa59c116edca75e64",
+      "startingHeadSha256": "20b4e9b8cba6f5ca3a641ee4c8f3622129c6eb8b826b9e77f4abdca9124feac2",
+      "preparedSha256": "20b4e9b8cba6f5ca3a641ee4c8f3622129c6eb8b826b9e77f4abdca9124feac2",
+      "classification": "preexisting_starting_head_gap"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/lms/lessonJournalTemplates.ts",
+      "expectedSha256": "cc491ee32125f329265ecbcafc69fd8dbd243e8cf3a575db3091b285d8ccb472",
+      "startingHeadSha256": "5195709e7e905b864f8f6f5a7c72909f1654bf0968873612fb4e36a0b669d6e2",
+      "preparedSha256": "5195709e7e905b864f8f6f5a7c72909f1654bf0968873612fb4e36a0b669d6e2",
+      "classification": "preexisting_starting_head_gap"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/lms/paperLineage.ts",
+      "expectedSha256": "ba146f15f6a45df672b95453e93673bf0186c599aa8369a3ad951fee1e5d8812",
+      "startingHeadSha256": "7ab638ce1e0517870eb434717f782c348276517eb894d5bfef94f8c1b295db19",
+      "preparedSha256": "7ab638ce1e0517870eb434717f782c348276517eb894d5bfef94f8c1b295db19",
+      "classification": "preexisting_starting_head_gap"
+    }
+  ],
+  "knownLimits": [
+    "No isolated synthetic PostgreSQL socket supplied; DB/CAS/transaction tests remain explicit skips. Pure guard and real application/snapshot composition are tested.",
+    "DOM-01 inventory/Inputs are historical at their exact source; its precommit inspector was not rerun.",
+    "Baseline missing external MCP source and route-registry checks are preserved in DOM-01 observations; no foreign source, lock or manifest is substituted.",
+    "No full aggregate module check or native/browser activation. Source-memory browser build does not establish native WebMCP or teacher acceptance.",
+    "Root owns source checkpoint commit, canonical exact snapshot/semantic transition and any shared provenance reconciliation."
+  ],
+  "effects": {
+    "gitStageOrCommit": 0,
+    "install": 0,
+    "dbSocketAdmitted": false,
+    "nativeSourceReads": 0,
+    "privateOriginals": 0,
+    "printing": 0,
+    "sending": 0,
+    "nativeActivation": 0
+  }
+}

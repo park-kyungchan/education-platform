@@ -11,6 +11,7 @@ import {readInputRecord} from '../contracts/readInputRecord';
 import { validateAcademyRecord, type AcademyRecord } from './records';
 import {assertPreparationDate} from './preparationHistory';
 import {sameClinicTarget} from './learningWork';
+import {assertAssignmentNotReplaced,assertReplacementGraph,replacementPredecessor,retainedAssessmentScore,type AssignmentVersion} from './learningWorkBindings';
 import {classroomCyclePolicy} from './classroomCyclePolicy';
 import type {NormalizedCohort} from './sourceBridge';
 import {normalizeSourceArea,validateSourceAreaTask,type SourceAreaTask,type SourceAreaReceipt} from './sourceSynchronization';
@@ -263,6 +264,15 @@ export class PostgresAcademyStore implements TeacherStore,SourceRefreshStore {
         const registered=registration?versionFrom(registration).payload:null;
         if(registered?.kind!=='source_book_registration'||['sourceCourse','sourceUserCourse','sourceBook'].some(field=>canonicalJson(registered[field as 'sourceCourse'])!==canonicalJson(payload[field as 'sourceCourse'])))throw Error('work_registration_binding_conflict');
         const assignments=await tx`SELECT * FROM academy.record_versions WHERE owner_id=${command.ownerId} AND student_id=${command.studentId} AND payload->>'kind'='learning_work_assignment'`;
+        if(payload.replaces?.state==='known'){
+          const retained:AssignmentVersion[]=assignments.map((row:VersionRow)=>versionFrom(row) as AssignmentVersion);
+          const proposed={ownerId:command.ownerId,studentId:command.studentId,entityId:command.entityId,revisionId:'uncommitted-replacement-candidate',payload} as AssignmentVersion;
+          const predecessor=replacementPredecessor(proposed,retained)!;
+          const [current]=await tx`SELECT revision_id FROM academy.record_heads WHERE owner_id=${command.ownerId} AND student_id=${command.studentId} AND entity_id=${predecessor.entityId}`;
+          const carried=retained.some(old=>old.entityId===command.entityId&&old.payload.replaces?.state==='known'&&old.payload.replaces.value.assignmentRevisionId===predecessor.revisionId);
+          if(!carried&&current?.revision_id!==predecessor.revisionId)throw Error('work_replacement_basis_not_current');
+          assertReplacementGraph([...retained,proposed]);
+        }
         for(const row of assignments){
           const old=versionFrom(row);if(old.payload.kind!=='learning_work_assignment')throw Error('work_binding_conflict');
           if(old.entityId!==command.entityId&&canonicalJson(old.payload.assignmentKey)===canonicalJson(payload.assignmentKey))throw Error('duplicate_work_identity');
@@ -299,8 +309,14 @@ export class PostgresAcademyStore implements TeacherStore,SourceRefreshStore {
           WHERE h.owner_id=${command.ownerId} AND h.student_id=${command.studentId} AND v.revision_id=${payload.assignmentRevisionId}`;
         const assignment=row?versionFrom(row).payload:null;
         if(assignment?.kind!=='learning_work_assignment'||assignment.status!=='assigned')throw Error('work_assignment_basis_conflict');
+        const successorRows=await tx`SELECT v.* FROM academy.record_versions v WHERE v.owner_id=${command.ownerId} AND v.student_id=${command.studentId} AND v.payload->>'kind'='learning_work_assignment'`;
+        assertAssignmentNotReplaced(versionFrom(row) as AssignmentVersion,successorRows.map((v:VersionRow)=>versionFrom(v) as AssignmentVersion),new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date(command.sourceObservedAt)));
         if(canonicalJson(payload.paperIssuanceKey)!==canonicalJson(assignment.paper.state==='known'?assignment.paper.value.issuanceKey:null))throw Error('work_paper_binding_conflict');
         if(payload.itemResults.some(item=>!assignment.items.some(assigned=>assigned.assignedItemId===item.assignedItemId)))throw Error('work_item_binding_conflict');
+        if(payload.assessmentBasis?.state==='known'){
+          const [source]=await tx`SELECT v.* FROM academy.record_heads h JOIN academy.record_versions v USING(owner_id,student_id,entity_id,sequence) WHERE h.owner_id=${command.ownerId} AND h.student_id=${command.studentId} AND v.revision_id=${payload.assessmentBasis.value.sourceAuditRevisionId}`;
+          if(!source||retainedAssessmentScore(versionFrom(row) as AssignmentVersion,payload,versionFrom(source)).state!=='known')throw Error('assessment_source_binding_conflict');
+        }
         if(payload.occurredAt.state==='known'&&Date.parse(payload.occurredAt.value)>Date.parse(command.sourceObservedAt))throw Error('future_attempt_occurrence');
         const attempts=await tx`SELECT * FROM academy.record_versions WHERE owner_id=${command.ownerId} AND student_id=${command.studentId} AND payload->>'kind'='learning_work_attempt'`;
         for(const row of attempts){const previous=versionFrom(row);if(previous.payload.kind==='learning_work_attempt'&&previous.entityId!==command.entityId&&canonicalJson(previous.payload.attemptKey)===canonicalJson(payload.attemptKey))throw Error('duplicate_work_identity');}
@@ -318,6 +334,8 @@ export class PostgresAcademyStore implements TeacherStore,SourceRefreshStore {
           WHERE h.owner_id=${command.ownerId} AND h.student_id=${command.studentId} AND v.revision_id=${payload.assignmentRevisionId}`;
         const assignment=assignmentRow?versionFrom(assignmentRow).payload:null;
         if(assignment?.kind!=='learning_work_assignment'||assignment.status!=='assigned'||assignment.effectiveDate>payload.effectiveDate)throw Error('work_assignment_basis_conflict');
+        const successorRows=await tx`SELECT v.* FROM academy.record_versions v WHERE v.owner_id=${command.ownerId} AND v.student_id=${command.studentId} AND v.payload->>'kind'='learning_work_assignment'`;
+        assertAssignmentNotReplaced(versionFrom(assignmentRow) as AssignmentVersion,successorRows.map((v:VersionRow)=>versionFrom(v) as AssignmentVersion),payload.effectiveDate);
         if(!assignment.items.some(item=>item.assignedItemId===payload.assignedItemId))throw Error('work_item_binding_conflict');
         const [attemptRow]=await tx`SELECT v.* FROM academy.record_heads h JOIN academy.record_versions v USING(owner_id,student_id,entity_id,sequence)
           WHERE h.owner_id=${command.ownerId} AND h.student_id=${command.studentId} AND h.entity_id=${payload.attemptEntityId} AND v.revision_id=${payload.attemptRevisionId}`;
@@ -358,6 +376,7 @@ export class PostgresAcademyStore implements TeacherStore,SourceRefreshStore {
       if(prior?.payload.kind==='learning_work_assignment'&&command.payload.kind==='learning_work_assignment'){
         for(const field of ['sourceStudent','sourceCourse','sourceUserCourse','sourceBook','assignmentKey','activity'] as const)
           if(canonicalJson(prior.payload[field])!==canonicalJson(command.payload[field]))throw Error('work_identity_changed');
+        if(prior.payload.replaces?.state==='known'&&(command.payload.replaces?.state!=='known'||prior.payload.replaces.value.assignmentRevisionId!==command.payload.replaces.value.assignmentRevisionId))throw Error('work_replacement_identity_changed');
       }
       if(prior?.payload.kind==='learning_work_attempt'&&command.payload.kind==='learning_work_attempt'){
         for(const field of ['sourceStudent','attemptKey','assignmentRevisionId','paperIssuanceKey','previousAttemptRevisionId'] as const)

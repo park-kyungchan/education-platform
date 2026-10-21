@@ -1,0 +1,348 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "academy-state-model-20261021",
+  "kind": "input",
+  "id": "DOM-02-RESULT-R1",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "education-platform-dom-sublead",
+    "locator": "codex-thread:01a15d19-e804-7a12-87c2-07c0b82d9807/DOM-02/prepared-source",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "schema": "academy.dom02-result.v1",
+    "status": "READY_FOR_ROOT_SOURCE_CHECKPOINT",
+    "logical": {
+      "domainId": "education",
+      "projectId": "education-platform",
+      "workId": "academy-state-model-20261021",
+      "issueId": "DOM-ISSUE-20261021",
+      "specId": "DOM-SPEC",
+      "specRevision": 1,
+      "planId": "DOM-PLAN",
+      "planRevision": 1,
+      "taskId": "education-platform:task:academy-state-model-20261021-dom-02"
+    },
+    "authority": {
+      "admission": "DOM-02-ADMISSION-R1",
+      "receivingGate": "DOM-QRY-BOUNDARY-QUALIFICATION-R1",
+      "adoption": "DOM-QRY-BOUNDARY-ADOPTION-R1",
+      "classification": "Root source-owner admission in approved architecture; not a new direct user interview answer or native activation."
+    },
+    "source": {
+      "repositoryId": "park-kyungchan/education-platform",
+      "startingHead": "fabce64cb5338101328900644462b98fa8209be9",
+      "startingTree": "73e6ce6b5035d1a3650f8a93fb946f81235ab2c4",
+      "businessImplementationBase": "3adb273aa1125aa8d6beff7dc51a4c5076710d9f",
+      "businessImplementationBaseTree": "d2fe87a0a28201e950f066e8b9a621d4c1dfa8c5",
+      "preparedBytesAreUncommitted": true,
+      "subLeadGitStageOrCommitPerformed": false
+    },
+    "nativeIdentity": {
+      "actualCodexThreadId": "01a15d19-e804-7a12-87c2-07c0b82d9807",
+      "observation": "Actual CODEX_THREAD_ID environment; never inferred from logical IDs",
+      "userDeclaredLocation": "wA:t2/p4",
+      "herdrLivenessIndependentlyObserved": false,
+      "nativeRegistrationClaimed": false
+    },
+    "implementation": {
+      "singleStateOwner": "Existing TeacherApplication/readSnapshot/TeacherQueries/projectLearningWork path",
+      "secondReducer": false,
+      "completedSourceRefinements": [
+        "G-100: exact retained textbook assessment100 excludes BOTH default targets; unqualified/mismatched evidence stays unknown and explicit assignments remain separate",
+        "G-ATTEMPT: optional known/unknown review binding, exact entity/revision guard and independent per-attempt ledger identity; legacy originals stay assignment-scoped",
+        "G-REPLACEMENT: explicit qualified lineage, cycle/ambiguity/scope rejection and active obligations excluding exact withdrawn/replaced work; guards share lesson-effective selection and preserve terminal original-request recovery",
+        "G-STAGES: independent issuance-bound print/distribution observations and absent-stage unknowns, without physical effects or payload backfill"
+      ],
+      "contractNotes": "architecture/academy-state-model/dom-02-design-r1.json",
+      "knownSourceCoverage": "Exact textbook-source crosswalks only; other/unqualified families or namespaces remain unknown. Retained local heads do not assert live authoritative currentness.",
+      "preservedCompletionLanes": "Clinic completed remains exact item/attempt; activity review final stays scoped to selected items/bound attempt or legacy unknown attempt. No automatic grading, teacher final or whole-book completion."
+    },
+    "businessCodePins": [
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/learningWork.ts",
+        "sha256": "747f44cb2eda9844d6fdc266f51d89eeb71f7d8c90618a11c4f967dd3f120261",
+        "bytes": 11892,
+        "beforeSha256": "7598a30b6c3ad9e3c6cb9c9f1cb78753e18ca202349ec8660f033ed350c065ea"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/learningWorkBindings.ts",
+        "sha256": "a9772e2c4b161cd4f30d05a4e1b87ce1dd7cdd9bdcda73294ae505ac39dbe0cc",
+        "bytes": 7301,
+        "beforeSha256": null
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/learningWorkProjection.ts",
+        "sha256": "bb2a6435379692009d7a688dfbf3cfc57fbdf35e57e0bb6936be8fe758e9d9d2",
+        "bytes": 9096,
+        "beforeSha256": "8dd95e4e4457940b6c3ad7a5fe4253f97aadf2fe495db3de3bac2b80a8b12e2b"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/ownerWorkspaceStore.ts",
+        "sha256": "5ccdcefce2294c1a6578aac318fe282632e700584e3e274124f644d15169a1c6",
+        "bytes": 17678,
+        "beforeSha256": "098e1075dbbbdd91d8d2b1ec69803c6795781cf546e5266695a30fff60abe73c"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/postgresStore.ts",
+        "sha256": "f74213e45b6e81ad992d629a08e706707fc11dacb50c8a2c865e87c0c16b22c9",
+        "bytes": 67743,
+        "beforeSha256": "a9bb7d1bab38b505e7a4ae4bec64988e7bb0e67b4b3aaec338d61930f6ac9c14"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/teacherWorkContext.ts",
+        "sha256": "79e85dbb464b96252b2547dba94d237fac992b692d40861e5ca791cb7bedd38e",
+        "bytes": 11607,
+        "beforeSha256": "aec375d98594846c0db9f269750ddb6d2c66d58a1156ac5352d97f7c120164a8"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/teacherWorkspace.ts",
+        "sha256": "dae77c929fc05a356e9619f83ca1fcf70b4af5e5b33f2c1094a0df6b855e418e",
+        "bytes": 17422,
+        "beforeSha256": "a3ae52b69d7c82ce2bfb5e7e9605b93edcb25cd273fe0d19a6d1a0ee2c9cd4db"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/usecases/studentScene.ts",
+        "sha256": "4ff2876a57a295a371795e0db28366b69f7aeef3bbbde5db338a33ff0c188b63",
+        "bytes": 10504,
+        "beforeSha256": "45e855f92bb8fb078c300472f4d6f4a87a18d63d2db7f5e5fe44ecb2b4170d93"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/web/learningWorkView.ts",
+        "sha256": "eb86537b86ba3f480532e831a2b0901404bdfbbfd898187b24161dfc0dcb4cec",
+        "bytes": 10214,
+        "beforeSha256": "9d2ac212e699bf0d05ed7310eae9250f8b52a3d7edc7f592e05d9c2c89c572ab"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/web/teacherWorkspaceView.ts",
+        "sha256": "ea1f50c5d7e0df4b1afc547da7ac1d5169cdc14095738243538f230b1f28229f",
+        "bytes": 15458,
+        "beforeSha256": "7e63d3683fdc4d59d91d2cec1da3ab89525184c060644cdce406f82854187206"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/tests/academy/learningWorkRefinements.test.ts",
+        "sha256": "464fcc0a3723ccef7d01af2f75f5af552fb282c65d123ce6641519311fd9d38b",
+        "bytes": 25368,
+        "beforeSha256": null
+      }
+    ],
+    "artifactPins": [
+      {
+        "path": "architecture/academy-state-model/dom-02-entrypoint.json",
+        "sha256": "d6586d6ed0d728c61a78f665592d593c85c0c80bb05e47bdcd68634269afbf6f",
+        "bytes": 2197
+      },
+      {
+        "path": "architecture/academy-state-model/dom-02-design-r1.json",
+        "sha256": "024b6c2c0f5ed33e8bd41b121e379d7320ff080787002340e1270aa78f8930ba",
+        "bytes": 8024
+      },
+      {
+        "path": "architecture/academy-state-model/verify-dom02.ts",
+        "sha256": "2742d806009a7ed3cde63d59e5cbf4a50bb40a9c085d07ba017127e2edf4446a",
+        "bytes": 7629
+      },
+      {
+        "path": "architecture/academy-state-model/tsconfig.dom02.json",
+        "sha256": "4acd8f999bfa84363736dcdfe788ad546cc77943d821dcf61e7a40d3f85b7bfe",
+        "bytes": 244
+      },
+      {
+        "path": "architecture/academy-state-model/observations/DOM-02-CHECKS-R1.json",
+        "sha256": "189f1a5aa7de0434e490af369a594ba1ec58fb4536b49f408e0f902ee9fd31da",
+        "bytes": 55546
+      },
+      {
+        "path": "architecture/academy-state-model/observations/DOM-02-CHECKS-R2.json",
+        "sha256": "756b88c58c560935abb11bd0add145cf990cc904ae5ad3d48fe0d5e382f6e9c2",
+        "bytes": 55698
+      }
+    ],
+    "preservedExistingInputs": [
+      {
+        "path": "work/education-platform/academy-state-model-20261021/inputs/DOM-02-ADMISSION-R1.json",
+        "sha256": "6d50deee09bbba29329c4f533441583f4354a7c5c2ccd7bc70c78e4495909671"
+      },
+      {
+        "path": "work/education-platform/academy-state-model-20261021/inputs/DOM-01-RESULT-R1.json",
+        "sha256": "c9e4db697cacc1de7ce54711f56a471411c5e7845c9db7251b8eed395cd0f6f2"
+      },
+      {
+        "path": "work/education-platform/academy-state-model-20261021/inputs/DOM-01-VERIFICATION-R2.json",
+        "sha256": "b8d9cdcd7b0d32d1d07cd31c9758b30c677f164b04837ffeb351d276937cbf1f"
+      },
+      {
+        "path": "work/education-platform/academy-state-model-20261021/inputs/DOM-QRY-BOUNDARY-QUALIFICATION-R1.json",
+        "sha256": "802b2c17738aed53831bff8999865f013b4894174068edb6dfac5f21e15ca58d"
+      },
+      {
+        "path": "work/education-platform/academy-state-model-20261021/inputs/DOM-QRY-BOUNDARY-QUALIFICATION-VERIFICATION-R1.json",
+        "sha256": "bee32060d54a2d1d346f23a56e41dfc0e659c79de30e91895ff0e4c6925aa081"
+      },
+      {
+        "path": "work/education-platform/academy-state-model-20261021/inputs/DOM-ROOT-QUALIFICATION-R1.json",
+        "sha256": "abdf282846ede7c1bc60c7c3edc0605b5cde21b3ae8e86dd098809cce0cb6d71"
+      },
+      {
+        "path": "work/education-platform/academy-state-model-20261021/inputs/DOM-01-RESULT-R2.json",
+        "sha256": "57ec1d6f7e18af67c3b9add0cd674c0d29e58c29b7e865db70048058a4788298"
+      },
+      {
+        "path": "work/education-platform/academy-state-model-20261021/inputs/DOM-01-VERIFICATION-R1.json",
+        "sha256": "e9325a087075e7741f8189ed5812e047251299dc39da1d6c0e8e1b7fefa22a65"
+      },
+      {
+        "path": "work/education-platform/academy-state-model-20261021/inputs/DOM-ROOT-QUALIFICATION-VERIFICATION-R1.json",
+        "sha256": "03150bbe11d86db66ec80c0b0eecf88abf8b655760ca36da26776c7ee8a6bc89"
+      },
+      {
+        "path": "work/education-platform/academy-state-model-20261021/inputs/DOM-QRY-BOUNDARY-ADOPTION-R1.json",
+        "sha256": "71c0fbe385606454af0910853e8af1d55f3864ea82cc93d663d6a059e45a8e9e"
+      },
+      {
+        "path": "work/education-platform/academy-state-model-20261021/inputs/DOM-DELEGATED-SCOPE-R1.json",
+        "sha256": "79ecf9b872c44c9635635ee46283c51dea1396077c5cc62451dd4534051092de"
+      }
+    ],
+    "qualifiedNeutralLeaves": [
+      {
+        "path": "apps/academy/dc-gang-a/src/contracts/catalogLevels.ts",
+        "sha256": "fb582c9e4d292537db98d818e78fdd1c5e6fe7bf895f2959a75ae9c447c78c17",
+        "qualifiedProducerBytesPreserved": true
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/contracts/operationalContractShape.ts",
+        "sha256": "85c5c0c65c26f0ed7b842bed9c6908470eb746e2d6633b5459ddb6bb90645403",
+        "qualifiedProducerBytesPreserved": true
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/contracts/parentInternalLanguage.ts",
+        "sha256": "60742973557e383b57c065dc7ef9cb806677f15ca4a571f48f7b2184f93aa456",
+        "qualifiedProducerBytesPreserved": true
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/contracts/readInputRecord.ts",
+        "sha256": "ba2eda95e601ccd9eba44fc77c43ed5fde50801d34c8f77ea0f9d0dedd65db0c",
+        "qualifiedProducerBytesPreserved": true
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/contracts/sourceDiscovery.ts",
+        "sha256": "40b28459db5aa1adff04c27e66245984f9f452842f67069b4bab045fcb369257",
+        "qualifiedProducerBytesPreserved": true
+      }
+    ],
+    "preservedReservedPins": [
+      {
+        "path": "package.json",
+        "sha256": "8e95b949a3b7a4f78a763eb5b29df0bcb8bb322fd62b7ac7027e2bdc58cb0039"
+      },
+      {
+        "path": "bun.lock",
+        "sha256": "bb598c9ccc3da2865c39a3d3a8aebda62304666a501e31965a1625ad20fa6d83"
+      },
+      {
+        "path": "releases/palantirkc-ontology-0.2.0.tgz",
+        "sha256": "3f9995d0b91d2ad39dfc7cedbb6e35b1cb9d29c2e57223ca0c076d2030319406"
+      },
+      {
+        "path": "architecture/source-map.json",
+        "sha256": "216c6449ae2e7ad07a5b851fc583aa3a9fa64808a8084eff39cc80425063ea4c"
+      },
+      {
+        "path": "apps/academy/run.ts",
+        "sha256": "39e3931f5556389e6a915a28f6eaa9305fb2b9e45529aa4389f6bee0be53a678"
+      },
+      {
+        "path": "provenance/imported-files.json",
+        "sha256": "f74723db381773b5823189f5ad1f7319566ce29f8134cace59d44a19bbce1bbc"
+      },
+      {
+        "path": "provenance/adaptations.json",
+        "sha256": "40af536dcb6ea279b0fc15e9da814ef50bef400ec565aeb7c258b17b01ef7a58"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/package.json",
+        "sha256": "70ac030925bc3d5896a2b44c4ce08885a9e82d241562c528c2b335e48531b59b"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/bun.lock",
+        "sha256": "d53986a01470c2b85224a79de64c4d8b86b166b37cee6d329aa8cf50fd589288"
+      },
+      {
+        "path": "apps/academy/gang-a/package.json",
+        "sha256": "c96949ee48da4409539f1848ddd7cb1046a4b1314c4e01b73229cb3fbf27012f"
+      },
+      {
+        "path": "apps/academy/gang-a/bun.lock",
+        "sha256": "8e83adfc345d885345ffb18007184ab31c5bbad03d4796c1a9a981e5cc612efb"
+      }
+    ],
+    "focusedChecks": {
+      "newAdversarial": {
+        "pass": 40,
+        "fail": 0,
+        "skip": 0,
+        "expectations": 123
+      },
+      "maintainedConsumers": {
+        "pass": 28,
+        "fail": 0,
+        "skip": 47,
+        "expectations": 145
+      },
+      "typechecks": [
+        "root",
+        "dc",
+        "new DOM-02 tests and verification runner"
+      ],
+      "actualCompiler": "7.0.2",
+      "teacherWebBuild": "In-memory browser bundle passed; no output files or native browser/runtime launched",
+      "initialTypingFailure": "Retained in raw observations; final typechecks pass"
+    },
+    "truthfulGaps": {
+      "postgres": "47 maintained tests skipped without an isolated synthetic socket; live transaction/CAS enforcement not executed. Pure shared guards and actual application/readSnapshot/clinic-recovery callers tested.",
+      "rootImportProvenance": {
+        "status": "failed",
+        "firstFailure": "import_hash_mismatch:apps/academy/dc-gang-a/src/academy/domain.ts",
+        "classificationCounts": {
+          "preexisting_starting_head_gap": 19,
+          "DOM02_source_change_requires_root_owned_provenance_reconciliation": 6
+        },
+        "details": "architecture/academy-state-model/observations/DOM-02-CHECKS-R2.json#/importGaps",
+        "rootOwnedAction": "Reserved provenance/imported-files.json and provenance/adaptations.json were not changed. Root must review/reconcile boundary-adoption and maintained-source hashes before claiming full provenance/integration success."
+      },
+      "baselineExternalSources": "DOM-01 observations retain missing external MCP source and route-registry gaps. They were not requalified or silently substituted in this task.",
+      "completeHistory": "Retained assignment revisions and workspace heads are not full native history/current roster. Existing history/result APIs retain originals; no generic pending-homework or teacher acceptance count is claimed.",
+      "canonical": "Root has not yet staged/committed this source or run its committed exact snapshot and semantic transition."
+    },
+    "deliveryState": {
+      "sourceExecution": "prepared_and_scoped_checked",
+      "boundedVerification": "passed_with_explicit_unpassed_aggregate_gaps",
+      "localResultDurability": "uncommitted_prepared_files_only",
+      "sharedDelivery": "pending",
+      "canonicalCommittedQualification": "pending_root",
+      "nativeAdoption": false,
+      "formalAcceptance": false,
+      "wholeWorkComplete": false
+    },
+    "nextAction": "WAIT. Root reviews prepared hashes, stages/commits exact owned files and runs canonical committed snapshot/transition. QRY-02/environment consumers require separate receiving qualification. Transfer only businessCodePins source delta from implementationBase; qualified neutral leaves are unchanged.",
+    "effects": {
+      "scope": "DOM-02 admission interval only",
+      "gitWrites": 0,
+      "installation": 0,
+      "commonContractsOrPins": 0,
+      "nativeConfigOrPermissionChanges": 0,
+      "nativeSourceAcquisition": 0,
+      "privateOriginalReadsOrWrites": 0,
+      "printing": 0,
+      "sending": 0,
+      "publication": 0,
+      "merge": 0,
+      "deployment": 0
+    },
+    "actualTaskVerificationTarget": "common-harness:task:2356ff2a7f67ee778f367900a196efebd5cb9600073a4159467e0d10532d3321",
+    "canonicalAuditorPin": "712f90deac0676e662dc5d75d88d89f7b6773bfe"
+  }
+}
