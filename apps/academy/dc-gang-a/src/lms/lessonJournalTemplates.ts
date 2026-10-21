@@ -1,5 +1,5 @@
 import {assertDate,assertExactKeys,requireText} from '../learning/model';
-import {parentInternalLanguage} from '../academy/teacherWorkspace';
+import {parentInternalLanguage} from '../contracts/parentInternalLanguage';
 
 /** Versioned teacher-feedback consumer. Rendering is not approval, a source join or a writer. */
 export const lessonJournalTemplates={

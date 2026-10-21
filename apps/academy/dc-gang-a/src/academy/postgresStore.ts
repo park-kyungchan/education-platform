@@ -7,7 +7,7 @@ import type { SQL } from 'bun';
 import { assertExactKeys, assertInstant, assertRefs, canonicalJson, digest, requireText, stableId } from '../learning/model';
 import { traceHierarchy, validateHierarchy, validateSourceKey, type CatalogNode, type SourceKey } from './domain';
 import { createAcademySourceAudit } from '../lms/academySourceAudit';
-import { readInputRecord } from '../lms/academyReadProtocol';
+import {readInputRecord} from '../contracts/readInputRecord';
 import { validateAcademyRecord, type AcademyRecord } from './records';
 import {assertPreparationDate} from './preparationHistory';
 import {sameClinicTarget} from './learningWork';

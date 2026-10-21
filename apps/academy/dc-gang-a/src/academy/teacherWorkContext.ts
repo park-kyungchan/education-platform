@@ -6,7 +6,8 @@ import type {RecordVersion} from './contracts/storageRecords';
 import {academyConnectionStatus,type AcademySourceConnection} from './nativeConnector';
 import {projectLearningWork,type LearningWorkProjection} from './learningWorkProjection';
 import {createAcademySourceAudit} from '../lms/academySourceAudit';
-import {readInputRecord,type StoredSourceRecord} from '../lms/academyReadProtocol';
+import {type StoredSourceRecord} from '../lms/academyReadProtocol';
+import {readInputRecord} from '../contracts/readInputRecord';
 
 export interface TeacherSourceResult {
   readonly revisionRef:string;readonly entityRef:string;readonly record:StoredSourceRecord;

@@ -1,0 +1,185 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "academy-state-model-20261021",
+  "kind": "input",
+  "id": "DOM-QRY-BOUNDARY-ADOPTION-R1",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "root-academy-orchestrator",
+    "locator": "root-source-dependency-adoption:qualified-QRY-BOUNDARY",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "createdAt": "2026-10-21T07:35:27.565092+00:00",
+    "actor": "root-authorized-source-operator",
+    "consumerPreviousCommit": "982d00ece0643622f893ed2d9fa3a5c34ceab4db",
+    "qualifiedProducer": {
+      "repositoryId": "park-kyungchan/education-platform",
+      "workId": "academy-query-integration-20261021",
+      "commit": "bfc2bcc5afccc13fd588c46447aa042732f14f36",
+      "base": "b9c954cb8f5bf9b0748bb5634b4951c5954e9a6b",
+      "receivingInputId": "DOM-QRY-BOUNDARY-QUALIFICATION-R1"
+    },
+    "method": "Exact selected source-only Git patch, precondition equality checked; no Git merge, publication or native activation.",
+    "patchSha256": "e1f6a29e9bd551fa1e16d6e3864aa333d1fc86a1666e3dc9a21c054b3834fdfd",
+    "fileCount": 29,
+    "files": [
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/domain.ts",
+        "beforeSha256": "c99a9a9b74899117156e7dd165dbdf3763a0eb050f6ae4d3d619d2d19a6c8607",
+        "afterSha256": "eb8ee7f8bace1799fd1b1a97ffcd44e507c671811fc4b123cde77f06d6737493"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/nativeBookSource.ts",
+        "beforeSha256": "988c0ade8691f6e906305a56f0c354aa6588874ac4e9207991a4776e8e048e63",
+        "afterSha256": "76970846283dac9538505ee9a18f21274c1b248ee4a5c5ec7104a943fe735ee3"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/nativeConnector.ts",
+        "beforeSha256": "c4509e9b9bab0266c1f7f4ec8f301fc124e676e6bd6d20b05a41fbbb9697d94d",
+        "afterSha256": "2dcb6607a35ea5e8c005fadaedb95da86395417ea9b829c33232b73a0ffd3016"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/nativeDirectSource.ts",
+        "beforeSha256": "f681fe4e5ff7821cc734b6c98763b55fbf18c7cab3ea6442e0e157a9f268ae2f",
+        "afterSha256": "fea68cbb3c87c54c3c5891e29013f6b0aeb0b156ed9195e9f9ee1ee630fbd15d"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/operationalContract.ts",
+        "beforeSha256": "920501253d9eafb4640177d196366c3b4324d79b252d6f0001cae4af2b213ebe",
+        "afterSha256": "f3d1f79d0b93d2db1626aca1969f754113abcb42b38f31bcc66521f8113b9b75"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/postgresStore.ts",
+        "beforeSha256": "724e51152009b8ba766543aecea30f34ea57d3ee2718654a125acbdb4a19ba79",
+        "afterSha256": "a9bb7d1bab38b505e7a4ae4bec64988e7bb0e67b4b3aaec338d61930f6ac9c14"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/refresh.ts",
+        "beforeSha256": "86034ac02de404044b173608c6ab5bb9f15f0bea89c8015233d92c6acbe27a7f",
+        "afterSha256": "4b4e5f7cc44730ee7c24a6c5bb66e1d0cc7f7aa26e55a86e469a0ad8eb0a5511"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/sourceBridge.ts",
+        "beforeSha256": "56d966ceed393f0dff33c405e16186c2d513c916864119d37d329e3b4ae562ef",
+        "afterSha256": "e328b3cb41b15c31e1cf2788bbf218d87f00af39f1fe225f01c62a39084359fa"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/sourceEvidence.ts",
+        "beforeSha256": "07f1455c9b396a765db0a1e02bdef93ef45e04ab4164b29d068474b75487418b",
+        "afterSha256": "c94f96db81b5c61f1d1a277e0f055def5ae25e4964b9230795f28a5c78dce5cb"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/sourceSynchronization.ts",
+        "beforeSha256": "69f0981f47f89288f8c9e156e4c0fdcf233b504fddc137834ad22263d1595e8a",
+        "afterSha256": "ed09a845da5a0d15e9f76b0952615ab8484da7941d5361e4cee4763801537124"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/teacherWorkContext.ts",
+        "beforeSha256": "e91c53f1c64b29642e1218d0d92a40ffa82eb3511eb12ea95ae33ab990d1ca02",
+        "afterSha256": "aec375d98594846c0db9f269750ddb6d2c66d58a1156ac5352d97f7c120164a8"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/teacherWorkspace.ts",
+        "beforeSha256": "277fe96d67970052c6d7e2e20861fa89ac18ceb10eecfa449ac3774b5782a496",
+        "afterSha256": "a3ae52b69d7c82ce2bfb5e7e9605b93edcb25cd273fe0d19a6d1a0ee2c9cd4db"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/usecases/studentScene.ts",
+        "beforeSha256": "4880bba11a8d9f367b5dec0c6d41df2f45e25bc869a54fd41fe3e1ed503adaf6",
+        "afterSha256": "45e855f92bb8fb078c300472f4d6f4a87a18d63d2db7f5e5fe44ecb2b4170d93"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/usecases/teacherClinic.ts",
+        "beforeSha256": "9592374e97fe9870f7826ce157d6b08c556da6777f57562c1e38cf80ccc1a686",
+        "afterSha256": "85ca55edadc7e95e42a734a8476eb04ad52630ee767fcf85454a0c9ec6d8b559"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/usecases/teacherObservation.ts",
+        "beforeSha256": "b3f7636b3c4d480b87b7a71ec4b7871c568d1c9d8b7a533bed8e6a481c73eda9",
+        "afterSha256": "f328d4a35ed209e3bb07bcf6c7a9ad615b92176902fec30a7c08b173316ba528"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/usecases/teacherWorkspace.ts",
+        "beforeSha256": "2d00f46c7311491ebae330cc54163e95bb813f522f77bb4d9f58b1e58472c267",
+        "afterSha256": "50a6c9f6ec114bf2f8ac429d63ffd6327ed3c144bb8ab894b4c0f809597ab9c4"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/canonical/rosterRecovery.ts",
+        "beforeSha256": "e715c70e3639b574de99f5fbbe5e038ec8a3bc5aab9c6453973dc1f92a8c1a0e",
+        "afterSha256": "6c0f83970875f20fc8d37d15e1a7fee8577eb050e7d473d2ff5eb70da7ce82b2"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/contracts/catalogLevels.ts",
+        "beforeSha256": null,
+        "afterSha256": "fb582c9e4d292537db98d818e78fdd1c5e6fe7bf895f2959a75ae9c447c78c17"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/contracts/operationalContractShape.ts",
+        "beforeSha256": null,
+        "afterSha256": "85c5c0c65c26f0ed7b842bed9c6908470eb746e2d6633b5459ddb6bb90645403"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/contracts/parentInternalLanguage.ts",
+        "beforeSha256": null,
+        "afterSha256": "60742973557e383b57c065dc7ef9cb806677f15ca4a571f48f7b2184f93aa456"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/contracts/readInputRecord.ts",
+        "beforeSha256": null,
+        "afterSha256": "ba2eda95e601ccd9eba44fc77c43ed5fde50801d34c8f77ea0f9d0dedd65db0c"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/contracts/sourceDiscovery.ts",
+        "beforeSha256": null,
+        "afterSha256": "40b28459db5aa1adff04c27e66245984f9f452842f67069b4bab045fcb369257"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/lms/academyHttpClient.ts",
+        "beforeSha256": "4badc8034591445041f98f98b156e15fb4dd69bdb13faf07d54ffcb3949e6174",
+        "afterSha256": "82c55826723182b8294b44009c587b9f9914980e4a33c0cae2d062167c43a76d"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/lms/academyReadProtocol.ts",
+        "beforeSha256": "9082ccf9cb91ec3dbd08ec3931acc330ee24725e0b8679c3b367d745e36857f3",
+        "afterSha256": "ac462984b3a0fbaef4ea8c802f0c962b5a0bbbaa3f2e46e0a3cb1576c88d82fc"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/lms/academySourceAudit.ts",
+        "beforeSha256": "8ca076aa8df8bbf5441c5148024ee55f183880b0cbdbeae27619eb229177bb83",
+        "afterSha256": "33aa474df60db400f12513e6050ef1f1e4c48bef1eee4fd134ff1128658ffd74"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/lms/endpointCatalog.ts",
+        "beforeSha256": "88ed24f454b97b7f3074eb77104b3c31ea5f6484456c5045072163de511c1025",
+        "afterSha256": "63798afbab187e39ac18612faaca1853810c9a54e41046afccb4cffb0926713c"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/lms/itemAnswerAudit.ts",
+        "beforeSha256": "b819c1180c04a4328ec77be9001df4ee3d0864019fe13bfaa59c116edca75e64",
+        "afterSha256": "20b4e9b8cba6f5ca3a641ee4c8f3622129c6eb8b826b9e77f4abdca9124feac2"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/lms/lessonJournalTemplates.ts",
+        "beforeSha256": "cc491ee32125f329265ecbcafc69fd8dbd243e8cf3a575db3091b285d8ccb472",
+        "afterSha256": "5195709e7e905b864f8f6f5a7c72909f1654bf0968873612fb4e36a0b669d6e2"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/lms/paperLineage.ts",
+        "beforeSha256": "ba146f15f6a45df672b95453e93673bf0186c599aa8369a3ad951fee1e5d8812",
+        "afterSha256": "7ab638ce1e0517870eb434717f782c348276517eb894d5bfef94f8c1b295db19"
+      }
+    ],
+    "purpose": "Provide the qualified neutral contract dependency before DOM-02; domain worker remains responsible for its own later business changes.",
+    "futureDiffRule": "Use the resulting post-adoption commit as DOM-02 implementation base so its later patch back to QRY excludes already-applied extraction.",
+    "preservation": "DOM-01 original Inputs/Evidence and rejected candidate history remain unchanged; its inventory is historical at its own exact source pin.",
+    "effects": {
+      "nativeActivation": false,
+      "privateReadsOrWrites": false,
+      "commonContractOrPinChange": false,
+      "dataOrCodeOwnershipMove": false
+    }
+  }
+}

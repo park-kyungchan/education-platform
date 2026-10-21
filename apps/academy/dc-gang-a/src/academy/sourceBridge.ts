@@ -1,5 +1,6 @@
 import { assertExactKeys, assertInstant, canonicalJson, digest, requireText, stableId, unknown } from '../learning/model';
-import { readInputRecord, readLiteralKey, readLiteralName } from '../lms/academyReadProtocol';
+import { readLiteralKey, readLiteralName } from '../lms/academyReadProtocol';
+import {readInputRecord} from '../contracts/readInputRecord';
 import { bindStudentCourseRow } from '../lms/studentCourseRead';
 import { sourceId, type CatalogNode } from './domain';
 import type { StudentRegistration } from './contracts/storageRecords';

@@ -1,6 +1,6 @@
 import {digest,requireText} from '../../learning/model';
 import {catalogLevels,type CatalogNode} from '../domain';
-import {readInputRecord} from '../../lms/academyReadProtocol';
+import {readInputRecord} from '../../contracts/readInputRecord';
 import type {DayRecordSourceRow} from '../../lms/dayRecordReadProtocol';
 import {buildStudentPreparation,assertPreparationDate} from '../preparationHistory';
 import type {AcademySourceConnection} from '../nativeConnector';
