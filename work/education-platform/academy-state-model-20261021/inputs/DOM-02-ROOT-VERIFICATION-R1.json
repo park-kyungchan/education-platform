@@ -1,0 +1,62 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "academy-state-model-20261021",
+  "kind": "input",
+  "id": "DOM-02-ROOT-VERIFICATION-R1",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "root-academy-orchestrator",
+    "locator": "exact-committed-source-verification:education-platform:task:academy-state-model-20261021-dom-02",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "verification": {
+      "schemaVersion": "1.0.0",
+      "kind": "verification",
+      "id": "education-platform:verification:dom-02-root-checkpoint-r1",
+      "domainId": "education",
+      "projectId": "education-platform",
+      "createdAt": "2026-10-21T08:23:16.583Z",
+      "payload": {
+        "targetRefs": [
+          "common-harness:task:2356ff2a7f67ee778f367900a196efebd5cb9600073a4159467e0d10532d3321"
+        ],
+        "criteria": [
+          {
+            "id": "exact-committed-source-qualified",
+            "status": "pass",
+            "message": "Exact source snapshot and semantic transition passed using canonical APIs; all bound input hashes matched committed bytes. Scope and unrun DB/native checks remain explicit.",
+            "evidenceRefs": [
+              "education-platform:evidence:dom-02-root-checkpoint-r1",
+              "education-platform:evidence:dom-02-result-observation-r1"
+            ]
+          },
+          {
+            "id": "producer-result-bound",
+            "status": "pass",
+            "message": "Original producer result is preserved and bound by exact bytes; root checkpoint establishes local source durability only.",
+            "evidenceRefs": [
+              "education-platform:evidence:dom-02-result-observation-r1"
+            ]
+          }
+        ],
+        "inputHashes": [
+          {
+            "path": "work/education-platform/academy-state-model-20261021/inputs/DOM-02-ROOT-CHECKPOINT-R1.json",
+            "sha256": "f3526641dac10df9b7f512d035ca6a1e7af9c1b3e22ebbc2a2c37863eef40062"
+          },
+          {
+            "path": "work/education-platform/academy-state-model-20261021/inputs/DOM-02-RESULT-R1.json",
+            "sha256": "8e8d9b51bb61ab3c1f1c101ac681b63a5a2a653412b7b8043c3832edf730e95d"
+          }
+        ],
+        "runtime": {
+          "name": "Bun canonical source audit",
+          "version": "1.4.3"
+        }
+      }
+    }
+  }
+}

@@ -18,10 +18,10 @@
   },
   "title": "Extend scoped teacher preparation projection contract gaps",
   "state": {
-    "execution": "running",
+    "execution": "complete",
     "verification": "passed",
-    "localAudit": "intent-durable",
-    "sharedAudit": "pending",
+    "localAudit": "result-durable",
+    "sharedAudit": "unsynchronized",
     "formalCompletion": "pending"
   },
   "executionClass": "source-only",
@@ -38,7 +38,8 @@
   "decisionIds": [],
   "effectIds": [],
   "verificationEvidenceIds": [
-    "education-platform:evidence:dom-02-verification-r1"
+    "education-platform:evidence:dom-02-verification-r1",
+    "education-platform:evidence:dom-02-root-verification-r1"
   ],
-  "nextAction": "READY_FOR_ROOT_SOURCE_CHECKPOINT. DOM-02 source and scoped checks are prepared; root alone stages/commits and performs canonical exact snapshot/semantic transition, then establishes completion/local durability. Preserve provenance/DB gaps and all original Inputs. WAIT; no native adoption, publication or formal acceptance."
+  "nextAction": "Preserve exact committed source qualification and originals. Downstream consumers require their own receiving qualifications; native effects/shared delivery/formal acceptance remain held."
 }
