@@ -1,0 +1,49 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "academy-state-model-20261021",
+  "kind": "input",
+  "id": "DOM-ROOT-QUALIFICATION-VERIFICATION-R1",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "root-academy-orchestrator",
+    "locator": "actual-root-source-receiving-qualification:verification-r1",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "verification": {
+      "schemaVersion": "1.0.0",
+      "kind": "verification",
+      "id": "education-platform:verification:dom-root-qualification-r1",
+      "projectId": "education-platform",
+      "domainId": "education",
+      "createdAt": "2026-10-21T05:50:24.990Z",
+      "payload": {
+        "targetRefs": [
+          "common-harness:task:e79a47f9a7e68b2b134e372d1e6dab2172c605cbf79ec988cba60fca4b06cd61"
+        ],
+        "criteria": [
+          {
+            "id": "producer-source-qualified",
+            "status": "pass",
+            "message": "Exact root source result and bound Verification were read with canonical APIs; receiver scope and local dependency declared; no native effects authorized.",
+            "evidenceRefs": [
+              "education-platform:evidence:dom-root-qualification-observation-r1"
+            ]
+          }
+        ],
+        "inputHashes": [
+          {
+            "path": "work/education-platform/academy-state-model-20261021/inputs/DOM-ROOT-QUALIFICATION-R1.json",
+            "sha256": "abdf282846ede7c1bc60c7c3edc0605b5cde21b3ae8e86dd098809cce0cb6d71"
+          }
+        ],
+        "runtime": {
+          "name": "Bun canonical source reader",
+          "version": "1.4.3"
+        }
+      }
+    }
+  }
+}
