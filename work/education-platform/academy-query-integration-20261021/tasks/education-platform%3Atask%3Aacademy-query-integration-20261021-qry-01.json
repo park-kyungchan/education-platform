@@ -18,10 +18,10 @@
   },
   "title": "Qualify maintained source and query ports and coverage",
   "state": {
-    "execution": "planned",
-    "verification": "pending",
-    "localAudit": "intent-durable",
-    "sharedAudit": "pending",
+    "execution": "complete",
+    "verification": "passed",
+    "localAudit": "result-durable",
+    "sharedAudit": "unsynchronized",
     "formalCompletion": "pending"
   },
   "executionClass": "source-only",
@@ -33,6 +33,8 @@
   ],
   "decisionIds": [],
   "effectIds": [],
-  "verificationEvidenceIds": [],
-  "nextAction": "Only QRY-01 admitted initially. Deliver exact source result and Verification; wait for DOM-01 qualification before QRY-BOUNDARY."
+  "verificationEvidenceIds": [
+    "education-platform:evidence:qry-01-verification-r1"
+  ],
+  "nextAction": "QRY-01 source inventory prepared. WAIT for root exact owned-path commit and canonical snapshot+transition checkpoint before separate QRY-BOUNDARY admission. QRY-02 remains held on qualified DOM-02. No native adoption or formal acceptance inferred."
 }

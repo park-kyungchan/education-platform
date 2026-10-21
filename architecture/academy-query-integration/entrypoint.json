@@ -1,0 +1,21 @@
+{
+  "schema": "academy.qry01-entrypoint.v1",
+  "taskId": "education-platform:task:academy-query-integration-20261021-qry-01",
+  "sourceBase": "f3427f736dfda2a50fbf80265582510b569fd5ef",
+  "inventory": "inventory.ts",
+  "exactSourceEvidence": "source-evidence.json",
+  "sourceChecks": "observations/QRY-01-SOURCE-CHECKS-R2.json",
+  "priorFailedCheck": "observations/QRY-01-SOURCE-CHECKS-R1.json",
+  "localRecordCheck": "observations/QRY-01-LOCAL-RECORD-CHECK-R1.json",
+  "canonicalCheckpointCommand": "bun architecture/academy-query-integration/canonical-audit.ts <exact-root-committed-candidate>",
+  "resultInput": "work/education-platform/academy-query-integration-20261021/inputs/QRY-01-RESULT-R1.json",
+  "verificationInput": "work/education-platform/academy-query-integration-20261021/inputs/QRY-01-VERIFICATION-R1.json",
+  "resultEvidenceId": "education-platform:evidence:qry-01-result-observation-r1",
+  "verificationEvidenceId": "education-platform:evidence:qry-01-verification-r1",
+  "status": "prepared-source-only-awaiting-root-committed-checkpoint",
+  "nextTask": "QRY-BOUNDARY requires root source checkpoint and separate admission; QRY-02 held on qualified DOM-02",
+  "wholeWorkComplete": false,
+  "sharedDelivery": false,
+  "nativeAdoption": false,
+  "formalAcceptance": false
+}
