@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "kind": "bounded_dayrecord_read_and_wire_equivalence",
+  "observedOn": "2026-10-21",
+  "origin": "https://dc.gang-a.kr",
+  "scope": "Current teacher/date group selector, exact requested occurrence reads, and static six-field request definitions; no business write or parent send",
+  "problem": "The local roster retains student identity without group mappings. The old popup-context hash also includes unrelated preceding pageshow/bfcache code.",
+  "groupDiscovery": {
+    "operation": "POST DayRecordServlet p_process=Main with explicit std_ymd; no guessed grp_seq",
+    "checks": ["authenticated principal", "one exact teacher input", "one exact date input", "one enabled group selector", "bounded unique positive numeric options"],
+    "meaning": "Selector options are route candidates. They do not establish student membership, attendance or current record identity; existing independent occurrence checks still apply."
+  },
+  "staticWireEquivalence": {
+    "predecessorRawDigest": "c7afa7e2975397c54801af3a417c44caeb7850de70e67a6806f61da8c97d5b4b",
+    "currentRawDigest": "2d43a2f0346040f81d0809c293b5830b234da7169be917f91145e80610aa56c2",
+    "predecessorProjectedDigest": "650813891d9428cb03eedb071f5c94bc369fd9641993de6d02ce4e07a5945bd1",
+    "currentProjectedDigest": "650813891d9428cb03eedb071f5c94bc369fd9641993de6d02ce4e07a5945bd1",
+    "fullHandlerDefinitionsByteIdentical": true,
+    "literalAssessmentOptionsByteIdentical": true,
+    "completePopupParameterAndEventSuffixByteIdentical": true,
+    "projection": "One popup source, starting at its unique empty g_param declaration. Preserve the entire following source, all six full handler definitions and every literal assessment option.",
+    "excludedDifference": "Unrelated preceding pageshow listener resets the submission lock after bfcache restoration.",
+    "unknownRevisionPolicy": "Do not automatically repin. Endpoint, method, field, parameter, handler, popup event and option changes remain rejected."
+  },
+  "currentReadVerification": {
+    "selectorOptions": 5,
+    "requestedOccurrencesObserved": 3,
+    "qualifiedCurrentAndPreviousStates": 3,
+    "academyWrites": 0,
+    "parentSends": 0,
+    "privateSourceBodiesPublished": false
+  },
+  "unchangedBoundaries": ["native credential ownership", "genuine exact native approval", "exclusive one-time consumption", "fresh before-state", "independent current/previous occurrence binding", "authoritative readback", "no retry of uncertain effects", "no parent sending"],
+  "limits": ["Source verification is not user approval or deployment", "No classroom content or credential is included", "No actual saved-record acceptance is claimed"]
+}

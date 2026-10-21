@@ -5,10 +5,13 @@ export const journalHttpFields=['progress','homework','lessonMemo','attendance',
 export type JournalHttpField=typeof journalHttpFields[number];
 /** Dated current field-wire qualification, not effect authority, generic source access or a CAS token. */
 export const JOURNAL_HTTP_SOURCE_CONTRACT={
- revision:'2026-10-06-direct-dayrecord-v1',observedOn:'2026-10-06',
- staticWireDigest:'c7afa7e2975397c54801af3a417c44caeb7850de70e67a6806f61da8c97d5b4b',
+ revision:'2026-10-21-direct-dayrecord-v2',observedOn:'2026-10-21',
+ staticWireDigest:'650813891d9428cb03eedb071f5c94bc369fd9641993de6d02ce4e07a5945bd1',
+ predecessorRawWireDigest:'c7afa7e2975397c54801af3a417c44caeb7850de70e67a6806f61da8c97d5b4b',
+ popupSelection:'One popup source; from its unique empty g_param declaration through the unchanged event-source suffix. No handler body, request or option normalization.',
  digestContent:['inert_handler_definitions','assessment_popup_events','literal_assessment_options'],
- sourceReceipt:'review/academy-direct-journal-checkpoint-2026-10-06.json',
+ sourceReceipt:'docs/dayrecord-wire-qualification-2026-10-21.json',
+ predecessorSourceReceipt:'review/academy-direct-journal-checkpoint-2026-10-06.json',
  assessmentLabels:{
   homework_radio:{'-1':'미확인','0':'미실시','1':'숙제 수행도 C','2':'숙제 수행도 B','3':'숙제 수행도 B⁺','4':'숙제 수행도 A','5':'숙제 수행도 A⁺'},
   daily_test_radio:{'-1':'미확인','0':'미실시','1':'일일 테스트 10점','2':'일일 테스트 20점','3':'일일 테스트 30점','4':'일일 테스트 40점','5':'일일 테스트 50점','6':'일일 테스트 60점','7':'일일 테스트 70점','8':'일일 테스트 80점','9':'일일 테스트 90점','10':'일일 테스트 100점'},
@@ -25,6 +28,16 @@ export const JOURNAL_HTTP_SOURCE_CONTRACT={
  readback:'new_direct_HTTP_Main_and_selected_occurrence; exact field plus unchanged-field preservation; not browser UI echo or causal proof',
  scope:'Six explicitly approved fields only; no persistent memo, unit selection, generation, printing, finalization or sender',
 } as const;
+/** The collector's preceding context can contain unrelated bfcache handlers. Retain the
+ * entire request-parameter declaration and popup event suffix, plus every full handler
+ * and literal option. Unknown/ambiguous popup sources remain refused. */
+export function journalWireDigest(wire:{functions:Record<string,string>;popupEvents:string[];assessmentOptions:{field:string;value:string;label:string}[]}){
+ if(wire.popupEvents.length!==1)throw Error('journal_popup_source_ambiguous');
+ const source=wire.popupEvents[0]!;
+ const declarations=[...source.matchAll(/(?:^|\n)[\t ]*var g_param\s*=\s*""\s*;/g)];
+ if(declarations.length!==1)throw Error('journal_popup_source_ambiguous');
+ return digest({functions:wire.functions,popupEvents:[source.slice(declarations[0]!.index).trimStart()],assessmentOptions:wire.assessmentOptions});
+}
 export function assertJournalWireQualified(wireDigest:string){if(wireDigest!==JOURNAL_HTTP_SOURCE_CONTRACT.staticWireDigest)throw Error('journal_mutation_wire_not_qualified');}
 export function assertJournalAssessmentOptions(options:{field:string;value:string;label:string}[]){
  const expected=Object.entries(JOURNAL_HTTP_SOURCE_CONTRACT.assessmentLabels).flatMap(([field,values])=>Object.entries(values).map(([value,label])=>({field,value,label})));

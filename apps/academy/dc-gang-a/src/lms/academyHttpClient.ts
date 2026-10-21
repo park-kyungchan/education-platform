@@ -3,8 +3,8 @@ import {randomInt} from 'node:crypto';
 import {createAcademyReadPlan,executeAcademyRead,readInputRecord,readLiteralKey,readLiteralName,sourceResponseKey,parseTextbookScopeBinding,type AcademyReadResult,type ScopedAcademyReadPlan} from './academyReadProtocol';
 import {currentDayRecordColumns} from './dayRecordColumnContract';
 import type {SourceDiscoveryRequest} from '../academy/nativeBookSource';
-import {canonicalJson,digest,assertExactKeys} from '../learning/model';
-import {applyJournalHttpAction,validateJournalHttpAction,assertJournalWireQualified,assertJournalAssessmentOptions,JOURNAL_HTTP_SOURCE_CONTRACT,type JournalHttpTarget,type JournalHttpState,type JournalHttpAction,type JournalHttpAdmission} from './lessonJournalHttp';
+import {canonicalJson,digest,assertExactKeys,assertDate} from '../learning/model';
+import {applyJournalHttpAction,validateJournalHttpAction,assertJournalWireQualified,assertJournalAssessmentOptions,journalWireDigest,JOURNAL_HTTP_SOURCE_CONTRACT,type JournalHttpTarget,type JournalHttpState,type JournalHttpAction,type JournalHttpAdmission} from './lessonJournalHttp';
 import {parseItemMetadata} from './itemMetadataRead';
 import {selectSourceFunction} from './sourceFunctionText';
 import {inspectAssessmentSearchMetadata} from './assessmentReadProtocol';
@@ -282,6 +282,41 @@ export class AcademyHttpClient {
       coverage:'returned_type_page_only',questionContent:'source_metadata_and_answer_only',sourceOrderPreserved:true,
       sourceHandlersExecuted:false,academyWrites:0,finalItemMembershipCreated:false};
   }
+  /** Read the current teacher/date selector before a missing local group mapping is used. */
+  async discoverDayRecordGroups(input:{teacherLabel:string;date:string}){
+    assertExactKeys(input,['teacherLabel','date']);assertDate(input.date);
+    if(input.teacherLabel!==this.#principal.teacherLabel)throw Error('day_record_group_principal_conflict');
+    if(!this.#authenticated)throw Error('authentication_required');
+    const response=await this.#request('/servlet/controller.cct.tutor.DayRecordServlet',{
+      method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'},
+      body:new URLSearchParams({p_process:'Main',std_ymd:input.date.replaceAll('-','')}).toString(),
+    });
+    const html=await response.text();if(html.length>2000000)throw Error('source_response_too_large');
+    const doc=sourceDomParser.parseFromString(html,'text/html');
+    if(doc.querySelector('input[type=password]')||/webUserPass|세션이 만료/.test(html)){
+      this.close();throw Error('authentication_required');
+    }
+    const dates=doc.querySelectorAll<HTMLInputElement>('input[name=std_date]');
+    const teachers=doc.querySelectorAll<HTMLInputElement>('input[name=teacher_pri_no]');
+    const selectors=doc.querySelectorAll<HTMLSelectElement>('select[name=grp_seq]');
+    if(dates.length!==1||dates[0]!.value!==input.date||teachers.length!==1
+      ||teachers[0]!.value!==this.#principal.teacherKey||selectors.length!==1)throw Error('day_record_group_scope_conflict');
+    const select=selectors[0]!,groups:{groupId:string;label:string}[]=[],seen=new Set<string>();
+    if(select.disabled||select.options.length>64)throw Error('day_record_group_options_rejected');
+    for(const option of select.options){
+      if(option.disabled||option.parentElement?.tagName==='OPTGROUP'&&(option.parentElement as HTMLOptGroupElement).disabled)continue;
+      if(option.value===''||option.value==='0')continue;
+      const groupId=readLiteralKey(option.value),label=option.textContent?.trim()??'';
+      if(!label||seen.has(groupId))throw Error('day_record_group_options_rejected');
+      seen.add(groupId);groups.push({groupId,label});
+    }
+    if(!groups.length||groups.length>12)throw Error('day_record_group_options_rejected');
+    const selectedGroupId=select.value===''||select.value==='0'?null:readLiteralKey(select.value);
+    if(selectedGroupId!==null&&!seen.has(selectedGroupId))throw Error('day_record_group_options_rejected');
+    return {teacherKey:this.#principal.teacherKey,date:input.date,groups,selectedGroupId,
+      observedAt:new Date().toISOString(),sourceOperation:'POST DayRecordServlet p_process=Main',
+      coverage:'current_date_selector_only_not_student_membership',academyWrites:0 as const,parentSends:0 as const};
+  }
   async inspectDayRecordWire(input:unknown){
     const plan=createAcademyReadPlan(input);
     if(plan.family!=='day_record'||plan.request.teacherLabel!==this.#principal.teacherLabel)throw Error('day_record_wire_scope_required');
@@ -400,7 +435,7 @@ export class AcademyHttpClient {
     const {fields,...identity}=row;if(canonicalJson(identity)!==canonicalJson(target))throw Error('journal_target_conflict');
     const wire=(await this.inspectDayRecordWire(request))[0];const controls=wire?.rows.find(r=>r.studentName===target.studentName)?.controls;
     if(!wire||!controls)throw Error('journal_wire_not_observed');
-    const wireDigest=digest({functions:wire.functions,popupEvents:wire.popupEvents,assessmentOptions:wire.assessmentOptions});assertJournalWireQualified(wireDigest);
+    const wireDigest=journalWireDigest(wire);assertJournalWireQualified(wireDigest);
     assertJournalAssessmentOptions(wire.assessmentOptions);
     for(const [handler,selector] of [['onAttn','udtAttn'],['onFoPrg','udtPrg'],['onFoHw','udtHw'],['onFoMm','udtMemo'],['setDailyTest','SetDailyTest'],['openHomeWorkRate','SetHomeWorkRate']])
       if(!wire.functions[handler!] || !wire.functions[handler!].includes('reqCmd='+selector))throw Error('journal_wire_drift');
