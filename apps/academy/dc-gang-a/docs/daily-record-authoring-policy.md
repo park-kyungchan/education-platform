@@ -1,6 +1,6 @@
 # DailyRecord authoring policy
 
-Revision: 2026-10-16. Owner: Academy DailyRecord workflow in this Education source checkout. This file records recurring user instructions; it is not a credential, effect approval, current student record or parent delivery receipt. It does not configure Hermes, Codex, Harness, a database or a global MCP client.
+Revision: 2026-10-21. Owner: Academy DailyRecord workflow in this Education source checkout. This file records recurring user instructions; it is not a credential, effect approval, current student record or parent delivery receipt. It does not configure Hermes, Codex, Harness, a database or a global MCP client.
 
 ## Intake and field ownership
 
@@ -37,3 +37,17 @@ The recurring intake preference does not grant future write authority. Every sou
 Saving DailyRecord fields and parent transmission are separate actions. Final sending, notifications, scheduling and bulk sending require a later explicit user instruction. Neither this policy, a template render, a successful save nor the existence of a pane grants that authority. Do not create clinics/homework assignments, alter unrelated attendance/assessments, generate papers, migrate a database or change global configuration as a side effect of authoring text.
 
 Dated student-specific notices, one-day “no memo” answers, CISM narratives, credentials, source IDs and operational receipts stay in their private owner/work context. They are not copied into this policy, public frontend fixtures, repository history or the month-end label-search user context.
+
+## Permanent line and mapping rules
+
+Apply these rules on every new or explicitly replaced parent text field, independent of date, runtime or agent. Use only literal `- ` at the start of every nonempty line and a single LF between entries. Do not copy headings, numbered lists, tables or other formatting from historical tone samples. Existing stored teacher text remains untouched unless that field is explicitly selected for replacement. Empty text requires a separate explicit clear decision. `parentDailyRecordLines` in `teacherWorkspace.ts` owns the machine-checkable line grammar.
+
+Group all selected sections into one line only for the same student, exact book edition, unit, activity and deadline. Preserve every distinct section; different units, activities or deadlines always start another line. A missing deadline stays absent. Never join by book display name alone.
+
+Three-number notation such as `가우스 5-1-2` means brand + grade5 + term1 + series2. Four-number notation such as `가우스 5-1-2-4` means brand + grade5 + term1 + major2 + minor4. The third number in a four-number coordinate is never the series. Resolve the student's actual edition independently; if multiple editions or school levels fit, always interview before linking. Unknown notation also requires an interview. New teacher answers are scoped corrections with evidence, not retroactive rewrites of imported originals or permission to alter native book registration.
+
+Use `src/lms/dailyRecordLearning.ts` as the canonical runtime-neutral mapping/section validator and grouped renderer. Its trusted catalog is student/edition/unit scoped; MCP callers cannot supply a replacement catalog or verified flag. Book, unit and section refs must all resolve through the same binding. Keep printed/source/teacher-reported section bases distinct. Source status columns (homework, clinic, restudy status) do not become printed sections. Similar names are not aliases without explicit scoped evidence. `실력쌓기`, `실력다지기` and `실력올리기` remain different; chapter assessments retain their major node and never get an invented minor0/99. Middle-school Davinci has no inferred series; Gauss Plus is a separate brand.
+
+Catalog coverage is observed-only. Missing sections, page boundaries and alias crosswalks remain unknown and require questions when needed; they are never unfinished homework. Teacher-confirmed completion survives an unresolved catalog link. An observed catalog does not prove a full printed TOC, current assignment or current source freshness. Keep real student catalogs and correction history in the existing private context repository; source tests use fictional students only.
+
+The MCP review consumer requires the pinned owner learning validator and an explicitly configured namespace/teacher/student-to-retained-student bridge for changed progress/homework. Missing catalog, binding or section holds the affected proposal for clarification. Rendering validates identity/format, not factual equivalence, assignment truth, approval, save or parent delivery. Notices without a textbook mapping need the separate teacher review path; never fabricate a textbook reference to pass a renderer.
