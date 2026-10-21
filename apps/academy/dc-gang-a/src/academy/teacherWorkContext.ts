@@ -36,6 +36,7 @@ export interface TeacherWorkContext {
     readonly sectionAssignments:Knowledge<readonly string[]>;
     readonly paperIssuance:Knowledge<readonly string[]>;
     readonly exactWork:LearningWorkProjection;
+    readonly currentObligations?:LearningWorkProjection['currentObligations'];
     readonly sourceResults:readonly TeacherSourceResult[];
   };
   readonly logic:{
@@ -96,9 +97,9 @@ export function buildTeacherWorkContext(input:{
     data:{
       studentKey:input.studentKey,curriculum:input.catalog,books,
       unitWork:input.preparation.books.flatMap(book=>book.units.map(unit=>({sourceBook:book.sourceBook,sourceCourse:book.sourceCourse,sourceMinorUnit:unit.sourceMinorUnit,duty:unit.duty,teacherActivities:unit.teacherActivities,evidenceGrain:'minor_unit_not_section_paper_or_item' as const}))),
-      sectionAssignments:exactWork.assignments.length?{state:'known',value:exactWork.assignments.map(row=>row.record.revisionId),evidenceRefs:exactWork.assignments.map(row=>row.record.revisionId)}:{state:'unknown',reason:'exact_assigned_section_and_item_scope_not_qualified'},
+      sectionAssignments:exactWork.currentObligations.length?{state:'known',value:exactWork.currentObligations.map(row=>row.assignmentRevisionId),evidenceRefs:exactWork.currentObligations.map(row=>row.assignmentRevisionId)}:{state:'unknown',reason:'exact_assigned_section_and_item_scope_not_qualified'},
       paperIssuance:exactWork.assignments.some(row=>row.record.payload.paper.state==='known')?{state:'known',value:exactWork.assignments.filter(row=>row.record.payload.paper.state==='known').map(row=>row.record.revisionId),evidenceRefs:exactWork.assignments.filter(row=>row.record.payload.paper.state==='known').map(row=>row.record.revisionId)}:{state:'unknown',reason:'paper_content_issuance_reissuance_and_attempt_bindings_not_qualified'},
-      exactWork,sourceResults,
+      exactWork,currentObligations:exactWork.currentObligations,sourceResults,
     },
     logic:{policyRef:'src/academy/classroomCyclePolicy.ts',policyRevision:classroomCyclePolicy.operationalContextRevision,sectionWork:classroomCyclePolicy.sectionWork,clinicWorkflow:classroomCyclePolicy.clinicWorkflow},
     action:{target:scene,sourceAcquisition,operations:[

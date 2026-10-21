@@ -1,0 +1,90 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "academy-query-integration-20261021",
+  "kind": "input",
+  "id": "QRY-DOM02-ADOPTION-R1",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "root-academy-orchestrator",
+    "locator": "root-source-dependency-adoption:qualified-DOM-02",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "createdAt": "2026-10-21T08:25:55.799858+00:00",
+    "actor": "root-authorized-source-operator",
+    "consumerPreviousCommit": "16241478934490f96aa6aaba7d04a465e32c33ce",
+    "qualifiedProducer": {
+      "repositoryId": "park-kyungchan/education-platform",
+      "workId": "academy-state-model-20261021",
+      "commit": "e52d008e0272f58a5a880f00696624361184aa22",
+      "postBoundaryBase": "3adb273aa1125aa8d6beff7dc51a4c5076710d9f",
+      "receivingInput": "QRY-DOM02-QUALIFICATION-R1"
+    },
+    "method": "Exact selected business source/test patch after checking existing target byte equality; neutral extraction excluded. No Git merge or native activation.",
+    "patchSha256": "ed71068abd9fe7c88190c75e11398e152255fc5b510346c3bb91a530afafcdeb",
+    "fileCount": 11,
+    "files": [
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/learningWork.ts",
+        "beforeSha256": "7598a30b6c3ad9e3c6cb9c9f1cb78753e18ca202349ec8660f033ed350c065ea",
+        "afterSha256": "747f44cb2eda9844d6fdc266f51d89eeb71f7d8c90618a11c4f967dd3f120261"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/learningWorkBindings.ts",
+        "beforeSha256": null,
+        "afterSha256": "a9772e2c4b161cd4f30d05a4e1b87ce1dd7cdd9bdcda73294ae505ac39dbe0cc"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/learningWorkProjection.ts",
+        "beforeSha256": "8dd95e4e4457940b6c3ad7a5fe4253f97aadf2fe495db3de3bac2b80a8b12e2b",
+        "afterSha256": "bb2a6435379692009d7a688dfbf3cfc57fbdf35e57e0bb6936be8fe758e9d9d2"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/ownerWorkspaceStore.ts",
+        "beforeSha256": "098e1075dbbbdd91d8d2b1ec69803c6795781cf546e5266695a30fff60abe73c",
+        "afterSha256": "5ccdcefce2294c1a6578aac318fe282632e700584e3e274124f644d15169a1c6"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/postgresStore.ts",
+        "beforeSha256": "a9bb7d1bab38b505e7a4ae4bec64988e7bb0e67b4b3aaec338d61930f6ac9c14",
+        "afterSha256": "f74213e45b6e81ad992d629a08e706707fc11dacb50c8a2c865e87c0c16b22c9"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/teacherWorkContext.ts",
+        "beforeSha256": "aec375d98594846c0db9f269750ddb6d2c66d58a1156ac5352d97f7c120164a8",
+        "afterSha256": "79e85dbb464b96252b2547dba94d237fac992b692d40861e5ca791cb7bedd38e"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/teacherWorkspace.ts",
+        "beforeSha256": "a3ae52b69d7c82ce2bfb5e7e9605b93edcb25cd273fe0d19a6d1a0ee2c9cd4db",
+        "afterSha256": "dae77c929fc05a356e9619f83ca1fcf70b4af5e5b33f2c1094a0df6b855e418e"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/usecases/studentScene.ts",
+        "beforeSha256": "45e855f92bb8fb078c300472f4d6f4a87a18d63d2db7f5e5fe44ecb2b4170d93",
+        "afterSha256": "4ff2876a57a295a371795e0db28366b69f7aeef3bbbde5db338a33ff0c188b63"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/web/learningWorkView.ts",
+        "beforeSha256": "9d2ac212e699bf0d05ed7310eae9250f8b52a3d7edc7f592e05d9c2c89c572ab",
+        "afterSha256": "eb86537b86ba3f480532e831a2b0901404bdfbbfd898187b24161dfc0dcb4cec"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/web/teacherWorkspaceView.ts",
+        "beforeSha256": "7e63d3683fdc4d59d91d2cec1da3ab89525184c060644cdce406f82854187206",
+        "afterSha256": "ea1f50c5d7e0df4b1afc547da7ac1d5169cdc14095738243538f230b1f28229f"
+      },
+      {
+        "path": "apps/academy/dc-gang-a/tests/academy/learningWorkRefinements.test.ts",
+        "beforeSha256": null,
+        "afterSha256": "464fcc0a3723ccef7d01af2f75f5af552fb282c65d123ce6641519311fd9d38b"
+      }
+    ],
+    "scope": "Canonical maintained domain dependency only. QRY-02 will add query slice, not duplicate state inference.",
+    "preservation": "All existing QRY source Inputs/Evidence and namespace/native/ownership boundaries retained. DOM original records remain in their own Work; no foreign Task IDs directly used as local dependsOn.",
+    "nativeAuthorityGranted": false,
+    "privateOriginalsReadOrWritten": false
+  }
+}

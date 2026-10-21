@@ -50,7 +50,7 @@ export function learningWorkView(context:TeacherWorkContext,selected:TeacherWork
       unit.append(stack);if(!results.length)unit.append(node('p','이 교재에 연결된 채점 관측이 없습니다. 미수행 판정이 아닙니다.','no-records'));detail.append(unit);
     }
     if(item.kind==='learning_section'||item.kind==='problem'){
-      const assignments=context.data.exactWork.assignments.filter(row=>row.record.payload.status==='assigned'&&(item.kind==='learning_section'?row.record.payload.sectionNodeIds.includes(item.id):row.record.payload.items.some(assigned=>assigned.contentNodeId===item.id)));
+      const assignments=context.data.exactWork.assignments.filter(row=>(row.obligationState??(row.record.payload.status==='assigned'?'active':'withdrawn'))==='active'&&(item.kind==='learning_section'?row.record.payload.sectionNodeIds.includes(item.id):row.record.payload.items.some(assigned=>assigned.contentNodeId===item.id)));
       line.dataset.workState=assignments.length?'assigned_exact':'source_unknown';
       detail.append(node('p',assignments.length?`보존 배정 ${assignments.length}건 · 배정 시점 목차와 문항별 판단은 아래에서 확인`:'배정·수행 근거 미확인','work-state'));
     }
