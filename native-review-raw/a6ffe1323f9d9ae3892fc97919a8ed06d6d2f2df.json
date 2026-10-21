@@ -1,0 +1,92 @@
+{
+  "schema": "owner-scoped-native-review-output.v1",
+  "binding": {
+    "repository": "park-kyungchan/education-platform",
+    "projectId": "education-platform",
+    "domainId": "education",
+    "semanticOwner": "education-platform",
+    "scope": "month-end-source-redesign"
+  },
+  "headSha": "a6ffe1323f9d9ae3892fc97919a8ed06d6d2f2df",
+  "reviewedTreeSha": "313020bba676ca07cea196290866e0c5c5f3007a",
+  "reviewedSourceManifestSha256": "feb63a69e15507863b47b73863562153faa156f42dc057ba6d09ea993d7ad4c3",
+  "reviewer": {
+    "runtime": "native-codex",
+    "taskId": "/root/academy_delivery_review"
+  },
+  "author": {
+    "runtime": "native-codex",
+    "taskId": "01a15e77-5f49-7461-a6ba-8efa2b888a39"
+  },
+  "conclusion": "pass",
+  "unresolvedFindings": 0,
+  "reviewStatus": "complete",
+  "findings": [],
+  "completedAt": "2026-10-21T14:27:29.131Z",
+  "reviewScope": "Full eleven-file source diff; authenticated date/principal group discovery, exact static wire projection, canonical action guard compatibility, runtime-owned current-request admission, publication metadata and synthetic regressions. Successor exact-head review additionally verifies only the source-author timestamp and immediate authoring-parent metadata changed.",
+  "changedFiles": [
+    ".github/source-author.json",
+    "apps/academy/dc-gang-a/docs/dayrecord-wire-qualification-2026-10-21.json",
+    "apps/academy/dc-gang-a/docs/journal-runtime-admission.json",
+    "apps/academy/dc-gang-a/package.json",
+    "apps/academy/dc-gang-a/src/lms/academyHttpClient.ts",
+    "apps/academy/dc-gang-a/src/lms/journalRequestAdmission.ts",
+    "apps/academy/dc-gang-a/src/lms/lessonJournalHttp.ts",
+    "apps/academy/dc-gang-a/tests/lms/dayRecordGroupDiscovery.test.ts",
+    "apps/academy/dc-gang-a/tests/lms/journalRequestAdmission.test.ts",
+    "apps/academy/dc-gang-a/tests/lms/journalWireFingerprint.test.ts",
+    "provenance/adaptations.json"
+  ],
+  "analysis": [
+    "Group discovery authenticates and validates exactly one matching teacher/date selector, bounds and validates numeric unique group options, keeps scripts inert, and labels options route candidates rather than student membership.",
+    "Wire projection requires one popup source and one empty g_param declaration; preserves every full handler, literal assessment option, and complete parameter/event suffix. Existing canonical action validation, fresh before-state, previous-record identity, exact approval digest, readback and unchanged-field checks remain unchanged.",
+    "Request admission captures exact action digests, independently compares current request evidence through a trusted runtime-owned port, and delegates exclusive durable consumption using a stable identity excluding attempt ID/output path. No model-facing approval flag or Hermes-only business requirement is introduced.",
+    "Source qualification records contain bounded metadata and hashes; no student histories, credentials, source session bodies or business-send authority are published.",
+    "Independently inspected the successor diff and exact parent: only .github/source-author.json sourceBaseSha and capturedAtUtc changed. sourceBaseSha equals the immediate source parent; capturedAtUtc is canonical JavaScript UTC milliseconds-Z. All previously reviewed application code and tests remain byte-identical. Existing author identity and nonauthentication flags remain unchanged."
+  ],
+  "validation": [
+    {
+      "check": "bun run test:journal-read",
+      "result": "passed",
+      "tests": 19,
+      "assertions": 85,
+      "runtime": "Bun 1.4.3",
+      "performedBy": "/root/academy_delivery_review"
+    },
+    {
+      "check": "git diff --check base head",
+      "result": "passed",
+      "performedBy": "/root/academy_delivery_review"
+    },
+    {
+      "check": "successor delta and parent/source identity",
+      "result": "passed",
+      "performedBy": "/root/academy_delivery_review",
+      "priorHead": "9baff6c8c22d9c57f4b304ad4b8c9986a890e47b",
+      "onlyChangedPath": ".github/source-author.json",
+      "modifiedKeys": [
+        "capturedAtUtc",
+        "sourceBaseSha"
+      ]
+    },
+    {
+      "check": "canonical verifyCommittedSourceAuthor at exact current head",
+      "result": "passed",
+      "performedBy": "/root/academy_delivery_review",
+      "metadataSha256": "f5fc5fc856b9f1cfe0760990921c0a4247cb214f48b7490dd67d3be5bd769ff6",
+      "nativeAuthorshipAuthenticated": false,
+      "publisherIdentityInferred": false
+    }
+  ],
+  "limitations": [
+    "The actual independent reviewer is collaboration agent /root/academy_delivery_review. Its inherited CODEX_THREAD_ID is not a distinct session identity.",
+    "Publisher custody and canonical structural proof validation are not cryptographic native authentication, runtime permission, deployment authority or teacher acceptance.",
+    "This is source review. Synthetic regression tests do not prove live operational correctness. The reviewer executed no Academy operation and did not rerun the full root check; parent-reported full checks and actual SDK observations are separate evidence.",
+    "The source-owned runtime integration must supply a genuine current user-event reader and exclusive durable consumption. Interface declarations and provenance locators alone do not authenticate user intent."
+  ],
+  "priorReview": {
+    "headSha": "9baff6c8c22d9c57f4b304ad4b8c9986a890e47b",
+    "rawSha256": "da6660b8d0f981f46e42f768576041ed4c40b97f5078af83523de4f2e3ffea96",
+    "relationship": "Exact full original review plus independently reviewed metadata-only successor delta; original raw report preserved unchanged."
+  }
+}
