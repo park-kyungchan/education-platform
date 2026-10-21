@@ -8,6 +8,7 @@ import {assertTeacherScope} from './usecases/requestRecovery';
 import {TeacherObservationCommands} from './usecases/teacherObservation';
 import {TeacherClinicCommands} from './usecases/teacherClinic';
 import {TeacherQueries} from './usecases/studentScene';
+import {createRetainedQueryReader} from './retainedQuery';
 export type {TrustedTeacherContext,ObservationInput,ClinicDecisionInput} from './contracts/teacherOperations';
 /** Stable human/agent facade. Business slices own behavior; adapters own transactional enforcement. */
 export class TeacherApplication {
@@ -15,12 +16,15 @@ export class TeacherApplication {
   private readonly workspaces:TeacherWorkspaceCommands;
   private readonly observations:TeacherObservationCommands;
   private readonly clinics:TeacherClinicCommands;
+  private readonly retainedQueries:ReturnType<typeof createRetainedQueryReader>;
   constructor(readonly store:TeacherStore,readonly ownerId:string,readonly connection:()=>AcademySourceConnection=()=>academyConnectionStatus,readonly certification?:BookCertificationRetainedPort){
     this.concepts=new ConceptWorkspaceCommands(store,ownerId,certification);
     this.workspaces=new TeacherWorkspaceCommands(store,ownerId);
     this.observations=new TeacherObservationCommands(store,ownerId);
     this.clinics=new TeacherClinicCommands(store,ownerId);
+    this.retainedQueries=createRetainedQueryReader(this);
   }
+  retainedQuery(context:TrustedTeacherContext,input:unknown){return this.retainedQueries.page(context,input);}
   saveConceptDefinition(context:TrustedTeacherContext,input:unknown){return this.concepts.saveDefinition(context,input);}
   saveStudentConceptLink(context:TrustedTeacherContext,input:unknown){return this.concepts.saveLink(context,input);}
   studentConceptGraph(context:TrustedTeacherContext,studentId:string){return this.concepts.graph(context,studentId);}
