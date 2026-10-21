@@ -1,0 +1,68 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "academy-query-integration-20261021",
+  "kind": "input",
+  "id": "QRY-BOUNDARY-ADMISSION-R1",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "root-academy-orchestrator",
+    "locator": "root-admission:QRY-BOUNDARY-after-exact-QRY01-checkpoint",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "admittedTaskId": "education-platform:task:academy-query-integration-20261021-qry-boundary",
+    "qualifiedLocalPrerequisites": {
+      "qry01Commit": "78a3453458b08e437f1b4cd6186c1c2cac94d6b3",
+      "qry01Tree": "61e265e1f8c7e71a7e1d3bbeb9ce3c3358f754aa",
+      "snapshotValid": true,
+      "transitionFrom": "f3427f736dfda2a50fbf80265582510b569fd5ef",
+      "transitionValid": true,
+      "resultSha256": "d5bd8bce85699ca1ba4a90c84f4fd211fc721444dfcba7a205f004f0e3da918a",
+      "dom01ReceivingInput": "QRY-DOM01-QUALIFICATION-R1"
+    },
+    "outcome": "Resolve the observed application/LMS reverse coupling using source-owner neutral leaf extraction and honest final import graph; preserve compatibility and existing meanings.",
+    "approvedDirectionSource": {
+      "commit": "f690ba381a61ba5b8b50006802649dccba3cc417",
+      "path": "architecture/academy-state-model/query-boundary.ts",
+      "steps": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q4"
+      ],
+      "meaning": "Q5 downstream consumer adaptation is not a prerequisite of this source boundary and remains with later CON/QRY02."
+    },
+    "sourceWriteScope": [
+      "apps/academy/dc-gang-a/src/contracts/** neutral leaf contracts only",
+      "Exact readInputRecord import sites identified by DOM-01, preserving other symbols and old public re-exports",
+      "src/academy/teacherWorkspace.ts parentInternalLanguage declaration/import/re-export only",
+      "src/academy/operationalContract.ts pure shape/path/revision/topics split with I/O loader retained",
+      "src/academy/domain.ts catalogLevels constant/type only if required for neutral leaf",
+      "src/academy/nativeBookSource.ts SourceDiscoveryRequest interface/re-export only",
+      "src/lms/lessonJournalTemplates.ts,endpointCatalog.ts,academyHttpClient.ts exact corresponding imports",
+      "Focused source-contract compatibility tests; own architecture and canonical Work records"
+    ],
+    "reserved": [
+      "Business state/eligibility/attempt/replacement/stage changes (DOM-02)",
+      "Storage/native authentication/effects",
+      "Shared manifests/locks/CI/source-map/run.ts/common contracts or pins",
+      "Other Work sources/records"
+    ],
+    "verification": "Preserve exact moved function/constant semantics, legacy exports/errors, type-only/dynamic graph distinctions; run relevant existing read-protocol and contract tests plus typecheck; retain known missing research/foreign-source baseline gaps. No second reducer or native activation.",
+    "dependenciesPrepared": {
+      "actor": "root-authorized-operator",
+      "directories": [
+        "Education root",
+        "apps/academy/gang-a",
+        "apps/academy/dc-gang-a"
+      ],
+      "method": "frozen-lockfile ignore-scripts; package/lock hashes unchanged",
+      "actualCompiler": "TypeScript7.0.2"
+    },
+    "delivery": "Separate NEW immutable boundary result/Verification Inputs/Evidence, root source checkpoint; then wait for DOM-02. No Git mutation or native permission bypass by subLead.",
+    "nativeAuthorityGranted": false,
+    "operationalActivation": false
+  }
+}
