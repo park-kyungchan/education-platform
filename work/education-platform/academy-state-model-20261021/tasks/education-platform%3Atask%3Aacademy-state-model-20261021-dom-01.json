@@ -18,10 +18,10 @@
   },
   "title": "Freeze maintained teacher workflow contracts and consumer selection",
   "state": {
-    "execution": "planned",
-    "verification": "pending",
-    "localAudit": "intent-durable",
-    "sharedAudit": "pending",
+    "execution": "complete",
+    "verification": "passed",
+    "localAudit": "result-durable",
+    "sharedAudit": "unsynchronized",
     "formalCompletion": "pending"
   },
   "executionClass": "source-only",
@@ -33,6 +33,8 @@
   ],
   "decisionIds": [],
   "effectIds": [],
-  "verificationEvidenceIds": [],
-  "nextAction": "Only DOM-01 is admitted initially. Produce typed contract-selection and exact result/Verification, then wait for qualified QRY-BOUNDARY."
+  "verificationEvidenceIds": [
+    "education-platform:evidence:dom-01-verification-r1"
+  ],
+  "nextAction": "Wait for root independent exact-source qualification. Education QRY first qualifies DOM-01 and owner-local QRY-BOUNDARY; DOM-02 and its receiving qualification remain held until root supplies exact qualified producer. No whole-Work completion, shared audit, native adoption or operational acceptance."
 }
