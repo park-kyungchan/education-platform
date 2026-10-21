@@ -1,5 +1,6 @@
 import {assertInstant,digest} from '../learning/model';
-import {createAcademyReadPlan,readInputRecord,readLiteralKey,readLiteralName} from './academyReadProtocol';
+import {createAcademyReadPlan,readLiteralKey,readLiteralName} from './academyReadProtocol';
+import {readInputRecord} from '../contracts/readInputRecord';
 import {createStudentCourseRequest} from './studentCourseRead';
 import {createItemAnswerAudit} from './itemAnswerAudit';
 

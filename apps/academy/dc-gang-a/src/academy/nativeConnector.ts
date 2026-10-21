@@ -1,4 +1,5 @@
-import { createAcademyReadPlan,readLiteralKey, readLiteralName, readInputRecord,type ScopedAcademyReadPlan } from '../lms/academyReadProtocol';
+import { createAcademyReadPlan,readLiteralKey, readLiteralName, type ScopedAcademyReadPlan } from '../lms/academyReadProtocol';
+import {readInputRecord} from '../contracts/readInputRecord';
 import {assertExactKeys,canonicalJson,assertInstant} from '../learning/model';
 import {normalizeCohortDiscovery} from './sourceBridge';
 import {runNativeDirectDiscovery,runNativeDirectRead} from './nativeDirectSource';

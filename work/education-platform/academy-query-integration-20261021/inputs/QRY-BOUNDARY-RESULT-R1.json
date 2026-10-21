@@ -1,0 +1,1269 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "academy-query-integration-20261021",
+  "kind": "input",
+  "id": "QRY-BOUNDARY-RESULT-R1",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "education-query-sublead",
+    "locator": "root-admitted-source-extraction:QRY-BOUNDARY:01a15d3e-8769-7061-983f-880f73d33289",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "schema": "academy.qry-boundary-result.v1",
+    "createdAt": "2026-10-21T07:23:58.589Z",
+    "taskId": "education-platform:task:academy-query-integration-20261021-qry-boundary",
+    "sourceBase": "b9c954cb8f5bf9b0748bb5634b4951c5954e9a6b",
+    "nativeThreadId": "01a15d3e-8769-7061-983f-880f73d33289",
+    "nativeIdentityMeaning": "Actual environment CODEX_THREAD_ID; not inferred from logical IDs.",
+    "authority": {
+      "kind": "root-source-owner-delegation",
+      "admissionInputId": "QRY-BOUNDARY-ADMISSION-R1",
+      "directUserInterviewAnswer": false,
+      "nativeAuthority": false
+    },
+    "prerequisites": {
+      "qry01Commit": "78a3453458b08e437f1b4cd6186c1c2cac94d6b3",
+      "qry01Tree": "61e265e1f8c7e71a7e1d3bbeb9ce3c3358f754aa",
+      "qry01ResultSha256": "d5bd8bce85699ca1ba4a90c84f4fd211fc721444dfcba7a205f004f0e3da918a",
+      "dom01Commit": "f690ba381a61ba5b8b50006802649dccba3cc417",
+      "dom01Tree": "4ad44db717ae5f68b2aefa16eae135e1661bb959",
+      "dom01ReceivingInput": "QRY-DOM01-QUALIFICATION-R1",
+      "downstreamWorkbenchProducerRequired": false
+    },
+    "changes": {
+      "existingSourceFiles": [
+        "apps/academy/dc-gang-a/src/academy/domain.ts",
+        "apps/academy/dc-gang-a/src/academy/nativeBookSource.ts",
+        "apps/academy/dc-gang-a/src/academy/nativeConnector.ts",
+        "apps/academy/dc-gang-a/src/academy/nativeDirectSource.ts",
+        "apps/academy/dc-gang-a/src/academy/operationalContract.ts",
+        "apps/academy/dc-gang-a/src/academy/postgresStore.ts",
+        "apps/academy/dc-gang-a/src/academy/refresh.ts",
+        "apps/academy/dc-gang-a/src/academy/sourceBridge.ts",
+        "apps/academy/dc-gang-a/src/academy/sourceEvidence.ts",
+        "apps/academy/dc-gang-a/src/academy/sourceSynchronization.ts",
+        "apps/academy/dc-gang-a/src/academy/teacherWorkContext.ts",
+        "apps/academy/dc-gang-a/src/academy/teacherWorkspace.ts",
+        "apps/academy/dc-gang-a/src/academy/usecases/studentScene.ts",
+        "apps/academy/dc-gang-a/src/academy/usecases/teacherClinic.ts",
+        "apps/academy/dc-gang-a/src/academy/usecases/teacherObservation.ts",
+        "apps/academy/dc-gang-a/src/academy/usecases/teacherWorkspace.ts",
+        "apps/academy/dc-gang-a/src/canonical/rosterRecovery.ts",
+        "apps/academy/dc-gang-a/src/lms/academyHttpClient.ts",
+        "apps/academy/dc-gang-a/src/lms/academyReadProtocol.ts",
+        "apps/academy/dc-gang-a/src/lms/academySourceAudit.ts",
+        "apps/academy/dc-gang-a/src/lms/endpointCatalog.ts",
+        "apps/academy/dc-gang-a/src/lms/itemAnswerAudit.ts",
+        "apps/academy/dc-gang-a/src/lms/lessonJournalTemplates.ts",
+        "apps/academy/dc-gang-a/src/lms/paperLineage.ts"
+      ],
+      "newNeutralLeaves": [
+        "apps/academy/dc-gang-a/src/contracts/readInputRecord.ts",
+        "apps/academy/dc-gang-a/src/contracts/parentInternalLanguage.ts",
+        "apps/academy/dc-gang-a/src/contracts/catalogLevels.ts",
+        "apps/academy/dc-gang-a/src/contracts/operationalContractShape.ts",
+        "apps/academy/dc-gang-a/src/contracts/sourceDiscovery.ts"
+      ],
+      "movedDeclarations": [
+        {
+          "name": "readInputRecord",
+          "from": "apps/academy/dc-gang-a/src/lms/academyReadProtocol.ts",
+          "to": "apps/academy/dc-gang-a/src/contracts/readInputRecord.ts",
+          "exactDeclarationSha256": "7240c6c670b6e9c0aaedc3b251b90852f89d8ec740160e007e67f6a431fce1e8",
+          "compatibilityExportTypeOnly": false
+        },
+        {
+          "name": "parentInternalLanguage",
+          "from": "apps/academy/dc-gang-a/src/academy/teacherWorkspace.ts",
+          "to": "apps/academy/dc-gang-a/src/contracts/parentInternalLanguage.ts",
+          "exactDeclarationSha256": "444a821e7ae944c9a36315d18bfd235990c387a72632f0c45580f9199c4e9fc5",
+          "compatibilityExportTypeOnly": false
+        },
+        {
+          "name": "CatalogKind",
+          "from": "apps/academy/dc-gang-a/src/academy/domain.ts",
+          "to": "apps/academy/dc-gang-a/src/contracts/catalogLevels.ts",
+          "exactDeclarationSha256": "ed53a0feb1716960d2c9286d590ac3069a0cf9e7cd301e87a5a51937cf74e3d6",
+          "compatibilityExportTypeOnly": true
+        },
+        {
+          "name": "catalogLevels",
+          "from": "apps/academy/dc-gang-a/src/academy/domain.ts",
+          "to": "apps/academy/dc-gang-a/src/contracts/catalogLevels.ts",
+          "exactDeclarationSha256": "569a9f5805c3454c24434f30cdd12f68d96f17ff155750e66e8c382e0308d610",
+          "compatibilityExportTypeOnly": false
+        },
+        {
+          "name": "OPERATIONAL_CONTRACT_PATH",
+          "from": "apps/academy/dc-gang-a/src/academy/operationalContract.ts",
+          "to": "apps/academy/dc-gang-a/src/contracts/operationalContractShape.ts",
+          "exactDeclarationSha256": "0cd4709832dd9a8c7115ff5f035fd6b760af4a3dbc105fd872359c65d3e376e1",
+          "compatibilityExportTypeOnly": false
+        },
+        {
+          "name": "OPERATIONAL_CONTRACT_REVISION",
+          "from": "apps/academy/dc-gang-a/src/academy/operationalContract.ts",
+          "to": "apps/academy/dc-gang-a/src/contracts/operationalContractShape.ts",
+          "exactDeclarationSha256": "e7d8a99acda49480644727b015648f279528d37ad8205d15742e47820eba4ba7",
+          "compatibilityExportTypeOnly": false
+        },
+        {
+          "name": "operationalTopics",
+          "from": "apps/academy/dc-gang-a/src/academy/operationalContract.ts",
+          "to": "apps/academy/dc-gang-a/src/contracts/operationalContractShape.ts",
+          "exactDeclarationSha256": "06f35f9cab97e076465f869fcc229428b74af4942430744413e82bbcd7faa21f",
+          "compatibilityExportTypeOnly": false
+        },
+        {
+          "name": "OperationalTopic",
+          "from": "apps/academy/dc-gang-a/src/academy/operationalContract.ts",
+          "to": "apps/academy/dc-gang-a/src/contracts/operationalContractShape.ts",
+          "exactDeclarationSha256": "b3388443c748785d7e939794246642bd278e51c1f9491f9eb6eae22abb273c35",
+          "compatibilityExportTypeOnly": true
+        },
+        {
+          "name": "operationalContractShape",
+          "from": "apps/academy/dc-gang-a/src/academy/operationalContract.ts",
+          "to": "apps/academy/dc-gang-a/src/contracts/operationalContractShape.ts",
+          "exactDeclarationSha256": "9110e8c17989953cf96e0554c785b613e2ab3c8d4a574cdcc838a70bf9515c1b",
+          "compatibilityExportTypeOnly": false
+        },
+        {
+          "name": "SourceDiscoveryRequest",
+          "from": "apps/academy/dc-gang-a/src/academy/nativeBookSource.ts",
+          "to": "apps/academy/dc-gang-a/src/contracts/sourceDiscovery.ts",
+          "exactDeclarationSha256": "f341a1ee4ae4563f5fdcc5e5706caa5b3690ac18896e212650badc535a3a580b",
+          "compatibilityExportTypeOnly": true
+        }
+      ],
+      "readInputImportSites": [
+        {
+          "from": "apps/academy/dc-gang-a/src/academy/nativeConnector.ts",
+          "oldTarget": "apps/academy/dc-gang-a/src/lms/academyReadProtocol.ts",
+          "newTarget": "apps/academy/dc-gang-a/src/contracts/readInputRecord.ts",
+          "otherSymbolsRetained": [
+            {
+              "name": "createAcademyReadPlan",
+              "local": "createAcademyReadPlan",
+              "typeOnly": false
+            },
+            {
+              "name": "readLiteralKey",
+              "local": "readLiteralKey",
+              "typeOnly": false
+            },
+            {
+              "name": "readLiteralName",
+              "local": "readLiteralName",
+              "typeOnly": false
+            },
+            {
+              "name": "ScopedAcademyReadPlan",
+              "local": "ScopedAcademyReadPlan",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "from": "apps/academy/dc-gang-a/src/academy/nativeDirectSource.ts",
+          "oldTarget": "apps/academy/dc-gang-a/src/lms/academyReadProtocol.ts",
+          "newTarget": "apps/academy/dc-gang-a/src/contracts/readInputRecord.ts",
+          "otherSymbolsRetained": [
+            {
+              "name": "createAcademyReadPlan",
+              "local": "createAcademyReadPlan",
+              "typeOnly": false
+            },
+            {
+              "name": "readLiteralKey",
+              "local": "readLiteralKey",
+              "typeOnly": false
+            },
+            {
+              "name": "readLiteralName",
+              "local": "readLiteralName",
+              "typeOnly": false
+            },
+            {
+              "name": "ScopedAcademyReadPlan",
+              "local": "ScopedAcademyReadPlan",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "from": "apps/academy/dc-gang-a/src/academy/postgresStore.ts",
+          "oldTarget": "apps/academy/dc-gang-a/src/lms/academyReadProtocol.ts",
+          "newTarget": "apps/academy/dc-gang-a/src/contracts/readInputRecord.ts",
+          "otherSymbolsRetained": []
+        },
+        {
+          "from": "apps/academy/dc-gang-a/src/academy/refresh.ts",
+          "oldTarget": "apps/academy/dc-gang-a/src/lms/academyReadProtocol.ts",
+          "newTarget": "apps/academy/dc-gang-a/src/contracts/readInputRecord.ts",
+          "otherSymbolsRetained": []
+        },
+        {
+          "from": "apps/academy/dc-gang-a/src/academy/sourceBridge.ts",
+          "oldTarget": "apps/academy/dc-gang-a/src/lms/academyReadProtocol.ts",
+          "newTarget": "apps/academy/dc-gang-a/src/contracts/readInputRecord.ts",
+          "otherSymbolsRetained": [
+            {
+              "name": "readLiteralKey",
+              "local": "readLiteralKey",
+              "typeOnly": false
+            },
+            {
+              "name": "readLiteralName",
+              "local": "readLiteralName",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "from": "apps/academy/dc-gang-a/src/academy/sourceEvidence.ts",
+          "oldTarget": "apps/academy/dc-gang-a/src/lms/academyReadProtocol.ts",
+          "newTarget": "apps/academy/dc-gang-a/src/contracts/readInputRecord.ts",
+          "otherSymbolsRetained": [
+            {
+              "name": "readLiteralKey",
+              "local": "readLiteralKey",
+              "typeOnly": false
+            },
+            {
+              "name": "readLiteralName",
+              "local": "readLiteralName",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "from": "apps/academy/dc-gang-a/src/academy/sourceSynchronization.ts",
+          "oldTarget": "apps/academy/dc-gang-a/src/lms/academyReadProtocol.ts",
+          "newTarget": "apps/academy/dc-gang-a/src/contracts/readInputRecord.ts",
+          "otherSymbolsRetained": [
+            {
+              "name": "createAcademyReadPlan",
+              "local": "createAcademyReadPlan",
+              "typeOnly": false
+            },
+            {
+              "name": "readLiteralKey",
+              "local": "readLiteralKey",
+              "typeOnly": false
+            },
+            {
+              "name": "readLiteralName",
+              "local": "readLiteralName",
+              "typeOnly": false
+            },
+            {
+              "name": "ScopedAcademyReadPlan",
+              "local": "ScopedAcademyReadPlan",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "from": "apps/academy/dc-gang-a/src/academy/teacherWorkContext.ts",
+          "oldTarget": "apps/academy/dc-gang-a/src/lms/academyReadProtocol.ts",
+          "newTarget": "apps/academy/dc-gang-a/src/contracts/readInputRecord.ts",
+          "otherSymbolsRetained": [
+            {
+              "name": "StoredSourceRecord",
+              "local": "StoredSourceRecord",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "from": "apps/academy/dc-gang-a/src/academy/usecases/studentScene.ts",
+          "oldTarget": "apps/academy/dc-gang-a/src/lms/academyReadProtocol.ts",
+          "newTarget": "apps/academy/dc-gang-a/src/contracts/readInputRecord.ts",
+          "otherSymbolsRetained": []
+        },
+        {
+          "from": "apps/academy/dc-gang-a/src/academy/usecases/teacherClinic.ts",
+          "oldTarget": "apps/academy/dc-gang-a/src/lms/academyReadProtocol.ts",
+          "newTarget": "apps/academy/dc-gang-a/src/contracts/readInputRecord.ts",
+          "otherSymbolsRetained": []
+        },
+        {
+          "from": "apps/academy/dc-gang-a/src/academy/usecases/teacherObservation.ts",
+          "oldTarget": "apps/academy/dc-gang-a/src/lms/academyReadProtocol.ts",
+          "newTarget": "apps/academy/dc-gang-a/src/contracts/readInputRecord.ts",
+          "otherSymbolsRetained": []
+        },
+        {
+          "from": "apps/academy/dc-gang-a/src/academy/usecases/teacherWorkspace.ts",
+          "oldTarget": "apps/academy/dc-gang-a/src/lms/academyReadProtocol.ts",
+          "newTarget": "apps/academy/dc-gang-a/src/contracts/readInputRecord.ts",
+          "otherSymbolsRetained": []
+        },
+        {
+          "from": "apps/academy/dc-gang-a/src/canonical/rosterRecovery.ts",
+          "oldTarget": "apps/academy/dc-gang-a/src/lms/academyReadProtocol.ts",
+          "newTarget": "apps/academy/dc-gang-a/src/contracts/readInputRecord.ts",
+          "otherSymbolsRetained": [
+            {
+              "name": "readLiteralKey",
+              "local": "readLiteralKey",
+              "typeOnly": false
+            },
+            {
+              "name": "readLiteralName",
+              "local": "readLiteralName",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "from": "apps/academy/dc-gang-a/src/lms/academyHttpClient.ts",
+          "oldTarget": "apps/academy/dc-gang-a/src/lms/academyReadProtocol.ts",
+          "newTarget": "apps/academy/dc-gang-a/src/contracts/readInputRecord.ts",
+          "otherSymbolsRetained": [
+            {
+              "name": "createAcademyReadPlan",
+              "local": "createAcademyReadPlan",
+              "typeOnly": false
+            },
+            {
+              "name": "executeAcademyRead",
+              "local": "executeAcademyRead",
+              "typeOnly": false
+            },
+            {
+              "name": "readLiteralKey",
+              "local": "readLiteralKey",
+              "typeOnly": false
+            },
+            {
+              "name": "readLiteralName",
+              "local": "readLiteralName",
+              "typeOnly": false
+            },
+            {
+              "name": "sourceResponseKey",
+              "local": "sourceResponseKey",
+              "typeOnly": false
+            },
+            {
+              "name": "parseTextbookScopeBinding",
+              "local": "parseTextbookScopeBinding",
+              "typeOnly": false
+            },
+            {
+              "name": "AcademyReadResult",
+              "local": "AcademyReadResult",
+              "typeOnly": true
+            },
+            {
+              "name": "ScopedAcademyReadPlan",
+              "local": "ScopedAcademyReadPlan",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "from": "apps/academy/dc-gang-a/src/lms/academySourceAudit.ts",
+          "oldTarget": "apps/academy/dc-gang-a/src/lms/academyReadProtocol.ts",
+          "newTarget": "apps/academy/dc-gang-a/src/contracts/readInputRecord.ts",
+          "otherSymbolsRetained": [
+            {
+              "name": "createAcademyReadPlan",
+              "local": "createAcademyReadPlan",
+              "typeOnly": false
+            },
+            {
+              "name": "readLiteralKey",
+              "local": "readLiteralKey",
+              "typeOnly": false
+            },
+            {
+              "name": "readLiteralName",
+              "local": "readLiteralName",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "from": "apps/academy/dc-gang-a/src/lms/itemAnswerAudit.ts",
+          "oldTarget": "apps/academy/dc-gang-a/src/lms/academyReadProtocol.ts",
+          "newTarget": "apps/academy/dc-gang-a/src/contracts/readInputRecord.ts",
+          "otherSymbolsRetained": [
+            {
+              "name": "readLiteralKey",
+              "local": "readLiteralKey",
+              "typeOnly": false
+            },
+            {
+              "name": "readLiteralName",
+              "local": "readLiteralName",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "from": "apps/academy/dc-gang-a/src/lms/paperLineage.ts",
+          "oldTarget": "apps/academy/dc-gang-a/src/lms/academyReadProtocol.ts",
+          "newTarget": "apps/academy/dc-gang-a/src/contracts/readInputRecord.ts",
+          "otherSymbolsRetained": [
+            {
+              "name": "readLiteralKey",
+              "local": "readLiteralKey",
+              "typeOnly": false
+            },
+            {
+              "name": "readLiteralName",
+              "local": "readLiteralName",
+              "typeOnly": false
+            },
+            {
+              "name": "StoredSourceRecord",
+              "local": "StoredSourceRecord",
+              "typeOnly": true
+            }
+          ]
+        }
+      ],
+      "reverseImportChanges": [
+        {
+          "before": {
+            "from": "apps/academy/dc-gang-a/src/lms/academyHttpClient.ts",
+            "to": "apps/academy/dc-gang-a/src/academy/nativeBookSource.ts",
+            "specifier": "../academy/nativeBookSource",
+            "line": 5,
+            "symbols": [
+              {
+                "name": "SourceDiscoveryRequest",
+                "typeOnly": true
+              }
+            ],
+            "typeOnly": true
+          },
+          "after": {
+            "from": "apps/academy/dc-gang-a/src/lms/academyHttpClient.ts",
+            "to": "apps/academy/dc-gang-a/src/contracts/sourceDiscovery.ts",
+            "specifier": "../contracts/sourceDiscovery",
+            "line": 6,
+            "kind": "import",
+            "symbols": [
+              {
+                "name": "SourceDiscoveryRequest",
+                "local": "SourceDiscoveryRequest",
+                "typeOnly": true
+              }
+            ],
+            "typeOnly": true
+          }
+        },
+        {
+          "before": {
+            "from": "apps/academy/dc-gang-a/src/lms/endpointCatalog.ts",
+            "to": "apps/academy/dc-gang-a/src/academy/operationalContract.ts",
+            "specifier": "../academy/operationalContract",
+            "line": 6,
+            "symbols": [
+              {
+                "name": "operationalContractShape",
+                "typeOnly": false
+              },
+              {
+                "name": "OPERATIONAL_CONTRACT_PATH",
+                "typeOnly": false
+              }
+            ],
+            "typeOnly": false
+          },
+          "after": {
+            "from": "apps/academy/dc-gang-a/src/lms/endpointCatalog.ts",
+            "to": "apps/academy/dc-gang-a/src/contracts/operationalContractShape.ts",
+            "specifier": "../contracts/operationalContractShape",
+            "line": 6,
+            "kind": "import",
+            "symbols": [
+              {
+                "name": "operationalContractShape",
+                "local": "operationalContractShape",
+                "typeOnly": false
+              },
+              {
+                "name": "OPERATIONAL_CONTRACT_PATH",
+                "local": "OPERATIONAL_CONTRACT_PATH",
+                "typeOnly": false
+              }
+            ],
+            "typeOnly": false
+          }
+        },
+        {
+          "before": {
+            "from": "apps/academy/dc-gang-a/src/lms/lessonJournalTemplates.ts",
+            "to": "apps/academy/dc-gang-a/src/academy/teacherWorkspace.ts",
+            "specifier": "../academy/teacherWorkspace",
+            "line": 2,
+            "symbols": [
+              {
+                "name": "parentInternalLanguage",
+                "typeOnly": false
+              }
+            ],
+            "typeOnly": false
+          },
+          "after": {
+            "from": "apps/academy/dc-gang-a/src/lms/lessonJournalTemplates.ts",
+            "to": "apps/academy/dc-gang-a/src/contracts/parentInternalLanguage.ts",
+            "specifier": "../contracts/parentInternalLanguage",
+            "line": 2,
+            "kind": "import",
+            "symbols": [
+              {
+                "name": "parentInternalLanguage",
+                "local": "parentInternalLanguage",
+                "typeOnly": false
+              }
+            ],
+            "typeOnly": false
+          }
+        }
+      ],
+      "catalogExtractionReason": "operationalContractShape references catalogLevels at runtime; moving CatalogKind and the exact level array prevents the pure shape leaf from importing application domain code. Legacy domain exports and shared array identity remain intact.",
+      "loaderOwnership": "Filesystem/path I/O, validation and loadAcademyOperationalContract remain in academy/operationalContract.ts with exact retained bodies.",
+      "compatibility": "All10 moved declarations match exact admitted-source text including error codes/regex/type literals. Every old public export retained. All other non-import top-level statements in24 changed files match their original bytes.",
+      "businessBodiesChanged": false,
+      "secondReducer": false
+    },
+    "targetImportGraph": {
+      "staticScope": "Qualified frozen DOM graph reused; only24 changed existing files+5 leaves reparsed; tree-level source diff DOM01->admitted base empty.",
+      "neutralLeafDependencies": [
+        {
+          "from": "apps/academy/dc-gang-a/src/contracts/operationalContractShape.ts",
+          "to": "apps/academy/dc-gang-a/src/contracts/catalogLevels.ts",
+          "specifier": "./catalogLevels",
+          "line": 2,
+          "kind": "import",
+          "symbols": [
+            {
+              "name": "catalogLevels",
+              "local": "catalogLevels",
+              "typeOnly": false
+            }
+          ],
+          "typeOnly": false
+        }
+      ],
+      "removedReverseCount": 3,
+      "remainingLmsToApplication": [],
+      "remainingApplicationToLms": [
+        {
+          "from": "apps/academy/dc-gang-a/src/academy/contracts/sourceRequests.ts",
+          "to": "apps/academy/dc-gang-a/src/lms/academyReadProtocol.ts",
+          "specifier": "../../lms/academyReadProtocol",
+          "line": 1,
+          "symbols": [
+            {
+              "name": "ScopedAcademyReadPlan",
+              "typeOnly": true
+            }
+          ],
+          "typeOnly": true
+        },
+        {
+          "from": "apps/academy/dc-gang-a/src/academy/contracts/teacherOperations.ts",
+          "to": "apps/academy/dc-gang-a/src/lms/dayRecordReadProtocol.ts",
+          "specifier": "../../lms/dayRecordReadProtocol",
+          "line": 10,
+          "symbols": [
+            {
+              "name": "DayRecordSourceRow",
+              "typeOnly": true
+            }
+          ],
+          "typeOnly": true
+        },
+        {
+          "from": "apps/academy/dc-gang-a/src/academy/records.ts",
+          "to": "apps/academy/dc-gang-a/src/lms/academySourceAudit.ts",
+          "specifier": "../lms/academySourceAudit",
+          "line": 2,
+          "symbols": [
+            {
+              "name": "createAcademySourceAudit",
+              "typeOnly": false
+            }
+          ],
+          "typeOnly": false
+        },
+        {
+          "from": "apps/academy/dc-gang-a/src/academy/web/sourceRefreshRequest.ts",
+          "to": "apps/academy/dc-gang-a/src/lms/academyReadProtocol.ts",
+          "specifier": "../../lms/academyReadProtocol",
+          "line": 2,
+          "symbols": [
+            {
+              "name": "scopedReadFamilies",
+              "typeOnly": false
+            }
+          ],
+          "typeOnly": false
+        },
+        {
+          "from": "apps/academy/dc-gang-a/src/academy/nativeConnector.ts",
+          "to": "apps/academy/dc-gang-a/src/lms/academyReadProtocol.ts",
+          "specifier": "../lms/academyReadProtocol",
+          "line": 1,
+          "kind": "import",
+          "symbols": [
+            {
+              "name": "createAcademyReadPlan",
+              "local": "createAcademyReadPlan",
+              "typeOnly": false
+            },
+            {
+              "name": "readLiteralKey",
+              "local": "readLiteralKey",
+              "typeOnly": false
+            },
+            {
+              "name": "readLiteralName",
+              "local": "readLiteralName",
+              "typeOnly": false
+            },
+            {
+              "name": "ScopedAcademyReadPlan",
+              "local": "ScopedAcademyReadPlan",
+              "typeOnly": true
+            }
+          ],
+          "typeOnly": false
+        },
+        {
+          "from": "apps/academy/dc-gang-a/src/academy/nativeConnector.ts",
+          "to": "apps/academy/dc-gang-a/src/lms/academySourceAudit.ts",
+          "specifier": "../lms/academySourceAudit",
+          "line": 6,
+          "kind": "import",
+          "symbols": [
+            {
+              "name": "createAcademySourceAudit",
+              "local": "createAcademySourceAudit",
+              "typeOnly": false
+            }
+          ],
+          "typeOnly": false
+        },
+        {
+          "from": "apps/academy/dc-gang-a/src/academy/nativeDirectSource.ts",
+          "to": "apps/academy/dc-gang-a/src/lms/academyReadProtocol.ts",
+          "specifier": "../lms/academyReadProtocol",
+          "line": 5,
+          "kind": "import",
+          "symbols": [
+            {
+              "name": "createAcademyReadPlan",
+              "local": "createAcademyReadPlan",
+              "typeOnly": false
+            },
+            {
+              "name": "readLiteralKey",
+              "local": "readLiteralKey",
+              "typeOnly": false
+            },
+            {
+              "name": "readLiteralName",
+              "local": "readLiteralName",
+              "typeOnly": false
+            },
+            {
+              "name": "ScopedAcademyReadPlan",
+              "local": "ScopedAcademyReadPlan",
+              "typeOnly": true
+            }
+          ],
+          "typeOnly": false
+        },
+        {
+          "from": "apps/academy/dc-gang-a/src/academy/postgresStore.ts",
+          "to": "apps/academy/dc-gang-a/src/lms/academySourceAudit.ts",
+          "specifier": "../lms/academySourceAudit",
+          "line": 9,
+          "kind": "import",
+          "symbols": [
+            {
+              "name": "createAcademySourceAudit",
+              "local": "createAcademySourceAudit",
+              "typeOnly": false
+            }
+          ],
+          "typeOnly": false
+        },
+        {
+          "from": "apps/academy/dc-gang-a/src/academy/sourceBridge.ts",
+          "to": "apps/academy/dc-gang-a/src/lms/academyReadProtocol.ts",
+          "specifier": "../lms/academyReadProtocol",
+          "line": 2,
+          "kind": "import",
+          "symbols": [
+            {
+              "name": "readLiteralKey",
+              "local": "readLiteralKey",
+              "typeOnly": false
+            },
+            {
+              "name": "readLiteralName",
+              "local": "readLiteralName",
+              "typeOnly": false
+            }
+          ],
+          "typeOnly": false
+        },
+        {
+          "from": "apps/academy/dc-gang-a/src/academy/sourceBridge.ts",
+          "to": "apps/academy/dc-gang-a/src/lms/studentCourseRead.ts",
+          "specifier": "../lms/studentCourseRead",
+          "line": 4,
+          "kind": "import",
+          "symbols": [
+            {
+              "name": "bindStudentCourseRow",
+              "local": "bindStudentCourseRow",
+              "typeOnly": false
+            }
+          ],
+          "typeOnly": false
+        },
+        {
+          "from": "apps/academy/dc-gang-a/src/academy/sourceEvidence.ts",
+          "to": "apps/academy/dc-gang-a/src/lms/academySourceAudit.ts",
+          "specifier": "../lms/academySourceAudit",
+          "line": 1,
+          "kind": "import",
+          "symbols": [
+            {
+              "name": "createAcademySourceAudit",
+              "local": "createAcademySourceAudit",
+              "typeOnly": false
+            }
+          ],
+          "typeOnly": false
+        },
+        {
+          "from": "apps/academy/dc-gang-a/src/academy/sourceEvidence.ts",
+          "to": "apps/academy/dc-gang-a/src/lms/academyReadProtocol.ts",
+          "specifier": "../lms/academyReadProtocol",
+          "line": 2,
+          "kind": "import",
+          "symbols": [
+            {
+              "name": "readLiteralKey",
+              "local": "readLiteralKey",
+              "typeOnly": false
+            },
+            {
+              "name": "readLiteralName",
+              "local": "readLiteralName",
+              "typeOnly": false
+            }
+          ],
+          "typeOnly": false
+        },
+        {
+          "from": "apps/academy/dc-gang-a/src/academy/sourceSynchronization.ts",
+          "to": "apps/academy/dc-gang-a/src/lms/academyReadProtocol.ts",
+          "specifier": "../lms/academyReadProtocol",
+          "line": 2,
+          "kind": "import",
+          "symbols": [
+            {
+              "name": "createAcademyReadPlan",
+              "local": "createAcademyReadPlan",
+              "typeOnly": false
+            },
+            {
+              "name": "readLiteralKey",
+              "local": "readLiteralKey",
+              "typeOnly": false
+            },
+            {
+              "name": "readLiteralName",
+              "local": "readLiteralName",
+              "typeOnly": false
+            },
+            {
+              "name": "ScopedAcademyReadPlan",
+              "local": "ScopedAcademyReadPlan",
+              "typeOnly": true
+            }
+          ],
+          "typeOnly": false
+        },
+        {
+          "from": "apps/academy/dc-gang-a/src/academy/sourceSynchronization.ts",
+          "to": "apps/academy/dc-gang-a/src/lms/academySourceAudit.ts",
+          "specifier": "../lms/academySourceAudit",
+          "line": 4,
+          "kind": "import",
+          "symbols": [
+            {
+              "name": "createAcademySourceAudit",
+              "local": "createAcademySourceAudit",
+              "typeOnly": false
+            }
+          ],
+          "typeOnly": false
+        },
+        {
+          "from": "apps/academy/dc-gang-a/src/academy/teacherWorkContext.ts",
+          "to": "apps/academy/dc-gang-a/src/lms/academySourceAudit.ts",
+          "specifier": "../lms/academySourceAudit",
+          "line": 8,
+          "kind": "import",
+          "symbols": [
+            {
+              "name": "createAcademySourceAudit",
+              "local": "createAcademySourceAudit",
+              "typeOnly": false
+            }
+          ],
+          "typeOnly": false
+        },
+        {
+          "from": "apps/academy/dc-gang-a/src/academy/teacherWorkContext.ts",
+          "to": "apps/academy/dc-gang-a/src/lms/academyReadProtocol.ts",
+          "specifier": "../lms/academyReadProtocol",
+          "line": 9,
+          "kind": "import",
+          "symbols": [
+            {
+              "name": "StoredSourceRecord",
+              "local": "StoredSourceRecord",
+              "typeOnly": true
+            }
+          ],
+          "typeOnly": true
+        },
+        {
+          "from": "apps/academy/dc-gang-a/src/academy/usecases/studentScene.ts",
+          "to": "apps/academy/dc-gang-a/src/lms/dayRecordReadProtocol.ts",
+          "specifier": "../../lms/dayRecordReadProtocol",
+          "line": 4,
+          "kind": "import",
+          "symbols": [
+            {
+              "name": "DayRecordSourceRow",
+              "local": "DayRecordSourceRow",
+              "typeOnly": true
+            }
+          ],
+          "typeOnly": true
+        }
+      ],
+      "dcToGangAPreserved": [
+        {
+          "from": "apps/academy/dc-gang-a/src/academy/bookCertificationEvidence.ts",
+          "to": "apps/academy/gang-a/packages/application/project-book-certification.ts",
+          "specifier": "../../../gang-a/packages/application/project-book-certification",
+          "line": 2,
+          "symbols": [
+            {
+              "name": "projectBookCertification",
+              "typeOnly": false
+            }
+          ],
+          "typeOnly": false
+        },
+        {
+          "from": "apps/academy/dc-gang-a/src/academy/bookCertificationEvidence.ts",
+          "to": "apps/academy/gang-a/packages/domain/book-certification.ts",
+          "specifier": "../../../gang-a/packages/domain/book-certification",
+          "line": 3,
+          "symbols": [
+            {
+              "name": "CertificationQuery",
+              "typeOnly": false
+            }
+          ],
+          "typeOnly": false
+        },
+        {
+          "from": "apps/academy/dc-gang-a/src/academy/bookCertificationEvidence.ts",
+          "to": "apps/academy/gang-a/packages/domain/evidence.ts",
+          "specifier": "../../../gang-a/packages/domain/evidence",
+          "line": 4,
+          "symbols": [
+            {
+              "name": "Evidence",
+              "typeOnly": false
+            },
+            {
+              "name": "Evidence",
+              "typeOnly": true
+            }
+          ],
+          "typeOnly": false
+        },
+        {
+          "from": "apps/academy/dc-gang-a/src/academy/operatingWorkspace.ts",
+          "to": "apps/academy/gang-a/packages/adapters/repository-operating-context.ts",
+          "specifier": "../../../gang-a/packages/adapters/repository-operating-context",
+          "line": 1,
+          "symbols": [
+            {
+              "name": "loadRepositoryOperatingContext",
+              "typeOnly": false
+            }
+          ],
+          "typeOnly": false
+        },
+        {
+          "from": "apps/academy/dc-gang-a/src/academy/operatingWorkspace.ts",
+          "to": "apps/academy/gang-a/packages/application/select-operational-context.ts",
+          "specifier": "../../../gang-a/packages/application/select-operational-context",
+          "line": 2,
+          "symbols": [
+            {
+              "name": "selectOperationalContext",
+              "typeOnly": false
+            }
+          ],
+          "typeOnly": false
+        },
+        {
+          "from": "apps/academy/dc-gang-a/src/academy/operatingWorkspace.ts",
+          "to": "apps/academy/gang-a/packages/domain/operational-context.ts",
+          "specifier": "../../../gang-a/packages/domain/operational-context",
+          "line": 3,
+          "symbols": [
+            {
+              "name": "OperationalId",
+              "typeOnly": true
+            }
+          ],
+          "typeOnly": true
+        }
+      ],
+      "dynamicDependenciesPreserved": [
+        {
+          "from": "apps/academy/dc-gang-a/src/academy/main.ts",
+          "line": 40,
+          "argumentKind": "literal",
+          "specifier": "./sourceRuntime",
+          "to": "apps/academy/dc-gang-a/src/academy/sourceRuntime.ts",
+          "resolution": "source-locator-only-not-executed",
+          "expression": null
+        },
+        {
+          "from": "apps/academy/dc-gang-a/src/academy/product-control/product-domain-controller.ts",
+          "line": 51,
+          "argumentKind": "computed",
+          "specifier": null,
+          "to": null,
+          "resolution": "unknown-runtime-target",
+          "expression": "directory+'/apps/academy/dc-gang-a/src/learning/model.ts'"
+        },
+        {
+          "from": "apps/academy/dc-gang-a/src/academy/product-control/running-p1-bootstrap.ts",
+          "line": 22,
+          "argumentKind": "computed",
+          "specifier": null,
+          "to": null,
+          "resolution": "unknown-runtime-target",
+          "expression": "'data:text/javascript;base64,'+Buffer.from(code).toString('base64')"
+        },
+        {
+          "from": "apps/academy/month-end-workbench/src/main.ts",
+          "line": 13,
+          "argumentKind": "literal",
+          "specifier": "./integrations/mcp-source-port.ts",
+          "to": "apps/academy/month-end-workbench/src/integrations/mcp-source-port.ts",
+          "resolution": "source-locator-only-not-executed",
+          "expression": null
+        }
+      ],
+      "disposition": {
+        "directReverseStaticEdgesRemoved": 3,
+        "readInputImportsRedirected": 17,
+        "legacyReexportsRetained": true,
+        "applicationToLmsStillPresent": true,
+        "dcToGangAUnchanged": true,
+        "moduleLayerMeaning": "For the inherited frozen source scope, LMS no longer imports application; application still imports LMS and gang-a. Pure leaves import only another pure leaf. This is a scoped static-boundary result, not a whole-system DAG assertion.",
+        "fileLevelAcyclicity": "not claimed; no SCC recomputation or runtime closure qualification",
+        "literalDynamics": "unchanged source locators, not executed",
+        "computedDynamics": "unchanged unresolved runtime/data-URL targets, not removed from graph",
+        "excluded": "Require/generated release/runtime config/assets/external package resolution and actual native runtime behavior are outside inherited inventory qualification.",
+        "businessBodiesChanged": false,
+        "domainRefinementsImplemented": false,
+        "secondReducer": false,
+        "nativeActivation": false
+      },
+      "fileLevelAcyclicityClaimed": false,
+      "wholeRuntimeClosureQualified": false
+    },
+    "checks": {
+      "dcTypecheck": "pass; actual DC TypeScript7.0.2",
+      "boundaryTypecheck": "pass with existing DC compiler options",
+      "compatibilityTests": {
+        "pass": 5,
+        "fail": 0,
+        "expectations": 37
+      },
+      "existingMaintainedTests": {
+        "pass": 81,
+        "skip": 7,
+        "fail": 14
+      },
+      "knownFailures": {
+        "registryDependent": 12,
+        "domEvidenceDependent": 2,
+        "paths": [
+          {
+            "path": "apps/academy/dc-gang-a/research/backend-map/route-registry.json",
+            "absentLocally": true,
+            "absentInAdmittedGitTree": true
+          },
+          {
+            "path": "apps/academy/dc-gang-a/docs/academy-dom-source-evidence.json",
+            "absentLocally": true,
+            "absentInAdmittedGitTree": true
+          }
+        ],
+        "meaning": "Full data-driven canonical catalog behavior not verified; absent input paths already absent in admitted Git tree. No fixture fabricated, no source/runtime fetch or permission escalation performed."
+      },
+      "initialStricterCheck": "R1 retained root noUncheckedIndexedAccess diagnostics on unchanged DC source; boundary test config corrected to extend owning DC config, not native/root configuration.",
+      "sourceGraph": "pass exact declarations/all17 import sites/all3 reverse imports/retained cross-owner and dynamics",
+      "priorRecordPreservation": "all prior QRY-01 artifacts and existing Inputs/Evidence/Spec/Plan preserved",
+      "knownMcpDeclarations": "Retained QRY-01 missing @modelcontextprotocol/client limitation; month-end source unchanged and native process launch still held.",
+      "aggregateAllTestsPassed": false,
+      "committedSnapshotAndTransition": "pending root exact owned-path commit; not claimed from dirty worktree"
+    },
+    "artifacts": [
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/domain.ts",
+        "sha256": "eb8ee7f8bace1799fd1b1a97ffcd44e507c671811fc4b123cde77f06d6737493",
+        "bytes": 5102
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/nativeBookSource.ts",
+        "sha256": "76970846283dac9538505ee9a18f21274c1b248ee4a5c5ec7104a943fe735ee3",
+        "bytes": 3920
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/nativeConnector.ts",
+        "sha256": "2dcb6607a35ea5e8c005fadaedb95da86395417ea9b829c33232b73a0ffd3016",
+        "bytes": 9159
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/nativeDirectSource.ts",
+        "sha256": "fea68cbb3c87c54c3c5891e29013f6b0aeb0b156ed9195e9f9ee1ee630fbd15d",
+        "bytes": 6935
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/operationalContract.ts",
+        "sha256": "f3d1f79d0b93d2db1626aca1969f754113abcb42b38f31bcc66521f8113b9b75",
+        "bytes": 4729
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/postgresStore.ts",
+        "sha256": "a9bb7d1bab38b505e7a4ae4bec64988e7bb0e67b4b3aaec338d61930f6ac9c14",
+        "bytes": 64919
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/refresh.ts",
+        "sha256": "4b4e5f7cc44730ee7c24a6c5bb66e1d0cc7f7aa26e55a86e469a0ad8eb0a5511",
+        "bytes": 5648
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/sourceBridge.ts",
+        "sha256": "e328b3cb41b15c31e1cf2788bbf218d87f00af39f1fe225f01c62a39084359fa",
+        "bytes": 7783
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/sourceEvidence.ts",
+        "sha256": "c94f96db81b5c61f1d1a277e0f055def5ae25e4964b9230795f28a5c78dce5cb",
+        "bytes": 5161
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/sourceSynchronization.ts",
+        "sha256": "ed09a845da5a0d15e9f76b0952615ab8484da7941d5361e4cee4763801537124",
+        "bytes": 8776
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/teacherWorkContext.ts",
+        "sha256": "aec375d98594846c0db9f269750ddb6d2c66d58a1156ac5352d97f7c120164a8",
+        "bytes": 11453
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/teacherWorkspace.ts",
+        "sha256": "a3ae52b69d7c82ce2bfb5e7e9605b93edcb25cd273fe0d19a6d1a0ee2c9cd4db",
+        "bytes": 13677
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/usecases/studentScene.ts",
+        "sha256": "45e855f92bb8fb078c300472f4d6f4a87a18d63d2db7f5e5fe44ecb2b4170d93",
+        "bytes": 10483
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/usecases/teacherClinic.ts",
+        "sha256": "85ca55edadc7e95e42a734a8476eb04ad52630ee767fcf85454a0c9ec6d8b559",
+        "bytes": 6010
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/usecases/teacherObservation.ts",
+        "sha256": "f328d4a35ed209e3bb07bcf6c7a9ad615b92176902fec30a7c08b173316ba528",
+        "bytes": 6027
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/usecases/teacherWorkspace.ts",
+        "sha256": "50a6c9f6ec114bf2f8ac429d63ffd6327ed3c144bb8ab894b4c0f809597ab9c4",
+        "bytes": 7937
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/canonical/rosterRecovery.ts",
+        "sha256": "6c0f83970875f20fc8d37d15e1a7fee8577eb050e7d473d2ff5eb70da7ce82b2",
+        "bytes": 4265
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/lms/academyHttpClient.ts",
+        "sha256": "82c55826723182b8294b44009c587b9f9914980e4a33c0cae2d062167c43a76d",
+        "bytes": 47210
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/lms/academyReadProtocol.ts",
+        "sha256": "ac462984b3a0fbaef4ea8c802f0c962b5a0bbbaa3f2e46e0a3cb1576c88d82fc",
+        "bytes": 21801
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/lms/academySourceAudit.ts",
+        "sha256": "33aa474df60db400f12513e6050ef1f1e4c48bef1eee4fd134ff1128658ffd74",
+        "bytes": 18372
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/lms/endpointCatalog.ts",
+        "sha256": "63798afbab187e39ac18612faaca1853810c9a54e41046afccb4cffb0926713c",
+        "bytes": 14113
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/lms/itemAnswerAudit.ts",
+        "sha256": "20b4e9b8cba6f5ca3a641ee4c8f3622129c6eb8b826b9e77f4abdca9124feac2",
+        "bytes": 3855
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/lms/lessonJournalTemplates.ts",
+        "sha256": "5195709e7e905b864f8f6f5a7c72909f1654bf0968873612fb4e36a0b669d6e2",
+        "bytes": 8388
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/lms/paperLineage.ts",
+        "sha256": "7ab638ce1e0517870eb434717f782c348276517eb894d5bfef94f8c1b295db19",
+        "bytes": 4247
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/contracts/readInputRecord.ts",
+        "sha256": "ba2eda95e601ccd9eba44fc77c43ed5fde50801d34c8f77ea0f9d0dedd65db0c",
+        "bytes": 557
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/contracts/parentInternalLanguage.ts",
+        "sha256": "60742973557e383b57c065dc7ef9cb806677f15ca4a571f48f7b2184f93aa456",
+        "bytes": 385
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/contracts/catalogLevels.ts",
+        "sha256": "fb582c9e4d292537db98d818e78fdd1c5e6fe7bf895f2959a75ae9c447c78c17",
+        "bytes": 367
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/contracts/operationalContractShape.ts",
+        "sha256": "85c5c0c65c26f0ed7b842bed9c6908470eb746e2d6633b5459ddb6bb90645403",
+        "bytes": 5660
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/contracts/sourceDiscovery.ts",
+        "sha256": "40b28459db5aa1adff04c27e66245984f9f452842f67069b4bab045fcb369257",
+        "bytes": 216
+      },
+      {
+        "path": "architecture/academy-query-integration/boundary-inspect.ts",
+        "sha256": "7078e09fceb485ab10ce708b8f08596721f681ea738827c86d1e8975c7677c99",
+        "bytes": 12858
+      },
+      {
+        "path": "architecture/academy-query-integration/boundary-contracts.test.ts",
+        "sha256": "bb6b8a1809531358ce974646eec3b695dba9d40abc66784863910f701b9d6546",
+        "bytes": 5407
+      },
+      {
+        "path": "architecture/academy-query-integration/boundary-checks.ts",
+        "sha256": "5eef52f2c4e8d81d0cb8edea7e25d3bba495e60f3ea930c5ec869791d1c54ecb",
+        "bytes": 4966
+      },
+      {
+        "path": "architecture/academy-query-integration/boundary-refine-checks.ts",
+        "sha256": "7c6df49cdbbcc2cbf1bcfd16c048dc7de920074097cab174272e100f4d19dde3",
+        "bytes": 4682
+      },
+      {
+        "path": "architecture/academy-query-integration/boundary-tsconfig.json",
+        "sha256": "e18b4c3a01a4864231a880ec1ac61dff45adc76571aa9ef5ff1cb5fb0ba323b2",
+        "bytes": 111
+      },
+      {
+        "path": "architecture/academy-query-integration/boundary-canonical-audit.ts",
+        "sha256": "e19d475ddee8736e06c308e6260c0892a6259377da2096072b60a8024865dbbe",
+        "bytes": 2995
+      },
+      {
+        "path": "architecture/academy-query-integration/boundary-entrypoint.json",
+        "sha256": "e2d6c1e7b1c9b3844af77af8e1ad3ac5dff98a3961e735e593d610f079d462ee",
+        "bytes": 1582
+      },
+      {
+        "path": "architecture/academy-query-integration/observations/QRY-BOUNDARY-SOURCE-GRAPH-R1.json",
+        "sha256": "71f04d069ced3308106d929323fcb6c44d4e9c236a94520888e8a9a2a26171fb",
+        "bytes": 164588
+      },
+      {
+        "path": "architecture/academy-query-integration/observations/QRY-BOUNDARY-CHECKS-R1.json",
+        "sha256": "65c7b2f6ef6302abb997d3588cd3a7fb34e225cc3525631d6d8af0d1fdefafd3",
+        "bytes": 40408
+      },
+      {
+        "path": "architecture/academy-query-integration/observations/QRY-BOUNDARY-CHECKS-R2.json",
+        "sha256": "e6e214ebbddb741ed052a90b6e9d68379ace53facf8e558d851668e09c9d2e5c",
+        "bytes": 18298
+      },
+      {
+        "path": "architecture/academy-query-integration/observations/QRY-BOUNDARY-PRESERVATION-R1.json",
+        "sha256": "afef71d04915a09933ed9566fdbe83f2a86f36fc13097233b6289ed48ec9309f",
+        "bytes": 6343
+      }
+    ],
+    "state": {
+      "execution": "complete",
+      "verification": "passed-for-admitted-source-boundary",
+      "localDurability": "result-durable",
+      "sharedDelivery": "unsynchronized",
+      "nativeUse": "not observed or activated",
+      "teacherAcceptance": "not established",
+      "formalAcceptance": false,
+      "wholeWorkComplete": false
+    },
+    "holds": [
+      "QRY-02 until exact receiver-qualified DOM-02",
+      "DOM-02 until root-qualified QRY-BOUNDARY producer is supplied",
+      "Native activation/publication/merge/deployment/private or source business effects"
+    ],
+    "effects": {
+      "gitMutation": 0,
+      "businessWrites": 0,
+      "privateOriginalReads": 0,
+      "nativeActivation": 0,
+      "printingSending": 0,
+      "publication": 0
+    },
+    "nextSafeAction": "Root owns exact source commit and canonical snapshot+transition. WAIT; DOM-02 must receive root-qualified QRY-BOUNDARY; QRY-02 remains held on qualified DOM-02."
+  }
+}

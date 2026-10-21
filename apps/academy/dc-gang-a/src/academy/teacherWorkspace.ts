@@ -1,3 +1,4 @@
+import {parentInternalLanguage} from '../contracts/parentInternalLanguage';
 import {assertDate,assertExactKeys,assertInstant,assertRefs,canonicalJson,requireText} from '../learning/model';
 import {validateSourceKey,type SourceKey} from './domain';
 import type {LearningWorkAssignment} from './learningWork';
@@ -36,7 +37,7 @@ const boundedText=(value:unknown,max=16000)=>{if(typeof value!=='string'||value.
 const member=(value:unknown,choices:readonly string[])=>{if(typeof value!=='string'||!choices.includes(value))throw Error('invalid_workspace_state');};
 const refs=(value:unknown,minimum=1)=>{if(!Array.isArray(value)||value.length<minimum||value.length>500||new Set(value).size!==value.length)throw Error('invalid_workspace_references');if(value.length)assertRefs(value);for(const id of value)if(id.length>200)throw Error('invalid_workspace_references');};
 /** This explicit exclusion list is a safeguard for a reviewed draft, never a language model or a completeness claim. */
-export const parentInternalLanguage=/강사\s*확인|교사\s*확인|교사\s*검토|교사\s*(?:최종\s*)?완료\s*판정|채점|미실시|미완료|시간\s*부족|확인\s*전|검사.{0,8}미완료|풀이와\s*채점|teacher\s*(?:inspection|review)|ungraded|not\s*completed|insufficient\s*time/i;
+export {parentInternalLanguage} from '../contracts/parentInternalLanguage';
 export function parentDraftText(draft:Pick<TeacherParentDraft,'progress'|'homework'|'memo'>){return {progress:draft.progress.map(line=>'- '+line.text).join('\n'),homework:draft.homework.map(line=>'- '+line.text).join('\n'),memo:draft.memo.map(line=>'- '+line.text).join('\n')};}
 export const originalWrongApplicability=(score:number|null)=>score===100?'not_applicable' as const:score===null?'unknown' as const:'potentially_applicable' as const;
 export function teacherActivitySummary(review:TeacherActivityReview){return {learning:review.final.decision==='accepted'?(review.coverage==='whole_assigned_items'?'teacher_finalized_assigned_items':'teacher_finalized_partial'):review.final.decision==='reopen'?'reopened':'unknown',originalWrong:originalWrongApplicability(review.originalScore),similarAssignment:review.similar,similarPrint:review.similarPrinted,appRecord:review.appEntry,mindmapCompletionClaimAllowed:review.mindmap.state==='reviewed'&&!!review.mindmap.explanation&&review.final.decision==='accepted',wholeBookComplete:false as const};}

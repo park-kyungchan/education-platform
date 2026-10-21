@@ -1,8 +1,9 @@
 import {JSDOM} from 'jsdom';
 import {randomInt} from 'node:crypto';
-import {createAcademyReadPlan,executeAcademyRead,readInputRecord,readLiteralKey,readLiteralName,sourceResponseKey,parseTextbookScopeBinding,type AcademyReadResult,type ScopedAcademyReadPlan} from './academyReadProtocol';
+import {createAcademyReadPlan,executeAcademyRead,readLiteralKey,readLiteralName,sourceResponseKey,parseTextbookScopeBinding,type AcademyReadResult,type ScopedAcademyReadPlan} from './academyReadProtocol';
+import {readInputRecord} from '../contracts/readInputRecord';
 import {currentDayRecordColumns} from './dayRecordColumnContract';
-import type {SourceDiscoveryRequest} from '../academy/nativeBookSource';
+import type {SourceDiscoveryRequest} from '../contracts/sourceDiscovery';
 import {canonicalJson,digest,assertExactKeys} from '../learning/model';
 import {applyJournalHttpAction,validateJournalHttpAction,assertJournalWireQualified,assertJournalAssessmentOptions,JOURNAL_HTTP_SOURCE_CONTRACT,type JournalHttpTarget,type JournalHttpState,type JournalHttpAction,type JournalHttpAdmission} from './lessonJournalHttp';
 import {parseItemMetadata} from './itemMetadataRead';

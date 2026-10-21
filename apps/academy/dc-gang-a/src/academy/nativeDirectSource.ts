@@ -2,7 +2,8 @@ import {spawn} from 'node:child_process';
 import {readdirSync,readFileSync,mkdtempSync,rmdirSync} from 'node:fs';
 import {reservePrivateJson,readPrivateJsonText} from '../../harness/academy_private_io';
 import {canonicalJson,assertExactKeys} from '../learning/model';
-import {createAcademyReadPlan,readInputRecord,readLiteralKey,readLiteralName,type ScopedAcademyReadPlan} from '../lms/academyReadProtocol';
+import {createAcademyReadPlan,readLiteralKey,readLiteralName,type ScopedAcademyReadPlan} from '../lms/academyReadProtocol';
+import {readInputRecord} from '../contracts/readInputRecord';
 import type {SourceDiscoveryRequest} from './nativeBookSource';
 
 export interface OwnedSourceProcess {argv:string[];env:NodeJS.ProcessEnv;deadlineMs?:number;graceMs?:number;signal?:AbortSignal}

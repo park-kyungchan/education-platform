@@ -1,5 +1,5 @@
 import {assertExactKeys,canonicalJson,digest} from '../../learning/model';
-import {readInputRecord} from '../../lms/academyReadProtocol';
+import {readInputRecord} from '../../contracts/readInputRecord';
 import {validateAcademyRecord,observationTerminalRefusals,ObservationCommandRefusal,type TeacherObservation,type TeacherObservationRequest} from '../records';
 import {classroomCyclePolicy} from '../classroomCyclePolicy';
 import {workToken,clinicTerminalRefusals,ClinicCommandRefusal,type TeacherClinicRevision,type TeacherClinicRequest} from '../learningWork';
