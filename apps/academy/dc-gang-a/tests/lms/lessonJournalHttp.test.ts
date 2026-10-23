@@ -43,6 +43,32 @@ test('source wire must match the independently qualified field contract, not mer
   expect(()=>module.assertJournalWireQualified(module.JOURNAL_HTTP_SOURCE_CONTRACT.staticWireDigest)).not.toThrow();
   expect(()=>module.assertJournalWireQualified('a'.repeat(64))).toThrow('journal_mutation_wire_not_qualified');
 });
+test('integration preserves the current wire qualification and refuses historical source digests',async()=>{
+ const m=await import('../../src/lms/lessonJournalHttp');
+ expect(m.JOURNAL_HTTP_SOURCE_CONTRACT.observedOn).toBe('2026-10-21');
+ expect(m.JOURNAL_HTTP_SOURCE_CONTRACT.staticWireDigest).toBe('650813891d9428cb03eedb071f5c94bc369fd9641993de6d02ce4e07a5945bd1');
+ expect(()=>m.assertJournalWireQualified(m.JOURNAL_HTTP_SOURCE_CONTRACT.staticWireDigest)).not.toThrow();
+ for(const historical of [m.JOURNAL_HTTP_SOURCE_CONTRACT.predecessorRawWireDigest,'2d43a2f0346040f81d0809c293b5830b234da7169be917f91145e80610aa56c2']){
+  expect(()=>m.assertJournalWireQualified(historical)).toThrow('journal_mutation_wire_not_qualified');
+ }
+ expect(()=>m.assertJournalWireQualified(' '+m.JOURNAL_HTTP_SOURCE_CONTRACT.staticWireDigest)).toThrow('journal_mutation_wire_not_qualified');
+});
+test('observed passive control syntax binds literal current and previous roles without handler execution',async()=>{
+ const {parseDayRecordHandlerAttribute:parse}=await import('../../src/lms/dayRecordDomBinding');
+ const calls=[
+  {source:"javascript:onAttn('0', '4', '77001', '13', '88001' );",event:'onchange' as const,handler:'onAttn'},
+  ...['onFoPrg','onFoHw','onFoMm'].map(handler=>({source:`javascript:${handler}('0', '4', '77001', '13','88001');`,event:'onfocusout' as const,handler})),
+ ];
+ for(const call of calls){const parsed=parse({...call,columnGroup:'current_progress'});expect(parsed.status).toBe('parsed');if(parsed.status!=='parsed')throw Error('synthetic_literal_unresolved');expect(parsed.handler).toBe(call.handler);expect(parsed.bindings).toEqual({i:'0',course_seq:'4',stu_pri_no:'77001',record_seq:'13',cm_seq:'88001'});}
+ const daily=parse({source:'setDailyTest(13,88001,0)',event:'onclick',columnGroup:'current_progress'});
+ const previous=parse({source:'openHomeWorkRate(12,88001,0)',event:'onclick',columnGroup:'previous_progress'});
+ expect(daily.status).toBe('parsed');expect(previous.status).toBe('parsed');
+ if(daily.status!=='parsed'||previous.status!=='parsed')throw Error('synthetic_assessment_unresolved');
+ expect(daily.bindings).toEqual({record_seq:'13',cm_seq:'88001',count:'0'});
+ expect(previous.bindings).toEqual({record_seq:'12',cm_seq:'88001',count:'0'});
+ expect(parse({source:'setDailyTest(13,88001,0); foreignWrite()',event:'onclick',columnGroup:'current_progress'}).status).toBe('unresolved');
+ expect(parse({source:'openHomeWorkRate(12,88001,0)',event:'onclick',columnGroup:'current_progress'}).status).toBe('unresolved');
+});
 test('assessment literal value-label drift fails the field-specific qualification',async()=>{
  const m=await import('../../src/lms/lessonJournalHttp');expect(typeof m.assertJournalAssessmentOptions).toBe('function');
  const options=Object.entries(m.JOURNAL_HTTP_SOURCE_CONTRACT.assessmentLabels).flatMap(([field,values])=>Object.entries(values).map(([value,label])=>({field,value,label})));

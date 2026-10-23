@@ -1,0 +1,44 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "academy-repository-integration-20261023",
+  "kind": "task",
+  "id": "AI-DELIVER",
+  "title": "Independently review and publish the exact integrated source",
+  "nextAction": "Wait for verified prerequisites; preserve all current owner and no-replay fences.",
+  "logical": {
+    "domainId": "education",
+    "projectId": "education-platform",
+    "workId": "academy-repository-integration-20261023",
+    "issueId": "AI-ISSUE",
+    "specId": "AI-SPEC",
+    "specRevision": 1,
+    "planId": "AI-PLAN",
+    "planRevision": 1,
+    "taskId": "AI-DELIVER"
+  },
+  "state": {
+    "execution": "planned",
+    "verification": "pending",
+    "localAudit": "intent-durable",
+    "sharedAudit": "pending",
+    "formalCompletion": "pending"
+  },
+  "executionClass": "source-only",
+  "dependsOn": [
+    {
+      "taskId": "AI-CONTEXT",
+      "milestone": "execution-and-verification"
+    },
+    {
+      "taskId": "AI-INTEGRATE",
+      "milestone": "execution-and-verification"
+    }
+  ],
+  "decisionIds": [
+    "AI-USER-DIRECTION"
+  ],
+  "effectIds": [],
+  "verificationEvidenceIds": []
+}

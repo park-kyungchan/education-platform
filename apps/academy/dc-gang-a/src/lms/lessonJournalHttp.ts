@@ -3,7 +3,7 @@ import {readLiteralKey,readLiteralName} from './academyReadProtocol';
 import {journalWireWidth} from './lessonJournalTemplates';
 export const journalHttpFields=['progress','homework','lessonMemo','attendance','dailyTestAssessment','previousHomeworkAssessment'] as const;
 export type JournalHttpField=typeof journalHttpFields[number];
-/** Dated current field-wire qualification, not effect authority, generic source access or a CAS token. */
+/** Current exact field-wire contract; historical source observations do not authorize effects or weaken this qualification. */
 export const JOURNAL_HTTP_SOURCE_CONTRACT={
  revision:'2026-10-21-direct-dayrecord-v2',observedOn:'2026-10-21',
  staticWireDigest:'650813891d9428cb03eedb071f5c94bc369fd9641993de6d02ce4e07a5945bd1',
