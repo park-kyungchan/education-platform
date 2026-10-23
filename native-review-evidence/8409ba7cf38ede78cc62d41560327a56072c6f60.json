@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "evidence",
+  "id": "education-platform:evidence:native-source-review-8409ba7cf38e",
+  "projectId": "education-platform",
+  "domainId": "education",
+  "createdAt": "2026-10-23T10:00:59.828Z",
+  "payload": {
+    "claim": "Observed actual independent native review of the exact integrated source",
+    "method": "native-codex-independent-source-review",
+    "sourceUrl": "https://github.com/park-kyungchan/education-platform/blob/01d6f8e857b289b389b1d36983f36160e09243f4/native-review-raw/8409ba7cf38ede78cc62d41560327a56072c6f60.json",
+    "fetchedAt": "2026-10-23T10:00:59.828Z",
+    "upstreamRevision": "8409ba7cf38ede78cc62d41560327a56072c6f60",
+    "result": {
+      "outcome": "success",
+      "processExitCode": 0,
+      "contentMatched": true
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "outcome": "success"
+      }
+    ],
+    "limitations": [
+      "Git source custody authenticates its publisher, not the native process.",
+      "Initial findings and failed verification attempts remain in private task custody. Source checks do not establish teacher/native acceptance or runtime activation."
+    ],
+    "details": {
+      "semanticOwner": "education-platform",
+      "review": {
+        "binding": {
+          "repository": "park-kyungchan/education-platform",
+          "projectId": "education-platform",
+          "domainId": "education",
+          "semanticOwner": "education-platform",
+          "scope": "month-end-source-redesign"
+        },
+        "headSha": "8409ba7cf38ede78cc62d41560327a56072c6f60",
+        "reviewedTreeSha": "75e88390baa2eca5ec8dca6b1a178315d4453f7d",
+        "reviewedSourceManifestSha256": "5bf977e17449838b369b967c15864a29ff8e501301cf22b84f1db87be901ba7c",
+        "reviewer": {
+          "runtime": "native-codex",
+          "taskId": "01a167cc-fb4d-7a30-b197-7f84f81186ec"
+        },
+        "author": {
+          "runtime": "native-codex",
+          "taskId": "01a16729-5b62-7c02-aa7b-db5767901815"
+        },
+        "conclusion": "pass",
+        "unresolvedFindings": 0
+      }
+    }
+  }
+}
