@@ -1,0 +1,55 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "academy-query-integration-20261021",
+  "kind": "input",
+  "id": "QRY-DOM01-QUALIFICATION-R1",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "root-academy-orchestrator",
+    "locator": "exact-source-receiving-qualification:QRY-DOM01-QUALIFICATION-R1",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "schema": "academy.external-source-qualification/1",
+    "disposition": "qualified-source-only",
+    "producer": {
+      "logical": {
+        "domainId": "education",
+        "projectId": "education-platform",
+        "workId": "academy-state-model-20261021",
+        "issueId": "DOM-ISSUE-20261021",
+        "specId": "DOM-SPEC",
+        "specRevision": 1,
+        "planId": "DOM-PLAN",
+        "planRevision": 1,
+        "taskId": "education-platform:task:academy-state-model-20261021-dom-01"
+      },
+      "repositoryId": "park-kyungchan/education-platform",
+      "commit": "f690ba381a61ba5b8b50006802649dccba3cc417",
+      "tree": "4ad44db717ae5f68b2aefa16eae135e1661bb959",
+      "resultEvidenceId": "education-platform:evidence:dom-01-result-observation-r2",
+      "verificationEvidenceId": "education-platform:evidence:dom-01-verification-r2",
+      "resultSha256": "57ec1d6f7e18af67c3b9add0cd674c0d29e58c29b7e865db70048058a4788298",
+      "verificationSha256": "b8d9cdcd7b0d32d1d07cd31c9758b30c677f164b04837ffeb351d276937cbf1f"
+    },
+    "consumer": {
+      "logical": {
+        "domainId": "education",
+        "projectId": "education-platform",
+        "workId": "academy-query-integration-20261021",
+        "issueId": "QRY-ISSUE-20261021",
+        "specId": "QRY-SPEC",
+        "specRevision": 1,
+        "planId": "QRY-PLAN",
+        "planRevision": 1,
+        "taskId": "education-platform:task:academy-query-integration-20261021-qry-boundary"
+      },
+      "qualificationTaskId": "education-platform:task:academy-query-integration-20261021-qry-boundary-qualify-dom-01"
+    },
+    "nativeReceiverAuthentication": false,
+    "sharedAuditDelivery": false,
+    "operationalActivation": false
+  }
+}

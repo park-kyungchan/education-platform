@@ -1,0 +1,211 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "academy-query-integration-20261021",
+  "kind": "input",
+  "id": "QRY-02-VERIFICATION-R1",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "education-query-sublead",
+    "locator": "result-bound-verification:QRY-02-RESULT-R1",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "verification": {
+      "schemaVersion": "1.0.0",
+      "kind": "verification",
+      "id": "education-platform:verification:qry-02-r1",
+      "domainId": "education",
+      "projectId": "education-platform",
+      "createdAt": "2026-10-21T09:21:15.684Z",
+      "payload": {
+        "targetRefs": [
+          "common-harness:task:46c8a5645bb58ea346413471a0f1b8762628d2f47225f6362cf433f2b68c0ee0"
+        ],
+        "criteria": [
+          {
+            "id": "canonical-authenticated-retained-query",
+            "status": "pass",
+            "message": "Common bounded facade path uses existing authenticated TeacherApplication/readSnapshot/DOM02 projections with exact student/date/class/cohort selectors; no second reducer/native-session store/source acquisition. Domain and neutral source preservation bound in source manifest.",
+            "evidenceRefs": [
+              "education-platform:evidence:qry-02-result-observation-r1"
+            ]
+          },
+          {
+            "id": "bounded-lossless-serialized-pages",
+            "status": "pass",
+            "message": "Actual UTF8 JSON page includes metadata/records/cursor/serializedBytes and bounded short refusals. Signed caller/selector/snapshot/config cursors, lossless reassembly, original namespace/revision/stage identity, explicit history/currentness omissions and exact source flags verified. Default65536/max131072 is distinct from CON duplicated512KiB.",
+            "evidenceRefs": [
+              "education-platform:evidence:qry-02-result-observation-r1"
+            ]
+          },
+          {
+            "id": "review005-consumer-and-union-fixes",
+            "status": "pass",
+            "message": "F1 stable tuple draft identity/value scope comparison preserves actual edited and pending draft state across legacy/retained scenes and rejects changed actors. F2 strict complete reply/refusal validation before accumulation rejects corrected-byte/valid-hash malformed metadata and effects without echo. Independent exact-successor re-review remains pending Root.",
+            "evidenceRefs": [
+              "education-platform:evidence:qry-02-result-observation-r1"
+            ]
+          },
+          {
+            "id": "focused-checks-and-equivalent-load-measurements",
+            "status": "pass",
+            "message": "Final DC/focused tsc7.0.2 pass;75 focused tests pass/6 DB skips, month-end1pass reused; actual browser entrypoints build in memory. Synthetic actual HTTP documents match one-shot canonical output; student5/cohort3/class1 pages, max65526 JSON bytes, facade/load/total bytes recorded. No native latency/adoption claim.",
+            "evidenceRefs": [
+              "education-platform:evidence:qry-02-result-observation-r1"
+            ]
+          },
+          {
+            "id": "coverage-source-custody-and-result-binding",
+            "status": "pass",
+            "message": "Exact consumer/deferred surfaces and missing native/DB/provenance/history/SDK boundaries retained. Original Inputs/Evidence,5 neutral leaves and Root manifests/locks preserved. Separate new result/Verification Inputs bind actual taskVerificationTarget, result observation and exact result Input sha256. Root committed snapshot/transition/shared delivery and formal acceptance remain separate.",
+            "evidenceRefs": [
+              "education-platform:evidence:qry-02-result-observation-r1"
+            ]
+          }
+        ],
+        "inputHashes": [
+          {
+            "path": "work/education-platform/academy-query-integration-20261021/inputs/QRY-02-RESULT-R1.json",
+            "sha256": "a22777ba427685253cced5479042597ee1ca0712feda6224213673e9929093b8"
+          },
+          {
+            "path": "apps/academy/dc-gang-a/harness/academy_query.ts",
+            "sha256": "574512398a50300519e8c23141999e57214c7475cc50cbe55fc719480ae59646"
+          },
+          {
+            "path": "apps/academy/dc-gang-a/src/academy/application.ts",
+            "sha256": "20f8a75e264c1dc4626dd095cb9381e58a80815706f44edbdd63af9f2cbec0ce"
+          },
+          {
+            "path": "apps/academy/dc-gang-a/src/academy/contracts/retainedQuery.ts",
+            "sha256": "390d83478a73afdcc0863b75c5b013ca9e065deb25c763cf2f19622caf9a9965"
+          },
+          {
+            "path": "apps/academy/dc-gang-a/src/academy/retainedQuery.ts",
+            "sha256": "084615bbfe033cb3098371a491cf5ca82d807d3268b3c85adb947a009e666cb4"
+          },
+          {
+            "path": "apps/academy/dc-gang-a/src/academy/retainedQueryClient.ts",
+            "sha256": "c458e74bce4ef63530c5480e2148646cacd81f5ceeb56ed1ec6570823b26288d"
+          },
+          {
+            "path": "apps/academy/dc-gang-a/src/academy/retainedQueryValidation.ts",
+            "sha256": "b5c1c09cd288a6d380776dbd67acb0b78b49cc125c020f7517f771d27b81ad9d"
+          },
+          {
+            "path": "apps/academy/dc-gang-a/src/academy/server.ts",
+            "sha256": "45033f49f65896690adcb2c4d9dd57aa3e0116d1c94570459f55b9e8f6f06de7"
+          },
+          {
+            "path": "apps/academy/dc-gang-a/src/academy/web/client.ts",
+            "sha256": "a7e774aeb73d3c046792ed97d33275e637f91f732a9a86d8d5d52b0f49248efd"
+          },
+          {
+            "path": "apps/academy/dc-gang-a/src/academy/web/teacherWorkspaceView.ts",
+            "sha256": "ac830eca4c3dab80cb21cdd00a7e07351c02dbb9cec5dd349a7f4abbbd7a3501"
+          },
+          {
+            "path": "apps/academy/dc-gang-a/src/academy/web/workspaceEditor.ts",
+            "sha256": "b492b7d0b324b2551dd09e2331be7548e56e907fa748e9481308f6e4fea829b3"
+          },
+          {
+            "path": "apps/academy/dc-gang-a/src/academy/web/examWorkspaceView.ts",
+            "sha256": "e80d95b9aebd6c824b81fed2d575bff6ad13c5c69fba4b8ec6f8fbfff1aee234"
+          },
+          {
+            "path": "apps/academy/dc-gang-a/src/academy/web/operatingWorkspaceView.ts",
+            "sha256": "5f415dc5a756d1d0970399436656592c38c814d0378ed857c5f93e493a018370"
+          },
+          {
+            "path": "apps/academy/dc-gang-a/tests/academy/retainedQuery.test.ts",
+            "sha256": "067e109f3fe86f9aa505181bb6da7c423e887d5e01014aa0859790ec52772b7f"
+          },
+          {
+            "path": "apps/academy/dc-gang-a/tests/academy/retainedQueryFixtures.ts",
+            "sha256": "a2f9ff6abda9a4d51c2763f1ae350789b9f8c9e6dca70b2b4c2f13bdc7fa2cd3"
+          },
+          {
+            "path": "apps/academy/dc-gang-a/tests/academy/retainedQueryReviewFixes.test.ts",
+            "sha256": "5beaab5e22b03d4249ccb6bc942e1fbc87d4a418e49a0d2196edaa04a9dbcbeb"
+          },
+          {
+            "path": "apps/academy/month-end-web/src/app.ts",
+            "sha256": "44a9b92ad05430e8df5bba7246d1abfbbe3a51708ae3b67c00df312bf6d23263"
+          },
+          {
+            "path": "apps/academy/month-end-web/src/source-page.ts",
+            "sha256": "02f8e1bcc8c32ebf09c4d5f94333ebeecf286ba52f82a12dd1ec456c5b11908a"
+          },
+          {
+            "path": "architecture/academy-query-integration/qry02-source-evidence.json",
+            "sha256": "0de03286ab84efedca70e37da9f16cf87cf376d638717ff200584a99a9502183"
+          },
+          {
+            "path": "architecture/academy-query-integration/qry02-entrypoint.json",
+            "sha256": "508bdb515f3c6f3a25db7dfc627b1467c295c70ba37b37d0d1abd2258e67cb18"
+          },
+          {
+            "path": "architecture/academy-query-integration/qry02-tsconfig.json",
+            "sha256": "bb9306e903271218bfb918bb2f67b0b165e6dccc91745e4a93783b34e1638057"
+          },
+          {
+            "path": "architecture/academy-query-integration/qry02-month-end.test.ts",
+            "sha256": "176f3fee604876f386c7843c5a3d1d7b27f9eace3a418022b8e12a88f1ad12c6"
+          },
+          {
+            "path": "architecture/academy-query-integration/qry02-checks.ts",
+            "sha256": "b2f3eb18dc9b22717cdf5e1fb741a991d46eb8c34e2ca84e0e345caad12c345a"
+          },
+          {
+            "path": "architecture/academy-query-integration/qry02-measure.ts",
+            "sha256": "f91eae50aac19f2710569aa3380788a5116c4f0e987fa6311a962618489f10cc"
+          },
+          {
+            "path": "architecture/academy-query-integration/observations/QRY-02-INITIAL-CHECKS-R1.json",
+            "sha256": "fcf7ac69e35854bd15c582d749f35aa746717df44e6ed29fd0f6e1ddbb1812fa"
+          },
+          {
+            "path": "architecture/academy-query-integration/observations/QRY-02-CHECKS-R1.json",
+            "sha256": "030dbdbe1d2400de9d81282ca27958cd6d369f35e86b9964d24ba13c5dfdf227"
+          },
+          {
+            "path": "architecture/academy-query-integration/observations/QRY-02-MEASUREMENTS-R1.json",
+            "sha256": "55bade5e724a36cf58133f1e073a4b27f1b3f049237909c0ef8401b6b96fe01e"
+          },
+          {
+            "path": "architecture/academy-query-integration/observations/QRY-02-CHECKS-R2.json",
+            "sha256": "3687340a65658fe3b6f4b34aa3fff2cfc6a48830aeb9efa4d237048bea08155e"
+          },
+          {
+            "path": "architecture/academy-query-integration/observations/QRY-02-MEASUREMENTS-R2.json",
+            "sha256": "ec344f64c97ddb5ac6efbedcd01b47092240cb8d8ad0a367d5a4c57b6170f045"
+          },
+          {
+            "path": "architecture/academy-query-integration/observations/QRY-02-CHECKS-R3.json",
+            "sha256": "579587f1d80af9915d4ab61e343ded3796dc7e3208c553d5bde11894489e3253"
+          },
+          {
+            "path": "architecture/academy-query-integration/observations/QRY-02-MEASUREMENTS-R3.json",
+            "sha256": "12ae58719b9be2194fe91f5899b38086136c4d04f01e47d3c073fa425aaf9b3d"
+          }
+        ],
+        "runtime": {
+          "name": "Bun canonical retained query source/synthetic HTTP/JSDOM checks / actual TypeScript",
+          "version": "1.4.3 / 7.0.2"
+        },
+        "details": {
+          "canonicalApiPin": "712f90deac0676e662dc5d75d88d89f7b6773bfe",
+          "verificationClass": "bounded-source-and-synthetic-production-paths",
+          "review005Source": "959920b only; successor review pending",
+          "committedSnapshot": "pending Root exact successor commit",
+          "committedTransition": "pending Root exact successor commit",
+          "nativeAdoption": false,
+          "teacherAcceptance": false,
+          "formalAcceptance": false
+        }
+      }
+    }
+  }
+}

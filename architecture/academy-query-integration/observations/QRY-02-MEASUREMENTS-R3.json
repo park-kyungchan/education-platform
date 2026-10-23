@@ -1,0 +1,169 @@
+{
+  "schema": "academy.qry02-measurements.v1",
+  "createdAt": "2026-10-21T09:16:56.982Z",
+  "sourceBase": "29510c7ee9a5f8e6fc68bb6dbe5cf320bb66fc95",
+  "nativeThreadId": "01a15d3e-8769-7061-983f-880f73d33289",
+  "measurements": [
+    {
+      "selectorKind": "student",
+      "fixture": {
+        "students": 1,
+        "notes": 120,
+        "realData": false
+      },
+      "equivalentCanonicalDocument": true,
+      "singleFacadeRead": {
+        "facadeCalls": 1,
+        "sourceLoads": {
+          "snapshots": 1,
+          "students": 1,
+          "current": 1,
+          "catalog": 1,
+          "preparationRevisions": 1,
+          "pinnedCatalog": 1,
+          "studentWorkspaces": 1,
+          "append": 0
+        },
+        "jsonBytes": 243015
+      },
+      "pagedHttp": {
+        "pages": 5,
+        "facadeCalls": 5,
+        "sourceLoads": {
+          "snapshots": 5,
+          "students": 5,
+          "current": 5,
+          "catalog": 5,
+          "preparationRevisions": 5,
+          "pinnedCatalog": 5,
+          "studentWorkspaces": 5,
+          "append": 0
+        },
+        "pageBytes": [
+          64395,
+          64632,
+          64673,
+          65526,
+          5221
+        ],
+        "totalJsonBytes": 264447,
+        "maxPageBytes": 65526,
+        "recordCounts": [
+          43,
+          37,
+          37,
+          85,
+          12
+        ],
+        "totalRecords": 214,
+        "snapshotCount": 1
+      },
+      "interpretation": "Stateless bounded delivery reloads the full canonical facade once per page; more calls/bytes than one unbounded JSON response are expected. No native source request, latency reduction or production latency measured."
+    },
+    {
+      "selectorKind": "cohort",
+      "fixture": {
+        "students": 700,
+        "notes": 120,
+        "realData": false
+      },
+      "equivalentCanonicalDocument": true,
+      "singleFacadeRead": {
+        "facadeCalls": 1,
+        "sourceLoads": {
+          "snapshots": 1,
+          "students": 1,
+          "current": 700,
+          "catalog": 0,
+          "preparationRevisions": 0,
+          "pinnedCatalog": 0,
+          "studentWorkspaces": 0,
+          "append": 0
+        },
+        "jsonBytes": 75991
+      },
+      "pagedHttp": {
+        "pages": 3,
+        "facadeCalls": 3,
+        "sourceLoads": {
+          "snapshots": 3,
+          "students": 3,
+          "current": 2100,
+          "catalog": 0,
+          "preparationRevisions": 0,
+          "pinnedCatalog": 0,
+          "studentWorkspaces": 0,
+          "append": 0
+        },
+        "pageBytes": [
+          42784,
+          44072,
+          37253
+        ],
+        "totalJsonBytes": 124109,
+        "maxPageBytes": 44072,
+        "recordCounts": [
+          250,
+          250,
+          212
+        ],
+        "totalRecords": 712,
+        "snapshotCount": 1
+      },
+      "interpretation": "Stateless bounded delivery reloads the full canonical facade once per page; more calls/bytes than one unbounded JSON response are expected. No native source request, latency reduction or production latency measured."
+    },
+    {
+      "selectorKind": "class_preparation",
+      "fixture": {
+        "students": 1,
+        "notes": 120,
+        "realData": false
+      },
+      "equivalentCanonicalDocument": true,
+      "singleFacadeRead": {
+        "facadeCalls": 1,
+        "sourceLoads": {
+          "snapshots": 1,
+          "students": 1,
+          "current": 1,
+          "catalog": 0,
+          "preparationRevisions": 1,
+          "pinnedCatalog": 0,
+          "studentWorkspaces": 0,
+          "append": 0
+        },
+        "jsonBytes": 2235
+      },
+      "pagedHttp": {
+        "pages": 1,
+        "facadeCalls": 1,
+        "sourceLoads": {
+          "snapshots": 1,
+          "students": 1,
+          "current": 1,
+          "catalog": 0,
+          "preparationRevisions": 1,
+          "pinnedCatalog": 0,
+          "studentWorkspaces": 0,
+          "append": 0
+        },
+        "pageBytes": [
+          3342
+        ],
+        "totalJsonBytes": 3342,
+        "maxPageBytes": 3342,
+        "recordCounts": [
+          1
+        ],
+        "totalRecords": 1,
+        "snapshotCount": 1
+      },
+      "interpretation": "Stateless bounded delivery reloads the full canonical facade once per page; more calls/bytes than one unbounded JSON response are expected. No native source request, latency reduction or production latency measured."
+    }
+  ],
+  "pageBudgetMeaning": "Actual UTF-8 JSON HTTP page including all metadata, fragments and cursor; default65536,max131072 bytes. This is NOT the downstream duplicated MCP CallToolResult512KiB budget.",
+  "downstreamRequirement": "Workbench CON must use its real production CallToolResult packager and qualify escaping, duplicated content and refusal under512KiB. Existing browser modelContext/CLI final aggregation is a separate output boundary.",
+  "currentness": "Authoritative source currentness unknown; source clocks remain in exact reconstructed document and retrievedAt is page delivery time.",
+  "nativeLatencyMeasured": false,
+  "nativeEffects": 0
+}

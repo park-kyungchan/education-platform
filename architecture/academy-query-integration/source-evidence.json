@@ -1,0 +1,1025 @@
+{
+  "schema": "academy.qry01-source-evidence.v1",
+  "sourceBase": "f3427f736dfda2a50fbf80265582510b569fd5ef",
+  "dom": {
+    "repositoryRoot": "/home/palantirkc/worktrees/academy-state-model-20261021",
+    "commit": "f690ba381a61ba5b8b50006802649dccba3cc417",
+    "tree": "4ad44db717ae5f68b2aefa16eae135e1661bb959",
+    "inventory": "architecture/academy-state-model/source-evidence.json",
+    "selection": "architecture/academy-state-model/selection.ts",
+    "boundary": "architecture/academy-state-model/query-boundary.ts",
+    "receivingInput": "QRY-DOM01-QUALIFICATION-R1",
+    "meaning": "Reuse the qualified frozen inventory/selection; no repeated 241-source graph or full suites.",
+    "refs": [
+      {
+        "repositoryId": "park-kyungchan/education-platform",
+        "commit": "f690ba381a61ba5b8b50006802649dccba3cc417",
+        "path": "architecture/academy-state-model/source-evidence.json",
+        "sha256": "9aa7db2cbcf74bd9f092c30569bb2a87646b877dd894e32167bbd4af526e03ee",
+        "bytes": 428896
+      },
+      {
+        "repositoryId": "park-kyungchan/education-platform",
+        "commit": "f690ba381a61ba5b8b50006802649dccba3cc417",
+        "path": "architecture/academy-state-model/selection.ts",
+        "sha256": "176a2f1892fd46d7084f29e67665ee9b8efdb11717c5dc1922b2fec39028be84",
+        "bytes": 10846
+      },
+      {
+        "repositoryId": "park-kyungchan/education-platform",
+        "commit": "f690ba381a61ba5b8b50006802649dccba3cc417",
+        "path": "architecture/academy-state-model/query-boundary.ts",
+        "sha256": "41275822e8d5323c5e325b5e3e92edb1c2b701e65b2f7bc280a3b99d7df8ba14",
+        "bytes": 10814
+      }
+    ],
+    "wholeInventoryRerun": false
+  },
+  "mcp": {
+    "repositoryRoot": "/home/palantirkc/worktrees/academy-class-prep-20261021/work/class-prep-20261021/repositories/academy-workbench",
+    "repositoryId": "park-kyungchan/academy-workbench",
+    "commit": "df8b9f776e22841919e69b9ff9ba25084e13f558",
+    "meaning": "Root-qualified prior saved-history source; this inventory checks selected exact bytes, not runtime adoption."
+  },
+  "files": [
+    {
+      "id": "readPlan",
+      "repositoryId": "park-kyungchan/education-platform",
+      "commit": "f3427f736dfda2a50fbf80265582510b569fd5ef",
+      "path": "apps/academy/dc-gang-a/src/lms/academyReadProtocol.ts",
+      "blobOid": "062052bce3e447d9bcf4ab8ded42e0cdce609c78",
+      "sha256": "9082ccf9cb91ec3dbd08ec3931acc330ee24725e0b8679c3b367d745e36857f3",
+      "bytes": 22144,
+      "anchors": [
+        {
+          "anchor": "export const scopedReadFamilies=",
+          "line": 7
+        },
+        {
+          "anchor": "export function createAcademyReadPlan",
+          "line": 52
+        },
+        {
+          "anchor": "export interface AcademyReadResult",
+          "line": 142
+        },
+        {
+          "anchor": "export async function executeAcademyRead",
+          "line": 170
+        }
+      ],
+      "frozenDomHashReused": true
+    },
+    {
+      "id": "audit",
+      "repositoryId": "park-kyungchan/education-platform",
+      "commit": "f3427f736dfda2a50fbf80265582510b569fd5ef",
+      "path": "apps/academy/dc-gang-a/src/lms/academySourceAudit.ts",
+      "blobOid": "881756761f0a8185970e027cfbef1ad3e9da7a3f",
+      "sha256": "8ca076aa8df8bbf5441c5148024ee55f183880b0cbdbeae27619eb229177bb83",
+      "bytes": 18326,
+      "anchors": [
+        {
+          "anchor": "export function createAcademySourceAudit",
+          "line": 7
+        },
+        {
+          "anchor": "snapshot.family==='student_course'",
+          "line": 19
+        },
+        {
+          "anchor": "snapshot.family==='daily_zero'",
+          "line": 68
+        },
+        {
+          "anchor": "snapshot.family==='day_record'",
+          "line": 99
+        }
+      ],
+      "frozenDomHashReused": true
+    },
+    {
+      "id": "day",
+      "repositoryId": "park-kyungchan/education-platform",
+      "commit": "f3427f736dfda2a50fbf80265582510b569fd5ef",
+      "path": "apps/academy/dc-gang-a/src/lms/dayRecordReadProtocol.ts",
+      "blobOid": "db88187659cd80c3afd6106b6587a976fef351c9",
+      "sha256": "28188190d156b1a1fd7aba6a2e33beb055aa49c963ec0d2187b3b67804898d65",
+      "bytes": 9446,
+      "anchors": [
+        {
+          "anchor": "export async function readDayRecordSource",
+          "line": 17
+        },
+        {
+          "anchor": "export interface DayRecordSourceRow",
+          "line": 16
+        }
+      ],
+      "frozenDomHashReused": true
+    },
+    {
+      "id": "course",
+      "repositoryId": "park-kyungchan/education-platform",
+      "commit": "f3427f736dfda2a50fbf80265582510b569fd5ef",
+      "path": "apps/academy/dc-gang-a/src/lms/studentCourseRead.ts",
+      "blobOid": "c40a4842bc33415ea90a5ca659900ee22d5e699d",
+      "sha256": "668325f2328d33eef20bde9b67c1dbece33133565423c839c9100fa94ce9b236",
+      "bytes": 7064,
+      "anchors": [
+        {
+          "anchor": "observed_row_not_all_assignments_or_pagination",
+          "line": 5
+        },
+        {
+          "anchor": "export async function readStudentCourses",
+          "line": 41
+        }
+      ],
+      "frozenDomHashReused": true
+    },
+    {
+      "id": "assessment",
+      "repositoryId": "park-kyungchan/education-platform",
+      "commit": "f3427f736dfda2a50fbf80265582510b569fd5ef",
+      "path": "apps/academy/dc-gang-a/src/lms/assessmentReadProtocol.ts",
+      "blobOid": "7afb06efdf7e306c0b5036793081321b0ce7d8d4",
+      "sha256": "ad7f55926af369e6de58230f9b57af3efe68514604bf3e37a272cc7a79662c34",
+      "bytes": 17214,
+      "anchors": [
+        {
+          "anchor": "export async function readAssessmentBatch",
+          "line": 89
+        },
+        {
+          "anchor": "sourceTimestamp: null",
+          "line": 78
+        },
+        {
+          "anchor": "one_observed_student_search_page_not_complete_history",
+          "line": 223
+        }
+      ],
+      "frozenDomHashReused": true
+    },
+    {
+      "id": "httpSource",
+      "repositoryId": "park-kyungchan/education-platform",
+      "commit": "f3427f736dfda2a50fbf80265582510b569fd5ef",
+      "path": "apps/academy/dc-gang-a/src/lms/academyHttpClient.ts",
+      "blobOid": "22c1f2ab793a7f5c2239582143a01f2fd6b415eb",
+      "sha256": "4badc8034591445041f98f98b156e15fb4dd69bdb13faf07d54ffcb3949e6174",
+      "bytes": 47163,
+      "anchors": [
+        {
+          "anchor": "async readTestPoolQuestions",
+          "line": 247
+        },
+        {
+          "anchor": "sourcePageSize:50",
+          "line": 281
+        },
+        {
+          "anchor": "returned_scoped_response_only",
+          "line": 244
+        },
+        {
+          "anchor": "operation:'UserBySearchTestResult'",
+          "line": 356
+        }
+      ],
+      "frozenDomHashReused": true
+    },
+    {
+      "id": "pool",
+      "repositoryId": "park-kyungchan/education-platform",
+      "commit": "f3427f736dfda2a50fbf80265582510b569fd5ef",
+      "path": "apps/academy/dc-gang-a/src/lms/testPoolReadProtocol.ts",
+      "blobOid": "fd9ef9ec48399d52253aa9024f265f622a1aaf44",
+      "sha256": "0ae0ad9e061efe048cbd9a3952f4f06355aa5a5f185732f30ecb2a5b82c86cab",
+      "bytes": 10384,
+      "anchors": [
+        {
+          "anchor": "export function testPoolReadRequest",
+          "line": 13
+        },
+        {
+          "anchor": "export function parseTestPoolQuestions",
+          "line": 91
+        }
+      ],
+      "frozenDomHashReused": true
+    },
+    {
+      "id": "paper",
+      "repositoryId": "park-kyungchan/education-platform",
+      "commit": "f3427f736dfda2a50fbf80265582510b569fd5ef",
+      "path": "apps/academy/dc-gang-a/src/lms/nativePaperReadProtocol.ts",
+      "blobOid": "2cfd93028df6225189b87edc3ef9efb39700e823",
+      "sha256": "b166f8ba5aee12f60525888c1d4679e83c4bbdb7bee142744acb3e9b274ad98c",
+      "bytes": 9696,
+      "anchors": [
+        {
+          "anchor": "const limit=Object.freeze",
+          "line": 8
+        },
+        {
+          "anchor": "export function inspectNativePaperOptionsResponse",
+          "line": 76
+        }
+      ],
+      "frozenDomHashReused": true
+    },
+    {
+      "id": "legacy",
+      "repositoryId": "park-kyungchan/education-platform",
+      "commit": "f3427f736dfda2a50fbf80265582510b569fd5ef",
+      "path": "apps/academy/dc-gang-a/src/lms/lmsLiveQueryService.ts",
+      "blobOid": "d454c454790a61bacd3ff9380a7c04cb1cd03606",
+      "sha256": "69d01cf14641dd6f5f320811f252d1040bf4db2ced5469fdb6f2579eef322dc0",
+      "bytes": 12547,
+      "anchors": [
+        {
+          "anchor": "private blockUnreviewedLiveOperation",
+          "line": 60
+        },
+        {
+          "anchor": "unverified_live_route_contract",
+          "line": 61
+        }
+      ],
+      "frozenDomHashReused": true
+    },
+    {
+      "id": "cache",
+      "repositoryId": "park-kyungchan/education-platform",
+      "commit": "f3427f736dfda2a50fbf80265582510b569fd5ef",
+      "path": "apps/academy/dc-gang-a/src/lms/lmsDeterministicReadRepository.ts",
+      "blobOid": "fb422d4acf8d462eebbc94f500d05b6a1ecb82ba",
+      "sha256": "6ddd9012be7a3025734b16743c58985483fb5259709c8519493634fb43d8d395",
+      "bytes": 7207,
+      "anchors": [
+        {
+          "anchor": "public getStudentAttempt",
+          "line": 65
+        },
+        {
+          "anchor": "public confirmVerifiedAttempt",
+          "line": 179
+        },
+        {
+          "anchor": "paper.provenance !== 'SYNTHETIC_HARNESS'",
+          "line": 104
+        }
+      ],
+      "frozenDomHashReused": true
+    },
+    {
+      "id": "application",
+      "repositoryId": "park-kyungchan/education-platform",
+      "commit": "f3427f736dfda2a50fbf80265582510b569fd5ef",
+      "path": "apps/academy/dc-gang-a/src/academy/application.ts",
+      "blobOid": "4c498270a2c9106d802313a9681ddf3b065a12b2",
+      "sha256": "83f2cbf1be5886376987a02e26157ea70fc07c050137a024fae9767183010aa7",
+      "bytes": 5238,
+      "anchors": [
+        {
+          "anchor": "export class TeacherApplication",
+          "line": 13
+        },
+        {
+          "anchor": "async student(",
+          "line": 45
+        },
+        {
+          "anchor": "async cohort(",
+          "line": 49
+        },
+        {
+          "anchor": "async classPreparation(",
+          "line": 53
+        }
+      ],
+      "frozenDomHashReused": true
+    },
+    {
+      "id": "queries",
+      "repositoryId": "park-kyungchan/education-platform",
+      "commit": "f3427f736dfda2a50fbf80265582510b569fd5ef",
+      "path": "apps/academy/dc-gang-a/src/academy/usecases/studentScene.ts",
+      "blobOid": "73f4b7fba06e3e16994c5a479c40682991e5a5a9",
+      "sha256": "4880bba11a8d9f367b5dec0c6d41df2f45e25bc869a54fd41fe3e1ed503adaf6",
+      "bytes": 10481,
+      "anchors": [
+        {
+          "anchor": "registered_teacher_owned_students_not_scheduled_date_completeness",
+          "line": 28
+        },
+        {
+          "anchor": "sourceFreshness:",
+          "line": 79
+        },
+        {
+          "anchor": "timeZone:'Asia/Seoul'",
+          "line": 32
+        },
+        {
+          "anchor": "verified_occurrences_in_observed_calendar_window_not_all_history",
+          "line": 107
+        },
+        {
+          "anchor": "completeCurrentRoster:",
+          "line": 107
+        }
+      ],
+      "frozenDomHashReused": true
+    },
+    {
+      "id": "readStore",
+      "repositoryId": "park-kyungchan/education-platform",
+      "commit": "f3427f736dfda2a50fbf80265582510b569fd5ef",
+      "path": "apps/academy/dc-gang-a/src/academy/ports/teacherStore.ts",
+      "blobOid": "ede2ae30bd79d89ea3dc81287e76ee8697701ede",
+      "sha256": "379812d9011d075b100070a3b938514c84578bd98481f6f8a01b7d6892ce6f94",
+      "bytes": 1741,
+      "anchors": [
+        {
+          "anchor": "export interface TeacherReadStore",
+          "line": 5
+        },
+        {
+          "anchor": "readSnapshot<T>",
+          "line": 20
+        }
+      ],
+      "frozenDomHashReused": true
+    },
+    {
+      "id": "postgres",
+      "repositoryId": "park-kyungchan/education-platform",
+      "commit": "f3427f736dfda2a50fbf80265582510b569fd5ef",
+      "path": "apps/academy/dc-gang-a/src/academy/postgresStore.ts",
+      "blobOid": "22f18f5d25fe518202bea64eda3f5df69060c5e0",
+      "sha256": "724e51152009b8ba766543aecea30f34ea57d3ee2718654a125acbdb4a19ba79",
+      "bytes": 64919,
+      "anchors": [
+        {
+          "anchor": "SET TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY",
+          "line": 46
+        },
+        {
+          "anchor": "async history(",
+          "line": 428
+        },
+        {
+          "anchor": "async current(",
+          "line": 433
+        },
+        {
+          "anchor": "preparation_history_scope_too_large",
+          "line": 443
+        },
+        {
+          "anchor": "catalog_scope_too_large",
+          "line": 447
+        }
+      ],
+      "frozenDomHashReused": true
+    },
+    {
+      "id": "teacherContract",
+      "repositoryId": "park-kyungchan/education-platform",
+      "commit": "f3427f736dfda2a50fbf80265582510b569fd5ef",
+      "path": "apps/academy/dc-gang-a/src/academy/contracts/teacherOperations.ts",
+      "blobOid": "5dd44efce6185626946b71d5a310b978136cc35f",
+      "sha256": "f68fa81c8d74263054cdf0472f1b94600fd8c5b50a51bacc4c42aa7025df55d7",
+      "bytes": 4281,
+      "anchors": [
+        {
+          "anchor": "export interface TrustedTeacherContext",
+          "line": 12
+        },
+        {
+          "anchor": "export interface StudentLearningScene",
+          "line": 20
+        },
+        {
+          "anchor": "export interface DateClassPreparation",
+          "line": 32
+        }
+      ],
+      "frozenDomHashReused": true
+    },
+    {
+      "id": "teacherHistory",
+      "repositoryId": "park-kyungchan/education-platform",
+      "commit": "f3427f736dfda2a50fbf80265582510b569fd5ef",
+      "path": "apps/academy/dc-gang-a/src/academy/usecases/teacherWorkspace.ts",
+      "blobOid": "4de12fb77a9271923e3f41c189f3048552bdf5af",
+      "sha256": "2d00f46c7311491ebae330cc54163e95bb813f522f77bb4d9f58b1e58472c267",
+      "bytes": 7935,
+      "anchors": [
+        {
+          "anchor": "async history(",
+          "line": 36
+        },
+        {
+          "anchor": "nextAfterSequence:rows.length===200",
+          "line": 38
+        },
+        {
+          "anchor": "async projectExamCandidate(",
+          "line": 50
+        }
+      ],
+      "frozenDomHashReused": true
+    },
+    {
+      "id": "conceptHistory",
+      "repositoryId": "park-kyungchan/education-platform",
+      "commit": "f3427f736dfda2a50fbf80265582510b569fd5ef",
+      "path": "apps/academy/dc-gang-a/src/academy/usecases/conceptWorkspace.ts",
+      "blobOid": "f42d7aa7e417f8f8536e7c4be1787254ef7d24be",
+      "sha256": "32a3637265fc2d2e79ce712f98cb98b0c986845ff483bd1165b1d49c267aa5ab",
+      "bytes": 4348,
+      "anchors": [
+        {
+          "anchor": "async history(",
+          "line": 26
+        },
+        {
+          "anchor": "nextAfterSequence:rows.length===200",
+          "line": 26
+        }
+      ],
+      "frozenDomHashReused": true
+    },
+    {
+      "id": "nativeConnection",
+      "repositoryId": "park-kyungchan/education-platform",
+      "commit": "f3427f736dfda2a50fbf80265582510b569fd5ef",
+      "path": "apps/academy/dc-gang-a/src/academy/nativeConnector.ts",
+      "blobOid": "cd006d44097e6c9e472c32846b2bdf4f84360e5a",
+      "sha256": "c4509e9b9bab0266c1f7f4ec8f301fc124e676e6bd6d20b05a41fbbb9697d94d",
+      "bytes": 9113,
+      "anchors": [
+        {
+          "anchor": "export const academyConnectionStatus",
+          "line": 10
+        },
+        {
+          "anchor": "export function createNativeDirectReadAcquirer",
+          "line": 31
+        },
+        {
+          "anchor": "export function createNativeDirectBookAcquirer",
+          "line": 65
+        }
+      ],
+      "frozenDomHashReused": true
+    },
+    {
+      "id": "sourceRuntime",
+      "repositoryId": "park-kyungchan/education-platform",
+      "commit": "f3427f736dfda2a50fbf80265582510b569fd5ef",
+      "path": "apps/academy/dc-gang-a/src/academy/sourceRuntime.ts",
+      "blobOid": "eafa1c950297020f19d799d7c795bcd7b755c69d",
+      "sha256": "9dd556f92238ffb49a6a8fcdc9adf50606c78bb0884b5d48e5b75040a06a810f",
+      "bytes": 1355,
+      "anchors": [
+        {
+          "anchor": "families:['student_course','day_record','textbook','daily_zero']",
+          "line": 10
+        },
+        {
+          "anchor": "new TeacherApplication",
+          "line": 11
+        }
+      ],
+      "frozenDomHashReused": true
+    },
+    {
+      "id": "retainedRuntime",
+      "repositoryId": "park-kyungchan/education-platform",
+      "commit": "f3427f736dfda2a50fbf80265582510b569fd5ef",
+      "path": "apps/academy/dc-gang-a/src/academy/retainedRuntime.ts",
+      "blobOid": "27729866ae17f8458096a728db7123c41537696b",
+      "sha256": "5b040e55708c8bebcc1691c0d3202fda2a2274759bb35dadc6fe66b52e2ced88",
+      "bytes": 1614,
+      "anchors": [
+        {
+          "anchor": "export function createRetainedTeacherRuntime",
+          "line": 8
+        },
+        {
+          "anchor": "reason:'retained_only_selected'",
+          "line": 11
+        }
+      ],
+      "frozenDomHashReused": true
+    },
+    {
+      "id": "main",
+      "repositoryId": "park-kyungchan/education-platform",
+      "commit": "f3427f736dfda2a50fbf80265582510b569fd5ef",
+      "path": "apps/academy/dc-gang-a/src/academy/main.ts",
+      "blobOid": "816c91f695e3a3b9bdc2e100b73fa1512fac4497",
+      "sha256": "99dfbc35b95946455d0d585c15b1e64e628ef2d28b8b6a78f1cfdec1714eed9f",
+      "bytes": 5065,
+      "anchors": [
+        {
+          "anchor": "active_profile_required",
+          "line": 14
+        },
+        {
+          "anchor": "const runtime=retainedOnly?",
+          "line": 39
+        },
+        {
+          "anchor": "Bun.serve({hostname:'127.0.0.1',port:8411",
+          "line": 62
+        }
+      ],
+      "frozenDomHashReused": true
+    },
+    {
+      "id": "teacherHttp",
+      "repositoryId": "park-kyungchan/education-platform",
+      "commit": "f3427f736dfda2a50fbf80265582510b569fd5ef",
+      "path": "apps/academy/dc-gang-a/src/academy/server.ts",
+      "blobOid": "973c453184093a6c41009b095cd546edae1a69c2",
+      "sha256": "94b2fe1eb66c617097cf4eed9ffdff483c21b64b5fd7f1e18b2411dde7c0946d",
+      "bytes": 36027,
+      "anchors": [
+        {
+          "anchor": "const context=(req:Request)",
+          "line": 56
+        },
+        {
+          "anchor": "path==='/api/cohort'",
+          "line": 296
+        },
+        {
+          "anchor": "path==='/api/class'",
+          "line": 309
+        },
+        {
+          "anchor": "path==='/api/student'",
+          "line": 314
+        }
+      ],
+      "frozenDomHashReused": true
+    },
+    {
+      "id": "teacherWeb",
+      "repositoryId": "park-kyungchan/education-platform",
+      "commit": "f3427f736dfda2a50fbf80265582510b569fd5ef",
+      "path": "apps/academy/dc-gang-a/src/academy/web/client.ts",
+      "blobOid": "8c7a9ef94896691382cd00c72ff4e8b2104fe236",
+      "sha256": "b844ee9e5bc525a4e876d6c9be8f2b5d52e4f869d9d7752d93bebf23b5578ecb",
+      "bytes": 35515,
+      "anchors": [
+        {
+          "anchor": "cache:'no-store'",
+          "line": 58
+        },
+        {
+          "anchor": "const scene=await api<Scene>",
+          "line": 145
+        },
+        {
+          "anchor": "const source=await api<DateClassPreparation>",
+          "line": 155
+        },
+        {
+          "anchor": "name:'query_student_learning'",
+          "line": 270
+        },
+        {
+          "anchor": "name:'query_date_class'",
+          "line": 271
+        }
+      ],
+      "frozenDomHashReused": true
+    },
+    {
+      "id": "teacherCli",
+      "repositoryId": "park-kyungchan/education-platform",
+      "commit": "f3427f736dfda2a50fbf80265582510b569fd5ef",
+      "path": "apps/academy/dc-gang-a/harness/academy_query.ts",
+      "blobOid": "396371bd5f30bc7d32530ac1f8cc7a6a9949c12e",
+      "sha256": "812e826c1a09d4248b6dcf0f39c8c1d411aacca064b56aa2660cf6b99c690beb",
+      "bytes": 1822,
+      "anchors": [
+        {
+          "anchor": "trusted_local_operator_only_not_HTTP_authentication",
+          "line": 9
+        },
+        {
+          "anchor": "new TeacherApplication",
+          "line": 13
+        }
+      ],
+      "frozenDomHashReused": false
+    },
+    {
+      "id": "monthContract",
+      "repositoryId": "park-kyungchan/education-platform",
+      "commit": "f3427f736dfda2a50fbf80265582510b569fd5ef",
+      "path": "apps/academy/month-end-workbench/src/contracts.ts",
+      "blobOid": "0246377aca8cc2f4c6be6ef2a7f4cf173eb98fe5",
+      "sha256": "3af6439ed94d3315aff2c376ed0d073f9aa0be38e7d7cf50c96a8a914bc2a5bd",
+      "bytes": 8539,
+      "anchors": [
+        {
+          "anchor": "export interface SourceContext",
+          "line": 26
+        },
+        {
+          "anchor": "export interface SourcePort",
+          "line": 38
+        },
+        {
+          "anchor": "export interface Application {",
+          "line": 59
+        }
+      ],
+      "frozenDomHashReused": true
+    },
+    {
+      "id": "monthApp",
+      "repositoryId": "park-kyungchan/education-platform",
+      "commit": "f3427f736dfda2a50fbf80265582510b569fd5ef",
+      "path": "apps/academy/month-end-workbench/src/application.ts",
+      "blobOid": "91b00fb417d8695b0ef3221584d04b4c2968568e",
+      "sha256": "11c5cf4fcc4e62b6bf5657d29e8c726f09c4941c0c3d92d4a8a0d1b79056e675",
+      "bytes": 20089,
+      "anchors": [
+        {
+          "anchor": "export function createApplication",
+          "line": 8
+        },
+        {
+          "anchor": "async sourceScope(",
+          "line": 57
+        },
+        {
+          "anchor": "async find(",
+          "line": 4
+        },
+        {
+          "anchor": "async review(",
+          "line": 4
+        },
+        {
+          "anchor": "Ephemeral inspected question evidence limit reached",
+          "line": 92
+        }
+      ],
+      "frozenDomHashReused": true
+    },
+    {
+      "id": "monthMcp",
+      "repositoryId": "park-kyungchan/education-platform",
+      "commit": "f3427f736dfda2a50fbf80265582510b569fd5ef",
+      "path": "apps/academy/month-end-workbench/src/integrations/mcp-source-port.ts",
+      "blobOid": "df09b4158e33dcd191e25af021567412248d1f2a",
+      "sha256": "5a3901f1a0a50cfa9e21da8bbc5264a088a3745ad2d75a415499c7242a48a5cd",
+      "bytes": 20892,
+      "anchors": [
+        {
+          "anchor": "export async function createMcpSourcePort",
+          "line": 54
+        },
+        {
+          "anchor": "mcp_verified_execution_boundary_unavailable",
+          "line": 65
+        },
+        {
+          "anchor": "export async function createSyntheticMcpSourcePort",
+          "line": 69
+        },
+        {
+          "anchor": "integer(request.limit??20,1,50)",
+          "line": 106
+        },
+        {
+          "anchor": "selector_and_process_observation_not_global_currentness",
+          "line": 135
+        },
+        {
+          "anchor": "mcp_cursor_limit",
+          "line": 156
+        }
+      ],
+      "frozenDomHashReused": true
+    },
+    {
+      "id": "monthMain",
+      "repositoryId": "park-kyungchan/education-platform",
+      "commit": "f3427f736dfda2a50fbf80265582510b569fd5ef",
+      "path": "apps/academy/month-end-workbench/src/main.ts",
+      "blobOid": "6717d32e862d528f4bc3c2613da0941a164c9da1",
+      "sha256": "7385f0a6c875c3d82c3bfae74112a9ff45e041d9b3e7e73aa2e229a958d86315",
+      "bytes": 1698,
+      "anchors": [
+        {
+          "anchor": "MONTH_END_SOURCE_MODE",
+          "line": 9
+        },
+        {
+          "anchor": "createMcpSourcePort",
+          "line": 13
+        }
+      ],
+      "frozenDomHashReused": true
+    },
+    {
+      "id": "monthHttp",
+      "repositoryId": "park-kyungchan/education-platform",
+      "commit": "f3427f736dfda2a50fbf80265582510b569fd5ef",
+      "path": "apps/academy/month-end-workbench/src/server.ts",
+      "blobOid": "7a04d6317687c3218cde6ef8550a490ec411dbde",
+      "sha256": "fb689c7a7a1a727444f200196387ad143f94e00e0b81b58bb443ae98d4cdbbee",
+      "bytes": 8275,
+      "anchors": [
+        {
+          "anchor": "const POST_ROUTES",
+          "line": 10
+        },
+        {
+          "anchor": "Loopback origin required",
+          "line": 14
+        },
+        {
+          "anchor": "32768",
+          "line": 42
+        },
+        {
+          "anchor": "30*60*1000",
+          "line": 21
+        }
+      ],
+      "frozenDomHashReused": true
+    },
+    {
+      "id": "monthClient",
+      "repositoryId": "park-kyungchan/education-platform",
+      "commit": "f3427f736dfda2a50fbf80265582510b569fd5ef",
+      "path": "apps/academy/month-end-web/src/client.ts",
+      "blobOid": "6c3fb6d5e8022edabd577eefed9d4f5c70b1ab0e",
+      "sha256": "a8a42e16e133c412c19e68c65b554841255046caa962a015f5ab2b1465933325",
+      "bytes": 2949,
+      "anchors": [
+        {
+          "anchor": "export async function createClient",
+          "line": 8
+        },
+        {
+          "anchor": "bootstrap.delivery==='standalone'",
+          "line": 10
+        },
+        {
+          "anchor": "'/api/scope'",
+          "line": 15
+        }
+      ],
+      "frozenDomHashReused": true
+    },
+    {
+      "id": "monthWeb",
+      "repositoryId": "park-kyungchan/education-platform",
+      "commit": "f3427f736dfda2a50fbf80265582510b569fd5ef",
+      "path": "apps/academy/month-end-web/src/app.ts",
+      "blobOid": "e9cf5960c173ceac6c0db6fd1b76a36fcb48dec8",
+      "sha256": "c75b7ed8e561f5aafd427e02405e6c0127ba531246437761bda164f434b52c15",
+      "bytes": 40542,
+      "anchors": [
+        {
+          "anchor": "async function loadSource",
+          "line": 63
+        },
+        {
+          "anchor": "async function loadLabels",
+          "line": 64
+        },
+        {
+          "anchor": "async function reviewType",
+          "line": 66
+        },
+        {
+          "anchor": "result.nextOffset",
+          "line": 76
+        },
+        {
+          "anchor": "result.nextCursor",
+          "line": 78
+        }
+      ],
+      "frozenDomHashReused": true
+    },
+    {
+      "id": "monthContext",
+      "repositoryId": "park-kyungchan/education-platform",
+      "commit": "f3427f736dfda2a50fbf80265582510b569fd5ef",
+      "path": "apps/academy/month-end-workbench/docs/source-context.md",
+      "blobOid": "e678f01f3e338ded4ef76c10df9d82597e3ff232",
+      "sha256": "2669b79ca4b93f7584d8744d3ce6f02e787f34dd2f7d0b7897d23f727f378f2a",
+      "bytes": 9086,
+      "anchors": [
+        {
+          "anchor": "The user explicitly rejected",
+          "line": 3
+        },
+        {
+          "anchor": "Current source repair adds a further launch hold",
+          "line": 39
+        },
+        {
+          "anchor": "later [2026-10-19 candidate-preparation handoff]",
+          "line": 15
+        }
+      ],
+      "frozenDomHashReused": true
+    },
+    {
+      "id": "monthCheckpoint",
+      "repositoryId": "park-kyungchan/education-platform",
+      "commit": "f3427f736dfda2a50fbf80265582510b569fd5ef",
+      "path": "apps/academy/month-end-web/work/month-end-context-rebuild-20261017/checkpoint.json",
+      "blobOid": "44f0abc6ba2d37b6a3eb2aff5749d920192e663b",
+      "sha256": "ca3c5b15ce1656d5430afdf38f4ef9dddba8ccef2a18268e463f722071900efc",
+      "bytes": 15753,
+      "anchors": [
+        {
+          "anchor": "nextSafeAction",
+          "line": 318
+        }
+      ],
+      "frozenDomHashReused": false
+    },
+    {
+      "id": "mcpContract",
+      "repositoryId": "park-kyungchan/academy-workbench",
+      "commit": "df8b9f776e22841919e69b9ff9ba25084e13f558",
+      "path": "tools/academy-mcp/src/contracts.ts",
+      "blobOid": "613b3d2e722d7498d84b3f779044e8e7a5a4d552",
+      "sha256": "ccceb4123e866d677d002f54ce29205248708a2241a438dc63e9a5290e49b8ff",
+      "bytes": 4454,
+      "anchors": [
+        {
+          "anchor": "export const FACETS",
+          "line": 3
+        },
+        {
+          "anchor": "export const MAX_QUERY_LIMIT",
+          "line": 5
+        },
+        {
+          "anchor": "export const MAX_QUERY_BYTES",
+          "line": 6
+        },
+        {
+          "anchor": "currentAcademyServerQueried: false",
+          "line": 47
+        }
+      ],
+      "frozenDomHashReused": false
+    },
+    {
+      "id": "mcpSaved",
+      "repositoryId": "park-kyungchan/academy-workbench",
+      "commit": "df8b9f776e22841919e69b9ff9ba25084e13f558",
+      "path": "tools/academy-mcp/src/saved-context.ts",
+      "blobOid": "c4f13c9c21a02263f30bb7c0f3d4c5e42273415e",
+      "sha256": "2ffd3205ee675f510639135b85568fb9c40722fda07ad1c5e1ab764e067fc5ab",
+      "bytes": 10289,
+      "anchors": [
+        {
+          "anchor": "export class SavedContext",
+          "line": 22
+        },
+        {
+          "anchor": "student_history",
+          "line": 49
+        },
+        {
+          "anchor": "const recordBudget",
+          "line": 107
+        },
+        {
+          "anchor": "fixed_source_metadata_exceeds_response_budget",
+          "line": 118
+        },
+        {
+          "anchor": "retrievedAt: new Date().toISOString()",
+          "line": 96
+        },
+        {
+          "anchor": "export async function loadSavedContext",
+          "line": 125
+        }
+      ],
+      "frozenDomHashReused": false
+    },
+    {
+      "id": "mcpPage",
+      "repositoryId": "park-kyungchan/academy-workbench",
+      "commit": "df8b9f776e22841919e69b9ff9ba25084e13f558",
+      "path": "tools/academy-mcp/src/pagination.ts",
+      "blobOid": "d8fa3c663995218fb859f58b5cb9f72b6fb4aa6d",
+      "sha256": "49f1b943240921714a9facd5f826225db3a1edc5a846b0671775d0dc67f3e657",
+      "bytes": 2419,
+      "anchors": [
+        {
+          "anchor": "export function paginate",
+          "line": 12
+        },
+        {
+          "anchor": "cursor_scope_or_snapshot_conflict",
+          "line": 23
+        },
+        {
+          "anchor": "single_record_exceeds_response_budget",
+          "line": 31
+        },
+        {
+          "anchor": "const next = offset + items.length",
+          "line": 36
+        }
+      ],
+      "frozenDomHashReused": false
+    },
+    {
+      "id": "mcpTransport",
+      "repositoryId": "park-kyungchan/academy-workbench",
+      "commit": "df8b9f776e22841919e69b9ff9ba25084e13f558",
+      "path": "tools/academy-mcp/src/tool-result.ts",
+      "blobOid": "beeacc14144d03e366e3a3daa12fdb195fa4957d",
+      "sha256": "68d1db6d259a5fed1591f47e03ac7f698991188ff9780281f4b57a18a9504582",
+      "bytes": 662,
+      "anchors": [
+        {
+          "anchor": "export function toolResult",
+          "line": 2
+        },
+        {
+          "anchor": "export const toolResultBytes",
+          "line": 6
+        },
+        {
+          "anchor": "export function recordTransportBytes",
+          "line": 8
+        }
+      ],
+      "frozenDomHashReused": false
+    },
+    {
+      "id": "mcpQuery",
+      "repositoryId": "park-kyungchan/academy-workbench",
+      "commit": "df8b9f776e22841919e69b9ff9ba25084e13f558",
+      "path": "tools/academy-mcp/src/query-tool.ts",
+      "blobOid": "a0c967f586a2e4173d937b4c113f446777c72923",
+      "sha256": "e7350a269f45984f8b83d60382cb0ce78935d34489aeac6ca054ed9aaa51b7c6",
+      "bytes": 859,
+      "anchors": [
+        {
+          "anchor": "export function registerSavedQuery",
+          "line": 4
+        },
+        {
+          "anchor": "server.registerTool('academy_query'",
+          "line": 5
+        }
+      ],
+      "frozenDomHashReused": false
+    },
+    {
+      "id": "mcpServer",
+      "repositoryId": "park-kyungchan/academy-workbench",
+      "commit": "df8b9f776e22841919e69b9ff9ba25084e13f558",
+      "path": "tools/academy-mcp/src/server.ts",
+      "blobOid": "9c76883eab993f434037db56b3149c27783fa090",
+      "sha256": "395cf1c36010bc2ba9e67731ea2dea5200c2ab4b1b72a68489b10962a82408fe",
+      "bytes": 2053,
+      "anchors": [
+        {
+          "anchor": "registerSavedQuery(server",
+          "line": 24
+        },
+        {
+          "anchor": "await server.connect",
+          "line": 31
+        }
+      ],
+      "frozenDomHashReused": false
+    }
+  ],
+  "limits": {
+    "boundedSelection": true,
+    "exhaustiveGraph": false,
+    "sourceBodiesRetained": false,
+    "privateOriginalsRead": false,
+    "nativeBindingQualified": false
+  }
+}

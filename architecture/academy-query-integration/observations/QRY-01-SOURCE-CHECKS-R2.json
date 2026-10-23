@@ -1,0 +1,103 @@
+{
+  "schema": "academy.qry01-source-checks.v1",
+  "createdAt": "2026-10-21T07:06:21.143Z",
+  "sourceBase": "f3427f736dfda2a50fbf80265582510b569fd5ef",
+  "nativeThreadId": "01a15d3e-8769-7061-983f-880f73d33289",
+  "nativeIdentityMeaning": "Observed environment CODEX_THREAD_ID; not derived from logical IDs.",
+  "manifestSha256": "de5fa2cd40a9a608b8d4b59cb18163aced2153297044e21250043061f1c392da",
+  "selectedFiles": 39,
+  "domSelectedHashesReused": 31,
+  "inventory": {
+    "ports": 9,
+    "workflows": 7,
+    "gaps": 8,
+    "resolvedSourceCitations": true
+  },
+  "probes": [
+    {
+      "id": "frontend100-adapter50",
+      "status": "pass",
+      "expected": "mcp_integer_invalid",
+      "toolCalls": 0,
+      "closed": 1,
+      "meaning": "Demonstrates an actual consumer/provider limit mismatch using only an isolated synthetic client."
+    },
+    {
+      "id": "unconfigured-source-unavailable",
+      "status": "pass",
+      "meaning": "Undefined configuration creates no process; scope unavailable and find refuses."
+    }
+  ],
+  "commands": [
+    {
+      "id": "status",
+      "args": [
+        "bun",
+        "run",
+        "status"
+      ],
+      "startedAt": "2026-10-21T07:06:20.762Z",
+      "exitCode": 0,
+      "stdoutSha256": "091598231c7a429dabf7c45c2f9d79b80373ad1515485b2958b1e5cbd172ebf9",
+      "stderrSha256": "357f5ac18959b62e4623f2f89ac33e249d9803fcb3bceb2b45b88780906873cb",
+      "stdoutBytes": 3370,
+      "stderrBytes": 24,
+      "summary": "Source status metadata; no production/runtime proof."
+    },
+    {
+      "id": "actual-typescript-version",
+      "args": [
+        "bun",
+        "node_modules/typescript/bin/tsc",
+        "--version"
+      ],
+      "startedAt": "2026-10-21T07:06:20.782Z",
+      "exitCode": 0,
+      "stdoutSha256": "41024334022fa58f9c7337359517de307cbcfc6055c19f2b734245eacc2fe97a",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 14,
+      "stderrBytes": 0,
+      "summary": "Version 7.0.2"
+    },
+    {
+      "id": "owned-typecheck",
+      "args": [
+        "bun",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "-p",
+        "architecture/academy-query-integration/tsconfig.json"
+      ],
+      "startedAt": "2026-10-21T07:06:20.808Z",
+      "exitCode": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 0,
+      "stderrBytes": 0,
+      "summary": ""
+    }
+  ],
+  "reused": [
+    "Qualified DOM-01 exact frozen source inventory and snapshot/transition qualification in receiving Work",
+    "Root-qualified df8b9f7 Unicode/cursor/no-loss/whole-tool512KiB behavior and bounded metadata refusal"
+  ],
+  "notRun": [
+    "Unchanged DOM whole241-source graph and suites",
+    "Unchanged full Workbench MCP suites",
+    "bun run check aggregate: would rerun every unchanged module; direct task instruction requires proportional inventory checks",
+    "Native startup, PostgreSQL sockets, live Academy reads, MCP subprocesses, browser/server startup"
+  ],
+  "priorFailuresRetained": [
+    "QRY-01-SOURCE-CHECKS-R1.json: broader static provider import failed on missing @modelcontextprotocol/client declarations and dependent implicit-any; own readonly spawn argument corrected. R2 owns only inventory/checkpoint source and browser-safe SourcePort contracts; actual provider still exercised by Bun dynamic import, no stub/installation/pin change. Full provider typecheck remains unqualified in this environment.",
+    "DOM-01 query-boundary documents missing research/backend-map/route-registry.json blocking endpointCatalog tests; not repaired or promoted by this inventory",
+    "df8b9f7 object not present in root architecture/project mirror; exact root-qualified saved-MCP repository locator resolved successfully; no fetch or retry of native effects"
+  ],
+  "effects": {
+    "privateOriginalReads": 0,
+    "businessWrites": 0,
+    "nativeActivation": 0,
+    "gitMutation": 0,
+    "publication": 0
+  },
+  "passed": true
+}

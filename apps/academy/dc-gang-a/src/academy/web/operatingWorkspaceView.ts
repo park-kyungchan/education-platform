@@ -1,7 +1,7 @@
 import type {TrustedTeacherContext} from '../contracts/teacherOperations';
 import type {TeacherOperationalCase} from '../teacherWorkspace';
 import {workspaceEntityId,validateTeacherWorkspace} from '../teacherWorkspace';
-import {workspaceNode as node,workspaceDraft,workspaceControls,editorText,editorSelect,editorCheck} from './workspaceEditor';
+import {workspaceNode as node,workspaceDraft,workspaceDraftKey,workspaceControls,editorText,editorSelect,editorCheck} from './workspaceEditor';
 const categories=[['counseling','상담'],['cism','CISM 준비'],['makeup','보강'],['onboarding','신규 배정'],['withdrawal','퇴원'],['materials','교재·자료'],['forms','서류·신청서']] as const;
 const suggestions:Record<string,string[]>={counseling:['D-A03','D-A05'],cism:['D-A02'],makeup:['D-A07','D-A09','D-A10','D-A11'],onboarding:['D-A03','D-A04','D-A25'],withdrawal:['D-A23'],materials:['D-A15','D-A16','D-A17','D-A18'],forms:['D-A08','D-A24']};
 type Read=<T>(path:string)=>Promise<T>;type Write=<T>(path:string,input:unknown)=>Promise<T>;
@@ -17,7 +17,7 @@ export function operatingWorkspaceView(scope:Pick<TrustedTeacherContext,'ownerId
  };
  const renderCase=async(prior:any|null,category:string)=>{
   const initial:TeacherOperationalCase={kind:'teacher_operational_case',reportedAt:new Date().toISOString(),studentBinding:null,evidenceRevisionIds:[],caseId:crypto.randomUUID(),category:category as any,policyIds:suggestions[category]??[],policyRevision:catalog.revision,title:categories.find(([key])=>key===category)?.[1]??'내부 업무',state:'open',note:'',checklist:[],actualAssignmentConfirmed:false,roleBoundaryAcknowledged:false,completionNote:'',executed:false,transmitted:false,received:false,officialSaved:false};
-  const identity=prior?.entityId??workspaceEntityId(initial),state=workspaceDraft(JSON.stringify([scope,identity]),prior?.payload??initial,prior?.revisionId??null,prior?.sequence??0),value=state.value as TeacherOperationalCase;
+  const identity=prior?.entityId??workspaceEntityId(initial),state=workspaceDraft(workspaceDraftKey(scope,null,identity),prior?.payload??initial,prior?.revisionId??null,prior?.sequence??0),value=state.value as TeacherOperationalCase;
   const details=node('details');details.open=!prior;details.dataset.operationalCase=value.caseId;details.append(node('summary',value.title+' · '+value.state));const form=node('div');form.className='workspace-form';form.dataset.entityId=identity;details.append(form);list.append(details);
   const changed=()=>{state.dirty=true;};editorText(form,'내부 업무 제목',value.title,text=>{value.title=text;changed();},'case-title',1);
   const policyPicker=node('fieldset');policyPicker.append(node('legend','관련 정책 · 의무 자동 생성 아님'));const selected=new Set(value.policyIds);

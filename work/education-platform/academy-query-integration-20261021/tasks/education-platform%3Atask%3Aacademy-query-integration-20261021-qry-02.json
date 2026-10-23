@@ -1,0 +1,48 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "academy-query-integration-20261021",
+  "kind": "task",
+  "id": "education-platform:task:academy-query-integration-20261021-qry-02",
+  "logical": {
+    "domainId": "education",
+    "projectId": "education-platform",
+    "workId": "academy-query-integration-20261021",
+    "issueId": "QRY-ISSUE-20261021",
+    "specId": "QRY-SPEC",
+    "specRevision": 1,
+    "planId": "QRY-PLAN",
+    "planRevision": 1,
+    "taskId": "education-platform:task:academy-query-integration-20261021-qry-02"
+  },
+  "title": "Implement bounded maintained current-state query slice",
+  "state": {
+    "execution": "complete",
+    "verification": "passed",
+    "localAudit": "result-durable",
+    "sharedAudit": "unsynchronized",
+    "formalCompletion": "pending"
+  },
+  "executionClass": "source-only",
+  "dependsOn": [
+    {
+      "taskId": "education-platform:task:academy-query-integration-20261021-qry-01",
+      "milestone": "execution-and-verification"
+    },
+    {
+      "taskId": "education-platform:task:academy-query-integration-20261021-qry-boundary",
+      "milestone": "execution-and-verification"
+    },
+    {
+      "taskId": "education-platform:task:academy-query-integration-20261021-qry-02-qualify-dom-02",
+      "milestone": "execution-and-verification"
+    }
+  ],
+  "decisionIds": [],
+  "effectIds": [],
+  "verificationEvidenceIds": [
+    "education-platform:evidence:qry-02-verification-r1"
+  ],
+  "nextAction": "Bounded source and review005 F1/F2 fixes prepared. WAIT for Root exact successor commit, independent re-review, canonical snapshot+transition and downstream admission. Native use, CON512KiB packaging, shared delivery, teacher/formal acceptance remain separate."
+}

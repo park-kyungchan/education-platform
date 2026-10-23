@@ -1,0 +1,32 @@
+{
+  "schema": "academy.qry02-entrypoint.v1",
+  "taskId": "education-platform:task:academy-query-integration-20261021-qry-02",
+  "implementationBase": "29510c7ee9a5f8e6fc68bb6dbe5cf320bb66fc95",
+  "transitionBase": "959920b0cf90201f878e719c284fea417da8289e",
+  "sourceEvidence": "qry02-source-evidence.json",
+  "checks": "observations/QRY-02-CHECKS-R3.json",
+  "measurements": "observations/QRY-02-MEASUREMENTS-R3.json",
+  "resultInput": "work/education-platform/academy-query-integration-20261021/inputs/QRY-02-RESULT-R1.json",
+  "verificationInput": "work/education-platform/academy-query-integration-20261021/inputs/QRY-02-VERIFICATION-R1.json",
+  "resultEvidenceId": "education-platform:evidence:qry-02-result-observation-r1",
+  "verificationEvidenceId": "education-platform:evidence:qry-02-verification-r1",
+  "localRecordCheck": "observations/QRY-02-LOCAL-RECORD-CHECK-R1.json",
+  "canonicalCheckpoint": {
+    "auditorRoot": "/home/palantirkc/projects/agent-platform",
+    "pin": "712f90deac0676e662dc5d75d88d89f7b6773bfe",
+    "apis": [
+      "openGitWork",
+      "validateGitWorkRecords",
+      "validateGitWorkTransition",
+      "taskVerificationTarget"
+    ],
+    "candidateCommit": "pending root commit; no future self-commit embedded"
+  },
+  "state": "prepared-source-successor-awaiting-root-exact-commit-and-re-review",
+  "next": "READY_FOR_ROOT_SOURCE_CHECKPOINT; WAIT for Root exact successor review and canonical checkpoint. No downstream admission, native adoption or formal acceptance inferred.",
+  "sharedDelivery": false,
+  "nativeAdoption": false,
+  "teacherAcceptance": false,
+  "formalAcceptance": false,
+  "wholeWorkComplete": false
+}

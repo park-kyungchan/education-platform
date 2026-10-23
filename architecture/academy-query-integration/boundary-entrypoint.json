@@ -1,0 +1,25 @@
+{
+  "schema": "academy.qry-boundary-entrypoint.v1",
+  "taskId": "education-platform:task:academy-query-integration-20261021-qry-boundary",
+  "sourceBase": "b9c954cb8f5bf9b0748bb5634b4951c5954e9a6b",
+  "admissionInput": "QRY-BOUNDARY-ADMISSION-R1",
+  "sourceGraph": "observations/QRY-BOUNDARY-SOURCE-GRAPH-R1.json",
+  "focusedChecks": [
+    "observations/QRY-BOUNDARY-CHECKS-R1.json",
+    "observations/QRY-BOUNDARY-CHECKS-R2.json"
+  ],
+  "preservation": "observations/QRY-BOUNDARY-PRESERVATION-R1.json",
+  "localRecordCheck": "observations/QRY-BOUNDARY-LOCAL-RECORD-CHECK-R1.json",
+  "canonicalCheckpointCommand": "bun architecture/academy-query-integration/boundary-canonical-audit.ts <exact-root-committed-candidate>",
+  "resultInput": "work/education-platform/academy-query-integration-20261021/inputs/QRY-BOUNDARY-RESULT-R1.json",
+  "verificationInput": "work/education-platform/academy-query-integration-20261021/inputs/QRY-BOUNDARY-VERIFICATION-R1.json",
+  "resultEvidenceId": "education-platform:evidence:qry-boundary-result-observation-r1",
+  "verificationEvidenceId": "education-platform:evidence:qry-boundary-verification-r1",
+  "status": "prepared-source-extraction-awaiting-root-committed-checkpoint",
+  "nextSafeAction": "Root owns exact source commit and canonical snapshot+transition. WAIT; DOM-02 must receive root-qualified QRY-BOUNDARY; QRY-02 remains held on qualified DOM-02.",
+  "sourceDelivery": "prepared locally",
+  "sharedDelivery": false,
+  "nativeUse": "not qualified or activated",
+  "teacherAcceptance": "not established",
+  "formalAcceptance": false
+}
