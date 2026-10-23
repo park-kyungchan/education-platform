@@ -1,0 +1,129 @@
+{
+  "verifiedDate": "2026-10-13",
+  "status": "research_design_pilot_unvalidated",
+  "projectId": "460699133838258176",
+  "componentId": "460699302226984960",
+  "baseRevisionId": "460704849860894720",
+  "revisionId": "460722308961701888",
+  "counts": {
+    "types": 151,
+    "microActions": 1216,
+    "originalBaseExamples": 151,
+    "originalVariants": 19,
+    "byArea": {
+      "곱셈": {
+        "types": 38,
+        "actions": 270
+      },
+      "나눗셈": {
+        "types": 36,
+        "actions": 442
+      },
+      "원": {
+        "types": 31,
+        "actions": 164
+      },
+      "상위 연결": {
+        "types": 46,
+        "actions": 340
+      }
+    }
+  },
+  "checks": {
+    "exact151TypeIds": "passed",
+    "requiredAndNestedSchema": "passed",
+    "sourceIdsAndAttribution": "passed",
+    "actionPromptAnswerSync": "passed",
+    "actionIdsAndChunks": "passed",
+    "all151DesignsAnd1216ActionsDOMRender": "passed",
+    "hierarchyContextRegression": "passed",
+    "koreanFontMissingGlyphs": 0,
+    "originalMathDataSha256": "d04dc6687d5ff9ec001cda9e177263673f368160f1d7d5d00f7d6d5bb1a8fcee",
+    "independentContentAudit": "passed_with_research_limitations",
+    "remoteArchiveFileCount": 15,
+    "remoteBuild": "completed_final_spacing_polish",
+    "remoteStoredHomePreview": "rendered_korean",
+    "remoteSourceReadback": {
+      "status": "verified_for_pre_polish_research_revision",
+      "revisionId": "460708940037120000",
+      "evidence": "Official edit-session baseline download matched all 7 research data modules and original MathData byte-for-byte. UI source formatting was normalized by MagicPath. Final spacing-only archive was accepted and built."
+    },
+    "liveBrowserInteraction": {
+      "revisionId": "460708940037120000",
+      "status": "passed_for_selected_samples",
+      "samples": [
+        {
+          "typeId": "HM12-d2-T01",
+          "checks": [
+            "five-level selected path and siblings persist",
+            "research problem answer expands and collapses",
+            "action 1 to 2 changes selected action and expected understanding",
+            "IES and RJ06 links, inference labels and limits visible",
+            "grade3 deepening scope label visible"
+          ]
+        }
+      ],
+      "upperGradeSample": {
+        "typeId": "G5-FMULT-SD01-T01",
+        "checks": [
+          "grade4_6 scope badge",
+          "grade3 prerequisite warning"
+        ],
+        "status": "passed_on_prior_research_revision"
+      }
+    },
+    "finalSpacingRuntime": {
+      "status": "passed_for_observed_correction",
+      "revisionId": "460722308961701888",
+      "typeId": "G5-FMULT-SD01-T01",
+      "verifiedText": [
+        "28m 막대 전체에 전체 1을 붙인다.",
+        "3/7은 이 전체에 대한 분수이다."
+      ],
+      "interaction": "Action 2 selection highlight and detail changed normally",
+      "remainingEditorialNote": "일부 문장에 계산 하세요 같은 과분리 띄어쓰기가 남아 있다. 완전한 문장 교정은 보증하지 않는다."
+    }
+  },
+  "credits": {
+    "before": 20,
+    "after": 20,
+    "wallet": 0,
+    "subscription": null,
+    "generationCreditsConsumed": 0
+  },
+  "privacy": {
+    "studentDataUsed": false,
+    "newProjectCreated": false,
+    "publicShareCreated": false
+  },
+  "inputChecksums": {
+    "multiplication_designs.json": "88d3c74c8c1427c0a72dd95416faeb126d3de77e699293b8e630ede05d7ffd05",
+    "division_designs.json": "49b15fe9872521486fdda29f41431ca568f67fc020ce025311740f2246dfb29b",
+    "circle_designs.json": "1b4d3da7b54c32d904b0ec7a54ce02138214a44420bee1c963e1a67d9901590a",
+    "upper_designs.json": "9e813c32c18b8e062e791dd9fa1b51a5cae798901e0fd37ffaf5b024722a6261"
+  },
+  "submittedSourceChecksums": {
+    "src/App.tsx": "1c3805ca26344402d9ce89d10ecf02af811e1ab6b6a045c0a9bbde7bd1a864d6",
+    "src/index.css": "8bbb0e1c2e4839f4d3dbcc4f1f21f4526051ca3ce0727bca27e441c7b738dc84",
+    "src/components/generated/MathExplorer.css": "45c34202e524fee98f532a3aa44cffb4b0992a471751ddf26088d9facb2b5bbd",
+    "src/components/generated/GeneratedComponent.tsx": "55ab072b248f94fceb641f3fa6e947cab9dfb7b0bfaf9c5365acd2e346e44069",
+    "src/components/generated/ResearchDataPart05.ts": "b14821c2365f63852f7bae24cdb48f6b7c9f355ec493dfbcf8e3d1a6135e48da",
+    "src/components/generated/MathData.ts": "d04dc6687d5ff9ec001cda9e177263673f368160f1d7d5d00f7d6d5bb1a8fcee",
+    "src/components/generated/ResearchData.ts": "a8c06166aac597de16ab302c26c1644f864caca2f89eab6fab7bcbd13260910b",
+    "src/components/generated/ResearchProblem.tsx": "8abe828dda864b6cbfbc8d304d2a6beabcb5aff080fc7b69a42866dd192d9eef",
+    "src/components/generated/ResearchDataPart02.ts": "3ee42f522de048c4680d437304aea26037cf93146c5fa5d7b6f136582a5513cd",
+    "src/components/generated/ResearchDataPart04.ts": "a91b77d84afb4356e4dc3c35611455fc373d91101b244a7a8363e8f38609f44f",
+    "src/components/generated/ActionExplorer.tsx": "1e17493d1721c4ea895f7cb94d89f2d90f92ab167574cdbede5f79c37792fb9b",
+    "src/components/generated/ResearchDataPart06.ts": "f8ed0345659a762ce069adadf114fb0c7c5acb235b926826f2d836f41b5e8ed4",
+    "src/components/generated/ResearchDataPart07.ts": "71b143637ca7d529195c5a9039fbac5ec3df6f9235dfcd769efafd4d8905dcd3",
+    "src/components/generated/ResearchDataPart03.ts": "7e0b49e5dccd3985e3cdfc379d1b42e99f7e1aae3f5ca634996375837cd40926",
+    "src/components/generated/ResearchDataPart01.ts": "7e0ff596f18c63e51130016c8789176a73f1140bd1765bc26d35b0f9f8eb918f"
+  },
+  "limitations": [
+    "창작 연구 설계안이며 실제 학생 학습효과를 관찰하거나 실험한 결과가 아니다.",
+    "전수 DOM 검사는 내용 표시와 상호작용 상태를 확인하며 실제 수업 적합성을 자동으로 입증하지 않는다.",
+    "수학적·교수적 감사의 범위와 남은 한계는 independent_audit.json을 참조한다.",
+    "원격 브라우저에서는 선택한 대표 경로를 확인했다. 1,216개 전체 행동 수와 전수 렌더 결과는 로컬 검사 및 독립 원고 감사 수치다."
+  ],
+  "priorResearchRevisionId": "460708940037120000"
+}

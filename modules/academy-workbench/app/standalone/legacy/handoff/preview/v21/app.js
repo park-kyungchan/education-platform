@@ -1,0 +1,2053 @@
+(() => {
+  // src/student-event-view.ts
+  var stateLabels = { unknown: "미확인", planned: "예정", in_progress: "진행 중", complete: "완료 보고", incomplete: "미완료 보고", not_performed: "미실시 보고", conditional: "조건부 예정", cancelled: "취소", conflicted: "근거 상충" };
+  var assignmentLabels = { planned: "숙제 계획", teacher_confirmed: "숙제 확정", issued_user_report: "배정 완료 보고", cancelled: "취소", conflicted: "근거 상충" };
+  function string(value) {
+    if (typeof value !== "string" || value.length > 8000)
+      throw Error("invalid_student_event_text");
+    return value;
+  }
+  function validateStudentEventView(value, selectedStudentId) {
+    if (!value || value.schemaVersion !== "academy.student-current/1.0.0" || !["saved_snapshot", "durable_d1"].includes(value.sourceMode) || value.liveRefreshConnected !== false || value.persistentWriteAdapterConnected !== (value.sourceMode === "durable_d1") || value.automaticPageSiteSyncConnected !== false || value.executionAuthorityGranted !== false || value.verification?.eventBundleHashVerified !== true || value.verification?.modelContractHashVerified !== true || value.verification?.runtimeSchemaValidated !== true || !Array.isArray(value.studentIds) || new Set(value.studentIds).size !== value.studentIds.length)
+      throw Error("invalid_student_event_projection");
+    if (value.sourceMode === "durable_d1" && (!value.durableReceipt?.hashChainVerified || !value.durableReceipt?.readbackVerified || !Array.isArray(value.durableReceipt?.perStudent) || value.studentIds.some((id) => !value.durableReceipt.perStudent.some((r) => r.studentId === id && Number.isSafeInteger(r.revision) && r.revision > 0 && /^[a-f0-9]{64}$/.test(r.headHash)))))
+      throw Error("durable_receipt_required");
+    if (selectedStudentId && (value.studentIds.length !== 1 || value.studentIds[0] !== selectedStudentId))
+      throw Error("student_event_view_scope_mismatch");
+    for (const name of ["assignments", "checklist", "schedules", "references", "conflicts", "sourceEvidence", "attendance", "dateCohorts"])
+      if (!Array.isArray(value[name]) || value[name].length > 200)
+        throw Error("invalid_student_event_list");
+    for (const row of [...value.assignments, ...value.checklist, ...value.schedules, ...value.references, ...value.conflicts, ...value.sourceEvidence, ...value.attendance])
+      if (!value.studentIds.includes(row.studentId))
+        throw Error("student_event_row_scope_mismatch");
+    for (const a of value.assignments) {
+      if (!Object.hasOwn(assignmentLabels, a.assignmentStatus) || a.studentCompletion !== "unknown" || a.lmsEntry !== "unknown" || a.parentMessageSent !== "unknown")
+        throw Error("invalid_assignment_state");
+      string(a.label);
+      string(a.displayName);
+      if (a.effectiveDue !== null && a.effectiveDue?.date !== null && !/^\d{4}-\d\d-\d\d$/.test(a.effectiveDue?.date ?? ""))
+        throw Error("invalid_effective_due");
+    }
+    for (const row of value.checklist) {
+      if (!Object.hasOwn(stateLabels, row.state) || row.checked !== (row.state === "complete") || row.authorityGranted !== false)
+        throw Error("invalid_stage_state");
+      string(row.labelRaw);
+      string(row.displayName);
+    }
+    if (value.workflowCoverage !== undefined) {
+      if (!Array.isArray(value.workflowCoverage) || value.workflowCoverage.length > 200)
+        throw Error("invalid_workflow_coverage");
+      for (const a of value.workflowCoverage) {
+        if (!value.studentIds.includes(a.studentId) || a.definitionOnly !== true || a.createsAssignment !== false || !Array.isArray(a.checkpoints) || a.checkpoints.length > 30)
+          throw Error("invalid_workflow_coverage_scope");
+        string(a.label);
+        for (const c of a.checkpoints) {
+          if (!["required", "waived", "deferred", "unknown"].includes(c.applicability) || !(Object.hasOwn(stateLabels, c.state) || c.state === "not_started") || c.checked !== (c.state === "complete") || c.blocksNextStep !== false || c.authorityGranted !== false)
+            throw Error("invalid_workflow_checkpoint");
+          string(c.label);
+          string(c.reason);
+        }
+      }
+    }
+    for (const row of value.schedules)
+      if (!Array.isArray(row.claims) || !row.claims.length || row.claims.some((e) => e.kind !== "schedule_assertion" || e.actualOccurredAt !== null || !/^\d{4}-\d\d-\d\d$/.test(e.date)))
+        throw Error("invalid_planned_schedule");
+    for (const row of value.attendance)
+      if (!Array.isArray(row.claims) || !row.claims.length || row.claims.some((e) => e.kind !== "attendance_assertion" || e.regularMembershipChanged !== false || !/^\d{4}-\d\d-\d\d$/.test(e.date)))
+        throw Error("invalid_actual_attendance");
+    for (const c of value.dateCohorts)
+      if (!Array.isArray(c.members) || c.members.some((m) => !value.studentIds.includes(m.studentId)))
+        throw Error("cohort_student_scope_mismatch");
+    return value;
+  }
+  function mountStudentEventView(target, value, selectedStudentId) {
+    const data = validateStudentEventView(value, selectedStudentId), doc = target.ownerDocument, section = doc.createElement("section");
+    section.className = "student-event-view";
+    section.setAttribute("aria-label", "최신 보존 과제와 교사 보고");
+    const add = (parent, tag, text) => {
+      const n = doc.createElement(tag);
+      n.textContent = text;
+      parent.append(n);
+      return n;
+    };
+    add(section, "h2", "최신 과제·교사 보고");
+    if (data.sourceMode === "durable_d1")
+      add(section, "p", "영구 DB 원장 · " + data.durableReceipt.perStudent.map((r) => "revision " + r.revision).join(" / ") + " · 저장 근거 해시 검증 완료");
+    add(section, "p", "교사 보고와 저장 근거를 반영한 현재 요약입니다. 학원 실시간 조회·영구 자동 동기화는 연결되지 않았습니다.");
+    const assurance = (ids) => (ids ?? []).some((id) => data.sourceEvidence.some((e) => e.eventId === id && e.provenance?.kind === "user_report_relay")) ? " · 사용자 보고 / 독립 원문 미검증" : "";
+    const prefix = (r) => selectedStudentId ? "" : string(r.displayName) + " · ";
+    const assignments = doc.createElement("div");
+    assignments.className = "student-current-assignments";
+    add(assignments, "h3", "숙제와 기한");
+    if (!data.assignments.length)
+      add(assignments, "p", "새로 보존된 숙제 정보가 없습니다. 숙제가 없다는 뜻은 아닙니다.");
+    for (const a of data.assignments) {
+      const due = a.dueState === "conflicted" ? "기한 근거 상충" : a.effectiveDue?.date ?? "기한 미확정";
+      const row = add(assignments, "p", prefix(a) + string(a.label) + " · " + assignmentLabels[a.assignmentStatus] + " · " + due + " · 수행 미확인" + assurance(a.evidenceEventIds));
+      row.dataset.assignmentId = a.assignmentId;
+    }
+    section.append(assignments);
+    const stages = doc.createElement("details");
+    stages.open = true;
+    add(stages, "summary", "단계별 현재 상태");
+    for (const row of data.checklist) {
+      const p = add(stages, "p", prefix(row) + string(row.labelRaw) + " · " + stateLabels[row.state] + (row.ownerRaw ? " · 담당 " + string(row.ownerRaw) : "") + (row.conditionRaw ? " · " + string(row.conditionRaw) : "") + assurance(row.evidenceEventIds));
+      p.dataset.stage = row.stage;
+      p.dataset.stageState = row.state;
+    }
+    section.append(stages);
+    if (data.workflowCoverage?.length) {
+      const coverage = doc.createElement("details");
+      add(coverage, "summary", "전체 흐름 누락 점검");
+      add(coverage, "p", "배정된 과제의 확인 틀입니다. 적용 여부 미확인은 미숙제 판정이 아니며, 앞 단계가 미확인이어도 다음 활동을 차단하지 않습니다.");
+      for (const a of data.workflowCoverage) {
+        add(coverage, "h4", string(a.label));
+        for (const c of a.checkpoints) {
+          const applicability = { required: "해당 단계", waived: "정책상 면제", deferred: "사유 있는 보류", unknown: "적용 여부 미확인" }[c.applicability];
+          add(coverage, "p", string(c.label) + " · " + applicability + " · " + (c.state === "not_started" ? "미실시 근거 있음" : stateLabels[c.state]) + " · " + string(c.reason));
+        }
+      }
+      section.append(coverage);
+    }
+    if (data.schedules.length) {
+      const schedules = doc.createElement("details");
+      schedules.open = true;
+      add(schedules, "summary", "예정 출결·보강");
+      for (const row of data.schedules) {
+        const e = row.claims[0];
+        add(schedules, "p", prefix(row) + string(row.label) + " · " + e.date + " " + (e.startsLocal ?? "") + (e.endsLocal ? "~" + e.endsLocal : "") + (e.approximate ? "경" : "") + " · " + (row.status === "conflicted" ? "일정 근거 상충" : "예정, 실제 출결 미확인") + assurance(row.evidenceEventIds));
+      }
+      section.append(schedules);
+    }
+    if (data.attendance.length) {
+      const actual = doc.createElement("div");
+      add(actual, "h3", "실제 등원 보고");
+      for (const row of data.attendance) {
+        const e = row.claims[0];
+        add(actual, "p", prefix(row) + e.date + " " + e.session + "부 · " + e.arrivalLocal + " 등원 보고 · 정기 요일 변경 아님");
+      }
+      section.append(actual);
+    }
+    if (data.dateCohorts.length) {
+      const cohorts = doc.createElement("div");
+      add(cohorts, "h3", "날짜별 수업 대상과 실제 참석");
+      for (const c of data.dateCohorts) {
+        add(cohorts, "p", c.date + " " + c.session + "부: " + c.members.map((m) => string(m.displayName) + " (" + (m.actualAttendanceState === "arrived_user_report" ? m.actualArrival + " 실제 등원 보고" : m.actualAttendanceState === "conflicted" ? "출결 근거 상충" : "수업 대상·출석 미확인") + ")").join(" · "));
+      }
+      section.append(cohorts);
+    }
+    const source = doc.createElement("details");
+    add(source, "summary", "근거와 보존 범위");
+    add(source, "p", "교사 보고: " + (data.sourceFreshness?.latestSourceReportedAt ?? "미확인") + " · 관측: " + (data.sourceFreshness?.latestSourceObservedAt ?? "미확인"));
+    add(source, "p", "원문 이력은 보존하며 명시적 정정만 현재 상태에 적용합니다. 기록 수집·인쇄·배부·풀이·서버 입력·교사 검토는 별개입니다.");
+    const relayed = data.sourceEvidence.filter((e) => e.provenance?.kind === "user_report_relay");
+    if (relayed.length)
+      add(source, "p", "사용자 보고 " + relayed.length + "건 · 독립 원문 미검증 · 학원 서버 직접 확인 근거가 아닙니다.");
+    for (const ref of data.references) {
+      const e = ref.claims[0];
+      add(source, "p", prefix({ displayName: data.assignments.find((a) => a.studentId === e.studentId)?.displayName ?? "학생" }) + "참조 근거: " + string(e.scope.rawDescription));
+    }
+    if (data.retractedAttendance?.length)
+      add(source, "p", "철회된 출결 보고 " + data.retractedAttendance.length + "건은 현재 참석자에 반영하지 않았습니다.");
+    if (data.unresolvedAttendance?.length)
+      add(source, "p", "정규 일정과 다른 등원 보고 " + data.unresolvedAttendance.length + "건은 예외 참석 여부 확인 대기입니다.");
+    if (data.conflicts.length)
+      add(source, "p", "확인할 상충 근거 " + data.conflicts.length + "건");
+    section.append(source);
+    target.append(section);
+    return { dispose() {
+      section.remove();
+    } };
+  }
+
+  // src/desktop-stepper.ts
+  var stages = [
+    { id: "preview", label: "예습", eyebrow: "교재와 범위", title: "배정과 교재부터 확인해요", description: "등록된 교재와 보존된 과제를 살펴보세요. 예습 수행 여부는 아직 별도 확인이 필요합니다." },
+    { id: "practice", label: "풀이", eyebrow: "풀이와 채점", title: "풀이의 근거를 한곳에서", description: "저장된 채점 관찰을 원본 날짜와 함께 봅니다. 점수는 학습 완료 판정과 구분합니다." },
+    { id: "review", label: "오답", eyebrow: "오답과 클리닉", title: "오답 검토의 근거를 확인해요", description: "원문 오답과 유사 클리닉을 나눠 봅니다. 교사가 확인한 범위만 표시합니다." },
+    { id: "teacher", label: "교사 검토", eyebrow: "교사의 독립된 판단", title: "확인한 것과 남은 것을 구분해요", description: "저장된 교사 확인을 살펴보세요. 검토 완료, 인쇄, 배부는 각각 다른 상태입니다." }
+  ];
+  var text = (value, fallback = "미확인") => typeof value === "string" && value.length ? value : fallback;
+  var reviewText = (state) => state === "teacher_confirmed_complete" ? "교사 완료 확인" : "미확인";
+  function mountDesktopStepper(shell, root, extra, options) {
+    const doc = shell.ownerDocument, win = doc.defaultView;
+    const media = win?.matchMedia("(min-width: 1100px)");
+    let stage = "preview", active = false, disposed = false, search = "", page = 0;
+    let sidebar = null, workspace = null, drawers = null;
+    let pane = null, tabs = null, live = null;
+    const restores = [];
+    const make = (tag, className = "", value) => {
+      const node = doc.createElement(tag);
+      if (className)
+        node.className = className;
+      if (value !== undefined)
+        node.textContent = value;
+      return node;
+    };
+    const button = (label, cls, action) => {
+      const node = make("button", cls, label);
+      node.type = "button";
+      node.addEventListener("click", action);
+      return node;
+    };
+    const allRecords = Object.values(options.view.records);
+    const attempts = allRecords.filter((record) => record.attemptEvidence.length > 0);
+    const candidates = options.teacherOverlay?.candidates ?? [];
+    const relocate = (node, parent) => {
+      if (!node)
+        return;
+      const placeholder = doc.createComment("desktop-restore");
+      node.before(placeholder);
+      restores.push({ node, placeholder });
+      parent.append(node);
+    };
+    const jump = (target) => {
+      if (!target)
+        return;
+      for (let parent = target.parentElement;parent; parent = parent.parentElement)
+        if (parent.tagName === "DETAILS")
+          parent.open = true;
+      target.scrollIntoView?.({ behavior: win?.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
+      if (target.matches("button,a,summary,[tabindex]"))
+        target.focus({ preventScroll: true });
+    };
+    const openRecord = (id) => {
+      options.selectRecord(id);
+      const target = Array.from(root.querySelectorAll("[data-record-id]")).find((node) => node.dataset.recordId === id) ?? null;
+      jump(target);
+    };
+    function badge(label, kind = "unknown") {
+      return make("span", "desktop-badge desktop-badge--" + kind, label);
+    }
+    function item(label, sub, meta, action) {
+      const row = make("article", "desktop-evidence-item"), body = make("div", "desktop-item-copy");
+      body.append(make("h3", "", label), make("p", "", sub));
+      row.append(body, make("span", "desktop-item-meta", meta), button("근거 보기 ↗", "desktop-item-open", action));
+      return row;
+    }
+    function renderPane() {
+      if (!pane || !tabs)
+        return;
+      const selected = stages.find((entry) => entry.id === stage);
+      tabs.style.setProperty("--selected-step", String(stages.indexOf(selected)));
+      for (const tab of tabs.querySelectorAll("[data-desktop-stage]")) {
+        const selected = tab.dataset.desktopStage === stage;
+        tab.setAttribute("aria-selected", String(selected));
+        tab.tabIndex = selected ? 0 : -1;
+        tab.dataset.state = selected ? "active" : "idle";
+      }
+      pane.setAttribute("aria-labelledby", "desktop-step-" + stage);
+      pane.dataset.stage = stage;
+      pane.replaceChildren();
+      const heading = make("div", "desktop-pane-heading"), copy = make("div");
+      copy.append(make("p", "desktop-eyebrow", selected.eyebrow), make("h2", "", selected.title), make("p", "desktop-pane-description", selected.description));
+      heading.append(copy, badge("저장 근거 탐색"));
+      const grid = make("div", "desktop-pane-grid"), main = make("section", "desktop-stage-evidence"), context = make("aside", "desktop-stage-context");
+      if (stage === "preview") {
+        main.append(make("div", "desktop-section-heading", "등록 교재"));
+        const books = make("div", "desktop-book-grid");
+        for (const [index, book] of options.view.books.entries()) {
+          const card = button("", "desktop-book-card", () => jump(root.querySelector("#c2-book-" + index)));
+          const cover = make("span", "desktop-book-cover"), spine = make("span", "desktop-book-spine", String(index + 1).padStart(2, "0"));
+          cover.append(spine, make("span", "desktop-book-cover-label", text(book.raw.bookCode, "교재")));
+          const copy = make("span", "desktop-book-copy");
+          copy.append(make("strong", "", text(book.label)), make("span", "", `판본 ${book.edition ?? "미확인"} · 저장 목차`), make("span", "desktop-card-link", "교재 근거 열기 ↗"));
+          card.append(cover, copy);
+          books.append(card);
+        }
+        if (!options.view.books.length)
+          books.append(make("p", "desktop-empty", "등록 교재 근거가 공급되지 않았습니다. 미배정을 뜻하지 않습니다."));
+        main.append(books);
+        const saved = make("div", "desktop-saved-prompt");
+        saved.append(make("div", "", "오늘 과제와 교사 보고"), make("p", "", "최근 보존된 계획과 과제를 확인할 수 있습니다. 실제 수행과 완료 여부는 각 원문을 기준으로 봅니다."), button("저장 요약 확인", "desktop-primary", () => {
+          const details = shell.querySelector(".legacy-today-detail");
+          if (details)
+            details.open = true;
+          jump(details?.querySelector("[data-today-summary]") ?? null);
+        }));
+        main.append(saved);
+        context.append(make("p", "desktop-context-kicker", "이 단계의 확인 범위"), make("h3", "", "예습 수행은 미확인"), make("p", "", "교재 등록과 예습 완료는 별개입니다. 정확한 과제 범위와 수행 근거를 먼저 확인하세요."), make("div", "desktop-context-rule"), make("span", "desktop-context-label", "기준 자료"), make("strong", "", "선택 학생의 저장본"), make("p", "desktop-small", "학원 실시간 재조회 없음"));
+      } else {
+        let renderList = function() {
+          list.replaceChildren();
+          pagination.replaceChildren();
+          const needle = search.trim().toLocaleLowerCase();
+          const records = stage === "practice" ? attempts : candidates;
+          const filtered = records.filter((record) => {
+            const source = stage === "practice" ? record : options.view.records[record.sourceRecordKey];
+            return !needle || [source?.bookDisplayName, source?.unitTitle, source?.sectionDisplayLabel, source?.catalogCode, record.appCatalogCode].filter(Boolean).join(" ").toLocaleLowerCase().includes(needle);
+          });
+          const limit = 5, start = page * limit, visible = filtered.slice(start, start + limit);
+          for (const entry of visible) {
+            if (stage === "practice") {
+              const scores = entry.attemptEvidence.filter((attempt) => typeof attempt.score === "number").map((attempt) => `${attempt.score}점`).join(" / ") || "점수 미제공";
+              const row = item(text(entry.sectionDisplayLabel), `${text(entry.unitTitle)} · ${text(entry.catalogCode, "코드 미관찰")}`, scores, () => openRecord(entry.recordId));
+              row.dataset.desktopRecordId = entry.recordId;
+              row.querySelector(".desktop-item-copy").append(make("small", "", entry.attemptEvidence.map((attempt) => text(attempt.dateRaw, "날짜 미제공")).join(" / ")));
+              list.append(row);
+            } else {
+              const source = options.view.records[entry.sourceRecordKey], row = item(text(source?.sectionDisplayLabel, entry.appCatalogCode), `${text(source?.unitTitle)} · ${entry.appCatalogCode}`, `${entry.score}점 · ${entry.attemptRawDate}`, () => openRecord(entry.sourceRecordKey));
+              row.dataset.desktopRecordId = entry.sourceRecordKey;
+              const states = make("div", "desktop-review-states");
+              states.append(badge("원문 오답 · " + reviewText(entry.originalWrongReview), entry.originalWrongReview === "teacher_confirmed_complete" ? "verified" : "unknown"), badge("유사 클리닉 · " + reviewText(entry.similarClinicReview), entry.similarClinicReview === "teacher_confirmed_complete" ? "verified" : "unknown"));
+              row.querySelector(".desktop-item-copy").append(states);
+              if (stage === "teacher") {
+                const meta = make("p", "desktop-review-provenance", `사용자 확인 근거 · 인쇄 ${entry.printConfirmation ? "사용자 완료 확인" : "미확인"} · 배부 ${entry.deliveryPlan ? "예정, 완료 미확인" : "미확인"}`);
+                row.querySelector(".desktop-item-copy").append(meta);
+              }
+              list.append(row);
+            }
+          }
+          if (!filtered.length)
+            list.append(make("div", "desktop-empty", needle ? "검색어와 일치하는 저장 근거가 없습니다." : stage === "practice" ? "이 저장본에 채점 관찰이 연결된 기록이 없습니다. 실제 미수행을 뜻하지 않습니다." : "이 학생에게 연결된 별도 교사 검토 근거가 없습니다. 검토 미실시를 뜻하지 않습니다."));
+          const previous = button("← 이전", "desktop-secondary", () => {
+            page--;
+            renderList();
+            list.focus({ preventScroll: true });
+          }), next = button("다음 →", "desktop-secondary", () => {
+            page++;
+            renderList();
+            list.focus({ preventScroll: true });
+          });
+          previous.disabled = page === 0;
+          next.disabled = start + limit >= filtered.length;
+          pagination.append(make("span", "", `${filtered.length ? start + 1 : 0}–${Math.min(start + limit, filtered.length)} / 저장 근거 ${filtered.length}건`), previous, next);
+        };
+        const title = stage === "practice" ? "채점 근거가 있는 기록" : stage === "review" ? "오답·클리닉 검토 근거" : "교사 확인 원문";
+        const listHeading = make("div", "desktop-list-heading");
+        listHeading.append(make("h3", "", title));
+        const filter = make("input", "desktop-search");
+        filter.type = "search";
+        filter.placeholder = "교재 · 단원 · 코드 찾기";
+        filter.setAttribute("aria-label", "이 단계의 저장 근거 검색");
+        filter.value = search;
+        filter.addEventListener("input", () => {
+          search = filter.value;
+          page = 0;
+          renderList();
+        });
+        listHeading.append(filter);
+        main.append(listHeading);
+        const list = make("div", "desktop-evidence-list"), pagination = make("div", "desktop-pagination");
+        list.tabIndex = -1;
+        list.setAttribute("role", "region");
+        list.setAttribute("aria-label", title + " 목록");
+        main.append(list, pagination);
+        renderList();
+        context.append(make("p", "desktop-context-kicker", "판단의 기준"), make("h3", "", stage === "practice" ? "점수와 완료는 별개" : stage === "review" ? "두 검토 경로를 구분" : "완료 근거는 원문대로"), make("p", "", stage === "practice" ? "채점 점수와 날짜는 저장 관찰값입니다. 100점이어도 교사 완료 판정을 대신하지 않습니다." : stage === "review" ? "원문 오답과 유사 클리닉의 교사 확인을 각각 표시합니다. 인쇄 또는 배부 계획을 검토 완료로 바꾸지 않습니다." : "사용자가 확인한 검토 범위만 표시합니다. 원문 날짜, 기록 시각, 완료 시각을 서로 대신하지 않습니다."), make("div", "desktop-context-rule"), make("span", "desktop-context-label", "현재 탐색"), make("strong", "", selected.label), make("p", "desktop-small", "이 단계 선택은 완료 기록을 만들지 않습니다."));
+        context.append(button("전체 교재 근거 보기 ↗", "desktop-text-button", () => jump(root.querySelector("#c2-books"))));
+      }
+      grid.append(main, context);
+      pane.append(heading, grid);
+      const footer = make("div", "desktop-stepper-footer");
+      footer.append(make("p", "", "단계는 탐색용입니다. 학습 상태와 완료 근거는 원문에 따릅니다."));
+      const index = stages.findIndex((entry) => entry.id === stage);
+      const controls = make("div", "desktop-stepper-actions");
+      if (index > 0)
+        controls.append(button("← " + stages[index - 1].label, "desktop-secondary", () => selectStage(stages[index - 1].id, true)));
+      if (index < stages.length - 1)
+        controls.append(button(stages[index + 1].label + " 살펴보기 →", "desktop-primary", () => selectStage(stages[index + 1].id, true)));
+      else
+        controls.append(button("예습으로 돌아가기 ↗", "desktop-secondary", () => selectStage("preview", true)));
+      footer.append(controls);
+      pane.append(footer);
+    }
+    function selectStage(next, focus = false) {
+      if (!active || !stages.some((entry) => entry.id === next))
+        return;
+      stage = next;
+      search = "";
+      page = 0;
+      renderPane();
+      if (live)
+        live.textContent = stages.find((entry) => entry.id === stage).label + " 근거 탐색. 학습 상태는 변경되지 않았습니다.";
+      if (focus)
+        tabs?.querySelector('[aria-selected="true"]')?.focus();
+    }
+    function activate() {
+      if (active || disposed)
+        return;
+      const inner = shell.querySelector(".shell-inner");
+      if (!inner)
+        return;
+      active = true;
+      doc.body.classList.add("desktop-academy");
+      root.dataset.desktopEvidenceRail = "";
+      extra.dataset.desktopEvidenceRail = "";
+      sidebar = make("aside", "desktop-sidebar");
+      sidebar.setAttribute("aria-label", "학생 작업 공간");
+      const brand = make("div", "desktop-brand");
+      brand.append(make("span", "desktop-brand-symbol", "k"), make("span", "", "학습 워크스페이스"));
+      sidebar.append(brand, make("p", "desktop-sidebar-label", "학생"));
+      relocate(inner.querySelector(".student-nav"), sidebar);
+      const sidebarFoot = make("div", "desktop-sidebar-footer");
+      sidebarFoot.append(make("span", "desktop-private-dot"), make("span", "", "본인 전용 · 읽기 화면"));
+      sidebar.append(sidebarFoot);
+      const originalTitle = inner.querySelector(".app-title");
+      if (originalTitle) {
+        relocate(originalTitle, sidebar);
+        originalTitle.classList.add("desktop-original-title");
+      }
+      workspace = make("section", "desktop-workspace");
+      workspace.dataset.desktopStepper = "";
+      workspace.setAttribute("aria-label", "학습 단계별 근거 탐색");
+      const topbar = make("div", "desktop-topbar");
+      topbar.append(make("p", "", "학생 학습 / " + options.studentName), badge("저장 자료 · 실시간 미연결"));
+      const heading = make("div", "desktop-workspace-heading"), copy = make("div");
+      copy.append(make("p", "desktop-eyebrow", "LEARNING WORKSPACE"), make("h1", "", options.studentName + "의 학습 확인"), make("p", "", "필요한 단계에 집중하고, 판단은 근거와 함께."));
+      const source = make("a", "desktop-source-link", "학생 원본 ↗");
+      source.href = "https://chatgpt.com/space/" + encodeURIComponent(options.sourcePageId);
+      source.target = "_blank";
+      source.rel = "noopener noreferrer";
+      heading.append(copy, source);
+      const frame = make("div", "desktop-stepper-frame");
+      tabs = make("div", "desktop-stepper-tabs");
+      tabs.setAttribute("role", "tablist");
+      tabs.setAttribute("aria-label", "학습 단계 탐색, 완료 상태 아님");
+      tabs.append(make("span", "desktop-step-glider"));
+      stages.forEach((entry, index) => {
+        const tab = button("", "desktop-step", () => selectStage(entry.id));
+        tab.id = "desktop-step-" + entry.id;
+        tab.dataset.desktopStage = entry.id;
+        tab.setAttribute("role", "tab");
+        tab.setAttribute("aria-controls", "desktop-stage-panel");
+        tab.append(make("span", "desktop-step-number", String(index + 1)), make("span", "desktop-step-label", entry.label));
+        tab.addEventListener("keydown", (event) => {
+          let target = index;
+          if (event.key === "ArrowRight")
+            target = (index + 1) % stages.length;
+          else if (event.key === "ArrowLeft")
+            target = (index + stages.length - 1) % stages.length;
+          else if (event.key === "Home")
+            target = 0;
+          else if (event.key === "End")
+            target = stages.length - 1;
+          else
+            return;
+          event.preventDefault();
+          selectStage(stages[target].id, true);
+        });
+        tabs.append(tab);
+      });
+      pane = make("div", "desktop-stepper-pane");
+      pane.id = "desktop-stage-panel";
+      pane.setAttribute("role", "tabpanel");
+      pane.tabIndex = 0;
+      live = make("div", "desktop-sr-only");
+      live.setAttribute("role", "status");
+      live.setAttribute("aria-live", "polite");
+      frame.append(tabs, pane);
+      workspace.append(topbar, heading);
+      relocate(inner.querySelector(".student-event-view"), workspace);
+      workspace.append(frame, live);
+      drawers = make("div", "desktop-context-drawers");
+      const work = make("details", "desktop-drawer"), provenance = make("details", "desktop-drawer");
+      work.append(make("summary", "", "수업 배정 · 업무 기준"));
+      provenance.append(make("summary", "", "자료 범위 · 조회 시각 · 연결 상태"));
+      relocate(inner.querySelector(".workflow-view"), work);
+      relocate(inner.querySelector(".refresh-state"), provenance);
+      relocate(inner.querySelector(".coverage-details"), provenance);
+      relocate(inner.querySelector(".refresh-readiness"), provenance);
+      drawers.append(work);
+      relocate(inner.querySelector(".legacy-today-detail"), drawers);
+      drawers.append(provenance);
+      inner.prepend(sidebar, workspace);
+      inner.append(drawers);
+      renderPane();
+    }
+    function deactivate() {
+      if (!active)
+        return;
+      const focusWasInDesktop = !!(workspace?.contains(doc.activeElement) || sidebar?.contains(doc.activeElement));
+      active = false;
+      for (const { node, placeholder } of restores.splice(0)) {
+        if (placeholder.parentNode)
+          placeholder.replaceWith(node);
+        else
+          node.remove();
+        node.classList.remove("desktop-original-title");
+      }
+      sidebar?.remove();
+      workspace?.remove();
+      drawers?.remove();
+      sidebar = workspace = drawers = pane = tabs = live = null;
+      doc.body.classList.remove("desktop-academy");
+      delete root.dataset.desktopEvidenceRail;
+      delete extra.dataset.desktopEvidenceRail;
+      if (focusWasInDesktop)
+        shell.querySelector('[data-student-id][aria-pressed="true"]')?.focus({ preventScroll: true });
+    }
+    const onChange = () => {
+      if (media?.matches)
+        activate();
+      else
+        deactivate();
+    };
+    media?.addEventListener("change", onChange);
+    onChange();
+    return { selectStage, getStage: () => stage, get active() {
+      return active;
+    }, dispose() {
+      if (disposed)
+        return;
+      disposed = true;
+      media?.removeEventListener("change", onChange);
+      deactivate();
+    } };
+  }
+
+  // src/refresh-readiness.ts
+  function renderRefreshReadiness(r, target) {
+    const doc = target.ownerDocument, section = doc.createElement("section");
+    section.className = "refresh-readiness";
+    section.setAttribute("data-refresh-student-id", r.studentId);
+    const title = doc.createElement("p");
+    title.textContent = "학생 선택은 저장 근거 보기입니다. 학원 서버 새 조회 완료를 뜻하지 않습니다.";
+    const button = doc.createElement("button");
+    button.type = "button";
+    button.disabled = true;
+    button.setAttribute("aria-disabled", "true");
+    button.setAttribute("data-student-refresh-unavailable", r.studentId);
+    button.textContent = "이 학생 학원 정보 갱신 · 현재 연결 준비 중";
+    const reason = doc.createElement("p");
+    reason.className = "refresh-meta";
+    reason.textContent = "실제 조회 연결 없음 · backend 시도 0 · 마지막 성공 갱신 미제공 · 현재 저장 자료 기준시각 미제공";
+    const details = doc.createElement("details");
+    details.append(Object.assign(doc.createElement("summary"), { textContent: `관리 영역 ${r.areas.length}개 · 연결 단계와 미확인 범위` }));
+    for (const a of r.areas) {
+      const p = doc.createElement("p");
+      p.className = "refresh-meta";
+      p.setAttribute("data-refresh-area-id", a.areaId);
+      p.textContent = `${a.label}: ${a.stages.menu_observed ? "메뉴 관찰" : "메뉴 미확인"} · ${a.stages.request_captured ? "요청 캡처" : "요청 미확인"} · ${a.stages.offline_parser_verified ? "합성 parser 검증" : "parser 미검증"} · 인증/실제조회/반영 미검증`;
+      details.append(p);
+    }
+    section.append(title, button, reason, details);
+    target.append(section);
+    return { dispose() {
+      section.remove();
+    } };
+  }
+
+  // src/academy-read-model.ts
+  var ACADEMY_TIMEZONE = "Asia/Seoul";
+  function academyDate(now = new Date) {
+    return new Intl.DateTimeFormat("en-CA", { timeZone: ACADEMY_TIMEZONE, year: "numeric", month: "2-digit", day: "2-digit" }).format(now);
+  }
+
+  // src/today-view.ts
+  function reportText(event, studentId, hasLaterPlan) {
+    if (!event || event.source !== "user_report" || event.studentId !== studentId || !event.payload || typeof event.payload !== "object")
+      throw Error("invalid_teacher_report");
+    const p = event.payload;
+    const text = (v) => {
+      if (typeof v !== "string" || !v.length || v.length > 2000)
+        throw Error("invalid_report_text");
+      return v;
+    };
+    const count = (v) => {
+      if (!Number.isSafeInteger(v) || v < 0 || v > 1000)
+        throw Error("invalid_report_count");
+      return v;
+    };
+    if (event.kind === "assignment_due_update") {
+      if (typeof p.dueDate !== "string" || !/^\d{4}-\d\d-\d\d$/.test(p.dueDate) || !p.makeup || p.makeup.status !== "confirmed_existing_schedule")
+        throw Error("invalid_due_update");
+      return "숙제 기한 변경: " + text(p.dueDate) + " " + text(p.deadlineContext) + " · 보강 " + text(p.makeup.start) + "~" + text(p.makeup.end) + " " + text(p.makeup.teacher) + " 선생님 · 다음 정규 출석 " + text(p.nextRegularAttendanceDate);
+    }
+    if (event.kind === "care_update") {
+      const checklist = event.effectiveChecklist ?? p.checklist;
+      if (!Array.isArray(checklist) || checklist.length > 30)
+        throw Error("invalid_checklist");
+      const labels = { pending: "완료 미확인", reported_missing: "미완료 사용자 확인", assigned: "숙제 배정", planned: "예정", completed_user_report: "사용자 완료 확인" };
+      return checklist.map((c) => {
+        if (!c || !Object.hasOwn(labels, c.status) || typeof c.dueDate !== "string" || !/^\d{4}-\d\d-\d\d$/.test(c.dueDate) || c.completedAt !== null || c.evidence !== "user_report")
+          throw Error("invalid_checklist_item");
+        return text(c.label) + " [" + labels[c.status] + "] · " + c.dueDate + " · " + text(c.detail);
+      }).join(`
+`);
+    }
+    if (event.kind === "class_activity") {
+      if (p.status !== "in_progress" || p.distribution !== "planned")
+        throw Error("invalid_activity_state");
+      return (hasLaterPlan ? "이전 교사 보고: " : "교사 보고: ") + text(p.activity) + " 진행 중 · " + (hasLaterPlan ? "종료 여부 미확인" : text(p.afterwards) + " 예정");
+    }
+    if (event.kind === "instruction_update") {
+      if (p.planStatus !== "planned" || p.gradingCompletedAt !== null || p.clinicDistribution !== "deferred_after_textbook_work" || !Array.isArray(p.pages) || p.pages.length !== 2 || !p.pages.every((x) => Number.isSafeInteger(x) && x > 0 && x < 1e4) || !Array.isArray(p.priorityPlan) || p.priorityPlan.length < 1 || p.priorityPlan.length > 5)
+        throw Error("invalid_instruction_plan");
+      return "최신 교사 계획: " + text(p.bookRaw) + " p." + p.pages.join("~") + " " + text(p.sectionRaw) + " · " + p.priorityPlan.map(text).join(" → ") + " 우선 · 클리닉 배부 후순위 · 완료 미확인";
+    }
+    if (event.kind === "printing") {
+      if (p.distribution !== "planned")
+        throw Error("invalid_print_plan");
+      return "교사 보고: 프린트 헤더 " + count(p.printedHeaderCount) + "건 인쇄 · 당시 배부 예정";
+    }
+    if (event.kind === "video_plan") {
+      if (p.status !== "planned" || p.filmedAt !== null || p.uploadedAt !== null)
+        throw Error("invalid_video_plan");
+      return "교사 보고: 미업로드 영상 " + count(p.missingUploadCount) + "개 · " + text(p.plan);
+    }
+    return "";
+  }
+  function mountTodayPreparation(target, onUnauthorized) {
+    const document2 = target.ownerDocument, section = document2.createElement("section");
+    section.className = "today-preparation";
+    section.setAttribute("aria-label", "오늘 수업 준비");
+    const title = document2.createElement("h2");
+    title.textContent = "오늘 수업 준비";
+    const date = document2.createElement("p");
+    date.className = "today-date";
+    date.textContent = academyDate() + " · 한국 시간";
+    const status = document2.createElement("p");
+    status.setAttribute("role", "status");
+    status.textContent = "오늘 학원 자료 미조회 · 확인된 오늘 할 일 수는 미확인입니다.";
+    const sessions = document2.createElement("div");
+    sessions.className = "today-sessions";
+    for (const label of ["1부", "2부"]) {
+      const row = document2.createElement("p");
+      row.textContent = label + " · 학생 배정·숙제·검토 범위 미확인";
+      sessions.append(row);
+    }
+    const button = document2.createElement("button");
+    button.type = "button";
+    button.textContent = "오늘 준비 요약 확인";
+    button.setAttribute("data-today-summary", "");
+    const note = document2.createElement("p");
+    note.className = "today-note";
+    note.textContent = "저장자료에서 확인 가능한 범위를 봅니다. 빈 목록은 할 일이 없다는 뜻이 아닙니다. 학생별 과거 근거는 아래 레일에서 확인하세요.";
+    const detail = document2.createElement("p");
+    detail.className = "today-note";
+    detail.textContent = "과거: 저장 근거 · 미확인: 오늘 DailyRecord와 1·2부 배정 · 상충: 오늘 자료 대조 전";
+    section.append(title, date, status, sessions, button, note, detail);
+    target.prepend(section);
+    let currentEventHandle = null;
+    let active = true, request = null;
+    const click = async () => {
+      request?.abort();
+      request = new AbortController;
+      button.disabled = true;
+      status.textContent = "보호된 저장 요약을 확인하고 있습니다.";
+      try {
+        const response = await fetch("/api/academy/today", { method: "POST", credentials: "same-origin", redirect: "manual", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ date: academyDate(), session: "all" }), signal: request.signal });
+        if (!active)
+          return;
+        if (response.status === 401 || response.status === 403 || response.type === "opaqueredirect" || response.redirected || response.status >= 300 && response.status < 400 || !response.headers.get("content-type")?.includes("application/json")) {
+          onUnauthorized();
+          return;
+        }
+        const data = await response.json();
+        if (!active)
+          return;
+        const result = data.result;
+        if (!response.ok || data.status !== "success" || result?.domain !== "academy" || result?.kind !== "daily_preparation" || result?.sourceMode !== "saved_snapshot" || result?.liveRefreshConnected !== false || !["unverified", "preserved_partial_evidence"].includes(result?.current?.state))
+          throw Error("verified_today_summary_required");
+        currentEventHandle?.dispose();
+        currentEventHandle = null;
+        if (result.studentEventOverlay)
+          currentEventHandle = mountStudentEventView(section, result.studentEventOverlay);
+        date.textContent = result.requestedDate + " · 한국 시간";
+        if (result.current.state === "preserved_partial_evidence") {
+          const tasks = result.current.tasks;
+          if (result.requestedDate !== academyDate() || !Array.isArray(tasks) || tasks.length !== result.taskCount || !tasks.length || tasks.some((t) => typeof t.studentId !== "string" || typeof t.displayName !== "string" || ![1, 2].includes(t.session) || t.assignment?.dueDate !== result.requestedDate || typeof t.assignment?.text !== "string" || t.completion !== "unknown" || t.teacherDecision !== null || t.bookId !== null || t.sectionId !== null) || result.historyImport?.coverage !== "partial" || result.historyImport?.liveRefreshConnected !== false)
+            throw Error("invalid_preserved_today");
+          const reportTexts = new Map(tasks.map((task) => {
+            const reports = task.relatedUserReports ?? [];
+            if (!Array.isArray(reports) || reports.length > 100)
+              throw Error("invalid_report_list");
+            return [task.studentId, reports.map((e) => reportText(e, task.studentId, reports.some((x) => x.kind === "instruction_update"))).filter(Boolean)];
+          }));
+          sessions.replaceChildren();
+          for (const part of [1, 2]) {
+            const heading = document2.createElement("h3");
+            heading.textContent = part + "부";
+            sessions.append(heading);
+            for (const task of tasks.filter((t) => t.session === part)) {
+              const row = document2.createElement("p");
+              row.textContent = task.displayName + " · " + task.assignment.text + " · 숙제 완료/교사 확인 미확인";
+              sessions.append(row);
+              for (const text of reportTexts.get(task.studentId) ?? []) {
+                const item = document2.createElement("p");
+                item.className = "today-note";
+                item.textContent = text;
+                item.style.whiteSpace = "pre-line";
+                sessions.append(item);
+              }
+            }
+          }
+          status.textContent = "보존된 오늘 과제 " + tasks.length + "건 · 실시간 재조회 아님";
+          detail.textContent = "조회 근거와 교사 보고를 구분했습니다. 교재·소단원 ID 연결은 확인 중이며, 반 배정은 출석 확인을 뜻하지 않습니다. 최신 관측: " + (result.historyImport.latestObservedAt ?? "미확인");
+          return;
+        }
+        sessions.replaceChildren();
+        for (const label of ["1부", "2부"]) {
+          const row = document2.createElement("p");
+          row.textContent = label + " · 학생 배정·숙제·검토 범위 미확인";
+          sessions.append(row);
+        }
+        status.textContent = "저장 요약 확인 · 오늘 학원 자료는 아직 미조회입니다.";
+        detail.textContent = "현재 할 일: 미확인 · 과거: 학생별 저장 근거 · 미확인: 오늘 DailyRecord와 반 배정 · 상충: 오늘 자료 대조 전";
+      } catch (error) {
+        if (active && !(error instanceof Error && error.name === "AbortError"))
+          status.textContent = "저장 요약을 확인하지 못했습니다. 오늘 자료는 미확인 상태로 유지합니다.";
+      } finally {
+        if (active)
+          button.disabled = false;
+      }
+    };
+    button.addEventListener("click", click);
+    return { dispose() {
+      active = false;
+      currentEventHandle?.dispose();
+      request?.abort();
+      button.removeEventListener("click", click);
+      section.remove();
+    } };
+  }
+
+  // src/workflow-operation.ts
+  var WORK_CONTEXT_TOOL = {
+    name: "academy_work_context",
+    description: "Read a bounded academy workflow-policy reference page or date/session preparation for explicitly user-confirmed members. Policy steps are never student tasks. Unloaded assignments, execution attempts, current decisions, historical membership and attendance remain unknown. Read only; no live query or writes.",
+    inputSchema: { type: "object", properties: { view: { type: "string", enum: ["policy-index", "preparation"] }, domain: { type: "string", enum: ["administration", "middle_school", "elementary_school", "teaching_coaching"] }, offset: { type: "integer", minimum: 0, maximum: 1e4 }, limit: { type: "integer", minimum: 1, maximum: 20 }, date: { type: "string", pattern: "^\\d{4}-\\d{2}-\\d{2}$" }, session: { oneOf: [{ type: "string", const: "all" }, { type: "integer", minimum: 1, maximum: Number.MAX_SAFE_INTEGER }] }, policyIds: { type: "array", items: { type: "string", minLength: 1, maxLength: 160, pattern: "^[A-Za-z0-9][A-Za-z0-9._:-]*$" }, maxItems: 12, uniqueItems: true }, expectedCatalogRevision: { type: "string", pattern: "^[a-f0-9]{64}$" }, expectedMembershipRevision: { type: "string", pattern: "^[a-f0-9]{64}$" }, expectedRosterRevision: { type: "string", minLength: 1, maxLength: 512 } }, required: ["view"], additionalProperties: false },
+    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false }
+  };
+
+  // src/workflow-view.ts
+  var domains = { administration: "학원 운영", middle_school: "중등", elementary_school: "초등", teaching_coaching: "수업·코칭" };
+  var knowledge = { user_confirmed: "사용자 확인", source_described: "문서 기준", observed_structure: "관찰된 구조", recommendation: "제안", unknown: "미확인" };
+  var lifecycle = { active: "현행 기준", historical: "과거 기준", superseded: "이전 기준", expired: "만료", deferred: "보류" };
+  var relationLabels = { precedes: "선행 순서", depends_on: "필요한 선행 기준", performed_by_role: "담당", produces_artifact: "결과물", reported_to_role: "보고 대상", uses_reference: "참조 자료", uses_concept: "연결 개념", related_policy: "관련 기준" };
+  var object = (v) => v !== null && typeof v === "object" && !Array.isArray(v);
+  var hash = (v) => typeof v === "string" && /^[a-f0-9]{64}$/.test(v);
+  var validDate = (v) => typeof v === "string" && /^\d{4}-\d{2}-\d{2}$/.test(v) && Number.isFinite(Date.parse(v + "T00:00:00Z")) && new Date(v + "T00:00:00Z").toISOString().slice(0, 10) === v;
+  var positive = (v) => typeof v === "number" && Number.isSafeInteger(v) && v > 0;
+  var shown = (v) => typeof v === "string" && v ? v : "미확인";
+  function parseInput(raw) {
+    if (!object(raw))
+      throw Error("invalid_work_context_arguments");
+    const input = { ...raw, ...raw.view === "preparation" && !("session" in raw) ? { session: "all" } : {} };
+    if (input.view === "policy-index") {
+      if (Object.keys(input).some((key) => !["view", "domain", "offset", "limit"].includes(key)) || "domain" in input && !Object.hasOwn(domains, input.domain) || "offset" in input && (!Number.isSafeInteger(input.offset) || input.offset < 0 || input.offset > 1e4) || "limit" in input && (!Number.isSafeInteger(input.limit) || input.limit < 1 || input.limit > 20))
+        throw Error("invalid_policy_index_arguments");
+    } else if (input.view === "preparation") {
+      if (Object.keys(input).some((key) => !["view", "date", "session", "policyIds", "expectedCatalogRevision", "expectedMembershipRevision", "expectedRosterRevision"].includes(key)) || !validDate(input.date) || input.session !== "all" && !positive(input.session) || !Array.isArray(input.policyIds) || input.policyIds.length > 12 || new Set(input.policyIds).size !== input.policyIds.length || input.policyIds.some((id) => typeof id !== "string" || !/^[A-Za-z0-9][A-Za-z0-9._:-]*$/.test(id) || id.length > 160) || !hash(input.expectedCatalogRevision) || !hash(input.expectedMembershipRevision) || typeof input.expectedRosterRevision !== "string" || !input.expectedRosterRevision || input.expectedRosterRevision.length > 512)
+        throw Error("invalid_preparation_arguments");
+    } else
+      throw Error("invalid_work_context_view");
+    return input;
+  }
+  function assertResponse(value, input) {
+    if (!object(value) || value.schemaVersion !== "academy.work-context/1.0.0" || value.view !== input.view || !object(value.revisions) || !hash(value.revisions.catalogRevision) || !hash(value.revisions.membershipRevision) || !hash(value.revisions.registrySha256) || typeof value.revisions.rosterRevision !== "string" || !value.revisions.rosterRevision || value.verification?.contextGatePassed !== true || value.verification?.fullContractByteHashVerified !== true || value.verification?.authenticatedOwnerPrivateDispatch !== true || value.verification?.registryVersion !== "1.2.0" || !hash(value.verification?.contextScopeFingerprint) || value.verification?.studentRecordsChanged !== false || value.verification?.nativeWebMcpVerified !== false || value.verification?.externalSourceQueried !== false || value.verification?.liveAdapterConnected !== false)
+      throw Error("verified_work_context_required");
+    if (input.view === "policy-index") {
+      if (!Array.isArray(value.policies) || value.policies.length > (input.limit ?? 12) || !Array.isArray(value.domains) || !object(value.pagination) || value.pagination.offset !== (input.offset ?? 0) || !Number.isSafeInteger(value.pagination.total) || typeof value.pagination.hasMore !== "boolean" || value.policies.some((p) => !object(p) || typeof p.policyId !== "string" || typeof p.labelRaw !== "string" || !Object.hasOwn(domains, p.domain) || input.domain !== undefined && p.domain !== input.domain))
+        throw Error("invalid_policy_index_scope");
+    } else {
+      const p = value.preparation;
+      if (value.revisions.catalogRevision !== input.expectedCatalogRevision || value.revisions.membershipRevision !== input.expectedMembershipRevision || value.revisions.rosterRevision !== input.expectedRosterRevision || !object(p) || p.kind !== "workflow_preparation_reference" || p.requestedDate !== input.date || p.timezone !== "Asia/Seoul" || p.actionBoundary?.externalSourceQueried !== false || p.actionBoundary?.studentRecordsChanged !== false || p.studentWork?.taskCount !== null || p.studentWork?.emptyMeansNoTasks !== false || p.studentWork?.assignments?.state !== "not_loaded" || p.studentWork?.executionAttempts?.state !== "not_loaded" || p.dateCohorts?.classDate !== input.date || p.dateCohorts?.timezone !== "Asia/Seoul" || p.dateCohorts?.source?.sha256 !== input.expectedMembershipRevision || p.dateCohorts?.rosterRevision?.rosterRevision !== input.expectedRosterRevision || p.dateCohorts?.coverage?.attendanceInferred !== false || p.dateCohorts?.coverage?.liveLmsQueryPerformed !== false || !Array.isArray(p.dateCohorts?.cohorts) || !Array.isArray(p.dateCohorts?.unverified) || !Array.isArray(p.workflowTemplate?.nodes) || !Array.isArray(p.workflowTemplate?.relations) || !Array.isArray(p.workflowTemplate?.sources) || p.workflowTemplate?.meaning !== "selected_policy_reference_not_student_tasks" || p.workflowTemplate?.revision !== input.expectedCatalogRevision || input.policyIds.length === 0 && (p.workflowTemplate.nodes.length !== 0 || p.workflowTemplate.relations.length !== 0 || p.workflowTemplate.sources.length !== 0) || input.policyIds.some((id) => !p.workflowTemplate.nodes.some((n) => n.kind === "policy" && n.id === id)))
+        throw Error("invalid_preparation_scope");
+      for (const cohort of p.dateCohorts.cohorts) {
+        if (cohort.classDate !== input.date || !Array.isArray(cohort.members) || input.session !== "all" && cohort.sessionSlot?.ordinal !== input.session || cohort.attendanceState !== "not_assessed" || cohort.taskCount !== null || cohort.emptyMeansNoClass !== false || cohort.members.some((m) => typeof m.studentId !== "string" || typeof m.displayName !== "string" || m.liveVerified !== false || m.effectiveFrom === null && input.date < m.confirmedAsOf))
+          throw Error("invalid_date_cohort_scope");
+      }
+    }
+  }
+  function mountWorkflowView(target, options) {
+    const document2 = target.ownerDocument;
+    const make = (tag, className = "", text) => {
+      const el = document2.createElement(tag);
+      if (className)
+        el.className = className;
+      if (text !== undefined)
+        el.textContent = text;
+      return el;
+    };
+    const section = make("section", "workflow-view");
+    section.setAttribute("aria-label", "오늘 수업과 업무 흐름");
+    section.dataset.workflowView = "";
+    const header = make("div", "workflow-heading"), title = make("h2", "", "오늘 수업과 업무 흐름"), sourceBadge = make("span", "workflow-source-badge", "저장 근거 · 학원 실시간 미연결");
+    header.append(title, sourceBadge);
+    const controls = make("div", "workflow-controls");
+    const dateLabel = make("label", "", "날짜"), date = make("input");
+    date.type = "date";
+    date.value = academyDate(options.now?.() ?? new Date);
+    date.setAttribute("data-workflow-date", "");
+    dateLabel.append(date);
+    const sessionLabel = make("label", "", "수업"), session = make("select");
+    session.setAttribute("data-workflow-session", "");
+    for (const [value, label] of [["all", "전체"], ["1", "1부"], ["2", "2부"]]) {
+      const opt = make("option", "", label);
+      opt.value = value;
+      session.append(opt);
+    }
+    sessionLabel.append(session);
+    const reload = make("button", "workflow-reload", "다시 확인");
+    reload.type = "button";
+    reload.dataset.workflowReload = "";
+    controls.append(dateLabel, sessionLabel, reload, make("span", "workflow-timezone", "한국 시간"));
+    const status = make("p", "workflow-status", "보호된 수업 배정 근거를 확인하고 있습니다.");
+    status.setAttribute("role", "status");
+    status.setAttribute("aria-live", "polite");
+    const cohorts = make("div", "workflow-cohorts");
+    const note = make("p", "workflow-note", "확인된 요일·수업 배정으로 묶습니다. 실제 출석·숙제·완료 상태는 별도 근거가 필요합니다.");
+    const details = make("details", "workflow-details"), summary = make("summary", "", "업무 기준 찾아보기");
+    const workspace = make("div", "workflow-workspace"), policyNav = make("div", "workflow-policy-nav");
+    const domainLabel = make("label", "", "업무 영역"), domain = make("select");
+    domain.dataset.workflowDomain = "";
+    const all = make("option", "", "모든 영역");
+    all.value = "";
+    domain.append(all);
+    for (const [value, label] of Object.entries(domains)) {
+      const opt = make("option", "", label);
+      opt.value = value;
+      domain.append(opt);
+    }
+    domainLabel.append(domain);
+    const policyList = make("div", "workflow-policy-list");
+    policyList.setAttribute("aria-label", "업무 기준 선택");
+    const pages = make("div", "workflow-pages"), previous = make("button", "", "이전"), next = make("button", "", "다음"), pageLabel = make("span");
+    previous.type = next.type = "button";
+    previous.dataset.workflowPrevious = "";
+    next.dataset.workflowNext = "";
+    pages.append(previous, pageLabel, next);
+    policyNav.append(domainLabel, policyList, pages);
+    const policyDetail = make("div", "workflow-policy-detail");
+    policyDetail.append(make("p", "workflow-note", "기준을 선택하면 계층, 명시된 선행 조건, 근거를 확인할 수 있습니다."));
+    workspace.append(policyNav, policyDetail);
+    details.append(summary, make("p", "workflow-note", "업무 기준은 절차 참고용입니다. 선택한 학생에게 생긴 오늘의 미완료 업무를 뜻하지 않습니다."), workspace);
+    const provenance = make("details", "workflow-provenance");
+    provenance.append(make("summary", "", "배정 근거와 확인 범위"));
+    section.append(header, controls, status, cohorts, note, details, provenance);
+    target.prepend(section);
+    let active = true, epoch = 0, request = null, index = null, prepared = null, selectedPolicyIds = [], selectedNodeId = null, lastError = null;
+    const lifecycleController = new AbortController;
+    const isCurrent = (token) => active && epoch === token;
+    const ensureCurrent = (token) => {
+      if (!isCurrent(token))
+        throw Error("superseded_work_context");
+    };
+    function setBusy(busy) {
+      section.setAttribute("aria-busy", String(busy));
+      reload.disabled = busy;
+    }
+    function showError(error) {
+      if (!active)
+        return;
+      lastError = error instanceof Error ? error.message : "work_context_failed";
+      status.textContent = prepared ? "업무 기준 목록을 확인하지 못했습니다. 마지막 확인된 배정 근거를 유지합니다." : "수업·업무 근거를 확인하지 못했습니다. 날짜별 배정과 실제 할 일은 미확인 상태입니다.";
+      status.dataset.state = "error";
+      if (!prepared)
+        policyDetail.replaceChildren(make("p", "workflow-note", "검증된 업무 기준을 불러오지 못했습니다. 다시 확인해 주세요."));
+    }
+    function clearReadView() {
+      prepared = null;
+      cohorts.replaceChildren();
+      policyDetail.replaceChildren(make("p", "workflow-note", "선택한 날짜와 업무 기준을 확인하고 있습니다."));
+      provenance.replaceChildren(make("summary", "", "배정 근거와 확인 범위"));
+    }
+    function buildPreparationArgs() {
+      if (!index)
+        throw Error("work_context_index_required");
+      return parseInput({ view: "preparation", date: date.value, session: session.value === "all" ? "all" : Number(session.value), policyIds: selectedPolicyIds, ...{ expectedCatalogRevision: index.revisions.catalogRevision, expectedMembershipRevision: index.revisions.membershipRevision, expectedRosterRevision: index.revisions.rosterRevision } });
+    }
+    function indexArgs(offset = 0) {
+      return parseInput({ view: "policy-index", limit: 8, offset, ...domain.value ? { domain: domain.value } : {} });
+    }
+    async function fetchResult(input, token, signal) {
+      const response = await fetch("/api/academy/work-context", { method: "POST", credentials: "same-origin", redirect: "manual", headers: { "Content-Type": "application/json" }, body: JSON.stringify(input), signal });
+      ensureCurrent(token);
+      const mediaType = response.headers.get("content-type")?.split(";")[0].trim().toLowerCase();
+      if (response.status === 401 || response.status === 403 || response.type === "opaqueredirect" || response.redirected || response.status >= 300 && response.status < 400 || !(mediaType === "application/json" || mediaType?.endsWith("+json"))) {
+        options.onUnauthorized();
+        throw Error("protected_identity_response_required");
+      }
+      const envelope = await response.json();
+      ensureCurrent(token);
+      if (!response.ok || !object(envelope) || envelope.status !== "success")
+        throw Error(object(envelope) && typeof envelope.status === "string" ? envelope.status : "work_context_read_failed");
+      assertResponse(envelope.result, input);
+      return envelope.result;
+    }
+    function renderIndex(result) {
+      index = result;
+      policyList.replaceChildren();
+      for (const policy of result.policies) {
+        const button = make("button", "workflow-policy", "");
+        button.type = "button";
+        button.dataset.workflowPolicy = policy.policyId;
+        button.setAttribute("aria-pressed", String(selectedPolicyIds.includes(policy.policyId)));
+        button.append(make("span", "", policy.labelRaw), make("small", "", `${domains[policy.domain]} · ${lifecycle[policy.lifecycle] ?? policy.lifecycle}`));
+        button.addEventListener("click", () => {
+          selectedPolicyIds = [policy.policyId];
+          selectedNodeId = policy.policyId;
+          details.open = true;
+          refreshPreparation().catch(() => {});
+        });
+        policyList.append(button);
+      }
+      if (result.policies.length === 0)
+        policyList.append(make("p", "workflow-note", "이 범위에 표시할 업무 기준이 없습니다."));
+      const start = result.pagination.total === 0 ? 0 : result.pagination.offset + 1, end = result.pagination.offset + result.policies.length;
+      pageLabel.textContent = `${start}–${end} / ${result.pagination.total}`;
+      previous.disabled = result.pagination.offset === 0;
+      next.disabled = !result.pagination.hasMore;
+    }
+    function renderCohorts(p) {
+      cohorts.replaceChildren();
+      for (const cohort of p.dateCohorts.cohorts) {
+        const row = make("div", "workflow-cohort");
+        row.append(make("h3", "", cohort.sessionSlot.ordinal + "부"));
+        const people = make("div", "workflow-people");
+        for (const member of cohort.members) {
+          const button = make("button", "workflow-student", member.displayName);
+          button.type = "button";
+          button.dataset.workflowStudent = member.studentId;
+          button.disabled = !options.canSelectStudent(member.studentId);
+          button.title = button.disabled ? "현재 허용된 학생 범위와 연결되지 않았습니다." : "학생의 저장 학습 근거 열기";
+          button.addEventListener("click", async () => {
+            if (!active || !options.canSelectStudent(member.studentId))
+              return;
+            button.disabled = true;
+            try {
+              await options.selectStudent(member.studentId);
+              if (active) {
+                const rail = document2.querySelector("#c2-root");
+                rail?.scrollIntoView?.({ behavior: "smooth", block: "start" });
+              }
+            } catch {
+              if (active) {
+                status.textContent = "학생 저장 근거를 열지 못했습니다. 현재 선택과 자료를 유지합니다.";
+              }
+            } finally {
+              if (active)
+                button.disabled = !options.canSelectStudent(member.studentId);
+            }
+          });
+          people.append(button);
+        }
+        if (!cohort.members.length)
+          people.append(make("p", "workflow-note", p.dateCohorts.unverified.some((u) => u.reason === "historical_start_unknown") ? "등록 시작일 미확인 · 이 날짜의 배정은 판단할 수 없습니다." : "이 날짜에 적용 가능한 배정 근거가 없습니다. 수업이 없다는 뜻은 아닙니다."));
+        row.append(people);
+        const projected = cohort.members.some((m) => m.applicability === "projected_pattern_not_date_verified");
+        row.append(make("p", "workflow-cohort-note", projected ? "확인된 요일 패턴의 예상 배정 · 해당 날짜 실제 편성 미확인" : cohort.members.length ? "사용자 확인 기준 · 출석 미확인" : "배정 미확인 · 출석 미확인"));
+        cohorts.append(row);
+      }
+      provenance.replaceChildren(make("summary", "", "배정 근거와 확인 범위"));
+      provenance.append(make("p", "", `사용자 확인 기준일: ${shown(p.dateCohorts.source.confirmedAsOf)} · 확인 내용 수신 시각: ${shown(p.dateCohorts.source.receivedAt)}`), make("p", "", "등록 시작·종료가 미확인인 학생은 확인일 이전 날짜에 소급 배정하지 않습니다. 이후 날짜는 확인된 요일 패턴의 예상 배정입니다."), make("p", "", "조회 범위: 명시적으로 확인한 학생만 · 학원 전체 명단 아님 · 휴원·보강·반 변경 미대조"), make("p", "", "학원 실시간 조회: 하지 않음 · 날짜별 과제·실행·현재 판정: 불러오지 않음"));
+      for (const cohort of p.dateCohorts.cohorts)
+        for (const m of cohort.members)
+          provenance.append(make("p", "", `${m.displayName}: ${m.enrollmentWeekdayPattern.label} · ${m.sessionSlot.ordinal}부 · 등록 시작 ${shown(m.effectiveFrom)} / 종료 ${shown(m.effectiveTo)}`));
+      if (p.dateCohorts.unverified.length)
+        provenance.append(make("p", "", `선택 날짜에 적용 여부 미확인: ${p.dateCohorts.unverified.length}명. 이름을 과거 반 명단으로 제시하지 않습니다.`));
+    }
+    function renderSourceList(anchors, all) {
+      const list = make("div", "workflow-sources");
+      for (const source of anchors) {
+        const entry = make("details", "workflow-source"), label = source.kind === "user_statement" ? "사용자 확인" : source.kind === "assistant_inference" ? "추론" : source.kind === "ui_structure" ? "관찰된 구조" : "문서 근거";
+        entry.append(make("summary", "", `${label} · ${source.sourceAlias}`), make("p", "", source.assertionRaw), make("p", "workflow-note", `원문 날짜 ${shown(source.dateRaw)} · 전달 ${shown(source.reportedAt)} · 관찰 ${shown(source.observedAt)} · 저장 ${shown(source.capturedAt)}`));
+        if (source.supersedesAnchorIds.length) {
+          entry.append(make("p", "workflow-note", "수정한 이전 근거:"));
+          for (const id of source.supersedesAnchorIds) {
+            const older = all.find((s) => s.id === id);
+            entry.append(make("p", "workflow-note", older ? `${older.sourceAlias}: ${older.assertionRaw}` : `이전 근거 ID: ${id}`));
+          }
+        }
+        entry.append(make("p", "workflow-note", "이 근거는 실시간 학생 조회나 실행 완료를 증명하지 않습니다."));
+        list.append(entry);
+      }
+      if (!anchors.length)
+        list.append(make("p", "workflow-note", "이 노드에 직접 연결된 근거가 없습니다."));
+      return list;
+    }
+    function renderTemplate(p) {
+      policyDetail.replaceChildren();
+      const template = p.workflowTemplate, nodes = template.nodes, byId = new Map(nodes.map((node) => [String(node.id), node]));
+      if (!selectedPolicyIds.length) {
+        policyDetail.append(make("p", "workflow-note", "기준을 선택하면 계층, 명시된 선행 조건, 근거를 확인할 수 있습니다."));
+        return;
+      }
+      const chosen = nodes.find((node) => node.kind === "policy" && selectedPolicyIds.includes(node.id));
+      if (!chosen) {
+        policyDetail.append(make("p", "workflow-note", "선택한 기준의 검증된 내용을 표시할 수 없습니다."));
+        return;
+      }
+      policyDetail.append(make("h3", "", chosen.labelRaw), make("p", "workflow-policy-meta", `${knowledge[chosen.knowledge] ?? chosen.knowledge} · ${lifecycle[chosen.lifecycle] ?? chosen.lifecycle} · 절차 참고용`));
+      const policySource = p.sourceCoverage?.find((source) => source.sourceKind === "operating_policy_checkpoint");
+      if (policySource)
+        policyDetail.append(make("p", "workflow-note", `운영 기준 저장본의 기준일: ${shown(policySource.sourceAsOf)} · 학원 실시간 조회 자료 아님`));
+      const tree = make("div", "workflow-tree");
+      tree.setAttribute("aria-label", "업무 기준 계층");
+      const contains = template.relations.filter((edge) => edge.kind === "contains"), hierarchyKinds = ["academy_root", "domain", "policy", "step"];
+      const displayNodes = nodes.filter((n) => hierarchyKinds.includes(n.kind)), parents = new Set(contains.map((e) => String(e.to)));
+      const rootNodes = displayNodes.filter((node) => !parents.has(node.id));
+      const addBranch = (node, seen) => {
+        const item = make("li"), button = make("button", "workflow-node");
+        button.type = "button";
+        button.dataset.workflowNode = node.id;
+        button.setAttribute("aria-pressed", String((selectedNodeId ?? chosen.id) === node.id));
+        button.textContent = node.kind === "domain" ? domains[node.domain] : node.kind === "academy_root" ? "학원 업무 기준" : node.labelRaw;
+        if (node.kind === "step")
+          button.append(make("small", "", "절차 표시 순서 " + (node.order + 1)));
+        button.addEventListener("click", () => {
+          selectedNodeId = node.id;
+          renderTemplate(p);
+          Array.from(policyDetail.querySelectorAll("[data-workflow-node]")).find((button) => button.dataset.workflowNode === node.id)?.focus();
+        });
+        item.append(button);
+        const nextSeen = new Set(seen).add(node.id), children = contains.filter((e) => e.from === node.id).sort((a, b) => (a.kind === "contains" ? a.order : 0) - (b.kind === "contains" ? b.order : 0)).flatMap((e) => {
+          const child = byId.get(e.to);
+          return child && hierarchyKinds.includes(child.kind) && !nextSeen.has(child.id) ? [child] : [];
+        });
+        if (children.length) {
+          const childList = make("ul");
+          children.forEach((child) => childList.append(addBranch(child, nextSeen)));
+          item.append(childList);
+        }
+        return item;
+      };
+      const branches = make("ul");
+      rootNodes.forEach((node) => branches.append(addBranch(node, new Set)));
+      tree.append(branches);
+      policyDetail.append(tree);
+      const selected = byId.get(selectedNodeId ?? chosen.id) ?? chosen;
+      const focused = make("section", "workflow-node-detail");
+      focused.append(make("h4", "", selected.labelRaw));
+      if (selected.kind === "policy") {
+        const values = [["적용", selected.applicability.activationRaw], ["주기", selected.cadenceRaw], ["기한", selected.deadlineRaw], ["범위", selected.scopeRaw], ["담당", selected.responsibilityRaw]];
+        const dl = make("dl");
+        for (const [term, value] of values) {
+          dl.append(make("dt", "", term), make("dd", "", value));
+        }
+        focused.append(dl);
+        if (selected.preconditions.length) {
+          focused.append(make("h5", "", "적용 전 확인"));
+          const list = make("ul");
+          for (const condition of selected.preconditions)
+            list.append(make("li", "", condition.labelRaw + " · " + { required: "필요", unconfirmed: "미확인", not_applicable: "해당 없음" }[condition.state]));
+          focused.append(list);
+        }
+        if (selected.exceptions.length) {
+          const exception = make("details");
+          exception.append(make("summary", "", "예외와 적용 범위"));
+          selected.exceptions.forEach((text) => exception.append(make("p", "", text)));
+          focused.append(exception);
+        }
+      }
+      const edges = template.relations.filter((edge) => edge.kind !== "contains" && (edge.from === selected.id || edge.to === selected.id));
+      focused.append(make("h5", "", "명시된 연결"));
+      if (edges.length) {
+        const list = make("ul", "workflow-relations");
+        for (const edge of edges) {
+          const from = byId.get(edge.from), to = byId.get(edge.to);
+          let text = edge.kind === "depends_on" ? `${to?.labelRaw ?? edge.to} → ${from?.labelRaw ?? edge.from}` : `${from?.labelRaw ?? edge.from} → ${to?.labelRaw ?? edge.to}`;
+          list.append(make("li", "", `${relationLabels[edge.kind] ?? edge.kind}: ${text}`));
+        }
+        focused.append(list);
+      } else
+        focused.append(make("p", "workflow-note", "이 노드에 명시된 선행·참조 연결이 없습니다. 표시 순서만으로 선행 조건을 만들지 않습니다."));
+      const allPrerequisites = template.relations.filter((edge) => edge.kind === "precedes" || edge.kind === "depends_on");
+      if (allPrerequisites.length) {
+        const prerequisite = make("details");
+        prerequisite.append(make("summary", "", "선택 범위 전체의 명시된 선행 조건"));
+        for (const edge of allPrerequisites) {
+          const from = byId.get(edge.from), to = byId.get(edge.to);
+          prerequisite.append(make("p", "", edge.kind === "depends_on" ? `${to?.labelRaw ?? edge.to} → ${from?.labelRaw ?? edge.from}` : `${from?.labelRaw ?? edge.from} → ${to?.labelRaw ?? edge.to}`));
+        }
+        focused.append(prerequisite);
+      }
+      focused.append(make("h5", "", "실행·재시도"), make("p", "workflow-note", "학생별 실행 시도·재시도·재개 기록은 불러오지 않았습니다. 이 계층과 선행 조건으로 완료 여부를 판단하지 않습니다."));
+      const sources = make("details", "workflow-source-details");
+      sources.append(make("summary", "", `선택한 항목의 근거 ${selected.sourceAnchorIds.length}개`), renderSourceList(template.sources.filter((source) => selected.sourceAnchorIds.includes(source.id)), template.sources));
+      focused.append(sources);
+      policyDetail.append(focused);
+    }
+    function accept(result, input) {
+      lastError = null;
+      if (result.view === "policy-index") {
+        renderIndex(result);
+        if (input.view === "policy-index")
+          domain.value = input.domain ?? "";
+        status.textContent = prepared ? `${prepared.preparation.requestedDate} · 배정 근거 확인. 업무 기준은 별도로 선택하세요.` : "업무 기준 목록 확인 · 날짜별 배정 근거를 확인합니다.";
+      } else if (input.view === "preparation") {
+        date.value = input.date;
+        const value = String(input.session);
+        if (!Array.from(session.options).some((option) => option.value === value)) {
+          const option = make("option", "", value + "부");
+          option.value = value;
+          session.append(option);
+        }
+        session.value = value;
+        selectedPolicyIds = [...input.policyIds];
+        prepared = result;
+        renderCohorts(result.preparation);
+        renderTemplate(result.preparation);
+        if (index)
+          renderIndex(index);
+        status.textContent = `${result.preparation.requestedDate} · 확인된 배정 근거 기준. 실제 출석·과제·완료는 미확인입니다.`;
+        status.dataset.state = "ready";
+        if (input.policyIds.length)
+          details.open = true;
+      }
+    }
+    async function execute(raw) {
+      const input = parseInput(raw);
+      if (!active)
+        throw Error("work_context_disposed");
+      const token = ++epoch;
+      request?.abort();
+      request = new AbortController;
+      setBusy(true);
+      status.textContent = "보호된 저장 근거를 확인하고 있습니다.";
+      if (input.view === "preparation")
+        clearReadView();
+      try {
+        const result = await fetchResult(input, token, request.signal);
+        ensureCurrent(token);
+        accept(result, input);
+        return result;
+      } catch (error) {
+        if (isCurrent(token) && !(error instanceof Error && error.name === "AbortError"))
+          showError(error);
+        throw error;
+      } finally {
+        if (isCurrent(token))
+          setBusy(false);
+      }
+    }
+    async function refreshPreparation() {
+      return execute(buildPreparationArgs());
+    }
+    async function initialize() {
+      try {
+        const result = await execute(indexArgs());
+        if (!active || result.view !== "policy-index")
+          return;
+        await refreshPreparation();
+      } catch {}
+    }
+    const refresh = () => {
+      if (!validDate(date.value)) {
+        epoch++;
+        request?.abort();
+        setBusy(false);
+        clearReadView();
+        status.textContent = "확인할 날짜를 올바르게 선택해 주세요.";
+        return;
+      }
+      (index ? refreshPreparation() : initialize()).catch(() => {});
+    };
+    date.addEventListener("change", refresh);
+    session.addEventListener("change", refresh);
+    reload.addEventListener("click", refresh);
+    domain.addEventListener("change", () => {
+      execute(indexArgs()).catch(() => {});
+    });
+    previous.addEventListener("click", () => {
+      execute(indexArgs(Math.max(0, (index?.pagination.offset ?? 0) - (index?.pagination.limit ?? 8)))).catch(() => {});
+    });
+    next.addEventListener("click", () => {
+      execute(indexArgs((index?.pagination.offset ?? 0) + (index?.pagination.limit ?? 8))).catch(() => {});
+    });
+    const registry = document2.modelContext;
+    if (typeof registry?.registerTool === "function") {
+      const tool = { ...WORK_CONTEXT_TOOL, description: "Change the visible academy date/session, policy index or selected workflow reference using the same protected HTTP read as this page. This changes browser navigation and displayed state; it does not query the live academy, change source records, create tasks, or mark work complete.", annotations: { ...WORK_CONTEXT_TOOL.annotations, readOnlyHint: false, consequentialHint: false, untrustedContentHint: true }, execute };
+      try {
+        Promise.resolve(registry.registerTool(tool, { signal: lifecycleController.signal })).catch(() => {});
+      } catch {}
+    }
+    const ready = initialize();
+    function dispose() {
+      if (!active)
+        return;
+      active = false;
+      epoch++;
+      request?.abort();
+      request = null;
+      lifecycleController.abort();
+      index = null;
+      prepared = null;
+      selectedPolicyIds = [];
+      selectedNodeId = null;
+      section.replaceChildren();
+      section.remove();
+      document2.defaultView?.removeEventListener("pagehide", dispose);
+    }
+    document2.defaultView?.addEventListener("pagehide", dispose, { once: true });
+    return { element: section, ready, execute, attach(nextTarget) {
+      if (active)
+        nextTarget.prepend(section);
+    }, getState() {
+      return { active, date: date.value, session: session.value, selectedPolicyIds: [...selectedPolicyIds], hasPreparation: prepared !== null, lastError };
+    }, dispose };
+  }
+
+  // src/assessment-view.ts
+  function mountAssessmentView(p, target, receipt) {
+    if (p.coverage.state !== "not_collected" || p.coverage.actualAttemptCount !== 0 || p.assessmentAttempts.length || receipt?.studentId !== p.studentId || receipt?.runtimeSchemaValidated !== true)
+      throw Error("validated_empty_assessment_projection_required");
+    const doc = target.ownerDocument, books = target.querySelector("#c2-books");
+    if (!books)
+      throw Error("assessment_source_renderer_missing");
+    const section = doc.createElement("section");
+    section.className = "assessment-view";
+    section.setAttribute("data-assessment-student-id", p.studentId);
+    section.setAttribute("data-assessment-projection-sha", receipt.assessmentProjectionSha256);
+    section.setAttribute("data-assessment-contract-sha", receipt.contractSha256);
+    const text = (tag, value, cls = "") => {
+      const n = doc.createElement(tag);
+      n.className = cls;
+      n.textContent = value;
+      return n;
+    };
+    section.append(text("h2", "시험 기록: 아직 원본 연결 안 됨"), text("p", "독립 DT/ZT 시험 응시 원본 수집 0건 · 채점 자료 not_collected · 실제 미응시나 미완료를 뜻하지 않습니다.", "assessment-meta"), text("p", "일지의 DT 언급은 일지 근거로만 읽습니다. DT는 DailyTest 소단원 수업 cycle이고 Daily Restudy는 교재 섹션입니다. 사용자 정정에 따라 서로 다른 항목이며 별칭·동일 binding을 만들지 않습니다. 시험 회차·판본·문항·점수·교사 완료는 원본 연결 전입니다.", "assessment-meta"));
+    const coverage = p.diaryCoverage, details = doc.createElement("details");
+    details.className = "assessment-diary-evidence";
+    details.append(text("summary", `일지 근거 ${coverage.projectedDiaryCount}건 · DT 언급 ${coverage.dtMentionCount}건 · 원본 연결 범위 확인`));
+    details.append(text("p", coverage.state === "not_collected" ? "이 학생의 canonical 일지 namespace를 아직 연결하지 않았습니다. 일지가 없다는 뜻은 아닙니다." : `제공된 canonical 일지 ${coverage.sourceDiaryCount}건 중 ${coverage.projectedDiaryCount}건 표시 · 진행요약 ${coverage.nonEmptyProgressCount}건 / 빈 원문 ${coverage.emptyProgressCount}건 · 전체 학생 이력 완전성 미확인`, "assessment-meta"));
+    for (const row of p.diaryEvidence) {
+      const c = row.evidence.claim.value, article = doc.createElement("article");
+      article.setAttribute("data-diary-source-id", row.sourceDiaryId);
+      article.setAttribute("data-diary-projection-state", row.priorProjectionState);
+      article.append(text("h3", `${c.dateRaw} · 저장 일지${row.mentionsDT ? " · DT 언급" : ""}`));
+      article.append(text("p", c.progressSummary || "진행요약이 빈 원문입니다. 수행 판단에 사용하지 않았습니다."));
+      if (c.homeworkSummary)
+        article.append(text("p", "당시 숙제 원문: " + c.homeworkSummary));
+      const state = row.priorProjectionState === "recovered_omission" ? "이전 화면에서 빠진 원문을 복구했습니다." : row.priorProjectionState === "preserved_unbound" ? "특정 교재·시험 응시와의 연결이 미확인인 원문을 보존합니다." : row.priorProjectionState === "source_empty_progress" ? "빈 원문도 coverage에 포함합니다." : "기존 일부 인용과 별도로 원일지 한 행을 보존합니다.";
+      article.append(text("p", state + " 연도 미확인 · 사건/관찰 시각 미제공 · DT=DailyTest 수업 활동 · Daily Restudy와 별도(사용자 정정), 학원 UI 타입 대응 미검증", "assessment-meta"), text("p", `sourceKind imported_snapshot · 검증 상태 독립 검증 전 · 원본 ${c.originalSource.fileName} ${c.originalSource.jsonPointer} · source SHA ${c.originalSource.fileSha256}`, "assessment-meta"));
+      details.append(article);
+    }
+    section.append(details, text("p", `이번 앱 조회 strict 시험 schema·학생 범위 검증 통과 · 실제 학원 조회 없음 · 계약 SHA ${receipt.contractSha256}`, "assessment-meta"));
+    books.before(section);
+    return { dispose() {
+      section.remove();
+    } };
+  }
+
+  // src/evidence-view.ts
+  function mountEvidenceView(p, target, receipt) {
+    if (!p || !Array.isArray(p.evidenceRecords) || !Array.isArray(p.decisionRecords) || p.namespaceBinding?.studentId !== p.studentId || p.externalSourceQueried !== false || p.lastSuccessfulRefreshedAt !== null)
+      throw Error("validated_evidence_projection_required");
+    const doc = target.ownerDocument, books = target.querySelector("#c2-books");
+    if (!books)
+      throw Error("evidence_source_renderer_missing");
+    const owned = new Set, evidence = new Map(p.evidenceRecords.map((e) => [e.evidenceId, e])), decisions = new Map(p.decisionRecords.map((d) => [d.decisionId, d]));
+    let disposed = false, pending = false;
+    const make = (tag, cls, text) => {
+      const n = doc.createElement(tag);
+      n.className = cls;
+      if (text !== undefined)
+        n.textContent = text;
+      return n;
+    };
+    const own = (n, kind) => {
+      n.setAttribute("data-domain-evidence-owned", kind);
+      owned.add(n);
+      return n;
+    };
+    const label = { user_report: "사용자 보고", imported_snapshot: "학원 자료 저장본", inference: "근거로 계산한 추론", lms_direct_observation: "학원 직접 조회" };
+    const verification = { unverified: "독립 검증 전", corroborated: "다른 근거로 대조됨", contradicted: "근거 충돌 · 정정 검토" };
+    function evidenceNode(e) {
+      const row = make("article", "domain-evidence-record");
+      row.setAttribute("data-domain-evidence-id", e.evidenceId);
+      row.setAttribute("data-source-kind", e.sourceKind);
+      row.setAttribute("data-verification-status", e.verificationStatus);
+      const value = e.claim.value, type = e.claim.type;
+      let description = type;
+      if (type === "not_observed_within_recent3w_capture")
+        description = `업로드 캡처에서 ${value.targetLabel} 미관찰 · 최근3주/27행 범위만 · 실제 서버 갱신 아님`;
+      else if (type.includes("grading_observation"))
+        description = `저장 앱 점수 ${value.score}점 · 원본 표시 ${value.eventTimeRaw ?? "미제공"}`;
+      else if (type === "teacher_review_statement")
+        description = `교사 판단 ${value.path === "original_wrong" ? "원오답" : "유사클리닉"} · ${value.state === "teacher_confirmed_complete" ? "완료" : value.state}`;
+      else if (type === "print_confirmation")
+        description = "교사 인쇄 보고 · 인쇄 완료 · 헤더·장수·배부·수령 미확인";
+      else if (type === "grading_registration_user_report")
+        description = "앱 등록 상태 사용자 보고 · 미등록이라고 보고됨 · 최종 제출 판단 대기";
+      else if (type === "user_defined_submission_acceptance_rule")
+        description = "사용자가 정한 제출 확인 기준";
+      else if (type === "teacher_new_homework_assignment_instruction")
+        description = "새 숙제 범위 교사 지시";
+      else if (type === "cached_native_catalog_structure")
+        description = "학원 목록 구조 저장 근거";
+      else if (type === "final_lesson_embedded_written_response_rule")
+        description = "마지막 차시에 서술형이 포함된다는 사용자 보고";
+      else if (type === "assignment_catalog_unit_count")
+        description = "저장된 목록으로 계산한 앱 채점 단위 수";
+      row.append(make("p", "domain-evidence-claim", `${label[e.sourceKind] ?? e.sourceKind} · ${description}`));
+      if (type === "not_observed_within_recent3w_capture")
+        row.append(make("p", "domain-evidence-meta", "관찰/캡처 시각은 업로드 HAR의 구조 시각이며 학생 수행 사건 시각이 아닙니다. 독립 인증은 미검증이고 학습 사건 시각·학원 갱신 성공 시각을 생성하지 않습니다."));
+      row.append(make("p", "domain-evidence-meta", `${verification[e.verificationStatus]} · 관찰 시각 ${e.observedAt ?? "미제공"} · 보고 시각 ${e.reportedAt ?? "미제공"} · 기록 시각 ${e.recordedAt}`));
+      if (e.timeRaw)
+        row.append(make("p", "domain-evidence-meta", `시각 원문 ${e.timeRaw} · 연도·시간대·정확한 사건 시각을 자동 추정하지 않습니다.`));
+      const correction = e.supersedesEvidenceIds.length || e.retractsEvidenceIds.length || e.conflictingEvidenceIds.length;
+      row.append(make("p", "domain-evidence-meta", correction ? "정정·철회·충돌 참조가 있습니다. 판정을 다시 검토해야 합니다." : "정정 대기: 현재 연결된 정정·철회·충돌 근거 없음"));
+      const detail = make("details", "domain-evidence-source"), summary = make("summary", "", "출처와 정확한 범위");
+      detail.append(summary, make("p", "domain-evidence-meta", `근거 ${e.evidenceId} · source ${e.sourceRef.reference ?? e.sourceRef.sourceMessageId ?? "미제공"} · 원문 위치 ${e.sourceRef.jsonPointer ?? "미제공"} · revision ${e.revision}`));
+      row.append(detail);
+      return row;
+    }
+    function decisionNode(d) {
+      const n = make("p", "domain-decision");
+      n.setAttribute("data-domain-decision-id", d.decisionId);
+      n.setAttribute("data-decision-status", d.decisionStatus);
+      n.textContent = `판정 기록 주체 ${d.decisionAuthority.role} · ${d.decisionStatus === "pending" ? "판정 대기" : d.decisionStatus === "confirmed" ? "교사 결정 확정" : d.decisionStatus} · 사실의 독립 검증은 각 근거 상태를 따릅니다. · 규칙 ${d.ruleVersion}`;
+      return n;
+    }
+    const summary = own(make("section", "domain-evidence-summary"), "summary");
+    summary.setAttribute("aria-label", "근거 종류와 확인 상태");
+    summary.setAttribute("data-domain-student-id", p.studentId);
+    summary.append(make("h2", "domain-evidence-title", "관찰·보고·판정의 출처"), make("p", "domain-evidence-meta", `저장 관찰 ${p.evidenceRecords.filter((e) => e.sourceKind === "imported_snapshot" && e.claim.type.includes("grading_observation")).length}건 · 사용자 보고 ${p.evidenceRecords.filter((e) => e.sourceKind === "user_report").length}건 · 판정 대기 ${p.decisionRecords.filter((d) => d.decisionStatus === "pending").length}건 · 이번 학원 직접 조회 0건`), make("p", "domain-evidence-meta", "사용자가 말했음을 확인한 근거도 사실의 독립 검증 상태는 따로 유지합니다. 보고 시각은 실제 관찰 시각이나 학원 갱신 성공 시각을 대신하지 않습니다."));
+    const reports = p.evidenceRecords.filter((e) => ["grading_registration_user_report", "not_observed_within_recent3w_capture"].includes(e.claim.type));
+    if (reports.length) {
+      const box = make("details", "domain-report-list");
+      box.append(make("summary", "", `현재 사용자 조회 보고 ${reports.length}건 · 최종 판정 대기`));
+      for (const e of reports)
+        box.append(evidenceNode(e));
+      for (const d of p.decisionRecords.filter((d) => d.decisionStatus === "pending"))
+        box.append(decisionNode(d));
+      summary.append(box);
+    }
+    for (const a of p.assignments) {
+      const section = make("details", "domain-assignment");
+      section.setAttribute("data-domain-assignment-id", a.assignmentId);
+      section.append(make("summary", "", `${a.nativeBookTitleRaw} · 새 숙제 ${a.appGradingUnitCount}개 앱 채점 단위`), make("p", "domain-evidence-meta", `교사 배정 지시 · 수행 미확인 · 완료 미확인 · 마감 미지정 · 다음 출석 ${a.tentativeNextAttendanceDate ?? "미제공"} 잠정 (마감 아님) · 실제 학원 서버 배정 미확인`));
+      const list = make("ol", "domain-assignment-items");
+      for (const item of a.scopeItems) {
+        const li = make("li", "");
+        li.setAttribute("data-domain-assignment-record", item.existingRecordRef);
+        li.textContent = `${item.nativeGroupingLabel} ${item.nativeTitleRaw} · ${item.nativeSectionLabelRaw} ${item.lessonIndex ? item.lessonIndex + "차시" : ""} · ${item.catalogCode} · 수행 미확인`;
+        for (const c of item.embeddedContents)
+          li.append(make("p", "domain-evidence-meta", `${c.sourceLabelRaw} 포함 · 사용자 보고 규칙 · 별도 채점 단위 없음 · 서버 포함 관계 직접검증 전`));
+        list.append(li);
+      }
+      section.append(list);
+      summary.append(section);
+    }
+    if (receipt) {
+      const r = make("details", "domain-runtime-receipt");
+      r.setAttribute("data-domain-receipt-student", receipt.studentId);
+      r.setAttribute("data-domain-contract-sha", receipt.contractSha256);
+      r.setAttribute("data-domain-evidence-sha", receipt.evidenceProjectionSha256);
+      r.setAttribute("data-domain-binding-sha", receipt.namespaceBindingSha256);
+      r.append(make("summary", "", "이번 앱 조회의 계약·범위 검증"), make("p", "domain-evidence-meta", `계약 전체 본문 hash 검증 ${receipt.fullContractByteHashVerified ? "통과" : "미확인"} · strict schema ${receipt.runtimeSchemaValidated ? "통과" : "미확인"} · 학생 namespace ${receipt.namespaceBindingValidated ? "통과" : "미확인"} · 계약 ${receipt.contractVersion}`), make("p", "domain-evidence-meta", `계약 SHA ${receipt.contractSha256} · 선택 근거 SHA ${receipt.evidenceProjectionSha256} · namespace SHA ${receipt.namespaceBindingSha256} · scope ${receipt.contextScopeFingerprint}`), make("p", "domain-evidence-meta", "이 앱의 저장 자료 읽기 검증입니다. 학원 서버의 새로운 조회·성공 갱신 기록을 만들지 않습니다."));
+      summary.append(r);
+    }
+    const binding = make("details", "domain-namespace");
+    binding.append(make("summary", "", "학생 ID와 자료 연결 확인"), make("p", "domain-evidence-meta", `Space 학생 ${p.namespaceBinding.spaceStudentId} · 원본 자료 SHA ${p.sourceSnapshotSha256} · 학원 native 학생 ID 미확인 · 이름만으로 자료를 합치지 않습니다.`));
+    summary.append(binding);
+    books.before(summary);
+    function refresh() {
+      if (disposed)
+        return;
+      for (const n of owned)
+        if (!target.contains(n))
+          owned.delete(n);
+      for (const row of target.querySelectorAll("[data-record-container]")) {
+        const rid = row.dataset.recordContainer, body = row.querySelector(".inline-evidence");
+        if (!body || !body.children.length || body.querySelector('[data-domain-evidence-owned="detail"]'))
+          continue;
+        const es = (p.recordEvidenceIds[rid] ?? []).map((id) => evidence.get(id)), ds = (p.recordDecisionIds[rid] ?? []).map((id) => decisions.get(id));
+        if (!es.length && !ds.length)
+          continue;
+        const section = own(make("section", "domain-evidence-detail"), "detail");
+        section.append(make("h6", "domain-evidence-title", "이 행의 출처·시각·검증 상태"));
+        for (const e of es)
+          section.append(evidenceNode(e));
+        for (const d of ds)
+          section.append(decisionNode(d));
+        body.append(section);
+      }
+    }
+    function schedule() {
+      if (disposed || pending)
+        return;
+      pending = true;
+      queueMicrotask(() => {
+        pending = false;
+        if (!disposed)
+          refresh();
+      });
+    }
+    const delegated = (event) => {
+      if (event.target?.closest?.("[data-record-id],[data-close-record]"))
+        schedule();
+    };
+    target.addEventListener("click", delegated);
+    target.addEventListener("keydown", delegated);
+    const Observer = doc.defaultView?.MutationObserver, observer = Observer ? new Observer((ms) => {
+      if (ms.some((m) => m.target.nodeType === 1 && m.target.matches(".inline-evidence") && [...m.addedNodes, ...m.removedNodes].some((n) => n.nodeType !== 1 || !n.hasAttribute("data-domain-evidence-owned"))))
+        schedule();
+    }) : null;
+    refresh();
+    observer?.observe(target, { childList: true, subtree: true });
+    return { refresh, dispose() {
+      disposed = true;
+      observer?.disconnect();
+      target.removeEventListener("click", delegated);
+      target.removeEventListener("keydown", delegated);
+      for (const n of owned)
+        n.remove();
+      owned.clear();
+    } };
+  }
+
+  // src/rails.ts
+  var esc = (value) => String(value ?? "미제공").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+  var raw = (value) => esc(JSON.stringify(value, null, 2));
+  var safe = (u) => typeof u === "string" && /^https?:\/\//.test(u) ? u : null;
+  var states = { observed: "채점 기록", observed_absent: "조회 범위 결과행 없음", mapping_unknown: "대응 미확인", not_checked: "수행 미조회", app_not_recorded: "앱 미기록", not_determined: "완료 미확인", not_supplied: "미제공", not_observed_in_catalog: "목록 미관찰", unverified_for_this_unit: "단원별 존재 미검증", observed_in_native_catalog: "목록에서 존재 관찰", observed_in_sample_body: "샘플 본문에서 존재 관찰", provisional_catalog_join: "목록 코드 잠정 연결", printed_toc_verified_body_partial: "목차 검증 · 본문 일부", not_captured: "not_captured · 수집 자료 없음" };
+  var label = (s) => states[s] ?? String(s ?? "unknown");
+  var levels = { major: "대단원", middle: "중단원", subunit: "소단원", major_assessment: "대단원 평가", answers: "정답" };
+  var marker = (r) => {
+    const s = r.performanceState ?? r.evidenceState;
+    return s === "observed" ? ["⊙", "observed"] : s === "mapping_unknown" ? ["◇", "mapping"] : s === "observed_absent" ? ["⌁", "absent"] : ["·", "not-queried"];
+  };
+  var sourceName = (u) => u.endsWith(".pdf") ? "공식 공개 샘플 PDF" : u.includes("chatgpt.com/space/") ? "저장 Space 근거" : new URL(u).hostname;
+  var sourceLinks = (urls) => [...new Set(urls)].filter(safe).map((u) => `<li><a href="${esc(u)}" target="_blank" rel="noopener noreferrer">${esc(sourceName(u))} ↗</a></li>`).join("");
+  var dl = (fields) => `<dl>${fields.map(([key, value]) => `<dt>${esc(key)}</dt><dd>${esc(value)}</dd>`).join("")}</dl>`;
+  function mountC2ProgressRails(view, target) {
+    const V = view, records = V.records;
+    const rows = V.books.flatMap((b) => b.rows);
+    const rowById = Object.fromEntries(rows.map((r) => [r.id, r]));
+    let selectedId = null;
+    const stats = { records: Object.keys(records).length, codes: new Set(Object.values(records).map((r) => r.catalogCode).filter(Boolean)).size, attempts: Object.values(records).flatMap((r) => r.attemptEvidence).length };
+    const countWithin = (row) => row.recordIds.length + rows.filter((r) => r.parentId === row.id).reduce((n, r) => n + countWithin(r), 0);
+    const orderRecords = (row, book) => {
+      const ord = new Map((book.raw.sectionFlow ?? []).map((s) => [s.cacheRef, s.order]));
+      return row.recordIds.map((id, i) => ({ r: records[id], i, o: ord.get(records[id].publicSectionTemplateRef) ?? Number.MAX_SAFE_INTEGER })).sort((a, b) => a.o - b.o || a.i - b.i).map((x) => x.r);
+    };
+    function record(r, index) {
+      const [glyph, kind] = marker(r), attempts = r.attemptEvidence.filter((a) => typeof a.score === "number");
+      const score = attempts.map((a) => a.score).join(" / "), dates = attempts.map((a) => a.dateRaw ?? "날짜 미제공").join(" / ");
+      const lesson = r.lessonIndex !== null ? `${r.lessonIndex}차시` : null;
+      return `<details class="record" data-record-container="${esc(r.recordId)}"><summary class="record-summary" data-record-id="${esc(r.recordId)}" tabindex="0" aria-expanded="false" aria-controls="c2-detail-${index}" aria-label="${esc(r.sectionDisplayLabel + (lesson ? " " + lesson : "") + " · " + label(r.performanceState ?? r.evidenceState))}"><span class="glyph ${kind}" aria-hidden="true">${glyph}</span><span class="record-label">${esc(r.sectionDisplayLabel)}${lesson ? `<small>${esc(lesson)}</small>` : ""}</span><span class="code">${esc(r.catalogCode ?? "코드 미관찰")}</span><span class="evidence-status ${kind}">${esc(label(r.performanceState ?? r.evidenceState))}</span><span class="numeric ${score ? "" : "empty"}">${score ? `${esc(score)}<small>점</small><span class="raw-date">${esc(dates)}</span>` : "채점 근거 없음"}</span><span class="teacher">교사 판단<br>${esc(label(r.teacherVerdict.state))}</span><span class="expand-sign" aria-hidden="true">+</span></summary><div class="inline-evidence" id="c2-detail-${index}" data-detail-record="${esc(r.recordId)}"></div></details>`;
+    }
+    let ordinal = 0;
+    function recordsLane(row, book) {
+      const rr = orderRecords(row, book);
+      return rr.length ? `<div class="record-stack" aria-label="${esc(row.title)} 섹션 표시 순서">${rr.map((r) => record(r, ordinal++)).join("")}</div>` : `<p class="no-records">이 목차 노드에 공급된 섹션 기록이 없습니다. 명시적 미배정 또는 미완료라는 뜻은 아닙니다.</p>`;
+    }
+    function node(row, book, first) {
+      const children = book.rows.filter((r) => r.parentId === row.id);
+      if (row.level === "major")
+        return `<details class="major" data-toc-node="${esc(row.id)}" ${first ? "open" : ""}><summary class="major-summary"><span class="major-sign">${esc(row.label)}</span><span class="major-title">${esc(row.title)}</span><span class="major-count">${countWithin(row)}개 기록</span></summary>${row.recordIds.length ? recordsLane(row, book) : ""}${children.map((c) => node(c, book, false)).join("")}</details>`;
+      if (row.level === "middle" && children.length)
+        return `<section class="middle" data-toc-node="${esc(row.id)}"><div class="middle-heading"><h3>${esc(row.title)}</h3><span class="node-meta">${esc(levels[row.level])}<br>부모 관계: ${esc(row.parentRelationState)}</span></div>${row.recordIds.length ? recordsLane(row, book) : ""}${children.map((c) => node(c, book, false)).join("")}</section>`;
+      const isAssessment = row.level === "major_assessment";
+      return `<section class="${row.level === "middle" ? "middle" : "unit"} ${isAssessment ? "assessment" : ""}" data-toc-node="${esc(row.id)}"><div class="unit-head"><span class="unit-number">${esc(isAssessment ? "ASSESS" : row.label)}</span><h4>${esc(row.title)}</h4><span class="node-meta">${esc(levels[row.level] ?? row.level)}${row.raw.printedStartPage !== null ? "<br>p." + esc(row.raw.printedStartPage) : ""}</span></div>${recordsLane(row, book)}${children.map((c) => node(c, book, false)).join("")}</section>`;
+    }
+    const books = V.books.map((b, i) => `<section class="book" id="c2-book-${i}" data-book-key="${esc(b.key)}"><div class="book-head"><span class="book-number">0${i + 1}</span><div><h2>${esc(b.label)}</h2><div class="identity">${esc(b.raw.originalBookTitle)}<br>코드 ${esc(b.raw.bookCode)} · 판본 ${esc(b.edition)} · 공개 리비전 ${esc(b.raw.sourceEditionBinding.publicRevisionLabel)}<br>학생 종이 교재 리비전 미확인</div></div><div class="coverage"><b>목차</b> ${b.tocCoverage.state === "printed_toc_verified" || b.tocCoverage.state === "entire_printed_toc_verified" ? "전체 인쇄 목차" : "학원 목록 구조 · 인쇄 목차 미검증"} ${b.rows.length}노드<br><b>본문</b> ${b.tocCoverage.state === "native_catalog_only" ? "본문 미검증" : "공개 샘플 일부만 확인"}<br><b>수행</b> ${b.rows.reduce((n, r) => n + r.recordIds.length, 0)}개 기록·확인칸 / 채점 ${b.performanceCoverage.attemptObservationCount}건<br>전체 학생 이력은 불완전</div></div><details class="guide"><summary>교재 안내 순서와 적용 범위</summary><ol class="guide-flow">${(b.raw.sectionFlow ?? []).map((s) => `<li>${esc(s.sourceLabel)}</li>`).join("")}</ol><p>이 선과 순서는 교재의 인쇄·표시 순서입니다. 인지 의존성·선수 관계·완료 전이를 뜻하지 않습니다. 안내에 있는 모든 섹션이 각 단원에 존재하거나 배정됐다는 뜻도 아닙니다. 연결되지 않은 확인칸은 원본 표시 순서 끝에 보존합니다.</p></details>${b.rows.filter((r) => r.parentId === null).map((r, j) => node(r, b, i === 0 && j === 0)).join("")}</section>`).join("");
+    target.classList.add("c2");
+    target.innerHTML = `<a class="skip" href="#c2-books">교재 근거 레일로 이동</a><div class="frame"><div class="topline"><span class="wordmark">교재의 흐름, 근거의 기록</span><span class="edition-mark">C2 / PRIVATE SNAPSHOT</span></div><header class="hero"><div><p class="overline">SECTION FLOW · READ FIRST</p><h1>${esc(V.studentLabel)}의 교재를 읽다</h1><p class="hero-note">얇은 행을 따라 필요한 근거만 펼쳐 봅니다.<br>섹션의 순서와 교사의 판단을, 각각 그대로.</p></div><div><div class="count-line"><span><strong>${stats.records}</strong> <small>기록·확인칸</small></span><span><strong>${stats.codes}</strong> <small>목록 코드</small></span><span><strong>${stats.attempts}</strong> <small>채점 관찰</small></span></div><div class="source-time">저장 스냅샷 ${esc(V.sourceContractVersion)}<br>학생 수행 기준시각: ${esc(V.sourceAsOf.studentPerformance ?? "미제공")}<br>목차 캐시 확인: ${esc(V.sourceAsOf.editionCacheVerifiedAt)}<br>현재 학원 기록을 새로 조회한 화면이 아닙니다.</div></div></header><div class="notice"><b>전체 완료 미확인</b><span>점수 100은 완료 판단과 별개입니다. 배정 범위·완료 기준이 닫히지 않아 완료율과 예상 기간을 계산하지 않습니다.</span></div><nav class="book-nav" aria-label="교재 이동">${V.books.map((b, i) => `<a href="#c2-book-${i}">${esc(b.label)} <span>${esc(b.key)}</span> ↘</a>`).join("")}</nav><div class="legend"><div class="legend-list"><span><i class="glyph observed" aria-hidden="true">⊙</i> 채점 기록</span><span><i class="glyph mapping" aria-hidden="true">◇</i> 대응 미확인</span><span><i class="glyph" aria-hidden="true">⌁</i> 조회 범위 결과행 없음</span><span><i class="glyph" aria-hidden="true">·</i> 수행 미조회</span></div><button type="button" data-expand-majors>모든 대단원 펼치기</button></div><div id="c2-status" class="sr-only" role="status" aria-live="polite"></div><div id="c2-books" tabindex="-1">${books}</div><footer class="footer"><div><h2>무엇이 확인됐고, 무엇이 남았는가</h2><p>목차·섹션 존재·조회 범위·채점·정확한 대응·교사 완료 판단은 독립된 축입니다. 결과행이 없다는 관찰을 실제 미수행으로 바꾸지 않습니다.</p><p>기본예제는 앱에 기록하지 않는다는 사용자 설명을 정확한 원문 라벨 범위에만 보존합니다. 개념예제·기본문제와 합치지 않습니다. ${V.terminologyPolicy ? "DT는 DailyTest 수업 활동이며 Daily Restudy 교재 섹션과 서로 다른 항목입니다. 사용자 정정 규칙이며 학원 UI 타입 대응은 미검증입니다." : "DT와 Daily Restudy의 동일성은 미검증입니다."}</p><p>문항별 채점·답안 이미지·필기 노트·풀이 노트는 not_captured입니다. 수집 자료가 없다는 것은 학생에게 노트나 풀이가 없다는 뜻이 아닙니다. 문항 전체 분모는 null입니다.</p></div><div><h2>출처와 대응을 보존합니다</h2><p>검증된 인쇄 목차와 학원 목록의 번호 그룹을 구분합니다. 번호 그룹의 실제 목차 단계는 미확인입니다. 공개 샘플은 전체 교재 본문이나 종이 판본의 검증을 뜻하지 않습니다.</p><details><summary>미연결 일지·숙제 원문·입력 SHA</summary><div class="source-note">${V.unmappedAssertions.map((a) => `<p>${esc(a.dateRaw)} · ${esc(a.statement)}<br>${esc(a.reason)}<br>${safe(a.sourceUrl) ? `<a href="${esc(a.sourceUrl)}" target="_blank" rel="noopener noreferrer">저장 일지 근거 ↗</a>` : ""}</p>`).join("")}<p>숙제 원문: ${esc(V.raw.currentHomeworkSource)}</p><p>숙제 페이지 대응은 목차 구간 기반 잠정 연결입니다. 실제 문항·종이 완료는 미확인입니다.</p><p class="raw-id">SHA-256(원본 파일 바이트): ${esc(V.inputSha256)}</p></div></details><p>외부 폰트·CDN을 쓰지 않습니다. 저장 근거는 본인 전용 Site의 검증된 조회 경로에서 불러옵니다.</p></div></footer></div>`;
+    const summaries = () => [...target.querySelectorAll("[data-record-id]")];
+    function notebookRows(r) {
+      return [["lecture_notes", "필기 노트"], ["solution_notes", "풀이 노트"]].map(([kind, title]) => {
+        const notes = V.notebookEvidence.filter((n) => n.kind === kind && n.targets.some((t) => t.tocNodeRef === r.tocNodeRef && (t.sectionRecordId === null || t.sectionRecordId === r.recordId)));
+        return notes.length ? notes.map((n) => `<div class="capture-line">${esc(title)} · ${esc(n.captureState)}<details><summary>노트 대상·근거·교사 검토</summary><pre>${raw(n)}</pre></details></div>`).join("") : `<div class="capture-line">${esc(title)}<br>not_captured · 수집 자료 없음<br>교사 검토: 미제공</div>`;
+      }).join("");
+    }
+    function detail(r) {
+      const row = rowById[r.tocNodeRef], attempts = r.attemptEvidence;
+      return `<div class="detail-line"><h5>${esc(r.unitLabel)} · ${esc(r.unitTitle)} / ${esc(r.sectionDisplayLabel)}${r.lessonIndex !== null ? " · " + esc(r.lessonIndex) + "차시" : ""}</h5><button type="button" class="close-inline" data-close-record>근거 접기 ↑</button></div><div class="detail-columns"><section><h6>정확한 대상과 독립된 상태</h6>${dl([["인쇄/공개 라벨", r.publicSectionLabel ?? "미제공"], ["앱 원문 라벨", r.sectionSourceLabel], ["목록 코드", r.catalogCode ?? "미관찰"], ["섹션 존재", label(r.sectionApplicabilityState)], ["목록 존재", label(r.catalogPresence)], ["조회/수행", label(r.performanceState ?? r.evidenceState)], ["정확한 매핑", label(r.mappingState)], ["교사 판정", label(r.teacherVerdict.state) + " · " + String(r.teacherVerdict.value ?? "unknown")], ["종이 확인", label(r.paperEvidence.state)], ["완료 판단", label(r.progressDecision)]])}${r.absenceReason ? `<p class="tiny">빈 근거 사유: ${esc(r.absenceReason)}</p>` : ""}<div class="read-only-note"><b>교사의 판단을 위한 읽기 위치</b>현재 판단 ${esc(label(r.teacherVerdict.state))} · 메모 ${esc(r.teacherVerdict.note ?? r.teacherVerdict.memo ?? "미제공")}<br>교사 판정은 정확한 섹션·문항·응시 범위의 근거와 함께 별도로 보존합니다.</div></section><section><h6>채점 ${attempts.length}건 · 원본 날짜</h6>${attempts.length ? attempts.map((a, i) => `<div class="attempt"><div class="grade">${typeof a.score === "number" ? esc(a.score) : "—"}<small>${typeof a.score === "number" ? "점 · 관찰값" : "점수 미제공"}</small></div>${dl([["원본 날짜", a.dateRaw ?? "미제공"], ["연도·시간대", (a.yearState ?? "unknown") + " / " + (a.timezoneState ?? "unknown")], ["사건 시각", a.occurredAt ?? "null · 미확인"], ["유효 시각", a.effectiveAt ?? "null · 미확인"], ["관찰 시각", a.observedAt ?? "null · 미제공"], ["기록 시각", a.recordedAt ?? "null · 미제공"], ["응시 고유 ID", a.nativeAttemptId ?? "null · 미제공"], ["결과 원문", a.sourceResultLabel ?? "미제공"], ["클리닉 원문", a.clinicText ?? "미제공"]])}${safe(a.sourceUrl) ? `<a href="${esc(a.sourceUrl)}" target="_blank" rel="noopener noreferrer">이 채점 관찰의 소스 ↗</a>` : ""}<details><summary>관찰 ${i + 1} 전체 원본</summary><pre>${raw(a)}</pre></details></div>`).join("") : '<p class="tiny">공급된 응시 근거 배열이 비어 있습니다. 실제 미수행·미배정이라는 뜻은 아닙니다.</p>'}<p class="tiny">100점도 교사 완료 판정을 대신하지 않습니다.</p>${r.diaryAssertions.length ? `<details><summary>연결된 일지 원문 ${r.diaryAssertions.length}건</summary>${r.diaryAssertions.map((a) => `<p>${esc(a.dateRaw)} · ${esc(a.statement)}<br>정확한 대응 ${esc(a.mappingState ?? "미제공")}<br>${safe(a.sourceUrl) ? `<a href="${esc(a.sourceUrl)}" target="_blank" rel="noopener noreferrer">일지 출처 ↗</a>` : ""}</p>`).join("")}</details>` : ""}</section><section><h6>문항·노트·출처</h6><div class="question-note">문항별 근거 ${esc(V.questionCoverage.state)}<br>관찰 문항 ${esc(V.questionCoverage.observedItemCount)} · 전체 문항 분모 ${esc(V.questionCoverage.totalItems ?? "null")}<br>답안 이미지·문항별 응시·채점 데이터는 공급되지 않았습니다.</div>${notebookRows(r)}<p class="tiny">수집 자료 없음은 실제 노트·풀이의 부재를 뜻하지 않습니다. 정확한 문항 ID를 만들어 넣지 않습니다.</p><ul class="source-links">${sourceLinks(r.sourceUrls)}</ul><p class="tiny">목차 시작 p.${esc(row.raw.printedStartPage ?? "미제공")} · 근거 PDF p.${esc(row.raw.tocEvidencePdfPage)}<br>학생 수행 기준시각 ${esc(V.sourceAsOf.studentPerformance ?? "미제공")}<br>개인 페이지는 열람 권한이 필요합니다.</p></section></div><details><summary>원본 전체와 코드·인쇄 대응 포인터</summary><pre>${raw(r)}</pre></details><div class="raw-id">recordId: ${esc(r.recordId)}<br>tocNodeRef: ${esc(r.tocNodeRef)}</div>`;
+    }
+    function openRecord(summary, open = true) {
+      const d = summary.parentElement;
+      if (open) {
+        summaries().forEach((s) => {
+          const p = s.parentElement;
+          if (s !== summary) {
+            p.open = false;
+            s.setAttribute("aria-expanded", "false");
+          }
+        });
+        selectedId = summary.dataset.recordId;
+        const body = d.querySelector(".inline-evidence");
+        body.innerHTML = detail(records[selectedId]);
+        body.setAttribute("role", "region");
+        body.setAttribute("aria-label", "선택 섹션의 전체 근거");
+        d.open = true;
+        summary.setAttribute("aria-expanded", "true");
+        target.querySelector("#c2-status").textContent = records[selectedId].sectionDisplayLabel + " · 근거를 같은 행 아래에 펼쳤습니다.";
+      } else {
+        d.open = false;
+        summary.setAttribute("aria-expanded", "false");
+        target.querySelector("#c2-status").textContent = "선택 섹션 근거를 접었습니다.";
+      }
+    }
+    const click = (e) => {
+      const t = e.target;
+      const s = t.closest("[data-record-id]");
+      if (s && target.contains(s)) {
+        e.preventDefault();
+        openRecord(s, !s.parentElement.open);
+        return;
+      }
+      const close = t.closest("[data-close-record]");
+      if (close) {
+        const s = close.closest(".record").querySelector("[data-record-id]");
+        openRecord(s, false);
+        s.focus();
+        return;
+      }
+      if (t.closest("[data-expand-majors]")) {
+        const all = [...target.querySelectorAll(".major")], open = all.some((d) => !d.open);
+        all.forEach((d) => d.open = open);
+        target.querySelector("[data-expand-majors]").textContent = open ? "모든 대단원 접기" : "모든 대단원 펼치기";
+      }
+    };
+    const keydown = (e) => {
+      const s = e.target.closest("[data-record-id]");
+      if (!s)
+        return;
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        openRecord(s, !s.parentElement.open);
+        return;
+      }
+      if (e.key === "Escape") {
+        e.preventDefault();
+        openRecord(s, false);
+        return;
+      }
+      const all = [...s.closest(".record-stack").querySelectorAll("[data-record-id]")];
+      let i = all.indexOf(s);
+      if (e.key === "ArrowDown" || e.key === "ArrowRight")
+        i = Math.min(all.length - 1, i + 1);
+      else if (e.key === "ArrowUp" || e.key === "ArrowLeft")
+        i = Math.max(0, i - 1);
+      else if (e.key === "Home")
+        i = 0;
+      else if (e.key === "End")
+        i = all.length - 1;
+      else
+        return;
+      e.preventDefault();
+      all[i].focus();
+      all[i].scrollIntoView({ block: "nearest" });
+    };
+    target.addEventListener("click", click);
+    target.addEventListener("keydown", keydown);
+    const first = summaries().find((s) => records[s.dataset.recordId].attemptEvidence.length);
+    if (first)
+      openRecord(first);
+    return { view: V, getSelectedId: () => selectedId, recordIds: Object.keys(records), tocIds: rows.map((r) => r.id), selectRecord: (id) => {
+      const s = summaries().find((s) => s.dataset.recordId === id);
+      if (s)
+        openRecord(s);
+    }, dispose: () => {
+      target.removeEventListener("click", click);
+      target.removeEventListener("keydown", keydown);
+      target.innerHTML = "";
+    } };
+  }
+  globalThis.mountC2ProgressRails = mountC2ProgressRails;
+  var source = document.querySelector("#progress-data");
+  var root = document.querySelector("#c2-root");
+  if (source && root) {
+    const handle = mountC2ProgressRails(JSON.parse(source.textContent), root);
+    window.C2_PROGRESS_QA = handle;
+  }
+
+  // src/teacher-overlay.ts
+  var mounted = new WeakMap;
+  var ownedAttribute = "data-teacher-overlay-owned";
+  var complete = (state) => state === "teacher_confirmed_complete";
+  var stateText = (state) => complete(state) ? "완료" : "미확인";
+  var present = (value) => value || "미확인";
+  function validateProjection(overlay) {
+    if (!["1.2.0", "1.3.0"].includes(overlay.version) || !/^[a-f0-9]{64}$/.test(overlay.sha256) || !/^[a-f0-9]{64}$/.test(overlay.sourceSnapshotSha256) || !overlay.studentId || !overlay.sourceRevision || !Array.isArray(overlay.candidates)) {
+      throw new Error("teacher_overlay_projection_invalid");
+    }
+    const summary = overlay.summary;
+    const counts = [
+      summary?.completedOriginalAttempts,
+      summary?.completedPathDecisions,
+      summary?.deliveryPlannedOriginalAttempts,
+      summary?.deliveryPlannedPathCandidates
+    ];
+    const printed = summary?.actualPrintedSheetCount;
+    if (counts.some((n) => typeof n !== "number" || !Number.isInteger(n) || n < 0) || printed !== null && (typeof printed !== "number" || !Number.isInteger(printed) || printed < 0)) {
+      throw new Error("teacher_overlay_summary_invalid");
+    }
+    if ((summary.printedOriginalAttempts !== undefined || summary.printedPathCandidates !== undefined) && [summary.printedOriginalAttempts, summary.printedPathCandidates].some((n) => typeof n !== "number" || !Number.isInteger(n) || n < 0)) {
+      throw new Error("teacher_overlay_summary_invalid");
+    }
+    const labels = new Set, attempts = new Set;
+    for (const candidate of overlay.candidates) {
+      if (!Number.isInteger(candidate.number) || candidate.number < 1 || candidate.number > 21 || labels.has(candidate.number) || !candidate.sourceRecordKey || !candidate.sourceAttemptKey || attempts.has(candidate.sourceAttemptKey) || [candidate.originalWrongReview, candidate.similarClinicReview].some((s) => s !== undefined && s !== "unknown" && s !== "teacher_confirmed_complete")) {
+        throw new Error("teacher_overlay_candidate_invalid");
+      }
+      labels.add(candidate.number);
+      attempts.add(candidate.sourceAttemptKey);
+      const print = candidate.printConfirmation;
+      if (print && (print.state !== "user_confirmed_complete" || !print.recordedAt || !print.printedTimeRaw || print.printedAt !== null || print.printedAtState !== "relative_time_only_no_authoritative_timestamp" || !print.sourceMessageId || !print.eventId || print.printedPageCount !== null || print.actualPrintedSheetCount !== null || print.materialIds !== null || print.printHeaderVerified !== false || !Array.isArray(print.remediationPaths) || print.remediationPaths.length !== 2 || !print.remediationPaths.includes("original_wrong") || !print.remediationPaths.includes("similar_clinic"))) {
+        throw new Error("teacher_overlay_print_confirmation_invalid");
+      }
+    }
+  }
+  function rowText(candidate) {
+    const review = `교사 확인: 원오답 ${stateText(candidate.originalWrongReview)} · 유사클리닉 ${stateText(candidate.similarClinicReview)}`;
+    let text = review;
+    if (candidate.deliveryPlan?.state === "planned") {
+      const planned = "원오답·유사클리닉 전달 예정";
+      text = complete(candidate.originalWrongReview) || complete(candidate.similarClinicReview) ? `${review} · ${planned}` : planned;
+    }
+    if (candidate.printConfirmation?.state === "user_confirmed_complete") {
+      text += " · 인쇄: 교사 확인 완료 (전달·수령 미확인)";
+    }
+    return text;
+  }
+  var mountTeacherOverlay = attachTeacherOverlay;
+  function attachTeacherOverlay(overlay, target) {
+    if (overlay !== null)
+      validateProjection(overlay);
+    mounted.get(target)?.dispose();
+    if (overlay === null)
+      return { refresh() {}, afterRecordRender() {}, dispose() {} };
+    const books = target.querySelector("#c2-books");
+    if (!books)
+      throw new Error("teacher_overlay_requires_mounted_c2");
+    const document2 = target.ownerDocument;
+    const groups = new Map;
+    for (const candidate of overlay.candidates) {
+      const group = groups.get(candidate.sourceRecordKey) ?? [];
+      group.push(candidate);
+      groups.set(candidate.sourceRecordKey, group);
+    }
+    let disposed = false, pending = false;
+    const ownedNodes = new Set;
+    const own = (node, kind) => {
+      node.setAttribute(ownedAttribute, kind);
+      ownedNodes.add(node);
+      return node;
+    };
+    const make = (tag, className, text) => {
+      const node = document2.createElement(tag);
+      node.className = className;
+      if (text !== undefined)
+        node.textContent = text;
+      return node;
+    };
+    const pair = (list, label, value) => {
+      list.append(make("dt", "", label), make("dd", "", value));
+    };
+    const active = () => !disposed && target.contains(books);
+    const evidenceText = (evidence) => evidence ? `${evidence.evidenceClass} · 기록 시각 ${present(evidence.recordedAt)}` : "근거 미제공";
+    function appendCandidateDetail(section, candidate) {
+      const article = make("div", "teacher-overlay-candidate");
+      article.append(make("p", "teacher-overlay-detail-state", `#${candidate.number} · ${rowText(candidate)}`));
+      const list = make("dl", "teacher-overlay-fields");
+      pair(list, "원오답 검토", `교사 확인 ${stateText(candidate.originalWrongReview)}`);
+      pair(list, "유사클리닉 검토", `교사 확인 ${stateText(candidate.similarClinicReview)}`);
+      const plan = candidate.deliveryPlan;
+      pair(list, "전달 계획", plan?.state === "planned" ? `${plan.pickupAtLocal} · ${plan.precision === "approximate" ? "대략적인 예정 시각" : "예정 시각"}` : "미제공");
+      const print = candidate.printConfirmation;
+      pair(list, "교사 인쇄 확인", print?.state === "user_confirmed_complete" ? `완료 · 사용자 기록 시각 ${print.recordedAt}` : "미확인");
+      if (print)
+        pair(list, "인쇄 시각 원문", `"${print.printedTimeRaw}" (사용자 원문) · 정확한 인쇄 사건 시각 미확인`);
+      pair(list, "생성 / 인쇄 / 수령", print?.state === "user_confirmed_complete" ? `생성 시각 ${present(plan?.generatedAt)} · 인쇄 시각 ${present(plan?.printedAt)} · 수령 ${present(plan?.deliveredAt)}` : `생성 ${present(plan?.generatedAt)} · 인쇄 ${present(plan?.printedAt)} · 수령 ${present(plan?.deliveredAt)}`);
+      pair(list, "인쇄물 존재 근거", candidate.printExistence === "user_confirmed_present" ? "교사 사용자 확인 · 실물·머리글·코드 검증 별도" : candidate.printExistence === "verified" ? "별도 근거로 확인" : "미확인");
+      pair(list, "인계 / 수령 확인", "인계 미확인 · 수령 미확인");
+      pair(list, "인쇄 머리글 / 코드", `머리글 ${candidate.printHeaderVerified ? "확인" : "미검증"} · 코드 ${present(candidate.verifiedPrintTestCode) === "미확인" ? "미검증" : candidate.verifiedPrintTestCode}`);
+      article.append(list);
+      const source = make("details", "teacher-overlay-provenance");
+      source.append(make("summary", "", "대조 대상·출처·확인 시각"));
+      const fields = make("dl", "teacher-overlay-fields");
+      pair(fields, "고정 후보 번호", String(candidate.number));
+      pair(fields, "원본 기록 키", candidate.sourceRecordKey);
+      pair(fields, "원본 응시 키", candidate.sourceAttemptKey);
+      pair(fields, "원본 점수 / 날짜", `${candidate.score}점 · ${candidate.attemptRawDate}`);
+      pair(fields, "앱 목록 코드", `${candidate.appCatalogCode} · 인쇄 코드와의 대응 미검증`);
+      pair(fields, "원오답 확인 근거", evidenceText(candidate.reviewEvidence?.originalWrong));
+      pair(fields, "유사클리닉 확인 근거", evidenceText(candidate.reviewEvidence?.similarClinic));
+      if (print) {
+        pair(fields, "인쇄 확인 출처", `${print.sourceMessageId} · ${print.eventId}`);
+        pair(fields, "인쇄 확인 경로", print.remediationPaths.join(" · "));
+        pair(fields, "인쇄 사건 시각", "null · 상대 시각 원문만 보존 (정확한 시각 미확인)");
+        pair(fields, "페이지 / 장수 / 자료 ID", "null / null / null · 미확인");
+      }
+      pair(fields, "학생 / 리비전", `${overlay.studentId} · ${overlay.sourceRevision}`);
+      pair(fields, "교사 대조 SHA-256", overlay.sha256);
+      pair(fields, "원본 스냅샷 SHA-256", overlay.sourceSnapshotSha256);
+      source.append(fields);
+      article.append(source);
+      section.append(article);
+    }
+    function restoreInline(recordKey) {
+      if (!active())
+        return;
+      for (const row of books.querySelectorAll("[data-record-container]")) {
+        const key = row.getAttribute("data-record-container");
+        if (recordKey !== undefined && key !== recordKey)
+          continue;
+        const candidates = groups.get(key);
+        if (!candidates)
+          continue;
+        const body = row.querySelector(".inline-evidence");
+        if (!body || ![...body.children].some((node) => !node.hasAttribute(ownedAttribute)) || [...body.children].some((node) => node.getAttribute(ownedAttribute) === "detail"))
+          continue;
+        const section = own(make("section", "teacher-overlay-detail"), "detail");
+        section.setAttribute("aria-label", "독립된 교사 대조 근거");
+        section.append(make("h6", "teacher-overlay-detail-title", "교사 대조 · 별도 확인 축"));
+        section.append(make("p", "teacher-overlay-separation", "이 대조는 응시별 원오답·유사클리닉 검토입니다. 원본의 섹션 교사 판단·앱 점수·클리닉 상태와 별도로 보존합니다. 점수 100이나 검토 근거 없음으로 완료·미완료를 판단하지 않습니다. 전달 계획은 실제 생성·인쇄·수령 확인을 대신하지 않습니다."));
+        candidates.forEach((candidate) => appendCandidateDetail(section, candidate));
+        body.append(section);
+      }
+    }
+    function refresh() {
+      if (!active())
+        return;
+      for (const node of ownedNodes)
+        if (!target.contains(node))
+          ownedNodes.delete(node);
+      if (!target.querySelector(`[${ownedAttribute}="summary"]`)) {
+        const s = overlay.summary;
+        const completed = s.completedPathDecisions === s.completedOriginalAttempts * 2 ? `원응시 ${s.completedOriginalAttempts}건 × 원오답·유사클리닉 2경로 완료 (${s.completedPathDecisions}건)` : `원응시 ${s.completedOriginalAttempts}건 · 원오답·유사클리닉 ${s.completedPathDecisions}경로 완료`;
+        const printed = s.actualPrintedSheetCount === null ? "미확인" : `${s.actualPrintedSheetCount}장`;
+        const printConfirmation = s.printedOriginalAttempts === undefined ? "" : ` · 인쇄 교사 확인 원응시 ${s.printedOriginalAttempts}건 · ${s.printedPathCandidates}경로 후보`;
+        const summary = own(make("p", "teacher-overlay-summary", `교사 대조 v${overlay.version}: ${completed} · 전달 예정 원응시 ${s.deliveryPlannedOriginalAttempts}건 × 2경로 (${s.deliveryPlannedPathCandidates}후보)${printConfirmation} · 실제 인쇄 장수 ${printed} · ${overlay.sourceRevision} 응시별 대조 (원본 섹션 판단 별도)`), "summary");
+        summary.setAttribute("aria-label", "교사 대조 요약");
+        books.before(summary);
+      }
+      for (const row of books.querySelectorAll("[data-record-container]")) {
+        const candidates = groups.get(row.getAttribute("data-record-container"));
+        const label = row.querySelector(".record-summary .record-label");
+        if (!candidates || !label || label.querySelector(`[${ownedAttribute}="row"]`))
+          continue;
+        const badges = own(make("span", "teacher-overlay-row"), "row");
+        for (const candidate of candidates) {
+          const badge = make("span", "teacher-overlay-row-entry");
+          badge.append(make("span", "teacher-overlay-number", `#${candidate.number}`), make("span", "teacher-overlay-row-state", rowText(candidate)));
+          badges.append(badge);
+        }
+        label.append(badges);
+      }
+      restoreInline();
+    }
+    function scheduleRestore() {
+      if (pending || !active())
+        return;
+      pending = true;
+      queueMicrotask(() => {
+        pending = false;
+        if (active())
+          refresh();
+      });
+    }
+    const delegated = (event) => {
+      const node = event.target;
+      const element = node?.nodeType === 1 ? node : node?.parentElement;
+      if (element?.closest("[data-record-id], [data-close-record]"))
+        scheduleRestore();
+    };
+    target.addEventListener("click", delegated);
+    target.addEventListener("keydown", delegated);
+    const Observer = document2.defaultView?.MutationObserver;
+    const observer = Observer ? new Observer((mutations) => {
+      if (!active()) {
+        dispose();
+        return;
+      }
+      if (mutations.some((mutation) => {
+        const element = mutation.target;
+        return element.nodeType === 1 && element.matches(".inline-evidence") && [...mutation.addedNodes, ...mutation.removedNodes].some((node) => node.nodeType !== 1 || !node.hasAttribute(ownedAttribute));
+      }))
+        scheduleRestore();
+    }) : null;
+    function dispose() {
+      if (disposed)
+        return;
+      disposed = true;
+      observer?.disconnect();
+      target.removeEventListener("click", delegated);
+      target.removeEventListener("keydown", delegated);
+      for (const node of ownedNodes)
+        node.remove();
+      ownedNodes.clear();
+      if (mounted.get(target) === handle)
+        mounted.delete(target);
+    }
+    const handle = { refresh, afterRecordRender: restoreInline, dispose };
+    mounted.set(target, handle);
+    refresh();
+    observer?.observe(target, { childList: true, subtree: true });
+    return handle;
+  }
+
+  // src/grading-projection.ts
+  function mountIncludedContents(projection, target) {
+    const owned = [];
+    const doc = target.ownerDocument;
+    for (const content of projection.includedContents) {
+      const parent = content.parentSourceRecordId ? Array.from(target.querySelectorAll("[data-record-container]")).find((e) => e.dataset.recordContainer === content.parentSourceRecordId) : null;
+      const unit = Array.from(target.querySelectorAll("[data-toc-node]")).find((e) => e.dataset.tocNode === content.tocNodeRef);
+      if (!unit)
+        throw Error("included_content_unit_not_rendered");
+      const note = doc.createElement("p");
+      note.className = "included-content-note";
+      note.setAttribute("data-included-source-record", content.sourceRecordKey);
+      note.setAttribute("data-inclusion-binding", content.nativeBindingState);
+      note.textContent = content.parentCatalogCode ? `${content.printedSourceLabel}: ${content.parentLessonIndex}차시 (${content.parentCatalogCode})에 포함 · 별도 기록칸·완료 분모 없음 · 사용자 포함 보고 · 서버 직접검증 전` : `${content.printedSourceLabel}: 소단원 마지막 차시에 포함 · 별도 기록칸·완료 분모 없음 · 마지막 차시 native 연결 미확인`;
+      if (parent)
+        parent.insertAdjacentElement("afterend", note);
+      else
+        unit.querySelector(".unit-head")?.insertAdjacentElement("afterend", note);
+      owned.push(note);
+    }
+    return { dispose() {
+      for (const note of owned)
+        note.remove();
+    } };
+  }
+
+  // src/app.ts
+  var esc2 = (v) => String(v ?? "미제공").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+  var data = { students: [], snapshots: {}, defaultStudentId: null };
+  var shell = document.querySelector("#app-shell");
+  var root2 = document.querySelector("#c2-root");
+  var extra = document.querySelector("#unresolved");
+  var studentEventHandle = null;
+  var desktopHandle = null;
+  var current = null;
+  var handle;
+  var teacherHandle;
+  var includedHandle;
+  var evidenceHandle;
+  var assessmentHandle;
+  var refreshHandle;
+  var todayHandle;
+  var workflowHandle = null;
+  var sequence = 0;
+  var activeRequest = null;
+  var lastReceipt = null;
+  var navigationReceipt = null;
+  function renderStudent(id) {
+    const navigationStudent = data.students.find((s) => s.id === id && s.managementState === "active");
+    if (!navigationStudent || data.selectedStudent?.id !== id || !data.snapshots[id])
+      throw Error("허용된 현재 학생이 아닙니다.");
+    const student = { ...navigationStudent, ...data.selectedStudent }, saved = data.snapshots[id];
+    desktopHandle?.dispose();
+    desktopHandle = null;
+    includedHandle?.dispose();
+    includedHandle = null;
+    evidenceHandle?.dispose();
+    evidenceHandle = null;
+    assessmentHandle?.dispose();
+    assessmentHandle = null;
+    refreshHandle?.dispose();
+    refreshHandle = null;
+    teacherHandle?.dispose();
+    teacherHandle = null;
+    handle?.dispose();
+    current = id;
+    shell.innerHTML = `<div class="shell-inner"><div class="app-title">교재 학습 지도 <span>본인 전용 · 저장 근거</span></div><nav class="student-nav" aria-label="학생 선택">${data.students.map((s) => `<button type="button" data-student-id="${esc2(s.id)}" aria-pressed="${s.id === id}">${esc2(s.displayName)}</button>`).join("")}</nav><div class="refresh-state"><b>학생 선택 · 저장 근거 조회</b><span>현재는 저장 자료입니다. 앱을 다시 열어도 학원 자료를 새로 조회하지 않습니다.</span><a href="https://chatgpt.com/space/${esc2(student.pageId)}" target="_blank" rel="noopener noreferrer">학생 원본 보기</a></div><details class="coverage-details"><summary>조회 시각·자료 범위 확인</summary><p>마지막 성공 갱신: 미확인 · 이번 학원 조회 시각: 미조회 · 앱 묶음 생성: ${esc2(data.bundleBuiltAt)}</p><p>등록 유효기간이 null인 자료는 실제 등록일·종료일이 미확인입니다. 사건 시각, 조회 시각, 앱 생성 시각을 서로 대신하지 않습니다.</p>${student.enrollments.map((e) => `<p>${esc2(e.courseTitle)} · 등록 시작 ${esc2(e.validFrom)} / 종료 ${esc2(e.validTo)} · ${esc2(e.status)}</p>`).join("")}${saved.sourceCoverage.map((s) => `<p>${esc2(s.module)} · 조회 기준시각 ${esc2(s.sourceAsOf)} · ${esc2(s.completeness)}<br>${esc2(s.queryScope)}</p>`).join("")}<p>일부 소스 갱신이 실패하면 마지막 성공 자료와 그 시각을 유지해야 합니다. 현재 갱신 연결이 없어 요청 접수·조회 성공으로 표시하지 않습니다.</p></details></div>`;
+    const shellInner = shell.querySelector(".shell-inner");
+    studentEventHandle?.dispose();
+    studentEventHandle = null;
+    if (data.studentEventOverlay)
+      studentEventHandle = mountStudentEventView(shellInner, data.studentEventOverlay, id);
+    if (workflowHandle)
+      workflowHandle.attach(shellInner);
+    else
+      workflowHandle = mountWorkflowView(shellInner, { onUnauthorized: () => clearProtectedData(sequence), canSelectStudent: (studentId) => data.students.some((s) => s.id === studentId && s.managementState === "active"), selectStudent });
+    const legacyToday = document.createElement("details");
+    legacyToday.className = "legacy-today-detail";
+    const legacyTitle = document.createElement("summary");
+    legacyTitle.textContent = "이전 저장 요약 확인";
+    const legacyBody = document.createElement("div");
+    legacyToday.append(legacyTitle, legacyBody);
+    shellInner.append(legacyToday);
+    todayHandle?.dispose();
+    todayHandle = mountTodayPreparation(legacyBody, () => clearProtectedData(sequence));
+    refreshHandle = renderRefreshReadiness(data.refreshReadiness, shell.querySelector(".shell-inner"));
+    handle = mountC2ProgressRails(data.gradingProjection.view, root2);
+    includedHandle = mountIncludedContents(data.gradingProjection, root2);
+    teacherHandle = mountTeacherOverlay(data.teacherOverlay, root2);
+    evidenceHandle = mountEvidenceView(data.evidenceProjection, root2, data.domainReceipt);
+    assessmentHandle = mountAssessmentView(data.assessmentProjection, root2, data.assessmentReceipt);
+    const unmapped = data.gradingProjection.view.unmappedRecordIds.map((rid) => data.gradingProjection.view.records[rid]);
+    extra.innerHTML = `<div class="unresolved-inner">${unmapped.length ? `<h2>목차 대응 미확정 섹션 ${unmapped.length}개</h2>${unmapped.map((r) => `<details><summary>${esc2(r.sectionDisplayLabel)} · ${esc2(r.catalogCode)} · ${esc2(r.mappingState)}</summary><pre>${esc2(JSON.stringify(r, null, 2))}</pre></details>`).join("")}` : ""}${saved.unresolvedAttempts.length ? `<h2>교재·섹션 연결 미확정 응시 ${saved.unresolvedAttempts.length}건</h2><p>등록 교재에 임의로 붙이지 않았습니다. 점수와 원본 표시 날짜를 그대로 보존합니다.</p>${saved.unresolvedAttempts.map((a) => `<details data-unresolved-attempt="${esc2(a.sourceAttemptId)}"><summary>${esc2(a.displayedAt?.raw)} · ${esc2(a.score)}점 · 대응 미확인</summary><pre>${esc2(JSON.stringify(a, null, 2))}</pre></details>`).join("")}` : ""}</div>`;
+    desktopHandle = mountDesktopStepper(shell, root2, extra, { studentId: id, studentName: student.displayName, sourcePageId: student.pageId, view: data.gradingProjection.view, teacherOverlay: data.teacherOverlay, selectRecord: (recordId) => handle.selectRecord(recordId) });
+    return { studentId: current, recordCount: Object.keys(data.gradingProjection.view.records).length, originalSavedRecordCount: Object.keys(saved.view.records).length, includedContentCount: data.gradingProjection.includedContents.length, sourceMode: "saved_snapshot", liveRefreshConnected: false };
+  }
+  function requireCurrentRequest(token) {
+    if (token !== sequence)
+      throw Error("superseded_selection");
+  }
+  function clearProtectedData(token) {
+    requireCurrentRequest(token);
+    activeRequest?.abort();
+    activeRequest = null;
+    sequence++;
+    desktopHandle?.dispose();
+    desktopHandle = null;
+    studentEventHandle?.dispose();
+    studentEventHandle = null;
+    includedHandle?.dispose();
+    includedHandle = null;
+    evidenceHandle?.dispose();
+    evidenceHandle = null;
+    assessmentHandle?.dispose();
+    assessmentHandle = null;
+    refreshHandle?.dispose();
+    refreshHandle = null;
+    teacherHandle?.dispose();
+    teacherHandle = null;
+    handle?.dispose();
+    handle = null;
+    lastReceipt = null;
+    navigationReceipt = null;
+    workflowHandle?.dispose();
+    workflowHandle = null;
+    todayHandle?.dispose();
+    todayHandle = null;
+    data = { students: [], snapshots: {}, defaultStudentId: null };
+    current = null;
+    root2.innerHTML = "";
+    extra.innerHTML = "";
+    shell.innerHTML = '<div class="shell-inner"><div class="app-title">교재 학습 지도</div><p>현재 로그인과 소유자 권한을 확인하지 못해 학생 자료를 닫았습니다.</p><a href="/signin-with-chatgpt?return_to=/" target="_top">ChatGPT로 로그인</a></div>';
+  }
+  async function load(path, payload, token, signal) {
+    const response = await fetch(path, { method: "POST", credentials: "same-origin", redirect: "manual", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload), signal });
+    requireCurrentRequest(token);
+    const mediaType = response.headers.get("Content-Type")?.split(";")[0].trim().toLowerCase();
+    if (response.status === 401 || response.status === 403 || response.type === "opaqueredirect" || response.redirected || response.status >= 300 && response.status < 400 || !(mediaType === "application/json" || mediaType?.endsWith("+json"))) {
+      clearProtectedData(token);
+      throw Error("protected_identity_response_required");
+    }
+    let result;
+    try {
+      result = await response.json();
+    } catch {
+      requireCurrentRequest(token);
+      throw Error("protected_api_response_invalid");
+    }
+    requireCurrentRequest(token);
+    if (!response.ok || result?.status !== "success" || result.verification?.contextGatePassed !== true || result.receipt?.loadStatus !== "verified" || result.receipt?.runtimeReceipt !== true)
+      throw Error(result?.status ?? "context_receipt_required");
+    return result;
+  }
+  function accept(result, requested, token) {
+    requireCurrentRequest(token);
+    if (typeof result.studentId !== "string" || requested !== null && result.studentId !== requested || result.selectedStudent?.id !== result.studentId)
+      throw Error("returned_student_scope_mismatch");
+    if (!/^[a-f0-9]{64}$/.test(result.receipt?.scopeFingerprint ?? ""))
+      throw Error("invalid_scope_receipt");
+    if (result.verification?.navigationGatePassed !== true || result.navigationReceipt?.loadStatus !== "verified" || result.navigationReceipt?.runtimeReceipt !== true || !/^[a-f0-9]{64}$/.test(result.navigationReceipt?.scopeFingerprint ?? ""))
+      throw Error("navigation_receipt_required");
+    if (!Array.isArray(result.meta?.students) || !Array.isArray(result.selectedStudent.enrollments) || typeof result.selectedStudent.pageId !== "string")
+      throw Error("invalid_student_metadata");
+    const gradingPin = result.meta.gradingProjectionSha256?.[result.studentId];
+    if (!/^[a-f0-9]{64}$/.test(gradingPin ?? "") || result.scope?.gradingProjectionSha256 !== gradingPin || result.scope?.sourceRevisions?.gradingProjection !== gradingPin || result.gradingProjection?.studentId !== result.studentId || result.gradingProjection?.sourceSnapshotSha256 !== result.snapshot?.sourceHash)
+      throw Error("grading_projection_pin_required");
+    const evidencePin = result.meta.evidenceProjectionSha256?.[result.studentId], domain = result.domainReceipt;
+    if (!/^[a-f0-9]{64}$/.test(evidencePin ?? "") || result.scope?.evidenceProjectionSha256 !== evidencePin || result.scope?.sourceRevisions?.evidenceProjection !== evidencePin || result.evidenceProjection?.studentId !== result.studentId || result.evidenceProjection?.sourceSnapshotSha256 !== result.snapshot?.sourceHash || result.evidenceProjection?.namespaceBinding?.studentId !== result.studentId || result.evidenceProjection?.namespaceBinding?.studentPageId !== result.selectedStudent.pageId || domain?.runtimeSchemaValidated !== true || domain?.fullContractByteHashVerified !== true || domain?.namespaceBindingValidated !== true || domain?.studentId !== result.studentId || domain?.evidenceProjectionSha256 !== evidencePin || domain?.contextScopeFingerprint !== result.receipt.scopeFingerprint || domain?.contractSha256 !== result.meta.domainContractSha256 || domain?.contractSha256 !== result.scope?.sourceRevisions?.domainContract || domain?.namespaceBindingSha256 !== result.scope?.sourceRevisions?.namespaceBinding || result.evidenceProjection?.externalSourceQueried !== false || result.evidenceProjection?.lastSuccessfulRefreshedAt !== null || result.evidenceProjection?.queriedAt !== null)
+      throw Error("evidence_schema_namespace_receipt_required");
+    const assessmentPin = result.meta.assessmentProjectionSha256?.[result.studentId], ar = result.assessmentReceipt;
+    if (!/^[a-f0-9]{64}$/.test(assessmentPin ?? "") || result.scope?.assessmentProjectionSha256 !== assessmentPin || result.scope?.sourceRevisions?.assessmentProjection !== assessmentPin || result.assessmentProjection?.studentId !== result.studentId || result.assessmentProjection?.sourceSnapshotSha256 !== result.snapshot?.sourceHash || result.assessmentProjection?.sourceEvidenceProjectionSha256 !== evidencePin || result.assessmentProjection?.namespaceBindingSha256 !== domain.namespaceBindingSha256 || ar?.studentId !== result.studentId || ar?.runtimeSchemaValidated !== true || ar?.fullContractByteHashVerified !== true || ar?.assessmentProjectionSha256 !== assessmentPin || ar?.contractSha256 !== result.meta.assessmentContractSha256 || ar?.contractSha256 !== result.scope?.sourceRevisions?.assessmentContract || ar?.contextScopeFingerprint !== result.receipt.scopeFingerprint || result.assessmentProjection?.coverage?.actualAttemptCount !== 0 || result.assessmentProjection?.coverage?.queriedAt !== null || result.assessmentProjection?.coverage?.lastSuccessfulRefreshedAt !== null)
+      throw Error("assessment_schema_scope_receipt_required");
+    if (result.refreshReadiness?.studentId !== result.studentId || result.refreshReadiness?.state !== "unavailable" || result.refreshReadiness?.backendAttemptStarted !== false || result.refreshReadiness?.lastBackendAttemptAt !== null || result.refreshReadiness?.lastSuccessfulRefreshedAt !== null || result.refreshReadiness?.externalRequests !== 0)
+      throw Error("blocked_refresh_readiness_scope_required");
+    const teacherPin = result.meta.teacherOverlayProjectionSha256?.[result.studentId];
+    if (teacherPin === undefined || result.scope?.teacherOverlayProjectionSha256 !== teacherPin)
+      throw Error("teacher_overlay_pin_required");
+    if (result.teacherOverlay === null) {
+      if (teacherPin !== null)
+        throw Error("teacher_overlay_missing");
+    } else if (!result.teacherOverlay || result.teacherOverlay.studentId !== result.studentId || result.teacherOverlay.sourceSnapshotSha256 !== result.snapshot?.sourceHash || !/^[a-f0-9]{64}$/.test(teacherPin ?? "") || result.scope?.sourceRevisions?.teacherOverlayProjection !== teacherPin || result.scope?.sourceRevisions?.teacherOverlaySource !== result.teacherOverlay.sha256 || result.scope?.sourceRevisions?.teacherOverlayRevision !== result.teacherOverlay.sourceRevision)
+      throw Error("teacher_overlay_scope_mismatch");
+    if (result.studentEventOverlay)
+      validateStudentEventView(result.studentEventOverlay, result.studentId);
+    const students = result.meta.students.map((s) => ({ id: s.id, displayName: s.displayName, managementState: s.managementState }));
+    if (!students.some((s) => s.id === result.studentId && s.managementState === "active"))
+      throw Error("student_outside_loaded_roster");
+    data = { students, studentEventOverlay: result.studentEventOverlay ?? null, snapshots: { [result.studentId]: result.snapshot }, selectedStudent: { id: result.selectedStudent.id, pageId: result.selectedStudent.pageId, enrollments: result.selectedStudent.enrollments }, refreshReadiness: result.refreshReadiness, assessmentProjection: result.assessmentProjection, assessmentReceipt: result.assessmentReceipt, evidenceProjection: result.evidenceProjection, domainReceipt: result.domainReceipt, teacherOverlay: result.teacherOverlay, gradingProjection: result.gradingProjection, defaultStudentId: result.studentId, rosterRevision: result.meta.rosterRevision, registrySha256: result.meta.registrySha256, snapshotProjectionSha256: result.meta.snapshotProjectionSha256, teacherOverlayProjectionSha256: result.meta.teacherOverlayProjectionSha256, gradingProjectionSha256: result.meta.gradingProjectionSha256, evidenceProjectionSha256: result.meta.evidenceProjectionSha256, domainContractSha256: result.meta.domainContractSha256, assessmentProjectionSha256: result.meta.assessmentProjectionSha256, assessmentContractSha256: result.meta.assessmentContractSha256, bundleBuiltAt: result.meta.bundleBuiltAt };
+    lastReceipt = result.receipt;
+    navigationReceipt = result.navigationReceipt;
+    return renderStudent(result.studentId);
+  }
+  async function selectStudent(id) {
+    await ready;
+    if (!current || !lastReceipt || !navigationReceipt)
+      throw Error("context_not_loaded");
+    if (!data.students.some((s) => s.id === id))
+      throw Error("student_outside_loaded_roster");
+    const token = ++sequence;
+    activeRequest?.abort();
+    const request = new AbortController;
+    activeRequest = request;
+    try {
+      const result = await load("/api/student-snapshot", { studentId: id, expectedRosterRevision: data.rosterRevision, expectedRegistrySha256: data.registrySha256, expectedSnapshotSha256: data.snapshotProjectionSha256[id], expectedTeacherOverlaySha256: data.teacherOverlayProjectionSha256[id], expectedGradingProjectionSha256: data.gradingProjectionSha256[id], expectedEvidenceProjectionSha256: data.evidenceProjectionSha256[id], expectedDomainContractSha256: data.domainContractSha256, expectedAssessmentProjectionSha256: data.assessmentProjectionSha256[id], expectedAssessmentContractSha256: data.assessmentContractSha256 }, token, request.signal);
+      return accept(result, id, token);
+    } catch (error) {
+      if (error.name !== "AbortError" && token === sequence && current) {
+        const notice = document.createElement("p");
+        notice.className = "load-error";
+        notice.textContent = "자료 불러오기에 실패했습니다. 이전에 확인된 학생과 저장 자료를 유지합니다. 새 조회 성공으로 표시하지 않습니다.";
+        shell.prepend(notice);
+      }
+      throw error;
+    }
+  }
+  shell.addEventListener("click", (e) => {
+    const button = e.target.closest("[data-student-id]");
+    if (button)
+      selectStudent(button.dataset.studentId).catch(() => {});
+  });
+  var ready = (async () => {
+    const token = ++sequence, request = new AbortController;
+    activeRequest = request;
+    try {
+      accept(await load("/api/init", {}, token, request.signal), null, token);
+      return true;
+    } catch {
+      if (token === sequence && !current && data.students.length === 0 && !shell.textContent?.includes("로그인"))
+        shell.innerHTML = '<div class="shell-inner"><div class="app-title">교재 학습 지도</div><p>계약·자료·권한 검증을 마치지 못해 학생 자료를 표시하지 않습니다. 확인 후 다시 열어 주세요.</p></div>';
+      return false;
+    }
+  })();
+  window.ACADEMY_READY = ready;
+  function browserToolObject(input, fields) {
+    if (input === null || typeof input !== "object" || Array.isArray(input))
+      throw Error("invalid_browser_tool_arguments");
+    const prototype = Object.getPrototypeOf(input);
+    if (prototype !== null && prototype !== Object.prototype)
+      throw Error("invalid_browser_tool_arguments");
+    const keys = Reflect.ownKeys(input);
+    if (keys.length !== fields.length || keys.some((key) => typeof key !== "string" || !fields.includes(key)))
+      throw Error("invalid_browser_tool_arguments");
+    for (const key of fields) {
+      const property = Object.getOwnPropertyDescriptor(input, key);
+      if (!property || !Object.hasOwn(property, "value"))
+        throw Error("invalid_browser_tool_arguments");
+    }
+    return input;
+  }
+  function browserStudentId(input) {
+    const value = browserToolObject(input, ["studentId"]).studentId;
+    if (typeof value !== "string" || value.length === 0 || value.length > 512)
+      throw Error("invalid_browser_tool_arguments");
+    return value;
+  }
+  var context = document.modelContext;
+  if (context?.registerTool) {
+    const lifecycle = new AbortController;
+    const register = (tool) => Promise.resolve(context.registerTool(tool, { signal: lifecycle.signal })).catch(() => {});
+    register({ name: "list_managed_students", description: "Reload the current selected student in the visible app and list the authorized active student names from the saved snapshot. Changes displayed browser state; no live academy query or source-record change.", inputSchema: { type: "object", properties: {}, additionalProperties: false }, annotations: { readOnlyHint: false, consequentialHint: false, untrustedContentHint: true }, execute: async (input) => {
+      browserToolObject(input, []);
+      await ready;
+      if (!navigationReceipt || !current)
+        throw Error("context_not_loaded");
+      await selectStudent(current);
+      return { students: data.students.map((s) => ({ id: s.id, name: s.displayName })), sourceMode: "saved_snapshot", liveRefreshConnected: false, navigationReceipt };
+    } });
+    register({ name: "select_student", description: "Change the visible selected student and open their authorized saved snapshot. Changes displayed browser state; no live academy query or source-record change.", inputSchema: { type: "object", properties: { studentId: { type: "string", minLength: 1, maxLength: 512 } }, required: ["studentId"], additionalProperties: false }, annotations: { readOnlyHint: false, consequentialHint: false, untrustedContentHint: true }, execute: async (input) => selectStudent(browserStudentId(input)) });
+    register({ name: "read_selected_book_evidence", description: "Reload the visible selected student and read their section IDs and snapshot limits. Changes displayed browser state; no live academy query, grading, or source-record change.", inputSchema: { type: "object", properties: {}, additionalProperties: false }, annotations: { readOnlyHint: false, consequentialHint: false, untrustedContentHint: true }, execute: async (input) => {
+      browserToolObject(input, []);
+      await ready;
+      if (!current)
+        throw Error("context_not_loaded");
+      await selectStudent(current);
+      return { studentId: current, sourceMode: "saved_snapshot", inputSha256: data.snapshots[current].sourceHash, recordIds: Object.keys(data.gradingProjection.view.records), gradingProjection: { version: data.gradingProjection.version, sourceSnapshotSha256: data.gradingProjection.sourceSnapshotSha256, includedContents: data.gradingProjection.includedContents, completionDenominator: null }, evidenceProjection: { version: data.evidenceProjection.version, studentId: current, evidenceRecords: data.evidenceProjection.evidenceRecords, decisionRecords: data.evidenceProjection.decisionRecords, namespaceBinding: data.evidenceProjection.namespaceBinding, domainReceipt: data.domainReceipt }, assessmentProjection: data.assessmentProjection, assessmentReceipt: data.assessmentReceipt, studentEventOverlay: data.studentEventOverlay, unresolvedAttempts: data.snapshots[current].unresolvedAttempts.length, sourceCoverage: data.snapshots[current].sourceCoverage, teacherReviewOverlay: data.teacherOverlay ? { version: data.teacherOverlay.version, sourceSha256: data.teacherOverlay.sha256, sourceSnapshotSha256: data.teacherOverlay.sourceSnapshotSha256, sourceRevision: data.teacherOverlay.sourceRevision, summary: data.teacherOverlay.summary, candidates: data.teacherOverlay.candidates } : null, liveRefreshConnected: false, contextReceipt: lastReceipt };
+    } });
+  }
+})();

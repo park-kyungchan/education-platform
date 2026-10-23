@@ -1,0 +1,24 @@
+{
+  "schema": "academy.consumer-stdio-diagnostic.v1",
+  "scope": "two focused startup diagnostics after one heavy selected test run; no broad rerun",
+  "runtime": "Bun1.4.3",
+  "observations": [
+    {
+      "operation": "exact synthetic fixture startup with network-deny preload and EOF stdin",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "operation": "one exact synthetic fixture SDK initialization/tools-list diagnostic",
+      "status": "failed",
+      "error": "Connection closed",
+      "childStderr": []
+    }
+  ],
+  "cause": "unresolved; no sandbox/network failure or source defect inferred",
+  "sourceEdits": false,
+  "credentialReads": false,
+  "academyRequests": false,
+  "automaticRetry": false
+}

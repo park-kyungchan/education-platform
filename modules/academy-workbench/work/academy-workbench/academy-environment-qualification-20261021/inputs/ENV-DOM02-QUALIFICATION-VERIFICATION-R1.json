@@ -1,0 +1,49 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "academy-operations",
+  "projectId": "academy-workbench",
+  "workId": "academy-environment-qualification-20261021",
+  "kind": "input",
+  "id": "ENV-DOM02-QUALIFICATION-VERIFICATION-R1",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "root-academy-orchestrator",
+    "locator": "exact-source-receiving-verification:ENV-DOM02-QUALIFICATION-R1",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "verification": {
+      "schemaVersion": "1.0.0",
+      "kind": "verification",
+      "id": "academy-workbench:verification:env-dom02-qualification-r1",
+      "domainId": "academy-operations",
+      "projectId": "academy-workbench",
+      "createdAt": "2026-10-21T08:25:17.732Z",
+      "payload": {
+        "targetRefs": [
+          "common-harness:task:467f39a3ece6d218c4a7bc5d8c00dce5b1dbeb95e9b780af6078c0d35777ee0c"
+        ],
+        "criteria": [
+          {
+            "id": "exact-source-receiving-qualified",
+            "status": "pass",
+            "message": "Canonical producer snapshot, completed source Task and result-bound Verification consumed at exact revision; receiver scope and local Task gate preserved.",
+            "evidenceRefs": [
+              "academy-workbench:evidence:env-dom02-qualification-r1-observation"
+            ]
+          }
+        ],
+        "inputHashes": [
+          {
+            "path": "work/academy-workbench/academy-environment-qualification-20261021/inputs/ENV-DOM02-QUALIFICATION-R1.json",
+            "sha256": "bb509a1c010fd099939dae6449720c5a4739659444d2ec9f03099f3aba7e7e88"
+          }
+        ],
+        "runtime": {
+          "name": "Bun canonical source reader",
+          "version": "1.4.3"
+        }
+      }
+    }
+  }
+}

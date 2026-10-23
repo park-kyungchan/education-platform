@@ -1,0 +1,41 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "academy-query-integration-20261021",
+  "kind": "input",
+  "id": "QRY-DELEGATED-SCOPE-R1",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "root-academy-orchestrator",
+    "locator": "approved-architecture-delegation:QRY-work-r1",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "authorityReference": {
+      "kind": "git",
+      "repositoryId": "park-kyungchan/academy-workbench",
+      "commit": "d79237566a86dfce9e633d5270e8b409d0d4a025",
+      "path": "work/academy-workbench/academy-architecture-orchestration-20261021/inputs/AAR-USER-APPROVAL-001.json",
+      "fragment": "#/content/originalText"
+    },
+    "meaning": "Root delegated scope under the approved architecture, not a direct user answer or native/global registration.",
+    "initialTask": "education-platform:task:academy-query-integration-20261021-qry-01",
+    "allowedInitialWrites": [
+      "architecture/academy-query-integration/**",
+      "work/education-platform/academy-query-integration-20261021/**"
+    ],
+    "laterWrites": "Selected existing LMS/read contracts and bounded query adapters only after root qualification/admission; preserve existing domain owner leaf files unless explicitly serialized.",
+    "reservedFiles": [
+      "package.json",
+      "bun.lock",
+      "architecture/source-map.json",
+      "apps/academy/run.ts",
+      "shared CI/check routing",
+      "existing completed Work/Inputs",
+      "native config/services/data"
+    ],
+    "rootArchitectureCheckout": "/home/palantirkc/worktrees/academy-architecture-orchestration-20261021",
+    "resultRule": "Separate immutable result and Verification Inputs; criteria Evidence and exact result Input hash binding; actual canonical snapshot and semantic transition."
+  }
+}

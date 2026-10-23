@@ -1,0 +1,80 @@
+{
+  "schemaVersion": "academy.context-contamination-recovery/1",
+  "observedAt": "2026-10-21T12:10:07.395394+00:00",
+  "workId": "academy-workflow-verification-20261021",
+  "logicalTaskId": "education-platform:task:academy-workflow-verification-20261021-ver-01",
+  "closedActor": {
+    "name": "academy-verification-lead",
+    "paneId": "wA:p9",
+    "tabId": "wA:t6",
+    "nativeSessionId": null,
+    "state": "interrupted; never reuse for independent verification"
+  },
+  "reason": "Source/contract/metadata-only admission was exceeded by project handoff and requirements body reads. Do not copy bodies or use them to derive expectations.",
+  "originalCommittedBase": "df2c146ed47e2b96e1719e6268f3452b597f0166",
+  "quarantine": {
+    "path": "/home/palantirkc/worktrees/academy-architecture-orchestration-20261021/.local/context-isolation/quarantine-ver01-20261021",
+    "admissibleAsIndependentEvidence": false,
+    "files": [
+      {
+        "path": "cases-r1.json",
+        "bytes": 79757,
+        "sha256": "20f9aec7bc5cf555a8d0cc930debf2275869afbf0e738ead252fa734ca3a2eed"
+      },
+      {
+        "path": "evaluator-r1.ts",
+        "bytes": 3128,
+        "sha256": "3d51e8a496556ae0f639cb57cc03f85df079793a3628550e81ab198c5251aa0d"
+      },
+      {
+        "path": "fixtures-r1.ts",
+        "bytes": 5349,
+        "sha256": "4ff7bdbaa00ea14626a799b6bec6d8234f4e4115807b7e872a92ac5cb9241685"
+      },
+      {
+        "path": "references-r1.json",
+        "bytes": 19992,
+        "sha256": "d85104dec09ddd7e3d9a6330d218bf6b89af51e9cd07ae172d7e2a478e477e69"
+      }
+    ],
+    "contentsReadIntoCoordinatorContext": false
+  },
+  "replacement": {
+    "state": "fresh independent session idle; boundary-only probes complete; VER01 workflow admission held",
+    "name": "academy-verification-clean",
+    "paneId": "wA:pA",
+    "tabId": "wA:t7",
+    "nativeSessionId": "01a15e5a-77bf-75c1-9dbf-e76042a9e639",
+    "inheritPriorSession": false,
+    "preserveWorkAndTaskIdentity": true,
+    "packetSha256": "fd0f6246a87b7e7313e68d8677a17d469e7863c2f18e319eae3b4668bd064b11"
+  },
+  "controlLevels": {
+    "old": "prompt-only scope; failed",
+    "newPane": "separate conversation only; not an access control",
+    "nativeFilesystemAllowlist": "Actual fresh native tools: allowed packet read/write passed; existing outside synthetic file and symlink inaccessible (ENOENT). Root independently verified canary unchanged and parent writes absent on host; parent writes succeeded only within transient namespace. This is bounded measured evidence, not proof of every path/tool.",
+    "networkAppsMcp": "Actual fresh native shell AF_INET socket creation denied EPERM; no connection attempted. Web/MCP/image/resource/cross-session tool families remain exposed or unqualified; they are not proven constrained by shell policy. Workflow dispatch held."
+  },
+  "holds": [
+    "No verification outputs from quarantined actor admitted",
+    "No publication/merge/deploy/native activation",
+    "No common/native persistent config or permission grants"
+  ],
+  "nativeProbeReceipts": [
+    {
+      "path": "observations/context-boundary/boundary-result-r1.json",
+      "sha256": "dbe65e2bdc1ebc07834f7c054512f457bda7358e2bf4da9951019a2ebd11373a"
+    },
+    {
+      "path": "observations/context-boundary/boundary-result-r2.json",
+      "sha256": "d1b4162a67f143c9d0f8cd0c47396a19805baa34d96a956a9da057bfed2ef19f"
+    }
+  ],
+  "hostReadback": {
+    "allowedResultVisible": true,
+    "outsideCanaryUnchanged": true,
+    "unexpectedParentWriteVisible": false,
+    "ephemeralParentWriteVisible": false
+  },
+  "nextAction": "Qualify per-session removal or owner-enforced mediation of alternate retrieval/delegation channels before workflow dispatch; preserve fresh-session scope and avoid global/native persistent configuration changes."
+}

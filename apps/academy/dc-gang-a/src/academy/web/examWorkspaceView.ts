@@ -2,7 +2,7 @@ import type {TrustedTeacherContext} from '../contracts/teacherOperations';
 import type {TeacherExamSelectionDraft} from '../teacherExamWorkspace';
 import {elementaryExamRequirement, type ExamCandidate} from '../examSelection';
 import {examPreselectionView} from './examPreselectionView';
-import {workspaceNode as node,workspaceDraft,workspaceControls,editorText,editorSelect} from './workspaceEditor';
+import {workspaceNode as node,workspaceDraft,workspaceDraftKey,workspaceControls,editorText,editorSelect} from './workspaceEditor';
 type Read=<T>(path:string)=>Promise<T>;type Write=<T>(path:string,input:unknown)=>Promise<T>;
 const known=<T>(value:T)=>({state:'known' as const,value,evidenceRefs:['teacher-entered-unqualified-source-claim']});
 const unknown=(reason:string)=>({state:'unknown' as const,reason});
@@ -13,7 +13,7 @@ export function examWorkspaceView(scope:Pick<TrustedTeacherContext,'ownerId'|'ac
  const list=node('div'),create=node('button','새 시험 선택 초안') as HTMLButtonElement;create.type='button';card.append(create,list);
  const render=(prior:any|null)=>{
   const draftId=crypto.randomUUID(),initial:TeacherExamSelectionDraft={kind:'teacher_exam_selection_draft',draftId,reportedAt:new Date().toISOString(),studentBinding:null,evidenceRevisionIds:[],workspace:{kind:'exam_selection_workspace',schemaVersion:1,requirementRevision:requirement.revision,title:'서술형 시험 초안',examDate:unknown('시험일 미확정'),timeZone:unknown('시간대 미확정'),selections:[]},candidates:[],sourceQualification:'not_verified_by_workspace',teacherAccepted:false,printed:false,published:false,officialSaved:false};
-  const identity=prior?.entityId??'teacher-exam-selection-'+draftId,state=workspaceDraft(JSON.stringify([scope,identity]),prior?.payload??initial,prior?.revisionId??null,prior?.sequence??0),value=state.value as TeacherExamSelectionDraft;
+  const identity=prior?.entityId??'teacher-exam-selection-'+draftId,state=workspaceDraft(workspaceDraftKey(scope,null,identity),prior?.payload??initial,prior?.revisionId??null,prior?.sequence??0),value=state.value as TeacherExamSelectionDraft;
   const detail=node('details');detail.open=!prior;detail.dataset.examDraft=value.draftId;detail.append(node('summary',value.workspace.title+' · 내부 초안'));const form=node('div');form.className='workspace-form';form.dataset.entityId=identity;detail.append(form);list.append(detail);
   const change=()=>{state.dirty=true;};editorText(form,'시험 제목',value.workspace.title,text=>{value.workspace={...value.workspace,title:text};change();},'exam-title',1);
   const dateLabel=node('label','확정된 시험일 · 미확정이면 빈칸'),date=document.createElement('input');date.type='date';date.value=value.workspace.examDate.state==='known'?value.workspace.examDate.value:'';date.dataset.role='exam-date';date.addEventListener('input',()=>{value.workspace={...value.workspace,examDate:date.value?known(date.value):unknown('시험일 미확정'),timeZone:date.value?known('Asia/Seoul'):unknown('시간대 미확정')};change();renderSelected();});dateLabel.append(date);form.append(dateLabel);

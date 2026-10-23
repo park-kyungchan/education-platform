@@ -1,0 +1,87 @@
+{
+  "schemaVersion": "academy.portable-audit-viewer/1",
+  "runtime": {
+    "engine": "Node.js >=24",
+    "network": "loopback-only",
+    "source": "explicit hash-pinned private JSON",
+    "sitesRequired": false,
+    "spacesRequired": false,
+    "databaseRequired": false,
+    "externalFetch": false
+  },
+  "environments": {
+    "dotsCloud": "synthetic automated tests only; no operational secret configured",
+    "wsl2": "same code target; not executed",
+    "vps": "same code target; not executed; remote public hosting unsupported"
+  },
+  "capabilities": [
+    {
+      "name": "student_detail",
+      "status": "implemented_readonly_audit_view",
+      "parity": "not the original MCP contract"
+    },
+    {
+      "name": "source_freshness",
+      "status": "preserved_source_clocks_and_coverage",
+      "parity": "no automatic refresh"
+    },
+    {
+      "name": "today",
+      "status": "snapshot_context_visible",
+      "parity": "no independent current-date/session preparation service"
+    },
+    {
+      "name": "work_context",
+      "status": "partial_per_student_preserved_context",
+      "parity": "workflow graph service not implemented"
+    },
+    {
+      "name": "append_user_reports",
+      "status": "not_implemented",
+      "parity": "read-only; no mutation permission implied"
+    },
+    {
+      "name": "fixed_evidence_import",
+      "status": "not_implemented",
+      "parity": "file integrity check only, not durable ledger import"
+    },
+    {
+      "name": "durable_ledger",
+      "status": "not_migrated_to_this_viewer",
+      "parity": "historical audit facts retained; D1 hash chain/event append semantics not replaced"
+    },
+    {
+      "name": "source_reference",
+      "status": "local_pinned_json_pointer",
+      "parity": "historical Page IDs preserved only as provenance"
+    }
+  ],
+  "release": {
+    "completeSitesReplacement": false,
+    "safeToDeleteOldSite": false,
+    "operationalAuthConfigured": false,
+    "externalDeploymentVerified": false
+  },
+  "harness": {
+    "domainModule": "academy-workbench",
+    "canonicalOwner": "agent-platform",
+    "sharedContractsCopied": false,
+    "nativeRuntimeOwnershipPreserved": true,
+    "registration": "local-domain-module-record-only",
+    "actualEnvironmentAcceptance": false
+  },
+  "hitlDomainContracts": {
+    "implementation": "pure_offline_evidence_projections",
+    "tested": [
+      "daily_test_learning_and_app_record_independence",
+      "optional_mindmap_concept_explanation_link",
+      "partial_scope_non_promotion",
+      "same_assignment_reprint_and_carryover",
+      "explicit_teacher_reopening_with_prior_history_preserved"
+    ],
+    "viewerIntegration": "not_connected_to_current_readonly_snapshot_viewer",
+    "teacherDecisionAuthority": false,
+    "externalWrites": false,
+    "persistentEventLedger": false
+  }
+}

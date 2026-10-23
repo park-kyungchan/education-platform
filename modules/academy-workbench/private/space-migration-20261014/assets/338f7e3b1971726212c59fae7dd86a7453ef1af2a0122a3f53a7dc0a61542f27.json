@@ -1,0 +1,83 @@
+{
+  "schemaVersion": "academy.history-capture/1.0.0",
+  "captureId": "capture_03b1878b07d396b739fdf364ab22db1f7d477097395301e39474a469e287483f",
+  "studentId": "stu_e656cff00f3b420c98c002588c6f58a6",
+  "studentIdNamespace": "existing_private_academy_projection_not_verified_lms_native_id",
+  "studentPageId": "page_dccfec028f408191bc190cda949b552a",
+  "observedAt": "2026-10-12T05:11:02Z",
+  "mappingObservedAt": "2026-10-12T05:15:46Z",
+  "timezone": "Asia/Seoul",
+  "captureStatus": "partial",
+  "sourceURLs": {
+    "dailyRecord": "https://dc.gang-a.kr/servlet/controller.cct.tutor.DayRecordServlet?p_process=Main",
+    "videoSummary": "https://dc.gang-a.kr/servlet/controller.coursemanage.CourseManageServlet?reqCmd=TeacherPrestudySummary",
+    "pendingReview": "https://dc.gang-a.kr/servlet/controller.coursemanage.CourseManageServlet?reqCmd=WebUnPreStudy"
+  },
+  "sourceFingerprint": {
+    "algorithm": "sha256",
+    "scope": "canonicalized_scoped_receipt_payload_not_raw_server_response",
+    "value": "03b1878b07d396b739fdf364ab22db1f7d477097395301e39474a469e287483f"
+  },
+  "eventKinds": [
+    "assignment",
+    "observation"
+  ],
+  "teacherDecision": null,
+  "bookId": null,
+  "bookIdentityStatus": "unresolved_do_not_join_by_name_alone",
+  "sourceNativeEventId": null,
+  "supersedesCaptureId": null,
+  "eventDate": "2026-10-07",
+  "dueDate": "2026-10-12",
+  "retention": {
+    "claim": "server deletes histories older than two weeks",
+    "source": "user_report_2026-10-12",
+    "providerVerified": false
+  },
+  "coverageLimits": [
+    "Video summary date filter was 2026-10-06 through 2026-10-12",
+    "Blank DailyRecord rows are not evidence of completion or absence of homework",
+    "Problem submission, app grading and error correction completion were not verified",
+    "No teacher review button, grading, save or send action was executed"
+  ],
+  "payload": {
+    "observation": {
+      "studentId": "stu_e656cff00f3b420c98c002588c6f58a6",
+      "name": "이현승",
+      "session": 2,
+      "classPattern": "월수금",
+      "membershipEvidence": "user_confirmed",
+      "assignment": {
+        "assignedDate": "2026-10-07",
+        "dueDate": "2026-10-12",
+        "text": "소단원5 및 교재 대단원 총괄평가 p.55–79; 직전 개념백지테스트와 같은 수준으로 예습 설명 준비"
+      },
+      "carryForward": [
+        "클리닉·Daily Test·부교재 미실시"
+      ],
+      "observations": [
+        {
+          "type": "video_record",
+          "title": "1-4 공배수와 최소공배수(ver. 1)",
+          "recordTimeLocal": "2026-10-06T21:44:00+09:00",
+          "aiScore": 77,
+          "videoStatus": "OK",
+          "instructorReview": "pending",
+          "match": "different_unit_and_before_current_assignment_not_completion_evidence"
+        }
+      ],
+      "currentMatchedVideoEvidence": "not_observed_in_queried_summary",
+      "problemGrading": "unknown",
+      "teacherHomeworkCheck": "unknown"
+    },
+    "mappingEvidence": [],
+    "mappingUnverified": [
+      "full unit code for 크기가 같은 분수 알아보기",
+      "meaning of leading component in example1-4-1",
+      "full code and title for 분수를 간단하게 나타내기",
+      "Park Seeun multiplication chapter full code",
+      "Lee Hyeonseung subunit5 exact title and code",
+      "Yoo Jiyeon GaussPlus clinic type-to-unit mapping"
+    ]
+  }
+}

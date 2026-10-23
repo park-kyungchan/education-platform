@@ -1,0 +1,41 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "academy-operations",
+  "projectId": "academy-workbench",
+  "workId": "academy-architecture-orchestration-20261021",
+  "kind": "task",
+  "id": "academy-workbench:task:academy-architecture-orchestration-20261021-int-01-qualify-env-02",
+  "logical": {
+    "domainId": "academy-operations",
+    "projectId": "academy-workbench",
+    "workId": "academy-architecture-orchestration-20261021",
+    "issueId": "AAR-ISSUE-20261021",
+    "specId": "AAR-SPEC",
+    "specRevision": 1,
+    "planId": "AAR-PLAN",
+    "planRevision": 2,
+    "taskId": "academy-workbench:task:academy-architecture-orchestration-20261021-int-01-qualify-env-02"
+  },
+  "title": "Qualify foreign source result ENV-02 for INT-01",
+  "nextAction": "Hold until exact producer result/Verification and receiver-owned qualification are present. Use qualify-external-work; never copy foreign Task records into this Work.",
+  "state": {
+    "execution": "planned",
+    "verification": "pending",
+    "localAudit": "intent-durable",
+    "sharedAudit": "pending",
+    "formalCompletion": "pending"
+  },
+  "executionClass": "source-only",
+  "dependsOn": [
+    {
+      "taskId": "academy-workbench:task:academy-architecture-orchestration-20261021-t04",
+      "milestone": "execution-and-verification"
+    }
+  ],
+  "decisionIds": [
+    "AAR-DECISION-APPROVAL-ORDER-R2",
+    "AAR-DECISION-ARCHITECTURE-APPROVED-001"
+  ],
+  "effectIds": [],
+  "verificationEvidenceIds": []
+}

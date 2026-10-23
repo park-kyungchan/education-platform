@@ -1,0 +1,5305 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "학원 Cartography 숙제 확인 확장 Schema 0.4.0",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/PracticalContextPackage"
+    },
+    {
+      "$ref": "#/$defs/SiteExecutionPackage"
+    },
+    {
+      "$ref": "#/$defs/SemanticOperationPackage"
+    },
+    {
+      "$ref": "#/$defs/CoveragePackage"
+    },
+    {
+      "$ref": "#/$defs/EvidencePackage"
+    },
+    {
+      "$ref": "#/$defs/IndexPackage"
+    },
+    {
+      "$ref": "#/$defs/ValidationPackage"
+    },
+    {
+      "$ref": "#/$defs/HomeworkPackage"
+    }
+  ],
+  "$defs": {
+    "LearningResultComponent": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "component": {
+          "enum": [
+            "필수예제",
+            "유형다지기"
+          ]
+        },
+        "rawScore": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "rawClinicStatus": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "siteClinicState": {
+          "enum": [
+            "not_started",
+            "in_progress",
+            "completed",
+            "unknown"
+          ]
+        }
+      },
+      "required": [
+        "component",
+        "rawScore",
+        "rawClinicStatus",
+        "siteClinicState"
+      ]
+    },
+    "LearningResultSnapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "subjectReference": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "unitLabel": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "components": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/LearningResultComponent"
+          }
+        },
+        "observedAt": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "subjectReference",
+        "unitLabel",
+        "components",
+        "observedAt"
+      ]
+    },
+    "PrintArtifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "const": "print_artifact"
+        },
+        "studentReference": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "courseCode": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "courseVersion": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "unitLabel": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "componentLabel": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "artifactType": {
+          "enum": [
+            "wrong_questions",
+            "similar_questions",
+            "required_examples",
+            "concept_blank_test",
+            "other",
+            "unknown"
+          ]
+        },
+        "sourceListRecordId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sourcePageUrl": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sourceObservedAt": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "stableIdentityState": {
+          "enum": [
+            "verified",
+            "tentative",
+            "conflict"
+          ]
+        },
+        "contentFingerprint": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "printEvidenceReference": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "teacherAssertionIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "attemptTimestamp": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "attemptTimestampEvidenceReference": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sourceAssessmentReference": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "originalWrongItemIds": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "uniqueItems": true
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "similarMappings": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "originalWrongItemId": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "similarItemIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "uniqueItems": true
+                  }
+                },
+                "required": [
+                  "originalWrongItemId",
+                  "similarItemIds"
+                ]
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "requestedSimilarPerOriginal": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        },
+        "observedSimilarPerOriginal": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        },
+        "headerEvidenceReference": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "studentReference",
+        "courseCode",
+        "courseVersion",
+        "unitLabel",
+        "componentLabel",
+        "artifactType",
+        "sourceListRecordId",
+        "sourcePageUrl",
+        "sourceObservedAt",
+        "stableIdentityState",
+        "contentFingerprint",
+        "printEvidenceReference",
+        "teacherAssertionIds",
+        "attemptTimestamp",
+        "attemptTimestampEvidenceReference",
+        "sourceAssessmentReference",
+        "originalWrongItemIds",
+        "similarMappings",
+        "requestedSimilarPerOriginal",
+        "observedSimilarPerOriginal",
+        "headerEvidenceReference"
+      ]
+    },
+    "TeacherCompletionAssertion": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "const": "teacher_completion_assertion"
+        },
+        "artifactIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "judgment": {
+          "enum": [
+            "complete",
+            "not_complete",
+            "needs_recheck",
+            "unknown"
+          ]
+        },
+        "assertedBy": {
+          "const": "user"
+        },
+        "assertedAt": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "sourceMessageId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "statement": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "supersedesAssertionId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "syncBackPerformed": {
+          "const": false
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "artifactIds",
+        "judgment",
+        "assertedBy",
+        "assertedAt",
+        "sourceMessageId",
+        "statement",
+        "revision",
+        "supersedesAssertionId",
+        "syncBackPerformed"
+      ]
+    },
+    "TargetSnapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "studentReference": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "courseCode": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "bookVersion": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "unitLabel": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "assessmentType": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "attemptTimestamp": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "materialKind": {
+          "enum": [
+            "wrong_original",
+            "similar_mapped",
+            "unknown"
+          ]
+        },
+        "headerText": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "originalWrongItemIds": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "uniqueItems": true
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "similarItemIds": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "uniqueItems": true
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "similarPerOriginal": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        },
+        "sourceAssessmentReference": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "scopeEvidenceReference": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "studentReference",
+        "courseCode",
+        "bookVersion",
+        "unitLabel",
+        "assessmentType",
+        "attemptTimestamp",
+        "materialKind",
+        "headerText",
+        "originalWrongItemIds",
+        "similarItemIds",
+        "similarPerOriginal",
+        "sourceAssessmentReference",
+        "scopeEvidenceReference"
+      ]
+    },
+    "Observation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "const": "observation"
+        },
+        "observedAt": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "sourceReference": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidenceType": {
+          "enum": [
+            "visible_text",
+            "structure",
+            "header",
+            "print_result",
+            "user_statement",
+            "unknown"
+          ]
+        },
+        "targetSnapshot": {
+          "$ref": "#/$defs/TargetSnapshot"
+        },
+        "claim": {
+          "type": "string",
+          "minLength": 1
+        },
+        "verificationState": {
+          "enum": [
+            "observed",
+            "unverified",
+            "conflict"
+          ]
+        },
+        "minimalEvidenceReference": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "containsStudentPersonalData": {
+          "type": "boolean"
+        },
+        "recordingMode": {
+          "enum": [
+            "instrumented_at_execution",
+            "reconstructed_from_observation_report"
+          ]
+        },
+        "sourceReportId": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "observedAt",
+        "sourceReference",
+        "evidenceType",
+        "targetSnapshot",
+        "claim",
+        "verificationState",
+        "minimalEvidenceReference",
+        "containsStudentPersonalData",
+        "recordingMode",
+        "sourceReportId"
+      ]
+    },
+    "ActionAttempt": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "const": "action_attempt"
+        },
+        "contractId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "contractVersion": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "operationId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "purpose": {
+          "type": "string",
+          "minLength": 1
+        },
+        "targetSnapshot": {
+          "$ref": "#/$defs/TargetSnapshot"
+        },
+        "preconditionsChecked": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "condition": {
+                "type": "string",
+                "minLength": 1
+              },
+              "state": {
+                "enum": [
+                  "satisfied",
+                  "not_satisfied",
+                  "unknown"
+                ]
+              },
+              "observationIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              }
+            },
+            "required": [
+              "condition",
+              "state",
+              "observationIds"
+            ]
+          }
+        },
+        "executionState": {
+          "enum": [
+            "planned",
+            "executed",
+            "success_verified",
+            "failure_verified",
+            "unknown"
+          ]
+        },
+        "plannedAt": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "executedAt": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "observationIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "atomicEventIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "recordingMode": {
+          "enum": [
+            "instrumented_at_execution",
+            "reconstructed_from_observation_report"
+          ]
+        },
+        "sourceReportId": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "contractId",
+        "contractVersion",
+        "operationId",
+        "purpose",
+        "targetSnapshot",
+        "preconditionsChecked",
+        "executionState",
+        "plannedAt",
+        "executedAt",
+        "observationIds",
+        "atomicEventIds",
+        "recordingMode",
+        "sourceReportId"
+      ]
+    },
+    "AtomicUIEvent": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "const": "atomic_ui_event"
+        },
+        "attemptId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "contractId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "contractVersion": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "purpose": {
+          "type": "string",
+          "minLength": 1
+        },
+        "targetSnapshot": {
+          "$ref": "#/$defs/TargetSnapshot"
+        },
+        "preconditionsChecked": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "operation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "actualAction": {
+          "type": "string",
+          "minLength": 1
+        },
+        "performed": {
+          "type": "boolean"
+        },
+        "observedAt": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "evidenceObservationIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "outcome": {
+          "enum": [
+            "observed_success",
+            "failure",
+            "unknown"
+          ]
+        },
+        "recordingMode": {
+          "enum": [
+            "instrumented_at_execution",
+            "reconstructed_from_observation_report"
+          ]
+        },
+        "sourceReportId": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "attemptId",
+        "contractId",
+        "contractVersion",
+        "purpose",
+        "targetSnapshot",
+        "preconditionsChecked",
+        "operation",
+        "actualAction",
+        "performed",
+        "observedAt",
+        "evidenceObservationIds",
+        "outcome",
+        "recordingMode",
+        "sourceReportId"
+      ]
+    },
+    "SemanticOperationContract": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "const": "semantic_operation_contract"
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "enum": [
+            "draft_blocked_before_click",
+            "ready_for_authorized_attempt",
+            "retired",
+            "attempted_result_unknown"
+          ]
+        },
+        "contextualBasisIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "routeIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "buttonSemantics": {
+          "enum": [
+            "user_confirmed",
+            "unknown"
+          ]
+        },
+        "clickEffect": {
+          "enum": [
+            "preview_confirmed",
+            "physical_print_confirmed",
+            "unverified",
+            "batch_pdf_generation_user_confirmed",
+            "batch_generation_attempted_artifact_unverified"
+          ]
+        },
+        "currentPrintAuthorized": {
+          "type": "boolean"
+        },
+        "sourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "operations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "enum": [
+                  "wrong_original",
+                  "similar_mapped"
+                ]
+              },
+              "buttonLabel": {
+                "enum": [
+                  "오",
+                  "클"
+                ]
+              },
+              "meaning": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sourceAssessmentScopeRequired": {
+                "const": true
+              },
+              "headerVerificationRequired": {
+                "const": true
+              },
+              "mappingRule": {
+                "type": "string",
+                "minLength": 1
+              },
+              "requestedSimilarPerOriginal": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 1
+              },
+              "observedUiSimilarPerOriginal": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 1
+              },
+              "userReportedUsualSimilarRange": {
+                "type": [
+                  "array",
+                  "null"
+                ],
+                "items": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              },
+              "targetFieldNames": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "remainingUnknowns": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "controlScope": {
+                "enum": [
+                  "top_batch_user_described_ui_unverified",
+                  "top_batch_verified",
+                  "row_verified",
+                  "unknown"
+                ]
+              },
+              "generationAuthorized": {
+                "type": "boolean"
+              },
+              "observedSettings": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "controlScope": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "similarPerOriginal": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "sourceIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "uniqueItems": true
+                    }
+                  },
+                  "required": [
+                    "controlScope",
+                    "similarPerOriginal",
+                    "sourceIds"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "id",
+              "buttonLabel",
+              "meaning",
+              "sourceAssessmentScopeRequired",
+              "headerVerificationRequired",
+              "mappingRule",
+              "requestedSimilarPerOriginal",
+              "observedUiSimilarPerOriginal",
+              "userReportedUsualSimilarRange",
+              "targetFieldNames",
+              "remainingUnknowns",
+              "controlScope",
+              "generationAuthorized",
+              "observedSettings"
+            ]
+          }
+        },
+        "blockedBy": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "recordingRule": {
+          "type": "string",
+          "minLength": 1
+        },
+        "runtimeLogImplemented": {
+          "const": false
+        },
+        "batchFlow": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "selectionControlBasis": {
+              "type": "string",
+              "minLength": 1
+            },
+            "headerSelectionRequired": {
+              "const": true
+            },
+            "selectedHeaderIds": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "uniqueItems": true
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "selectedHeaderOrder": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "uniqueItems": true
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "selectedHeaderCount": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0
+            },
+            "batchGenerateLabel": {
+              "type": "string",
+              "minLength": 1
+            },
+            "currentPdfGenerationAuthorized": {
+              "type": "boolean"
+            },
+            "generatedPdfReference": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "generatedPdfHash": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "pdfHeaderVerificationState": {
+              "enum": [
+                "not_generated",
+                "unverified",
+                "verified",
+                "conflict"
+              ]
+            },
+            "pdfValidation": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "physicalPrintIsSeparate": {
+              "const": true
+            },
+            "physicalPrintAttempts": {
+              "const": 0
+            },
+            "physicalPrintCopies": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 1
+            },
+            "duplicateProtection": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "dependencyStatus": {
+              "enum": [
+                "not_verified",
+                "verified_ready"
+              ]
+            },
+            "runtimeExecutionImplemented": {
+              "const": false
+            },
+            "pdfGenerationAuthorization": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "sourceId": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "approvedOperationIds": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "uniqueItems": true
+                },
+                "targetConstraint": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "exclusions": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "uniqueItems": true
+                },
+                "authorizationStatus": {
+                  "enum": [
+                    "authorized_bounded_test",
+                    "not_authorized"
+                  ]
+                }
+              },
+              "required": [
+                "sourceId",
+                "approvedOperationIds",
+                "targetConstraint",
+                "exclusions",
+                "authorizationStatus"
+              ]
+            },
+            "authorizationUseState": {
+              "enum": [
+                "unexecuted",
+                "attempted_outcome_unknown",
+                "verified_complete"
+              ]
+            },
+            "observedUiMarkers": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "pdfViewerState": {
+              "enum": [
+                "not_observed",
+                "user_confirmed_open",
+                "agent_observed_open"
+              ]
+            },
+            "contentInspectionState": {
+              "enum": [
+                "not_inspected",
+                "blocked_current_capability",
+                "verified"
+              ]
+            },
+            "contentInspectionEvidenceSourceIds": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "selectionControlBasis",
+            "headerSelectionRequired",
+            "selectedHeaderIds",
+            "selectedHeaderOrder",
+            "selectedHeaderCount",
+            "batchGenerateLabel",
+            "currentPdfGenerationAuthorized",
+            "generatedPdfReference",
+            "generatedPdfHash",
+            "pdfHeaderVerificationState",
+            "pdfValidation",
+            "physicalPrintIsSeparate",
+            "physicalPrintAttempts",
+            "physicalPrintCopies",
+            "duplicateProtection",
+            "dependencyStatus",
+            "runtimeExecutionImplemented",
+            "pdfGenerationAuthorization",
+            "authorizationUseState",
+            "observedUiMarkers",
+            "pdfViewerState",
+            "contentInspectionState",
+            "contentInspectionEvidenceSourceIds"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "version",
+        "status",
+        "contextualBasisIds",
+        "routeIds",
+        "buttonSemantics",
+        "clickEffect",
+        "currentPrintAuthorized",
+        "sourceIds",
+        "operations",
+        "blockedBy",
+        "recordingRule",
+        "runtimeLogImplemented",
+        "batchFlow"
+      ]
+    },
+    "PracticalContextPackage": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "$schema": {
+          "const": "academy-cartography-0.3.schema.json"
+        },
+        "kind": {
+          "const": "practical_context_package"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schemaVersion": {
+          "const": "0.3.0"
+        },
+        "revision": {
+          "const": 3
+        },
+        "projectId": {
+          "const": "project:academy-practical"
+        },
+        "canonicalParentId": {
+          "const": "project:academy-practical"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "sourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "authorityGrantedByDocument": {
+          "const": false
+        },
+        "practicalContexts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "kind": {
+                "const": "practical_context"
+              },
+              "schemaVersion": {
+                "const": "0.3.0"
+              },
+              "revision": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "purpose": {
+                "type": "string",
+                "minLength": 1
+              },
+              "scope": {
+                "type": "string",
+                "minLength": 1
+              },
+              "confirmationState": {
+                "enum": [
+                  "user_confirmed",
+                  "partly_confirmed",
+                  "hypothesis"
+                ]
+              },
+              "sourceIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "classRoutine": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "step": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "description": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "basis": {
+                      "enum": [
+                        "user_confirmed",
+                        "model_separation"
+                      ]
+                    },
+                    "sourceIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "uniqueItems": true
+                    }
+                  },
+                  "required": [
+                    "step",
+                    "description",
+                    "basis",
+                    "sourceIds"
+                  ]
+                }
+              },
+              "roles": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "role": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "activities": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    }
+                  },
+                  "required": [
+                    "role",
+                    "activities"
+                  ]
+                }
+              },
+              "judgmentPolicy": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "judge": {
+                    "const": "teacher"
+                  },
+                  "conceptBlankTest": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "clinic": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "assistantRole": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "siteSyncBack": {
+                    "const": false
+                  }
+                },
+                "required": [
+                  "judge",
+                  "conceptBlankTest",
+                  "clinic",
+                  "assistantRole",
+                  "siteSyncBack"
+                ]
+              },
+              "physicalArtifacts": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "schedule": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "weekdayPatterns": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "label": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "weekdays": {
+                          "type": "array",
+                          "items": {
+                            "enum": [
+                              "MO",
+                              "TU",
+                              "WE",
+                              "TH",
+                              "FR",
+                              "SA",
+                              "SU"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "label",
+                        "weekdays"
+                      ]
+                    }
+                  },
+                  "periodTemplates": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "applicableWeekdays": {
+                          "type": "array",
+                          "items": {
+                            "enum": [
+                              "MO",
+                              "TU",
+                              "WE",
+                              "TH",
+                              "FR"
+                            ]
+                          }
+                        },
+                        "period": {
+                          "enum": [
+                            1,
+                            2
+                          ]
+                        },
+                        "startLocal": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "endLocal": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "selfStudyStartLocal": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "selfStudyEndLocal": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "selfStudyLocation": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "applicableWeekdays",
+                        "period",
+                        "startLocal",
+                        "endLocal",
+                        "selfStudyStartLocal",
+                        "selfStudyEndLocal",
+                        "selfStudyLocation"
+                      ]
+                    }
+                  },
+                  "timezone": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "userAssignedTemplateIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "uniqueItems": true
+                  },
+                  "userAssignmentState": {
+                    "const": "unknown"
+                  }
+                },
+                "required": [
+                  "weekdayPatterns",
+                  "periodTemplates",
+                  "timezone",
+                  "userAssignedTemplateIds",
+                  "userAssignmentState"
+                ]
+              },
+              "curriculum": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "coreTextbook": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "unitGranularity": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "previewAnswerEntry": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "previewGrading": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "diagnosticTests": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "ordinal": {
+                          "enum": [
+                            1,
+                            2
+                          ]
+                        },
+                        "difficulty": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "required": [
+                        "ordinal",
+                        "difficulty"
+                      ]
+                    }
+                  },
+                  "supplementaryTextbooks": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                },
+                "required": [
+                  "coreTextbook",
+                  "unitGranularity",
+                  "previewAnswerEntry",
+                  "previewGrading",
+                  "diagnosticTests",
+                  "supplementaryTextbooks"
+                ]
+              },
+              "clinicStages": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "label": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "actor": {
+                      "enum": [
+                        "student",
+                        "teacher",
+                        "system",
+                        "unspecified"
+                      ]
+                    },
+                    "basis": {
+                      "enum": [
+                        "user_confirmed",
+                        "model_separation",
+                        "completion_criterion_pending"
+                      ]
+                    },
+                    "evidenceNeeded": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "doesNotImply": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "label",
+                    "actor",
+                    "basis",
+                    "evidenceNeeded",
+                    "doesNotImply"
+                  ]
+                }
+              },
+              "instanceCompletionInferred": {
+                "const": false
+              }
+            },
+            "required": [
+              "id",
+              "kind",
+              "schemaVersion",
+              "revision",
+              "purpose",
+              "scope",
+              "confirmationState",
+              "sourceIds",
+              "classRoutine",
+              "roles",
+              "judgmentPolicy",
+              "physicalArtifacts",
+              "schedule",
+              "curriculum",
+              "clinicStages",
+              "instanceCompletionInferred"
+            ]
+          }
+        }
+      },
+      "required": [
+        "$schema",
+        "kind",
+        "id",
+        "schemaVersion",
+        "revision",
+        "projectId",
+        "canonicalParentId",
+        "updatedAt",
+        "sourceIds",
+        "authorityGrantedByDocument",
+        "practicalContexts"
+      ]
+    },
+    "SiteExecutionPackage": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "$schema": {
+          "const": "academy-cartography-0.3.schema.json"
+        },
+        "kind": {
+          "const": "site_execution_package"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schemaVersion": {
+          "const": "0.3.0"
+        },
+        "revision": {
+          "const": 3
+        },
+        "projectId": {
+          "const": "project:academy-practical"
+        },
+        "canonicalParentId": {
+          "const": "project:academy-practical"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "sourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "authorityGrantedByDocument": {
+          "const": false
+        },
+        "siteExecutionContracts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "kind": {
+                "const": "site_execution_contract"
+              },
+              "schemaVersion": {
+                "const": "0.3.0"
+              },
+              "revision": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "canonicalParentId": {
+                "const": "project:academy-practical"
+              },
+              "routeId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "actionName": {
+                "type": "string",
+                "minLength": 1
+              },
+              "siteObservedFunction": {
+                "type": "string",
+                "minLength": 1
+              },
+              "preconditions": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "expectedObservation": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "postconditions": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "sideEffects": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "riskClass": {
+                "enum": [
+                  "read_only_with_guard",
+                  "possible_autosave",
+                  "effectful_unverified"
+                ]
+              },
+              "executionBoundary": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "mode": {
+                    "enum": [
+                      "read_only",
+                      "prepare_only",
+                      "requires_current_authorization"
+                    ]
+                  },
+                  "authorizationGrantedByContract": {
+                    "const": false
+                  },
+                  "mustStopWhen": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                },
+                "required": [
+                  "mode",
+                  "authorizationGrantedByContract",
+                  "mustStopWhen"
+                ]
+              },
+              "failureRecovery": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "failure": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "safeRecovery": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "failure",
+                    "safeRecovery"
+                  ]
+                }
+              },
+              "evidence": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "sourceIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "uniqueItems": true
+                  },
+                  "confidence": {
+                    "enum": [
+                      "reported_observation",
+                      "hypothesis",
+                      "user_confirmed"
+                    ]
+                  },
+                  "remainingUnknowns": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                },
+                "required": [
+                  "sourceIds",
+                  "confidence",
+                  "remainingUnknowns"
+                ]
+              },
+              "questionIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "validationHistory": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "eventId": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "at": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "format": "date-time"
+                    },
+                    "kind": {
+                      "enum": [
+                        "reported_observation",
+                        "hypothesis",
+                        "user_feedback",
+                        "read_trial",
+                        "rejected_assumption"
+                      ]
+                    },
+                    "sourceIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "uniqueItems": true
+                    },
+                    "result": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "verifiedEffects": {
+                      "enum": [
+                        "read_only",
+                        "possible_write",
+                        "not_tested"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "eventId",
+                    "at",
+                    "kind",
+                    "sourceIds",
+                    "result",
+                    "verifiedEffects"
+                  ]
+                }
+              },
+              "supersedesId": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "rejectedAssumptions": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "assumption": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "reason": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "sourceIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "uniqueItems": true
+                    }
+                  },
+                  "required": [
+                    "assumption",
+                    "reason",
+                    "sourceIds"
+                  ]
+                }
+              },
+              "lifecycleStatus": {
+                "enum": [
+                  "active",
+                  "closed_by_user",
+                  "effectful_not_executed",
+                  "outside_current_scope"
+                ]
+              },
+              "nextSteps": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "observedCondition": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "recommendedFollowUp": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "basis": {
+                      "enum": [
+                        "working_hypothesis",
+                        "observed_procedure",
+                        "explicit_user_instruction"
+                      ]
+                    },
+                    "routeId": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "questionId": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "changesExternalState": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "observedCondition",
+                    "recommendedFollowUp",
+                    "basis",
+                    "routeId",
+                    "questionId",
+                    "changesExternalState"
+                  ]
+                }
+              },
+              "gaps": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "category": {
+                      "enum": [
+                        "uninspected",
+                        "partial_read_evidence",
+                        "user_context_needed",
+                        "meaning_unconfirmed",
+                        "effectful_not_executed",
+                        "scope_closed",
+                        "capability_blocked"
+                      ]
+                    },
+                    "description": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "resolutionRoute": {
+                      "enum": [
+                        "read_only_exploration",
+                        "user_question",
+                        "requires_current_authorization",
+                        "none"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "category",
+                    "description",
+                    "resolutionRoute"
+                  ]
+                }
+              },
+              "contextualBasisIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "siteVerificationState": {
+                "enum": [
+                  "reported_read",
+                  "partly_observed",
+                  "uninspected",
+                  "outside_current_scope"
+                ]
+              },
+              "targetResolution": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "studentIdentity": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "courseIdentity": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "artifactIdentity": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "requiredFilters": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                },
+                "required": [
+                  "studentIdentity",
+                  "courseIdentity",
+                  "artifactIdentity",
+                  "requiredFilters"
+                ]
+              },
+              "previewAndVerify": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "printPlan": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "capabilityGoal": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "isCurrentPrintRequest": {
+                        "const": false
+                      },
+                      "destination": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "copies": {
+                        "type": [
+                          "integer",
+                          "null"
+                        ],
+                        "minimum": 1
+                      },
+                      "pageSelection": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "duplicateProtection": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "executionState": {
+                        "const": "not_requested"
+                      }
+                    },
+                    "required": [
+                      "capabilityGoal",
+                      "isCurrentPrintRequest",
+                      "destination",
+                      "copies",
+                      "pageSelection",
+                      "duplicateProtection",
+                      "executionState"
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "kind",
+              "schemaVersion",
+              "revision",
+              "canonicalParentId",
+              "routeId",
+              "actionName",
+              "siteObservedFunction",
+              "preconditions",
+              "expectedObservation",
+              "postconditions",
+              "sideEffects",
+              "riskClass",
+              "executionBoundary",
+              "failureRecovery",
+              "evidence",
+              "questionIds",
+              "validationHistory",
+              "supersedesId",
+              "rejectedAssumptions",
+              "lifecycleStatus",
+              "nextSteps",
+              "gaps",
+              "contextualBasisIds",
+              "siteVerificationState",
+              "targetResolution",
+              "previewAndVerify",
+              "printPlan"
+            ]
+          }
+        },
+        "routeExtensions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "intent": {
+                "type": "string",
+                "minLength": 1
+              },
+              "exactUrl": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "menuPath": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "filters": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "locator": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "locator"
+                  ]
+                }
+              },
+              "readSequence": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "resultDimensions": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "effectfulControlsObserved": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "effectfulControlsExecuted": {
+                "const": false
+              },
+              "sourceIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "resultSchemaRef": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "intent",
+              "exactUrl",
+              "menuPath",
+              "filters",
+              "readSequence",
+              "resultDimensions",
+              "effectfulControlsObserved",
+              "effectfulControlsExecuted",
+              "sourceIds",
+              "resultSchemaRef"
+            ]
+          }
+        },
+        "interpretationRules": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "rule": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sourceIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              }
+            },
+            "required": [
+              "id",
+              "rule",
+              "sourceIds"
+            ]
+          }
+        },
+        "courseIdentityExamples": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "courseTitleBasis": {
+                "type": "string",
+                "minLength": 1
+              },
+              "courseCode": {
+                "type": "string",
+                "minLength": 1
+              },
+              "versionLabel": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sourceIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              }
+            },
+            "required": [
+              "courseTitleBasis",
+              "courseCode",
+              "versionLabel",
+              "sourceIds"
+            ]
+          }
+        },
+        "safeReadAlternatives": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "workflow": {
+                "type": "string",
+                "minLength": 1
+              },
+              "preferredView": {
+                "type": "string",
+                "minLength": 1
+              },
+              "avoidedRisk": {
+                "type": "string",
+                "minLength": 1
+              },
+              "exactUrl": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "sourceIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              }
+            },
+            "required": [
+              "workflow",
+              "preferredView",
+              "avoidedRisk",
+              "exactUrl",
+              "sourceIds"
+            ]
+          }
+        },
+        "groundedExamples": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "purpose": {
+                "type": "string",
+                "minLength": 1
+              },
+              "record": {
+                "$ref": "#/$defs/LearningResultSnapshot"
+              },
+              "interpretation": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sourceIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              }
+            },
+            "required": [
+              "id",
+              "purpose",
+              "record",
+              "interpretation",
+              "sourceIds"
+            ]
+          }
+        },
+        "artifactAccess": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "sourcePageId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sourcePageUrl": {
+              "type": "string",
+              "minLength": 1
+            },
+            "readRule": {
+              "type": "string",
+              "minLength": 1
+            },
+            "baselineArtifacts": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "role": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "pageId": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "reference": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "role",
+                  "pageId",
+                  "reference"
+                ]
+              }
+            }
+          },
+          "required": [
+            "sourcePageId",
+            "sourcePageUrl",
+            "readRule",
+            "baselineArtifacts"
+          ]
+        }
+      },
+      "required": [
+        "$schema",
+        "kind",
+        "id",
+        "schemaVersion",
+        "revision",
+        "projectId",
+        "canonicalParentId",
+        "updatedAt",
+        "sourceIds",
+        "authorityGrantedByDocument",
+        "siteExecutionContracts",
+        "routeExtensions",
+        "interpretationRules",
+        "courseIdentityExamples",
+        "safeReadAlternatives",
+        "groundedExamples",
+        "artifactAccess"
+      ]
+    },
+    "SemanticOperationPackage": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "$schema": {
+          "const": "academy-cartography-0.3.schema.json"
+        },
+        "kind": {
+          "const": "semantic_operation_package"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schemaVersion": {
+          "const": "0.3.0"
+        },
+        "revision": {
+          "const": 3
+        },
+        "projectId": {
+          "const": "project:academy-practical"
+        },
+        "canonicalParentId": {
+          "const": "project:academy-practical"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "sourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "authorityGrantedByDocument": {
+          "const": false
+        },
+        "operationContracts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SemanticOperationContract"
+          }
+        },
+        "actionAttempts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ActionAttempt"
+          }
+        },
+        "observations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Observation"
+          }
+        },
+        "executionEvents": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/AtomicUIEvent"
+          }
+        },
+        "practicalRecordModel": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "printArtifactSchemaRef": {
+              "const": "#/$defs/PrintArtifact"
+            },
+            "teacherAssertionSchemaRef": {
+              "const": "#/$defs/TeacherCompletionAssertion"
+            },
+            "identityRule": {
+              "type": "string",
+              "minLength": 1
+            },
+            "observationRule": {
+              "type": "string",
+              "minLength": 1
+            },
+            "teacherJudgmentRule": {
+              "type": "string",
+              "minLength": 1
+            },
+            "deepAssessmentRequested": {
+              "const": false
+            },
+            "instanceRecordsCreated": {
+              "const": 0
+            }
+          },
+          "required": [
+            "printArtifactSchemaRef",
+            "teacherAssertionSchemaRef",
+            "identityRule",
+            "observationRule",
+            "teacherJudgmentRule",
+            "deepAssessmentRequested",
+            "instanceRecordsCreated"
+          ]
+        },
+        "externalAuditSource": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "artifactName": {
+              "type": "string",
+              "minLength": 1
+            },
+            "reportedEventCount": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "ingestedExactEventCount": {
+              "const": 0
+            },
+            "readState": {
+              "const": "user_cancelled_do_not_retry"
+            },
+            "sourceIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "artifactName",
+            "reportedEventCount",
+            "ingestedExactEventCount",
+            "readState",
+            "sourceIds"
+          ]
+        }
+      },
+      "required": [
+        "$schema",
+        "kind",
+        "id",
+        "schemaVersion",
+        "revision",
+        "projectId",
+        "canonicalParentId",
+        "updatedAt",
+        "sourceIds",
+        "authorityGrantedByDocument",
+        "operationContracts",
+        "actionAttempts",
+        "observations",
+        "executionEvents",
+        "practicalRecordModel",
+        "externalAuditSource"
+      ]
+    },
+    "CoveragePackage": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "$schema": {
+          "const": "academy-cartography-0.3.schema.json"
+        },
+        "kind": {
+          "const": "coverage_package"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schemaVersion": {
+          "const": "0.3.0"
+        },
+        "revision": {
+          "const": 3
+        },
+        "projectId": {
+          "const": "project:academy-practical"
+        },
+        "canonicalParentId": {
+          "const": "project:academy-practical"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "sourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "authorityGrantedByDocument": {
+          "const": false
+        },
+        "progress": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "publicationIsExplorationComplete": {
+              "const": false
+            },
+            "inventoryComplete": {
+              "type": "boolean"
+            },
+            "reportedInventoryItemCount": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "reportedTopMenuCount": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "inventoryCountBasis": {
+              "type": "string",
+              "minLength": 1
+            },
+            "continuationScope": {
+              "type": "string",
+              "minLength": 1
+            },
+            "excludedScope": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "required": [
+            "publicationIsExplorationComplete",
+            "inventoryComplete",
+            "reportedInventoryItemCount",
+            "reportedTopMenuCount",
+            "inventoryCountBasis",
+            "continuationScope",
+            "excludedScope"
+          ]
+        },
+        "coverage": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "label": {
+                "type": "string",
+                "minLength": 1
+              },
+              "labelBasis": {
+                "enum": [
+                  "reported_menu_or_workflow",
+                  "semantic_workflow"
+                ]
+              },
+              "routeId": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "inspectionState": {
+                "enum": [
+                  "uninspected",
+                  "partly_read",
+                  "read_observed",
+                  "scope_closed"
+                ]
+              },
+              "gaps": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "uninspected",
+                    "partial_read_evidence",
+                    "user_context_needed",
+                    "meaning_unconfirmed",
+                    "effectful_not_executed",
+                    "scope_closed",
+                    "capability_blocked"
+                  ]
+                }
+              },
+              "nextReadOnlyCheck": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "sourceIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              }
+            },
+            "required": [
+              "id",
+              "label",
+              "labelBasis",
+              "routeId",
+              "inspectionState",
+              "gaps",
+              "nextReadOnlyCheck",
+              "sourceIds"
+            ]
+          }
+        },
+        "workState": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "activeScope": {
+              "type": "string",
+              "minLength": 1
+            },
+            "closedWork": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "state": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "reason": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "sourceIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "uniqueItems": true
+                  }
+                },
+                "required": [
+                  "id",
+                  "state",
+                  "reason",
+                  "sourceIds"
+                ]
+              }
+            },
+            "remainingAttendanceWork": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "label": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "date": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "state": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "sourceIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "uniqueItems": true
+                  }
+                },
+                "required": [
+                  "label",
+                  "date",
+                  "state",
+                  "sourceIds"
+                ]
+              }
+            }
+          },
+          "required": [
+            "activeScope",
+            "closedWork",
+            "remainingAttendanceWork"
+          ]
+        },
+        "questions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "question": {
+                "type": "string",
+                "minLength": 1
+              },
+              "askWhen": {
+                "type": "string",
+                "minLength": 1
+              },
+              "whyItMatters": {
+                "type": "string",
+                "minLength": 1
+              },
+              "status": {
+                "enum": [
+                  "pending",
+                  "answered",
+                  "not_needed",
+                  "asked",
+                  "retired_by_user"
+                ]
+              },
+              "answer": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "answerSourceIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              }
+            },
+            "required": [
+              "id",
+              "question",
+              "askWhen",
+              "whyItMatters",
+              "status",
+              "answer",
+              "answerSourceIds"
+            ]
+          }
+        },
+        "interviewPolicy": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "requestedMode": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sourceIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "uniqueItems": true
+            },
+            "askStrategy": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "requestedMode",
+            "sourceIds",
+            "askStrategy"
+          ]
+        },
+        "maintenance": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "approach": {
+              "type": "string",
+              "minLength": 1
+            },
+            "safeTrialBoundary": {
+              "type": "string",
+              "minLength": 1
+            },
+            "versionRule": {
+              "type": "string",
+              "minLength": 1
+            },
+            "actualWebMcpRuntimeInstalled": {
+              "const": false
+            }
+          },
+          "required": [
+            "approach",
+            "safeTrialBoundary",
+            "versionRule",
+            "actualWebMcpRuntimeInstalled"
+          ]
+        },
+        "executionEnvironment": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "academyComputer": {
+              "const": "강아PC"
+            },
+            "cloudLoginState": {
+              "const": "cancelled"
+            },
+            "cloudInstallationState": {
+              "const": "cancelled"
+            },
+            "cloudAuthenticationCreated": {
+              "const": false
+            },
+            "cloudCredentialsUsedOrStored": {
+              "const": false
+            },
+            "cloudInstallPerformed": {
+              "const": false
+            },
+            "supportedCurrentSurface": {
+              "type": "string",
+              "minLength": 1
+            },
+            "externalPdfAccessState": {
+              "type": "string",
+              "minLength": 1
+            },
+            "physicalPrintControlState": {
+              "type": "string",
+              "minLength": 1
+            },
+            "scope": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sourceIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "academyComputer",
+            "cloudLoginState",
+            "cloudInstallationState",
+            "cloudAuthenticationCreated",
+            "cloudCredentialsUsedOrStored",
+            "cloudInstallPerformed",
+            "supportedCurrentSurface",
+            "externalPdfAccessState",
+            "physicalPrintControlState",
+            "scope",
+            "sourceIds"
+          ]
+        }
+      },
+      "required": [
+        "$schema",
+        "kind",
+        "id",
+        "schemaVersion",
+        "revision",
+        "projectId",
+        "canonicalParentId",
+        "updatedAt",
+        "sourceIds",
+        "authorityGrantedByDocument",
+        "progress",
+        "coverage",
+        "workState",
+        "questions",
+        "interviewPolicy",
+        "maintenance",
+        "executionEnvironment"
+      ]
+    },
+    "EvidencePackage": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "$schema": {
+          "const": "academy-cartography-0.3.schema.json"
+        },
+        "kind": {
+          "const": "evidence_package"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schemaVersion": {
+          "const": "0.3.0"
+        },
+        "revision": {
+          "const": 3
+        },
+        "projectId": {
+          "const": "project:academy-practical"
+        },
+        "canonicalParentId": {
+          "const": "project:academy-practical"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "sourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "authorityGrantedByDocument": {
+          "const": false
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "classification": {
+                "enum": [
+                  "user_instruction",
+                  "reported_observation",
+                  "direct_read"
+                ]
+              },
+              "sourceReference": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "reportedAt": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "format": "date-time"
+              },
+              "observationWindow": {
+                "anyOf": [
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "claim": {
+                "type": "string",
+                "minLength": 1
+              },
+              "scope": {
+                "type": "string",
+                "minLength": 1
+              },
+              "limitations": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            "required": [
+              "id",
+              "classification",
+              "sourceReference",
+              "reportedAt",
+              "observationWindow",
+              "claim",
+              "scope",
+              "limitations"
+            ]
+          }
+        }
+      },
+      "required": [
+        "$schema",
+        "kind",
+        "id",
+        "schemaVersion",
+        "revision",
+        "projectId",
+        "canonicalParentId",
+        "updatedAt",
+        "sourceIds",
+        "authorityGrantedByDocument",
+        "sources"
+      ]
+    },
+    "IndexPackage": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "$schema": {
+          "const": "academy-cartography-0.4.schema.json"
+        },
+        "kind": {
+          "const": "cartography_index"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schemaVersion": {
+          "const": "0.4.0"
+        },
+        "revision": {
+          "const": 4
+        },
+        "projectId": {
+          "const": "project:academy-practical"
+        },
+        "canonicalParentId": {
+          "const": "project:academy-practical"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "sourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "authorityGrantedByDocument": {
+          "const": false
+        },
+        "scope": {
+          "type": "string",
+          "minLength": 1
+        },
+        "artifacts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "pageId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "reference": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sha256": {
+                "type": "string",
+                "minLength": 1
+              },
+              "byteSize": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "recordCollection": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "key",
+              "title",
+              "pageId",
+              "reference",
+              "sha256",
+              "byteSize",
+              "recordCollection"
+            ]
+          }
+        },
+        "retrievalRules": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "intentRoutes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "intent": {
+                "type": "string",
+                "minLength": 1
+              },
+              "artifactKey": {
+                "type": "string",
+                "minLength": 1
+              },
+              "recordCollection": {
+                "type": "string",
+                "minLength": 1
+              },
+              "recordId": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "intent",
+              "artifactKey",
+              "recordCollection",
+              "recordId"
+            ]
+          }
+        },
+        "explorationComplete": {
+          "const": false
+        }
+      },
+      "required": [
+        "$schema",
+        "kind",
+        "id",
+        "schemaVersion",
+        "revision",
+        "projectId",
+        "canonicalParentId",
+        "updatedAt",
+        "sourceIds",
+        "authorityGrantedByDocument",
+        "scope",
+        "artifacts",
+        "retrievalRules",
+        "intentRoutes",
+        "explorationComplete"
+      ]
+    },
+    "ValidationPackage": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "$schema": {
+          "const": "academy-cartography-0.4.schema.json"
+        },
+        "kind": {
+          "const": "cartography_validation"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schemaVersion": {
+          "const": "0.4.0"
+        },
+        "revision": {
+          "const": 4
+        },
+        "projectId": {
+          "const": "project:academy-practical"
+        },
+        "canonicalParentId": {
+          "const": "project:academy-practical"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "sourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "authorityGrantedByDocument": {
+          "const": false
+        },
+        "checks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "status": {
+                "enum": [
+                  "passed",
+                  "pending",
+                  "failed"
+                ]
+              },
+              "detail": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "name",
+              "status",
+              "detail"
+            ]
+          }
+        },
+        "fileHashes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "fileName": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sha256": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "fileName",
+              "sha256"
+            ]
+          }
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "$schema",
+        "kind",
+        "id",
+        "schemaVersion",
+        "revision",
+        "projectId",
+        "canonicalParentId",
+        "updatedAt",
+        "sourceIds",
+        "authorityGrantedByDocument",
+        "checks",
+        "fileHashes",
+        "limitations"
+      ]
+    },
+    "HomeworkRequirement": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/PreviewVideoRequirement"
+        },
+        {
+          "$ref": "#/$defs/ProblemSectionRequirement"
+        }
+      ]
+    },
+    "HomeworkEvidenceMatch": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/PreviewVideoEvidenceMatch"
+        },
+        {
+          "$ref": "#/$defs/ProblemSectionEvidenceMatch"
+        }
+      ]
+    },
+    "HomeworkCheck": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "const": "homework_check"
+        },
+        "schemaVersion": {
+          "const": "0.4.0"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "assignmentRef": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "recordKind": {
+              "const": "Assignment"
+            },
+            "recordId": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "recordKind",
+            "recordId"
+          ]
+        },
+        "teacherAssertionRefs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "recordKind": {
+                "const": "TeacherCompletionAssertion"
+              },
+              "recordId": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "recordKind",
+              "recordId"
+            ]
+          }
+        },
+        "inspectedScope": {
+          "type": "string",
+          "minLength": 1
+        },
+        "overallState": {
+          "enum": [
+            "awaiting_evidence",
+            "evidence_compared",
+            "needs_teacher_judgment",
+            "teacher_judgment_recorded"
+          ]
+        },
+        "confirmedFacts": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "uncertainties": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "sourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "externalWritePerformed": {
+          "const": false
+        },
+        "evaluationPhase": {
+          "enum": [
+            "before_class",
+            "in_class",
+            "after_class"
+          ]
+        },
+        "scopeItemRefs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "previewVideoRequirements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PreviewVideoRequirement"
+          }
+        },
+        "problemSectionRequirements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ProblemSectionRequirement"
+          }
+        },
+        "previewVideoEvidenceMatches": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PreviewVideoEvidenceMatch"
+          }
+        },
+        "problemSectionEvidenceMatches": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ProblemSectionEvidenceMatch"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "schemaVersion",
+        "revision",
+        "assignmentRef",
+        "teacherAssertionRefs",
+        "inspectedScope",
+        "overallState",
+        "confirmedFacts",
+        "uncertainties",
+        "sourceIds",
+        "updatedAt",
+        "externalWritePerformed",
+        "evaluationPhase",
+        "scopeItemRefs",
+        "previewVideoRequirements",
+        "problemSectionRequirements",
+        "previewVideoEvidenceMatches",
+        "problemSectionEvidenceMatches"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "overallState": {
+                "const": "teacher_judgment_recorded"
+              }
+            },
+            "required": [
+              "overallState"
+            ]
+          },
+          "then": {
+            "properties": {
+              "teacherAssertionRefs": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "SectionRegistryEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "role": {
+          "const": "problem_section"
+        },
+        "bookCode": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "bookVersion": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "verificationState": {
+          "enum": [
+            "user_mentioned",
+            "site_label_observed",
+            "header_verified"
+          ]
+        },
+        "exactHeaderLabel": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "headerEvidenceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "sourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "universalAcrossBooks": {
+          "const": false
+        },
+        "labelForm": {
+          "enum": [
+            "literal",
+            "pattern"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "label",
+        "role",
+        "bookCode",
+        "bookVersion",
+        "verificationState",
+        "exactHeaderLabel",
+        "headerEvidenceIds",
+        "sourceIds",
+        "universalAcrossBooks",
+        "labelForm"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "verificationState": {
+                "const": "header_verified"
+              }
+            },
+            "required": [
+              "verificationState"
+            ]
+          },
+          "then": {
+            "properties": {
+              "exactHeaderLabel": {
+                "type": "string",
+                "minLength": 1
+              },
+              "headerEvidenceIds": {
+                "minItems": 1
+              },
+              "bookCode": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      ],
+      "not": {
+        "properties": {
+          "label": {
+            "enum": [
+              "영상",
+              "예습영상",
+              "예습 영상",
+              "video",
+              "preview video"
+            ]
+          }
+        },
+        "required": [
+          "label"
+        ]
+      }
+    },
+    "AssignmentScopeItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "const": "assignment_scope_item"
+        },
+        "assignmentRef": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "recordKind": {
+              "const": "Assignment"
+            },
+            "recordId": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "recordKind",
+            "recordId"
+          ]
+        },
+        "bookCode": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "bookVersion": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "courseReference": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "unitLabel": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sectionRef": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "rangeTextVerbatim": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pageRangeText": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "itemRangeText": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "scopeState": {
+          "enum": [
+            "verified",
+            "partially_mapped",
+            "ambiguous_mapping",
+            "unmapped"
+          ]
+        },
+        "headerVerification": {
+          "enum": [
+            "not_checked",
+            "verified",
+            "conflict"
+          ]
+        },
+        "headerEvidenceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "gradingAttemptRefs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "sourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "assignmentRef",
+        "bookCode",
+        "bookVersion",
+        "courseReference",
+        "unitLabel",
+        "sectionRef",
+        "rangeTextVerbatim",
+        "pageRangeText",
+        "itemRangeText",
+        "scopeState",
+        "headerVerification",
+        "headerEvidenceIds",
+        "gradingAttemptRefs",
+        "sourceIds"
+      ]
+    },
+    "ScopeGradingBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scopeItemRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "assessmentResultRef": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "attemptId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "attemptTimeVerbatim": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "attemptTimezone": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "bookCode": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "bookVersion": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sectionRef": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "rangeCoverage": {
+          "enum": [
+            "full",
+            "partial",
+            "outside",
+            "unknown"
+          ]
+        },
+        "temporalRelation": {
+          "enum": [
+            "linked_to_assignment",
+            "within_required_window",
+            "older_than_assignment",
+            "unknown"
+          ]
+        },
+        "originalWrongItemSetRef": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "mappedSimilarItemSetRef": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sourceAttemptRefs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "evidenceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "bindingState": {
+          "enum": [
+            "verified",
+            "partial",
+            "ambiguous",
+            "not_matching"
+          ]
+        },
+        "idAuthority": {
+          "const": "local_trace"
+        },
+        "catalogTestCode": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "nativeAttemptId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "scopeItemRef",
+        "assessmentResultRef",
+        "attemptId",
+        "attemptTimeVerbatim",
+        "attemptTimezone",
+        "bookCode",
+        "bookVersion",
+        "sectionRef",
+        "rangeCoverage",
+        "temporalRelation",
+        "originalWrongItemSetRef",
+        "mappedSimilarItemSetRef",
+        "sourceAttemptRefs",
+        "evidenceIds",
+        "bindingState",
+        "idAuthority",
+        "catalogTestCode",
+        "nativeAttemptId"
+      ]
+    },
+    "HomeworkPackage": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "$schema": {
+          "const": "academy-cartography-0.4.schema.json"
+        },
+        "kind": {
+          "const": "homework_verification_package"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schemaVersion": {
+          "const": "0.4.0"
+        },
+        "revision": {
+          "const": 4
+        },
+        "projectId": {
+          "const": "project:academy-practical"
+        },
+        "canonicalParentId": {
+          "const": "project:academy-practical"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "sourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "authorityGrantedByDocument": {
+          "const": false
+        },
+        "purpose": {
+          "type": "string",
+          "minLength": 1
+        },
+        "baseRecordPolicy": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "sectionRegistry": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SectionRegistryEntry"
+          }
+        },
+        "assignmentScopeItems": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/AssignmentScopeItem"
+          }
+        },
+        "gradingBindings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ScopeGradingBinding"
+          }
+        },
+        "homeworkChecks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/HomeworkCheck"
+          }
+        },
+        "verificationContracts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "version": {
+                "type": "string",
+                "minLength": 1
+              },
+              "status": {
+                "enum": [
+                  "read_path_observed_limited_scope",
+                  "draft"
+                ]
+              },
+              "routeIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "stages": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "action": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "guard": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "action",
+                    "guard"
+                  ]
+                }
+              },
+              "queryWindow": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "observedAtWindowUtc": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "videoDateLabels": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "appWindowLabel": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "siteClockTimezone": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "observedAtWindowUtc",
+                  "videoDateLabels",
+                  "appWindowLabel",
+                  "siteClockTimezone"
+                ]
+              },
+              "generationAuthority": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "ongoingAutoGenerationAuthorized": {
+                    "const": false
+                  },
+                  "ongoingAutoPrintingAuthorized": {
+                    "const": false
+                  },
+                  "ambiguousSourceBlocksGeneration": {
+                    "const": true
+                  }
+                },
+                "required": [
+                  "ongoingAutoGenerationAuthorized",
+                  "ongoingAutoPrintingAuthorized",
+                  "ambiguousSourceBlocksGeneration"
+                ]
+              },
+              "sourceIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              }
+            },
+            "required": [
+              "id",
+              "version",
+              "status",
+              "routeIds",
+              "stages",
+              "queryWindow",
+              "generationAuthority",
+              "sourceIds"
+            ]
+          }
+        },
+        "conditionalRules": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "appliesWhen": {
+                "type": "string",
+                "minLength": 1
+              },
+              "effects": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "doesNotApplyTo": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "sourceIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              }
+            },
+            "required": [
+              "id",
+              "appliesWhen",
+              "effects",
+              "doesNotApplyTo",
+              "sourceIds"
+            ]
+          }
+        },
+        "observedPatterns": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "observation": {
+                "type": "string",
+                "minLength": 1
+              },
+              "interpretationLimit": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sourceIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              }
+            },
+            "required": [
+              "id",
+              "observation",
+              "interpretationLimit",
+              "sourceIds"
+            ]
+          }
+        },
+        "catalogBindings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "bookCode": {
+                "type": "string",
+                "minLength": 1
+              },
+              "bookVersion": {
+                "type": "string",
+                "minLength": 1
+              },
+              "label": {
+                "type": "string",
+                "minLength": 1
+              },
+              "unitOrLessonLabel": {
+                "type": "string",
+                "minLength": 1
+              },
+              "testCodes": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "verifiedRelation": {
+                "type": "string",
+                "minLength": 1
+              },
+              "unverifiedRelations": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "sourceIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              }
+            },
+            "required": [
+              "bookCode",
+              "bookVersion",
+              "label",
+              "unitOrLessonLabel",
+              "testCodes",
+              "verifiedRelation",
+              "unverifiedRelations",
+              "sourceIds"
+            ]
+          }
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "classification": {
+                "enum": [
+                  "user_instruction",
+                  "reported_observation"
+                ]
+              },
+              "sourceReference": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "turnReference": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "observationWindowUtc": {
+                "anyOf": [
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "claim": {
+                "type": "string",
+                "minLength": 1
+              },
+              "limitations": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            "required": [
+              "id",
+              "classification",
+              "sourceReference",
+              "turnReference",
+              "observationWindowUtc",
+              "claim",
+              "limitations"
+            ]
+          }
+        },
+        "notVerified": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "runtimeImplemented": {
+          "const": false
+        },
+        "readPassState": {
+          "const": "completed_with_evidence_gaps"
+        },
+        "labelCorrespondences": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "bookCode": {
+                "type": "string",
+                "minLength": 1
+              },
+              "bookVersion": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sourceResultLabel": {
+                "type": "string",
+                "minLength": 1
+              },
+              "catalogLabel": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sectionRegistryRefs": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "equivalenceState": {
+                "const": "unverified_preserve_both"
+              },
+              "sourceIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              }
+            },
+            "required": [
+              "bookCode",
+              "bookVersion",
+              "sourceResultLabel",
+              "catalogLabel",
+              "sectionRegistryRefs",
+              "equivalenceState",
+              "sourceIds"
+            ]
+          }
+        }
+      },
+      "required": [
+        "$schema",
+        "kind",
+        "id",
+        "schemaVersion",
+        "revision",
+        "projectId",
+        "canonicalParentId",
+        "updatedAt",
+        "sourceIds",
+        "authorityGrantedByDocument",
+        "purpose",
+        "baseRecordPolicy",
+        "sectionRegistry",
+        "assignmentScopeItems",
+        "gradingBindings",
+        "homeworkChecks",
+        "verificationContracts",
+        "conditionalRules",
+        "observedPatterns",
+        "catalogBindings",
+        "sources",
+        "notVerified",
+        "runtimeImplemented",
+        "readPassState",
+        "labelCorrespondences"
+      ]
+    },
+    "PreviewVideoRequirement": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "const": "preview_video_requirement"
+        },
+        "assignmentRef": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "recordKind": {
+              "const": "Assignment"
+            },
+            "recordId": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "recordKind",
+            "recordId"
+          ]
+        },
+        "required": {
+          "enum": [
+            "required",
+            "not_required",
+            "unknown"
+          ]
+        },
+        "timing": {
+          "enum": [
+            "before_class",
+            "in_class",
+            "after_class",
+            "unspecified"
+          ]
+        },
+        "videoUnitLabel": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "videoVersionReference": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "routeIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "sourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "assignmentRef",
+        "required",
+        "timing",
+        "videoUnitLabel",
+        "videoVersionReference",
+        "routeIds",
+        "sourceIds"
+      ]
+    },
+    "ProblemSectionRequirement": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "const": "problem_section_requirement"
+        },
+        "assignmentRef": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "recordKind": {
+              "const": "Assignment"
+            },
+            "recordId": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "recordKind",
+            "recordId"
+          ]
+        },
+        "scopeItemRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "activity": {
+          "enum": [
+            "paper_solve",
+            "paper_correction",
+            "app_answer_entry",
+            "app_resubmission",
+            "app_grading",
+            "teacher_grading",
+            "bring_paper",
+            "other"
+          ]
+        },
+        "required": {
+          "enum": [
+            "required",
+            "not_required",
+            "unknown"
+          ]
+        },
+        "timing": {
+          "enum": [
+            "before_class",
+            "in_class",
+            "after_class",
+            "unspecified"
+          ]
+        },
+        "supportResources": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "type": {
+                "const": "qr_help_video"
+              },
+              "available": {
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              },
+              "requiredForCompletion": {
+                "const": false
+              },
+              "completionEvidence": {
+                "const": false
+              },
+              "sourceIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              }
+            },
+            "required": [
+              "type",
+              "available",
+              "requiredForCompletion",
+              "completionEvidence",
+              "sourceIds"
+            ]
+          }
+        },
+        "sourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "exceptionNote": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "assignmentRef",
+        "scopeItemRef",
+        "activity",
+        "required",
+        "timing",
+        "supportResources",
+        "sourceIds",
+        "exceptionNote"
+      ]
+    },
+    "ProblemSectionEvidenceMatch": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "requirementId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "observationRefs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "recordKind": {
+                "enum": [
+                  "Observation",
+                  "PreviewInspection",
+                  "AssessmentResult"
+                ]
+              },
+              "recordId": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "recordKind",
+              "recordId"
+            ]
+          }
+        },
+        "sourceAttemptReference": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "studentMatch": {
+          "enum": [
+            "confirmed",
+            "unconfirmed",
+            "conflict"
+          ]
+        },
+        "courseAndVersionMatch": {
+          "enum": [
+            "confirmed",
+            "unconfirmed",
+            "conflict"
+          ]
+        },
+        "rangeCoverage": {
+          "enum": [
+            "full",
+            "partial",
+            "outside",
+            "unknown"
+          ]
+        },
+        "temporalMatch": {
+          "enum": [
+            "linked_to_assignment",
+            "within_required_window",
+            "older_than_assignment",
+            "unknown"
+          ]
+        },
+        "matchState": {
+          "enum": [
+            "matching_evidence",
+            "partial_evidence",
+            "not_matching",
+            "inconclusive"
+          ]
+        },
+        "checkResult": {
+          "enum": [
+            "evidence_present",
+            "partial_evidence",
+            "not_found_in_inspected_scope",
+            "conflict",
+            "unknown",
+            "not_applicable"
+          ]
+        },
+        "explanation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "requirementApplicability": {
+          "enum": [
+            "applicable",
+            "not_required_for_phase",
+            "not_due_yet",
+            "unknown"
+          ]
+        },
+        "queryScopeState": {
+          "enum": [
+            "target_verified",
+            "stale_result_discarded",
+            "query_not_applied",
+            "unknown"
+          ]
+        },
+        "kind": {
+          "const": "problem_section_evidence_match"
+        },
+        "sectionMatch": {
+          "enum": [
+            "confirmed",
+            "unconfirmed",
+            "conflict"
+          ]
+        },
+        "evidenceDomain": {
+          "enum": [
+            "app_entry",
+            "app_grading",
+            "paper_observation",
+            "teacher_statement",
+            "site_summary",
+            "unknown"
+          ]
+        }
+      },
+      "required": [
+        "requirementId",
+        "observationRefs",
+        "sourceAttemptReference",
+        "studentMatch",
+        "courseAndVersionMatch",
+        "rangeCoverage",
+        "temporalMatch",
+        "matchState",
+        "checkResult",
+        "explanation",
+        "requirementApplicability",
+        "queryScopeState",
+        "kind",
+        "sectionMatch",
+        "evidenceDomain"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "checkResult": {
+                "const": "evidence_present"
+              }
+            },
+            "required": [
+              "checkResult"
+            ]
+          },
+          "then": {
+            "properties": {
+              "studentMatch": {
+                "const": "confirmed"
+              },
+              "courseAndVersionMatch": {
+                "const": "confirmed"
+              },
+              "rangeCoverage": {
+                "const": "full"
+              },
+              "temporalMatch": {
+                "enum": [
+                  "linked_to_assignment",
+                  "within_required_window"
+                ]
+              },
+              "matchState": {
+                "const": "matching_evidence"
+              },
+              "requirementApplicability": {
+                "const": "applicable"
+              },
+              "observationRefs": {
+                "minItems": 1
+              },
+              "queryScopeState": {
+                "const": "target_verified"
+              },
+              "sectionMatch": {
+                "const": "confirmed"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "checkResult": {
+                "const": "not_applicable"
+              }
+            },
+            "required": [
+              "checkResult"
+            ]
+          },
+          "then": {
+            "properties": {
+              "requirementApplicability": {
+                "enum": [
+                  "not_required_for_phase",
+                  "not_due_yet"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "PreviewVideoEvidenceMatch": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "requirementId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "const": "preview_video_evidence_match"
+        },
+        "observationRefs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "recordKind": {
+                "enum": [
+                  "Observation",
+                  "PreviewInspection"
+                ]
+              },
+              "recordId": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "recordKind",
+              "recordId"
+            ]
+          }
+        },
+        "studentMatch": {
+          "enum": [
+            "confirmed",
+            "unconfirmed",
+            "conflict"
+          ]
+        },
+        "videoUnitMatch": {
+          "enum": [
+            "confirmed",
+            "unconfirmed",
+            "conflict"
+          ]
+        },
+        "videoVersionMatch": {
+          "enum": [
+            "confirmed",
+            "not_specified",
+            "unconfirmed",
+            "conflict"
+          ]
+        },
+        "temporalMatch": {
+          "enum": [
+            "linked_to_assignment",
+            "within_required_window",
+            "older_than_assignment",
+            "unknown"
+          ]
+        },
+        "queryScopeState": {
+          "enum": [
+            "target_verified",
+            "stale_result_discarded",
+            "query_not_applied",
+            "unknown"
+          ]
+        },
+        "rawVideoStatus": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "rawTeacherInspectionStatus": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "requirementApplicability": {
+          "enum": [
+            "applicable",
+            "not_required_for_phase",
+            "not_due_yet",
+            "unknown"
+          ]
+        },
+        "checkResult": {
+          "enum": [
+            "evidence_present",
+            "partial_evidence",
+            "not_found_in_inspected_scope",
+            "conflict",
+            "unknown",
+            "not_applicable"
+          ]
+        },
+        "explanation": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "requirementId",
+        "kind",
+        "observationRefs",
+        "studentMatch",
+        "videoUnitMatch",
+        "videoVersionMatch",
+        "temporalMatch",
+        "queryScopeState",
+        "rawVideoStatus",
+        "rawTeacherInspectionStatus",
+        "requirementApplicability",
+        "checkResult",
+        "explanation"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "checkResult": {
+                "const": "evidence_present"
+              }
+            },
+            "required": [
+              "checkResult"
+            ]
+          },
+          "then": {
+            "properties": {
+              "studentMatch": {
+                "const": "confirmed"
+              },
+              "videoUnitMatch": {
+                "const": "confirmed"
+              },
+              "videoVersionMatch": {
+                "enum": [
+                  "confirmed",
+                  "not_specified"
+                ]
+              },
+              "temporalMatch": {
+                "enum": [
+                  "linked_to_assignment",
+                  "within_required_window"
+                ]
+              },
+              "queryScopeState": {
+                "const": "target_verified"
+              },
+              "requirementApplicability": {
+                "const": "applicable"
+              },
+              "observationRefs": {
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "checkResult": {
+                "const": "not_applicable"
+              }
+            },
+            "required": [
+              "checkResult"
+            ]
+          },
+          "then": {
+            "properties": {
+              "requirementApplicability": {
+                "enum": [
+                  "not_required_for_phase",
+                  "not_due_yet"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

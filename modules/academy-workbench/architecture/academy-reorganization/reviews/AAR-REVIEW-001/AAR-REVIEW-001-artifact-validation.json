@@ -1,0 +1,136 @@
+{
+  "schemaVersion": "academy.review-artifact-validation/1",
+  "reviewId": "AAR-REVIEW-001",
+  "observedAtUtc": "2026-10-21T05:14:27.918505+00:00",
+  "primaryResultSha256": "f2b0b090d760e9b50babeee12eafe7cae28ae85a7a7f418911cd9c33213d5c1f",
+  "allJsonParses": true,
+  "uniqueFindingIds": true,
+  "allReportHashReferencesMatch": true,
+  "checkedReportReferences": 41,
+  "trackedSourceUnchanged": true,
+  "headAndTreeUnchanged": true,
+  "checks": [
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD",
+        "HEAD^{tree}"
+      ],
+      "exitCode": 0,
+      "stdout": "6cf0a518d68e21b3d7a7624d0fba2f9c4d31dde6\n20aa98bdb31de50a4f6079200d4f6536a1aec62a\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--exit-code",
+        "--quiet"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--exit-code",
+        "--quiet"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "status",
+        "--short",
+        "--untracked-files=all"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bun",
+        "/home/palantirkc/projects/agent-platform/node_modules/typescript/bin/tsc",
+        "--version"
+      ],
+      "exitCode": 0,
+      "stdout": "Version 5.9.3\n",
+      "stderr": ""
+    }
+  ],
+  "artifactInventory": [
+    {
+      "path": ".local/reviews/AAR-REVIEW-001-check-cross-work.json",
+      "sha256": "d51feab3f05a48e5218b101bf932b221afac398329f7d7518856d6e21db40b58",
+      "bytes": 2640
+    },
+    {
+      "path": ".local/reviews/AAR-REVIEW-001-check-graph-semantics.json",
+      "sha256": "e9b7173e2950268f2628a9ba20abf2ed20240e465ada731b56bc2e2962aa5558",
+      "bytes": 4049
+    },
+    {
+      "path": ".local/reviews/AAR-REVIEW-001-check-preserved-identities.json",
+      "sha256": "eaca6150a730e30a5ce680f8ab277d3755d1af07f317eb907a1bfd4e68c4f26e",
+      "bytes": 5001
+    },
+    {
+      "path": ".local/reviews/AAR-REVIEW-001-check-topology-common.json",
+      "sha256": "30bb0d4f816f056b13688cde6ac8e31179d212c12890d4ef783657453a61c549",
+      "bytes": 1247
+    },
+    {
+      "path": ".local/reviews/AAR-REVIEW-001-check-types-qualified.json",
+      "sha256": "e66f9247de586a87cc8c016cc487466c511cdfb7aa3544516e3cc08f2ded5fb7",
+      "bytes": 1175
+    },
+    {
+      "path": ".local/reviews/AAR-REVIEW-001-check-types.json",
+      "sha256": "d760eff1ec5fb94f171c278a932afcf9d45ae71f160af247effb700758e38976",
+      "bytes": 1641
+    },
+    {
+      "path": ".local/reviews/AAR-REVIEW-001-evidence.json",
+      "sha256": "e9478779529bedea70d21b43bd841128c1f4172f8bb3ee41b472fca7bc64a20f",
+      "bytes": 35790
+    },
+    {
+      "path": ".local/reviews/AAR-REVIEW-001-observations.json",
+      "sha256": "94221cc8d463865529d8e2ea11c88c433f91eee5cc0d5f83b1eb419f17a28490",
+      "bytes": 2249
+    },
+    {
+      "path": ".local/reviews/AAR-REVIEW-001.json",
+      "sha256": "f2b0b090d760e9b50babeee12eafe7cae28ae85a7a7f418911cd9c33213d5c1f",
+      "bytes": 36095
+    }
+  ],
+  "supplementalReadDiagnostics": [
+    {
+      "operation": "rg against native adapter src/index.ts guesses",
+      "result": "failed",
+      "exitCode": 2,
+      "paths": [
+        "/home/palantirkc/projects/agent-platform/packages/native-codex-adapter/src/index.ts",
+        "/home/palantirkc/projects/agent-platform/packages/native-hermes-adapter/src/index.ts"
+      ],
+      "reason": "The packages export named entrypoints instead of a root src/index.ts. Package manifests were read successfully; no missing root barrel was treated as a defect.",
+      "followup": "No adapter runtime was launched or inspected."
+    },
+    {
+      "operation": "rg --files architecture work -g AGENTS.md",
+      "result": "no-matches",
+      "exitCode": 1,
+      "meaning": "No nested AGENTS.md found under the scoped architecture and Work paths; not a failed architecture test."
+    }
+  ],
+  "note": "All originals and failed type-check/read evidence are retained. Review artifacts are ignored by Git and were not committed."
+}

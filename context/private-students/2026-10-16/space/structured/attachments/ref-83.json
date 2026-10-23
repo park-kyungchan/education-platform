@@ -1,0 +1,447 @@
+{
+  "source_reference": "library-file:fde1_bGliZmlsZV95MUhqTWxfRFFDS0x6ZVRaZTNJSnJ3_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+  "source_sha256": "cc49ebd444408635d345b16a1276587b1df48442206955ceaa4e948984e57994",
+  "data": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "kind": {
+        "type": "string",
+        "const": "student_book_evidence_rows"
+      },
+      "schemaVersion": {
+        "type": "string",
+        "const": "1.0.0"
+      },
+      "studentViewId": {
+        "type": "string"
+      },
+      "canonicalStudentId": {
+        "type": "string"
+      },
+      "sourceSnapshot": {
+        "type": "object",
+        "properties": {
+          "pageId": {
+            "type": "string"
+          },
+          "reference": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "jsonPointer": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "pageId",
+          "reference",
+          "sha256",
+          "jsonPointer"
+        ],
+        "additionalProperties": false
+      },
+      "sharedEditionRegistry": {
+        "type": "object",
+        "properties": {
+          "pageId": {
+            "type": "string"
+          },
+          "reference": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "jsonPointer": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "pageId",
+          "reference",
+          "sha256",
+          "jsonPointer"
+        ],
+        "additionalProperties": false
+      },
+      "rows": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "bookEditionId": {
+              "type": "string"
+            },
+            "sourceSectionId": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "tocNodeId": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "rowKind": {
+              "type": "string",
+              "enum": [
+                "catalog_section",
+                "verification_slot"
+              ]
+            },
+            "unitLabel": {
+              "type": "string"
+            },
+            "unitTitle": {
+              "type": "string"
+            },
+            "unitLevel": {
+              "type": "string",
+              "enum": [
+                "subunit",
+                "middle",
+                "major_assessment",
+                "unknown"
+              ]
+            },
+            "parentRelationState": {
+              "type": "string",
+              "enum": [
+                "printed_toc_verified",
+                "number_prefix_only",
+                "not_verified"
+              ]
+            },
+            "sectionSourceLabel": {
+              "type": "string"
+            },
+            "sectionDisplayLabel": {
+              "type": "string"
+            },
+            "catalogCode": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "lessonIndex": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "catalogPresence": {
+              "type": "string",
+              "enum": [
+                "observed",
+                "not_observed"
+              ]
+            },
+            "tocState": {
+              "type": "string",
+              "enum": [
+                "observed_in_printed_toc",
+                "native_catalog_only",
+                "section_applicability_unverified"
+              ]
+            },
+            "mappingState": {
+              "type": "string",
+              "enum": [
+                "native_section_match",
+                "unverified_toc_binding",
+                "verification_slot_only"
+              ]
+            },
+            "attemptIds": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "evidenceState": {
+              "type": "string",
+              "enum": [
+                "observed",
+                "observed_absent",
+                "mapping_unknown",
+                "not_checked"
+              ]
+            },
+            "teacherVerdict": {
+              "type": "string",
+              "const": "not_checked"
+            },
+            "paperEvidence": {
+              "type": "string",
+              "const": "not_checked"
+            },
+            "progressDecision": {
+              "type": "string",
+              "const": "not_determined"
+            },
+            "absenceReason": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "sourceAsOf": {
+              "type": "null"
+            },
+            "currentAssignmentCompletion": {
+              "type": "string",
+              "const": "not_determined"
+            },
+            "labelEquivalenceState": {
+              "type": "string",
+              "enum": [
+                "exact_source_label",
+                "not_asserted"
+              ]
+            },
+            "bookDisplayName": {
+              "type": "string"
+            },
+            "bookCode": {
+              "type": "string"
+            },
+            "edition": {
+              "type": "integer",
+              "minimum": -9007199254740991,
+              "maximum": 9007199254740991
+            },
+            "majorGroupingLabel": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "attemptEvidence": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "sourceAttemptId": {
+                    "type": "string"
+                  },
+                  "nativeAttemptId": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "source": {
+                    "type": "object",
+                    "properties": {
+                      "pageId": {
+                        "type": "string"
+                      },
+                      "reference": {
+                        "type": "string"
+                      },
+                      "sha256": {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      },
+                      "jsonPointer": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "pageId",
+                      "reference",
+                      "sha256",
+                      "jsonPointer"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "score": {
+                    "type": "number"
+                  },
+                  "displayedAt": {
+                    "type": "object",
+                    "properties": {
+                      "raw": {
+                        "type": "string"
+                      },
+                      "precision": {
+                        "type": "string"
+                      },
+                      "rawYear": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "yearStatus": {
+                        "type": "string"
+                      },
+                      "inferredYear": {
+                        "anyOf": [
+                          {
+                            "type": "integer",
+                            "minimum": -9007199254740991,
+                            "maximum": 9007199254740991
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "inferenceBasis": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "timezone": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "timezoneStatus": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "raw",
+                      "precision",
+                      "rawYear",
+                      "yearStatus",
+                      "inferredYear",
+                      "inferenceBasis",
+                      "timezone",
+                      "timezoneStatus"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "sourceAttemptId",
+                  "nativeAttemptId",
+                  "source",
+                  "score",
+                  "displayedAt"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "diaryAssertions": {
+              "type": "array",
+              "items": {}
+            },
+            "sourceUrls": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "sourceScope": {
+              "type": "string"
+            },
+            "contractVersion": {
+              "type": "string",
+              "const": "1.1.0"
+            },
+            "denominatorAxis": {
+              "type": "string",
+              "enum": [
+                "subunit",
+                "middle",
+                "major_assessment",
+                "unknown"
+              ]
+            },
+            "axisVerificationState": {
+              "type": "string",
+              "enum": [
+                "topology_verified_performance_denominator_open",
+                "topology_unverified"
+              ]
+            },
+            "durationEstimate": {
+              "type": "null"
+            }
+          },
+          "required": [
+            "id",
+            "bookEditionId",
+            "sourceSectionId",
+            "tocNodeId",
+            "rowKind",
+            "unitLabel",
+            "unitTitle",
+            "unitLevel",
+            "parentRelationState",
+            "sectionSourceLabel",
+            "sectionDisplayLabel",
+            "catalogCode",
+            "lessonIndex",
+            "catalogPresence",
+            "tocState",
+            "mappingState",
+            "attemptIds",
+            "evidenceState",
+            "teacherVerdict",
+            "paperEvidence",
+            "progressDecision",
+            "absenceReason",
+            "sourceAsOf",
+            "currentAssignmentCompletion",
+            "labelEquivalenceState",
+            "bookDisplayName",
+            "bookCode",
+            "edition",
+            "majorGroupingLabel",
+            "attemptEvidence",
+            "diaryAssertions",
+            "sourceUrls",
+            "sourceScope",
+            "contractVersion",
+            "denominatorAxis",
+            "axisVerificationState",
+            "durationEstimate"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "kind",
+      "schemaVersion",
+      "studentViewId",
+      "canonicalStudentId",
+      "sourceSnapshot",
+      "sharedEditionRegistry",
+      "rows"
+    ],
+    "additionalProperties": false
+  }
+}

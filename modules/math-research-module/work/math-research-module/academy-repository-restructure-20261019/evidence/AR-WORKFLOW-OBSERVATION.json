@@ -1,0 +1,104 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "mathematics-education",
+  "projectId": "math-research-module",
+  "workId": "academy-repository-restructure-20261019",
+  "kind": "evidence",
+  "id": "AR-WORKFLOW-OBSERVATION",
+  "evidenceKind": "observation",
+  "source": {
+    "kind": "snapshot",
+    "path": "work/math-research-module/academy-repository-restructure-20261019/inputs/AR-WORKFLOW-CHECKS.json",
+    "fragment": "#/content/observation"
+  },
+  "artifact": {
+    "schemaVersion": "1.0.0",
+    "kind": "evidence",
+    "id": "math-research-module:evidence:academy-restructure:workflow-checks",
+    "projectId": "math-research-module",
+    "domainId": "mathematics-education",
+    "createdAt": "2026-10-19T05:57:55.047Z",
+    "payload": {
+      "claim": "The canonical committed Work reader accepted the selected Work and current context, and preserved the two expected source-only holds.",
+      "method": "Serial invocation of the unchanged pinned common CLI through the Education source transport; capture exact output hashes and exit statuses.",
+      "sourceUrl": "urn:git:sha1:ee236370878c38e996f2850650a2d3d5d2453a07",
+      "fetchedAt": "2026-10-19T05:57:55.047Z",
+      "upstreamRevision": "ee236370878c38e996f2850650a2d3d5d2453a07",
+      "result": {
+        "outcome": "success",
+        "processExitCode": 0,
+        "contentMatched": true
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "outcome": "success"
+        }
+      ],
+      "limitations": [
+        "Local committed-source proof only; no shared delivery, independent review, native effect or semantic acceptance.",
+        "Broader integration stopped at the missing required Node26.7.0 executable; source typecheck,37 root tests and import checks passed."
+      ],
+      "details": {
+        "checks": [
+          {
+            "repository": "math-research-module",
+            "label": "validate",
+            "snapshotCommit": "ee236370878c38e996f2850650a2d3d5d2453a07",
+            "exitCode": 0,
+            "expectedExitCode": 0,
+            "status": null,
+            "valid": true,
+            "findings": [],
+            "holds": null,
+            "outputSha256": "10e556a039be47aec25f2986272ba577482903f204e652ec58cc8a22c600c0eb",
+            "outputBytes": 139,
+            "stderr": ""
+          },
+          {
+            "repository": "math-research-module",
+            "label": "context",
+            "snapshotCommit": "ee236370878c38e996f2850650a2d3d5d2453a07",
+            "exitCode": 0,
+            "expectedExitCode": 0,
+            "status": "source-qualified",
+            "valid": null,
+            "findings": null,
+            "holds": null,
+            "outputSha256": "0da8f5bd25eba7250d9768b25840dc88c41c4fba4005a15575cd67ec28da69ee",
+            "outputBytes": 9129,
+            "stderr": ""
+          },
+          {
+            "repository": "math-research-module",
+            "label": "context-unknown",
+            "snapshotCommit": "ee236370878c38e996f2850650a2d3d5d2453a07",
+            "exitCode": 1,
+            "expectedExitCode": 1,
+            "status": "held",
+            "valid": null,
+            "findings": null,
+            "holds": null,
+            "outputSha256": "6be5a72670a233287fa92f1605ff7957f088871d52f611e88edc0896dfa6018c",
+            "outputBytes": 9158,
+            "stderr": ""
+          },
+          {
+            "repository": "math-research-module",
+            "label": "context-ownership-held",
+            "snapshotCommit": "ee236370878c38e996f2850650a2d3d5d2453a07",
+            "exitCode": 1,
+            "expectedExitCode": 1,
+            "status": "held",
+            "valid": null,
+            "findings": null,
+            "holds": null,
+            "outputSha256": "3068abd1a7cb33777da78cc61a37eabb5aab66878fe605195ed6d571ff62e978",
+            "outputBytes": 10619,
+            "stderr": ""
+          }
+        ]
+      }
+    }
+  }
+}

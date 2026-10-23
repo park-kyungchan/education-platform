@@ -1,0 +1,3625 @@
+{
+  "source_reference": "library-file:fde1_bGliZmlsZV9lOVZINGV6Wk1zN1NGU1BjUnlha1h3_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+  "source_sha256": "8930eadf32412f70ada1ced8738e2bb46d856d727be290c549a235a4d786a5c7",
+  "data": {
+    "type": "object",
+    "required": [
+      "$schema",
+      "type",
+      "plan_id",
+      "version",
+      "student",
+      "created_at_utc",
+      "source_messages",
+      "homework_comparison_basis",
+      "gauss_submission_check",
+      "teacher_solution_review",
+      "davinci_total_assignment_comparison",
+      "dayrecord_execution",
+      "terminology",
+      "evidence_boundary",
+      "revised_at_utc",
+      "previous_revision",
+      "historical_comparison_states",
+      "davinci_assignment_scope",
+      "reminder_plan",
+      "scope_structure_revision_history",
+      "schema_refinement_request",
+      "evidence_contract",
+      "evidence_records",
+      "legacy_evidence_bindings",
+      "decision_records",
+      "legacy_decision_bindings",
+      "additive_refinement_audit"
+    ],
+    "properties": {
+      "$schema": {
+        "type": "string"
+      },
+      "type": {
+        "const": "student_homework_submission_and_teacher_review_plan"
+      },
+      "plan_id": {
+        "type": "string"
+      },
+      "version": {
+        "const": "1.6.0"
+      },
+      "student": {
+        "type": "object",
+        "required": [
+          "display_name",
+          "canonical_snapshot_student_key"
+        ],
+        "properties": {
+          "display_name": {
+            "type": "string"
+          },
+          "canonical_snapshot_student_key": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "created_at_utc": {
+        "type": "string"
+      },
+      "source_messages": {
+        "type": "array",
+        "items": {
+          "anyOf": [
+            {
+              "type": "object",
+              "required": [
+                "message_id",
+                "actor",
+                "sent_at_utc",
+                "exact_relevant_text"
+              ],
+              "properties": {
+                "message_id": {
+                  "type": "string"
+                },
+                "actor": {
+                  "type": "string"
+                },
+                "sent_at_utc": {
+                  "type": "string"
+                },
+                "exact_relevant_text": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "message_id",
+                "actor",
+                "sent_at_utc",
+                "exact_relevant_spans"
+              ],
+              "properties": {
+                "message_id": {
+                  "type": "string"
+                },
+                "actor": {
+                  "type": "string"
+                },
+                "sent_at_utc": {
+                  "type": "string"
+                },
+                "exact_relevant_spans": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "message_id",
+                "actor",
+                "sent_at_utc",
+                "purpose"
+              ],
+              "properties": {
+                "message_id": {
+                  "type": "string"
+                },
+                "actor": {
+                  "type": "string"
+                },
+                "sent_at_utc": {
+                  "type": "string"
+                },
+                "purpose": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "message_id",
+                "actor",
+                "sent_at_utc",
+                "purpose",
+                "message_text_supplied"
+              ],
+              "properties": {
+                "message_id": {
+                  "type": "string"
+                },
+                "actor": {
+                  "type": "string"
+                },
+                "sent_at_utc": {
+                  "type": "string"
+                },
+                "purpose": {
+                  "type": "string"
+                },
+                "message_text_supplied": {
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "message_id",
+                "actor",
+                "sent_at_utc",
+                "exact_relevant_text",
+                "purpose"
+              ],
+              "properties": {
+                "message_id": {
+                  "type": "string"
+                },
+                "actor": {
+                  "type": "string"
+                },
+                "sent_at_utc": {
+                  "type": "string"
+                },
+                "exact_relevant_text": {
+                  "type": "string"
+                },
+                "purpose": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false
+            }
+          ]
+        }
+      },
+      "homework_comparison_basis": {
+        "type": "object",
+        "required": [
+          "date",
+          "timezone",
+          "state",
+          "source_message_id"
+        ],
+        "properties": {
+          "date": {
+            "type": "string"
+          },
+          "timezone": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "source_message_id": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "gauss_submission_check": {
+        "type": "object",
+        "required": [
+          "target",
+          "scope",
+          "scheduled_attendance_at_local",
+          "scheduled_attendance_at_utc",
+          "timezone",
+          "check_time_semantics",
+          "registration_criterion",
+          "rules",
+          "current_query_state",
+          "current_submission_state",
+          "observed_at_utc",
+          "source_message_id",
+          "paper_solution_review_state",
+          "submission_acceptance_and_paper_review_are_separate",
+          "latest_registration_observation",
+          "current_review_policy_ref",
+          "rules_timing_status"
+        ],
+        "properties": {
+          "target": {
+            "type": "object",
+            "required": [
+              "book_code",
+              "edition",
+              "book_display_name",
+              "unit_label",
+              "unit_title",
+              "native_section_label",
+              "catalog_code",
+              "existing_record_reference",
+              "reference_kind",
+              "creates_attempt_record"
+            ],
+            "properties": {
+              "book_code": {
+                "type": "string"
+              },
+              "edition": {
+                "type": "integer"
+              },
+              "book_display_name": {
+                "type": "string"
+              },
+              "unit_label": {
+                "type": "string"
+              },
+              "unit_title": {
+                "type": "string"
+              },
+              "native_section_label": {
+                "type": "string"
+              },
+              "catalog_code": {
+                "type": "string"
+              },
+              "existing_record_reference": {
+                "type": "string"
+              },
+              "reference_kind": {
+                "type": "string"
+              },
+              "creates_attempt_record": {
+                "type": "boolean"
+              }
+            },
+            "additionalProperties": false
+          },
+          "scope": {
+            "type": "string"
+          },
+          "scheduled_attendance_at_local": {
+            "type": "string"
+          },
+          "scheduled_attendance_at_utc": {
+            "type": "string"
+          },
+          "timezone": {
+            "type": "string"
+          },
+          "check_time_semantics": {
+            "type": "string"
+          },
+          "registration_criterion": {
+            "type": "string"
+          },
+          "rules": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "query_outcome",
+                "homework_submission_state",
+                "dayrecord_missing_homework_memo"
+              ],
+              "properties": {
+                "query_outcome": {
+                  "type": "string"
+                },
+                "homework_submission_state": {
+                  "type": "string"
+                },
+                "dayrecord_missing_homework_memo": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "current_query_state": {
+            "type": "string"
+          },
+          "current_submission_state": {
+            "type": "string"
+          },
+          "observed_at_utc": {
+            "type": [
+              "string",
+              "number",
+              "object",
+              "array",
+              "null"
+            ]
+          },
+          "source_message_id": {
+            "type": "string"
+          },
+          "paper_solution_review_state": {
+            "type": "string"
+          },
+          "submission_acceptance_and_paper_review_are_separate": {
+            "type": "boolean"
+          },
+          "latest_registration_observation": {
+            "type": "object",
+            "required": [
+              "evidence_class",
+              "registration_state",
+              "source_message_id",
+              "reported_at_utc",
+              "observed_at_utc",
+              "observed_at_state",
+              "assistant_query_performed",
+              "final_submission_decision_state"
+            ],
+            "properties": {
+              "evidence_class": {
+                "type": "string"
+              },
+              "registration_state": {
+                "type": "string"
+              },
+              "source_message_id": {
+                "type": "string"
+              },
+              "reported_at_utc": {
+                "type": "string"
+              },
+              "observed_at_utc": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "array",
+                  "null"
+                ]
+              },
+              "observed_at_state": {
+                "type": "string"
+              },
+              "assistant_query_performed": {
+                "type": "boolean"
+              },
+              "final_submission_decision_state": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          },
+          "current_review_policy_ref": {
+            "type": "string"
+          },
+          "rules_timing_status": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "teacher_solution_review": {
+        "type": "object",
+        "required": [
+          "target",
+          "action",
+          "state",
+          "attendance_timing",
+          "tentative_attendance_date",
+          "actual_review_at",
+          "completion_state",
+          "dayrecord_remention_date",
+          "dayrecord_remention_state",
+          "source_message_id"
+        ],
+        "properties": {
+          "target": {
+            "type": "object",
+            "required": [
+              "user_label",
+              "problem_id",
+              "book_edition_section_binding_state"
+            ],
+            "properties": {
+              "user_label": {
+                "type": "string"
+              },
+              "problem_id": {
+                "type": "string"
+              },
+              "book_edition_section_binding_state": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          },
+          "action": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "attendance_timing": {
+            "type": "string"
+          },
+          "tentative_attendance_date": {
+            "type": "string"
+          },
+          "actual_review_at": {
+            "type": [
+              "string",
+              "number",
+              "object",
+              "array",
+              "null"
+            ]
+          },
+          "completion_state": {
+            "type": "string"
+          },
+          "dayrecord_remention_date": {
+            "type": "string"
+          },
+          "dayrecord_remention_state": {
+            "type": "string"
+          },
+          "source_message_id": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "davinci_total_assignment_comparison": {
+        "type": "object",
+        "required": [
+          "target",
+          "past_homework_basis_date",
+          "past_inclusion_state",
+          "conditional_action",
+          "actual_new_assignment_state",
+          "source_message_id",
+          "conditional_action_state",
+          "scope_confirmation_source_message_id",
+          "scope_confirmation_sent_at_utc",
+          "native_code_binding_state",
+          "latest_registration_observation"
+        ],
+        "properties": {
+          "target": {
+            "type": "object",
+            "required": [
+              "book_code",
+              "edition",
+              "unit_label",
+              "unit_title",
+              "native_section_label",
+              "catalog_code",
+              "existing_record_reference"
+            ],
+            "properties": {
+              "book_code": {
+                "type": "string"
+              },
+              "edition": {
+                "type": "integer"
+              },
+              "unit_label": {
+                "type": "string"
+              },
+              "unit_title": {
+                "type": "string"
+              },
+              "native_section_label": {
+                "type": "string"
+              },
+              "catalog_code": {
+                "type": "string"
+              },
+              "existing_record_reference": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          },
+          "past_homework_basis_date": {
+            "type": "string"
+          },
+          "past_inclusion_state": {
+            "type": "string"
+          },
+          "conditional_action": {
+            "type": "string"
+          },
+          "actual_new_assignment_state": {
+            "type": "string"
+          },
+          "source_message_id": {
+            "type": "string"
+          },
+          "conditional_action_state": {
+            "type": "string"
+          },
+          "scope_confirmation_source_message_id": {
+            "type": "string"
+          },
+          "scope_confirmation_sent_at_utc": {
+            "type": "string"
+          },
+          "native_code_binding_state": {
+            "type": "string"
+          },
+          "latest_registration_observation": {
+            "type": "object",
+            "required": [
+              "evidence_class",
+              "registration_state",
+              "source_message_id",
+              "reported_at_utc",
+              "observed_at_utc",
+              "observed_at_state",
+              "assistant_query_performed",
+              "final_submission_decision_state"
+            ],
+            "properties": {
+              "evidence_class": {
+                "type": "string"
+              },
+              "registration_state": {
+                "type": "string"
+              },
+              "source_message_id": {
+                "type": "string"
+              },
+              "reported_at_utc": {
+                "type": "string"
+              },
+              "observed_at_utc": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "array",
+                  "null"
+                ]
+              },
+              "observed_at_state": {
+                "type": "string"
+              },
+              "assistant_query_performed": {
+                "type": "boolean"
+              },
+              "final_submission_decision_state": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      },
+      "dayrecord_execution": {
+        "type": "object",
+        "required": [
+          "date",
+          "memo_preparation_state",
+          "draft_written_to_academy",
+          "submitted_to_academy",
+          "sent_to_guardian",
+          "actual_execution_evidence",
+          "final_missing_homework_decision_state",
+          "current_review_policy_ref"
+        ],
+        "properties": {
+          "date": {
+            "type": "string"
+          },
+          "memo_preparation_state": {
+            "type": "string"
+          },
+          "draft_written_to_academy": {
+            "type": "string"
+          },
+          "submitted_to_academy": {
+            "type": "string"
+          },
+          "sent_to_guardian": {
+            "type": "string"
+          },
+          "actual_execution_evidence": {
+            "type": [
+              "string",
+              "number",
+              "object",
+              "array",
+              "null"
+            ]
+          },
+          "final_missing_homework_decision_state": {
+            "type": "string"
+          },
+          "current_review_policy_ref": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "terminology": {
+        "type": "object",
+        "required": [
+          "authority",
+          "identity",
+          "hierarchy",
+          "labels",
+          "automatic_alias_registration",
+          "alias_registration_condition",
+          "ambiguous_referent_handling",
+          "source_collection_version"
+        ],
+        "properties": {
+          "authority": {
+            "type": "string"
+          },
+          "identity": {
+            "type": "string"
+          },
+          "hierarchy": {
+            "type": "string"
+          },
+          "labels": {
+            "type": "string"
+          },
+          "automatic_alias_registration": {
+            "type": "boolean"
+          },
+          "alias_registration_condition": {
+            "type": "string"
+          },
+          "ambiguous_referent_handling": {
+            "type": "string"
+          },
+          "source_collection_version": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "evidence_boundary": {
+        "type": "object",
+        "required": [
+          "stored_mapping_absence_is_not_current_submission_failure",
+          "current_query_required",
+          "no_external_site_input_or_dayrecord_send_performed",
+          "score_does_not_prove_paper_review",
+          "print_execution_does_not_prove_student_remediation_completion",
+          "user_reported_observation_is_not_assistant_query",
+          "embedded_written_response_has_no_independent_denominator_or_missing_status"
+        ],
+        "properties": {
+          "stored_mapping_absence_is_not_current_submission_failure": {
+            "type": "boolean"
+          },
+          "current_query_required": {
+            "type": "boolean"
+          },
+          "no_external_site_input_or_dayrecord_send_performed": {
+            "type": "boolean"
+          },
+          "score_does_not_prove_paper_review": {
+            "type": "boolean"
+          },
+          "print_execution_does_not_prove_student_remediation_completion": {
+            "type": "boolean"
+          },
+          "user_reported_observation_is_not_assistant_query": {
+            "type": "boolean"
+          },
+          "embedded_written_response_has_no_independent_denominator_or_missing_status": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "revised_at_utc": {
+        "type": "string"
+      },
+      "previous_revision": {
+        "type": "object",
+        "required": [
+          "version",
+          "file_name",
+          "sha256"
+        ],
+        "properties": {
+          "version": {
+            "type": "string"
+          },
+          "file_name": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "historical_comparison_states": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "target",
+            "past_homework_basis_date",
+            "past_inclusion_state",
+            "conditional_action",
+            "actual_new_assignment_state",
+            "source_message_id"
+          ],
+          "properties": {
+            "target": {
+              "type": "object",
+              "required": [
+                "book_code",
+                "edition",
+                "unit_label",
+                "unit_title",
+                "native_section_label",
+                "catalog_code",
+                "existing_record_reference"
+              ],
+              "properties": {
+                "book_code": {
+                  "type": "string"
+                },
+                "edition": {
+                  "type": "integer"
+                },
+                "unit_label": {
+                  "type": "string"
+                },
+                "unit_title": {
+                  "type": "string"
+                },
+                "native_section_label": {
+                  "type": "string"
+                },
+                "catalog_code": {
+                  "type": "string"
+                },
+                "existing_record_reference": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false
+            },
+            "past_homework_basis_date": {
+              "type": "string"
+            },
+            "past_inclusion_state": {
+              "type": "string"
+            },
+            "conditional_action": {
+              "type": "string"
+            },
+            "actual_new_assignment_state": {
+              "type": "string"
+            },
+            "source_message_id": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "davinci_assignment_scope": {
+        "type": "object",
+        "required": [
+          "homework_basis_date",
+          "book_display_name",
+          "book_code",
+          "edition",
+          "page_range",
+          "page_scope_state",
+          "scope_confirmation_source",
+          "ordered_items",
+          "observation_source",
+          "app_assignment_unit_count",
+          "count_state",
+          "standalone_written_response_scope_item_retired",
+          "structure_confirmation_source_message_id",
+          "structure_confirmation_sent_at_utc",
+          "independent_written_response_scope_item_count",
+          "embedded_section_rule"
+        ],
+        "properties": {
+          "homework_basis_date": {
+            "type": "string"
+          },
+          "book_display_name": {
+            "type": "string"
+          },
+          "book_code": {
+            "type": "string"
+          },
+          "edition": {
+            "type": "integer"
+          },
+          "page_range": {
+            "type": "object",
+            "required": [
+              "from",
+              "to"
+            ],
+            "properties": {
+              "from": {
+                "type": "integer"
+              },
+              "to": {
+                "type": "integer"
+              }
+            },
+            "additionalProperties": false
+          },
+          "page_scope_state": {
+            "type": "string"
+          },
+          "scope_confirmation_source": {
+            "type": "object",
+            "required": [
+              "message_id",
+              "actor",
+              "sent_at_utc",
+              "exact_relevant_text"
+            ],
+            "properties": {
+              "message_id": {
+                "type": "string"
+              },
+              "actor": {
+                "type": "string"
+              },
+              "sent_at_utc": {
+                "type": "string"
+              },
+              "exact_relevant_text": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          },
+          "ordered_items": {
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "required": [
+                    "scope_item_id",
+                    "order",
+                    "user_scope_label",
+                    "user_confirmed_assigned",
+                    "unit_label",
+                    "native_section_label",
+                    "lesson_index",
+                    "observed_app_catalog_code",
+                    "existing_record_reference",
+                    "app_catalog_code_state",
+                    "printed_test_code",
+                    "printed_code_binding_state",
+                    "per_item_page_range",
+                    "saved_app_observation"
+                  ],
+                  "properties": {
+                    "scope_item_id": {
+                      "type": "string"
+                    },
+                    "order": {
+                      "type": "integer"
+                    },
+                    "user_scope_label": {
+                      "type": "string"
+                    },
+                    "user_confirmed_assigned": {
+                      "type": "boolean"
+                    },
+                    "unit_label": {
+                      "type": "string"
+                    },
+                    "native_section_label": {
+                      "type": "string"
+                    },
+                    "lesson_index": {
+                      "type": "integer"
+                    },
+                    "observed_app_catalog_code": {
+                      "type": "string"
+                    },
+                    "existing_record_reference": {
+                      "type": "string"
+                    },
+                    "app_catalog_code_state": {
+                      "type": "string"
+                    },
+                    "printed_test_code": {
+                      "type": [
+                        "string",
+                        "number",
+                        "object",
+                        "array",
+                        "null"
+                      ]
+                    },
+                    "printed_code_binding_state": {
+                      "type": "string"
+                    },
+                    "per_item_page_range": {
+                      "type": [
+                        "string",
+                        "number",
+                        "object",
+                        "array",
+                        "null"
+                      ]
+                    },
+                    "saved_app_observation": {
+                      "type": "object",
+                      "required": [
+                        "score",
+                        "event_time_raw",
+                        "event_year_state",
+                        "event_timezone_state",
+                        "clinic_text",
+                        "current_requery_state",
+                        "teacher_paper_review_state"
+                      ],
+                      "properties": {
+                        "score": {
+                          "type": "integer"
+                        },
+                        "event_time_raw": {
+                          "type": "string"
+                        },
+                        "event_year_state": {
+                          "type": "string"
+                        },
+                        "event_timezone_state": {
+                          "type": "string"
+                        },
+                        "clinic_text": {
+                          "type": "string"
+                        },
+                        "current_requery_state": {
+                          "type": "string"
+                        },
+                        "teacher_paper_review_state": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "required": [
+                    "scope_item_id",
+                    "order",
+                    "user_scope_label",
+                    "user_confirmed_assigned",
+                    "unit_label",
+                    "native_section_label",
+                    "lesson_index",
+                    "observed_app_catalog_code",
+                    "existing_record_reference",
+                    "app_catalog_code_state",
+                    "printed_test_code",
+                    "printed_code_binding_state",
+                    "per_item_page_range",
+                    "saved_app_observation",
+                    "embedded_sections"
+                  ],
+                  "properties": {
+                    "scope_item_id": {
+                      "type": "string"
+                    },
+                    "order": {
+                      "type": "integer"
+                    },
+                    "user_scope_label": {
+                      "type": "string"
+                    },
+                    "user_confirmed_assigned": {
+                      "type": "boolean"
+                    },
+                    "unit_label": {
+                      "type": "string"
+                    },
+                    "native_section_label": {
+                      "type": "string"
+                    },
+                    "lesson_index": {
+                      "type": "integer"
+                    },
+                    "observed_app_catalog_code": {
+                      "type": "string"
+                    },
+                    "existing_record_reference": {
+                      "type": "string"
+                    },
+                    "app_catalog_code_state": {
+                      "type": "string"
+                    },
+                    "printed_test_code": {
+                      "type": [
+                        "string",
+                        "number",
+                        "object",
+                        "array",
+                        "null"
+                      ]
+                    },
+                    "printed_code_binding_state": {
+                      "type": "string"
+                    },
+                    "per_item_page_range": {
+                      "type": [
+                        "string",
+                        "number",
+                        "object",
+                        "array",
+                        "null"
+                      ]
+                    },
+                    "saved_app_observation": {
+                      "type": "object",
+                      "required": [
+                        "score",
+                        "event_time_raw",
+                        "event_year_state",
+                        "event_timezone_state",
+                        "clinic_text",
+                        "current_requery_state",
+                        "teacher_paper_review_state"
+                      ],
+                      "properties": {
+                        "score": {
+                          "type": "integer"
+                        },
+                        "event_time_raw": {
+                          "type": "string"
+                        },
+                        "event_year_state": {
+                          "type": "string"
+                        },
+                        "event_timezone_state": {
+                          "type": "string"
+                        },
+                        "clinic_text": {
+                          "type": "string"
+                        },
+                        "current_requery_state": {
+                          "type": "string"
+                        },
+                        "teacher_paper_review_state": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "embedded_sections": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "source_label",
+                          "parent_scope_item_id",
+                          "parent_lesson_index",
+                          "placement",
+                          "relationship_evidence_class",
+                          "source_message_id",
+                          "source_sent_at_utc",
+                          "included_in_parent_app_grading_target",
+                          "native_section_id",
+                          "independent_scope_item",
+                          "independent_grading_denominator",
+                          "independent_missing_status",
+                          "saved_parent_score_proves_embedded_section_paper_review"
+                        ],
+                        "properties": {
+                          "source_label": {
+                            "type": "string"
+                          },
+                          "parent_scope_item_id": {
+                            "type": "string"
+                          },
+                          "parent_lesson_index": {
+                            "type": "integer"
+                          },
+                          "placement": {
+                            "type": "string"
+                          },
+                          "relationship_evidence_class": {
+                            "type": "string"
+                          },
+                          "source_message_id": {
+                            "type": "string"
+                          },
+                          "source_sent_at_utc": {
+                            "type": "string"
+                          },
+                          "included_in_parent_app_grading_target": {
+                            "type": "boolean"
+                          },
+                          "native_section_id": {
+                            "type": [
+                              "string",
+                              "number",
+                              "object",
+                              "array",
+                              "null"
+                            ]
+                          },
+                          "independent_scope_item": {
+                            "type": "boolean"
+                          },
+                          "independent_grading_denominator": {
+                            "type": "boolean"
+                          },
+                          "independent_missing_status": {
+                            "type": "boolean"
+                          },
+                          "saved_parent_score_proves_embedded_section_paper_review": {
+                            "type": "boolean"
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "required": [
+                    "scope_item_id",
+                    "order",
+                    "user_scope_label",
+                    "user_confirmed_assigned",
+                    "candidate_native_catalog_code",
+                    "candidate_existing_record_reference",
+                    "native_catalog_candidate_label",
+                    "native_print_label_binding_state",
+                    "printed_test_code",
+                    "per_item_page_range",
+                    "saved_app_observation",
+                    "latest_registration_observation"
+                  ],
+                  "properties": {
+                    "scope_item_id": {
+                      "type": "string"
+                    },
+                    "order": {
+                      "type": "integer"
+                    },
+                    "user_scope_label": {
+                      "type": "string"
+                    },
+                    "user_confirmed_assigned": {
+                      "type": "boolean"
+                    },
+                    "candidate_native_catalog_code": {
+                      "type": "string"
+                    },
+                    "candidate_existing_record_reference": {
+                      "type": "string"
+                    },
+                    "native_catalog_candidate_label": {
+                      "type": "string"
+                    },
+                    "native_print_label_binding_state": {
+                      "type": "string"
+                    },
+                    "printed_test_code": {
+                      "type": [
+                        "string",
+                        "number",
+                        "object",
+                        "array",
+                        "null"
+                      ]
+                    },
+                    "per_item_page_range": {
+                      "type": [
+                        "string",
+                        "number",
+                        "object",
+                        "array",
+                        "null"
+                      ]
+                    },
+                    "saved_app_observation": {
+                      "type": "object",
+                      "required": [
+                        "state",
+                        "current_requery_state",
+                        "homework_non_submission_inferred",
+                        "teacher_paper_review_state"
+                      ],
+                      "properties": {
+                        "state": {
+                          "type": "string"
+                        },
+                        "current_requery_state": {
+                          "type": "string"
+                        },
+                        "homework_non_submission_inferred": {
+                          "type": "boolean"
+                        },
+                        "teacher_paper_review_state": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "latest_registration_observation": {
+                      "type": "object",
+                      "required": [
+                        "evidence_class",
+                        "registration_state",
+                        "source_message_id",
+                        "reported_at_utc",
+                        "observed_at_utc",
+                        "observed_at_state",
+                        "assistant_query_performed",
+                        "final_submission_decision_state"
+                      ],
+                      "properties": {
+                        "evidence_class": {
+                          "type": "string"
+                        },
+                        "registration_state": {
+                          "type": "string"
+                        },
+                        "source_message_id": {
+                          "type": "string"
+                        },
+                        "reported_at_utc": {
+                          "type": "string"
+                        },
+                        "observed_at_utc": {
+                          "type": [
+                            "string",
+                            "number",
+                            "object",
+                            "array",
+                            "null"
+                          ]
+                        },
+                        "observed_at_state": {
+                          "type": "string"
+                        },
+                        "assistant_query_performed": {
+                          "type": "boolean"
+                        },
+                        "final_submission_decision_state": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              ]
+            }
+          },
+          "observation_source": {
+            "type": "object",
+            "required": [
+              "mapping_file_name",
+              "mapping_version",
+              "mapping_sha256",
+              "mapping_pointers",
+              "source_observed_at_utc",
+              "source_observed_at_state",
+              "performance_as_of",
+              "page_scope_confirmation_time_is_not_app_query_time",
+              "current_new_query_evidence"
+            ],
+            "properties": {
+              "mapping_file_name": {
+                "type": "string"
+              },
+              "mapping_version": {
+                "type": "string"
+              },
+              "mapping_sha256": {
+                "type": "string"
+              },
+              "mapping_pointers": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "source_observed_at_utc": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "array",
+                  "null"
+                ]
+              },
+              "source_observed_at_state": {
+                "type": "string"
+              },
+              "performance_as_of": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "array",
+                  "null"
+                ]
+              },
+              "page_scope_confirmation_time_is_not_app_query_time": {
+                "type": "boolean"
+              },
+              "current_new_query_evidence": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          },
+          "app_assignment_unit_count": {
+            "type": "integer"
+          },
+          "count_state": {
+            "type": "string"
+          },
+          "standalone_written_response_scope_item_retired": {
+            "type": "string"
+          },
+          "structure_confirmation_source_message_id": {
+            "type": "string"
+          },
+          "structure_confirmation_sent_at_utc": {
+            "type": "string"
+          },
+          "independent_written_response_scope_item_count": {
+            "type": "integer"
+          },
+          "embedded_section_rule": {
+            "type": "object",
+            "required": [
+              "source_label",
+              "user_placement_rule_text",
+              "independent_section_split",
+              "native_server_identity_authority_preserved",
+              "automatic_alias_created",
+              "source_message_id"
+            ],
+            "properties": {
+              "source_label": {
+                "type": "string"
+              },
+              "user_placement_rule_text": {
+                "type": "string"
+              },
+              "independent_section_split": {
+                "type": "boolean"
+              },
+              "native_server_identity_authority_preserved": {
+                "type": "boolean"
+              },
+              "automatic_alias_created": {
+                "type": "boolean"
+              },
+              "source_message_id": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      },
+      "reminder_plan": {
+        "type": "object",
+        "required": [
+          "requested_reminder_at_local",
+          "requested_reminder_at_utc",
+          "timezone",
+          "schedule_change_state",
+          "next_run_at_utc",
+          "next_run_verification_state",
+          "recreated",
+          "if_assistant_cannot_query_at_reminder",
+          "source_message_id",
+          "source_sent_at_utc",
+          "schedule_update_completed_at_utc",
+          "automation_id"
+        ],
+        "properties": {
+          "requested_reminder_at_local": {
+            "type": "string"
+          },
+          "requested_reminder_at_utc": {
+            "type": "string"
+          },
+          "timezone": {
+            "type": "string"
+          },
+          "schedule_change_state": {
+            "type": "string"
+          },
+          "next_run_at_utc": {
+            "type": [
+              "string",
+              "number",
+              "object",
+              "array",
+              "null"
+            ]
+          },
+          "next_run_verification_state": {
+            "type": "string"
+          },
+          "recreated": {
+            "type": "boolean"
+          },
+          "if_assistant_cannot_query_at_reminder": {
+            "type": "string"
+          },
+          "source_message_id": {
+            "type": "string"
+          },
+          "source_sent_at_utc": {
+            "type": "string"
+          },
+          "schedule_update_completed_at_utc": {
+            "type": "string"
+          },
+          "automation_id": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "scope_structure_revision_history": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "from_plan_version",
+            "source_message_id",
+            "source_sent_at_utc",
+            "previous_assignment_scope",
+            "revision_kind"
+          ],
+          "properties": {
+            "from_plan_version": {
+              "type": "string"
+            },
+            "source_message_id": {
+              "type": "string"
+            },
+            "source_sent_at_utc": {
+              "type": "string"
+            },
+            "previous_assignment_scope": {
+              "type": "object",
+              "required": [
+                "homework_basis_date",
+                "book_display_name",
+                "book_code",
+                "edition",
+                "page_range",
+                "page_scope_state",
+                "scope_confirmation_source",
+                "ordered_items",
+                "observation_source"
+              ],
+              "properties": {
+                "homework_basis_date": {
+                  "type": "string"
+                },
+                "book_display_name": {
+                  "type": "string"
+                },
+                "book_code": {
+                  "type": "string"
+                },
+                "edition": {
+                  "type": "integer"
+                },
+                "page_range": {
+                  "type": "object",
+                  "required": [
+                    "from",
+                    "to"
+                  ],
+                  "properties": {
+                    "from": {
+                      "type": "integer"
+                    },
+                    "to": {
+                      "type": "integer"
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "page_scope_state": {
+                  "type": "string"
+                },
+                "scope_confirmation_source": {
+                  "type": "object",
+                  "required": [
+                    "message_id",
+                    "actor",
+                    "sent_at_utc",
+                    "exact_relevant_text"
+                  ],
+                  "properties": {
+                    "message_id": {
+                      "type": "string"
+                    },
+                    "actor": {
+                      "type": "string"
+                    },
+                    "sent_at_utc": {
+                      "type": "string"
+                    },
+                    "exact_relevant_text": {
+                      "type": "string"
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "ordered_items": {
+                  "type": "array",
+                  "items": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "required": [
+                          "scope_item_id",
+                          "order",
+                          "user_scope_label",
+                          "user_confirmed_assigned",
+                          "unit_label",
+                          "native_section_label",
+                          "lesson_index",
+                          "observed_app_catalog_code",
+                          "existing_record_reference",
+                          "app_catalog_code_state",
+                          "printed_test_code",
+                          "printed_code_binding_state",
+                          "per_item_page_range",
+                          "saved_app_observation"
+                        ],
+                        "properties": {
+                          "scope_item_id": {
+                            "type": "string"
+                          },
+                          "order": {
+                            "type": "integer"
+                          },
+                          "user_scope_label": {
+                            "type": "string"
+                          },
+                          "user_confirmed_assigned": {
+                            "type": "boolean"
+                          },
+                          "unit_label": {
+                            "type": "string"
+                          },
+                          "native_section_label": {
+                            "type": "string"
+                          },
+                          "lesson_index": {
+                            "type": "integer"
+                          },
+                          "observed_app_catalog_code": {
+                            "type": "string"
+                          },
+                          "existing_record_reference": {
+                            "type": "string"
+                          },
+                          "app_catalog_code_state": {
+                            "type": "string"
+                          },
+                          "printed_test_code": {
+                            "type": [
+                              "string",
+                              "number",
+                              "object",
+                              "array",
+                              "null"
+                            ]
+                          },
+                          "printed_code_binding_state": {
+                            "type": "string"
+                          },
+                          "per_item_page_range": {
+                            "type": [
+                              "string",
+                              "number",
+                              "object",
+                              "array",
+                              "null"
+                            ]
+                          },
+                          "saved_app_observation": {
+                            "type": "object",
+                            "required": [
+                              "score",
+                              "event_time_raw",
+                              "event_year_state",
+                              "event_timezone_state",
+                              "clinic_text",
+                              "current_requery_state",
+                              "teacher_paper_review_state"
+                            ],
+                            "properties": {
+                              "score": {
+                                "type": "integer"
+                              },
+                              "event_time_raw": {
+                                "type": "string"
+                              },
+                              "event_year_state": {
+                                "type": "string"
+                              },
+                              "event_timezone_state": {
+                                "type": "string"
+                              },
+                              "clinic_text": {
+                                "type": "string"
+                              },
+                              "current_requery_state": {
+                                "type": "string"
+                              },
+                              "teacher_paper_review_state": {
+                                "type": "string"
+                              }
+                            },
+                            "additionalProperties": false
+                          }
+                        },
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "required": [
+                          "scope_item_id",
+                          "order",
+                          "user_scope_label",
+                          "user_confirmed_assigned",
+                          "native_catalog_code",
+                          "native_catalog_code_state",
+                          "existing_record_reference",
+                          "creates_app_record",
+                          "per_item_page_range",
+                          "saved_app_observation"
+                        ],
+                        "properties": {
+                          "scope_item_id": {
+                            "type": "string"
+                          },
+                          "order": {
+                            "type": "integer"
+                          },
+                          "user_scope_label": {
+                            "type": "string"
+                          },
+                          "user_confirmed_assigned": {
+                            "type": "boolean"
+                          },
+                          "native_catalog_code": {
+                            "type": [
+                              "string",
+                              "number",
+                              "object",
+                              "array",
+                              "null"
+                            ]
+                          },
+                          "native_catalog_code_state": {
+                            "type": "string"
+                          },
+                          "existing_record_reference": {
+                            "type": [
+                              "string",
+                              "number",
+                              "object",
+                              "array",
+                              "null"
+                            ]
+                          },
+                          "creates_app_record": {
+                            "type": "boolean"
+                          },
+                          "per_item_page_range": {
+                            "type": [
+                              "string",
+                              "number",
+                              "object",
+                              "array",
+                              "null"
+                            ]
+                          },
+                          "saved_app_observation": {
+                            "type": "object",
+                            "required": [
+                              "state",
+                              "score",
+                              "current_requery_state",
+                              "teacher_paper_review_state"
+                            ],
+                            "properties": {
+                              "state": {
+                                "type": "string"
+                              },
+                              "score": {
+                                "type": [
+                                  "string",
+                                  "number",
+                                  "object",
+                                  "array",
+                                  "null"
+                                ]
+                              },
+                              "current_requery_state": {
+                                "type": "string"
+                              },
+                              "teacher_paper_review_state": {
+                                "type": "string"
+                              }
+                            },
+                            "additionalProperties": false
+                          }
+                        },
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "required": [
+                          "scope_item_id",
+                          "order",
+                          "user_scope_label",
+                          "user_confirmed_assigned",
+                          "candidate_native_catalog_code",
+                          "candidate_existing_record_reference",
+                          "native_catalog_candidate_label",
+                          "native_print_label_binding_state",
+                          "printed_test_code",
+                          "per_item_page_range",
+                          "saved_app_observation"
+                        ],
+                        "properties": {
+                          "scope_item_id": {
+                            "type": "string"
+                          },
+                          "order": {
+                            "type": "integer"
+                          },
+                          "user_scope_label": {
+                            "type": "string"
+                          },
+                          "user_confirmed_assigned": {
+                            "type": "boolean"
+                          },
+                          "candidate_native_catalog_code": {
+                            "type": "string"
+                          },
+                          "candidate_existing_record_reference": {
+                            "type": "string"
+                          },
+                          "native_catalog_candidate_label": {
+                            "type": "string"
+                          },
+                          "native_print_label_binding_state": {
+                            "type": "string"
+                          },
+                          "printed_test_code": {
+                            "type": [
+                              "string",
+                              "number",
+                              "object",
+                              "array",
+                              "null"
+                            ]
+                          },
+                          "per_item_page_range": {
+                            "type": [
+                              "string",
+                              "number",
+                              "object",
+                              "array",
+                              "null"
+                            ]
+                          },
+                          "saved_app_observation": {
+                            "type": "object",
+                            "required": [
+                              "state",
+                              "current_requery_state",
+                              "homework_non_submission_inferred",
+                              "teacher_paper_review_state"
+                            ],
+                            "properties": {
+                              "state": {
+                                "type": "string"
+                              },
+                              "current_requery_state": {
+                                "type": "string"
+                              },
+                              "homework_non_submission_inferred": {
+                                "type": "boolean"
+                              },
+                              "teacher_paper_review_state": {
+                                "type": "string"
+                              }
+                            },
+                            "additionalProperties": false
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    ]
+                  }
+                },
+                "observation_source": {
+                  "type": "object",
+                  "required": [
+                    "mapping_file_name",
+                    "mapping_version",
+                    "mapping_sha256",
+                    "mapping_pointers",
+                    "source_observed_at_utc",
+                    "source_observed_at_state",
+                    "performance_as_of",
+                    "page_scope_confirmation_time_is_not_app_query_time",
+                    "current_new_query_evidence"
+                  ],
+                  "properties": {
+                    "mapping_file_name": {
+                      "type": "string"
+                    },
+                    "mapping_version": {
+                      "type": "string"
+                    },
+                    "mapping_sha256": {
+                      "type": "string"
+                    },
+                    "mapping_pointers": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "source_observed_at_utc": {
+                      "type": [
+                        "string",
+                        "number",
+                        "object",
+                        "array",
+                        "null"
+                      ]
+                    },
+                    "source_observed_at_state": {
+                      "type": "string"
+                    },
+                    "performance_as_of": {
+                      "type": [
+                        "string",
+                        "number",
+                        "object",
+                        "array",
+                        "null"
+                      ]
+                    },
+                    "page_scope_confirmation_time_is_not_app_query_time": {
+                      "type": "boolean"
+                    },
+                    "current_new_query_evidence": {
+                      "type": "string"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "additionalProperties": false
+            },
+            "revision_kind": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "schema_refinement_request": {
+        "type": "object",
+        "required": [
+          "source_message_id",
+          "reported_at_utc",
+          "recorded_at_utc",
+          "purpose",
+          "actual_observation_event"
+        ],
+        "properties": {
+          "source_message_id": {
+            "type": "string"
+          },
+          "reported_at_utc": {
+            "type": "string"
+          },
+          "recorded_at_utc": {
+            "type": "string"
+          },
+          "purpose": {
+            "type": "string"
+          },
+          "actual_observation_event": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "evidence_contract": {
+        "type": "object",
+        "required": [
+          "version",
+          "canonical_field_style",
+          "storage_adapter_style",
+          "verification_status_semantics",
+          "statement_provenance_semantics",
+          "mutation_semantics",
+          "server_query_success_fields_created"
+        ],
+        "properties": {
+          "version": {
+            "type": "string"
+          },
+          "canonical_field_style": {
+            "type": "string"
+          },
+          "storage_adapter_style": {
+            "type": "string"
+          },
+          "verification_status_semantics": {
+            "type": "object",
+            "required": [
+              "unverified",
+              "corroborated",
+              "contradicted"
+            ],
+            "properties": {
+              "unverified": {
+                "type": "string"
+              },
+              "corroborated": {
+                "type": "string"
+              },
+              "contradicted": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          },
+          "statement_provenance_semantics": {
+            "type": "string"
+          },
+          "mutation_semantics": {
+            "type": "string"
+          },
+          "server_query_success_fields_created": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "evidence_records": {
+        "type": "array",
+        "items": {
+          "$ref": "#/$defs/EvidenceRecord"
+        }
+      },
+      "legacy_evidence_bindings": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "legacyJsonPointer",
+            "evidenceId"
+          ],
+          "properties": {
+            "legacyJsonPointer": {
+              "type": "string"
+            },
+            "evidenceId": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "decision_records": {
+        "type": "array",
+        "items": {
+          "$ref": "#/$defs/DecisionRecord"
+        }
+      },
+      "legacy_decision_bindings": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "legacyJsonPointer",
+            "decisionId"
+          ],
+          "properties": {
+            "legacyJsonPointer": {
+              "type": "string"
+            },
+            "decisionId": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additive_refinement_audit": {
+        "type": "object",
+        "required": [
+          "base_version",
+          "base_sha256",
+          "legacy_source_and_observation_objects_preserved",
+          "existing_user_confirmed_assignment_and_embedded_relationship_flags_preserved",
+          "same_TEST_report_is_one_central_evidence_record",
+          "reportedAt_reuses_actual_source_message_sentAt",
+          "observedAt_remains_null",
+          "recordedAt_reuses_original_legacy_record_timestamps",
+          "no_last_success_or_server_query_time_synthesized",
+          "current_homework_submission_pending"
+        ],
+        "properties": {
+          "base_version": {
+            "type": "string"
+          },
+          "base_sha256": {
+            "type": "string"
+          },
+          "legacy_source_and_observation_objects_preserved": {
+            "type": "boolean"
+          },
+          "existing_user_confirmed_assignment_and_embedded_relationship_flags_preserved": {
+            "type": "boolean"
+          },
+          "same_TEST_report_is_one_central_evidence_record": {
+            "type": "boolean"
+          },
+          "reportedAt_reuses_actual_source_message_sentAt": {
+            "type": "boolean"
+          },
+          "observedAt_remains_null": {
+            "type": "boolean"
+          },
+          "recordedAt_reuses_original_legacy_record_timestamps": {
+            "type": "boolean"
+          },
+          "no_last_success_or_server_query_time_synthesized": {
+            "type": "boolean"
+          },
+          "current_homework_submission_pending": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "assignments": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "assignmentId",
+            "studentId",
+            "bookCode",
+            "edition",
+            "normalizedBookEditionId",
+            "nativeBookTitleRaw",
+            "purpose",
+            "assignmentStatus",
+            "assignmentDate",
+            "assignedAt",
+            "dueDate",
+            "dueAt",
+            "tentativeNextAttendanceDate",
+            "tentativeAttendanceIsDeadline",
+            "userRequest",
+            "nativeGroupingLabels",
+            "scopeItems",
+            "counts",
+            "evidenceIds",
+            "ruleVersion",
+            "studentPerformance",
+            "externalLMSWrite",
+            "nativeLabelAndUserWordingSeparated",
+            "automaticAliasesCreated"
+          ],
+          "properties": {
+            "assignmentId": {
+              "type": "string"
+            },
+            "studentId": {
+              "type": "string"
+            },
+            "bookCode": {
+              "type": "string"
+            },
+            "edition": {
+              "type": "integer"
+            },
+            "normalizedBookEditionId": {
+              "type": "string"
+            },
+            "nativeBookTitleRaw": {
+              "type": "string"
+            },
+            "purpose": {
+              "type": "string"
+            },
+            "assignmentStatus": {
+              "type": "string"
+            },
+            "assignmentDate": {
+              "type": "string"
+            },
+            "assignedAt": {
+              "type": [
+                "string",
+                "number",
+                "object",
+                "array",
+                "null"
+              ]
+            },
+            "dueDate": {
+              "type": "null"
+            },
+            "dueAt": {
+              "type": "null"
+            },
+            "tentativeNextAttendanceDate": {
+              "type": "string"
+            },
+            "tentativeAttendanceIsDeadline": {
+              "type": "boolean"
+            },
+            "userRequest": {
+              "type": "object",
+              "required": [
+                "sourceMessageId",
+                "reportedAt",
+                "userUnitLabelRaw",
+                "requestedUnitCount",
+                "requestedAssessmentLabelRaw"
+              ],
+              "properties": {
+                "sourceMessageId": {
+                  "type": "string"
+                },
+                "reportedAt": {
+                  "type": "string"
+                },
+                "userUnitLabelRaw": {
+                  "type": "string"
+                },
+                "requestedUnitCount": {
+                  "type": "integer"
+                },
+                "requestedAssessmentLabelRaw": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false
+            },
+            "nativeGroupingLabels": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "scopeItems": {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "required": [
+                      "scopeItemId",
+                      "order",
+                      "catalogCode",
+                      "normalizedCatalogSectionId",
+                      "existingRecordRef",
+                      "bookCode",
+                      "edition",
+                      "nativeGroupingLabel",
+                      "nativeTitleRaw",
+                      "nativeSectionLabelRaw",
+                      "printedSectionLabelRaw",
+                      "printedTocNodeLabelRaw",
+                      "savedMappingUnitLevel",
+                      "lessonIndex",
+                      "kind",
+                      "purpose",
+                      "evidenceIds",
+                      "source",
+                      "embeddedContents",
+                      "performanceState",
+                      "completionState",
+                      "performanceEvidenceIds"
+                    ],
+                    "properties": {
+                      "scopeItemId": {
+                        "type": "string"
+                      },
+                      "order": {
+                        "type": "integer"
+                      },
+                      "catalogCode": {
+                        "type": "string"
+                      },
+                      "normalizedCatalogSectionId": {
+                        "type": "string"
+                      },
+                      "existingRecordRef": {
+                        "type": "string"
+                      },
+                      "bookCode": {
+                        "type": "string"
+                      },
+                      "edition": {
+                        "type": "integer"
+                      },
+                      "nativeGroupingLabel": {
+                        "type": "string"
+                      },
+                      "nativeTitleRaw": {
+                        "type": "string"
+                      },
+                      "nativeSectionLabelRaw": {
+                        "type": "string"
+                      },
+                      "printedSectionLabelRaw": {
+                        "type": "string"
+                      },
+                      "printedTocNodeLabelRaw": {
+                        "type": "string"
+                      },
+                      "savedMappingUnitLevel": {
+                        "type": "string"
+                      },
+                      "lessonIndex": {
+                        "type": "integer"
+                      },
+                      "kind": {
+                        "type": "string"
+                      },
+                      "purpose": {
+                        "type": "string"
+                      },
+                      "evidenceIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "source": {
+                        "type": "object",
+                        "required": [
+                          "catalogFileName",
+                          "catalogSha256",
+                          "normalizedCatalogSectionId",
+                          "nativeOriginalSource",
+                          "mappingFileName",
+                          "mappingSha256",
+                          "mappingJsonPointer",
+                          "sourceKind",
+                          "currentServerQueriedAt"
+                        ],
+                        "properties": {
+                          "catalogFileName": {
+                            "type": "string"
+                          },
+                          "catalogSha256": {
+                            "type": "string"
+                          },
+                          "normalizedCatalogSectionId": {
+                            "type": "string"
+                          },
+                          "nativeOriginalSource": {
+                            "type": "object",
+                            "required": [
+                              "evidenceLevel",
+                              "fileName",
+                              "fileSha256",
+                              "jsonPointer"
+                            ],
+                            "properties": {
+                              "evidenceLevel": {
+                                "type": "string"
+                              },
+                              "fileName": {
+                                "type": "string"
+                              },
+                              "fileSha256": {
+                                "type": "string"
+                              },
+                              "jsonPointer": {
+                                "type": "string"
+                              }
+                            },
+                            "additionalProperties": false
+                          },
+                          "mappingFileName": {
+                            "type": "string"
+                          },
+                          "mappingSha256": {
+                            "type": "string"
+                          },
+                          "mappingJsonPointer": {
+                            "type": "string"
+                          },
+                          "sourceKind": {
+                            "type": "string"
+                          },
+                          "currentServerQueriedAt": {
+                            "type": [
+                              "string",
+                              "number",
+                              "object",
+                              "array",
+                              "null"
+                            ]
+                          }
+                        },
+                        "additionalProperties": false
+                      },
+                      "embeddedContents": {
+                        "type": "array"
+                      },
+                      "performanceState": {
+                        "type": "string"
+                      },
+                      "completionState": {
+                        "type": "string"
+                      },
+                      "performanceEvidenceIds": {
+                        "type": "array"
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "scopeItemId",
+                      "order",
+                      "catalogCode",
+                      "normalizedCatalogSectionId",
+                      "existingRecordRef",
+                      "bookCode",
+                      "edition",
+                      "nativeGroupingLabel",
+                      "nativeTitleRaw",
+                      "nativeSectionLabelRaw",
+                      "printedSectionLabelRaw",
+                      "printedTocNodeLabelRaw",
+                      "savedMappingUnitLevel",
+                      "lessonIndex",
+                      "kind",
+                      "purpose",
+                      "evidenceIds",
+                      "source",
+                      "embeddedContents",
+                      "performanceState",
+                      "completionState",
+                      "performanceEvidenceIds"
+                    ],
+                    "properties": {
+                      "scopeItemId": {
+                        "type": "string"
+                      },
+                      "order": {
+                        "type": "integer"
+                      },
+                      "catalogCode": {
+                        "type": "string"
+                      },
+                      "normalizedCatalogSectionId": {
+                        "type": "string"
+                      },
+                      "existingRecordRef": {
+                        "type": "string"
+                      },
+                      "bookCode": {
+                        "type": "string"
+                      },
+                      "edition": {
+                        "type": "integer"
+                      },
+                      "nativeGroupingLabel": {
+                        "type": "string"
+                      },
+                      "nativeTitleRaw": {
+                        "type": "string"
+                      },
+                      "nativeSectionLabelRaw": {
+                        "type": "string"
+                      },
+                      "printedSectionLabelRaw": {
+                        "type": "string"
+                      },
+                      "printedTocNodeLabelRaw": {
+                        "type": "string"
+                      },
+                      "savedMappingUnitLevel": {
+                        "type": "string"
+                      },
+                      "lessonIndex": {
+                        "type": "integer"
+                      },
+                      "kind": {
+                        "type": "string"
+                      },
+                      "purpose": {
+                        "type": "string"
+                      },
+                      "evidenceIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "source": {
+                        "type": "object",
+                        "required": [
+                          "catalogFileName",
+                          "catalogSha256",
+                          "normalizedCatalogSectionId",
+                          "nativeOriginalSource",
+                          "mappingFileName",
+                          "mappingSha256",
+                          "mappingJsonPointer",
+                          "sourceKind",
+                          "currentServerQueriedAt"
+                        ],
+                        "properties": {
+                          "catalogFileName": {
+                            "type": "string"
+                          },
+                          "catalogSha256": {
+                            "type": "string"
+                          },
+                          "normalizedCatalogSectionId": {
+                            "type": "string"
+                          },
+                          "nativeOriginalSource": {
+                            "type": "object",
+                            "required": [
+                              "evidenceLevel",
+                              "fileName",
+                              "fileSha256",
+                              "jsonPointer"
+                            ],
+                            "properties": {
+                              "evidenceLevel": {
+                                "type": "string"
+                              },
+                              "fileName": {
+                                "type": "string"
+                              },
+                              "fileSha256": {
+                                "type": "string"
+                              },
+                              "jsonPointer": {
+                                "type": "string"
+                              }
+                            },
+                            "additionalProperties": false
+                          },
+                          "mappingFileName": {
+                            "type": "string"
+                          },
+                          "mappingSha256": {
+                            "type": "string"
+                          },
+                          "mappingJsonPointer": {
+                            "type": "string"
+                          },
+                          "sourceKind": {
+                            "type": "string"
+                          },
+                          "currentServerQueriedAt": {
+                            "type": [
+                              "string",
+                              "number",
+                              "object",
+                              "array",
+                              "null"
+                            ]
+                          }
+                        },
+                        "additionalProperties": false
+                      },
+                      "embeddedContents": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "required": [
+                            "labelRaw",
+                            "placement",
+                            "parentCatalogCode",
+                            "independentScopeItem",
+                            "countsAsIndependentGradingUnit",
+                            "independentMissingStatus",
+                            "nativeBindingState",
+                            "evidenceIds"
+                          ],
+                          "properties": {
+                            "labelRaw": {
+                              "type": "string"
+                            },
+                            "placement": {
+                              "type": "string"
+                            },
+                            "parentCatalogCode": {
+                              "type": "string"
+                            },
+                            "independentScopeItem": {
+                              "type": "boolean"
+                            },
+                            "countsAsIndependentGradingUnit": {
+                              "type": "boolean"
+                            },
+                            "independentMissingStatus": {
+                              "type": "boolean"
+                            },
+                            "nativeBindingState": {
+                              "type": "string"
+                            },
+                            "evidenceIds": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "additionalProperties": false
+                        }
+                      },
+                      "performanceState": {
+                        "type": "string"
+                      },
+                      "completionState": {
+                        "type": "string"
+                      },
+                      "performanceEvidenceIds": {
+                        "type": "array"
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "scopeItemId",
+                      "order",
+                      "catalogCode",
+                      "normalizedCatalogSectionId",
+                      "existingRecordRef",
+                      "bookCode",
+                      "edition",
+                      "nativeGroupingLabel",
+                      "nativeTitleRaw",
+                      "nativeSectionLabelRaw",
+                      "printedSectionLabelRaw",
+                      "printedTocNodeLabelRaw",
+                      "savedMappingUnitLevel",
+                      "lessonIndex",
+                      "kind",
+                      "purpose",
+                      "evidenceIds",
+                      "source",
+                      "embeddedContents",
+                      "performanceState",
+                      "completionState",
+                      "performanceEvidenceIds"
+                    ],
+                    "properties": {
+                      "scopeItemId": {
+                        "type": "string"
+                      },
+                      "order": {
+                        "type": "integer"
+                      },
+                      "catalogCode": {
+                        "type": "string"
+                      },
+                      "normalizedCatalogSectionId": {
+                        "type": "string"
+                      },
+                      "existingRecordRef": {
+                        "type": "string"
+                      },
+                      "bookCode": {
+                        "type": "string"
+                      },
+                      "edition": {
+                        "type": "integer"
+                      },
+                      "nativeGroupingLabel": {
+                        "type": "string"
+                      },
+                      "nativeTitleRaw": {
+                        "type": "string"
+                      },
+                      "nativeSectionLabelRaw": {
+                        "type": "string"
+                      },
+                      "printedSectionLabelRaw": {
+                        "type": "string"
+                      },
+                      "printedTocNodeLabelRaw": {
+                        "type": "string"
+                      },
+                      "savedMappingUnitLevel": {
+                        "type": "string"
+                      },
+                      "lessonIndex": {
+                        "type": [
+                          "string",
+                          "number",
+                          "object",
+                          "array",
+                          "null"
+                        ]
+                      },
+                      "kind": {
+                        "type": "string"
+                      },
+                      "purpose": {
+                        "type": "string"
+                      },
+                      "evidenceIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "source": {
+                        "type": "object",
+                        "required": [
+                          "catalogFileName",
+                          "catalogSha256",
+                          "normalizedCatalogSectionId",
+                          "nativeOriginalSource",
+                          "mappingFileName",
+                          "mappingSha256",
+                          "mappingJsonPointer",
+                          "sourceKind",
+                          "currentServerQueriedAt"
+                        ],
+                        "properties": {
+                          "catalogFileName": {
+                            "type": "string"
+                          },
+                          "catalogSha256": {
+                            "type": "string"
+                          },
+                          "normalizedCatalogSectionId": {
+                            "type": "string"
+                          },
+                          "nativeOriginalSource": {
+                            "type": "object",
+                            "required": [
+                              "evidenceLevel",
+                              "fileName",
+                              "fileSha256",
+                              "jsonPointer"
+                            ],
+                            "properties": {
+                              "evidenceLevel": {
+                                "type": "string"
+                              },
+                              "fileName": {
+                                "type": "string"
+                              },
+                              "fileSha256": {
+                                "type": "string"
+                              },
+                              "jsonPointer": {
+                                "type": "string"
+                              }
+                            },
+                            "additionalProperties": false
+                          },
+                          "mappingFileName": {
+                            "type": "string"
+                          },
+                          "mappingSha256": {
+                            "type": "string"
+                          },
+                          "mappingJsonPointer": {
+                            "type": "string"
+                          },
+                          "sourceKind": {
+                            "type": "string"
+                          },
+                          "currentServerQueriedAt": {
+                            "type": [
+                              "string",
+                              "number",
+                              "object",
+                              "array",
+                              "null"
+                            ]
+                          }
+                        },
+                        "additionalProperties": false
+                      },
+                      "embeddedContents": {
+                        "type": "array"
+                      },
+                      "performanceState": {
+                        "type": "string"
+                      },
+                      "completionState": {
+                        "type": "string"
+                      },
+                      "performanceEvidenceIds": {
+                        "type": "array"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                ]
+              },
+              "minItems": 17,
+              "maxItems": 17
+            },
+            "counts": {
+              "type": "object",
+              "required": [
+                "lessons",
+                "majorTotalAssessments",
+                "appGradingUnits",
+                "independentEmbeddedSections"
+              ],
+              "properties": {
+                "lessons": {
+                  "type": "integer"
+                },
+                "majorTotalAssessments": {
+                  "type": "integer"
+                },
+                "appGradingUnits": {
+                  "type": "integer"
+                },
+                "independentEmbeddedSections": {
+                  "type": "integer"
+                }
+              },
+              "additionalProperties": false
+            },
+            "evidenceIds": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "ruleVersion": {
+              "type": "string"
+            },
+            "studentPerformance": {
+              "type": "object",
+              "required": [
+                "state",
+                "completionState",
+                "observedAt",
+                "evidenceIds"
+              ],
+              "properties": {
+                "state": {
+                  "type": "string"
+                },
+                "completionState": {
+                  "type": "string"
+                },
+                "observedAt": {
+                  "type": [
+                    "string",
+                    "number",
+                    "object",
+                    "array",
+                    "null"
+                  ]
+                },
+                "evidenceIds": {
+                  "type": "array"
+                }
+              },
+              "additionalProperties": false
+            },
+            "externalLMSWrite": {
+              "type": "object",
+              "required": [
+                "assistantWritePerformed",
+                "actualServerAssignmentState"
+              ],
+              "properties": {
+                "assistantWritePerformed": {
+                  "type": "boolean"
+                },
+                "actualServerAssignmentState": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false
+            },
+            "nativeLabelAndUserWordingSeparated": {
+              "type": "boolean"
+            },
+            "automaticAliasesCreated": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "imported_capture_claims": {
+        "type": "object",
+        "required": [
+          "sourceReference",
+          "sourceSha256",
+          "sanitizedContractSha256",
+          "captureTimestamp",
+          "uploadMessageReportedAt",
+          "evidenceIds",
+          "originalHARReuploaded",
+          "rawResponseRowsCopied",
+          "credentialsCopied",
+          "sourceKind",
+          "liveServerFetch",
+          "authenticatedResponseIndependentlyVerified",
+          "final1830Judgment"
+        ],
+        "properties": {
+          "sourceReference": {
+            "type": "string"
+          },
+          "sourceSha256": {
+            "type": "string"
+          },
+          "sanitizedContractSha256": {
+            "type": "string"
+          },
+          "captureTimestamp": {
+            "type": "string"
+          },
+          "uploadMessageReportedAt": {
+            "type": "string"
+          },
+          "evidenceIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "originalHARReuploaded": {
+            "type": "boolean"
+          },
+          "rawResponseRowsCopied": {
+            "type": "boolean"
+          },
+          "credentialsCopied": {
+            "type": "boolean"
+          },
+          "sourceKind": {
+            "type": "string"
+          },
+          "liveServerFetch": {
+            "type": "boolean"
+          },
+          "authenticatedResponseIndependentlyVerified": {
+            "type": "boolean"
+          },
+          "final1830Judgment": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "current_decision_refs": {
+        "type": "object",
+        "required": [
+          "gauss6TotalSubmission",
+          "davinci2TotalSubmission"
+        ],
+        "properties": {
+          "gauss6TotalSubmission": {
+            "type": "string"
+          },
+          "davinci2TotalSubmission": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "decision_revision_relations": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "currentDecisionId",
+            "supersedesDecisionId",
+            "reason",
+            "previousRecordModified"
+          ],
+          "properties": {
+            "currentDecisionId": {
+              "type": "string"
+            },
+            "supersedesDecisionId": {
+              "type": "string"
+            },
+            "reason": {
+              "type": "string"
+            },
+            "previousRecordModified": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "current_review_policy": {
+        "type": "object",
+        "required": [
+          "policyId",
+          "ruleVersion",
+          "studentId",
+          "targetEntityIds",
+          "reviewCheckpointAtLocal",
+          "reviewCheckpointAtUtc",
+          "timezone",
+          "holdMissingHomeworkJudgmentUntilCheckpoint",
+          "automaticMissingJudgmentAt1830Allowed",
+          "checkpointReachedIsNotMissingHomeworkEvidence",
+          "sourceEvidenceRequirementsUnchanged",
+          "scope",
+          "assignmentDeadlineChangedByThisRevision",
+          "studentDeadlineChangeNotificationSent",
+          "guardianCommunicationSent",
+          "actualDayRecordWritePerformed",
+          "lateSubmissionAcceptanceRuleChangedByThisRevision",
+          "liveServerQueriesAdded",
+          "evidenceIds"
+        ],
+        "properties": {
+          "policyId": {
+            "type": "string"
+          },
+          "ruleVersion": {
+            "type": "string"
+          },
+          "studentId": {
+            "type": "string"
+          },
+          "targetEntityIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "reviewCheckpointAtLocal": {
+            "type": "string"
+          },
+          "reviewCheckpointAtUtc": {
+            "type": "string"
+          },
+          "timezone": {
+            "type": "string"
+          },
+          "holdMissingHomeworkJudgmentUntilCheckpoint": {
+            "type": "boolean"
+          },
+          "automaticMissingJudgmentAt1830Allowed": {
+            "type": "boolean"
+          },
+          "checkpointReachedIsNotMissingHomeworkEvidence": {
+            "type": "boolean"
+          },
+          "sourceEvidenceRequirementsUnchanged": {
+            "type": "boolean"
+          },
+          "scope": {
+            "type": "string"
+          },
+          "assignmentDeadlineChangedByThisRevision": {
+            "type": "boolean"
+          },
+          "studentDeadlineChangeNotificationSent": {
+            "type": "boolean"
+          },
+          "guardianCommunicationSent": {
+            "type": "boolean"
+          },
+          "actualDayRecordWritePerformed": {
+            "type": "boolean"
+          },
+          "lateSubmissionAcceptanceRuleChangedByThisRevision": {
+            "type": "boolean"
+          },
+          "liveServerQueriesAdded": {
+            "type": "integer"
+          },
+          "evidenceIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "review_policy_history": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "previousCheckpointAtLocal",
+            "previousRuleEvidenceId",
+            "previousPlanVersion",
+            "previousPlanReference",
+            "previousPlanSha256",
+            "status",
+            "supersededByPolicyId",
+            "previousEvidenceModified",
+            "sourceMessageId",
+            "reportedAt"
+          ],
+          "properties": {
+            "previousCheckpointAtLocal": {
+              "type": "string"
+            },
+            "previousRuleEvidenceId": {
+              "type": "string"
+            },
+            "previousPlanVersion": {
+              "type": "string"
+            },
+            "previousPlanReference": {
+              "type": "string"
+            },
+            "previousPlanSha256": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            },
+            "supersededByPolicyId": {
+              "type": "string"
+            },
+            "previousEvidenceModified": {
+              "type": "boolean"
+            },
+            "sourceMessageId": {
+              "type": "string"
+            },
+            "reportedAt": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "reminder_history": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "requested_reminder_at_local",
+            "requested_reminder_at_utc",
+            "timezone",
+            "schedule_change_state",
+            "next_run_at_utc",
+            "next_run_verification_state",
+            "recreated",
+            "if_assistant_cannot_query_at_reminder",
+            "source_message_id",
+            "source_sent_at_utc",
+            "dispatchEvent"
+          ],
+          "properties": {
+            "requested_reminder_at_local": {
+              "type": "string"
+            },
+            "requested_reminder_at_utc": {
+              "type": "string"
+            },
+            "timezone": {
+              "type": "string"
+            },
+            "schedule_change_state": {
+              "type": "string"
+            },
+            "next_run_at_utc": {
+              "type": [
+                "string",
+                "number",
+                "object",
+                "array",
+                "null"
+              ]
+            },
+            "next_run_verification_state": {
+              "type": "string"
+            },
+            "recreated": {
+              "type": "boolean"
+            },
+            "if_assistant_cannot_query_at_reminder": {
+              "type": "string"
+            },
+            "source_message_id": {
+              "type": "string"
+            },
+            "source_sent_at_utc": {
+              "type": "string"
+            },
+            "dispatchEvent": {
+              "type": "object",
+              "required": [
+                "acceptedAtUtc",
+                "status",
+                "gradeCheckEvidence",
+                "deliveryConfirmed"
+              ],
+              "properties": {
+                "acceptedAtUtc": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "gradeCheckEvidence": {
+                  "type": "boolean"
+                },
+                "deliveryConfirmed": {
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "legacy_timing_field_status": {
+        "type": "object",
+        "required": [
+          "/gauss_submission_check/scheduled_attendance_at_local",
+          "/gauss_submission_check/rules",
+          "/imported_capture_claims/final1830Judgment"
+        ],
+        "properties": {
+          "/gauss_submission_check/scheduled_attendance_at_local": {
+            "type": "string"
+          },
+          "/gauss_submission_check/rules": {
+            "type": "string"
+          },
+          "/imported_capture_claims/final1830Judgment": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "additionalProperties": false,
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Student homework evidence decision and assignment plan",
+    "$defs": {
+      "EvidenceRecord": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "sourceKind",
+          "actor",
+          "sourceRef",
+          "reportedAt",
+          "observedAt",
+          "capturedAt",
+          "recordedAt",
+          "timeRaw",
+          "verificationStatus",
+          "scope",
+          "claim",
+          "revision",
+          "supersedesEvidenceIds",
+          "retractsEvidenceIds",
+          "conflictingEvidenceIds",
+          "evidenceId"
+        ],
+        "properties": {
+          "evidenceId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "sourceKind": {
+            "enum": [
+              "user_report",
+              "lms_direct_observation",
+              "imported_snapshot",
+              "inference"
+            ]
+          },
+          "actor": {
+            "type": "object",
+            "required": [
+              "kind",
+              "role",
+              "id"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "kind": {
+                "enum": [
+                  "user",
+                  "assistant",
+                  "native_tool",
+                  "system"
+                ]
+              },
+              "role": {
+                "enum": [
+                  "teacher",
+                  "source_collector",
+                  "reviewer",
+                  "maintainer",
+                  "unknown"
+                ]
+              },
+              "id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          },
+          "sourceRef": {
+            "type": "object",
+            "required": [
+              "sourceMessageId",
+              "reference",
+              "sha256",
+              "jsonPointer"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "sourceMessageId": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "reference": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "sha256": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              "jsonPointer": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          },
+          "reportedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "observedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "capturedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "recordedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "timeRaw": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "verificationStatus": {
+            "enum": [
+              "unverified",
+              "corroborated",
+              "contradicted"
+            ]
+          },
+          "verificationDetail": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "statementProvenance": {
+            "type": "object",
+            "required": [
+              "confirmed",
+              "sourceMessageId"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "confirmed": {
+                "type": "boolean"
+              },
+              "sourceMessageId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              }
+            }
+          },
+          "scope": {
+            "type": "object",
+            "required": [
+              "studentId",
+              "entityIds",
+              "fields",
+              "window"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "studentId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "entityIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                }
+              },
+              "fields": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "window": {
+                "anyOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "from",
+                      "to",
+                      "labelRaw"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "from": {
+                        "type": [
+                          "string",
+                          "null"
+                        ],
+                        "format": "date-time"
+                      },
+                      "to": {
+                        "type": [
+                          "string",
+                          "null"
+                        ],
+                        "format": "date-time"
+                      },
+                      "labelRaw": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "claim": {
+            "type": "object",
+            "required": [
+              "type",
+              "value"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "type": {
+                "type": "string"
+              },
+              "value": {}
+            }
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "supersedesEvidenceIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          "retractsEvidenceIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          "conflictingEvidenceIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          }
+        }
+      },
+      "DecisionRecord": {
+        "type": "object",
+        "required": [
+          "decisionId",
+          "studentId",
+          "targetEntityIds",
+          "evidenceIds",
+          "ruleVersion",
+          "decisionStatus",
+          "decisionAuthority",
+          "recordedAt"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "decisionId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "studentId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "targetEntityIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          "evidenceIds": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          "ruleVersion": {
+            "type": "string",
+            "minLength": 1
+          },
+          "decisionStatus": {
+            "enum": [
+              "pending",
+              "confirmed",
+              "conflicted",
+              "superseded",
+              "retracted"
+            ]
+          },
+          "decisionAuthority": {
+            "type": "object",
+            "required": [
+              "actorKind",
+              "role"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "actorKind": {
+                "enum": [
+                  "user",
+                  "assistant",
+                  "native_tool",
+                  "system"
+                ]
+              },
+              "role": {
+                "enum": [
+                  "teacher",
+                  "source_collector",
+                  "reviewer",
+                  "maintainer",
+                  "unknown"
+                ]
+              }
+            }
+          },
+          "recordedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    }
+  }
+}

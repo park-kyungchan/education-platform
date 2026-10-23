@@ -6,7 +6,14 @@ interface Draft {value:any;expectedRevisionId:string|null;sequence:number;pendin
 /** Private originals stay in this page's memory; acknowledged revisions and outcomes stay in PostgreSQL. */
 const drafts=new Map<string,Draft>();
 export const workspaceNode=<K extends keyof HTMLElementTagNameMap>(tag:K,text='')=>{const element=document.createElement(tag);element.textContent=text;return element;};
+export const workspaceDraftKey=(scope:Scope,studentId:string|null,identity:string)=>JSON.stringify([scope.ownerId,scope.actorId,studentId,identity]);
+/** Existing callers/recovery probes may still supply the former object-scope key. */
+function normalizedDraftKey(key:string):string{
+ try{const value=JSON.parse(key);if(Array.isArray(value)&&(value.length===2||value.length===3)&&value[0]&&typeof value[0]==='object'&&typeof value[0].ownerId==='string'&&typeof value[0].actorId==='string'&&typeof value.at(-1)==='string'&&(value.length===2||typeof value[1]==='string'))return workspaceDraftKey(value[0],value.length===3?value[1]:null,value.at(-1));}catch{}
+ return key;
+}
 export function workspaceDraft(key:string,initial:any,revisionId:string|null,sequence=0):Draft {
+ key=normalizedDraftKey(key);
  let draft=drafts.get(key);if(!draft){draft={value:structuredClone(initial),expectedRevisionId:revisionId,sequence,pending:null,dirty:false,blocked:false,message:''};drafts.set(key,draft);}
  else if(sequence>draft.sequence&&!draft.pending){if(draft.dirty){draft.blocked=true;draft.message='다른 수정이 저장됐습니다. 내 입력은 유지했습니다. 이전 이력과 현재 근거를 확인하세요.';}else{draft.value=structuredClone(initial);draft.expectedRevisionId=revisionId;draft.sequence=sequence;}}
  return draft;

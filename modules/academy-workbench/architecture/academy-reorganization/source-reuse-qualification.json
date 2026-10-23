@@ -1,0 +1,91 @@
+{
+  "schemaVersion": "academy.source-reuse-qualification/1",
+  "scope": "Read-only source qualification while independent architecture review runs; not implementation or full semantic acceptance.",
+  "ownerRoot": "/home/palantirkc/projects/education-platform",
+  "ownerCommit": "cb7e571262593f230d21401994a507e94960f967",
+  "sourcePins": [
+    {
+      "path": "apps/academy/gang-a/packages/domain/evidence.ts",
+      "sha256": "932c818b1eacedad571a54afd94a3b171007bf3111c7e0ea5aa9204b88c3b930"
+    },
+    {
+      "path": "apps/academy/gang-a/packages/domain/decision.ts",
+      "sha256": "e53601e359ac9f42e9ba96ea288f9588b0097da217966d8bdafee03da67d01eb"
+    },
+    {
+      "path": "apps/academy/gang-a/packages/domain/scope.ts",
+      "sha256": "1c847eb87a8ea56412a87ed7ab9d3ac11840677601382e582a34d5713a8ddd43"
+    },
+    {
+      "path": "apps/academy/gang-a/packages/domain/assignment.ts",
+      "sha256": "f1d896215b24ba3120c5472249f2e4d8fc21b4f7b1e16b57c37232ada32b5743"
+    },
+    {
+      "path": "apps/academy/gang-a/packages/domain/book.ts",
+      "sha256": "37fd598cfb006a9a941d04a7de3d8dcde0bbaaae5b82b14e4e729a5db1ccae0f"
+    },
+    {
+      "path": "apps/academy/gang-a/packages/domain/teacher-outcome.ts",
+      "sha256": "3e2af58e9f7fe656f5b9a77c5431b916226f247a129f2f64020f40568356ffc2"
+    },
+    {
+      "path": "apps/academy/gang-a/packages/application/refresh-student.ts",
+      "sha256": "5ba6bf084f2035fa3ba3b830468f8f2d068420ef6549660e6f5dd36499f86573"
+    },
+    {
+      "path": "apps/academy/gang-a/packages/application/prepare-book-progress-facts.ts",
+      "sha256": "7d5c92f80181dd2c528c827d1a2a2e64a514f57d6d54c8d073e034245aadc703"
+    },
+    {
+      "path": "apps/academy/gang-a/packages/application/validate-evidence-projection.ts",
+      "sha256": "11c6c6cfc1d5bb081390698580553d2991fdc817b74616694b71e254f947ab58"
+    },
+    {
+      "path": "apps/academy/gang-a/packages/ports/store.ts",
+      "sha256": "2edf456cddb9ab509ff573ccc4e0da3896a3909a150a2e6ec6a0e314f653847e"
+    },
+    {
+      "path": "apps/academy/gang-a/packages/ports/transport.ts",
+      "sha256": "a09e81fa8f627865dc0284a9088075d0b2100666d4faa36cc72a3918da09b02b"
+    }
+  ],
+  "qualifiedReuse": [
+    {
+      "capability": "source observations",
+      "canonicalCandidate": "gang-a/packages/domain/evidence.ts",
+      "existingContract": "academy.evidence/2.0.1",
+      "reuse": "Preserve source kind, clocks, scope, supersession/retraction/conflict IDs; no parallel Evidence store."
+    },
+    {
+      "capability": "teacher decisions",
+      "canonicalCandidate": "gang-a/packages/domain/decision.ts",
+      "existingContract": "academy.decision/2.0.0",
+      "reuse": "Confirmed completion requires scoped teacher-review evidence; no inference from score."
+    },
+    {
+      "capability": "book containment",
+      "canonicalCandidate": "gang-a/packages/domain/book.ts",
+      "reuse": "Existing edition-local hierarchy validation; qualify explicit source namespace crosswalk separately."
+    },
+    {
+      "capability": "source refresh",
+      "canonicalCandidate": "gang-a/packages/application/refresh-student.ts",
+      "reuse": "Preserves teacher decisions and prior evidence on failure; live verifier required. No operational connection implied."
+    }
+  ],
+  "gaps": [
+    {
+      "id": "AAR-REUSE-001",
+      "description": "Legacy teacher-outcome imports schema/v1 while newer Evidence/Decision use domain v2 contracts; define explicit compatibility projection before a common current-state consumer."
+    },
+    {
+      "id": "AAR-REUSE-002",
+      "description": "Existing Assignment completion is coarse; activity occurrence and cancellation/replacement need bounded domain extensions rather than a whole schema rewrite."
+    },
+    {
+      "id": "AAR-REUSE-003",
+      "description": "Standalone read model recognizes selected assignment/checkpoint kinds and uses synthetic/local storage; it is not current source adapter parity."
+    }
+  ],
+  "writeConflicts": "No current source writes; existing AR/AO and month-end Work history retained. All actual child writers remain gated on review disposition."
+}

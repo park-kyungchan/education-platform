@@ -1,6 +1,6 @@
 import {digest,requireText} from '../../learning/model';
 import {catalogLevels,type CatalogNode} from '../domain';
-import {readInputRecord} from '../../lms/academyReadProtocol';
+import {readInputRecord} from '../../contracts/readInputRecord';
 import type {DayRecordSourceRow} from '../../lms/dayRecordReadProtocol';
 import {buildStudentPreparation,assertPreparationDate} from '../preparationHistory';
 import type {AcademySourceConnection} from '../nativeConnector';
@@ -51,7 +51,7 @@ async student(context:TrustedTeacherContext,studentId:string,date=new Intl.DateT
     const preparationVersions=[...new Map([...current,...revisions].map(v=>[v.revisionId,v])).values()];
     const catalogRefs=preparationVersions.flatMap(v=>v.payload.kind==='learning_work_assignment'?v.payload.catalogRefs:[]);
     const pinned=catalogRefs.length?await this.store.pinnedCatalog(this.ownerId,catalogRefs):[];
-    const exactWork=projectLearningWork(studentId,student.sourceKey,date,preparationVersions,current,pinned);
+    const exactWork=projectLearningWork(studentId,student.sourceKey,date,preparationVersions,current,pinned,teacherWorkspaces);
     const bookSources=current.filter(row=>row.payload.kind==='source_book_registration');
     const rootIds=new Set(bookSources.map(row=>row.payload.kind==='source_book_registration'?row.payload.catalogNodeId:''));
     const nodes=new Map(catalog.map(node=>[node.id,node]));
@@ -61,7 +61,7 @@ async student(context:TrustedTeacherContext,studentId:string,date=new Intl.DateT
       return false;
     };
     const selectedCatalog=catalog.filter(belongs);
-    const sceneRevision=digest({studentId,date,heads:current.map(row=>({revisionId:row.revisionId,lastVerifiedAt:row.lastVerifiedAt})),teacherRevisions:revisions.map(v=>v.revisionId),teacherWorkspaceRevisions:teacherWorkspaces.map(v=>v.revisionId),catalog:selectedCatalog,workContextSchema:'1-source-results-r1',policyRevision:classroomCyclePolicy.operationalContextRevision});
+    const sceneRevision=digest({studentId,date,heads:current.map(row=>({revisionId:row.revisionId,lastVerifiedAt:row.lastVerifiedAt})),teacherRevisions:revisions.map(v=>v.revisionId),teacherWorkspaceRevisions:teacherWorkspaces.map(v=>v.revisionId),catalog:selectedCatalog,workContextSchema:'1-dom02-refinements-r1',policyRevision:classroomCyclePolicy.operationalContextRevision});
     const preparation=buildStudentPreparation(student.sourceKey,preparationVersions,date);
     const connection=this.connection();
     const workContext=buildTeacherWorkContext({studentId,studentKey:student.sourceKey,date,revision:sceneRevision,catalog:selectedCatalog,preparation,versions:current,exactWork,sourceAcquisition:connection.acquisition});

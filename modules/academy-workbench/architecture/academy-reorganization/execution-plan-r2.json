@@ -1,0 +1,404 @@
+{
+  "schemaVersion": "academy.execution-topology/2",
+  "status": "repair-successor-not-dispatched",
+  "logicalTaskAliasRule": "Local graph aliases are not native Task IDs. Canonical child Task IDs are issued under each approved project/work, and linked here without changing aliases.",
+  "nodes": [
+    {
+      "id": "AAR-01",
+      "workId": "academy-architecture-orchestration-20261021",
+      "outcome": "Measure current scoped reality",
+      "dependsOn": [],
+      "accountableRole": "root",
+      "writeScope": "architecture/academy-reorganization/measurement.json",
+      "state": "source-preparation",
+      "milestone": "execution-and-verification",
+      "actualNativeOccurrence": null,
+      "canonicalTaskRef": "academy-workbench:task:academy-architecture-orchestration-20261021-t01",
+      "canonicalTaskStatus": "created-local"
+    },
+    {
+      "id": "AAR-02",
+      "workId": "academy-architecture-orchestration-20261021",
+      "outcome": "Architecture, identity and dependency design",
+      "dependsOn": [
+        "AAR-01"
+      ],
+      "accountableRole": "root",
+      "writeScope": "architecture/academy-reorganization/*.json and contracts.ts",
+      "state": "source-preparation",
+      "milestone": "execution-and-verification",
+      "actualNativeOccurrence": null,
+      "canonicalTaskRef": "academy-workbench:task:academy-architecture-orchestration-20261021-t02",
+      "canonicalTaskStatus": "created-local"
+    },
+    {
+      "id": "AAR-03",
+      "workId": "academy-architecture-orchestration-20261021",
+      "outcome": "Actual user architecture approval",
+      "dependsOn": [
+        "AAR-02"
+      ],
+      "accountableRole": "user",
+      "writeScope": "new immutable actual-user Input; no inferred approval",
+      "state": "awaiting-approval",
+      "milestone": "actual-user-approval",
+      "actualNativeOccurrence": null,
+      "canonicalTaskRef": null,
+      "gateKind": "actual-user-architecture-approval",
+      "canonicalTaskStatus": "external-gate"
+    },
+    {
+      "id": "AAR-04",
+      "workId": "academy-architecture-orchestration-20261021",
+      "outcome": "Independent exact-source review",
+      "dependsOn": [
+        "AAR-03"
+      ],
+      "accountableRole": "independent-reviewer",
+      "writeScope": "review-only result path, no implementation writes",
+      "state": "awaiting-approval",
+      "milestone": "execution-and-verification",
+      "actualNativeOccurrence": null,
+      "canonicalTaskRef": "academy-workbench:task:academy-architecture-orchestration-20261021-t03",
+      "canonicalTaskStatus": "created-local"
+    },
+    {
+      "id": "AAR-05",
+      "workId": "academy-architecture-orchestration-20261021",
+      "outcome": "Resolve review and qualify preserved Work results",
+      "dependsOn": [
+        "AAR-04"
+      ],
+      "accountableRole": "root",
+      "writeScope": "integration source pins and compatibility/effect dispositions",
+      "state": "awaiting-approval",
+      "milestone": "execution-and-verification",
+      "actualNativeOccurrence": null,
+      "canonicalTaskRef": "academy-workbench:task:academy-architecture-orchestration-20261021-t04",
+      "canonicalTaskStatus": "created-local"
+    },
+    {
+      "id": "DOM-01",
+      "workId": "academy-state-model-20261021",
+      "outcome": "Freeze seven-workflow canonical producer/consumer/disposition inventory and existing teacher application extension boundary",
+      "dependsOn": [
+        "AAR-05"
+      ],
+      "accountableRole": "domain-subLead",
+      "writeScope": "existing domain modules and owner-local Work records",
+      "state": "awaiting-approval",
+      "milestone": "execution-and-verification",
+      "actualNativeOccurrence": null,
+      "canonicalTaskRef": "education-platform:task:academy-state-model-20261021-dom-01",
+      "canonicalTaskStatus": "proposed-not-created"
+    },
+    {
+      "id": "DOM-02",
+      "workId": "academy-state-model-20261021",
+      "outcome": "Extend existing teacher-state contracts/projections only for qualified gaps; no second current-state reducer",
+      "dependsOn": [
+        "DOM-01"
+      ],
+      "accountableRole": "domain-subLead",
+      "writeScope": "selected existing domain/application files",
+      "state": "awaiting-approval",
+      "milestone": "execution-and-verification",
+      "actualNativeOccurrence": null,
+      "canonicalTaskRef": "education-platform:task:academy-state-model-20261021-dom-02",
+      "canonicalTaskStatus": "proposed-not-created"
+    },
+    {
+      "id": "QRY-01",
+      "workId": "academy-query-integration-20261021",
+      "outcome": "Qualify source/query ports and coverage",
+      "dependsOn": [
+        "AAR-05"
+      ],
+      "accountableRole": "query-subLead",
+      "writeScope": "existing lms/adapters port boundary; avoid domain contract writes",
+      "state": "awaiting-approval",
+      "milestone": "execution-and-verification",
+      "actualNativeOccurrence": null,
+      "canonicalTaskRef": "education-platform:task:academy-query-integration-20261021-qry-01",
+      "canonicalTaskStatus": "proposed-not-created"
+    },
+    {
+      "id": "QRY-02",
+      "workId": "academy-query-integration-20261021",
+      "outcome": "Implement bounded common current-state query slice",
+      "dependsOn": [
+        "DOM-02",
+        "QRY-01"
+      ],
+      "accountableRole": "query-subLead",
+      "writeScope": "source adapters/query composition; root serializes shared schema",
+      "state": "awaiting-approval",
+      "milestone": "execution-and-verification",
+      "actualNativeOccurrence": null,
+      "canonicalTaskRef": "education-platform:task:academy-query-integration-20261021-qry-02",
+      "canonicalTaskStatus": "proposed-not-created"
+    },
+    {
+      "id": "VER-01",
+      "workId": "academy-workflow-verification-20261021",
+      "outcome": "Specify adversarial identity, correction and workflow checks",
+      "dependsOn": [
+        "AAR-05"
+      ],
+      "accountableRole": "verification-subLead",
+      "writeScope": "dedicated verification fixtures; no copied private students",
+      "state": "awaiting-approval",
+      "milestone": "execution-and-verification",
+      "actualNativeOccurrence": null,
+      "canonicalTaskRef": "education-platform:task:academy-workflow-verification-20261021-ver-01",
+      "canonicalTaskStatus": "proposed-not-created"
+    },
+    {
+      "id": "VER-02",
+      "workId": "academy-workflow-verification-20261021",
+      "outcome": "Early domain/query parity gate at exact source revisions; not final consumer routing verification",
+      "dependsOn": [
+        "DOM-02",
+        "QRY-02",
+        "VER-01"
+      ],
+      "accountableRole": "verification-subLead",
+      "writeScope": "dedicated workflow checks and coverage graph",
+      "state": "awaiting-approval",
+      "milestone": "execution-and-verification",
+      "actualNativeOccurrence": null,
+      "canonicalTaskRef": "education-platform:task:academy-workflow-verification-20261021-ver-02",
+      "canonicalTaskStatus": "proposed-not-created"
+    },
+    {
+      "id": "CON-01",
+      "workId": "academy-consumer-integration-20261021",
+      "outcome": "Qualify preserved MCP/context/skill consumer contracts",
+      "dependsOn": [
+        "AAR-05"
+      ],
+      "accountableRole": "consumer-subLead",
+      "writeScope": "own consumer files; shared package scripts reserved to root",
+      "state": "awaiting-approval",
+      "milestone": "execution-and-verification",
+      "actualNativeOccurrence": null,
+      "canonicalTaskRef": "academy-workbench:task:academy-consumer-integration-20261021-con-01",
+      "canonicalTaskStatus": "proposed-not-created"
+    },
+    {
+      "id": "CON-02",
+      "workId": "academy-consumer-integration-20261021",
+      "outcome": "Connect preparation and correction reports to common state",
+      "dependsOn": [
+        "QRY-02",
+        "CON-01"
+      ],
+      "accountableRole": "consumer-subLead",
+      "writeScope": "MCP/report/offline consumer glue",
+      "state": "awaiting-approval",
+      "milestone": "execution-and-verification",
+      "actualNativeOccurrence": null,
+      "canonicalTaskRef": "academy-workbench:task:academy-consumer-integration-20261021-con-02",
+      "canonicalTaskStatus": "proposed-not-created"
+    },
+    {
+      "id": "CON-03",
+      "workId": "academy-consumer-integration-20261021",
+      "outcome": "Route remaining internal workflow consumers or explicitly retain scoped gaps; do not claim deferred surfaces complete",
+      "dependsOn": [
+        "CON-02",
+        "VER-02"
+      ],
+      "accountableRole": "consumer-subLead",
+      "writeScope": "workflow-specific consumers, no native effects",
+      "state": "awaiting-approval",
+      "milestone": "execution-and-verification",
+      "actualNativeOccurrence": null,
+      "canonicalTaskRef": "academy-workbench:task:academy-consumer-integration-20261021-con-03",
+      "canonicalTaskStatus": "proposed-not-created"
+    },
+    {
+      "id": "ENV-01",
+      "workId": "academy-environment-qualification-20261021",
+      "outcome": "Qualify each native environment independently",
+      "dependsOn": [
+        "AAR-05"
+      ],
+      "accountableRole": "environment-subLead",
+      "writeScope": "capability/evidence only; no credential/config writes",
+      "state": "awaiting-approval",
+      "milestone": "execution-and-verification",
+      "actualNativeOccurrence": null,
+      "canonicalTaskRef": "academy-workbench:task:academy-environment-qualification-20261021-env-01",
+      "canonicalTaskStatus": "proposed-not-created"
+    },
+    {
+      "id": "ENV-02",
+      "workId": "academy-environment-qualification-20261021",
+      "outcome": "Prepare qualified native handoff per supported environment",
+      "dependsOn": [
+        "DOM-02",
+        "ENV-01"
+      ],
+      "accountableRole": "environment-subLead",
+      "writeScope": "thin native-owned harness proposals; common changes held",
+      "state": "awaiting-approval",
+      "milestone": "execution-and-verification",
+      "actualNativeOccurrence": null,
+      "canonicalTaskRef": "academy-workbench:task:academy-environment-qualification-20261021-env-02",
+      "canonicalTaskStatus": "proposed-not-created"
+    },
+    {
+      "id": "INT-01",
+      "workId": "academy-architecture-orchestration-20261021",
+      "outcome": "Serialize exact reviewed source integration and transitions",
+      "dependsOn": [
+        "CON-03",
+        "VER-03",
+        "ENV-02"
+      ],
+      "accountableRole": "root",
+      "writeScope": "integration branch/shared routing/shared manifests",
+      "state": "awaiting-approval",
+      "milestone": "execution-and-verification",
+      "actualNativeOccurrence": null,
+      "canonicalTaskRef": "academy-workbench:task:academy-architecture-orchestration-20261021-t05",
+      "canonicalTaskStatus": "created-local"
+    },
+    {
+      "id": "VER-03",
+      "workId": "academy-workflow-verification-20261021",
+      "outcome": "Verify final consumer closure after CON-03, including month-end source/web and negative cases",
+      "dependsOn": [
+        "CON-03",
+        "VER-02"
+      ],
+      "accountableRole": "verification-subLead",
+      "writeScope": "Final consumer and per-workflow source checks, exact delivered revisions",
+      "state": "awaiting-approval",
+      "milestone": "execution-and-verification",
+      "actualNativeOccurrence": null,
+      "canonicalTaskRef": "education-platform:task:academy-workflow-verification-20261021-ver-03",
+      "canonicalTaskStatus": "proposed-not-created"
+    },
+    {
+      "id": "INT-VERIFY",
+      "workId": "academy-architecture-orchestration-20261021",
+      "outcome": "Revalidate current integrated source closure and exact independent review after composition",
+      "dependsOn": [
+        "INT-01",
+        "VER-03"
+      ],
+      "accountableRole": "root",
+      "writeScope": "Integrated candidate commit/tree, affected checks and common semantic transitions",
+      "state": "awaiting-approval",
+      "milestone": "execution-and-verification",
+      "actualNativeOccurrence": null,
+      "canonicalTaskRef": "academy-workbench:task:academy-architecture-orchestration-20261021-t07",
+      "canonicalTaskStatus": "proposed-not-created"
+    },
+    {
+      "id": "INT-02",
+      "workId": "academy-architecture-orchestration-20261021",
+      "outcome": "Report remaining operational gates and scoped acceptance",
+      "dependsOn": [
+        "INT-VERIFY"
+      ],
+      "accountableRole": "root",
+      "writeScope": "reviewable delivery and continuity; activation remains separately held",
+      "state": "awaiting-approval",
+      "milestone": "execution-and-verification",
+      "actualNativeOccurrence": null,
+      "canonicalTaskRef": "academy-workbench:task:academy-architecture-orchestration-20261021-t06",
+      "canonicalTaskStatus": "created-local"
+    }
+  ],
+  "parallelGroups": [
+    {
+      "after": "AAR-05",
+      "compatible": [
+        "DOM-01",
+        "QRY-01",
+        "VER-01",
+        "CON-01",
+        "ENV-01"
+      ],
+      "condition": "Disjoint owned files and bounded resource slots; these need not run simultaneously."
+    },
+    {
+      "after": "DOM-02",
+      "compatible": [
+        "QRY-02",
+        "ENV-02"
+      ],
+      "condition": "Frozen domain contract; query implementation cannot edit domain owner files."
+    }
+  ],
+  "serialization": [
+    {
+      "resource": "shared contracts, schema/export generation",
+      "owner": "domain subLead for domain fields; root for integration",
+      "rule": "One writer; consumers use pinned contract revision; incompatible change returns to exact review."
+    },
+    {
+      "resource": "package.json, lockfiles, CI/check routing, source maps",
+      "owner": "root integration task",
+      "rule": "Leaf workers submit bounded patches; root applies in exact source order with semantic transitions."
+    },
+    {
+      "resource": "private source access, DB changes, print/send/deployment/native config",
+      "owner": "existing source/native owners",
+      "rule": "Current effect hold; Git worktrees do not isolate these resources."
+    },
+    {
+      "resource": "CPU/memory/test processes",
+      "owner": "root coordinator",
+      "rule": "Initially at most two owned active agent turns including root, one heavy build/test at a time. Observe existing load and reduce concurrency; do not control unrelated agents."
+    }
+  ],
+  "tabPolicy": {
+    "oneAccountableSubLeadPerTab": true,
+    "oneWorkPerTab": true,
+    "parentChildrenShareWork": true,
+    "reviewer": "Independent child pane in root Work tab; no implementer role. Another Work receives another tab only after approval.",
+    "rolesIndependentOfRuntimeModelEffort": true,
+    "defaultWorkerRuntime": "Select a qualified available native runtime at dispatch; do not allocate unavailable environments for coverage theater.",
+    "existingTabs": "Never seize, reassign or message unrelated active tabs; prior owners and holds retained.",
+    "plannedTabIds": "null until created; never predict Herdr public IDs."
+  },
+  "reviewer": {
+    "logicalWorkId": "academy-architecture-orchestration-20261021",
+    "taskRef": "academy-workbench:task:academy-architecture-orchestration-20261021-t03",
+    "role": "independent-architecture-reviewer",
+    "requestedCLI": "codex",
+    "requestedModel": "gpt-6-astra",
+    "requestedEffort": "xhigh",
+    "tabId": null,
+    "paneId": null,
+    "nativeSessionId": null,
+    "launchState": "not-launched-awaiting-architecture-approval",
+    "sourcePolicy": "Exact immutable repair successor with original approved design and first independent review preserved; actual native launch is in checkpoint/delegation receipts, not this design-time assignment.",
+    "writeScope": "Only reviewer-owned typed review receipts; no student contents, services, configuration or remote effects.",
+    "resultContract": [
+      "reviewed commit/tree",
+      "source pins actually inspected",
+      "findings with stable IDs/severity/evidence",
+      "tests actually run and limits",
+      "accept/repair/defer proposal, not user AcceptanceDecision"
+    ],
+    "noFallback": "If model/effort is not actually available, retain the requested assignment and report the exact gap; do not silently substitute."
+  },
+  "integrationPolicy": {
+    "exactBaseRequired": true,
+    "reviewBeforeIntegration": true,
+    "semanticTransitionRequired": true,
+    "rootOwnsCurrentSourceCAS": true,
+    "publication": "held",
+    "automaticMerge": false,
+    "activation": "separate-owner-authority-held",
+    "formalCompletion": "Requires actual delivery/acceptance prerequisites; local tests alone are insufficient.",
+    "finalVerification": "VER-03 consumes final CON-03 closure; INT-VERIFY consumes the actual integrated commit/tree. Any closure hash change invalidates applicable previous evidence and requires a new bounded check."
+  },
+  "supersedesDesign": "execution-plan.json",
+  "crossWorkProtocol": "Consumer-owned local qualification Tasks via cross-work-protocol-r2.json and qualify-external-work.ts; foreign Tasks are never put directly in common GitWork dependsOn."
+}

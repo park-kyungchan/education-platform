@@ -1,0 +1,34 @@
+$ cd app/offline-import-adapter && node --test tests/*.test.ts
+✔ private envelope preserves namespaced bindings but creates no live projection (12.352287ms)
+✔ mapping is deterministic regardless of input file enumeration (2.299562ms)
+✔ event JSON bytes, original order and clocks are preserved separately (1.343778ms)
+✔ all saved response fields including evidence relations and teacher history roundtrip (2.302717ms)
+✔ superseding withdrawal does not transfer another student date or become active state (1.063383ms)
+✔ book identity correction remains scoped rather than full assignment supersession (0.807524ms)
+✔ unresolved relationship stays raw and explicitly reported without fabricated binding (0.76998ms)
+✔ D1 event content hash mismatch is rejected (0.914062ms)
+✔ ledger target or scope cannot cross students (1.077905ms)
+✔ response student identity cannot change across request and response (0.602932ms)
+✔ missing events, non-exhausted pagination and offset holes fail closed (1.035492ms)
+✔ changed source bytes or omitted source manifest entries are rejected (0.536895ms)
+✔ credential fields and signed URLs cannot enter portable source artifacts (0.870488ms)
+✔ path traversal and unsupported binaries cannot be copied (0.548462ms)
+✔ vendored validator stays byte-identical to the frozen release contract (0.217622ms)
+✔ changed saved snapshot versions get new immutable record IDs while student binding stays stable (0.969364ms)
+✔ embedded Markdown signed URLs and plaintext credentials are quarantined (0.879381ms)
+✔ secondary evidence pagination cannot be silently labelled exhausted (1.305973ms)
+✔ versioned source artifacts do not reuse IDs for changed bytes (1.865821ms)
+✔ D1 rows with explicit mixed owner scopes cannot bind one portable owner (0.448494ms)
+✔ CLI creates private files, copies exact bytes and verifies without databases (192.543055ms)
+✔ CLI refuses an existing output without overwriting (76.632165ms)
+✔ CLI rejects source symlinks and leaves destination absent (76.196159ms)
+✔ CLI rejects public and recognized runtime output roots before reading source (154.030246ms)
+✔ CLI refuses symlink output ancestors (72.308767ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 688.517394

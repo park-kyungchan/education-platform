@@ -1,0 +1,455 @@
+{
+  "schemaVersion": "academy.independent-architecture-review/2",
+  "reviewId": "AAR-REVIEW-002",
+  "createdAtUtc": "2026-10-21T05:34:49.224874+00:00",
+  "reviewClass": "Focused independent successor review; no implementation role",
+  "logicalIdentity": {
+    "domainId": "academy-operations",
+    "projectId": "academy-workbench",
+    "workId": "academy-architecture-orchestration-20261021",
+    "issueId": "AAR-ISSUE-20261021",
+    "specRef": "AAR-SPEC@1",
+    "currentPlanRef": "AAR-PLAN@2",
+    "retainedPriorPlanRef": "AAR-PLAN@1",
+    "taskId": "academy-workbench:task:academy-architecture-orchestration-20261021-t03",
+    "nativeTaskId": null,
+    "nativeRunId": null
+  },
+  "reviewerIdentity": {
+    "actualNativeCODEX_THREAD_ID": "01a15cd8-368e-7322-bb15-20755a7bf9d5",
+    "independentObservation": "Inherited CODEX_THREAD_ID only; no native configuration, other-session state or session logs inspected.",
+    "requestedModel": "gpt-6-astra",
+    "requestedEffort": "xhigh",
+    "independentlyObservedModel": null,
+    "independentlyObservedEffort": null,
+    "rootObservedLaunch": {
+      "model": "gpt-6-astra",
+      "effort": "xhigh",
+      "observedNativeModelUI": "GPT-6-Astra xhigh",
+      "nativeSessionId": "01a15cd8-368e-7322-bb15-20755a7bf9d5",
+      "source": {
+        "repositoryRoot": "/home/palantirkc/worktrees/academy-architecture-review-binding-20261021",
+        "commit": "1a3f9e3ed977560e29ea91209ba6bdb7249b8be4",
+        "path": "architecture/academy-reorganization/delegations/AAR-REVIEW-001.json",
+        "sha256": "5baa880cb0c0cd6aa1a0e145da732e34dcc4049132e3107f0e5a8cb59eadbc5d",
+        "locator": "#/observedNativeModelUI; #/nativeSessionId"
+      },
+      "scope": "Root-authored launch/readback evidence for this session, not a fresh independent model observation or cryptographic authentication."
+    }
+  },
+  "finalReviewedSource": {
+    "commit": "1a3f9e3ed977560e29ea91209ba6bdb7249b8be4",
+    "tree": "31a7896a6d012fe0c1920151e9cde80c59a0e10d",
+    "checkout": "/home/palantirkc/worktrees/academy-architecture-review-binding-20261021",
+    "sourceReadOnly": true,
+    "resultCheckout": "/home/palantirkc/worktrees/academy-architecture-review-20261021",
+    "successorNotice": "User steered the active focused review from 9db3043 to 1a3f9e3. Historical checks and failed reviewer fixture evidence are retained; no source tree was changed."
+  },
+  "historicalReviewedCandidate": {
+    "commit": "9db3043992d31110622337daa20cf8ca64f35a1e",
+    "tree": "915f9ed71f8edce8cf196c994823ac7b41b57c8f",
+    "sourceCheckout": "/home/palantirkc/worktrees/academy-architecture-review-r2-20261021",
+    "observationsPreserved": true
+  },
+  "approvedArchitecture": {
+    "commit": "cb41685437d0f3fabf9f32ae00667e3b88fec4c4",
+    "tree": "d4a9556d6755adb1ae2455d73818207f6ebc4bbb",
+    "baselineDesignTreatment": "Historical approved files and unlaunched/approval-pending design fields are preserved, not treated as current failed dispatch state."
+  },
+  "conclusion": {
+    "disposition": "repair-required-before-dependent-source-admission",
+    "uniqueUnresolvedFindings": 3,
+    "severityCounts": {
+      "high": 0,
+      "medium": 3,
+      "low": 0
+    },
+    "summary": "The successor supplies the missing cross-Work protocol and target consumers, fixes the selected producer result binding, and adds final consumer/integrated verification. The receiving Input admission and the coarse runtime module graph still need repair, and the new perfect-score acceptance oracle needs separation from teacher-review completion.",
+    "noUnresolvedFindingsInDeclaredScope": false,
+    "blanketArchitectureAcceptance": false,
+    "operationalAcceptance": false,
+    "userAcceptanceDecisionIssued": false
+  },
+  "originalFindingDispositions": [
+    {
+      "findingId": "AAR-REVIEW-001-F01",
+      "originalSeverity": "high",
+      "disposition": "partially-resolved",
+      "resolvedPart": "A concrete receiver-owned local qualification protocol now exists, with sixteen cross-Work edge bindings, local root qualification Tasks and separate canonical producer/consumer readers. Producer Tasks are not transplanted into receiver Work records. Final helper explicitly binds selected result Evidence ID and source bytes to the producer Verification.",
+      "remaining": "AAR-REVIEW-002-F01: receiving Input admission is incomplete.",
+      "independentEvidence": [
+        {
+          "path": ".local/reviews/AAR-REVIEW-002-check-helper-memory-qualified.json",
+          "sha256": "4b6442368f8680c8d68625ccba0b0480cfb7576c5091318782f12eebc654dbb4"
+        },
+        {
+          "path": ".local/reviews/AAR-REVIEW-002-check-receiver-input.json",
+          "sha256": "54328bba49f337d0e7c2283fd16296503bddd3bf8f25c75ebd57b9ef6f758834"
+        }
+      ],
+      "historicalGap": "The unrelated same-Work result accepted by 9db3043 with a consistently updated receiver was rejected by 1a3f9e3 with producer_result_not_bound_to_verification. The earlier observations remain preserved."
+    },
+    {
+      "findingId": "AAR-REVIEW-001-F02",
+      "originalSeverity": "high",
+      "disposition": "resolved-in-declared-architecture-scope",
+      "reason": "The thirteen-module map and seven-workflow inventory now identify TeacherApplication/TeacherQueries/store projections, teacher HTTP/web/WebMCP and month-end source/web. Existing teacher state composition is selected, Workbench adapter gaps are explicit, a second reducer is prohibited, and DOM-01 must freeze the exact selection before dependent implementation. Parent-facing drafting/transmission and counseling remain excluded.",
+      "evidence": [
+        {
+          "repositoryRoot": "/home/palantirkc/worktrees/academy-architecture-review-binding-20261021",
+          "commit": "1a3f9e3ed977560e29ea91209ba6bdb7249b8be4",
+          "path": "architecture/academy-reorganization/architecture-r2.json",
+          "sha256": "bbb281d17098d46f362e091ba9753da1b366d4315254bf3010a9e67db4b00fd1",
+          "locator": "#/modules; #/currentStateDesign/canonicalComposition; #/consumerTrace"
+        },
+        {
+          "repositoryRoot": "/home/palantirkc/worktrees/academy-architecture-review-binding-20261021",
+          "commit": "1a3f9e3ed977560e29ea91209ba6bdb7249b8be4",
+          "path": "architecture/academy-reorganization/workflow-capabilities-r2.json",
+          "sha256": "b0f3889b74b864da6dbad840e928661749fd73c944e41ac5db66ae4eed0c1add",
+          "locator": "#/rows; #/canonicalStatePath; #/sourceSelectionGate"
+        }
+      ],
+      "notEstablished": "Adapter implementation, runtime adoption and seven-workflow behavior are not accepted by this disposition."
+    },
+    {
+      "findingId": "AAR-REVIEW-001-F03",
+      "originalSeverity": "medium",
+      "disposition": "partially-resolved",
+      "resolvedPart": "Port contracts, concrete adapters and type-only/request-flow graphs are now distinct; the original managed-sites reverse import is present.",
+      "remaining": "The selected teacher application has another concrete value import omitted by the runtime graph. See active AAR-REVIEW-001-F03.",
+      "evidence": [
+        {
+          "path": ".local/reviews/AAR-REVIEW-002-check-graph-coverage.json",
+          "sha256": "f06cd49025af80478ecf6b8fd75cebfb24a42c3e100635a31f23c2cd9f25cc3f"
+        }
+      ]
+    },
+    {
+      "findingId": "AAR-REVIEW-001-F04",
+      "originalSeverity": "medium",
+      "disposition": "partially-resolved",
+      "resolvedPart": "VER-02 is explicitly early parity; VER-03 depends on final CON-03; INT-VERIFY follows actual integration and precedes delivery. Canonical root T07 and receiving qualification Tasks encode the local sequence under Plan@2. Source-change invalidation, month-end source/web checks and negative workflow coverage are explicit. All fifteen named teacher test file references were located.",
+      "remaining": "AAR-REVIEW-002-F02: split the new perfect-score oracle so clinic eligibility and teacher review are not conflated.",
+      "evidence": [
+        {
+          "path": ".local/reviews/AAR-REVIEW-002-check-graph-coverage.json",
+          "sha256": "f06cd49025af80478ecf6b8fd75cebfb24a42c3e100635a31f23c2cd9f25cc3f"
+        },
+        {
+          "repositoryRoot": "/home/palantirkc/worktrees/academy-architecture-review-binding-20261021",
+          "commit": "1a3f9e3ed977560e29ea91209ba6bdb7249b8be4",
+          "path": "architecture/academy-reorganization/verification-plan-r2.json",
+          "sha256": "b9376bca7b085505a01af82d891e9f5d42b32576afc6aa68328de08d47609277",
+          "locator": "#/gates; #/evidenceInvalidation"
+        }
+      ],
+      "notEstablished": "The future workflow tests, final consumer integration and operational acceptance have not run."
+    }
+  ],
+  "activeFindings": [
+    {
+      "id": "AAR-REVIEW-002-F01",
+      "severity": "medium",
+      "priority": "P2",
+      "status": "unresolved",
+      "introducedBy": "Architecture-local qualifier in 9db3043; still present at 1a3f9e3",
+      "relatedOriginalFindingId": "AAR-REVIEW-001-F01",
+      "title": "Validate and bind the receiving Input as a canonical receiver-owned record",
+      "finding": "qualifyExternalWork reads receiverSource with the generic readSource API and checks only kind, inputKind, projectId and workId on receiver.document. It does not validate the common Input schema, domainId, record id/origin or membership in the selected receiving Work. The later validateGitWorkRecords call validates listed Work records; it does not turn arbitrary source documents outside that record set into canonical Inputs. A completed local gate with a Verification hash for such a document is sufficient for the helper to return qualified:true.",
+      "reproduction": "The real unchanged final helper was called with memory-only source readers and the real canonical record validator. Both producer and consumer Work validations passed. A receiver document outside the Work record set, carrying the wrong domain and then additionally omitting schema, id and origin, was still accepted. The same fixture with a valid canonical receiving Input is accepted as the positive control. This is not claimed as a Git-backed or native-authentication exploit.",
+      "impact": "A source file that has never passed the required canonical Input identity/attribution checks can satisfy the receiving qualification boundary. This weakens the stated receiver-owned evidence contract even though native authentication, shared delivery and execution authority remain explicitly false.",
+      "evidence": [
+        {
+          "repositoryRoot": "/home/palantirkc/worktrees/academy-architecture-review-binding-20261021",
+          "commit": "1a3f9e3ed977560e29ea91209ba6bdb7249b8be4",
+          "path": "architecture/academy-reorganization/qualify-external-work.ts",
+          "sha256": "5b73803bda229fc2340bf00cbf07d6353e36a5e8ec665762554ecb99f516b8c8",
+          "locator": "lines 49-57 and 58-72"
+        },
+        {
+          "repositoryRoot": "/home/palantirkc/worktrees/academy-architecture-review-binding-20261021",
+          "commit": "1a3f9e3ed977560e29ea91209ba6bdb7249b8be4",
+          "path": "architecture/academy-reorganization/cross-work-protocol-r2.json",
+          "sha256": "321db665850c3da6e6a3da2269b1420b760f85d49b0433f26aa765fe9365c633",
+          "locator": "#/qualificationSequence/2; #/failurePolicy"
+        },
+        {
+          "repositoryRoot": "/home/palantirkc/projects/agent-platform",
+          "commit": "712f90deac0676e662dc5d75d88d89f7b6773bfe",
+          "path": "packages/work-continuity/src/git-work/source.ts",
+          "sha256": "9dfc1b8d9a17dcc896bd015f9702b2c4585b01a4477aa3dc9febca3bd18ef8c1",
+          "locator": "generic source parsing near line 348; readRecord validation near lines 380-394; listRecords scope from line 398"
+        },
+        {
+          "repositoryRoot": "/home/palantirkc/projects/agent-platform",
+          "commit": "712f90deac0676e662dc5d75d88d89f7b6773bfe",
+          "path": "packages/work-continuity/src/git-work/records.ts",
+          "sha256": "8054265ca54243a7ad22619af85ae39cd66f1385a202a2e6ae4925d8de616806",
+          "locator": "validateRecordSources evidence handling and validateGitWorkRecords/loadRecords"
+        }
+      ],
+      "probeReceipts": [
+        {
+          "path": ".local/reviews/AAR-REVIEW-002-check-helper-memory-qualified.json",
+          "sha256": "4b6442368f8680c8d68625ccba0b0480cfb7576c5091318782f12eebc654dbb4"
+        },
+        {
+          "path": ".local/reviews/AAR-REVIEW-002-check-receiver-input.json",
+          "sha256": "54328bba49f337d0e7c2283fd16296503bddd3bf8f25c75ebd57b9ef6f758834"
+        }
+      ],
+      "repair": "Use the existing canonical Input validation/readRecord path and compare the complete domain/project/work/id identity with the receiver selection. Bind the source document and selected receipt fragment to that validated Input and the local qualification Verification. If an external source-owner Input is intentionally allowed, make that admission rule explicit and still validate its complete canonical record shape, attribution and receiver scope. Do not duplicate or change common validators.",
+      "repairAcceptance": [
+        "A canonical receiver-owned Input still qualifies.",
+        "Wrong receiver domain, absent schema/id/origin, mismatched Input identity and an unadmitted external pseudo-Input are rejected before qualified:true.",
+        "A well-formed foreign Work Input cannot stand in for the receiving Input.",
+        "Tests retain explicit source-only, non-native-authenticated and non-activation result flags."
+      ],
+      "gate": "Before using the source qualification helper to admit a cross-Work dependent Task"
+    },
+    {
+      "id": "AAR-REVIEW-001-F03",
+      "severity": "medium",
+      "priority": "P2",
+      "status": "partially-resolved",
+      "title": "The retained teacher composition still introduces a missing runtime module edge",
+      "finding": "R2 correctly separates port interfaces, concrete adapters and type-only coupling, and now includes the managed-sites adapter -> application runtime edge. However, the selected TeacherQueries implementation imports and calls readInputRecord from dc-gang-a/src/lms/academyReadProtocol. The architecture places studentScene.ts in academy-application and the entire src/lms path in academy-source-adapters. This yields the missing value-import edge academy-application -> academy-source-adapters. Adding it to the existing reverse edge creates a cycle at the declared coarse module granularity. validate-successor.ts explicitly asserts that this edge is absent.",
+      "impact": "The 189-assertion pass still excludes a runtime dependency of the very composition selected as canonical. Labeling the graph representative narrows the claim, but does not provide a consistent target boundary: adding the observed import fails the validator, while retaining the existing code violates its asserted direction. This is a coarse module-graph inconsistency, not a claim of a file-level import cycle.",
+      "evidence": [
+        {
+          "repositoryRoot": "/home/palantirkc/worktrees/academy-architecture-review-binding-20261021",
+          "commit": "1a3f9e3ed977560e29ea91209ba6bdb7249b8be4",
+          "path": "architecture/academy-reorganization/architecture-r2.json",
+          "sha256": "bbb281d17098d46f362e091ba9753da1b366d4315254bf3010a9e67db4b00fd1",
+          "locator": "#/modules; academy-application and academy-source-adapters; #/moduleGraphs/runtimeImports"
+        },
+        {
+          "repositoryRoot": "/home/palantirkc/worktrees/academy-architecture-review-binding-20261021",
+          "commit": "1a3f9e3ed977560e29ea91209ba6bdb7249b8be4",
+          "path": "architecture/academy-reorganization/validate-successor.ts",
+          "sha256": "be5b9ef28b08d5d1fb9fc1cb46308c1ef2aec1609325c2b01a2fb56b7dffb9ed",
+          "locator": "runtime graph checks and explicit application-to-adapter edge prohibition, lines 15-22"
+        },
+        {
+          "repositoryRoot": "/home/palantirkc/projects/education-platform",
+          "commit": "cb7e571262593f230d21401994a507e94960f967",
+          "path": "apps/academy/dc-gang-a/src/academy/usecases/studentScene.ts",
+          "sha256": "4880bba11a8d9f367b5dec0c6d41df2f45e25bc869a54fd41fe3e1ed503adaf6",
+          "locator": "value import line 3 and calls at lines 25 and 95"
+        },
+        {
+          "repositoryRoot": "/home/palantirkc/projects/education-platform",
+          "commit": "cb7e571262593f230d21401994a507e94960f967",
+          "path": "apps/academy/dc-gang-a/src/lms/academyReadProtocol.ts",
+          "sha256": "9082ccf9cb91ec3dbd08ec3931acc330ee24725e0b8679c3b367d745e36857f3",
+          "locator": "readInputRecord function at line 38"
+        },
+        {
+          "repositoryRoot": "/home/palantirkc/projects/education-platform",
+          "commit": "cb7e571262593f230d21401994a507e94960f967",
+          "path": "apps/academy/gang-a/packages/adapters/managed-sites/handler.ts",
+          "sha256": "8b03ffaf5f58f3ba27cbb4e9d09088659b7c705a87d1707d316d246060e9cd67",
+          "locator": "runtime application import line 1"
+        }
+      ],
+      "probeReceipts": [
+        {
+          "path": ".local/reviews/AAR-REVIEW-002-check-graph-coverage.json",
+          "sha256": "f06cd49025af80478ecf6b8fd75cebfb24a42c3e100635a31f23c2cd9f25cc3f"
+        }
+      ],
+      "repair": "Represent the selected current runtime edges faithfully. Either split module granularity so unrelated dc and gang-a adapter/application groups are not collapsed into a false DAG, or record the current coarse coupling and define an explicit owner-reviewed contract extraction/migration before asserting the target DAG. Pure protocol parsing can have an explicit contract-layer owner; it cannot be silently reclassified while the path map still assigns all src/lms to concrete adapters. Update the validator to check the chosen truthful model.",
+      "repairAcceptance": [
+        "The studentScene -> academyReadProtocol value import and managed-sites -> application import both have explicit module-level dispositions.",
+        "The model distinguishes current observed coupling from any intended acyclic target and assigns required changes to existing owners.",
+        "A faithful observed edge is not rejected solely to preserve an incomplete acyclic graph."
+      ],
+      "gate": "Before freezing the DOM-01/QRY-01 source boundary"
+    },
+    {
+      "id": "AAR-REVIEW-002-F02",
+      "severity": "medium",
+      "priority": "P2",
+      "status": "unresolved",
+      "introducedBy": "New futureBehaviorChecks perfect-score case in verification-plan-r2.json",
+      "relatedOriginalFindingId": "AAR-REVIEW-001-F04",
+      "title": "Separate verified perfect-score clinic eligibility from teacher-review completion in the new test oracle",
+      "finding": "The new case says a 100-point observation without verified exact assessment identity OR teacher review should produce no automatic clinic exemption, print or final completion. As written, the missing-teacher-review branch also denies the default clinic exclusion for an otherwise verified, correctly scoped 100-point assessment. The preserved perfect-score rule says that assessment is excluded from default wrong/similar clinic targets, while teacher review, correction, printing and distribution remain independent. A scoped teacher exception is separate.",
+      "impact": "The acceptance oracle combines two different decisions. An implementation following its literal OR condition can keep a verified perfect-score assessment in the default clinic queue merely because teacher review is unknown, even though the actual rule only prohibits inferring review/print/completion from the score. This is a planning/test-contract conflict; no production behavior was executed or claimed.",
+      "evidence": [
+        {
+          "repositoryRoot": "/home/palantirkc/worktrees/academy-architecture-review-binding-20261021",
+          "commit": "1a3f9e3ed977560e29ea91209ba6bdb7249b8be4",
+          "path": "architecture/academy-reorganization/verification-plan-r2.json",
+          "sha256": "b9376bca7b085505a01af82d891e9f5d42b32576afc6aa68328de08d47609277",
+          "locator": "#/futureBehaviorChecks/8"
+        },
+        {
+          "repositoryRoot": "/home/palantirkc/worktrees/academy-architecture-review-binding-20261021",
+          "commit": "1a3f9e3ed977560e29ea91209ba6bdb7249b8be4",
+          "path": "context/business-decisions.json",
+          "sha256": "cdebb97ff2e8f41f7151ee12451d2b3c869279996ae2a1c0b63d9b6a472222fc",
+          "locator": "#/decisions; perfect-score and zero-wrong-review"
+        },
+        {
+          "repositoryRoot": "/home/palantirkc/worktrees/academy-architecture-review-binding-20261021",
+          "commit": "1a3f9e3ed977560e29ea91209ba6bdb7249b8be4",
+          "path": "AGENTS.md",
+          "sha256": "d680da4facbc1df92f90da15d137b5b34ab997baeea3cd0ade16952152a6d9f3",
+          "locator": "Scoped 100-point exemption and independent print/distribution/correction/teacher-review instructions"
+        }
+      ],
+      "repair": "Split the oracle into distinct cases: unverified assessment identity plus a 100-point value cannot establish exemption; a verified exact-scope 100-point assessment is excluded from default clinic targets while teacher review remains unknown and printing/distribution/completion are not inferred; an explicit scoped teacher exception is represented separately. If the intended case required both identity and review to be missing, remove the ambiguous OR wording and still add the valid-score/unknown-review positive case.",
+      "repairAcceptance": [
+        "Verified exact assessment score 100 plus unknown teacher review produces default clinic exclusion without declaring teacher review or physical effects complete.",
+        "A score with unresolved assessment identity does not establish exemption.",
+        "A separately scoped teacher exception affects only its named target."
+      ],
+      "gate": "Before implementing or accepting the new clinic behavior test"
+    }
+  ],
+  "checksActuallyRun": [
+    {
+      "id": "AAR-REVIEW-002-C01",
+      "result": "passed",
+      "scope": "Historical 9db3043 successor authored topology: 189 assertions, 20 nodes, 13 modules, 7 workflows, 16 qualification edges.",
+      "receipt": {
+        "path": ".local/reviews/AAR-REVIEW-002-check-successor.json",
+        "sha256": "15777547f2e7555ce1a33c92ae26d4baf730d1645456f5659cb22bfbf1a98547"
+      }
+    },
+    {
+      "id": "AAR-REVIEW-002-C02",
+      "result": "passed",
+      "scope": "Historical 9db3043 real Git-backed canonical root snapshot and transitions from 5d679a8 and cb41685.",
+      "receipt": {
+        "path": ".local/reviews/AAR-REVIEW-002-check-common.json",
+        "sha256": "e71601e88ca30bcb289a4515b7ad1929846b299e9e3bb1f07081f79624ab3fd9"
+      }
+    },
+    {
+      "id": "AAR-REVIEW-002-C03",
+      "result": "failed-reviewer-fixture",
+      "scope": "Initial memory fixtures used noncanonical Artifact evidenceRef IDs, so positive controls failed. These results do not establish a candidate defect or a successful negative test.",
+      "receipt": {
+        "path": ".local/reviews/AAR-REVIEW-002-check-helper-memory.json",
+        "sha256": "0ec3138c51793e6f8be87dfc94d9e97e88a8db0f5cd623b517f78076cd7ce6fb"
+      },
+      "diagnostic": {
+        "path": ".local/reviews/AAR-REVIEW-002-check-helper-fixture-diagnostic.json",
+        "sha256": "d336dad41d6ef67b542329e45ea4105c3d4184e8a1e54ecf96f0681afc6c8d3d"
+      },
+      "preserved": true
+    },
+    {
+      "id": "AAR-REVIEW-002-C04",
+      "result": "mixed-expected-results-and-reproduced-gaps",
+      "scope": "Twenty observations: the same ten memory-only scenarios against both unchanged helper versions, with real canonical record validation. All underlying synthetic Work validations pass. Final candidate accepts the positive control, rejects seven basic negative scenarios and rejects the unrelated result, but accepts a wrong-domain unregistered receiving Input.",
+      "receipt": {
+        "path": ".local/reviews/AAR-REVIEW-002-check-helper-memory-qualified.json",
+        "sha256": "4b6442368f8680c8d68625ccba0b0480cfb7576c5091318782f12eebc654dbb4"
+      },
+      "limit": "Source readers and tree/commit addresses are injected memory fixtures; canonical openGitWork is not exercised in these helper probes. The final output is not described as twenty passed tests."
+    },
+    {
+      "id": "AAR-REVIEW-002-C05",
+      "result": "passed",
+      "scope": "Final 1a3f9e3 no-emit TypeScript 5.9.3 compilation: contracts, successor validator, qualifier and committed test source.",
+      "receipt": {
+        "path": ".local/reviews/AAR-REVIEW-002-check-types.json",
+        "sha256": "d6160f2f7d97960d0cf3db713fdf0af052fba001cecff54c75cb8c49cd3c0149"
+      }
+    },
+    {
+      "id": "AAR-REVIEW-002-C06",
+      "result": "unexpected-acceptance-reproduced",
+      "scope": "Final unchanged helper accepts both the valid receiver positive control and a wrong-domain external pseudo-Input missing common schema/id/origin. Real canonical synthetic Work validations pass.",
+      "receipt": {
+        "path": ".local/reviews/AAR-REVIEW-002-check-receiver-input.json",
+        "sha256": "54328bba49f337d0e7c2283fd16296503bddd3bf8f25c75ebd57b9ef6f758834"
+      },
+      "limit": "Memory source-reader unit probe plus static trace of real canonical readSource/listRecords behavior; not a Git fixture or native effect test."
+    },
+    {
+      "id": "AAR-REVIEW-002-C07",
+      "result": "passed",
+      "scope": "Final 1a3f9e3 successor topology: 189 assertions; real Git-backed canonical root snapshot and transitions from 9db3043, 5d679a8 and approved cb41685.",
+      "receipt": {
+        "path": ".local/reviews/AAR-REVIEW-002-check-final-common-topology.json",
+        "sha256": "242395fa7f7a181b47b06102bd039da2df8156b841fe5a44234dae08dfdd283d"
+      },
+      "limit": "No baseline 18-node validation is represented as successor validation. A green authored graph does not resolve the missing actual import."
+    },
+    {
+      "id": "AAR-REVIEW-002-C08",
+      "result": "ordering-passed-runtime-graph-gap-observed",
+      "scope": "Final verification ancestry, seven-workflow inventory/test locator inspection and selected source import trace. Fifteen named teacher test locators found; bodies were not read or run.",
+      "receipt": {
+        "path": ".local/reviews/AAR-REVIEW-002-check-graph-coverage.json",
+        "sha256": "f06cd49025af80478ecf6b8fd75cebfb24a42c3e100635a31f23c2cd9f25cc3f"
+      }
+    }
+  ],
+  "checksNotRun": [
+    {
+      "command": "bun test architecture/academy-reorganization/qualify-external-work.test.ts",
+      "status": "not-run-verbatim",
+      "reason": "The committed test creates/deletes temporary files and creates Git commits. The user permits only AAR-REVIEW-002*.json writes and forbids commits. The actual helper and existing canonical record APIs were instead exercised with memory-only fixture readers. Owner-reported 8 tests/13 assertions are not claimed as independently rerun."
+    },
+    {
+      "scope": "Broad repository check/test/CI/synthetic-runtime/offline-adapter suites and future workflow acceptance tests",
+      "status": "not-run",
+      "reason": "Focused source/type/topology/helper review only; no implementation was changed and no private/runtime or generated-file routes were exercised."
+    },
+    {
+      "scope": "Native model/effort readback, native harness qualification, WSL/Windows/VPS integration, live academy queries, activation and teacher/user acceptance",
+      "status": "not-run",
+      "reason": "Outside the source-only review; root launch evidence remains separately attributed."
+    }
+  ],
+  "preservationEvidence": {
+    "originalTenReviewArtifacts": {
+      "path": ".local/reviews/AAR-REVIEW-002-observations.json",
+      "sha256": "a8b718ac1dfcf87553a23ace6722543a3d0e73dbfc8011bc9db609b339928bc8"
+    },
+    "approvedBaselineAndExactFiles": {
+      "path": ".local/reviews/AAR-REVIEW-002-evidence.json",
+      "sha256": "6a9ad3035215681e66a7930991c4799b31edef50009a54eea0d0e6161ffa302f"
+    },
+    "additionalBusinessRulePins": {
+      "path": ".local/reviews/AAR-REVIEW-002-evidence-supplement.json",
+      "sha256": "00ae22376788e92668f581e6b053d1de494c39bf90070ed756d8327fd594e55b"
+    },
+    "finalDeltaExactlyThreePaths": [
+      "architecture/academy-reorganization/qualification-binding-successor.json",
+      "architecture/academy-reorganization/qualify-external-work.test.ts",
+      "architecture/academy-reorganization/qualify-external-work.ts"
+    ],
+    "originalFailedArtifactsModified": false,
+    "completedT01T02AndPlan1": "Canonical semantic transitions pass; completed original records and historical contracts are retained."
+  },
+  "limitations": [
+    "The canonical validator used is the clean agent-platform@712f90de external auditor; the Academy ffba consumer pin and common contracts were not changed.",
+    "Helper probes call the actual source helper and canonical record validator, but synthetic source-reader IO and Git identities are memory-only. Separate exact root snapshot checks use the real Git reader.",
+    "The initial reviewer fixture error is preserved and explicitly excluded from candidate behavioral conclusions.",
+    "The runtime graph finding is at the declared module granularity and does not assert a file-level import cycle.",
+    "The perfect-score issue is a conflict in the new planned test oracle; no changed application implementation or real student effect was observed.",
+    "Source and record hashes establish scoped byte identity, not native authority, semantic truth of owner claims or operational acceptance.",
+    "This is the requested focused successor review, not a full repository/security audit or a newly authorized implementation phase."
+  ],
+  "constraintsObserved": {
+    "writesOnly": ".local/reviews/AAR-REVIEW-002*.json in the original reviewer checkout",
+    "sourceModifications": false,
+    "commonSourceOrPinChanges": false,
+    "nativeConfigurationReadsOrChanges": false,
+    "network": false,
+    "commits": false,
+    "goals": false,
+    "agents": false,
+    "otherSessionMessages": false,
+    "nativeEffects": false,
+    "implementationDispatched": false
+  },
+  "nextOwnerAction": "Disposition the remaining stable findings and preserve exact successor source/evidence. This review does not launch implementation or grant publication/activation authority."
+}

@@ -1,0 +1,4 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {planTabRecovery} from '../browser-recovery.ts';
+test('empty tabs alone do not mean a new browser connection',()=>assert.equal(planTabRecovery({sameApprovedBrowser:true,scopeUnchanged:true,tabMissing:true,unresolvedDenial:false}),'create_fresh_tab_in_same_approved_browser'));
+test('new connection or expanded scope requires permission verification',()=>{assert.equal(planTabRecovery({sameApprovedBrowser:false,scopeUnchanged:true,tabMissing:true,unresolvedDenial:false}),'verify_new_connection_or_scope_permission');assert.equal(planTabRecovery({sameApprovedBrowser:true,scopeUnchanged:false,tabMissing:true,unresolvedDenial:false}),'verify_new_connection_or_scope_permission');});
+test('tab recovery never overrides an unresolved denial',()=>assert.equal(planTabRecovery({sameApprovedBrowser:true,scopeUnchanged:true,tabMissing:true,unresolvedDenial:true}),'stop_and_resolve_denial'));

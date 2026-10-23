@@ -1,0 +1,1286 @@
+{
+  "$schema": "academy-operations.schema.json",
+  "kind": "academy_route_map",
+  "id": "academy:routes:2026-10-06:r1",
+  "schemaVersion": "0.1.0",
+  "revision": 1,
+  "profileId": "kyungchan",
+  "projectId": "project:academy-practical",
+  "updatedAt": "2026-10-06T05:44:12.101Z",
+  "sourceIds": [
+    "source:site-observation-initial",
+    "source:user-cartography-request",
+    "source:site-observation-20261006-0540"
+  ],
+  "siteBaseUrl": "https://dc.gang-a.kr",
+  "screens": [
+    {
+      "id": "screen:class-calendar",
+      "kind": "site_screen",
+      "schemaVersion": "0.1.0",
+      "revision": 1,
+      "profileId": "kyungchan",
+      "canonicalParentId": "project:academy-practical",
+      "relatedProjectIds": [
+        "project:academy-practical"
+      ],
+      "sourceIds": [
+        "source:site-observation-initial"
+      ],
+      "observedAt": null,
+      "updatedAt": "2026-10-06T05:39:28.149Z",
+      "label": "수업일정관리",
+      "exactUrl": null,
+      "menuPath": [],
+      "locator": null,
+      "verificationState": "label_observed",
+      "fields": [
+        {
+          "name": "수업 날짜",
+          "exactLabel": null,
+          "locator": null,
+          "status": "reported_observed"
+        },
+        {
+          "name": "수업 일정",
+          "exactLabel": null,
+          "locator": null,
+          "status": "reported_observed"
+        }
+      ],
+      "readOnlyHazards": []
+    },
+    {
+      "id": "screen:student-attendance",
+      "kind": "site_screen",
+      "schemaVersion": "0.1.0",
+      "revision": 1,
+      "profileId": "kyungchan",
+      "canonicalParentId": "project:academy-practical",
+      "relatedProjectIds": [
+        "project:academy-practical"
+      ],
+      "sourceIds": [
+        "source:site-observation-initial"
+      ],
+      "observedAt": null,
+      "updatedAt": "2026-10-06T05:39:28.149Z",
+      "label": "학생별 출결조회",
+      "exactUrl": null,
+      "menuPath": [],
+      "locator": null,
+      "verificationState": "label_observed",
+      "fields": [
+        {
+          "name": "출결 표시",
+          "exactLabel": null,
+          "locator": null,
+          "status": "reported_observed"
+        },
+        {
+          "name": "지각 여부",
+          "exactLabel": null,
+          "locator": null,
+          "status": "reported_observed"
+        },
+        {
+          "name": "메모",
+          "exactLabel": null,
+          "locator": null,
+          "status": "reported_observed"
+        }
+      ],
+      "readOnlyHazards": []
+    },
+    {
+      "id": "screen:day-record",
+      "kind": "site_screen",
+      "schemaVersion": "0.1.0",
+      "revision": 1,
+      "profileId": "kyungchan",
+      "canonicalParentId": "project:academy-practical",
+      "relatedProjectIds": [
+        "project:academy-practical"
+      ],
+      "sourceIds": [
+        "source:site-observation-20261006-0540"
+      ],
+      "observedAt": null,
+      "updatedAt": "2026-10-06T05:44:12.101Z",
+      "label": "DayRecord",
+      "exactUrl": "https://dc.gang-a.kr/servlet/controller.cct.tutor.DayRecordServlet?p_process=Main",
+      "menuPath": [
+        "DayRecord"
+      ],
+      "locator": null,
+      "verificationState": "path_verified",
+      "fields": [
+        {
+          "name": "날짜 필터",
+          "exactLabel": null,
+          "locator": "#std_date",
+          "status": "reported_observed"
+        },
+        {
+          "name": "수업 그룹 필터",
+          "exactLabel": null,
+          "locator": "#grp_seq",
+          "status": "reported_observed"
+        },
+        {
+          "name": "출결 입력",
+          "exactLabel": null,
+          "locator": "#attn0",
+          "status": "reported_observed"
+        },
+        {
+          "name": "진도 입력",
+          "exactLabel": null,
+          "locator": "#prg_txt0",
+          "status": "reported_observed"
+        },
+        {
+          "name": "숙제 입력",
+          "exactLabel": null,
+          "locator": "#hw_txt0",
+          "status": "reported_observed"
+        },
+        {
+          "name": "메모 입력",
+          "exactLabel": null,
+          "locator": "#memo_txt0",
+          "status": "reported_observed"
+        },
+        {
+          "name": "학생 메모 입력",
+          "exactLabel": null,
+          "locator": "#stu_memo_txt0",
+          "status": "reported_observed"
+        }
+      ],
+      "readOnlyHazards": [
+        {
+          "trigger": "입력칸에서 포커스를 벗어날 때 자동 저장될 수 있음",
+          "selectors": [
+            "#attn0",
+            "#prg_txt0",
+            "#hw_txt0",
+            "#memo_txt0",
+            "#stu_memo_txt0"
+          ],
+          "avoidance": "읽기 작업에서 해당 입력의 값을 변경하거나 fill 하지 않는다. 수업 기록 변경 권한으로 간주하지 않는다."
+        },
+        {
+          "trigger": "날짜 직접 입력이 조회에 반영되지 않은 사례",
+          "selectors": [
+            "#std_date"
+          ],
+          "avoidance": "현재 화면에서 관찰한 이전 및 다음 날짜 버튼을 사용하고 표시 날짜와 기록을 확인한다. 버튼 선택자는 추정하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "screen:enrollment-location",
+      "kind": "site_screen",
+      "schemaVersion": "0.1.0",
+      "revision": 1,
+      "profileId": "kyungchan",
+      "canonicalParentId": "project:academy-practical",
+      "relatedProjectIds": [
+        "project:academy-practical"
+      ],
+      "sourceIds": [
+        "source:site-observation-initial"
+      ],
+      "observedAt": null,
+      "updatedAt": "2026-10-06T05:39:28.149Z",
+      "label": "학생 등록 정보 위치 확인 중",
+      "exactUrl": null,
+      "menuPath": [],
+      "locator": null,
+      "verificationState": "unverified",
+      "fields": [
+        {
+          "name": "등록 시작일",
+          "exactLabel": null,
+          "locator": null,
+          "status": "reported_observed"
+        },
+        {
+          "name": "요일",
+          "exactLabel": null,
+          "locator": null,
+          "status": "reported_observed"
+        },
+        {
+          "name": "과정",
+          "exactLabel": null,
+          "locator": null,
+          "status": "reported_observed"
+        },
+        {
+          "name": "반",
+          "exactLabel": null,
+          "locator": null,
+          "status": "reported_observed"
+        },
+        {
+          "name": "부",
+          "exactLabel": null,
+          "locator": null,
+          "status": "reported_observed"
+        }
+      ],
+      "readOnlyHazards": []
+    },
+    {
+      "id": "screen:school-location",
+      "kind": "site_screen",
+      "schemaVersion": "0.1.0",
+      "revision": 1,
+      "profileId": "kyungchan",
+      "canonicalParentId": "project:academy-practical",
+      "relatedProjectIds": [
+        "project:academy-practical"
+      ],
+      "sourceIds": [
+        "source:site-observation-initial"
+      ],
+      "observedAt": null,
+      "updatedAt": "2026-10-06T05:39:28.149Z",
+      "label": "학교 정보 위치 확인 중",
+      "exactUrl": null,
+      "menuPath": [],
+      "locator": null,
+      "verificationState": "unverified",
+      "fields": [
+        {
+          "name": "학교",
+          "exactLabel": null,
+          "locator": null,
+          "status": "unknown"
+        }
+      ],
+      "readOnlyHazards": []
+    },
+    {
+      "id": "screen:course-progress",
+      "kind": "site_screen",
+      "schemaVersion": "0.1.0",
+      "revision": 1,
+      "profileId": "kyungchan",
+      "canonicalParentId": "project:academy-practical",
+      "relatedProjectIds": [
+        "project:academy-practical"
+      ],
+      "sourceIds": [
+        "source:site-observation-20261006-0540"
+      ],
+      "observedAt": null,
+      "updatedAt": "2026-10-06T05:44:12.101Z",
+      "label": "학습진도",
+      "exactUrl": "https://dc.gang-a.kr/servlet/controller.coursemanage.CourseManageServlet?reqCmd=StudySchedule",
+      "menuPath": [
+        "학습진도"
+      ],
+      "locator": null,
+      "verificationState": "path_verified",
+      "fields": [
+        {
+          "name": "학년",
+          "exactLabel": null,
+          "locator": "#grade_no",
+          "status": "reported_observed"
+        },
+        {
+          "name": "반",
+          "exactLabel": null,
+          "locator": "#cls_no",
+          "status": "reported_observed"
+        },
+        {
+          "name": "학생",
+          "exactLabel": null,
+          "locator": "#student_no",
+          "status": "reported_observed"
+        },
+        {
+          "name": "과정",
+          "exactLabel": null,
+          "locator": "#course",
+          "status": "reported_observed"
+        },
+        {
+          "name": "단원 및 상태 격자",
+          "exactLabel": null,
+          "locator": null,
+          "status": "reported_observed"
+        }
+      ],
+      "readOnlyHazards": []
+    },
+    {
+      "id": "screen:preview-inspection",
+      "kind": "site_screen",
+      "schemaVersion": "0.1.0",
+      "revision": 1,
+      "profileId": "kyungchan",
+      "canonicalParentId": "project:academy-practical",
+      "relatedProjectIds": [
+        "project:academy-practical"
+      ],
+      "sourceIds": [
+        "source:site-observation-20261006-0540"
+      ],
+      "observedAt": null,
+      "updatedAt": "2026-10-06T05:44:12.101Z",
+      "label": "예습 검사",
+      "exactUrl": "https://dc.gang-a.kr/servlet/controller.coursemanage.CourseManageServlet?reqCmd=WebUnPreStudy",
+      "menuPath": [
+        "예습 검사"
+      ],
+      "locator": null,
+      "verificationState": "path_verified",
+      "fields": [
+        {
+          "name": "학생 이름",
+          "exactLabel": null,
+          "locator": "#student_name",
+          "status": "reported_observed"
+        },
+        {
+          "name": "검사대기 탭",
+          "exactLabel": null,
+          "locator": null,
+          "status": "reported_observed"
+        },
+        {
+          "name": "검사완료 탭",
+          "exactLabel": null,
+          "locator": null,
+          "status": "reported_observed"
+        },
+        {
+          "name": "영상 상태",
+          "exactLabel": null,
+          "locator": null,
+          "status": "reported_observed"
+        }
+      ],
+      "readOnlyHazards": []
+    },
+    {
+      "id": "screen:dt-results",
+      "kind": "site_screen",
+      "schemaVersion": "0.1.0",
+      "revision": 1,
+      "profileId": "kyungchan",
+      "canonicalParentId": "project:academy-practical",
+      "relatedProjectIds": [
+        "project:academy-practical"
+      ],
+      "sourceIds": [
+        "source:site-observation-20261006-0540"
+      ],
+      "observedAt": null,
+      "updatedAt": "2026-10-06T05:44:12.101Z",
+      "label": "DT 결과",
+      "exactUrl": "https://dc.gang-a.kr/servlet/controller.dailyzerotest.DailyZeroTestServlet?reqCmd=DailyZeroTestResult",
+      "menuPath": [
+        "DT 결과"
+      ],
+      "locator": null,
+      "verificationState": "path_verified",
+      "fields": [
+        {
+          "name": "조회 날짜",
+          "exactLabel": null,
+          "locator": "#sort_date",
+          "status": "reported_observed"
+        },
+        {
+          "name": "학생 이름",
+          "exactLabel": null,
+          "locator": "#stu_name",
+          "status": "reported_observed"
+        },
+        {
+          "name": "검색 결과 DtResultSearch",
+          "exactLabel": null,
+          "locator": null,
+          "status": "reported_observed"
+        }
+      ],
+      "readOnlyHazards": [
+        {
+          "trigger": "재시험 또는 채점 변경 기능",
+          "selectors": [],
+          "avoidance": "결과 조회만 수행하고 재시험이나 채점 변경 기능은 실행하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "screen:student-search",
+      "kind": "site_screen",
+      "schemaVersion": "0.1.0",
+      "revision": 1,
+      "profileId": "kyungchan",
+      "canonicalParentId": "project:academy-practical",
+      "relatedProjectIds": [
+        "project:academy-practical"
+      ],
+      "sourceIds": [
+        "source:site-observation-20261006-0540"
+      ],
+      "observedAt": null,
+      "updatedAt": "2026-10-06T05:44:12.101Z",
+      "label": "학생 조회",
+      "exactUrl": "https://dc.gang-a.kr/servlet/controller.tutor.base.UserSearchServlet?p_process=Main",
+      "menuPath": [
+        "학생 조회"
+      ],
+      "locator": null,
+      "verificationState": "path_verified",
+      "fields": [
+        {
+          "name": "이름 검색",
+          "exactLabel": null,
+          "locator": "#name",
+          "status": "reported_observed"
+        },
+        {
+          "name": "학생 상세 UserManageStudentServlet",
+          "exactLabel": null,
+          "locator": null,
+          "status": "reported_observed"
+        },
+        {
+          "name": "학년",
+          "exactLabel": null,
+          "locator": null,
+          "status": "reported_observed"
+        },
+        {
+          "name": "반",
+          "exactLabel": null,
+          "locator": null,
+          "status": "reported_observed"
+        }
+      ],
+      "readOnlyHazards": []
+    },
+    {
+      "id": "screen:teaching-materials",
+      "kind": "site_screen",
+      "schemaVersion": "0.1.0",
+      "revision": 1,
+      "profileId": "kyungchan",
+      "canonicalParentId": "project:academy-practical",
+      "relatedProjectIds": [
+        "project:academy-practical"
+      ],
+      "sourceIds": [
+        "source:site-observation-20261006-0540"
+      ],
+      "observedAt": null,
+      "updatedAt": "2026-10-06T05:44:12.101Z",
+      "label": "교재 자료",
+      "exactUrl": "https://dc.gang-a.kr/servlet/controller.coursemanage.CourseManageServlet?reqCmd=GaStudyAnswer",
+      "menuPath": [
+        "교재 자료"
+      ],
+      "locator": null,
+      "verificationState": "path_verified",
+      "fields": [
+        {
+          "name": "학년",
+          "exactLabel": null,
+          "locator": null,
+          "status": "reported_observed"
+        },
+        {
+          "name": "레벨",
+          "exactLabel": null,
+          "locator": null,
+          "status": "reported_observed"
+        },
+        {
+          "name": "학기",
+          "exactLabel": null,
+          "locator": null,
+          "status": "reported_observed"
+        },
+        {
+          "name": "권",
+          "exactLabel": null,
+          "locator": null,
+          "status": "reported_observed"
+        },
+        {
+          "name": "답 버튼",
+          "exactLabel": null,
+          "locator": null,
+          "status": "reported_observed"
+        },
+        {
+          "name": "D 버튼",
+          "exactLabel": null,
+          "locator": null,
+          "status": "reported_observed"
+        },
+        {
+          "name": "오 버튼",
+          "exactLabel": null,
+          "locator": null,
+          "status": "reported_observed"
+        },
+        {
+          "name": "무 버튼",
+          "exactLabel": null,
+          "locator": null,
+          "status": "reported_observed"
+        },
+        {
+          "name": "샘 버튼",
+          "exactLabel": null,
+          "locator": null,
+          "status": "reported_observed"
+        }
+      ],
+      "readOnlyHazards": []
+    }
+  ],
+  "routes": [
+    {
+      "id": "route:attendance",
+      "kind": "route",
+      "schemaVersion": "0.1.0",
+      "revision": 1,
+      "profileId": "kyungchan",
+      "canonicalParentId": "project:academy-practical",
+      "relatedProjectIds": [
+        "project:academy-practical"
+      ],
+      "sourceIds": [
+        "source:site-observation-initial",
+        "source:user-cartography-request"
+      ],
+      "observedAt": null,
+      "updatedAt": "2026-10-06T05:44:12.101Z",
+      "intent": "학생과 기간의 실제 출결 확인",
+      "exampleRequests": [
+        "9월 출결 정리해 줘",
+        "이 학생은 언제 결석했어?"
+      ],
+      "entityTypes": [
+        "Student",
+        "Enrollment",
+        "ClassSession",
+        "Attendance"
+      ],
+      "screenIds": [
+        "screen:enrollment-location",
+        "screen:student-attendance"
+      ],
+      "inputRequirements": [
+        "대상 학생",
+        "대상 기간"
+      ],
+      "readSteps": [
+        {
+          "order": 1,
+          "action": "대상 학생과 등록 과정, 등록 시작일 및 요일을 확인한다.",
+          "screenId": "screen:enrollment-location",
+          "verificationState": "reported_observed"
+        },
+        {
+          "order": 2,
+          "action": "학생별 출결조회에서 대상 학생과 기간의 실제 표시, 지각 여부, 메모를 읽는다.",
+          "screenId": "screen:student-attendance",
+          "verificationState": "reported_observed"
+        },
+        {
+          "order": 3,
+          "action": "등록 전 날짜와 미수업일을 제외하고 사용자 확인과 충돌한 필드를 따로 표시한다.",
+          "screenId": null,
+          "verificationState": "proposed"
+        }
+      ],
+      "evidenceValidation": [
+        "동명이인은 학생과 등록 관계로 재확인한다.",
+        "빈칸과 DayRecord 누락을 결석으로 바꾸지 않는다.",
+        "원문 표시와 정규화 값, 근거 시각을 함께 남긴다."
+      ],
+      "completionCriteria": [
+        "대상 기간의 적용 등록 범위가 확인됨",
+        "출결별 근거 또는 미확인 이유가 존재함"
+      ],
+      "writeBoundary": {
+        "routeMode": "read_only",
+        "allowedWithoutAdditionalApproval": [
+          "현재 허용된 계정과 화면에서 요청 범위에 필요한 정보 읽기",
+          "기존 허가된 비공개 목적지 안에서 요청된 초안과 구조화 자료 준비"
+        ],
+        "requiresCurrentAuthorization": [
+          "외부 사이트 기록 생성 또는 수정",
+          "제3자에게 학생 정보나 파일 공유",
+          "학부모 메시지 발송",
+          "접근권한 또는 지속 접근 설정 변경"
+        ],
+        "authorityGrantedByThisFile": false
+      },
+      "status": "partial_verified",
+      "unknowns": [
+        "정확한 메뉴 진입 순서와 URL",
+        "화면의 조회 컨트롤 및 필드 locator"
+      ]
+    },
+    {
+      "id": "route:next-class",
+      "kind": "route",
+      "schemaVersion": "0.1.0",
+      "revision": 1,
+      "profileId": "kyungchan",
+      "canonicalParentId": "project:academy-practical",
+      "relatedProjectIds": [
+        "project:academy-practical"
+      ],
+      "sourceIds": [
+        "source:site-observation-initial",
+        "source:user-cartography-request",
+        "source:site-observation-20261006-0540"
+      ],
+      "observedAt": null,
+      "updatedAt": "2026-10-06T05:44:12.101Z",
+      "intent": "다음 수업의 학생별 준비",
+      "exampleRequests": [
+        "내일 수업 준비해 줘",
+        "다음 시간 진도 확인해 줘"
+      ],
+      "entityTypes": [
+        "Student",
+        "Enrollment",
+        "ClassSession",
+        "LessonRecord",
+        "Assignment",
+        "CourseProgress",
+        "PreviewInspection",
+        "AssessmentResult"
+      ],
+      "screenIds": [
+        "screen:class-calendar",
+        "screen:enrollment-location",
+        "screen:day-record",
+        "screen:course-progress",
+        "screen:preview-inspection",
+        "screen:dt-results"
+      ],
+      "inputRequirements": [
+        "대상 날짜 또는 다음 수업의 기준 시각"
+      ],
+      "readSteps": [
+        {
+          "order": 1,
+          "action": "수업일정관리에서 예정 수업을 확인하고 학생별 등록 과정과 그룹을 대조한다.",
+          "screenId": "screen:class-calendar",
+          "verificationState": "reported_observed"
+        },
+        {
+          "order": 2,
+          "action": "DayRecord의 학생 및 그룹과 표시 날짜를 확인하고 최근 진도와 숙제 내용을 읽는다. 자동 저장 입력칸은 변경하지 않는다.",
+          "screenId": "screen:day-record",
+          "verificationState": "reported_observed"
+        },
+        {
+          "order": 3,
+          "action": "학년 → 반 → 학생 → 과정 순서로 선택하고 검색하여 학습진도 격자를 읽는다.",
+          "screenId": "screen:course-progress",
+          "verificationState": "reported_observed"
+        },
+        {
+          "order": 4,
+          "action": "예습 검사의 학생 이름과 검사대기 및 완료 탭을 확인하고 영상 상태와 검사 상태를 구분한다.",
+          "screenId": "screen:preview-inspection",
+          "verificationState": "reported_observed"
+        },
+        {
+          "order": 5,
+          "action": "필요한 경우 DT 결과의 날짜와 학생 이름으로 검색한 각 시험 결과를 확인한다.",
+          "screenId": "screen:dt-results",
+          "verificationState": "reported_observed"
+        },
+        {
+          "order": 6,
+          "action": "학생별 진도와 과제 및 검사 대기 항목을 준비표에 연결한다.",
+          "screenId": null,
+          "verificationState": "proposed"
+        }
+      ],
+      "evidenceValidation": [
+        "오래된 기록을 최신 기록으로 표시하지 않는다.",
+        "합반 학생의 서로 다른 과정과 진도를 합치지 않는다.",
+        "과제 및 준비물은 실제 기록이 있는 경우에만 기입한다.",
+        "학습진도 격자의 '-'를 미완료로 단정하지 않는다.",
+        "영상 OK와 교사의 검사 완료는 다른 상태이다.",
+        "DT 결과는 시험 날짜와 각 시도를 분리한다."
+      ],
+      "completionCriteria": [
+        "일정과 학생별 등록 과정 확인",
+        "학생별 최신 기록 날짜와 다음 준비 또는 미확인 표시"
+      ],
+      "writeBoundary": {
+        "routeMode": "read_only",
+        "allowedWithoutAdditionalApproval": [
+          "현재 허용된 계정과 화면에서 요청 범위에 필요한 정보 읽기",
+          "기존 허가된 비공개 목적지 안에서 요청된 초안과 구조화 자료 준비"
+        ],
+        "requiresCurrentAuthorization": [
+          "외부 사이트 기록 생성 또는 수정",
+          "제3자에게 학생 정보나 파일 공유",
+          "학부모 메시지 발송",
+          "접근권한 또는 지속 접근 설정 변경"
+        ],
+        "authorityGrantedByThisFile": false
+      },
+      "status": "partial_verified",
+      "unknowns": [
+        "학교 필드의 실제 위치",
+        "전체 사이트 탐색 범위"
+      ]
+    },
+    {
+      "id": "route:school",
+      "kind": "route",
+      "schemaVersion": "0.1.0",
+      "revision": 1,
+      "profileId": "kyungchan",
+      "canonicalParentId": "project:academy-practical",
+      "relatedProjectIds": [
+        "project:academy-practical"
+      ],
+      "sourceIds": [
+        "source:site-observation-initial",
+        "source:user-cartography-request",
+        "source:site-observation-20261006-0540"
+      ],
+      "observedAt": null,
+      "updatedAt": "2026-10-06T05:44:12.101Z",
+      "intent": "학생 학교 조회와 출석부 B열 매핑",
+      "exampleRequests": [
+        "B열 학교도 사이트에서 찾아줘"
+      ],
+      "entityTypes": [
+        "Student",
+        "Enrollment",
+        "Task"
+      ],
+      "screenIds": [
+        "screen:school-location",
+        "screen:student-search"
+      ],
+      "inputRequirements": [
+        "대상 학생",
+        "대상 출석부와 학생 행"
+      ],
+      "readSteps": [
+        {
+          "order": 1,
+          "action": "학생 조회의 이름 검색에서 학생을 선택해 상세 정보를 확인한다. 관찰한 상세에는 학년과 반이 있었지만 학교 필드는 확인하지 못했다.",
+          "screenId": "screen:student-search",
+          "verificationState": "reported_observed"
+        },
+        {
+          "order": 2,
+          "action": "학생의 식별 정보와 등록 관계를 비교해 올바른 학교 원문을 읽는다.",
+          "screenId": "screen:school-location",
+          "verificationState": "proposed"
+        },
+        {
+          "order": 3,
+          "action": "출석부의 해당 학생 행과 학교 원문을 대응하고 비어 있거나 충돌하는 값은 확인 필요로 남긴다.",
+          "screenId": null,
+          "verificationState": "proposed"
+        }
+      ],
+      "evidenceValidation": [
+        "과정이나 반 이름을 학교 이름으로 추정하지 않는다.",
+        "학교의 원문과 관찰 위치를 기록한다.",
+        "이름만으로 중복 학생을 결정하지 않는다."
+      ],
+      "completionCriteria": [
+        "학교 필드 위치와 원문 근거 확보",
+        "대상 학생 행 매핑 검증"
+      ],
+      "writeBoundary": {
+        "routeMode": "prepare_only",
+        "allowedWithoutAdditionalApproval": [
+          "현재 허용된 계정과 화면에서 요청 범위에 필요한 정보 읽기",
+          "기존 허가된 비공개 목적지 안에서 요청된 초안과 구조화 자료 준비"
+        ],
+        "requiresCurrentAuthorization": [
+          "외부 사이트 기록 생성 또는 수정",
+          "제3자에게 학생 정보나 파일 공유",
+          "학부모 메시지 발송",
+          "접근권한 또는 지속 접근 설정 변경"
+        ],
+        "authorityGrantedByThisFile": false
+      },
+      "status": "discovery_required",
+      "unknowns": [
+        "학교 필드가 실제로 존재하는 화면과 매핑 위치",
+        "아직 열어보지 않은 학생 및 다른 메뉴의 학교 정보",
+        "출석부 B열 변경 완료"
+      ]
+    },
+    {
+      "id": "route:makeup",
+      "kind": "route",
+      "schemaVersion": "0.1.0",
+      "revision": 1,
+      "profileId": "kyungchan",
+      "canonicalParentId": "project:academy-practical",
+      "relatedProjectIds": [
+        "project:academy-practical"
+      ],
+      "sourceIds": [
+        "source:site-observation-initial",
+        "source:user-cartography-request"
+      ],
+      "observedAt": null,
+      "updatedAt": "2026-10-06T05:44:12.101Z",
+      "intent": "결석과 보강의 연결 확인",
+      "exampleRequests": [
+        "보강이 남았는지 정리해 줘",
+        "어느 결석을 보강하는 거야?"
+      ],
+      "entityTypes": [
+        "Attendance",
+        "Absence",
+        "Makeup",
+        "ClassSession"
+      ],
+      "screenIds": [
+        "screen:student-attendance",
+        "screen:class-calendar"
+      ],
+      "inputRequirements": [
+        "대상 학생",
+        "결석 또는 보강 기간"
+      ],
+      "readSteps": [
+        {
+          "order": 1,
+          "action": "확인된 출결에서 결석 원기록을 선택한다.",
+          "screenId": "screen:student-attendance",
+          "verificationState": "reported_observed"
+        },
+        {
+          "order": 2,
+          "action": "보강과 연결된 일정 또는 사용자 확인 내용을 찾는다.",
+          "screenId": "screen:class-calendar",
+          "verificationState": "proposed"
+        },
+        {
+          "order": 3,
+          "action": "실제 실시 근거와 보강 충족 기준을 확인해 연결 상태를 기록한다.",
+          "screenId": null,
+          "verificationState": "proposed"
+        }
+      ],
+      "evidenceValidation": [
+        "보강 예정과 실시 및 충족을 분리한다.",
+        "날짜 경과로 완료를 추정하지 않는다.",
+        "하나의 보강이 여러 결석을 충족하는지는 확인된 기준을 사용한다."
+      ],
+      "completionCriteria": [
+        "결석별 대응 보강 또는 연결 미확인 상태 존재",
+        "완료 주장에 실제 실시 근거 존재"
+      ],
+      "writeBoundary": {
+        "routeMode": "read_only",
+        "allowedWithoutAdditionalApproval": [
+          "현재 허용된 계정과 화면에서 요청 범위에 필요한 정보 읽기",
+          "기존 허가된 비공개 목적지 안에서 요청된 초안과 구조화 자료 준비"
+        ],
+        "requiresCurrentAuthorization": [
+          "외부 사이트 기록 생성 또는 수정",
+          "제3자에게 학생 정보나 파일 공유",
+          "학부모 메시지 발송",
+          "접근권한 또는 지속 접근 설정 변경"
+        ],
+        "authorityGrantedByThisFile": false
+      },
+      "status": "partial_verified",
+      "unknowns": [
+        "사이트의 전용 보강 화면 유무",
+        "회차 또는 시간 차감 기준",
+        "실시 확인의 실제 필드"
+      ]
+    },
+    {
+      "id": "route:parent-notice",
+      "kind": "route",
+      "schemaVersion": "0.1.0",
+      "revision": 1,
+      "profileId": "kyungchan",
+      "canonicalParentId": "project:academy-practical",
+      "relatedProjectIds": [
+        "project:academy-practical"
+      ],
+      "sourceIds": [
+        "source:site-observation-initial",
+        "source:user-cartography-request"
+      ],
+      "observedAt": null,
+      "updatedAt": "2026-10-06T05:44:12.101Z",
+      "intent": "확정된 수업 또는 보강 안내 준비",
+      "exampleRequests": [
+        "학부모 안내문 준비해 줘"
+      ],
+      "entityTypes": [
+        "ParentNotice",
+        "ClassSession",
+        "Makeup",
+        "Task"
+      ],
+      "screenIds": [],
+      "inputRequirements": [
+        "안내 목적",
+        "확정된 날짜와 시간",
+        "실제 수신자와 발송 목적"
+      ],
+      "readSteps": [
+        {
+          "order": 1,
+          "action": "관련 수업 또는 보강의 확정 정보와 남은 불확실성을 확인한다.",
+          "screenId": null,
+          "verificationState": "proposed"
+        },
+        {
+          "order": 2,
+          "action": "필요한 내용만 포함한 초안을 작성한다.",
+          "screenId": null,
+          "verificationState": "proposed"
+        },
+        {
+          "order": 3,
+          "action": "발송 요청이 있는 경우 수신자와 현재 승인을 별도로 확인한다.",
+          "screenId": null,
+          "verificationState": "proposed"
+        }
+      ],
+      "evidenceValidation": [
+        "알림 생성이나 초안 작성과 실제 발송을 구분한다.",
+        "학생 정보를 다른 학부모에게 섞어 보내지 않는다."
+      ],
+      "completionCriteria": [
+        "검토 가능한 초안과 미확정 항목 제시"
+      ],
+      "writeBoundary": {
+        "routeMode": "prepare_only",
+        "allowedWithoutAdditionalApproval": [
+          "현재 허용된 계정과 화면에서 요청 범위에 필요한 정보 읽기",
+          "기존 허가된 비공개 목적지 안에서 요청된 초안과 구조화 자료 준비"
+        ],
+        "requiresCurrentAuthorization": [
+          "외부 사이트 기록 생성 또는 수정",
+          "제3자에게 학생 정보나 파일 공유",
+          "학부모 메시지 발송",
+          "접근권한 또는 지속 접근 설정 변경"
+        ],
+        "authorityGrantedByThisFile": false
+      },
+      "status": "discovery_required",
+      "unknowns": [
+        "사이트의 안내 및 발송 기능",
+        "수신자 매핑과 발송 확인 화면"
+      ]
+    },
+    {
+      "id": "route:course-progress",
+      "kind": "route",
+      "schemaVersion": "0.1.0",
+      "revision": 1,
+      "profileId": "kyungchan",
+      "canonicalParentId": "project:academy-practical",
+      "relatedProjectIds": [
+        "project:academy-practical"
+      ],
+      "sourceIds": [
+        "source:site-observation-20261006-0540"
+      ],
+      "observedAt": null,
+      "updatedAt": "2026-10-06T05:44:12.101Z",
+      "intent": "학생별 단원 진도 조회",
+      "exampleRequests": [
+        "이 학생 진도가 어디까지야?"
+      ],
+      "entityTypes": [
+        "Student",
+        "Enrollment",
+        "CourseProgress"
+      ],
+      "screenIds": [
+        "screen:course-progress"
+      ],
+      "inputRequirements": [
+        "대상 학생 또는 교재",
+        "대상 기간 또는 과정"
+      ],
+      "readSteps": [
+        {
+          "order": 1,
+          "action": "학년, 반, 학생, 과정 순서로 필터를 선택하고 검색한다.",
+          "screenId": "screen:course-progress",
+          "verificationState": "reported_observed"
+        },
+        {
+          "order": 2,
+          "action": "단원과 상태 격자를 읽고 과정 및 조회 학생을 다시 확인한다.",
+          "screenId": "screen:course-progress",
+          "verificationState": "reported_observed"
+        }
+      ],
+      "evidenceValidation": [
+        "'-'는 미확인 상태로 두며 미완료로 바꾸지 않는다."
+      ],
+      "completionCriteria": [
+        "대상과 필터 확인",
+        "원문 상태와 관찰 날짜 또는 미확인 이유 기록"
+      ],
+      "writeBoundary": {
+        "routeMode": "read_only",
+        "allowedWithoutAdditionalApproval": [
+          "현재 허용된 계정과 화면에서 요청 범위에 필요한 정보 읽기",
+          "기존 허가된 비공개 목적지 안에서 요청된 초안과 구조화 자료 준비"
+        ],
+        "requiresCurrentAuthorization": [
+          "외부 사이트 기록 생성 또는 수정",
+          "제3자에게 학생 정보나 파일 공유",
+          "학부모 메시지 발송",
+          "접근권한 또는 지속 접근 설정 변경"
+        ],
+        "authorityGrantedByThisFile": false
+      },
+      "status": "partial_verified",
+      "unknowns": [
+        "모든 격자 상태 코드의 의미"
+      ]
+    },
+    {
+      "id": "route:preview-inspection",
+      "kind": "route",
+      "schemaVersion": "0.1.0",
+      "revision": 1,
+      "profileId": "kyungchan",
+      "canonicalParentId": "project:academy-practical",
+      "relatedProjectIds": [
+        "project:academy-practical"
+      ],
+      "sourceIds": [
+        "source:site-observation-20261006-0540"
+      ],
+      "observedAt": null,
+      "updatedAt": "2026-10-06T05:44:12.101Z",
+      "intent": "예습 영상과 검사 상태 조회",
+      "exampleRequests": [
+        "예습을 확인해 줘",
+        "검사 대기 중인 게 있어?"
+      ],
+      "entityTypes": [
+        "Student",
+        "PreviewInspection"
+      ],
+      "screenIds": [
+        "screen:preview-inspection"
+      ],
+      "inputRequirements": [
+        "대상 학생 또는 교재",
+        "대상 기간 또는 과정"
+      ],
+      "readSteps": [
+        {
+          "order": 1,
+          "action": "학생 이름으로 대상 학생의 검사대기와 완료 탭을 확인한다.",
+          "screenId": "screen:preview-inspection",
+          "verificationState": "reported_observed"
+        },
+        {
+          "order": 2,
+          "action": "단원, 버전, 영상 상태와 교사 검사 상태를 분리해 읽는다.",
+          "screenId": "screen:preview-inspection",
+          "verificationState": "reported_observed"
+        }
+      ],
+      "evidenceValidation": [
+        "영상 OK만으로 교사 검사 완료로 처리하지 않는다.",
+        "읽기 요청에서 검사 완료 처리 버튼을 누르지 않는다."
+      ],
+      "completionCriteria": [
+        "대상과 필터 확인",
+        "원문 상태와 관찰 날짜 또는 미확인 이유 기록"
+      ],
+      "writeBoundary": {
+        "routeMode": "read_only",
+        "allowedWithoutAdditionalApproval": [
+          "현재 허용된 계정과 화면에서 요청 범위에 필요한 정보 읽기",
+          "기존 허가된 비공개 목적지 안에서 요청된 초안과 구조화 자료 준비"
+        ],
+        "requiresCurrentAuthorization": [
+          "외부 사이트 기록 생성 또는 수정",
+          "제3자에게 학생 정보나 파일 공유",
+          "학부모 메시지 발송",
+          "접근권한 또는 지속 접근 설정 변경"
+        ],
+        "authorityGrantedByThisFile": false
+      },
+      "status": "partial_verified",
+      "unknowns": [
+        "검사 완료 쓰기 동작은 이번 조회 범위 밖"
+      ]
+    },
+    {
+      "id": "route:dt-results",
+      "kind": "route",
+      "schemaVersion": "0.1.0",
+      "revision": 1,
+      "profileId": "kyungchan",
+      "canonicalParentId": "project:academy-practical",
+      "relatedProjectIds": [
+        "project:academy-practical"
+      ],
+      "sourceIds": [
+        "source:site-observation-20261006-0540"
+      ],
+      "observedAt": null,
+      "updatedAt": "2026-10-06T05:44:12.101Z",
+      "intent": "학생별 DT 결과 조회",
+      "exampleRequests": [
+        "최근 DT 점수 보여줘"
+      ],
+      "entityTypes": [
+        "Student",
+        "AssessmentResult"
+      ],
+      "screenIds": [
+        "screen:dt-results"
+      ],
+      "inputRequirements": [
+        "대상 학생 또는 교재",
+        "대상 기간 또는 과정"
+      ],
+      "readSteps": [
+        {
+          "order": 1,
+          "action": "날짜와 학생 이름을 지정해 검색한다.",
+          "screenId": "screen:dt-results",
+          "verificationState": "reported_observed"
+        },
+        {
+          "order": 2,
+          "action": "각 시험 시각과 시험명, 점수 및 문항 수를 구분해 읽는다.",
+          "screenId": "screen:dt-results",
+          "verificationState": "reported_observed"
+        }
+      ],
+      "evidenceValidation": [
+        "다른 시험 시도 결과를 합쳐 하나의 점수로 만들지 않는다.",
+        "재시험 또는 채점 변경을 수행하지 않는다."
+      ],
+      "completionCriteria": [
+        "대상과 필터 확인",
+        "원문 상태와 관찰 날짜 또는 미확인 이유 기록"
+      ],
+      "writeBoundary": {
+        "routeMode": "read_only",
+        "allowedWithoutAdditionalApproval": [
+          "현재 허용된 계정과 화면에서 요청 범위에 필요한 정보 읽기",
+          "기존 허가된 비공개 목적지 안에서 요청된 초안과 구조화 자료 준비"
+        ],
+        "requiresCurrentAuthorization": [
+          "외부 사이트 기록 생성 또는 수정",
+          "제3자에게 학생 정보나 파일 공유",
+          "학부모 메시지 발송",
+          "접근권한 또는 지속 접근 설정 변경"
+        ],
+        "authorityGrantedByThisFile": false
+      },
+      "status": "partial_verified",
+      "unknowns": [
+        "결과 내보내기 기능"
+      ]
+    },
+    {
+      "id": "route:teaching-material",
+      "kind": "route",
+      "schemaVersion": "0.1.0",
+      "revision": 1,
+      "profileId": "kyungchan",
+      "canonicalParentId": "project:academy-practical",
+      "relatedProjectIds": [
+        "project:academy-practical"
+      ],
+      "sourceIds": [
+        "source:site-observation-20261006-0540"
+      ],
+      "observedAt": null,
+      "updatedAt": "2026-10-06T05:44:12.101Z",
+      "intent": "과정에 맞는 교재 자료 찾기",
+      "exampleRequests": [
+        "다음 진도 교재 자료 찾아줘"
+      ],
+      "entityTypes": [
+        "TeachingMaterial"
+      ],
+      "screenIds": [
+        "screen:teaching-materials"
+      ],
+      "inputRequirements": [
+        "대상 학생 또는 교재",
+        "대상 기간 또는 과정"
+      ],
+      "readSteps": [
+        {
+          "order": 1,
+          "action": "학년, 레벨, 학기, 권 등 표시된 교재 조건을 확인한다.",
+          "screenId": "screen:teaching-materials",
+          "verificationState": "reported_observed"
+        },
+        {
+          "order": 2,
+          "action": "답, D, 오, 무, 샘 버튼의 대상 자료를 확인한다.",
+          "screenId": "screen:teaching-materials",
+          "verificationState": "reported_observed"
+        }
+      ],
+      "evidenceValidation": [
+        "버튼의 존재와 실제 다운로드 완료를 구분한다.",
+        "확인하지 않은 버튼 의미나 파일 형식을 추정하지 않는다."
+      ],
+      "completionCriteria": [
+        "대상과 필터 확인",
+        "원문 상태와 관찰 날짜 또는 미확인 이유 기록"
+      ],
+      "writeBoundary": {
+        "routeMode": "read_only",
+        "allowedWithoutAdditionalApproval": [
+          "현재 허용된 계정과 화면에서 요청 범위에 필요한 정보 읽기",
+          "기존 허가된 비공개 목적지 안에서 요청된 초안과 구조화 자료 준비"
+        ],
+        "requiresCurrentAuthorization": [
+          "외부 사이트 기록 생성 또는 수정",
+          "제3자에게 학생 정보나 파일 공유",
+          "학부모 메시지 발송",
+          "접근권한 또는 지속 접근 설정 변경"
+        ],
+        "authorityGrantedByThisFile": false
+      },
+      "status": "partial_verified",
+      "unknowns": [
+        "각 버튼의 정확한 의미",
+        "실제 다운로드와 파일 내용"
+      ]
+    }
+  ],
+  "routingMethod": "요청 의도 → 필요한 엔터티 → 관찰된 화면과 필드 → 읽기 순서 → 근거 검증 → 현재 요청의 변경 권한 확인. partial_verified 경로는 전체 클릭 절차의 재현 검증을 뜻하지 않는다."
+}

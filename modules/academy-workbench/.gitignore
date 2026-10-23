@@ -1,0 +1,18 @@
+node_modules/
+
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+artifacts-private/
+.local/
+
+# Consumer-local dependencies and generated non-authorizing context
+.harness-deps/
+.harness-runtime/
+node_modules/
+
+# Preserve the two originally tracked synthetic validation records on import.
+!app/offline-import-adapter/validation/synthetic-tests.log
+!app/standalone/validation/validation.log

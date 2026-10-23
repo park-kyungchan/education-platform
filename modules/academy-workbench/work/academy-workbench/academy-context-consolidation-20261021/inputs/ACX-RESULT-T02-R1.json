@@ -1,0 +1,117 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "academy-operations",
+  "projectId": "academy-workbench",
+  "workId": "academy-context-consolidation-20261021",
+  "kind": "input",
+  "id": "ACX-RESULT-T02-R1",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "academy-workbench",
+    "locator": "local-source-result:academy-context-consolidation-20261021:t02:r1",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "title": "Bounded context and useful intake",
+    "summary": "28focused selector/integration tests passed with262assertions; independent scope mutations and pagination combinations passed. Required class-preparation references are8; discovery references are39, with no source body auto-read.",
+    "sourcePins": [
+      {
+        "path": "context/academy-context/catalog.json",
+        "sha256": "3beb4adba25512867a1823cf9ac69dae7ffe52a013cba7fb5f01b5cdeaab1d3d"
+      },
+      {
+        "path": "context/academy-context/observations/local-checks.json",
+        "sha256": "08915e69feb66237269b8a86e1ab1aeffc7fe3c17ac626d828f615076bdafa43"
+      },
+      {
+        "path": "context/academy-context/observations/source-pins.json",
+        "sha256": "693ab14533c06852b2ec57188541461e7b29496535685b3f89076d984fefcaad"
+      },
+      {
+        "path": "context/academy-context/reviews/work-records-review.json",
+        "sha256": "b9dbe466e796be47728138c4917c43d9e61035fdc897a7ac3e23a7442c4c6707"
+      },
+      {
+        "path": "context/academy-context/reviews/selector-review.json",
+        "sha256": "7d4bbad0a3a406bd1c72753aad07036842599ea78888e23f5782694243242631"
+      },
+      {
+        "path": "context/academy-context/reviews/integration-review.json",
+        "sha256": "e8b56238ff1902a0ab1cea8c6d9f5c4e3e4819d8eaa4edd01c56b8c78b200acc"
+      },
+      {
+        "path": "context/academy-context/reviews/mcp-df8b9f7-review.json",
+        "sha256": "a3b45dc283f8fe63133c430f55a15084968fd9211a32ee78b24227e3c2ac220c"
+      }
+    ],
+    "limitations": [
+      "Root observed local command outcomes; no recreated cryptographic native authorship.",
+      "No live business validation or private-data body review.",
+      "Whole check umbrella not run because its private audit stage is outside current scope."
+    ],
+    "verification": {
+      "schemaVersion": "1.0.0",
+      "kind": "verification",
+      "id": "academy-workbench:verification:academy-context-t02",
+      "projectId": "academy-workbench",
+      "domainId": "academy-operations",
+      "createdAt": "2026-10-21T04:17:35.380Z",
+      "payload": {
+        "targetRefs": [
+          "common-harness:task:fe61742121f875bda9b6abe884710eb246cdc3f5eb719e8ee37bb93d0b90a213"
+        ],
+        "criteria": [
+          {
+            "id": "local-source-contract",
+            "status": "pass",
+            "message": "28focused selector/integration tests passed with262assertions; independent scope mutations and pagination combinations passed. Required class-preparation references are8; discovery references are39, with no source body auto-read.",
+            "evidenceRefs": [
+              "academy-workbench:evidence:academy-context-t02-observation"
+            ]
+          }
+        ],
+        "inputHashes": [
+          {
+            "path": "context/academy-context/catalog.json",
+            "sha256": "3beb4adba25512867a1823cf9ac69dae7ffe52a013cba7fb5f01b5cdeaab1d3d"
+          },
+          {
+            "path": "context/academy-context/observations/local-checks.json",
+            "sha256": "08915e69feb66237269b8a86e1ab1aeffc7fe3c17ac626d828f615076bdafa43"
+          },
+          {
+            "path": "context/academy-context/observations/source-pins.json",
+            "sha256": "693ab14533c06852b2ec57188541461e7b29496535685b3f89076d984fefcaad"
+          },
+          {
+            "path": "context/academy-context/reviews/work-records-review.json",
+            "sha256": "b9dbe466e796be47728138c4917c43d9e61035fdc897a7ac3e23a7442c4c6707"
+          },
+          {
+            "path": "context/academy-context/reviews/selector-review.json",
+            "sha256": "7d4bbad0a3a406bd1c72753aad07036842599ea78888e23f5782694243242631"
+          },
+          {
+            "path": "context/academy-context/reviews/integration-review.json",
+            "sha256": "e8b56238ff1902a0ab1cea8c6d9f5c4e3e4819d8eaa4edd01c56b8c78b200acc"
+          },
+          {
+            "path": "context/academy-context/reviews/mcp-df8b9f7-review.json",
+            "sha256": "a3b45dc283f8fe63133c430f55a15084968fd9211a32ee78b24227e3c2ac220c"
+          }
+        ],
+        "runtime": {
+          "name": "Bun / Node / TypeScript source-only",
+          "version": "1.4.3 /24.21.0 /7.0.2"
+        },
+        "details": {
+          "scope": "local source and synthetic behavior only",
+          "sourceBodiesPrivateRead": false,
+          "sharedPublication": false,
+          "nativeActivation": false,
+          "userAcceptanceInferred": false
+        }
+      }
+    }
+  }
+}

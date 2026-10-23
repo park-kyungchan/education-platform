@@ -1,5 +1,6 @@
 import {assertExactKeys,assertInstant,canonicalJson,digest,requireText,stableId} from '../learning/model';
-import {createAcademyReadPlan,readInputRecord,readLiteralKey,readLiteralName,type ScopedAcademyReadPlan} from '../lms/academyReadProtocol';
+import {createAcademyReadPlan,readLiteralKey,readLiteralName,type ScopedAcademyReadPlan} from '../lms/academyReadProtocol';
+import {readInputRecord} from '../contracts/readInputRecord';
 import {createAcademySourceAudit} from '../lms/academySourceAudit';
 import {assertPreparationDate} from './preparationHistory';
 import {planDayRecordEvidence,planTextbookEvidence,type PlannedSourceEvidence} from './sourceEvidence';

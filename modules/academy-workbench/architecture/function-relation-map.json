@@ -1,0 +1,3305 @@
+{
+  "schema": "academy.function-relation-map/1",
+  "status": "metadata_only",
+  "domains": [
+    {
+      "id": "identity",
+      "label": "학생·강사·직원·권한",
+      "entities": [
+        "Student",
+        "Actor",
+        "SourceIdentityBinding",
+        "Enrollment"
+      ],
+      "defaultVisibility": "dependency_only",
+      "whyRetain": "사용자관리 화면을 감춰도 모든 업무의 학생·담당자·접근 범위에 필요"
+    },
+    {
+      "id": "lesson",
+      "label": "일정·편성·출결·수업 회차",
+      "entities": [
+        "Enrollment",
+        "LessonOccurrence",
+        "Attendance",
+        "DayRecord"
+      ],
+      "defaultVisibility": "pilot_candidate",
+      "whyRetain": "보강·반이동·같은 날 복수 수업과 정확한 기록 대상을 구별"
+    },
+    {
+      "id": "curriculum",
+      "label": "교육과정·교재·단원·자료",
+      "entities": [
+        "Curriculum",
+        "BookEdition",
+        "ContentItem",
+        "Assignment"
+      ],
+      "defaultVisibility": "pilot_candidate",
+      "whyRetain": "과정 ID, 교재 ID, 문항 위치와 학습 범위를 연결"
+    },
+    {
+      "id": "prestudy",
+      "label": "예습·영상·필기·개념 확인",
+      "entities": [
+        "Assignment",
+        "WorkOccurrence",
+        "Submission",
+        "TeacherReview"
+      ],
+      "defaultVisibility": "pilot_candidate",
+      "whyRetain": "숙제 범위와 실제 제출·검토의 관계를 보존"
+    },
+    {
+      "id": "assessment",
+      "label": "평가·DailyTest·시도·문항 채점",
+      "entities": [
+        "AssessmentPaper",
+        "Attempt",
+        "ItemJudgment",
+        "TeacherReview"
+      ],
+      "defaultVisibility": "pilot_candidate",
+      "whyRetain": "FA·NA·DA·DT/ZT를 구분하면서 공통 시험지/시도/결과 구조를 재사용"
+    },
+    {
+      "id": "clinic",
+      "label": "오답·유사 클리닉·재확인",
+      "entities": [
+        "Attempt",
+        "WrongSubset",
+        "ClinicPlan",
+        "GeneratedPaperVersion",
+        "PrintSnapshot",
+        "WorkOccurrence"
+      ],
+      "defaultVisibility": "pilot_candidate",
+      "whyRetain": "현재 오답과 당시 출력된 생성본이 달라질 수 있음"
+    },
+    {
+      "id": "materials",
+      "label": "자료 준비·인쇄·배부",
+      "entities": [
+        "BookEdition",
+        "GeneratedPaperVersion",
+        "PrintSnapshot",
+        "DistributionEvent"
+      ],
+      "defaultVisibility": "pilot_candidate",
+      "whyRetain": "만들기·렌더링·인쇄·배부·풀이가 각각 별도 사실"
+    },
+    {
+      "id": "smartbook",
+      "label": "스마트북",
+      "entities": [
+        "BookEdition",
+        "Assignment",
+        "Attempt",
+        "ItemJudgment"
+      ],
+      "defaultVisibility": "dependency_only",
+      "whyRetain": "현재 안 써도 교재·출제·결과와의 관계 및 향후 진입점을 유지"
+    },
+    {
+      "id": "communication",
+      "label": "수업일지·학부모 리포트·발송",
+      "entities": [
+        "DayRecord",
+        "ParentProgressProjection",
+        "ReportVersion",
+        "DeliveryEvent"
+      ],
+      "defaultVisibility": "pilot_candidate",
+      "whyRetain": "공식 저장, 현재 미리보기, 실제 발송·수신 상태를 구별"
+    },
+    {
+      "id": "counseling",
+      "label": "상담·주기적 점검",
+      "entities": [
+        "Student",
+        "LessonOccurrence",
+        "TeacherObservation"
+      ],
+      "defaultVisibility": "dependency_only",
+      "whyRetain": "개별 학생 이해와 후속 조치에 연관되지만 첫 화면 구현은 우선순위 결정 후"
+    },
+    {
+      "id": "device",
+      "label": "앱·학습패드·세션",
+      "entities": [
+        "Actor",
+        "Student",
+        "SourceIdentityBinding"
+      ],
+      "defaultVisibility": "dependency_only",
+      "whyRetain": "학습앱 정체와 원천 접근 경로를 식별; 학습 증거와 기기 등록 효과를 분리"
+    },
+    {
+      "id": "book_order",
+      "label": "교재 요청·주문",
+      "entities": [
+        "BookEdition",
+        "Student",
+        "Enrollment"
+      ],
+      "defaultVisibility": "dependency_only",
+      "whyRetain": "교재를 주문했다는 사실은 배부·학습과 별개이나 준비 업무와 연결"
+    },
+    {
+      "id": "navigation",
+      "label": "원천 메뉴·도움말",
+      "entities": [],
+      "defaultVisibility": "dependency_only",
+      "whyRetain": "원래 메뉴의 출처와 아직 이해하지 못한 기능을 잃지 않음"
+    }
+  ],
+  "operations": [
+    {
+      "id": "course_menu",
+      "origin": "canonical_registry",
+      "domain": "lesson",
+      "operation": "CourseManageIndex",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.tutor.TutorMenuIndexServlet?p_process=CourseManageIndex",
+      "sourceDeclaredEffect": "read",
+      "sourceEvidenceGrade": "live-route",
+      "sourceEvidenceDate": "2026-09-27",
+      "joinKeyCandidates": [],
+      "sourceRefs": [
+        "research/backend-map/course-delivery.md:17"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "course_schedule",
+      "origin": "canonical_registry",
+      "domain": "lesson",
+      "operation": "Main",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.cct.tutor.CourseScheduleServlet?p_process=Main",
+      "sourceDeclaredEffect": "read",
+      "sourceEvidenceGrade": "live-route",
+      "sourceEvidenceDate": "2026-09-27",
+      "joinKeyCandidates": [
+        "date",
+        "course_seq",
+        "stu_pri_no",
+        "record_seq",
+        "cm_seq"
+      ],
+      "sourceRefs": [
+        "research/backend-map/course-delivery.md:18"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "course_group",
+      "origin": "canonical_registry",
+      "domain": "lesson",
+      "operation": "Main",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.cct.tutor.CourseGroupServlet?p_process=Main",
+      "sourceDeclaredEffect": "read",
+      "sourceEvidenceGrade": "live-route",
+      "sourceEvidenceDate": "2026-09-27",
+      "joinKeyCandidates": [
+        "grp_seq"
+      ],
+      "sourceRefs": [
+        "research/backend-map/course-delivery.md:19"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "attendance_history",
+      "origin": "canonical_registry",
+      "domain": "lesson",
+      "operation": "Main",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.cct.tutor.AttendanceServlet?p_process=Main",
+      "sourceDeclaredEffect": "read",
+      "sourceEvidenceGrade": "live-route",
+      "sourceEvidenceDate": "2026-09-27",
+      "joinKeyCandidates": [
+        "stu_pri_no",
+        "course_seq",
+        "date"
+      ],
+      "sourceRefs": [
+        "research/backend-map/course-delivery.md:20"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "day_record_read",
+      "origin": "canonical_registry",
+      "domain": "lesson",
+      "operation": "Main",
+      "method": "POST",
+      "pathTemplate": "/servlet/controller.cct.tutor.DayRecordServlet",
+      "sourceDeclaredEffect": "read",
+      "sourceEvidenceGrade": "live-structure",
+      "sourceEvidenceDate": "2026-09-27",
+      "joinKeyCandidates": [
+        "std_ymd",
+        "grp_seq",
+        "course_seq",
+        "stu_pri_no",
+        "record_seq",
+        "cm_seq"
+      ],
+      "sourceRefs": [
+        "research/backend-map/course-delivery.md:22"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "day_record_udtprg",
+      "origin": "canonical_registry",
+      "domain": "lesson",
+      "operation": "udtPrg",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.cct.tutor.DayRecordServlet?reqCmd=udtPrg",
+      "sourceDeclaredEffect": "write",
+      "sourceEvidenceGrade": "source",
+      "sourceEvidenceDate": "2026-09-27",
+      "joinKeyCandidates": [
+        "course_seq",
+        "stu_pri_no",
+        "record_seq",
+        "cm_seq"
+      ],
+      "sourceRefs": [
+        "research/backend-map/course-delivery.md:23"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "day_record_udthw",
+      "origin": "canonical_registry",
+      "domain": "lesson",
+      "operation": "udtHw",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.cct.tutor.DayRecordServlet?reqCmd=udtHw",
+      "sourceDeclaredEffect": "write",
+      "sourceEvidenceGrade": "source",
+      "sourceEvidenceDate": "2026-09-27",
+      "joinKeyCandidates": [
+        "course_seq",
+        "stu_pri_no",
+        "record_seq",
+        "cm_seq"
+      ],
+      "sourceRefs": [
+        "research/backend-map/course-delivery.md:23"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "day_record_udtmemo",
+      "origin": "canonical_registry",
+      "domain": "lesson",
+      "operation": "udtMemo",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.cct.tutor.DayRecordServlet?reqCmd=udtMemo",
+      "sourceDeclaredEffect": "write",
+      "sourceEvidenceGrade": "source",
+      "sourceEvidenceDate": "2026-09-27",
+      "joinKeyCandidates": [
+        "course_seq",
+        "stu_pri_no",
+        "record_seq",
+        "cm_seq"
+      ],
+      "sourceRefs": [
+        "research/backend-map/course-delivery.md:23"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "day_record_udtstumemo",
+      "origin": "canonical_registry",
+      "domain": "lesson",
+      "operation": "udtStuMemo",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.cct.tutor.DayRecordServlet?reqCmd=udtStuMemo",
+      "sourceDeclaredEffect": "write",
+      "sourceEvidenceGrade": "source",
+      "sourceEvidenceDate": "2026-09-27",
+      "joinKeyCandidates": [],
+      "sourceRefs": [
+        "research/backend-map/course-delivery.md:23"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "day_record_udtattn",
+      "origin": "canonical_registry",
+      "domain": "lesson",
+      "operation": "udtAttn",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.cct.tutor.DayRecordServlet?reqCmd=udtAttn",
+      "sourceDeclaredEffect": "write",
+      "sourceEvidenceGrade": "source",
+      "sourceEvidenceDate": "2026-09-27",
+      "joinKeyCandidates": [
+        "course_seq",
+        "stu_pri_no",
+        "record_seq",
+        "cm_seq"
+      ],
+      "sourceRefs": [
+        "research/backend-map/course-delivery.md:23"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "course_common_setdailytest",
+      "origin": "canonical_registry",
+      "domain": "lesson",
+      "operation": "SetDailyTest",
+      "method": "POST",
+      "pathTemplate": "/servlet/controller.cct.common.CourseCommonServlet?reqCmd=SetDailyTest",
+      "sourceDeclaredEffect": "write",
+      "sourceEvidenceGrade": "source",
+      "sourceEvidenceDate": "2026-09-27",
+      "joinKeyCandidates": [
+        "course_seq",
+        "stu_pri_no",
+        "record_seq",
+        "cm_seq"
+      ],
+      "sourceRefs": [
+        "research/backend-map/course-delivery.md:23"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "course_common_sethomeworkrate",
+      "origin": "canonical_registry",
+      "domain": "lesson",
+      "operation": "SetHomeWorkRate",
+      "method": "POST",
+      "pathTemplate": "/servlet/controller.cct.common.CourseCommonServlet?reqCmd=SetHomeWorkRate",
+      "sourceDeclaredEffect": "write",
+      "sourceEvidenceGrade": "source",
+      "sourceEvidenceDate": "2026-09-27",
+      "joinKeyCandidates": [
+        "course_seq",
+        "stu_pri_no",
+        "record_seq",
+        "cm_seq"
+      ],
+      "sourceRefs": [
+        "research/backend-map/course-delivery.md:23"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "course_common_setcoursedata",
+      "origin": "canonical_registry",
+      "domain": "lesson",
+      "operation": "SetCourseData",
+      "method": "POST",
+      "pathTemplate": "/servlet/controller.cct.common.CourseCommonServlet?reqCmd=SetCourseData",
+      "sourceDeclaredEffect": "write",
+      "sourceEvidenceGrade": "source",
+      "sourceEvidenceDate": "2026-09-27",
+      "joinKeyCandidates": [
+        "course_seq",
+        "stu_pri_no",
+        "record_seq",
+        "cm_seq"
+      ],
+      "sourceRefs": [
+        "research/backend-map/course-delivery.md:23"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "daily_report_preview",
+      "origin": "canonical_registry",
+      "domain": "communication",
+      "operation": "DailyReport",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.cct.common.CourseCommonServlet?reqCmd=DailyReport",
+      "sourceDeclaredEffect": "read",
+      "sourceEvidenceGrade": "live-structure",
+      "sourceEvidenceDate": "2026-09-27",
+      "joinKeyCandidates": [
+        "report_seq",
+        "stu_pri_no",
+        "record_seq",
+        "cm_seq"
+      ],
+      "sourceRefs": [
+        "research/backend-map/course-delivery.md:24"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "alimtalk_send_screen",
+      "origin": "canonical_registry",
+      "domain": "communication",
+      "operation": "open_send_studyreport",
+      "method": "GET",
+      "pathTemplate": "/alimtalk/send_studyreport_alimtalk.jsp",
+      "sourceDeclaredEffect": "open_send_screen",
+      "sourceEvidenceGrade": "live-structure",
+      "sourceEvidenceDate": "2026-09-27",
+      "joinKeyCandidates": [
+        "all_report_seq_list",
+        "target_report_seq_list",
+        "report_date"
+      ],
+      "sourceRefs": [
+        "research/backend-map/course-delivery.md:26"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "alimtalk_send",
+      "origin": "canonical_registry",
+      "domain": "communication",
+      "operation": "sendMultiStudyReport",
+      "method": "POST",
+      "pathTemplate": "/servlet/controller.appui.alimtalk.AlimtalkServlet?p_process=sendMultiStudyReport",
+      "sourceDeclaredEffect": "send",
+      "sourceEvidenceGrade": "live-static-js",
+      "sourceEvidenceDate": "2026-09-27",
+      "joinKeyCandidates": [
+        "target_report_seq_list",
+        "report_date"
+      ],
+      "sourceRefs": [
+        "research/backend-map/course-delivery.md:27"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "alimtalk_cancel",
+      "origin": "canonical_registry",
+      "domain": "communication",
+      "operation": "cancelAlimtalk",
+      "method": "POST",
+      "pathTemplate": "/servlet/controller.appui.alimtalk.AlimtalkServlet?p_process=cancelAlimtalk",
+      "sourceDeclaredEffect": "write",
+      "sourceEvidenceGrade": "live-static-js",
+      "sourceEvidenceDate": "2026-09-27",
+      "joinKeyCandidates": [
+        "report_seq"
+      ],
+      "sourceRefs": [
+        "research/backend-map/course-delivery.md:27"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "alimtalk_history",
+      "origin": "canonical_registry",
+      "domain": "communication",
+      "operation": "AlimtalkList",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.appui.alimtalk.AlimtalkServlet?p_process=AlimtalkList",
+      "sourceDeclaredEffect": "read",
+      "sourceEvidenceGrade": "live-structure",
+      "sourceEvidenceDate": "2026-09-27",
+      "joinKeyCandidates": [
+        "student_name",
+        "report_seq"
+      ],
+      "sourceRefs": [
+        "research/backend-map/course-delivery.md:28"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "study_menu",
+      "origin": "canonical_registry",
+      "domain": "navigation",
+      "operation": "CourseMainIndex",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.tutor.TutorMenuIndexServlet?p_process=CourseMainIndex",
+      "sourceDeclaredEffect": "read",
+      "sourceEvidenceGrade": "live-structure",
+      "sourceEvidenceDate": "2026-09-27",
+      "joinKeyCandidates": [],
+      "sourceRefs": [
+        "research/backend-map/app-live.md:9"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "prestudy_waiting",
+      "origin": "canonical_registry",
+      "domain": "prestudy",
+      "operation": "WebUnPreStudy",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.coursemanage.CourseManageServlet?reqCmd=WebUnPreStudy",
+      "sourceDeclaredEffect": "read",
+      "sourceEvidenceGrade": "live-structure",
+      "sourceEvidenceDate": "2026-09-29",
+      "joinKeyCandidates": [
+        "g_clg_no",
+        "g_pri_no",
+        "student_name"
+      ],
+      "sourceRefs": [
+        "research/backend-map/app-live.md:10",
+        "research/backend-map/teacher-site-live-structure-2026-09-29.json:prestudy_waiting"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "prestudy_completed",
+      "origin": "canonical_registry",
+      "domain": "prestudy",
+      "operation": "WebCtPreStudy",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.coursemanage.CourseManageServlet?reqCmd=WebCtPreStudy",
+      "sourceDeclaredEffect": "read",
+      "sourceEvidenceGrade": "live-structure",
+      "sourceEvidenceDate": "2026-09-29",
+      "joinKeyCandidates": [
+        "g_clg_no",
+        "g_pri_no",
+        "student_name"
+      ],
+      "sourceRefs": [
+        "research/backend-map/app-live.md:11",
+        "research/backend-map/teacher-site-live-structure-2026-09-29.json:prestudy_completed"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "prestudy_summary",
+      "origin": "canonical_registry",
+      "domain": "prestudy",
+      "operation": "TeacherPrestudySummary",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.coursemanage.CourseManageServlet?reqCmd=TeacherPrestudySummary",
+      "sourceDeclaredEffect": "read",
+      "sourceEvidenceGrade": "live-structure",
+      "sourceEvidenceDate": "2026-09-27",
+      "joinKeyCandidates": [
+        "start_date",
+        "end_date",
+        "view_type"
+      ],
+      "sourceRefs": [
+        "research/backend-map/app-live.md:12"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "dtzt_result",
+      "origin": "canonical_registry",
+      "domain": "assessment",
+      "operation": "DailyZeroTestResult",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.dailyzerotest.DailyZeroTestServlet?reqCmd=DailyZeroTestResult",
+      "sourceDeclaredEffect": "read",
+      "sourceEvidenceGrade": "live-structure",
+      "sourceEvidenceDate": "2026-09-27",
+      "joinKeyCandidates": [
+        "sort_date",
+        "stu_name"
+      ],
+      "sourceRefs": [
+        "research/backend-map/app-live.md:13"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "study_schedule",
+      "origin": "canonical_registry",
+      "domain": "curriculum",
+      "operation": "StudySchedule",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.coursemanage.CourseManageServlet?reqCmd=StudySchedule",
+      "sourceDeclaredEffect": "read",
+      "sourceEvidenceGrade": "live-structure",
+      "sourceEvidenceDate": "2026-09-27",
+      "joinKeyCandidates": [
+        "grade_no",
+        "cls_no",
+        "student_no",
+        "course",
+        "p_user_course_key"
+      ],
+      "sourceRefs": [
+        "research/backend-map/app-live.md:14"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "study_progress",
+      "origin": "canonical_registry",
+      "domain": "curriculum",
+      "operation": "StudyPro",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.coursemanage.CourseManageServlet?reqCmd=StudyPro",
+      "sourceDeclaredEffect": "read",
+      "sourceEvidenceGrade": "live-structure",
+      "sourceEvidenceDate": "2026-09-27",
+      "joinKeyCandidates": [
+        "course_key",
+        "g_course_key",
+        "grade_no"
+      ],
+      "sourceRefs": [
+        "research/backend-map/app-live.md:16"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "study_overview",
+      "origin": "canonical_registry",
+      "domain": "curriculum",
+      "operation": "StudyMain",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.coursemanage.CourseManageServlet?reqCmd=StudyMain",
+      "sourceDeclaredEffect": "read",
+      "sourceEvidenceGrade": "live-structure",
+      "sourceEvidenceDate": "2026-09-27",
+      "joinKeyCandidates": [
+        "g_clg_no",
+        "g_start_date",
+        "g_end_date",
+        "student_no"
+      ],
+      "sourceRefs": [
+        "research/backend-map/app-live.md:17"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "study_course",
+      "origin": "canonical_registry",
+      "domain": "curriculum",
+      "operation": "StudyCourse",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.coursemanage.CourseManageServlet?reqCmd=StudyCourse",
+      "sourceDeclaredEffect": "read",
+      "sourceEvidenceGrade": "live-structure",
+      "sourceEvidenceDate": "2026-09-27",
+      "joinKeyCandidates": [
+        "grade_no",
+        "cls_no",
+        "student_name"
+      ],
+      "sourceRefs": [
+        "research/backend-map/app-live.md:18"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "dtzt_list",
+      "origin": "canonical_registry",
+      "domain": "assessment",
+      "operation": "DailyZeroTestMain",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.dailyzerotest.DailyZeroTestServlet?reqCmd=DailyZeroTestMain",
+      "sourceDeclaredEffect": "read",
+      "sourceEvidenceGrade": "source",
+      "sourceEvidenceDate": "2026-09-27",
+      "joinKeyCandidates": [
+        "evalgubun"
+      ],
+      "sourceRefs": [
+        "research/backend-map/learning-assessment.md:28",
+        "research/backend-map/../remote-2026-09-27/shared-llm-wiki/concepts/academy-source-system-structure-map.md:196"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "smartbook_menu",
+      "origin": "canonical_registry",
+      "domain": "smartbook",
+      "operation": "SmartBookMainIndex",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.tutor.TutorMenuIndexServlet?p_process=SmartBookMainIndex",
+      "sourceDeclaredEffect": "read",
+      "sourceEvidenceGrade": "live-structure",
+      "sourceEvidenceDate": "2026-09-27",
+      "joinKeyCandidates": [],
+      "sourceRefs": [
+        "research/backend-map/app-live.md:15"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "workbook_catalog",
+      "origin": "canonical_registry",
+      "domain": "smartbook",
+      "operation": "Main",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.tutor.wb.WorkbookManageServlet?p_process=Main",
+      "sourceDeclaredEffect": "read",
+      "sourceEvidenceGrade": "live-structure",
+      "sourceEvidenceDate": "2026-09-27",
+      "joinKeyCandidates": [
+        "workbook_no",
+        "book_code"
+      ],
+      "sourceRefs": [
+        "research/backend-map/app-live.md:20"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "smartbook_result",
+      "origin": "canonical_registry",
+      "domain": "smartbook",
+      "operation": "SmartBookResultMain",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.tutor.wb.WbTeachList1Servlet?p_process=SmartBookResultMain",
+      "sourceDeclaredEffect": "read",
+      "sourceEvidenceGrade": "live-structure",
+      "sourceEvidenceDate": "2026-09-27",
+      "joinKeyCandidates": [
+        "book_code",
+        "clg_no",
+        "cls_no",
+        "stu_no",
+        "wb_list",
+        "sort_date"
+      ],
+      "sourceRefs": [
+        "research/backend-map/app-live.md:21"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "textbook_answer_catalog",
+      "origin": "canonical_registry",
+      "domain": "materials",
+      "operation": "GaStudyAnswer",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.coursemanage.CourseManageServlet?reqCmd=GaStudyAnswer",
+      "sourceDeclaredEffect": "read",
+      "sourceEvidenceGrade": "live-structure",
+      "sourceEvidenceDate": "2026-09-29",
+      "joinKeyCandidates": [],
+      "sourceRefs": [
+        "research/backend-map/learning-assessment.md:26",
+        "research/backend-map/learning-assessment.md:40",
+        "research/backend-map/teacher-site-live-structure-2026-09-29.json:textbook_answer_catalog"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "textbook_sample_pdf",
+      "origin": "canonical_registry",
+      "domain": "materials",
+      "operation": "GaussSamplePdf",
+      "method": "GET",
+      "pathTemplate": "https://storage.studyq.net/data/answer/mi/book/g7_gauss_sample_1_1.pdf",
+      "sourceDeclaredEffect": "read",
+      "sourceEvidenceGrade": "live-structure",
+      "sourceEvidenceDate": "2026-09-29",
+      "joinKeyCandidates": [],
+      "sourceRefs": [
+        "research/backend-map/teacher-site-live-structure-2026-09-29.json:textbook_answer_catalog"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "textbook_main",
+      "origin": "canonical_registry",
+      "domain": "curriculum",
+      "operation": "getTextBookMain",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.coursemanage.TextBookManageServlet?reqCmd=getTextBookMain",
+      "sourceDeclaredEffect": "read",
+      "sourceEvidenceGrade": "live-structure",
+      "sourceEvidenceDate": "2026-09-27",
+      "joinKeyCandidates": [
+        "student_name"
+      ],
+      "sourceRefs": [
+        "research/backend-map/app-live.md:19"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "fa_student_results",
+      "origin": "canonical_registry",
+      "domain": "assessment",
+      "operation": "UserByMain",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.tutor.base.TestPageListServlet?p_process=UserByMain&ass_no={ass_no}",
+      "sourceDeclaredEffect": "read",
+      "sourceEvidenceGrade": "source",
+      "sourceEvidenceDate": "2026-09-27",
+      "joinKeyCandidates": [
+        "ass_no",
+        "stu_pri_no",
+        "p_no",
+        "testing_no"
+      ],
+      "sourceRefs": [
+        "research/backend-map/learning-assessment.md:29",
+        "research/backend-map/learning-assessment.md:43"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "test_pool",
+      "origin": "canonical_registry",
+      "domain": "materials",
+      "operation": "Main",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.tutor.etest.TestPoolServlet?reqCmd=Main",
+      "sourceDeclaredEffect": "read",
+      "sourceEvidenceGrade": "source",
+      "sourceEvidenceDate": "2026-09-27",
+      "joinKeyCandidates": [
+        "p_no",
+        "author"
+      ],
+      "sourceRefs": [
+        "research/backend-map/learning-assessment.md:30"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "item_metadata",
+      "origin": "canonical_registry",
+      "domain": "materials",
+      "operation": "GetLectureList",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.common.TestPageShowExServlet?p_process=GetLectureList&lecture_list={lecture_keys}",
+      "sourceDeclaredEffect": "read",
+      "sourceEvidenceGrade": "source",
+      "sourceEvidenceDate": "2026-09-27",
+      "joinKeyCandidates": [
+        "lecture_key"
+      ],
+      "sourceRefs": [
+        "research/backend-map/learning-assessment.md:32",
+        "research/backend-map/app-static.md:23-24"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "video_lookup",
+      "origin": "canonical_registry",
+      "domain": "materials",
+      "operation": "getVideoLecture",
+      "method": "POST",
+      "pathTemplate": "/servlet/controller.first.RegAppCommandServlet",
+      "sourceDeclaredEffect": "unknown",
+      "sourceEvidenceGrade": "source",
+      "sourceEvidenceDate": "2026-09-27",
+      "joinKeyCandidates": [
+        "lecture_key"
+      ],
+      "sourceRefs": [
+        "research/backend-map/learning-assessment.md:33",
+        "research/backend-map/app-static.md:24"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "app_registration",
+      "origin": "canonical_registry",
+      "domain": "device",
+      "operation": "unknown",
+      "method": null,
+      "pathTemplate": "/servlet/controller.first.RegAppServlet",
+      "sourceDeclaredEffect": "unknown",
+      "sourceEvidenceGrade": "source",
+      "sourceEvidenceDate": "2026-09-27",
+      "joinKeyCandidates": [],
+      "sourceRefs": [
+        "research/backend-map/app-static.md:19"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "prestudy_waiting_search",
+      "origin": "canonical_registry",
+      "domain": "prestudy",
+      "operation": "WebUnPreStudy",
+      "method": "POST",
+      "pathTemplate": "/servlet/controller.coursemanage.CourseManageServlet?reqCmd=WebUnPreStudy",
+      "sourceDeclaredEffect": "unknown",
+      "sourceEvidenceGrade": "live-static-js",
+      "sourceEvidenceDate": "2026-09-27",
+      "joinKeyCandidates": [
+        "g_clg_no",
+        "g_mem_type",
+        "g_pri_no",
+        "student_name"
+      ],
+      "sourceRefs": [
+        "research/backend-map/app-live.md:51",
+        "research/backend-map/../remote-2026-09-27/shared-llm-wiki/concepts/academy-source-system-structure-map.md:140"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "prestudy_completed_search",
+      "origin": "canonical_registry",
+      "domain": "prestudy",
+      "operation": "WebCtPreStudy",
+      "method": "POST",
+      "pathTemplate": "/servlet/controller.coursemanage.CourseManageServlet?reqCmd=WebCtPreStudy",
+      "sourceDeclaredEffect": "unknown",
+      "sourceEvidenceGrade": "live-static-js",
+      "sourceEvidenceDate": "2026-09-27",
+      "joinKeyCandidates": [
+        "g_clg_no",
+        "g_mem_type",
+        "g_pri_no",
+        "student_name"
+      ],
+      "sourceRefs": [
+        "research/backend-map/app-live.md:51",
+        "research/backend-map/../remote-2026-09-27/shared-llm-wiki/concepts/academy-source-system-structure-map.md:140"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "prestudy_historical_search",
+      "origin": "canonical_registry",
+      "domain": "prestudy",
+      "operation": "StudentNameSearch",
+      "method": "POST",
+      "pathTemplate": "/servlet/controller.coursemanage.CourseManageServlet",
+      "sourceDeclaredEffect": "read",
+      "sourceEvidenceGrade": "historical-read",
+      "sourceEvidenceDate": "2026-08-26",
+      "joinKeyCandidates": [
+        "student_name"
+      ],
+      "sourceRefs": [
+        "research/backend-map/../remote-2026-09-27/shared-llm-wiki/concepts/academy-source-system-structure-map.md:140",
+        "research/backend-map/app-live.md:51"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "prestudy_historical_detail",
+      "origin": "canonical_registry",
+      "domain": "prestudy",
+      "operation": "WebPreStudy",
+      "method": null,
+      "pathTemplate": "/servlet/controller.coursemanage.CourseManageServlet?reqCmd=WebPreStudy&prestudy_key={prestudy_key}",
+      "sourceDeclaredEffect": "unknown",
+      "sourceEvidenceGrade": "source",
+      "sourceEvidenceDate": "2026-08-26",
+      "joinKeyCandidates": [
+        "prestudy_key"
+      ],
+      "sourceRefs": [
+        "research/backend-map/../remote-2026-09-27/shared-llm-wiki/concepts/academy-source-system-structure-map.md:140",
+        "research/backend-map/app-read-contracts.md:22"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "dtzt_result_search",
+      "origin": "canonical_registry",
+      "domain": "assessment",
+      "operation": "DtResultSearch",
+      "method": "POST",
+      "pathTemplate": "/servlet/controller.dailyzerotest.DailyZeroTestServlet?reqCmd=DtResultSearch",
+      "sourceDeclaredEffect": "read",
+      "sourceEvidenceGrade": "historical-read-plus-live-structure",
+      "sourceEvidenceDate": "2026-08-26",
+      "joinKeyCandidates": [
+        "sort_date",
+        "stu_name"
+      ],
+      "sourceRefs": [
+        "research/backend-map/../remote-2026-09-27/shared-llm-wiki/concepts/academy-source-system-structure-map.md:67",
+        "research/backend-map/app-live.md:52"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "dtzt_list_search",
+      "origin": "canonical_registry",
+      "domain": "assessment",
+      "operation": "DailyZeroTestSeach",
+      "method": "POST",
+      "pathTemplate": "/servlet/controller.dailyzerotest.DailyZeroTestServlet",
+      "sourceDeclaredEffect": "read",
+      "sourceEvidenceGrade": "historical-read",
+      "sourceEvidenceDate": "2026-08-26",
+      "joinKeyCandidates": [
+        "evalgubun",
+        "frm_cl1",
+        "frm_cl2",
+        "frm_cl3"
+      ],
+      "sourceRefs": [
+        "research/backend-map/../remote-2026-09-27/shared-llm-wiki/concepts/academy-source-system-structure-map.md:196"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "textbook_progress_search",
+      "origin": "canonical_registry",
+      "domain": "curriculum",
+      "operation": "getTextBookProgress",
+      "method": "POST",
+      "pathTemplate": "/servlet/controller.coursemanage.TextBookManageServlet?reqCmd=getTextBookProgress",
+      "sourceDeclaredEffect": "read",
+      "sourceEvidenceGrade": "historical-read-plus-live-structure",
+      "sourceEvidenceDate": "2026-08-26",
+      "joinKeyCandidates": [
+        "student_name"
+      ],
+      "sourceRefs": [
+        "research/backend-map/../remote-2026-09-27/shared-llm-wiki/concepts/academy-source-system-structure-map.md:158",
+        "research/backend-map/app-live.md:53"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "study_main_search",
+      "origin": "canonical_registry",
+      "domain": "curriculum",
+      "operation": "StudyMainSearch",
+      "method": null,
+      "pathTemplate": "/servlet/controller.coursemanage.CourseManageServlet",
+      "sourceDeclaredEffect": "unknown",
+      "sourceEvidenceGrade": "live-static-js",
+      "sourceEvidenceDate": "2026-09-27",
+      "joinKeyCandidates": [
+        "clg_no",
+        "tutor_pri_no",
+        "student_pri_no",
+        "start_date",
+        "end_date"
+      ],
+      "sourceRefs": [
+        "research/backend-map/app-live.md:40",
+        "research/backend-map/app-static.md:50-76"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "study_day_student_list",
+      "origin": "canonical_registry",
+      "domain": "curriculum",
+      "operation": "GetDayOfStudentList",
+      "method": null,
+      "pathTemplate": "/servlet/controller.coursemanage.CourseManageServlet",
+      "sourceDeclaredEffect": "unknown",
+      "sourceEvidenceGrade": "live-static-js",
+      "sourceEvidenceDate": "2026-09-27",
+      "joinKeyCandidates": [
+        "clg_no",
+        "tutor_pri_no",
+        "start_date",
+        "end_date"
+      ],
+      "sourceRefs": [
+        "research/backend-map/app-live.md:40",
+        "research/backend-map/app-static.md:50-76"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "course_get_list",
+      "origin": "canonical_registry",
+      "domain": "curriculum",
+      "operation": "CourseGetList",
+      "method": null,
+      "pathTemplate": "/servlet/controller.coursemanage.CourseManageServlet",
+      "sourceDeclaredEffect": "unknown",
+      "sourceEvidenceGrade": "live-static-js",
+      "sourceEvidenceDate": "2026-09-27",
+      "joinKeyCandidates": [
+        "grade_no",
+        "cls_no",
+        "student_no"
+      ],
+      "sourceRefs": [
+        "research/backend-map/app-live.md:38",
+        "research/backend-map/app-static.md:50-76"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "student_get_list",
+      "origin": "canonical_registry",
+      "domain": "curriculum",
+      "operation": "StudentGetList",
+      "method": null,
+      "pathTemplate": "UserSearchServlet",
+      "sourceDeclaredEffect": "unknown",
+      "sourceEvidenceGrade": "live-static-js",
+      "sourceEvidenceDate": "2026-09-27",
+      "joinKeyCandidates": [
+        "grade_no",
+        "cls_no"
+      ],
+      "sourceRefs": [
+        "research/backend-map/app-live.md:38",
+        "research/backend-map/app-static.md:50-76"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "pro_course_get_list",
+      "origin": "canonical_registry",
+      "domain": "curriculum",
+      "operation": "ProCourseGetList",
+      "method": null,
+      "pathTemplate": "/servlet/controller.coursemanage.CourseManageServlet",
+      "sourceDeclaredEffect": "unknown",
+      "sourceEvidenceGrade": "live-static-js",
+      "sourceEvidenceDate": "2026-09-27",
+      "joinKeyCandidates": [
+        "grade_no",
+        "course_key"
+      ],
+      "sourceRefs": [
+        "research/backend-map/app-live.md:39",
+        "research/backend-map/app-static.md:50-76"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "smartbook_result_search",
+      "origin": "canonical_registry",
+      "domain": "smartbook",
+      "operation": "SmartBookResultSearch",
+      "method": null,
+      "pathTemplate": "/servlet/controller.tutor.wb.WbTeachList1Servlet",
+      "sourceDeclaredEffect": "unknown",
+      "sourceEvidenceGrade": "live-static-js",
+      "sourceEvidenceDate": "2026-09-27",
+      "joinKeyCandidates": [
+        "book_code",
+        "clg_no",
+        "cls_no",
+        "stu_no",
+        "wb_list",
+        "sort_date"
+      ],
+      "sourceRefs": [
+        "research/backend-map/app-live.md:41",
+        "research/backend-map/app-static.md:50-76"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "prestudy_comment",
+      "origin": "canonical_registry",
+      "domain": "prestudy",
+      "operation": "WebSetPreStudyComment",
+      "method": "POST",
+      "pathTemplate": "/servlet/controller.coursemanage.CourseManageServlet",
+      "sourceDeclaredEffect": "write",
+      "sourceEvidenceGrade": "historical-effect",
+      "sourceEvidenceDate": "2026-08-26",
+      "joinKeyCandidates": [
+        "prestudy_key",
+        "comment",
+        "recipient"
+      ],
+      "sourceRefs": [
+        "research/backend-map/../remote-2026-09-27/shared-llm-wiki/concepts/academy-source-system-structure-map.md:142"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "similar_paper_create",
+      "origin": "canonical_registry",
+      "domain": "clinic",
+      "operation": "incorrect.create",
+      "method": null,
+      "pathTemplate": "native:Typeset.createResultPaper",
+      "sourceDeclaredEffect": "write",
+      "sourceEvidenceGrade": "historical-effect",
+      "sourceEvidenceDate": "2026-08-26",
+      "joinKeyCandidates": [
+        "testing_no"
+      ],
+      "sourceRefs": [
+        "research/backend-map/../remote-2026-09-27/shared-llm-wiki/concepts/academy-source-system-structure-map.md:160",
+        "research/backend-map/learning-assessment.md:34"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "업무영역 배치는 설계 해석이며 검증된 학생 수준 데이터 조인이 아님"
+    },
+    {
+      "id": "candidate:menu_BaseManageIndex",
+      "origin": "source_candidate",
+      "domain": "navigation",
+      "operation": "BaseManageIndex",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.tutor.TutorMenuIndexServlet?p_process=BaseManageIndex",
+      "sourceDeclaredEffect": "unknown",
+      "sourceEvidenceGrade": "source_candidate_not_live_verified",
+      "sourceEvidenceDate": null,
+      "joinKeyCandidates": [],
+      "sourceRefs": [
+        "lms-automation/ganga/lms/endpoints.py:50-59"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "정적 후보와 업무영역 연결; 호출 계약 또는 권한이 아님"
+    },
+    {
+      "id": "candidate:menu_DAIndex",
+      "origin": "source_candidate",
+      "domain": "navigation",
+      "operation": "DAIndex",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.tutor.TutorMenuIndexServlet?p_process=DAIndex",
+      "sourceDeclaredEffect": "unknown",
+      "sourceEvidenceGrade": "source_candidate_not_live_verified",
+      "sourceEvidenceDate": null,
+      "joinKeyCandidates": [],
+      "sourceRefs": [
+        "lms-automation/ganga/lms/endpoints.py:50-59"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "정적 후보와 업무영역 연결; 호출 계약 또는 권한이 아님"
+    },
+    {
+      "id": "candidate:menu_FAIndex",
+      "origin": "source_candidate",
+      "domain": "navigation",
+      "operation": "FAIndex",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.tutor.TutorMenuIndexServlet?p_process=FAIndex",
+      "sourceDeclaredEffect": "unknown",
+      "sourceEvidenceGrade": "source_candidate_not_live_verified",
+      "sourceEvidenceDate": null,
+      "joinKeyCandidates": [],
+      "sourceRefs": [
+        "lms-automation/ganga/lms/endpoints.py:50-59"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "정적 후보와 업무영역 연결; 호출 계약 또는 권한이 아님"
+    },
+    {
+      "id": "candidate:menu_NAIndex",
+      "origin": "source_candidate",
+      "domain": "navigation",
+      "operation": "NAIndex",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.tutor.TutorMenuIndexServlet?p_process=NAIndex",
+      "sourceDeclaredEffect": "unknown",
+      "sourceEvidenceGrade": "source_candidate_not_live_verified",
+      "sourceEvidenceDate": null,
+      "joinKeyCandidates": [],
+      "sourceRefs": [
+        "lms-automation/ganga/lms/endpoints.py:50-59"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "정적 후보와 업무영역 연결; 호출 계약 또는 권한이 아님"
+    },
+    {
+      "id": "candidate:menu_TestPoolIndex",
+      "origin": "source_candidate",
+      "domain": "navigation",
+      "operation": "TestPoolIndex",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.tutor.TutorMenuIndexServlet?p_process=TestPoolIndex",
+      "sourceDeclaredEffect": "unknown",
+      "sourceEvidenceGrade": "source_candidate_not_live_verified",
+      "sourceEvidenceDate": null,
+      "joinKeyCandidates": [],
+      "sourceRefs": [
+        "lms-automation/ganga/lms/endpoints.py:50-59"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "정적 후보와 업무영역 연결; 호출 계약 또는 권한이 아님"
+    },
+    {
+      "id": "candidate:menu_CommunityMainIndex",
+      "origin": "source_candidate",
+      "domain": "navigation",
+      "operation": "CommunityMainIndex",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.tutor.TutorMenuIndexServlet?p_process=CommunityMainIndex",
+      "sourceDeclaredEffect": "unknown",
+      "sourceEvidenceGrade": "source_candidate_not_live_verified",
+      "sourceEvidenceDate": null,
+      "joinKeyCandidates": [],
+      "sourceRefs": [
+        "lms-automation/ganga/lms/endpoints.py:50-59"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "정적 후보와 업무영역 연결; 호출 계약 또는 권한이 아님"
+    },
+    {
+      "id": "candidate:day_record_by_date",
+      "origin": "source_candidate",
+      "domain": "lesson",
+      "operation": "DaysMain",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.cct.tutor.DayRecordServlet?p_process=DaysMain",
+      "sourceDeclaredEffect": "unknown",
+      "sourceEvidenceGrade": "source_candidate_not_live_verified",
+      "sourceEvidenceDate": null,
+      "joinKeyCandidates": [
+        "date",
+        "teacherKey",
+        "groupKey"
+      ],
+      "sourceRefs": [
+        "lms-automation/ganga/lms/endpoints.py:80-83"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "정적 후보와 업무영역 연결; 호출 계약 또는 권한이 아님"
+    },
+    {
+      "id": "candidate:course_members",
+      "origin": "source_candidate",
+      "domain": "lesson",
+      "operation": "Main",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.cct.tutor.CourseMemberServlet?p_process=Main",
+      "sourceDeclaredEffect": "unknown",
+      "sourceEvidenceGrade": "source_candidate_not_live_verified",
+      "sourceEvidenceDate": null,
+      "joinKeyCandidates": [
+        "teacherKey",
+        "studentKey",
+        "courseKey"
+      ],
+      "sourceRefs": [
+        "lms-automation/ganga/lms/endpoints.py:84-86"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "정적 후보와 업무영역 연결; 호출 계약 또는 권한이 아님"
+    },
+    {
+      "id": "candidate:counsel",
+      "origin": "source_candidate",
+      "domain": "counseling",
+      "operation": "page",
+      "method": "GET",
+      "pathTemplate": "/counsel/csl_student_list.jsp",
+      "sourceDeclaredEffect": "unknown",
+      "sourceEvidenceGrade": "source_candidate_not_live_verified",
+      "sourceEvidenceDate": null,
+      "joinKeyCandidates": [
+        "teacherKey",
+        "studentKey"
+      ],
+      "sourceRefs": [
+        "lms-automation/ganga/lms/endpoints.py:90-92"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "정적 후보와 업무영역 연결; 호출 계약 또는 권한이 아님"
+    },
+    {
+      "id": "candidate:learning_results",
+      "origin": "source_candidate",
+      "domain": "assessment",
+      "operation": "Main",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.tutor.base.TestPageListServlet?p_process=Main",
+      "sourceDeclaredEffect": "unknown",
+      "sourceEvidenceGrade": "source_candidate_not_live_verified",
+      "sourceEvidenceDate": null,
+      "joinKeyCandidates": [
+        "studentKey",
+        "paperKey",
+        "attemptKey"
+      ],
+      "sourceRefs": [
+        "lms-automation/ganga/lms/endpoints.py:101-105"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "정적 후보와 업무영역 연결; 호출 계약 또는 권한이 아님"
+    },
+    {
+      "id": "candidate:course_lookup",
+      "origin": "source_candidate",
+      "domain": "curriculum",
+      "operation": "CourseStudyManager",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.coursemanage.CourseManageServlet?reqCmd=CourseStudyManager",
+      "sourceDeclaredEffect": "unknown",
+      "sourceEvidenceGrade": "source_candidate_not_live_verified",
+      "sourceEvidenceDate": null,
+      "joinKeyCandidates": [
+        "courseKey"
+      ],
+      "sourceRefs": [
+        "lms-automation/ganga/lms/endpoints.py:122"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "정적 후보와 업무영역 연결; 호출 계약 또는 권한이 아님"
+    },
+    {
+      "id": "candidate:paper_history",
+      "origin": "source_candidate",
+      "domain": "materials",
+      "operation": "LogViewList",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.tutor.etest.TestPoolServlet?reqCmd=LogViewList",
+      "sourceDeclaredEffect": "unknown",
+      "sourceEvidenceGrade": "source_candidate_not_live_verified",
+      "sourceEvidenceDate": null,
+      "joinKeyCandidates": [
+        "teacherKey",
+        "paperKey",
+        "page"
+      ],
+      "sourceRefs": [
+        "lms-automation/ganga/lms/endpoints.py:142-146"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "정적 후보와 업무영역 연결; 호출 계약 또는 권한이 아님"
+    },
+    {
+      "id": "candidate:paper_create",
+      "origin": "source_candidate",
+      "domain": "materials",
+      "operation": "create",
+      "method": "GET",
+      "pathTemplate": "/common/etest_pool.jsp",
+      "sourceDeclaredEffect": "write",
+      "sourceEvidenceGrade": "source_candidate_not_live_verified",
+      "sourceEvidenceDate": null,
+      "joinKeyCandidates": [],
+      "sourceRefs": [
+        "lms-automation/ganga/lms/endpoints.py:145"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "정적 후보와 업무영역 연결; 호출 계약 또는 권한이 아님"
+    },
+    {
+      "id": "candidate:roster_search",
+      "origin": "source_candidate",
+      "domain": "identity",
+      "operation": "Main",
+      "method": "POST",
+      "pathTemplate": "/servlet/controller.tutor.base.UserSearchServlet?p_process=Main",
+      "sourceDeclaredEffect": "unknown",
+      "sourceEvidenceGrade": "source_candidate_not_live_verified",
+      "sourceEvidenceDate": null,
+      "joinKeyCandidates": [
+        "grp_no",
+        "p_pageno",
+        "grade_no",
+        "cls_no",
+        "name",
+        "status",
+        "lecture_status",
+        "login_status"
+      ],
+      "sourceRefs": [
+        "lms-automation/ganga/lms/endpoints.py:224-230"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "정적 후보와 업무영역 연결; 호출 계약 또는 권한이 아님"
+    },
+    {
+      "id": "candidate:student_approval",
+      "origin": "source_candidate",
+      "domain": "identity",
+      "operation": "Main",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.tutor.base.UserClsManageServlet?p_process=Main",
+      "sourceDeclaredEffect": "write",
+      "sourceEvidenceGrade": "source_candidate_not_live_verified",
+      "sourceEvidenceDate": null,
+      "joinKeyCandidates": [],
+      "sourceRefs": [
+        "lms-automation/ganga/lms/endpoints.py:232-233"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "정적 후보와 업무영역 연결; 호출 계약 또는 권한이 아님"
+    },
+    {
+      "id": "candidate:device_certificate",
+      "origin": "source_candidate",
+      "domain": "device",
+      "operation": "GetCertificateMain",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.tutor.base.UserSearchServlet?p_process=GetCertificateMain",
+      "sourceDeclaredEffect": "unknown",
+      "sourceEvidenceGrade": "source_candidate_not_live_verified",
+      "sourceEvidenceDate": null,
+      "joinKeyCandidates": [
+        "studentKey"
+      ],
+      "sourceRefs": [
+        "lms-automation/ganga/lms/endpoints.py:234-235"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "정적 후보와 업무영역 연결; 호출 계약 또는 권한이 아님"
+    },
+    {
+      "id": "candidate:book_orders",
+      "origin": "source_candidate",
+      "domain": "book_order",
+      "operation": "ClgMain",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.bookorder.tutor.PreOrderServlet?p_process=ClgMain",
+      "sourceDeclaredEffect": "unknown",
+      "sourceEvidenceGrade": "source_candidate_not_live_verified",
+      "sourceEvidenceDate": null,
+      "joinKeyCandidates": [
+        "teacherKey",
+        "studentKey",
+        "orderKey"
+      ],
+      "sourceRefs": [
+        "lms-automation/ganga/lms/endpoints.py:236-238"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "정적 후보와 업무영역 연결; 호출 계약 또는 권한이 아님"
+    },
+    {
+      "id": "candidate:fa_paper_list",
+      "origin": "source_candidate",
+      "domain": "assessment",
+      "operation": "Main",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.tutor.fa.TestPageListGrpServlet?p_process=Main",
+      "sourceDeclaredEffect": "unknown",
+      "sourceEvidenceGrade": "source_candidate_not_live_verified",
+      "sourceEvidenceDate": null,
+      "joinKeyCandidates": [
+        "paperKey",
+        "teacherKey",
+        "page"
+      ],
+      "sourceRefs": [
+        "lms-automation/ganga/lms/endpoints.py:168-182"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "정적 후보와 업무영역 연결; 호출 계약 또는 권한이 아님"
+    },
+    {
+      "id": "candidate:fa_exam_results",
+      "origin": "source_candidate",
+      "domain": "assessment",
+      "operation": "unverified",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.tutor.fa.TestPageListServlet",
+      "sourceDeclaredEffect": "unknown",
+      "sourceEvidenceGrade": "source_candidate_not_live_verified",
+      "sourceEvidenceDate": null,
+      "joinKeyCandidates": [
+        "paperKey",
+        "attemptKey",
+        "studentKey",
+        "page"
+      ],
+      "sourceRefs": [
+        "lms-automation/ganga/lms/endpoints.py:183-184"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "정적 후보와 업무영역 연결; 호출 계약 또는 권한이 아님"
+    },
+    {
+      "id": "candidate:fa_period_results",
+      "origin": "source_candidate",
+      "domain": "assessment",
+      "operation": "Main",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.tutor.fa.MarksResultDigestServlet?p_process=Main",
+      "sourceDeclaredEffect": "unknown",
+      "sourceEvidenceGrade": "source_candidate_not_live_verified",
+      "sourceEvidenceDate": null,
+      "joinKeyCandidates": [
+        "studentKey",
+        "fromDate",
+        "toDate",
+        "page"
+      ],
+      "sourceRefs": [
+        "lms-automation/ganga/lms/endpoints.py:185-186"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "정적 후보와 업무영역 연결; 호출 계약 또는 권한이 아님"
+    },
+    {
+      "id": "candidate:fa_paper_create",
+      "origin": "source_candidate",
+      "domain": "assessment",
+      "operation": "Auto",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.tutor.fa.TestPageRegServlet?p_process=Auto",
+      "sourceDeclaredEffect": "write",
+      "sourceEvidenceGrade": "source_candidate_not_live_verified",
+      "sourceEvidenceDate": null,
+      "joinKeyCandidates": [],
+      "sourceRefs": [
+        "lms-automation/ganga/lms/endpoints.py:180-181"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "정적 후보와 업무영역 연결; 호출 계약 또는 권한이 아님"
+    },
+    {
+      "id": "candidate:na_paper_list",
+      "origin": "source_candidate",
+      "domain": "assessment",
+      "operation": "Main",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.tutor.na.TestPageListOurclgServlet?p_process=Main",
+      "sourceDeclaredEffect": "unknown",
+      "sourceEvidenceGrade": "source_candidate_not_live_verified",
+      "sourceEvidenceDate": null,
+      "joinKeyCandidates": [
+        "paperKey",
+        "teacherKey",
+        "page"
+      ],
+      "sourceRefs": [
+        "lms-automation/ganga/lms/endpoints.py:168-182"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "정적 후보와 업무영역 연결; 호출 계약 또는 권한이 아님"
+    },
+    {
+      "id": "candidate:na_exam_results",
+      "origin": "source_candidate",
+      "domain": "assessment",
+      "operation": "unverified",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.tutor.na.TestPageListServlet",
+      "sourceDeclaredEffect": "unknown",
+      "sourceEvidenceGrade": "source_candidate_not_live_verified",
+      "sourceEvidenceDate": null,
+      "joinKeyCandidates": [
+        "paperKey",
+        "attemptKey",
+        "studentKey",
+        "page"
+      ],
+      "sourceRefs": [
+        "lms-automation/ganga/lms/endpoints.py:183-184"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "정적 후보와 업무영역 연결; 호출 계약 또는 권한이 아님"
+    },
+    {
+      "id": "candidate:na_period_results",
+      "origin": "source_candidate",
+      "domain": "assessment",
+      "operation": "Main",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.tutor.na.MarksResultDigestServlet?p_process=Main",
+      "sourceDeclaredEffect": "unknown",
+      "sourceEvidenceGrade": "source_candidate_not_live_verified",
+      "sourceEvidenceDate": null,
+      "joinKeyCandidates": [
+        "studentKey",
+        "fromDate",
+        "toDate",
+        "page"
+      ],
+      "sourceRefs": [
+        "lms-automation/ganga/lms/endpoints.py:185-186"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "정적 후보와 업무영역 연결; 호출 계약 또는 권한이 아님"
+    },
+    {
+      "id": "candidate:na_paper_create",
+      "origin": "source_candidate",
+      "domain": "assessment",
+      "operation": "Auto",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.tutor.na.TestPageRegServlet?p_process=Auto",
+      "sourceDeclaredEffect": "write",
+      "sourceEvidenceGrade": "source_candidate_not_live_verified",
+      "sourceEvidenceDate": null,
+      "joinKeyCandidates": [],
+      "sourceRefs": [
+        "lms-automation/ganga/lms/endpoints.py:180-181"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "정적 후보와 업무영역 연결; 호출 계약 또는 권한이 아님"
+    },
+    {
+      "id": "candidate:da_paper_list",
+      "origin": "source_candidate",
+      "domain": "assessment",
+      "operation": "Main",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.tutor.da.TestPageListGrpServlet?p_process=Main",
+      "sourceDeclaredEffect": "unknown",
+      "sourceEvidenceGrade": "source_candidate_not_live_verified",
+      "sourceEvidenceDate": null,
+      "joinKeyCandidates": [
+        "paperKey",
+        "teacherKey",
+        "page"
+      ],
+      "sourceRefs": [
+        "lms-automation/ganga/lms/endpoints.py:168-182"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "정적 후보와 업무영역 연결; 호출 계약 또는 권한이 아님"
+    },
+    {
+      "id": "candidate:da_exam_results",
+      "origin": "source_candidate",
+      "domain": "assessment",
+      "operation": "unverified",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.tutor.da.TestPageListServlet",
+      "sourceDeclaredEffect": "unknown",
+      "sourceEvidenceGrade": "source_candidate_not_live_verified",
+      "sourceEvidenceDate": null,
+      "joinKeyCandidates": [
+        "paperKey",
+        "attemptKey",
+        "studentKey",
+        "page"
+      ],
+      "sourceRefs": [
+        "lms-automation/ganga/lms/endpoints.py:183-184"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "정적 후보와 업무영역 연결; 호출 계약 또는 권한이 아님"
+    },
+    {
+      "id": "candidate:da_period_results",
+      "origin": "source_candidate",
+      "domain": "assessment",
+      "operation": "Main",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.tutor.da.MarksResultDigestServlet?p_process=Main",
+      "sourceDeclaredEffect": "unknown",
+      "sourceEvidenceGrade": "source_candidate_not_live_verified",
+      "sourceEvidenceDate": null,
+      "joinKeyCandidates": [
+        "studentKey",
+        "fromDate",
+        "toDate",
+        "page"
+      ],
+      "sourceRefs": [
+        "lms-automation/ganga/lms/endpoints.py:185-186"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "정적 후보와 업무영역 연결; 호출 계약 또는 권한이 아님"
+    },
+    {
+      "id": "candidate:da_paper_create",
+      "origin": "source_candidate",
+      "domain": "assessment",
+      "operation": "Auto",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.tutor.da.TestPageRegServlet?p_process=Auto",
+      "sourceDeclaredEffect": "write",
+      "sourceEvidenceGrade": "source_candidate_not_live_verified",
+      "sourceEvidenceDate": null,
+      "joinKeyCandidates": [],
+      "sourceRefs": [
+        "lms-automation/ganga/lms/endpoints.py:180-181"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "정적 후보와 업무영역 연결; 호출 계약 또는 권한이 아님"
+    },
+    {
+      "id": "candidate:grading_helper",
+      "origin": "source_candidate",
+      "domain": "assessment",
+      "operation": "NonePaper",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.tutor.na.TestPageRegServlet?p_process=NonePaper",
+      "sourceDeclaredEffect": "write",
+      "sourceEvidenceGrade": "source_candidate_not_live_verified",
+      "sourceEvidenceDate": null,
+      "joinKeyCandidates": [],
+      "sourceRefs": [
+        "lms-automation/ganga/lms/endpoints.py:193-198"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "정적 후보와 업무영역 연결; 호출 계약 또는 권한이 아님"
+    },
+    {
+      "id": "candidate:diagnostic_papers",
+      "origin": "source_candidate",
+      "domain": "assessment",
+      "operation": "TestPaperList",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.tutor.diag.DiagnostManageServlet?reqCmd=TestPaperList",
+      "sourceDeclaredEffect": "unknown",
+      "sourceEvidenceGrade": "source_candidate_not_live_verified",
+      "sourceEvidenceDate": null,
+      "joinKeyCandidates": [
+        "paperKey",
+        "page"
+      ],
+      "sourceRefs": [
+        "lms-automation/ganga/lms/endpoints.py:199-203"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "정적 후보와 업무영역 연결; 호출 계약 또는 권한이 아님"
+    },
+    {
+      "id": "candidate:diagnostic_results",
+      "origin": "source_candidate",
+      "domain": "assessment",
+      "operation": "TestResultList",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.tutor.diag.DiagnostManageServlet?reqCmd=TestResultList",
+      "sourceDeclaredEffect": "unknown",
+      "sourceEvidenceGrade": "source_candidate_not_live_verified",
+      "sourceEvidenceDate": null,
+      "joinKeyCandidates": [
+        "studentKey",
+        "attemptKey",
+        "page"
+      ],
+      "sourceRefs": [
+        "lms-automation/ganga/lms/endpoints.py:204-207"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "정적 후보와 업무영역 연결; 호출 계약 또는 권한이 아님"
+    },
+    {
+      "id": "candidate:assessment_search",
+      "origin": "source_candidate",
+      "domain": "assessment",
+      "operation": "UserBySearchTestResult",
+      "method": "POST",
+      "pathTemplate": "/servlet/controller.tutor.base.TestPageListServlet?p_process=UserBySearchTestResult",
+      "sourceDeclaredEffect": "unknown",
+      "sourceEvidenceGrade": "source_candidate_not_live_verified",
+      "sourceEvidenceDate": null,
+      "joinKeyCandidates": [
+        "studentKey",
+        "paperKey",
+        "attemptKey"
+      ],
+      "sourceRefs": [
+        "src/lms/lmsRouteRegistry.ts#legacyRoutes/FA_USER_SEARCH_RESULT"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "정적 후보와 업무영역 연결; 호출 계약 또는 권한이 아님"
+    },
+    {
+      "id": "candidate:fa_pupil_detail",
+      "origin": "source_candidate",
+      "domain": "assessment",
+      "operation": "PupilSearch",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.tutor.fa.TestPageListServlet?p_process=PupilSearch",
+      "sourceDeclaredEffect": "unknown",
+      "sourceEvidenceGrade": "source_candidate_not_live_verified",
+      "sourceEvidenceDate": null,
+      "joinKeyCandidates": [
+        "studentKey",
+        "paperKey",
+        "attemptKey"
+      ],
+      "sourceRefs": [
+        "src/lms/lmsRouteRegistry.ts#legacyRoutes/FA_PUPIL_SEARCH"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "정적 후보와 업무영역 연결; 호출 계약 또는 권한이 아님"
+    },
+    {
+      "id": "candidate:na_pupil_detail",
+      "origin": "source_candidate",
+      "domain": "assessment",
+      "operation": "PupilSearch",
+      "method": "GET",
+      "pathTemplate": "/servlet/controller.tutor.na.TestPageListServlet?p_process=PupilSearch",
+      "sourceDeclaredEffect": "unknown",
+      "sourceEvidenceGrade": "source_candidate_not_live_verified",
+      "sourceEvidenceDate": null,
+      "joinKeyCandidates": [
+        "studentKey",
+        "paperKey",
+        "attemptKey"
+      ],
+      "sourceRefs": [
+        "src/lms/lmsRouteRegistry.ts#legacyRoutes/NA_PUPIL_SEARCH"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "정적 후보와 업무영역 연결; 호출 계약 또는 권한이 아님"
+    },
+    {
+      "id": "candidate:typeset_single",
+      "origin": "source_candidate",
+      "domain": "clinic",
+      "operation": "getStudyResultSingleTestingSingleUser",
+      "method": "POST",
+      "pathTemplate": "/servlet/controller.common.TestpageSelectExServlet?p_process=getStudyResultSingleTestingSingleUser",
+      "sourceDeclaredEffect": "write",
+      "sourceEvidenceGrade": "source_candidate_not_live_verified",
+      "sourceEvidenceDate": null,
+      "joinKeyCandidates": [
+        "studentKey",
+        "paperKey",
+        "attemptKey"
+      ],
+      "sourceRefs": [
+        "src/lms/lmsRouteRegistry.ts#legacyRoutes/TYPESET_STUDY_RESULT_SINGLE"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "정적 후보와 업무영역 연결; 호출 계약 또는 권한이 아님"
+    },
+    {
+      "id": "candidate:typeset_multi",
+      "origin": "source_candidate",
+      "domain": "clinic",
+      "operation": "getStudyResultSingleTestingMultiUser",
+      "method": "POST",
+      "pathTemplate": "/servlet/controller.common.TestpageSelectExServlet?p_process=getStudyResultSingleTestingMultiUser",
+      "sourceDeclaredEffect": "write",
+      "sourceEvidenceGrade": "source_candidate_not_live_verified",
+      "sourceEvidenceDate": null,
+      "joinKeyCandidates": [
+        "studentKey",
+        "paperKey",
+        "attemptKey"
+      ],
+      "sourceRefs": [
+        "src/lms/lmsRouteRegistry.ts#legacyRoutes/TYPESET_STUDY_RESULT_MULTI"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "정적 후보와 업무영역 연결; 호출 계약 또는 권한이 아님"
+    },
+    {
+      "id": "candidate:exam_detail",
+      "origin": "source_candidate",
+      "domain": "assessment",
+      "operation": "GetExamDetail",
+      "method": null,
+      "pathTemplate": "unresolved:TestpageSelectExServlet?p_process=GetExamDetail&testing_no={attemptKey}",
+      "sourceDeclaredEffect": "unknown",
+      "sourceEvidenceGrade": "source_candidate_not_live_verified",
+      "sourceEvidenceDate": null,
+      "joinKeyCandidates": [
+        "studentKey",
+        "paperKey",
+        "attemptKey"
+      ],
+      "sourceRefs": [
+        "research/backend-map/app-static.md:23"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "정적 후보와 업무영역 연결; 호출 계약 또는 권한이 아님"
+    },
+    {
+      "id": "candidate:paper_lecture_codes",
+      "origin": "source_candidate",
+      "domain": "assessment",
+      "operation": "GetLectureCode",
+      "method": null,
+      "pathTemplate": "unresolved:TestPageListOurclgServlet?reqCmd=GetLectureCode&p_no={paperKey}",
+      "sourceDeclaredEffect": "unknown",
+      "sourceEvidenceGrade": "source_candidate_not_live_verified",
+      "sourceEvidenceDate": null,
+      "joinKeyCandidates": [
+        "studentKey",
+        "paperKey",
+        "attemptKey"
+      ],
+      "sourceRefs": [
+        "research/backend-map/learning-assessment.md:46"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "정적 후보와 업무영역 연결; 호출 계약 또는 권한이 아님"
+    },
+    {
+      "id": "candidate:paper_items",
+      "origin": "source_candidate",
+      "domain": "assessment",
+      "operation": "getTestExamList",
+      "method": null,
+      "pathTemplate": "unresolved:TestpageSelectExServlet?p_process=getTestExamList&p_no={paperKey}",
+      "sourceDeclaredEffect": "unknown",
+      "sourceEvidenceGrade": "source_candidate_not_live_verified",
+      "sourceEvidenceDate": null,
+      "joinKeyCandidates": [
+        "studentKey",
+        "paperKey",
+        "attemptKey"
+      ],
+      "sourceRefs": [
+        "research/backend-map/learning-assessment.md:46"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "정적 후보와 업무영역 연결; 호출 계약 또는 권한이 아님"
+    },
+    {
+      "id": "candidate:smartbook_by_name",
+      "origin": "source_candidate",
+      "domain": "smartbook",
+      "operation": "SmartBookResultSearchByName",
+      "method": null,
+      "pathTemplate": "/servlet/controller.tutor.wb.WbTeachList1Servlet",
+      "sourceDeclaredEffect": "unknown",
+      "sourceEvidenceGrade": "source_candidate_not_live_verified",
+      "sourceEvidenceDate": null,
+      "joinKeyCandidates": [
+        "studentKey",
+        "paperKey",
+        "attemptKey"
+      ],
+      "sourceRefs": [
+        "research/backend-map/app-static.md:59"
+      ],
+      "runtimeCallable": false,
+      "productActivation": "mapped_only",
+      "relationshipMeaning": "정적 후보와 업무영역 연결; 호출 계약 또는 권한이 아님"
+    }
+  ],
+  "menuObservations": [
+    {
+      "id": "BaseManageIndex:1",
+      "branch": "BaseManageIndex",
+      "branchLabel": "사용자관리",
+      "label": "사용자검색",
+      "path": "/servlet/controller.tutor.base.UserSearchServlet",
+      "selector": {
+        "key": "p_process",
+        "literal": "Main"
+      },
+      "queryKeyNames": [
+        "p_process"
+      ],
+      "observedAtDate": "2026-10-01",
+      "evidenceGrade": "rendered_dom_href_declaration",
+      "signatureMatches": [
+        "candidate:roster_search"
+      ],
+      "matchMeaning": "리터럴 경로·선택자 일치일 뿐 동등한 요청, 카테고리, 데이터 조인, 권한 증명이 아님",
+      "currentCallable": false,
+      "childNavigationObserved": false,
+      "preservedEvenWhenHidden": true
+    },
+    {
+      "id": "BaseManageIndex:2",
+      "branch": "BaseManageIndex",
+      "branchLabel": "사용자관리",
+      "label": "학생승인&반편성",
+      "path": "/servlet/controller.tutor.base.UserClsManageServlet",
+      "selector": {
+        "key": "p_process",
+        "literal": "Main"
+      },
+      "queryKeyNames": [
+        "p_process"
+      ],
+      "observedAtDate": "2026-10-01",
+      "evidenceGrade": "rendered_dom_href_declaration",
+      "signatureMatches": [
+        "candidate:student_approval"
+      ],
+      "matchMeaning": "리터럴 경로·선택자 일치일 뿐 동등한 요청, 카테고리, 데이터 조인, 권한 증명이 아님",
+      "currentCallable": false,
+      "childNavigationObserved": false,
+      "preservedEvenWhenHidden": true
+    },
+    {
+      "id": "BaseManageIndex:3",
+      "branch": "BaseManageIndex",
+      "branchLabel": "사용자관리",
+      "label": "학습패드관리",
+      "path": "/servlet/controller.tutor.base.UserSearchServlet",
+      "selector": {
+        "key": "p_process",
+        "literal": "GetCertificateMain"
+      },
+      "queryKeyNames": [
+        "p_process"
+      ],
+      "observedAtDate": "2026-10-01",
+      "evidenceGrade": "rendered_dom_href_declaration",
+      "signatureMatches": [
+        "candidate:device_certificate"
+      ],
+      "matchMeaning": "리터럴 경로·선택자 일치일 뿐 동등한 요청, 카테고리, 데이터 조인, 권한 증명이 아님",
+      "currentCallable": false,
+      "childNavigationObserved": false,
+      "preservedEvenWhenHidden": true
+    },
+    {
+      "id": "BaseManageIndex:4",
+      "branch": "BaseManageIndex",
+      "branchLabel": "사용자관리",
+      "label": "교재요청관리",
+      "path": "/servlet/controller.bookorder.tutor.PreOrderServlet",
+      "selector": {
+        "key": "p_process",
+        "literal": "ClgMain"
+      },
+      "queryKeyNames": [
+        "p_process"
+      ],
+      "observedAtDate": "2026-10-01",
+      "evidenceGrade": "rendered_dom_href_declaration",
+      "signatureMatches": [
+        "candidate:book_orders"
+      ],
+      "matchMeaning": "리터럴 경로·선택자 일치일 뿐 동등한 요청, 카테고리, 데이터 조인, 권한 증명이 아님",
+      "currentCallable": false,
+      "childNavigationObserved": false,
+      "preservedEvenWhenHidden": true
+    },
+    {
+      "id": "DAIndex:1",
+      "branch": "DAIndex",
+      "branchLabel": "학력인증평가",
+      "label": "새로 만들기",
+      "path": "/servlet/controller.tutor.da.TestPageRegServlet",
+      "selector": {
+        "key": "p_process",
+        "literal": "Auto"
+      },
+      "queryKeyNames": [
+        "p_process"
+      ],
+      "observedAtDate": "2026-10-01",
+      "evidenceGrade": "rendered_dom_href_declaration",
+      "signatureMatches": [
+        "candidate:da_paper_create"
+      ],
+      "matchMeaning": "리터럴 경로·선택자 일치일 뿐 동등한 요청, 카테고리, 데이터 조인, 권한 증명이 아님",
+      "currentCallable": false,
+      "childNavigationObserved": false,
+      "preservedEvenWhenHidden": true
+    },
+    {
+      "id": "DAIndex:2",
+      "branch": "DAIndex",
+      "branchLabel": "학력인증평가",
+      "label": "시험지 목록 / 출제",
+      "path": "/servlet/controller.tutor.da.TestPageListGrpServlet",
+      "selector": {
+        "key": "p_process",
+        "literal": "Main"
+      },
+      "queryKeyNames": [
+        "p_process"
+      ],
+      "observedAtDate": "2026-10-01",
+      "evidenceGrade": "rendered_dom_href_declaration",
+      "signatureMatches": [
+        "candidate:da_paper_list"
+      ],
+      "matchMeaning": "리터럴 경로·선택자 일치일 뿐 동등한 요청, 카테고리, 데이터 조인, 권한 증명이 아님",
+      "currentCallable": false,
+      "childNavigationObserved": false,
+      "preservedEvenWhenHidden": true
+    },
+    {
+      "id": "DAIndex:3",
+      "branch": "DAIndex",
+      "branchLabel": "학력인증평가",
+      "label": "시험별 응시결과",
+      "path": "/servlet/controller.tutor.da.TestPageListServlet",
+      "selector": null,
+      "queryKeyNames": [],
+      "observedAtDate": "2026-10-01",
+      "evidenceGrade": "rendered_dom_href_declaration",
+      "signatureMatches": [
+        "candidate:da_exam_results"
+      ],
+      "matchMeaning": "리터럴 경로·선택자 일치일 뿐 동등한 요청, 카테고리, 데이터 조인, 권한 증명이 아님",
+      "currentCallable": false,
+      "childNavigationObserved": false,
+      "preservedEvenWhenHidden": true
+    },
+    {
+      "id": "DAIndex:4",
+      "branch": "DAIndex",
+      "branchLabel": "학력인증평가",
+      "label": "기간별 응시결과",
+      "path": "/servlet/controller.tutor.da.MarksResultDigestServlet",
+      "selector": {
+        "key": "p_process",
+        "literal": "Main"
+      },
+      "queryKeyNames": [
+        "p_process"
+      ],
+      "observedAtDate": "2026-10-01",
+      "evidenceGrade": "rendered_dom_href_declaration",
+      "signatureMatches": [
+        "candidate:da_period_results"
+      ],
+      "matchMeaning": "리터럴 경로·선택자 일치일 뿐 동등한 요청, 카테고리, 데이터 조인, 권한 증명이 아님",
+      "currentCallable": false,
+      "childNavigationObserved": false,
+      "preservedEvenWhenHidden": true
+    },
+    {
+      "id": "DAIndex:5",
+      "branch": "DAIndex",
+      "branchLabel": "학력인증평가",
+      "label": "학생별 응시결과",
+      "path": "/servlet/controller.tutor.base.TestPageListServlet",
+      "selector": {
+        "key": "p_process",
+        "literal": "UserByMain"
+      },
+      "queryKeyNames": [
+        "p_process",
+        "ass_no"
+      ],
+      "observedAtDate": "2026-10-01",
+      "evidenceGrade": "rendered_dom_href_declaration",
+      "signatureMatches": [
+        "fa_student_results"
+      ],
+      "matchMeaning": "리터럴 경로·선택자 일치일 뿐 동등한 요청, 카테고리, 데이터 조인, 권한 증명이 아님",
+      "currentCallable": false,
+      "childNavigationObserved": false,
+      "preservedEvenWhenHidden": true
+    },
+    {
+      "id": "DAIndex:6",
+      "branch": "DAIndex",
+      "branchLabel": "학력인증평가",
+      "label": "시험지 목록",
+      "path": "/servlet/controller.tutor.diag.DiagnostManageServlet",
+      "selector": {
+        "key": "reqCmd",
+        "literal": "TestPaperList"
+      },
+      "queryKeyNames": [
+        "reqCmd"
+      ],
+      "observedAtDate": "2026-10-01",
+      "evidenceGrade": "rendered_dom_href_declaration",
+      "signatureMatches": [
+        "candidate:diagnostic_papers"
+      ],
+      "matchMeaning": "리터럴 경로·선택자 일치일 뿐 동등한 요청, 카테고리, 데이터 조인, 권한 증명이 아님",
+      "currentCallable": false,
+      "childNavigationObserved": false,
+      "preservedEvenWhenHidden": true
+    },
+    {
+      "id": "DAIndex:7",
+      "branch": "DAIndex",
+      "branchLabel": "학력인증평가",
+      "label": "시험 결과",
+      "path": "/servlet/controller.tutor.diag.DiagnostManageServlet",
+      "selector": {
+        "key": "reqCmd",
+        "literal": "TestResultList"
+      },
+      "queryKeyNames": [
+        "reqCmd"
+      ],
+      "observedAtDate": "2026-10-01",
+      "evidenceGrade": "rendered_dom_href_declaration",
+      "signatureMatches": [
+        "candidate:diagnostic_results"
+      ],
+      "matchMeaning": "리터럴 경로·선택자 일치일 뿐 동등한 요청, 카테고리, 데이터 조인, 권한 증명이 아님",
+      "currentCallable": false,
+      "childNavigationObserved": false,
+      "preservedEvenWhenHidden": true
+    },
+    {
+      "id": "DAIndex:8",
+      "branch": "DAIndex",
+      "branchLabel": "학력인증평가",
+      "label": null,
+      "path": "/servlet/controller.tutor.da.TestPageListOurclgServlet",
+      "selector": {
+        "key": "p_process",
+        "literal": "Main"
+      },
+      "queryKeyNames": [
+        "p_process"
+      ],
+      "observedAtDate": "2026-10-01",
+      "evidenceGrade": "rendered_dom_href_declaration",
+      "signatureMatches": [],
+      "matchMeaning": "리터럴 경로·선택자 일치일 뿐 동등한 요청, 카테고리, 데이터 조인, 권한 증명이 아님",
+      "currentCallable": false,
+      "childNavigationObserved": false,
+      "preservedEvenWhenHidden": true
+    },
+    {
+      "id": "FAIndex:1",
+      "branch": "FAIndex",
+      "branchLabel": "형성평가",
+      "label": "새로 만들기",
+      "path": "/servlet/controller.tutor.fa.TestPageRegServlet",
+      "selector": {
+        "key": "p_process",
+        "literal": "Auto"
+      },
+      "queryKeyNames": [
+        "p_process"
+      ],
+      "observedAtDate": "2026-10-01",
+      "evidenceGrade": "rendered_dom_href_declaration",
+      "signatureMatches": [
+        "candidate:fa_paper_create"
+      ],
+      "matchMeaning": "리터럴 경로·선택자 일치일 뿐 동등한 요청, 카테고리, 데이터 조인, 권한 증명이 아님",
+      "currentCallable": false,
+      "childNavigationObserved": false,
+      "preservedEvenWhenHidden": true
+    },
+    {
+      "id": "FAIndex:2",
+      "branch": "FAIndex",
+      "branchLabel": "형성평가",
+      "label": "시험지 목록 / 출제",
+      "path": "/servlet/controller.tutor.fa.TestPageListGrpServlet",
+      "selector": {
+        "key": "p_process",
+        "literal": "Main"
+      },
+      "queryKeyNames": [
+        "p_process"
+      ],
+      "observedAtDate": "2026-10-01",
+      "evidenceGrade": "rendered_dom_href_declaration",
+      "signatureMatches": [
+        "candidate:fa_paper_list"
+      ],
+      "matchMeaning": "리터럴 경로·선택자 일치일 뿐 동등한 요청, 카테고리, 데이터 조인, 권한 증명이 아님",
+      "currentCallable": false,
+      "childNavigationObserved": false,
+      "preservedEvenWhenHidden": true
+    },
+    {
+      "id": "FAIndex:3",
+      "branch": "FAIndex",
+      "branchLabel": "형성평가",
+      "label": "시험별 응시결과",
+      "path": "/servlet/controller.tutor.fa.TestPageListServlet",
+      "selector": null,
+      "queryKeyNames": [],
+      "observedAtDate": "2026-10-01",
+      "evidenceGrade": "rendered_dom_href_declaration",
+      "signatureMatches": [
+        "candidate:fa_exam_results"
+      ],
+      "matchMeaning": "리터럴 경로·선택자 일치일 뿐 동등한 요청, 카테고리, 데이터 조인, 권한 증명이 아님",
+      "currentCallable": false,
+      "childNavigationObserved": false,
+      "preservedEvenWhenHidden": true
+    },
+    {
+      "id": "FAIndex:4",
+      "branch": "FAIndex",
+      "branchLabel": "형성평가",
+      "label": "기간별 응시결과",
+      "path": "/servlet/controller.tutor.fa.MarksResultDigestServlet",
+      "selector": {
+        "key": "p_process",
+        "literal": "Main"
+      },
+      "queryKeyNames": [
+        "p_process"
+      ],
+      "observedAtDate": "2026-10-01",
+      "evidenceGrade": "rendered_dom_href_declaration",
+      "signatureMatches": [
+        "candidate:fa_period_results"
+      ],
+      "matchMeaning": "리터럴 경로·선택자 일치일 뿐 동등한 요청, 카테고리, 데이터 조인, 권한 증명이 아님",
+      "currentCallable": false,
+      "childNavigationObserved": false,
+      "preservedEvenWhenHidden": true
+    },
+    {
+      "id": "FAIndex:5",
+      "branch": "FAIndex",
+      "branchLabel": "형성평가",
+      "label": "학생별 응시결과",
+      "path": "/servlet/controller.tutor.base.TestPageListServlet",
+      "selector": {
+        "key": "p_process",
+        "literal": "UserByMain"
+      },
+      "queryKeyNames": [
+        "p_process",
+        "ass_no"
+      ],
+      "observedAtDate": "2026-10-01",
+      "evidenceGrade": "rendered_dom_href_declaration",
+      "signatureMatches": [
+        "fa_student_results"
+      ],
+      "matchMeaning": "리터럴 경로·선택자 일치일 뿐 동등한 요청, 카테고리, 데이터 조인, 권한 증명이 아님",
+      "currentCallable": false,
+      "childNavigationObserved": false,
+      "preservedEvenWhenHidden": true
+    },
+    {
+      "id": "FAIndex:6",
+      "branch": "FAIndex",
+      "branchLabel": "형성평가",
+      "label": null,
+      "path": "/servlet/controller.tutor.fa.TestPageListOurclgServlet",
+      "selector": {
+        "key": "p_process",
+        "literal": "Main"
+      },
+      "queryKeyNames": [
+        "p_process"
+      ],
+      "observedAtDate": "2026-10-01",
+      "evidenceGrade": "rendered_dom_href_declaration",
+      "signatureMatches": [],
+      "matchMeaning": "리터럴 경로·선택자 일치일 뿐 동등한 요청, 카테고리, 데이터 조인, 권한 증명이 아님",
+      "currentCallable": false,
+      "childNavigationObserved": false,
+      "preservedEvenWhenHidden": true
+    },
+    {
+      "id": "NAIndex:1",
+      "branch": "NAIndex",
+      "branchLabel": "수시평가",
+      "label": "새로 만들기",
+      "path": "/servlet/controller.tutor.na.TestPageRegServlet",
+      "selector": {
+        "key": "p_process",
+        "literal": "Auto"
+      },
+      "queryKeyNames": [
+        "p_process"
+      ],
+      "observedAtDate": "2026-10-01",
+      "evidenceGrade": "rendered_dom_href_declaration",
+      "signatureMatches": [
+        "candidate:na_paper_create"
+      ],
+      "matchMeaning": "리터럴 경로·선택자 일치일 뿐 동등한 요청, 카테고리, 데이터 조인, 권한 증명이 아님",
+      "currentCallable": false,
+      "childNavigationObserved": false,
+      "preservedEvenWhenHidden": true
+    },
+    {
+      "id": "NAIndex:2",
+      "branch": "NAIndex",
+      "branchLabel": "수시평가",
+      "label": "채점도우미",
+      "path": "/servlet/controller.tutor.na.TestPageRegServlet",
+      "selector": {
+        "key": "p_process",
+        "literal": "NonePaper"
+      },
+      "queryKeyNames": [
+        "p_process"
+      ],
+      "observedAtDate": "2026-10-01",
+      "evidenceGrade": "rendered_dom_href_declaration",
+      "signatureMatches": [
+        "candidate:grading_helper"
+      ],
+      "matchMeaning": "리터럴 경로·선택자 일치일 뿐 동등한 요청, 카테고리, 데이터 조인, 권한 증명이 아님",
+      "currentCallable": false,
+      "childNavigationObserved": false,
+      "preservedEvenWhenHidden": true
+    },
+    {
+      "id": "NAIndex:3",
+      "branch": "NAIndex",
+      "branchLabel": "수시평가",
+      "label": "시험지 목록 / 출제",
+      "path": "/servlet/controller.tutor.na.TestPageListOurclgServlet",
+      "selector": {
+        "key": "p_process",
+        "literal": "Main"
+      },
+      "queryKeyNames": [
+        "p_process"
+      ],
+      "observedAtDate": "2026-10-01",
+      "evidenceGrade": "rendered_dom_href_declaration",
+      "signatureMatches": [
+        "candidate:na_paper_list"
+      ],
+      "matchMeaning": "리터럴 경로·선택자 일치일 뿐 동등한 요청, 카테고리, 데이터 조인, 권한 증명이 아님",
+      "currentCallable": false,
+      "childNavigationObserved": false,
+      "preservedEvenWhenHidden": true
+    },
+    {
+      "id": "NAIndex:4",
+      "branch": "NAIndex",
+      "branchLabel": "수시평가",
+      "label": "시험별 응시결과",
+      "path": "/servlet/controller.tutor.na.TestPageListServlet",
+      "selector": null,
+      "queryKeyNames": [],
+      "observedAtDate": "2026-10-01",
+      "evidenceGrade": "rendered_dom_href_declaration",
+      "signatureMatches": [
+        "candidate:na_exam_results"
+      ],
+      "matchMeaning": "리터럴 경로·선택자 일치일 뿐 동등한 요청, 카테고리, 데이터 조인, 권한 증명이 아님",
+      "currentCallable": false,
+      "childNavigationObserved": false,
+      "preservedEvenWhenHidden": true
+    },
+    {
+      "id": "NAIndex:5",
+      "branch": "NAIndex",
+      "branchLabel": "수시평가",
+      "label": "기간별 응시결과",
+      "path": "/servlet/controller.tutor.na.MarksResultDigestServlet",
+      "selector": {
+        "key": "p_process",
+        "literal": "Main"
+      },
+      "queryKeyNames": [
+        "p_process"
+      ],
+      "observedAtDate": "2026-10-01",
+      "evidenceGrade": "rendered_dom_href_declaration",
+      "signatureMatches": [
+        "candidate:na_period_results"
+      ],
+      "matchMeaning": "리터럴 경로·선택자 일치일 뿐 동등한 요청, 카테고리, 데이터 조인, 권한 증명이 아님",
+      "currentCallable": false,
+      "childNavigationObserved": false,
+      "preservedEvenWhenHidden": true
+    },
+    {
+      "id": "NAIndex:6",
+      "branch": "NAIndex",
+      "branchLabel": "수시평가",
+      "label": "학생별 응시결과",
+      "path": "/servlet/controller.tutor.base.TestPageListServlet",
+      "selector": {
+        "key": "p_process",
+        "literal": "UserByMain"
+      },
+      "queryKeyNames": [
+        "p_process",
+        "ass_no"
+      ],
+      "observedAtDate": "2026-10-01",
+      "evidenceGrade": "rendered_dom_href_declaration",
+      "signatureMatches": [
+        "fa_student_results"
+      ],
+      "matchMeaning": "리터럴 경로·선택자 일치일 뿐 동등한 요청, 카테고리, 데이터 조인, 권한 증명이 아님",
+      "currentCallable": false,
+      "childNavigationObserved": false,
+      "preservedEvenWhenHidden": true
+    },
+    {
+      "id": "NAIndex:7",
+      "branch": "NAIndex",
+      "branchLabel": "수시평가",
+      "label": null,
+      "path": "/servlet/controller.tutor.na.TestPageListGrpServlet",
+      "selector": {
+        "key": "p_process",
+        "literal": "Main"
+      },
+      "queryKeyNames": [
+        "p_process"
+      ],
+      "observedAtDate": "2026-10-01",
+      "evidenceGrade": "rendered_dom_href_declaration",
+      "signatureMatches": [],
+      "matchMeaning": "리터럴 경로·선택자 일치일 뿐 동등한 요청, 카테고리, 데이터 조인, 권한 증명이 아님",
+      "currentCallable": false,
+      "childNavigationObserved": false,
+      "preservedEvenWhenHidden": true
+    },
+    {
+      "id": "TestPoolIndex:1",
+      "branch": "TestPoolIndex",
+      "branchLabel": "문제지제작",
+      "label": "문제지 조회",
+      "path": "/servlet/controller.tutor.etest.TestPoolServlet",
+      "selector": {
+        "key": "reqCmd",
+        "literal": "Main"
+      },
+      "queryKeyNames": [
+        "reqCmd"
+      ],
+      "observedAtDate": "2026-10-01",
+      "evidenceGrade": "rendered_dom_href_declaration",
+      "signatureMatches": [
+        "test_pool"
+      ],
+      "matchMeaning": "리터럴 경로·선택자 일치일 뿐 동등한 요청, 카테고리, 데이터 조인, 권한 증명이 아님",
+      "currentCallable": false,
+      "childNavigationObserved": false,
+      "preservedEvenWhenHidden": true
+    },
+    {
+      "id": "TestPoolIndex:2",
+      "branch": "TestPoolIndex",
+      "branchLabel": "문제지제작",
+      "label": "문제지 제작 이력조회",
+      "path": "/servlet/controller.tutor.etest.TestPoolServlet",
+      "selector": {
+        "key": "reqCmd",
+        "literal": "LogViewList"
+      },
+      "queryKeyNames": [
+        "reqCmd"
+      ],
+      "observedAtDate": "2026-10-01",
+      "evidenceGrade": "rendered_dom_href_declaration",
+      "signatureMatches": [
+        "candidate:paper_history"
+      ],
+      "matchMeaning": "리터럴 경로·선택자 일치일 뿐 동등한 요청, 카테고리, 데이터 조인, 권한 증명이 아님",
+      "currentCallable": false,
+      "childNavigationObserved": false,
+      "preservedEvenWhenHidden": true
+    },
+    {
+      "id": "CourseMainIndex:1",
+      "branch": "CourseMainIndex",
+      "branchLabel": "학습관리",
+      "label": "강아학습결과",
+      "path": "/servlet/controller.tutor.base.TestPageListServlet",
+      "selector": {
+        "key": "p_process",
+        "literal": "Main"
+      },
+      "queryKeyNames": [
+        "p_process"
+      ],
+      "observedAtDate": "2026-10-01",
+      "evidenceGrade": "rendered_dom_href_declaration",
+      "signatureMatches": [
+        "candidate:learning_results"
+      ],
+      "matchMeaning": "리터럴 경로·선택자 일치일 뿐 동등한 요청, 카테고리, 데이터 조인, 권한 증명이 아님",
+      "currentCallable": false,
+      "childNavigationObserved": false,
+      "preservedEvenWhenHidden": true
+    },
+    {
+      "id": "CourseMainIndex:2",
+      "branch": "CourseMainIndex",
+      "branchLabel": "학습관리",
+      "label": "교재리포트 생성",
+      "path": "/servlet/controller.coursemanage.TextBookManageServlet",
+      "selector": {
+        "key": "reqCmd",
+        "literal": "getTextBookMain"
+      },
+      "queryKeyNames": [
+        "reqCmd"
+      ],
+      "observedAtDate": "2026-10-01",
+      "evidenceGrade": "rendered_dom_href_declaration",
+      "signatureMatches": [
+        "textbook_main"
+      ],
+      "matchMeaning": "리터럴 경로·선택자 일치일 뿐 동등한 요청, 카테고리, 데이터 조인, 권한 증명이 아님",
+      "currentCallable": false,
+      "childNavigationObserved": false,
+      "preservedEvenWhenHidden": true
+    },
+    {
+      "id": "CourseMainIndex:3",
+      "branch": "CourseMainIndex",
+      "branchLabel": "학습관리",
+      "label": "DT / ZT 목록",
+      "path": "/servlet/controller.dailyzerotest.DailyZeroTestServlet",
+      "selector": {
+        "key": "reqCmd",
+        "literal": "DailyZeroTestMain"
+      },
+      "queryKeyNames": [
+        "reqCmd"
+      ],
+      "observedAtDate": "2026-10-01",
+      "evidenceGrade": "rendered_dom_href_declaration",
+      "signatureMatches": [
+        "dtzt_list"
+      ],
+      "matchMeaning": "리터럴 경로·선택자 일치일 뿐 동등한 요청, 카테고리, 데이터 조인, 권한 증명이 아님",
+      "currentCallable": false,
+      "childNavigationObserved": false,
+      "preservedEvenWhenHidden": true
+    },
+    {
+      "id": "CourseMainIndex:4",
+      "branch": "CourseMainIndex",
+      "branchLabel": "학습관리",
+      "label": "DT / ZT 결과",
+      "path": "/servlet/controller.dailyzerotest.DailyZeroTestServlet",
+      "selector": {
+        "key": "reqCmd",
+        "literal": "DailyZeroTestResult"
+      },
+      "queryKeyNames": [
+        "reqCmd"
+      ],
+      "observedAtDate": "2026-10-01",
+      "evidenceGrade": "rendered_dom_href_declaration",
+      "signatureMatches": [
+        "dtzt_result"
+      ],
+      "matchMeaning": "리터럴 경로·선택자 일치일 뿐 동등한 요청, 카테고리, 데이터 조인, 권한 증명이 아님",
+      "currentCallable": false,
+      "childNavigationObserved": false,
+      "preservedEvenWhenHidden": true
+    },
+    {
+      "id": "CourseMainIndex:5",
+      "branch": "CourseMainIndex",
+      "branchLabel": "학습관리",
+      "label": "진도현황표",
+      "path": "/servlet/controller.coursemanage.CourseManageServlet",
+      "selector": {
+        "key": "reqCmd",
+        "literal": "StudyMain"
+      },
+      "queryKeyNames": [
+        "reqCmd"
+      ],
+      "observedAtDate": "2026-10-01",
+      "evidenceGrade": "rendered_dom_href_declaration",
+      "signatureMatches": [
+        "study_overview"
+      ],
+      "matchMeaning": "리터럴 경로·선택자 일치일 뿐 동등한 요청, 카테고리, 데이터 조인, 권한 증명이 아님",
+      "currentCallable": false,
+      "childNavigationObserved": false,
+      "preservedEvenWhenHidden": true
+    },
+    {
+      "id": "CourseMainIndex:6",
+      "branch": "CourseMainIndex",
+      "branchLabel": "학습관리",
+      "label": "학습과정별 개념진도현황",
+      "path": "/servlet/controller.coursemanage.CourseManageServlet",
+      "selector": {
+        "key": "reqCmd",
+        "literal": "StudyPro"
+      },
+      "queryKeyNames": [
+        "reqCmd"
+      ],
+      "observedAtDate": "2026-10-01",
+      "evidenceGrade": "rendered_dom_href_declaration",
+      "signatureMatches": [
+        "study_progress"
+      ],
+      "matchMeaning": "리터럴 경로·선택자 일치일 뿐 동등한 요청, 카테고리, 데이터 조인, 권한 증명이 아님",
+      "currentCallable": false,
+      "childNavigationObserved": false,
+      "preservedEvenWhenHidden": true
+    },
+    {
+      "id": "CourseMainIndex:7",
+      "branch": "CourseMainIndex",
+      "branchLabel": "학습관리",
+      "label": "학생별 진도현황",
+      "path": "/servlet/controller.coursemanage.CourseManageServlet",
+      "selector": {
+        "key": "reqCmd",
+        "literal": "StudySchedule"
+      },
+      "queryKeyNames": [
+        "reqCmd"
+      ],
+      "observedAtDate": "2026-10-01",
+      "evidenceGrade": "rendered_dom_href_declaration",
+      "signatureMatches": [
+        "study_schedule"
+      ],
+      "matchMeaning": "리터럴 경로·선택자 일치일 뿐 동등한 요청, 카테고리, 데이터 조인, 권한 증명이 아님",
+      "currentCallable": false,
+      "childNavigationObserved": false,
+      "preservedEvenWhenHidden": true
+    },
+    {
+      "id": "CourseMainIndex:8",
+      "branch": "CourseMainIndex",
+      "branchLabel": "학습관리",
+      "label": "학생별 학습과정 관리",
+      "path": "/servlet/controller.coursemanage.CourseManageServlet",
+      "selector": {
+        "key": "reqCmd",
+        "literal": "StudyCourse"
+      },
+      "queryKeyNames": [
+        "reqCmd"
+      ],
+      "observedAtDate": "2026-10-01",
+      "evidenceGrade": "rendered_dom_href_declaration",
+      "signatureMatches": [
+        "study_course"
+      ],
+      "matchMeaning": "리터럴 경로·선택자 일치일 뿐 동등한 요청, 카테고리, 데이터 조인, 권한 증명이 아님",
+      "currentCallable": false,
+      "childNavigationObserved": false,
+      "preservedEvenWhenHidden": true
+    },
+    {
+      "id": "CourseMainIndex:9",
+      "branch": "CourseMainIndex",
+      "branchLabel": "학습관리",
+      "label": "학습과정 조회",
+      "path": "/servlet/controller.coursemanage.CourseManageServlet",
+      "selector": {
+        "key": "reqCmd",
+        "literal": "CourseStudyManager"
+      },
+      "queryKeyNames": [
+        "reqCmd"
+      ],
+      "observedAtDate": "2026-10-01",
+      "evidenceGrade": "rendered_dom_href_declaration",
+      "signatureMatches": [
+        "candidate:course_lookup"
+      ],
+      "matchMeaning": "리터럴 경로·선택자 일치일 뿐 동등한 요청, 카테고리, 데이터 조인, 권한 증명이 아님",
+      "currentCallable": false,
+      "childNavigationObserved": false,
+      "preservedEvenWhenHidden": true
+    },
+    {
+      "id": "CourseMainIndex:10",
+      "branch": "CourseMainIndex",
+      "branchLabel": "학습관리",
+      "label": "교재정답지 & 일일학습",
+      "path": "/servlet/controller.coursemanage.CourseManageServlet",
+      "selector": {
+        "key": "reqCmd",
+        "literal": "GaStudyAnswer"
+      },
+      "queryKeyNames": [
+        "reqCmd"
+      ],
+      "observedAtDate": "2026-10-01",
+      "evidenceGrade": "rendered_dom_href_declaration",
+      "signatureMatches": [
+        "textbook_answer_catalog"
+      ],
+      "matchMeaning": "리터럴 경로·선택자 일치일 뿐 동등한 요청, 카테고리, 데이터 조인, 권한 증명이 아님",
+      "currentCallable": false,
+      "childNavigationObserved": false,
+      "preservedEvenWhenHidden": true
+    },
+    {
+      "id": "CourseMainIndex:11",
+      "branch": "CourseMainIndex",
+      "branchLabel": "학습관리",
+      "label": "예습 확인",
+      "path": "/servlet/controller.coursemanage.CourseManageServlet",
+      "selector": {
+        "key": "reqCmd",
+        "literal": "WebUnPreStudy"
+      },
+      "queryKeyNames": [
+        "reqCmd"
+      ],
+      "observedAtDate": "2026-10-01",
+      "evidenceGrade": "rendered_dom_href_declaration",
+      "signatureMatches": [
+        "prestudy_waiting",
+        "prestudy_waiting_search"
+      ],
+      "matchMeaning": "리터럴 경로·선택자 일치일 뿐 동등한 요청, 카테고리, 데이터 조인, 권한 증명이 아님",
+      "currentCallable": false,
+      "childNavigationObserved": false,
+      "preservedEvenWhenHidden": true
+    },
+    {
+      "id": "CourseMainIndex:12",
+      "branch": "CourseMainIndex",
+      "branchLabel": "학습관리",
+      "label": "예습영상 현황",
+      "path": "/servlet/controller.coursemanage.CourseManageServlet",
+      "selector": {
+        "key": "reqCmd",
+        "literal": "TeacherPrestudySummary"
+      },
+      "queryKeyNames": [
+        "reqCmd"
+      ],
+      "observedAtDate": "2026-10-01",
+      "evidenceGrade": "rendered_dom_href_declaration",
+      "signatureMatches": [
+        "prestudy_summary"
+      ],
+      "matchMeaning": "리터럴 경로·선택자 일치일 뿐 동등한 요청, 카테고리, 데이터 조인, 권한 증명이 아님",
+      "currentCallable": false,
+      "childNavigationObserved": false,
+      "preservedEvenWhenHidden": true
+    },
+    {
+      "id": "CourseMainIndex:13",
+      "branch": "CourseMainIndex",
+      "branchLabel": "학습관리",
+      "label": "알림톡 목록",
+      "path": "/servlet/controller.appui.alimtalk.AlimtalkServlet",
+      "selector": {
+        "key": "p_process",
+        "literal": "AlimtalkList"
+      },
+      "queryKeyNames": [
+        "p_process"
+      ],
+      "observedAtDate": "2026-10-01",
+      "evidenceGrade": "rendered_dom_href_declaration",
+      "signatureMatches": [
+        "alimtalk_history"
+      ],
+      "matchMeaning": "리터럴 경로·선택자 일치일 뿐 동등한 요청, 카테고리, 데이터 조인, 권한 증명이 아님",
+      "currentCallable": false,
+      "childNavigationObserved": false,
+      "preservedEvenWhenHidden": true
+    },
+    {
+      "id": "CourseMainIndex:14",
+      "branch": "CourseMainIndex",
+      "branchLabel": "학습관리",
+      "label": null,
+      "path": "/servlet/controller.coursemanage.CourseManageServlet",
+      "selector": {
+        "key": "reqCmd",
+        "literal": "PreStudyDownloadList"
+      },
+      "queryKeyNames": [
+        "reqCmd"
+      ],
+      "observedAtDate": "2026-10-01",
+      "evidenceGrade": "rendered_dom_href_declaration",
+      "signatureMatches": [],
+      "matchMeaning": "리터럴 경로·선택자 일치일 뿐 동등한 요청, 카테고리, 데이터 조인, 권한 증명이 아님",
+      "currentCallable": false,
+      "childNavigationObserved": false,
+      "preservedEvenWhenHidden": true
+    },
+    {
+      "id": "SmartBookMainIndex:1",
+      "branch": "SmartBookMainIndex",
+      "branchLabel": "스마트북",
+      "label": "스마트북 목록",
+      "path": "/servlet/controller.tutor.wb.WorkbookManageServlet",
+      "selector": {
+        "key": "p_process",
+        "literal": "Main"
+      },
+      "queryKeyNames": [
+        "p_process"
+      ],
+      "observedAtDate": "2026-10-01",
+      "evidenceGrade": "rendered_dom_href_declaration",
+      "signatureMatches": [
+        "workbook_catalog"
+      ],
+      "matchMeaning": "리터럴 경로·선택자 일치일 뿐 동등한 요청, 카테고리, 데이터 조인, 권한 증명이 아님",
+      "currentCallable": false,
+      "childNavigationObserved": false,
+      "preservedEvenWhenHidden": true
+    },
+    {
+      "id": "SmartBookMainIndex:2",
+      "branch": "SmartBookMainIndex",
+      "branchLabel": "스마트북",
+      "label": "스마트북 시험결과",
+      "path": "/servlet/controller.tutor.wb.WbTeachList1Servlet",
+      "selector": {
+        "key": "p_process",
+        "literal": "SmartBookResultMain"
+      },
+      "queryKeyNames": [
+        "p_process"
+      ],
+      "observedAtDate": "2026-10-01",
+      "evidenceGrade": "rendered_dom_href_declaration",
+      "signatureMatches": [
+        "smartbook_result"
+      ],
+      "matchMeaning": "리터럴 경로·선택자 일치일 뿐 동등한 요청, 카테고리, 데이터 조인, 권한 증명이 아님",
+      "currentCallable": false,
+      "childNavigationObserved": false,
+      "preservedEvenWhenHidden": true
+    }
+  ],
+  "effectBoundaries": [
+    {
+      "id": "wrong_note_to_generation",
+      "source": "clinic/textbook-main-current.js:52-193",
+      "evidence": "manual_review_of_current_source; REA partial semantic context",
+      "chain": [
+        "createBookIncorrectPapers",
+        "POST getWrongAnswerNoteResult",
+        "noteResultList",
+        "incorrect.create=1",
+        "START",
+        "Typeset.createResultPaper"
+      ],
+      "classification": "compound_generation_workflow",
+      "readDisposition": "excluded_entire_wrapper",
+      "unknown": "getWrongAnswerNoteResult 단독 서버 효과와 응답 계약은 미검증",
+      "relatedOperationIds": [
+        "similar_paper_create",
+        "candidate:typeset_single",
+        "candidate:typeset_multi"
+      ],
+      "sameOperationClaim": false
+    },
+    {
+      "id": "textbook_report_native_bridge",
+      "source": "clinic/textbook-main-current.js:30-45",
+      "evidence": "manual_review_of_current_source; REA partial semantic context",
+      "chain": [
+        "callReport",
+        "MODULE.NativeCallManager.urlscmCommand",
+        "CreateTextBookReport"
+      ],
+      "classification": "native_report_generation_candidate",
+      "readDisposition": "excluded",
+      "parameterNames": [
+        "G_SCHOOL_KEY",
+        "G_USER_KEY",
+        "course_key",
+        "book_no",
+        "pri_no"
+      ],
+      "unknown": "native implementation, actual generated artifact, print effects, and persistence not observed"
+    },
+    {
+      "id": "session_skip_change",
+      "source": "clinic/mobile-inline-reviewed-excerpt.js:5-18",
+      "evidence": "manual_review_of_current_source; REA partial semantic context",
+      "chain": [
+        "setChangeLectureStatusSkip",
+        "POST reqCmd=SessionChangeLectureStatusSkip",
+        "/servlet/controller.first.RegAppServlet"
+      ],
+      "classification": "session_or_learning_state_change_candidate",
+      "readDisposition": "excluded",
+      "relatedOperationIds": [
+        "app_registration"
+      ],
+      "sameOperationClaim": false,
+      "unknown": "actual state and server side effects unverified"
+    },
+    {
+      "id": "result_detail_wrapper_tag",
+      "source": "clinic/official-result-detail-route.js:9-10,29",
+      "evidence": "manual_review_of_current_source",
+      "chain": [
+        "onPopupViewTestResultButtonClick",
+        "makeTag",
+        "MODULE.TagManager.saveTag",
+        "MODULE.Commons.showPopUp"
+      ],
+      "classification": "wrapper_has_unclassified_tag_effect",
+      "readDisposition": "do_not_invoke_whole_wrapper_as_pure_read",
+      "unknown": "TagManager implementation/storage/network effect absent",
+      "separateReadEvidence": "Observed initial PupilSearch GET and DOM reading remain separate; source-derived route does not certify the wrapper"
+    },
+    {
+      "id": "assessment_category_route",
+      "source": "clinic/official-result-detail-route.js:12-26; lms-automation/ganga/lms/endpoints.py:153-154",
+      "evidence": "manual_literal_branch_comparison",
+      "mapping": [
+        {
+          "assNo": 1000,
+          "kind": "DA",
+          "pathFamily": "tutor.da"
+        },
+        {
+          "assNo": 1001,
+          "kind": "FA",
+          "pathFamily": "tutor.fa"
+        },
+        {
+          "assNo": 1002,
+          "kind": "NA",
+          "pathFamily": "tutor.na"
+        }
+      ],
+      "classification": "static_route_mapping_consistent",
+      "readDisposition": "only separately verified bounded NA initial GET currently observed",
+      "unknown": "FA/DA live result contracts and all dynamic parameter semantics unverified"
+    }
+  ],
+  "reaEvidence": "rea-crosscheck.json",
+  "handlerOnlyDeclarations": [
+    {
+      "branch": "SmartBookMainIndex",
+      "sourceAnchor": "https://dc.gang-a.kr/servlet/controller.tutor.TutorMenuIndexServlet?p_process=SmartBookMainIndex",
+      "linkLabel": null,
+      "handler": "createWorkBookWizard",
+      "destinationEstablished": false,
+      "evidenceLevel": "rendered_dom_javascript_href",
+      "invoked": false,
+      "executionDisposition": "excluded_creation_workflow",
+      "currentCallable": false,
+      "preserve": true
+    }
+  ],
+  "unmappedMenuObservations": [
+    "DAIndex:8",
+    "FAIndex:6",
+    "NAIndex:7",
+    "CourseMainIndex:14"
+  ],
+  "notes": [
+    "미매핑은 삭제하지 않고 별도 원천 관측으로 남긴다.",
+    "FA/NA/DA 공용 UserByMain 경로 일치는 ass_no 값 동일성이나 요청 동등성을 입증하지 않는다.",
+    "domain 배치와 entity 관계는 설계 해석이다. 실제 조인은 독립된 증거 수준을 갖는다.",
+    "새 REA 분석은 세 JS 파일의 부분 의미분석이다. 별도 효과경계를 추가하지만 정적 후보를 호출 가능으로 전환하지 않는다."
+  ],
+  "exportProvenance": {
+    "locatorClassification": "historical_nonportable_locator",
+    "meaning": "Source file/line/pointer references identify original observations. Referenced private captures are intentionally absent and these strings are not resolvable repository links.",
+    "mappingDocument": "validation/provenance-path-map.json",
+    "runtimeAuthority": false
+  }
+}

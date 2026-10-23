@@ -1,0 +1,14 @@
+{
+  "schema": "academy.consumer-local-assembly-failure.v1",
+  "observedAt": "2026-10-21T09:46:53.057856+00:00",
+  "command": "bun architecture/academy-consumer-integration/finalize-selection.ts",
+  "exitCode": 1,
+  "canonicalError": "SOURCE_ONLY_TASK_CANNOT_CLAIM_NATIVE_EFFECT",
+  "cause": "Attempted executionEvidenceId on source-only Task; canonical assertRecord rejected before Task write.",
+  "taskWritten": false,
+  "retainedInputs": [
+    "CON-01-RESULT-R1",
+    "CON-01-VERIFICATION-R1"
+  ],
+  "disposition": "Retain as first local assembly; R2 must omit native-effect-only field and bind result through observation Evidence and Verification inputHashes. R1 is not the final source checkpoint."
+}

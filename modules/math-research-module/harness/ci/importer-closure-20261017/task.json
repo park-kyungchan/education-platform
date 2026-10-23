@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectId": "math-research-module",
+  "domainId": "mathematics-education",
+  "createdAt": "2026-10-16T22:53:51.707057+00:00",
+  "kind": "task",
+  "id": "math-research-module:task:importer-closure-20261017",
+  "references": [
+    {
+      "artifactId": "math-research-module:project:manifest",
+      "relation": "parent"
+    }
+  ],
+  "payload": {
+    "title": "Close generated canonical dependency importer shadow bypass",
+    "objective": "Refuse ignored physical lookup shadows for both compiled canonical bundles before/after evaluation while preserving canonical validators and all immutable source pins.",
+    "status": "blocked",
+    "acceptanceCriteria": [
+      "actual-generated-importer-resolutions-and-physical-lookup-closure",
+      "before-after-ignored-shadow-regressions",
+      "unchanged-canonical-validation-and-historical-inputs",
+      "independent-exact-successor-review-before-publication"
+    ],
+    "details": {
+      "workId": "portable-source-ci-successor-20261017",
+      "sourceBaseline": "9bace5b2d3ac06525912b9d866301bb0d902d636",
+      "predecessorDisposition": "Independent P1 HOLD; preserved, never published as PASS.",
+      "scope": "Bounded generated transport/importer closure repair only; Root owns independent review and publication.",
+      "authority": "none",
+      "nativePermissionGranted": false,
+      "userAcceptance": "not-observed",
+      "localSourceImplementation": "completed",
+      "blockedReason": "Independent exact successor review and Root publication remain pending; predecessor9bace remains HOLD.",
+      "remainingGates": [
+        "fresh independent exact successor review",
+        "Root immutable native review/evidence/status publication",
+        "hosted source checks and current-main CAS",
+        "explicit Root merge"
+      ]
+    }
+  }
+}

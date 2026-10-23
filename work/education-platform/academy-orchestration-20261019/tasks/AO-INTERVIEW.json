@@ -1,0 +1,48 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "academy-orchestration-20261019",
+  "kind": "task",
+  "id": "AO-INTERVIEW",
+  "title": "Conduct the source-grounded academy workflow interview",
+  "nextAction": "After source-bound repository/harness and native frontend readiness are verified, present the prepared interview and capture actual user answers separately from proposals.",
+  "logical": {
+    "domainId": "education",
+    "projectId": "education-platform",
+    "workId": "academy-orchestration-20261019",
+    "issueId": "AO-ISSUE-20261019",
+    "specId": "AO-SPEC",
+    "specRevision": 1,
+    "planId": "AO-PLAN",
+    "planRevision": 1,
+    "taskId": "AO-INTERVIEW"
+  },
+  "state": {
+    "execution": "planned",
+    "verification": "pending",
+    "localAudit": "intent-durable",
+    "sharedAudit": "pending",
+    "formalCompletion": "pending"
+  },
+  "executionClass": "source-only",
+  "dependsOn": [
+    {
+      "taskId": "AO-REPOSITORIES",
+      "milestone": "execution-and-verification"
+    },
+    {
+      "taskId": "AO-HARNESS",
+      "milestone": "execution-and-verification"
+    },
+    {
+      "taskId": "AO-FRONTEND",
+      "milestone": "execution-and-verification"
+    }
+  ],
+  "decisionIds": [
+    "AO-DIRECTION"
+  ],
+  "effectIds": [],
+  "verificationEvidenceIds": []
+}

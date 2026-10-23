@@ -1,0 +1,118 @@
+{
+  "schemaVersion": "academy.review-check/1",
+  "id": "AAR-REVIEW-CHECK-005",
+  "observedAtUtc": "2026-10-21T05:09:41.257850+00:00",
+  "scope": "Pure inspection of approved execution DAG and specified module membership. No runtime assertions.",
+  "crossWorkEdges": [
+    {
+      "consumer": "DOM-01",
+      "producer": "AAR-05",
+      "consumerWork": "academy-state-model-20261021",
+      "producerWork": "academy-architecture-orchestration-20261021"
+    },
+    {
+      "consumer": "QRY-01",
+      "producer": "AAR-05",
+      "consumerWork": "academy-query-integration-20261021",
+      "producerWork": "academy-architecture-orchestration-20261021"
+    },
+    {
+      "consumer": "QRY-02",
+      "producer": "DOM-02",
+      "consumerWork": "academy-query-integration-20261021",
+      "producerWork": "academy-state-model-20261021"
+    },
+    {
+      "consumer": "VER-01",
+      "producer": "AAR-05",
+      "consumerWork": "academy-workflow-verification-20261021",
+      "producerWork": "academy-architecture-orchestration-20261021"
+    },
+    {
+      "consumer": "VER-02",
+      "producer": "DOM-02",
+      "consumerWork": "academy-workflow-verification-20261021",
+      "producerWork": "academy-state-model-20261021"
+    },
+    {
+      "consumer": "VER-02",
+      "producer": "QRY-02",
+      "consumerWork": "academy-workflow-verification-20261021",
+      "producerWork": "academy-query-integration-20261021"
+    },
+    {
+      "consumer": "CON-01",
+      "producer": "AAR-05",
+      "consumerWork": "academy-consumer-integration-20261021",
+      "producerWork": "academy-architecture-orchestration-20261021"
+    },
+    {
+      "consumer": "CON-02",
+      "producer": "QRY-02",
+      "consumerWork": "academy-consumer-integration-20261021",
+      "producerWork": "academy-query-integration-20261021"
+    },
+    {
+      "consumer": "CON-03",
+      "producer": "VER-02",
+      "consumerWork": "academy-consumer-integration-20261021",
+      "producerWork": "academy-workflow-verification-20261021"
+    },
+    {
+      "consumer": "ENV-01",
+      "producer": "AAR-05",
+      "consumerWork": "academy-environment-qualification-20261021",
+      "producerWork": "academy-architecture-orchestration-20261021"
+    },
+    {
+      "consumer": "ENV-02",
+      "producer": "DOM-02",
+      "consumerWork": "academy-environment-qualification-20261021",
+      "producerWork": "academy-state-model-20261021"
+    },
+    {
+      "consumer": "INT-01",
+      "producer": "CON-03",
+      "consumerWork": "academy-architecture-orchestration-20261021",
+      "producerWork": "academy-consumer-integration-20261021"
+    },
+    {
+      "consumer": "INT-01",
+      "producer": "VER-02",
+      "consumerWork": "academy-architecture-orchestration-20261021",
+      "producerWork": "academy-workflow-verification-20261021"
+    },
+    {
+      "consumer": "INT-01",
+      "producer": "ENV-02",
+      "consumerWork": "academy-architecture-orchestration-20261021",
+      "producerWork": "academy-environment-qualification-20261021"
+    }
+  ],
+  "crossWorkEdgeCount": 14,
+  "verificationOrdering": {
+    "VER-02DependsTransitivelyOnCON-02": false,
+    "VER-02DependsTransitivelyOnCON-03": false,
+    "CON-03DependsTransitivelyOnVER-02": true,
+    "verificationRoleNodesAfterCON-03": [],
+    "INT-01Prerequisites": [
+      "CON-03",
+      "VER-02",
+      "ENV-02"
+    ],
+    "implication": "VER-02 can finish before CON-02 and must finish before CON-03. No independent verification node consumes the final CON-03 revision."
+  },
+  "moduleEdgeProbe": {
+    "declaredEdge": [
+      "academy-domain",
+      "academy-source-ports"
+    ],
+    "observedImportEdgeWithinDeclaredGroups": [
+      "academy-source-ports",
+      "academy-domain"
+    ],
+    "observedImport": "apps/academy/gang-a/packages/adapters/managed-sites/handler.ts:1 imports ../../application/validate-evidence-projection.ts",
+    "cycleIfImportEdgeIsAdded": true,
+    "implication": "The combined ports/adapters grouping cannot be validated as an acyclic module-use graph while preserving both observed directions."
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "academy-operations",
+  "projectId": "academy-workbench",
+  "workId": "academy-consumer-integration-20261021",
+  "kind": "input",
+  "id": "CON-RESPONSE-REPAIR-VERIFICATION-R1",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "accountable-consumer-subLead",
+    "locator": "native-thread:01a15dd0-03ed-71a0-8372-936776e22669:CON-RESPONSE-REPAIR-VERIFICATION-R1",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "verification": {
+      "schemaVersion": "1.0.0",
+      "kind": "verification",
+      "id": "academy-workbench:verification:con-response-repair-r1",
+      "domainId": "academy-operations",
+      "projectId": "academy-workbench",
+      "createdAt": "2026-10-21T10:56:49.168Z",
+      "payload": {
+        "targetRefs": [
+          "common-harness:task:6654b2aa07105c3426ae90ec0ce771aab0ee8d15177f845fc7fb045afbd9fa24"
+        ],
+        "criteria": [
+          {
+            "id": "bounded-automatic-sdk-input-errors",
+            "status": "pass",
+            "message": "Root exact changed-source actual SDK/wire regressions confirm fixed bounded non-echoing errors before either handler; original strict advertised/runtime schemas and defaults preserved; source callback zero on invalid arguments.",
+            "evidenceRefs": [
+              "academy-workbench:evidence:con-response-repair-result-observation-r1",
+              "academy-workbench:evidence:con-response-repair-root-sdk-observation-r1"
+            ]
+          },
+          {
+            "id": "source-backed-catalog-paths",
+            "status": "pass",
+            "message": "Canonical sibling/branch/missing-parent regression passes on exact repaired source; no invented containment.",
+            "evidenceRefs": [
+              "academy-workbench:evidence:con-response-repair-result-observation-r1",
+              "academy-workbench:evidence:con-response-repair-root-sdk-observation-r1"
+            ]
+          },
+          {
+            "id": "scoped-physical-stages-and-teacher-clocks",
+            "status": "pass",
+            "message": "Canonical exact attempt/issuance stage cases and teacher-reported vs recorded/observed/retrieved business-date clock cases pass without domain reducer or blanket-unknown contradiction.",
+            "evidenceRefs": [
+              "academy-workbench:evidence:con-response-repair-result-observation-r1",
+              "academy-workbench:evidence:con-response-repair-root-sdk-observation-r1"
+            ]
+          },
+          {
+            "id": "full-source-sdk-and-compiler-control",
+            "status": "pass",
+            "message": "Root same-source/Bun1.4.3 deny-preloaded selected full suite16pass0fail523assertions includes actual production stdio and InMemory/wire codec; preserved own focused compiler passes. Result524286B remains below512KiB while accepted frame524321B is measured separately.",
+            "evidenceRefs": [
+              "academy-workbench:evidence:con-response-repair-result-observation-r1",
+              "academy-workbench:evidence:con-response-repair-root-sdk-observation-r1"
+            ]
+          },
+          {
+            "id": "history-and-source-boundaries-preserved",
+            "status": "pass",
+            "message": "All prior completed Tasks/Inputs/observations/Plan1/2 preserved,23baseline bytes and canonical closure unchanged. Prior author failure remains history. No native effects or formal/teacher/independent review acceptance inferred.",
+            "evidenceRefs": [
+              "academy-workbench:evidence:con-response-repair-result-observation-r1"
+            ]
+          }
+        ],
+        "inputHashes": [
+          {
+            "path": "work/academy-workbench/academy-consumer-integration-20261021/inputs/CON-RESPONSE-REPAIR-RESULT-R1.json",
+            "sha256": "5c9f5524752d3aedc3f40c307f892df24fe88d9883a00654605474708a21e970"
+          },
+          {
+            "path": "work/academy-workbench/academy-consumer-integration-20261021/inputs/CON-RESPONSE-REPAIR-ROOT-SDK-R1.json",
+            "sha256": "5061a488e8cc71564bfcc38b03732127239c0a268c4ad5a5669df54a389d4565"
+          },
+          {
+            "path": "architecture/academy-consumer-integration/observations/CON-RESPONSE-REPAIR-ROOT-SDK-R1.json",
+            "sha256": "47bc436d7d652c4064652f510e03e02336193dde75485b4b2b15891af70f4504"
+          },
+          {
+            "path": "architecture/academy-consumer-integration/observations/CON-RESPONSE-REPAIR-FOCUSED-R2.json",
+            "sha256": "1b2474ab81a9657a81db4016c252a947d623330d5472732e7059e64c17382a71"
+          }
+        ],
+        "runtime": {
+          "name": "Bun local canonical record APIs; production SDK tests separately attributed to Root authorized tools",
+          "version": "1.4.3"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,151 @@
+{
+  "source_reference": "library-file:fde1_bGliZmlsZV9TREJtQzhhdk9hdFpVcFM1a25US1NR_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+  "source_sha256": "0dad8d6b652fd3a2a11db2d5013f29cc772095fbd0bbaa4672e6a65d2e563740",
+  "data": {
+    "type": "teacher_review_append_revision",
+    "collection_id": "ruhan-clinic-review-20261007-001",
+    "revision_id": "revision_0003",
+    "from_version": "1.2.0",
+    "to_version": "1.3.0",
+    "recorded_at_utc": "2026-10-07T05:28:53.751Z",
+    "base": {
+      "file_name": "이루한_100미만_교사대조_1.2.0.json",
+      "sha256": "1c0345d815a9a9565d413a320a4ed6ac6e2de02eaf45041bf89449905d72d206"
+    },
+    "source_message_ids": [
+      "Sentinel_915d757d1eec8191a0a2f575b644246f",
+      "Sentinel_cf0e8292c930819188e371807a5885d9",
+      "Sentinel_8b7f9b527a648191821c9ebaf0dfe6f2",
+      "Sentinel_dbe77dcf12f0819187db54193a7f573f"
+    ],
+    "events": [
+      {
+        "event_id": "revision0003-event01",
+        "kind": "print_execution_user_confirmed_complete",
+        "source": {
+          "message_id": "Sentinel_915d757d1eec8191a0a2f575b644246f",
+          "actor": "user",
+          "recorded_at_utc": "2026-10-07T05:28:53.751Z",
+          "exact_relevant_text": "1. 11+20+21은 지금 내가 프린트 해놓았으므로 해결."
+        },
+        "effective_at": null,
+        "target_numbers": [
+          11,
+          20,
+          21
+        ],
+        "target_remediation_paths": [
+          "original_wrong",
+          "similar_clinic"
+        ],
+        "payload": {
+          "state": "user_confirmed_complete",
+          "printed_time_raw": "지금",
+          "printed_at": null,
+          "printed_at_state": "relative_time_only_no_authoritative_timestamp",
+          "print_existence": "user_confirmed_present",
+          "print_header_verified": false,
+          "material_ids": null,
+          "printed_page_count": null,
+          "actual_printed_sheet_count": null,
+          "guardian_handoff_state": "not_confirmed",
+          "guardian_receipt_state": "not_confirmed",
+          "student_work_state": "not_checked",
+          "teacher_review_completion_changed": false
+        }
+      },
+      {
+        "event_id": "revision0003-event02",
+        "kind": "gauss_book_and_prestudy_preparation_resolved_by_user",
+        "source": {
+          "message_id": "Sentinel_915d757d1eec8191a0a2f575b644246f",
+          "actor": "user",
+          "recorded_at_utc": "2026-10-07T05:28:53.751Z",
+          "exact_relevant_text": "2. 새 가우스 1-2-4 교재 배부 및 소단원 1개 예습도 해결."
+        },
+        "effective_at": null,
+        "payload": {
+          "state": "resolved_by_user",
+          "book_display_name": "가우스 1-2-4",
+          "book_distribution_preparation": "resolved_by_user",
+          "one_subunit_prestudy_preparation_decision": "resolved_by_user",
+          "requested_subunit_count": 1,
+          "exact_selected_subunit": null,
+          "first_subunit_selected": "unknown",
+          "actual_book_handoff_state": "not_confirmed",
+          "student_prestudy_execution_state": "not_checked",
+          "student_prestudy_completion_state": "unknown",
+          "student_completion_inferred": false
+        }
+      },
+      {
+        "event_id": "revision0003-event03",
+        "kind": "homework_count_and_lesson_detail_language_confirmed",
+        "source": {
+          "message_id": "Sentinel_cf0e8292c930819188e371807a5885d9",
+          "actor": "user",
+          "recorded_at_utc": "2026-10-07T05:28:53.751Z",
+          "exact_relevant_text": "차시는 구분해주면 좋은데, 내가 의미한 것은 소단원 개수였어. 그러나 너는 차시단위까지 나에게 계속 언급해주면 돼."
+        },
+        "effective_at": null,
+        "payload": {
+          "requested_count": 6,
+          "requested_count_unit": "소단원",
+          "requested_count_is_lesson_count": false,
+          "include_lesson_level_details": true,
+          "exact_selected_targets": null,
+          "selection_state": "not_selected",
+          "assignment_confirmation": false,
+          "scope": "student_book_homework_planning"
+        }
+      },
+      {
+        "event_id": "revision0003-event04",
+        "kind": "native_server_terminology_authority_confirmed",
+        "source": {
+          "message_id": "Sentinel_8b7f9b527a648191821c9ebaf0dfe6f2",
+          "actor": "user",
+          "recorded_at_utc": "2026-10-07T05:28:53.751Z",
+          "exact_relevant_text": "용어/어휘 매핑규칙 정할 때는 학원서버 메타데이터 기준으로 정하자. 괜히 불필요하게 매핑 여러번 거칠 필요 없으니까."
+        },
+        "effective_at": null,
+        "payload": {
+          "authority": "academy_server_metadata",
+          "primary_identity": "native_id",
+          "primary_structure": "native_server_hierarchy",
+          "primary_label": "native_server_label",
+          "user_wording_role": "alias_only_when_needed",
+          "intermediate_taxonomy_created": false,
+          "source_and_catalog_labels_preserved": true,
+          "label_conflict_handling": "verify_only_observed_sourceLabel_catalogLabel_mismatches",
+          "existing_native_and_source_identifiers_changed": false
+        }
+      },
+      {
+        "event_id": "revision0003-event05",
+        "kind": "terminology_correction_and_explicit_alias_rule_confirmed",
+        "source": {
+          "message_id": "Sentinel_dbe77dcf12f0819187db54193a7f573f",
+          "actor": "user",
+          "recorded_at_utc": "2026-10-07T05:28:53.751Z",
+          "exact_relevant_text": "내 표현이 다른 경우는, 지칭을 잘못할 경우도 많으니까, 너가 교정해주면 돼. 내가 특별히 따로 부르고자 하는 것은 매핑규칙에 추가할거야."
+        },
+        "effective_at": null,
+        "payload": {
+          "updates_event_id": "revision0003-event04",
+          "authority": "academy_server_metadata",
+          "incorrect_user_term_handling": "correct_to_native_server_label",
+          "automatic_alias_registration": false,
+          "alias_registration_condition": "only_explicit_user_distinct_designation_with_clear_referent",
+          "ambiguous_referent_handling": "ask_for_confirmation",
+          "intermediate_taxonomy_created": false,
+          "existing_aliases_created": false
+        }
+      }
+    ],
+    "authority": {
+      "source": "exact_user_statements_provided_in_parent_transcript_evidence",
+      "actor": "user"
+    }
+  }
+}

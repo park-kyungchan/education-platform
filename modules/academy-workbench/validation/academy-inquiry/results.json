@@ -1,0 +1,107 @@
+{
+  "schemaVersion": "academy.inquiry-validation/1",
+  "recordedAt": "2026-10-14T07:42:53.942Z",
+  "scope": "Current local inquiry-context patch. Source truth and remote publication are separate.",
+  "baseCommit": "ca8389744c1d5ebf756973f1ee45b03d2b7ad0be",
+  "runtime": {
+    "node": "24.19.0",
+    "bunDirect": "1.4.2",
+    "bunNestedScriptsObserved": "1.3.14",
+    "platformCommit": "ffba2462a08b9f8c83c6f87b1043403e5cb748d7",
+    "platformTrackedSourceChanged": false
+  },
+  "checks": [
+    {
+      "name": "inquiry-TypeScript",
+      "status": "pass"
+    },
+    {
+      "name": "inquiry-strict-schema-hierarchy-sources-corrections-canonical-identity",
+      "status": "pass",
+      "records": 27,
+      "sources": 11
+    },
+    {
+      "name": "inquiry-regression",
+      "status": "pass",
+      "passed": 23,
+      "failed": 0,
+      "assertions": 176
+    },
+    {
+      "name": "existing-user-context-TypeScript",
+      "status": "pass"
+    },
+    {
+      "name": "existing-user-context-validator",
+      "status": "pass",
+      "groups": 12
+    },
+    {
+      "name": "existing-user-context-regression",
+      "status": "pass",
+      "passed": 21
+    },
+    {
+      "name": "root-check",
+      "status": "fail",
+      "reason": "Existing check:harness fails with Windows Bun tempdir AccessDenied/EPERM; later chained checks did not run. Direct new-context checks were run separately."
+    },
+    {
+      "name": "root-test",
+      "status": "fail",
+      "passed": 10,
+      "failed": 9,
+      "reason": "Existing harness tests fail at AJV file-URL dependency resolution, foreign POSIX-path assertion on Windows, and Windows symlink EPERM. Root chained test:inquiry did not run; it passed separately."
+    },
+    {
+      "name": "synthetic-runtime",
+      "status": "fail",
+      "passed": 42,
+      "failed": 1,
+      "reason": "Existing SQLite close/reopen test fails removing its Windows temp directory with EPERM."
+    },
+    {
+      "name": "offline-adapter",
+      "status": "fail",
+      "passed": 22,
+      "failed": 3,
+      "reason": "Existing CLI path normalization rejects Windows input paths; two symlink tests fail with Windows EPERM."
+    },
+    {
+      "name": "independent-review",
+      "status": "not-run",
+      "reason": "Checkpoint interrupted before PR handoff."
+    },
+    {
+      "name": "new-PR-hosted-CI",
+      "status": "not-run",
+      "reason": "No PR created or remote branch pushed."
+    },
+    {
+      "name": "five-student-current-snapshot-and-full-audit",
+      "status": "not-run",
+      "reason": "Parent collects current sources and continues new scope in cloud; no student state invented."
+    }
+  ],
+  "sourceTruthIndependentlyVerified": false,
+  "userAcceptance": "not-observed",
+  "publication": {
+    "push": "not-attempted",
+    "pr": "not-created",
+    "merge": "not-attempted"
+  },
+  "authority": "none",
+  "nativePermissionGranted": false,
+  "externalMessageSent": false,
+  "studentRecordsChanged": false,
+  "credentialsChanged": false,
+  "extensionsInstalled": false,
+  "remaining": [
+    "Cloud re-run of complete checks on exact applied patch",
+    "Independent review and actual hosted CI for a future PR",
+    "Latest five-student evidence and identity/book reconciliation",
+    "Existing Space/repo synchronization audit; do not recreate deleted/migrated Space",
+    "Only then publish and merge authorized changes; never merge unrelated PR #2 implicitly"
+  ]
+}

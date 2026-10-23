@@ -1,0 +1,173 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "month-end-bot-screen-review-20261019",
+  "kind": "input",
+  "id": "LEAD-HANDOFF",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "education-platform",
+    "locator": "academy-orchestrator:worklead-handoff",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "role": "Hermes FrontendLead",
+    "priority": "P0 parallel UI inspection; final verification after selection",
+    "sourceBase": "8611a84705f1fe796d6d9a1a3efe8fc1d26a1c9e",
+    "allowedSourceRoots": [
+      "apps/academy/month-end-web"
+    ],
+    "upstreamWorks": [
+      {
+        "domainId": "education",
+        "projectId": "education-platform",
+        "workId": "month-end-jev114-selection24-20261019",
+        "sourceCommit": null,
+        "delivery": "pending-producer"
+      }
+    ],
+    "coordinator": {
+      "domainId": "education",
+      "projectId": "education-platform",
+      "workId": "academy-orchestration-20261019"
+    },
+    "next": "User requested priority/IDs and will hand the rest to the WorkLead. Native TUI is prepared for that followup; no implementation, live Academy read or Jev inference is dispatched by this scaffold.",
+    "unknowns": [
+      "teacher UI feedback",
+      "final selection contract from AssessmentLead"
+    ],
+    "constraints": [
+      "The current research-only preview has no live Academy connection.",
+      "Native profile/config/models/credentials remain native-owned.",
+      "Do not claim Windows viewer rendering from backend Screen or a browser screenshot alone."
+    ],
+    "requiredModel": "typesafe-ai/jev-1.14.0",
+    "modelCatalogObservation": {
+      "schema": "academy.jev-model-observation.v1",
+      "observedAt": "2026-10-19T03:28:08.657921+00:00",
+      "url": "https://ai-gateway.vercel.sh/v1/models",
+      "retrieval": "native HTTP for public JSON model catalog; no inference",
+      "selected": {
+        "id": "typesafe-ai/jev-1.14.0",
+        "object": "model",
+        "created": 1755815280,
+        "released": 1792022400,
+        "owned_by": "typesafe-ai",
+        "name": "Jev 1.14.0",
+        "description": "Jev 1.14.0 is TypeSafe AI’s System One evaluation model for fast, structured decisions in software. It evaluates shared state against typed questions and returns choices, scores, and boolean probabilities, supporting classification, routing, rubric-based assessment, and automated verification. Multiple questions can be evaluated in parallel within a single request.",
+        "context_window": 32000,
+        "max_tokens": 0,
+        "type": "evaluation",
+        "zdr": "all",
+        "no_training": "all",
+        "tags": [
+          "vision"
+        ],
+        "supported_specifications": [
+          "v4"
+        ],
+        "modalities": {
+          "input": [
+            "text",
+            "image"
+          ],
+          "output": [
+            "text"
+          ]
+        },
+        "pricing": {
+          "input": "0.000000042",
+          "output": "0"
+        }
+      },
+      "userRequiredVersion": "Jev-1.14",
+      "genericAliasAllowed": false,
+      "liveInferenceMade": false,
+      "priorOdiLedgerReusable": false
+    },
+    "knownExam": {
+      "count": 24,
+      "grade": 3,
+      "subjects": [
+        "multiplication",
+        "division",
+        "circle"
+      ],
+      "eligibleNativeDifficulty": [
+        "중",
+        "상",
+        "최상"
+      ],
+      "pointPattern": "12x3+8x5+4x6=100; points do not determine difficulty",
+      "durationMinutes": 80,
+      "startTime": "15:00",
+      "examDate": null,
+      "timeZone": null,
+      "oldSubject9_9_6": "proposal-only"
+    },
+    "resourcePolicyInputId": "RESOURCE-POLICY-20261019",
+    "resourcePolicy": {
+      "schema": "academy.resource-policy.v1",
+      "priority": "Preserve headroom for other user work and minimize academy memory pressure.",
+      "maxAdditionalActiveWorkLeadTuis": 1,
+      "maxConcurrentHeavyAcademyJobs": 1,
+      "retainedFrontend": "Frontend runtime is off and held by current user instruction. Start only on a later explicit frontend review/resume request.",
+      "idleWorkers": "Keep unneeded WorkLead panes at shell prompts; terminate owned completed worker runtimes after durable results.",
+      "beforeEachLaunch": [
+        "Observe current host MemAvailable, memory PSI and own active processes.",
+        "Assess headroom for the next concrete workload; a past observation or free swap is not launch approval.",
+        "Defer the new workload when available headroom is insufficient or memory pressure is rising."
+      ],
+      "workloads": [
+        "Start WorkLeads sequentially instead of simultaneous native/MCP initialization.",
+        "Serialize browser/build/test/indexing and model-input preparation batches; keep question/image batches bounded.",
+        "Reuse existing source dependencies and previews instead of duplicating servers/browsers or broad indexes."
+      ],
+      "pressureResponse": [
+        "Stop additional launches first.",
+        "Checkpoint and retire only owned optional idle workers after exact process verification.",
+        "Reconcile uncertain operations before any later new launch; do not blindly retry."
+      ],
+      "preserved": [
+        "Unrelated user jobs/services/data remain under their own owners.",
+        "No swap, cgroup, global model/configuration/permissions or system service changes through this policy."
+      ],
+      "implementation": "Source-owned WorkLead instructions and manual orchestration checks; no monitoring daemon, scheduler or alternate runtime.",
+      "frontendHold": {
+        "schema": "academy.frontend-hold.v1",
+        "requestedBy": "current-user",
+        "status": "paused-until-user-review",
+        "frontendTui": "stopped-native-quit",
+        "researchPreview": "stopped-SIGTERM-owned-process",
+        "browser": "observed-stopped",
+        "botScreen": "observed-stopped",
+        "restartCondition": "Only a later explicit user request to review or resume frontend work. Resource recovery, dependency completion, handoff or another WorkLead starting does not release this hold.",
+        "preserve": [
+          "Work IDs",
+          "source Work records",
+          "worktrees",
+          "native saved sessions"
+        ],
+        "automaticRestart": false
+      }
+    },
+    "frontendHold": {
+      "schema": "academy.frontend-hold.v1",
+      "requestedBy": "current-user",
+      "status": "paused-until-user-review",
+      "frontendTui": "stopped-native-quit",
+      "researchPreview": "stopped-SIGTERM-owned-process",
+      "browser": "observed-stopped",
+      "botScreen": "observed-stopped",
+      "restartCondition": "Only a later explicit user request to review or resume frontend work. Resource recovery, dependency completion, handoff or another WorkLead starting does not release this hold.",
+      "preserve": [
+        "Work IDs",
+        "source Work records",
+        "worktrees",
+        "native saved sessions"
+      ],
+      "automaticRestart": false
+    }
+  }
+}

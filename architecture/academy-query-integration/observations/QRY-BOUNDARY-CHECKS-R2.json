@@ -1,0 +1,354 @@
+{
+  "schema": "academy.qry-boundary-checks-refinement.v1",
+  "createdAt": "2026-10-21T07:20:53.162Z",
+  "sourceBase": "b9c954cb8f5bf9b0748bb5634b4951c5954e9a6b",
+  "nativeThreadId": "01a15d3e-8769-7061-983f-880f73d33289",
+  "supersedesNoRecord": true,
+  "priorReceipt": {
+    "path": "architecture/academy-query-integration/observations/QRY-BOUNDARY-CHECKS-R1.json",
+    "sha256": "65c7b2f6ef6302abb997d3588cd3a7fb34e225cc3525631d6d8af0d1fdefafd3"
+  },
+  "correction": "New boundary typecheck extends existing DC compiler options rather than imposing root noUncheckedIndexedAccess on unchanged DC source. Native config, DC/root tsconfig, packages and locks unchanged. Initial stricter diagnostics retained.",
+  "records": [
+    {
+      "id": "boundary-typecheck-matching-dc-options",
+      "args": [
+        "bun",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "-p",
+        "architecture/academy-query-integration/boundary-tsconfig.json"
+      ],
+      "startedAt": "2026-10-21T07:20:52.488Z",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "updated-compatibility-and-explicit-catalog-consumer",
+      "args": [
+        "bun",
+        "test",
+        "./architecture/academy-query-integration/boundary-contracts.test.ts"
+      ],
+      "startedAt": "2026-10-21T07:20:53.093Z",
+      "exitCode": 0,
+      "stdout": "bun test v1.4.3 (c6da4a4d3)\n",
+      "stderr": "\narchitecture/academy-query-integration/boundary-contracts.test.ts:\n(pass) neutral contract compatibility without acquisition or business writes > record reader keeps one implementation and exact refusal codes at the old export [2.37ms]\n(pass) neutral contract compatibility without acquisition or business writes > parent exclusion safeguard is the same regex and preserves independent interpretation [0.21ms]\n(pass) neutral contract compatibility without acquisition or business writes > legacy shape exports share the exact object, catalog array and topic values [2.29ms]\n(pass) neutral contract compatibility without acquisition or business writes > type compatibility retains selector readonly fields and catalog kind contracts [0.04ms]\n(pass) neutral contract compatibility without acquisition or business writes > real catalog coverage consumes the pure policy with an explicit empty synthetic selection [0.75ms]\n\n 5 pass\n 0 fail\n 37 expect() calls\nRan 5 tests across 1 file. [30.00ms]\n",
+      "stdoutSha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+      "stderrSha256": "987359e5fb11f3f74958319b58efaf1ed099b3c608b2955a229e38bafbf08d73"
+    }
+  ],
+  "retainedPriorPasses": [
+    {
+      "id": "initial-boundary-compatibility-tests",
+      "command": [
+        "bun",
+        "test",
+        "./architecture/academy-query-integration/boundary-contracts.test.ts"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "observedSummary": "4 pass / 0 fail /30 expectations; directly observed prior to this receipt, not rerun."
+    },
+    {
+      "id": "root-status",
+      "args": [
+        "bun",
+        "run",
+        "status"
+      ],
+      "cwd": ".",
+      "startedAt": "2026-10-21T07:19:10.679Z",
+      "finishedAt": "2026-10-21T07:19:10.706Z",
+      "exitCode": 0,
+      "stdoutSha256": "091598231c7a429dabf7c45c2f9d79b80373ad1515485b2958b1e5cbd172ebf9",
+      "stderrSha256": "357f5ac18959b62e4623f2f89ac33e249d9803fcb3bceb2b45b88780906873cb",
+      "stdoutBytes": 3370,
+      "stderrBytes": 24,
+      "stdoutTail": "{\n  \"projectId\": \"education-platform\",\n  \"authority\": \"none\",\n  \"ontologyVersion\": \"0.2.0\",\n  \"modules\": [\n    {\n      \"id\": \"mathematics-core\",\n      \"root\": \"packages/mathematics-core\",\n      \"runtime\": \"node-npm\",\n      \"sourceCommit\": \"b8766843f3f83b9d36cc5888f65f6b1ea56f3c52\",\n      \"native\": {\n        \"ownerProfile\": \"default\",\n        \"projectId\": \"p_8a30d5d4\",\n        \"projectRoot\": \"/opt/data/workspace/mathematics-cartography\",\n        \"workIssueIds\": [],\n        \"pendingWork\": \"IMMUTABLE_HUMAN_SEMANTIC_DISPOSITION_RECORD-R4\",\n        \"authority\": \"none\",\n        \"ontologyRootKind\": \"WorkStudio\"\n      },\n      \"entrypoints\": [\n        \"src/compile-fragment-review-proposal.ts\",\n        \"src/compile-fragment-evidence-review-packet.ts\",\n        \"src/compile-human-semantic-disposition-record.ts\"\n      ]\n    },\n    {\n      \"id\": \"curriculum\",\n      \"root\": \"packages/curriculum\",\n      \"runtime\": \"bun\",\n      \"runtimePin\": \"1.4.3\",\n      \"sourceCommit\": \"4a666ef6ff568f15495ff8219db583bf6dfbfe2a\",\n      \"native\": {\n        \"ownerProfile\": null,\n        \"projectId\": null,\n        \"projectRoot\": null,\n        \"workIssueIds\": [],\n        \"authority\": \"none\"\n      },\n      \"entrypoints\": [\n        \"scripts/preview.ts\",\n        \"scripts/project-ui.ts\"\n      ]\n    },\n    {\n      \"id\": \"academy\",\n      \"root\": \"apps/academy\",\n      \"runtime\": \"bun\",\n      \"runtimePin\": \"1.4.3\",\n      \"sourceCommit\": \"5074aeb5649c1a97ad06d33b9f895296fb4c3ad6\",\n      \"native\": {\n        \"ownerProfile\": \"dc-gang-a-dev\",\n        \"projectId\": \"p_a5676068\",\n        \"projectRoot\": \"/opt/data/workspace/dc-gang-a\",\n        \"workIssueIds\": [\n          \"t_ce34cba7\"\n        ],\n        \"authority\": \"none\",\n        \"workIssueMeaning\": \"historical task locator; not active status or permission\"\n      },\n      \"entrypoints\": [\n        \"dc-gang-a/src/academy/application.ts\",\n        \"dc-gang-a/src/academy/main.ts\",\n        \"gang-a/packages/application/select-operational-context.ts\"\n      ]\n    },\n    {\n      \"id\": \"clinic-workbench\",\n      \"root\": \"examples/clinic-workbench\",\n      \"runtime\": \"bun\",\n      \"runtimePin\": \"1.4.3\",\n      \"sourceCommit\": \"a99605e9ea4bcbfa28130456e0d1ab8e41e7001a\",\n      \"native\": {\n        \"ownerProfile\": \"dc-gang-a-dev\",\n        \"projectId\": null,\n        \"projectRoot\": null,\n        \"workIssueIds\": [],\n        \"authority\": \"none\"\n      },\n      \"entrypoints\": [\n        \"src/index.ts\",\n        \"scripts/demo.ts\"\n      ]\n    },\n    {\n      \"id\": \"mathcrew\",\n      \"root\": \"apps/mathcrew\",\n      \"runtime\": \"bun\",\n      \"runtimePin\": \"1.4.3\",\n      \"sourceCommit\": \"929f2ec058846fd45be4b6ba479966264be4e5e9\",\n      \"native\": {\n        \"ownerProfile\": \"default\",\n        \"projectId\": \"p_566ac0ba\",\n        \"projectRoot\": \"/opt/data/workspace/backend-ontology\",\n        \"workIssueIds\": [],\n        \"authority\": \"none\",\n        \"bindingMeaning\": \"profile-associated backend project; public product source remains module-owned\"\n      },\n      \"entrypoints\": [\n        \"src/build.ts\",\n        \"src/preview-handler.ts\"\n      ]\n    }\n  ],\n  \"semanticState\": {\n    \"mathematicsHumanDecision\": \"PENDING\",\n    \"mathematicsCanonicalApplication\": \"NOT_PERFORMED\",\n    \"r4Review\": \"PENDING_NEW_EXACT_REVIEW_AUTHORITY\",\n    \"bunParity\": \"DEFERRED\",\n    \"curriculumCanonicalInputs\": \"not_available_in_this_ui_export\"\n  },\n  \"productionVerified\": false\n}\n",
+      "stderrTail": "$ bun src/cli.ts status\n"
+    },
+    {
+      "id": "root-actual-compiler",
+      "args": [
+        "bun",
+        "node_modules/typescript/bin/tsc",
+        "--version"
+      ],
+      "cwd": ".",
+      "startedAt": "2026-10-21T07:19:10.706Z",
+      "finishedAt": "2026-10-21T07:19:10.735Z",
+      "exitCode": 0,
+      "stdoutSha256": "41024334022fa58f9c7337359517de307cbcfc6055c19f2b734245eacc2fe97a",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 14,
+      "stderrBytes": 0,
+      "stdoutTail": "Version 7.0.2\n",
+      "stderrTail": ""
+    },
+    {
+      "id": "dc-actual-compiler",
+      "args": [
+        "bun",
+        "node_modules/typescript/bin/tsc",
+        "--version"
+      ],
+      "cwd": "apps/academy/dc-gang-a",
+      "startedAt": "2026-10-21T07:19:10.735Z",
+      "finishedAt": "2026-10-21T07:19:10.767Z",
+      "exitCode": 0,
+      "stdoutSha256": "41024334022fa58f9c7337359517de307cbcfc6055c19f2b734245eacc2fe97a",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 14,
+      "stderrBytes": 0,
+      "stdoutTail": "Version 7.0.2\n",
+      "stderrTail": ""
+    },
+    {
+      "id": "exact-declarations-and-scoped-import-graph",
+      "args": [
+        "bun",
+        "architecture/academy-query-integration/boundary-inspect.ts"
+      ],
+      "cwd": ".",
+      "startedAt": "2026-10-21T07:19:10.768Z",
+      "finishedAt": "2026-10-21T07:19:12.170Z",
+      "exitCode": 0,
+      "stdoutSha256": "e046a6526a16d3f8593538affcdaed735ac3a0de8ba4cc2374600801e73de7c5",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 216,
+      "stderrBytes": 0,
+      "stdoutTail": "{\"status\":\"pass\",\"changedExisting\":24,\"newLeaves\":5,\"movedDeclarations\":10,\"readInputImports\":17,\"remainingReverse\":0,\"retainedApplicationToLms\":17,\"dcGangEdges\":6,\"dynamicDependencies\":4,\"wholeGraphReparsed\":false}\n",
+      "stderrTail": ""
+    },
+    {
+      "id": "dc-typecheck",
+      "args": [
+        "bun",
+        "run",
+        "typecheck"
+      ],
+      "cwd": "apps/academy/dc-gang-a",
+      "startedAt": "2026-10-21T07:19:12.715Z",
+      "finishedAt": "2026-10-21T07:19:15.052Z",
+      "exitCode": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "20a7f6ddac8dfddfae008432d479755c5a411ed34c10316ad6e9ef2d44f4a5a9",
+      "stdoutBytes": 0,
+      "stderrBytes": 47,
+      "stdoutTail": "",
+      "stderrTail": "$ bun node_modules/typescript/bin/tsc --noEmit\n"
+    }
+  ],
+  "priorTestResults": {
+    "maintainedReadProtocolsAndWorkspace": {
+      "pass": 56,
+      "skip": 7,
+      "fail": 1,
+      "onlyFailure": "whole-catalog coverage exposes scoped preparation without promoting unknown operations",
+      "cause": "Absent canonical route-registry.json"
+    },
+    "operationalContractAndCatalog": {
+      "pass": 25,
+      "fail": 13,
+      "causes": "11 absent canonical registry /2 absent docs/academy-dom-source-evidence.json"
+    }
+  },
+  "baselineFilePins": [
+    {
+      "path": "apps/academy/dc-gang-a/src/lms/lmsRouteRegistry.ts",
+      "sha256": "7e694abc19979a84553f3e43b5fcf6c5d842637bf6cc3fc957297f6db17ca9ff",
+      "unchangedFromAdmittedBase": true
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/lms/backendSourceEvidence.ts",
+      "sha256": "08f7ded8671fcee496e2570e76cf9f5fef65c9bdd784b36448ed6f706cb06fe7",
+      "unchangedFromAdmittedBase": true
+    },
+    {
+      "path": "apps/academy/dc-gang-a/tests/lms/academyReadProtocol.test.ts",
+      "sha256": "710541e93eebaee6a5ba6fba2f30319e006182e8efa562d58a3af3d46c6709b0",
+      "unchangedFromAdmittedBase": true
+    },
+    {
+      "path": "apps/academy/dc-gang-a/tests/lms/endpointCatalog.test.ts",
+      "sha256": "04c9ac12e2ec26c3ea2ad530034e6b3491b62d20caa227a599e450741a7e5446",
+      "unchangedFromAdmittedBase": true
+    },
+    {
+      "path": "apps/academy/dc-gang-a/tests/academy/operationalContract.test.ts",
+      "sha256": "0f6cf376e66a0c0c3d77efe2770dbeb0e16aee1a1daafdd1ce0e6921d45f2619",
+      "unchangedFromAdmittedBase": true
+    }
+  ],
+  "absent": [
+    {
+      "path": "apps/academy/dc-gang-a/research/backend-map/route-registry.json",
+      "absentLocally": true,
+      "absentInAdmittedGitTree": true
+    },
+    {
+      "path": "apps/academy/dc-gang-a/docs/academy-dom-source-evidence.json",
+      "absentLocally": true,
+      "absentInAdmittedGitTree": true
+    }
+  ],
+  "unchangedProductSource": [
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/domain.ts",
+      "sha256": "eb8ee7f8bace1799fd1b1a97ffcd44e507c671811fc4b123cde77f06d6737493",
+      "bytes": 5102
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/nativeBookSource.ts",
+      "sha256": "76970846283dac9538505ee9a18f21274c1b248ee4a5c5ec7104a943fe735ee3",
+      "bytes": 3920
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/nativeConnector.ts",
+      "sha256": "2dcb6607a35ea5e8c005fadaedb95da86395417ea9b829c33232b73a0ffd3016",
+      "bytes": 9159
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/nativeDirectSource.ts",
+      "sha256": "fea68cbb3c87c54c3c5891e29013f6b0aeb0b156ed9195e9f9ee1ee630fbd15d",
+      "bytes": 6935
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/operationalContract.ts",
+      "sha256": "f3d1f79d0b93d2db1626aca1969f754113abcb42b38f31bcc66521f8113b9b75",
+      "bytes": 4729
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/postgresStore.ts",
+      "sha256": "a9bb7d1bab38b505e7a4ae4bec64988e7bb0e67b4b3aaec338d61930f6ac9c14",
+      "bytes": 64919
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/refresh.ts",
+      "sha256": "4b4e5f7cc44730ee7c24a6c5bb66e1d0cc7f7aa26e55a86e469a0ad8eb0a5511",
+      "bytes": 5648
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/sourceBridge.ts",
+      "sha256": "e328b3cb41b15c31e1cf2788bbf218d87f00af39f1fe225f01c62a39084359fa",
+      "bytes": 7783
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/sourceEvidence.ts",
+      "sha256": "c94f96db81b5c61f1d1a277e0f055def5ae25e4964b9230795f28a5c78dce5cb",
+      "bytes": 5161
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/sourceSynchronization.ts",
+      "sha256": "ed09a845da5a0d15e9f76b0952615ab8484da7941d5361e4cee4763801537124",
+      "bytes": 8776
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/teacherWorkContext.ts",
+      "sha256": "aec375d98594846c0db9f269750ddb6d2c66d58a1156ac5352d97f7c120164a8",
+      "bytes": 11453
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/teacherWorkspace.ts",
+      "sha256": "a3ae52b69d7c82ce2bfb5e7e9605b93edcb25cd273fe0d19a6d1a0ee2c9cd4db",
+      "bytes": 13677
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/usecases/studentScene.ts",
+      "sha256": "45e855f92bb8fb078c300472f4d6f4a87a18d63d2db7f5e5fe44ecb2b4170d93",
+      "bytes": 10483
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/usecases/teacherClinic.ts",
+      "sha256": "85ca55edadc7e95e42a734a8476eb04ad52630ee767fcf85454a0c9ec6d8b559",
+      "bytes": 6010
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/usecases/teacherObservation.ts",
+      "sha256": "f328d4a35ed209e3bb07bcf6c7a9ad615b92176902fec30a7c08b173316ba528",
+      "bytes": 6027
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/usecases/teacherWorkspace.ts",
+      "sha256": "50a6c9f6ec114bf2f8ac429d63ffd6327ed3c144bb8ab894b4c0f809597ab9c4",
+      "bytes": 7937
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/canonical/rosterRecovery.ts",
+      "sha256": "6c0f83970875f20fc8d37d15e1a7fee8577eb050e7d473d2ff5eb70da7ce82b2",
+      "bytes": 4265
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/lms/academyHttpClient.ts",
+      "sha256": "82c55826723182b8294b44009c587b9f9914980e4a33c0cae2d062167c43a76d",
+      "bytes": 47210
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/lms/academyReadProtocol.ts",
+      "sha256": "ac462984b3a0fbaef4ea8c802f0c962b5a0bbbaa3f2e46e0a3cb1576c88d82fc",
+      "bytes": 21801
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/lms/academySourceAudit.ts",
+      "sha256": "33aa474df60db400f12513e6050ef1f1e4c48bef1eee4fd134ff1128658ffd74",
+      "bytes": 18372
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/lms/endpointCatalog.ts",
+      "sha256": "63798afbab187e39ac18612faaca1853810c9a54e41046afccb4cffb0926713c",
+      "bytes": 14113
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/lms/itemAnswerAudit.ts",
+      "sha256": "20b4e9b8cba6f5ca3a641ee4c8f3622129c6eb8b826b9e77f4abdca9124feac2",
+      "bytes": 3855
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/lms/lessonJournalTemplates.ts",
+      "sha256": "5195709e7e905b864f8f6f5a7c72909f1654bf0968873612fb4e36a0b669d6e2",
+      "bytes": 8388
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/lms/paperLineage.ts",
+      "sha256": "7ab638ce1e0517870eb434717f782c348276517eb894d5bfef94f8c1b295db19",
+      "bytes": 4247
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/contracts/readInputRecord.ts",
+      "sha256": "ba2eda95e601ccd9eba44fc77c43ed5fde50801d34c8f77ea0f9d0dedd65db0c",
+      "bytes": 557
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/contracts/parentInternalLanguage.ts",
+      "sha256": "60742973557e383b57c065dc7ef9cb806677f15ca4a571f48f7b2184f93aa456",
+      "bytes": 385
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/contracts/catalogLevels.ts",
+      "sha256": "fb582c9e4d292537db98d818e78fdd1c5e6fe7bf895f2959a75ae9c447c78c17",
+      "bytes": 367
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/contracts/operationalContractShape.ts",
+      "sha256": "85c5c0c65c26f0ed7b842bed9c6908470eb746e2d6633b5459ddb6bb90645403",
+      "bytes": 5660
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/contracts/sourceDiscovery.ts",
+      "sha256": "40b28459db5aa1adff04c27e66245984f9f452842f67069b4bab045fcb369257",
+      "bytes": 216
+    }
+  ],
+  "verificationDisposition": "Exact source/export/import-boundary compatibility and DC typecheck qualify the delivered extraction. Full canonical catalog data-driven behavior remains unverified because baseline source inputs are absent; no overall all-tests-pass claim.",
+  "boundedNeedForFullCatalogVerification": "Source owner must separately supply authorized code/spec registry and DOM evidence JSON at the two exact missing paths; no live/private retrieval or synthesized replacement authorized/performed.",
+  "monthEndSdkDeclarationGap": "Retained QRY-01 limitation; no month-end implementation changed or native launch admitted.",
+  "passed": true,
+  "allExecutedTestsPassed": false,
+  "gitMutations": 0,
+  "nativeActivation": false,
+  "teacherAcceptance": false
+}

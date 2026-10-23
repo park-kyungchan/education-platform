@@ -1,0 +1,33 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "academy-query-integration-20261021",
+  "kind": "input",
+  "id": "QRY-02-CAPACITY-CHECKPOINT-R1",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "root-academy-orchestrator",
+    "locator": "root-observed-native-model-capacity:QRY02-incomplete",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "createdAt": "2026-10-21T08:48:41.850386+00:00",
+    "nativeSessionId": "01a15d3e-8769-7061-983f-880f73d33289",
+    "nativeAssignment": {
+      "agent": "academy-query-lead",
+      "paneId": "wA:p6",
+      "tabId": "wA:t4",
+      "observedModel": "gpt-6.1-sol",
+      "observedEffort": "high"
+    },
+    "observedError": "Selected model is at capacity. Please try a different model.",
+    "state": "incomplete-source-WIP; not READY_FOR_ROOT_SOURCE_CHECKPOINT",
+    "rootAction": "Preserve exact partial source in local commit; assign already-authorized independent Astra/xhigh source review without replaying completed edits or changing native permissions/config.",
+    "completedEffects": "Source edits and initial synthetic checks retained in working tree; no Git effects by subLead, native effects or private source writes observed.",
+    "uncertainty": "No final QRY-02 result/Verification or full source completion. Capacity recovery time unknown.",
+    "sourceBase": "29510c7ee9a5f8e6fc68bb6dbe5cf320bb66fc95",
+    "nativeActivation": false,
+    "sharedDelivery": false
+  }
+}

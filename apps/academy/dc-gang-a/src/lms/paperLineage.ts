@@ -1,6 +1,7 @@
 import {canonicalJson,requireText,type Knowledge} from '../learning/model';
 import {createAcademySourceAudit} from './academySourceAudit';
-import {readInputRecord,readLiteralKey,readLiteralName,type StoredSourceRecord} from './academyReadProtocol';
+import {readLiteralKey,readLiteralName,type StoredSourceRecord} from './academyReadProtocol';
+import {readInputRecord} from '../contracts/readInputRecord';
 
 export interface PaperTraceRequest {studentKey:string;studentName:string;orderedLabels:readonly string[]}
 export interface PaperTraceSnapshot {evidenceRef:string;acquisition:unknown}

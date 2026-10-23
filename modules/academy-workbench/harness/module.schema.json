@@ -1,0 +1,236 @@
+{
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "const": "academy.consumer-module/1",
+      "type": "string"
+    },
+    "moduleId": {
+      "const": "academy-workbench",
+      "type": "string"
+    },
+    "projectRef": {
+      "const": "academy-workbench:project:manifest",
+      "type": "string"
+    },
+    "canonicalDependency": {
+      "type": "object",
+      "properties": {
+        "lockPath": {
+          "const": "harness/agent-platform.lock.json",
+          "type": "string"
+        },
+        "consumption": {
+          "const": "pinned-source",
+          "type": "string"
+        },
+        "copiedImplementation": {
+          "const": false,
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "lockPath",
+        "consumption",
+        "copiedImplementation"
+      ],
+      "additionalProperties": false
+    },
+    "registration": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "const": "local-module-record",
+          "type": "string"
+        },
+        "globallyRegistered": {
+          "const": false,
+          "type": "boolean"
+        },
+        "centralIssuer": {
+          "const": "not-established",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "globallyRegistered",
+        "centralIssuer"
+      ],
+      "additionalProperties": false
+    },
+    "surfaces": {
+      "type": "object",
+      "properties": {
+        "runtime": {
+          "const": "app/standalone",
+          "type": "string"
+        },
+        "offlineAdapter": {
+          "const": "app/offline-import-adapter",
+          "type": "string"
+        },
+        "userContext": {
+          "const": "context/business-decisions.json",
+          "type": "string"
+        },
+        "historicalGates": {
+          "const": "migration/current-status.json",
+          "type": "string"
+        },
+        "selectedUserContext": {
+          "const": "context/user-context/records.json",
+          "type": "string"
+        }
+      },
+      "required": [
+        "runtime",
+        "offlineAdapter",
+        "userContext",
+        "historicalGates",
+        "selectedUserContext"
+      ],
+      "additionalProperties": false
+    },
+    "relationships": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "moduleId",
+          "relation",
+          "automaticDataTransfer"
+        ],
+        "properties": {
+          "moduleId": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*$"
+          },
+          "relation": {
+            "enum": [
+              "uses-canonical-source",
+              "research-context-only"
+            ]
+          },
+          "automaticDataTransfer": {
+            "const": false,
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "capability": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "const": "synthetic-offline-development",
+          "type": "string"
+        },
+        "executionEnabled": {
+          "const": false,
+          "type": "boolean"
+        },
+        "authority": {
+          "const": "none",
+          "type": "string"
+        },
+        "nativePermissionGranted": {
+          "const": false,
+          "type": "boolean"
+        },
+        "nativeRegistrationPerformed": {
+          "const": false,
+          "type": "boolean"
+        },
+        "allowedDevelopmentInputs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "project.json",
+              "harness/",
+              "context/business-decisions.json",
+              "migration/current-status.json",
+              "synthetic test fixtures"
+            ],
+            "type": "string"
+          }
+        },
+        "liveStudentReadEnabled": {
+          "const": false,
+          "type": "boolean"
+        },
+        "sourceMutationEnabled": {
+          "const": false,
+          "type": "boolean"
+        },
+        "printEnabled": {
+          "const": false,
+          "type": "boolean"
+        },
+        "sendEnabled": {
+          "const": false,
+          "type": "boolean"
+        },
+        "credentialSetupEnabled": {
+          "const": false,
+          "type": "boolean"
+        },
+        "deploymentEnabled": {
+          "const": false,
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "profile",
+        "executionEnabled",
+        "authority",
+        "nativePermissionGranted",
+        "nativeRegistrationPerformed",
+        "allowedDevelopmentInputs",
+        "liveStudentReadEnabled",
+        "sourceMutationEnabled",
+        "printEnabled",
+        "sendEnabled",
+        "credentialSetupEnabled",
+        "deploymentEnabled"
+      ],
+      "additionalProperties": false
+    },
+    "acceptance": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "const": "not-observed",
+          "type": "string"
+        },
+        "inferredFromTests": {
+          "const": false,
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "status",
+        "inferredFromTests"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "moduleId",
+    "projectRef",
+    "canonicalDependency",
+    "registration",
+    "surfaces",
+    "relationships",
+    "capability",
+    "acceptance"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.academy-workbench.local/consumer-module/1",
+  "title": "Academy consumer module (local contract, not a central registration)"
+}

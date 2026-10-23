@@ -1,6 +1,7 @@
 import {assertInstant,digest} from '../learning/model';
 import {parseItemAnswer} from './itemAnswerRead';
-import {readInputRecord,readLiteralKey,readLiteralName} from './academyReadProtocol';
+import {readLiteralKey,readLiteralName} from './academyReadProtocol';
+import {readInputRecord} from '../contracts/readInputRecord';
 
 export function createItemAnswerAudit(snapshot:Record<string,unknown>){
   if(snapshot.schemaVersion!==1||snapshot.family!=='item_answer'||!['observed','partial','blocked'].includes(snapshot.status as string)

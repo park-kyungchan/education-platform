@@ -1,0 +1,44 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "academy-operations",
+  "projectId": "academy-workbench",
+  "workId": "academy-consumer-integration-20261021",
+  "kind": "task",
+  "id": "academy-workbench:task:academy-consumer-integration-20261021-con-02-source-qualification",
+  "logical": {
+    "domainId": "academy-operations",
+    "projectId": "academy-workbench",
+    "workId": "academy-consumer-integration-20261021",
+    "issueId": "CON-ISSUE-20261021",
+    "specId": "CON-SPEC",
+    "specRevision": 1,
+    "planId": "CON-PLAN",
+    "planRevision": 2,
+    "taskId": "academy-workbench:task:academy-consumer-integration-20261021-con-02-source-qualification"
+  },
+  "title": "Qualify exact consumer source with separately attributed Root SDK control",
+  "state": {
+    "execution": "complete",
+    "verification": "passed",
+    "localAudit": "result-durable",
+    "sharedAudit": "pending",
+    "formalCompletion": "pending"
+  },
+  "executionClass": "source-only",
+  "dependsOn": [
+    {
+      "taskId": "academy-workbench:task:academy-consumer-integration-20261021-con-01",
+      "milestone": "execution-and-verification"
+    },
+    {
+      "taskId": "academy-workbench:task:academy-consumer-integration-20261021-con-02-qualify-qry-02",
+      "milestone": "execution-and-verification"
+    }
+  ],
+  "decisionIds": [],
+  "effectIds": [],
+  "verificationEvidenceIds": [
+    "academy-workbench:evidence:con-02-source-qualification-verification-r2"
+  ],
+  "nextAction": "READY_FOR_ROOT_SOURCE_CHECKPOINT; WAIT for Root exact R2 snapshot/transition. Source qualified through separately attributed Root SDK control; old failed CON02 unchanged. Native author SDK gap unresolved; native/real-data adoption unverified; CON03 requires VER02+Root admission; shared/formal acceptance pending."
+}

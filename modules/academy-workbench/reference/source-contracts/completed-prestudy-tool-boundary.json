@@ -1,0 +1,16 @@
+{
+  "source": "completed-prestudy-read-source.json",
+  "clarification": "The cdp label is the existing supported CUA browser selector, not a new DevTools connection.",
+  "tool": "mcp__cua_repl__js",
+  "operations": [
+    "cua.getState",
+    "cua.getTab",
+    "tab.goto",
+    "tab.playwright.evaluate:read-only DOM"
+  ],
+  "newDevtoolsConnection": false,
+  "newDebugPort": false,
+  "separateReaCdpClient": false,
+  "fetch": false,
+  "policyBypass": false
+}

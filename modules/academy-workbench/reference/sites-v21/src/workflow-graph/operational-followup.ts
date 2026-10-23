@@ -1,0 +1,25 @@
+import {z} from 'zod';
+import {OperationalId} from './operational-context.ts';
+
+const scope={policyIds:z.array(OperationalId).min(1),sourceAnchorIds:z.array(OperationalId).min(1)};
+export const MakeupEligibilityPractice=z.strictObject({...scope,
+ guardianNoticeRequiredBy:z.literal('day_before_absence'),unannouncedSameDay:z.literal('ineligible'),unknownNotice:z.literal('unknown'),
+ contact:z.strictObject({anchor:z.literal('notice_received_date'),guidanceDays:z.tuple([z.literal(0),z.literal(2),z.literal(3)]),strength:z.literal('soft_guidance'),hardDeadline:z.null()}),
+ executionDeadlineAnchor:z.literal('absence_date'),existingPlansRevalidated:z.literal(false)});
+export const MakeupHandoffPractice=z.strictObject({...scope,homeworkReference:z.literal('DailyRecord'),sequence:z.tuple([z.literal('incomplete_homework_at_teacher_selected_scope'),z.literal('new_homework')]),quantityAuthority:z.literal('teacher_judgment'),contentCheck:z.literal('ask_user_at_relevant_lesson'),resultReportingRoleId:OperationalId,recordingAndForwardingRoleId:OperationalId,teacherReportIsServerObservation:z.literal(false)});
+export const DeductionPractice=z.strictObject({...scope,materialReceivingAndForwardingRoleId:OperationalId,approvalRoleId:OperationalId,applicationRoleId:OperationalId,documentsAndDeadlines:z.literal('unconfirmed'),choiceBetweenMakeupAndDeduction:z.literal('unconfirmed')});
+export const DailyRestudyPractice=z.strictObject({...scope,assessmentKind:z.literal('textbook_daily_restudy_section'),location:z.literal('gauss_middle_school_subunit_final_section'),review:z.literal('teacher_discretionary_point_questions'),exhaustiveBlankGradingRequired:z.literal(false),observedErrorSequence:z.tuple([z.literal('correction'),z.literal('recheck')]),samplingProvesWholeConceptMastery:z.literal(false),dailyTestSameEntity:z.literal(false)});
+export const ClosureNoticePractice=z.strictObject({...scope,guardianNoticeRoleId:OperationalId,duplicateAcademyNoticeStillRequired:z.literal(true),genericDeadline:z.null()});
+export const ClinicPractice=z.strictObject({...scope,currentAssignment:z.literal('inactive'),currentWork:z.tuple([z.literal('practical_preparation'),z.literal('teacher_discretionary_book_research')]),furtherResearchInterviewRequired:z.literal(false)});
+export const WithdrawalPractice=z.strictObject({...scope,noticeRecipients:z.tuple([z.literal('management'),z.literal('teacher')]),consultingRoleId:OperationalId,
+ reasonFormArtifactId:OperationalId,rosterArtifactId:OperationalId,priorNotificationRoleId:OperationalId,
+ sequence:z.tuple([z.literal('notice_received'),z.literal('guardian_consultation'),z.literal('write_separate_reason_form'),z.literal('submit_separate_reason_form')]),
+ beforeRosterEntry:z.literal('notify_vice_director'),softProcessingGuidance:z.strictObject({anchor:z.literal('notice_received_date'),approximateDays:z.literal(7),institutionHardDeadline:z.null()}),
+ reasonFormSource:z.literal('awaiting_source'),rosterIsReasonForm:z.literal(false),rosterEntryProvesFormSubmitted:z.literal(false),
+ durationComponents:z.tuple([z.literal('months'),z.literal('lesson_count')]),conversionFormula:z.null(),lessonCountDefinition:z.literal('unconfirmed'),
+ withdrawalMonthAnchor:z.literal('last_actual_class'),lcadMeaning:z.literal('admission_diagnostic_grade'),
+ briefingMarkerScope:z.literal('withdrawal_roster.column_I'),attendingMarkers:z.tuple([z.literal('O'),z.literal('0')]),blankMarker:z.literal('unknown'),markerProvesPastEventCompletion:z.literal(false),
+ unknownMayRemainBlank:z.tuple([z.literal('admission_route'),z.literal('briefing_attendance'),z.literal('parent_disposition')]),parentDispositionOwner:z.literal('user_teacher'),assistantDispositionAction:z.literal('remind_only'),
+ sheetStructure:z.strictObject({sourceAnchorIds:z.array(OperationalId).min(1),columns:z.array(z.strictObject({column:z.string().regex(/^[A-M]$/),headerRaw:z.string().min(1)})).length(13),observedTimePrecision:z.literal('approximate'),schemaValidationRules:z.literal('not_observed'),studentValuesBundled:z.literal(false),newRecordWritten:z.literal(false)})});
+export const BookProgressMeaningPractice=z.strictObject({...scope,startDate:z.literal('per_book_actual_start'),firstLessonDateIsBookStart:z.literal(false),handoffDateIsBookStart:z.literal(false),assistantInferenceIsUserConfirmation:z.literal(false),unverifiedValues:z.literal('blank_or_unknown'),googleSheetsEditedHere:z.literal(false)});
+export const BookCertificationPractice=z.strictObject({...scope,trigger:z.literal('gauss_book_completion'),assessmentKind:z.literal('book_certification_assessment'),assessmentScope:z.literal('final_certification_for_same_book'),minimumScore:z.literal(70),comparison:z.literal('greater_than_or_equal'),scoreUnit:z.literal('points'),maximumScore:z.null(),bookEditionAndFinalTestBindingRequired:z.literal(true),attemptSelectionPolicy:z.literal('unconfirmed'),retryPolicy:z.literal('unconfirmed'),belowThresholdHandling:z.literal('unconfirmed'),automaticBookAdvancement:z.literal('not_established'),liveResultCapability:z.literal('not_observed')});

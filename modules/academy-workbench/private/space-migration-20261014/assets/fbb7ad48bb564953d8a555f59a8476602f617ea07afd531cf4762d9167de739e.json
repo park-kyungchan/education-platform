@@ -1,0 +1,137 @@
+{
+  "$schema": "academy-operations.schema.json",
+  "kind": "academy_evidence",
+  "id": "academy:evidence:2026-10-06:r1",
+  "schemaVersion": "0.1.0",
+  "revision": 1,
+  "profileId": "kyungchan",
+  "projectId": "project:academy-practical",
+  "updatedAt": "2026-10-06T05:44:12.101Z",
+  "sourceIds": [
+    "source:user-cartography-request"
+  ],
+  "sources": [
+    {
+      "id": "source:site-observation-initial",
+      "kind": "source_evidence",
+      "schemaVersion": "0.1.0",
+      "revision": 1,
+      "profileId": "kyungchan",
+      "canonicalParentId": "project:academy-practical",
+      "relatedProjectIds": [
+        "project:academy-practical"
+      ],
+      "sourceIds": [],
+      "observedAt": null,
+      "updatedAt": "2026-10-06T05:39:28.149Z",
+      "sourceKind": "site_observation_summary",
+      "sourceReference": null,
+      "claim": "기존 실제 사이트 탐색에서 수업일정관리, 학생별 출결조회, DayRecord와 등록 시작일 및 요일, 실제 출결과 지각 표시 및 메모를 확인했다.",
+      "verificationState": "reported_observation",
+      "sourceObservedAt": null,
+      "limitations": [
+        "정확한 관찰 시각, 전체 메뉴 경로, URL, 화면 선택자는 이 초기 자료에 전달되지 않았다.",
+        "원시 화면 증거의 직접 재검증을 대신하지 않는다.",
+        "학교 필드 위치와 최신 10월 DayRecord 내용은 아직 확인되지 않았다."
+      ],
+      "containsStudentPersonalData": false
+    },
+    {
+      "id": "source:user-cartography-request",
+      "kind": "source_evidence",
+      "schemaVersion": "0.1.0",
+      "revision": 1,
+      "profileId": "kyungchan",
+      "canonicalParentId": "project:academy-practical",
+      "relatedProjectIds": [
+        "project:academy-practical"
+      ],
+      "sourceIds": [],
+      "observedAt": null,
+      "updatedAt": "2026-10-06T05:39:28.149Z",
+      "sourceKind": "user_request",
+      "sourceReference": null,
+      "claim": "사용자가 사이트에서 학교를 찾아 출석부 B열과 연결하고, 다른 에이전트가 빠르게 조회할 수 있는 Cartography와 요청 라우팅을 구축하며 박경찬 Space에 학원 실무 공간을 만들도록 요청했다.",
+      "verificationState": "directly_read",
+      "sourceObservedAt": null,
+      "limitations": [
+        "요청은 학교 필드의 실제 위치나 매핑 완료를 입증하지 않는다.",
+        "원문 메시지의 영구 참조는 아직 연결하지 않았다."
+      ],
+      "containsStudentPersonalData": false
+    },
+    {
+      "id": "source:space-page-read",
+      "kind": "source_evidence",
+      "schemaVersion": "0.1.0",
+      "revision": 1,
+      "profileId": "kyungchan",
+      "canonicalParentId": "project:academy-practical",
+      "relatedProjectIds": [
+        "project:academy-practical"
+      ],
+      "sourceIds": [],
+      "observedAt": null,
+      "updatedAt": "2026-10-06T05:39:28.149Z",
+      "sourceKind": "page_read",
+      "sourceReference": "https://chatgpt.com/space/page_f18c68ae5c808191b723b4eb693016fa",
+      "claim": "교육 아래 학원 실무 프로젝트와 수업 준비와 기록, 출결과 보강, 사이트 길찾기 Cartography, 구조화 원본과 검증의 4개 하위 Page를 생성하고 각각 내용을 재읽었다.",
+      "verificationState": "directly_read",
+      "sourceObservedAt": "2026-10-06T05:39:28.149Z",
+      "limitations": [
+        "실제 사이트 기능의 확인 근거가 아니다.",
+        "Page의 시각적 렌더링은 별도 검증하지 않았다."
+      ],
+      "containsStudentPersonalData": false
+    },
+    {
+      "id": "source:sharing-read",
+      "kind": "source_evidence",
+      "schemaVersion": "0.1.0",
+      "revision": 1,
+      "profileId": "kyungchan",
+      "canonicalParentId": "project:academy-practical",
+      "relatedProjectIds": [
+        "project:academy-practical"
+      ],
+      "sourceIds": [],
+      "observedAt": null,
+      "updatedAt": "2026-10-06T05:39:28.149Z",
+      "sourceKind": "sharing_read",
+      "sourceReference": "https://chatgpt.com/space/page_f18c68ae5c808191b723b4eb693016fa",
+      "claim": "교육과 학원 실무 프로젝트 및 4개 하위 Page에서 공유목록이 비어 있고 inherited_access.complete=true인 소유자 전용 상태를 읽었다.",
+      "verificationState": "directly_read",
+      "sourceObservedAt": "2026-10-06T05:39:28.149Z",
+      "limitations": [
+        "현재 관찰 시점의 접근 상태이며 이후 공유 변경을 막는 보장이 아니다.",
+        "개별 파일은 업로드와 재읽기로 접근을 추가 확인한다."
+      ],
+      "containsStudentPersonalData": false
+    },
+    {
+      "id": "source:site-observation-20261006-0540",
+      "kind": "source_evidence",
+      "schemaVersion": "0.1.0",
+      "revision": 1,
+      "profileId": "kyungchan",
+      "canonicalParentId": "project:academy-practical",
+      "relatedProjectIds": [
+        "project:academy-practical"
+      ],
+      "sourceIds": [],
+      "observedAt": null,
+      "updatedAt": "2026-10-06T05:44:12.101Z",
+      "sourceKind": "site_observation_summary",
+      "sourceReference": "task:01a10fb5-7835-7589-8a54-c84ad351d02a",
+      "claim": "실제 사이트 재탐색에서 DayRecord, 학습진도, 예습 검사, DT 결과, 학생조회와 교재 자료의 URL 및 주요 조회 컨트롤을 확인했다. DayRecord 일부 입력은 blur 시 자동 저장 위험이 있다. 확인한 학생 상세에서는 학교 필드를 찾지 못했다.",
+      "verificationState": "reported_observation",
+      "sourceObservedAt": null,
+      "limitations": [
+        "2026년 10월 6일 약 05:40 UTC에 전달된 실제 탐색 보고이며 이 파일 작성 과정에서 브라우저를 중복 조작하지 않았다.",
+        "학생 정보 상세에서 학교 필드를 못 찾은 결과를 사이트 전체의 학교 정보 부재로 일반화하지 않는다.",
+        "교재 버튼 표시는 확인했지만 실제 다운로드는 검증하지 않았다."
+      ],
+      "containsStudentPersonalData": false
+    }
+  ]
+}

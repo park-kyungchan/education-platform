@@ -1,0 +1,399 @@
+{
+  "schemaVersion": "1.0.0",
+  "proposalVersion": "2026-10-13.v1",
+  "proposalId": "MATH-HC11-D1-T02-001",
+  "status": "proposed_not_applied",
+  "reviewScope": "one_targeted_mathematical_and_instructional_consistency_issue_not_full_151_type_audit",
+  "typeId": "HC11-d1-T02",
+  "actionId": "HC11-d1-T02-A04",
+  "severity": "high_instructional_consistency_risk",
+  "finding": {
+    "title": "정확한 세 점의 등거리 조건을 중심 결정 불충분 사례처럼 취급하는 설명 방향",
+    "nuance": "원문 중앙 답은 L이 중심이 아니라고 직접 단정하지 않고 모순 없는 후보라고만 한다. 그러나 targetStructure와 A04 designIntent/separationReason은 주어진 세 점 조건에서 올바른 중심 확정을 과도한 일반화처럼 취급하여 교사 판단을 잘못 이끌 수 있다.",
+    "givenConditions": [
+      "A, B, C는 같은 원 위 서로 다른 세 점이다.",
+      "LA=LB=LC=4cm이며 반올림 측정값이 아닌 정확한 길이다.",
+      "문제는 통상의 평면 유클리드 기하 상황이다."
+    ],
+    "mathematicalConclusion": "L은 이 원의 유일한 중심이다. K는 KA=4cm, KC=3cm가 서로 다르므로 중심이 아니다.",
+    "justification": "한 원 위 서로 다른 세 점은 비공선이다. A와 B까지 같은 거리인 점은 AB의 수직이등분선 위에, A와 C까지 같은 거리인 점은 AC의 수직이등분선 위에 있다. 두 수직이등분선의 교점은 유일하며 원래 원의 중심도 두 선 위에 있으므로 L은 그 중심이다. 동치로, 서로 다른 두 원은 세 개의 서로 다른 공통점을 가질 수 없다.",
+    "grade3Guardrail": "위 증명은 교사용 수학 정합성 검토이며 초3 필수 성취나 학생 평가 요구로 추가하지 않는다.",
+    "twoPointBoundaryRemainsValid": "두 점 A, B까지의 등거리만으로는 중심을 확정할 수 없다는 별도 boundaryCase는 옳으며 보존한다."
+  },
+  "canonicalSource": {
+    "file": "source/archive/research_review/circle_designs.json",
+    "sha256": "1b4d3da7b54c32d904b0ec7a54ce02138214a44420bee1c963e1a67d9901590a",
+    "selector": {
+      "array": "designs",
+      "field": "subtypeId",
+      "equals": "HC11-d1-T02"
+    },
+    "observedJsonPointer": "/designs/1"
+  },
+  "evidencePointers": [
+    "/designs/1/centralTask/prompt",
+    "/designs/1/designRationale/conditions",
+    "/designs/1/centralTask/answer",
+    "/designs/1/targetStructure",
+    "/designs/1/actionDesign/microActions/3/designIntent",
+    "/designs/1/actionDesign/microActions/3/separationReason"
+  ],
+  "originalExampleLocation": {
+    "file": "source/archive/research_review/original_170_examples_and_hierarchy.json",
+    "jsonPointer": "/details/39/types/1/example",
+    "verdict": "원래 예시는 O가 이미 중심이라고 주었고 세 반지름이 모두 4cm일 수 있다는 답이 맞으므로 수정 대상이 아니다."
+  },
+  "applicationPolicy": {
+    "writeArchivedSources": false,
+    "intendedTarget": "An explicitly versioned derived review/correction layer; preserve raw source and its manifest.",
+    "applyAutomatically": false,
+    "reason": "This file is a review proposal. Applying it is a separate repository design decision.",
+    "preconditions": [
+      "Select exactly one matching subtypeId.",
+      "Verify the source SHA-256 and every RFC6902 test before replacement.",
+      "Keep raw and corrected views distinguishable and show proposal ID.",
+      "Propagate correction only to derived mirrored fields, never silently to immutable archive."
+    ]
+  },
+  "recommendedResolution": "원문 문항의 정확한 세 점 조건을 보존하고 L이 중심임을 명시한다. A04는 L 중심 응답을 오류로 채점하지 않도록 교정한다.",
+  "relativeRecordPatch": [
+    {
+      "op": "test",
+      "path": "/targetStructure",
+      "value": "중심 후보에서 원 위의 점까지 거리 조건을 확인하되 일부 거리의 일치만으로 중심을 확정하지 않는다."
+    },
+    {
+      "op": "replace",
+      "path": "/targetStructure",
+      "value": "중심의 거리 조건으로 K를 배제한다. 같은 원 위 서로 다른 세 점까지 정확히 같은 거리에 있는 L은 이 원의 중심임을 교사용 해설에 명시하고, 두 점만 확인한 경계 사례와 구별한다."
+    },
+    {
+      "op": "test",
+      "path": "/centralTask/answer",
+      "value": "K는 제외합니다. L은 주어진 검사에서 모순이 없는 후보이며, 중심의 조건은 원 위 어느 점까지나 거리가 같다는 것입니다."
+    },
+    {
+      "op": "replace",
+      "path": "/centralTask/answer",
+      "value": "K는 제외합니다. L은 이 원의 중심입니다. 중심에서 원 위 어느 점까지나 거리가 같습니다. 이 문제는 서로 다른 세 점까지의 정확한 길이를 주었으므로 L을 중심이라고 할 수 있습니다."
+    },
+    {
+      "op": "test",
+      "path": "/centralTask/solution",
+      "value": "중심에서 원 위까지의 거리는 같아야 합니다. K는 A와 C까지의 거리가 달라 그 조건을 어깁니다. L의 세 측정은 조건에 맞습니다. 이 활동에서는 세 점의 검사에서 전체 원의 성질로 넘어가는 설명을 목표로 하며, 세 점의 등거리만으로 중심을 증명하는 상급 기하 정리는 요구하지 않습니다."
+    },
+    {
+      "op": "replace",
+      "path": "/centralTask/solution",
+      "value": "K는 A와 C까지의 정확한 거리가 다르므로 중심이 아닙니다. L은 같은 원 위의 서로 다른 세 점 A, B, C까지의 정확한 거리가 모두 4cm이므로 이 원의 유일한 중심입니다. 이 세 점 조건의 충분성에 대한 증명은 교사용 수학 검토 사항이며 초3 학생에게 요구하지 않습니다. 두 점까지만 거리가 같은 경계 문제와는 조건이 다릅니다."
+    },
+    {
+      "op": "test",
+      "path": "/designRationale/numbers",
+      "value": "4·4·3은 두 번 맞아도 한 번의 불일치가 조건을 깨뜨림을 보인다. 4·4·4와 대비하여 단순 다수결을 막는다."
+    },
+    {
+      "op": "replace",
+      "path": "/designRationale/numbers",
+      "value": "K의 4·4·3은 두 길이가 같아도 나머지 한 길이의 불일치로 중심이 배제됨을 보인다. L의 4·4·4는 같은 원 위 서로 다른 세 점에 대한 정확한 등거리이므로 L을 중심으로 정한다. 두 점만 확인한 경계 사례와 혼동하지 않는다."
+    },
+    {
+      "op": "test",
+      "path": "/anticipatedStrategies/productive",
+      "value": "한 후보 안에서 원 위 점들까지의 길이를 비교해 K를 제외한다."
+    },
+    {
+      "op": "replace",
+      "path": "/anticipatedStrategies/productive",
+      "value": "K의 거리 불일치를 찾아 제외한다. L이 중심이라는 결론은 인정하되, 그 충분성 증명을 초3 학생에게 요구하지 않는다."
+    },
+    {
+      "op": "test",
+      "path": "/anticipatedStrategies/reflectionPrompt",
+      "value": "두 점의 거리만 맞았다는 것과 원 위 어느 점에서도 맞는다는 것은 어떻게 다른가요?"
+    },
+    {
+      "op": "replace",
+      "path": "/anticipatedStrategies/reflectionPrompt",
+      "value": "두 점만 거리가 같은 경계 문제와, 서로 다른 세 점까지 정확히 같은 거리인 L의 조건은 무엇이 다른가요? 이 질문의 증명은 교사용 심화이며 초3 필수 평가로 쓰지 않습니다."
+    },
+    {
+      "op": "test",
+      "path": "/generalization/invariant",
+      "value": "중심은 원 위 어느 점까지나 같은 거리를 갖는다. 한 번의 정확한 거리 불일치로 중심 후보를 배제할 수 있다."
+    },
+    {
+      "op": "replace",
+      "path": "/generalization/invariant",
+      "value": "중심에서 원 위 어느 점까지나 거리는 같다. 한 번의 정확한 거리 불일치로 중심 후보를 배제할 수 있다. 같은 원 위 서로 다른 세 점까지의 정확한 등거리는 중심을 유일하게 정하지만, 두 점만의 등거리는 일반적으로 그렇지 않다."
+    },
+    {
+      "op": "test",
+      "path": "/generalization/explanation",
+      "value": "점의 이름과 방향을 바꾸어도 필요한 조건은 거리의 일치다. 두 점만 등거리인 사실은 일반적으로 중심을 보장하지 않는다."
+    },
+    {
+      "op": "replace",
+      "path": "/generalization/explanation",
+      "value": "점의 이름과 방향을 바꾸어도 중심의 거리 일정성은 유지된다. 중심의 필요조건을 이용한 후보 배제, 정확한 세 점 조건의 충분성, 두 점만 확인한 조건의 불충분성을 구별한다. 세 점 조건의 증명은 초3 필수 평가에 포함하지 않는다."
+    },
+    {
+      "op": "test",
+      "path": "/complexityRationale/grade3Core",
+      "value": "초3 핵심은 불일치 후보 배제와 정의의 설명이다. 세 비공선 점에 대한 외심의 유일성 증명은 평가하지 않는다."
+    },
+    {
+      "op": "replace",
+      "path": "/complexityRationale/grade3Core",
+      "value": "초3 핵심은 거리 불일치로 K를 배제하고 중심의 뜻을 설명하는 것이다. 교사는 정확한 세 점 조건에서 L이 유일한 중심임을 명시하고 정답으로 인정한다. 세 비공선 점의 외심 유일성 증명은 평가하지 않는다."
+    },
+    {
+      "op": "test",
+      "path": "/revisedExample/answer",
+      "value": "K는 제외합니다. L은 주어진 검사에서 모순이 없는 후보이며, 중심의 조건은 원 위 어느 점까지나 거리가 같다는 것입니다."
+    },
+    {
+      "op": "replace",
+      "path": "/revisedExample/answer",
+      "value": "K는 제외합니다. L은 이 원의 중심입니다. 중심에서 원 위 어느 점까지나 거리가 같습니다. 이 문제는 서로 다른 세 점까지의 정확한 길이를 주었으므로 L을 중심이라고 할 수 있습니다."
+    },
+    {
+      "op": "test",
+      "path": "/revisedExample/solution/0",
+      "value": "중심에서 원 위까지의 거리는 같아야 합니다. K는 A와 C까지의 거리가 달라 그 조건을 어깁니다. L의 세 측정은 조건에 맞습니다. 이 활동에서는 세 점의 검사에서 전체 원의 성질로 넘어가는 설명을 목표로 하며, 세 점의 등거리만으로 중심을 증명하는 상급 기하 정리는 요구하지 않습니다."
+    },
+    {
+      "op": "replace",
+      "path": "/revisedExample/solution/0",
+      "value": "K는 A와 C까지의 정확한 거리가 다르므로 중심이 아닙니다. L은 같은 원 위의 서로 다른 세 점 A, B, C까지의 정확한 거리가 모두 4cm이므로 이 원의 유일한 중심입니다. 이 세 점 조건의 충분성에 대한 증명은 교사용 수학 검토 사항이며 초3 학생에게 요구하지 않습니다. 두 점까지만 거리가 같은 경계 문제와는 조건이 다릅니다."
+    },
+    {
+      "op": "test",
+      "path": "/generalizationDomain",
+      "value": "중심은 원 위 어느 점까지나 같은 거리를 갖는다. 한 번의 정확한 거리 불일치로 중심 후보를 배제할 수 있다. 적용 범위 및 한계: 점의 이름과 방향을 바꾸어도 필요한 조건은 거리의 일치다. 두 점만 등거리인 사실은 일반적으로 중심을 보장하지 않는다."
+    },
+    {
+      "op": "replace",
+      "path": "/generalizationDomain",
+      "value": "중심에서 원 위 어느 점까지나 거리는 같다. 한 번의 정확한 거리 불일치로 중심 후보를 배제할 수 있다. 같은 원 위 서로 다른 세 점까지의 정확한 등거리는 중심을 유일하게 정하지만, 두 점만의 등거리는 일반적으로 그렇지 않다. 적용 범위 및 한계: 점의 이름과 방향을 바꾸어도 중심의 거리 일정성은 유지된다. 중심의 필요조건을 이용한 후보 배제, 정확한 세 점 조건의 충분성, 두 점만 확인한 조건의 불충분성을 구별한다. 세 점 조건의 증명은 초3 필수 평가에 포함하지 않는다."
+    },
+    {
+      "op": "test",
+      "path": "/expectedStrategies/0",
+      "value": "한 후보 안에서 원 위 점들까지의 길이를 비교해 K를 제외한다."
+    },
+    {
+      "op": "replace",
+      "path": "/expectedStrategies/0",
+      "value": "K의 거리 불일치를 찾아 제외한다. L이 중심이라는 결론은 인정하되, 그 충분성 증명을 초3 학생에게 요구하지 않는다."
+    },
+    {
+      "op": "test",
+      "path": "/invariant",
+      "value": "중심은 원 위 어느 점까지나 같은 거리를 갖는다. 한 번의 정확한 거리 불일치로 중심 후보를 배제할 수 있다."
+    },
+    {
+      "op": "replace",
+      "path": "/invariant",
+      "value": "중심에서 원 위 어느 점까지나 거리는 같다. 한 번의 정확한 거리 불일치로 중심 후보를 배제할 수 있다. 같은 원 위 서로 다른 세 점까지의 정확한 등거리는 중심을 유일하게 정하지만, 두 점만의 등거리는 일반적으로 그렇지 않다."
+    },
+    {
+      "op": "test",
+      "path": "/guidanceSequence/1",
+      "value": "두 점의 거리만 맞았다는 것과 원 위 어느 점에서도 맞는다는 것은 어떻게 다른가요?"
+    },
+    {
+      "op": "replace",
+      "path": "/guidanceSequence/1",
+      "value": "두 점만 거리가 같은 경계 문제와, 서로 다른 세 점까지 정확히 같은 거리인 L의 조건은 무엇이 다른가요? 이 질문의 증명은 교사용 심화이며 초3 필수 평가로 쓰지 않습니다."
+    },
+    {
+      "op": "test",
+      "path": "/actionDesign/example/answer",
+      "value": "K는 제외합니다. L은 주어진 검사에서 모순이 없는 후보이며, 중심의 조건은 원 위 어느 점까지나 거리가 같다는 것입니다."
+    },
+    {
+      "op": "replace",
+      "path": "/actionDesign/example/answer",
+      "value": "K는 제외합니다. L은 이 원의 중심입니다. 중심에서 원 위 어느 점까지나 거리가 같습니다. 이 문제는 서로 다른 세 점까지의 정확한 길이를 주었으므로 L을 중심이라고 할 수 있습니다."
+    },
+    {
+      "op": "test",
+      "path": "/actionDesign/segmentation/chunks/3/exitEvidence",
+      "value": "세 기록에는 모순이 없고 원 위 어느 점까지나 같은 거리인지가 중심 조건이라고 말한다. 단순 지목에 그치지 않고 제시한 조건이나 해당 표식과 연결하는 말·행동을 기록한다."
+    },
+    {
+      "op": "replace",
+      "path": "/actionDesign/segmentation/chunks/3/exitEvidence",
+      "value": "K를 배제하는 이유를 거리 불일치로 설명한다. L이 중심이라는 응답을 수학적으로 맞는 답으로 인정한다. 세 점 조건의 증명을 하지 못한 사실만으로 초3 중심 개념의 미이해를 판정하지 않는다. 두 점만 확인한 별도 경계 사례의 반응은 구분하여 기록한다."
+    },
+    {
+      "op": "test",
+      "path": "/actionDesign/microActions/0/mathematicalPurpose",
+      "value": "후보별로 원 위 점까지 거리들을 함께 비교해야 한다. 이 행동은 “중심 후보에서 원 위의 점까지 거리 조건을 확인하되 일부 거리의 일치만으로 중심을 확정하지 않는다.” 중 해당 판단을 드러내기 위한 것이다."
+    },
+    {
+      "op": "replace",
+      "path": "/actionDesign/microActions/0/mathematicalPurpose",
+      "value": "후보별로 원 위 점까지 거리들을 함께 비교해야 한다. 이 행동은 “중심의 거리 조건으로 K를 배제한다. 같은 원 위 서로 다른 세 점까지 정확히 같은 거리에 있는 L은 이 원의 중심임을 교사용 해설에 명시하고, 두 점만 확인한 경계 사례와 구별한다.” 중 해당 판단을 드러내기 위한 것이다."
+    },
+    {
+      "op": "test",
+      "path": "/actionDesign/microActions/1/mathematicalPurpose",
+      "value": "중심의 거리 일정성에는 한 쌍의 불일치도 허용되지 않는다. 이 행동은 “중심 후보에서 원 위의 점까지 거리 조건을 확인하되 일부 거리의 일치만으로 중심을 확정하지 않는다.” 중 해당 판단을 드러내기 위한 것이다."
+    },
+    {
+      "op": "replace",
+      "path": "/actionDesign/microActions/1/mathematicalPurpose",
+      "value": "중심의 거리 일정성에는 한 쌍의 불일치도 허용되지 않는다. 이 행동은 “중심의 거리 조건으로 K를 배제한다. 같은 원 위 서로 다른 세 점까지 정확히 같은 거리에 있는 L은 이 원의 중심임을 교사용 해설에 명시하고, 두 점만 확인한 경계 사례와 구별한다.” 중 해당 판단을 드러내기 위한 것이다."
+    },
+    {
+      "op": "test",
+      "path": "/actionDesign/microActions/2/mathematicalPurpose",
+      "value": "필요조건 위반은 후보를 배제할 수 있게 한다. 이 행동은 “중심 후보에서 원 위의 점까지 거리 조건을 확인하되 일부 거리의 일치만으로 중심을 확정하지 않는다.” 중 해당 판단을 드러내기 위한 것이다."
+    },
+    {
+      "op": "replace",
+      "path": "/actionDesign/microActions/2/mathematicalPurpose",
+      "value": "필요조건 위반은 후보를 배제할 수 있게 한다. 이 행동은 “중심의 거리 조건으로 K를 배제한다. 같은 원 위 서로 다른 세 점까지 정확히 같은 거리에 있는 L은 이 원의 중심임을 교사용 해설에 명시하고, 두 점만 확인한 경계 사례와 구별한다.” 중 해당 판단을 드러내기 위한 것이다."
+    },
+    {
+      "op": "test",
+      "path": "/actionDesign/microActions/3/observableStudentAction",
+      "value": "세 기록에는 모순이 없고 원 위 어느 점까지나 같은 거리인지가 중심 조건이라고 말한다."
+    },
+    {
+      "op": "replace",
+      "path": "/actionDesign/microActions/3/observableStudentAction",
+      "value": "K는 중심이 아니고 L은 중심임을 말한다. 세 점 조건의 증명을 요구하지 않으며, 두 점만 확인한 경계 사례는 별도 질문에서 비교한다."
+    },
+    {
+      "op": "test",
+      "path": "/actionDesign/microActions/3/expectedUnderstanding",
+      "value": "기대하는 이해(관찰 전 가설): 부분 확인과 중심의 전체 조건을 구별한다."
+    },
+    {
+      "op": "replace",
+      "path": "/actionDesign/microActions/3/expectedUnderstanding",
+      "value": "기대하는 이해(관찰 전 가설): 중심의 필요조건을 위반한 K를 배제한다. 교사용 검토에서는 세 점 등거리와 두 점 등거리의 논리적 차이를 보존한다."
+    },
+    {
+      "op": "test",
+      "path": "/actionDesign/microActions/3/mathematicalPurpose",
+      "value": "부분 확인과 중심의 전체 조건을 구별한다. 이 행동은 “중심 후보에서 원 위의 점까지 거리 조건을 확인하되 일부 거리의 일치만으로 중심을 확정하지 않는다.” 중 해당 판단을 드러내기 위한 것이다."
+    },
+    {
+      "op": "replace",
+      "path": "/actionDesign/microActions/3/mathematicalPurpose",
+      "value": "정확한 세 점 조건에서 L이 중심임을 올바르게 인정하고, 두 점만 확인한 경계 사례와 섞어 중심 확정을 오류로 처리하지 않는다."
+    },
+    {
+      "op": "test",
+      "path": "/actionDesign/microActions/3/designIntent",
+      "value": "관찰된 일부 사례에서 전체로 과도하게 확정하는 오류를 별도 점검한다. 앞 단계의 산출물을 필요한 때에만 보이며, 학생에게는 이 단서 한 가지를 먼저 제시한다."
+    },
+    {
+      "op": "replace",
+      "path": "/actionDesign/microActions/3/designIntent",
+      "value": "학생의 올바른 L 중심 판단을 과도한 일반화로 채점하지 않는다. 초3 중심 개념 설명과 세 점 조건의 상급 증명 요구를 분리한다."
+    },
+    {
+      "op": "test",
+      "path": "/actionDesign/microActions/3/teacherCheck/evidence",
+      "value": "세 기록에는 모순이 없고 원 위 어느 점까지나 같은 거리인지가 중심 조건이라고 말한다. 단순 지목에 그치지 않고 제시한 조건이나 해당 표식과 연결하는 말·행동을 기록한다."
+    },
+    {
+      "op": "replace",
+      "path": "/actionDesign/microActions/3/teacherCheck/evidence",
+      "value": "K를 배제하는 이유를 거리 불일치로 설명한다. L이 중심이라는 응답을 수학적으로 맞는 답으로 인정한다. 세 점 조건의 증명을 하지 못한 사실만으로 초3 중심 개념의 미이해를 판정하지 않는다. 두 점만 확인한 별도 경계 사례의 반응은 구분하여 기록한다."
+    },
+    {
+      "op": "test",
+      "path": "/actionDesign/microActions/3/teacherCheck/nonEvidence",
+      "value": "정답만 따라 말하기, 교사의 손을 따라 지목하기, 보기 좋은 그림만 완성하기는 이 이해의 충분한 증거가 아니다. 특히 두 점만 같아도 무조건 중심이라고 한다.가 남아 있으면 정답 여부와 별도 기록한다."
+    },
+    {
+      "op": "replace",
+      "path": "/actionDesign/microActions/3/teacherCheck/nonEvidence",
+      "value": "정답을 따라 말한 것만으로 독립적인 이해를 확정하지 않는다. 다만 L이 중심이라는 응답 자체는 정확한 세 점 조건에서 수학적으로 옳으므로 오류로 기록하지 않는다."
+    },
+    {
+      "op": "test",
+      "path": "/actionDesign/microActions/3/teacherCheck/nextDecision",
+      "value": "이유와 행동이 일치하면 다음 의미 단위로 이동한다. “두 점만 같아도 무조건 중심이라고 한다.”가 나타나면 제시된 도움만 사용한 뒤 같은 판단을 학생이 다시 수행하게 한다. 수행이 느리거나 손 조작이 불안정한 사실만으로 개념 미이해를 판정하지 않는다."
+    },
+    {
+      "op": "replace",
+      "path": "/actionDesign/microActions/3/teacherCheck/nextDecision",
+      "value": "K를 배제하는 이유를 설명하면 초3 핵심 목표의 증거로 기록한다. L이 중심이라는 답은 인정한다. 두 점만의 등거리도 항상 중심을 보장한다고 주장할 때에만 별도 경계 사례를 보여 준다."
+    },
+    {
+      "op": "test",
+      "path": "/actionDesign/microActions/3/fading/readinessEvidence",
+      "value": "다음 시도에서 교사가 정답을 지목하지 않아도 학생이 “세 기록에는 모순이 없고 원 위 어느 점까지나 같은 거리인지가 중심 조건이라고 말한다.”를 수행하고 해당 조건을 설명한다. 정해진 횟수나 시간만으로 도움을 제거하지 않는다."
+    },
+    {
+      "op": "replace",
+      "path": "/actionDesign/microActions/3/fading/readinessEvidence",
+      "value": "K의 거리 불일치를 스스로 설명하는지 확인한다. L 중심 판단을 인정하며, 세 점 충분성 증명은 도움 제거의 통과 기준으로 쓰지 않는다. 두 점 경계 사례는 별도 조건 판단으로 기록한다."
+    },
+    {
+      "op": "test",
+      "path": "/actionDesign/microActions/3/separationReason",
+      "value": "관찰된 일부 사례에서 전체로 과도하게 확정하는 오류를 별도 점검한다."
+    },
+    {
+      "op": "replace",
+      "path": "/actionDesign/microActions/3/separationReason",
+      "value": "거리 불일치에 의한 후보 배제와 두 점 조건의 한계는 별도 판단이다. 주어진 정확한 세 점 조건에서 L이 중심이라는 올바른 결론을 잘못된 과도한 일반화로 취급하지 않는다."
+    }
+  ],
+  "changeCount": 29,
+  "mirroredLocations": [
+    {
+      "file": "source/archive/grade3_research/freudenthal/circle_designs.json",
+      "jsonPointer": "/designs/1",
+      "handling": "Archive unchanged; any derived view should use the same selected-record correction."
+    },
+    {
+      "file": "source/archive/app_snapshot/src/components/generated/ResearchDataPart04.ts",
+      "export": "DATA_PART",
+      "recordKey": "HC11-d1-T02",
+      "handling": "Archive unchanged; rebuilt app should load the versioned derived view."
+    }
+  ],
+  "dependentCapabilityProposal": {
+    "file": "source/capability-research/초3_105유형_능력후보_근거대응.json",
+    "sha256": "cc76d2fb3ce9f7eb0723ea8775da72a28b269b788c67509af7314b6e8bbd7451",
+    "selector": {
+      "array": "mapping",
+      "field": "typeId",
+      "equals": "HC11-d1-T02"
+    },
+    "observedJsonPointer": "/mapping/75/designTarget",
+    "expectedBefore": "중심 후보에서 원 위의 점까지 거리 조건을 확인하되 일부 거리의 일치만으로 중심을 확정하지 않는다.",
+    "proposedAfter": "중심의 거리 조건으로 K를 배제한다. 같은 원 위 서로 다른 세 점까지 정확히 같은 거리에 있는 L은 이 원의 중심임을 교사용 해설에 명시하고, 두 점만 확인한 경계 사례와 구별한다.",
+    "note": "능력후보 및 문헌 근거의 타당성을 재검증한 것은 아니다. 교정된 설계 목표와 파생 대응문구의 정합성만 유지한다."
+  },
+  "alternativeNotSelected": "교수학 목표가 일부 점 검사만으로 중심을 확정할 수 없음을 다루는 것이라면 L은 A·B 두 점까지만 4cm라고 바꾸고 C까지 거리는 주지 않는 별도 문항 버전을 만들 수 있다. 이는 문제 조건 자체의 변경이므로 현재 권장안에 혼합하지 않는다.",
+  "acceptanceChecks": [
+    "Original example and all 19 archived variants remain byte-preserved.",
+    "Corrected answer explicitly accepts L as the unique center under exact distinct-three-point conditions.",
+    "K exclusion remains correct.",
+    "Two-point boundary remains insufficient and has a valid counterexample.",
+    "No grade3 student is marked wrong solely for failing to prove circumcenter uniqueness.",
+    "centralTask/revisedExample/actionDesign answers and capability designTarget stay synchronized.",
+    "No learning-effect claim or student-mastery inference is introduced."
+  ],
+  "verification": {
+    "proposalPatchTestedInMemory": true,
+    "sourceWasModified": false,
+    "centralRevisedAndActionAnswersAgree": true,
+    "originalExampleUnchanged": true,
+    "boundaryCaseUnchanged": true
+  },
+  "unverified": [
+    "All other mathematical wording, diagrams, and pedagogy across 151 research types have not received a full independent review.",
+    "No actual student evidence or local learning-effect evaluation is available."
+  ]
+}

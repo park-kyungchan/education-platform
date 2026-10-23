@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "academy.git-work-validation-observation/1",
+  "targetCommit": "07d35461b031746550c3d53dba5bfcff350e9ae1",
+  "externalValidatorCommit": "712f90deac0676e662dc5d75d88d89f7b6773bfe",
+  "valid": false,
+  "findings": [
+    "GOVERNING_DECISION_NOT_CURRENT:academy-context-consolidation-20261021"
+  ],
+  "cause": "The final no-further-third-messaging user decision superseded the earlier notice decision, but the current Work governing list still selected that superseded historical Decision.",
+  "repair": "Remove only the superseded Decision from the current Work governing list. Preserve the original Input/Decision and the explicit successor supersedes link.",
+  "originalInputsModified": false,
+  "nativeEffectsReplayed": false
+}

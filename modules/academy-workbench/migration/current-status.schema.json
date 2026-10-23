@@ -1,0 +1,331 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Current migration status",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schemaVersion",
+    "checkedAt",
+    "sourceCommit",
+    "authority",
+    "precedence",
+    "sources",
+    "resolvedScopes",
+    "remainingGates",
+    "boundaries",
+    "coverageLimits",
+    "verification"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "./current-status.schema.json"
+    },
+    "schemaVersion": {
+      "const": "academy.current-migration-status/1"
+    },
+    "checkedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "sourceCommit": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "grantsActionPermission",
+        "containsStudentValues",
+        "containsCredentials",
+        "runtimeModified"
+      ],
+      "properties": {
+        "grantsActionPermission": {
+          "const": false
+        },
+        "containsStudentValues": {
+          "const": false
+        },
+        "containsCredentials": {
+          "const": false
+        },
+        "runtimeModified": {
+          "const": false
+        }
+      }
+    },
+    "precedence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "currentEntry",
+        "historicalEntry",
+        "rule",
+        "supersededHistoricalClaims"
+      ],
+      "properties": {
+        "currentEntry": {
+          "type": "string",
+          "minLength": 1
+        },
+        "historicalEntry": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rule": {
+          "type": "string",
+          "minLength": 1
+        },
+        "supersededHistoricalClaims": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "resolvedScope"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "resolvedScope": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "path",
+          "commit",
+          "checkedAt",
+          "url",
+          "meaning"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "commit": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{40}$"
+          },
+          "checkedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "meaning": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "resolvedScopes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "domain",
+          "status",
+          "claim",
+          "sourceIds",
+          "nextVerification"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "domain": {
+            "type": "string",
+            "minLength": 1
+          },
+          "status": {
+            "const": "resolved"
+          },
+          "claim": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sourceIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "nextVerification": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    },
+    "remainingGates": {
+      "type": "array",
+      "minItems": 7,
+      "maxItems": 7,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "status",
+          "requirement",
+          "domain",
+          "dependencies",
+          "next",
+          "sourceIds"
+        ],
+        "properties": {
+          "id": {
+            "enum": [
+              "real_data",
+              "credential_setup",
+              "private_storage",
+              "recovery",
+              "hosting",
+              "scope_parity",
+              "release_hash"
+            ]
+          },
+          "status": {
+            "const": "open"
+          },
+          "requirement": {
+            "type": "string",
+            "minLength": 1
+          },
+          "domain": {
+            "type": "string",
+            "minLength": 1
+          },
+          "dependencies": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "real_data",
+                "credential_setup",
+                "private_storage",
+                "recovery",
+                "hosting",
+                "scope_parity",
+                "release_hash"
+              ]
+            },
+            "uniqueItems": true
+          },
+          "next": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "sourceIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    },
+    "boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "realDataRuntimeActivated",
+        "operationalAuthConfigured",
+        "externalHostingSupported",
+        "sourceLiveRefreshIntegrated",
+        "sourceDeletionEligible",
+        "sourceCompletenessVerified"
+      ],
+      "properties": {
+        "realDataRuntimeActivated": {
+          "const": false
+        },
+        "operationalAuthConfigured": {
+          "const": false
+        },
+        "externalHostingSupported": {
+          "const": false
+        },
+        "sourceLiveRefreshIntegrated": {
+          "const": false
+        },
+        "sourceDeletionEligible": {
+          "const": false
+        },
+        "sourceCompletenessVerified": {
+          "const": false
+        }
+      }
+    },
+    "coverageLimits": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "performed",
+        "notPerformed",
+        "completionMeaning"
+      ],
+      "properties": {
+        "performed": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "notPerformed": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "completionMeaning": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

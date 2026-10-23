@@ -1,0 +1,119 @@
+{
+  "schema": "academy.consumer-con02-source-evidence.v1",
+  "createdAt": "2026-10-21T10:11:16.876Z",
+  "sourceHead": "7a1fd6127efcd3329709f4d22f75b6fc929d3342",
+  "nativeThreadId": "01a15dd0-03ed-71a0-8372-936776e22669",
+  "admission": "CON-02-ADMISSION-R1",
+  "baselineAdoption": "CON-BASELINES-ADOPTION-R1",
+  "canonicalSource": {
+    "repositoryRoot": "/home/palantirkc/worktrees/academy-query-integration-20261021",
+    "commit": "8f8c9bd61bd5e55445780b5569ecc40effcecef6",
+    "tree": "ccb0fc6302f664abe069086881961cec99cf2d85",
+    "files": [
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/contracts/retainedQuery.ts",
+        "sha256": "390d83478a73afdcc0863b75c5b013ca9e065deb25c763cf2f19622caf9a9965",
+        "byteLength": 1878
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/retainedQueryClient.ts",
+        "sha256": "c458e74bce4ef63530c5480e2148646cacd81f5ceeb56ed1ec6570823b26288d",
+        "byteLength": 4695
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/retainedQueryValidation.ts",
+        "sha256": "b5c1c09cd288a6d380776dbd67acb0b78b49cc125c020f7517f771d27b81ad9d",
+        "byteLength": 6293
+      }
+    ]
+  },
+  "ownership": "Education owns canonical contract/reader/wire validation and domain projections; Workbench owns explicit source binding, consumer request schemas, page binding and presentation only.",
+  "composition": {
+    "entrypoint": "tools/academy-mcp/src/teacher-server.ts",
+    "exports": [
+      "createTeacherServer",
+      "startTeacherStdio"
+    ],
+    "configuration": [
+      "explicit sourceRoot",
+      "source-owned authenticatedFetchPage callback"
+    ],
+    "nativeRegistration": false,
+    "defaultPrivateLoader": false,
+    "sourceReadback": "Exact Git HEAD/tree and three file hashes before import and before/after each consumer operation; finite local readback, not an atomic filesystem lock.",
+    "canonicalRead": "Original validateRetainedQueryReply and readRetainedDocument dynamically imported from the pinned closure; no copied wire validator or second domain reducer.",
+    "tools": [
+      "academy_teacher_query",
+      "academy_teacher_report"
+    ]
+  },
+  "budgets": {
+    "canonicalJsonPage": {
+      "defaultBytes": 65536,
+      "maxBytes": 131072,
+      "owner": "QRY"
+    },
+    "fullMcpResult": {
+      "maxBytes": 524288,
+      "method": "shared toolResultBytes measures text + structuredContent + escaping + framing",
+      "owner": "Workbench"
+    },
+    "report": {
+      "defaultBytes": 65536,
+      "maxBytes": 524288,
+      "limit": 250,
+      "scope": "each actual CallToolResult; explicit bound cursor and single-line/fixed-metadata refusal"
+    },
+    "distinct": true
+  },
+  "tests": {
+    "typecheck": "passed",
+    "reportTests": {
+      "passed": 7,
+      "scope": "exact source root, canonical100/explicit assignment, teacher-final vs low score, distinct attempts, cancellation/replacement, scoped corrections/unknown edition, class occurrences, report continuation/oversize/caller change"
+    },
+    "sdkTests": {
+      "failed": 3,
+      "stage": "child startup",
+      "code": "CONNECTION_CLOSED",
+      "capturedChildStderr": "empty",
+      "assertionsTotal": 115,
+      "coverage": "required transport cases authored; runtime scope not passed",
+      "rootCheck": "needed"
+    },
+    "immutableReceipt": {
+      "path": "architecture/academy-consumer-integration/observations/CON-02-CHECKS-R1.json",
+      "sha256": "2836c5e84f65c5ffccb6b08ed7039096b91bbf37cc949c1d32788e09f6249b15"
+    },
+    "baseline23Unchanged": true,
+    "heavyChecksPaused": true
+  },
+  "priorHistory": "CON01 original7pass2CONNECTION_CLOSED and Root independent9pass0fail135assertions remain separate immutable evidence; exact divergence cause unknown.",
+  "productionPaths": [
+    "tools/academy-mcp/src/teacher-source-binding.ts",
+    "tools/academy-mcp/src/teacher-retained.ts",
+    "tools/academy-mcp/src/teacher-report.ts",
+    "tools/academy-mcp/src/teacher-query-tools.ts",
+    "tools/academy-mcp/src/teacher-server.ts"
+  ],
+  "testPaths": [
+    "tools/academy-mcp/tests/teacher-fixture.ts",
+    "tools/academy-mcp/tests/teacher-report.test.ts",
+    "tools/academy-mcp/tests/teacher-tools-mcp.test.ts",
+    "tools/academy-mcp/tests/teacher-transport-fixture.ts"
+  ],
+  "knownGaps": [
+    "Required new production SDK transport scope is FAILED/NOT VERIFIED: 3 startup CONNECTION_CLOSED failures with empty captured child stderr. Root same-source receipt pending; do not infer a source defect or rewrite the original failure.",
+    "Canonical source loader is an explicit qualified local checkout composition, not published packaging or installed native capability. Caller must supply the source-owned authenticated read-only fetchPage; no credentials are selected or configured here.",
+    "Class-preparation report covers observed dated class rows and their preparation. Detailed attempts/item judgments require a separate student selector; current schedule/roster completeness remains unknown.",
+    "Student report presents canonical preparation, exact assignments, attempts, item judgments, source results and teacher notes. It does not reconstruct day attendance from unrelated evidence or claim exhaustive source/review history. Full retained fragments remain available separately.",
+    "Source scores, default100 eligibility and explicit assignments remain separate. Current obligation lists are not pending counts. Physical print/distribution and other absent stages remain unknown.",
+    "Report rendering displays canonical current judgments and prior refs; it neither creates nor reconciles teacher decisions independently. Real Oct19 applicable facts stay in private source/conversation custody.",
+    "Original daily report is still outstanding; older reports are not presented as current. Internal lesson report is not an approved parent projection, save or send.",
+    "Post-commit canonical snapshot/transition and shared package/CI/manifests remain Root-owned. CON-03 holds on VER-02 receiver qualification and Root admission.",
+    "Native/WSL/VPS production integration, real source authentication/adoption, teacher acceptance, shared audit delivery and formal Work completion remain unverified/pending."
+  ],
+  "sourceEffects": false,
+  "commonConsumerPinChanged": false,
+  "realPrivateOriginalsRead": false
+}

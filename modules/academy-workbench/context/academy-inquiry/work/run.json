@@ -1,0 +1,67 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "run",
+  "id": "academy-workbench:run:academy-inquiry-context-20261014-01",
+  "projectId": "academy-workbench",
+  "domainId": "academy-operations",
+  "createdAt": "2026-10-14T07:33:13.063Z",
+  "payload": {
+    "taskRef": "academy-workbench:task:academy-inquiry-context-20261014",
+    "state": "interrupted",
+    "startedAt": "2026-10-14T07:33:13.063Z",
+    "finishedAt": "2026-10-14T07:42:53.942Z",
+    "inputHashes": [
+      {
+        "path": "AGENTS.md",
+        "sha256": "839cc8ef0c9a86240ba7074b79992c1235254b48104f9ff1f23135a640af1bbf"
+      },
+      {
+        "path": "project.json",
+        "sha256": "191065134c998695aa89a2908c6698a0fa9972733f0cfdc115f224563f2d5c58"
+      },
+      {
+        "path": "harness/module.json",
+        "sha256": "e49138c1e22bb8688f1940584f7b5b84ee2c82d73ba34f208819dd4e1fb054e9"
+      },
+      {
+        "path": "harness/agent-platform.lock.json",
+        "sha256": "000c650b51d5b3009cf5efdc319fe2fa5b9e74123f0bf3dddb1d638b6f8e6b99"
+      },
+      {
+        "path": "context/business-decisions.json",
+        "sha256": "cdebb97ff2e8f41f7151ee12451d2b3c869279996ae2a1c0b63d9b6a472222fc"
+      },
+      {
+        "path": "migration/current-status.json",
+        "sha256": "dd8f1500d2e079079317dcf6ac2acaf62605a6ff531d2aee6c0aed53b5683fa4"
+      },
+      {
+        "path": "architecture/logical-model-v2.ts",
+        "sha256": "686ac315ed94b072fecb9fb72f8d99b6cf14ae525810a8375bc261768f973190"
+      }
+    ],
+    "runtime": {
+      "name": "Codex-local-Windows",
+      "version": "Bun-1.4.2"
+    },
+    "evidenceRefs": [],
+    "verificationRefs": [],
+    "details": {
+      "workId": "academy-inquiry-context-20261014",
+      "registration": "local-module-record",
+      "baseCommit": "ca8389744c1d5ebf756973f1ee45b03d2b7ad0be",
+      "liveAcademyReobservation": false,
+      "nativeGlobalRegistration": false,
+      "publication": "pending",
+      "merge": "pending",
+      "checkpoint": "Local implementation verified; parent requested cloud filesystem continuation. No remote push, PR or merge attempted.",
+      "validationReceipt": "validation/academy-inquiry/results.json"
+    }
+  },
+  "references": [
+    {
+      "artifactId": "academy-workbench:task:academy-inquiry-context-20261014",
+      "relation": "attemptOf"
+    }
+  ]
+}

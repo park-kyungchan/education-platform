@@ -1,0 +1,301 @@
+{
+  "schema": "math.owner-review-projection.v1",
+  "codeOwner": "agent-platform",
+  "generatedOnly": true,
+  "nativePermissionGranted": false,
+  "source": {
+    "repository": "https://github.com/park-kyungchan/agent-platform.git",
+    "commit": "7eabcdb20e358955c771e5aa0dc500448fa84534",
+    "tree": "82aad84ada5d2d67df1f609c1084811752d7c6b9",
+    "inputs": [
+      {
+        "path": "ci/quality/receipt-validation-gate.ts",
+        "sha256": "a32d9653cc14fd0015464c895cd84194549dc076a4e94852782801a42eb3dcad"
+      },
+      {
+        "path": "ci/quality/receipt-validator.ts",
+        "sha256": "d9b4492a08e3e801107fd17ba8a8ee3cc39cf875767e5b111635de18b394a725"
+      }
+    ],
+    "providerPinSha256": "81f8b6d8a401fff0e811f2bc80d6dc7cb8182337b80a1d553d15636d10eef639"
+  },
+  "canonicalCoreManifestSha256": "7d13282f8bc0be0cca891571b52e5b8df3ed2906ce61fa205ff0a762464743fc",
+  "compiler": {
+    "name": "Bun",
+    "version": "1.4.3",
+    "revision": "c6da4a4d3010e5553438c60f6bd76d981976867c",
+    "sha256": "7ce7d6b654eddeec20afddf2396317fba6dc19ab52788a27e894e1806bf8f24b",
+    "bytes": 88979072
+  },
+  "build": {
+    "target": "bun",
+    "format": "esm",
+    "minify": false,
+    "splitting": false,
+    "tsconfigSha256": "eaf8ebfd7d8606ddc71ba3aac3a180791e5f3a8bc864a39c98fab7cb24530ce0"
+  },
+  "generationInputs": [
+    {
+      "path": "ci/generate-projection.ts",
+      "sha256": "35fcfa7fd4a380d518a52dc3012e7a75be064fc327483236830a5c33755d3704"
+    },
+    {
+      "path": "ci/native-review.entry.ts",
+      "sha256": "807eb3a6d8c3e72492e2cd468e1a427b771578f4fd1797264319245bf09133fd"
+    },
+    {
+      "path": "scripts/canonical-projection.ts",
+      "sha256": "a45dd7e51b4a4c8dac74d121cdd8eeb95402c72ade4cfb13474d5163aaca53c5"
+    },
+    {
+      "path": "ci/native-review.ts",
+      "sha256": "68dedaf398cdb62baec9ddd143b0df88a44af5d67d63d3aa33a67454032583b0"
+    }
+  ],
+  "externalSpecifiers": [
+    "ajv/dist/2020.js",
+    "ajv-formats",
+    "node:crypto",
+    "node:fs/promises",
+    "node:path"
+  ],
+  "compiledInputs": [
+    {
+      "path": "consumer-entry:ci/native-review.entry.ts",
+      "sha256": "807eb3a6d8c3e72492e2cd468e1a427b771578f4fd1797264319245bf09133fd",
+      "bytes": 773,
+      "imports": [
+        {
+          "path": "review-source:ci/quality/receipt-validation-gate.ts",
+          "kind": "import-statement",
+          "original": "canonical:owner-review"
+        }
+      ],
+      "format": "esm"
+    },
+    {
+      "path": "ontology-release:dist/contracts.js",
+      "sha256": "e5d1c5295d1b9eafbde050da74be9c1a93b883f2d78b782be20d49f6e42c32fb",
+      "bytes": 88,
+      "imports": [
+        {
+          "path": "ontology-release:dist/validation.js",
+          "kind": "import-statement",
+          "original": "./validation.js"
+        }
+      ],
+      "format": "esm"
+    },
+    {
+      "path": "ontology-release:dist/index.js",
+      "sha256": "d1c42c9b601efb25dd38b149e10324ab348212908b68a5c9c1eabc3d372669c7",
+      "bytes": 485,
+      "imports": [
+        {
+          "path": "ontology-release:dist/contracts.js",
+          "kind": "import-statement",
+          "original": "./contracts.js"
+        },
+        {
+          "path": "ontology-release:dist/upper.js",
+          "kind": "import-statement",
+          "original": "./upper.js"
+        },
+        {
+          "path": "ontology-release:dist/schema.js",
+          "kind": "import-statement",
+          "original": "./schema.js"
+        },
+        {
+          "path": "ontology-release:dist/operational.js",
+          "kind": "import-statement",
+          "original": "./operational.js"
+        }
+      ],
+      "format": "esm"
+    },
+    {
+      "path": "ontology-release:dist/json-validation.js",
+      "sha256": "8d3f8edab28d4493c2de6845df7e99e573d7e80445a529b590ea68d6d5523594",
+      "bytes": 1040,
+      "imports": [],
+      "format": "esm"
+    },
+    {
+      "path": "ontology-release:dist/operational-validation.js",
+      "sha256": "e0fddaa80ea2790f3378ff32130a6fd3653a1e803a06ed23f6ddb69fe09243d5",
+      "bytes": 16336,
+      "imports": [
+        {
+          "path": "ajv/dist/2020.js",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "ajv-formats",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "ontology-release:schemas/operational.schema.json",
+          "kind": "import-statement",
+          "original": "../schemas/operational.schema.json",
+          "with": {
+            "type": "json"
+          }
+        },
+        {
+          "path": "ontology-release:dist/json-validation.js",
+          "kind": "import-statement",
+          "original": "./json-validation.js"
+        }
+      ],
+      "format": "esm"
+    },
+    {
+      "path": "ontology-release:dist/operational.js",
+      "sha256": "870447137af547b994a95afb187659ec8c6207943a93d2f1498793e7157fd6da",
+      "bytes": 447,
+      "imports": [
+        {
+          "path": "ontology-release:schemas/operational.schema.json",
+          "kind": "import-statement",
+          "original": "../schemas/operational.schema.json",
+          "with": {
+            "type": "json"
+          }
+        },
+        {
+          "path": "ontology-release:dist/operational-validation.js",
+          "kind": "import-statement",
+          "original": "./operational-validation.js"
+        }
+      ],
+      "format": "esm"
+    },
+    {
+      "path": "ontology-release:dist/schema.js",
+      "sha256": "58dfd25d0086fd4f5b6c5a436e640f6f51b626998855dc7020aee6dcd09b26eb",
+      "bytes": 99,
+      "imports": [
+        {
+          "path": "ontology-release:schemas/artifact.schema.json",
+          "kind": "import-statement",
+          "original": "../schemas/artifact.schema.json",
+          "with": {
+            "type": "json"
+          }
+        }
+      ],
+      "format": "esm"
+    },
+    {
+      "path": "ontology-release:dist/upper.js",
+      "sha256": "211642fbc5706f9bc09de5ea26a53c1f49e8c22a3be0612a0a3f8c99f5349e94",
+      "bytes": 140,
+      "imports": [
+        {
+          "path": "ontology-release:ontology/upper/vocabulary.json",
+          "kind": "import-statement",
+          "original": "../ontology/upper/vocabulary.json",
+          "with": {
+            "type": "json"
+          }
+        }
+      ],
+      "format": "esm"
+    },
+    {
+      "path": "ontology-release:dist/validation.js",
+      "sha256": "9146d975dfa513892acc76e8819e1322e44c34922a361d659e8fb3c9fb99f136",
+      "bytes": 10633,
+      "imports": [
+        {
+          "path": "ajv/dist/2020.js",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "ajv-formats",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "ontology-release:dist/schema.js",
+          "kind": "import-statement",
+          "original": "./schema.js"
+        },
+        {
+          "path": "ontology-release:dist/json-validation.js",
+          "kind": "import-statement",
+          "original": "./json-validation.js"
+        }
+      ],
+      "format": "esm"
+    },
+    {
+      "path": "ontology-release:ontology/upper/vocabulary.json",
+      "sha256": "41e9055533e666d86d6dfd008ef71bbb4c87f4fc7ba63e944a19b9248ff14e0a",
+      "bytes": 392,
+      "imports": [],
+      "format": "json"
+    },
+    {
+      "path": "ontology-release:schemas/artifact.schema.json",
+      "sha256": "614f7deb0b9d7717ab8a992f144955e05875c012716001d4aa0a96edbce92ba8",
+      "bytes": 24834,
+      "imports": [],
+      "format": "json"
+    },
+    {
+      "path": "ontology-release:schemas/operational.schema.json",
+      "sha256": "6bf05713aff0406ecc51ca08d7bed5c84897909600476eabf083636c1ad928f1",
+      "bytes": 20140,
+      "imports": [],
+      "format": "json"
+    },
+    {
+      "path": "review-source:ci/quality/receipt-validation-gate.ts",
+      "sha256": "a32d9653cc14fd0015464c895cd84194549dc076a4e94852782801a42eb3dcad",
+      "bytes": 15124,
+      "imports": [
+        {
+          "path": "review-source:ci/quality/receipt-validator.ts",
+          "kind": "import-statement",
+          "original": "./receipt-validator"
+        },
+        {
+          "path": "ontology-release:dist/index.js",
+          "kind": "dynamic-import",
+          "original": "@palantirkc/ontology"
+        },
+        {
+          "path": "crypto",
+          "kind": "dynamic-import",
+          "original": "node:crypto",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    {
+      "path": "review-source:ci/quality/receipt-validator.ts",
+      "sha256": "d9b4492a08e3e801107fd17ba8a8ee3cc39cf875767e5b111635de18b394a725",
+      "bytes": 15120,
+      "imports": [
+        {
+          "path": "crypto",
+          "kind": "import-statement",
+          "original": "node:crypto",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    }
+  ],
+  "generated": {
+    "path": "ci/generated/native-review.js",
+    "sha256": "d7151e696dba883082c9902ee4be7e1f0fd8f1e5fd8d426e4c8dd5d839bc75f4"
+  },
+  "qualification": "generated-owner-scoped-review-verifier; no native activation or authentication inferred"
+}

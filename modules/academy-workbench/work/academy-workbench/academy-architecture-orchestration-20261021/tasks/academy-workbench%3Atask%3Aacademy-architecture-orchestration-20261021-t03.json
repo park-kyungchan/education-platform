@@ -1,0 +1,43 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "academy-operations",
+  "projectId": "academy-workbench",
+  "workId": "academy-architecture-orchestration-20261021",
+  "kind": "task",
+  "id": "academy-workbench:task:academy-architecture-orchestration-20261021-t03",
+  "logical": {
+    "domainId": "academy-operations",
+    "projectId": "academy-workbench",
+    "workId": "academy-architecture-orchestration-20261021",
+    "issueId": "AAR-ISSUE-20261021",
+    "specId": "AAR-SPEC",
+    "specRevision": 1,
+    "planId": "AAR-PLAN",
+    "planRevision": 2,
+    "taskId": "academy-workbench:task:academy-architecture-orchestration-20261021-t03"
+  },
+  "title": "Independent exact-source architecture review after actual approval",
+  "nextAction": "Preserve this scoped locally verified source result. Receiving Work must qualify exact producer/Verification evidence before dependent implementation; native/operational holds remain.",
+  "state": {
+    "execution": "complete",
+    "verification": "passed",
+    "localAudit": "result-durable",
+    "sharedAudit": "unsynchronized",
+    "formalCompletion": "pending"
+  },
+  "executionClass": "source-only",
+  "dependsOn": [
+    {
+      "taskId": "academy-workbench:task:academy-architecture-orchestration-20261021-t02",
+      "milestone": "execution-and-verification"
+    }
+  ],
+  "decisionIds": [
+    "AAR-DECISION-APPROVAL-ORDER-R2",
+    "AAR-DECISION-ARCHITECTURE-APPROVED-001"
+  ],
+  "effectIds": [],
+  "verificationEvidenceIds": [
+    "academy-workbench:evidence:aar-t03-verification-r1"
+  ]
+}

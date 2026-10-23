@@ -3,7 +3,7 @@ import {assertArtifact} from '@palantirkc/ontology';
 import {readSourceMap,validateModuleGraph,resolveModuleRoot,runModuleCheck,validateAcademyGangSourceMaintenance} from '../src/modules';
 import type {EducationModule} from '../src/contracts';
 import {inspectCurriculumSources} from '../packages/curriculum/integration';
-test('source graph preserves pending domain acceptance and native ownership',async()=>{const map=await readSourceMap();expect(map.modules).toHaveLength(5);expect(map.semanticState.mathematicsHumanDecision).toBe('PENDING');expect(map.semanticState.mathematicsCanonicalApplication).toBe('NOT_PERFORMED');expect(map.modules.find(m=>m.id==='academy')?.native.ownerProfile).toBe('dc-gang-a-dev');for(const module of map.modules)expect(module.native.authority).toBe('none');});
+test('source graph preserves pending domain acceptance and native ownership',async()=>{const map=await readSourceMap();expect(map.modules).toHaveLength(7);expect(map.modules.find(m=>m.id==='academy-workbench')?.root).toBe('modules/academy-workbench');expect(map.modules.find(m=>m.id==='math-research')?.root).toBe('modules/math-research-module');expect(map.semanticState.mathematicsHumanDecision).toBe('PENDING');expect(map.semanticState.mathematicsCanonicalApplication).toBe('NOT_PERFORMED');expect(map.modules.find(m=>m.id==='academy')?.native.ownerProfile).toBe('dc-gang-a-dev');for(const module of map.modules)expect(module.native.authority).toBe('none');});
 test('source reader consumes canonical Gang ownership without native or retirement authority',async()=>{
  const map=await readSourceMap(),owner=validateAcademyGangSourceMaintenance(map);
  expect(owner).toBe(map.academyGangSourceMaintenance);

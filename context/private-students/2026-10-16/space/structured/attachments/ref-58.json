@@ -1,0 +1,295 @@
+{
+  "source_reference": "library-file:fde1_bGliZmlsZV9NNnk3YkpFUG9TLTl3c1Z6NWN0VXJB_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+  "source_sha256": "42809b8c03e6a039f78b367246907f41604b4ab639274380156ba10c44cdc3c3",
+  "data": {
+    "$schema": "academy-student-registry-1.0.schema.json",
+    "schemaVersion": "1.0.0",
+    "revision": 2,
+    "projectId": "project:academy-practical",
+    "canonicalParentId": "project:academy-practical",
+    "updatedAt": "2026-10-06T10:43:43.574Z",
+    "kind": "student_management_contracts",
+    "queryContract": {
+      "id": "contract:student-query:v1",
+      "requiredInputs": [
+        "intent"
+      ],
+      "optionalInputs": [
+        "studentId",
+        "displayName",
+        "dateOrInterval",
+        "module",
+        "bookVersion",
+        "assignmentId"
+      ],
+      "resolutionRules": [
+        "Read the current registry linked from the private student directory; count and scope are dynamic.",
+        "Prefer opaque studentId. A display name may yield multiple candidates; never merge duplicate names.",
+        "Intersect dated work with confirmed enrollment intervals; unknown boundaries remain uncertain and simultaneous courses remain distinct.",
+        "Resolve Assignment requirements through referenced evidence and the homework module. PreviewVideoRequirement and ProblemSectionRequirement use separate routes.",
+        "Read current student view for practical summary and canonical module snapshots for provenance. Return limited coverage with every answer.",
+        "Find site actions in canonical Cartography using intent; teacher practice does not grant execution authority.",
+        "교재별 흐름은 학생 디렉터리의 현재 academy-student-book-flows 모듈을 읽고 StudentID·BookEditionID·AssignmentID로 결합한다. 빈 과제 링크를 미배정으로 추정하지 않는다.",
+        "교재 이름은 학년-학기-권 표시와 학교급·판본 배지를 분리한다. 실제 위계가 미확인인 단계와 단원별 섹션 존재를 임의로 채우지 않는다.",
+        "미수행 누락은 정확한 범위의 명시적 판단으로만 표시하며 미조회·매핑 불명·기한 경과 미확인과 구분한다."
+      ],
+      "outputs": [
+        "student view Page link",
+        "canonical IDs and minimal relevant fields",
+        "field-specific evidence source and as-of",
+        "coverage and uncertainty",
+        "next allowed step or focused question"
+      ],
+      "noDuplicateCanonicalRecords": true,
+      "noFixedStudentCount": true
+    },
+    "lifecycleContracts": [
+      {
+        "id": "contract:student-onboard:v1",
+        "operation": "onboard",
+        "preconditions": [
+          "User explicitly confirms the student is within managed scope.",
+          "Resolve possible duplicate names without harvesting other students.",
+          "Verify destination is owner-only."
+        ],
+        "localActions": [
+          "Allocate a new opaque stable StudentID; external IDs remain null until observed and needed.",
+          "Append minimal enrollment evidence with validity interval; unknown boundaries remain null.",
+          "Create one private child Page and one derived view record; add allowlist entry and regenerate counts."
+        ],
+        "historyPreservation": [
+          "Do not repurpose another student's ID or records.",
+          "No fixed number of students."
+        ],
+        "websiteWriteAuthorization": false
+      },
+      {
+        "id": "contract:student-transfer:v1",
+        "operation": "transfer",
+        "preconditions": [
+          "User or permitted source confirms the relevant course/schedule transition and effective date; uncertainties remain explicit."
+        ],
+        "localActions": [
+          "Append a new Enrollment record and link it to the existing StudentID.",
+          "Record an end boundary only when supported; retain source-specific interval confidence.",
+          "Route assignments by date and version; preserve simultaneous-course enrollment when observed."
+        ],
+        "historyPreservation": [
+          "Do not rewrite past assignments or collapse versions with equal titles.",
+          "Retain previous enrollment, source observations and teacher overrides."
+        ],
+        "websiteWriteAuthorization": false
+      },
+      {
+        "id": "contract:student-end:v1",
+        "operation": "end_management",
+        "preconditions": [
+          "User confirms management ends and the effective date."
+        ],
+        "localActions": [
+          "Mark local management state ended and remove from active refresh selection.",
+          "Keep its private historical Page and registry links available."
+        ],
+        "historyPreservation": [
+          "No destructive deletion; enrollment and work history remain linked.",
+          "Management end does not imply website unenrollment or revoked account."
+        ],
+        "websiteWriteAuthorization": false
+      }
+    ],
+    "migrationContract": {
+      "id": "contract:student-schema-migration:v1",
+      "currentSchemaVersion": "1.0.0",
+      "compatibilityRules": [
+        "Keep stable student and entity IDs across revisions.",
+        "Old published files remain immutable history; update only explicit current-head links.",
+        "Version schema changes and record migration provenance; do not force unknown values into completion.",
+        "Preserve original Workspace catalog and academy r1-r4 snapshots."
+      ],
+      "requiredRegressionTests": [
+        "duplicate-name isolation",
+        "new student count derived dynamically",
+        "transfer preserves old records",
+        "same-title book-version separation",
+        "inclusive date intersection and unknown interval handling",
+        "no orphan student/enrollment/assignment/evidence references",
+        "manual-block conflict preservation",
+        "recent snapshot cannot claim full-history completion",
+        "preview video cannot become a problem section"
+      ],
+      "destructiveMigrationAllowed": false
+    },
+    "refreshContract": {
+      "$schema": "academy-student-registry-1.0.schema.json",
+      "schemaVersion": "1.0.0",
+      "revision": 2,
+      "projectId": "project:academy-practical",
+      "canonicalParentId": "project:academy-practical",
+      "updatedAt": "2026-10-06T10:43:43.574Z",
+      "kind": "student_refresh_contract",
+      "contractId": "contract:student-prework-refresh:v1",
+      "directoryPageId": "page_d9818d5817f08191835ba0a0e85936bc",
+      "registryDiscovery": "Read the current canonical registry and publication receipt linked from this directory. Resolve file references using this same original directory Page. Never use an archived revision as the current head.",
+      "automation": {
+        "id": "6ac4aec79d0c819198cf2223ac49295a",
+        "title": "출근전학생자료갱신",
+        "timezone": "Asia/Seoul",
+        "weekdays": [
+          "MO",
+          "TU",
+          "WE",
+          "TH",
+          "FR"
+        ],
+        "startDate": "2026-10-07",
+        "startLocal": "13:00",
+        "workDeadlineLocal": "14:00",
+        "state": "configured",
+        "firstScheduledRunVerified": false
+      },
+      "environment": {
+        "computerName": "강아PC",
+        "computerId": null,
+        "existingTaskId": "01a11017-3022-70a4-9576-c0ad5ac36027",
+        "siteBaseUrl": "https://dc.gang-a.kr",
+        "onlyConnectedComputer": true,
+        "noParallelTask": true,
+        "offlinePolicy": "If Gang-a PC is offline or the existing task is busy, skip or wait without starting an overlapping browser. Preserve prior records and report the source-specific blocker.",
+        "loginPolicy": "Use the authorized existing Gang-a PC session only. Do not create a cloud login, install dependencies, store credentials or bypass blocked access."
+      },
+      "scope": {
+        "studentSelection": "Only active, user-confirmed managed students in the current private registry. Resolve ambiguous names with stable internal ID plus confirmed enrollment; stop rather than choose another person.",
+        "newStudentsRequireConfirmation": true,
+        "excludedFields": [
+          "birthdate",
+          "school",
+          "contact details",
+          "family or health context",
+          "memo column by default",
+          "unrelated students",
+          "full raw grading exports"
+        ],
+        "excludedActions": [
+          "site writes",
+          "attendance or lesson edits",
+          "teacher inspection completion",
+          "grading",
+          "retakes",
+          "PDF generation",
+          "physical printing",
+          "parent messages",
+          "external sharing",
+          "software installation",
+          "bypassing denied data transfer"
+        ]
+      },
+      "readPlan": [
+        {
+          "order": 1,
+          "module": "privacy_identity",
+          "action": "Read the directory, canonical registry and target Pages; recheck owner-only permissions and current managed-block hashes.",
+          "scope": "Registry allowlist only; no fixed student count.",
+          "validation": [
+            "Owner-only access and complete inherited-access observation required before personal-data write.",
+            "Resolve stable student ID. Names and row indices are not identifiers.",
+            "Retain all user-added or modified blocks and teacher assertions."
+          ]
+        },
+        {
+          "order": 2,
+          "module": "lesson_assignment",
+          "action": "Read DaysMain retrospective non-input table; capture latest dated lesson and assigned requirements separately.",
+          "scope": "Current month; previous month only if needed to locate the current assignment.",
+          "validation": [
+            "Verify result-row student and actual date after waiting for async search.",
+            "Discard stale or empty tables until filter application and target rows are established.",
+            "Exclude sensitive memo column; distinguish scheduled future assignment from completed class.",
+            "Do not edit autosave DayRecord fields."
+          ]
+        },
+        {
+          "order": 3,
+          "module": "enrollment",
+          "action": "Check a course/version change when relevant; retain historical interval and as-of metadata.",
+          "scope": "Managed student's enrolled courses only; previously read evidence remains older unless actually re-read.",
+          "validation": [
+            "Same title may have multiple simultaneous courses or versions.",
+            "Do not infer enrollment start/end from missing records or an expired period label.",
+            "Unknown interval stays null; do not treat as a verified all-time enrollment."
+          ]
+        },
+        {
+          "order": 4,
+          "module": "preview_video",
+          "action": "Use TeacherPrestudySummary and pending/completed preview views for the required subsection.",
+          "scope": "Rolling seven days, extended only when the current assignment requires older evidence.",
+          "validation": [
+            "Video is an independent requirement, never a problem-book section.",
+            "Reapply student filter after tab changes.",
+            "Video OK, AI report or stars do not establish teacher inspection completion.",
+            "Site event timezone stays unknown until verified."
+          ]
+        },
+        {
+          "order": 5,
+          "module": "problem_sections",
+          "action": "Read TestPageList graded records and compare assignment date, book version, section and range.",
+          "scope": "Recent three weeks and exact student's courses; extend to one month only when assignment matching requires it.",
+          "validation": [
+            "Input name alone is insufficient; the returned row must match the managed student.",
+            "Old original grades cannot complete a new correction or clinic task.",
+            "Catalog paper codes are not native attempt IDs. Record unknown joins explicitly.",
+            "Partial section matches do not cover all assigned pages; header/page/question mapping may remain ambiguous.",
+            "Paper-only assignment exception removes home app/grade requirement but leaves paper and in-class review unchecked."
+          ]
+        },
+        {
+          "order": 6,
+          "module": "coverage",
+          "action": "Record requested and observed windows, pagination, source exhaustion and per-requirement status.",
+          "scope": "Recent incremental refresh; full-history baseline remains separately versioned.",
+          "validation": [
+            "Not checked, queried-but-not-observed, partial, ambiguous, exception and teacher-confirmed are distinct.",
+            "Catalog denominator is not assigned-required denominator.",
+            "Do not infer overall historical progress or absence from a recent window.",
+            "Attendance/makeup remain not checked unless explicitly read within the allowed task."
+          ]
+        }
+      ],
+      "writePlan": [
+        "Build a minimal typed revision that references stable student, enrollment, assignment and evidence IDs. Do not duplicate canonical records into each Page file.",
+        "Check current private access immediately before publishing personal data.",
+        "Upsert only managed block IDs whose current hashes equal lastPublishedHash. On mismatch, preserve the teacher edit and report conflict.",
+        "Preserve teacher notes, assertions, historical enrollment and prior source timestamps. New observations append provenance; they do not silently overwrite conflicting facts.",
+        "Upload the new immutable registry revision to this directory, validate schema and cross-references, read back bytes and hash, then advance its current-head link.",
+        "Read every changed student Page back; record source-specific read/write outcomes in a new receipt.",
+        "Set lastSuccessfulScheduledRefreshAt only after the scheduled run's private writes and readbacks actually succeed. Initial publication is not a scheduled run.",
+        "새 관찰을 해당 학생·교재·과제 범위에 연결한 뒤 교재 흐름 모듈을 재투영한다. 과거 관찰의 asOf를 새 관찰처럼 올리지 않는다.",
+        "교재 흐름 블록도 현재 StudentView.managedBlocks의 lastPublishedHash와 비교한다. 사용자 수정과 protectedManualBlockIds는 보존한다.",
+        "섹션 vocabulary를 모든 단원 인스턴스나 필수 배정으로 확장하지 않는다. 알 수 없는 위계·권·판본은 미확인으로 유지한다."
+      ],
+      "failurePolicy": [
+        "Offline, stale table, filter failure, unknown identity, privacy uncertainty, canceled or denied transfer: stop the dependent module and keep prior data intact.",
+        "Never retry uncertain PDF generation, printing, grading or other effects as part of this read-only refresh.",
+        "A partial source refresh does not make other modules fresh. Failed modules retain their old as-of and receive failure metadata.",
+        "When authorized source data cannot be transferred, do not bridge through files or another worker."
+      ],
+      "successDefinition": [
+        "All written data belong to the current allowlist and owner-only destination.",
+        "Every updated module has its own observed window, scope and provenance.",
+        "Schema, no-orphan references and guarded Page writes pass; readback confirms the published version.",
+        "Report partial success honestly; configured automation and an initial publication do not prove unattended operation."
+      ],
+      "expectedMinutes": [
+        5,
+        10
+      ],
+      "fullHistorySeparate": true,
+      "runtimeEnforcementClaim": false,
+      "sourceIds": [
+        "Sentinel_42b0c1e24868819198ed68bddc0a95c4",
+        "Sentinel_663490c424208191b3613eda5ec26da9"
+      ]
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "academy-state-model-20261021",
+  "kind": "task",
+  "id": "education-platform:task:academy-state-model-20261021-dom-01",
+  "logical": {
+    "domainId": "education",
+    "projectId": "education-platform",
+    "workId": "academy-state-model-20261021",
+    "issueId": "DOM-ISSUE-20261021",
+    "specId": "DOM-SPEC",
+    "specRevision": 1,
+    "planId": "DOM-PLAN",
+    "planRevision": 1,
+    "taskId": "education-platform:task:academy-state-model-20261021-dom-01"
+  },
+  "title": "Freeze maintained teacher workflow contracts and consumer selection",
+  "state": {
+    "execution": "complete",
+    "verification": "passed",
+    "localAudit": "result-durable",
+    "sharedAudit": "unsynchronized",
+    "formalCompletion": "pending"
+  },
+  "executionClass": "source-only",
+  "dependsOn": [
+    {
+      "taskId": "education-platform:task:academy-state-model-20261021-dom-01-qualify-aar-05",
+      "milestone": "execution-and-verification"
+    }
+  ],
+  "decisionIds": [],
+  "effectIds": [],
+  "verificationEvidenceIds": [
+    "education-platform:evidence:dom-01-verification-r2"
+  ],
+  "nextAction": "Await root independent exact R2 successor qualification from valid4bdef2c base; preserve rejected1ccae7f and R1 Inputs. Education QRY qualifies DOM-01 before its owner-local QRY-BOUNDARY; DOM-02 and receiving qualification stay held. Later QRY-02 feeds Workbench CON. No Work completion/shared audit/native adoption/operational acceptance."
+}

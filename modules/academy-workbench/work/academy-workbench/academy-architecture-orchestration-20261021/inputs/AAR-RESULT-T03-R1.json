@@ -1,0 +1,71 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "academy-operations",
+  "projectId": "academy-workbench",
+  "workId": "academy-architecture-orchestration-20261021",
+  "kind": "input",
+  "id": "AAR-RESULT-T03-R1",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "root-academy-orchestrator",
+    "locator": "architecture-review-and-source-qualification:t03:r1",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "summary": "Independent Astra review dispositions close the original four and directly introduced findings in declared architecture/source scope at5e5017e. Prior failed/intermediate reviews retained; no implementation or activation acceptance inferred.",
+    "sourcePins": [
+      {
+        "path": "architecture/academy-reorganization/reviews/AAR-REVIEW-004/AAR-REVIEW-004.json",
+        "sha256": "9d981cd2952d51393ee060bc3f469e3c4083d5a18d976f0d4ab45866300635f4"
+      },
+      {
+        "path": "architecture/academy-reorganization/review-disposition-r3.json",
+        "sha256": "9780fa3018e87644453011a86fa649772d5a2f3322cd2e9ec492bc3e5e4f05e8"
+      }
+    ],
+    "reviewedArchitectureCommit": "5e5017e6dff174343dcb6e95685837fd0f6093a6",
+    "nativeReceiptClaim": false,
+    "verification": {
+      "schemaVersion": "1.0.0",
+      "kind": "verification",
+      "id": "academy-workbench:verification:aar-t03-r1",
+      "projectId": "academy-workbench",
+      "domainId": "academy-operations",
+      "createdAt": "2026-10-21T05:46:07.489890+00:00",
+      "payload": {
+        "targetRefs": [
+          "common-harness:task:26186289e4c551f2d6bb97700b5438edc32d1e77ab4445e5d386528da8c5e939"
+        ],
+        "criteria": [
+          {
+            "id": "scoped-source-result",
+            "status": "pass",
+            "message": "Independent Astra review dispositions close the original four and directly introduced findings in declared architecture/source scope at5e5017e. Prior failed/intermediate reviews retained; no implementation or activation acceptance inferred.",
+            "evidenceRefs": [
+              "academy-workbench:evidence:aar-t03-observation-r1"
+            ]
+          }
+        ],
+        "inputHashes": [
+          {
+            "path": "architecture/academy-reorganization/reviews/AAR-REVIEW-004/AAR-REVIEW-004.json",
+            "sha256": "9d981cd2952d51393ee060bc3f469e3c4083d5a18d976f0d4ab45866300635f4"
+          },
+          {
+            "path": "architecture/academy-reorganization/review-disposition-r3.json",
+            "sha256": "9780fa3018e87644453011a86fa649772d5a2f3322cd2e9ec492bc3e5e4f05e8"
+          }
+        ],
+        "runtime": {
+          "name": "Bun source qualification and independent native reviewer",
+          "version": "1.4.3; reviewer CLI0.163.0; actual installed TypeScript5.9.3"
+        },
+        "details": {
+          "sourceOnly": true,
+          "nativeActivation": false,
+          "userOperationalAcceptance": false
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "name": "academy-workbench-handoff",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Private academy consumer module with preserved sources, standalone synthetic runtime and pinned agent-platform contracts",
+  "type": "module",
+  "scripts": {
+    "preview": "python3 -m http.server 8765 --bind 127.0.0.1 --directory preview/v21",
+    "verify:export": "node scripts/verify-export.mjs",
+    "setup:harness": "bun scripts/setup-harness.ts",
+    "check:harness": "bun scripts/check-harness.ts",
+    "test:harness": "bun test tests/harness",
+    "typecheck:harness": "bun scripts/typecheck-harness.ts",
+    "check": "bun run typecheck:harness && bun run check:harness && bun run typecheck:context && bun run check:context && bun run check:inquiry && bun run check:student-audit && bun run check:student-viewer && bun run check:academy-context",
+    "test": "bun run test:harness && bun run test:inquiry && bun run test:student-audit && bun run test:student-viewer && bun run test:academy-context",
+    "test:synthetic-runtime": "cd app/standalone && node --test tests/*.test.ts",
+    "test:offline-adapter": "cd app/offline-import-adapter && node --test tests/*.test.ts",
+    "context:inspect": "bun scripts/work-context.ts",
+    "check:ci": "bun ci/verify-projection.ts && bun test tests/onboarding",
+    "setup:ci": "bun ci/restore-dependency.ts",
+    "check:context": "cd context/user-context && bun run check",
+    "typecheck:context": "bun node_modules/typescript/bin/tsc -p context/user-context/tsconfig.json",
+    "check:inquiry": "bun node_modules/typescript/bin/tsc -p context/academy-inquiry/tsconfig.json && bun context/academy-inquiry/validate.ts",
+    "test:inquiry": "bun test context/academy-inquiry/context.test.ts",
+    "check:student-audit": "bun node_modules/typescript/bin/tsc -p context/student-audit-20261014/tsconfig.json && bun context/student-audit-20261014/validate-data.ts && bun context/student-audit-20261014/check-work.ts",
+    "test:student-audit": "node --test context/student-audit-20261014/tests/*.test.ts",
+    "test:student-viewer": "node --test app/student-audit-viewer/tests/*.test.ts",
+    "check:student-viewer": "node node_modules/typescript/bin/tsc -p app/student-audit-viewer/tsconfig.json",
+    "context:academy": "bun context/academy-context/cli.ts",
+    "check:academy-context": "bun node_modules/typescript/bin/tsc -p context/academy-context/tsconfig.json && bun context/academy-context/cli.ts inspect",
+    "test:academy-context": "bun test context/academy-context/select.test.ts context/academy-context/catalog.test.ts",
+    "check:mcp": "bun run --cwd tools/academy-mcp check",
+    "test:mcp": "bun run --cwd tools/academy-mcp test"
+  },
+  "engines": {
+    "bun": ">=1.3.14",
+    "node": ">=24.0.0"
+  },
+  "devDependencies": {
+    "bun-types": "1.4.2",
+    "typescript": "7.0.2"
+  },
+  "packageManager": "bun@1.4.2"
+}

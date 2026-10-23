@@ -1,0 +1,570 @@
+{
+  "subtypeId": "sample_division_38_by_6",
+  "status": "research_design_unvalidated",
+  "example": {
+    "prompt": "구슬 38개를 한 봉지에 6개씩 넣습니다. 가득 찬 봉지는 몇 개이고 구슬은 몇 개 남나요?",
+    "answer": "가득 찬 봉지 6개, 남은 구슬 2개. 38÷6=6…2."
+  },
+  "prerequisites": [
+    {
+      "skill": "6개 세기와 동일 묶음",
+      "quickCheck": "낱개 14개에서 6개짜리 두 묶음 만들기",
+      "ifNotReady": "더 작은 전체와 실제 물체로 동일 묶음 연습"
+    },
+    {
+      "skill": "전체와 부분의 수량 보존",
+      "quickCheck": "12개와 2개를 합쳐 전체 14개 확인",
+      "ifNotReady": "이동해도 수가 같은지 직접 대응"
+    },
+    {
+      "skill": "6단 구구 또는 대체 전략",
+      "quickCheck": "6씩 세거나 표로 6×6을 찾기",
+      "ifNotReady": "구구표를 허용하고 개념 평가와 암기 회상을 분리"
+    }
+  ],
+  "segmentation": {
+    "chunks": [
+      {
+        "label": "목표와 양의 역할",
+        "actionIds": [
+          "D38-01",
+          "D38-02",
+          "D38-03"
+        ],
+        "exitEvidence": "전체 38개와 한 봉지 6개 및 두 결과를 구별"
+      },
+      {
+        "label": "동일 묶음과 남는 양",
+        "actionIds": [
+          "D38-04",
+          "D38-05",
+          "D38-06",
+          "D38-07",
+          "D38-08"
+        ],
+        "exitEvidence": "6묶음·2낱개와 추가 묶음 불가를 확인"
+      },
+      {
+        "label": "그림과 식, 설명",
+        "actionIds": [
+          "D38-09",
+          "D38-10",
+          "D38-11",
+          "D38-12",
+          "D38-13"
+        ],
+        "exitEvidence": "양 보존 및 종료 조건을 그림/식으로 정당화"
+      },
+      {
+        "label": "지원 없는 전이와 경계",
+        "actionIds": [
+          "D38-14",
+          "D38-15",
+          "D38-16"
+        ],
+        "exitEvidence": "묶음 크기 변경·0나머지·질문 변경을 구분"
+      }
+    ],
+    "presentationRule": "16행동은 연구자의 분석 단위이지 한 수업의 의무 체크리스트가 아니다. 학생의 숙련에 따라 합치거나 생략하고, 오류가 나타나는 경계에서만 다시 나눈다. 전이는 안내 풀이와 다른 시점에 실시할 수 있다."
+  },
+  "microActions": [
+    {
+      "id": "D38-01",
+      "phase": "orient",
+      "cue": "구슬 38개를 한 봉지에 6개씩 넣어요. 가득 찬 봉지 수와 남는 구슬 수를 찾아요. 무엇을 찾나요?",
+      "observableStudentAction": "문장 속 가득 찬 봉지 수와 남는 구슬 수에 각각 표시한다.",
+      "expectedUnderstanding": "결과가 몫 하나가 아니라 두 종류의 양임을 구별한다.",
+      "mathematicalPurpose": "찾는 양을 먼저 고정하여 38과 6을 무작정 계산하지 않게 한다.",
+      "designIntent": "찾는 양을 먼저 고정하여 38과 6을 무작정 계산하지 않게 한다. 문항 전체를 한 번에 설명하도록 요구하지 않고 이 판단의 흔적부터 확보한다.",
+      "teacherCheck": {
+        "evidence": "두 결과에 모두 표시한다.",
+        "nonEvidence": "38과 6에만 밑줄을 그었다.",
+        "nextDecision": "두 표시가 있으면 양 대응으로, 없으면 질문을 두 부분으로 읽는다."
+      },
+      "likelyError": "남는 수를 묻는 부분을 놓친다.",
+      "scaffold": "가득 찬 봉지는 몇 개? 남은 구슬은 몇 개?를 따로 보여준다.",
+      "fading": {
+        "remove": "질문을 두 줄로 나눈 카드",
+        "readinessEvidence": "다른 짧은 문장에서 두 결과를 스스로 구별한다.",
+        "restoreIf": "결과 단위를 하나만 말한다."
+      },
+      "separationReason": "계산 전 목표 확인은 계산 실수와 다른 진단 대상이다.",
+      "evidence": [
+        {
+          "sourceId": "IES21",
+          "relation": "project_application_inference",
+          "applicationInference": "선정한 지도 원리를 이 수학적 판단에 적용한 설계 가설이며, 이 행동의 효과가 직접 검증된 것은 아니다."
+        }
+      ],
+      "childFacingSegment": "한 질문과 바로 필요한 그림/식만 제시; 연구용 항목명과 모든 오류 목록은 학생에게 동시에 보이지 않는다."
+    },
+    {
+      "id": "D38-02",
+      "phase": "orient",
+      "cue": "38은 무엇의 수인가요?",
+      "observableStudentAction": "38 옆에 구슬 전체 38개라고 쓰거나 전체 구슬을 가리킨다.",
+      "expectedUnderstanding": "피제수가 전체 낱개의 양임을 연결한다.",
+      "mathematicalPurpose": "전체량의 단위를 고정한다.",
+      "designIntent": "전체량의 단위를 고정한다. 문항 전체를 한 번에 설명하도록 요구하지 않고 이 판단의 흔적부터 확보한다.",
+      "teacherCheck": {
+        "evidence": "38개 전체를 가리킨다.",
+        "nonEvidence": "38이라는 숫자를 읽기만 한다.",
+        "nextDecision": "전체와 단위가 연결되면 다음 양을 확인한다."
+      },
+      "likelyError": "38봉지라고 한다.",
+      "scaffold": "봉지 그림 없이 낱개 전체를 둘러싸고 전체 몇 개인지 묻는다.",
+      "fading": {
+        "remove": "전체를 두른 테두리",
+        "readinessEvidence": "다른 수의 전체를 도움 없이 가리킨다.",
+        "restoreIf": "봉지 수와 전체 낱개를 바꾼다."
+      },
+      "separationReason": "피제수의 역할을 제수와 분리해 관찰한다.",
+      "evidence": [
+        {
+          "sourceId": "IES21",
+          "relation": "project_application_inference",
+          "applicationInference": "선정한 지도 원리를 이 수학적 판단에 적용한 설계 가설이며, 이 행동의 효과가 직접 검증된 것은 아니다."
+        }
+      ],
+      "childFacingSegment": "한 질문과 바로 필요한 그림/식만 제시; 연구용 항목명과 모든 오류 목록은 학생에게 동시에 보이지 않는다."
+    },
+    {
+      "id": "D38-03",
+      "phase": "orient",
+      "cue": "6개씩은 무엇을 정하나요?",
+      "observableStudentAction": "봉지 하나 그림 안에 점 6개를 표시한다.",
+      "expectedUnderstanding": "제수 6은 묶음 크기이며 봉지 수를 미리 정하는 값이 아니다.",
+      "mathematicalPurpose": "포함제 상황을 그림으로 특정한다.",
+      "designIntent": "포함제 상황을 그림으로 특정한다. 문항 전체를 한 번에 설명하도록 요구하지 않고 이 판단의 흔적부터 확보한다.",
+      "teacherCheck": {
+        "evidence": "한 봉지 안의 점이 6개다.",
+        "nonEvidence": "봉지 6개만 그린다.",
+        "nextDecision": "봉지 크기를 정하면 동일 크기 묶음 생성으로 간다."
+      },
+      "likelyError": "6봉지에 나누어 담는 등분제로 바꾼다.",
+      "scaffold": "빈 봉지 하나만 주고 이 봉지에 몇 개 넣는지 묻는다.",
+      "fading": {
+        "remove": "빈 봉지 하나의 외곽선",
+        "readinessEvidence": "다른 문장의 몇 개씩을 묶음 크기로 나타낸다.",
+        "restoreIf": "묶음 수부터 고정한다."
+      },
+      "separationReason": "38÷6은 몫도 6이어서 역할 혼동이 정답에 가려진다; 이 행동을 따로 본다.",
+      "evidence": [
+        {
+          "sourceId": "IES21",
+          "relation": "project_application_inference",
+          "applicationInference": "선정한 지도 원리를 이 수학적 판단에 적용한 설계 가설이며, 이 행동의 효과가 직접 검증된 것은 아니다."
+        }
+      ],
+      "childFacingSegment": "한 질문과 바로 필요한 그림/식만 제시; 연구용 항목명과 모든 오류 목록은 학생에게 동시에 보이지 않는다."
+    },
+    {
+      "id": "D38-04",
+      "phase": "represent",
+      "cue": "앞의 봉지와 같은 크기로 한 봉지를 더 만들어요.",
+      "observableStudentAction": "6개짜리 묶음을 하나 더 만들고 두 묶음의 낱개 수를 대조한다.",
+      "expectedUnderstanding": "각 묶음의 크기가 같아야 함을 확인한다.",
+      "mathematicalPurpose": "한 묶음 모델에서 동일 단위의 반복으로 넘어간다.",
+      "designIntent": "한 묶음 모델에서 동일 단위의 반복으로 넘어간다. 문항 전체를 한 번에 설명하도록 요구하지 않고 이 판단의 흔적부터 확보한다.",
+      "teacherCheck": {
+        "evidence": "두 묶음이 각각 6개다.",
+        "nonEvidence": "두 묶음의 합만 12라고 말한다.",
+        "nextDecision": "크기가 같으면 나머지 묶음 생성으로 진행한다."
+      },
+      "likelyError": "두 번째 묶음에 5개나 7개를 넣는다.",
+      "scaffold": "첫 묶음과 하나씩 짝지어 본다.",
+      "fading": {
+        "remove": "일대일 대응 자리표",
+        "readinessEvidence": "새 묶음에서도 6개를 스스로 유지한다.",
+        "restoreIf": "묶음 크기가 흔들린다."
+      },
+      "separationReason": "반복의 동일성은 첫 묶음 만들기와 다른 확인이다.",
+      "evidence": [
+        {
+          "sourceId": "IES21",
+          "relation": "project_application_inference",
+          "applicationInference": "선정한 지도 원리를 이 수학적 판단에 적용한 설계 가설이며, 이 행동의 효과가 직접 검증된 것은 아니다."
+        }
+      ],
+      "childFacingSegment": "한 질문과 바로 필요한 그림/식만 제시; 연구용 항목명과 모든 오류 목록은 학생에게 동시에 보이지 않는다."
+    },
+    {
+      "id": "D38-05",
+      "phase": "represent",
+      "cue": "6개씩 계속 묶고, 묶지 못한 구슬은 옆에 두세요.",
+      "observableStudentAction": "38개 전체에서 겹치거나 빠짐없이 6개짜리 묶음 여섯 개와 낱개 2개를 만든다.",
+      "expectedUnderstanding": "전체를 동일 묶음과 미완성 부분으로 분해한다.",
+      "mathematicalPurpose": "정답을 먼저 주지 않고 학생의 분할 흔적을 확보한다.",
+      "designIntent": "정답을 먼저 주지 않고 학생의 분할 흔적을 확보한다. 문항 전체를 한 번에 설명하도록 요구하지 않고 이 판단의 흔적부터 확보한다.",
+      "teacherCheck": {
+        "evidence": "각 구슬이 한 곳에만 속하고 전체 수가 보존된다.",
+        "nonEvidence": "교사의 완성 그림을 그대로 따라 그렸다.",
+        "nextDecision": "중복이나 누락이 있으면 수량 보존을 먼저 수정한다."
+      },
+      "likelyError": "같은 구슬을 두 번 세거나 남은 두 개를 묶음에 포함한다.",
+      "scaffold": "처리한 구슬을 한쪽으로 옮기며 실제 물체로 다시 묶는다.",
+      "fading": {
+        "remove": "처리/미처리 공간 표시",
+        "readinessEvidence": "새 전체량을 중복 없이 분할한다.",
+        "restoreIf": "전체가 달라진다."
+      },
+      "separationReason": "전체 소진과 묶음 규칙의 동시 적용을 관찰하는 경계이다.",
+      "evidence": [
+        {
+          "sourceId": "IES21",
+          "relation": "project_application_inference",
+          "applicationInference": "선정한 지도 원리를 이 수학적 판단에 적용한 설계 가설이며, 이 행동의 효과가 직접 검증된 것은 아니다."
+        }
+      ],
+      "childFacingSegment": "한 질문과 바로 필요한 그림/식만 제시; 연구용 항목명과 모든 오류 목록은 학생에게 동시에 보이지 않는다."
+    },
+    {
+      "id": "D38-06",
+      "phase": "execute",
+      "cue": "가득 찬 봉지만 하나씩 짚어 세어 보세요.",
+      "observableStudentAction": "여섯 묶음을 하나씩 짚고 6봉지라고 쓴다.",
+      "expectedUnderstanding": "몫의 단위는 묶음 수임을 구분한다.",
+      "mathematicalPurpose": "낱개 세기에서 묶음을 단위로 세기로 전환한다.",
+      "designIntent": "낱개 세기에서 묶음을 단위로 세기로 전환한다. 문항 전체를 한 번에 설명하도록 요구하지 않고 이 판단의 흔적부터 확보한다.",
+      "teacherCheck": {
+        "evidence": "6봉지를 가리키고 단위를 붙인다.",
+        "nonEvidence": "6×6=36만 말한다.",
+        "nextDecision": "단위가 분명하면 남은 낱개를 센다."
+      },
+      "likelyError": "묶음 안의 36개를 몫이라고 한다.",
+      "scaffold": "봉지마다 번호를 하나씩 붙인다.",
+      "fading": {
+        "remove": "봉지 번호",
+        "readinessEvidence": "번호 없이 묶음 수를 센다.",
+        "restoreIf": "낱개 수를 답한다."
+      },
+      "separationReason": "단위 전환 자체가 핵심인지 행동이다.",
+      "evidence": [
+        {
+          "sourceId": "IES21",
+          "relation": "project_application_inference",
+          "applicationInference": "선정한 지도 원리를 이 수학적 판단에 적용한 설계 가설이며, 이 행동의 효과가 직접 검증된 것은 아니다."
+        }
+      ],
+      "childFacingSegment": "한 질문과 바로 필요한 그림/식만 제시; 연구용 항목명과 모든 오류 목록은 학생에게 동시에 보이지 않는다."
+    },
+    {
+      "id": "D38-07",
+      "phase": "execute",
+      "cue": "봉지 밖에 남은 것만 세세요.",
+      "observableStudentAction": "남은 낱개 두 개를 가리키고 2개라고 기록한다.",
+      "expectedUnderstanding": "나머지는 가득 찬 묶음에 속하지 않은 낱개 수다.",
+      "mathematicalPurpose": "몫과 다른 단위로 남는 양을 기록한다.",
+      "designIntent": "몫과 다른 단위로 남는 양을 기록한다. 문항 전체를 한 번에 설명하도록 요구하지 않고 이 판단의 흔적부터 확보한다.",
+      "teacherCheck": {
+        "evidence": "남은 두 낱개를 특정한다.",
+        "nonEvidence": "정답의 2를 읽기만 한다.",
+        "nextDecision": "남은 위치와 수를 연결하면 종료 조건으로 간다."
+      },
+      "likelyError": "빈 봉지 수를 나머지로 센다.",
+      "scaffold": "낱개만 놓인 영역을 잠시 테두리로 표시한다.",
+      "fading": {
+        "remove": "나머지 영역 테두리",
+        "readinessEvidence": "테두리 없이 남은 낱개를 구별한다.",
+        "restoreIf": "묶음이나 봉지를 나머지로 센다."
+      },
+      "separationReason": "몫과 나머지의 단위가 달라 별도 관찰한다.",
+      "evidence": [
+        {
+          "sourceId": "IES21",
+          "relation": "project_application_inference",
+          "applicationInference": "선정한 지도 원리를 이 수학적 판단에 적용한 설계 가설이며, 이 행동의 효과가 직접 검증된 것은 아니다."
+        }
+      ],
+      "childFacingSegment": "한 질문과 바로 필요한 그림/식만 제시; 연구용 항목명과 모든 오류 목록은 학생에게 동시에 보이지 않는다."
+    },
+    {
+      "id": "D38-08",
+      "phase": "check",
+      "cue": "남은 2개로 가득 찬 봉지 하나를 더 만들 수 있나요?",
+      "observableStudentAction": "2개와 필요한 6개를 비교하고 더 만들 수 없다고 말하거나 부족한 자리를 표시한다.",
+      "expectedUnderstanding": "나머지가 묶음 크기보다 작아야 완료됨을 이해한다.",
+      "mathematicalPurpose": "단순 계산 결과에서 최대한 묶었다는 조건으로 이동한다.",
+      "designIntent": "단순 계산 결과에서 최대한 묶었다는 조건으로 이동한다. 문항 전체를 한 번에 설명하도록 요구하지 않고 이 판단의 흔적부터 확보한다.",
+      "teacherCheck": {
+        "evidence": "2<6을 말이나 빈자리로 근거 삼는다.",
+        "nonEvidence": "그냥 안 된다고만 말한다.",
+        "nextDecision": "근거가 있으면 그림과 식 연결로 간다."
+      },
+      "likelyError": "남는 수가 양수면 언제나 끝났다고 생각한다.",
+      "scaffold": "6칸 봉지에 남은 2개를 넣고 빈칸을 보게 한다.",
+      "fading": {
+        "remove": "6칸 자리표",
+        "readinessEvidence": "다른 남는 수에서도 추가 묶음 가능성을 판단한다.",
+        "restoreIf": "6개 이상 남아도 끝났다고 한다."
+      },
+      "separationReason": "수량 보존식과 나머지 조건은 서로 다른 검증이다.",
+      "evidence": [
+        {
+          "sourceId": "IES21",
+          "relation": "project_application_inference",
+          "applicationInference": "선정한 지도 원리를 이 수학적 판단에 적용한 설계 가설이며, 이 행동의 효과가 직접 검증된 것은 아니다."
+        }
+      ],
+      "childFacingSegment": "한 질문과 바로 필요한 그림/식만 제시; 연구용 항목명과 모든 오류 목록은 학생에게 동시에 보이지 않는다."
+    },
+    {
+      "id": "D38-09",
+      "phase": "connect",
+      "cue": "그림에서 6×6은 어느 부분인가요?",
+      "observableStudentAction": "한 봉지 6개와 6봉지를 번갈아 가리키고 가득 찬 부분 전체 36개를 표시한다.",
+      "expectedUnderstanding": "제수×몫이 묶인 전체량을 나타냄을 연결한다.",
+      "mathematicalPurpose": "동일 숫자 두 개의 서로 다른 역할을 드러낸다.",
+      "designIntent": "동일 숫자 두 개의 서로 다른 역할을 드러낸다. 문항 전체를 한 번에 설명하도록 요구하지 않고 이 판단의 흔적부터 확보한다.",
+      "teacherCheck": {
+        "evidence": "두 6의 역할을 각각 지시한다.",
+        "nonEvidence": "6×6=36 암송만 한다.",
+        "nextDecision": "역할이 드러나면 나머지를 더한다."
+      },
+      "likelyError": "두 6을 모두 봉지 수라고 한다.",
+      "scaffold": "식 아래에 한 봉지의 개수, 봉지 수라는 빈 단위표를 준다.",
+      "fading": {
+        "remove": "곱셈식 아래 단위표",
+        "readinessEvidence": "제수와 몫이 다른 전이문항에서도 각 역할을 가리킨다.",
+        "restoreIf": "단위가 다시 섞인다."
+      },
+      "separationReason": "표상→곱셈식 대응은 계산 수행과 별개이다.",
+      "evidence": [
+        {
+          "sourceId": "IES21",
+          "relation": "project_application_inference",
+          "applicationInference": "선정한 지도 원리를 이 수학적 판단에 적용한 설계 가설이며, 이 행동의 효과가 직접 검증된 것은 아니다."
+        }
+      ],
+      "childFacingSegment": "한 질문과 바로 필요한 그림/식만 제시; 연구용 항목명과 모든 오류 목록은 학생에게 동시에 보이지 않는다."
+    },
+    {
+      "id": "D38-10",
+      "phase": "connect",
+      "cue": "전체 38개가 되려면 36개에 무엇을 더하나요?",
+      "observableStudentAction": "36+2=38을 쓰고 2를 그림의 남은 낱개와 연결한다.",
+      "expectedUnderstanding": "전체=묶인 양+남은 양의 보존 관계를 이해한다.",
+      "mathematicalPurpose": "나머지를 결과 옆에 덧붙이는 기호에서 관계의 일부로 만든다.",
+      "designIntent": "나머지를 결과 옆에 덧붙이는 기호에서 관계의 일부로 만든다. 문항 전체를 한 번에 설명하도록 요구하지 않고 이 판단의 흔적부터 확보한다.",
+      "teacherCheck": {
+        "evidence": "36과 2의 그림 위치가 식과 대응한다.",
+        "nonEvidence": "38을 얻었다는 것만 확인한다.",
+        "nextDecision": "각 항이 대응하면 나눗셈 기록으로 간다."
+      },
+      "likelyError": "36+6 또는 38+2를 쓴다.",
+      "scaffold": "묶인 부분과 남은 부분을 서로 다른 괄호로 묶는다.",
+      "fading": {
+        "remove": "두 부분 괄호",
+        "readinessEvidence": "새 수량에서 분해식을 스스로 쓴다.",
+        "restoreIf": "항의 역할이 섞인다."
+      },
+      "separationReason": "곱셈의 결과에서 전체 복원으로 관계가 바뀐다.",
+      "evidence": [
+        {
+          "sourceId": "IES21",
+          "relation": "project_application_inference",
+          "applicationInference": "선정한 지도 원리를 이 수학적 판단에 적용한 설계 가설이며, 이 행동의 효과가 직접 검증된 것은 아니다."
+        }
+      ],
+      "childFacingSegment": "한 질문과 바로 필요한 그림/식만 제시; 연구용 항목명과 모든 오류 목록은 학생에게 동시에 보이지 않는다."
+    },
+    {
+      "id": "D38-11",
+      "phase": "connect",
+      "cue": "나눗셈식에 봉지 수와 남은 수를 넣어 보세요.",
+      "observableStudentAction": "38÷6=6…2를 쓰고 몫 6과 나머지 2를 표시한다.",
+      "expectedUnderstanding": "문맥과 그림의 두 결과를 나눗셈 기호로 압축한다.",
+      "mathematicalPurpose": "기호의 위치와 양의 역할을 연결한다.",
+      "designIntent": "기호의 위치와 양의 역할을 연결한다. 문항 전체를 한 번에 설명하도록 요구하지 않고 이 판단의 흔적부터 확보한다.",
+      "teacherCheck": {
+        "evidence": "몫과 나머지 표기가 그림과 일치한다.",
+        "nonEvidence": "완성 식을 베껴 쓴다.",
+        "nextDecision": "표기만 틀렸다면 개념 오류와 구별해 고친다."
+      },
+      "likelyError": "몫과 나머지를 2…6으로 바꾼다.",
+      "scaffold": "몫/나머지 이름이 있는 빈칸을 준다.",
+      "fading": {
+        "remove": "빈칸 이름",
+        "readinessEvidence": "다른 문항에서 이름 없이 올바르게 기록한다.",
+        "restoreIf": "기록 위치가 바뀐다."
+      },
+      "separationReason": "기호 표기 오류를 양의 이해 오류와 분리한다.",
+      "evidence": [
+        {
+          "sourceId": "IES21",
+          "relation": "project_application_inference",
+          "applicationInference": "선정한 지도 원리를 이 수학적 판단에 적용한 설계 가설이며, 이 행동의 효과가 직접 검증된 것은 아니다."
+        }
+      ],
+      "childFacingSegment": "한 질문과 바로 필요한 그림/식만 제시; 연구용 항목명과 모든 오류 목록은 학생에게 동시에 보이지 않는다."
+    },
+    {
+      "id": "D38-12",
+      "phase": "explain",
+      "cue": "친구는 5봉지에 8개가 남았대요. 아직 더 할 수 있는 일은 무엇인가요?",
+      "observableStudentAction": "남은 8개 중 6개를 새 봉지로 옮겨 6봉지와 2개로 수정한다.",
+      "expectedUnderstanding": "38=6×5+8이어도 완료된 몫·나머지는 아님을 구별한다.",
+      "mathematicalPurpose": "보존식만 맞는 불완전한 분할을 반례로 사용한다.",
+      "designIntent": "보존식만 맞는 불완전한 분할을 반례로 사용한다. 문항 전체를 한 번에 설명하도록 요구하지 않고 이 판단의 흔적부터 확보한다.",
+      "teacherCheck": {
+        "evidence": "추가 묶음 생성과 나머지 조건을 연결한다.",
+        "nonEvidence": "친구 답이 틀렸다는 말만 한다.",
+        "nextDecision": "수정할 수 있으면 두 조건의 이유를 설명한다."
+      },
+      "likelyError": "식이 맞으니 5…8도 정답이라고 한다.",
+      "scaffold": "8개를 직접 주고 6개 한 묶음을 만들게 한다.",
+      "fading": {
+        "remove": "수정용 실제 구슬",
+        "readinessEvidence": "수량 보존만 맞는 다른 오류를 독립적으로 수정한다.",
+        "restoreIf": "정답 외우기로만 반박한다."
+      },
+      "separationReason": "올바른 절차 수행과 오류 진단·종료 조건 설명을 구분한다.",
+      "evidence": [
+        {
+          "sourceId": "RJ06",
+          "relation": "project_application_inference",
+          "applicationInference": "선정한 지도 원리를 이 수학적 판단에 적용한 설계 가설이며, 이 행동의 효과가 직접 검증된 것은 아니다."
+        }
+      ],
+      "childFacingSegment": "한 질문과 바로 필요한 그림/식만 제시; 연구용 항목명과 모든 오류 목록은 학생에게 동시에 보이지 않는다."
+    },
+    {
+      "id": "D38-13",
+      "phase": "explain",
+      "cue": "왜 6봉지와 2개라고 답하나요? 그림이나 식으로 알려 주세요.",
+      "observableStudentAction": "모두 38개이며 봉지마다 6개이고 남은 2개로는 한 봉지를 못 채운다는 근거를 그림·말·식으로 제시한다.",
+      "expectedUnderstanding": "전체 보존과 더 묶을 수 없음이 답을 함께 정당화한다.",
+      "mathematicalPurpose": "어떻게 계산했는가를 넘어 왜 이 결과가 맞는가를 짧게 설명하게 한다.",
+      "designIntent": "어떻게 계산했는가를 넘어 왜 이 결과가 맞는가를 짧게 설명하게 한다. 문항 전체를 한 번에 설명하도록 요구하지 않고 이 판단의 흔적부터 확보한다.",
+      "teacherCheck": {
+        "evidence": "전체와 종료 조건 두 근거가 드러난다.",
+        "nonEvidence": "교사의 문장을 그대로 반복한다.",
+        "nextDecision": "한 근거만 있으면 빠진 조건 하나만 추가로 묻는다."
+      },
+      "likelyError": "계산을 했으니까라고만 한다.",
+      "scaffold": "모두 몇 개인가?/한 봉지를 더 채울 수 있는가? 두 질문 카드를 준다.",
+      "fading": {
+        "remove": "두 질문 카드",
+        "readinessEvidence": "새 문항에서 자기 방식으로 두 근거를 표현한다.",
+        "restoreIf": "말만 유창하고 그림과 불일치한다."
+      },
+      "separationReason": "자기설명은 절차 복창과 구별해 내용으로 확인한다.",
+      "evidence": [
+        {
+          "sourceId": "RJ06",
+          "relation": "project_application_inference",
+          "applicationInference": "선정한 지도 원리를 이 수학적 판단에 적용한 설계 가설이며, 이 행동의 효과가 직접 검증된 것은 아니다."
+        }
+      ],
+      "childFacingSegment": "한 질문과 바로 필요한 그림/식만 제시; 연구용 항목명과 모든 오류 목록은 학생에게 동시에 보이지 않는다."
+    },
+    {
+      "id": "D38-14",
+      "phase": "transfer",
+      "cue": "이번에는 38개를 5개씩 담아요. 가득 찬 봉지와 남는 개수는?",
+      "observableStudentAction": "필요한 도구를 선택해 7봉지와 3개를 만들고 38÷5=7…3을 쓴다.",
+      "expectedUnderstanding": "새 묶음 크기에서도 동일 관계를 적용한다.",
+      "mathematicalPurpose": "6과 6의 일치에 가려진 역할 혼동을 진단한다.",
+      "designIntent": "6과 6의 일치에 가려진 역할 혼동을 진단한다. 문항 전체를 한 번에 설명하도록 요구하지 않고 이 판단의 흔적부터 확보한다.",
+      "teacherCheck": {
+        "evidence": "한 봉지 5개·7봉지·남은 3개를 구별한다.",
+        "nonEvidence": "이전 답의 숫자 위치를 기계적으로 바꾼다.",
+        "nextDecision": "실패 시 묶음 크기 행동으로 돌아가고 성공 시 경계문항으로 간다."
+      },
+      "likelyError": "5봉지에 나누어 담는다.",
+      "scaffold": "정답 없이 봉지 하나의 크기만 다시 표시한다.",
+      "fading": {
+        "remove": "봉지 크기 표시",
+        "readinessEvidence": "지원 없는 다른 수에서 세 양을 구별한다.",
+        "restoreIf": "등분제/포함제가 다시 혼동된다."
+      },
+      "separationReason": "독립 전이는 안내받은 성공과 다른 학습 증거다.",
+      "evidence": [
+        {
+          "sourceId": "IES21",
+          "relation": "project_application_inference",
+          "applicationInference": "선정한 지도 원리를 이 수학적 판단에 적용한 설계 가설이며, 이 행동의 효과가 직접 검증된 것은 아니다."
+        }
+      ],
+      "childFacingSegment": "한 질문과 바로 필요한 그림/식만 제시; 연구용 항목명과 모든 오류 목록은 학생에게 동시에 보이지 않는다."
+    },
+    {
+      "id": "D38-15",
+      "phase": "transfer",
+      "cue": "36개를 6개씩 담으면 밖에 무엇이 남나요?",
+      "observableStudentAction": "6봉지와 남은 0개를 나타내고 36÷6=6을 기록한다.",
+      "expectedUnderstanding": "남는 수가 0인 경우도 나눗셈의 한 경우다.",
+      "mathematicalPurpose": "양의 나머지가 항상 있어야 한다는 오해를 검사한다.",
+      "designIntent": "양의 나머지가 항상 있어야 한다는 오해를 검사한다. 문항 전체를 한 번에 설명하도록 요구하지 않고 이 판단의 흔적부터 확보한다.",
+      "teacherCheck": {
+        "evidence": "0개 남았음을 말하고 남는 물체를 만들지 않는다.",
+        "nonEvidence": "계산 답 6만 말한다.",
+        "nextDecision": "0을 인정하면 문맥 해석 확인으로 이동한다."
+      },
+      "likelyError": "나머지는 꼭 있어야 한다며 5봉지와 6개로 멈춘다.",
+      "scaffold": "남은 6개도 완전한 봉지가 되는지 묻는다.",
+      "fading": {
+        "remove": "마지막 봉지 외곽선",
+        "readinessEvidence": "나누어떨어지는 경우를 독립적으로 마무리한다.",
+        "restoreIf": "완전 묶음을 남긴다."
+      },
+      "separationReason": "나머지의 하한 0은 상한 조건과 다른 경계다.",
+      "evidence": [
+        {
+          "sourceId": "IES21",
+          "relation": "project_application_inference",
+          "applicationInference": "선정한 지도 원리를 이 수학적 판단에 적용한 설계 가설이며, 이 행동의 효과가 직접 검증된 것은 아니다."
+        }
+      ],
+      "childFacingSegment": "한 질문과 바로 필요한 그림/식만 제시; 연구용 항목명과 모든 오류 목록은 학생에게 동시에 보이지 않는다."
+    },
+    {
+      "id": "D38-16",
+      "phase": "check",
+      "cue": "처음 문제에서 남은 구슬도 모두 봉지에 넣어 보관한다면 봉지는 몇 장 필요할까요?",
+      "observableStudentAction": "가득 찬 6봉지 외에 남은 2개용 봉지 하나를 더해 7장이라고 답하고, 나눗셈 몫은 여전히 6임을 가리킨다.",
+      "expectedUnderstanding": "몫과 문맥에서 필요한 용기 수를 구별한다.",
+      "mathematicalPurpose": "계산 결과를 모든 질문의 답으로 복사하는 오해를 드러낸다.",
+      "designIntent": "계산 결과를 모든 질문의 답으로 복사하는 오해를 드러낸다. 문항 전체를 한 번에 설명하도록 요구하지 않고 이 판단의 흔적부터 확보한다.",
+      "teacherCheck": {
+        "evidence": "빈 공간이 있는 일곱 번째 봉지와 가득 찬 여섯 봉지를 구별한다.",
+        "nonEvidence": "7이라는 숫자만 말한다.",
+        "nextDecision": "구별이 안 되면 원래 질문과 새 질문을 나란히 읽는다."
+      },
+      "likelyError": "처음 몫도 7로 고친다.",
+      "scaffold": "가득 찬 봉지/사용한 봉지 두 제목 아래 그림을 분류한다.",
+      "fading": {
+        "remove": "두 질문 제목",
+        "readinessEvidence": "새 문맥에서 몫과 필요한 용기 수를 구별한다.",
+        "restoreIf": "질문 변경을 계산 오류로 여긴다."
+      },
+      "separationReason": "수학적 몫에서 상황의 최종 의사결정으로 요구가 바뀐다.",
+      "evidence": [
+        {
+          "sourceId": "IES21",
+          "relation": "project_application_inference",
+          "applicationInference": "선정한 지도 원리를 이 수학적 판단에 적용한 설계 가설이며, 이 행동의 효과가 직접 검증된 것은 아니다."
+        }
+      ],
+      "childFacingSegment": "한 질문과 바로 필요한 그림/식만 제시; 연구용 항목명과 모든 오류 목록은 학생에게 동시에 보이지 않는다."
+    }
+  ],
+  "independentTransfer": {
+    "prompt": "38개를 5개씩 담으면?",
+    "answer": "7봉지, 3개 남음",
+    "evidenceToCollect": "두 역할의 지시, 풀이 산출물, 지원 유무를 기록",
+    "changedFeature": "제수와 몫이 달라 역할 혼동 노출"
+  },
+  "boundaryProbe": {
+    "prompt": "36개를 6개씩 담으면? / 남은 구슬까지 모두 보관하면 봉지가 몇 장인가?",
+    "answer": "6봉지, 0개 남음 / 원래 38개 상황에서는 7장",
+    "distinguishes": "0나머지 허용 및 몫과 문맥 답의 차이"
+  },
+  "interpretationLimits": [
+    "38÷6에서 제수와 몫이 모두 6이므로 정답만으로 역할 구분을 검증할 수 없다.",
+    "예상 이해는 관찰 전 가설이다. 정확도·설명·전이를 따로 기록한다.",
+    "미세운동, 읽기, 말하기, 구구 회상 어려움을 수학 개념 부족으로 즉시 해석하지 않는다.",
+    "9세라는 나이만으로 고정 발달 단계나 학습 양식을 부여하지 않는다.",
+    "모든 학생에게 16단계와 모든 보조물을 강제하면 불필요한 부담이 될 수 있다."
+  ]
+}

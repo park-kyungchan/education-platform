@@ -1,0 +1,68 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "academy-state-model-20261021",
+  "kind": "input",
+  "id": "DOM-02-ADMISSION-R1",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "root-academy-orchestrator",
+    "locator": "root-admission:DOM-02-after-qualified-boundary-adoption",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "admittedTaskId": "education-platform:task:academy-state-model-20261021-dom-02",
+    "implementationBase": "3adb273aa1125aa8d6beff7dc51a4c5076710d9f",
+    "qualifiedDependency": {
+      "producerCommit": "bfc2bcc5afccc13fd588c46447aa042732f14f36",
+      "producerTree": "aaa637a442fc2ca9e8eab8191db0e1231645f569",
+      "receivingInput": "DOM-QRY-BOUNDARY-QUALIFICATION-R1",
+      "adoptionInput": "DOM-QRY-BOUNDARY-ADOPTION-R1",
+      "sourceFiles": 29,
+      "snapshotAndTransitionValid": true,
+      "nativeAuthorityGranted": false
+    },
+    "outcome": "Extend maintained teacher contracts/projections for the four demonstrated gaps, preserving exact original payloads, scope and unknowns; no second reducer.",
+    "boundedRefinements": [
+      {
+        "id": "G-100",
+        "requirement": "Exact verified same-student/book/assessment-attempt score100 excludes BOTH default wrong/similar targets; mismatched/unresolved basis stays unknown. Preserve explicit later assignments/teacher exceptions and separate raw score, correction/print/distribution/review/final acceptance. Zero-wrong source count alone is not teacher closure."
+      },
+      {
+        "id": "G-ATTEMPT",
+        "requirement": "Represent known/unknown attempt binding for activity review. Preserve legacy assignment-level originals without promoting their final to every attempt; validate any exact new binding against retained assignment/item/attempt scope."
+      },
+      {
+        "id": "G-REPLACEMENT",
+        "requirement": "Represent explicit replacement lineage where supported by exact evidence; exclude validated withdrawn/replaced work from current pending obligations while preserving original assignment/history. Unknown links, cycles or cross-student scope must not create false cancellations/completions."
+      },
+      {
+        "id": "G-STAGES",
+        "requirement": "Keep observed print and distribution separate from issuance identity, solving, grade, corrections, app entry and teacher final. Preserve immutable issued membership/reissue lineage; absence defaults to unknown, never a physical effect inferred from an ID."
+      }
+    ],
+    "compatibility": "Add backward-compatible/versioned source contract refinements only as evidence requires. Older payload bytes/digests/teacher originals remain unchanged; derive explicit unknowns in views instead of silently rewriting old source payloads. No automatic grading or final acceptance.",
+    "sourceWriteScope": [
+      "Owned leaf domain/contracts/projections and focused synthetic tests under apps/academy/dc-gang-a",
+      "architecture/academy-state-model/** current successor artifacts and observations",
+      "Own canonical Work records only; original Inputs immutable"
+    ],
+    "reserved": [
+      "TeacherApplication/store ownership and existing guard/CAS/readSnapshot enforcement (preserve)",
+      "Shared manifests/lock/CI/source-map/run.ts/common contracts/pins",
+      "Qualified neutral leaves unless a concrete owner-coordinated need is reported",
+      "Native services/config/credentials/permissions/private originals",
+      "Math/research semantics and parent/counseling workflows"
+    ],
+    "verification": "Meaningful adversarial cases for exact100 vs unknown/cross-attempt/explicit assignment, old review compatibility, replacement/withdrawal and cycles, independent print/distribution, edition/occurrence/teacher-final preservation. Run affected typecheck and maintained focused tests; preserve known baseline gaps.",
+    "gitAndDependencyCustody": "Root stages/commits exact owned files and runs committed snapshot+transition. SubLead does not request native Git/install escalation or change permissions; report bounded operator need. Root/source dependency directories already restored with frozen locks and ignored scripts.",
+    "futureDiffRule": "Implementation changes are compared against post-boundary adoption base3adb273; later root transfers only this domain diff back to QRY, avoiding duplicate extraction.",
+    "delivery": "Separate NEW immutable DOM-02 result and Verification Inputs/Evidence with actual taskVerificationTarget and exact result Input hash; source checkpoint readiness then wait.",
+    "holds": [
+      "No publication/merge/deploy/native activation/private source reads or writes/printing/sending",
+      "No common contract/permission/pin or unrelated Work changes",
+      "QRY-02 and environment handoff require their own subsequent receiving qualifications"
+    ]
+  }
+}

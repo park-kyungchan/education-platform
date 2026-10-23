@@ -1,0 +1,37 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "academy-operations",
+  "projectId": "academy-workbench",
+  "workId": "academy-consumer-integration-20261021",
+  "kind": "input",
+  "id": "CON-02-ROOT-SDK-CONTROL-R1",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "root-academy-orchestrator",
+    "locator": "root-same-source-synthetic-SDK-control:05797da1aad0ef1133d983fd4baac922c269b6f1",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "checkedCommit": "05797da1aad0ef1133d983fd4baac922c269b6f1",
+    "checkedTree": "11bd6aa1c730a493757ad222955e1e854fbfde55",
+    "command": [
+      "/usr/local/bin/bun",
+      "test",
+      "--preload",
+      "./tests/network-deny.ts",
+      "tests/teacher-report.test.ts",
+      "tests/teacher-tools-mcp.test.ts"
+    ],
+    "receiptPath": "architecture/academy-consumer-integration/observations/CON-02-ROOT-SDK-CONTROL-R1.json",
+    "receiptSha256": "5bcd9c61c091e0b913688bbb750306de82a7d02aa4b263b371fac765547789e9",
+    "pass": 10,
+    "fail": 0,
+    "assertions": 289,
+    "runtime": "Bun1.4.3 via Root authorized tools path",
+    "sourceStillExact": true,
+    "scope": "Actual shared production registration/SDK with synthetic owner-injected source callback; no installed/native authentication or real student parity claim.",
+    "originalFailures": "Preserve R1 Inputs and original failed Verification as historical observations. New R2 may qualify the exact implementation using Root-attributed SDK evidence; native author runtime difference remains unresolved.",
+    "nativeActivation": false,
+    "teacherAcceptance": false
+  }
+}

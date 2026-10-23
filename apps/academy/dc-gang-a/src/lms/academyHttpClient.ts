@@ -1,8 +1,10 @@
 import {JSDOM} from 'jsdom';
-import {randomInt} from 'node:crypto';
-import {createAcademyReadPlan,executeAcademyRead,readInputRecord,readLiteralKey,readLiteralName,sourceResponseKey,parseTextbookScopeBinding,type AcademyReadResult,type ScopedAcademyReadPlan} from './academyReadProtocol';
+import {randomInt,createHash} from 'node:crypto';
+import {createAcademyReadPlan,executeAcademyRead,readLiteralKey,readLiteralName,sourceResponseKey,parseTextbookScopeBinding,type AcademyReadResult,type ScopedAcademyReadPlan} from './academyReadProtocol';
+import {readInputRecord} from '../contracts/readInputRecord';
 import {currentDayRecordColumns} from './dayRecordColumnContract';
-import type {SourceDiscoveryRequest} from '../academy/nativeBookSource';
+import {inspectDayRecordGroupMetadata} from './dayRecordGroupMetadata';
+import type {SourceDiscoveryRequest} from '../contracts/sourceDiscovery';
 import {canonicalJson,digest,assertExactKeys,assertDate} from '../learning/model';
 import {applyJournalHttpAction,validateJournalHttpAction,assertJournalWireQualified,assertJournalAssessmentOptions,journalWireDigest,JOURNAL_HTTP_SOURCE_CONTRACT,type JournalHttpTarget,type JournalHttpState,type JournalHttpAction,type JournalHttpAdmission} from './lessonJournalHttp';
 import {parseItemMetadata} from './itemMetadataRead';
@@ -11,7 +13,10 @@ import {inspectAssessmentSearchMetadata} from './assessmentReadProtocol';
 import {inspectTestPoolDocument,readTestPoolDocument,testPoolSelectorDefaults} from './testPoolInspection';
 import {testPoolQuestionPreviewReferences,testPoolPreviewSourcePins} from './testPoolQuestionPreview';
 import {inspectTestPoolPresentationProtocol as inspectPoolPresentationProtocol} from './testPoolPresentationProtocol';
-import {qualifyNativePaperInputReference,qualifyNativePaperOptionsTemplate,inspectNativePaperOptionsResponse} from './nativePaperReadProtocol';
+import {qualifyNativePaperInputReference,qualifyNativePaperOptionsTemplate,inspectNativePaperOptionsResponse,readNativePaperLectureKeys,qualifyNativePaperSelectedQuestionsTemplate,nativePaperSelectedQuestionQuery,inspectNativePaperSelectedQuestionsResponse} from './nativePaperReadProtocol';
+import {reusablePoolExpectation,reusableTestPoolRequest,qualifyReusablePoolTab,qualifyReusablePoolMain,readReusablePoolText,reusablePoolCreatedKey,reusablePoolReadbackKey,verifyReusablePoolMembership,inspectReusablePoolMainTarget,ReusableTestPoolCreateFailure,REUSABLE_POOL_INDEX_PATH,
+ lectureUsageExpectation,lectureUsageRequest,qualifyLectureUsageTab,inspectLectureUsageHistory,verifyLectureUsageDelta,lectureUsageDateAt,LectureUsageWriteFailure,LECTURE_USAGE_HISTORY_PATH,
+ type ReusableTestPoolInput,type ReusablePoolExpectation,type ReusablePoolDispatch,type LectureUsageInput,type LectureUsageExpectation,type LectureUsageSnapshot,type LectureUsageDispatch} from './reusableTestPoolProtocol';
 import {emptyTestPoolScope,testPoolScope,testPoolReadRequest,parseTestPoolCategories,qualifyTestPoolTypeTemplate,parseTestPoolTypeLabels,extractTestPoolLabelPayload,qualifyTestPoolQuestionTemplate,parseTestPoolQuestions,type TestPoolScope} from './testPoolReadProtocol';
 
 export const ACADEMY_ORIGIN='https://dc.gang-a.kr' as const;
@@ -41,12 +46,31 @@ export class AcademyHttpClient {
   #principal:AcademyPrincipal;
   #transport:SourceTransport;
   #testPoolProtocol:{defaults:Record<string,string>;selectorSha256:string;html:string}|null=null;
+  #reusablePoolCreateAttempted=false;
+  #lectureUsageWriteAttempted=false;
   constructor(principal:AcademyPrincipal,transport:SourceTransport=fetch){
     this.#principal={teacherLabel:readLiteralName(principal.teacherLabel),teacherKey:readLiteralKey(principal.teacherKey),collegeKey:readLiteralKey(principal.collegeKey)};
     this.#transport=transport;
   }
   get authenticated(){return this.#authenticated;}
   close(){this.#cookies.clear();this.#authenticated=false;this.#testPoolProtocol=null;}
+  /** Fixed original DayRecord Main document; selector/date metadata only, never roster rows or handlers. */
+  async inspectDayRecordGroupSelector(input:{teacherLabel:string;date:string}){
+    if(!input||typeof input!=='object'||Object.keys(input).sort().join(',')!=='date,teacherLabel'||input.teacherLabel!==this.#principal.teacherLabel||
+      typeof input.date!=='string'||!/^20[0-9]{2}-[0-9]{2}-[0-9]{2}$/.test(input.date))throw Error('day_record_group_input_invalid');
+    const calendar=new Date(input.date+'T00:00:00.000Z');if(!Number.isFinite(calendar.valueOf())||calendar.toISOString().slice(0,10)!==input.date)throw Error('day_record_group_input_invalid');
+    if(!this.#authenticated)throw Error('authentication_required');
+    try{
+      const path='/servlet/controller.cct.tutor.DayRecordServlet?'+new URLSearchParams({p_process:'Main',std_ymd:input.date.replaceAll('-','')});
+      const raw=await readReusablePoolText(await this.#request(path,{method:'GET'},false,'day_record_group_selector'));
+      if(/normal_session_error\.jsp|popup_session_error\.jsp|세션이 만료|<input\b[^>]*\btype\s*=\s*["']?password/i.test(raw))throw Error('test_pool_authentication_required');
+      return {...inspectDayRecordGroupMetadata(raw,sourceDomParser.parseFromString,input.date),sourceOperation:'day_record_group_selector' as const,
+        authenticatedPrincipalQualified:true as const,requestedTeacherMatchesClientPrincipal:true as const,responsePrincipalRechecked:false as const,
+        academyWrites:0 as const,sourceHandlersExecuted:false as const,rosterRowsExported:false as const,serverSideEffects:'not_independently_observed' as const};
+    }catch(error){
+      if(error instanceof AcademyHttpFailure&&[401,403].includes(error.httpStatus)||error instanceof Error&&['source_redirect_rejected','foreign_source_redirect_rejected','test_pool_authentication_required','day_record_group_authentication_required'].includes(error.message))this.close();throw error;
+    }
+  }
   async #request(path:string,init:RequestInit={},followLoginRedirect=false,sourceOperation?:string):Promise<Response>{
     const url=new URL(path,ACADEMY_ORIGIN);
     if(url.origin!==ACADEMY_ORIGIN||url.username||url.password||url.hash)throw Error('fixed_academy_origin_required');
@@ -148,6 +172,109 @@ export class AcademyHttpClient {
       sourceOperation:'test_pool_tab_document' as const,observedAt:new Date().toISOString()};}
     catch(error){if(error instanceof Error&&error.message==='test_pool_authentication_required')this.close();throw error;}
   }
+  async #reusablePoolReadback(poolNo:string,expected:ReusablePoolExpectation,tabSourceSha256:string,onMembershipVerified?:()=>void){
+    const raw=await readReusablePoolText(await this.#request(REUSABLE_POOL_INDEX_PATH+'?'+new URLSearchParams({reqCmd:'getPool',pool_no:poolNo}),{method:'GET'},false,'reusable_pool_membership_readback'));
+    const membership=verifyReusablePoolMembership(raw,expected);
+    onMembershipVerified?.();
+    const main=await readReusablePoolText(await this.#request(REUSABLE_POOL_INDEX_PATH+'?reqCmd=Main',{method:'GET'},false,'reusable_pool_index_readback'));
+    const metadata=inspectReusablePoolMainTarget(main,poolNo,expected,this.#principal.teacherLabel,sourceDomParser.parseFromString);
+    return {status:metadata.metadataVerified?'readback_verified' as const:'readback_partial' as const,poolNo,tabSourceSha256,membership,metadata,
+      metadataReadbackScope:'ordered_membership_outer_keys_variants_titles_search_words_creator_question_count' as const,
+      keywordTitleReadback:'not_projected_by_qualified_readback' as const,
+      sourceHandlersExecuted:false as const,nativeProgramInvoked:false as const,serverSideEffects:'not_independently_observed' as const,automaticRetryAllowed:false as const,acceptance:'not_inferred' as const};
+  }
+  /** Read-only recovery for a known poolNo. Never constructs or submits a create request. */
+  async readReusableTestPoolReadback(poolNo:string,input:ReusableTestPoolInput){
+    const key=reusablePoolReadbackKey(poolNo),expected=reusablePoolExpectation(input);if(!this.#authenticated)throw Error('authentication_required');
+    try{
+      const tab=await readReusablePoolText(await this.#request('/common/etest_pool.jsp',{method:'GET'},false,'reusable_pool_readback_source'));
+      const qualified=qualifyReusablePoolTab(tab,sourceDomParser.parseFromString);
+      return {...await this.#reusablePoolReadback(key,expected,qualified.sourceSha256),academyWrites:0 as const};
+    }catch(error){
+      if(error instanceof AcademyHttpFailure&&[401,403].includes(error.httpStatus)||error instanceof Error&&['source_redirect_rejected','foreign_source_redirect_rejected','test_pool_authentication_required'].includes(error.message))this.close();throw error;
+    }
+  }
+  /** Explicit single-attempt reusable save only. A durable external journal callback must finish before dispatch. */
+  async createReusableTestPool(input:ReusableTestPoolInput,beforeDispatch:(admission:ReusablePoolDispatch)=>Promise<void>){
+    if(!this.#authenticated)throw Error('authentication_required');
+    if(this.#reusablePoolCreateAttempted)throw Error('reusable_pool_create_attempt_already_consumed');
+    if(typeof beforeDispatch!=='function')throw Error('reusable_pool_dispatch_journal_required');
+    const request=reusableTestPoolRequest(input);this.#reusablePoolCreateAttempted=true;
+    let phase='source_preflight',dispatchAttempted=false,poolNo:string|null=null,metadataReadback:ReturnType<typeof inspectReusablePoolMainTarget>|undefined,membershipVerified=false,saveResponseSha256:string|null=null;
+    try{
+      const tab=await readReusablePoolText(await this.#request('/common/etest_pool.jsp',{method:'GET'},false,'reusable_pool_create_source'));
+      const qualified=qualifyReusablePoolTab(tab,sourceDomParser.parseFromString);
+      const main=await readReusablePoolText(await this.#request(REUSABLE_POOL_INDEX_PATH+'?reqCmd=Main',{method:'GET'},false,'reusable_pool_create_index'));
+      const index=qualifyReusablePoolMain(main,sourceDomParser.parseFromString);
+      phase='dispatch_journal';await beforeDispatch(Object.freeze({schemaVersion:'academy.reusable-test-pool-dispatch/1',method:'POST',path:request.path,
+        bodySha256:request.bodySha256,selectionSha256:request.selectionSha256,tabSourceSha256:qualified.sourceSha256,mainSourceSha256:index.sourceSha256,automaticRetryAllowed:false}));
+      if(!this.#authenticated)throw Error('authentication_required');
+      phase='save_response';dispatchAttempted=true;
+      const xml=await readReusablePoolText(await this.#request(request.path,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded','Accept':'application/xml'},body:request.body},false,'reusable_pool_create'));
+      saveResponseSha256=createHash('sha256').update(xml,'utf8').digest('hex');poolNo=reusablePoolCreatedKey(xml,sourceDomParser.parseFromString);phase='readback';
+      const readback=await this.#reusablePoolReadback(poolNo,request,qualified.sourceSha256,()=>{membershipVerified=true;});metadataReadback=readback.metadata;
+      if(!metadataReadback.metadataVerified)throw Error('reusable_pool_metadata_unqualified');
+      return {...readback,status:'created_readback_verified' as const,requestBodySha256:request.bodySha256,saveResponseSha256,dispatchAttempted:true as const,
+        reusableSaveRequested:true as const,saveRequestsSubmitted:1 as const,noUseLogOrOptionUpdateSubmitted:true as const};
+    }catch(error){
+      if(error instanceof AcademyHttpFailure&&[401,403].includes(error.httpStatus)||error instanceof Error&&['source_redirect_rejected','foreign_source_redirect_rejected','test_pool_authentication_required'].includes(error.message))this.close();
+      const code=error instanceof Error&&/^[a-z_]{1,100}$/.test(error.message)?error.message:'reusable_pool_create_unknown_failure';
+      throw new ReusableTestPoolCreateFailure(code,phase,dispatchAttempted,poolNo,metadataReadback,membershipVerified,error instanceof AcademyHttpFailure?error.httpStatus:null,saveResponseSha256);
+    }
+  }
+  async #lectureUsageHistory(expected:LectureUsageExpectation):Promise<LectureUsageSnapshot>{
+    const histories=[];
+    for(const lectureKey of expected.lectureKeys){
+      const raw=await readReusablePoolText(await this.#request(LECTURE_USAGE_HISTORY_PATH+'?'+new URLSearchParams({p_process:'GetLectureListLog',lecture_key:lectureKey}),{method:'GET'},false,'lecture_usage_history'));
+      histories.push(inspectLectureUsageHistory(raw,lectureKey,expected,sourceDomParser.parseFromString));
+    }
+    return {scopeSha256:expected.scopeSha256,date:expected.date,histories};
+  }
+  /** Exact selected IDs and matching memo/date only; no raw or unrelated history is returned. */
+  async readLectureUsageHistory(input:LectureUsageInput){
+    const expected=lectureUsageExpectation(input);if(!this.#authenticated)throw Error('authentication_required');
+    try{
+      const tab=await readReusablePoolText(await this.#request('/common/etest_pool.jsp',{method:'GET'},false,'lecture_usage_source'));
+      const qualification=qualifyLectureUsageTab(tab,sourceDomParser.parseFromString);
+      return {status:'history_observed' as const,...await this.#lectureUsageHistory(expected),tabSourceSha256:qualification.sourceSha256,
+        academyWrites:0 as const,teacherAttribution:'not_returned_by_qualified_history' as const,sourceHandlersExecuted:false as const,automaticRetryAllowed:false as const,
+        serverSideEffects:'not_independently_observed' as const,acceptance:'not_inferred' as const};
+    }catch(error){
+      if(error instanceof AcademyHttpFailure&&[401,403].includes(error.httpStatus)||error instanceof Error&&['source_redirect_rejected','foreign_source_redirect_rejected','test_pool_authentication_required'].includes(error.message))this.close();throw error;
+    }
+  }
+  /** One original SaveLectureUseLog POST, fenced before dispatch and compared with both scoped snapshots. */
+  async saveLectureUsageLog(input:LectureUsageInput,beforeDispatch:(admission:LectureUsageDispatch)=>Promise<void>){
+    if(!this.#authenticated)throw Error('authentication_required');
+    if(this.#lectureUsageWriteAttempted)throw Error('lecture_usage_write_attempt_already_consumed');
+    if(typeof beforeDispatch!=='function')throw Error('lecture_usage_dispatch_journal_required');
+    const request=lectureUsageRequest(input);if(request.date!==lectureUsageDateAt())throw Error('lecture_usage_current_date_required');this.#lectureUsageWriteAttempted=true;
+    let phase='source_preflight',dispatchAttempted=false,baseline:LectureUsageSnapshot|null=null,readback:LectureUsageSnapshot|null=null,saveResponseSha256:string|null=null;
+    try{
+      const tab=await readReusablePoolText(await this.#request('/common/etest_pool.jsp',{method:'GET'},false,'lecture_usage_write_source'));
+      const qualification=qualifyLectureUsageTab(tab,sourceDomParser.parseFromString);
+      phase='baseline';baseline=await this.#lectureUsageHistory(request);
+      if(baseline.histories.some(history=>history.unknownTargetDateCount))throw Error('lecture_usage_target_date_unqualified');
+      if(baseline.histories.some(history=>history.matched.length>=500||history.recordCount>=5000))throw Error('lecture_usage_readback_capacity_exceeded');
+      phase='dispatch_journal';await beforeDispatch(Object.freeze({schemaVersion:'academy.lecture-use-log-dispatch/1',method:'POST',path:request.path,
+        bodySha256:request.bodySha256,scopeSha256:request.scopeSha256,tabSourceSha256:qualification.sourceSha256,
+        baselineSha256:createHash('sha256').update(JSON.stringify(baseline)).digest('hex'),automaticRetryAllowed:false}));
+      if(!this.#authenticated)throw Error('authentication_required');if(request.date!==lectureUsageDateAt())throw Error('lecture_usage_current_date_required');
+      phase='save_response';dispatchAttempted=true;
+      const raw=await readReusablePoolText(await this.#request(request.path,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8','Accept':'application/xml'},body:request.body},false,'lecture_usage_write'));
+      saveResponseSha256=createHash('sha256').update(raw).digest('hex');
+      if(/normal_session_error\.jsp|popup_session_error\.jsp|세션이 만료|<input\b[^>]*\btype\s*=\s*["']?password/i.test(raw))throw Error('test_pool_authentication_required');
+      phase='readback';readback=await this.#lectureUsageHistory(request);
+      const comparison=verifyLectureUsageDelta(baseline,readback);if(!comparison.verified)throw Error('lecture_usage_increment_unqualified');
+      return {status:'usage_saved_readback_matched' as const,scopeSha256:request.scopeSha256,requestBodySha256:request.bodySha256,tabSourceSha256:qualification.sourceSha256,
+        saveResponseSha256,baseline,readback,comparison,saveRequestsSubmitted:1 as const,dispatchAttempted:true as const,automaticRetryAllowed:false as const,
+        saveResponseValueUsedAsSuccessPredicate:false as const,sourceHandlersExecuted:false as const,nativeProgramInvoked:false as const,acceptance:'not_inferred' as const};
+    }catch(error){
+      if(error instanceof AcademyHttpFailure&&[401,403].includes(error.httpStatus)||error instanceof Error&&['source_redirect_rejected','foreign_source_redirect_rejected','test_pool_authentication_required'].includes(error.message))this.close();
+      const code=error instanceof Error&&/^[a-z_]{1,100}$/.test(error.message)?error.message:'lecture_usage_write_unknown_failure';
+      throw new LectureUsageWriteFailure(code,phase,dispatchAttempted,baseline,readback,saveResponseSha256);
+    }
+  }
   /** Source-referenced input document only; no question-row, save, print or generation request. */
   async inspectNativePaperInputDocument(){
     if(!this.#authenticated)throw Error('authentication_required');
@@ -168,6 +295,28 @@ export class AcademyHttpClient {
       return {...inspectNativePaperOptionsResponse(text),sourceOperation:'native_paper_options' as const,
         sourceTemplate:template,observedAt:new Date().toISOString()};
     }catch(error){if(error instanceof Error&&error.message==='test_pool_authentication_required')this.close();throw error;}
+  }
+  /** Source-qualified exact selected-row GET. No UI grid mutation, defaults, save or native handoff. */
+  async readNativePaperSelectedQuestions(lectureKeys:readonly string[]){
+    if(!this.#authenticated)throw Error('authentication_required');
+    const requested=readNativePaperLectureKeys(lectureKeys);
+    try{
+      const reference=qualifyNativePaperInputReference(await this.inspectTestPoolTab());
+      const html=await (await this.#request(reference.path,{method:'GET'},false,'native_paper_selected_input_source')).text();
+      const template=qualifyNativePaperSelectedQuestionsTemplate(html,sourceDomParser.parseFromString);
+      const request=nativePaperSelectedQuestionQuery(requested,Date.now());
+      const text=await (await this.#request(request.path+'?'+request.query,{method:'GET'},false,'native_paper_selected_questions')).text();
+      return {...inspectNativePaperSelectedQuestionsResponse(text,requested,sourceDomParser.parseFromString),sourceOperation:'native_paper_selected_questions' as const,
+        sourceTemplate:{...template,tabSourceSha256:reference.tabSourceSha256,tabSourceDigestMeaning:'canonical_json_string_sha256' as const},
+        requestBinding:{method:request.method,path:request.path,p_process:'GetLectureList' as const,lectureKeys:requested,uniq:request.uniq,querySha256:request.querySha256,queryDigestMeaning:'raw_utf8_sha256' as const},
+        observedAt:new Date().toISOString()};
+    }catch(error){
+      if(error instanceof AcademyHttpFailure&&[401,403].includes(error.httpStatus)
+        ||error instanceof Error&&['source_redirect_rejected','foreign_source_redirect_rejected'].includes(error.message)){
+        this.close();throw Error('test_pool_authentication_refused');
+      }
+      if(error instanceof Error&&error.message==='test_pool_authentication_required')this.close();throw error;
+    }
   }
   /** Read the source-referenced type-selection document; no selection/generation request is sent. */
   async inspectTestPoolSelector(){

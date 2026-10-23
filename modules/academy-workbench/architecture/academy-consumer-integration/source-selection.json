@@ -1,0 +1,585 @@
+{
+  "schema": "academy.consumer-source-selection.v1",
+  "createdAt": "2026-10-21T09:41:05.096400+00:00",
+  "taskId": "academy-workbench:task:academy-consumer-integration-20261021-con-01",
+  "sourceHead": "37f3f1e8c1313cd41721f7d1ee15cef67da12883",
+  "scope": "CON-01 selection only",
+  "sources": [
+    {
+      "id": "savedMcp",
+      "repositoryRoot": "/home/palantirkc/worktrees/academy-class-prep-20261021/work/class-prep-20261021/repositories/academy-workbench",
+      "commit": "df8b9f776e22841919e69b9ff9ba25084e13f558",
+      "tree": "4307227ab5a9a58c32a6ab4f7a7d313ebf9b8ae9",
+      "files": [
+        {
+          "path": "tools/academy-mcp/src/contracts.ts",
+          "sha256": "ccceb4123e866d677d002f54ce29205248708a2241a438dc63e9a5290e49b8ff",
+          "byteLength": 4454,
+          "liveBytesMatchExactSource": true
+        },
+        {
+          "path": "tools/academy-mcp/src/export-contracts.ts",
+          "sha256": "3af2806decbbf73dce475bf0d1ce44af534d8ff4c17df6468dedc008ad9d695a",
+          "byteLength": 3606,
+          "liveBytesMatchExactSource": true
+        },
+        {
+          "path": "tools/academy-mcp/src/pagination.ts",
+          "sha256": "49f1b943240921714a9facd5f826225db3a1edc5a846b0671775d0dc67f3e657",
+          "byteLength": 2419,
+          "liveBytesMatchExactSource": true
+        },
+        {
+          "path": "tools/academy-mcp/src/query-tool.ts",
+          "sha256": "e7350a269f45984f8b83d60382cb0ce78935d34489aeac6ca054ed9aaa51b7c6",
+          "byteLength": 859,
+          "liveBytesMatchExactSource": true
+        },
+        {
+          "path": "tools/academy-mcp/src/saved-context.ts",
+          "sha256": "2ffd3205ee675f510639135b85568fb9c40722fda07ad1c5e1ab764e067fc5ab",
+          "byteLength": 10289,
+          "liveBytesMatchExactSource": true
+        },
+        {
+          "path": "tools/academy-mcp/src/server.ts",
+          "sha256": "395cf1c36010bc2ba9e67731ea2dea5200c2ab4b1b72a68489b10962a82408fe",
+          "byteLength": 2053,
+          "liveBytesMatchExactSource": true
+        },
+        {
+          "path": "tools/academy-mcp/src/tool-result.ts",
+          "sha256": "68d1db6d259a5fed1591f47e03ac7f698991188ff9780281f4b57a18a9504582",
+          "byteLength": 662,
+          "liveBytesMatchExactSource": true
+        },
+        {
+          "path": "tools/academy-mcp/schemas/contracts.json",
+          "sha256": "ecfc318884cde593f7498e552b3fc9989ba49fb695f2ceecfd37d26486619141",
+          "byteLength": 86887,
+          "liveBytesMatchExactSource": true
+        },
+        {
+          "path": "tools/academy-mcp/tests/history-pagination.test.ts",
+          "sha256": "8c370163dc1d262445538eda09bf32034c7cb57cc208ff2612d1ae7d0166b315",
+          "byteLength": 4267,
+          "liveBytesMatchExactSource": true
+        },
+        {
+          "path": "tools/academy-mcp/tests/history-transport-fixture.ts",
+          "sha256": "c598f55c02805dbf6f82ddde852b3838811d512c18fc36b20300119d26f175c6",
+          "byteLength": 904,
+          "liveBytesMatchExactSource": true
+        },
+        {
+          "path": "tools/academy-mcp/tests/history-transport.test.ts",
+          "sha256": "3d917b954619bd935bacad8232fe943c4206862c648feb48138277a53a4318db",
+          "byteLength": 4002,
+          "liveBytesMatchExactSource": true
+        },
+        {
+          "path": "tools/academy-mcp/tests/saved-context.test.ts",
+          "sha256": "fa49db98ec45576602f06e74299c688ee50ac16eeb8f9fab45feb91453a74b00",
+          "byteLength": 6244,
+          "liveBytesMatchExactSource": true
+        }
+      ],
+      "supportFiles": [
+        {
+          "path": "tools/academy-mcp/tests/fixtures.ts",
+          "sha256": "3e55e18e86def42ad45faa87fb3b994d5889be401684c3cd52bbf6e5e50332af",
+          "byteLength": 2462,
+          "liveBytesMatchExactSource": true
+        },
+        {
+          "path": "tools/academy-mcp/tests/network-deny.ts",
+          "sha256": "41f984698a7c3375308109f5d04b1c07770f1f460562a40ea9a769af7d93cfef",
+          "byteLength": 803,
+          "liveBytesMatchExactSource": true
+        },
+        {
+          "path": "app/student-audit-viewer/model.ts",
+          "sha256": "88b81fada88650ae5f66ee6a510029568c6b0261444a71533c3d2155d36fb33b",
+          "byteLength": 3093,
+          "liveBytesMatchExactSource": true
+        },
+        {
+          "path": "app/student-audit-viewer/lesson.ts",
+          "sha256": "17fd94e2f11a4817ed83f35cc991d02bb918e38657831c0fff4426b4c4e9b42a",
+          "byteLength": 24263,
+          "liveBytesMatchExactSource": true
+        }
+      ]
+    },
+    {
+      "id": "context",
+      "repositoryRoot": "/home/palantirkc/worktrees/academy-context-consolidation-20261021",
+      "commit": "ad42d0760df24df273cabf202b75fba5bbe8c68e",
+      "tree": "fd994bdeddba05d4b00e3881a78ddbb30a007a08",
+      "files": [
+        {
+          "path": "context/academy-context/catalog.json",
+          "sha256": "3beb4adba25512867a1823cf9ac69dae7ffe52a013cba7fb5f01b5cdeaab1d3d",
+          "byteLength": 64386,
+          "liveBytesMatchExactSource": true
+        },
+        {
+          "path": "context/academy-context/types.ts",
+          "sha256": "c49a1863ddd1540f6d591c0175c08d0a720747762c3be74af9bb459ef889abd1",
+          "byteLength": 3431,
+          "liveBytesMatchExactSource": true
+        },
+        {
+          "path": "context/academy-context/validate.ts",
+          "sha256": "ffa530db92b98368740e0942ee7b8f0f3b41e87101602b44e7ee0e7e1be2e08f",
+          "byteLength": 9878,
+          "liveBytesMatchExactSource": true
+        },
+        {
+          "path": "context/academy-context/select.ts",
+          "sha256": "c668446e2fe5b8d76ac1294bbe7a63a1d13f066e87a490c5bbd471cf904e8cca",
+          "byteLength": 11400,
+          "liveBytesMatchExactSource": true
+        },
+        {
+          "path": "context/academy-context/reading-plan.ts",
+          "sha256": "d0d5a5bfdcebb88195826451314ac6d340c9817b594e3eafc90bacd2027a561e",
+          "byteLength": 2508,
+          "liveBytesMatchExactSource": true
+        },
+        {
+          "path": "context/academy-context/cli.ts",
+          "sha256": "16faea4fe983e2905ca42751c8fd9584defb05d54d4993ebddc1666868e83145",
+          "byteLength": 3144,
+          "liveBytesMatchExactSource": true
+        },
+        {
+          "path": "context/academy-context/execution-contracts.ts",
+          "sha256": "97da48787c699617e3a3edccd8f1bd06f99357ad8558b3b46ee21630fd5c55f2",
+          "byteLength": 24980,
+          "liveBytesMatchExactSource": true
+        },
+        {
+          "path": "context/academy-context/repository-plan.json",
+          "sha256": "5986ed3b1b24d278c61d09e0fc2819acdda32cdc6ead7386bc8b53e8aa1d9c22",
+          "byteLength": 15654,
+          "liveBytesMatchExactSource": true
+        },
+        {
+          "path": "context/academy-context/catalog.test.ts",
+          "sha256": "661725ae8220811b797f6b47c06c5b87f6238253bb16c65b01ed123564b13450",
+          "byteLength": 2654,
+          "liveBytesMatchExactSource": true
+        },
+        {
+          "path": "context/academy-context/select.test.ts",
+          "sha256": "401468bd49898d8699aaccef47b1272675600ac461ad3b53235fbbf06b8bc5e9",
+          "byteLength": 19426,
+          "liveBytesMatchExactSource": true
+        },
+        {
+          "path": "context/academy-context/tsconfig.json",
+          "sha256": "6e5b28d747c6e29415ce1219fa53077bd146fbbdfc853b4b9c182eb79c7c35d9",
+          "byteLength": 290,
+          "liveBytesMatchExactSource": true
+        }
+      ],
+      "supportFiles": [
+        {
+          "path": "context/academy-context/reviews/mcp-df8b9f7-review.json",
+          "sha256": "a3b45dc283f8fe63133c430f55a15084968fd9211a32ee78b24227e3c2ac220c",
+          "byteLength": 13290,
+          "liveBytesMatchExactSource": true
+        }
+      ]
+    },
+    {
+      "id": "query",
+      "repositoryRoot": "/home/palantirkc/worktrees/academy-query-integration-20261021",
+      "commit": "8f8c9bd61bd5e55445780b5569ecc40effcecef6",
+      "tree": "ccb0fc6302f664abe069086881961cec99cf2d85",
+      "files": [
+        {
+          "path": "apps/academy/dc-gang-a/src/academy/application.ts",
+          "sha256": "20f8a75e264c1dc4626dd095cb9381e58a80815706f44edbdd63af9f2cbec0ce",
+          "byteLength": 5547,
+          "liveBytesMatchExactSource": true
+        },
+        {
+          "path": "apps/academy/dc-gang-a/src/academy/retainedQuery.ts",
+          "sha256": "084615bbfe033cb3098371a491cf5ca82d807d3268b3c85adb947a009e666cb4",
+          "byteLength": 9731,
+          "liveBytesMatchExactSource": true
+        },
+        {
+          "path": "apps/academy/dc-gang-a/src/academy/retainedQueryClient.ts",
+          "sha256": "c458e74bce4ef63530c5480e2148646cacd81f5ceeb56ed1ec6570823b26288d",
+          "byteLength": 4695,
+          "liveBytesMatchExactSource": true
+        },
+        {
+          "path": "apps/academy/dc-gang-a/src/academy/retainedQueryValidation.ts",
+          "sha256": "b5c1c09cd288a6d380776dbd67acb0b78b49cc125c020f7517f771d27b81ad9d",
+          "byteLength": 6293,
+          "liveBytesMatchExactSource": true
+        },
+        {
+          "path": "apps/academy/dc-gang-a/src/academy/contracts/retainedQuery.ts",
+          "sha256": "390d83478a73afdcc0863b75c5b013ca9e065deb25c763cf2f19622caf9a9965",
+          "byteLength": 1878,
+          "liveBytesMatchExactSource": true
+        },
+        {
+          "path": "apps/academy/dc-gang-a/src/academy/server.ts",
+          "sha256": "45033f49f65896690adcb2c4d9dd57aa3e0116d1c94570459f55b9e8f6f06de7",
+          "byteLength": 37044,
+          "liveBytesMatchExactSource": true
+        },
+        {
+          "path": "apps/academy/dc-gang-a/src/academy/web/client.ts",
+          "sha256": "a7e774aeb73d3c046792ed97d33275e637f91f732a9a86d8d5d52b0f49248efd",
+          "byteLength": 35698,
+          "liveBytesMatchExactSource": true
+        },
+        {
+          "path": "apps/academy/dc-gang-a/harness/academy_query.ts",
+          "sha256": "574512398a50300519e8c23141999e57214c7475cc50cbe55fc719480ae59646",
+          "byteLength": 2155,
+          "liveBytesMatchExactSource": true
+        },
+        {
+          "path": "apps/academy/dc-gang-a/src/academy/usecases/studentScene.ts",
+          "sha256": "4ff2876a57a295a371795e0db28366b69f7aeef3bbbde5db338a33ff0c188b63",
+          "byteLength": 10504,
+          "liveBytesMatchExactSource": true
+        },
+        {
+          "path": "apps/academy/month-end-web/src/source-page.ts",
+          "sha256": "02f8e1bcc8c32ebf09c4d5f94333ebeecf286ba52f82a12dd1ec456c5b11908a",
+          "byteLength": 585,
+          "liveBytesMatchExactSource": true
+        },
+        {
+          "path": "apps/academy/month-end-web/src/app.ts",
+          "sha256": "44a9b92ad05430e8df5bba7246d1abfbbe3a51708ae3b67c00df312bf6d23263",
+          "byteLength": 40564,
+          "liveBytesMatchExactSource": true
+        },
+        {
+          "path": "architecture/academy-query-integration/qry02-entrypoint.json",
+          "sha256": "508bdb515f3c6f3a25db7dfc627b1467c295c70ba37b37d0d1abd2258e67cb18",
+          "byteLength": 1658,
+          "liveBytesMatchExactSource": true
+        }
+      ]
+    }
+  ],
+  "currentConsumerFiles": [
+    {
+      "path": "tools/academy-mcp/src/contracts.ts",
+      "sha256": "af39a49a90bf277f0ead849fd295e88cc1a9aaee4dc6f311367a10d3337b7f43",
+      "byteLength": 4004
+    },
+    {
+      "path": "tools/academy-mcp/src/saved-context.ts",
+      "sha256": "6fa7b90fc984f8400e2913004627ef7bca0803c1c0d5b01280345d35ec26c8d4",
+      "byteLength": 8988
+    },
+    {
+      "path": "tools/academy-mcp/src/pagination.ts",
+      "sha256": "a8c8569faf1a0f8288ec0a48f06cfac1fc1cb8ee826d2d07fe007b33cc0ae081",
+      "byteLength": 1651
+    },
+    {
+      "path": "tools/academy-mcp/src/service.ts",
+      "sha256": "58c13fe776c45bb4a4594735fcad473be9ce9bb8daffc0c83bb1a9074f267d84",
+      "byteLength": 6130
+    },
+    {
+      "path": "tools/academy-mcp/src/server.ts",
+      "sha256": "65e85422ea99477202822509f7f138ea81ac9d87f12350a6ffd845cbe37ce969",
+      "byteLength": 2712
+    },
+    {
+      "path": "tools/academy-mcp/src/dailyrecord.ts",
+      "sha256": "c65c18b9a04e13db37fa4abf9d8e6f8d228732016823fc1310e639b8d438486a",
+      "byteLength": 21580
+    },
+    {
+      "path": "tools/academy-mcp/src/dailyrecord-context.ts",
+      "sha256": "602077f4ac6088d411f946233bfb89e7a4424fb6bf4f8b0c01e99c546ef90b20",
+      "byteLength": 5112
+    },
+    {
+      "path": "tools/academy-mcp/src/dailyrecord-tools.ts",
+      "sha256": "2f92bd05a2b96aee9b1a29a6a88f169c788efe219f0b723838c703c267fa205c",
+      "byteLength": 4199
+    },
+    {
+      "path": "tools/academy-mcp/src/cli.ts",
+      "sha256": "65862ad2c489ece5dce62c8cc106204b863d86eb2b6e210bac80a43a782ff129",
+      "byteLength": 752
+    },
+    {
+      "path": "tools/academy-mcp/src/runtime.ts",
+      "sha256": "6eae677ea0d4be225d0ccde63621dee09651b6ac4506bc6f2ada94a6c4506f03",
+      "byteLength": 1394
+    },
+    {
+      "path": "tools/academy-mcp/src/verify-academy-mcp.ts",
+      "sha256": "69f66fc79cd449cc3eed6d16229fbfc271e80751d82b3f5a436c00d82f2bb448",
+      "byteLength": 8044
+    },
+    {
+      "path": "package.json",
+      "sha256": "d0699f4c14ff9bdee046789fbb1c692ca6eccafb46454d03e2d56597f7023b61",
+      "byteLength": 2364
+    },
+    {
+      "path": "tools/academy-mcp/package.json",
+      "sha256": "d7b7e42d4c3e72a1d5d1bd2d60250e38a12adbe96c529d4c7795c9149062a825",
+      "byteLength": 1367
+    },
+    {
+      "path": "harness/agent-platform.lock.json",
+      "sha256": "000c650b51d5b3009cf5efdc319fe2fa5b9e74123f0bf3dddb1d638b6f8e6b99",
+      "byteLength": 10652
+    }
+  ],
+  "installedSkill": {
+    "path": "/root/.codex/skills/academy-student-context/SKILL.md",
+    "sha256": "2d08b8d5b6b1feed55cf4489ab991034acdf12ed26d7c3894133050ec134c287",
+    "byteLength": 9159,
+    "mode": "read and hash only; no edit or native install"
+  },
+  "qualification": {
+    "queryReceiverInput": "CON-QRY02-QUALIFICATION-R1",
+    "queryVerificationInput": "CON-QRY02-QUALIFICATION-VERIFICATION-R1",
+    "queryCanonicalSourceAudit": "received Root-qualified source only; not rerun as CON-01 implementation test",
+    "queryIndependentReview": "AAR-REVIEW-006 scoped PASS; Root consumed sha256 3e422049d0de4fcda74667e7350b38df7a1d1582dc84a6ea50b54f7b6fe9f389",
+    "savedReviewReference": "context/academy-context/reviews/mcp-df8b9f7-review.json at context ad42d076; bounded source review, not native acceptance",
+    "savedReviewDisposition": {
+      "status": "no-unresolved-findings-in-declared-source-review-scope",
+      "conclusion": "The exact final source candidate has zero unresolved findings within the declared correctness, bounded transport, static-contract and canonical Work-continuation review scope. This does not establish private-data completeness, operational activation or user acceptance."
+    },
+    "selectedSourceRevalidation": "Current bounded run recorded separately: 7 pass / 2 fail. Historical scoped review is not a pass for this runtime."
+  },
+  "currentVersusSelected": [
+    {
+      "surface": "saved MCP",
+      "current": "roster/student_summary/student_records/lesson_context; limit 25; query JSON alone checked after fixed-count paging; server duplicates text and structuredContent",
+      "selected": "df8b9f7 student_history optional unique facets; max 250; byte-aware paging with full CallToolResult accounting, explicit oversize/refusal; shared registerSavedQuery",
+      "gap": "12 finite source/schema/test files differ; production server still inline registration at current HEAD; no adoption performed"
+    },
+    {
+      "surface": "context",
+      "current": "context/academy-context is absent in this checkout; generalized context and legacy user-context have distinct retained owners",
+      "selected": "ad42d076 metadata catalog + selectContext + readingPlan + seven design contracts",
+      "gap": "finite exact module adoption and Root package script routing still required; catalog entries are discovery only; requalify referenced current bodies with their owners"
+    },
+    {
+      "surface": "canonical teacher query",
+      "current": "no Workbench caller/import of retainedQueryClient or TeacherApplication; saved evidence is separate",
+      "selected": "QRY 8f8c9bd TeacherApplication.retainedQuery + readRetainedDocument + strict validateRetainedQueryReply",
+      "gap": "owner-injected authenticated fetchPage and reviewed cross-repository source resolution needed; do not copy reducer or fabricate native auth"
+    },
+    {
+      "surface": "report",
+      "current": "DailyRecord tools intake/review exist; server injects null read backend; this is not the installed numbered lesson report formatter",
+      "selected": "installed skill and report-contract.ts design; canonical result supplies learning state",
+      "gap": "typed report mapping and bounded formatting entrypoint absent; original daily report outstanding; current Oct19 teacher facts remain private"
+    }
+  ],
+  "actualCallers": [
+    {
+      "path": "tools/academy-mcp/src/server.ts",
+      "chain": [
+        "loadService",
+        "AcademyService.query",
+        "SavedContext.query"
+      ],
+      "mode": "saved; startup loads fixed pinned audit/lesson bodies; not launched in CON-01"
+    },
+    {
+      "path": "tools/academy-mcp/src/verify-academy-mcp.ts",
+      "chain": [
+        "stdio academy_query",
+        "roster",
+        "student_summary",
+        "student_records per facet",
+        "lesson_context"
+      ],
+      "mode": "legacy live pinned-data verification; not run"
+    },
+    {
+      "path": "tools/academy-mcp/src/cli.ts",
+      "chain": [
+        "loadService",
+        "hierarchy/status/roster/contract/operations",
+        "AcademyService.query for roster"
+      ],
+      "mode": "startup loads pinned saved bodies even for metadata commands; not run; no canonical TeacherApplication caller"
+    },
+    {
+      "path": "tools/academy-mcp/src/dailyrecord-tools.ts",
+      "chain": [
+        "registerDailyRecordTools",
+        "DailyRecordService.intake/review/cism"
+      ],
+      "mode": "read backend not configured by main server; save/send unsupported"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/server.ts",
+      "chain": [
+        "authenticated POST /api/retained-query",
+        "current actor recheck",
+        "TeacherApplication.retainedQuery",
+        "post-read auth recheck"
+      ],
+      "owner": "existing Education code/native/source owners; source-only qualified"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/web/client.ts",
+      "chain": [
+        "retained helper",
+        "readRetainedDocument",
+        "POST /api/retained-query"
+      ],
+      "selectors": [
+        "cohort",
+        "class_preparation",
+        "student"
+      ],
+      "additionalCaller": "query_student_learning WebMCP reconstructs then emits a text projection; downstream whole MCP envelope bound not proven by JSON paging"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/harness/academy_query.ts",
+      "chain": [
+        "trusted local profile owner",
+        "TeacherApplication",
+        "readRetainedDocument"
+      ],
+      "mode": "profile/database-bound CLI; inspected source only; not executed or authorized here"
+    },
+    {
+      "path": "apps/academy/month-end-web/src/source-page.ts",
+      "chain": [
+        "hierarchySourcePage",
+        "labelSourcePage"
+      ],
+      "mode": "separate maintained source paging limit 50; not a TeacherApplication retained reader caller"
+    },
+    {
+      "path": "context/academy-context/cli.ts at ad42d076",
+      "chain": [
+        "metadata catalog read",
+        "inspect/select/readingPlan"
+      ],
+      "mode": "no referenced source body reads; readingPlan consumes all pages"
+    },
+    {
+      "path": "/root/.codex/skills/academy-student-context/SKILL.md",
+      "chain": [
+        "assistant discovers owned sources",
+        "caller completes needed pages",
+        "numbered Korean report"
+      ],
+      "mode": "installed guidance only; no evidence that a native consumer was newly activated"
+    }
+  ],
+  "coverage": {
+    "savedFacets": [
+      "books",
+      "sections",
+      "attempts",
+      "assignments",
+      "videos",
+      "daily_tests",
+      "daily_records",
+      "teacher_events",
+      "daily_record_drafts"
+    ],
+    "studentHistory": "selected saved facets only; never ALL/current history",
+    "separateLessonContext": "teacherEvents plus lesson-only source observations for exact saved lesson date; observations absent from student_history",
+    "canonicalHistory": "canonical projection inputs only; not all-history scan or native refresh",
+    "context": "partial metadata; whole conversation/Space denominator unknown; seven internal workflows, counseling/parent communication excluded",
+    "realOriginalsRead": false,
+    "currentness": "authoritative currentness/complete current roster not established"
+  },
+  "sourceClocks": {
+    "saved": [
+      "audit.collectedAt",
+      "lesson.lessonDate",
+      "lesson.preparedAt",
+      "query.retrievedAt",
+      "snapshot.sha256",
+      "per-record original clocks"
+    ],
+    "canonical": [
+      "sourceObservedAt",
+      "lastVerifiedAt",
+      "recordedAt",
+      "occurredAt where supplied",
+      "teacher decision time",
+      "query.retrievedAt",
+      "snapshot",
+      "facadeSceneRevision"
+    ],
+    "context": [
+      "repository commit",
+      "catalog hash",
+      "source metadata sha256/null",
+      "selector retrieval occurrence"
+    ],
+    "teacherContext": "2026-10-19 applicability from delegation only; do not substitute host date or query retrieval for source freshness",
+    "report": "requested academy businessDate/timezone; source and decision clocks retained separately; unknown clocks stay null"
+  },
+  "budgets": {
+    "queryJsonPage": {
+      "owner": "QRY retained-query",
+      "defaultBytes": 65536,
+      "maxBytes": 131072,
+      "maxRecords": 250,
+      "scope": "serialized UTF-8 JSON page including page metadata; not CallToolResult"
+    },
+    "strictReader": {
+      "owner": "QRY retainedQueryClient",
+      "pageBytes": 65536,
+      "maxPages": 1024,
+      "maxTransferredBytes": 33554432,
+      "maxDocumentBytes": 8388608,
+      "maxDocumentRecords": 100000,
+      "checks": [
+        "strict reply schema",
+        "selector",
+        "snapshot",
+        "callerBinding",
+        "offset/ordinal",
+        "continuation",
+        "exact terminal count",
+        "reconstructed digest"
+      ]
+    },
+    "downstreamMcp": {
+      "owner": "Workbench saved MCP selection df8b9f7",
+      "maxCallToolResultBytes": 524288,
+      "scope": "text + structuredContent + JSON escaping + envelope; Unicode and refusal included",
+      "distinctFromQueryPage": true,
+      "canonicalAdaptation": "check actual wrapper independently; never return reconstructed multi-MiB document as one MCP response"
+    }
+  },
+  "remainingGaps": [
+    "Current Bun1.4.3 SDK stdio observation: selected df8b9f7 tests 7 passed / 2 failed with CONNECTION_CLOSED and no child stderr; fixture EOF startup exited0. Root must resolve before claiming successful SDK adoption; cause not established.",
+    "Root exact CON-01 source commit/canonical snapshot and transition check",
+    "CON-02 Root admission despite complete QRY receiver gate",
+    "Exact finite saved MCP/context adoption; no old Work state promotion",
+    "Authenticated source-owner callback and common strict reader source resolution",
+    "Report field/identity mapping with scoped teacher corrections and explicit unknown/pending",
+    "All required lesson overlays beyond saved Oct14 remain private-owner reads; Oct19 facts not copied",
+    "CON-03 workflow routing holds on VER-02",
+    "Native/WSL/VPS integration, actual teacher acceptance and original daily report are unverified/outstanding"
+  ],
+  "operationalEffects": false,
+  "sourceOwnersUnchanged": true,
+  "commonPinChanged": false
+}

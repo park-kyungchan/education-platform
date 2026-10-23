@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "task",
+  "id": "academy-workbench:task:harness-consumer-upgrade-20261013",
+  "projectId": "academy-workbench",
+  "domainId": "academy-operations",
+  "createdAt": "2026-10-13T23:11:05Z",
+  "payload": {
+    "title": "Apply pinned common harness to academy consumer",
+    "objective": "Portable clone/setup/check/test without copying canonical implementations or changing operational gates.",
+    "status": "running",
+    "acceptanceCriteria": [
+      "Canonical source pins and imported validators are checked",
+      "Consumer identity and bounded context contracts pass synthetic checks",
+      "Existing archives and seven operational gates remain unchanged"
+    ],
+    "details": {
+      "workId": "harness-consumer-upgrade-20261013",
+      "registration": "local-module-record",
+      "globallyRegistered": false,
+      "userAcceptance": "not-observed"
+    }
+  },
+  "references": [
+    {
+      "artifactId": "academy-workbench:project:manifest",
+      "relation": "parent"
+    }
+  ]
+}

@@ -1,0 +1,2445 @@
+{
+  "$schema": "./이루한_100미만_교사대조_1.3.0.schema.json",
+  "type": "teacher_review_comparison_collection",
+  "collection_id": "ruhan-clinic-review-20261007-001",
+  "version": "1.3.0",
+  "created_at_utc": "2026-10-07T05:03:21.427Z",
+  "student": {
+    "display_name": "이루한",
+    "canonical_snapshot_student_key": "student_700f4a05dcab5762d6ab37f8",
+    "identity_scope": "approved_saved_snapshot_only"
+  },
+  "number_binding": {
+    "state": "frozen",
+    "basis": "exact_1_to_21_order_already_delivered_in_user_chat",
+    "renumber_allowed": false
+  },
+  "filter": {
+    "name": "score_lt_100",
+    "field": "observed_attempt_score",
+    "operator": "lt",
+    "value": 100,
+    "applied_to": "each_supplied_attempt_row",
+    "drop_historical_lt_100_when_latest_100": false
+  },
+  "counts": {
+    "source_attempt_rows": 44,
+    "excluded_score_100": 23,
+    "included_score_lt_100": 21,
+    "gauss_candidates": 11,
+    "davinci_candidates": 10,
+    "repeated_catalog_codes_in_supplied_rows": 0,
+    "latest_100_with_earlier_lt_100_cases_in_supplied_rows": 0
+  },
+  "source_snapshot": {
+    "mode": "saved_snapshot",
+    "performance_as_of": null,
+    "performance_as_of_state": "not_supplied_for_entire_44_row_snapshot",
+    "full_history_complete": false,
+    "latest_bounded_recheck": {
+      "observed_at_utc": "2026-10-06T07:26:01.799Z",
+      "scope": "이루한 최근3주 앱 결과 재조회; 44행 전체 수집시각으로 확대하지 않음",
+      "file_name": "homework-check-observed-v0.2.json",
+      "json_pointer": "/execution_events/15"
+    },
+    "mapping_file": {
+      "file_name": "이루한_교재매핑_1.1.0.json",
+      "version": "1.1.0",
+      "sha256": "b2382b181d62ca86374dfcf7816376de576e1b02180d6a12b14418b1ac5c486c"
+    },
+    "canonical_file": {
+      "file_name": "history.canonical.json",
+      "version": "1.0.0",
+      "sha256": "a9ca89417b8635aafe5a6f5230d4bac97526d03e49194d0becffbc992309dece"
+    }
+  },
+  "interpretation": {
+    "review_states": [
+      "unknown",
+      "teacher_confirmed_complete",
+      "teacher_confirmed_incomplete"
+    ],
+    "teacher_review_scope": "original_wrong_review_and_similar_clinic_review_are_separate",
+    "app_catalog_code_is_print_test_code": false,
+    "candidates_are_generated_or_printed_papers": false,
+    "score_determines_completion": false,
+    "lesson_index_is_attempt_round": false,
+    "source_native_attempt_ids": "not_supplied"
+  },
+  "candidates": [
+    {
+      "number": 1,
+      "source_record_key": "record:1N87:5-1:1N8700",
+      "source_attempt_key": "attempt_1822b96edb0a5c1030540795",
+      "book_edition": {
+        "book_code": "1N87",
+        "version": 1,
+        "display_name": "가우스 1-2-3 중등",
+        "physical_revision_state": "unverified"
+      },
+      "unit": {
+        "label": "5-1",
+        "title": "점, 선, 면",
+        "level": "subunit"
+      },
+      "section": {
+        "source_label": "필수예제",
+        "lesson_index": null
+      },
+      "attempt_round": null,
+      "attempt_at": {
+        "raw": "09-05 21:43",
+        "year": null,
+        "timezone": null,
+        "year_state": "unknown",
+        "timezone_state": "unknown",
+        "precision": "minute"
+      },
+      "score": 83,
+      "app_catalog_code": "1N8700",
+      "verified_print_test_code": null,
+      "original_wrong_review": "teacher_confirmed_complete",
+      "similar_clinic_review": "teacher_confirmed_complete",
+      "print_header_verified": false,
+      "print_existence": "unknown",
+      "source": {
+        "mapping_record_pointer": "/records/4",
+        "canonical_attempt_pointer": "/attempts/25",
+        "original_attempt": {
+          "evidenceLevel": "inferred_join",
+          "fileName": "baseline-attempts-local.json",
+          "fileSha256": "dbb539916f6865db1f7ef90e709e79bee5ec4c7354ae6c638fd52b7abd5daf87",
+          "jsonPointer": "/students/1/rows/43"
+        },
+        "catalog": {
+          "evidenceLevel": "observed",
+          "fileName": "book-section-registry-local.json",
+          "fileSha256": "8da3798f73d1ad15d25eab9ed3e629f76acb38a4987b63bdd9f86d47dc65b306",
+          "jsonPointer": "/books/6/units/2/2/E"
+        },
+        "catalog_to_attempt_mapping_state": "inferred_join",
+        "catalog_to_print_binding_state": "not_verified_from_public_sample"
+      },
+      "review_evidence": {
+        "original_wrong_review": {
+          "evidence_class": "user_confirmed",
+          "event_id": "revision0001-event01",
+          "source_message_id": "Sentinel_5604726453208191a6df31cf9d3efe18",
+          "recorded_at_utc": "2026-10-07T05:12:38.375Z",
+          "completed_at": null
+        },
+        "similar_clinic_review": {
+          "evidence_class": "user_confirmed",
+          "event_id": "revision0001-event01",
+          "source_message_id": "Sentinel_5604726453208191a6df31cf9d3efe18",
+          "recorded_at_utc": "2026-10-07T05:12:38.375Z",
+          "completed_at": null
+        }
+      }
+    },
+    {
+      "number": 2,
+      "source_record_key": "record:1N87:5-1:1N8701",
+      "source_attempt_key": "attempt_1b443a881288f87914b99239",
+      "book_edition": {
+        "book_code": "1N87",
+        "version": 1,
+        "display_name": "가우스 1-2-3 중등",
+        "physical_revision_state": "unverified"
+      },
+      "unit": {
+        "label": "5-1",
+        "title": "점, 선, 면",
+        "level": "subunit"
+      },
+      "section": {
+        "source_label": "유형다지기",
+        "lesson_index": null
+      },
+      "attempt_round": null,
+      "attempt_at": {
+        "raw": "09-05 22:12",
+        "year": null,
+        "timezone": null,
+        "year_state": "unknown",
+        "timezone_state": "unknown",
+        "precision": "minute"
+      },
+      "score": 60,
+      "app_catalog_code": "1N8701",
+      "verified_print_test_code": null,
+      "original_wrong_review": "teacher_confirmed_complete",
+      "similar_clinic_review": "teacher_confirmed_complete",
+      "print_header_verified": false,
+      "print_existence": "unknown",
+      "source": {
+        "mapping_record_pointer": "/records/5",
+        "canonical_attempt_pointer": "/attempts/29",
+        "original_attempt": {
+          "evidenceLevel": "inferred_join",
+          "fileName": "baseline-attempts-local.json",
+          "fileSha256": "dbb539916f6865db1f7ef90e709e79bee5ec4c7354ae6c638fd52b7abd5daf87",
+          "jsonPointer": "/students/1/rows/42"
+        },
+        "catalog": {
+          "evidenceLevel": "observed",
+          "fileName": "book-section-registry-local.json",
+          "fileSha256": "8da3798f73d1ad15d25eab9ed3e629f76acb38a4987b63bdd9f86d47dc65b306",
+          "jsonPointer": "/books/6/units/2/2/T"
+        },
+        "catalog_to_attempt_mapping_state": "inferred_join",
+        "catalog_to_print_binding_state": "not_verified_from_public_sample"
+      },
+      "review_evidence": {
+        "original_wrong_review": {
+          "evidence_class": "user_confirmed",
+          "event_id": "revision0001-event01",
+          "source_message_id": "Sentinel_5604726453208191a6df31cf9d3efe18",
+          "recorded_at_utc": "2026-10-07T05:12:38.375Z",
+          "completed_at": null
+        },
+        "similar_clinic_review": {
+          "evidence_class": "user_confirmed",
+          "event_id": "revision0001-event01",
+          "source_message_id": "Sentinel_5604726453208191a6df31cf9d3efe18",
+          "recorded_at_utc": "2026-10-07T05:12:38.375Z",
+          "completed_at": null
+        }
+      }
+    },
+    {
+      "number": 3,
+      "source_record_key": "record:1N87:5-4:1N8706",
+      "source_attempt_key": "attempt_9f1452bcf9b0020f89af8c51",
+      "book_edition": {
+        "book_code": "1N87",
+        "version": 1,
+        "display_name": "가우스 1-2-3 중등",
+        "physical_revision_state": "unverified"
+      },
+      "unit": {
+        "label": "5-4",
+        "title": "공간에서 평면의 위치 관계",
+        "level": "subunit"
+      },
+      "section": {
+        "source_label": "필수예제",
+        "lesson_index": null
+      },
+      "attempt_round": null,
+      "attempt_at": {
+        "raw": "09-13 19:44",
+        "year": null,
+        "timezone": null,
+        "year_state": "unknown",
+        "timezone_state": "unknown",
+        "precision": "minute"
+      },
+      "score": 67,
+      "app_catalog_code": "1N8706",
+      "verified_print_test_code": null,
+      "original_wrong_review": "teacher_confirmed_complete",
+      "similar_clinic_review": "teacher_confirmed_complete",
+      "print_header_verified": false,
+      "print_existence": "unknown",
+      "source": {
+        "mapping_record_pointer": "/records/25",
+        "canonical_attempt_pointer": "/attempts/127",
+        "original_attempt": {
+          "evidenceLevel": "inferred_join",
+          "fileName": "baseline-attempts-local.json",
+          "fileSha256": "dbb539916f6865db1f7ef90e709e79bee5ec4c7354ae6c638fd52b7abd5daf87",
+          "jsonPointer": "/students/1/rows/39"
+        },
+        "catalog": {
+          "evidenceLevel": "observed",
+          "fileName": "book-section-registry-local.json",
+          "fileSha256": "8da3798f73d1ad15d25eab9ed3e629f76acb38a4987b63bdd9f86d47dc65b306",
+          "jsonPointer": "/books/6/units/5/2/E"
+        },
+        "catalog_to_attempt_mapping_state": "inferred_join",
+        "catalog_to_print_binding_state": "not_verified_from_public_sample"
+      },
+      "review_evidence": {
+        "original_wrong_review": {
+          "evidence_class": "user_confirmed",
+          "event_id": "revision0001-event01",
+          "source_message_id": "Sentinel_5604726453208191a6df31cf9d3efe18",
+          "recorded_at_utc": "2026-10-07T05:12:38.375Z",
+          "completed_at": null
+        },
+        "similar_clinic_review": {
+          "evidence_class": "user_confirmed",
+          "event_id": "revision0001-event01",
+          "source_message_id": "Sentinel_5604726453208191a6df31cf9d3efe18",
+          "recorded_at_utc": "2026-10-07T05:12:38.375Z",
+          "completed_at": null
+        }
+      }
+    },
+    {
+      "number": 4,
+      "source_record_key": "record:1N87:5-4:1N8707",
+      "source_attempt_key": "attempt_bfc443544076a00adeae5c7c",
+      "book_edition": {
+        "book_code": "1N87",
+        "version": 1,
+        "display_name": "가우스 1-2-3 중등",
+        "physical_revision_state": "unverified"
+      },
+      "unit": {
+        "label": "5-4",
+        "title": "공간에서 평면의 위치 관계",
+        "level": "subunit"
+      },
+      "section": {
+        "source_label": "유형다지기",
+        "lesson_index": null
+      },
+      "attempt_round": null,
+      "attempt_at": {
+        "raw": "09-14 21:19",
+        "year": null,
+        "timezone": null,
+        "year_state": "unknown",
+        "timezone_state": "unknown",
+        "precision": "minute"
+      },
+      "score": 74,
+      "app_catalog_code": "1N8707",
+      "verified_print_test_code": null,
+      "original_wrong_review": "teacher_confirmed_complete",
+      "similar_clinic_review": "teacher_confirmed_complete",
+      "print_header_verified": false,
+      "print_existence": "unknown",
+      "source": {
+        "mapping_record_pointer": "/records/26",
+        "canonical_attempt_pointer": "/attempts/158",
+        "original_attempt": {
+          "evidenceLevel": "inferred_join",
+          "fileName": "baseline-attempts-local.json",
+          "fileSha256": "dbb539916f6865db1f7ef90e709e79bee5ec4c7354ae6c638fd52b7abd5daf87",
+          "jsonPointer": "/students/1/rows/36"
+        },
+        "catalog": {
+          "evidenceLevel": "observed",
+          "fileName": "book-section-registry-local.json",
+          "fileSha256": "8da3798f73d1ad15d25eab9ed3e629f76acb38a4987b63bdd9f86d47dc65b306",
+          "jsonPointer": "/books/6/units/5/2/T"
+        },
+        "catalog_to_attempt_mapping_state": "inferred_join",
+        "catalog_to_print_binding_state": "not_verified_from_public_sample"
+      },
+      "review_evidence": {
+        "original_wrong_review": {
+          "evidence_class": "user_confirmed",
+          "event_id": "revision0001-event01",
+          "source_message_id": "Sentinel_5604726453208191a6df31cf9d3efe18",
+          "recorded_at_utc": "2026-10-07T05:12:38.375Z",
+          "completed_at": null
+        },
+        "similar_clinic_review": {
+          "evidence_class": "user_confirmed",
+          "event_id": "revision0001-event01",
+          "source_message_id": "Sentinel_5604726453208191a6df31cf9d3efe18",
+          "recorded_at_utc": "2026-10-07T05:12:38.375Z",
+          "completed_at": null
+        }
+      }
+    },
+    {
+      "number": 5,
+      "source_record_key": "record:1N87:5-6:1N870A",
+      "source_attempt_key": "attempt_5f3796c3cd9ca6f703a44ae1",
+      "book_edition": {
+        "book_code": "1N87",
+        "version": 1,
+        "display_name": "가우스 1-2-3 중등",
+        "physical_revision_state": "unverified"
+      },
+      "unit": {
+        "label": "5-6",
+        "title": "작도",
+        "level": "subunit"
+      },
+      "section": {
+        "source_label": "필수예제",
+        "lesson_index": null
+      },
+      "attempt_round": null,
+      "attempt_at": {
+        "raw": "09-18 15:51",
+        "year": null,
+        "timezone": null,
+        "year_state": "unknown",
+        "timezone_state": "unknown",
+        "precision": "minute"
+      },
+      "score": 87,
+      "app_catalog_code": "1N870A",
+      "verified_print_test_code": null,
+      "original_wrong_review": "teacher_confirmed_complete",
+      "similar_clinic_review": "teacher_confirmed_complete",
+      "print_header_verified": false,
+      "print_existence": "unknown",
+      "source": {
+        "mapping_record_pointer": "/records/39",
+        "canonical_attempt_pointer": "/attempts/87",
+        "original_attempt": {
+          "evidenceLevel": "inferred_join",
+          "fileName": "baseline-attempts-local.json",
+          "fileSha256": "dbb539916f6865db1f7ef90e709e79bee5ec4c7354ae6c638fd52b7abd5daf87",
+          "jsonPointer": "/students/1/rows/33"
+        },
+        "catalog": {
+          "evidenceLevel": "observed",
+          "fileName": "book-section-registry-local.json",
+          "fileSha256": "8da3798f73d1ad15d25eab9ed3e629f76acb38a4987b63bdd9f86d47dc65b306",
+          "jsonPointer": "/books/6/units/7/2/E"
+        },
+        "catalog_to_attempt_mapping_state": "inferred_join",
+        "catalog_to_print_binding_state": "not_verified_from_public_sample"
+      },
+      "review_evidence": {
+        "original_wrong_review": {
+          "evidence_class": "user_confirmed",
+          "event_id": "revision0001-event01",
+          "source_message_id": "Sentinel_5604726453208191a6df31cf9d3efe18",
+          "recorded_at_utc": "2026-10-07T05:12:38.375Z",
+          "completed_at": null
+        },
+        "similar_clinic_review": {
+          "evidence_class": "user_confirmed",
+          "event_id": "revision0001-event01",
+          "source_message_id": "Sentinel_5604726453208191a6df31cf9d3efe18",
+          "recorded_at_utc": "2026-10-07T05:12:38.375Z",
+          "completed_at": null
+        }
+      }
+    },
+    {
+      "number": 6,
+      "source_record_key": "record:1N87:5-6:1N870B",
+      "source_attempt_key": "attempt_57678dd04ee8a52f2152129c",
+      "book_edition": {
+        "book_code": "1N87",
+        "version": 1,
+        "display_name": "가우스 1-2-3 중등",
+        "physical_revision_state": "unverified"
+      },
+      "unit": {
+        "label": "5-6",
+        "title": "작도",
+        "level": "subunit"
+      },
+      "section": {
+        "source_label": "유형다지기",
+        "lesson_index": null
+      },
+      "attempt_round": null,
+      "attempt_at": {
+        "raw": "09-18 16:24",
+        "year": null,
+        "timezone": null,
+        "year_state": "unknown",
+        "timezone_state": "unknown",
+        "precision": "minute"
+      },
+      "score": 80,
+      "app_catalog_code": "1N870B",
+      "verified_print_test_code": null,
+      "original_wrong_review": "teacher_confirmed_complete",
+      "similar_clinic_review": "teacher_confirmed_complete",
+      "print_header_verified": false,
+      "print_existence": "unknown",
+      "source": {
+        "mapping_record_pointer": "/records/40",
+        "canonical_attempt_pointer": "/attempts/81",
+        "original_attempt": {
+          "evidenceLevel": "inferred_join",
+          "fileName": "baseline-attempts-local.json",
+          "fileSha256": "dbb539916f6865db1f7ef90e709e79bee5ec4c7354ae6c638fd52b7abd5daf87",
+          "jsonPointer": "/students/1/rows/32"
+        },
+        "catalog": {
+          "evidenceLevel": "observed",
+          "fileName": "book-section-registry-local.json",
+          "fileSha256": "8da3798f73d1ad15d25eab9ed3e629f76acb38a4987b63bdd9f86d47dc65b306",
+          "jsonPointer": "/books/6/units/7/2/T"
+        },
+        "catalog_to_attempt_mapping_state": "inferred_join",
+        "catalog_to_print_binding_state": "not_verified_from_public_sample"
+      },
+      "review_evidence": {
+        "original_wrong_review": {
+          "evidence_class": "user_confirmed",
+          "event_id": "revision0001-event01",
+          "source_message_id": "Sentinel_5604726453208191a6df31cf9d3efe18",
+          "recorded_at_utc": "2026-10-07T05:12:38.375Z",
+          "completed_at": null
+        },
+        "similar_clinic_review": {
+          "evidence_class": "user_confirmed",
+          "event_id": "revision0001-event01",
+          "source_message_id": "Sentinel_5604726453208191a6df31cf9d3efe18",
+          "recorded_at_utc": "2026-10-07T05:12:38.375Z",
+          "completed_at": null
+        }
+      }
+    },
+    {
+      "number": 7,
+      "source_record_key": "record:1N87:5-7:1N870C",
+      "source_attempt_key": "attempt_a511df05d3a215f24cecdee3",
+      "book_edition": {
+        "book_code": "1N87",
+        "version": 1,
+        "display_name": "가우스 1-2-3 중등",
+        "physical_revision_state": "unverified"
+      },
+      "unit": {
+        "label": "5-7",
+        "title": "합동",
+        "level": "subunit"
+      },
+      "section": {
+        "source_label": "필수예제",
+        "lesson_index": null
+      },
+      "attempt_round": null,
+      "attempt_at": {
+        "raw": "09-19 20:58",
+        "year": null,
+        "timezone": null,
+        "year_state": "unknown",
+        "timezone_state": "unknown",
+        "precision": "minute"
+      },
+      "score": 88,
+      "app_catalog_code": "1N870C",
+      "verified_print_test_code": null,
+      "original_wrong_review": "teacher_confirmed_complete",
+      "similar_clinic_review": "teacher_confirmed_complete",
+      "print_header_verified": false,
+      "print_existence": "unknown",
+      "source": {
+        "mapping_record_pointer": "/records/46",
+        "canonical_attempt_pointer": "/attempts/137",
+        "original_attempt": {
+          "evidenceLevel": "inferred_join",
+          "fileName": "baseline-attempts-local.json",
+          "fileSha256": "dbb539916f6865db1f7ef90e709e79bee5ec4c7354ae6c638fd52b7abd5daf87",
+          "jsonPointer": "/students/1/rows/31"
+        },
+        "catalog": {
+          "evidenceLevel": "observed",
+          "fileName": "book-section-registry-local.json",
+          "fileSha256": "8da3798f73d1ad15d25eab9ed3e629f76acb38a4987b63bdd9f86d47dc65b306",
+          "jsonPointer": "/books/6/units/8/2/E"
+        },
+        "catalog_to_attempt_mapping_state": "inferred_join",
+        "catalog_to_print_binding_state": "not_verified_from_public_sample"
+      },
+      "review_evidence": {
+        "original_wrong_review": {
+          "evidence_class": "user_confirmed",
+          "event_id": "revision0001-event01",
+          "source_message_id": "Sentinel_5604726453208191a6df31cf9d3efe18",
+          "recorded_at_utc": "2026-10-07T05:12:38.375Z",
+          "completed_at": null
+        },
+        "similar_clinic_review": {
+          "evidence_class": "user_confirmed",
+          "event_id": "revision0001-event01",
+          "source_message_id": "Sentinel_5604726453208191a6df31cf9d3efe18",
+          "recorded_at_utc": "2026-10-07T05:12:38.375Z",
+          "completed_at": null
+        }
+      }
+    },
+    {
+      "number": 8,
+      "source_record_key": "record:1N87:5-7:1N870D",
+      "source_attempt_key": "attempt_4c8ad5fdf611af881e6bbfab",
+      "book_edition": {
+        "book_code": "1N87",
+        "version": 1,
+        "display_name": "가우스 1-2-3 중등",
+        "physical_revision_state": "unverified"
+      },
+      "unit": {
+        "label": "5-7",
+        "title": "합동",
+        "level": "subunit"
+      },
+      "section": {
+        "source_label": "유형다지기",
+        "lesson_index": null
+      },
+      "attempt_round": null,
+      "attempt_at": {
+        "raw": "09-20 11:47",
+        "year": null,
+        "timezone": null,
+        "year_state": "unknown",
+        "timezone_state": "unknown",
+        "precision": "minute"
+      },
+      "score": 80,
+      "app_catalog_code": "1N870D",
+      "verified_print_test_code": null,
+      "original_wrong_review": "teacher_confirmed_complete",
+      "similar_clinic_review": "teacher_confirmed_complete",
+      "print_header_verified": false,
+      "print_existence": "unknown",
+      "source": {
+        "mapping_record_pointer": "/records/47",
+        "canonical_attempt_pointer": "/attempts/72",
+        "original_attempt": {
+          "evidenceLevel": "inferred_join",
+          "fileName": "baseline-attempts-local.json",
+          "fileSha256": "dbb539916f6865db1f7ef90e709e79bee5ec4c7354ae6c638fd52b7abd5daf87",
+          "jsonPointer": "/students/1/rows/28"
+        },
+        "catalog": {
+          "evidenceLevel": "observed",
+          "fileName": "book-section-registry-local.json",
+          "fileSha256": "8da3798f73d1ad15d25eab9ed3e629f76acb38a4987b63bdd9f86d47dc65b306",
+          "jsonPointer": "/books/6/units/8/2/T"
+        },
+        "catalog_to_attempt_mapping_state": "inferred_join",
+        "catalog_to_print_binding_state": "not_verified_from_public_sample"
+      },
+      "review_evidence": {
+        "original_wrong_review": {
+          "evidence_class": "user_confirmed",
+          "event_id": "revision0001-event01",
+          "source_message_id": "Sentinel_5604726453208191a6df31cf9d3efe18",
+          "recorded_at_utc": "2026-10-07T05:12:38.375Z",
+          "completed_at": null
+        },
+        "similar_clinic_review": {
+          "evidence_class": "user_confirmed",
+          "event_id": "revision0001-event01",
+          "source_message_id": "Sentinel_5604726453208191a6df31cf9d3efe18",
+          "recorded_at_utc": "2026-10-07T05:12:38.375Z",
+          "completed_at": null
+        }
+      }
+    },
+    {
+      "number": 9,
+      "source_record_key": "record:1N87:5:1N870E",
+      "source_attempt_key": "attempt_2bfab2e027cbd11360f5e486",
+      "book_edition": {
+        "book_code": "1N87",
+        "version": 1,
+        "display_name": "가우스 1-2-3 중등",
+        "physical_revision_state": "unverified"
+      },
+      "unit": {
+        "label": "5",
+        "title": "기본 도형 대단원 총괄",
+        "level": "major_assessment"
+      },
+      "section": {
+        "source_label": "단원평가",
+        "lesson_index": null
+      },
+      "attempt_round": null,
+      "attempt_at": {
+        "raw": "09-23 20:01",
+        "year": null,
+        "timezone": null,
+        "year_state": "unknown",
+        "timezone_state": "unknown",
+        "precision": "minute"
+      },
+      "score": 96,
+      "app_catalog_code": "1N870E",
+      "verified_print_test_code": null,
+      "original_wrong_review": "teacher_confirmed_complete",
+      "similar_clinic_review": "teacher_confirmed_complete",
+      "print_header_verified": false,
+      "print_existence": "unknown",
+      "source": {
+        "mapping_record_pointer": "/records/84",
+        "canonical_attempt_pointer": "/attempts/40",
+        "original_attempt": {
+          "evidenceLevel": "inferred_join",
+          "fileName": "baseline-attempts-local.json",
+          "fileSha256": "dbb539916f6865db1f7ef90e709e79bee5ec4c7354ae6c638fd52b7abd5daf87",
+          "jsonPointer": "/students/1/rows/25"
+        },
+        "catalog": {
+          "evidenceLevel": "observed",
+          "fileName": "book-section-registry-local.json",
+          "fileSha256": "8da3798f73d1ad15d25eab9ed3e629f76acb38a4987b63bdd9f86d47dc65b306",
+          "jsonPointer": "/books/6/units/0/2/D"
+        },
+        "catalog_to_attempt_mapping_state": "inferred_join",
+        "catalog_to_print_binding_state": "not_verified_from_public_sample"
+      },
+      "review_evidence": {
+        "original_wrong_review": {
+          "evidence_class": "user_confirmed",
+          "event_id": "revision0001-event01",
+          "source_message_id": "Sentinel_5604726453208191a6df31cf9d3efe18",
+          "recorded_at_utc": "2026-10-07T05:12:38.375Z",
+          "completed_at": null
+        },
+        "similar_clinic_review": {
+          "evidence_class": "user_confirmed",
+          "event_id": "revision0001-event01",
+          "source_message_id": "Sentinel_5604726453208191a6df31cf9d3efe18",
+          "recorded_at_utc": "2026-10-07T05:12:38.375Z",
+          "completed_at": null
+        }
+      }
+    },
+    {
+      "number": 10,
+      "source_record_key": "record:1N87:6-2:1N870H",
+      "source_attempt_key": "attempt_3559cae7b04473416d8a3103",
+      "book_edition": {
+        "book_code": "1N87",
+        "version": 1,
+        "display_name": "가우스 1-2-3 중등",
+        "physical_revision_state": "unverified"
+      },
+      "unit": {
+        "label": "6-2",
+        "title": "삼각형의 내각과 외각",
+        "level": "subunit"
+      },
+      "section": {
+        "source_label": "필수예제",
+        "lesson_index": null
+      },
+      "attempt_round": null,
+      "attempt_at": {
+        "raw": "09-22 20:35",
+        "year": null,
+        "timezone": null,
+        "year_state": "unknown",
+        "timezone_state": "unknown",
+        "precision": "minute"
+      },
+      "score": 89,
+      "app_catalog_code": "1N870H",
+      "verified_print_test_code": null,
+      "original_wrong_review": "teacher_confirmed_complete",
+      "similar_clinic_review": "teacher_confirmed_complete",
+      "print_header_verified": false,
+      "print_existence": "unknown",
+      "source": {
+        "mapping_record_pointer": "/records/60",
+        "canonical_attempt_pointer": "/attempts/51",
+        "original_attempt": {
+          "evidenceLevel": "inferred_join",
+          "fileName": "baseline-attempts-local.json",
+          "fileSha256": "dbb539916f6865db1f7ef90e709e79bee5ec4c7354ae6c638fd52b7abd5daf87",
+          "jsonPointer": "/students/1/rows/27"
+        },
+        "catalog": {
+          "evidenceLevel": "observed",
+          "fileName": "book-section-registry-local.json",
+          "fileSha256": "8da3798f73d1ad15d25eab9ed3e629f76acb38a4987b63bdd9f86d47dc65b306",
+          "jsonPointer": "/books/6/units/10/2/E"
+        },
+        "catalog_to_attempt_mapping_state": "inferred_join",
+        "catalog_to_print_binding_state": "not_verified_from_public_sample"
+      },
+      "review_evidence": {
+        "original_wrong_review": {
+          "evidence_class": "user_confirmed",
+          "event_id": "revision0001-event01",
+          "source_message_id": "Sentinel_5604726453208191a6df31cf9d3efe18",
+          "recorded_at_utc": "2026-10-07T05:12:38.375Z",
+          "completed_at": null
+        },
+        "similar_clinic_review": {
+          "evidence_class": "user_confirmed",
+          "event_id": "revision0001-event01",
+          "source_message_id": "Sentinel_5604726453208191a6df31cf9d3efe18",
+          "recorded_at_utc": "2026-10-07T05:12:38.375Z",
+          "completed_at": null
+        }
+      }
+    },
+    {
+      "number": 11,
+      "source_record_key": "record:1N87:6-3:1N870J",
+      "source_attempt_key": "attempt_24b76c46fa0a799466c12879",
+      "book_edition": {
+        "book_code": "1N87",
+        "version": 1,
+        "display_name": "가우스 1-2-3 중등",
+        "physical_revision_state": "unverified"
+      },
+      "unit": {
+        "label": "6-3",
+        "title": "다각형의 내각과 외각",
+        "level": "subunit"
+      },
+      "section": {
+        "source_label": "필수예제",
+        "lesson_index": null
+      },
+      "attempt_round": null,
+      "attempt_at": {
+        "raw": "09-26 11:22",
+        "year": null,
+        "timezone": null,
+        "year_state": "unknown",
+        "timezone_state": "unknown",
+        "precision": "minute"
+      },
+      "score": 90,
+      "app_catalog_code": "1N870J",
+      "verified_print_test_code": null,
+      "original_wrong_review": "unknown",
+      "similar_clinic_review": "unknown",
+      "print_header_verified": false,
+      "print_existence": "user_confirmed_present",
+      "source": {
+        "mapping_record_pointer": "/records/67",
+        "canonical_attempt_pointer": "/attempts/32",
+        "original_attempt": {
+          "evidenceLevel": "inferred_join",
+          "fileName": "baseline-attempts-local.json",
+          "fileSha256": "dbb539916f6865db1f7ef90e709e79bee5ec4c7354ae6c638fd52b7abd5daf87",
+          "jsonPointer": "/students/1/rows/24"
+        },
+        "catalog": {
+          "evidenceLevel": "observed",
+          "fileName": "book-section-registry-local.json",
+          "fileSha256": "8da3798f73d1ad15d25eab9ed3e629f76acb38a4987b63bdd9f86d47dc65b306",
+          "jsonPointer": "/books/6/units/11/2/E"
+        },
+        "catalog_to_attempt_mapping_state": "inferred_join",
+        "catalog_to_print_binding_state": "not_verified_from_public_sample"
+      },
+      "delivery_plan": {
+        "event_id": "revision0002-event03",
+        "state": "planned",
+        "receiver_role": "guardian",
+        "date": "2026-10-07",
+        "pickup_at_local": "2026-10-07T16:00:00+09:00",
+        "pickup_timezone": "Asia/Seoul",
+        "pickup_precision": "approximate",
+        "remediation_path_scope": "confirmed_both_paths",
+        "remediation_paths": [
+          "original_wrong",
+          "similar_clinic"
+        ],
+        "generated_at": null,
+        "printed_at": null,
+        "delivered_at": null,
+        "source_message_ids": [
+          "Sentinel_5604726453208191a6df31cf9d3efe18",
+          "Sentinel_d6646a40228c8191abfb048e7985938c"
+        ],
+        "print_execution_state": "user_confirmed_complete",
+        "print_completion_event_id": "revision0003-event01",
+        "print_completion_source_message_id": "Sentinel_915d757d1eec8191a0a2f575b644246f",
+        "guardian_handoff_state": "not_confirmed",
+        "guardian_receipt_state": "not_confirmed"
+      },
+      "print_execution": {
+        "state": "user_confirmed_complete",
+        "event_id": "revision0003-event01",
+        "source_message_id": "Sentinel_915d757d1eec8191a0a2f575b644246f",
+        "recorded_at_utc": "2026-10-07T05:28:53.751Z",
+        "printed_time_raw": "지금",
+        "printed_at": null,
+        "printed_at_state": "relative_time_only_no_authoritative_timestamp",
+        "remediation_paths": [
+          "original_wrong",
+          "similar_clinic"
+        ],
+        "material_ids": null,
+        "printed_page_count": null,
+        "actual_printed_sheet_count": null,
+        "print_header_verified": false
+      },
+      "student_remediation_execution": {
+        "state": "not_checked",
+        "original_wrong_work_completion": "unknown",
+        "similar_clinic_work_completion": "unknown",
+        "not_inferred_from_printing": true
+      }
+    },
+    {
+      "number": 12,
+      "source_record_key": "record:1MHL:1-1:1MHL01",
+      "source_attempt_key": "attempt_04cb04300b6c5932520d51d0",
+      "book_edition": {
+        "book_code": "1MHL",
+        "version": 1,
+        "display_name": "다빈치 1-1 중등",
+        "physical_revision_state": "unverified"
+      },
+      "unit": {
+        "label": "1-1",
+        "title": "소인수분해",
+        "level": "middle"
+      },
+      "section": {
+        "source_label": "유형다지기",
+        "lesson_index": 2
+      },
+      "attempt_round": null,
+      "attempt_at": {
+        "raw": "09-11 16:23",
+        "year": null,
+        "timezone": null,
+        "year_state": "unknown",
+        "timezone_state": "unknown",
+        "precision": "minute"
+      },
+      "score": 92,
+      "app_catalog_code": "1MHL01",
+      "verified_print_test_code": null,
+      "original_wrong_review": "teacher_confirmed_complete",
+      "similar_clinic_review": "teacher_confirmed_complete",
+      "print_header_verified": false,
+      "print_existence": "unknown",
+      "source": {
+        "mapping_record_pointer": "/records/87",
+        "canonical_attempt_pointer": "/attempts/6",
+        "original_attempt": {
+          "evidenceLevel": "inferred_join",
+          "fileName": "baseline-attempts-local.json",
+          "fileSha256": "dbb539916f6865db1f7ef90e709e79bee5ec4c7354ae6c638fd52b7abd5daf87",
+          "jsonPointer": "/students/1/rows/17"
+        },
+        "catalog": {
+          "evidenceLevel": "observed",
+          "fileName": "book-section-registry-local.json",
+          "fileSha256": "8da3798f73d1ad15d25eab9ed3e629f76acb38a4987b63bdd9f86d47dc65b306",
+          "jsonPointer": "/books/7/units/4/2/T/1"
+        },
+        "catalog_to_attempt_mapping_state": "inferred_join",
+        "catalog_to_print_binding_state": "not_verified_from_public_sample"
+      },
+      "completion_claim": {
+        "state": "user_reported_complete",
+        "source_text": "12~19번 완료",
+        "scope_state": "resolved_both_paths",
+        "event_id": "revision0001-event02",
+        "source_message_id": "Sentinel_5604726453208191a6df31cf9d3efe18",
+        "recorded_at_utc": "2026-10-07T05:12:38.375Z",
+        "completed_at": null,
+        "resolved_by_event_id": "revision0002-event02",
+        "resolved_by_message_id": "Sentinel_d6646a40228c8191abfb048e7985938c",
+        "resolved_at_utc": "2026-10-07T05:15:36.930Z"
+      },
+      "review_evidence": {
+        "original_wrong_review": {
+          "evidence_class": "user_confirmed",
+          "event_id": "revision0002-event02",
+          "source_message_id": "Sentinel_d6646a40228c8191abfb048e7985938c",
+          "recorded_at_utc": "2026-10-07T05:15:36.930Z",
+          "completed_at": null,
+          "confirmation_question_exact": "12~19번도 오·클 둘 다 완료이고, 11번은 오·클 둘 다 전달할 예정이야?"
+        },
+        "similar_clinic_review": {
+          "evidence_class": "user_confirmed",
+          "event_id": "revision0002-event02",
+          "source_message_id": "Sentinel_d6646a40228c8191abfb048e7985938c",
+          "recorded_at_utc": "2026-10-07T05:15:36.930Z",
+          "completed_at": null,
+          "confirmation_question_exact": "12~19번도 오·클 둘 다 완료이고, 11번은 오·클 둘 다 전달할 예정이야?"
+        }
+      }
+    },
+    {
+      "number": 13,
+      "source_record_key": "record:1MHL:1-1:1MHL02",
+      "source_attempt_key": "attempt_f0b33869ba329186daa2d774",
+      "book_edition": {
+        "book_code": "1MHL",
+        "version": 1,
+        "display_name": "다빈치 1-1 중등",
+        "physical_revision_state": "unverified"
+      },
+      "unit": {
+        "label": "1-1",
+        "title": "소인수분해",
+        "level": "middle"
+      },
+      "section": {
+        "source_label": "유형다지기",
+        "lesson_index": 3
+      },
+      "attempt_round": null,
+      "attempt_at": {
+        "raw": "09-11 17:37",
+        "year": null,
+        "timezone": null,
+        "year_state": "unknown",
+        "timezone_state": "unknown",
+        "precision": "minute"
+      },
+      "score": 77,
+      "app_catalog_code": "1MHL02",
+      "verified_print_test_code": null,
+      "original_wrong_review": "teacher_confirmed_complete",
+      "similar_clinic_review": "teacher_confirmed_complete",
+      "print_header_verified": false,
+      "print_existence": "unknown",
+      "source": {
+        "mapping_record_pointer": "/records/88",
+        "canonical_attempt_pointer": "/attempts/198",
+        "original_attempt": {
+          "evidenceLevel": "inferred_join",
+          "fileName": "baseline-attempts-local.json",
+          "fileSha256": "dbb539916f6865db1f7ef90e709e79bee5ec4c7354ae6c638fd52b7abd5daf87",
+          "jsonPointer": "/students/1/rows/18"
+        },
+        "catalog": {
+          "evidenceLevel": "observed",
+          "fileName": "book-section-registry-local.json",
+          "fileSha256": "8da3798f73d1ad15d25eab9ed3e629f76acb38a4987b63bdd9f86d47dc65b306",
+          "jsonPointer": "/books/7/units/4/2/T/2"
+        },
+        "catalog_to_attempt_mapping_state": "inferred_join",
+        "catalog_to_print_binding_state": "not_verified_from_public_sample"
+      },
+      "completion_claim": {
+        "state": "user_reported_complete",
+        "source_text": "12~19번 완료",
+        "scope_state": "resolved_both_paths",
+        "event_id": "revision0001-event02",
+        "source_message_id": "Sentinel_5604726453208191a6df31cf9d3efe18",
+        "recorded_at_utc": "2026-10-07T05:12:38.375Z",
+        "completed_at": null,
+        "resolved_by_event_id": "revision0002-event02",
+        "resolved_by_message_id": "Sentinel_d6646a40228c8191abfb048e7985938c",
+        "resolved_at_utc": "2026-10-07T05:15:36.930Z"
+      },
+      "review_evidence": {
+        "original_wrong_review": {
+          "evidence_class": "user_confirmed",
+          "event_id": "revision0002-event02",
+          "source_message_id": "Sentinel_d6646a40228c8191abfb048e7985938c",
+          "recorded_at_utc": "2026-10-07T05:15:36.930Z",
+          "completed_at": null,
+          "confirmation_question_exact": "12~19번도 오·클 둘 다 완료이고, 11번은 오·클 둘 다 전달할 예정이야?"
+        },
+        "similar_clinic_review": {
+          "evidence_class": "user_confirmed",
+          "event_id": "revision0002-event02",
+          "source_message_id": "Sentinel_d6646a40228c8191abfb048e7985938c",
+          "recorded_at_utc": "2026-10-07T05:15:36.930Z",
+          "completed_at": null,
+          "confirmation_question_exact": "12~19번도 오·클 둘 다 완료이고, 11번은 오·클 둘 다 전달할 예정이야?"
+        }
+      }
+    },
+    {
+      "number": 14,
+      "source_record_key": "record:1MHL:1-2:1MHL03",
+      "source_attempt_key": "attempt_f7950cc419c706028f4d501f",
+      "book_edition": {
+        "book_code": "1MHL",
+        "version": 1,
+        "display_name": "다빈치 1-1 중등",
+        "physical_revision_state": "unverified"
+      },
+      "unit": {
+        "label": "1-2",
+        "title": "최대공약수와 최소공배수",
+        "level": "middle"
+      },
+      "section": {
+        "source_label": "유형다지기",
+        "lesson_index": 1
+      },
+      "attempt_round": null,
+      "attempt_at": {
+        "raw": "09-14 15:30",
+        "year": null,
+        "timezone": null,
+        "year_state": "unknown",
+        "timezone_state": "unknown",
+        "precision": "minute"
+      },
+      "score": 90,
+      "app_catalog_code": "1MHL03",
+      "verified_print_test_code": null,
+      "original_wrong_review": "teacher_confirmed_complete",
+      "similar_clinic_review": "teacher_confirmed_complete",
+      "print_header_verified": false,
+      "print_existence": "unknown",
+      "source": {
+        "mapping_record_pointer": "/records/89",
+        "canonical_attempt_pointer": "/attempts/201",
+        "original_attempt": {
+          "evidenceLevel": "inferred_join",
+          "fileName": "baseline-attempts-local.json",
+          "fileSha256": "dbb539916f6865db1f7ef90e709e79bee5ec4c7354ae6c638fd52b7abd5daf87",
+          "jsonPointer": "/students/1/rows/13"
+        },
+        "catalog": {
+          "evidenceLevel": "observed",
+          "fileName": "book-section-registry-local.json",
+          "fileSha256": "8da3798f73d1ad15d25eab9ed3e629f76acb38a4987b63bdd9f86d47dc65b306",
+          "jsonPointer": "/books/7/units/5/2/T/0"
+        },
+        "catalog_to_attempt_mapping_state": "inferred_join",
+        "catalog_to_print_binding_state": "not_verified_from_public_sample"
+      },
+      "completion_claim": {
+        "state": "user_reported_complete",
+        "source_text": "12~19번 완료",
+        "scope_state": "resolved_both_paths",
+        "event_id": "revision0001-event02",
+        "source_message_id": "Sentinel_5604726453208191a6df31cf9d3efe18",
+        "recorded_at_utc": "2026-10-07T05:12:38.375Z",
+        "completed_at": null,
+        "resolved_by_event_id": "revision0002-event02",
+        "resolved_by_message_id": "Sentinel_d6646a40228c8191abfb048e7985938c",
+        "resolved_at_utc": "2026-10-07T05:15:36.930Z"
+      },
+      "review_evidence": {
+        "original_wrong_review": {
+          "evidence_class": "user_confirmed",
+          "event_id": "revision0002-event02",
+          "source_message_id": "Sentinel_d6646a40228c8191abfb048e7985938c",
+          "recorded_at_utc": "2026-10-07T05:15:36.930Z",
+          "completed_at": null,
+          "confirmation_question_exact": "12~19번도 오·클 둘 다 완료이고, 11번은 오·클 둘 다 전달할 예정이야?"
+        },
+        "similar_clinic_review": {
+          "evidence_class": "user_confirmed",
+          "event_id": "revision0002-event02",
+          "source_message_id": "Sentinel_d6646a40228c8191abfb048e7985938c",
+          "recorded_at_utc": "2026-10-07T05:15:36.930Z",
+          "completed_at": null,
+          "confirmation_question_exact": "12~19번도 오·클 둘 다 완료이고, 11번은 오·클 둘 다 전달할 예정이야?"
+        }
+      }
+    },
+    {
+      "number": 15,
+      "source_record_key": "record:1MHL:1-2:1MHL06",
+      "source_attempt_key": "attempt_948a217cb760f7ee978c4647",
+      "book_edition": {
+        "book_code": "1MHL",
+        "version": 1,
+        "display_name": "다빈치 1-1 중등",
+        "physical_revision_state": "unverified"
+      },
+      "unit": {
+        "label": "1-2",
+        "title": "최대공약수와 최소공배수",
+        "level": "middle"
+      },
+      "section": {
+        "source_label": "유형다지기",
+        "lesson_index": 4
+      },
+      "attempt_round": null,
+      "attempt_at": {
+        "raw": "09-15 23:21",
+        "year": null,
+        "timezone": null,
+        "year_state": "unknown",
+        "timezone_state": "unknown",
+        "precision": "minute"
+      },
+      "score": 86,
+      "app_catalog_code": "1MHL06",
+      "verified_print_test_code": null,
+      "original_wrong_review": "teacher_confirmed_complete",
+      "similar_clinic_review": "teacher_confirmed_complete",
+      "print_header_verified": false,
+      "print_existence": "unknown",
+      "source": {
+        "mapping_record_pointer": "/records/92",
+        "canonical_attempt_pointer": "/attempts/121",
+        "original_attempt": {
+          "evidenceLevel": "inferred_join",
+          "fileName": "baseline-attempts-local.json",
+          "fileSha256": "dbb539916f6865db1f7ef90e709e79bee5ec4c7354ae6c638fd52b7abd5daf87",
+          "jsonPointer": "/students/1/rows/12"
+        },
+        "catalog": {
+          "evidenceLevel": "observed",
+          "fileName": "book-section-registry-local.json",
+          "fileSha256": "8da3798f73d1ad15d25eab9ed3e629f76acb38a4987b63bdd9f86d47dc65b306",
+          "jsonPointer": "/books/7/units/5/2/T/3"
+        },
+        "catalog_to_attempt_mapping_state": "inferred_join",
+        "catalog_to_print_binding_state": "not_verified_from_public_sample"
+      },
+      "completion_claim": {
+        "state": "user_reported_complete",
+        "source_text": "12~19번 완료",
+        "scope_state": "resolved_both_paths",
+        "event_id": "revision0001-event02",
+        "source_message_id": "Sentinel_5604726453208191a6df31cf9d3efe18",
+        "recorded_at_utc": "2026-10-07T05:12:38.375Z",
+        "completed_at": null,
+        "resolved_by_event_id": "revision0002-event02",
+        "resolved_by_message_id": "Sentinel_d6646a40228c8191abfb048e7985938c",
+        "resolved_at_utc": "2026-10-07T05:15:36.930Z"
+      },
+      "review_evidence": {
+        "original_wrong_review": {
+          "evidence_class": "user_confirmed",
+          "event_id": "revision0002-event02",
+          "source_message_id": "Sentinel_d6646a40228c8191abfb048e7985938c",
+          "recorded_at_utc": "2026-10-07T05:15:36.930Z",
+          "completed_at": null,
+          "confirmation_question_exact": "12~19번도 오·클 둘 다 완료이고, 11번은 오·클 둘 다 전달할 예정이야?"
+        },
+        "similar_clinic_review": {
+          "evidence_class": "user_confirmed",
+          "event_id": "revision0002-event02",
+          "source_message_id": "Sentinel_d6646a40228c8191abfb048e7985938c",
+          "recorded_at_utc": "2026-10-07T05:15:36.930Z",
+          "completed_at": null,
+          "confirmation_question_exact": "12~19번도 오·클 둘 다 완료이고, 11번은 오·클 둘 다 전달할 예정이야?"
+        }
+      }
+    },
+    {
+      "number": 16,
+      "source_record_key": "record:1MHL:1:1MHL09",
+      "source_attempt_key": "attempt_d3130eb778d568d13d9be21b",
+      "book_edition": {
+        "book_code": "1MHL",
+        "version": 1,
+        "display_name": "다빈치 1-1 중등",
+        "physical_revision_state": "unverified"
+      },
+      "unit": {
+        "label": "1",
+        "title": "소인수분해 대단원 총괄",
+        "level": "major_assessment"
+      },
+      "section": {
+        "source_label": "단원평가",
+        "lesson_index": null
+      },
+      "attempt_round": null,
+      "attempt_at": {
+        "raw": "09-18 18:21",
+        "year": null,
+        "timezone": null,
+        "year_state": "unknown",
+        "timezone_state": "unknown",
+        "precision": "minute"
+      },
+      "score": 72,
+      "app_catalog_code": "1MHL09",
+      "verified_print_test_code": null,
+      "original_wrong_review": "teacher_confirmed_complete",
+      "similar_clinic_review": "teacher_confirmed_complete",
+      "print_header_verified": false,
+      "print_existence": "unknown",
+      "source": {
+        "mapping_record_pointer": "/records/129",
+        "canonical_attempt_pointer": "/attempts/178",
+        "original_attempt": {
+          "evidenceLevel": "inferred_join",
+          "fileName": "baseline-attempts-local.json",
+          "fileSha256": "dbb539916f6865db1f7ef90e709e79bee5ec4c7354ae6c638fd52b7abd5daf87",
+          "jsonPointer": "/students/1/rows/9"
+        },
+        "catalog": {
+          "evidenceLevel": "observed",
+          "fileName": "book-section-registry-local.json",
+          "fileSha256": "8da3798f73d1ad15d25eab9ed3e629f76acb38a4987b63bdd9f86d47dc65b306",
+          "jsonPointer": "/books/7/units/0/2/D"
+        },
+        "catalog_to_attempt_mapping_state": "inferred_join",
+        "catalog_to_print_binding_state": "not_verified_from_public_sample"
+      },
+      "completion_claim": {
+        "state": "user_reported_complete",
+        "source_text": "12~19번 완료",
+        "scope_state": "resolved_both_paths",
+        "event_id": "revision0001-event02",
+        "source_message_id": "Sentinel_5604726453208191a6df31cf9d3efe18",
+        "recorded_at_utc": "2026-10-07T05:12:38.375Z",
+        "completed_at": null,
+        "resolved_by_event_id": "revision0002-event02",
+        "resolved_by_message_id": "Sentinel_d6646a40228c8191abfb048e7985938c",
+        "resolved_at_utc": "2026-10-07T05:15:36.930Z"
+      },
+      "review_evidence": {
+        "original_wrong_review": {
+          "evidence_class": "user_confirmed",
+          "event_id": "revision0002-event02",
+          "source_message_id": "Sentinel_d6646a40228c8191abfb048e7985938c",
+          "recorded_at_utc": "2026-10-07T05:15:36.930Z",
+          "completed_at": null,
+          "confirmation_question_exact": "12~19번도 오·클 둘 다 완료이고, 11번은 오·클 둘 다 전달할 예정이야?"
+        },
+        "similar_clinic_review": {
+          "evidence_class": "user_confirmed",
+          "event_id": "revision0002-event02",
+          "source_message_id": "Sentinel_d6646a40228c8191abfb048e7985938c",
+          "recorded_at_utc": "2026-10-07T05:15:36.930Z",
+          "completed_at": null,
+          "confirmation_question_exact": "12~19번도 오·클 둘 다 완료이고, 11번은 오·클 둘 다 전달할 예정이야?"
+        }
+      }
+    },
+    {
+      "number": 17,
+      "source_record_key": "record:1MHL:2-1:1MHL0A",
+      "source_attempt_key": "attempt_ed62e6a5b50f5cdcf4a21374",
+      "book_edition": {
+        "book_code": "1MHL",
+        "version": 1,
+        "display_name": "다빈치 1-1 중등",
+        "physical_revision_state": "unverified"
+      },
+      "unit": {
+        "label": "2-1",
+        "title": "정수와 유리수",
+        "level": "middle"
+      },
+      "section": {
+        "source_label": "유형다지기",
+        "lesson_index": 1
+      },
+      "attempt_round": null,
+      "attempt_at": {
+        "raw": "09-22 22:06",
+        "year": null,
+        "timezone": null,
+        "year_state": "unknown",
+        "timezone_state": "unknown",
+        "precision": "minute"
+      },
+      "score": 89,
+      "app_catalog_code": "1MHL0A",
+      "verified_print_test_code": null,
+      "original_wrong_review": "teacher_confirmed_complete",
+      "similar_clinic_review": "teacher_confirmed_complete",
+      "print_header_verified": false,
+      "print_existence": "unknown",
+      "source": {
+        "mapping_record_pointer": "/records/95",
+        "canonical_attempt_pointer": "/attempts/191",
+        "original_attempt": {
+          "evidenceLevel": "inferred_join",
+          "fileName": "baseline-attempts-local.json",
+          "fileSha256": "dbb539916f6865db1f7ef90e709e79bee5ec4c7354ae6c638fd52b7abd5daf87",
+          "jsonPointer": "/students/1/rows/8"
+        },
+        "catalog": {
+          "evidenceLevel": "observed",
+          "fileName": "book-section-registry-local.json",
+          "fileSha256": "8da3798f73d1ad15d25eab9ed3e629f76acb38a4987b63bdd9f86d47dc65b306",
+          "jsonPointer": "/books/7/units/6/2/T/0"
+        },
+        "catalog_to_attempt_mapping_state": "inferred_join",
+        "catalog_to_print_binding_state": "not_verified_from_public_sample"
+      },
+      "completion_claim": {
+        "state": "user_reported_complete",
+        "source_text": "12~19번 완료",
+        "scope_state": "resolved_both_paths",
+        "event_id": "revision0001-event02",
+        "source_message_id": "Sentinel_5604726453208191a6df31cf9d3efe18",
+        "recorded_at_utc": "2026-10-07T05:12:38.375Z",
+        "completed_at": null,
+        "resolved_by_event_id": "revision0002-event02",
+        "resolved_by_message_id": "Sentinel_d6646a40228c8191abfb048e7985938c",
+        "resolved_at_utc": "2026-10-07T05:15:36.930Z"
+      },
+      "review_evidence": {
+        "original_wrong_review": {
+          "evidence_class": "user_confirmed",
+          "event_id": "revision0002-event02",
+          "source_message_id": "Sentinel_d6646a40228c8191abfb048e7985938c",
+          "recorded_at_utc": "2026-10-07T05:15:36.930Z",
+          "completed_at": null,
+          "confirmation_question_exact": "12~19번도 오·클 둘 다 완료이고, 11번은 오·클 둘 다 전달할 예정이야?"
+        },
+        "similar_clinic_review": {
+          "evidence_class": "user_confirmed",
+          "event_id": "revision0002-event02",
+          "source_message_id": "Sentinel_d6646a40228c8191abfb048e7985938c",
+          "recorded_at_utc": "2026-10-07T05:15:36.930Z",
+          "completed_at": null,
+          "confirmation_question_exact": "12~19번도 오·클 둘 다 완료이고, 11번은 오·클 둘 다 전달할 예정이야?"
+        }
+      }
+    },
+    {
+      "number": 18,
+      "source_record_key": "record:1MHL:2-1:1MHL0B",
+      "source_attempt_key": "attempt_3da497ff53eb7c36dd57d10d",
+      "book_edition": {
+        "book_code": "1MHL",
+        "version": 1,
+        "display_name": "다빈치 1-1 중등",
+        "physical_revision_state": "unverified"
+      },
+      "unit": {
+        "label": "2-1",
+        "title": "정수와 유리수",
+        "level": "middle"
+      },
+      "section": {
+        "source_label": "유형다지기",
+        "lesson_index": 2
+      },
+      "attempt_round": null,
+      "attempt_at": {
+        "raw": "09-23 15:15",
+        "year": null,
+        "timezone": null,
+        "year_state": "unknown",
+        "timezone_state": "unknown",
+        "precision": "minute"
+      },
+      "score": 90,
+      "app_catalog_code": "1MHL0B",
+      "verified_print_test_code": null,
+      "original_wrong_review": "teacher_confirmed_complete",
+      "similar_clinic_review": "teacher_confirmed_complete",
+      "print_header_verified": false,
+      "print_existence": "unknown",
+      "source": {
+        "mapping_record_pointer": "/records/96",
+        "canonical_attempt_pointer": "/attempts/59",
+        "original_attempt": {
+          "evidenceLevel": "inferred_join",
+          "fileName": "baseline-attempts-local.json",
+          "fileSha256": "dbb539916f6865db1f7ef90e709e79bee5ec4c7354ae6c638fd52b7abd5daf87",
+          "jsonPointer": "/students/1/rows/6"
+        },
+        "catalog": {
+          "evidenceLevel": "observed",
+          "fileName": "book-section-registry-local.json",
+          "fileSha256": "8da3798f73d1ad15d25eab9ed3e629f76acb38a4987b63bdd9f86d47dc65b306",
+          "jsonPointer": "/books/7/units/6/2/T/1"
+        },
+        "catalog_to_attempt_mapping_state": "inferred_join",
+        "catalog_to_print_binding_state": "not_verified_from_public_sample"
+      },
+      "completion_claim": {
+        "state": "user_reported_complete",
+        "source_text": "12~19번 완료",
+        "scope_state": "resolved_both_paths",
+        "event_id": "revision0001-event02",
+        "source_message_id": "Sentinel_5604726453208191a6df31cf9d3efe18",
+        "recorded_at_utc": "2026-10-07T05:12:38.375Z",
+        "completed_at": null,
+        "resolved_by_event_id": "revision0002-event02",
+        "resolved_by_message_id": "Sentinel_d6646a40228c8191abfb048e7985938c",
+        "resolved_at_utc": "2026-10-07T05:15:36.930Z"
+      },
+      "review_evidence": {
+        "original_wrong_review": {
+          "evidence_class": "user_confirmed",
+          "event_id": "revision0002-event02",
+          "source_message_id": "Sentinel_d6646a40228c8191abfb048e7985938c",
+          "recorded_at_utc": "2026-10-07T05:15:36.930Z",
+          "completed_at": null,
+          "confirmation_question_exact": "12~19번도 오·클 둘 다 완료이고, 11번은 오·클 둘 다 전달할 예정이야?"
+        },
+        "similar_clinic_review": {
+          "evidence_class": "user_confirmed",
+          "event_id": "revision0002-event02",
+          "source_message_id": "Sentinel_d6646a40228c8191abfb048e7985938c",
+          "recorded_at_utc": "2026-10-07T05:15:36.930Z",
+          "completed_at": null,
+          "confirmation_question_exact": "12~19번도 오·클 둘 다 완료이고, 11번은 오·클 둘 다 전달할 예정이야?"
+        }
+      }
+    },
+    {
+      "number": 19,
+      "source_record_key": "record:1MHL:2-1:1MHL0C",
+      "source_attempt_key": "attempt_d848a70f9c8a65d9150992f1",
+      "book_edition": {
+        "book_code": "1MHL",
+        "version": 1,
+        "display_name": "다빈치 1-1 중등",
+        "physical_revision_state": "unverified"
+      },
+      "unit": {
+        "label": "2-1",
+        "title": "정수와 유리수",
+        "level": "middle"
+      },
+      "section": {
+        "source_label": "유형다지기",
+        "lesson_index": 3
+      },
+      "attempt_round": null,
+      "attempt_at": {
+        "raw": "09-23 15:25",
+        "year": null,
+        "timezone": null,
+        "year_state": "unknown",
+        "timezone_state": "unknown",
+        "precision": "minute"
+      },
+      "score": 92,
+      "app_catalog_code": "1MHL0C",
+      "verified_print_test_code": null,
+      "original_wrong_review": "teacher_confirmed_complete",
+      "similar_clinic_review": "teacher_confirmed_complete",
+      "print_header_verified": false,
+      "print_existence": "unknown",
+      "source": {
+        "mapping_record_pointer": "/records/97",
+        "canonical_attempt_pointer": "/attempts/180",
+        "original_attempt": {
+          "evidenceLevel": "inferred_join",
+          "fileName": "baseline-attempts-local.json",
+          "fileSha256": "dbb539916f6865db1f7ef90e709e79bee5ec4c7354ae6c638fd52b7abd5daf87",
+          "jsonPointer": "/students/1/rows/7"
+        },
+        "catalog": {
+          "evidenceLevel": "observed",
+          "fileName": "book-section-registry-local.json",
+          "fileSha256": "8da3798f73d1ad15d25eab9ed3e629f76acb38a4987b63bdd9f86d47dc65b306",
+          "jsonPointer": "/books/7/units/6/2/T/2"
+        },
+        "catalog_to_attempt_mapping_state": "inferred_join",
+        "catalog_to_print_binding_state": "not_verified_from_public_sample"
+      },
+      "completion_claim": {
+        "state": "user_reported_complete",
+        "source_text": "12~19번 완료",
+        "scope_state": "resolved_both_paths",
+        "event_id": "revision0001-event02",
+        "source_message_id": "Sentinel_5604726453208191a6df31cf9d3efe18",
+        "recorded_at_utc": "2026-10-07T05:12:38.375Z",
+        "completed_at": null,
+        "resolved_by_event_id": "revision0002-event02",
+        "resolved_by_message_id": "Sentinel_d6646a40228c8191abfb048e7985938c",
+        "resolved_at_utc": "2026-10-07T05:15:36.930Z"
+      },
+      "review_evidence": {
+        "original_wrong_review": {
+          "evidence_class": "user_confirmed",
+          "event_id": "revision0002-event02",
+          "source_message_id": "Sentinel_d6646a40228c8191abfb048e7985938c",
+          "recorded_at_utc": "2026-10-07T05:15:36.930Z",
+          "completed_at": null,
+          "confirmation_question_exact": "12~19번도 오·클 둘 다 완료이고, 11번은 오·클 둘 다 전달할 예정이야?"
+        },
+        "similar_clinic_review": {
+          "evidence_class": "user_confirmed",
+          "event_id": "revision0002-event02",
+          "source_message_id": "Sentinel_d6646a40228c8191abfb048e7985938c",
+          "recorded_at_utc": "2026-10-07T05:15:36.930Z",
+          "completed_at": null,
+          "confirmation_question_exact": "12~19번도 오·클 둘 다 완료이고, 11번은 오·클 둘 다 전달할 예정이야?"
+        }
+      }
+    },
+    {
+      "number": 20,
+      "source_record_key": "record:1MHL:2-2:1MHL0D",
+      "source_attempt_key": "attempt_b3bb9f4ba06358ee824dcf53",
+      "book_edition": {
+        "book_code": "1MHL",
+        "version": 1,
+        "display_name": "다빈치 1-1 중등",
+        "physical_revision_state": "unverified"
+      },
+      "unit": {
+        "label": "2-2",
+        "title": "유리수의 계산",
+        "level": "middle"
+      },
+      "section": {
+        "source_label": "유형다지기",
+        "lesson_index": 1
+      },
+      "attempt_round": null,
+      "attempt_at": {
+        "raw": "10-01 17:55",
+        "year": null,
+        "timezone": null,
+        "year_state": "unknown",
+        "timezone_state": "unknown",
+        "precision": "minute"
+      },
+      "score": 80,
+      "app_catalog_code": "1MHL0D",
+      "verified_print_test_code": null,
+      "original_wrong_review": "unknown",
+      "similar_clinic_review": "unknown",
+      "print_header_verified": false,
+      "print_existence": "user_confirmed_present",
+      "source": {
+        "mapping_record_pointer": "/records/98",
+        "canonical_attempt_pointer": "/attempts/148",
+        "original_attempt": {
+          "evidenceLevel": "inferred_join",
+          "fileName": "baseline-attempts-local.json",
+          "fileSha256": "dbb539916f6865db1f7ef90e709e79bee5ec4c7354ae6c638fd52b7abd5daf87",
+          "jsonPointer": "/students/1/rows/5"
+        },
+        "catalog": {
+          "evidenceLevel": "observed",
+          "fileName": "book-section-registry-local.json",
+          "fileSha256": "8da3798f73d1ad15d25eab9ed3e629f76acb38a4987b63bdd9f86d47dc65b306",
+          "jsonPointer": "/books/7/units/7/2/T/0"
+        },
+        "catalog_to_attempt_mapping_state": "inferred_join",
+        "catalog_to_print_binding_state": "not_verified_from_public_sample"
+      },
+      "delivery_plan": {
+        "event_id": "revision0002-event04",
+        "state": "planned",
+        "receiver_role": "guardian",
+        "date": "2026-10-07",
+        "pickup_at_local": "2026-10-07T16:00:00+09:00",
+        "pickup_timezone": "Asia/Seoul",
+        "pickup_precision": "approximate",
+        "remediation_path_scope": "confirmed_both_paths",
+        "remediation_paths": [
+          "original_wrong",
+          "similar_clinic"
+        ],
+        "generated_at": null,
+        "printed_at": null,
+        "delivered_at": null,
+        "source_message_ids": [
+          "Sentinel_5604726453208191a6df31cf9d3efe18",
+          "Sentinel_d6646a40228c8191abfb048e7985938c"
+        ],
+        "print_execution_state": "user_confirmed_complete",
+        "print_completion_event_id": "revision0003-event01",
+        "print_completion_source_message_id": "Sentinel_915d757d1eec8191a0a2f575b644246f",
+        "guardian_handoff_state": "not_confirmed",
+        "guardian_receipt_state": "not_confirmed"
+      },
+      "print_execution": {
+        "state": "user_confirmed_complete",
+        "event_id": "revision0003-event01",
+        "source_message_id": "Sentinel_915d757d1eec8191a0a2f575b644246f",
+        "recorded_at_utc": "2026-10-07T05:28:53.751Z",
+        "printed_time_raw": "지금",
+        "printed_at": null,
+        "printed_at_state": "relative_time_only_no_authoritative_timestamp",
+        "remediation_paths": [
+          "original_wrong",
+          "similar_clinic"
+        ],
+        "material_ids": null,
+        "printed_page_count": null,
+        "actual_printed_sheet_count": null,
+        "print_header_verified": false
+      },
+      "student_remediation_execution": {
+        "state": "not_checked",
+        "original_wrong_work_completion": "unknown",
+        "similar_clinic_work_completion": "unknown",
+        "not_inferred_from_printing": true
+      }
+    },
+    {
+      "number": 21,
+      "source_record_key": "record:1MHL:2-2:1MHL0E",
+      "source_attempt_key": "attempt_5a6434d50ac808208b68abc4",
+      "book_edition": {
+        "book_code": "1MHL",
+        "version": 1,
+        "display_name": "다빈치 1-1 중등",
+        "physical_revision_state": "unverified"
+      },
+      "unit": {
+        "label": "2-2",
+        "title": "유리수의 계산",
+        "level": "middle"
+      },
+      "section": {
+        "source_label": "유형다지기",
+        "lesson_index": 2
+      },
+      "attempt_round": null,
+      "attempt_at": {
+        "raw": "10-02 14:48",
+        "year": null,
+        "timezone": null,
+        "year_state": "unknown",
+        "timezone_state": "unknown",
+        "precision": "minute"
+      },
+      "score": 93,
+      "app_catalog_code": "1MHL0E",
+      "verified_print_test_code": null,
+      "original_wrong_review": "unknown",
+      "similar_clinic_review": "unknown",
+      "print_header_verified": false,
+      "print_existence": "user_confirmed_present",
+      "source": {
+        "mapping_record_pointer": "/records/99",
+        "canonical_attempt_pointer": "/attempts/84",
+        "original_attempt": {
+          "evidenceLevel": "inferred_join",
+          "fileName": "baseline-attempts-local.json",
+          "fileSha256": "dbb539916f6865db1f7ef90e709e79bee5ec4c7354ae6c638fd52b7abd5daf87",
+          "jsonPointer": "/students/1/rows/1"
+        },
+        "catalog": {
+          "evidenceLevel": "observed",
+          "fileName": "book-section-registry-local.json",
+          "fileSha256": "8da3798f73d1ad15d25eab9ed3e629f76acb38a4987b63bdd9f86d47dc65b306",
+          "jsonPointer": "/books/7/units/7/2/T/1"
+        },
+        "catalog_to_attempt_mapping_state": "inferred_join",
+        "catalog_to_print_binding_state": "not_verified_from_public_sample"
+      },
+      "delivery_plan": {
+        "event_id": "revision0002-event04",
+        "state": "planned",
+        "receiver_role": "guardian",
+        "date": "2026-10-07",
+        "pickup_at_local": "2026-10-07T16:00:00+09:00",
+        "pickup_timezone": "Asia/Seoul",
+        "pickup_precision": "approximate",
+        "remediation_path_scope": "confirmed_both_paths",
+        "remediation_paths": [
+          "original_wrong",
+          "similar_clinic"
+        ],
+        "generated_at": null,
+        "printed_at": null,
+        "delivered_at": null,
+        "source_message_ids": [
+          "Sentinel_5604726453208191a6df31cf9d3efe18",
+          "Sentinel_d6646a40228c8191abfb048e7985938c"
+        ],
+        "print_execution_state": "user_confirmed_complete",
+        "print_completion_event_id": "revision0003-event01",
+        "print_completion_source_message_id": "Sentinel_915d757d1eec8191a0a2f575b644246f",
+        "guardian_handoff_state": "not_confirmed",
+        "guardian_receipt_state": "not_confirmed"
+      },
+      "print_execution": {
+        "state": "user_confirmed_complete",
+        "event_id": "revision0003-event01",
+        "source_message_id": "Sentinel_915d757d1eec8191a0a2f575b644246f",
+        "recorded_at_utc": "2026-10-07T05:28:53.751Z",
+        "printed_time_raw": "지금",
+        "printed_at": null,
+        "printed_at_state": "relative_time_only_no_authoritative_timestamp",
+        "remediation_paths": [
+          "original_wrong",
+          "similar_clinic"
+        ],
+        "material_ids": null,
+        "printed_page_count": null,
+        "actual_printed_sheet_count": null,
+        "print_header_verified": false
+      },
+      "student_remediation_execution": {
+        "state": "not_checked",
+        "original_wrong_work_completion": "unknown",
+        "similar_clinic_work_completion": "unknown",
+        "not_inferred_from_printing": true
+      }
+    }
+  ],
+  "revised_at_utc": "2026-10-07T05:28:53.751Z",
+  "revision_history": [
+    {
+      "revision_id": "revision_0001",
+      "file_name": "이루한_100미만_교사대조_revision_0001.json",
+      "base_version": "1.0.0",
+      "applied_version": "1.1.0",
+      "source_message_id": "Sentinel_5604726453208191a6df31cf9d3efe18",
+      "recorded_at_utc": "2026-10-07T05:12:38.375Z"
+    },
+    {
+      "revision_id": "revision_0002",
+      "file_name": "이루한_100미만_교사대조_revision_0002.json",
+      "base_version": "1.1.0",
+      "applied_version": "1.2.0",
+      "source_message_id": "Sentinel_d6646a40228c8191abfb048e7985938c",
+      "recorded_at_utc": "2026-10-07T05:15:36.930Z"
+    },
+    {
+      "revision_id": "revision_0003",
+      "file_name": "이루한_100미만_교사대조_revision_0003.json",
+      "base_version": "1.2.0",
+      "applied_version": "1.3.0",
+      "source_message_ids": [
+        "Sentinel_915d757d1eec8191a0a2f575b644246f",
+        "Sentinel_cf0e8292c930819188e371807a5885d9",
+        "Sentinel_8b7f9b527a648191821c9ebaf0dfe6f2",
+        "Sentinel_dbe77dcf12f0819187db54193a7f573f"
+      ],
+      "recorded_at_utc": "2026-10-07T05:28:53.751Z"
+    }
+  ],
+  "unresolved_references": [],
+  "planning_events": [
+    {
+      "event_id": "revision0002-event03",
+      "kind": "remediation_delivery_scope_confirmed",
+      "source": {
+        "message_id": "Sentinel_d6646a40228c8191abfb048e7985938c",
+        "actor": "user",
+        "recorded_at_utc": "2026-10-07T05:15:36.930Z",
+        "exact_relevant_text": "2. 맞아.",
+        "prior_assistant_question_exact": "12~19번도 오·클 둘 다 완료이고, 11번은 오·클 둘 다 전달할 예정이야?"
+      },
+      "effective_at": null,
+      "target_numbers": [
+        11
+      ],
+      "payload": {
+        "resolves_event_id": "revision0001-event03",
+        "plan_state": "planned",
+        "remediation_paths": [
+          "original_wrong",
+          "similar_clinic"
+        ],
+        "receiver_role": "guardian",
+        "date": "2026-10-07",
+        "pickup_at_local": "2026-10-07T16:00:00+09:00",
+        "pickup_at_utc": "2026-10-07T07:00:00Z",
+        "pickup_timezone": "Asia/Seoul",
+        "pickup_precision": "approximate",
+        "pickup_source_message_id": "Sentinel_5604726453208191a6df31cf9d3efe18",
+        "original_wrong_review": "unknown",
+        "similar_clinic_review": "unknown",
+        "generated_at": null,
+        "printed_at": null,
+        "delivered_at": null
+      }
+    },
+    {
+      "event_id": "revision0002-event04",
+      "kind": "corrected_remediation_delivery_planned",
+      "source": {
+        "message_id": "Sentinel_d6646a40228c8191abfb048e7985938c",
+        "actor": "user",
+        "recorded_at_utc": "2026-10-07T05:15:36.930Z",
+        "exact_relevant_text": "1. 20+21인데 잘못 말했음.",
+        "prior_assistant_question_exact": null
+      },
+      "effective_at": null,
+      "target_numbers": [
+        20,
+        21
+      ],
+      "payload": {
+        "original_plan_event_id": "revision0001-event04",
+        "correction_event_id": "revision0002-event01",
+        "original_plan_source_message_id": "Sentinel_5604726453208191a6df31cf9d3efe18",
+        "plan_state": "planned",
+        "remediation_paths": [
+          "original_wrong",
+          "similar_clinic"
+        ],
+        "receiver_role": "guardian",
+        "date": "2026-10-07",
+        "pickup_at_local": "2026-10-07T16:00:00+09:00",
+        "pickup_at_utc": "2026-10-07T07:00:00Z",
+        "pickup_timezone": "Asia/Seoul",
+        "pickup_precision": "approximate",
+        "original_wrong_review": "unknown",
+        "similar_clinic_review": "unknown",
+        "generated_at": null,
+        "printed_at": null,
+        "delivered_at": null
+      }
+    },
+    {
+      "event_id": "revision0002-event05",
+      "kind": "new_homework_selection_criterion_confirmed",
+      "source": {
+        "message_id": "Sentinel_d6646a40228c8191abfb048e7985938c",
+        "actor": "user",
+        "recorded_at_utc": "2026-10-07T05:15:36.930Z",
+        "exact_relevant_text": "3. 다빈치의 소단원 6개에 대해서, 아직 앱에 채점 입력하지 않은것을 기준으로 리스트업해보고 정할 것임. 이미 기록된 2-2의 1~6차시 이후 새 범위인데, 이미 기록된 것들에 대한 오/클 클리닉 검토 완료가 안된 것들은 프린트로 전달해줘야한다.",
+        "prior_assistant_question_exact": null
+      },
+      "effective_at": null,
+      "payload": {
+        "updates_event_id": "revision0001-event06",
+        "book_display_name": "다빈치 1-1",
+        "desired_count": 6,
+        "count_precision": "approximate",
+        "declared_unit_kind": "소단원",
+        "mapped_unit_kind": null,
+        "selection_state": "not_selected",
+        "selection_criterion": "no_app_grading_entry_in_saved_or_authorized_observation_scope",
+        "new_range_boundary": {
+          "after_unit_label": "2-2",
+          "after_lesson_indices": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "after_section_label": "유형다지기"
+        },
+        "exact_selected_targets": null,
+        "selection_steps": [
+          "list_candidates",
+          "teacher_selects_targets"
+        ],
+        "assignment_state": "planned_not_confirmed_assigned",
+        "assignment_due_at": null,
+        "existing_record_remediation_is_separate": true,
+        "existing_record_remediation_delivery_rule": "teacher_review_not_complete_original_wrong_and_similar_clinic_require_print_delivery",
+        "generated_at": null,
+        "printed_at": null,
+        "delivered_at": null
+      }
+    },
+    {
+      "event_id": "revision0003-derived-gauss-state",
+      "kind": "gauss_distribution_and_prestudy_preparation_current_state",
+      "source": {
+        "message_id": "Sentinel_915d757d1eec8191a0a2f575b644246f",
+        "actor": "user",
+        "recorded_at_utc": "2026-10-07T05:28:53.751Z",
+        "exact_relevant_text": "2. 새 가우스 1-2-4 교재 배부 및 소단원 1개 예습도 해결."
+      },
+      "effective_at": null,
+      "payload": {
+        "state": "resolved_by_user",
+        "book_display_name": "가우스 1-2-4",
+        "book_distribution_preparation": "resolved_by_user",
+        "one_subunit_prestudy_preparation_decision": "resolved_by_user",
+        "requested_subunit_count": 1,
+        "exact_selected_subunit": null,
+        "first_subunit_selected": "unknown",
+        "actual_book_handoff_state": "not_confirmed",
+        "student_prestudy_execution_state": "not_checked",
+        "student_prestudy_completion_state": "unknown",
+        "student_completion_inferred": false,
+        "source_event_id": "revision0003-event02",
+        "source_message_id": "Sentinel_915d757d1eec8191a0a2f575b644246f",
+        "recorded_at_utc": "2026-10-07T05:28:53.751Z"
+      }
+    }
+  ],
+  "review_summary": {
+    "both_original_wrong_and_similar_clinic_user_confirmed_complete": {
+      "count": 18,
+      "numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ]
+    },
+    "confirmed_completed_path_decisions": 36,
+    "user_completion_claim_with_scope_pending": {
+      "count": 0,
+      "numbers": []
+    },
+    "both_review_paths_unknown": {
+      "count": 3,
+      "numbers": [
+        11,
+        20,
+        21
+      ]
+    },
+    "both_path_guardian_delivery_planned": {
+      "original_attempt_count": 3,
+      "numbers": [
+        11,
+        20,
+        21
+      ],
+      "remediation_type_candidate_count": 6,
+      "actual_printed_sheet_count": null,
+      "sheet_count_state": "not_established",
+      "generated_at": null,
+      "printed_at": null,
+      "delivered_at": null,
+      "print_execution_state": "user_confirmed_complete",
+      "print_completion_source_message_id": "Sentinel_915d757d1eec8191a0a2f575b644246f",
+      "guardian_handoff_state": "not_confirmed",
+      "guardian_receipt_state": "not_confirmed",
+      "student_work_completion_state": "unknown"
+    },
+    "all_pending_teacher_reviews_are_incomplete": false
+  },
+  "reference_resolution_audit": [
+    {
+      "event_id": "revision0001-event04",
+      "source_message_id": "Sentinel_5604726453208191a6df31cf9d3efe18",
+      "raw_reference": "21+22",
+      "state": "invalid_reference",
+      "invalid_numbers": [
+        22
+      ],
+      "existing_mentions": [
+        21
+      ],
+      "resolved_target_numbers": null,
+      "clarification_state": "pending",
+      "automatic_correction_applied": false,
+      "current_resolution_state": "resolved_by_user",
+      "corrected_target_numbers": [
+        20,
+        21
+      ],
+      "correction_event_id": "revision0002-event01",
+      "correction_source_message_id": "Sentinel_d6646a40228c8191abfb048e7985938c",
+      "corrected_at_utc": "2026-10-07T05:15:36.930Z"
+    }
+  ],
+  "historical_planning_events": [
+    {
+      "event_id": "revision0001-event03",
+      "kind": "delivery_planned",
+      "source": {
+        "message_id": "Sentinel_5604726453208191a6df31cf9d3efe18",
+        "actor": "user",
+        "recorded_at_utc": "2026-10-07T05:12:38.375Z",
+        "exact_non_sensitive_spans": [
+          "11번은 오늘 결석이라서 프린트를",
+          "전달할 예정",
+          "16:00정도에 가지러 오심"
+        ]
+      },
+      "effective_at": null,
+      "target_numbers": [
+        11
+      ],
+      "payload": {
+        "plan_state": "planned",
+        "teacher_review_state": "unknown",
+        "remediation_path_scope": "clarification_pending",
+        "print_existence": "unknown",
+        "receiver_role": "guardian",
+        "service_date": "2026-10-07",
+        "pickup_at_local": "2026-10-07T16:00:00+09:00",
+        "pickup_at_utc": "2026-10-07T07:00:00Z",
+        "pickup_timezone": "Asia/Seoul",
+        "pickup_precision": "approximate",
+        "delivered_at": null,
+        "attendance_context": {
+          "date": "2026-10-07",
+          "state": "user_reported_absent",
+          "reason": null
+        }
+      }
+    },
+    {
+      "event_id": "revision0001-event04",
+      "kind": "print_delivery_plan_invalid_reference",
+      "source": {
+        "message_id": "Sentinel_5604726453208191a6df31cf9d3efe18",
+        "actor": "user",
+        "recorded_at_utc": "2026-10-07T05:12:38.375Z",
+        "exact_non_sensitive_spans": [
+          "21+22번",
+          "오늘 프린트해서",
+          "전달할 예정"
+        ]
+      },
+      "effective_at": null,
+      "target_numbers": [
+        21,
+        22
+      ],
+      "payload": {
+        "stated_reference": "21+22",
+        "reference_state": "invalid_reference",
+        "existing_number_mentions": [
+          21
+        ],
+        "invalid_number_mentions": [
+          22
+        ],
+        "remap_to_20_21": false,
+        "corrected_target_numbers": null,
+        "clarification_state": "pending",
+        "plan_state": "planned_target_resolution_pending",
+        "receiver_role": "guardian",
+        "service_date": "2026-10-07",
+        "printed_at": null,
+        "delivered_at": null,
+        "actual_printing_evidence": "unknown"
+      }
+    },
+    {
+      "event_id": "revision0001-event05",
+      "kind": "book_distribution_and_prestudy_planned",
+      "source": {
+        "message_id": "Sentinel_5604726453208191a6df31cf9d3efe18",
+        "actor": "user",
+        "recorded_at_utc": "2026-10-07T05:12:38.375Z",
+        "exact_non_sensitive_spans": [
+          "다음주 수요일에 올 예정",
+          "가우스 1-2-4 교재 배부 예정",
+          "소단원은 1개 예습해오라고 할 것임"
+        ]
+      },
+      "effective_at": null,
+      "payload": {
+        "plan_state": "planned",
+        "planned_return_date": "2026-10-14",
+        "return_date_state": "tentative",
+        "book_display_name": "가우스 1-2-4",
+        "actual_book_distribution_at": null,
+        "physical_edition_state": "unverified",
+        "prestudy_count": 1,
+        "declared_unit_kind": "소단원",
+        "exact_unit_refs": null,
+        "first_subunit_selected": "unknown",
+        "assignment_state": "planned_not_confirmed_assigned",
+        "assignment_due_at": null
+      }
+    },
+    {
+      "event_id": "revision0001-event06",
+      "kind": "davinci_homework_scope_planned",
+      "source": {
+        "message_id": "Sentinel_5604726453208191a6df31cf9d3efe18",
+        "actor": "user",
+        "recorded_at_utc": "2026-10-07T05:12:38.375Z",
+        "exact_relevant_text": "나머지는 다빈치 1-1에서 소단원 6개정도 해오도록 할 것이다."
+      },
+      "effective_at": null,
+      "payload": {
+        "plan_state": "planned",
+        "book_display_name": "다빈치 1-1",
+        "declared_unit_kind": "소단원",
+        "declared_count": 6,
+        "count_precision": "approximate",
+        "mapped_unit_kind": null,
+        "exact_targets": null,
+        "target_meaning_state": "clarification_pending",
+        "assignment_state": "planned_not_confirmed_assigned",
+        "assignment_due_at": null
+      }
+    },
+    {
+      "event_id": "revision0002-event03",
+      "kind": "remediation_delivery_scope_confirmed",
+      "source": {
+        "message_id": "Sentinel_d6646a40228c8191abfb048e7985938c",
+        "actor": "user",
+        "recorded_at_utc": "2026-10-07T05:15:36.930Z",
+        "exact_relevant_text": "2. 맞아.",
+        "prior_assistant_question_exact": "12~19번도 오·클 둘 다 완료이고, 11번은 오·클 둘 다 전달할 예정이야?"
+      },
+      "effective_at": null,
+      "target_numbers": [
+        11
+      ],
+      "payload": {
+        "resolves_event_id": "revision0001-event03",
+        "plan_state": "planned",
+        "remediation_paths": [
+          "original_wrong",
+          "similar_clinic"
+        ],
+        "receiver_role": "guardian",
+        "date": "2026-10-07",
+        "pickup_at_local": "2026-10-07T16:00:00+09:00",
+        "pickup_at_utc": "2026-10-07T07:00:00Z",
+        "pickup_timezone": "Asia/Seoul",
+        "pickup_precision": "approximate",
+        "pickup_source_message_id": "Sentinel_5604726453208191a6df31cf9d3efe18",
+        "original_wrong_review": "unknown",
+        "similar_clinic_review": "unknown",
+        "generated_at": null,
+        "printed_at": null,
+        "delivered_at": null
+      }
+    },
+    {
+      "event_id": "revision0002-event04",
+      "kind": "corrected_remediation_delivery_planned",
+      "source": {
+        "message_id": "Sentinel_d6646a40228c8191abfb048e7985938c",
+        "actor": "user",
+        "recorded_at_utc": "2026-10-07T05:15:36.930Z",
+        "exact_relevant_text": "1. 20+21인데 잘못 말했음.",
+        "prior_assistant_question_exact": null
+      },
+      "effective_at": null,
+      "target_numbers": [
+        20,
+        21
+      ],
+      "payload": {
+        "original_plan_event_id": "revision0001-event04",
+        "correction_event_id": "revision0002-event01",
+        "original_plan_source_message_id": "Sentinel_5604726453208191a6df31cf9d3efe18",
+        "plan_state": "planned",
+        "remediation_paths": [
+          "original_wrong",
+          "similar_clinic"
+        ],
+        "receiver_role": "guardian",
+        "date": "2026-10-07",
+        "pickup_at_local": "2026-10-07T16:00:00+09:00",
+        "pickup_at_utc": "2026-10-07T07:00:00Z",
+        "pickup_timezone": "Asia/Seoul",
+        "pickup_precision": "approximate",
+        "original_wrong_review": "unknown",
+        "similar_clinic_review": "unknown",
+        "generated_at": null,
+        "printed_at": null,
+        "delivered_at": null
+      }
+    },
+    {
+      "event_id": "revision0001-event05",
+      "kind": "book_distribution_and_prestudy_planned",
+      "source": {
+        "message_id": "Sentinel_5604726453208191a6df31cf9d3efe18",
+        "actor": "user",
+        "recorded_at_utc": "2026-10-07T05:12:38.375Z",
+        "exact_non_sensitive_spans": [
+          "다음주 수요일에 올 예정",
+          "가우스 1-2-4 교재 배부 예정",
+          "소단원은 1개 예습해오라고 할 것임"
+        ]
+      },
+      "effective_at": null,
+      "payload": {
+        "plan_state": "planned",
+        "planned_return_date": "2026-10-14",
+        "return_date_state": "tentative",
+        "book_display_name": "가우스 1-2-4",
+        "actual_book_distribution_at": null,
+        "physical_edition_state": "unverified",
+        "prestudy_count": 1,
+        "declared_unit_kind": "소단원",
+        "exact_unit_refs": null,
+        "first_subunit_selected": "unknown",
+        "assignment_state": "planned_not_confirmed_assigned",
+        "assignment_due_at": null
+      }
+    },
+    {
+      "event_id": "revision0002-event05",
+      "kind": "new_homework_selection_criterion_confirmed",
+      "source": {
+        "message_id": "Sentinel_d6646a40228c8191abfb048e7985938c",
+        "actor": "user",
+        "recorded_at_utc": "2026-10-07T05:15:36.930Z",
+        "exact_relevant_text": "3. 다빈치의 소단원 6개에 대해서, 아직 앱에 채점 입력하지 않은것을 기준으로 리스트업해보고 정할 것임. 이미 기록된 2-2의 1~6차시 이후 새 범위인데, 이미 기록된 것들에 대한 오/클 클리닉 검토 완료가 안된 것들은 프린트로 전달해줘야한다.",
+        "prior_assistant_question_exact": null
+      },
+      "effective_at": null,
+      "payload": {
+        "updates_event_id": "revision0001-event06",
+        "book_display_name": "다빈치 1-1",
+        "desired_count": 6,
+        "count_precision": "approximate",
+        "declared_unit_kind": "소단원",
+        "mapped_unit_kind": null,
+        "selection_state": "not_selected",
+        "selection_criterion": "no_app_grading_entry_in_saved_or_authorized_observation_scope",
+        "new_range_boundary": {
+          "after_unit_label": "2-2",
+          "after_lesson_indices": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "after_section_label": "유형다지기"
+        },
+        "exact_selected_targets": null,
+        "selection_steps": [
+          "list_candidates",
+          "teacher_selects_targets"
+        ],
+        "assignment_state": "planned_not_confirmed_assigned",
+        "assignment_due_at": null,
+        "existing_record_remediation_is_separate": true,
+        "existing_record_remediation_delivery_rule": "teacher_review_not_complete_original_wrong_and_similar_clinic_require_print_delivery",
+        "generated_at": null,
+        "printed_at": null,
+        "delivered_at": null
+      }
+    }
+  ],
+  "new_homework_selection": {
+    "book_display_name": "다빈치 1-1",
+    "source_event_id": "revision0002-event05",
+    "source_message_id": "Sentinel_d6646a40228c8191abfb048e7985938c",
+    "selection_state": "not_selected",
+    "requested_count": 6,
+    "requested_count_precision": "approximate",
+    "user_unit_label": "소단원",
+    "mapped_unit_kind": null,
+    "criterion": "not_yet_entered_in_app_grading",
+    "new_range_after": {
+      "unit_label": "2-2",
+      "section_label": "유형다지기",
+      "lesson_indices": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "selected_targets": null,
+    "assignment_state": "planned_not_confirmed_assigned",
+    "selection_required_by_teacher": true,
+    "existing_record_remediation_scope_separate": true,
+    "requested_count_unit": "소단원",
+    "requested_count_is_lesson_count": false,
+    "include_lesson_level_details": true,
+    "count_language_source_event_id": "revision0003-event03",
+    "count_language_source_message_id": "Sentinel_cf0e8292c930819188e371807a5885d9"
+  },
+  "print_execution_summary": {
+    "state": "user_confirmed_complete",
+    "numbers": [
+      11,
+      20,
+      21
+    ],
+    "original_attempt_count": 3,
+    "remediation_type_count": 6,
+    "actual_printed_sheet_count": null,
+    "printed_page_count": null,
+    "material_ids": null,
+    "print_headers_verified": false,
+    "source_event_id": "revision0003-event01",
+    "source_message_id": "Sentinel_915d757d1eec8191a0a2f575b644246f",
+    "guardian_handoff_state": "not_confirmed",
+    "guardian_receipt_state": "not_confirmed",
+    "student_work_state": "not_checked",
+    "teacher_review_completion_state": "unknown"
+  },
+  "gauss_preparation_resolution": {
+    "state": "resolved_by_user",
+    "book_display_name": "가우스 1-2-4",
+    "book_distribution_preparation": "resolved_by_user",
+    "one_subunit_prestudy_preparation_decision": "resolved_by_user",
+    "requested_subunit_count": 1,
+    "exact_selected_subunit": null,
+    "first_subunit_selected": "unknown",
+    "actual_book_handoff_state": "not_confirmed",
+    "student_prestudy_execution_state": "not_checked",
+    "student_prestudy_completion_state": "unknown",
+    "student_completion_inferred": false,
+    "source_event_id": "revision0003-event02",
+    "source_message_id": "Sentinel_915d757d1eec8191a0a2f575b644246f",
+    "recorded_at_utc": "2026-10-07T05:28:53.751Z"
+  },
+  "terminology_policy": {
+    "authority": "academy_server_metadata",
+    "primary_identity": "native_id",
+    "primary_structure": "native_server_hierarchy",
+    "primary_label": "native_server_label",
+    "user_wording_role": "correct_misnaming_and_register_only_explicit_distinct_designations",
+    "intermediate_taxonomy_created": false,
+    "source_and_catalog_labels_preserved": true,
+    "label_conflict_handling": "verify_only_observed_sourceLabel_catalogLabel_mismatches",
+    "existing_native_and_source_identifiers_changed": false,
+    "updates_event_id": "revision0003-event04",
+    "incorrect_user_term_handling": "correct_to_native_server_label",
+    "automatic_alias_registration": false,
+    "alias_registration_condition": "only_explicit_user_distinct_designation_with_clear_referent",
+    "ambiguous_referent_handling": "ask_for_confirmation",
+    "existing_aliases_created": false,
+    "source_event_ids": [
+      "revision0003-event04",
+      "revision0003-event05"
+    ],
+    "source_message_ids": [
+      "Sentinel_8b7f9b527a648191821c9ebaf0dfe6f2",
+      "Sentinel_dbe77dcf12f0819187db54193a7f573f"
+    ],
+    "recorded_at_utc": "2026-10-07T05:28:53.751Z"
+  },
+  "executed_preparation_events": [
+    {
+      "event_id": "revision0003-event01",
+      "kind": "print_execution_user_confirmed_complete",
+      "source": {
+        "message_id": "Sentinel_915d757d1eec8191a0a2f575b644246f",
+        "actor": "user",
+        "recorded_at_utc": "2026-10-07T05:28:53.751Z",
+        "exact_relevant_text": "1. 11+20+21은 지금 내가 프린트 해놓았으므로 해결."
+      },
+      "effective_at": null,
+      "target_numbers": [
+        11,
+        20,
+        21
+      ],
+      "target_remediation_paths": [
+        "original_wrong",
+        "similar_clinic"
+      ],
+      "payload": {
+        "state": "user_confirmed_complete",
+        "printed_time_raw": "지금",
+        "printed_at": null,
+        "printed_at_state": "relative_time_only_no_authoritative_timestamp",
+        "print_existence": "user_confirmed_present",
+        "print_header_verified": false,
+        "material_ids": null,
+        "printed_page_count": null,
+        "actual_printed_sheet_count": null,
+        "guardian_handoff_state": "not_confirmed",
+        "guardian_receipt_state": "not_confirmed",
+        "student_work_state": "not_checked",
+        "teacher_review_completion_changed": false
+      }
+    },
+    {
+      "event_id": "revision0003-event02",
+      "kind": "gauss_book_and_prestudy_preparation_resolved_by_user",
+      "source": {
+        "message_id": "Sentinel_915d757d1eec8191a0a2f575b644246f",
+        "actor": "user",
+        "recorded_at_utc": "2026-10-07T05:28:53.751Z",
+        "exact_relevant_text": "2. 새 가우스 1-2-4 교재 배부 및 소단원 1개 예습도 해결."
+      },
+      "effective_at": null,
+      "payload": {
+        "state": "resolved_by_user",
+        "book_display_name": "가우스 1-2-4",
+        "book_distribution_preparation": "resolved_by_user",
+        "one_subunit_prestudy_preparation_decision": "resolved_by_user",
+        "requested_subunit_count": 1,
+        "exact_selected_subunit": null,
+        "first_subunit_selected": "unknown",
+        "actual_book_handoff_state": "not_confirmed",
+        "student_prestudy_execution_state": "not_checked",
+        "student_prestudy_completion_state": "unknown",
+        "student_completion_inferred": false
+      }
+    }
+  ]
+}

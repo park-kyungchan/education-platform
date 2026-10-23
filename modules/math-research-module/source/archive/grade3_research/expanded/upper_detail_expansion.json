@@ -1,0 +1,4322 @@
+{
+  "schemaVersion": "1.0",
+  "version": "upper-detail-expansion-2026-10-13",
+  "title": "초3 곱셈·나눗셈·원에 연결된 초3~6 내용의 세부단원·문제 유형·창작 예시",
+  "scope": "기존 15개 연결내용 중 직접 연결 11개만 세부단원·세분유형·창작 예시로 확장한다. 경계 지원 4개는 원래 기록을 보존하고 시험문항화하지 않는다. 각 단원의 전수 분류는 아니다.",
+  "createdAt": "2026-10-13",
+  "baseArtifacts": [
+    {
+      "file": "upper_problem_types.json",
+      "sha256": "acabaabc675c208470db6b301ceee9d5d3184162e675a807340595779d3b53c6"
+    },
+    {
+      "file": "grade3_to_6_connections.json",
+      "sha256": "33da92aa3e78fe7a0b7aa186e9fd1a686e3d67595d4e6de3cb583d02d38fd463"
+    },
+    {
+      "file": "core_taxonomy.json",
+      "sha256": "f1c2882276737f64ca0de017acb3e2f2bd1db8cef2e54abfb2f50d4ed43b7981"
+    }
+  ],
+  "sources": [
+    {
+      "id": "S2",
+      "url": "https://www.pen.go.kr/upload/main/na/bbs_2330/ntt_1118209/doc_eaadv4ca2%3D8avba%3D4dv76%3Db4v0c%3D291bvb350v0784_v620.pdf",
+      "role": "2022 개정 수학 성취기준 학년군 범위",
+      "accessedAt": "2026-10-13",
+      "verificationStatus": "opened-and-relevant-text-checked",
+      "usedFor": "교육과정 내용 범위·학년군 또는 확인한 편성 예시; 세분 유형 목록과 창작 문항의 직접 출처가 아님",
+      "title": "2025 부산광역시 초등학교 교육과정 편성·운영 지침",
+      "checkedLocator": "PDF 61쪽(인쇄면 53쪽): 4수01-04~14 및 6수01 성취기준",
+      "verificationNote": "수와 연산 학년군 기준 본문을 웹에서 직접 확인했다."
+    },
+    {
+      "id": "S3",
+      "url": "https://www.goe.go.kr/resource/goe/na/bbs_2675/2026/02/116dc7a4-254a-44fe-9e77-3e908ecc5ff3.pdf",
+      "role": "2026 5~6학년2022개정 성취기준 및 학기배치 공식 예시",
+      "pages": "15~17,37~38,65~66,93~95,121~124",
+      "accessedAt": "2026-10-13",
+      "verificationStatus": "opened-and-relevant-text-checked",
+      "usedFor": "교육과정 내용 범위·학년군 또는 확인한 편성 예시; 세분 유형 목록과 창작 문항의 직접 출처가 아님",
+      "title": "2026학년도 초등학교 5~6학년 1~2학기 수업-평가 계획 예시자료",
+      "checkedLocator": "PDF 15~17쪽: 수학 성취기준·단원 연결표; 124쪽: 원주와 넓이 평가; 183~184쪽: 약수·배수 교수학습 예시",
+      "verificationNote": "성취기준 및 예시 배치를 직접 확인했다. 국가가 학기를 일률 지정한 표라는 뜻은 아니다."
+    },
+    {
+      "id": "S4",
+      "url": "https://s3.ap-northeast-2.amazonaws.com/tsol.jihak.co.kr/tsol/archive/page/m2024/pbl/ele.html",
+      "role": "출판사 공개 자료 목록에서 확인한 단원 배치",
+      "accessedAt": "2026-10-13",
+      "verificationStatus": "opened-and-relevant-text-checked",
+      "usedFor": "교육과정 내용 범위·학년군 또는 확인한 편성 예시; 세분 유형 목록과 창작 문항의 직접 출처가 아님",
+      "title": "지학사 티솔루션 2022 개정 PBL 자료집 모음",
+      "checkedLocator": "3-1 분수와 소수 및 4-1-3 곱셈과 나눗셈 목록",
+      "verificationNote": "공개 목록만 확인했다. 이 페이지에서 PDF 문제 본문이나 세부 차시를 열람했다고 주장하지 않는다."
+    },
+    {
+      "id": "UP-P51",
+      "title": "디딤돌 초등수학 기본 5-1 (2022 개정)",
+      "url": "https://www.didimdol.co.kr/books/bookDetail2.asp?bookcode=2602050",
+      "accessedAt": "2026-10-13",
+      "role": "publisher-public-table-of-contents",
+      "verificationStatus": "opened-and-table-of-contents-checked",
+      "checkedLocator": "공개 목차의 약수와 배수, 약분과 통분, 다각형의 둘레와 넓이",
+      "usedFor": "해당 학기 교재의 단원 존재·배치 확인만. 세부 유형·예시 문제를 이 자료에서 추출한 것이 아님.",
+      "verificationNote": "공개 도서 소개 목차를 웹에서 직접 확인했다. 교재 전체 본문, 해설 PDF 또는 유료·로그인 자료를 열람했다고 주장하지 않는다."
+    },
+    {
+      "id": "UP-P52",
+      "title": "디딤돌 초등수학 기본+응용 5-2 (2022 개정)",
+      "url": "https://www.didimdol.co.kr/books/bookDetail2.asp?bookcode=2602590",
+      "accessedAt": "2026-10-13",
+      "role": "publisher-public-table-of-contents",
+      "verificationStatus": "opened-and-table-of-contents-checked",
+      "checkedLocator": "공개 목차의 분수의 곱셈, 소수의 곱셈",
+      "usedFor": "해당 학기 교재의 단원 존재·배치 확인만. 세부 유형·예시 문제를 이 자료에서 추출한 것이 아님.",
+      "verificationNote": "공개 도서 소개 목차를 웹에서 직접 확인했다. 교재 전체 본문, 해설 PDF 또는 유료·로그인 자료를 열람했다고 주장하지 않는다."
+    },
+    {
+      "id": "UP-P61",
+      "title": "디딤돌 초등수학 기본 6-1 (2022 개정)",
+      "url": "https://www.didimdol.co.kr/books/bookDetail.asp?bookcode=2602060",
+      "accessedAt": "2026-10-13",
+      "role": "publisher-public-table-of-contents",
+      "verificationStatus": "opened-and-table-of-contents-checked",
+      "checkedLocator": "공개 목차의 분수의 나눗셈, 소수의 나눗셈",
+      "usedFor": "해당 학기 교재의 단원 존재·배치 확인만. 세부 유형·예시 문제를 이 자료에서 추출한 것이 아님.",
+      "verificationNote": "공개 도서 소개 목차를 웹에서 직접 확인했다. 교재 전체 본문, 해설 PDF 또는 유료·로그인 자료를 열람했다고 주장하지 않는다."
+    },
+    {
+      "id": "UP-P62",
+      "title": "디딤돌 초등수학 기본 6-2 (2022 개정)",
+      "url": "https://www.didimdol.co.kr/books/bookDetail.asp?bookcode=2602160",
+      "accessedAt": "2026-10-13",
+      "role": "publisher-public-table-of-contents",
+      "verificationStatus": "opened-and-table-of-contents-checked",
+      "checkedLocator": "공개 목차의 분수의 나눗셈, 소수의 나눗셈, 원의 둘레와 넓이",
+      "usedFor": "해당 학기 교재의 단원 존재·배치 확인만. 세부 유형·예시 문제를 이 자료에서 추출한 것이 아님.",
+      "verificationNote": "공개 도서 소개 목차를 웹에서 직접 확인했다. 교재 전체 본문, 해설 PDF 또는 유료·로그인 자료를 열람했다고 주장하지 않는다."
+    }
+  ],
+  "details": [
+    {
+      "id": "G4-M-SD01",
+      "parentContentId": "G4-M",
+      "kind": "detail-unit",
+      "title": "부분곱으로 세 자리 수의 곱셈 계산하기",
+      "officialGradeBand": "3~4",
+      "observedPlacement": "4-1",
+      "placementStatus": "verified-official-example-not-national-mandate",
+      "connectionRole": "core-related",
+      "standardIds": [
+        "4수01-04"
+      ],
+      "sourceIds": [
+        "S4",
+        "S2"
+      ],
+      "evidenceStatus": "proposed-original",
+      "types": [
+        {
+          "title": "자릿값에 맞게 부분곱 합치기",
+          "originalTypeIds": [
+            "U4M-T01"
+          ],
+          "example": {
+            "prompt": "213×24를 계산하고, 24의 2로 구한 부분곱이 뜻하는 양을 설명하세요.",
+            "answer": "5112; 213×20=4260을 뜻한다.",
+            "solution": "24를 20과 4로 나눈다.\n213×4=852, 213×20=4260이다.\n852+4260=5112이다.",
+            "misconception": "십의 자리 2를 2로만 보아 426을 더함.",
+            "authorship": "original"
+          },
+          "arithmeticChecks": [
+            {
+              "expression": "213*24",
+              "expected": "5112",
+              "actual": "5112",
+              "passed": true
+            },
+            {
+              "expression": "213*4",
+              "expected": "852",
+              "actual": "852",
+              "passed": true
+            },
+            {
+              "expression": "213*20",
+              "expected": "4260",
+              "actual": "4260",
+              "passed": true
+            }
+          ],
+          "id": "G4-M-SD01-T01",
+          "parentId": "G4-M-SD01",
+          "kind": "problem-type",
+          "sourceIds": [
+            "S4",
+            "S2"
+          ],
+          "evidenceStatus": "proposed-original",
+          "standardIds": [
+            "4수01-04"
+          ],
+          "reusedCoreTypeIds": [
+            "M-T02",
+            "M-T05"
+          ],
+          "originalSourceRefs": [
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "U4M-T01",
+              "sourceIds": [
+                "S4"
+              ]
+            }
+          ],
+          "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+          "variants": [
+            {
+              "title": "0이 포함된 수의 부분곱 계산하기",
+              "originalTypeIds": [
+                "U4M-T01"
+              ],
+              "id": "G4-M-SD01-T02",
+              "parentId": "G4-M-SD01-T01",
+              "kind": "problem-variant",
+              "sourceIds": [
+                "S4",
+                "S2"
+              ],
+              "evidenceStatus": "proposed-original",
+              "standardIds": [
+                "4수01-04"
+              ],
+              "reusedCoreTypeIds": [
+                "M-T02",
+                "M-T05"
+              ],
+              "originalSourceRefs": [
+                {
+                  "file": "upper_problem_types.json",
+                  "typeId": "U4M-T01",
+                  "sourceIds": [
+                    "S4"
+                  ]
+                }
+              ],
+              "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+              "variantReason": "같은 핵심 인지 과제에서 입력 수·조건·표현 방식이 달라지는 변형",
+              "verification": {
+                "arithmetic": "passed",
+                "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+                "reviewType": "author-review-not-independent-expert-review"
+              },
+              "prompt": "306×32를 계산하세요.",
+              "answer": "9792",
+              "solution": "306×2=612이다.\n306×30=9180이다.\n612+9180=9792이다.",
+              "misconception": "306의 0을 건너뛰면서 각 자리의 위치가 달라짐.",
+              "authorship": "original",
+              "numericChecks": [
+                {
+                  "expression": "306*32",
+                  "expected": "9792",
+                  "actual": "9792",
+                  "passed": true
+                },
+                {
+                  "expression": "306*30",
+                  "expected": "9180",
+                  "actual": "9180",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "title": "받아올림이 적은 세 자리×두 자리 계산 변형",
+              "originalTypeIds": [
+                "U4M-T01"
+              ],
+              "id": "G4-M-SD01-T01-V2",
+              "parentId": "G4-M-SD01-T01",
+              "kind": "problem-variant",
+              "sourceIds": [
+                "S4",
+                "S2"
+              ],
+              "evidenceStatus": "proposed-original",
+              "standardIds": [
+                "4수01-04"
+              ],
+              "reusedCoreTypeIds": [
+                "M-T02",
+                "M-T05"
+              ],
+              "originalSourceRefs": [
+                {
+                  "file": "upper_problem_types.json",
+                  "typeId": "U4M-T01",
+                  "sourceIds": [
+                    "S4"
+                  ]
+                }
+              ],
+              "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+              "variantReason": "새 인지유형이 아니라 같은 계산 구조의 수 조건 변형",
+              "verification": {
+                "arithmetic": "passed",
+                "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+                "reviewType": "author-review-not-independent-expert-review"
+              },
+              "prompt": "112×21을 계산하세요.",
+              "answer": "2352",
+              "solution": "112×20=2240, 112×1=112이다.\n부분곱을 합하면 2240+112=2352이다.",
+              "misconception": "십의 자리 부분곱을 한 자리 작게 정렬함.",
+              "authorship": "original",
+              "numericChecks": [
+                {
+                  "expression": "112*21",
+                  "expected": "2352",
+                  "actual": "2352",
+                  "passed": true
+                }
+              ]
+            }
+          ],
+          "verification": {
+            "arithmetic": "passed",
+            "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+            "reviewType": "author-review-not-independent-expert-review"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G4-M-SD02",
+      "parentContentId": "G4-M",
+      "kind": "detail-unit",
+      "title": "어림과 오류 점검으로 곱 검증하기",
+      "officialGradeBand": "3~4",
+      "observedPlacement": "4-1",
+      "placementStatus": "verified-official-example-not-national-mandate",
+      "connectionRole": "core-related",
+      "standardIds": [
+        "4수01-04",
+        "4수01-08"
+      ],
+      "sourceIds": [
+        "S4",
+        "S2"
+      ],
+      "evidenceStatus": "proposed-original",
+      "types": [
+        {
+          "title": "편리한 수로 어림하고 답 고르기",
+          "originalTypeIds": [
+            "U4M-T02"
+          ],
+          "example": {
+            "prompt": "299×19를 300×20으로 어림하세요. 정확한 곱으로 5681과 56810 중 어느 수가 타당한가요?",
+            "answer": "약 6000; 5681",
+            "solution": "300×20=6000으로 어림한다.\n299×19=299×20−299=5980−299=5681이다.\n56810은 어림값보다 지나치게 크다.",
+            "misconception": "어림값 6000을 정확한 곱이라고 쓰거나 자리수 오류를 확인하지 않음.",
+            "authorship": "original"
+          },
+          "arithmeticChecks": [
+            {
+              "expression": "300*20",
+              "expected": "6000",
+              "actual": "6000",
+              "passed": true
+            },
+            {
+              "expression": "299*19",
+              "expected": "5681",
+              "actual": "5681",
+              "passed": true
+            }
+          ],
+          "id": "G4-M-SD02-T01",
+          "parentId": "G4-M-SD02",
+          "kind": "problem-type",
+          "sourceIds": [
+            "S4",
+            "S2"
+          ],
+          "evidenceStatus": "proposed-original",
+          "standardIds": [
+            "4수01-04",
+            "4수01-08"
+          ],
+          "reusedCoreTypeIds": [
+            "M-T09"
+          ],
+          "originalSourceRefs": [
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "U4M-T02",
+              "sourceIds": [
+                "S4"
+              ]
+            }
+          ],
+          "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+          "verification": {
+            "arithmetic": "passed",
+            "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+            "reviewType": "author-review-not-independent-expert-review"
+          }
+        },
+        {
+          "title": "잘못 정렬된 부분곱 바로잡기",
+          "originalTypeIds": [
+            "U4M-T01",
+            "U4M-T02"
+          ],
+          "example": {
+            "prompt": "152×23을 456+304=760으로 계산했습니다. 어느 부분이 잘못되었고, 바른 답은 무엇인가요?",
+            "answer": "304를 3040으로 고쳐야 하며, 바른 답은 3496이다.",
+            "solution": "456은 152×3으로 맞다.\n23의 2는 20이므로 둘째 부분곱은 152×20=3040이다.\n456+3040=3496이다.",
+            "misconception": "십의 자리 부분곱을 일의 자리부터 더함.",
+            "authorship": "original"
+          },
+          "arithmeticChecks": [
+            {
+              "expression": "152*23",
+              "expected": "3496",
+              "actual": "3496",
+              "passed": true
+            },
+            {
+              "expression": "456+304",
+              "expected": "760",
+              "actual": "760",
+              "passed": true
+            },
+            {
+              "expression": "456+3040",
+              "expected": "3496",
+              "actual": "3496",
+              "passed": true
+            }
+          ],
+          "id": "G4-M-SD02-T02",
+          "parentId": "G4-M-SD02",
+          "kind": "problem-type",
+          "sourceIds": [
+            "S4",
+            "S2"
+          ],
+          "evidenceStatus": "proposed-original",
+          "standardIds": [
+            "4수01-04",
+            "4수01-08"
+          ],
+          "reusedCoreTypeIds": [
+            "M-T02",
+            "M-T05",
+            "M-T09"
+          ],
+          "originalSourceRefs": [
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "U4M-T01",
+              "sourceIds": [
+                "S4"
+              ]
+            },
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "U4M-T02",
+              "sourceIds": [
+                "S4"
+              ]
+            }
+          ],
+          "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+          "verification": {
+            "arithmetic": "passed",
+            "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+            "reviewType": "author-review-not-independent-expert-review"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G4-M-SD03",
+      "parentContentId": "G4-M",
+      "kind": "detail-unit",
+      "title": "큰 묶음과 배 관계에 곱셈 활용하기",
+      "officialGradeBand": "3~4",
+      "observedPlacement": "4-1",
+      "placementStatus": "verified-official-example-not-national-mandate",
+      "connectionRole": "core-related",
+      "standardIds": [
+        "4수01-04"
+      ],
+      "sourceIds": [
+        "S4",
+        "S2"
+      ],
+      "evidenceStatus": "proposed-original",
+      "types": [
+        {
+          "title": "같은 묶음·배 관계를 곱셈으로 모델링하기",
+          "originalTypeIds": [
+            "U4M-T01"
+          ],
+          "example": {
+            "prompt": "상자 한 개에 색종이가 125장씩 들어 있습니다. 16상자의 색종이는 모두 몇 장인가요?",
+            "answer": "2000장",
+            "solution": "125장씩 16묶음이므로 125×16을 계산한다.\n125×10=1250, 125×6=750이다.\n1250+750=2000장이 있다.",
+            "misconception": "한 상자의 양과 상자 수를 더해 141장으로 답함.",
+            "authorship": "original"
+          },
+          "arithmeticChecks": [
+            {
+              "expression": "125*16",
+              "expected": "2000",
+              "actual": "2000",
+              "passed": true
+            }
+          ],
+          "id": "G4-M-SD03-T01",
+          "parentId": "G4-M-SD03",
+          "kind": "problem-type",
+          "sourceIds": [
+            "S4",
+            "S2"
+          ],
+          "evidenceStatus": "proposed-original",
+          "standardIds": [
+            "4수01-04"
+          ],
+          "reusedCoreTypeIds": [
+            "M-T02",
+            "M-T05"
+          ],
+          "originalSourceRefs": [
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "U4M-T01",
+              "sourceIds": [
+                "S4"
+              ]
+            }
+          ],
+          "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+          "variants": [
+            {
+              "title": "몇 배인 양을 곱셈식으로 나타내기",
+              "originalTypeIds": [
+                "U4M-T01"
+              ],
+              "id": "G4-M-SD03-T02",
+              "parentId": "G4-M-SD03-T01",
+              "kind": "problem-variant",
+              "sourceIds": [
+                "S4",
+                "S2"
+              ],
+              "evidenceStatus": "proposed-original",
+              "standardIds": [
+                "4수01-04"
+              ],
+              "reusedCoreTypeIds": [
+                "M-T02",
+                "M-T05"
+              ],
+              "originalSourceRefs": [
+                {
+                  "file": "upper_problem_types.json",
+                  "typeId": "U4M-T01",
+                  "sourceIds": [
+                    "S4"
+                  ]
+                }
+              ],
+              "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+              "variantReason": "같은 핵심 인지 과제에서 입력 수·조건·표현 방식이 달라지는 변형",
+              "verification": {
+                "arithmetic": "passed",
+                "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+                "reviewType": "author-review-not-independent-expert-review"
+              },
+              "prompt": "짧은 길은 148m이고 긴 길은 짧은 길의 12배입니다. 긴 길은 몇 m인가요?",
+              "answer": "1776m",
+              "solution": "148m의 12배는 148×12이다.\n148×10+148×2=1480+296=1776이다.",
+              "misconception": "12배를 12m 더하는 것으로 해석함.",
+              "authorship": "original",
+              "numericChecks": [
+                {
+                  "expression": "148*12",
+                  "expected": "1776",
+                  "actual": "1776",
+                  "passed": true
+                }
+              ]
+            }
+          ],
+          "verification": {
+            "arithmetic": "passed",
+            "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+            "reviewType": "author-review-not-independent-expert-review"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G4-D-SD01",
+      "parentContentId": "G4-D",
+      "kind": "detail-unit",
+      "title": "두 자리 수로 나눌 때 몫 찾기",
+      "officialGradeBand": "3~4",
+      "observedPlacement": "4-1",
+      "placementStatus": "verified-official-example-not-national-mandate",
+      "connectionRole": "core-related",
+      "standardIds": [
+        "4수01-07"
+      ],
+      "sourceIds": [
+        "S4",
+        "S2"
+      ],
+      "evidenceStatus": "proposed-original",
+      "types": [
+        {
+          "title": "어림한 몫을 곱셈과 나머지 조건으로 조정하기",
+          "originalTypeIds": [
+            "U4D-T01"
+          ],
+          "example": {
+            "prompt": "203÷26에서 몫을 8로 어림했습니다. 몫과 나머지를 바르게 구하세요.",
+            "answer": "몫 7, 나머지 21",
+            "solution": "26×8=208로 203보다 크므로 8은 쓸 수 없다.\n26×7=182이므로 203−182=21이다.\n21은 26보다 작으므로 몫 7, 나머지 21이다.",
+            "misconception": "어림한 몫을 곱셈으로 확인하지 않고 확정함.",
+            "authorship": "original"
+          },
+          "arithmeticChecks": [
+            {
+              "expression": "26*8",
+              "expected": "208",
+              "actual": "208",
+              "passed": true
+            },
+            {
+              "expression": "203//26",
+              "expected": "7",
+              "actual": "7",
+              "passed": true
+            },
+            {
+              "expression": "203%26",
+              "expected": "21",
+              "actual": "21",
+              "passed": true
+            }
+          ],
+          "id": "G4-D-SD01-T01",
+          "parentId": "G4-D-SD01",
+          "kind": "problem-type",
+          "sourceIds": [
+            "S4",
+            "S2"
+          ],
+          "evidenceStatus": "proposed-original",
+          "standardIds": [
+            "4수01-07"
+          ],
+          "reusedCoreTypeIds": [
+            "D-T07"
+          ],
+          "originalSourceRefs": [
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "U4D-T01",
+              "sourceIds": [
+                "S4"
+              ]
+            }
+          ],
+          "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+          "variants": [
+            {
+              "title": "몫을 작게 어림한 뒤 높이기",
+              "originalTypeIds": [
+                "U4D-T01"
+              ],
+              "id": "G4-D-SD01-T02",
+              "parentId": "G4-D-SD01-T01",
+              "kind": "problem-variant",
+              "sourceIds": [
+                "S4",
+                "S2"
+              ],
+              "evidenceStatus": "proposed-original",
+              "standardIds": [
+                "4수01-07"
+              ],
+              "reusedCoreTypeIds": [
+                "D-T07"
+              ],
+              "originalSourceRefs": [
+                {
+                  "file": "upper_problem_types.json",
+                  "typeId": "U4D-T01",
+                  "sourceIds": [
+                    "S4"
+                  ]
+                }
+              ],
+              "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+              "variantReason": "같은 핵심 인지 과제에서 입력 수·조건·표현 방식이 달라지는 변형",
+              "verification": {
+                "arithmetic": "passed",
+                "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+                "reviewType": "author-review-not-independent-expert-review"
+              },
+              "prompt": "175÷24의 몫을 6으로 정하면 31이 남습니다. 몫과 나머지를 바르게 구하세요.",
+              "answer": "몫 7, 나머지 7",
+              "solution": "24×6=144, 175−144=31이다.\n31에는 24가 한 번 더 들어가므로 몫을 7로 높인다.\n175−24×7=7이고 7<24이다.",
+              "misconception": "나머지가 나누는 수보다 커도 계산을 끝냄.",
+              "authorship": "original",
+              "numericChecks": [
+                {
+                  "expression": "175-24*6",
+                  "expected": "31",
+                  "actual": "31",
+                  "passed": true
+                },
+                {
+                  "expression": "175//24",
+                  "expected": "7",
+                  "actual": "7",
+                  "passed": true
+                },
+                {
+                  "expression": "175%24",
+                  "expected": "7",
+                  "actual": "7",
+                  "passed": true
+                }
+              ]
+            }
+          ],
+          "verification": {
+            "arithmetic": "passed",
+            "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+            "reviewType": "author-review-not-independent-expert-review"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G4-D-SD02",
+      "parentContentId": "G4-D",
+      "kind": "detail-unit",
+      "title": "두 자리 몫의 자릿값과 계산 검산하기",
+      "officialGradeBand": "3~4",
+      "observedPlacement": "4-1",
+      "placementStatus": "verified-official-example-not-national-mandate",
+      "connectionRole": "core-related",
+      "standardIds": [
+        "4수01-07"
+      ],
+      "sourceIds": [
+        "S4",
+        "S2"
+      ],
+      "evidenceStatus": "proposed-original",
+      "types": [
+        {
+          "title": "두 자리 몫을 세로셈으로 구하기",
+          "originalTypeIds": [
+            "U4D-T01"
+          ],
+          "example": {
+            "prompt": "864÷24를 계산하세요.",
+            "answer": "36",
+            "solution": "86에는 24가 3번 들어간다. 이때 몫의 3은 30을 뜻한다.\n864−24×30=144이고, 144÷24=6이다.\n30+6=36이다.",
+            "misconception": "몫의 첫 숫자 3을 일의 자리에 놓음.",
+            "authorship": "original"
+          },
+          "arithmeticChecks": [
+            {
+              "expression": "864//24",
+              "expected": "36",
+              "actual": "36",
+              "passed": true
+            },
+            {
+              "expression": "864-24*30",
+              "expected": "144",
+              "actual": "144",
+              "passed": true
+            }
+          ],
+          "id": "G4-D-SD02-T01",
+          "parentId": "G4-D-SD02",
+          "kind": "problem-type",
+          "sourceIds": [
+            "S4",
+            "S2"
+          ],
+          "evidenceStatus": "proposed-original",
+          "standardIds": [
+            "4수01-07"
+          ],
+          "reusedCoreTypeIds": [
+            "D-T07"
+          ],
+          "originalSourceRefs": [
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "U4D-T01",
+              "sourceIds": [
+                "S4"
+              ]
+            }
+          ],
+          "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+          "variants": [
+            {
+              "title": "몫의 끝에 0이 있는 계산 변형",
+              "originalTypeIds": [
+                "U4D-T01"
+              ],
+              "id": "G4-D-SD02-T01-V1",
+              "parentId": "G4-D-SD02-T01",
+              "kind": "problem-variant",
+              "sourceIds": [
+                "S4",
+                "S2"
+              ],
+              "evidenceStatus": "proposed-original",
+              "standardIds": [
+                "4수01-07"
+              ],
+              "reusedCoreTypeIds": [
+                "D-T07"
+              ],
+              "originalSourceRefs": [
+                {
+                  "file": "upper_problem_types.json",
+                  "typeId": "U4D-T01",
+                  "sourceIds": [
+                    "S4"
+                  ]
+                }
+              ],
+              "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+              "variantReason": "새 인지유형이 아니라 같은 계산 구조의 수 조건 변형",
+              "verification": {
+                "arithmetic": "passed",
+                "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+                "reviewType": "author-review-not-independent-expert-review"
+              },
+              "prompt": "840÷21을 계산하세요.",
+              "answer": "40",
+              "solution": "21×4=84이므로 21×40=840이다.\n따라서 몫은 40이다.",
+              "misconception": "몫의 끝 0을 빠뜨려 4로 답함.",
+              "authorship": "original",
+              "numericChecks": [
+                {
+                  "expression": "840//21",
+                  "expected": "40",
+                  "actual": "40",
+                  "passed": true
+                }
+              ]
+            }
+          ],
+          "verification": {
+            "arithmetic": "passed",
+            "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+            "reviewType": "author-review-not-independent-expert-review"
+          }
+        },
+        {
+          "title": "검산 등식과 나머지 조건을 함께 확인하기",
+          "originalTypeIds": [
+            "U4D-T02"
+          ],
+          "example": {
+            "prompt": "382÷17=21…25는 17×21+25=382를 만족합니다. 이 답이 맞는지 판단하고 고치세요.",
+            "answer": "틀리다. 몫 22, 나머지 8",
+            "solution": "25는 17보다 크므로 나머지로 쓸 수 없다.\n25에서 17을 한 번 더 나누면 8이 남는다.\n몫은 22이고 17×22+8=382, 8<17이다.",
+            "misconception": "검산 등식만 맞으면 나눗셈의 답도 맞다고 생각함.",
+            "authorship": "original"
+          },
+          "arithmeticChecks": [
+            {
+              "expression": "17*21+25",
+              "expected": "382",
+              "actual": "382",
+              "passed": true
+            },
+            {
+              "expression": "382//17",
+              "expected": "22",
+              "actual": "22",
+              "passed": true
+            },
+            {
+              "expression": "382%17",
+              "expected": "8",
+              "actual": "8",
+              "passed": true
+            }
+          ],
+          "id": "G4-D-SD02-T02",
+          "parentId": "G4-D-SD02",
+          "kind": "problem-type",
+          "sourceIds": [
+            "S4",
+            "S2"
+          ],
+          "evidenceStatus": "proposed-original",
+          "standardIds": [
+            "4수01-07"
+          ],
+          "reusedCoreTypeIds": [
+            "D-T05",
+            "D-T06"
+          ],
+          "originalSourceRefs": [
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "U4D-T02",
+              "sourceIds": [
+                "S4"
+              ]
+            }
+          ],
+          "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+          "verification": {
+            "arithmetic": "passed",
+            "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+            "reviewType": "author-review-not-independent-expert-review"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G4-D-SD03",
+      "parentContentId": "G4-D",
+      "kind": "detail-unit",
+      "title": "문장제에서 몫과 나머지 해석하기",
+      "officialGradeBand": "3~4",
+      "observedPlacement": "4-1",
+      "placementStatus": "verified-official-example-not-national-mandate",
+      "connectionRole": "core-related",
+      "standardIds": [
+        "4수01-07"
+      ],
+      "sourceIds": [
+        "S4",
+        "S2"
+      ],
+      "evidenceStatus": "proposed-original",
+      "types": [
+        {
+          "title": "완성되는 묶음의 수 구하기",
+          "originalTypeIds": [
+            "U4D-T02"
+          ],
+          "example": {
+            "prompt": "구슬 278개를 한 봉지에 24개씩 넣습니다. 24개가 모두 들어 있는 봉지는 몇 개 만들고, 구슬은 몇 개 남나요?",
+            "answer": "11봉지, 14개 남음",
+            "solution": "278÷24=11…14이다.\n완성된 봉지는 11개이고, 남은 14개로는 24개짜리 한 봉지를 만들 수 없다.",
+            "misconception": "나머지가 있다는 이유로 완성 봉지 수에 1을 더함.",
+            "authorship": "original"
+          },
+          "arithmeticChecks": [
+            {
+              "expression": "278//24",
+              "expected": "11",
+              "actual": "11",
+              "passed": true
+            },
+            {
+              "expression": "278%24",
+              "expected": "14",
+              "actual": "14",
+              "passed": true
+            }
+          ],
+          "id": "G4-D-SD03-T01",
+          "parentId": "G4-D-SD03",
+          "kind": "problem-type",
+          "sourceIds": [
+            "S4",
+            "S2"
+          ],
+          "evidenceStatus": "proposed-original",
+          "standardIds": [
+            "4수01-07"
+          ],
+          "reusedCoreTypeIds": [
+            "D-T05",
+            "D-T06"
+          ],
+          "originalSourceRefs": [
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "U4D-T02",
+              "sourceIds": [
+                "S4"
+              ]
+            }
+          ],
+          "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+          "verification": {
+            "arithmetic": "passed",
+            "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+            "reviewType": "author-review-not-independent-expert-review"
+          }
+        },
+        {
+          "title": "남는 사람까지 수용할 묶음 수 구하기",
+          "originalTypeIds": [
+            "U4D-T02"
+          ],
+          "example": {
+            "prompt": "학생 278명이 한 대에 24명씩 탈 수 있는 차를 탑니다. 모두 타려면 차가 최소 몇 대 필요한가요?",
+            "answer": "12대",
+            "solution": "278÷24=11…14이다.\n11대에 264명이 타고 14명이 남으므로 차 1대가 더 필요하다.\n필요한 차는 12대이다. 나눗셈의 몫 자체는 11이다.",
+            "misconception": "필요한 차 수와 정수 나눗셈의 몫을 혼동함.",
+            "authorship": "original"
+          },
+          "arithmeticChecks": [
+            {
+              "expression": "278//24+1",
+              "expected": "12",
+              "actual": "12",
+              "passed": true
+            },
+            {
+              "expression": "11*24",
+              "expected": "264",
+              "actual": "264",
+              "passed": true
+            }
+          ],
+          "id": "G4-D-SD03-T02",
+          "parentId": "G4-D-SD03",
+          "kind": "problem-type",
+          "sourceIds": [
+            "S4",
+            "S2"
+          ],
+          "evidenceStatus": "proposed-original",
+          "standardIds": [
+            "4수01-07"
+          ],
+          "reusedCoreTypeIds": [
+            "D-T05",
+            "D-T06"
+          ],
+          "originalSourceRefs": [
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "U4D-T02",
+              "sourceIds": [
+                "S4"
+              ]
+            }
+          ],
+          "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+          "verification": {
+            "arithmetic": "passed",
+            "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+            "reviewType": "author-review-not-independent-expert-review"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G5-FM-SD01",
+      "parentContentId": "G5-FM",
+      "kind": "detail-unit",
+      "title": "약수와 배수의 뜻 구별하기",
+      "officialGradeBand": "5~6",
+      "observedPlacement": "5-1",
+      "placementStatus": "verified-official-example-not-national-mandate",
+      "connectionRole": "core-related",
+      "standardIds": [
+        "6수01-04",
+        "6수01-05"
+      ],
+      "sourceIds": [
+        "S3",
+        "UP-P51"
+      ],
+      "evidenceStatus": "proposed-original",
+      "types": [
+        {
+          "title": "곱의 짝으로 약수 빠짐없이 찾기",
+          "originalTypeIds": [
+            "U5FM-T01"
+          ],
+          "example": {
+            "prompt": "28의 약수를 모두 구하세요.",
+            "answer": "1, 2, 4, 7, 14, 28",
+            "solution": "곱이 28인 짝은 1×28, 2×14, 4×7이다.\n각 짝의 수를 작은 순서로 쓰면 1, 2, 4, 7, 14, 28이다.",
+            "misconception": "약수의 짝 한쪽만 쓰거나 자기 자신을 빠뜨림.",
+            "authorship": "original"
+          },
+          "arithmeticChecks": [
+            {
+              "expression": "[n for n in range(1,29) if 28%n==0]",
+              "expected": "[1, 2, 4, 7, 14, 28]",
+              "actual": "[1, 2, 4, 7, 14, 28]",
+              "passed": true
+            }
+          ],
+          "id": "G5-FM-SD01-T01",
+          "parentId": "G5-FM-SD01",
+          "kind": "problem-type",
+          "sourceIds": [
+            "S3",
+            "UP-P51"
+          ],
+          "evidenceStatus": "proposed-original",
+          "standardIds": [
+            "6수01-04",
+            "6수01-05"
+          ],
+          "reusedCoreTypeIds": [],
+          "originalSourceRefs": [
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "U5FM-T01",
+              "sourceIds": [
+                "S3"
+              ]
+            }
+          ],
+          "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+          "verification": {
+            "arithmetic": "passed",
+            "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+            "reviewType": "author-review-not-independent-expert-review"
+          }
+        },
+        {
+          "title": "주어진 범위에서 배수 찾기",
+          "originalTypeIds": [
+            "U5FM-T02"
+          ],
+          "example": {
+            "prompt": "8의 배수 중 15보다 크고 40보다 작은 수를 모두 구하세요.",
+            "answer": "16, 24, 32",
+            "solution": "8의 배수는 8, 16, 24, 32, 40, …이다.\n15보다 크고 40보다 작은 수는 16, 24, 32이다.",
+            "misconception": "경계인 40을 포함하거나 배수를 약수와 혼동함.",
+            "authorship": "original"
+          },
+          "arithmeticChecks": [
+            {
+              "expression": "[n for n in range(16,40) if n%8==0]",
+              "expected": "[16, 24, 32]",
+              "actual": "[16, 24, 32]",
+              "passed": true
+            }
+          ],
+          "id": "G5-FM-SD01-T02",
+          "parentId": "G5-FM-SD01",
+          "kind": "problem-type",
+          "sourceIds": [
+            "S3",
+            "UP-P51"
+          ],
+          "evidenceStatus": "proposed-original",
+          "standardIds": [
+            "6수01-04",
+            "6수01-05"
+          ],
+          "reusedCoreTypeIds": [],
+          "originalSourceRefs": [
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "U5FM-T02",
+              "sourceIds": [
+                "S3"
+              ]
+            }
+          ],
+          "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+          "verification": {
+            "arithmetic": "passed",
+            "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+            "reviewType": "author-review-not-independent-expert-review"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G5-FM-SD02",
+      "parentContentId": "G5-FM",
+      "kind": "detail-unit",
+      "title": "공약수와 공배수 구하기",
+      "officialGradeBand": "5~6",
+      "observedPlacement": "5-1",
+      "placementStatus": "verified-official-example-not-national-mandate",
+      "connectionRole": "core-related",
+      "standardIds": [
+        "6수01-04",
+        "6수01-05"
+      ],
+      "sourceIds": [
+        "S3",
+        "UP-P51"
+      ],
+      "evidenceStatus": "proposed-original",
+      "types": [
+        {
+          "title": "공약수와 최대공약수 연결하기",
+          "originalTypeIds": [
+            "U5FM-T03"
+          ],
+          "example": {
+            "prompt": "18과 30의 공약수를 모두 쓰고 최대공약수를 구하세요.",
+            "answer": "공약수 1, 2, 3, 6; 최대공약수 6",
+            "solution": "18의 약수는 1, 2, 3, 6, 9, 18이다.\n30의 약수는 1, 2, 3, 5, 6, 10, 15, 30이다.\n공통인 1, 2, 3, 6 중 가장 큰 수는 6이다.",
+            "misconception": "어느 한 수의 약수이면 공약수라고 생각함.",
+            "authorship": "original"
+          },
+          "arithmeticChecks": [
+            {
+              "expression": "[n for n in range(1,19) if 18%n==0 and 30%n==0]",
+              "expected": "[1, 2, 3, 6]",
+              "actual": "[1, 2, 3, 6]",
+              "passed": true
+            }
+          ],
+          "id": "G5-FM-SD02-T01",
+          "parentId": "G5-FM-SD02",
+          "kind": "problem-type",
+          "sourceIds": [
+            "S3",
+            "UP-P51"
+          ],
+          "evidenceStatus": "proposed-original",
+          "standardIds": [
+            "6수01-04",
+            "6수01-05"
+          ],
+          "reusedCoreTypeIds": [],
+          "originalSourceRefs": [
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "U5FM-T03",
+              "sourceIds": [
+                "S3"
+              ]
+            }
+          ],
+          "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+          "verification": {
+            "arithmetic": "passed",
+            "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+            "reviewType": "author-review-not-independent-expert-review"
+          }
+        },
+        {
+          "title": "최소공배수와 다른 공배수 연결하기",
+          "originalTypeIds": [
+            "U5FM-T04"
+          ],
+          "example": {
+            "prompt": "6과 8의 최소공배수를 구하고, 60 이하인 두 수의 공배수를 모두 쓰세요.",
+            "answer": "최소공배수 24; 공배수 24, 48",
+            "solution": "6의 배수와 8의 배수 중 처음 겹치는 양의 수는 24이다.\n공배수는 24의 배수이므로 60 이하에서는 24, 48이다.",
+            "misconception": "최소공배수를 항상 두 수의 곱 48로 정함.",
+            "authorship": "original"
+          },
+          "arithmeticChecks": [
+            {
+              "expression": "[n for n in range(1,61) if n%6==0 and n%8==0]",
+              "expected": "[24, 48]",
+              "actual": "[24, 48]",
+              "passed": true
+            }
+          ],
+          "id": "G5-FM-SD02-T02",
+          "parentId": "G5-FM-SD02",
+          "kind": "problem-type",
+          "sourceIds": [
+            "S3",
+            "UP-P51"
+          ],
+          "evidenceStatus": "proposed-original",
+          "standardIds": [
+            "6수01-04",
+            "6수01-05"
+          ],
+          "reusedCoreTypeIds": [],
+          "originalSourceRefs": [
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "U5FM-T04",
+              "sourceIds": [
+                "S3"
+              ]
+            }
+          ],
+          "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+          "verification": {
+            "arithmetic": "passed",
+            "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+            "reviewType": "author-review-not-independent-expert-review"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G5-FM-SD03",
+      "parentContentId": "G5-FM",
+      "kind": "detail-unit",
+      "title": "약수와 배수로 같은 묶음 만들기",
+      "officialGradeBand": "5~6",
+      "observedPlacement": "5-1",
+      "placementStatus": "verified-official-example-not-national-mandate",
+      "connectionRole": "core-related",
+      "standardIds": [
+        "6수01-04",
+        "6수01-05"
+      ],
+      "sourceIds": [
+        "S3",
+        "UP-P51"
+      ],
+      "evidenceStatus": "proposed-original",
+      "types": [
+        {
+          "title": "남김없이 같은 구성으로 최대한 나누기",
+          "originalTypeIds": [
+            "U5FM-T03"
+          ],
+          "example": {
+            "prompt": "빨간 구슬 24개와 파란 구슬 36개를 남김없이 여러 봉지에 나눕니다. 모든 봉지의 빨간 구슬 수는 같고 파란 구슬 수도 같아야 합니다. 봉지를 최대 몇 개 만들 수 있고, 한 봉지에 각 색은 몇 개씩인가요?",
+            "answer": "12봉지; 빨간색 2개, 파란색 3개",
+            "solution": "봉지 수는 24와 36의 공약수여야 한다.\n최대공약수는 12이므로 최대 12봉지이다.\n24÷12=2, 36÷12=3이다.",
+            "misconception": "각 봉지에 들어갈 개수와 봉지 수를 바꾸어 해석함.",
+            "authorship": "original"
+          },
+          "arithmeticChecks": [
+            {
+              "expression": "max(n for n in range(1,25) if 24%n==0 and 36%n==0)",
+              "expected": "12",
+              "actual": "12",
+              "passed": true
+            },
+            {
+              "expression": "24//12",
+              "expected": "2",
+              "actual": "2",
+              "passed": true
+            },
+            {
+              "expression": "36//12",
+              "expected": "3",
+              "actual": "3",
+              "passed": true
+            }
+          ],
+          "id": "G5-FM-SD03-T01",
+          "parentId": "G5-FM-SD03",
+          "kind": "problem-type",
+          "sourceIds": [
+            "S3",
+            "UP-P51"
+          ],
+          "evidenceStatus": "proposed-original",
+          "standardIds": [
+            "6수01-04",
+            "6수01-05"
+          ],
+          "reusedCoreTypeIds": [],
+          "originalSourceRefs": [
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "U5FM-T03",
+              "sourceIds": [
+                "S3"
+              ]
+            }
+          ],
+          "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+          "verification": {
+            "arithmetic": "passed",
+            "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+            "reviewType": "author-review-not-independent-expert-review"
+          }
+        },
+        {
+          "title": "서로 다른 주기가 다시 만나는 때 찾기",
+          "originalTypeIds": [
+            "U5FM-T04"
+          ],
+          "example": {
+            "prompt": "전등 가는 6초마다, 전등 나는 9초마다 한 번씩 켜집니다. 지금 동시에 켜졌다면 다음으로 동시에 켜지는 것은 몇 초 뒤인가요?",
+            "answer": "18초 뒤",
+            "solution": "다음으로 겹치는 때는 6과 9의 공배수 중 가장 작은 양의 수이다.\n6의 배수 6, 12, 18과 9의 배수 9, 18에서 처음 겹치는 수는 18이다.",
+            "misconception": "지금인 0초를 다음 시각으로 답하거나 6+9로 계산함.",
+            "authorship": "original"
+          },
+          "arithmeticChecks": [
+            {
+              "expression": "min(n for n in range(1,55) if n%6==0 and n%9==0)",
+              "expected": "18",
+              "actual": "18",
+              "passed": true
+            }
+          ],
+          "id": "G5-FM-SD03-T02",
+          "parentId": "G5-FM-SD03",
+          "kind": "problem-type",
+          "sourceIds": [
+            "S3",
+            "UP-P51"
+          ],
+          "evidenceStatus": "proposed-original",
+          "standardIds": [
+            "6수01-04",
+            "6수01-05"
+          ],
+          "reusedCoreTypeIds": [],
+          "originalSourceRefs": [
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "U5FM-T04",
+              "sourceIds": [
+                "S3"
+              ]
+            }
+          ],
+          "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+          "verification": {
+            "arithmetic": "passed",
+            "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+            "reviewType": "author-review-not-independent-expert-review"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G5-FMULT-SD01",
+      "parentContentId": "G5-FMULT",
+      "kind": "detail-unit",
+      "title": "분수 곱셈을 양과 그림으로 해석하기",
+      "officialGradeBand": "5~6",
+      "observedPlacement": "5-2",
+      "placementStatus": "verified-official-example-not-national-mandate",
+      "connectionRole": "core-related",
+      "standardIds": [
+        "6수01-09"
+      ],
+      "sourceIds": [
+        "S3",
+        "UP-P52"
+      ],
+      "evidenceStatus": "proposed-original",
+      "types": [
+        {
+          "title": "자연수인 전체의 몇 분의 몇 구하기",
+          "originalTypeIds": [
+            "FM-03"
+          ],
+          "example": {
+            "prompt": "길이가 28m인 리본의 3/7을 사용했습니다. 사용한 리본은 몇 m인가요?",
+            "answer": "12m",
+            "solution": "28m를 7등분한 한 몫은 28÷7=4m이다.\n그중 3몫은 4×3=12m이다.\n식으로는 28×3/7=12이다.",
+            "misconception": "28÷3 또는 28÷(3/7)로 식을 세움.",
+            "authorship": "original"
+          },
+          "arithmeticChecks": [
+            {
+              "expression": "28*F(3,7)",
+              "expected": "12",
+              "actual": "12",
+              "passed": true
+            }
+          ],
+          "id": "G5-FMULT-SD01-T01",
+          "parentId": "G5-FMULT-SD01",
+          "kind": "problem-type",
+          "sourceIds": [
+            "S3",
+            "UP-P52"
+          ],
+          "evidenceStatus": "proposed-original",
+          "standardIds": [
+            "6수01-09"
+          ],
+          "reusedCoreTypeIds": [],
+          "originalSourceRefs": [
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "FM-03",
+              "sourceIds": [
+                "S3"
+              ]
+            }
+          ],
+          "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+          "verification": {
+            "arithmetic": "passed",
+            "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+            "reviewType": "author-review-not-independent-expert-review"
+          }
+        },
+        {
+          "title": "부분을 다시 나눈 양을 전체의 분수로 나타내기",
+          "originalTypeIds": [
+            "FM-01"
+          ],
+          "example": {
+            "prompt": "전체를 1로 하는 종이의 2/3을 칠하고, 칠한 부분의 3/4에 빗금을 그었습니다. 빗금 부분은 전체의 얼마인가요?",
+            "answer": "1/2",
+            "solution": "전체를 가로로 3등분, 세로로 4등분하면 같은 크기 12칸으로 볼 수 있다.\n빗금은 2×3=6칸이므로 전체의 6/12이다.\n2/3×3/4=1/2이다.",
+            "misconception": "두 번째 분수 3/4의 기준을 전체로 바꾸어 해석함.",
+            "authorship": "original"
+          },
+          "arithmeticChecks": [
+            {
+              "expression": "F(2,3)*F(3,4)",
+              "expected": "1/2",
+              "actual": "1/2",
+              "passed": true
+            }
+          ],
+          "id": "G5-FMULT-SD01-T02",
+          "parentId": "G5-FMULT-SD01",
+          "kind": "problem-type",
+          "sourceIds": [
+            "S3",
+            "UP-P52"
+          ],
+          "evidenceStatus": "proposed-original",
+          "standardIds": [
+            "6수01-09"
+          ],
+          "reusedCoreTypeIds": [],
+          "originalSourceRefs": [
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "FM-01",
+              "sourceIds": [
+                "S3"
+              ]
+            }
+          ],
+          "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+          "verification": {
+            "arithmetic": "passed",
+            "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+            "reviewType": "author-review-not-independent-expert-review"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G5-FMULT-SD02",
+      "parentContentId": "G5-FMULT",
+      "kind": "detail-unit",
+      "title": "분수의 곱 계산과 크기 판단하기",
+      "officialGradeBand": "5~6",
+      "observedPlacement": "5-2",
+      "placementStatus": "verified-official-example-not-national-mandate",
+      "connectionRole": "core-related",
+      "standardIds": [
+        "6수01-09"
+      ],
+      "sourceIds": [
+        "S3",
+        "UP-P52"
+      ],
+      "evidenceStatus": "proposed-original",
+      "types": [
+        {
+          "title": "분수의 곱 계산하기",
+          "originalTypeIds": [
+            "FM-02"
+          ],
+          "example": {
+            "prompt": "1과 2/3 × 9/10을 계산하세요.",
+            "answer": "1과 1/2 또는 3/2",
+            "solution": "1과 2/3은 5/3이다.\n5/3×9/10=45/30=3/2이다.\n3/2는 1과 1/2이다.",
+            "misconception": "대분수의 자연수 부분을 누락하거나 계산 전 잘못 약분함.",
+            "authorship": "original"
+          },
+          "arithmeticChecks": [
+            {
+              "expression": "F(5,3)*F(9,10)",
+              "expected": "3/2",
+              "actual": "3/2",
+              "passed": true
+            }
+          ],
+          "id": "G5-FMULT-SD02-T01",
+          "parentId": "G5-FMULT-SD02",
+          "kind": "problem-type",
+          "sourceIds": [
+            "S3",
+            "UP-P52"
+          ],
+          "evidenceStatus": "proposed-original",
+          "standardIds": [
+            "6수01-09"
+          ],
+          "reusedCoreTypeIds": [],
+          "originalSourceRefs": [
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "FM-02",
+              "sourceIds": [
+                "S3"
+              ]
+            }
+          ],
+          "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+          "variants": [
+            {
+              "title": "진분수끼리 곱하는 계산 변형",
+              "originalTypeIds": [
+                "FM-02"
+              ],
+              "id": "G5-FMULT-SD02-T01-V1",
+              "parentId": "G5-FMULT-SD02-T01",
+              "kind": "problem-variant",
+              "sourceIds": [
+                "S3",
+                "UP-P52"
+              ],
+              "evidenceStatus": "proposed-original",
+              "standardIds": [
+                "6수01-09"
+              ],
+              "reusedCoreTypeIds": [],
+              "originalSourceRefs": [
+                {
+                  "file": "upper_problem_types.json",
+                  "typeId": "FM-02",
+                  "sourceIds": [
+                    "S3"
+                  ]
+                }
+              ],
+              "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+              "variantReason": "새 인지유형이 아니라 같은 계산 구조의 수 조건 변형",
+              "verification": {
+                "arithmetic": "passed",
+                "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+                "reviewType": "author-review-not-independent-expert-review"
+              },
+              "prompt": "3/5×5/9를 계산하세요.",
+              "answer": "1/3",
+              "solution": "분자끼리, 분모끼리 곱하면 15/45이다.\n15/45를 약분하면 1/3이다.",
+              "misconception": "같은 분모를 만드는 통분이 곱셈에서도 필요하다고 생각함.",
+              "authorship": "original",
+              "numericChecks": [
+                {
+                  "expression": "F(3,5)*F(5,9)",
+                  "expected": "1/3",
+                  "actual": "1/3",
+                  "passed": true
+                }
+              ]
+            }
+          ],
+          "verification": {
+            "arithmetic": "passed",
+            "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+            "reviewType": "author-review-not-independent-expert-review"
+          }
+        },
+        {
+          "title": "1보다 작은 분수를 곱했을 때 크기 설명하기",
+          "originalTypeIds": [
+            "FM-04"
+          ],
+          "example": {
+            "prompt": "7/8×4/5는 7/8보다 큰가요, 작은가요? 계산하지 않고 먼저 설명하고, 계산으로 확인하세요.",
+            "answer": "작다; 곱은 7/10",
+            "solution": "7/8의 4/5만큼을 구하므로 7/8 전체보다 작다.\n계산하면 7/8×4/5=28/40=7/10이다.",
+            "misconception": "곱셈의 결과는 항상 커진다고 생각함.",
+            "authorship": "original"
+          },
+          "arithmeticChecks": [
+            {
+              "expression": "F(7,8)*F(4,5)",
+              "expected": "7/10",
+              "actual": "7/10",
+              "passed": true
+            },
+            {
+              "expression": "F(7,10)<F(7,8)",
+              "expected": "True",
+              "actual": "True",
+              "passed": true
+            }
+          ],
+          "id": "G5-FMULT-SD02-T02",
+          "parentId": "G5-FMULT-SD02",
+          "kind": "problem-type",
+          "sourceIds": [
+            "S3",
+            "UP-P52"
+          ],
+          "evidenceStatus": "proposed-original",
+          "standardIds": [
+            "6수01-09"
+          ],
+          "reusedCoreTypeIds": [],
+          "originalSourceRefs": [
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "FM-04",
+              "sourceIds": [
+                "S3"
+              ]
+            }
+          ],
+          "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+          "verification": {
+            "arithmetic": "passed",
+            "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+            "reviewType": "author-review-not-independent-expert-review"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G5-DMULT-SD01",
+      "parentContentId": "G5-DMULT",
+      "kind": "detail-unit",
+      "title": "소수 곱셈을 자릿값과 연결하기",
+      "officialGradeBand": "5~6",
+      "observedPlacement": "5-2",
+      "placementStatus": "verified-official-example-not-national-mandate",
+      "connectionRole": "core-related",
+      "standardIds": [
+        "6수01-13"
+      ],
+      "sourceIds": [
+        "S3",
+        "UP-P52"
+      ],
+      "evidenceStatus": "proposed-original",
+      "types": [
+        {
+          "title": "자연수의 곱으로 소수점 위치 설명하기",
+          "originalTypeIds": [
+            "DM-02"
+          ],
+          "example": {
+            "prompt": "36×24=864를 이용하여 3.6×0.24를 구하고 소수점 위치를 설명하세요.",
+            "answer": "0.864",
+            "solution": "3.6은 36의 1/10, 0.24는 24의 1/100이다.\n따라서 곱은 864의 1/1000이므로 0.864이다.",
+            "misconception": "두 인수 중 하나의 자릿값 변화만 반영함.",
+            "authorship": "original"
+          },
+          "arithmeticChecks": [
+            {
+              "expression": "D(\"3.6\")*D(\"0.24\")",
+              "expected": "0.864",
+              "actual": "0.864",
+              "passed": true
+            }
+          ],
+          "id": "G5-DMULT-SD01-T01",
+          "parentId": "G5-DMULT-SD01",
+          "kind": "problem-type",
+          "sourceIds": [
+            "S3",
+            "UP-P52"
+          ],
+          "evidenceStatus": "proposed-original",
+          "standardIds": [
+            "6수01-13"
+          ],
+          "reusedCoreTypeIds": [],
+          "originalSourceRefs": [
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "DM-02",
+              "sourceIds": [
+                "S3"
+              ]
+            }
+          ],
+          "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+          "verification": {
+            "arithmetic": "passed",
+            "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+            "reviewType": "author-review-not-independent-expert-review"
+          }
+        },
+        {
+          "title": "반복된 소수량의 전체 구하기",
+          "originalTypeIds": [
+            "DM-03"
+          ],
+          "example": {
+            "prompt": "한 병에 0.35L씩 든 주스 8병의 양은 모두 몇 L인가요?",
+            "answer": "2.8L",
+            "solution": "0.35L가 8개이므로 0.35×8을 계산한다.\n35×8=280이며 0.01L가 280개인 양은 2.80L=2.8L이다.",
+            "misconception": "소수점을 무시하여 280L로 답함.",
+            "authorship": "original"
+          },
+          "arithmeticChecks": [
+            {
+              "expression": "D(\"0.35\")*8",
+              "expected": "2.8",
+              "actual": "2.80",
+              "passed": true
+            }
+          ],
+          "id": "G5-DMULT-SD01-T02",
+          "parentId": "G5-DMULT-SD01",
+          "kind": "problem-type",
+          "sourceIds": [
+            "S3",
+            "UP-P52"
+          ],
+          "evidenceStatus": "proposed-original",
+          "standardIds": [
+            "6수01-13"
+          ],
+          "reusedCoreTypeIds": [],
+          "originalSourceRefs": [
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "DM-03",
+              "sourceIds": [
+                "S3"
+              ]
+            }
+          ],
+          "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+          "verification": {
+            "arithmetic": "passed",
+            "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+            "reviewType": "author-review-not-independent-expert-review"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G5-DMULT-SD02",
+      "parentContentId": "G5-DMULT",
+      "kind": "detail-unit",
+      "title": "소수끼리 곱하고 결과 점검하기",
+      "officialGradeBand": "5~6",
+      "observedPlacement": "5-2",
+      "placementStatus": "verified-official-example-not-national-mandate",
+      "connectionRole": "core-related",
+      "standardIds": [
+        "6수01-13"
+      ],
+      "sourceIds": [
+        "S3",
+        "UP-P52"
+      ],
+      "evidenceStatus": "proposed-original",
+      "types": [
+        {
+          "title": "0으로 시작하는 소수의 곱 계산하기",
+          "originalTypeIds": [
+            "DM-01"
+          ],
+          "example": {
+            "prompt": "0.48×0.25를 계산하세요.",
+            "answer": "0.12",
+            "solution": "48×25=1200이다.\n두 수가 각각 자연수의 1/100이므로 곱은 1200의 1/10000이다.\n0.1200=0.12이다.",
+            "misconception": "곱셈에서도 덧셈처럼 소수점만 맞추면 된다고 생각함.",
+            "authorship": "original"
+          },
+          "arithmeticChecks": [
+            {
+              "expression": "D(\"0.48\")*D(\"0.25\")",
+              "expected": "0.12",
+              "actual": "0.1200",
+              "passed": true
+            }
+          ],
+          "id": "G5-DMULT-SD02-T01",
+          "parentId": "G5-DMULT-SD02",
+          "kind": "problem-type",
+          "sourceIds": [
+            "S3",
+            "UP-P52"
+          ],
+          "evidenceStatus": "proposed-original",
+          "standardIds": [
+            "6수01-13"
+          ],
+          "reusedCoreTypeIds": [],
+          "originalSourceRefs": [
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "DM-01",
+              "sourceIds": [
+                "S3"
+              ]
+            }
+          ],
+          "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+          "variants": [
+            {
+              "title": "곱의 끝 0을 정리하는 계산 변형",
+              "originalTypeIds": [
+                "DM-01"
+              ],
+              "id": "G5-DMULT-SD02-T01-V1",
+              "parentId": "G5-DMULT-SD02-T01",
+              "kind": "problem-variant",
+              "sourceIds": [
+                "S3",
+                "UP-P52"
+              ],
+              "evidenceStatus": "proposed-original",
+              "standardIds": [
+                "6수01-13"
+              ],
+              "reusedCoreTypeIds": [],
+              "originalSourceRefs": [
+                {
+                  "file": "upper_problem_types.json",
+                  "typeId": "DM-01",
+                  "sourceIds": [
+                    "S3"
+                  ]
+                }
+              ],
+              "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+              "variantReason": "새 인지유형이 아니라 같은 계산 구조의 수 조건 변형",
+              "verification": {
+                "arithmetic": "passed",
+                "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+                "reviewType": "author-review-not-independent-expert-review"
+              },
+              "prompt": "1.25×1.6을 계산하세요.",
+              "answer": "2",
+              "solution": "125×16=2000이다.\n두 인수의 소수 자리는 모두 3자리이므로 곱은 2.000이다.\n2.000과 2는 같은 수이다.",
+              "misconception": "소수의 끝 0을 지우면 크기가 달라진다고 생각함.",
+              "authorship": "original",
+              "numericChecks": [
+                {
+                  "expression": "D(\"1.25\")*D(\"1.6\")",
+                  "expected": "2",
+                  "actual": "2.000",
+                  "passed": true
+                }
+              ]
+            }
+          ],
+          "verification": {
+            "arithmetic": "passed",
+            "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+            "reviewType": "author-review-not-independent-expert-review"
+          }
+        },
+        {
+          "title": "곱의 크기와 소수점 오류 함께 점검하기",
+          "originalTypeIds": [
+            "DM-01",
+            "DM-02"
+          ],
+          "example": {
+            "prompt": "2.5×0.4의 답을 10이라고 썼습니다. 곱의 크기를 이용해 오류를 설명하고 바르게 계산하세요.",
+            "answer": "1; 0.4는 1보다 작으므로 곱은 2.5보다 작아야 한다.",
+            "solution": "2.5의 0.4배는 2.5보다 작다.\n25×4=100에서 소수 자리가 모두 2자리이므로 1.00=1이다.",
+            "misconception": "소수점 위치를 빠뜨리고 1보다 작은 수를 곱한 크기를 확인하지 않음.",
+            "authorship": "original"
+          },
+          "arithmeticChecks": [
+            {
+              "expression": "D(\"2.5\")*D(\"0.4\")",
+              "expected": "1",
+              "actual": "1.00",
+              "passed": true
+            }
+          ],
+          "id": "G5-DMULT-SD02-T02",
+          "parentId": "G5-DMULT-SD02",
+          "kind": "problem-type",
+          "sourceIds": [
+            "S3",
+            "UP-P52"
+          ],
+          "evidenceStatus": "proposed-original",
+          "standardIds": [
+            "6수01-13"
+          ],
+          "reusedCoreTypeIds": [],
+          "originalSourceRefs": [
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "DM-01",
+              "sourceIds": [
+                "S3"
+              ]
+            },
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "DM-02",
+              "sourceIds": [
+                "S3"
+              ]
+            }
+          ],
+          "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+          "verification": {
+            "arithmetic": "passed",
+            "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+            "reviewType": "author-review-not-independent-expert-review"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G6-FDIVN-SD01",
+      "parentContentId": "G6-FDIVN",
+      "kind": "detail-unit",
+      "title": "자연수 나눗셈의 몫을 분수로 표현하기",
+      "officialGradeBand": "5~6",
+      "observedPlacement": "6-1",
+      "placementStatus": "verified-official-example-not-national-mandate",
+      "connectionRole": "core-related",
+      "standardIds": [
+        "6수01-10",
+        "6수01-11"
+      ],
+      "sourceIds": [
+        "S3",
+        "UP-P61"
+      ],
+      "evidenceStatus": "proposed-original",
+      "types": [
+        {
+          "title": "자연수 나눗셈의 몫을 분수로 해석하기",
+          "originalTypeIds": [
+            "FN-01"
+          ],
+          "example": {
+            "prompt": "물 3L를 5개의 병에 똑같이 나누어 담습니다. 한 병에 몇 L씩 담나요?",
+            "answer": "3/5L",
+            "solution": "3L를 5등분한 한 몫은 3÷5이다.\n1L씩을 각각 5등분하면 한 병에는 1/5L가 3개씩 들어간다.\n따라서 3/5L이다.",
+            "misconception": "나누어지는 수와 나누는 수를 바꾸어 5/3L로 씀.",
+            "authorship": "original"
+          },
+          "arithmeticChecks": [
+            {
+              "expression": "F(3,1)/5",
+              "expected": "3/5",
+              "actual": "3/5",
+              "passed": true
+            }
+          ],
+          "id": "G6-FDIVN-SD01-T01",
+          "parentId": "G6-FDIVN-SD01",
+          "kind": "problem-type",
+          "sourceIds": [
+            "S3",
+            "UP-P61"
+          ],
+          "evidenceStatus": "proposed-original",
+          "standardIds": [
+            "6수01-10",
+            "6수01-11"
+          ],
+          "reusedCoreTypeIds": [],
+          "originalSourceRefs": [
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "FN-01",
+              "sourceIds": [
+                "S3"
+              ]
+            }
+          ],
+          "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+          "variants": [
+            {
+              "title": "1보다 큰 등분 몫을 가분수·대분수로 나타내기",
+              "originalTypeIds": [
+                "FN-01"
+              ],
+              "id": "G6-FDIVN-SD01-T02",
+              "parentId": "G6-FDIVN-SD01-T01",
+              "kind": "problem-variant",
+              "sourceIds": [
+                "S3",
+                "UP-P61"
+              ],
+              "evidenceStatus": "proposed-original",
+              "standardIds": [
+                "6수01-10",
+                "6수01-11"
+              ],
+              "reusedCoreTypeIds": [],
+              "originalSourceRefs": [
+                {
+                  "file": "upper_problem_types.json",
+                  "typeId": "FN-01",
+                  "sourceIds": [
+                    "S3"
+                  ]
+                }
+              ],
+              "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+              "variantReason": "같은 핵심 인지 과제에서 입력 수·조건·표현 방식이 달라지는 변형",
+              "verification": {
+                "arithmetic": "passed",
+                "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+                "reviewType": "author-review-not-independent-expert-review"
+              },
+              "prompt": "밀가루 7kg을 4개의 통에 똑같이 나눕니다. 한 통의 양을 가분수와 대분수로 나타내세요.",
+              "answer": "7/4kg, 1과 3/4kg",
+              "solution": "7÷4=7/4이다.\n7/4은 4/4과 3/4이므로 1과 3/4이다.",
+              "misconception": "몫 1과 나머지 3에서 멈추고 남는 양을 나누지 않음.",
+              "authorship": "original",
+              "numericChecks": [
+                {
+                  "expression": "F(7,1)/4",
+                  "expected": "7/4",
+                  "actual": "7/4",
+                  "passed": true
+                },
+                {
+                  "expression": "F(7,4)==1+F(3,4)",
+                  "expected": "True",
+                  "actual": "True",
+                  "passed": true
+                }
+              ]
+            }
+          ],
+          "verification": {
+            "arithmetic": "passed",
+            "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+            "reviewType": "author-review-not-independent-expert-review"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G6-FDIVN-SD02",
+      "parentContentId": "G6-FDIVN",
+      "kind": "detail-unit",
+      "title": "분수인 양을 자연수로 등분하기",
+      "officialGradeBand": "5~6",
+      "observedPlacement": "6-1",
+      "placementStatus": "verified-official-example-not-national-mandate",
+      "connectionRole": "core-related",
+      "standardIds": [
+        "6수01-10",
+        "6수01-11"
+      ],
+      "sourceIds": [
+        "S3",
+        "UP-P61"
+      ],
+      "evidenceStatus": "proposed-original",
+      "types": [
+        {
+          "title": "분자가 나누어떨어지는 분수÷자연수",
+          "originalTypeIds": [
+            "FN-02"
+          ],
+          "example": {
+            "prompt": "2와 2/5 ÷ 3을 계산하세요.",
+            "answer": "4/5",
+            "solution": "2와 2/5를 12/5로 바꾼다.\n1/5이 12개인 양을 3등분하면 한 몫은 1/5이 4개이다.\n따라서 12/5÷3=4/5이다.",
+            "misconception": "분자와 분모를 모두 3으로 나누어 원래 분수와 같은 양을 만듦.",
+            "authorship": "original"
+          },
+          "arithmeticChecks": [
+            {
+              "expression": "F(12,5)/3",
+              "expected": "4/5",
+              "actual": "4/5",
+              "passed": true
+            }
+          ],
+          "id": "G6-FDIVN-SD02-T01",
+          "parentId": "G6-FDIVN-SD02",
+          "kind": "problem-type",
+          "sourceIds": [
+            "S3",
+            "UP-P61"
+          ],
+          "evidenceStatus": "proposed-original",
+          "standardIds": [
+            "6수01-10",
+            "6수01-11"
+          ],
+          "reusedCoreTypeIds": [],
+          "originalSourceRefs": [
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "FN-02",
+              "sourceIds": [
+                "S3"
+              ]
+            }
+          ],
+          "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+          "variants": [
+            {
+              "title": "진분수를 자연수로 나누는 계산 변형",
+              "originalTypeIds": [
+                "FN-02"
+              ],
+              "id": "G6-FDIVN-SD02-T01-V1",
+              "parentId": "G6-FDIVN-SD02-T01",
+              "kind": "problem-variant",
+              "sourceIds": [
+                "S3",
+                "UP-P61"
+              ],
+              "evidenceStatus": "proposed-original",
+              "standardIds": [
+                "6수01-10",
+                "6수01-11"
+              ],
+              "reusedCoreTypeIds": [],
+              "originalSourceRefs": [
+                {
+                  "file": "upper_problem_types.json",
+                  "typeId": "FN-02",
+                  "sourceIds": [
+                    "S3"
+                  ]
+                }
+              ],
+              "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+              "variantReason": "새 인지유형이 아니라 같은 계산 구조의 수 조건 변형",
+              "verification": {
+                "arithmetic": "passed",
+                "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+                "reviewType": "author-review-not-independent-expert-review"
+              },
+              "prompt": "9/10÷3을 계산하세요.",
+              "answer": "3/10",
+              "solution": "1/10이 9개인 양을 3등분한다.\n한 몫에는 1/10이 3개이므로 3/10이다.",
+              "misconception": "분자와 분모를 모두 3으로 나눔.",
+              "authorship": "original",
+              "numericChecks": [
+                {
+                  "expression": "F(9,10)/3",
+                  "expected": "3/10",
+                  "actual": "3/10",
+                  "passed": true
+                }
+              ]
+            }
+          ],
+          "verification": {
+            "arithmetic": "passed",
+            "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+            "reviewType": "author-review-not-independent-expert-review"
+          }
+        },
+        {
+          "title": "분자가 나누어떨어지지 않는 등분과 오류 수정",
+          "originalTypeIds": [
+            "FN-03"
+          ],
+          "example": {
+            "prompt": "5/6÷4를 20/6이라고 계산했습니다. 식을 고치고 등분의 뜻으로 설명하세요.",
+            "answer": "5/24",
+            "solution": "5/6을 4등분하므로 한 몫은 5/6의 1/4이다.\n5/6×1/4=5/24이다.\n4로 나누면 양이 작아져야 하므로 20/6은 타당하지 않다.",
+            "misconception": "나누는 자연수를 분자에 곱함.",
+            "authorship": "original"
+          },
+          "arithmeticChecks": [
+            {
+              "expression": "F(5,6)/4",
+              "expected": "5/24",
+              "actual": "5/24",
+              "passed": true
+            }
+          ],
+          "id": "G6-FDIVN-SD02-T02",
+          "parentId": "G6-FDIVN-SD02",
+          "kind": "problem-type",
+          "sourceIds": [
+            "S3",
+            "UP-P61"
+          ],
+          "evidenceStatus": "proposed-original",
+          "standardIds": [
+            "6수01-10",
+            "6수01-11"
+          ],
+          "reusedCoreTypeIds": [],
+          "originalSourceRefs": [
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "FN-03",
+              "sourceIds": [
+                "S3"
+              ]
+            }
+          ],
+          "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+          "verification": {
+            "arithmetic": "passed",
+            "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+            "reviewType": "author-review-not-independent-expert-review"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G6-DDIVN-SD01",
+      "parentContentId": "G6-DDIVN",
+      "kind": "detail-unit",
+      "title": "소수 나눗셈의 자리별 몫 구하기",
+      "officialGradeBand": "5~6",
+      "observedPlacement": "6-1",
+      "placementStatus": "verified-official-example-not-national-mandate",
+      "connectionRole": "core-related",
+      "standardIds": [
+        "6수01-14",
+        "6수01-15"
+      ],
+      "sourceIds": [
+        "S3",
+        "UP-P61"
+      ],
+      "evidenceStatus": "proposed-original",
+      "types": [
+        {
+          "title": "소수 자릿값을 유지하며 자연수로 나누기",
+          "originalTypeIds": [
+            "DN-01"
+          ],
+          "example": {
+            "prompt": "9.6÷4를 계산하세요.",
+            "answer": "2.4",
+            "solution": "9.6은 0.1이 96개인 수이다.\n96개를 4등분하면 24개이므로 몫은 2.4이다.",
+            "misconception": "96÷4=24에서 소수 단위를 반영하지 않음.",
+            "authorship": "original"
+          },
+          "arithmeticChecks": [
+            {
+              "expression": "D(\"9.6\")/4",
+              "expected": "2.4",
+              "actual": "2.4",
+              "passed": true
+            }
+          ],
+          "id": "G6-DDIVN-SD01-T01",
+          "parentId": "G6-DDIVN-SD01",
+          "kind": "problem-type",
+          "sourceIds": [
+            "S3",
+            "UP-P61"
+          ],
+          "evidenceStatus": "proposed-original",
+          "standardIds": [
+            "6수01-14",
+            "6수01-15"
+          ],
+          "reusedCoreTypeIds": [],
+          "originalSourceRefs": [
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "DN-01",
+              "sourceIds": [
+                "S3"
+              ]
+            }
+          ],
+          "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+          "variants": [
+            {
+              "title": "1보다 작은 소수를 자연수로 나누는 변형",
+              "originalTypeIds": [
+                "DN-01"
+              ],
+              "id": "G6-DDIVN-SD01-T01-V1",
+              "parentId": "G6-DDIVN-SD01-T01",
+              "kind": "problem-variant",
+              "sourceIds": [
+                "S3",
+                "UP-P61"
+              ],
+              "evidenceStatus": "proposed-original",
+              "standardIds": [
+                "6수01-14",
+                "6수01-15"
+              ],
+              "reusedCoreTypeIds": [],
+              "originalSourceRefs": [
+                {
+                  "file": "upper_problem_types.json",
+                  "typeId": "DN-01",
+                  "sourceIds": [
+                    "S3"
+                  ]
+                }
+              ],
+              "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+              "variantReason": "새 인지유형이 아니라 같은 계산 구조의 수 조건 변형",
+              "verification": {
+                "arithmetic": "passed",
+                "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+                "reviewType": "author-review-not-independent-expert-review"
+              },
+              "prompt": "0.84÷7을 계산하세요.",
+              "answer": "0.12",
+              "solution": "0.84는 0.01이 84개인 수이다.\n84개를 7등분하면 12개이므로 0.12이다.",
+              "misconception": "84÷7=12에서 소수 단위를 반영하지 않음.",
+              "authorship": "original",
+              "numericChecks": [
+                {
+                  "expression": "D(\"0.84\")/7",
+                  "expected": "0.12",
+                  "actual": "0.12",
+                  "passed": true
+                }
+              ]
+            }
+          ],
+          "verification": {
+            "arithmetic": "passed",
+            "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+            "reviewType": "author-review-not-independent-expert-review"
+          }
+        },
+        {
+          "title": "몫 가운데 0을 넣고 곱셈으로 검산하기",
+          "originalTypeIds": [
+            "DN-03"
+          ],
+          "example": {
+            "prompt": "8.24÷8=1.3이라고 쓴 답을 고치고 검산하세요.",
+            "answer": "1.03; 1.03×8=8.24",
+            "solution": "8을 나누면 1이고, 0.24를 다시 8로 나누면 0.03이다.\n소수 첫째 자리에는 0을 써야 하므로 몫은 1.03이다.\n1.03×8=8.24로 확인한다.",
+            "misconception": "몫의 소수 첫째 자리 0을 생략하여 1.3으로 씀.",
+            "authorship": "original"
+          },
+          "arithmeticChecks": [
+            {
+              "expression": "D(\"8.24\")/8",
+              "expected": "1.03",
+              "actual": "1.03",
+              "passed": true
+            },
+            {
+              "expression": "D(\"1.03\")*8",
+              "expected": "8.24",
+              "actual": "8.24",
+              "passed": true
+            }
+          ],
+          "id": "G6-DDIVN-SD01-T02",
+          "parentId": "G6-DDIVN-SD01",
+          "kind": "problem-type",
+          "sourceIds": [
+            "S3",
+            "UP-P61"
+          ],
+          "evidenceStatus": "proposed-original",
+          "standardIds": [
+            "6수01-14",
+            "6수01-15"
+          ],
+          "reusedCoreTypeIds": [],
+          "originalSourceRefs": [
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "DN-03",
+              "sourceIds": [
+                "S3"
+              ]
+            }
+          ],
+          "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+          "verification": {
+            "arithmetic": "passed",
+            "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+            "reviewType": "author-review-not-independent-expert-review"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G6-DDIVN-SD02",
+      "parentContentId": "G6-DDIVN",
+      "kind": "detail-unit",
+      "title": "나눗셈을 이어 소수 몫 완성하기",
+      "officialGradeBand": "5~6",
+      "observedPlacement": "6-1",
+      "placementStatus": "verified-official-example-not-national-mandate",
+      "connectionRole": "core-related",
+      "standardIds": [
+        "6수01-14",
+        "6수01-15"
+      ],
+      "sourceIds": [
+        "S3",
+        "UP-P61"
+      ],
+      "evidenceStatus": "proposed-original",
+      "types": [
+        {
+          "title": "피제수 끝에 0을 붙여 소수 몫 완성하기",
+          "originalTypeIds": [
+            "DN-02",
+            "DN-01"
+          ],
+          "example": {
+            "prompt": "7÷8의 몫을 소수로 나타내세요.",
+            "answer": "0.875",
+            "solution": "7보다 8이 크므로 몫의 일의 자리는 0이다.\n7.000으로 보고 나눗셈을 이어 계산한다.\n0.875×8=7이므로 몫은 0.875이다.",
+            "misconception": "나머지가 생기면 계산을 끝내거나 7.8로 이어 씀.",
+            "authorship": "original"
+          },
+          "arithmeticChecks": [
+            {
+              "expression": "D(7)/8",
+              "expected": "0.875",
+              "actual": "0.875",
+              "passed": true
+            }
+          ],
+          "id": "G6-DDIVN-SD02-T01",
+          "parentId": "G6-DDIVN-SD02",
+          "kind": "problem-type",
+          "sourceIds": [
+            "S3",
+            "UP-P61"
+          ],
+          "evidenceStatus": "proposed-original",
+          "standardIds": [
+            "6수01-14",
+            "6수01-15"
+          ],
+          "reusedCoreTypeIds": [],
+          "originalSourceRefs": [
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "DN-02",
+              "sourceIds": [
+                "S3"
+              ]
+            },
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "DN-01",
+              "sourceIds": [
+                "S3"
+              ]
+            }
+          ],
+          "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+          "variants": [
+            {
+              "title": "피제수에 0을 붙여 소수 둘째 자리까지 나누기",
+              "originalTypeIds": [
+                "DN-01",
+                "DN-02"
+              ],
+              "id": "G6-DDIVN-SD02-T02",
+              "parentId": "G6-DDIVN-SD02-T01",
+              "kind": "problem-variant",
+              "sourceIds": [
+                "S3",
+                "UP-P61"
+              ],
+              "evidenceStatus": "proposed-original",
+              "standardIds": [
+                "6수01-14",
+                "6수01-15"
+              ],
+              "reusedCoreTypeIds": [],
+              "originalSourceRefs": [
+                {
+                  "file": "upper_problem_types.json",
+                  "typeId": "DN-01",
+                  "sourceIds": [
+                    "S3"
+                  ]
+                },
+                {
+                  "file": "upper_problem_types.json",
+                  "typeId": "DN-02",
+                  "sourceIds": [
+                    "S3"
+                  ]
+                }
+              ],
+              "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+              "variantReason": "같은 핵심 인지 과제에서 입력 수·조건·표현 방식이 달라지는 변형",
+              "verification": {
+                "arithmetic": "passed",
+                "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+                "reviewType": "author-review-not-independent-expert-review"
+              },
+              "prompt": "길이 5.4m인 끈을 4명이 똑같이 나누면 한 명이 몇 m씩 받나요?",
+              "answer": "1.35m",
+              "solution": "5.4를 5.40으로 바꾸어 생각해도 값은 같다.\n5.40÷4=1.35이다.\n1.35×4=5.4로 확인한다.",
+              "misconception": "5.4의 소수 자리 수까지만 계산해야 한다고 생각함.",
+              "authorship": "original",
+              "numericChecks": [
+                {
+                  "expression": "D(\"5.4\")/4",
+                  "expected": "1.35",
+                  "actual": "1.35",
+                  "passed": true
+                },
+                {
+                  "expression": "D(\"1.35\")*4",
+                  "expected": "5.4",
+                  "actual": "5.40",
+                  "passed": true
+                }
+              ]
+            }
+          ],
+          "verification": {
+            "arithmetic": "passed",
+            "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+            "reviewType": "author-review-not-independent-expert-review"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G6-FDIVF-SD01",
+      "parentContentId": "G6-FDIVF",
+      "kind": "detail-unit",
+      "title": "분수 나눗셈을 같은 단위로 해석하기",
+      "officialGradeBand": "5~6",
+      "observedPlacement": "6-2",
+      "placementStatus": "verified-official-example-not-national-mandate",
+      "connectionRole": "core-related",
+      "standardIds": [
+        "6수01-11"
+      ],
+      "sourceIds": [
+        "S3",
+        "UP-P62"
+      ],
+      "evidenceStatus": "proposed-original",
+      "types": [
+        {
+          "title": "정해진 분수량이 들어가는 횟수 구하기",
+          "originalTypeIds": [
+            "FF-01"
+          ],
+          "example": {
+            "prompt": "주스 5/6L를 한 컵에 1/12L씩 담습니다. 몇 컵을 가득 채울 수 있나요?",
+            "answer": "10컵",
+            "solution": "5/6L는 10/12L이다.\n1/12L가 10번 들어 있으므로 10컵이다.\n식은 5/6÷1/12=10이다.",
+            "misconception": "분수끼리 나누어야 한다는 이유로 분자끼리만 계산하고 단위를 확인하지 않음.",
+            "authorship": "original"
+          },
+          "arithmeticChecks": [
+            {
+              "expression": "F(5,6)/F(1,12)",
+              "expected": "10",
+              "actual": "10",
+              "passed": true
+            }
+          ],
+          "id": "G6-FDIVF-SD01-T01",
+          "parentId": "G6-FDIVF-SD01",
+          "kind": "problem-type",
+          "sourceIds": [
+            "S3",
+            "UP-P62"
+          ],
+          "evidenceStatus": "proposed-original",
+          "standardIds": [
+            "6수01-11"
+          ],
+          "reusedCoreTypeIds": [],
+          "originalSourceRefs": [
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "FF-01",
+              "sourceIds": [
+                "S3"
+              ]
+            }
+          ],
+          "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+          "verification": {
+            "arithmetic": "passed",
+            "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+            "reviewType": "author-review-not-independent-expert-review"
+          }
+        },
+        {
+          "title": "통분하여 같은 단위의 개수끼리 나누기",
+          "originalTypeIds": [
+            "FF-03"
+          ],
+          "example": {
+            "prompt": "3/4÷2/3을 분모가 같은 분수끼리의 나눗셈으로 바꾸어 설명하세요.",
+            "answer": "9/12÷8/12=9÷8=9/8",
+            "solution": "3/4=9/12, 2/3=8/12이다.\n같은 1/12 단위의 개수가 9개와 8개이므로 9÷8을 계산한다.\n몫은 9/8이다.",
+            "misconception": "통분한 뒤 분모 12를 답에 다시 곱하거나 나눔.",
+            "authorship": "original"
+          },
+          "arithmeticChecks": [
+            {
+              "expression": "F(3,4)/F(2,3)",
+              "expected": "9/8",
+              "actual": "9/8",
+              "passed": true
+            }
+          ],
+          "id": "G6-FDIVF-SD01-T02",
+          "parentId": "G6-FDIVF-SD01",
+          "kind": "problem-type",
+          "sourceIds": [
+            "S3",
+            "UP-P62"
+          ],
+          "evidenceStatus": "proposed-original",
+          "standardIds": [
+            "6수01-11"
+          ],
+          "reusedCoreTypeIds": [],
+          "originalSourceRefs": [
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "FF-03",
+              "sourceIds": [
+                "S3"
+              ]
+            }
+          ],
+          "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+          "verification": {
+            "arithmetic": "passed",
+            "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+            "reviewType": "author-review-not-independent-expert-review"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G6-FDIVF-SD02",
+      "parentContentId": "G6-FDIVF",
+      "kind": "detail-unit",
+      "title": "역수 곱셈과 몫의 크기 점검하기",
+      "officialGradeBand": "5~6",
+      "observedPlacement": "6-2",
+      "placementStatus": "verified-official-example-not-national-mandate",
+      "connectionRole": "core-related",
+      "standardIds": [
+        "6수01-11"
+      ],
+      "sourceIds": [
+        "S3",
+        "UP-P62"
+      ],
+      "evidenceStatus": "proposed-original",
+      "types": [
+        {
+          "title": "대분수를 가분수로 바꾸고 나누는 수 뒤집기",
+          "originalTypeIds": [
+            "FF-02"
+          ],
+          "example": {
+            "prompt": "2와 1/4 ÷ 3/8을 계산하세요.",
+            "answer": "6",
+            "solution": "2와 1/4은 9/4이다.\n9/4÷3/8=9/4×8/3이다.\n곱을 계산하면 6이다.",
+            "misconception": "피제수도 뒤집거나 대분수의 자연수 부분을 그대로 둠.",
+            "authorship": "original"
+          },
+          "arithmeticChecks": [
+            {
+              "expression": "F(9,4)/F(3,8)",
+              "expected": "6",
+              "actual": "6",
+              "passed": true
+            }
+          ],
+          "id": "G6-FDIVF-SD02-T01",
+          "parentId": "G6-FDIVF-SD02",
+          "kind": "problem-type",
+          "sourceIds": [
+            "S3",
+            "UP-P62"
+          ],
+          "evidenceStatus": "proposed-original",
+          "standardIds": [
+            "6수01-11"
+          ],
+          "reusedCoreTypeIds": [],
+          "originalSourceRefs": [
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "FF-02",
+              "sourceIds": [
+                "S3"
+              ]
+            }
+          ],
+          "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+          "verification": {
+            "arithmetic": "passed",
+            "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+            "reviewType": "author-review-not-independent-expert-review"
+          }
+        },
+        {
+          "title": "1보다 작은 분수로 나눌 때 크기 판단하기",
+          "originalTypeIds": [
+            "FF-04"
+          ],
+          "example": {
+            "prompt": "4/5÷2/5는 4/5보다 큰가요, 작은가요? 그 이유와 정확한 몫을 쓰세요.",
+            "answer": "크다; 몫은 2",
+            "solution": "4/5 안에는 2/5가 2번 들어간다.\n2/5는 1보다 작으므로 그것을 단위로 센 몫은 원래의 수보다 커진다.\n4/5÷2/5=2이다.",
+            "misconception": "나눗셈의 결과는 언제나 원래 수보다 작다고 생각함.",
+            "authorship": "original"
+          },
+          "arithmeticChecks": [
+            {
+              "expression": "F(4,5)/F(2,5)",
+              "expected": "2",
+              "actual": "2",
+              "passed": true
+            },
+            {
+              "expression": "2>F(4,5)",
+              "expected": "True",
+              "actual": "True",
+              "passed": true
+            }
+          ],
+          "id": "G6-FDIVF-SD02-T02",
+          "parentId": "G6-FDIVF-SD02",
+          "kind": "problem-type",
+          "sourceIds": [
+            "S3",
+            "UP-P62"
+          ],
+          "evidenceStatus": "proposed-original",
+          "standardIds": [
+            "6수01-11"
+          ],
+          "reusedCoreTypeIds": [],
+          "originalSourceRefs": [
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "FF-04",
+              "sourceIds": [
+                "S3"
+              ]
+            }
+          ],
+          "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+          "verification": {
+            "arithmetic": "passed",
+            "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+            "reviewType": "author-review-not-independent-expert-review"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G6-DDIVD-SD01",
+      "parentContentId": "G6-DDIVD",
+      "kind": "detail-unit",
+      "title": "제수를 자연수로 바꾸어 나누기",
+      "officialGradeBand": "5~6",
+      "observedPlacement": "6-2",
+      "placementStatus": "verified-official-example-not-national-mandate",
+      "connectionRole": "core-related",
+      "standardIds": [
+        "6수01-15"
+      ],
+      "sourceIds": [
+        "S3",
+        "UP-P62"
+      ],
+      "evidenceStatus": "proposed-original",
+      "types": [
+        {
+          "title": "두 수에 같은 수를 곱해 몫 보존하기",
+          "originalTypeIds": [
+            "DD-01"
+          ],
+          "example": {
+            "prompt": "3.36÷0.8을 나누는 수가 자연수인 식으로 바꾸고, 바꾸기 전후의 몫이 같은 이유를 설명하세요.",
+            "answer": "33.6÷8; 나누어지는 수와 나누는 수를 똑같이 10배 했기 때문이다.",
+            "solution": "나누는 수 0.8을 자연수 8로 만들려면 10배 한다.\n나누어지는 수 3.36도 같은 10배를 하여 33.6으로 바꾼다.\n전체 양과 한 묶음의 양이 같은 비율로 커지므로 묶음의 수인 몫은 달라지지 않는다.",
+            "misconception": "나누는 수만 10배하여 몫도 같다고 생각함.",
+            "authorship": "original"
+          },
+          "arithmeticChecks": [
+            {
+              "expression": "D(\"3.36\")/D(\"0.8\")",
+              "expected": "4.2",
+              "actual": "4.2",
+              "passed": true
+            },
+            {
+              "expression": "D(\"33.6\")/8",
+              "expected": "4.2",
+              "actual": "4.2",
+              "passed": true
+            }
+          ],
+          "id": "G6-DDIVD-SD01-T01",
+          "parentId": "G6-DDIVD-SD01",
+          "kind": "problem-type",
+          "sourceIds": [
+            "S3",
+            "UP-P62"
+          ],
+          "evidenceStatus": "proposed-original",
+          "standardIds": [
+            "6수01-15"
+          ],
+          "reusedCoreTypeIds": [],
+          "originalSourceRefs": [
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "DD-01",
+              "sourceIds": [
+                "S3"
+              ]
+            }
+          ],
+          "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+          "verification": {
+            "arithmetic": "passed",
+            "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+            "reviewType": "author-review-not-independent-expert-review"
+          }
+        },
+        {
+          "title": "소수 두 자리 제수를 자연수로 바꾸어 계산하기",
+          "originalTypeIds": [
+            "DD-02"
+          ],
+          "example": {
+            "prompt": "5.04÷0.28을 계산하세요.",
+            "answer": "18",
+            "solution": "두 수에 100을 곱해 504÷28로 바꾼다.\n28×18=504이므로 몫은 18이다.",
+            "misconception": "각 수의 소수점만 없애려다 서로 다른 배수를 곱함.",
+            "authorship": "original"
+          },
+          "arithmeticChecks": [
+            {
+              "expression": "D(\"5.04\")/D(\"0.28\")",
+              "expected": "18",
+              "actual": "18",
+              "passed": true
+            },
+            {
+              "expression": "28*18",
+              "expected": "504",
+              "actual": "504",
+              "passed": true
+            }
+          ],
+          "id": "G6-DDIVD-SD01-T02",
+          "parentId": "G6-DDIVD-SD01",
+          "kind": "problem-type",
+          "sourceIds": [
+            "S3",
+            "UP-P62"
+          ],
+          "evidenceStatus": "proposed-original",
+          "standardIds": [
+            "6수01-15"
+          ],
+          "reusedCoreTypeIds": [],
+          "originalSourceRefs": [
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "DD-02",
+              "sourceIds": [
+                "S3"
+              ]
+            }
+          ],
+          "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+          "verification": {
+            "arithmetic": "passed",
+            "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+            "reviewType": "author-review-not-independent-expert-review"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G6-DDIVD-SD02",
+      "parentContentId": "G6-DDIVD",
+      "kind": "detail-unit",
+      "title": "몫과 남는 양을 원래 단위로 해석하기",
+      "officialGradeBand": "5~6",
+      "observedPlacement": "6-2",
+      "placementStatus": "verified-official-example-not-national-mandate",
+      "connectionRole": "core-related",
+      "standardIds": [
+        "6수01-15"
+      ],
+      "sourceIds": [
+        "S3",
+        "UP-P62"
+      ],
+      "evidenceStatus": "proposed-original",
+      "types": [
+        {
+          "title": "완성 조각 수와 실제 남는 길이 구하기",
+          "originalTypeIds": [
+            "DD-03"
+          ],
+          "example": {
+            "prompt": "끈 5.3m를 0.8m씩 자릅니다. 0.8m짜리 조각은 몇 개이고 몇 m가 남나요?",
+            "answer": "6개, 0.5m 남음",
+            "solution": "53÷8=6…5로 계산할 수 있다.\n이때 5는 0.1m 단위 5개이므로 남는 길이는 0.5m이다.\n0.8×6+0.5=5.3m로 확인한다.",
+            "misconception": "53÷8의 나머지 5를 그대로 5m라고 씀.",
+            "authorship": "original"
+          },
+          "arithmeticChecks": [
+            {
+              "expression": "D(\"5.3\")//D(\"0.8\")",
+              "expected": "6",
+              "actual": "6",
+              "passed": true
+            },
+            {
+              "expression": "D(\"5.3\")-D(\"0.8\")*6",
+              "expected": "0.5",
+              "actual": "0.5",
+              "passed": true
+            }
+          ],
+          "id": "G6-DDIVD-SD02-T01",
+          "parentId": "G6-DDIVD-SD02",
+          "kind": "problem-type",
+          "sourceIds": [
+            "S3",
+            "UP-P62"
+          ],
+          "evidenceStatus": "proposed-original",
+          "standardIds": [
+            "6수01-15"
+          ],
+          "reusedCoreTypeIds": [],
+          "originalSourceRefs": [
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "DD-03",
+              "sourceIds": [
+                "S3"
+              ]
+            }
+          ],
+          "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+          "verification": {
+            "arithmetic": "passed",
+            "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+            "reviewType": "author-review-not-independent-expert-review"
+          }
+        },
+        {
+          "title": "소수 두 자리 제수에서 몫 자릿값 확인하기",
+          "originalTypeIds": [
+            "DD-01",
+            "DD-02"
+          ],
+          "example": {
+            "prompt": "1.44÷0.12=1.2라고 썼습니다. 바른 답을 구하고 곱셈으로 확인하세요.",
+            "answer": "12; 0.12×12=1.44",
+            "solution": "두 수에 100을 곱하면 144÷12이다.\n144÷12=12이며 몫에 임의로 소수점을 붙이지 않는다.\n0.12×12=1.44로 확인한다.",
+            "misconception": "소수 나눗셈이므로 몫도 소수여야 한다고 생각함.",
+            "authorship": "original"
+          },
+          "arithmeticChecks": [
+            {
+              "expression": "D(\"1.44\")/D(\"0.12\")",
+              "expected": "12",
+              "actual": "12",
+              "passed": true
+            },
+            {
+              "expression": "D(\"0.12\")*12",
+              "expected": "1.44",
+              "actual": "1.44",
+              "passed": true
+            }
+          ],
+          "id": "G6-DDIVD-SD02-T02",
+          "parentId": "G6-DDIVD-SD02",
+          "kind": "problem-type",
+          "sourceIds": [
+            "S3",
+            "UP-P62"
+          ],
+          "evidenceStatus": "proposed-original",
+          "standardIds": [
+            "6수01-15"
+          ],
+          "reusedCoreTypeIds": [],
+          "originalSourceRefs": [
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "DD-01",
+              "sourceIds": [
+                "S3"
+              ]
+            },
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "DD-02",
+              "sourceIds": [
+                "S3"
+              ]
+            }
+          ],
+          "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+          "verification": {
+            "arithmetic": "passed",
+            "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+            "reviewType": "author-review-not-independent-expert-review"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G6-PI-SD01",
+      "parentContentId": "G6-PI",
+      "kind": "detail-unit",
+      "title": "원주와 지름의 관계 탐구하기",
+      "officialGradeBand": "5~6",
+      "observedPlacement": "6-2",
+      "placementStatus": "verified-official-example-not-national-mandate",
+      "connectionRole": "core-related",
+      "standardIds": [
+        "6수03-15",
+        "6수03-16"
+      ],
+      "sourceIds": [
+        "S3",
+        "UP-P62"
+      ],
+      "evidenceStatus": "proposed-original",
+      "types": [
+        {
+          "title": "측정 자료에서 원주율의 근삿값 해석하기",
+          "originalTypeIds": [
+            "U6PI-T01"
+          ],
+          "example": {
+            "prompt": "가상 측정 자료에서 원 가의 지름은 5cm, 원주는 약 15.7cm이고, 원 나의 지름은 8cm, 원주는 약 25.12cm입니다. 각 원의 원주÷지름을 구하고 공통점을 쓰세요.",
+            "answer": "두 값 모두 약 3.14; 두 원의 원주는 지름의 약 3.14배이다.",
+            "solution": "15.7÷5=3.14, 25.12÷8=3.14이다.\n원 크기가 달라도 원주와 지름의 비는 일정하다.\n제시된 원주는 측정 근삿값이므로 3.14가 원주율의 정확한 값이라는 뜻은 아니다.",
+            "misconception": "측정으로 구한 3.14를 원주율의 정확한 값이라고 단정함.",
+            "authorship": "original"
+          },
+          "arithmeticChecks": [
+            {
+              "expression": "D(\"15.7\")/5",
+              "expected": "3.14",
+              "actual": "3.14",
+              "passed": true
+            },
+            {
+              "expression": "D(\"25.12\")/8",
+              "expected": "3.14",
+              "actual": "3.14",
+              "passed": true
+            }
+          ],
+          "id": "G6-PI-SD01-T01",
+          "parentId": "G6-PI-SD01",
+          "kind": "problem-type",
+          "sourceIds": [
+            "S3",
+            "UP-P62"
+          ],
+          "evidenceStatus": "proposed-original",
+          "standardIds": [
+            "6수03-15",
+            "6수03-16"
+          ],
+          "reusedCoreTypeIds": [],
+          "originalSourceRefs": [
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "U6PI-T01",
+              "sourceIds": [
+                "S3"
+              ]
+            }
+          ],
+          "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+          "verification": {
+            "arithmetic": "passed",
+            "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+            "reviewType": "author-review-not-independent-expert-review"
+          }
+        },
+        {
+          "title": "원주를 지름의 3배와 4배 사이로 어림하기",
+          "originalTypeIds": [
+            "U6PI-T01"
+          ],
+          "example": {
+            "prompt": "지름이 9cm인 원의 원주는 27cm보다 큰가요, 36cm보다 작은가요? 원주율이 3보다 크고 4보다 작다는 사실을 이용하세요.",
+            "answer": "27cm보다 크고 36cm보다 작다.",
+            "solution": "원주는 지름×원주율이다.\n9×3=27, 9×4=36이다.\n따라서 원주는 27cm와 36cm 사이에 있다.",
+            "misconception": "지름의 3배를 원주의 정확한 값으로 삼음.",
+            "authorship": "original"
+          },
+          "arithmeticChecks": [
+            {
+              "expression": "9*3",
+              "expected": "27",
+              "actual": "27",
+              "passed": true
+            },
+            {
+              "expression": "9*4",
+              "expected": "36",
+              "actual": "36",
+              "passed": true
+            }
+          ],
+          "id": "G6-PI-SD01-T02",
+          "parentId": "G6-PI-SD01",
+          "kind": "problem-type",
+          "sourceIds": [
+            "S3",
+            "UP-P62"
+          ],
+          "evidenceStatus": "proposed-original",
+          "standardIds": [
+            "6수03-15",
+            "6수03-16"
+          ],
+          "reusedCoreTypeIds": [],
+          "originalSourceRefs": [
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "U6PI-T01",
+              "sourceIds": [
+                "S3"
+              ]
+            }
+          ],
+          "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+          "verification": {
+            "arithmetic": "passed",
+            "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+            "reviewType": "author-review-not-independent-expert-review"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G6-PI-SD02",
+      "parentContentId": "G6-PI",
+      "kind": "detail-unit",
+      "title": "주어진 반지름이나 지름으로 원주 구하기",
+      "officialGradeBand": "5~6",
+      "observedPlacement": "6-2",
+      "placementStatus": "verified-official-example-not-national-mandate",
+      "connectionRole": "core-related",
+      "standardIds": [
+        "6수03-15",
+        "6수03-16"
+      ],
+      "sourceIds": [
+        "S3",
+        "UP-P62"
+      ],
+      "evidenceStatus": "proposed-original",
+      "types": [
+        {
+          "title": "반지름 또는 지름에서 원주 구하기",
+          "originalTypeIds": [
+            "U6PI-T02"
+          ],
+          "example": {
+            "prompt": "지름이 12cm인 원의 원주를 구하세요. 원주율은 3.14로 계산합니다.",
+            "answer": "37.68cm",
+            "solution": "원주는 지름×원주율이다.\n12×3.14=37.68cm이다.",
+            "misconception": "지름을 또 두 배로 하여 원주를 계산함.",
+            "authorship": "original"
+          },
+          "arithmeticChecks": [
+            {
+              "expression": "12*D(\"3.14\")",
+              "expected": "37.68",
+              "actual": "37.68",
+              "passed": true
+            }
+          ],
+          "id": "G6-PI-SD02-T01",
+          "parentId": "G6-PI-SD02",
+          "kind": "problem-type",
+          "sourceIds": [
+            "S3",
+            "UP-P62"
+          ],
+          "evidenceStatus": "proposed-original",
+          "standardIds": [
+            "6수03-15",
+            "6수03-16"
+          ],
+          "reusedCoreTypeIds": [
+            "C-T04"
+          ],
+          "originalSourceRefs": [
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "U6PI-T02",
+              "sourceIds": [
+                "S3"
+              ]
+            }
+          ],
+          "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+          "variants": [
+            {
+              "title": "반지름을 지름으로 바꾸어 원주 구하기",
+              "originalTypeIds": [
+                "U6PI-T02"
+              ],
+              "id": "G6-PI-SD02-T02",
+              "parentId": "G6-PI-SD02-T01",
+              "kind": "problem-variant",
+              "sourceIds": [
+                "S3",
+                "UP-P62"
+              ],
+              "evidenceStatus": "proposed-original",
+              "standardIds": [
+                "6수03-15",
+                "6수03-16"
+              ],
+              "reusedCoreTypeIds": [
+                "C-T04"
+              ],
+              "originalSourceRefs": [
+                {
+                  "file": "upper_problem_types.json",
+                  "typeId": "U6PI-T02",
+                  "sourceIds": [
+                    "S3"
+                  ]
+                }
+              ],
+              "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+              "variantReason": "같은 핵심 인지 과제에서 입력 수·조건·표현 방식이 달라지는 변형",
+              "verification": {
+                "arithmetic": "passed",
+                "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+                "reviewType": "author-review-not-independent-expert-review"
+              },
+              "prompt": "반지름이 7cm인 원의 원주를 구하세요. 원주율은 3.14로 계산합니다.",
+              "answer": "43.96cm",
+              "solution": "지름은 7×2=14cm이다.\n원주는 14×3.14=43.96cm이다.",
+              "misconception": "반지름에 원주율만 곱함.",
+              "authorship": "original",
+              "numericChecks": [
+                {
+                  "expression": "7*2*D(\"3.14\")",
+                  "expected": "43.96",
+                  "actual": "43.96",
+                  "passed": true
+                }
+              ]
+            }
+          ],
+          "verification": {
+            "arithmetic": "passed",
+            "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+            "reviewType": "author-review-not-independent-expert-review"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G6-PI-SD03",
+      "parentContentId": "G6-PI",
+      "kind": "detail-unit",
+      "title": "원주에서 길이를 역산하고 활용하기",
+      "officialGradeBand": "5~6",
+      "observedPlacement": "6-2",
+      "placementStatus": "verified-official-example-not-national-mandate",
+      "connectionRole": "core-related",
+      "standardIds": [
+        "6수03-15",
+        "6수03-16"
+      ],
+      "sourceIds": [
+        "S3",
+        "UP-P62"
+      ],
+      "evidenceStatus": "proposed-original",
+      "types": [
+        {
+          "title": "원주에서 지름과 반지름 차례로 구하기",
+          "originalTypeIds": [
+            "U6PI-T03"
+          ],
+          "example": {
+            "prompt": "원주가 50.24cm인 원의 지름과 반지름을 구하세요. 원주율은 3.14로 계산합니다.",
+            "answer": "지름 16cm, 반지름 8cm",
+            "solution": "지름은 원주÷원주율이므로 50.24÷3.14=16cm이다.\n반지름은 지름의 절반이므로 8cm이다.",
+            "misconception": "원주÷원주율의 결과를 반지름으로 답함.",
+            "authorship": "original"
+          },
+          "arithmeticChecks": [
+            {
+              "expression": "D(\"50.24\")/D(\"3.14\")",
+              "expected": "16",
+              "actual": "16",
+              "passed": true
+            },
+            {
+              "expression": "16/2",
+              "expected": "8",
+              "actual": "8.0",
+              "passed": true
+            }
+          ],
+          "id": "G6-PI-SD03-T01",
+          "parentId": "G6-PI-SD03",
+          "kind": "problem-type",
+          "sourceIds": [
+            "S3",
+            "UP-P62"
+          ],
+          "evidenceStatus": "proposed-original",
+          "standardIds": [
+            "6수03-15",
+            "6수03-16"
+          ],
+          "reusedCoreTypeIds": [],
+          "originalSourceRefs": [
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "U6PI-T03",
+              "sourceIds": [
+                "S3"
+              ]
+            }
+          ],
+          "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+          "verification": {
+            "arithmetic": "passed",
+            "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+            "reviewType": "author-review-not-independent-expert-review"
+          }
+        },
+        {
+          "title": "미끄러짐 없이 굴러간 바퀴의 거리 구하기",
+          "originalTypeIds": [
+            "U6PI-T02"
+          ],
+          "example": {
+            "prompt": "지름이 20cm인 바퀴가 미끄러지지 않고 곧게 5바퀴 굴렀습니다. 이동 거리는 몇 cm인가요? 원주율은 3.14로 계산합니다.",
+            "answer": "314cm",
+            "solution": "한 바퀴 이동 거리는 원주인 20×3.14=62.8cm이다.\n5바퀴 이동 거리는 62.8×5=314cm이다.",
+            "misconception": "바퀴의 지름에 바퀴 수만 곱하거나 미끄러짐 조건을 무시함.",
+            "authorship": "original"
+          },
+          "arithmeticChecks": [
+            {
+              "expression": "20*D(\"3.14\")*5",
+              "expected": "314",
+              "actual": "314.00",
+              "passed": true
+            }
+          ],
+          "id": "G6-PI-SD03-T02",
+          "parentId": "G6-PI-SD03",
+          "kind": "problem-type",
+          "sourceIds": [
+            "S3",
+            "UP-P62"
+          ],
+          "evidenceStatus": "proposed-original",
+          "standardIds": [
+            "6수03-15",
+            "6수03-16"
+          ],
+          "reusedCoreTypeIds": [
+            "C-T04"
+          ],
+          "originalSourceRefs": [
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "U6PI-T02",
+              "sourceIds": [
+                "S3"
+              ]
+            }
+          ],
+          "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+          "verification": {
+            "arithmetic": "passed",
+            "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+            "reviewType": "author-review-not-independent-expert-review"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G6-AREA-SD01",
+      "parentContentId": "G6-AREA",
+      "kind": "detail-unit",
+      "title": "원 조각의 재구성으로 넓이 식 이해하기",
+      "officialGradeBand": "5~6",
+      "observedPlacement": "6-2",
+      "placementStatus": "verified-official-example-not-national-mandate",
+      "connectionRole": "core-related",
+      "standardIds": [
+        "6수03-16"
+      ],
+      "sourceIds": [
+        "S3",
+        "UP-P62"
+      ],
+      "evidenceStatus": "proposed-original",
+      "types": [
+        {
+          "title": "원 조각 재구성으로 가로·세로와 넓이 식 설명하기",
+          "originalTypeIds": [
+            "U6A-T01"
+          ],
+          "example": {
+            "prompt": "원을 같은 크기의 부채 모양 조각으로 아주 잘게 나누어 위아래가 번갈아 오도록 늘어놓습니다. 직사각형에 가까워지는 모양의 가로와 세로는 각각 무엇에 가까워지나요?",
+            "answer": "가로는 원주의 절반, 세로는 반지름",
+            "solution": "위쪽과 아래쪽에 원둘레의 절반씩이 놓인다.\n조각을 더 잘게 나눌수록 가로는 원주의 절반, 세로는 반지름인 직사각형에 가까워진다.",
+            "misconception": "가로를 원주 전체로 보거나 유한한 조각을 배열한 모양을 정확한 직사각형이라 함.",
+            "authorship": "original"
+          },
+          "arithmeticChecks": [],
+          "id": "G6-AREA-SD01-T01",
+          "parentId": "G6-AREA-SD01",
+          "kind": "problem-type",
+          "sourceIds": [
+            "S3",
+            "UP-P62"
+          ],
+          "evidenceStatus": "proposed-original",
+          "standardIds": [
+            "6수03-16"
+          ],
+          "reusedCoreTypeIds": [],
+          "originalSourceRefs": [
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "U6A-T01",
+              "sourceIds": [
+                "S3"
+              ]
+            }
+          ],
+          "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+          "variants": [
+            {
+              "title": "반지름을 이용해 넓이 식 설명하기",
+              "originalTypeIds": [
+                "U6A-T01"
+              ],
+              "id": "G6-AREA-SD01-T02",
+              "parentId": "G6-AREA-SD01-T01",
+              "kind": "problem-variant",
+              "sourceIds": [
+                "S3",
+                "UP-P62"
+              ],
+              "evidenceStatus": "proposed-original",
+              "standardIds": [
+                "6수03-16"
+              ],
+              "reusedCoreTypeIds": [],
+              "originalSourceRefs": [
+                {
+                  "file": "upper_problem_types.json",
+                  "typeId": "U6A-T01",
+                  "sourceIds": [
+                    "S3"
+                  ]
+                }
+              ],
+              "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+              "variantReason": "같은 핵심 인지 과제에서 입력 수·조건·표현 방식이 달라지는 변형",
+              "verification": {
+                "arithmetic": "passed",
+                "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+                "reviewType": "author-review-not-independent-expert-review"
+              },
+              "prompt": "반지름이 4cm인 원을 잘게 나누어 재배열했습니다. 가로가 원주의 절반에, 세로가 반지름에 가까워진다는 점을 이용하여 넓이를 구하세요. 원주율은 3.14로 계산합니다.",
+              "answer": "50.24cm²",
+              "solution": "원주의 절반은 4×3.14=12.56cm이다.\n세로는 반지름 4cm에 가까워진다.\n원을 나누고 옮겨도 넓이는 같으므로 원의 넓이는 12.56×4=50.24cm²이다.",
+              "misconception": "원주와 반지름을 곱하여 넓이를 두 배로 구함.",
+              "authorship": "original",
+              "numericChecks": [
+                {
+                  "expression": "4*D(\"3.14\")",
+                  "expected": "12.56",
+                  "actual": "12.56",
+                  "passed": true
+                },
+                {
+                  "expression": "4*4*D(\"3.14\")",
+                  "expected": "50.24",
+                  "actual": "50.24",
+                  "passed": true
+                }
+              ]
+            }
+          ],
+          "verification": {
+            "arithmetic": "not-applicable",
+            "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+            "reviewType": "author-review-not-independent-expert-review"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G6-AREA-SD02",
+      "parentContentId": "G6-AREA",
+      "kind": "detail-unit",
+      "title": "반지름과 지름 조건으로 넓이 계산하기",
+      "officialGradeBand": "5~6",
+      "observedPlacement": "6-2",
+      "placementStatus": "verified-official-example-not-national-mandate",
+      "connectionRole": "core-related",
+      "standardIds": [
+        "6수03-16"
+      ],
+      "sourceIds": [
+        "S3",
+        "UP-P62"
+      ],
+      "evidenceStatus": "proposed-original",
+      "types": [
+        {
+          "title": "반지름 또는 지름에서 원의 넓이 구하기",
+          "originalTypeIds": [
+            "U6A-T02"
+          ],
+          "example": {
+            "prompt": "반지름이 6cm인 원의 넓이를 구하세요. 원주율은 3.14로 계산합니다.",
+            "answer": "113.04cm²",
+            "solution": "원의 넓이는 반지름×반지름×원주율이다.\n6×6×3.14=113.04cm²이다.",
+            "misconception": "반지름×2×원주율을 넓이 식으로 사용함.",
+            "authorship": "original"
+          },
+          "arithmeticChecks": [
+            {
+              "expression": "6*6*D(\"3.14\")",
+              "expected": "113.04",
+              "actual": "113.04",
+              "passed": true
+            }
+          ],
+          "id": "G6-AREA-SD02-T01",
+          "parentId": "G6-AREA-SD02",
+          "kind": "problem-type",
+          "sourceIds": [
+            "S3",
+            "UP-P62"
+          ],
+          "evidenceStatus": "proposed-original",
+          "standardIds": [
+            "6수03-16"
+          ],
+          "reusedCoreTypeIds": [
+            "C-T04"
+          ],
+          "originalSourceRefs": [
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "U6A-T02",
+              "sourceIds": [
+                "S3"
+              ]
+            }
+          ],
+          "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+          "variants": [
+            {
+              "title": "지름을 반으로 나누고 넓이 단위 쓰기",
+              "originalTypeIds": [
+                "U6A-T02"
+              ],
+              "id": "G6-AREA-SD02-T02",
+              "parentId": "G6-AREA-SD02-T01",
+              "kind": "problem-variant",
+              "sourceIds": [
+                "S3",
+                "UP-P62"
+              ],
+              "evidenceStatus": "proposed-original",
+              "standardIds": [
+                "6수03-16"
+              ],
+              "reusedCoreTypeIds": [
+                "C-T04"
+              ],
+              "originalSourceRefs": [
+                {
+                  "file": "upper_problem_types.json",
+                  "typeId": "U6A-T02",
+                  "sourceIds": [
+                    "S3"
+                  ]
+                }
+              ],
+              "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+              "variantReason": "같은 핵심 인지 과제에서 입력 수·조건·표현 방식이 달라지는 변형",
+              "verification": {
+                "arithmetic": "passed",
+                "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+                "reviewType": "author-review-not-independent-expert-review"
+              },
+              "prompt": "지름이 18cm인 원의 넓이를 구하세요. 원주율은 3.14로 계산합니다.",
+              "answer": "254.34cm²",
+              "solution": "반지름은 18÷2=9cm이다.\n9×9×3.14=254.34cm²이다.\n넓이이므로 단위는 cm²를 쓴다.",
+              "misconception": "지름 18을 그대로 두 번 곱하거나 cm로 답함.",
+              "authorship": "original",
+              "numericChecks": [
+                {
+                  "expression": "9*9*D(\"3.14\")",
+                  "expected": "254.34",
+                  "actual": "254.34",
+                  "passed": true
+                }
+              ]
+            }
+          ],
+          "verification": {
+            "arithmetic": "passed",
+            "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+            "reviewType": "author-review-not-independent-expert-review"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G6-AREA-SD03",
+      "parentContentId": "G6-AREA",
+      "kind": "detail-unit",
+      "title": "원의 길이 변화와 넓이 변화 비교하기",
+      "officialGradeBand": "5~6",
+      "observedPlacement": "6-2",
+      "placementStatus": "verified-official-example-not-national-mandate",
+      "connectionRole": "core-related",
+      "standardIds": [
+        "6수03-16"
+      ],
+      "sourceIds": [
+        "S3",
+        "UP-P62"
+      ],
+      "evidenceStatus": "proposed-original",
+      "types": [
+        {
+          "title": "반지름의 배율과 원주·넓이 배율 구별하기",
+          "originalTypeIds": [
+            "U6A-T03"
+          ],
+          "example": {
+            "prompt": "원 가의 반지름은 2cm, 원 나의 반지름은 6cm입니다. 원 나의 원주와 넓이는 각각 원 가의 몇 배인가요?",
+            "answer": "원주 3배, 넓이 9배",
+            "solution": "반지름이 6÷2=3배이므로 지름과 원주도 3배이다.\n넓이 식에서는 반지름을 두 번 곱하므로 넓이는 3×3=9배이다.",
+            "misconception": "길이가 3배이면 넓이도 3배라고 생각함.",
+            "authorship": "original"
+          },
+          "arithmeticChecks": [
+            {
+              "expression": "6/2",
+              "expected": "3",
+              "actual": "3.0",
+              "passed": true
+            },
+            {
+              "expression": "(6*6)/(2*2)",
+              "expected": "9",
+              "actual": "9.0",
+              "passed": true
+            }
+          ],
+          "id": "G6-AREA-SD03-T01",
+          "parentId": "G6-AREA-SD03",
+          "kind": "problem-type",
+          "sourceIds": [
+            "S3",
+            "UP-P62"
+          ],
+          "evidenceStatus": "proposed-original",
+          "standardIds": [
+            "6수03-16"
+          ],
+          "reusedCoreTypeIds": [],
+          "originalSourceRefs": [
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "U6A-T03",
+              "sourceIds": [
+                "S3"
+              ]
+            }
+          ],
+          "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+          "verification": {
+            "arithmetic": "passed",
+            "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+            "reviewType": "author-review-not-independent-expert-review"
+          }
+        },
+        {
+          "title": "같은 원주율에서 두 원의 넓이 차 구하기",
+          "originalTypeIds": [
+            "U6A-T02",
+            "U6A-T03"
+          ],
+          "example": {
+            "prompt": "반지름이 각각 5cm와 3cm인 두 원의 넓이 차를 구하세요. 원주율은 3.14로 계산합니다.",
+            "answer": "50.24cm²",
+            "solution": "큰 원의 넓이는 5×5×3.14=78.5cm²이다.\n작은 원의 넓이는 3×3×3.14=28.26cm²이다.\n차는 78.5−28.26=50.24cm²이다.",
+            "misconception": "반지름의 차 2cm인 원의 넓이가 두 원의 넓이 차와 같다고 생각함.",
+            "authorship": "original"
+          },
+          "arithmeticChecks": [
+            {
+              "expression": "5*5*D(\"3.14\")",
+              "expected": "78.5",
+              "actual": "78.50",
+              "passed": true
+            },
+            {
+              "expression": "3*3*D(\"3.14\")",
+              "expected": "28.26",
+              "actual": "28.26",
+              "passed": true
+            },
+            {
+              "expression": "(5*5-3*3)*D(\"3.14\")",
+              "expected": "50.24",
+              "actual": "50.24",
+              "passed": true
+            }
+          ],
+          "id": "G6-AREA-SD03-T02",
+          "parentId": "G6-AREA-SD03",
+          "kind": "problem-type",
+          "sourceIds": [
+            "S3",
+            "UP-P62"
+          ],
+          "evidenceStatus": "proposed-original",
+          "standardIds": [
+            "6수03-16"
+          ],
+          "reusedCoreTypeIds": [
+            "C-T04"
+          ],
+          "originalSourceRefs": [
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "U6A-T02",
+              "sourceIds": [
+                "S3"
+              ]
+            },
+            {
+              "file": "upper_problem_types.json",
+              "typeId": "U6A-T03",
+              "sourceIds": [
+                "S3"
+              ]
+            }
+          ],
+          "alignmentNote": "확인한 교육과정 범위와 자료의 내용 구분을 참고해 연구자가 세분화한 유형이다. 예시 문항·정답·풀이는 새로 작성했으며 출판사 문항 인용이나 공식 유형 목록이 아니다.",
+          "verification": {
+            "arithmetic": "passed",
+            "reviewedFor": "조건·단위·등분할·원주율 근삿값·몫과 나머지의 해석",
+            "reviewType": "author-review-not-independent-expert-review"
+          }
+        }
+      ]
+    }
+  ],
+  "boundarySupportNodes": [
+    {
+      "id": "G5-RED",
+      "title": "약분·통분",
+      "parentId": null,
+      "kind": "connected-content",
+      "connectionRole": "boundary-support",
+      "standardIds": [
+        "6수01-06"
+      ],
+      "officialGradeBand": "5~6",
+      "observedPlacement": "5-1",
+      "placementStatus": "verified-official-example-not-national-mandate",
+      "sourceIds": [
+        "S3"
+      ],
+      "evidenceStatus": "curriculum-aligned",
+      "scopeNote": "해당 연결에 필요한 부분만 표시하며 이 단원 전체를 펼치지 않음"
+    },
+    {
+      "id": "G5-AREABASE",
+      "title": "둘레·넓이 의미, 넓이 단위, 직사각형 넓이",
+      "parentId": null,
+      "kind": "connected-content",
+      "connectionRole": "boundary-support",
+      "standardIds": [
+        "6수03-11",
+        "6수03-12",
+        "6수03-13"
+      ],
+      "officialGradeBand": "5~6",
+      "observedPlacement": "5-1",
+      "placementStatus": "verified-official-example-not-national-mandate",
+      "sourceIds": [
+        "S3"
+      ],
+      "evidenceStatus": "curriculum-aligned",
+      "scopeNote": "해당 연결에 필요한 부분만 표시하며 이 단원 전체를 펼치지 않음"
+    },
+    {
+      "id": "G34-FRAC",
+      "title": "분수의 의미",
+      "parentId": null,
+      "kind": "connected-content",
+      "connectionRole": "boundary-support",
+      "standardIds": [
+        "4수01-09",
+        "4수01-10"
+      ],
+      "officialGradeBand": "3~4",
+      "observedPlacement": "3~4학년군",
+      "placementStatus": "grade-band-only",
+      "sourceIds": [
+        "S2"
+      ],
+      "evidenceStatus": "curriculum-aligned",
+      "scopeNote": "해당 연결에 필요한 부분만 표시하며 이 단원 전체를 펼치지 않음"
+    },
+    {
+      "id": "G34-DEC",
+      "title": "소수의 의미·자릿값",
+      "parentId": null,
+      "kind": "connected-content",
+      "connectionRole": "boundary-support",
+      "standardIds": [
+        "4수01-12",
+        "4수01-13"
+      ],
+      "officialGradeBand": "3~4",
+      "observedPlacement": "3~4학년군",
+      "placementStatus": "grade-band-only",
+      "sourceIds": [
+        "S2"
+      ],
+      "evidenceStatus": "curriculum-aligned",
+      "scopeNote": "해당 연결에 필요한 부분만 표시하며 이 단원 전체를 펼치지 않음"
+    }
+  ],
+  "originalTypeCoverage": [
+    {
+      "originalTypeId": "U4M-T01",
+      "originalParentContentId": "G4-M",
+      "expandedTypeIds": [
+        "G4-M-SD01-T01",
+        "G4-M-SD01-T02",
+        "G4-M-SD01-T01-V2",
+        "G4-M-SD02-T02",
+        "G4-M-SD03-T01",
+        "G4-M-SD03-T02"
+      ]
+    },
+    {
+      "originalTypeId": "U4M-T02",
+      "originalParentContentId": "G4-M",
+      "expandedTypeIds": [
+        "G4-M-SD02-T01",
+        "G4-M-SD02-T02"
+      ]
+    },
+    {
+      "originalTypeId": "U4D-T01",
+      "originalParentContentId": "G4-D",
+      "expandedTypeIds": [
+        "G4-D-SD01-T01",
+        "G4-D-SD01-T02",
+        "G4-D-SD02-T01",
+        "G4-D-SD02-T01-V1"
+      ]
+    },
+    {
+      "originalTypeId": "U4D-T02",
+      "originalParentContentId": "G4-D",
+      "expandedTypeIds": [
+        "G4-D-SD02-T02",
+        "G4-D-SD03-T01",
+        "G4-D-SD03-T02"
+      ]
+    },
+    {
+      "originalTypeId": "U5FM-T01",
+      "originalParentContentId": "G5-FM",
+      "expandedTypeIds": [
+        "G5-FM-SD01-T01"
+      ]
+    },
+    {
+      "originalTypeId": "U5FM-T02",
+      "originalParentContentId": "G5-FM",
+      "expandedTypeIds": [
+        "G5-FM-SD01-T02"
+      ]
+    },
+    {
+      "originalTypeId": "U5FM-T03",
+      "originalParentContentId": "G5-FM",
+      "expandedTypeIds": [
+        "G5-FM-SD02-T01",
+        "G5-FM-SD03-T01"
+      ]
+    },
+    {
+      "originalTypeId": "U5FM-T04",
+      "originalParentContentId": "G5-FM",
+      "expandedTypeIds": [
+        "G5-FM-SD02-T02",
+        "G5-FM-SD03-T02"
+      ]
+    },
+    {
+      "originalTypeId": "U6PI-T01",
+      "originalParentContentId": "G6-PI",
+      "expandedTypeIds": [
+        "G6-PI-SD01-T01",
+        "G6-PI-SD01-T02"
+      ]
+    },
+    {
+      "originalTypeId": "U6PI-T02",
+      "originalParentContentId": "G6-PI",
+      "expandedTypeIds": [
+        "G6-PI-SD02-T01",
+        "G6-PI-SD02-T02",
+        "G6-PI-SD03-T02"
+      ]
+    },
+    {
+      "originalTypeId": "U6PI-T03",
+      "originalParentContentId": "G6-PI",
+      "expandedTypeIds": [
+        "G6-PI-SD03-T01"
+      ]
+    },
+    {
+      "originalTypeId": "U6A-T01",
+      "originalParentContentId": "G6-AREA",
+      "expandedTypeIds": [
+        "G6-AREA-SD01-T01",
+        "G6-AREA-SD01-T02"
+      ]
+    },
+    {
+      "originalTypeId": "U6A-T02",
+      "originalParentContentId": "G6-AREA",
+      "expandedTypeIds": [
+        "G6-AREA-SD02-T01",
+        "G6-AREA-SD02-T02",
+        "G6-AREA-SD03-T02"
+      ]
+    },
+    {
+      "originalTypeId": "U6A-T03",
+      "originalParentContentId": "G6-AREA",
+      "expandedTypeIds": [
+        "G6-AREA-SD03-T01",
+        "G6-AREA-SD03-T02"
+      ]
+    },
+    {
+      "originalTypeId": "FM-01",
+      "originalParentContentId": "G5-FMULT",
+      "expandedTypeIds": [
+        "G5-FMULT-SD01-T02"
+      ]
+    },
+    {
+      "originalTypeId": "FM-02",
+      "originalParentContentId": "G5-FMULT",
+      "expandedTypeIds": [
+        "G5-FMULT-SD02-T01",
+        "G5-FMULT-SD02-T01-V1"
+      ]
+    },
+    {
+      "originalTypeId": "FM-03",
+      "originalParentContentId": "G5-FMULT",
+      "expandedTypeIds": [
+        "G5-FMULT-SD01-T01"
+      ]
+    },
+    {
+      "originalTypeId": "FM-04",
+      "originalParentContentId": "G5-FMULT",
+      "expandedTypeIds": [
+        "G5-FMULT-SD02-T02"
+      ]
+    },
+    {
+      "originalTypeId": "DM-01",
+      "originalParentContentId": "G5-DMULT",
+      "expandedTypeIds": [
+        "G5-DMULT-SD02-T01",
+        "G5-DMULT-SD02-T01-V1",
+        "G5-DMULT-SD02-T02"
+      ]
+    },
+    {
+      "originalTypeId": "DM-02",
+      "originalParentContentId": "G5-DMULT",
+      "expandedTypeIds": [
+        "G5-DMULT-SD01-T01",
+        "G5-DMULT-SD02-T02"
+      ]
+    },
+    {
+      "originalTypeId": "DM-03",
+      "originalParentContentId": "G5-DMULT",
+      "expandedTypeIds": [
+        "G5-DMULT-SD01-T02"
+      ]
+    },
+    {
+      "originalTypeId": "FN-01",
+      "originalParentContentId": "G6-FDIVN",
+      "expandedTypeIds": [
+        "G6-FDIVN-SD01-T01",
+        "G6-FDIVN-SD01-T02"
+      ]
+    },
+    {
+      "originalTypeId": "FN-02",
+      "originalParentContentId": "G6-FDIVN",
+      "expandedTypeIds": [
+        "G6-FDIVN-SD02-T01",
+        "G6-FDIVN-SD02-T01-V1"
+      ]
+    },
+    {
+      "originalTypeId": "FN-03",
+      "originalParentContentId": "G6-FDIVN",
+      "expandedTypeIds": [
+        "G6-FDIVN-SD02-T02"
+      ]
+    },
+    {
+      "originalTypeId": "DN-01",
+      "originalParentContentId": "G6-DDIVN",
+      "expandedTypeIds": [
+        "G6-DDIVN-SD01-T01",
+        "G6-DDIVN-SD01-T01-V1",
+        "G6-DDIVN-SD02-T01",
+        "G6-DDIVN-SD02-T02"
+      ]
+    },
+    {
+      "originalTypeId": "DN-02",
+      "originalParentContentId": "G6-DDIVN",
+      "expandedTypeIds": [
+        "G6-DDIVN-SD02-T01",
+        "G6-DDIVN-SD02-T02"
+      ]
+    },
+    {
+      "originalTypeId": "DN-03",
+      "originalParentContentId": "G6-DDIVN",
+      "expandedTypeIds": [
+        "G6-DDIVN-SD01-T02"
+      ]
+    },
+    {
+      "originalTypeId": "FF-01",
+      "originalParentContentId": "G6-FDIVF",
+      "expandedTypeIds": [
+        "G6-FDIVF-SD01-T01"
+      ]
+    },
+    {
+      "originalTypeId": "FF-02",
+      "originalParentContentId": "G6-FDIVF",
+      "expandedTypeIds": [
+        "G6-FDIVF-SD02-T01"
+      ]
+    },
+    {
+      "originalTypeId": "FF-03",
+      "originalParentContentId": "G6-FDIVF",
+      "expandedTypeIds": [
+        "G6-FDIVF-SD01-T02"
+      ]
+    },
+    {
+      "originalTypeId": "FF-04",
+      "originalParentContentId": "G6-FDIVF",
+      "expandedTypeIds": [
+        "G6-FDIVF-SD02-T02"
+      ]
+    },
+    {
+      "originalTypeId": "DD-01",
+      "originalParentContentId": "G6-DDIVD",
+      "expandedTypeIds": [
+        "G6-DDIVD-SD01-T01",
+        "G6-DDIVD-SD02-T02"
+      ]
+    },
+    {
+      "originalTypeId": "DD-02",
+      "originalParentContentId": "G6-DDIVD",
+      "expandedTypeIds": [
+        "G6-DDIVD-SD01-T02",
+        "G6-DDIVD-SD02-T02"
+      ]
+    },
+    {
+      "originalTypeId": "DD-03",
+      "originalParentContentId": "G6-DDIVD",
+      "expandedTypeIds": [
+        "G6-DDIVD-SD02-T01"
+      ]
+    }
+  ],
+  "validation": {
+    "status": "passed",
+    "connectedContentCount": 11,
+    "boundarySupportCount": 4,
+    "detailUnitCount": 27,
+    "expandedTypeCount": 46,
+    "variantCount": 14,
+    "originalExampleCount": 60,
+    "originalUpperTypeCount": 34,
+    "coveredOriginalUpperTypeCount": 34,
+    "missingOriginalUpperTypeIds": [],
+    "arithmeticAssertionCount": 92,
+    "minimumDetailUnitsPerContent": 2,
+    "minimumTypesPerDetail": 1,
+    "gradeBandCounts": {
+      "3~4": 6,
+      "5~6": 21
+    },
+    "countsByContent": [
+      {
+        "contentId": "G4-M",
+        "title": "자연수 곱셈 범위 확대",
+        "detailUnitCount": 3,
+        "typeCount": 4,
+        "exampleCount": 7
+      },
+      {
+        "contentId": "G4-D",
+        "title": "두 자리 수로 나누기",
+        "detailUnitCount": 3,
+        "typeCount": 5,
+        "exampleCount": 7
+      },
+      {
+        "contentId": "G5-FM",
+        "title": "약수와 배수",
+        "detailUnitCount": 3,
+        "typeCount": 6,
+        "exampleCount": 6
+      },
+      {
+        "contentId": "G5-FMULT",
+        "title": "분수의 곱셈",
+        "detailUnitCount": 2,
+        "typeCount": 4,
+        "exampleCount": 5
+      },
+      {
+        "contentId": "G5-DMULT",
+        "title": "소수의 곱셈",
+        "detailUnitCount": 2,
+        "typeCount": 4,
+        "exampleCount": 5
+      },
+      {
+        "contentId": "G6-FDIVN",
+        "title": "분수를 자연수로 나누기·자연수 나눗셈의 분수 몫",
+        "detailUnitCount": 2,
+        "typeCount": 3,
+        "exampleCount": 5
+      },
+      {
+        "contentId": "G6-DDIVN",
+        "title": "소수를 자연수로 나누기·자연수 나눗셈의 소수 몫",
+        "detailUnitCount": 2,
+        "typeCount": 3,
+        "exampleCount": 5
+      },
+      {
+        "contentId": "G6-FDIVF",
+        "title": "분수로 나누기",
+        "detailUnitCount": 2,
+        "typeCount": 4,
+        "exampleCount": 4
+      },
+      {
+        "contentId": "G6-DDIVD",
+        "title": "소수로 나누기",
+        "detailUnitCount": 2,
+        "typeCount": 4,
+        "exampleCount": 4
+      },
+      {
+        "contentId": "G6-PI",
+        "title": "원주율과 원주",
+        "detailUnitCount": 3,
+        "typeCount": 5,
+        "exampleCount": 6
+      },
+      {
+        "contentId": "G6-AREA",
+        "title": "원의 넓이",
+        "detailUnitCount": 3,
+        "typeCount": 4,
+        "exampleCount": 6
+      }
+    ],
+    "limitations": [
+      "교과서 전체·문제집 전체를 전수 조사한 유형 목록이 아니다.",
+      "교육과정 정합성은 자료 범위와 작성자 검토를 근거로 하며 독립 전문가의 검수 결과는 아니다.",
+      "기존 학년군·학기 배치 필드를 유지하되 출판사와 교육청 편성 예시를 국가의 학기 의무 배정으로 해석하지 않는다."
+    ]
+  },
+  "notes": [
+    "officialGradeBand는 공식 성취기준의 학년군이다. observedPlacement는 기존 확인 자료의 편성 예시이며 전국 공통 의무 학기가 아니다.",
+    "G34-FRAC와 G34-DEC는 상위학년 과제의 경계 지원 내용이며 초3~4학년군이다. 파일 이름의 upper는 모든 항목이 초4 이상이라는 뜻이 아니다.",
+    "세부단원과 세분유형은 수업 설계를 위한 연구자 제안이다. 모든 유형과 예시는 proposed-original이며 출판사의 공식 유형표라는 뜻이 아니다.",
+    "originalTypeIds는 기존 상위학년 34유형의 의미를 추적한다. originalSourceRefs와 reusedCoreTypeIds는 원자료 참조를 보존한다.",
+    "같은 핵심 인지 과제에서 수치나 입력 조건만 달라지는 문항은 variants에 넣었다. 유형 수와 예시 수를 구분한다.",
+    "출판사 목차는 내용 범위와 학기 배치만 보강한다. 예시·해설·오개념은 직접 작성했으며 교재 문항 복제가 아니다.",
+    "원주율 3.14가 주어진 문항의 수치 답은 해당 근삿값으로 계산한 결과이다. 실제 원주율이 정확히 3.14라는 주장은 하지 않는다.",
+    "학생별 숙달이나 진단 결과는 생성하지 않았다. 오개념은 수업에서 확인할 가능성 있는 오류에 대한 제안이다."
+  ]
+}

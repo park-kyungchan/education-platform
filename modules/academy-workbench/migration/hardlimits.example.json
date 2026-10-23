@@ -1,0 +1,396 @@
+{
+  "$schema": "./hardlimits.schema.json",
+  "schemaVersion": "1.0.0",
+  "generatedAt": "2026-10-13T03:16:01.146921Z",
+  "artifactKind": "synthetic_schema_example",
+  "intendedRepository": "park-kyungchan/academy-workbench",
+  "repositoryVisibilityRequired": "private",
+  "authority": {
+    "grantsActionPermission": false,
+    "historicalPermissionsAreCurrentGrants": false,
+    "sourceFilesEmbedded": false,
+    "studentValuesEmbedded": false,
+    "credentialValuesEmbedded": false,
+    "writesPerformedByThisArtifact": false
+  },
+  "currentState": {
+    "sites": {
+      "productionVersion": 19,
+      "productionCommit": "e5760c53aeb723d3ad7a66dc1428301374394059",
+      "storedCandidateVersion": 21,
+      "storedCandidateCommit": "54967bfc64278fb594d64887106b85c71facd80c",
+      "candidateDeployed": false,
+      "rollbackVersion": 19
+    },
+    "coverageAxes": {
+      "officialUiReadSupportedCatalogEntries": 7,
+      "historicalCatalogEntries": 95,
+      "observedMenuEntries": 43,
+      "independentlyActivatedProductionSourceApiAdapters": 0,
+      "siteLiveSourceRefreshIntegrated": false,
+      "uiReadMeaning": "Bounded current-day normal-UI reads, including fixed GETs and scoped NA POST search. Not independent callable APIs."
+    },
+    "qa": {
+      "responsiveChromiumWidthsPassed": [
+        1440,
+        1100,
+        1099,
+        768,
+        390,
+        320
+      ],
+      "actualMobileDeviceVerified": false,
+      "safariTouchVerified": false,
+      "fullWcagAuditVerified": false,
+      "nativeWebMcpVerified": false,
+      "actualDeviceIsAdditionalMandatoryGate": false
+    },
+    "pilotAudience": "owner_only",
+    "evidenceCutoff": "2026-10-13; later source reports may supersede these scoped facts; generatedAt is not a new live observation."
+  },
+  "goals": [
+    {
+      "id": "G.OWNER_PILOT",
+      "description": "Provide an owner-only academy workbench pilot with truthful read coverage."
+    },
+    {
+      "id": "G.CURRENT_READS",
+      "description": "Use bounded, verified academy observations without unsafe replay or false absence claims."
+    },
+    {
+      "id": "G.WORKFLOW_MODEL",
+      "description": "Keep preparation, assessment, wrong-answer, print and journal evidence distinct."
+    },
+    {
+      "id": "G.V21_RELEASE",
+      "description": "Validate the stored v21 candidate against the requested release gates before production activation."
+    },
+    {
+      "id": "G.STANDALONE",
+      "description": "Prepare a private, portable workbench implementation path without exporting private source data."
+    },
+    {
+      "id": "G.ANDROID_RESEARCH",
+      "description": "Inspect an official academy Android artifact if supplied; distinguish client code from deployed server truth."
+    }
+  ],
+  "domainHierarchy": [
+    {
+      "id": "environments",
+      "children": [
+        "cloud-coding",
+        "cloud-browser",
+        "android",
+        "native-tools"
+      ]
+    },
+    {
+      "id": "auth",
+      "children": [
+        "platform-identity",
+        "source-session"
+      ]
+    },
+    {
+      "id": "source-read",
+      "children": [
+        "assets",
+        "interaction",
+        "coverage",
+        "identity",
+        "temporal-evidence",
+        "effects"
+      ]
+    },
+    {
+      "id": "integration",
+      "children": [
+        "source-adapters",
+        "domain-model",
+        "assessment",
+        "prestudy",
+        "connector"
+      ]
+    },
+    {
+      "id": "privacy",
+      "children": [
+        "source-export",
+        "pilot-access"
+      ]
+    },
+    {
+      "id": "deployment",
+      "children": [
+        "candidate",
+        "quality",
+        "connector-readback"
+      ]
+    },
+    {
+      "id": "migration",
+      "children": [
+        "standalone-runtime",
+        "persistence",
+        "synthetic-data",
+        "source-portability"
+      ]
+    }
+  ],
+  "statusSemantics": {
+    "failed": "An attempted operation returned a definite failure; retain stage and code.",
+    "blocked": "A known missing prerequisite, restriction or unimplemented component prevents the scoped goal.",
+    "unverified": "A claim has insufficient evidence; requiredForCurrentDelivery distinguishes a mandatory gate from a coverage limit.",
+    "approval_pending": "A specific actual requested approval is unresolved. Historical context is not a grant. Example-only entries do not create real approval requests.",
+    "resolved": "The exact scoped condition is supported by evidence; neighboring or broader claims remain unaffected."
+  },
+  "limits": [
+    {
+      "id": "EXAMPLE.FAILED",
+      "domainPath": [
+        "environments",
+        "cloud-coding"
+      ],
+      "title": "Synthetic failed example",
+      "status": "failed",
+      "currentFact": "Synthetic schema demonstration only; this is not a real task or approval.",
+      "impactedGoals": [
+        "G.STANDALONE"
+      ],
+      "requiredForCurrentDelivery": false,
+      "scopeClassification": "example_only",
+      "dependencies": [],
+      "evidence": [
+        {
+          "sourceId": "E.REPORTED.SCOPE",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        }
+      ],
+      "attemptedMethods": [],
+      "whatNotToRetry": [
+        "Do not execute this example."
+      ],
+      "smallestRequiredInput": {
+        "kind": "none",
+        "description": "None; example only."
+      },
+      "acceptanceChecks": [
+        {
+          "id": "EXAMPLE.FAILED.CHECK.1",
+          "criterion": "Validate discriminated status shape.",
+          "evidenceNeeded": "Schema validation."
+        }
+      ],
+      "ownership": {
+        "accountableRole": "example_only",
+        "supportingRoles": []
+      },
+      "nextSafeAction": "Do not execute; validate the example.",
+      "failure": {
+        "stage": "example",
+        "code": "EXAMPLE_FAILURE",
+        "retryPolicy": "Never execute examples."
+      }
+    },
+    {
+      "id": "EXAMPLE.BLOCKED",
+      "domainPath": [
+        "environments",
+        "cloud-coding"
+      ],
+      "title": "Synthetic blocked example",
+      "status": "blocked",
+      "currentFact": "Synthetic schema demonstration only; this is not a real task or approval.",
+      "impactedGoals": [
+        "G.STANDALONE"
+      ],
+      "requiredForCurrentDelivery": false,
+      "scopeClassification": "example_only",
+      "dependencies": [],
+      "evidence": [
+        {
+          "sourceId": "E.REPORTED.SCOPE",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        }
+      ],
+      "attemptedMethods": [],
+      "whatNotToRetry": [
+        "Do not execute this example."
+      ],
+      "smallestRequiredInput": {
+        "kind": "none",
+        "description": "None; example only."
+      },
+      "acceptanceChecks": [
+        {
+          "id": "EXAMPLE.BLOCKED.CHECK.1",
+          "criterion": "Validate discriminated status shape.",
+          "evidenceNeeded": "Schema validation."
+        }
+      ],
+      "ownership": {
+        "accountableRole": "example_only",
+        "supportingRoles": []
+      },
+      "nextSafeAction": "Do not execute; validate the example.",
+      "blocker": {
+        "kind": "missing_prerequisite",
+        "reason": "Example prerequisite is absent."
+      }
+    },
+    {
+      "id": "EXAMPLE.UNVERIFIED",
+      "domainPath": [
+        "environments",
+        "cloud-coding"
+      ],
+      "title": "Synthetic unverified example",
+      "status": "unverified",
+      "currentFact": "Synthetic schema demonstration only; this is not a real task or approval.",
+      "impactedGoals": [
+        "G.STANDALONE"
+      ],
+      "requiredForCurrentDelivery": false,
+      "scopeClassification": "example_only",
+      "dependencies": [],
+      "evidence": [
+        {
+          "sourceId": "E.REPORTED.SCOPE",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        }
+      ],
+      "attemptedMethods": [],
+      "whatNotToRetry": [
+        "Do not execute this example."
+      ],
+      "smallestRequiredInput": {
+        "kind": "none",
+        "description": "None; example only."
+      },
+      "acceptanceChecks": [
+        {
+          "id": "EXAMPLE.UNVERIFIED.CHECK.1",
+          "criterion": "Validate discriminated status shape.",
+          "evidenceNeeded": "Schema validation."
+        }
+      ],
+      "ownership": {
+        "accountableRole": "example_only",
+        "supportingRoles": []
+      },
+      "nextSafeAction": "Do not execute; validate the example.",
+      "verification": {
+        "claimToEstablish": "Example claim",
+        "currentEvidenceInsufficientBecause": "No real observation is intended."
+      }
+    },
+    {
+      "id": "EXAMPLE.APPROVAL_PENDING",
+      "domainPath": [
+        "environments",
+        "cloud-coding"
+      ],
+      "title": "Synthetic approval_pending example",
+      "status": "approval_pending",
+      "currentFact": "Synthetic schema demonstration only; this is not a real task or approval.",
+      "impactedGoals": [
+        "G.STANDALONE"
+      ],
+      "requiredForCurrentDelivery": false,
+      "scopeClassification": "example_only",
+      "dependencies": [],
+      "evidence": [
+        {
+          "sourceId": "E.REPORTED.SCOPE",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        }
+      ],
+      "attemptedMethods": [],
+      "whatNotToRetry": [
+        "Do not execute this example."
+      ],
+      "smallestRequiredInput": {
+        "kind": "none",
+        "description": "None; example only."
+      },
+      "acceptanceChecks": [
+        {
+          "id": "EXAMPLE.APPROVAL_PENDING.CHECK.1",
+          "criterion": "Validate discriminated status shape.",
+          "evidenceNeeded": "Schema validation."
+        }
+      ],
+      "ownership": {
+        "accountableRole": "example_only",
+        "supportingRoles": []
+      },
+      "nextSafeAction": "Do not execute; validate the example.",
+      "approval": {
+        "action": "Synthetic example action",
+        "target": "Synthetic target",
+        "requestedAt": null,
+        "approvalState": "not_granted",
+        "executeUntilApproved": false
+      }
+    },
+    {
+      "id": "EXAMPLE.RESOLVED",
+      "domainPath": [
+        "environments",
+        "cloud-coding"
+      ],
+      "title": "Synthetic resolved example",
+      "status": "resolved",
+      "currentFact": "Synthetic schema demonstration only; this is not a real task or approval.",
+      "impactedGoals": [
+        "G.STANDALONE"
+      ],
+      "requiredForCurrentDelivery": false,
+      "scopeClassification": "example_only",
+      "dependencies": [],
+      "evidence": [
+        {
+          "sourceId": "E.REPORTED.SCOPE",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        }
+      ],
+      "attemptedMethods": [],
+      "whatNotToRetry": [
+        "Do not execute this example."
+      ],
+      "smallestRequiredInput": {
+        "kind": "none",
+        "description": "None; example only."
+      },
+      "acceptanceChecks": [
+        {
+          "id": "EXAMPLE.RESOLVED.CHECK.1",
+          "criterion": "Validate discriminated status shape.",
+          "evidenceNeeded": "Schema validation."
+        }
+      ],
+      "ownership": {
+        "accountableRole": "example_only",
+        "supportingRoles": []
+      },
+      "nextSafeAction": "Do not execute; validate the example.",
+      "resolution": {
+        "resolvedScope": "Example only",
+        "remainingLimits": [
+          "No real system state is established."
+        ]
+      }
+    }
+  ],
+  "dependencyGraph": {
+    "semantics": "Synthetic empty DAG.",
+    "edges": []
+  },
+  "workflowCycles": [],
+  "evidenceManifest": "./evidence-manifest.json"
+}

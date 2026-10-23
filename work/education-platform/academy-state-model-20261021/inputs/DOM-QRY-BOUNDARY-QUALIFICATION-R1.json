@@ -1,0 +1,55 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "academy-state-model-20261021",
+  "kind": "input",
+  "id": "DOM-QRY-BOUNDARY-QUALIFICATION-R1",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "root-academy-orchestrator",
+    "locator": "exact-source-receiving-qualification:DOM-QRY-BOUNDARY-QUALIFICATION-R1",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "schema": "academy.external-source-qualification/1",
+    "disposition": "qualified-source-only",
+    "producer": {
+      "logical": {
+        "domainId": "education",
+        "projectId": "education-platform",
+        "workId": "academy-query-integration-20261021",
+        "issueId": "QRY-ISSUE-20261021",
+        "specId": "QRY-SPEC",
+        "specRevision": 1,
+        "planId": "QRY-PLAN",
+        "planRevision": 1,
+        "taskId": "education-platform:task:academy-query-integration-20261021-qry-boundary"
+      },
+      "repositoryId": "park-kyungchan/education-platform",
+      "commit": "bfc2bcc5afccc13fd588c46447aa042732f14f36",
+      "tree": "aaa637a442fc2ca9e8eab8191db0e1231645f569",
+      "resultEvidenceId": "education-platform:evidence:qry-boundary-result-observation-r1",
+      "verificationEvidenceId": "education-platform:evidence:qry-boundary-verification-r1",
+      "resultSha256": "26788fae0f1202d11bd14465d284b58be6dd2ef40f1bda4b54bd54aef30032f1",
+      "verificationSha256": "d1c924c1e8a5b03b249c68da3301268ce5143e69d1bb299ff4569b01803784b1"
+    },
+    "consumer": {
+      "logical": {
+        "domainId": "education",
+        "projectId": "education-platform",
+        "workId": "academy-state-model-20261021",
+        "issueId": "DOM-ISSUE-20261021",
+        "specId": "DOM-SPEC",
+        "specRevision": 1,
+        "planId": "DOM-PLAN",
+        "planRevision": 1,
+        "taskId": "education-platform:task:academy-state-model-20261021-dom-02"
+      },
+      "qualificationTaskId": "education-platform:task:academy-state-model-20261021-dom-02-qualify-qry-boundary"
+    },
+    "nativeReceiverAuthentication": false,
+    "sharedAuditDelivery": false,
+    "operationalActivation": false
+  }
+}

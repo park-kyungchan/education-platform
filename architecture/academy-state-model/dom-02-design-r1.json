@@ -1,0 +1,78 @@
+{
+  "schema": "academy.dom02-contract-refinements.v1",
+  "taskId": "education-platform:task:academy-state-model-20261021-dom-02",
+  "status": "prepared-source-awaiting-root-checkpoint",
+  "startingHead": "fabce64cb5338101328900644462b98fa8209be9",
+  "implementationBase": "3adb273aa1125aa8d6beff7dc51a4c5076710d9f",
+  "admissionInput": "DOM-02-ADMISSION-R1",
+  "qualifiedBoundary": "DOM-QRY-BOUNDARY-QUALIFICATION-R1",
+  "singleStateOwner": "TeacherApplication.student -> TeacherStore.readSnapshot -> TeacherQueries -> existing projectLearningWork and buildTeacherWorkContext",
+  "bindingsOwner": "learningWorkBindings.ts contains only reusable binding/selection assertions and exact retained-source score qualification; it creates no store, source acquisition or second state reducer.",
+  "refinements": [
+    {
+      "id": "G-100",
+      "optionalPersistedField": "LearningWorkAttempt.assessmentBasis: Knowledge<TextbookAssessmentBasis>",
+      "explicitNamespaces": {
+        "paper": "academy_textbook_paper",
+        "attempt": "academy_textbook_attempt",
+        "meaning": "Opt-in literal keys from the maintained textbook read family; the student/course/book/paper/attempt tuple and retained source revision are all checked. Equal literals in legacy or other namespaces are not silently aliased. No native identity registration is inferred."
+      },
+      "qualifiedBasis": [
+        "Same owner/student partition and namespaced student/course/book assignment scope",
+        "Exact assignment revision, local attempt entity/revision, issuance key and explicit source paper/attempt crosswalk",
+        "Assignment, attempt and source revision must be retained heads; missing or replaced evidence stays unknown",
+        "Observed textbook source passes existing source audit and matches its original content digest and observation clock"
+      ],
+      "view": "Each exact attempt exposes assessmentTarget, scoreBasis and paired defaultClinicTargets. Only exact numeric100 excludes both defaults. Other verified scores require teacher selection; unresolved evidence stays unknown. No assignment is created or cancelled by this filter.",
+      "separation": "Explicit later assignments/exceptions, raw source scores, teacher-reported originalScore, clinic final, activity review, app entry and physical stages remain independent.",
+      "coverageLimit": "Unsupported read families or unqualified namespace/book/attempt crosswalks remain unknown. Retained-head qualification is not a new live acquisition or proof of authoritative currentness."
+    },
+    {
+      "id": "G-ATTEMPT",
+      "optionalPersistedField": "TeacherActivityReview.attemptBinding: Knowledge<ActivityAttemptBinding>",
+      "writeGuard": "Existing owner ledger/student lock and CAS remain. New exact bindings must cite their attempt revision and match retained current assignment/items/attempt/issuance and student/owner scope.",
+      "identity": "Legacy or explicit unknown reviews keep their old assignment-level entity. An exact new review has an attempt-and-revision-scoped entity suffix, preserving earlier originals rather than rebinding them.",
+      "view": "Summary derives unknown for absent legacy bindings. Exact attempt activityReviews contain only qualified matching reviews; a grade/source revision cannot inherit its predecessor's inspection. Assignment-level teacher finals remain visible at their original scope.",
+      "coverageLimit": "The existing student workspace port returns retained ledger heads. activityReviewCoverage explicitly does not claim complete review history; existing history/result APIs retain original access. Clinic completed remains its own exact item/attempt lane."
+    },
+    {
+      "id": "G-REPLACEMENT",
+      "optionalPersistedField": "LearningWorkAssignment.replaces: Knowledge<AssignmentReplacement>",
+      "writeGuard": "A new exact predecessor must be a retained current revision in the same student/course/book/user-course/registration scope. Self links, missing links, cross-scope references, entity cycles and competing successors are rejected. A known lineage cannot be silently dropped or rebound on a later revision.",
+      "view": "Existing projection exposes obligationState, qualified lineage and currentObligations. Withdrawn and exactly replaced revisions are excluded; raw records, attempts and archived assignment versions remain. Unknown/invalid relationships cannot create cancellations. A later distinct predecessor revision is not silently cancelled.",
+      "oneSelection": "selectEffectiveAssignments extracts the existing lesson-effective assignment selection and is reused by projection and transaction guards. Guards read retained history so a future successor revision cannot hide an already-effective replacement.",
+      "recovery": "work_assignment_replaced is a proven terminal clinic refusal; the existing protected original request and refusal readback remain available without decision replay.",
+      "countingLimit": "currentObligations means active retained explicit assignments with separate completion lanes, not a whole-student pending-homework count or full native inventory."
+    },
+    {
+      "id": "G-STAGES",
+      "optionalPersistedField": "TeacherActivityReview.paper.stages: {printed: Knowledge<PaperStageObservation>, distributed: Knowledge<PaperStageObservation>}",
+      "scope": "Every known stage cites the exact issuance key and an observedAt clock no later than its teacher report. Stage reports are attributable teacher observations, not native execution receipts.",
+      "view": "Absent stages derive independent unknowns. Known printing does not establish distribution; known distribution does not invent a print observation. Issuance identity, immutable ordered membership/reissue lineage, solving, source grade, correction, app entry and teacher final stay separate.",
+      "history": "Existing append-only owner workspace versions retain previous stage observations and teacher originals. No payload normalization, backfill, schema migration or physical action is performed."
+    }
+  ],
+  "compatibility": {
+    "payloads": "Legacy exact-key validators still accept absent new optional fields. Views derive unknowns without adding properties to old payloads or changing their content/integrity digests.",
+    "consumer": "Existing teacher web filtering respects active obligations and retains a fallback for older serialized views without obligationState. New contracts require reviewed producer/consumer source adoption before emission in a native environment.",
+    "sceneRevision": "TeacherQueries includes the existing teacher workspace revision pins and updates its projection schema marker; readSnapshot ownership and source acquisition behavior are unchanged.",
+    "neutralLeaves": "All five QRY-BOUNDARY neutral leaves remain byte-identical to the qualified adoption Input."
+  },
+  "verification": {
+    "newTests": "tests/academy/learningWorkRefinements.test.ts",
+    "runner": "architecture/academy-state-model/verify-dom02.ts",
+    "rawObservations": "architecture/academy-state-model/observations/DOM-02-CHECKS-R*.json",
+    "database": "No synthetic PostgreSQL socket admitted. Pure shared guards and actual application/readSnapshot/request-recovery composition are checked; live transaction/CAS paths remain unexecuted.",
+    "provenance": "Root import-provenance verification reports existing boundary-adoption drift and additional maintained source edits. Reserved provenance manifests stay unchanged; root owns reconciliation after reviewing exact prepared source hashes.",
+    "canonical": "Root owns stage/commit and the committed exact snapshot plus semantic transition. No committed DOM-02 qualification or local result-durable milestone is claimed here."
+  },
+  "effects": {
+    "gitWrite": false,
+    "install": false,
+    "commonContractOrPinChange": false,
+    "nativeActivation": false,
+    "privateOriginals": false,
+    "printingOrSending": false,
+    "teacherOrMathematicalAcceptance": false
+  }
+}

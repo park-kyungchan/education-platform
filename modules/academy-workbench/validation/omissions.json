@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "academy.export-omissions/1.0.0",
+  "defaultPolicy": "Only allowlisted UTF-8 text is included; absence is deliberate unless manifest says otherwise.",
+  "omitted": [
+    {
+      "group": "Original Git history and private/runtime configuration",
+      "reason": "Prior history and configuration may contain data or credentials; the source checkout is not republished.",
+      "restore": "Create a clean repository and independent host setup."
+    },
+    {
+      "group": "src/generated/**, src/durable/approved-delta.ts, src/domain/confirmed-workflow-bindings.ts, src/workflow-pins.ts",
+      "reason": "Contains embedded student/event/history/roster data or private binding literals; worker config includes compressed private data.",
+      "restore": "Recreate from authorized data in server-only private storage, not source files or browser bundles."
+    },
+    {
+      "group": "artifacts/**, dist/**, .sites-runtime/**, node_modules/**, .openai/** and archive files",
+      "reason": "Generated payloads, deployment identity, cached/binary material and private snapshots are out of scope.",
+      "restore": "Regenerate only from the approved sanitized source and private runtime inputs in the intended environment."
+    },
+    {
+      "group": "Raw academy-context reconstruction JSON, conversations, private pages and original provenance IDs",
+      "reason": "Includes real student facts and private user context.",
+      "restore": "Use the newly written generic business packet; reconsult private sources only when authorized for a separate task."
+    },
+    {
+      "group": "Raw DOM, screenshots, HAR, saved response fixtures, endpoint sample requests/results and native identifiers",
+      "reason": "Potential student, account and session data.",
+      "restore": "Collect a bounded new sample through approved access and keep it out of Git."
+    },
+    {
+      "group": "Unsafe and unreviewed tests, input-preparation scripts, original build scripts, original README and renderer-original.ts",
+      "reason": "Hardcoded real roster/provenance or environment-coupled dependencies.",
+      "restore": "Port in the selected coding environment using newly created fictional fixtures."
+    },
+    {
+      "group": "Architecture sourced-provenance test cases",
+      "reason": "Read original private context and assert exact message IDs.",
+      "restore": "Keep only the synthetic pure-validator subset and create explicit nonprivate provenance tests."
+    },
+    {
+      "group": "Full raw architecture/context-route bindings",
+      "reason": "Contains private source paths, history bindings or authority text; not suitable for repository handoff.",
+      "restore": "Use the sanitized architecture and current explicit authority, not historical text."
+    }
+  ],
+  "intentionalTransformations": [
+    "Replace private source page/message/profile/space literals in four legacy source modules with fictional/redacted placeholders.",
+    "Replace original account repository provenance with generic source-repository labels.",
+    "Rebase clinic module imports to the included abstract architecture and type contract.",
+    "Replace private fixture-filename provenance in source-contract metadata.",
+    "Mark proposed clinic endpoint unavailable when omitted private fixture loader is absent.",
+    "Retain only synthetic logical-model tests and write results to stdout.",
+    "Change preview test happy-dom import to package import; no test execution performed.",
+    "Generalize historical student-capture counts and remove the old snapshot-count field name.",
+    "Replace hardcoded preparation-reminder clock/timezone with a caller-supplied workdayReminders contract; preserve verified personal teaching day versus delegated-session audit semantics.",
+    "Classify original source metadata locators as historical_nonportable_locator with an explicit mapping document."
+  ],
+  "limitations": [
+    "No encrypted/compressed/binary data files are exported.",
+    "No credentials, auth cookies or student facts should be added to repository configuration.",
+    "Known pattern scanning plus independent review reduces disclosure risk but cannot certify unseen source information."
+  ]
+}

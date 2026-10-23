@@ -1,0 +1,45 @@
+{
+  "reviewType": "independent_adversarial_data_and_domain_code_review",
+  "reviewedAt": "2026-10-14T08:02:47Z",
+  "verdict": "pass_for_bounded_offline_audit_scope",
+  "repositoryWorkspace": "/workspace/scratch/3bd8c10a8771/academy-five-student-audit-20261014",
+  "auditSha256": "a5b58fc7f44c80f15878f2ffa80f036258204b8830a077ee670bd66630ba3787",
+  "independentlyExecuted": {
+    "domainAndDataTests": {
+      "passed": 74,
+      "failed": 0
+    },
+    "validateData": "pass",
+    "privateManifestFilesHashed": 3
+  },
+  "defectsFoundAndVerifiedFixed": [
+    "Unknown attempt IDs no longer cross-join.",
+    "Original error and similar clinic review routes separated.",
+    "Unknown book/edition explicitly retained, not auto-joined.",
+    "Video counts labeled observations rather than unique videos; mixed-offset timestamp comparisons use instants.",
+    "Mixed raw clinic columns cannot establish route-specific discrepancy without mapped routeState.",
+    "Historical row teacher status renamed and effective exact Ruhan routes separately projected.",
+    "Oct8 user-reported dispatch supersedes stale Page handoff unknown; recipient receipt and learning completion remain unknown; claim supportingSources includes verified user message.",
+    "Raw DOM and unnecessary health/other-student content excluded from committed live academic projection."
+  ],
+  "dataChecks": {
+    "students": 5,
+    "historicalAttempts": 208,
+    "historicalVideos": 47,
+    "historicalRowsIncludingPlaceholders": 636,
+    "liveObservationRows": 178,
+    "liveAcademicDailyRecordRows": 8,
+    "ruhanConfirmedRoutes": 36,
+    "ruhanUnconfirmedRoutes": 6,
+    "danglingAttemptReferences": 0,
+    "duplicateHistoricalAttemptIdsWithinStudent": 0,
+    "rawDomInPrivateProjection": false
+  },
+  "limitations": [
+    "Review is not native harness review attestation and grants no permission.",
+    "No independent browser recapture performed; reviewed collected artifacts and source attribution.",
+    "No complete lifetime, assigned print inventory, exact live-to-historical identity or LMS missing-entry conclusion established.",
+    "New Site runtime deploy, actual repository remote publication, CI and merge not verified in this review.",
+    "Topology graph and repository-wide engineering integration reviewed separately."
+  ]
+}

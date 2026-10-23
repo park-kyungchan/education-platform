@@ -1,0 +1,38 @@
+{
+  "type": "student_homework_review_plan_append_revision",
+  "plan_id": "ruhan-homework-review-plan-20261007-001",
+  "revision_id": "revision_0001",
+  "from_version": "1.0.0",
+  "to_version": "1.1.0",
+  "recorded_at_utc": "2026-10-07T05:43:04Z",
+  "base": {
+    "version": "1.0.0",
+    "file_name": "이루한_숙제제출_교사확인계획_1.0.0.json",
+    "sha256": "53ce3c5ea54b85d8db58b7fc4337dde6af2ed5d8248e04db9c15dd7cb78ea7e2"
+  },
+  "events": [
+    {
+      "kind": "teacher_confirmed_davinci_page_assignment_scope",
+      "source": {
+        "message_id": "Sentinel_04746caec34c8191919c2e24507335ed",
+        "actor": "user",
+        "sent_at_utc": "2026-10-07T05:40:06.642062+00:00",
+        "exact_relevant_text": "다빈치1-1 p.72~p.83은 유리수의 계산 단원의5차시와6차시,그리고 학교 시험 서술형 정복 섹션과 대단원 실전 TEST이다.그러므로숙제범위에포함되는것들이다."
+      },
+      "homework_basis_date": "2026-10-02",
+      "page_range": {
+        "from": 72,
+        "to": 83
+      },
+      "scope_item_ids": [
+        "scope:ruhan:20261002:davinci:lesson5",
+        "scope:ruhan:20261002:davinci:lesson6",
+        "scope:ruhan:20261002:davinci:written_response",
+        "scope:ruhan:20261002:davinci:unit2_TEST"
+      ],
+      "prior_state": "pending_verification",
+      "new_state": "user_confirmed_included",
+      "app_observation_refreshed": false
+    }
+  ]
+}

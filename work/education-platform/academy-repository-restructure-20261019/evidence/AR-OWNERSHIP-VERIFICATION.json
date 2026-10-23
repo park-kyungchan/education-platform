@@ -1,0 +1,73 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "academy-repository-restructure-20261019",
+  "kind": "evidence",
+  "id": "AR-OWNERSHIP-VERIFICATION",
+  "evidenceKind": "verification",
+  "source": {
+    "kind": "snapshot",
+    "path": "work/education-platform/academy-repository-restructure-20261019/inputs/AR-OWNERSHIP-CHECKS.json",
+    "fragment": "#/content/verification"
+  },
+  "artifact": {
+    "schemaVersion": "1.0.0",
+    "kind": "verification",
+    "id": "education-platform:verification:academy-restructure:ownership",
+    "projectId": "education-platform",
+    "domainId": "education",
+    "createdAt": "2026-10-19T06:00:21.496Z",
+    "payload": {
+      "targetRefs": [
+        "common-harness:task:5d9fea37588a3d80b6a3b7812b81b372166cfde98f505337d6b71d97627fa19a"
+      ],
+      "criteria": [
+        {
+          "id": "source-backed-owner-routing",
+          "status": "pass",
+          "message": "All15 source records and owner targets exist; the plan narrows selected repositories and refuses an unknown repository without dispatching owner checks.",
+          "evidenceRefs": [
+            "education-platform:evidence:academy-restructure:ownership-checks"
+          ]
+        },
+        {
+          "id": "preserved-source-boundaries",
+          "status": "pass",
+          "message": "Only three maintained repositories contain this source-only workflow change. Twelve retained/native/governance/archived/provider sources, protected external feature paths and historical locks/archives/context remain unchanged.",
+          "evidenceRefs": [
+            "education-platform:evidence:academy-restructure:ownership-checks"
+          ]
+        }
+      ],
+      "inputHashes": [
+        {
+          "path": "work/education-platform/academy-repository-restructure-20261019/work.json",
+          "sha256": "32ec71465aa9b7913abcb6f2225a28aee0f9cb3f5782e95b63fc35f8a1016368"
+        },
+        {
+          "path": "work/education-platform/academy-repository-restructure-20261019/tasks/AR-OWNERSHIP.json",
+          "sha256": "a60cf29e4f4a0cc3d7ac2cdec37832cadf3d0bb70ffea602f2ed73198a04732e"
+        },
+        {
+          "path": "work/education-platform/academy-repository-restructure-20261019/inputs/AR-WORKFLOW-ROUTE.json",
+          "sha256": "1570aef8f17c34a8903f1d84c138b70871b5619aa4e0d04a7dc30b0c60d0fd81"
+        }
+      ],
+      "runtime": {
+        "name": "Bun and native Git",
+        "version": "1.4.3"
+      },
+      "details": {
+        "testedCommit": "bd90de758a176ddce674c451a34c0a6f3bdab35b",
+        "coordinationSourceCommit": "bd90de758a176ddce674c451a34c0a6f3bdab35b",
+        "receiptSha256": "fd6b4517015af2a44010e51ad49ccb3a71f9c40753aeea9467da043d48a64f97",
+        "verificationClass": "source-only-routing-and-preservation",
+        "nativeActivation": false,
+        "independentReviewPerformed": false,
+        "sharedDelivery": "pending",
+        "semanticAcceptanceEstablished": false
+      }
+    }
+  }
+}

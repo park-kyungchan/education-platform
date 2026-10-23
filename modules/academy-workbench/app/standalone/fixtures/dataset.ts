@@ -1,0 +1,15 @@
+import {makeView,students} from './view.ts';
+import type {Dataset,Provenance,RecordEntry,Json} from '../src/server/contracts.ts';
+export function makeSyntheticDataset():Dataset{
+ const timestamp='2030-01-08T00:00:00.000Z',provenance:Provenance={sourceKind:'synthetic',sourceReference:'purpose-written-fiction',sourceHash:null,sourceRevision:'fiction-parity-1',observedAt:null,reportedAt:null,occurredAt:null,recordedAt:timestamp,originalTimeLabel:'합성 검수 날짜',timePrecision:'unknown',verification:'unverified',completeness:'partial',queryScope:'Fiction only; zero academy requests',coverageWindow:{from:null,to:null},pagination:{exhausted:null,pages:null}},records:RecordEntry[]=[];
+ const add=(id:string,studentId:string|null,domain:RecordEntry['domain'],kind:string,data:Json)=>records.push({id,studentId,domain,kind,data,provenance,supersedes:[],retracts:[],conflicts:[]});
+ const projections=students.map((s,n)=>{const {view,includedContents,candidates}=makeView(s.id);
+  add(s.id+'-assignment',s.id,'assignment','teacher_assignment',{label:'가상 수학 탐구 A · 연습 두 단원',assignmentStatus:'planned',deadline:'2030-01-09',studentCompletion:'unknown',teacherReview:'unknown'});
+  add(s.id+'-membership',s.id,'schedule','confirmed_membership',{weekdays:[2,4],weekdayLabel:'합성 화·목 패턴',session:n%2+1,confirmedAsOf:'2030-01-01',effectiveFrom:null,effectiveTo:null});
+  add(s.id+'-checkpoint',s.id,'teacher_review','activity_checkpoint',{stage:'review',label:'가상 오답 검토',state:'planned'});
+  add(s.id+'-diary',s.id,'dailyrecord','saved_diary',{dateRaw:'1월 8일 (합성)',progressSummary:'합성 DT 활동 언급 · 원본 시험 응시와 연결되지 않음',homeworkSummary:'가상 연습 두 단원',mentionsDT:true});
+  for(const r of Object.values(view.records) as any[])for(const [i,a]of r.attemptEvidence.entries())add(r.recordId+'-observation-'+i,s.id,'learning','grading_observation',{recordRef:r.recordId,score:a.score,eventTimeRaw:a.dateRaw});
+  return{studentId:s.id,sourceRecordIds:records.filter(r=>r.studentId===s.id).map(r=>r.id),view,includedContents,teacherOverlay:{version:'1.3.0',studentId:s.id,sha256:'0'.repeat(64),sourceSnapshotSha256:'0'.repeat(64),sourceRevision:'fiction-parity-1',summary:{completedOriginalAttempts:4,completedPathDecisions:7,deliveryPlannedOriginalAttempts:6,deliveryPlannedPathCandidates:12,actualPrintedSheetCount:null,printedOriginalAttempts:4,printedPathCandidates:8},candidates}};});
+ ['숙제 확인','오답 검토','수업 준비','교사 확인'].forEach((label,i)=>add('fiction-policy-'+(i+1),null,'context','workflow_policy',{labelRaw:'합성 '+label+' 기준',domain:'teaching_coaching',lifecycle:'active',knowledge:'unknown',activationRaw:'합성 기준',cadenceRaw:'가상 주기',deadlineRaw:'미정',scopeRaw:'합성 UI 검수',responsibilityRaw:'가상 교사',steps:['근거 확인','판단과 실행 권한 구분'],exceptions:[]}));
+ return{schemaVersion:'academy.portable-dataset/1',datasetId:'synthetic-parity-v1',ownerId:'local-owner',mode:'synthetic',createdAt:timestamp,students:students.map(s=>({id:s.id,displayName:s.displayName,sourceIdentities:[{namespace:'fiction',sourceId:s.id,verification:'unverified',evidenceIds:[s.id+'-assignment']}]})),records,artifacts:[],projections};
+}

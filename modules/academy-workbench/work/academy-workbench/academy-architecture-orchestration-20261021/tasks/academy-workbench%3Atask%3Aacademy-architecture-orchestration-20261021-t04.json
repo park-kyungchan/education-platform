@@ -1,0 +1,44 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "academy-operations",
+  "projectId": "academy-workbench",
+  "workId": "academy-architecture-orchestration-20261021",
+  "kind": "task",
+  "id": "academy-workbench:task:academy-architecture-orchestration-20261021-t04",
+  "logical": {
+    "domainId": "academy-operations",
+    "projectId": "academy-workbench",
+    "workId": "academy-architecture-orchestration-20261021",
+    "issueId": "AAR-ISSUE-20261021",
+    "specId": "AAR-SPEC",
+    "specRevision": 1,
+    "planId": "AAR-PLAN",
+    "planRevision": 2,
+    "taskId": "academy-workbench:task:academy-architecture-orchestration-20261021-t04"
+  },
+  "title": "Qualify preserved prior Work delivery and integration bases",
+  "nextAction": "Preserve this scoped locally verified source result. Receiving Work must qualify exact producer/Verification evidence before dependent implementation; native/operational holds remain.",
+  "state": {
+    "execution": "complete",
+    "verification": "passed",
+    "localAudit": "result-durable",
+    "sharedAudit": "unsynchronized",
+    "formalCompletion": "pending"
+  },
+  "executionClass": "source-only",
+  "dependsOn": [
+    {
+      "taskId": "academy-workbench:task:academy-architecture-orchestration-20261021-t03",
+      "milestone": "execution-and-verification"
+    }
+  ],
+  "decisionIds": [
+    "AAR-DECISION-APPROVAL-ORDER-R2",
+    "AAR-DECISION-ARCHITECTURE-APPROVED-001"
+  ],
+  "effectIds": [],
+  "verificationEvidenceIds": [
+    "academy-workbench:evidence:aar-t04-verification-r1",
+    "academy-workbench:evidence:aar-t04-delivery-verification-r2"
+  ]
+}

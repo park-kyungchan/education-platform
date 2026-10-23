@@ -1,0 +1,29 @@
+$ bun run test:harness
+$ bun test tests/harness
+bun test v1.4.2 (744846f84)
+
+tests/harness/consumer.test.ts:
+(pass) canonical contracts through the pinned external provider > consumer identity, local registration and unchanged historical gates pass [52.76ms]
+(pass) canonical contracts through the pinned external provider > unknown or enabled capability fields cannot bypass the local manifest [31.90ms]
+(pass) canonical contracts through the pinned external provider > omitted false flags and wrong module schema cannot silently widen capability [33.33ms]
+(pass) canonical contracts through the pinned external provider > local identity rejects wrong Task/Run IDs and registration claims [41.98ms]
+(pass) canonical contracts through the pinned external provider > an existing checkpoint cannot be reset by a fresh context projection [1.40ms]
+(pass) canonical contracts through the pinned external provider > canonical schema rejects malformed Artifact IDs [0.43ms]
+(pass) canonical contracts through the pinned external provider > complete Task without Verification is rejected [0.35ms]
+(pass) canonical contracts through the pinned external provider > Run references a real Task in the closed set [2.50ms]
+(pass) canonical contracts through the pinned external provider > generated handoff summary is not an actual user decision [1.50ms]
+(pass) canonical contracts through the pinned external provider > capability or context never grants native permission [0.72ms]
+(pass) canonical contracts through the pinned external provider > completed effect cannot be queued again [1.07ms]
+(pass) canonical contracts through the pinned external provider > uncertain effect stays distinct and requires observation [0.83ms]
+(pass) canonical contracts through the pinned external provider > foreign WorkContext checkpoint path is rejected [0.15ms]
+(pass) canonical contracts through the pinned external provider > snapshot mode is explicit and not a claimed native provider closure [5.31ms]
+(pass) fail-closed source pins > rejects missing, changed and escaping sources, accepts exact bytes [0.98ms]
+(pass) fail-closed source pins > rejects a source symlink even if bytes match [0.52ms]
+(pass) Bun relative import shadow protection > reject or ignore unpinned shadow packages/ontology/src/schema.js [7.39ms]
+(pass) Bun relative import shadow protection > reject or ignore unpinned shadow packages/work-continuity/src/context/source [4.20ms]
+(pass) Bun relative import shadow protection > reject or ignore unpinned shadow packages/work-continuity/src/context/source.json [7.41ms]
+
+ 19 pass
+ 0 fail
+ 29 expect() calls
+Ran 19 tests across 1 file. [445.00ms]

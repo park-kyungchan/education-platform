@@ -1,0 +1,78 @@
+bun install v1.4.2 (744846f84)
+
++ bun-types@1.4.2
++ typescript@7.0.2
+
+5 packages installed [57.00ms]
+$ bun run typecheck:harness && bun run check:harness && bun run typecheck:context && bun run check:context
+$ bun scripts/typecheck-harness.ts
+$ bun scripts/check-harness.ts
+{
+  "status": "pass",
+  "source": {
+    "root": "<AGENT_PLATFORM_ROOT>",
+    "commit": "ffba2462a08b9f8c83c6f87b1043403e5cb748d7",
+    "mode": "pinned-snapshot",
+    "scope": "Selected Artifact and WorkContext validator import closure plus immutable ontology 0.2.0 release; not all native provider closure.",
+    "fullNativeProviderClosureVerified": false,
+    "authority": "none",
+    "nativePermissionGranted": false
+  },
+  "artifactCount": 5,
+  "closedReferences": "pass",
+  "checkpoint": "pass",
+  "identity": {
+    "projectId": "academy-workbench",
+    "workId": "harness-consumer-upgrade-20261013",
+    "registration": "local-module-record"
+  },
+  "historicalGateBytes": "unchanged",
+  "archiveContentsRechecked": false,
+  "runtimeActivated": false,
+  "actualUserAcceptance": "not-observed"
+}
+$ bun node_modules/typescript/bin/tsc -p context/user-context/tsconfig.json
+$ cd context/user-context && bun run check
+$ bun scripts/validate.mjs && bun scripts/test.mjs
+{
+  "status": "passed",
+  "mode": "read-only",
+  "sources": 77,
+  "records": 52,
+  "checks": 12,
+  "errors": [],
+  "sourceFingerprint": "592c8bd54fc6ab067a33489e6dca6775e90c744834ca997fe35c97fdeedbacff"
+}
+{
+  "testsPassed": 21,
+  "coverage": "positive fixture, 19 adversarial data mutations, and byte-identical read-only CLI; no semantic validity claim"
+}
+$ bun run test:harness
+$ bun test tests/harness
+bun test v1.4.2 (744846f84)
+
+tests/harness/consumer.test.ts:
+(pass) canonical contracts through the pinned external provider > consumer identity, local registration and unchanged historical gates pass [57.47ms]
+(pass) canonical contracts through the pinned external provider > unknown or enabled capability fields cannot bypass the local manifest [37.27ms]
+(pass) canonical contracts through the pinned external provider > omitted false flags and wrong module schema cannot silently widen capability [41.90ms]
+(pass) canonical contracts through the pinned external provider > local identity rejects wrong Task/Run IDs and registration claims [45.32ms]
+(pass) canonical contracts through the pinned external provider > an existing checkpoint cannot be reset by a fresh context projection [1.60ms]
+(pass) canonical contracts through the pinned external provider > canonical schema rejects malformed Artifact IDs [0.73ms]
+(pass) canonical contracts through the pinned external provider > complete Task without Verification is rejected [0.36ms]
+(pass) canonical contracts through the pinned external provider > Run references a real Task in the closed set [5.12ms]
+(pass) canonical contracts through the pinned external provider > generated handoff summary is not an actual user decision [1.51ms]
+(pass) canonical contracts through the pinned external provider > capability or context never grants native permission [0.81ms]
+(pass) canonical contracts through the pinned external provider > completed effect cannot be queued again [0.88ms]
+(pass) canonical contracts through the pinned external provider > uncertain effect stays distinct and requires observation [0.87ms]
+(pass) canonical contracts through the pinned external provider > foreign WorkContext checkpoint path is rejected [0.14ms]
+(pass) canonical contracts through the pinned external provider > snapshot mode is explicit and not a claimed native provider closure [4.54ms]
+(pass) fail-closed source pins > rejects missing, changed and escaping sources, accepts exact bytes [1.36ms]
+(pass) fail-closed source pins > rejects a source symlink even if bytes match [0.81ms]
+(pass) Bun relative import shadow protection > reject or ignore unpinned shadow packages/ontology/src/schema.js [6.39ms]
+(pass) Bun relative import shadow protection > reject or ignore unpinned shadow packages/work-continuity/src/context/source [4.34ms]
+(pass) Bun relative import shadow protection > reject or ignore unpinned shadow packages/work-continuity/src/context/source.json [9.00ms]
+
+ 19 pass
+ 0 fail
+ 29 expect() calls
+Ran 19 tests across 1 file. [476.00ms]

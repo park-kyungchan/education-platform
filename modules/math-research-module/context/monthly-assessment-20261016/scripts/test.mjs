@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict';
+import {load,validate} from './validate.mjs';
+const data=await load();assert.deepEqual(validate(data),[]);
+const mutate=(f,expected)=>{const copy=structuredClone(data);f(copy);assert(validate(copy).some(x=>x.includes(expected)),expected)};
+mutate(x=>x.sources.sources[0].originalText+=' drift','source hash mismatch');
+mutate(x=>x.dossier.claims[0].sourceKeys=['unknown'],'unresolved source');
+mutate(x=>x.coverage.completenessClaimed=true,'unsupported completeness');
+mutate(x=>x.dossier.claims.find(y=>y.key==='math-exam-distribution').status='current','allocation adopted');
+mutate(x=>x.dossier.claims.find(y=>y.key==='math-palantir-user-analogy').status='current','research hypothesis promotion');
+mutate(x=>x.dossier.claims.find(y=>y.key==='history:ux.ancestor_only').status='current','navigation correction lost');
+mutate(x=>delete x.dossier.ontologyArchitecture.LOGIC,'ontology layer missing');
+mutate(x=>x.dossier.nativePermissionGranted=true,'authority escalation');
+mutate(x=>x.requirements.records.find(r=>r.key==='math-exam-context').assessmentFacts.scoreBands[0].count=11,'score arithmetic');
+mutate(x=>x.requirements.records.find(r=>r.key==='math-exam-timing').timingFacts.durationMinutes=100,'exam timing drift');
+mutate(x=>x.sources.sources[0].author='unverified_publisher','invalid source author');
+console.log('PASS 11 negative tests and baseline validation');

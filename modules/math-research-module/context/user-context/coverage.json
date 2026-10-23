@@ -1,0 +1,197 @@
+{
+  "schemaVersion": "module-user-context.coverage/1.0.0",
+  "scopeStatus": "partial",
+  "fullConversationTransferComplete": false,
+  "fullSpaceReconciliationComplete": false,
+  "conversationDenominator": null,
+  "coveragePercent": null,
+  "scopeDescription": "학원실무와 초3 수학 연구 파일럿의 업무 설계·의도·결정·수정·제안·수락에 한정한 선택 원문 복원. 전체 이관 검증이 아니다.",
+  "included": {
+    "messages": 64,
+    "spaceBlocks": 13,
+    "records": 52,
+    "sourceTimeMinimum": "2026-10-06T05:58:24.941270+00:00",
+    "sourceTimeMaximum": "2026-10-13T23:21:01.872006+00:00"
+  },
+  "scopeInventory": [
+    {
+      "scope": "math.current-pilot",
+      "status": "selected_sources_recovered",
+      "includes": [
+        "초3 곱셈·나눗셈·원",
+        "관련 초3~6 연결만",
+        "2022 개정 근거",
+        "105 core",
+        "전형적 예제",
+        "미시행동·학습심리",
+        "능력 후보·문헌",
+        "강사 표현·연구자 이견",
+        "Palantir 연구 객체 경계",
+        "24문항 맥락"
+      ]
+    },
+    {
+      "scope": "math.historical-map",
+      "status": "summary_blocks_only",
+      "includes": [
+        "초5~중3 기존 MathEducation Page의 과거 상태"
+      ],
+      "notIncluded": [
+        "48개 하위 Page 전수",
+        "313개 개념 원본 재검증",
+        "모든 성취기준·선수 관계 감사"
+      ]
+    },
+    {
+      "scope": "academy.design",
+      "status": "selected_sources_recovered",
+      "includes": [
+        "실무 의도와 행동 매핑",
+        "typed 구조",
+        "원본/판단/계획/실행 분리",
+        "독립 환경",
+        "부모용 진도 투영",
+        "교사 완료판정",
+        "전체 통합 요구"
+      ]
+    },
+    {
+      "scope": "academy.student-records",
+      "status": "excluded_from_new_collection",
+      "includes": [],
+      "reason": "이번 패키지의 목적은 업무설계 맥락이며 기존 보존 자료는 별도 manifest로 참조한다."
+    },
+    {
+      "scope": "academy.archives",
+      "status": "manifest_audit_only",
+      "includes": [
+        "이전 1,588파일 보존 목록·23개 요약 결정·남은 게이트"
+      ],
+      "notIncluded": [
+        "압축 원본 전수 재검증",
+        "이슈/PR/브랜치/설정 이관 완전성"
+      ]
+    },
+    {
+      "scope": "common.harness",
+      "status": "source_pinned_contract_reference",
+      "includes": [
+        "agent-platform 고정 commit의 context 계약"
+      ],
+      "notIncluded": [
+        "사용자 WSL 파일 전체 원문 동등성",
+        "중앙 runtime 등록",
+        "native 권한 설정"
+      ]
+    },
+    {
+      "scope": "messages",
+      "status": "keyword_and_neighborhood_selection",
+      "includes": [
+        "반복 맥락 키워드 검색",
+        "관련 메시지 전후 확인",
+        "명시 수정·거절·재개 검토"
+      ],
+      "notIncluded": [
+        "전체 메시지 인벤토리",
+        "삭제/미러되지 않은 메시지",
+        "첨부 내용 전수"
+      ]
+    },
+    {
+      "scope": "space",
+      "status": "direct_relevant_root_reads",
+      "includes": [
+        "강의하는아이들 학원 실무",
+        "MathEducation",
+        "교육 탐색 경로"
+      ],
+      "notIncluded": [
+        "학생 디렉터리",
+        "개별학생 하위 Page",
+        "기타 생활 프로젝트"
+      ]
+    },
+    {
+      "scope": "other.assigned-work-common-harness",
+      "status": "inventory_pending",
+      "includes": [
+        "최신 모든 담당 작업·향후 작업에 대한 portable 공통 하네스 요구"
+      ],
+      "notIncluded": [
+        "기타 작업의 상세 조사·이관·실행환경 등록",
+        "Dots 전용 runtime 최적화 구현·내부 자료의 GitHub 게시"
+      ]
+    }
+  ],
+  "gaps": [
+    {
+      "key": "full-inventory",
+      "status": "unknown",
+      "detail": "전체 대화 모집단·원문별 목적 저장소 위치 대조가 없어 완전율을 계산하지 않는다."
+    },
+    {
+      "key": "message-links",
+      "status": "unavailable",
+      "detail": "메시지 도구는 검증된 permalink를 반환하지 않았다. URL을 추정하지 않고 정확한 messageId/time/locator를 보존한다."
+    },
+    {
+      "key": "private-search-pagination",
+      "status": "temporarily_unavailable",
+      "detail": "Private 검색 첫 페이지 이후 cursor 요청이 두 차례 Message history is temporarily unavailable 응답. 재개·전체 범위 핵심 원문은 개별 read로 확인했다."
+    },
+    {
+      "key": "neighborhood-bounds",
+      "status": "partial",
+      "detail": "여러 전후 메시지 조회가 partial=true였다. 포함된 원문이 전체 대화 구간을 망라한다고 주장하지 않는다."
+    },
+    {
+      "key": "source-attachments",
+      "status": "not_reconciled",
+      "detail": "대화에 붙은 원문 문서·이미지·ZIP은 본 패키지에서 전수 읽지 않았다. 문항/능력 자료의 내용 검증은 별도 module 작업이다."
+    },
+    {
+      "key": "content-validity",
+      "status": "not_run",
+      "detail": "문헌·문항·인지 가설·학습효과·실학생 판단의 타당성은 이 맥락 패키지 검증으로 입증되지 않는다."
+    },
+    {
+      "key": "acceptance-limits",
+      "status": "scoped",
+      "detail": "11:55 충분하다는 발화는 당시 시안 검토에 한정. 최신 DB/문항/ID 계약 전면 승인은 미확인."
+    },
+    {
+      "key": "exam-selection",
+      "status": "not_done",
+      "detail": "실제 학원 문항을 선별하지 않았다. 곱셈9/나눗셈9/원6은 assistant 제안이며 사용자 최종 채택은 미확인."
+    },
+    {
+      "key": "live-environment",
+      "status": "not_run",
+      "detail": "사용자 WSL2/VPS에서 설치·실행·native 등록은 수행하지 않았다."
+    },
+    {
+      "key": "remote-publication",
+      "status": "not_done_by_this_package",
+      "detail": "이 패키지는 로컬 산출물이다. 원격 반영·검증은 각 module 업로드 작업의 별도 증거가 필요하다."
+    },
+    {
+      "key": "other-assigned-work",
+      "status": "inventory_pending",
+      "detail": "최신 확대 범위는 확인했으나 현재 두 module 외 담당 작업의 전체 목록·상태·적용은 아직 검증하지 않았다."
+    }
+  ],
+  "excludedData": [
+    "비밀번호·세션쿠키·API키·토큰",
+    "새로 수집한 개별 학생 비공개 세부자료",
+    "assistant의 내부 노트·비공개 추론",
+    "저장된 custom rule 본문",
+    "과제와 무관한 생활정보"
+  ],
+  "sourceTruthRules": [
+    "원문은 수정하지 않고 요약과 분리한다.",
+    "assistant의 제안·보고는 사용자 결정·독립 검증으로 승격하지 않는다.",
+    "원문이 없는 사실을 source quote로 생성하지 않는다.",
+    "컨텍스트는 권한이나 실행 허가가 아니다."
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "academy-operations",
+  "projectId": "academy-workbench",
+  "workId": "month-end-real-pool-read-20261019",
+  "kind": "input",
+  "id": "RESOURCE-POLICY-20261019",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "education-platform",
+    "locator": "academy-orchestrator:resource-constraint-application",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "schema": "academy.resource-policy.v1",
+    "priority": "Preserve headroom for other user work and minimize academy memory pressure.",
+    "maxAdditionalActiveWorkLeadTuis": 1,
+    "maxConcurrentHeavyAcademyJobs": 1,
+    "retainedFrontend": "Frontend runtime is off and held by current user instruction. Start only on a later explicit frontend review/resume request.",
+    "idleWorkers": "Keep unneeded WorkLead panes at shell prompts; terminate owned completed worker runtimes after durable results.",
+    "beforeEachLaunch": [
+      "Observe current host MemAvailable, memory PSI and own active processes.",
+      "Assess headroom for the next concrete workload; a past observation or free swap is not launch approval.",
+      "Defer the new workload when available headroom is insufficient or memory pressure is rising."
+    ],
+    "workloads": [
+      "Start WorkLeads sequentially instead of simultaneous native/MCP initialization.",
+      "Serialize browser/build/test/indexing and model-input preparation batches; keep question/image batches bounded.",
+      "Reuse existing source dependencies and previews instead of duplicating servers/browsers or broad indexes."
+    ],
+    "pressureResponse": [
+      "Stop additional launches first.",
+      "Checkpoint and retire only owned optional idle workers after exact process verification.",
+      "Reconcile uncertain operations before any later new launch; do not blindly retry."
+    ],
+    "preserved": [
+      "Unrelated user jobs/services/data remain under their own owners.",
+      "No swap, cgroup, global model/configuration/permissions or system service changes through this policy."
+    ],
+    "implementation": "Source-owned WorkLead instructions and manual orchestration checks; no monitoring daemon, scheduler or alternate runtime.",
+    "frontendHold": {
+      "schema": "academy.frontend-hold.v1",
+      "requestedBy": "current-user",
+      "status": "paused-until-user-review",
+      "frontendTui": "stopped-native-quit",
+      "researchPreview": "stopped-SIGTERM-owned-process",
+      "browser": "observed-stopped",
+      "botScreen": "observed-stopped",
+      "restartCondition": "Only a later explicit user request to review or resume frontend work. Resource recovery, dependency completion, handoff or another WorkLead starting does not release this hold.",
+      "preserve": [
+        "Work IDs",
+        "source Work records",
+        "worktrees",
+        "native saved sessions"
+      ],
+      "automaticRestart": false
+    }
+  }
+}

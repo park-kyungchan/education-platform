@@ -1,0 +1,129 @@
+{
+  "schemaVersion": "academy.scoped-runtime-observation/2",
+  "observedAt": "2026-10-21T10:03:40.420272+00:00",
+  "scope": "Host resource metadata, six owned source worktrees and named Hermes container selected fields only; no credentials, real user data or unrelated service effects.",
+  "host": {
+    "hostname": "srv1873899",
+    "cpuCount": 2,
+    "loadAverage": [
+      3.62646484375,
+      2.41943359375,
+      1.61083984375
+    ],
+    "memory": "total        used        free      shared  buff/cache   available\nMem:      8326615040  4253630464   206716928      385024  4225884160  4072984576\nSwap:     2147479552   784191488  1363288064",
+    "ownedSourceFilesystem": "Avail Use%\n25550303232  76%"
+  },
+  "namedHermesContainer": {
+    "name": "hermes-agent-2q3y-hermes-serve-1",
+    "selectedState": {
+      "exitCode": 0,
+      "stdout": "\"4189cb30782e97cf38b97a0f91a99e14cb9dd1696990d2583c61304acde9d360\" \"sha256:1acfd8025bbc868e5d9dc668577e33d01a6a42211c5b7dc320564ab74568af25\" \"running\" \"healthy\"",
+      "stderr": ""
+    },
+    "nativeAdoption": "unknown",
+    "credentialsOrEnvironmentInspected": false
+  },
+  "toolReadback": {
+    "Bun": {
+      "exitCode": 0,
+      "stdout": "1.4.3",
+      "stderr": ""
+    },
+    "Node": {
+      "exitCode": 0,
+      "stdout": "v24.21.0",
+      "stderr": ""
+    },
+    "Codex": {
+      "exitCode": 0,
+      "stdout": "codex-cli 0.163.0",
+      "stderr": ""
+    },
+    "Claude": {
+      "exitCode": 0,
+      "stdout": "2.1.259 (Claude Code)",
+      "stderr": ""
+    },
+    "Antigravity": {
+      "exitCode": 0,
+      "stdout": "/root/.local/bin/agy",
+      "stderr": ""
+    },
+    "Muse": {
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "GrokCLI": {
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "hostHermes": {
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": ""
+    }
+  },
+  "sourceWorktrees": [
+    {
+      "workId": "academy-architecture-orchestration-20261021",
+      "root": "/home/palantirkc/worktrees/academy-architecture-orchestration-20261021",
+      "commit": "4e0c54753ae935da2948a37e7baab9d3db079609",
+      "branch": "work/academy-architecture-candidate-20261021",
+      "trackedDirtyPaths": 0,
+      "meaning": "Source location/state only, not native registration or semantic ownership."
+    },
+    {
+      "workId": "academy-state-model-20261021",
+      "root": "/home/palantirkc/worktrees/academy-state-model-20261021",
+      "commit": "e52d008e0272f58a5a880f00696624361184aa22",
+      "branch": "work/academy-state-model-20261021",
+      "trackedDirtyPaths": 0,
+      "meaning": "Source location/state only, not native registration or semantic ownership."
+    },
+    {
+      "workId": "academy-query-integration-20261021",
+      "root": "/home/palantirkc/worktrees/academy-query-integration-20261021",
+      "commit": "8f8c9bd61bd5e55445780b5569ecc40effcecef6",
+      "branch": "work/academy-query-integration-20261021",
+      "trackedDirtyPaths": 0,
+      "meaning": "Source location/state only, not native registration or semantic ownership."
+    },
+    {
+      "workId": "academy-consumer-integration-20261021",
+      "root": "/home/palantirkc/worktrees/academy-consumer-integration-20261021",
+      "commit": "7a1fd6127efcd3329709f4d22f75b6fc929d3342",
+      "branch": "work/academy-consumer-integration-20261021",
+      "trackedDirtyPaths": 0,
+      "meaning": "Source location/state only, not native registration or semantic ownership."
+    },
+    {
+      "workId": "academy-workflow-verification-20261021",
+      "root": "/home/palantirkc/worktrees/academy-workflow-verification-20261021",
+      "commit": "fdd1d197cffb0ef30d465759763593fe6e756a8e",
+      "branch": "work/academy-workflow-verification-20261021",
+      "trackedDirtyPaths": 0,
+      "meaning": "Source location/state only, not native registration or semantic ownership."
+    },
+    {
+      "workId": "academy-environment-qualification-20261021",
+      "root": "/home/palantirkc/worktrees/academy-environment-qualification-20261021",
+      "commit": "c1c237ae13cda444e8c29257d1b988b6be8c1f31",
+      "branch": "work/academy-environment-qualification-20261021",
+      "trackedDirtyPaths": 0,
+      "meaning": "Source location/state only, not native registration or semantic ownership."
+    }
+  ],
+  "resourcePolicy": {
+    "maxOwnedActiveWorkerTurns": 1,
+    "maxHeavyChecks": 1,
+    "unrelatedAgents": "untouched",
+    "idlePanes": "not active worker turns"
+  },
+  "limits": [
+    "Installed CLI or healthy container does not establish academy harness support/adoption.",
+    "Do not infer one environment support from another. ENV01/02 performs explicit canonical/native owner tracing.",
+    "No permission/config/model/common-pin/service changes."
+  ]
+}

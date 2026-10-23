@@ -1,0 +1,238 @@
+{
+  "schema": "academy.qry-boundary-checks.v1",
+  "createdAt": "2026-10-21T07:19:15.728Z",
+  "sourceBase": "b9c954cb8f5bf9b0748bb5634b4951c5954e9a6b",
+  "nativeThreadId": "01a15d3e-8769-7061-983f-880f73d33289",
+  "records": [
+    {
+      "id": "initial-boundary-compatibility-tests",
+      "command": [
+        "bun",
+        "test",
+        "./architecture/academy-query-integration/boundary-contracts.test.ts"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "observedSummary": "4 pass / 0 fail /30 expectations; directly observed prior to this receipt, not rerun."
+    },
+    {
+      "id": "root-status",
+      "args": [
+        "bun",
+        "run",
+        "status"
+      ],
+      "cwd": ".",
+      "startedAt": "2026-10-21T07:19:10.679Z",
+      "finishedAt": "2026-10-21T07:19:10.706Z",
+      "exitCode": 0,
+      "stdoutSha256": "091598231c7a429dabf7c45c2f9d79b80373ad1515485b2958b1e5cbd172ebf9",
+      "stderrSha256": "357f5ac18959b62e4623f2f89ac33e249d9803fcb3bceb2b45b88780906873cb",
+      "stdoutBytes": 3370,
+      "stderrBytes": 24,
+      "stdoutTail": "{\n  \"projectId\": \"education-platform\",\n  \"authority\": \"none\",\n  \"ontologyVersion\": \"0.2.0\",\n  \"modules\": [\n    {\n      \"id\": \"mathematics-core\",\n      \"root\": \"packages/mathematics-core\",\n      \"runtime\": \"node-npm\",\n      \"sourceCommit\": \"b8766843f3f83b9d36cc5888f65f6b1ea56f3c52\",\n      \"native\": {\n        \"ownerProfile\": \"default\",\n        \"projectId\": \"p_8a30d5d4\",\n        \"projectRoot\": \"/opt/data/workspace/mathematics-cartography\",\n        \"workIssueIds\": [],\n        \"pendingWork\": \"IMMUTABLE_HUMAN_SEMANTIC_DISPOSITION_RECORD-R4\",\n        \"authority\": \"none\",\n        \"ontologyRootKind\": \"WorkStudio\"\n      },\n      \"entrypoints\": [\n        \"src/compile-fragment-review-proposal.ts\",\n        \"src/compile-fragment-evidence-review-packet.ts\",\n        \"src/compile-human-semantic-disposition-record.ts\"\n      ]\n    },\n    {\n      \"id\": \"curriculum\",\n      \"root\": \"packages/curriculum\",\n      \"runtime\": \"bun\",\n      \"runtimePin\": \"1.4.3\",\n      \"sourceCommit\": \"4a666ef6ff568f15495ff8219db583bf6dfbfe2a\",\n      \"native\": {\n        \"ownerProfile\": null,\n        \"projectId\": null,\n        \"projectRoot\": null,\n        \"workIssueIds\": [],\n        \"authority\": \"none\"\n      },\n      \"entrypoints\": [\n        \"scripts/preview.ts\",\n        \"scripts/project-ui.ts\"\n      ]\n    },\n    {\n      \"id\": \"academy\",\n      \"root\": \"apps/academy\",\n      \"runtime\": \"bun\",\n      \"runtimePin\": \"1.4.3\",\n      \"sourceCommit\": \"5074aeb5649c1a97ad06d33b9f895296fb4c3ad6\",\n      \"native\": {\n        \"ownerProfile\": \"dc-gang-a-dev\",\n        \"projectId\": \"p_a5676068\",\n        \"projectRoot\": \"/opt/data/workspace/dc-gang-a\",\n        \"workIssueIds\": [\n          \"t_ce34cba7\"\n        ],\n        \"authority\": \"none\",\n        \"workIssueMeaning\": \"historical task locator; not active status or permission\"\n      },\n      \"entrypoints\": [\n        \"dc-gang-a/src/academy/application.ts\",\n        \"dc-gang-a/src/academy/main.ts\",\n        \"gang-a/packages/application/select-operational-context.ts\"\n      ]\n    },\n    {\n      \"id\": \"clinic-workbench\",\n      \"root\": \"examples/clinic-workbench\",\n      \"runtime\": \"bun\",\n      \"runtimePin\": \"1.4.3\",\n      \"sourceCommit\": \"a99605e9ea4bcbfa28130456e0d1ab8e41e7001a\",\n      \"native\": {\n        \"ownerProfile\": \"dc-gang-a-dev\",\n        \"projectId\": null,\n        \"projectRoot\": null,\n        \"workIssueIds\": [],\n        \"authority\": \"none\"\n      },\n      \"entrypoints\": [\n        \"src/index.ts\",\n        \"scripts/demo.ts\"\n      ]\n    },\n    {\n      \"id\": \"mathcrew\",\n      \"root\": \"apps/mathcrew\",\n      \"runtime\": \"bun\",\n      \"runtimePin\": \"1.4.3\",\n      \"sourceCommit\": \"929f2ec058846fd45be4b6ba479966264be4e5e9\",\n      \"native\": {\n        \"ownerProfile\": \"default\",\n        \"projectId\": \"p_566ac0ba\",\n        \"projectRoot\": \"/opt/data/workspace/backend-ontology\",\n        \"workIssueIds\": [],\n        \"authority\": \"none\",\n        \"bindingMeaning\": \"profile-associated backend project; public product source remains module-owned\"\n      },\n      \"entrypoints\": [\n        \"src/build.ts\",\n        \"src/preview-handler.ts\"\n      ]\n    }\n  ],\n  \"semanticState\": {\n    \"mathematicsHumanDecision\": \"PENDING\",\n    \"mathematicsCanonicalApplication\": \"NOT_PERFORMED\",\n    \"r4Review\": \"PENDING_NEW_EXACT_REVIEW_AUTHORITY\",\n    \"bunParity\": \"DEFERRED\",\n    \"curriculumCanonicalInputs\": \"not_available_in_this_ui_export\"\n  },\n  \"productionVerified\": false\n}\n",
+      "stderrTail": "$ bun src/cli.ts status\n"
+    },
+    {
+      "id": "root-actual-compiler",
+      "args": [
+        "bun",
+        "node_modules/typescript/bin/tsc",
+        "--version"
+      ],
+      "cwd": ".",
+      "startedAt": "2026-10-21T07:19:10.706Z",
+      "finishedAt": "2026-10-21T07:19:10.735Z",
+      "exitCode": 0,
+      "stdoutSha256": "41024334022fa58f9c7337359517de307cbcfc6055c19f2b734245eacc2fe97a",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 14,
+      "stderrBytes": 0,
+      "stdoutTail": "Version 7.0.2\n",
+      "stderrTail": ""
+    },
+    {
+      "id": "dc-actual-compiler",
+      "args": [
+        "bun",
+        "node_modules/typescript/bin/tsc",
+        "--version"
+      ],
+      "cwd": "apps/academy/dc-gang-a",
+      "startedAt": "2026-10-21T07:19:10.735Z",
+      "finishedAt": "2026-10-21T07:19:10.767Z",
+      "exitCode": 0,
+      "stdoutSha256": "41024334022fa58f9c7337359517de307cbcfc6055c19f2b734245eacc2fe97a",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 14,
+      "stderrBytes": 0,
+      "stdoutTail": "Version 7.0.2\n",
+      "stderrTail": ""
+    },
+    {
+      "id": "exact-declarations-and-scoped-import-graph",
+      "args": [
+        "bun",
+        "architecture/academy-query-integration/boundary-inspect.ts"
+      ],
+      "cwd": ".",
+      "startedAt": "2026-10-21T07:19:10.768Z",
+      "finishedAt": "2026-10-21T07:19:12.170Z",
+      "exitCode": 0,
+      "stdoutSha256": "e046a6526a16d3f8593538affcdaed735ac3a0de8ba4cc2374600801e73de7c5",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 216,
+      "stderrBytes": 0,
+      "stdoutTail": "{\"status\":\"pass\",\"changedExisting\":24,\"newLeaves\":5,\"movedDeclarations\":10,\"readInputImports\":17,\"remainingReverse\":0,\"retainedApplicationToLms\":17,\"dcGangEdges\":6,\"dynamicDependencies\":4,\"wholeGraphReparsed\":false}\n",
+      "stderrTail": ""
+    },
+    {
+      "id": "owned-boundary-typecheck",
+      "args": [
+        "bun",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "-p",
+        "architecture/academy-query-integration/boundary-tsconfig.json"
+      ],
+      "cwd": ".",
+      "startedAt": "2026-10-21T07:19:12.170Z",
+      "finishedAt": "2026-10-21T07:19:12.715Z",
+      "exitCode": 1,
+      "stdoutSha256": "3498cdc0230d97f9bd942ccb90180e3f361d5c29f6d29002866cfda9213685bf",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 4822,
+      "stderrBytes": 0,
+      "stdoutTail": "apps/academy/dc-gang-a/src/lms/dayRecordDomBinding.ts(101,18): error TS2532: Object is possibly 'undefined'.\napps/academy/dc-gang-a/src/lms/dayRecordDomBinding.ts(101,47): error TS2532: Object is possibly 'undefined'.\napps/academy/dc-gang-a/src/lms/dayRecordDomBinding.ts(118,5): error TS2322: Type '{ [k: string]: string | undefined; }' is not assignable to type 'Record<string, string>'.\n  'string' index signatures are incompatible.\n    Type 'string | undefined' is not assignable to type 'string'.\n      Type 'undefined' is not assignable to type 'string'.\napps/academy/dc-gang-a/src/lms/dayRecordDomBinding.ts(229,5): error TS2322: Type 'string | undefined' is not assignable to type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\napps/academy/dc-gang-a/src/lms/dayRecordDomBinding.ts(229,21): error TS2322: Type 'string | undefined' is not assignable to type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\napps/academy/dc-gang-a/src/lms/dayRecordDomBinding.ts(229,55): error TS2322: Type 'string | undefined' is not assignable to type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\napps/academy/dc-gang-a/src/lms/dayRecordDomBinding.ts(230,5): error TS2322: Type 'string | undefined' is not assignable to type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\napps/academy/dc-gang-a/src/lms/dayRecordDomBinding.ts(230,39): error TS2322: Type 'string | undefined' is not assignable to type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\napps/academy/dc-gang-a/src/lms/dayRecordDomBinding.ts(236,5): error TS2322: Type '{ report_seq: string | undefined; stu_pri_no: string | undefined; record_seq: string | undefined; cm_seq: string | undefined; relationship: \"same_current_student_record_and_membership\"; deliveryEvidence: \"not_established\"; } | null' is not assignable to type 'DayRecordReportBinding | null'.\n  Type '{ report_seq: string | undefined; stu_pri_no: string | undefined; record_seq: string | undefined; cm_seq: string | undefined; relationship: \"same_current_student_record_and_membership\"; deliveryEvidence: \"not_established\"; }' is not assignable to type 'DayRecordReportBinding'.\n    Types of property 'report_seq' are incompatible.\n      Type 'string | undefined' is not assignable to type 'string'.\n        Type 'undefined' is not assignable to type 'string'.\napps/academy/dc-gang-a/src/lms/dayRecordDomBinding.ts(240,5): error TS2322: Type '{ record_seq: string | undefined; cm_seq: string | undefined; count: string | undefined; sourceHandler: \"openHomeWorkRate\"; columnGroup: \"previous_progress\"; sameRecordAsCurrent: boolean; sameMembershipAsCurrent: boolean; relationship: \"separate_previous_column_binding\"; occurrenceDateEvidence: \"not_established\"; } ...' is not assignable to type 'DayRecordPreviousProgressBinding | null'.\n  Type '{ record_seq: string | undefined; cm_seq: string | undefined; count: string | undefined; sourceHandler: \"openHomeWorkRate\"; columnGroup: \"previous_progress\"; sameRecordAsCurrent: boolean; sameMembershipAsCurrent: boolean; relationship: \"separate_previous_column_binding\"; occurrenceDateEvidence: \"not_established\"; }' is not assignable to type 'DayRecordPreviousProgressBinding'.\n    Types of property 'record_seq' are incompatible.\n      Type 'string | undefined' is not assignable to type 'string'.\n        Type 'undefined' is not assignable to type 'string'.\napps/academy/dc-gang-a/src/lms/dayRecordDomBinding.ts(287,16): error TS18048: 'year' is possibly 'undefined'.\napps/academy/dc-gang-a/src/lms/dayRecordDomBinding.ts(287,35): error TS18048: 'year' is possibly 'undefined'.\napps/academy/dc-gang-a/src/lms/dayRecordDomBinding.ts(287,55): error TS18048: 'year' is possibly 'undefined'.\napps/academy/dc-gang-a/src/lms/dayRecordDomBinding.ts(289,7): error TS18048: 'year' is possibly 'undefined'.\napps/academy/dc-gang-a/src/lms/dayRecordDomBinding.ts(289,19): error TS18048: 'month' is possibly 'undefined'.\napps/academy/dc-gang-a/src/lms/dayRecordDomBinding.ts(289,32): error TS18048: 'month' is possibly 'undefined'.\napps/academy/dc-gang-a/src/lms/dayRecordDomBinding.ts(289,46): error TS18048: 'day' is possibly 'undefined'.\napps/academy/dc-gang-a/src/lms/dayRecordDomBinding.ts(289,57): error TS18048: 'day' is possibly 'undefined'.\napps/academy/dc-gang-a/src/lms/dayRecordDomBinding.ts(289,63): error TS2532: Object is possibly 'undefined'.\napps/academy/dc-gang-a/src/lms/dayRecordDomBinding.ts(289,68): error TS18048: 'month' is possibly 'undefined'.\napps/academy/dc-gang-a/src/wholeLens/domain.ts(347,18): error TS18048: 'zone' is possibly 'undefined'.\napps/academy/dc-gang-a/src/wholeLens/domain.ts(348,36): error TS18048: 'zone' is possibly 'undefined'.\napps/academy/dc-gang-a/src/wholeLens/domain.ts(348,68): error TS18048: 'zone' is possibly 'undefined'.\n",
+      "stderrTail": ""
+    },
+    {
+      "id": "dc-typecheck",
+      "args": [
+        "bun",
+        "run",
+        "typecheck"
+      ],
+      "cwd": "apps/academy/dc-gang-a",
+      "startedAt": "2026-10-21T07:19:12.715Z",
+      "finishedAt": "2026-10-21T07:19:15.052Z",
+      "exitCode": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "20a7f6ddac8dfddfae008432d479755c5a411ed34c10316ad6e9ef2d44f4a5a9",
+      "stdoutBytes": 0,
+      "stderrBytes": 47,
+      "stdoutTail": "",
+      "stderrTail": "$ bun node_modules/typescript/bin/tsc --noEmit\n"
+    },
+    {
+      "id": "focused-maintained-read-protocol-tests",
+      "args": [
+        "bun",
+        "test",
+        "tests/lms/academyReadProtocol.test.ts",
+        "tests/lms/academyReadIntegration.test.ts",
+        "tests/lms/academySourceAudit.test.ts",
+        "tests/lms/itemAnswerBatch.test.ts",
+        "tests/lms/itemAnswerRead.test.ts",
+        "tests/lms/paperLineage.test.ts",
+        "tests/lms/studentCourseRead.test.ts",
+        "tests/lms/lessonJournalTemplates.test.ts",
+        "tests/academy/teacherWorkspace.test.ts"
+      ],
+      "cwd": "apps/academy/dc-gang-a",
+      "startedAt": "2026-10-21T07:19:15.052Z",
+      "finishedAt": "2026-10-21T07:19:15.617Z",
+      "exitCode": 1,
+      "stdoutSha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+      "stderrSha256": "fd921a9a50cbc4ddfe924a201332c7649e96ad1b1f0e75514f78cdf45c0605de",
+      "stdoutBytes": 28,
+      "stderrBytes": 10101,
+      "stdoutTail": "bun test v1.4.3 (c6da4a4d3)\n",
+      "stderrTail": "\ntests/academy/teacherWorkspace.test.ts:\n(pass) teacher workspace source meaning > score100, paper review, app absence, video upload and optional mindmap do not complete a review [3.45ms]\n(pass) teacher workspace source meaning > parent text has three traceable sections and cannot leak excluded language into memo [4.03ms]\n(pass) teacher workspace source meaning > loads all71 original policies with exact byte pin and preserves selected source supersession [271.21ms]\n(skip) real PostgreSQL authenticated workspace durability > activity scope is checked in the transaction, CAS races once, exact lost-ack lookup and restart retain final/reopen history\n(skip) real PostgreSQL authenticated workspace durability > unknown paper membership stays partial and optional mindmap binds transactionally only to the exact concept explanation scope\n(skip) real PostgreSQL authenticated workspace durability > parent original edits survive revisions, actor outcome replay, and stale or cross-student references are rejected\n(skip) real PostgreSQL authenticated workspace durability > owner-only onboarding needs no fake student, keeps immutable case history and enforces policy/student/step boundaries\n(skip) real PostgreSQL authenticated workspace durability > exam selection drafts persist in owner ledger with exact source candidate pins and never claim source or teacher acceptance\n(skip) real PostgreSQL authenticated workspace durability > a real committed PostgreSQL owner command survives a misleading postcommit readback exception without being classified as rejected\n(skip) real PostgreSQL authenticated workspace durability > existing authenticated ingress rejects anonymous/foreign actor and accepts scoped local-only save\n\ntests/lms/paperLineage.test.ts:\n(pass) student-scoped original paper matches never certify the distributed clinic [2.43ms]\n(pass) same-name foreign subjects and identity conflicts cannot become own-paper evidence [0.78ms]\n(pass) duplicate captures retain refs without duplicating the original item relation [0.59ms]\n\ntests/lms/lessonJournalTemplates.test.ts:\n(pass) parent journal maps internal paper codes to attributable edition/unit names in three independent templates [2.67ms]\n(pass) unknown clinic header blocks homework only and memo respects lesson part [0.75ms]\n(pass) unattributed mappings and literal internal codes fail closed instead of reaching parent text [0.27ms]\n(pass) overlong fields are blocked without silent truncation or completing ungraded work [0.47ms]\n(pass) reviewer negatives reject coercible enums, blank source unit code and attached internal labels [0.57ms]\n(pass) multiple same-edition units share one book label without losing literal codes or names [0.44ms]\n(pass) activity wording does not repeat problem solving and excluded memo evidence is not rendered provenance [0.23ms]\n(pass) teacher-format revision gives each semantic entry one hyphen line, not each sentence [0.37ms]\n(pass) parent blockers preserve source wording and isolate independently valid fields [0.25ms]\n\ntests/lms/itemAnswerRead.test.ts:\n(pass) exact item answers preserve official literals and distinct source keys [0.42ms]\n(pass) a source solution-file pointer is not presented as acquired answer content [0.11ms]\n(pass) answer requests reject nonliteral keys before any fetch [0.44ms]\n(pass) answer acquisition fails closed on foreign identities, schema drift and authentication [0.60ms]\n(pass) one exact answer uses only the reviewed fixed operation [0.35ms]\n\ntests/lms/academyReadProtocol.test.ts:\n(pass) prepares the textbook existing-result family without grade or generation effects [0.53ms]\n(pass) reads exact existing textbook grades and never invokes a generation tail [2.35ms]\n(pass) zero-context public discovery explains the read consumer without source dumps [2.47ms]\n(pass) explicit offline legacy preparation writes an exclusive private script and emits no student values [21.90ms]\n(pass) uses known daily-zero identities without HAR or textbook-family substitution [2.08ms]\n(pass) prepares exact DayRecord date/group reads with independent occurrence verification [0.38ms]\n(pass) refuses DayRecord reads without an independently bound native principal [2.01ms]\n594 |     if (this._initialized) {\n595 |       return;\n596 |     }\n597 | \n598 |     if (!existsSync(ROUTE_REGISTRY_PATH)) {\n599 |       throw new Error(`[LmsRouteRegistry] Canonical route registry not found at: '${ROUTE_REGISTRY_PATH}'`);\n                                                                                                                ^\nerror: [LmsRouteRegistry] Canonical route registry not found at: '/home/palantirkc/worktrees/academy-query-integration-20261021/apps/academy/dc-gang-a/research/backend-map/route-registry.json'\n      at ensureInitialized (/home/palantirkc/worktrees/academy-query-integration-20261021/apps/academy/dc-gang-a/src/lms/lmsRouteRegistry.ts:599:107)\n      at getAllRoutes (/home/palantirkc/worktrees/academy-query-integration-20261021/apps/academy/dc-gang-a/src/lms/lmsRouteRegistry.ts:760:10)\n      at buildEndpointCatalog (/home/palantirkc/worktrees/academy-query-integration-20261021/apps/academy/dc-gang-a/src/lms/endpointCatalog.ts:67:15)\n      at queryEndpoints (/home/palantirkc/worktrees/academy-query-integration-20261021/apps/academy/dc-gang-a/src/lms/endpointCatalog.ts:106:69)\n      at <anonymous> (/home/palantirkc/worktrees/academy-query-integration-20261021/apps/academy/dc-gang-a/tests/lms/academyReadProtocol.test.ts:90:16)\n(fail) whole-catalog coverage exposes scoped preparation without promoting unknown operations [0.92ms]\n(pass) rejects secret-bearing, malformed, normalized and accessor requests before preparation [0.30ms]\n(pass) refuses authentication and mutated plans before any HTTP request [2.06ms]\n(pass) scope mismatch and foreign note results cannot become empty or observed source success [0.39ms]\n(pass) direct exported DayRecord ingress cannot bypass origin authentication [0.30ms]\n(pass) private preparation rejects a linked input parent even inside the allowed tree [1.11ms]\n(pass) private preparation rejects a linked output parent even inside the allowed tree [0.68ms]\n(pass) DayRecord principals use the canonical key contract before transport or native DOM [0.44ms]\n(pass) item metadata uses the existing public plan and audit without a second consumer [0.70ms]\n\ntests/lms/itemAnswerBatch.test.ts:\n(pass) a stopped exact-answer batch keeps observations and pending labels without automatic retries [0.62ms]\n(pass) persistence failure prevents advancing to another answer [0.25ms]\n(pass) duplicate, oversized and malformed answer batches are refused before fetching [0.48ms]\n\ntests/lms/academySourceAudit.test.ts:\n(pass) content fingerprint is deterministic across observation time and source ordering [0.68ms]\n(pass) DayRecord audit uses independent occurrence keys, not assessment aliases [0.59ms]\n(pass) partial DayRecord audit retains requested scope and unobserved students without declaring absence [0.81ms]\n(pass) daily result audit retains blocked targets and excludes fetch timing from meaning [2.74ms]\n(pass) public audit consumer writes a private normalized result without transcript or credential output [4.34ms]\n(pass) audit refuses secret-like envelope fields and populated foreign-family lanes [0.88ms]\n(pass) DayRecord audit rejects mixed principals and unsupported journal fields [1.56ms]\n(pass) daily audit preserves opaque nonrenderable paper identities and refuses zero-item grades [1.80ms]\n\ntests/lms/academyReadIntegration.test.ts:\n(pass) student-course normalized audit preserves scope, literal cells and empty-query meaning [1.25ms]\n(pass) public student_course preparation uses the same exclusive private CLI boundary [10.62ms]\n(pass) public item_metadata preparation uses the same exclusive private CLI boundary [8.09ms]\n(pass) public item_answer preparation uses the same exclusive private CLI boundary [11.41ms]\n(pass) public DayRecord preparation binds the source-qualified columns, not caller-supplied authority [7.55ms]\n(pass) new audit lanes reject foreign-family data and cannot promote item metadata into mastery [0.50ms]\n\ntests/lms/studentCourseRead.test.ts:\n(pass) binds a course row through three independent passive literal tuples without invoking mutations [0.71ms]\n(pass) the observed started-row variant binds status/delete without inventing a missing reset control [0.20ms]\n(pass) rejects foreign students, mismatched tuple identities and executable handler tails [0.15ms]\n(pass) literal request and native origin checks refuse malformed/secret-bearing inputs before network [0.79ms]\n\n7 tests skipped:\n(skip) real PostgreSQL authenticated workspace durability > activity scope is checked in the transaction, CAS races once, exact lost-ack lookup and restart retain final/reopen history\n(skip) real PostgreSQL authenticated workspace durability > unknown paper membership stays partial and optional mindmap binds transactionally only to the exact concept explanation scope\n(skip) real PostgreSQL authenticated workspace durability > parent original edits survive revisions, actor outcome replay, and stale or cross-student references are rejected\n(skip) real PostgreSQL authenticated workspace durability > owner-only onboarding needs no fake student, keeps immutable case history and enforces policy/student/step boundaries\n(skip) real PostgreSQL authenticated workspace durability > exam selection drafts persist in owner ledger with exact source candidate pins and never claim source or teacher acceptance\n(skip) real PostgreSQL authenticated workspace durability > a real committed PostgreSQL owner command survives a misleading postcommit readback exception without being classified as rejected\n(skip) real PostgreSQL authenticated workspace durability > existing authenticated ingress rejects anonymous/foreign actor and accepts scoped local-only save\n\n\n1 tests failed:\n(fail) whole-catalog coverage exposes scoped preparation without promoting unknown operations [0.92ms]\n\n 56 pass\n 7 skip\n 1 fail\n 259 expect() calls\nRan 64 tests across 9 files. [553.00ms]\n"
+    },
+    {
+      "id": "operational-contract-and-catalog-baseline-gap",
+      "args": [
+        "bun",
+        "test",
+        "tests/academy/operationalContract.test.ts",
+        "tests/lms/endpointCatalog.test.ts"
+      ],
+      "cwd": "apps/academy/dc-gang-a",
+      "startedAt": "2026-10-21T07:19:15.617Z",
+      "finishedAt": "2026-10-21T07:19:15.686Z",
+      "exitCode": 1,
+      "stdoutSha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+      "stderrSha256": "a547faa0fa90f9b8882e9b84224dff4b1bd452378c1b1333971a2a4d5f96186c",
+      "stdoutBytes": 28,
+      "stderrBytes": 21253,
+      "stdoutTail": "bun test v1.4.3 (c6da4a4d3)\n",
+      "stderrTail": "safe declarations [0.30ms]\n(pass) deterministic metadata query and fail-closed execution > mutable legacy-source references use resolvable symbol anchors with matching metadata [1.03ms]\n594 |     if (this._initialized) {\n595 |       return;\n596 |     }\n597 | \n598 |     if (!existsSync(ROUTE_REGISTRY_PATH)) {\n599 |       throw new Error(`[LmsRouteRegistry] Canonical route registry not found at: '${ROUTE_REGISTRY_PATH}'`);\n                                                                                                                ^\nerror: [LmsRouteRegistry] Canonical route registry not found at: '/home/palantirkc/worktrees/academy-query-integration-20261021/apps/academy/dc-gang-a/research/backend-map/route-registry.json'\n      at ensureInitialized (/home/palantirkc/worktrees/academy-query-integration-20261021/apps/academy/dc-gang-a/src/lms/lmsRouteRegistry.ts:599:107)\n      at getAllRoutes (/home/palantirkc/worktrees/academy-query-integration-20261021/apps/academy/dc-gang-a/src/lms/lmsRouteRegistry.ts:760:10)\n      at buildEndpointCatalog (/home/palantirkc/worktrees/academy-query-integration-20261021/apps/academy/dc-gang-a/src/lms/endpointCatalog.ts:67:15)\n      at queryEndpoints (/home/palantirkc/worktrees/academy-query-integration-20261021/apps/academy/dc-gang-a/src/lms/endpointCatalog.ts:106:69)\n      at <anonymous> (/home/palantirkc/worktrees/academy-query-integration-20261021/apps/academy/dc-gang-a/tests/lms/endpointCatalog.test.ts:109:12)\n(fail) deterministic metadata query and fail-closed execution > all effects including safe-looking GETs remain noncallable [0.48ms]\n594 |     if (this._initialized) {\n595 |       return;\n596 |     }\n597 | \n598 |     if (!existsSync(ROUTE_REGISTRY_PATH)) {\n599 |       throw new Error(`[LmsRouteRegistry] Canonical route registry not found at: '${ROUTE_REGISTRY_PATH}'`);\n                                                                                                                ^\nerror: [LmsRouteRegistry] Canonical route registry not found at: '/home/palantirkc/worktrees/academy-query-integration-20261021/apps/academy/dc-gang-a/research/backend-map/route-registry.json'\n      at ensureInitialized (/home/palantirkc/worktrees/academy-query-integration-20261021/apps/academy/dc-gang-a/src/lms/lmsRouteRegistry.ts:599:107)\n      at getAllRoutes (/home/palantirkc/worktrees/academy-query-integration-20261021/apps/academy/dc-gang-a/src/lms/lmsRouteRegistry.ts:760:10)\n      at buildEndpointCatalog (/home/palantirkc/worktrees/academy-query-integration-20261021/apps/academy/dc-gang-a/src/lms/endpointCatalog.ts:67:15)\n      at <anonymous> (/home/palantirkc/worktrees/academy-query-integration-20261021/apps/academy/dc-gang-a/tests/lms/endpointCatalog.test.ts:118:25)\n(fail) deterministic metadata query and fail-closed execution > no mutation/send/unknown endpoint receives an executable classification [0.18ms]\n594 |     if (this._initialized) {\n595 |       return;\n596 |     }\n597 | \n598 |     if (!existsSync(ROUTE_REGISTRY_PATH)) {\n599 |       throw new Error(`[LmsRouteRegistry] Canonical route registry not found at: '${ROUTE_REGISTRY_PATH}'`);\n                                                                                                                ^\nerror: [LmsRouteRegistry] Canonical route registry not found at: '/home/palantirkc/worktrees/academy-query-integration-20261021/apps/academy/dc-gang-a/research/backend-map/route-registry.json'\n      at ensureInitialized (/home/palantirkc/worktrees/academy-query-integration-20261021/apps/academy/dc-gang-a/src/lms/lmsRouteRegistry.ts:599:107)\n      at getAllRoutes (/home/palantirkc/worktrees/academy-query-integration-20261021/apps/academy/dc-gang-a/src/lms/lmsRouteRegistry.ts:760:10)\n      at buildEndpointCatalog (/home/palantirkc/worktrees/academy-query-integration-20261021/apps/academy/dc-gang-a/src/lms/endpointCatalog.ts:67:15)\n      at <anonymous> (/home/palantirkc/worktrees/academy-query-integration-20261021/apps/academy/dc-gang-a/tests/lms/endpointCatalog.test.ts:125:21)\n(fail) deterministic metadata query and fail-closed execution > sort/filter output is deterministic and limits are explicit [0.15ms]\n594 |     if (this._initialized) {\n595 |       return;\n596 |     }\n597 | \n598 |     if (!existsSync(ROUTE_REGISTRY_PATH)) {\n599 |       throw new Error(`[LmsRouteRegistry] Canonical route registry not found at: '${ROUTE_REGISTRY_PATH}'`);\n                                                                                                                ^\nerror: [LmsRouteRegistry] Canonical route registry not found at: '/home/palantirkc/worktrees/academy-query-integration-20261021/apps/academy/dc-gang-a/research/backend-map/route-registry.json'\n      at ensureInitialized (/home/palantirkc/worktrees/academy-query-integration-20261021/apps/academy/dc-gang-a/src/lms/lmsRouteRegistry.ts:599:107)\n      at getAllRoutes (/home/palantirkc/worktrees/academy-query-integration-20261021/apps/academy/dc-gang-a/src/lms/lmsRouteRegistry.ts:760:10)\n      at buildEndpointCatalog (/home/palantirkc/worktrees/academy-query-integration-20261021/apps/academy/dc-gang-a/src/lms/endpointCatalog.ts:67:15)\n      at <anonymous> (/home/palantirkc/worktrees/academy-query-integration-20261021/apps/academy/dc-gang-a/tests/lms/endpointCatalog.test.ts:136:21)\n(fail) deterministic metadata query and fail-closed execution > projections are detached and unknown selectors fail closed [0.17ms]\n594 |     if (this._initialized) {\n595 |       return;\n596 |     }\n597 | \n598 |     if (!existsSync(ROUTE_REGISTRY_PATH)) {\n599 |       throw new Error(`[LmsRouteRegistry] Canonical route registry not found at: '${ROUTE_REGISTRY_PATH}'`);\n                                                                                                                ^\nerror: [LmsRouteRegistry] Canonical route registry not found at: '/home/palantirkc/worktrees/academy-query-integration-20261021/apps/academy/dc-gang-a/research/backend-map/route-registry.json'\n      at ensureInitialized (/home/palantirkc/worktrees/academy-query-integration-20261021/apps/academy/dc-gang-a/src/lms/lmsRouteRegistry.ts:599:107)\n      at getAllRoutes (/home/palantirkc/worktrees/academy-query-integration-20261021/apps/academy/dc-gang-a/src/lms/lmsRouteRegistry.ts:760:10)\n      at buildEndpointCatalog (/home/palantirkc/worktrees/academy-query-integration-20261021/apps/academy/dc-gang-a/src/lms/endpointCatalog.ts:67:15)\n      at endpointOutputMetrics (/home/palantirkc/worktrees/academy-query-integration-20261021/apps/academy/dc-gang-a/src/lms/endpointCatalog.ts:181:96)\n      at <anonymous> (/home/palantirkc/worktrees/academy-query-integration-20261021/apps/academy/dc-gang-a/tests/lms/endpointCatalog.test.ts:147:21)\n(fail) deterministic metadata query and fail-closed execution > compact and summary byte savings are measured on identical selected data [0.51ms]\n594 |     if (this._initialized) {\n595 |       return;\n596 |     }\n597 | \n598 |     if (!existsSync(ROUTE_REGISTRY_PATH)) {\n599 |       throw new Error(`[LmsRouteRegistry] Canonical route registry not found at: '${ROUTE_REGISTRY_PATH}'`);\n                                                                                                                ^\nerror: [LmsRouteRegistry] Canonical route registry not found at: '/home/palantirkc/worktrees/academy-query-integration-20261021/apps/academy/dc-gang-a/research/backend-map/route-registry.json'\n      at ensureInitialized (/home/palantirkc/worktrees/academy-query-integration-20261021/apps/academy/dc-gang-a/src/lms/lmsRouteRegistry.ts:599:107)\n      at getAllRoutes (/home/palantirkc/worktrees/academy-query-integration-20261021/apps/academy/dc-gang-a/src/lms/lmsRouteRegistry.ts:760:10)\n      at buildEndpointCatalog (/home/palantirkc/worktrees/academy-query-integration-20261021/apps/academy/dc-gang-a/src/lms/endpointCatalog.ts:67:15)\n      at queryEndpoints (/home/palantirkc/worktrees/academy-query-integration-20261021/apps/academy/dc-gang-a/src/lms/endpointCatalog.ts:106:69)\n      at endpointCli (/home/palantirkc/worktrees/academy-query-integration-20261021/apps/academy/dc-gang-a/harness/endpoints.ts:61:18)\n      at <anonymous> (/home/palantirkc/worktrees/academy-query-integration-20261021/apps/academy/dc-gang-a/tests/lms/endpointCatalog.test.ts:160:12)\n(fail) deterministic metadata query and fail-closed execution > CLI is strict, importable, and returns compact metadata by default [0.25ms]\n(pass) future reader provenance and completeness contract > validates synthetic complete evidence without granting request permission [0.46ms]\n(pass) future reader provenance and completeness contract > requires exact ownership, selector and occurrence provenance [0.22ms]\n(pass) future reader provenance and completeness contract > rejects missing runtime keys, nonboolean exhaustion and normalized impossible dates [0.22ms]\n(pass) future reader provenance and completeness contract > rejects invalid times, coverage mismatch, duplicates, unexhausted and missing totals [0.23ms]\n(pass) future reader provenance and completeness contract > preserves partial/unknown coverage rather than converting emptiness into absence [0.15ms]\n209 |     }\n210 |   });\n211 | });\n212 | \n213 | describe('authenticated DOM-source evidence remains separate from transport proof', () => {\n214 |   const evidence = () => JSON.parse(readFileSync(resolve(root, 'docs/academy-dom-source-evidence.json'), 'utf8'));\n                                          ^\nerror: ENOENT: no such file or directory, open '/home/palantirkc/worktrees/academy-query-integration-20261021/apps/academy/dc-gang-a/docs/academy-dom-source-evidence.json'\n      at evidence (/home/palantirkc/worktrees/academy-query-integration-20261021/apps/academy/dc-gang-a/tests/lms/endpointCatalog.test.ts:214:37)\n      at <anonymous> (/home/palantirkc/worktrees/academy-query-integration-20261021/apps/academy/dc-gang-a/tests/lms/endpointCatalog.test.ts:216:18)\n(fail) authenticated DOM-source evidence remains separate from transport proof > records six POST declarations without claiming submitted or captured requests [0.25ms]\n209 |     }\n210 |   });\n211 | });\n212 | \n213 | describe('authenticated DOM-source evidence remains separate from transport proof', () => {\n214 |   const evidence = () => JSON.parse(readFileSync(resolve(root, 'docs/academy-dom-source-evidence.json'), 'utf8'));\n                                          ^\nerror: ENOENT: no such file or directory, open '/home/palantirkc/worktrees/academy-query-integration-20261021/apps/academy/dc-gang-a/docs/academy-dom-source-evidence.json'\n      at evidence (/home/palantirkc/worktrees/academy-query-integration-20261021/apps/academy/dc-gang-a/tests/lms/endpointCatalog.test.ts:214:37)\n      at <anonymous> (/home/palantirkc/worktrees/academy-query-integration-20261021/apps/academy/dc-gang-a/tests/lms/endpointCatalog.test.ts:234:18)\n(fail) authenticated DOM-source evidence remains separate from transport proof > keeps new source tokens and write-associated controls noncallable [0.21ms]\n\n13 tests failed:\n(fail) extensible canonical schema without source promotion > preserves every canonical evidence field and the dated baseline [2.01ms]\n(fail) extensible canonical schema without source promotion > accepts schema-valid additions and a smaller fixture without editing evidence files [0.19ms]\n(fail) extensible canonical schema without source promotion > rejects duplicate IDs, malformed arrays/methods/effects and contradictory safety [0.18ms]\n(fail) extensible canonical schema without source promotion > validation returns an independent copy and does not echo raw metadata on error [0.11ms]\n(fail) deterministic metadata query and fail-closed execution > source candidates stay distinct and have no live-safe declarations [0.30ms]\n(fail) deterministic metadata query and fail-closed execution > all effects including safe-looking GETs remain noncallable [0.48ms]\n(fail) deterministic metadata query and fail-closed execution > no mutation/send/unknown endpoint receives an executable classification [0.18ms]\n(fail) deterministic metadata query and fail-closed execution > sort/filter output is deterministic and limits are explicit [0.15ms]\n(fail) deterministic metadata query and fail-closed execution > projections are detached and unknown selectors fail closed [0.17ms]\n(fail) deterministic metadata query and fail-closed execution > compact and summary byte savings are measured on identical selected data [0.51ms]\n(fail) deterministic metadata query and fail-closed execution > CLI is strict, importable, and returns compact metadata by default [0.25ms]\n(fail) authenticated DOM-source evidence remains separate from transport proof > records six POST declarations without claiming submitted or captured requests [0.25ms]\n(fail) authenticated DOM-source evidence remains separate from transport proof > keeps new source tokens and write-associated controls noncallable [0.21ms]\n\n 25 pass\n 13 fail\n 91 expect() calls\nRan 38 tests across 2 files. [58.00ms]\n"
+    }
+  ],
+  "preservedPins": [
+    {
+      "path": "package.json",
+      "sha256": "8e95b949a3b7a4f78a763eb5b29df0bcb8bb322fd62b7ac7027e2bdc58cb0039",
+      "unchanged": true
+    },
+    {
+      "path": "bun.lock",
+      "sha256": "bb598c9ccc3da2865c39a3d3a8aebda62304666a501e31965a1625ad20fa6d83",
+      "unchanged": true
+    },
+    {
+      "path": "apps/academy/dc-gang-a/package.json",
+      "sha256": "70ac030925bc3d5896a2b44c4ce08885a9e82d241562c528c2b335e48531b59b",
+      "unchanged": true
+    },
+    {
+      "path": "apps/academy/dc-gang-a/bun.lock",
+      "sha256": "d53986a01470c2b85224a79de64c4d8b86b166b37cee6d329aa8cf50fd589288",
+      "unchanged": true
+    },
+    {
+      "path": "apps/academy/gang-a/package.json",
+      "sha256": "c96949ee48da4409539f1848ddd7cb1046a4b1314c4e01b73229cb3fbf27012f",
+      "unchanged": true
+    },
+    {
+      "path": "apps/academy/gang-a/bun.lock",
+      "sha256": "8e83adfc345d885345ffb18007184ab31c5bbad03d4796c1a9a981e5cc612efb",
+      "unchanged": true
+    },
+    {
+      "path": "apps/academy/month-end-workbench/package.json",
+      "sha256": "e288965177fdcfc208664df85d6dcafc259ab725239d14b9565a4ca66c45f1fb",
+      "unchanged": true
+    },
+    {
+      "path": "apps/academy/month-end-workbench/bun.lock",
+      "sha256": "dc405a84e0ecb417c967d29e09b0be926756fc0b9e684656cdaa68840dc713df",
+      "unchanged": true
+    }
+  ],
+  "knownEnvironment": {
+    "missingRegistry": {
+      "path": "apps/academy/dc-gang-a/research/backend-map/route-registry.json",
+      "absent": true,
+      "testExitCode": 1,
+      "baselineQualification": "Already documented by exact qualified DOM-01 query-boundary and QRY-01 result; no synthetic replacement installed."
+    },
+    "monthEndMcpDeclarations": "Known missing @modelcontextprotocol/client from QRY-01 receipt; no month-end source changed or typecheck repeated."
+  },
+  "notRun": [
+    "Whole241-source graph/suites",
+    "All-module bun run check aggregate (unchanged unrelated suites)",
+    "Database/socket/native authentication or Academy reads",
+    "Native MCP execution, browser/server launch, printing/sending, publication/activation"
+  ],
+  "effects": {
+    "gitMutation": 0,
+    "privateOriginalReads": 0,
+    "businessWrites": 0,
+    "nativeActivation": 0
+  },
+  "focusedChecksPassed": false,
+  "allExecutedChecksPassed": false
+}

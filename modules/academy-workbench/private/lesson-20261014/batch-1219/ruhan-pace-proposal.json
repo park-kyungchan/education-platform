@@ -1,0 +1,204 @@
+{
+  "schemaVersion": "1.0.0",
+  "studentId": "stu_d7aad9a0d42049c2a8faa9e7bcd0c378",
+  "studentName": "이루한",
+  "kind": "assistant_planning_proposal",
+  "status": "proposed_not_user_accepted",
+  "communicatedMessageId": "Sentinel_46da4bff2a588191adc4bde4a7bcd247",
+  "createdAt": "2026-10-14T12:20:17Z",
+  "scope": {
+    "gauss": "1-2-4 is final series of middle-school year 1 semester 2, per user; historical series 1-2-1 through 1-2-4 are not asserted fully audited",
+    "davinci": "1-1 has no series dimension; scope ends with this book",
+    "unitDefinition": "One subunit OR one major-chapter assessment in one book, not a paired Gauss-plus-Davinci bundle"
+  },
+  "observations": [
+    {
+      "date": "2026-09-09",
+      "fact": "DailyRecord states this was the first lesson with current teacher",
+      "caveat": "Not the beginning of all prior student learning",
+      "source": "capture_ruhan_lesson_snapshot server diary read 2026-10-14 21:03:55 Asia/Seoul"
+    },
+    {
+      "date": "2026-09-23",
+      "fact": "Diary reports polygon and triangle interior/exterior-angle blank/oral work",
+      "sourceFile": "/workspace/shared/academy-audit/audit_이루한.json",
+      "field": "diaryHistory"
+    },
+    {
+      "date": "2026-09-30",
+      "fact": "DT result rows for 6-1 and 6-2 observed",
+      "sourceFile": "/workspace/shared/academy-audit/lesson-20261014-ruhan/dt64-65-live-2026.json"
+    },
+    {
+      "date": "2026-10-02",
+      "fact": "Diary reports 6-3 DT two rounds, each four questions, all correct",
+      "sourceFile": "/workspace/shared/academy-audit/audit_이루한.json"
+    },
+    {
+      "date": "2026-10-14",
+      "fact": "Teacher reports 6-4 and 6-5 DT complete; server four rows observed at 20:26:39 Asia/Seoul",
+      "sourceFile": "/workspace/shared/academy-audit/lesson-20261014-ruhan/dt64-65-live-2026.json"
+    },
+    {
+      "date": "2026-10-14",
+      "fact": "Teacher reports Davinci work through p111 and p112-p140 not done",
+      "sourceMessageId": "Sentinel_5d672af8688c8191859ff1644dd04cf6"
+    }
+  ],
+  "historicalProxy": {
+    "window": [
+      "2026-09-23",
+      "2026-10-14"
+    ],
+    "regularTeachingSlots": [
+      "2026-09-23",
+      "2026-09-30",
+      "2026-10-02",
+      "2026-10-07",
+      "2026-10-14"
+    ],
+    "slotCount": 5,
+    "attendanceForAllSlotsVerified": false,
+    "excludedAcademyHolidays": [
+      "2026-09-25",
+      "2026-10-09"
+    ],
+    "subunitsReachingObservedDTMilestone": [
+      "6-1",
+      "6-2",
+      "6-3",
+      "6-4",
+      "6-5"
+    ],
+    "milestoneCount": 5,
+    "estimatedSlotsPerUnit": 1,
+    "meaning": "Proxy of concurrent classroom throughput, including Davinci and older work during the same slots, NOT pure time per unit or teacher-final cycle completion rate",
+    "leftCensoring": "6-1 and 6-2 preparation submissions already observed on Sep20 and Sep22; learning may have begun earlier",
+    "timestampsDoNotProve": "Displayed assessment timestamps are not verified initial input, study start, duration, or final completion"
+  },
+  "remainingOutline": {
+    "gaussCurrentBook": {
+      "totalUnits": 14,
+      "subunitCount": 12,
+      "assessmentCount": 2,
+      "units": [
+        "7-1",
+        "7-2",
+        "7-3",
+        "7-4",
+        "7-5",
+        "7-6",
+        "7:assessment",
+        "8-1",
+        "8-2",
+        "8-3",
+        "8-4",
+        "8-5",
+        "8-6",
+        "8:assessment"
+      ],
+      "partiallyProgressed": [
+        "7-1"
+      ]
+    },
+    "davinci": {
+      "totalUnits": 6,
+      "units": [
+        "3-2:remaining",
+        "3-3",
+        "3:assessment",
+        "4-1",
+        "4-2",
+        "4:assessment"
+      ],
+      "partiallyProgressed": [
+        "3-2:remaining"
+      ]
+    },
+    "totalFutureOutlineUnits": 20,
+    "notAllUntouched": true,
+    "separateCarryover": [
+      {
+        "unit": "Gauss 6:assessment",
+        "status": "pending_teacher_final",
+        "slotsAssumed": 1
+      },
+      {
+        "unit": "Davinci 3-1 remaining review/clinic if any",
+        "status": "not_confirmed_complete",
+        "slotsAssumed": null,
+        "avoidReassigningCompletedPreparation": true
+      }
+    ]
+  },
+  "calculation": {
+    "model": "Gauss recent milestone pacing as concurrent-class planning proxy, with conditional Davinci throughput",
+    "gaussUnitsIncludingOldAssessment": 15,
+    "baseSlots": 15,
+    "buffer": {
+      "range": [
+        0.15,
+        0.25
+      ],
+      "basis": "Convenience planning allowance chosen by assistant, not fitted statistical uncertainty"
+    },
+    "roundedSlots": [
+      18,
+      19
+    ],
+    "futureSlotStart": "2026-10-16",
+    "weekdays": [
+      "Wednesday",
+      "Friday"
+    ],
+    "excludedFutureHolidays": [
+      "2026-12-25",
+      "2027-01-01"
+    ],
+    "otherHolidaysAndAbsences": "unknown_not_included",
+    "scenarioDates": [
+      "2026-12-16",
+      "2026-12-18"
+    ],
+    "tentativeTarget": "2026-12-18",
+    "conditionalIfOld6AssessmentCompletedToday": {
+      "baseSlots": 14,
+      "roundedSlots": [
+        17,
+        18
+      ],
+      "scenarioDates": [
+        "2026-12-11",
+        "2026-12-16"
+      ]
+    },
+    "davinciParallelCondition": "Six remaining outline units must fit into the same 18-19 classes, approximately one unit per three classes; not proven final-completion rate",
+    "combinationRule": "Do not add Gauss elapsed schedule and Davinci elapsed schedule; they are concurrent. Reassess if Davinci becomes bottleneck",
+    "notAConfidenceInterval": true,
+    "notGuaranteed": true,
+    "reassessmentSuggestion": "Observe next 2-3 classes and revise against teacher-confirmed completion"
+  },
+  "latestContextConstraints": {
+    "polyhedronConceptTest": "Teacher has now reported the concept test complete; this does not complete the whole 7-1 cycle or remove its remaining-unit membership",
+    "gauss6Assessment": "Planned to continue through 21:30 with app entry intended; still not confirmed final-complete",
+    "provenance": "Parent task instructions received 2026-10-14T12:20:17Z; exact latest source message IDs not supplied here, retain raw events as authoritative"
+  },
+  "rubricIsolation": {
+    "hyunFiveToSixOfEightDTThresholdApplied": false,
+    "ruhanRubric": "Keep existing student-specific teacher judgment; do not copy Hyun rubric"
+  },
+  "sourceFiles": [
+    "/workspace/shared/academy-audit/audit_이루한.json",
+    "/workspace/shared/academy-audit/lesson-20261014-ruhan/teacher-raw-events.jsonl",
+    "/workspace/shared/academy-audit/lesson-20261014-ruhan/dt64-65-live-2026.json",
+    "/workspace/shared/academy-audit/lesson-20261014-ruhan/davinci-timing-live-1950.json",
+    "/workspace/shared/academy-audit/migration-publishable/assets/38c2fca9df409f7fde7abbb6a3273265a976b73d9ea7554c1d4639a13c2bf98d.json"
+  ],
+  "publication": {
+    "localEvidenceOnly": true,
+    "githubWritePerformed": false,
+    "academyServerWritePerformed": false,
+    "waitForBatch": true
+  },
+  "batchNote": "Prepared after cutoff from pre-cutoff observations; assistant proposal, not user acceptance or new real-world event"
+}

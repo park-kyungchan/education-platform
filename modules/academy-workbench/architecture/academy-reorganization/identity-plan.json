@@ -1,0 +1,407 @@
+{
+  "schemaVersion": "academy.identity-plan/1",
+  "status": "proposal-awaiting-architecture-approval",
+  "existingIds": "Retain all existing Domain/Project/Work/Task/Issue IDs. Repository moves, execution order, model changes and pane movement do not reissue them.",
+  "newIds": "Allocate only distinct integration Work and bounded unfulfilled outcomes; proposed child IDs become canonical only in their source-owned records after approval.",
+  "namespaceRule": "projectId + workId is the Work key; identical historical Work text across three Projects is not one global/native identity.",
+  "revisions": "Change an uncompleted Spec/Plan contract with successor revision and history. Do not mutate completed Task contracts or original Inputs; use successor records and explicit supersedes/implements relations.",
+  "nativeIdentity": "Session, invocation, Task/Run and pane IDs are observations supplied by native runtimes, not generated from logical IDs.",
+  "domainIdentity": "Teacher evidence, source observations, edition crosswalks and lesson occurrences use owner-qualified domain IDs; unmatched joins remain unresolved.",
+  "proposedWorks": [
+    {
+      "id": "academy-architecture-orchestration-20261021",
+      "projectId": "academy-workbench",
+      "domainId": "academy-operations",
+      "role": "accountable-coordinator-and-integrator",
+      "registration": "local-canonical-record-created",
+      "tabId": "wA:t1",
+      "nativeSessionId": "01a15c7e-9584-7e91-b429-62a53d7ba5bc",
+      "implementationOwner": "root orchestrator",
+      "issueId": "AAR-ISSUE-20261021",
+      "specRef": "AAR-SPEC@1",
+      "planRef": "AAR-PLAN@1",
+      "accountableSubLead": "root",
+      "assignmentStatus": "observed-current",
+      "commonTaskRuntimeEquivalence": false
+    },
+    {
+      "id": "academy-state-model-20261021",
+      "projectId": "education-platform",
+      "domainId": "education",
+      "role": "domain-model-subLead",
+      "registration": "proposed-not-created",
+      "tabId": null,
+      "nativeSessionId": null,
+      "implementationOwner": "existing academy domain module owners",
+      "issueId": "proposed:academy-state-model-20261021:issue",
+      "specRef": "proposed:academy-state-model-20261021:spec@1",
+      "planRef": "proposed:academy-state-model-20261021:plan@1",
+      "accountableSubLead": null,
+      "assignmentStatus": "unassigned-proposal",
+      "commonTaskRuntimeEquivalence": false
+    },
+    {
+      "id": "academy-query-integration-20261021",
+      "projectId": "education-platform",
+      "domainId": "education",
+      "role": "query-source-adapter-subLead",
+      "registration": "proposed-not-created",
+      "tabId": null,
+      "nativeSessionId": null,
+      "implementationOwner": "existing dc-gang-a/lms and gang-a adapters owners",
+      "issueId": "proposed:academy-query-integration-20261021:issue",
+      "specRef": "proposed:academy-query-integration-20261021:spec@1",
+      "planRef": "proposed:academy-query-integration-20261021:plan@1",
+      "accountableSubLead": null,
+      "assignmentStatus": "unassigned-proposal",
+      "commonTaskRuntimeEquivalence": false
+    },
+    {
+      "id": "academy-consumer-integration-20261021",
+      "projectId": "academy-workbench",
+      "domainId": "academy-operations",
+      "role": "consumer-subLead",
+      "registration": "proposed-not-created",
+      "tabId": null,
+      "nativeSessionId": null,
+      "implementationOwner": "academy-workbench consumers",
+      "issueId": "proposed:academy-consumer-integration-20261021:issue",
+      "specRef": "proposed:academy-consumer-integration-20261021:spec@1",
+      "planRef": "proposed:academy-consumer-integration-20261021:plan@1",
+      "accountableSubLead": null,
+      "assignmentStatus": "unassigned-proposal",
+      "commonTaskRuntimeEquivalence": false
+    },
+    {
+      "id": "academy-workflow-verification-20261021",
+      "projectId": "education-platform",
+      "domainId": "education",
+      "role": "verification-subLead",
+      "registration": "proposed-not-created",
+      "tabId": null,
+      "nativeSessionId": null,
+      "implementationOwner": "module test owners; root owns shared routing",
+      "issueId": "proposed:academy-workflow-verification-20261021:issue",
+      "specRef": "proposed:academy-workflow-verification-20261021:spec@1",
+      "planRef": "proposed:academy-workflow-verification-20261021:plan@1",
+      "accountableSubLead": null,
+      "assignmentStatus": "unassigned-proposal",
+      "commonTaskRuntimeEquivalence": false
+    },
+    {
+      "id": "academy-environment-qualification-20261021",
+      "projectId": "academy-workbench",
+      "domainId": "academy-operations",
+      "role": "environment-harness-subLead",
+      "registration": "proposed-not-created",
+      "tabId": null,
+      "nativeSessionId": null,
+      "implementationOwner": "native environment owners; shared changes are approval-gated",
+      "issueId": "proposed:academy-environment-qualification-20261021:issue",
+      "specRef": "proposed:academy-environment-qualification-20261021:spec@1",
+      "planRef": "proposed:academy-environment-qualification-20261021:plan@1",
+      "accountableSubLead": null,
+      "assignmentStatus": "unassigned-proposal",
+      "commonTaskRuntimeEquivalence": false
+    }
+  ],
+  "preservedWorks": [
+    {
+      "projectId": "academy-workbench",
+      "workId": "academy-context-consolidation-20261021",
+      "domainId": "academy-operations",
+      "issueId": "ACX-ISSUE-20261021",
+      "path": "/home/palantirkc/worktrees/academy-context-consolidation-20261021",
+      "head": "ad42d0760df24df273cabf202b75fba5bbe8c68e",
+      "workRecordPath": "work/academy-workbench/academy-context-consolidation-20261021/work.json",
+      "workRecordSha256": "f26f95cff8d35ac4908dbc40c5e95ed45bbb6ea62bb52cdbcc8ea69cd9a1f1a0",
+      "tasks": [
+        {
+          "id": "academy-workbench:task:academy-context-consolidation-20261021-t01",
+          "state": {
+            "execution": "complete",
+            "verification": "passed",
+            "localAudit": "result-durable",
+            "sharedAudit": "unsynchronized",
+            "formalCompletion": "pending"
+          },
+          "nextAction": "Local source work is complete. Wait for the next user instruction; do not publish, merge, activate, deploy or message the third session."
+        },
+        {
+          "id": "academy-workbench:task:academy-context-consolidation-20261021-t02",
+          "state": {
+            "execution": "complete",
+            "verification": "passed",
+            "localAudit": "result-durable",
+            "sharedAudit": "unsynchronized",
+            "formalCompletion": "pending"
+          },
+          "nextAction": "Local source work is complete. Wait for the next user instruction; do not publish, merge, activate, deploy or message the third session."
+        },
+        {
+          "id": "academy-workbench:task:academy-context-consolidation-20261021-t03",
+          "state": {
+            "execution": "complete",
+            "verification": "passed",
+            "localAudit": "result-durable",
+            "sharedAudit": "unsynchronized",
+            "formalCompletion": "pending"
+          },
+          "nextAction": "Local source work is complete. Wait for the next user instruction; do not publish, merge, activate, deploy or message the third session."
+        },
+        {
+          "id": "academy-workbench:task:academy-context-consolidation-20261021-t04",
+          "state": {
+            "execution": "complete",
+            "verification": "passed",
+            "localAudit": "result-durable",
+            "sharedAudit": "unsynchronized",
+            "formalCompletion": "pending"
+          },
+          "nextAction": "Local source work is complete. Wait for the next user instruction; do not publish, merge, activate, deploy or message the third session."
+        },
+        {
+          "id": "academy-workbench:task:academy-context-consolidation-20261021-t05",
+          "state": {
+            "execution": "complete",
+            "verification": "passed",
+            "localAudit": "result-durable",
+            "sharedAudit": "unsynchronized",
+            "formalCompletion": "pending"
+          },
+          "nextAction": "Local source work is complete. Wait for the next user instruction; do not publish, merge, activate, deploy or message the third session."
+        }
+      ],
+      "nativeOwnerLiveness": "not established by Git",
+      "reuseRule": "Preserve IDs and completed records; consume exact result after owner/effect/compatibility qualification. Never auto-resume or overwrite."
+    },
+    {
+      "projectId": "academy-workbench",
+      "workId": "academy-preparation-restructure-20261021",
+      "domainId": "academy-operations",
+      "issueId": "ACADEMY-PREP-ISSUE-20261021",
+      "path": "/home/palantirkc/worktrees/academy-class-prep-20261021/work/class-prep-20261021/repositories/academy-workbench",
+      "head": "df8b9f776e22841919e69b9ff9ba25084e13f558",
+      "workRecordPath": "work/academy-workbench/academy-preparation-restructure-20261021/work.json",
+      "workRecordSha256": "7483999d4e45e4c4ad2ce1a2c8702c271308104e275efbb47f66fdee235559b7",
+      "tasks": [
+        {
+          "id": "MCP-T02",
+          "state": {
+            "execution": "running",
+            "verification": "passed",
+            "localAudit": "result-durable",
+            "sharedAudit": "pending",
+            "formalCompletion": "pending"
+          },
+          "nextAction": "Await independent exact-head re-review; remain local without publication, merge or deployment."
+        },
+        {
+          "id": "MCP-T01",
+          "state": {
+            "execution": "running",
+            "verification": "pending",
+            "localAudit": "intent-durable",
+            "sharedAudit": "pending",
+            "formalCompletion": "pending"
+          },
+          "nextAction": "Deliver source-backed current class report with explicit historical gaps."
+        },
+        {
+          "id": "MCP-T03",
+          "state": {
+            "execution": "running",
+            "verification": "pending",
+            "localAudit": "intent-durable",
+            "sharedAudit": "pending",
+            "formalCompletion": "pending"
+          },
+          "nextAction": "Consume peer context packet and interview unresolved integration decisions."
+        }
+      ],
+      "nativeOwnerLiveness": "not established by Git",
+      "reuseRule": "Preserve IDs and completed records; consume exact result after owner/effect/compatibility qualification. Never auto-resume or overwrite."
+    },
+    {
+      "projectId": "education-platform",
+      "workId": "academy-orchestration-20261019",
+      "domainId": "education",
+      "issueId": "AO-ISSUE-20261019",
+      "path": "/home/palantirkc/worktrees/academy-orchestration-20261019",
+      "head": "b1709450970c6413abbf2aefeb9d395b3f0d3f4b",
+      "workRecordPath": "work/education-platform/academy-orchestration-20261019/work.json",
+      "workRecordSha256": "0ae0a1c9af2b272e898892a6e436f2ef1945cf539c47aeba2bd3d38b8635aa7b",
+      "tasks": [
+        {
+          "id": "AO-INTERVIEW",
+          "state": {
+            "execution": "planned",
+            "verification": "pending",
+            "localAudit": "intent-durable",
+            "sharedAudit": "pending",
+            "formalCompletion": "pending"
+          },
+          "nextAction": "After source-bound repository/harness and native frontend readiness are verified, present the prepared interview and capture actual user answers separately from proposals."
+        },
+        {
+          "id": "AO-HARNESS",
+          "state": {
+            "execution": "complete",
+            "verification": "passed",
+            "localAudit": "result-durable",
+            "sharedAudit": "pending",
+            "formalCompletion": "audit-synchronization-pending"
+          },
+          "nextAction": "Preserve the verified common source integration and pending shared delivery. Parent integrates repository/frontend native receipts and actual user interview answers without changing existing source/provider/native owners."
+        },
+        {
+          "id": "AO-REPOSITORIES",
+          "state": {
+            "execution": "running",
+            "verification": "pending",
+            "localAudit": "intent-durable",
+            "sharedAudit": "pending",
+            "formalCompletion": "pending"
+          },
+          "nextAction": "Reconcile the parent final Git observations with AO-REPOSITORY-OBSERVATION and attach source-bound Verification before qualifying interview dependencies."
+        },
+        {
+          "id": "AO-FRONTEND",
+          "state": {
+            "execution": "running",
+            "verification": "pending",
+            "localAudit": "intent-durable",
+            "sharedAudit": "pending",
+            "formalCompletion": "pending"
+          },
+          "nextAction": "Retain owned ready TUI w4:p2 and dc-gang-a-dev Bot Screen with research preview. Read AO-RUNTIME-READINESS before any next action. Do not relaunch any observed process or confuse local setup with Windows viewer or native Task/Run verification."
+        }
+      ],
+      "nativeOwnerLiveness": "not established by Git",
+      "reuseRule": "Preserve IDs and completed records; consume exact result after owner/effect/compatibility qualification. Never auto-resume or overwrite."
+    },
+    {
+      "projectId": "academy-workbench",
+      "workId": "academy-repository-restructure-20261019",
+      "domainId": "academy-operations",
+      "issueId": "AR-ISSUE",
+      "path": "/home/palantirkc/worktrees/academy-restructure-20261019/academy-workbench",
+      "head": "11346a14f87abcd39d22b063984efdc193610e53",
+      "workRecordPath": "work/academy-workbench/academy-repository-restructure-20261019/work.json",
+      "workRecordSha256": "46d43b8899135ab23f96cdc6005c03c969327782c8526a0f48d848b99df88083",
+      "tasks": [
+        {
+          "id": "AR-OWNERSHIP",
+          "state": {
+            "execution": "complete",
+            "verification": "passed",
+            "localAudit": "result-durable",
+            "sharedAudit": "pending",
+            "formalCompletion": "audit-synchronization-pending"
+          },
+          "nextAction": "Repository routing and preservation are locally source-verified. Preserve separate project identities and existing native/domain owners. Independent review/shared publication remain pending; do not send status to the Orchestrator or resume held/external feature work."
+        },
+        {
+          "id": "AR-WORKFLOW",
+          "state": {
+            "execution": "complete",
+            "verification": "passed",
+            "localAudit": "result-durable",
+            "sharedAudit": "pending",
+            "formalCompletion": "audit-synchronization-pending"
+          },
+          "nextAction": "Common Work workflow is locally source-verified. Continue the separate ownership Task; shared publication, independent review and native activation are not established."
+        }
+      ],
+      "nativeOwnerLiveness": "not established by Git",
+      "reuseRule": "Preserve IDs and completed records; consume exact result after owner/effect/compatibility qualification. Never auto-resume or overwrite."
+    },
+    {
+      "projectId": "math-research-module",
+      "workId": "academy-repository-restructure-20261019",
+      "domainId": "mathematics-education",
+      "issueId": "AR-ISSUE",
+      "path": "/home/palantirkc/worktrees/academy-restructure-20261019/math-research-module",
+      "head": "968429e58a3bada93f377853c3f90e353551aa2b",
+      "workRecordPath": "work/math-research-module/academy-repository-restructure-20261019/work.json",
+      "workRecordSha256": "1d9636b70bc2348bf1d5196ab1e79a21a3b5f9aa2071f2ddb4f50ad5a2982479",
+      "tasks": [
+        {
+          "id": "AR-OWNERSHIP",
+          "state": {
+            "execution": "complete",
+            "verification": "passed",
+            "localAudit": "result-durable",
+            "sharedAudit": "pending",
+            "formalCompletion": "audit-synchronization-pending"
+          },
+          "nextAction": "Repository routing and preservation are locally source-verified. Preserve separate project identities and existing native/domain owners. Independent review/shared publication remain pending; do not send status to the Orchestrator or resume held/external feature work."
+        },
+        {
+          "id": "AR-WORKFLOW",
+          "state": {
+            "execution": "complete",
+            "verification": "passed",
+            "localAudit": "result-durable",
+            "sharedAudit": "pending",
+            "formalCompletion": "audit-synchronization-pending"
+          },
+          "nextAction": "Common Work workflow is locally source-verified. Continue the separate ownership Task; shared publication, independent review and native activation are not established."
+        }
+      ],
+      "nativeOwnerLiveness": "not established by Git",
+      "reuseRule": "Preserve IDs and completed records; consume exact result after owner/effect/compatibility qualification. Never auto-resume or overwrite."
+    },
+    {
+      "projectId": "education-platform",
+      "workId": "academy-repository-restructure-20261019",
+      "domainId": "education",
+      "issueId": "AR-ISSUE",
+      "path": "/home/palantirkc/worktrees/academy-restructure-20261019/education-platform",
+      "head": "6ce5ff1917094a8b25a8cc49c5690ca70350fb2e",
+      "workRecordPath": "work/education-platform/academy-repository-restructure-20261019/work.json",
+      "workRecordSha256": "32ec71465aa9b7913abcb6f2225a28aee0f9cb3f5782e95b63fc35f8a1016368",
+      "tasks": [
+        {
+          "id": "AR-OWNERSHIP",
+          "state": {
+            "execution": "complete",
+            "verification": "passed",
+            "localAudit": "result-durable",
+            "sharedAudit": "pending",
+            "formalCompletion": "audit-synchronization-pending"
+          },
+          "nextAction": "Repository routing and preservation are locally source-verified. Preserve separate project identities and existing native/domain owners. Independent review/shared publication remain pending; do not send status to the Orchestrator or resume held/external feature work."
+        },
+        {
+          "id": "AR-WORKFLOW",
+          "state": {
+            "execution": "complete",
+            "verification": "passed",
+            "localAudit": "result-durable",
+            "sharedAudit": "pending",
+            "formalCompletion": "audit-synchronization-pending"
+          },
+          "nextAction": "Common Work workflow is locally source-verified. Continue the separate ownership Task; shared publication, independent review and native activation are not established."
+        }
+      ],
+      "nativeOwnerLiveness": "not established by Git",
+      "reuseRule": "Preserve IDs and completed records; consume exact result after owner/effect/compatibility qualification. Never auto-resume or overwrite."
+    }
+  ],
+  "aliases": [
+    {
+      "existingPrefix": "ACX-*",
+      "meaning": "Existing findings/context identities; retained with version-qualified review dispositions."
+    },
+    {
+      "existingPrefix": "MCP-T* / ACADEMY-PREP-*",
+      "meaning": "Existing local MCP/preparation records; no renumbering."
+    },
+    {
+      "existingPrefix": "AR-* / AO-*",
+      "meaning": "Existing repository/harness and frontend orchestration records; qualify before reuse."
+    }
+  ],
+  "allocationAuthority": "Local source records only. No global issuer, native registration, domain data migration or existing owner transfer is inferred."
+}

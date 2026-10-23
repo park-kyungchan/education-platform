@@ -1,0 +1,235 @@
+{
+  "schemaVersion": "academy.focused-repair-review/3",
+  "reviewId": "AAR-REVIEW-003",
+  "createdAtUtc": "2026-10-21T05:39:52.547011+00:00",
+  "role": "Independent child source reviewer; same root Work/Task",
+  "logicalIdentity": {
+    "domainId": "academy-operations",
+    "projectId": "academy-workbench",
+    "workId": "academy-architecture-orchestration-20261021",
+    "issueId": "AAR-ISSUE-20261021",
+    "specRef": "AAR-SPEC@1",
+    "currentPlanRef": "AAR-PLAN@2",
+    "retainedPriorPlanRef": "AAR-PLAN@1",
+    "taskId": "academy-workbench:task:academy-architecture-orchestration-20261021-t03",
+    "nativeTaskId": null,
+    "nativeRunId": null
+  },
+  "reviewer": {
+    "actualNativeCODEX_THREAD_ID": "01a15cd8-368e-7322-bb15-20755a7bf9d5",
+    "independentlyObservedModel": null,
+    "independentlyObservedEffort": null,
+    "rootObservedLaunchEvidence": "Retained and separately attributed in AAR-REVIEW-002; no fresh model/effort or other-session inspection.",
+    "nativeTaskId": null,
+    "nativeRunId": null
+  },
+  "reviewedSource": {
+    "commit": "05bef45afecafec97e99ca8a58b8637bb6ef4a1e",
+    "tree": "4159a342706551aaa7ba1350ea1858710fcabcd2",
+    "checkout": "/home/palantirkc/worktrees/academy-architecture-review-scope-20261021",
+    "comparedAgainstCommit": "1a3f9e3ed977560e29ea91209ba6bdb7249b8be4",
+    "comparedAgainstTree": "31a7896a6d012fe0c1920151e9cde80c59a0e10d",
+    "actualDeltaPathCount": 5,
+    "scope": "Small receiver Input qualification delta, source-only receiving Task boundary, corrected class route and related owner checkpoint/evidence metadata."
+  },
+  "priorReview": {
+    "path": ".local/reviews/AAR-REVIEW-002.json",
+    "sha256": "ad097fa5b2429b7269efbd66e51cdc95edc26a75512ef79292e6df040e77774d"
+  },
+  "conclusion": {
+    "disposition": "no-unresolved-findings-in-declared-scope",
+    "findingClosed": "AAR-REVIEW-002-F01",
+    "newFindings": 0,
+    "declaredScope": "Only the receiver Input scope/registration/equality repair and its immediate source-only consumer boundary at 05bef45.",
+    "overallArchitectureStillHasUnresolvedFindings": true,
+    "carriedUnresolvedFindingIds": [
+      "AAR-REVIEW-001-F03",
+      "AAR-REVIEW-002-F02"
+    ],
+    "blanketArchitectureAcceptance": false,
+    "operationalAcceptance": false,
+    "implementationAuthorizationGranted": false
+  },
+  "focusedFindingDisposition": {
+    "findingId": "AAR-REVIEW-002-F01",
+    "priorStatus": "unresolved at 1a3f9e3",
+    "status": "resolved-in-declared-source-scope at 05bef45",
+    "reason": "The qualifier now compares the receiver Input domain/project/work, resolves its ID through the selected consumer canonical readRecord API, and requires exact equality with the resolved source document. The canonical reader performs the common record schema/identity checks. A generic unregistered Input-shaped source cannot borrow a valid receiver Work snapshot. The receiving Task must also be source-only. Existing producer result/Verification binding and local qualification Verification checks are retained.",
+    "evidence": [
+      {
+        "repositoryRoot": "/home/palantirkc/worktrees/academy-architecture-review-scope-20261021",
+        "commit": "05bef45afecafec97e99ca8a58b8637bb6ef4a1e",
+        "path": "architecture/academy-reorganization/qualify-external-work.ts",
+        "sha256": "4de89e2db0f4fa38eaad494d0d348dd2cde71b19e0f5d186f87d53d11893d887",
+        "locator": "qualifyExternalWork receiver document validation, canonical Input resolution/equality and next.executionClass check"
+      },
+      {
+        "repositoryRoot": "/home/palantirkc/worktrees/academy-architecture-review-scope-20261021",
+        "commit": "05bef45afecafec97e99ca8a58b8637bb6ef4a1e",
+        "path": "architecture/academy-reorganization/qualify-external-work.test.ts",
+        "sha256": "1b9bb6114caba83847539275ae40e6c01a04fd7ec0833856f95c5fd706aa587d",
+        "locator": "registered wrong-domain, unregistered envelope and native-effect consumer negative tests"
+      },
+      {
+        "path": ".local/reviews/AAR-REVIEW-003-check-receiver-memory.json",
+        "sha256": "3ddc864e4d0be0e36c54592ca6e05fabeea806625b0442438d96d37fd09b80c7"
+      }
+    ],
+    "precision": "The common validator already rejects a wrong-domain Input registered in the selected Work. The original local helper gap involved an unregistered source document outside that record set. This review claims no common validator defect or modification."
+  },
+  "originalFourFindingDispositions": [
+    {
+      "findingId": "AAR-REVIEW-001-F01",
+      "status": "resolved-in-declared-architecture-source-scope",
+      "basis": "The missing cross-Work bridge and producer-result binding were reviewed in 002; its remaining receiver admission defect is closed by this focused review. No native/shared-delivery qualification is inferred."
+    },
+    {
+      "findingId": "AAR-REVIEW-001-F02",
+      "status": "resolved-in-declared-architecture-scope-carried-from-002",
+      "basis": "Existing consumer coverage decision is retained. The class-preparation route label is corrected to /api/class, matching server.ts source. No full consumer re-review or behavior test was repeated."
+    },
+    {
+      "findingId": "AAR-REVIEW-001-F03",
+      "status": "partially-resolved-unresolved-carried-from-002",
+      "basis": "The runtime module map and its missing actual application-to-source-adapter edge are unchanged by this candidate. No repair or closure is inferred."
+    },
+    {
+      "findingId": "AAR-REVIEW-001-F04",
+      "status": "partially-resolved-carried-from-002",
+      "basis": "Final verification ordering remains repaired, but the unchanged perfect-score oracle issue AAR-REVIEW-002-F02 remains unresolved."
+    }
+  ],
+  "carriedUnresolvedFindings": [
+    {
+      "id": "AAR-REVIEW-001-F03",
+      "severity": "medium",
+      "status": "unresolved; not re-reviewed",
+      "title": "Retained teacher composition still introduces a missing runtime module edge",
+      "sourceUnchanged": "architecture-r2.json and execution-plan-r2.json Git object identities match 1a3f9e3.",
+      "priorDetails": {
+        "path": ".local/reviews/AAR-REVIEW-002.json",
+        "sha256": "ad097fa5b2429b7269efbd66e51cdc95edc26a75512ef79292e6df040e77774d"
+      }
+    },
+    {
+      "id": "AAR-REVIEW-002-F02",
+      "severity": "medium",
+      "status": "unresolved; not re-reviewed",
+      "title": "Separate verified perfect-score clinic eligibility from teacher-review completion in the test oracle",
+      "sourceUnchanged": "verification-plan-r2.json Git object identity matches 1a3f9e3.",
+      "priorDetails": {
+        "path": ".local/reviews/AAR-REVIEW-002.json",
+        "sha256": "ad097fa5b2429b7269efbd66e51cdc95edc26a75512ef79292e6df040e77774d"
+      }
+    }
+  ],
+  "checksActuallyRun": [
+    {
+      "id": "AAR-REVIEW-003-C01",
+      "result": "passed",
+      "scope": "Six focused actual-helper scenarios using real canonical record validation/assertRecord and memory-only source readers.",
+      "scenarios": [
+        {
+          "name": "Registered receiver positive control",
+          "expected": "Accept; both canonical Work snapshots valid"
+        },
+        {
+          "name": "Registered wrong-domain receiver Input",
+          "expected": "Reject; canonical consumer snapshot also reports RECORD_SCOPE_MISMATCH"
+        },
+        {
+          "name": "Unregistered well-formed Input-shaped source",
+          "expected": "Reject canonical Input resolution while listed Work snapshot remains valid"
+        },
+        {
+          "name": "Unregistered wrong-domain source",
+          "expected": "Reject receiver scope while listed Work snapshot remains valid"
+        },
+        {
+          "name": "Unregistered malformed source",
+          "expected": "Reject invalid Input reference while listed Work snapshot remains valid"
+        },
+        {
+          "name": "Native-effect consuming Task",
+          "expected": "Reject by the source-only local gate boundary"
+        }
+      ],
+      "receipt": {
+        "path": ".local/reviews/AAR-REVIEW-003-check-receiver-memory.json",
+        "sha256": "3ddc864e4d0be0e36c54592ca6e05fabeea806625b0442438d96d37fd09b80c7"
+      },
+      "limitations": "The unchanged candidate helper and canonical validators are real. Source-reader IO and commit/tree values in these unit probes are synthetic memory fixtures, not actual Git or native observations."
+    },
+    {
+      "id": "AAR-REVIEW-003-C02",
+      "result": "passed",
+      "scope": "Installed TypeScript 5.9.3 no-emit compilation of the affected qualifier and committed test source only.",
+      "receipt": {
+        "path": ".local/reviews/AAR-REVIEW-003-check-types.json",
+        "sha256": "efcbfaa61c605b91f6bcdf8b7826fcdbd87bc1f004969ade942c6d30ab10041a"
+      }
+    },
+    {
+      "id": "AAR-REVIEW-003-C03",
+      "result": "passed",
+      "scope": "Exact candidate commit/tree and five changed file hashes; canonical root Work subtree, common consumer pin and carried finding source objects unchanged; twenty-four original/intermediate review artifacts retained.",
+      "receipt": {
+        "path": ".local/reviews/AAR-REVIEW-003-evidence.json",
+        "sha256": "9138ec387017f96fe4e6b031d7e59e1896c555202025a53cae0cedd9c4cc5690"
+      }
+    },
+    {
+      "id": "AAR-REVIEW-003-C04",
+      "result": "observed-corrected-route",
+      "scope": "Read-only exact code search confirms teacher GET routes /api/class and /api/student at education-platform cb7e571 server.ts lines 309 and 314; no HTTP call performed.",
+      "evidence": {
+        "repositoryRoot": "/home/palantirkc/worktrees/academy-architecture-review-scope-20261021",
+        "commit": "05bef45afecafec97e99ca8a58b8637bb6ef4a1e",
+        "path": "architecture/academy-reorganization/workflow-capabilities-r2.json",
+        "sha256": "2f13bcde17bac9045bed07296998424e1cb14dc5d4a272e146c07be9c07eee72",
+        "locator": "#/rows/0/actualAndIntendedConsumers"
+      }
+    }
+  ],
+  "ownerReportedChecks": {
+    "result": "11 tests and 18 assertions passed with temporary Git/common readers",
+    "source": {
+      "repositoryRoot": "/home/palantirkc/worktrees/academy-architecture-review-scope-20261021",
+      "commit": "05bef45afecafec97e99ca8a58b8637bb6ef4a1e",
+      "path": "architecture/academy-reorganization/receiver-record-scope-successor.json",
+      "sha256": "372cd135e93216f1f2339f3a7e84cb54dbf5642eb67c6b26276a65974c8ea54d",
+      "locator": "#/checks; #/preservedFailedTest"
+    },
+    "independentlyExecuted": false,
+    "qualification": "Owner report only. The retained failed assumption about a registered wrong-domain Input is acknowledged; independent memory checks confirm its canonical snapshot rejection."
+  },
+  "notRun": [
+    {
+      "scope": "Committed temporary-Git test suite verbatim",
+      "reason": "It writes/deletes temporary files and creates Git commits, outside the JSON-only/no-commit review boundary. No permissions were expanded."
+    },
+    {
+      "scope": "Broad topology, unrelated repository suites, full Work snapshot/transition rerun, live/native or operational checks",
+      "reason": "The narrow helper delta does not change the canonical Work subtree or carried graph/oracle sources. Existing checks remain historical at their exact commits; they are not relabeled as newly run."
+    }
+  ],
+  "checkpointInterpretation": "The candidate checkpoint retains the earlier 1a3f9e3/002 review locator. The explicit user successor request and this report bind the actual target to 05bef45/003. No checkpoint was rewritten.",
+  "limitations": [
+    "This closes only the scoped receiver qualification defect. It does not accept the overall architecture while the two carried findings remain unresolved.",
+    "The qualifier is a source-only local adapter, not a scheduler, shared audit delivery system, native authentication proof or authority grant.",
+    "No actual student data, credential, native configuration, unrelated service or other agent/session was inspected.",
+    "No new broad review, source implementation, Goal, agent, commit, network action or native effect was performed."
+  ],
+  "preservation": {
+    "previousReview002Overwritten": false,
+    "originalOrIntermediateProbeModified": false,
+    "writesRestrictedTo": ".local/reviews/AAR-REVIEW-003*.json in the original reviewer checkout",
+    "sourceTreesModified": false,
+    "commonContractsOrPinsChanged": false,
+    "evidence": {
+      "path": ".local/reviews/AAR-REVIEW-003-evidence.json",
+      "sha256": "9138ec387017f96fe4e6b031d7e59e1896c555202025a53cae0cedd9c4cc5690"
+    }
+  },
+  "nextOwnerAction": "Retain this scoped closure alongside 002 and disposition the remaining graph and perfect-score oracle findings before claiming complete architecture review closure."
+}

@@ -1,0 +1,45 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "academy-repository-integration-20261023",
+  "kind": "task",
+  "id": "AI-DELIVER",
+  "title": "Independently review and publish the exact integrated source",
+  "nextAction": "Freeze the complete candidate and commission the user-selected fresh gpt-6.1-sol/xhigh independent reviewer with exact source pins and readback before review; publish only after required review and checks.",
+  "logical": {
+    "domainId": "education",
+    "projectId": "education-platform",
+    "workId": "academy-repository-integration-20261023",
+    "issueId": "AI-ISSUE",
+    "specId": "AI-SPEC",
+    "specRevision": 1,
+    "planId": "AI-PLAN",
+    "planRevision": 1,
+    "taskId": "AI-DELIVER"
+  },
+  "state": {
+    "execution": "planned",
+    "verification": "pending",
+    "localAudit": "intent-durable",
+    "sharedAudit": "pending",
+    "formalCompletion": "pending"
+  },
+  "executionClass": "source-only",
+  "dependsOn": [
+    {
+      "taskId": "AI-CONTEXT",
+      "milestone": "execution-and-verification"
+    },
+    {
+      "taskId": "AI-INTEGRATE",
+      "milestone": "execution-and-verification"
+    }
+  ],
+  "decisionIds": [
+    "AI-USER-DIRECTION",
+    "AI-ADDITIONAL-DIRECTION"
+  ],
+  "effectIds": [],
+  "verificationEvidenceIds": []
+}

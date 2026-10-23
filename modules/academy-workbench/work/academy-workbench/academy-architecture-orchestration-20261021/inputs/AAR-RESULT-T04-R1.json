@@ -1,0 +1,95 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "academy-operations",
+  "projectId": "academy-workbench",
+  "workId": "academy-architecture-orchestration-20261021",
+  "kind": "input",
+  "id": "AAR-RESULT-T04-R1",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "root-academy-orchestrator",
+    "locator": "architecture-review-and-source-qualification:t04:r1",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "summary": "Exact prior context and MCP source candidates match their preserved clean heads. Existing teacher application and assessment consumer boundaries qualified for staged source work. This is selected source baseline qualification, not completion of every prior Work/Task or delivery/authentication/activation.",
+    "sourcePins": [
+      {
+        "path": "architecture/academy-reorganization/prior-result-qualification.json",
+        "sha256": "d810e732b4f0f2752604dc70d09ce54761918647b0e7ac2fb937863ee9220fa2"
+      },
+      {
+        "path": "architecture/academy-reorganization/source-reuse-qualification-r2.json",
+        "sha256": "f7b9a44282ede03ce72066cdcb28bce403872f769184973e486f4238652d6e01"
+      },
+      {
+        "path": "architecture/academy-reorganization/workflow-capabilities-r2.json",
+        "sha256": "2f13bcde17bac9045bed07296998424e1cb14dc5d4a272e146c07be9c07eee72"
+      },
+      {
+        "path": "architecture/academy-reorganization/architecture-r3.json",
+        "sha256": "fa7c49448405292c312d19eb1e3063cf9b073a56dbd29836b4152036b24e708f"
+      },
+      {
+        "path": "architecture/academy-reorganization/execution-plan-r3.json",
+        "sha256": "3157166ea7c5334e2e4a319b69f69e3e6dcc118224211f823d4e0dc4580082f5"
+      }
+    ],
+    "reviewedArchitectureCommit": "5e5017e6dff174343dcb6e95685837fd0f6093a6",
+    "nativeReceiptClaim": false,
+    "verification": {
+      "schemaVersion": "1.0.0",
+      "kind": "verification",
+      "id": "academy-workbench:verification:aar-t04-r1",
+      "projectId": "academy-workbench",
+      "domainId": "academy-operations",
+      "createdAt": "2026-10-21T05:46:07.489890+00:00",
+      "payload": {
+        "targetRefs": [
+          "common-harness:task:d29a5fc5319ae76b57bb110426bcb93eb67fe31a36a8c42b958f1ddf8072e6b4"
+        ],
+        "criteria": [
+          {
+            "id": "scoped-source-result",
+            "status": "pass",
+            "message": "Exact prior context and MCP source candidates match their preserved clean heads. Existing teacher application and assessment consumer boundaries qualified for staged source work. This is selected source baseline qualification, not completion of every prior Work/Task or delivery/authentication/activation.",
+            "evidenceRefs": [
+              "academy-workbench:evidence:aar-t04-observation-r1"
+            ]
+          }
+        ],
+        "inputHashes": [
+          {
+            "path": "architecture/academy-reorganization/prior-result-qualification.json",
+            "sha256": "d810e732b4f0f2752604dc70d09ce54761918647b0e7ac2fb937863ee9220fa2"
+          },
+          {
+            "path": "architecture/academy-reorganization/source-reuse-qualification-r2.json",
+            "sha256": "f7b9a44282ede03ce72066cdcb28bce403872f769184973e486f4238652d6e01"
+          },
+          {
+            "path": "architecture/academy-reorganization/workflow-capabilities-r2.json",
+            "sha256": "2f13bcde17bac9045bed07296998424e1cb14dc5d4a272e146c07be9c07eee72"
+          },
+          {
+            "path": "architecture/academy-reorganization/architecture-r3.json",
+            "sha256": "fa7c49448405292c312d19eb1e3063cf9b073a56dbd29836b4152036b24e708f"
+          },
+          {
+            "path": "architecture/academy-reorganization/execution-plan-r3.json",
+            "sha256": "3157166ea7c5334e2e4a319b69f69e3e6dcc118224211f823d4e0dc4580082f5"
+          }
+        ],
+        "runtime": {
+          "name": "Bun source qualification and independent native reviewer",
+          "version": "1.4.3; reviewer CLI0.163.0; actual installed TypeScript5.9.3"
+        },
+        "details": {
+          "sourceOnly": true,
+          "nativeActivation": false,
+          "userOperationalAcceptance": false
+        }
+      }
+    }
+  }
+}

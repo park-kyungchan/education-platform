@@ -1,0 +1,124 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "mathematics-education",
+  "projectId": "math-research-module",
+  "workId": "academy-repository-restructure-20261019",
+  "kind": "input",
+  "id": "AR-OWNERSHIP-CHECKS",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "math-research-module",
+    "locator": "actual-serial-repository-source-checks",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "observation": {
+      "schemaVersion": "1.0.0",
+      "kind": "evidence",
+      "id": "math-research-module:evidence:academy-restructure:ownership-checks",
+      "projectId": "math-research-module",
+      "domainId": "mathematics-education",
+      "createdAt": "2026-10-19T06:00:21.596Z",
+      "payload": {
+        "claim": "The explicit academy repository/check plan routes15 prepared source repositories while preserving retained source and excluded feature owners.",
+        "method": "Read-only Git source/path/ancestry/cleanliness checks, nonexecuting CLI plan and selected/missing-repository routing checks.",
+        "sourceUrl": "urn:git:sha1:578d26c0a955f0e170df3936257e0c58b152d30c",
+        "fetchedAt": "2026-10-19T05:59:35.735591+00:00",
+        "upstreamRevision": "578d26c0a955f0e170df3936257e0c58b152d30c",
+        "result": {
+          "outcome": "success",
+          "processExitCode": 0,
+          "contentMatched": true
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "outcome": "success"
+          }
+        ],
+        "limitations": [
+          "Source routing and local checks only; no physical repository retirement, native/data cutover, production read, independent review or shared publication.",
+          "Node26.7.0 module integration runtime is absent; broader module checks were not completed."
+        ],
+        "details": {
+          "coordinationSourceCommit": "bd90de758a176ddce674c451a34c0a6f3bdab35b",
+          "receiptSha256": "fd6b4517015af2a44010e51ad49ccb3a71f9c40753aeea9467da043d48a64f97",
+          "repositoryCount": 15,
+          "unchangedSourceRepositories": 12,
+          "changedSourceRepositories": [
+            "education-platform",
+            "academy-workbench",
+            "math-research-module"
+          ],
+          "protectedFeatureAndHistoricalSourceUnchanged": true,
+          "checks": [
+            "15 exact isolated Git worktrees exist and are clean; fetched base is an ancestor.",
+            "Pinned source-evidence files and declared owner route targets exist.",
+            "Plan is nonexecuting and selected-repository routes narrow correctly; missing repository is refused.",
+            "Only three maintained repositories changed; native/retained/archived/provider source stays identical.",
+            "External MCP/month-end feature paths, existing dependency/research/intent locks and original/context archives are unchanged."
+          ]
+        }
+      }
+    },
+    "verification": {
+      "schemaVersion": "1.0.0",
+      "kind": "verification",
+      "id": "math-research-module:verification:academy-restructure:ownership",
+      "projectId": "math-research-module",
+      "domainId": "mathematics-education",
+      "createdAt": "2026-10-19T06:00:21.596Z",
+      "payload": {
+        "targetRefs": [
+          "common-harness:task:66ec58672d690d86d304cada5b3929f9b64c448a2a72c0cc2542f2448270d664"
+        ],
+        "criteria": [
+          {
+            "id": "source-backed-owner-routing",
+            "status": "pass",
+            "message": "All15 source records and owner targets exist; the plan narrows selected repositories and refuses an unknown repository without dispatching owner checks.",
+            "evidenceRefs": [
+              "math-research-module:evidence:academy-restructure:ownership-checks"
+            ]
+          },
+          {
+            "id": "preserved-source-boundaries",
+            "status": "pass",
+            "message": "Only three maintained repositories contain this source-only workflow change. Twelve retained/native/governance/archived/provider sources, protected external feature paths and historical locks/archives/context remain unchanged.",
+            "evidenceRefs": [
+              "math-research-module:evidence:academy-restructure:ownership-checks"
+            ]
+          }
+        ],
+        "inputHashes": [
+          {
+            "path": "work/math-research-module/academy-repository-restructure-20261019/work.json",
+            "sha256": "1d9636b70bc2348bf1d5196ab1e79a21a3b5f9aa2071f2ddb4f50ad5a2982479"
+          },
+          {
+            "path": "work/math-research-module/academy-repository-restructure-20261019/tasks/AR-OWNERSHIP.json",
+            "sha256": "f72d16ad6bdd6e0f64dafa1cdf1e3ece0dd6f7fb89e0cc45a80a61a5244e26be"
+          },
+          {
+            "path": "work/math-research-module/academy-repository-restructure-20261019/inputs/AR-WORKFLOW-ROUTE.json",
+            "sha256": "d1a222248cd6bc7ad9cf0eaa320d7a33dadd58e22bb30a2155a8976b3cd7e4b5"
+          }
+        ],
+        "runtime": {
+          "name": "Bun and native Git",
+          "version": "1.4.3"
+        },
+        "details": {
+          "testedCommit": "578d26c0a955f0e170df3936257e0c58b152d30c",
+          "coordinationSourceCommit": "bd90de758a176ddce674c451a34c0a6f3bdab35b",
+          "receiptSha256": "fd6b4517015af2a44010e51ad49ccb3a71f9c40753aeea9467da043d48a64f97",
+          "verificationClass": "source-only-routing-and-preservation",
+          "nativeActivation": false,
+          "independentReviewPerformed": false,
+          "sharedDelivery": "pending",
+          "semanticAcceptanceEstablished": false
+        }
+      }
+    }
+  }
+}

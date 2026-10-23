@@ -1,0 +1,3509 @@
+{
+  "schema": "academy.consumer-context-page-observation.v1",
+  "selections": [
+    {
+      "workflowId": "academy.class-preparation",
+      "includeHistory": false,
+      "catalogSha256": "c670f865f7ff37cf0832eb491cffb00f5a562c285aedac24991a8702c9d3c458",
+      "closure": {
+        "topicIds": [
+          "academy",
+          "academy.class-preparation",
+          "foundation",
+          "foundation.currentness",
+          "foundation.curriculum",
+          "foundation.harness",
+          "foundation.identity",
+          "foundation.provenance",
+          "foundation.verification"
+        ],
+        "topicCount": 9,
+        "sourceCount": 47,
+        "recordCount": 13,
+        "findingCount": 16,
+        "relationCount": 2,
+        "referenceCount": 1,
+        "itemCount": 88
+      },
+      "pages": [
+        {
+          "index": 0,
+          "usedBytes": 7874,
+          "itemCount": 16,
+          "continued": true
+        },
+        {
+          "index": 1,
+          "usedBytes": 8037,
+          "itemCount": 11,
+          "continued": true
+        },
+        {
+          "index": 2,
+          "usedBytes": 7666,
+          "itemCount": 9,
+          "continued": true
+        },
+        {
+          "index": 3,
+          "usedBytes": 8003,
+          "itemCount": 13,
+          "continued": true
+        },
+        {
+          "index": 4,
+          "usedBytes": 8093,
+          "itemCount": 13,
+          "continued": true
+        },
+        {
+          "index": 5,
+          "usedBytes": 7866,
+          "itemCount": 14,
+          "continued": true
+        },
+        {
+          "index": 6,
+          "usedBytes": 6543,
+          "itemCount": 12,
+          "continued": false
+        }
+      ],
+      "sourceIds": [
+        "SRC-AWB-ARCHITECTURE",
+        "SRC-AWB-ARCHIVE-INDEX",
+        "SRC-AWB-AUDIT-METADATA",
+        "SRC-AWB-CONTEXT",
+        "SRC-AWB-CONTINUATION",
+        "SRC-AWB-COVERAGE",
+        "SRC-AWB-GATES",
+        "SRC-AWB-GENERALIZED",
+        "SRC-AWB-HARNESS",
+        "SRC-AWB-INQUIRY",
+        "SRC-AWB-LOGICAL-TYPES",
+        "SRC-AWB-ORIGINALS-LOCATOR",
+        "SRC-COMMON-GITWORK",
+        "SRC-COMMON-MEMORY",
+        "SRC-COMMON-OWNERS",
+        "SRC-COMMON-RECORD-TYPES",
+        "SRC-CURRENT-IMPROVEMENT",
+        "SRC-CURRENT-NAVIGATION",
+        "SRC-CURRENT-SCOPE",
+        "SRC-CURRENT-USER",
+        "SRC-CURRICULUM-GAPS",
+        "SRC-DC-CHECKPOINT",
+        "SRC-DC-CLASSROOM",
+        "SRC-DC-CONTRACT",
+        "SRC-DC-ENTRY",
+        "SRC-DC-OLD-CONTEXT",
+        "SRC-DC-OLD-MAP",
+        "SRC-DC-OLD-README",
+        "SRC-DC-PRIVATE-1016",
+        "SRC-DC-PRIVATE-1016-ADDENDUM",
+        "SRC-DC-TARGET",
+        "SRC-ED-ACADEMY-CHECK",
+        "SRC-ED-ACADEMY-TSC",
+        "SRC-ED-CHECK-ROUTER",
+        "SRC-ED-ENTRY",
+        "SRC-ED-MONTHLY",
+        "SRC-ED-SOURCE-MAP",
+        "SRC-GANG-POLICY",
+        "SRC-GANG-SELECTOR",
+        "SRC-LEGACY-MEMORY",
+        "SRC-LEGACY-SSOT",
+        "SRC-LEGACY-TIERS",
+        "SRC-RESEARCH-CHRONOLOGY",
+        "SRC-RESEARCH-COVERAGE",
+        "SRC-RESEARCH-OWNERS",
+        "SRC-RESEARCH-TYPES",
+        "SRC-WORK-IDENTITY"
+      ],
+      "records": [
+        {
+          "id": "CTX-IMPROVEMENT",
+          "kind": "actual-user-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-NAVIGATION",
+          "kind": "actual-user-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-OWNERS",
+          "kind": "actual-user-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-SCOPE",
+          "kind": "actual-user-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-BOOK-IDENTITY",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-COMPLETION",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-DC-ROUTE",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-ED-MAINTENANCE",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-WEB-POSTGRES",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-COVERAGE",
+          "kind": "coverage-gap",
+          "status": "unresolved"
+        },
+        {
+          "id": "CTX-CURRENTNESS",
+          "kind": "inference",
+          "status": "current"
+        },
+        {
+          "id": "CTX-MEMORY-BOUNDARY",
+          "kind": "inference",
+          "status": "current"
+        },
+        {
+          "id": "CTX-TOPOLOGY",
+          "kind": "inference",
+          "status": "current"
+        }
+      ],
+      "findings": [
+        {
+          "id": "ACX-COVERAGE-001",
+          "status": "observed"
+        },
+        {
+          "id": "ACX-IDENTITY-001",
+          "status": "peer-in-progress"
+        },
+        {
+          "id": "ACX-NAVIGATION-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-OWNER-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-PAYLOAD-001",
+          "status": "peer-in-progress"
+        },
+        {
+          "id": "ACX-QUERY-001",
+          "status": "peer-in-progress"
+        },
+        {
+          "id": "ACX-ROUTING-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-SOURCE-001",
+          "status": "peer-in-progress"
+        },
+        {
+          "id": "ACX-TOPOLOGY-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-VERIFY-001",
+          "status": "observed"
+        },
+        {
+          "id": "ACX-CURRICULUM-001",
+          "status": "deferred-owner"
+        },
+        {
+          "id": "ACX-DECISION-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-DUPLICATE-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-INTEGRATION-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-INTERVIEW-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-MEMORY-001",
+          "status": "observed"
+        }
+      ],
+      "requiredReferenceIds": [
+        "SRC-CURRENT-SCOPE",
+        "SRC-CURRENT-USER",
+        "SRC-DC-CONTRACT",
+        "SRC-AWB-COVERAGE",
+        "SRC-AWB-HARNESS",
+        "SRC-CURRENT-NAVIGATION",
+        "SRC-DC-CLASSROOM",
+        "SRC-AWB-LOGICAL-TYPES"
+      ],
+      "sourceBodiesLoaded": false
+    },
+    {
+      "workflowId": "academy.class-preparation",
+      "includeHistory": true,
+      "catalogSha256": "c670f865f7ff37cf0832eb491cffb00f5a562c285aedac24991a8702c9d3c458",
+      "closure": {
+        "topicIds": [
+          "academy",
+          "academy.class-preparation",
+          "foundation",
+          "foundation.currentness",
+          "foundation.curriculum",
+          "foundation.harness",
+          "foundation.identity",
+          "foundation.provenance",
+          "foundation.verification"
+        ],
+        "topicCount": 9,
+        "sourceCount": 47,
+        "recordCount": 14,
+        "findingCount": 16,
+        "relationCount": 2,
+        "referenceCount": 0,
+        "itemCount": 88
+      },
+      "pages": [
+        {
+          "index": 0,
+          "usedBytes": 7873,
+          "itemCount": 16,
+          "continued": true
+        },
+        {
+          "index": 1,
+          "usedBytes": 8036,
+          "itemCount": 11,
+          "continued": true
+        },
+        {
+          "index": 2,
+          "usedBytes": 7665,
+          "itemCount": 9,
+          "continued": true
+        },
+        {
+          "index": 3,
+          "usedBytes": 8002,
+          "itemCount": 13,
+          "continued": true
+        },
+        {
+          "index": 4,
+          "usedBytes": 8092,
+          "itemCount": 13,
+          "continued": true
+        },
+        {
+          "index": 5,
+          "usedBytes": 7865,
+          "itemCount": 14,
+          "continued": true
+        },
+        {
+          "index": 6,
+          "usedBytes": 6738,
+          "itemCount": 12,
+          "continued": false
+        }
+      ],
+      "sourceIds": [
+        "SRC-AWB-ARCHITECTURE",
+        "SRC-AWB-ARCHIVE-INDEX",
+        "SRC-AWB-AUDIT-METADATA",
+        "SRC-AWB-CONTEXT",
+        "SRC-AWB-CONTINUATION",
+        "SRC-AWB-COVERAGE",
+        "SRC-AWB-GATES",
+        "SRC-AWB-GENERALIZED",
+        "SRC-AWB-HARNESS",
+        "SRC-AWB-INQUIRY",
+        "SRC-AWB-LOGICAL-TYPES",
+        "SRC-AWB-ORIGINALS-LOCATOR",
+        "SRC-COMMON-GITWORK",
+        "SRC-COMMON-MEMORY",
+        "SRC-COMMON-OWNERS",
+        "SRC-COMMON-RECORD-TYPES",
+        "SRC-CURRENT-IMPROVEMENT",
+        "SRC-CURRENT-NAVIGATION",
+        "SRC-CURRENT-SCOPE",
+        "SRC-CURRENT-USER",
+        "SRC-CURRICULUM-GAPS",
+        "SRC-DC-CHECKPOINT",
+        "SRC-DC-CLASSROOM",
+        "SRC-DC-CONTRACT",
+        "SRC-DC-ENTRY",
+        "SRC-DC-OLD-CONTEXT",
+        "SRC-DC-OLD-MAP",
+        "SRC-DC-OLD-README",
+        "SRC-DC-PRIVATE-1016",
+        "SRC-DC-PRIVATE-1016-ADDENDUM",
+        "SRC-DC-TARGET",
+        "SRC-ED-ACADEMY-CHECK",
+        "SRC-ED-ACADEMY-TSC",
+        "SRC-ED-CHECK-ROUTER",
+        "SRC-ED-ENTRY",
+        "SRC-ED-MONTHLY",
+        "SRC-ED-SOURCE-MAP",
+        "SRC-GANG-POLICY",
+        "SRC-GANG-SELECTOR",
+        "SRC-LEGACY-MEMORY",
+        "SRC-LEGACY-SSOT",
+        "SRC-LEGACY-TIERS",
+        "SRC-RESEARCH-CHRONOLOGY",
+        "SRC-RESEARCH-COVERAGE",
+        "SRC-RESEARCH-OWNERS",
+        "SRC-RESEARCH-TYPES",
+        "SRC-WORK-IDENTITY"
+      ],
+      "records": [
+        {
+          "id": "CTX-IMPROVEMENT",
+          "kind": "actual-user-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-NAVIGATION",
+          "kind": "actual-user-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-OWNERS",
+          "kind": "actual-user-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-SCOPE",
+          "kind": "actual-user-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-BOOK-IDENTITY",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-COMPLETION",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-DC-ROUTE",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-ED-MAINTENANCE",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-WEB-POSTGRES",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-COVERAGE",
+          "kind": "coverage-gap",
+          "status": "unresolved"
+        },
+        {
+          "id": "CTX-CURRENTNESS",
+          "kind": "inference",
+          "status": "current"
+        },
+        {
+          "id": "CTX-MEMORY-BOUNDARY",
+          "kind": "inference",
+          "status": "current"
+        },
+        {
+          "id": "CTX-TOPOLOGY",
+          "kind": "inference",
+          "status": "current"
+        },
+        {
+          "id": "CTX-OLD-ROUTING",
+          "kind": "source-owner-decision",
+          "status": "historical"
+        }
+      ],
+      "findings": [
+        {
+          "id": "ACX-COVERAGE-001",
+          "status": "observed"
+        },
+        {
+          "id": "ACX-IDENTITY-001",
+          "status": "peer-in-progress"
+        },
+        {
+          "id": "ACX-NAVIGATION-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-OWNER-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-PAYLOAD-001",
+          "status": "peer-in-progress"
+        },
+        {
+          "id": "ACX-QUERY-001",
+          "status": "peer-in-progress"
+        },
+        {
+          "id": "ACX-ROUTING-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-SOURCE-001",
+          "status": "peer-in-progress"
+        },
+        {
+          "id": "ACX-TOPOLOGY-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-VERIFY-001",
+          "status": "observed"
+        },
+        {
+          "id": "ACX-CURRICULUM-001",
+          "status": "deferred-owner"
+        },
+        {
+          "id": "ACX-DECISION-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-DUPLICATE-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-INTEGRATION-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-INTERVIEW-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-MEMORY-001",
+          "status": "observed"
+        }
+      ],
+      "requiredReferenceIds": [
+        "SRC-CURRENT-SCOPE",
+        "SRC-CURRENT-USER",
+        "SRC-DC-CONTRACT",
+        "SRC-AWB-COVERAGE",
+        "SRC-AWB-HARNESS",
+        "SRC-CURRENT-NAVIGATION",
+        "SRC-DC-CLASSROOM",
+        "SRC-AWB-LOGICAL-TYPES"
+      ],
+      "sourceBodiesLoaded": false
+    },
+    {
+      "workflowId": "academy.lesson-delivery",
+      "includeHistory": false,
+      "catalogSha256": "c670f865f7ff37cf0832eb491cffb00f5a562c285aedac24991a8702c9d3c458",
+      "closure": {
+        "topicIds": [
+          "academy",
+          "academy.lesson-delivery",
+          "foundation",
+          "foundation.currentness",
+          "foundation.harness",
+          "foundation.identity",
+          "foundation.provenance",
+          "foundation.verification"
+        ],
+        "topicCount": 8,
+        "sourceCount": 45,
+        "recordCount": 12,
+        "findingCount": 13,
+        "relationCount": 2,
+        "referenceCount": 1,
+        "itemCount": 81
+      },
+      "pages": [
+        {
+          "index": 0,
+          "usedBytes": 8057,
+          "itemCount": 16,
+          "continued": true
+        },
+        {
+          "index": 1,
+          "usedBytes": 7879,
+          "itemCount": 10,
+          "continued": true
+        },
+        {
+          "index": 2,
+          "usedBytes": 8127,
+          "itemCount": 11,
+          "continued": true
+        },
+        {
+          "index": 3,
+          "usedBytes": 7767,
+          "itemCount": 13,
+          "continued": true
+        },
+        {
+          "index": 4,
+          "usedBytes": 8050,
+          "itemCount": 14,
+          "continued": true
+        },
+        {
+          "index": 5,
+          "usedBytes": 7861,
+          "itemCount": 13,
+          "continued": true
+        },
+        {
+          "index": 6,
+          "usedBytes": 2430,
+          "itemCount": 4,
+          "continued": false
+        }
+      ],
+      "sourceIds": [
+        "SRC-AWB-ARCHITECTURE",
+        "SRC-AWB-ARCHIVE-INDEX",
+        "SRC-AWB-AUDIT-METADATA",
+        "SRC-AWB-CONTEXT",
+        "SRC-AWB-CONTINUATION",
+        "SRC-AWB-COVERAGE",
+        "SRC-AWB-GATES",
+        "SRC-AWB-GENERALIZED",
+        "SRC-AWB-HARNESS",
+        "SRC-AWB-INQUIRY",
+        "SRC-AWB-LOGICAL-TYPES",
+        "SRC-AWB-ORIGINALS-LOCATOR",
+        "SRC-COMMON-GITWORK",
+        "SRC-COMMON-MEMORY",
+        "SRC-COMMON-OWNERS",
+        "SRC-COMMON-RECORD-TYPES",
+        "SRC-CURRENT-IMPROVEMENT",
+        "SRC-CURRENT-SCOPE",
+        "SRC-CURRENT-USER",
+        "SRC-DC-CHECKPOINT",
+        "SRC-DC-CLASSROOM",
+        "SRC-DC-CONTRACT",
+        "SRC-DC-ENTRY",
+        "SRC-DC-OLD-CONTEXT",
+        "SRC-DC-OLD-MAP",
+        "SRC-DC-OLD-README",
+        "SRC-DC-PRIVATE-1016",
+        "SRC-DC-PRIVATE-1016-ADDENDUM",
+        "SRC-DC-TARGET",
+        "SRC-ED-ACADEMY-CHECK",
+        "SRC-ED-ACADEMY-TSC",
+        "SRC-ED-CHECK-ROUTER",
+        "SRC-ED-ENTRY",
+        "SRC-ED-MONTHLY",
+        "SRC-ED-SOURCE-MAP",
+        "SRC-GANG-POLICY",
+        "SRC-GANG-SELECTOR",
+        "SRC-LEGACY-MEMORY",
+        "SRC-LEGACY-SSOT",
+        "SRC-LEGACY-TIERS",
+        "SRC-RESEARCH-CHRONOLOGY",
+        "SRC-RESEARCH-COVERAGE",
+        "SRC-RESEARCH-OWNERS",
+        "SRC-RESEARCH-TYPES",
+        "SRC-WORK-IDENTITY"
+      ],
+      "records": [
+        {
+          "id": "CTX-IMPROVEMENT",
+          "kind": "actual-user-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-OWNERS",
+          "kind": "actual-user-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-SCOPE",
+          "kind": "actual-user-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-BOOK-IDENTITY",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-COMPLETION",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-DC-ROUTE",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-ED-MAINTENANCE",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-WEB-POSTGRES",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-COVERAGE",
+          "kind": "coverage-gap",
+          "status": "unresolved"
+        },
+        {
+          "id": "CTX-CURRENTNESS",
+          "kind": "inference",
+          "status": "current"
+        },
+        {
+          "id": "CTX-MEMORY-BOUNDARY",
+          "kind": "inference",
+          "status": "current"
+        },
+        {
+          "id": "CTX-TOPOLOGY",
+          "kind": "inference",
+          "status": "current"
+        }
+      ],
+      "findings": [
+        {
+          "id": "ACX-COVERAGE-001",
+          "status": "observed"
+        },
+        {
+          "id": "ACX-IDENTITY-001",
+          "status": "peer-in-progress"
+        },
+        {
+          "id": "ACX-OWNER-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-PAYLOAD-001",
+          "status": "peer-in-progress"
+        },
+        {
+          "id": "ACX-ROUTING-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-SOURCE-001",
+          "status": "peer-in-progress"
+        },
+        {
+          "id": "ACX-TOPOLOGY-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-VERIFY-001",
+          "status": "observed"
+        },
+        {
+          "id": "ACX-DECISION-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-DUPLICATE-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-INTEGRATION-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-INTERVIEW-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-MEMORY-001",
+          "status": "observed"
+        }
+      ],
+      "requiredReferenceIds": [
+        "SRC-CURRENT-SCOPE",
+        "SRC-CURRENT-USER",
+        "SRC-DC-CONTRACT",
+        "SRC-AWB-COVERAGE",
+        "SRC-AWB-HARNESS",
+        "SRC-DC-CLASSROOM"
+      ],
+      "sourceBodiesLoaded": false
+    },
+    {
+      "workflowId": "academy.lesson-delivery",
+      "includeHistory": true,
+      "catalogSha256": "c670f865f7ff37cf0832eb491cffb00f5a562c285aedac24991a8702c9d3c458",
+      "closure": {
+        "topicIds": [
+          "academy",
+          "academy.lesson-delivery",
+          "foundation",
+          "foundation.currentness",
+          "foundation.harness",
+          "foundation.identity",
+          "foundation.provenance",
+          "foundation.verification"
+        ],
+        "topicCount": 8,
+        "sourceCount": 45,
+        "recordCount": 13,
+        "findingCount": 13,
+        "relationCount": 2,
+        "referenceCount": 0,
+        "itemCount": 81
+      },
+      "pages": [
+        {
+          "index": 0,
+          "usedBytes": 8056,
+          "itemCount": 16,
+          "continued": true
+        },
+        {
+          "index": 1,
+          "usedBytes": 7878,
+          "itemCount": 10,
+          "continued": true
+        },
+        {
+          "index": 2,
+          "usedBytes": 8126,
+          "itemCount": 11,
+          "continued": true
+        },
+        {
+          "index": 3,
+          "usedBytes": 7766,
+          "itemCount": 13,
+          "continued": true
+        },
+        {
+          "index": 4,
+          "usedBytes": 8049,
+          "itemCount": 14,
+          "continued": true
+        },
+        {
+          "index": 5,
+          "usedBytes": 7860,
+          "itemCount": 13,
+          "continued": true
+        },
+        {
+          "index": 6,
+          "usedBytes": 2625,
+          "itemCount": 4,
+          "continued": false
+        }
+      ],
+      "sourceIds": [
+        "SRC-AWB-ARCHITECTURE",
+        "SRC-AWB-ARCHIVE-INDEX",
+        "SRC-AWB-AUDIT-METADATA",
+        "SRC-AWB-CONTEXT",
+        "SRC-AWB-CONTINUATION",
+        "SRC-AWB-COVERAGE",
+        "SRC-AWB-GATES",
+        "SRC-AWB-GENERALIZED",
+        "SRC-AWB-HARNESS",
+        "SRC-AWB-INQUIRY",
+        "SRC-AWB-LOGICAL-TYPES",
+        "SRC-AWB-ORIGINALS-LOCATOR",
+        "SRC-COMMON-GITWORK",
+        "SRC-COMMON-MEMORY",
+        "SRC-COMMON-OWNERS",
+        "SRC-COMMON-RECORD-TYPES",
+        "SRC-CURRENT-IMPROVEMENT",
+        "SRC-CURRENT-SCOPE",
+        "SRC-CURRENT-USER",
+        "SRC-DC-CHECKPOINT",
+        "SRC-DC-CLASSROOM",
+        "SRC-DC-CONTRACT",
+        "SRC-DC-ENTRY",
+        "SRC-DC-OLD-CONTEXT",
+        "SRC-DC-OLD-MAP",
+        "SRC-DC-OLD-README",
+        "SRC-DC-PRIVATE-1016",
+        "SRC-DC-PRIVATE-1016-ADDENDUM",
+        "SRC-DC-TARGET",
+        "SRC-ED-ACADEMY-CHECK",
+        "SRC-ED-ACADEMY-TSC",
+        "SRC-ED-CHECK-ROUTER",
+        "SRC-ED-ENTRY",
+        "SRC-ED-MONTHLY",
+        "SRC-ED-SOURCE-MAP",
+        "SRC-GANG-POLICY",
+        "SRC-GANG-SELECTOR",
+        "SRC-LEGACY-MEMORY",
+        "SRC-LEGACY-SSOT",
+        "SRC-LEGACY-TIERS",
+        "SRC-RESEARCH-CHRONOLOGY",
+        "SRC-RESEARCH-COVERAGE",
+        "SRC-RESEARCH-OWNERS",
+        "SRC-RESEARCH-TYPES",
+        "SRC-WORK-IDENTITY"
+      ],
+      "records": [
+        {
+          "id": "CTX-IMPROVEMENT",
+          "kind": "actual-user-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-OWNERS",
+          "kind": "actual-user-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-SCOPE",
+          "kind": "actual-user-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-BOOK-IDENTITY",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-COMPLETION",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-DC-ROUTE",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-ED-MAINTENANCE",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-WEB-POSTGRES",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-COVERAGE",
+          "kind": "coverage-gap",
+          "status": "unresolved"
+        },
+        {
+          "id": "CTX-CURRENTNESS",
+          "kind": "inference",
+          "status": "current"
+        },
+        {
+          "id": "CTX-MEMORY-BOUNDARY",
+          "kind": "inference",
+          "status": "current"
+        },
+        {
+          "id": "CTX-TOPOLOGY",
+          "kind": "inference",
+          "status": "current"
+        },
+        {
+          "id": "CTX-OLD-ROUTING",
+          "kind": "source-owner-decision",
+          "status": "historical"
+        }
+      ],
+      "findings": [
+        {
+          "id": "ACX-COVERAGE-001",
+          "status": "observed"
+        },
+        {
+          "id": "ACX-IDENTITY-001",
+          "status": "peer-in-progress"
+        },
+        {
+          "id": "ACX-OWNER-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-PAYLOAD-001",
+          "status": "peer-in-progress"
+        },
+        {
+          "id": "ACX-ROUTING-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-SOURCE-001",
+          "status": "peer-in-progress"
+        },
+        {
+          "id": "ACX-TOPOLOGY-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-VERIFY-001",
+          "status": "observed"
+        },
+        {
+          "id": "ACX-DECISION-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-DUPLICATE-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-INTEGRATION-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-INTERVIEW-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-MEMORY-001",
+          "status": "observed"
+        }
+      ],
+      "requiredReferenceIds": [
+        "SRC-CURRENT-SCOPE",
+        "SRC-CURRENT-USER",
+        "SRC-DC-CONTRACT",
+        "SRC-AWB-COVERAGE",
+        "SRC-AWB-HARNESS",
+        "SRC-DC-CLASSROOM"
+      ],
+      "sourceBodiesLoaded": false
+    },
+    {
+      "workflowId": "academy.progress-audit",
+      "includeHistory": false,
+      "catalogSha256": "c670f865f7ff37cf0832eb491cffb00f5a562c285aedac24991a8702c9d3c458",
+      "closure": {
+        "topicIds": [
+          "academy",
+          "academy.progress-audit",
+          "foundation",
+          "foundation.currentness",
+          "foundation.curriculum",
+          "foundation.harness",
+          "foundation.identity",
+          "foundation.provenance",
+          "foundation.verification"
+        ],
+        "topicCount": 9,
+        "sourceCount": 46,
+        "recordCount": 12,
+        "findingCount": 14,
+        "relationCount": 2,
+        "referenceCount": 1,
+        "itemCount": 84
+      },
+      "pages": [
+        {
+          "index": 0,
+          "usedBytes": 7947,
+          "itemCount": 16,
+          "continued": true
+        },
+        {
+          "index": 1,
+          "usedBytes": 7621,
+          "itemCount": 10,
+          "continued": true
+        },
+        {
+          "index": 2,
+          "usedBytes": 8048,
+          "itemCount": 10,
+          "continued": true
+        },
+        {
+          "index": 3,
+          "usedBytes": 8186,
+          "itemCount": 14,
+          "continued": true
+        },
+        {
+          "index": 4,
+          "usedBytes": 7770,
+          "itemCount": 13,
+          "continued": true
+        },
+        {
+          "index": 5,
+          "usedBytes": 7658,
+          "itemCount": 13,
+          "continued": true
+        },
+        {
+          "index": 6,
+          "usedBytes": 4514,
+          "itemCount": 8,
+          "continued": false
+        }
+      ],
+      "sourceIds": [
+        "SRC-AWB-ARCHITECTURE",
+        "SRC-AWB-ARCHIVE-INDEX",
+        "SRC-AWB-AUDIT-METADATA",
+        "SRC-AWB-CONTEXT",
+        "SRC-AWB-CONTINUATION",
+        "SRC-AWB-COVERAGE",
+        "SRC-AWB-GATES",
+        "SRC-AWB-GENERALIZED",
+        "SRC-AWB-HARNESS",
+        "SRC-AWB-INQUIRY",
+        "SRC-AWB-LOGICAL-TYPES",
+        "SRC-AWB-ORIGINALS-LOCATOR",
+        "SRC-COMMON-GITWORK",
+        "SRC-COMMON-MEMORY",
+        "SRC-COMMON-OWNERS",
+        "SRC-COMMON-RECORD-TYPES",
+        "SRC-CURRENT-IMPROVEMENT",
+        "SRC-CURRENT-SCOPE",
+        "SRC-CURRENT-USER",
+        "SRC-CURRICULUM-GAPS",
+        "SRC-DC-CHECKPOINT",
+        "SRC-DC-CLASSROOM",
+        "SRC-DC-CONTRACT",
+        "SRC-DC-ENTRY",
+        "SRC-DC-OLD-CONTEXT",
+        "SRC-DC-OLD-MAP",
+        "SRC-DC-OLD-README",
+        "SRC-DC-PRIVATE-1016",
+        "SRC-DC-PRIVATE-1016-ADDENDUM",
+        "SRC-DC-TARGET",
+        "SRC-ED-ACADEMY-CHECK",
+        "SRC-ED-ACADEMY-TSC",
+        "SRC-ED-CHECK-ROUTER",
+        "SRC-ED-ENTRY",
+        "SRC-ED-MONTHLY",
+        "SRC-ED-SOURCE-MAP",
+        "SRC-GANG-POLICY",
+        "SRC-GANG-SELECTOR",
+        "SRC-LEGACY-MEMORY",
+        "SRC-LEGACY-SSOT",
+        "SRC-LEGACY-TIERS",
+        "SRC-RESEARCH-CHRONOLOGY",
+        "SRC-RESEARCH-COVERAGE",
+        "SRC-RESEARCH-OWNERS",
+        "SRC-RESEARCH-TYPES",
+        "SRC-WORK-IDENTITY"
+      ],
+      "records": [
+        {
+          "id": "CTX-IMPROVEMENT",
+          "kind": "actual-user-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-OWNERS",
+          "kind": "actual-user-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-SCOPE",
+          "kind": "actual-user-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-BOOK-IDENTITY",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-COMPLETION",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-DC-ROUTE",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-ED-MAINTENANCE",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-WEB-POSTGRES",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-COVERAGE",
+          "kind": "coverage-gap",
+          "status": "unresolved"
+        },
+        {
+          "id": "CTX-CURRENTNESS",
+          "kind": "inference",
+          "status": "current"
+        },
+        {
+          "id": "CTX-MEMORY-BOUNDARY",
+          "kind": "inference",
+          "status": "current"
+        },
+        {
+          "id": "CTX-TOPOLOGY",
+          "kind": "inference",
+          "status": "current"
+        }
+      ],
+      "findings": [
+        {
+          "id": "ACX-COVERAGE-001",
+          "status": "observed"
+        },
+        {
+          "id": "ACX-IDENTITY-001",
+          "status": "peer-in-progress"
+        },
+        {
+          "id": "ACX-OWNER-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-PAYLOAD-001",
+          "status": "peer-in-progress"
+        },
+        {
+          "id": "ACX-ROUTING-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-SOURCE-001",
+          "status": "peer-in-progress"
+        },
+        {
+          "id": "ACX-TOPOLOGY-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-VERIFY-001",
+          "status": "observed"
+        },
+        {
+          "id": "ACX-CURRICULUM-001",
+          "status": "deferred-owner"
+        },
+        {
+          "id": "ACX-DECISION-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-DUPLICATE-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-INTEGRATION-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-INTERVIEW-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-MEMORY-001",
+          "status": "observed"
+        }
+      ],
+      "requiredReferenceIds": [
+        "SRC-CURRENT-SCOPE",
+        "SRC-CURRENT-USER",
+        "SRC-DC-CONTRACT",
+        "SRC-AWB-COVERAGE",
+        "SRC-AWB-HARNESS",
+        "SRC-DC-CLASSROOM",
+        "SRC-AWB-INQUIRY",
+        "SRC-AWB-LOGICAL-TYPES"
+      ],
+      "sourceBodiesLoaded": false
+    },
+    {
+      "workflowId": "academy.progress-audit",
+      "includeHistory": true,
+      "catalogSha256": "c670f865f7ff37cf0832eb491cffb00f5a562c285aedac24991a8702c9d3c458",
+      "closure": {
+        "topicIds": [
+          "academy",
+          "academy.progress-audit",
+          "foundation",
+          "foundation.currentness",
+          "foundation.curriculum",
+          "foundation.harness",
+          "foundation.identity",
+          "foundation.provenance",
+          "foundation.verification"
+        ],
+        "topicCount": 9,
+        "sourceCount": 46,
+        "recordCount": 13,
+        "findingCount": 14,
+        "relationCount": 2,
+        "referenceCount": 0,
+        "itemCount": 84
+      },
+      "pages": [
+        {
+          "index": 0,
+          "usedBytes": 7946,
+          "itemCount": 16,
+          "continued": true
+        },
+        {
+          "index": 1,
+          "usedBytes": 7620,
+          "itemCount": 10,
+          "continued": true
+        },
+        {
+          "index": 2,
+          "usedBytes": 8047,
+          "itemCount": 10,
+          "continued": true
+        },
+        {
+          "index": 3,
+          "usedBytes": 8185,
+          "itemCount": 14,
+          "continued": true
+        },
+        {
+          "index": 4,
+          "usedBytes": 7769,
+          "itemCount": 13,
+          "continued": true
+        },
+        {
+          "index": 5,
+          "usedBytes": 7657,
+          "itemCount": 13,
+          "continued": true
+        },
+        {
+          "index": 6,
+          "usedBytes": 4709,
+          "itemCount": 8,
+          "continued": false
+        }
+      ],
+      "sourceIds": [
+        "SRC-AWB-ARCHITECTURE",
+        "SRC-AWB-ARCHIVE-INDEX",
+        "SRC-AWB-AUDIT-METADATA",
+        "SRC-AWB-CONTEXT",
+        "SRC-AWB-CONTINUATION",
+        "SRC-AWB-COVERAGE",
+        "SRC-AWB-GATES",
+        "SRC-AWB-GENERALIZED",
+        "SRC-AWB-HARNESS",
+        "SRC-AWB-INQUIRY",
+        "SRC-AWB-LOGICAL-TYPES",
+        "SRC-AWB-ORIGINALS-LOCATOR",
+        "SRC-COMMON-GITWORK",
+        "SRC-COMMON-MEMORY",
+        "SRC-COMMON-OWNERS",
+        "SRC-COMMON-RECORD-TYPES",
+        "SRC-CURRENT-IMPROVEMENT",
+        "SRC-CURRENT-SCOPE",
+        "SRC-CURRENT-USER",
+        "SRC-CURRICULUM-GAPS",
+        "SRC-DC-CHECKPOINT",
+        "SRC-DC-CLASSROOM",
+        "SRC-DC-CONTRACT",
+        "SRC-DC-ENTRY",
+        "SRC-DC-OLD-CONTEXT",
+        "SRC-DC-OLD-MAP",
+        "SRC-DC-OLD-README",
+        "SRC-DC-PRIVATE-1016",
+        "SRC-DC-PRIVATE-1016-ADDENDUM",
+        "SRC-DC-TARGET",
+        "SRC-ED-ACADEMY-CHECK",
+        "SRC-ED-ACADEMY-TSC",
+        "SRC-ED-CHECK-ROUTER",
+        "SRC-ED-ENTRY",
+        "SRC-ED-MONTHLY",
+        "SRC-ED-SOURCE-MAP",
+        "SRC-GANG-POLICY",
+        "SRC-GANG-SELECTOR",
+        "SRC-LEGACY-MEMORY",
+        "SRC-LEGACY-SSOT",
+        "SRC-LEGACY-TIERS",
+        "SRC-RESEARCH-CHRONOLOGY",
+        "SRC-RESEARCH-COVERAGE",
+        "SRC-RESEARCH-OWNERS",
+        "SRC-RESEARCH-TYPES",
+        "SRC-WORK-IDENTITY"
+      ],
+      "records": [
+        {
+          "id": "CTX-IMPROVEMENT",
+          "kind": "actual-user-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-OWNERS",
+          "kind": "actual-user-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-SCOPE",
+          "kind": "actual-user-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-BOOK-IDENTITY",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-COMPLETION",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-DC-ROUTE",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-ED-MAINTENANCE",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-WEB-POSTGRES",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-COVERAGE",
+          "kind": "coverage-gap",
+          "status": "unresolved"
+        },
+        {
+          "id": "CTX-CURRENTNESS",
+          "kind": "inference",
+          "status": "current"
+        },
+        {
+          "id": "CTX-MEMORY-BOUNDARY",
+          "kind": "inference",
+          "status": "current"
+        },
+        {
+          "id": "CTX-TOPOLOGY",
+          "kind": "inference",
+          "status": "current"
+        },
+        {
+          "id": "CTX-OLD-ROUTING",
+          "kind": "source-owner-decision",
+          "status": "historical"
+        }
+      ],
+      "findings": [
+        {
+          "id": "ACX-COVERAGE-001",
+          "status": "observed"
+        },
+        {
+          "id": "ACX-IDENTITY-001",
+          "status": "peer-in-progress"
+        },
+        {
+          "id": "ACX-OWNER-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-PAYLOAD-001",
+          "status": "peer-in-progress"
+        },
+        {
+          "id": "ACX-ROUTING-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-SOURCE-001",
+          "status": "peer-in-progress"
+        },
+        {
+          "id": "ACX-TOPOLOGY-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-VERIFY-001",
+          "status": "observed"
+        },
+        {
+          "id": "ACX-CURRICULUM-001",
+          "status": "deferred-owner"
+        },
+        {
+          "id": "ACX-DECISION-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-DUPLICATE-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-INTEGRATION-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-INTERVIEW-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-MEMORY-001",
+          "status": "observed"
+        }
+      ],
+      "requiredReferenceIds": [
+        "SRC-CURRENT-SCOPE",
+        "SRC-CURRENT-USER",
+        "SRC-DC-CONTRACT",
+        "SRC-AWB-COVERAGE",
+        "SRC-AWB-HARNESS",
+        "SRC-DC-CLASSROOM",
+        "SRC-AWB-INQUIRY",
+        "SRC-AWB-LOGICAL-TYPES"
+      ],
+      "sourceBodiesLoaded": false
+    },
+    {
+      "workflowId": "academy.homework-followup",
+      "includeHistory": false,
+      "catalogSha256": "c670f865f7ff37cf0832eb491cffb00f5a562c285aedac24991a8702c9d3c458",
+      "closure": {
+        "topicIds": [
+          "academy",
+          "academy.homework-followup",
+          "foundation",
+          "foundation.currentness",
+          "foundation.curriculum",
+          "foundation.harness",
+          "foundation.identity",
+          "foundation.provenance",
+          "foundation.verification"
+        ],
+        "topicCount": 9,
+        "sourceCount": 46,
+        "recordCount": 12,
+        "findingCount": 14,
+        "relationCount": 2,
+        "referenceCount": 1,
+        "itemCount": 84
+      },
+      "pages": [
+        {
+          "index": 0,
+          "usedBytes": 7852,
+          "itemCount": 16,
+          "continued": true
+        },
+        {
+          "index": 1,
+          "usedBytes": 7627,
+          "itemCount": 10,
+          "continued": true
+        },
+        {
+          "index": 2,
+          "usedBytes": 8054,
+          "itemCount": 10,
+          "continued": true
+        },
+        {
+          "index": 3,
+          "usedBytes": 8192,
+          "itemCount": 14,
+          "continued": true
+        },
+        {
+          "index": 4,
+          "usedBytes": 7776,
+          "itemCount": 13,
+          "continued": true
+        },
+        {
+          "index": 5,
+          "usedBytes": 7664,
+          "itemCount": 13,
+          "continued": true
+        },
+        {
+          "index": 6,
+          "usedBytes": 4520,
+          "itemCount": 8,
+          "continued": false
+        }
+      ],
+      "sourceIds": [
+        "SRC-AWB-ARCHITECTURE",
+        "SRC-AWB-ARCHIVE-INDEX",
+        "SRC-AWB-AUDIT-METADATA",
+        "SRC-AWB-CONTEXT",
+        "SRC-AWB-CONTINUATION",
+        "SRC-AWB-COVERAGE",
+        "SRC-AWB-GATES",
+        "SRC-AWB-GENERALIZED",
+        "SRC-AWB-HARNESS",
+        "SRC-AWB-INQUIRY",
+        "SRC-AWB-LOGICAL-TYPES",
+        "SRC-AWB-ORIGINALS-LOCATOR",
+        "SRC-COMMON-GITWORK",
+        "SRC-COMMON-MEMORY",
+        "SRC-COMMON-OWNERS",
+        "SRC-COMMON-RECORD-TYPES",
+        "SRC-CURRENT-IMPROVEMENT",
+        "SRC-CURRENT-SCOPE",
+        "SRC-CURRENT-USER",
+        "SRC-CURRICULUM-GAPS",
+        "SRC-DC-CHECKPOINT",
+        "SRC-DC-CLASSROOM",
+        "SRC-DC-CONTRACT",
+        "SRC-DC-ENTRY",
+        "SRC-DC-OLD-CONTEXT",
+        "SRC-DC-OLD-MAP",
+        "SRC-DC-OLD-README",
+        "SRC-DC-PRIVATE-1016",
+        "SRC-DC-PRIVATE-1016-ADDENDUM",
+        "SRC-DC-TARGET",
+        "SRC-ED-ACADEMY-CHECK",
+        "SRC-ED-ACADEMY-TSC",
+        "SRC-ED-CHECK-ROUTER",
+        "SRC-ED-ENTRY",
+        "SRC-ED-MONTHLY",
+        "SRC-ED-SOURCE-MAP",
+        "SRC-GANG-POLICY",
+        "SRC-GANG-SELECTOR",
+        "SRC-LEGACY-MEMORY",
+        "SRC-LEGACY-SSOT",
+        "SRC-LEGACY-TIERS",
+        "SRC-RESEARCH-CHRONOLOGY",
+        "SRC-RESEARCH-COVERAGE",
+        "SRC-RESEARCH-OWNERS",
+        "SRC-RESEARCH-TYPES",
+        "SRC-WORK-IDENTITY"
+      ],
+      "records": [
+        {
+          "id": "CTX-IMPROVEMENT",
+          "kind": "actual-user-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-OWNERS",
+          "kind": "actual-user-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-SCOPE",
+          "kind": "actual-user-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-BOOK-IDENTITY",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-COMPLETION",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-DC-ROUTE",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-ED-MAINTENANCE",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-WEB-POSTGRES",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-COVERAGE",
+          "kind": "coverage-gap",
+          "status": "unresolved"
+        },
+        {
+          "id": "CTX-CURRENTNESS",
+          "kind": "inference",
+          "status": "current"
+        },
+        {
+          "id": "CTX-MEMORY-BOUNDARY",
+          "kind": "inference",
+          "status": "current"
+        },
+        {
+          "id": "CTX-TOPOLOGY",
+          "kind": "inference",
+          "status": "current"
+        }
+      ],
+      "findings": [
+        {
+          "id": "ACX-COVERAGE-001",
+          "status": "observed"
+        },
+        {
+          "id": "ACX-IDENTITY-001",
+          "status": "peer-in-progress"
+        },
+        {
+          "id": "ACX-OWNER-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-PAYLOAD-001",
+          "status": "peer-in-progress"
+        },
+        {
+          "id": "ACX-ROUTING-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-SOURCE-001",
+          "status": "peer-in-progress"
+        },
+        {
+          "id": "ACX-TOPOLOGY-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-VERIFY-001",
+          "status": "observed"
+        },
+        {
+          "id": "ACX-CURRICULUM-001",
+          "status": "deferred-owner"
+        },
+        {
+          "id": "ACX-DECISION-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-DUPLICATE-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-INTEGRATION-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-INTERVIEW-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-MEMORY-001",
+          "status": "observed"
+        }
+      ],
+      "requiredReferenceIds": [
+        "SRC-CURRENT-SCOPE",
+        "SRC-CURRENT-USER",
+        "SRC-DC-CONTRACT",
+        "SRC-AWB-COVERAGE",
+        "SRC-AWB-HARNESS",
+        "SRC-DC-CLASSROOM",
+        "SRC-AWB-LOGICAL-TYPES"
+      ],
+      "sourceBodiesLoaded": false
+    },
+    {
+      "workflowId": "academy.homework-followup",
+      "includeHistory": true,
+      "catalogSha256": "c670f865f7ff37cf0832eb491cffb00f5a562c285aedac24991a8702c9d3c458",
+      "closure": {
+        "topicIds": [
+          "academy",
+          "academy.homework-followup",
+          "foundation",
+          "foundation.currentness",
+          "foundation.curriculum",
+          "foundation.harness",
+          "foundation.identity",
+          "foundation.provenance",
+          "foundation.verification"
+        ],
+        "topicCount": 9,
+        "sourceCount": 46,
+        "recordCount": 13,
+        "findingCount": 14,
+        "relationCount": 2,
+        "referenceCount": 0,
+        "itemCount": 84
+      },
+      "pages": [
+        {
+          "index": 0,
+          "usedBytes": 7851,
+          "itemCount": 16,
+          "continued": true
+        },
+        {
+          "index": 1,
+          "usedBytes": 7626,
+          "itemCount": 10,
+          "continued": true
+        },
+        {
+          "index": 2,
+          "usedBytes": 8053,
+          "itemCount": 10,
+          "continued": true
+        },
+        {
+          "index": 3,
+          "usedBytes": 8191,
+          "itemCount": 14,
+          "continued": true
+        },
+        {
+          "index": 4,
+          "usedBytes": 7775,
+          "itemCount": 13,
+          "continued": true
+        },
+        {
+          "index": 5,
+          "usedBytes": 7663,
+          "itemCount": 13,
+          "continued": true
+        },
+        {
+          "index": 6,
+          "usedBytes": 4715,
+          "itemCount": 8,
+          "continued": false
+        }
+      ],
+      "sourceIds": [
+        "SRC-AWB-ARCHITECTURE",
+        "SRC-AWB-ARCHIVE-INDEX",
+        "SRC-AWB-AUDIT-METADATA",
+        "SRC-AWB-CONTEXT",
+        "SRC-AWB-CONTINUATION",
+        "SRC-AWB-COVERAGE",
+        "SRC-AWB-GATES",
+        "SRC-AWB-GENERALIZED",
+        "SRC-AWB-HARNESS",
+        "SRC-AWB-INQUIRY",
+        "SRC-AWB-LOGICAL-TYPES",
+        "SRC-AWB-ORIGINALS-LOCATOR",
+        "SRC-COMMON-GITWORK",
+        "SRC-COMMON-MEMORY",
+        "SRC-COMMON-OWNERS",
+        "SRC-COMMON-RECORD-TYPES",
+        "SRC-CURRENT-IMPROVEMENT",
+        "SRC-CURRENT-SCOPE",
+        "SRC-CURRENT-USER",
+        "SRC-CURRICULUM-GAPS",
+        "SRC-DC-CHECKPOINT",
+        "SRC-DC-CLASSROOM",
+        "SRC-DC-CONTRACT",
+        "SRC-DC-ENTRY",
+        "SRC-DC-OLD-CONTEXT",
+        "SRC-DC-OLD-MAP",
+        "SRC-DC-OLD-README",
+        "SRC-DC-PRIVATE-1016",
+        "SRC-DC-PRIVATE-1016-ADDENDUM",
+        "SRC-DC-TARGET",
+        "SRC-ED-ACADEMY-CHECK",
+        "SRC-ED-ACADEMY-TSC",
+        "SRC-ED-CHECK-ROUTER",
+        "SRC-ED-ENTRY",
+        "SRC-ED-MONTHLY",
+        "SRC-ED-SOURCE-MAP",
+        "SRC-GANG-POLICY",
+        "SRC-GANG-SELECTOR",
+        "SRC-LEGACY-MEMORY",
+        "SRC-LEGACY-SSOT",
+        "SRC-LEGACY-TIERS",
+        "SRC-RESEARCH-CHRONOLOGY",
+        "SRC-RESEARCH-COVERAGE",
+        "SRC-RESEARCH-OWNERS",
+        "SRC-RESEARCH-TYPES",
+        "SRC-WORK-IDENTITY"
+      ],
+      "records": [
+        {
+          "id": "CTX-IMPROVEMENT",
+          "kind": "actual-user-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-OWNERS",
+          "kind": "actual-user-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-SCOPE",
+          "kind": "actual-user-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-BOOK-IDENTITY",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-COMPLETION",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-DC-ROUTE",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-ED-MAINTENANCE",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-WEB-POSTGRES",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-COVERAGE",
+          "kind": "coverage-gap",
+          "status": "unresolved"
+        },
+        {
+          "id": "CTX-CURRENTNESS",
+          "kind": "inference",
+          "status": "current"
+        },
+        {
+          "id": "CTX-MEMORY-BOUNDARY",
+          "kind": "inference",
+          "status": "current"
+        },
+        {
+          "id": "CTX-TOPOLOGY",
+          "kind": "inference",
+          "status": "current"
+        },
+        {
+          "id": "CTX-OLD-ROUTING",
+          "kind": "source-owner-decision",
+          "status": "historical"
+        }
+      ],
+      "findings": [
+        {
+          "id": "ACX-COVERAGE-001",
+          "status": "observed"
+        },
+        {
+          "id": "ACX-IDENTITY-001",
+          "status": "peer-in-progress"
+        },
+        {
+          "id": "ACX-OWNER-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-PAYLOAD-001",
+          "status": "peer-in-progress"
+        },
+        {
+          "id": "ACX-ROUTING-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-SOURCE-001",
+          "status": "peer-in-progress"
+        },
+        {
+          "id": "ACX-TOPOLOGY-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-VERIFY-001",
+          "status": "observed"
+        },
+        {
+          "id": "ACX-CURRICULUM-001",
+          "status": "deferred-owner"
+        },
+        {
+          "id": "ACX-DECISION-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-DUPLICATE-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-INTEGRATION-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-INTERVIEW-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-MEMORY-001",
+          "status": "observed"
+        }
+      ],
+      "requiredReferenceIds": [
+        "SRC-CURRENT-SCOPE",
+        "SRC-CURRENT-USER",
+        "SRC-DC-CONTRACT",
+        "SRC-AWB-COVERAGE",
+        "SRC-AWB-HARNESS",
+        "SRC-DC-CLASSROOM",
+        "SRC-AWB-LOGICAL-TYPES"
+      ],
+      "sourceBodiesLoaded": false
+    },
+    {
+      "workflowId": "academy.assessment-preparation",
+      "includeHistory": false,
+      "catalogSha256": "c670f865f7ff37cf0832eb491cffb00f5a562c285aedac24991a8702c9d3c458",
+      "closure": {
+        "topicIds": [
+          "academy",
+          "academy.assessment-preparation",
+          "foundation",
+          "foundation.currentness",
+          "foundation.curriculum",
+          "foundation.harness",
+          "foundation.identity",
+          "foundation.provenance",
+          "foundation.research",
+          "foundation.verification"
+        ],
+        "topicCount": 10,
+        "sourceCount": 45,
+        "recordCount": 12,
+        "findingCount": 14,
+        "relationCount": 4,
+        "referenceCount": 1,
+        "itemCount": 86
+      },
+      "pages": [
+        {
+          "index": 0,
+          "usedBytes": 8187,
+          "itemCount": 17,
+          "continued": true
+        },
+        {
+          "index": 1,
+          "usedBytes": 7660,
+          "itemCount": 10,
+          "continued": true
+        },
+        {
+          "index": 2,
+          "usedBytes": 8087,
+          "itemCount": 10,
+          "continued": true
+        },
+        {
+          "index": 3,
+          "usedBytes": 7738,
+          "itemCount": 13,
+          "continued": true
+        },
+        {
+          "index": 4,
+          "usedBytes": 8178,
+          "itemCount": 14,
+          "continued": true
+        },
+        {
+          "index": 5,
+          "usedBytes": 7756,
+          "itemCount": 13,
+          "continued": true
+        },
+        {
+          "index": 6,
+          "usedBytes": 4517,
+          "itemCount": 9,
+          "continued": false
+        }
+      ],
+      "sourceIds": [
+        "SRC-AWB-ARCHITECTURE",
+        "SRC-AWB-ARCHIVE-INDEX",
+        "SRC-AWB-AUDIT-METADATA",
+        "SRC-AWB-CONTEXT",
+        "SRC-AWB-CONTINUATION",
+        "SRC-AWB-COVERAGE",
+        "SRC-AWB-GATES",
+        "SRC-AWB-GENERALIZED",
+        "SRC-AWB-HARNESS",
+        "SRC-AWB-INQUIRY",
+        "SRC-AWB-LOGICAL-TYPES",
+        "SRC-AWB-ORIGINALS-LOCATOR",
+        "SRC-COMMON-GITWORK",
+        "SRC-COMMON-MEMORY",
+        "SRC-COMMON-OWNERS",
+        "SRC-COMMON-RECORD-TYPES",
+        "SRC-CURRENT-IMPROVEMENT",
+        "SRC-CURRENT-SCOPE",
+        "SRC-CURRENT-USER",
+        "SRC-CURRICULUM-GAPS",
+        "SRC-DC-CHECKPOINT",
+        "SRC-DC-CONTRACT",
+        "SRC-DC-ENTRY",
+        "SRC-DC-OLD-CONTEXT",
+        "SRC-DC-OLD-MAP",
+        "SRC-DC-OLD-README",
+        "SRC-DC-PRIVATE-1016",
+        "SRC-DC-PRIVATE-1016-ADDENDUM",
+        "SRC-DC-TARGET",
+        "SRC-ED-ACADEMY-CHECK",
+        "SRC-ED-ACADEMY-TSC",
+        "SRC-ED-CHECK-ROUTER",
+        "SRC-ED-ENTRY",
+        "SRC-ED-MONTHLY",
+        "SRC-ED-SOURCE-MAP",
+        "SRC-GANG-POLICY",
+        "SRC-GANG-SELECTOR",
+        "SRC-LEGACY-MEMORY",
+        "SRC-LEGACY-SSOT",
+        "SRC-LEGACY-TIERS",
+        "SRC-RESEARCH-CHRONOLOGY",
+        "SRC-RESEARCH-COVERAGE",
+        "SRC-RESEARCH-OWNERS",
+        "SRC-RESEARCH-TYPES",
+        "SRC-WORK-IDENTITY"
+      ],
+      "records": [
+        {
+          "id": "CTX-IMPROVEMENT",
+          "kind": "actual-user-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-OWNERS",
+          "kind": "actual-user-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-SCOPE",
+          "kind": "actual-user-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-ASSESSMENT-SCOPE",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-BOOK-IDENTITY",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-DC-ROUTE",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-ED-MAINTENANCE",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-WEB-POSTGRES",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-COVERAGE",
+          "kind": "coverage-gap",
+          "status": "unresolved"
+        },
+        {
+          "id": "CTX-CURRENTNESS",
+          "kind": "inference",
+          "status": "current"
+        },
+        {
+          "id": "CTX-MEMORY-BOUNDARY",
+          "kind": "inference",
+          "status": "current"
+        },
+        {
+          "id": "CTX-TOPOLOGY",
+          "kind": "inference",
+          "status": "current"
+        }
+      ],
+      "findings": [
+        {
+          "id": "ACX-COVERAGE-001",
+          "status": "observed"
+        },
+        {
+          "id": "ACX-IDENTITY-001",
+          "status": "peer-in-progress"
+        },
+        {
+          "id": "ACX-OWNER-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-PAYLOAD-001",
+          "status": "peer-in-progress"
+        },
+        {
+          "id": "ACX-ROUTING-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-SOURCE-001",
+          "status": "peer-in-progress"
+        },
+        {
+          "id": "ACX-TOPOLOGY-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-VERIFY-001",
+          "status": "observed"
+        },
+        {
+          "id": "ACX-CURRICULUM-001",
+          "status": "deferred-owner"
+        },
+        {
+          "id": "ACX-DECISION-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-DUPLICATE-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-INTEGRATION-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-INTERVIEW-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-MEMORY-001",
+          "status": "observed"
+        }
+      ],
+      "requiredReferenceIds": [
+        "SRC-CURRENT-SCOPE",
+        "SRC-CURRENT-USER",
+        "SRC-DC-CONTRACT",
+        "SRC-AWB-COVERAGE",
+        "SRC-AWB-HARNESS",
+        "SRC-ED-MONTHLY",
+        "SRC-RESEARCH-OWNERS",
+        "SRC-RESEARCH-CHRONOLOGY",
+        "SRC-CURRICULUM-GAPS"
+      ],
+      "sourceBodiesLoaded": false
+    },
+    {
+      "workflowId": "academy.assessment-preparation",
+      "includeHistory": true,
+      "catalogSha256": "c670f865f7ff37cf0832eb491cffb00f5a562c285aedac24991a8702c9d3c458",
+      "closure": {
+        "topicIds": [
+          "academy",
+          "academy.assessment-preparation",
+          "foundation",
+          "foundation.currentness",
+          "foundation.curriculum",
+          "foundation.harness",
+          "foundation.identity",
+          "foundation.provenance",
+          "foundation.research",
+          "foundation.verification"
+        ],
+        "topicCount": 10,
+        "sourceCount": 45,
+        "recordCount": 13,
+        "findingCount": 14,
+        "relationCount": 4,
+        "referenceCount": 0,
+        "itemCount": 86
+      },
+      "pages": [
+        {
+          "index": 0,
+          "usedBytes": 8186,
+          "itemCount": 17,
+          "continued": true
+        },
+        {
+          "index": 1,
+          "usedBytes": 7659,
+          "itemCount": 10,
+          "continued": true
+        },
+        {
+          "index": 2,
+          "usedBytes": 8086,
+          "itemCount": 10,
+          "continued": true
+        },
+        {
+          "index": 3,
+          "usedBytes": 7737,
+          "itemCount": 13,
+          "continued": true
+        },
+        {
+          "index": 4,
+          "usedBytes": 8177,
+          "itemCount": 14,
+          "continued": true
+        },
+        {
+          "index": 5,
+          "usedBytes": 7755,
+          "itemCount": 13,
+          "continued": true
+        },
+        {
+          "index": 6,
+          "usedBytes": 4712,
+          "itemCount": 9,
+          "continued": false
+        }
+      ],
+      "sourceIds": [
+        "SRC-AWB-ARCHITECTURE",
+        "SRC-AWB-ARCHIVE-INDEX",
+        "SRC-AWB-AUDIT-METADATA",
+        "SRC-AWB-CONTEXT",
+        "SRC-AWB-CONTINUATION",
+        "SRC-AWB-COVERAGE",
+        "SRC-AWB-GATES",
+        "SRC-AWB-GENERALIZED",
+        "SRC-AWB-HARNESS",
+        "SRC-AWB-INQUIRY",
+        "SRC-AWB-LOGICAL-TYPES",
+        "SRC-AWB-ORIGINALS-LOCATOR",
+        "SRC-COMMON-GITWORK",
+        "SRC-COMMON-MEMORY",
+        "SRC-COMMON-OWNERS",
+        "SRC-COMMON-RECORD-TYPES",
+        "SRC-CURRENT-IMPROVEMENT",
+        "SRC-CURRENT-SCOPE",
+        "SRC-CURRENT-USER",
+        "SRC-CURRICULUM-GAPS",
+        "SRC-DC-CHECKPOINT",
+        "SRC-DC-CONTRACT",
+        "SRC-DC-ENTRY",
+        "SRC-DC-OLD-CONTEXT",
+        "SRC-DC-OLD-MAP",
+        "SRC-DC-OLD-README",
+        "SRC-DC-PRIVATE-1016",
+        "SRC-DC-PRIVATE-1016-ADDENDUM",
+        "SRC-DC-TARGET",
+        "SRC-ED-ACADEMY-CHECK",
+        "SRC-ED-ACADEMY-TSC",
+        "SRC-ED-CHECK-ROUTER",
+        "SRC-ED-ENTRY",
+        "SRC-ED-MONTHLY",
+        "SRC-ED-SOURCE-MAP",
+        "SRC-GANG-POLICY",
+        "SRC-GANG-SELECTOR",
+        "SRC-LEGACY-MEMORY",
+        "SRC-LEGACY-SSOT",
+        "SRC-LEGACY-TIERS",
+        "SRC-RESEARCH-CHRONOLOGY",
+        "SRC-RESEARCH-COVERAGE",
+        "SRC-RESEARCH-OWNERS",
+        "SRC-RESEARCH-TYPES",
+        "SRC-WORK-IDENTITY"
+      ],
+      "records": [
+        {
+          "id": "CTX-IMPROVEMENT",
+          "kind": "actual-user-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-OWNERS",
+          "kind": "actual-user-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-SCOPE",
+          "kind": "actual-user-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-ASSESSMENT-SCOPE",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-BOOK-IDENTITY",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-DC-ROUTE",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-ED-MAINTENANCE",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-WEB-POSTGRES",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-COVERAGE",
+          "kind": "coverage-gap",
+          "status": "unresolved"
+        },
+        {
+          "id": "CTX-CURRENTNESS",
+          "kind": "inference",
+          "status": "current"
+        },
+        {
+          "id": "CTX-MEMORY-BOUNDARY",
+          "kind": "inference",
+          "status": "current"
+        },
+        {
+          "id": "CTX-TOPOLOGY",
+          "kind": "inference",
+          "status": "current"
+        },
+        {
+          "id": "CTX-OLD-ROUTING",
+          "kind": "source-owner-decision",
+          "status": "historical"
+        }
+      ],
+      "findings": [
+        {
+          "id": "ACX-COVERAGE-001",
+          "status": "observed"
+        },
+        {
+          "id": "ACX-IDENTITY-001",
+          "status": "peer-in-progress"
+        },
+        {
+          "id": "ACX-OWNER-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-PAYLOAD-001",
+          "status": "peer-in-progress"
+        },
+        {
+          "id": "ACX-ROUTING-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-SOURCE-001",
+          "status": "peer-in-progress"
+        },
+        {
+          "id": "ACX-TOPOLOGY-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-VERIFY-001",
+          "status": "observed"
+        },
+        {
+          "id": "ACX-CURRICULUM-001",
+          "status": "deferred-owner"
+        },
+        {
+          "id": "ACX-DECISION-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-DUPLICATE-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-INTEGRATION-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-INTERVIEW-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-MEMORY-001",
+          "status": "observed"
+        }
+      ],
+      "requiredReferenceIds": [
+        "SRC-CURRENT-SCOPE",
+        "SRC-CURRENT-USER",
+        "SRC-DC-CONTRACT",
+        "SRC-AWB-COVERAGE",
+        "SRC-AWB-HARNESS",
+        "SRC-ED-MONTHLY",
+        "SRC-RESEARCH-OWNERS",
+        "SRC-RESEARCH-CHRONOLOGY",
+        "SRC-CURRICULUM-GAPS"
+      ],
+      "sourceBodiesLoaded": false
+    },
+    {
+      "workflowId": "academy.wrong-answer-clinic",
+      "includeHistory": false,
+      "catalogSha256": "c670f865f7ff37cf0832eb491cffb00f5a562c285aedac24991a8702c9d3c458",
+      "closure": {
+        "topicIds": [
+          "academy",
+          "academy.wrong-answer-clinic",
+          "foundation",
+          "foundation.currentness",
+          "foundation.curriculum",
+          "foundation.harness",
+          "foundation.identity",
+          "foundation.provenance",
+          "foundation.verification"
+        ],
+        "topicCount": 9,
+        "sourceCount": 46,
+        "recordCount": 12,
+        "findingCount": 14,
+        "relationCount": 2,
+        "referenceCount": 1,
+        "itemCount": 84
+      },
+      "pages": [
+        {
+          "index": 0,
+          "usedBytes": 7863,
+          "itemCount": 16,
+          "continued": true
+        },
+        {
+          "index": 1,
+          "usedBytes": 7631,
+          "itemCount": 10,
+          "continued": true
+        },
+        {
+          "index": 2,
+          "usedBytes": 8058,
+          "itemCount": 10,
+          "continued": true
+        },
+        {
+          "index": 3,
+          "usedBytes": 7709,
+          "itemCount": 13,
+          "continued": true
+        },
+        {
+          "index": 4,
+          "usedBytes": 7787,
+          "itemCount": 13,
+          "continued": true
+        },
+        {
+          "index": 5,
+          "usedBytes": 8148,
+          "itemCount": 14,
+          "continued": true
+        },
+        {
+          "index": 6,
+          "usedBytes": 4524,
+          "itemCount": 8,
+          "continued": false
+        }
+      ],
+      "sourceIds": [
+        "SRC-AWB-ARCHITECTURE",
+        "SRC-AWB-ARCHIVE-INDEX",
+        "SRC-AWB-AUDIT-METADATA",
+        "SRC-AWB-CONTEXT",
+        "SRC-AWB-CONTINUATION",
+        "SRC-AWB-COVERAGE",
+        "SRC-AWB-GATES",
+        "SRC-AWB-GENERALIZED",
+        "SRC-AWB-HARNESS",
+        "SRC-AWB-INQUIRY",
+        "SRC-AWB-LOGICAL-TYPES",
+        "SRC-AWB-ORIGINALS-LOCATOR",
+        "SRC-COMMON-GITWORK",
+        "SRC-COMMON-MEMORY",
+        "SRC-COMMON-OWNERS",
+        "SRC-COMMON-RECORD-TYPES",
+        "SRC-CURRENT-IMPROVEMENT",
+        "SRC-CURRENT-SCOPE",
+        "SRC-CURRENT-USER",
+        "SRC-CURRICULUM-GAPS",
+        "SRC-DC-CHECKPOINT",
+        "SRC-DC-CLASSROOM",
+        "SRC-DC-CONTRACT",
+        "SRC-DC-ENTRY",
+        "SRC-DC-OLD-CONTEXT",
+        "SRC-DC-OLD-MAP",
+        "SRC-DC-OLD-README",
+        "SRC-DC-PRIVATE-1016",
+        "SRC-DC-PRIVATE-1016-ADDENDUM",
+        "SRC-DC-TARGET",
+        "SRC-ED-ACADEMY-CHECK",
+        "SRC-ED-ACADEMY-TSC",
+        "SRC-ED-CHECK-ROUTER",
+        "SRC-ED-ENTRY",
+        "SRC-ED-MONTHLY",
+        "SRC-ED-SOURCE-MAP",
+        "SRC-GANG-POLICY",
+        "SRC-GANG-SELECTOR",
+        "SRC-LEGACY-MEMORY",
+        "SRC-LEGACY-SSOT",
+        "SRC-LEGACY-TIERS",
+        "SRC-RESEARCH-CHRONOLOGY",
+        "SRC-RESEARCH-COVERAGE",
+        "SRC-RESEARCH-OWNERS",
+        "SRC-RESEARCH-TYPES",
+        "SRC-WORK-IDENTITY"
+      ],
+      "records": [
+        {
+          "id": "CTX-IMPROVEMENT",
+          "kind": "actual-user-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-OWNERS",
+          "kind": "actual-user-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-SCOPE",
+          "kind": "actual-user-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-BOOK-IDENTITY",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-COMPLETION",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-DC-ROUTE",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-ED-MAINTENANCE",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-WEB-POSTGRES",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-COVERAGE",
+          "kind": "coverage-gap",
+          "status": "unresolved"
+        },
+        {
+          "id": "CTX-CURRENTNESS",
+          "kind": "inference",
+          "status": "current"
+        },
+        {
+          "id": "CTX-MEMORY-BOUNDARY",
+          "kind": "inference",
+          "status": "current"
+        },
+        {
+          "id": "CTX-TOPOLOGY",
+          "kind": "inference",
+          "status": "current"
+        }
+      ],
+      "findings": [
+        {
+          "id": "ACX-COVERAGE-001",
+          "status": "observed"
+        },
+        {
+          "id": "ACX-IDENTITY-001",
+          "status": "peer-in-progress"
+        },
+        {
+          "id": "ACX-OWNER-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-PAYLOAD-001",
+          "status": "peer-in-progress"
+        },
+        {
+          "id": "ACX-ROUTING-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-SOURCE-001",
+          "status": "peer-in-progress"
+        },
+        {
+          "id": "ACX-TOPOLOGY-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-VERIFY-001",
+          "status": "observed"
+        },
+        {
+          "id": "ACX-CURRICULUM-001",
+          "status": "deferred-owner"
+        },
+        {
+          "id": "ACX-DECISION-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-DUPLICATE-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-INTEGRATION-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-INTERVIEW-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-MEMORY-001",
+          "status": "observed"
+        }
+      ],
+      "requiredReferenceIds": [
+        "SRC-CURRENT-SCOPE",
+        "SRC-CURRENT-USER",
+        "SRC-DC-CONTRACT",
+        "SRC-AWB-COVERAGE",
+        "SRC-AWB-HARNESS",
+        "SRC-DC-CLASSROOM",
+        "SRC-AWB-INQUIRY",
+        "SRC-AWB-LOGICAL-TYPES"
+      ],
+      "sourceBodiesLoaded": false
+    },
+    {
+      "workflowId": "academy.wrong-answer-clinic",
+      "includeHistory": true,
+      "catalogSha256": "c670f865f7ff37cf0832eb491cffb00f5a562c285aedac24991a8702c9d3c458",
+      "closure": {
+        "topicIds": [
+          "academy",
+          "academy.wrong-answer-clinic",
+          "foundation",
+          "foundation.currentness",
+          "foundation.curriculum",
+          "foundation.harness",
+          "foundation.identity",
+          "foundation.provenance",
+          "foundation.verification"
+        ],
+        "topicCount": 9,
+        "sourceCount": 46,
+        "recordCount": 13,
+        "findingCount": 14,
+        "relationCount": 2,
+        "referenceCount": 0,
+        "itemCount": 84
+      },
+      "pages": [
+        {
+          "index": 0,
+          "usedBytes": 7862,
+          "itemCount": 16,
+          "continued": true
+        },
+        {
+          "index": 1,
+          "usedBytes": 7630,
+          "itemCount": 10,
+          "continued": true
+        },
+        {
+          "index": 2,
+          "usedBytes": 8057,
+          "itemCount": 10,
+          "continued": true
+        },
+        {
+          "index": 3,
+          "usedBytes": 7708,
+          "itemCount": 13,
+          "continued": true
+        },
+        {
+          "index": 4,
+          "usedBytes": 7786,
+          "itemCount": 13,
+          "continued": true
+        },
+        {
+          "index": 5,
+          "usedBytes": 8147,
+          "itemCount": 14,
+          "continued": true
+        },
+        {
+          "index": 6,
+          "usedBytes": 4719,
+          "itemCount": 8,
+          "continued": false
+        }
+      ],
+      "sourceIds": [
+        "SRC-AWB-ARCHITECTURE",
+        "SRC-AWB-ARCHIVE-INDEX",
+        "SRC-AWB-AUDIT-METADATA",
+        "SRC-AWB-CONTEXT",
+        "SRC-AWB-CONTINUATION",
+        "SRC-AWB-COVERAGE",
+        "SRC-AWB-GATES",
+        "SRC-AWB-GENERALIZED",
+        "SRC-AWB-HARNESS",
+        "SRC-AWB-INQUIRY",
+        "SRC-AWB-LOGICAL-TYPES",
+        "SRC-AWB-ORIGINALS-LOCATOR",
+        "SRC-COMMON-GITWORK",
+        "SRC-COMMON-MEMORY",
+        "SRC-COMMON-OWNERS",
+        "SRC-COMMON-RECORD-TYPES",
+        "SRC-CURRENT-IMPROVEMENT",
+        "SRC-CURRENT-SCOPE",
+        "SRC-CURRENT-USER",
+        "SRC-CURRICULUM-GAPS",
+        "SRC-DC-CHECKPOINT",
+        "SRC-DC-CLASSROOM",
+        "SRC-DC-CONTRACT",
+        "SRC-DC-ENTRY",
+        "SRC-DC-OLD-CONTEXT",
+        "SRC-DC-OLD-MAP",
+        "SRC-DC-OLD-README",
+        "SRC-DC-PRIVATE-1016",
+        "SRC-DC-PRIVATE-1016-ADDENDUM",
+        "SRC-DC-TARGET",
+        "SRC-ED-ACADEMY-CHECK",
+        "SRC-ED-ACADEMY-TSC",
+        "SRC-ED-CHECK-ROUTER",
+        "SRC-ED-ENTRY",
+        "SRC-ED-MONTHLY",
+        "SRC-ED-SOURCE-MAP",
+        "SRC-GANG-POLICY",
+        "SRC-GANG-SELECTOR",
+        "SRC-LEGACY-MEMORY",
+        "SRC-LEGACY-SSOT",
+        "SRC-LEGACY-TIERS",
+        "SRC-RESEARCH-CHRONOLOGY",
+        "SRC-RESEARCH-COVERAGE",
+        "SRC-RESEARCH-OWNERS",
+        "SRC-RESEARCH-TYPES",
+        "SRC-WORK-IDENTITY"
+      ],
+      "records": [
+        {
+          "id": "CTX-IMPROVEMENT",
+          "kind": "actual-user-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-OWNERS",
+          "kind": "actual-user-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-SCOPE",
+          "kind": "actual-user-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-BOOK-IDENTITY",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-COMPLETION",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-DC-ROUTE",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-ED-MAINTENANCE",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-WEB-POSTGRES",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-COVERAGE",
+          "kind": "coverage-gap",
+          "status": "unresolved"
+        },
+        {
+          "id": "CTX-CURRENTNESS",
+          "kind": "inference",
+          "status": "current"
+        },
+        {
+          "id": "CTX-MEMORY-BOUNDARY",
+          "kind": "inference",
+          "status": "current"
+        },
+        {
+          "id": "CTX-TOPOLOGY",
+          "kind": "inference",
+          "status": "current"
+        },
+        {
+          "id": "CTX-OLD-ROUTING",
+          "kind": "source-owner-decision",
+          "status": "historical"
+        }
+      ],
+      "findings": [
+        {
+          "id": "ACX-COVERAGE-001",
+          "status": "observed"
+        },
+        {
+          "id": "ACX-IDENTITY-001",
+          "status": "peer-in-progress"
+        },
+        {
+          "id": "ACX-OWNER-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-PAYLOAD-001",
+          "status": "peer-in-progress"
+        },
+        {
+          "id": "ACX-ROUTING-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-SOURCE-001",
+          "status": "peer-in-progress"
+        },
+        {
+          "id": "ACX-TOPOLOGY-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-VERIFY-001",
+          "status": "observed"
+        },
+        {
+          "id": "ACX-CURRICULUM-001",
+          "status": "deferred-owner"
+        },
+        {
+          "id": "ACX-DECISION-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-DUPLICATE-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-INTEGRATION-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-INTERVIEW-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-MEMORY-001",
+          "status": "observed"
+        }
+      ],
+      "requiredReferenceIds": [
+        "SRC-CURRENT-SCOPE",
+        "SRC-CURRENT-USER",
+        "SRC-DC-CONTRACT",
+        "SRC-AWB-COVERAGE",
+        "SRC-AWB-HARNESS",
+        "SRC-DC-CLASSROOM",
+        "SRC-AWB-INQUIRY",
+        "SRC-AWB-LOGICAL-TYPES"
+      ],
+      "sourceBodiesLoaded": false
+    },
+    {
+      "workflowId": "academy.attendance-internal-journal",
+      "includeHistory": false,
+      "catalogSha256": "c670f865f7ff37cf0832eb491cffb00f5a562c285aedac24991a8702c9d3c458",
+      "closure": {
+        "topicIds": [
+          "academy",
+          "academy.attendance-internal-journal",
+          "foundation",
+          "foundation.currentness",
+          "foundation.harness",
+          "foundation.identity",
+          "foundation.provenance",
+          "foundation.verification"
+        ],
+        "topicCount": 8,
+        "sourceCount": 45,
+        "recordCount": 12,
+        "findingCount": 13,
+        "relationCount": 2,
+        "referenceCount": 1,
+        "itemCount": 81
+      },
+      "pages": [
+        {
+          "index": 0,
+          "usedBytes": 8028,
+          "itemCount": 16,
+          "continued": true
+        },
+        {
+          "index": 1,
+          "usedBytes": 7903,
+          "itemCount": 10,
+          "continued": true
+        },
+        {
+          "index": 2,
+          "usedBytes": 8151,
+          "itemCount": 11,
+          "continued": true
+        },
+        {
+          "index": 3,
+          "usedBytes": 7791,
+          "itemCount": 13,
+          "continued": true
+        },
+        {
+          "index": 4,
+          "usedBytes": 7946,
+          "itemCount": 14,
+          "continued": true
+        },
+        {
+          "index": 5,
+          "usedBytes": 7941,
+          "itemCount": 13,
+          "continued": true
+        },
+        {
+          "index": 6,
+          "usedBytes": 2454,
+          "itemCount": 4,
+          "continued": false
+        }
+      ],
+      "sourceIds": [
+        "SRC-AWB-ARCHITECTURE",
+        "SRC-AWB-ARCHIVE-INDEX",
+        "SRC-AWB-AUDIT-METADATA",
+        "SRC-AWB-CONTEXT",
+        "SRC-AWB-CONTINUATION",
+        "SRC-AWB-COVERAGE",
+        "SRC-AWB-GATES",
+        "SRC-AWB-GENERALIZED",
+        "SRC-AWB-HARNESS",
+        "SRC-AWB-INQUIRY",
+        "SRC-AWB-LOGICAL-TYPES",
+        "SRC-AWB-ORIGINALS-LOCATOR",
+        "SRC-COMMON-GITWORK",
+        "SRC-COMMON-MEMORY",
+        "SRC-COMMON-OWNERS",
+        "SRC-COMMON-RECORD-TYPES",
+        "SRC-CURRENT-IMPROVEMENT",
+        "SRC-CURRENT-SCOPE",
+        "SRC-CURRENT-USER",
+        "SRC-DC-CHECKPOINT",
+        "SRC-DC-CONTRACT",
+        "SRC-DC-ENTRY",
+        "SRC-DC-OLD-CONTEXT",
+        "SRC-DC-OLD-MAP",
+        "SRC-DC-OLD-README",
+        "SRC-DC-PRIVATE-1016",
+        "SRC-DC-PRIVATE-1016-ADDENDUM",
+        "SRC-DC-TARGET",
+        "SRC-ED-ACADEMY-CHECK",
+        "SRC-ED-ACADEMY-TSC",
+        "SRC-ED-CHECK-ROUTER",
+        "SRC-ED-DAILY-INTERNAL",
+        "SRC-ED-ENTRY",
+        "SRC-ED-MONTHLY",
+        "SRC-ED-SOURCE-MAP",
+        "SRC-GANG-POLICY",
+        "SRC-GANG-SELECTOR",
+        "SRC-LEGACY-MEMORY",
+        "SRC-LEGACY-SSOT",
+        "SRC-LEGACY-TIERS",
+        "SRC-RESEARCH-CHRONOLOGY",
+        "SRC-RESEARCH-COVERAGE",
+        "SRC-RESEARCH-OWNERS",
+        "SRC-RESEARCH-TYPES",
+        "SRC-WORK-IDENTITY"
+      ],
+      "records": [
+        {
+          "id": "CTX-IMPROVEMENT",
+          "kind": "actual-user-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-INTERNAL-JOURNAL",
+          "kind": "actual-user-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-OWNERS",
+          "kind": "actual-user-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-SCOPE",
+          "kind": "actual-user-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-BOOK-IDENTITY",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-DC-ROUTE",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-ED-MAINTENANCE",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-WEB-POSTGRES",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-COVERAGE",
+          "kind": "coverage-gap",
+          "status": "unresolved"
+        },
+        {
+          "id": "CTX-CURRENTNESS",
+          "kind": "inference",
+          "status": "current"
+        },
+        {
+          "id": "CTX-MEMORY-BOUNDARY",
+          "kind": "inference",
+          "status": "current"
+        },
+        {
+          "id": "CTX-TOPOLOGY",
+          "kind": "inference",
+          "status": "current"
+        }
+      ],
+      "findings": [
+        {
+          "id": "ACX-COVERAGE-001",
+          "status": "observed"
+        },
+        {
+          "id": "ACX-IDENTITY-001",
+          "status": "peer-in-progress"
+        },
+        {
+          "id": "ACX-OWNER-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-PAYLOAD-001",
+          "status": "peer-in-progress"
+        },
+        {
+          "id": "ACX-ROUTING-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-SOURCE-001",
+          "status": "peer-in-progress"
+        },
+        {
+          "id": "ACX-TOPOLOGY-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-VERIFY-001",
+          "status": "observed"
+        },
+        {
+          "id": "ACX-DECISION-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-DUPLICATE-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-INTEGRATION-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-INTERVIEW-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-MEMORY-001",
+          "status": "observed"
+        }
+      ],
+      "requiredReferenceIds": [
+        "SRC-CURRENT-SCOPE",
+        "SRC-CURRENT-USER",
+        "SRC-DC-CONTRACT",
+        "SRC-AWB-COVERAGE",
+        "SRC-AWB-HARNESS",
+        "SRC-ED-DAILY-INTERNAL"
+      ],
+      "sourceBodiesLoaded": false
+    },
+    {
+      "workflowId": "academy.attendance-internal-journal",
+      "includeHistory": true,
+      "catalogSha256": "c670f865f7ff37cf0832eb491cffb00f5a562c285aedac24991a8702c9d3c458",
+      "closure": {
+        "topicIds": [
+          "academy",
+          "academy.attendance-internal-journal",
+          "foundation",
+          "foundation.currentness",
+          "foundation.harness",
+          "foundation.identity",
+          "foundation.provenance",
+          "foundation.verification"
+        ],
+        "topicCount": 8,
+        "sourceCount": 45,
+        "recordCount": 13,
+        "findingCount": 13,
+        "relationCount": 2,
+        "referenceCount": 0,
+        "itemCount": 81
+      },
+      "pages": [
+        {
+          "index": 0,
+          "usedBytes": 8027,
+          "itemCount": 16,
+          "continued": true
+        },
+        {
+          "index": 1,
+          "usedBytes": 7902,
+          "itemCount": 10,
+          "continued": true
+        },
+        {
+          "index": 2,
+          "usedBytes": 8150,
+          "itemCount": 11,
+          "continued": true
+        },
+        {
+          "index": 3,
+          "usedBytes": 7790,
+          "itemCount": 13,
+          "continued": true
+        },
+        {
+          "index": 4,
+          "usedBytes": 7945,
+          "itemCount": 14,
+          "continued": true
+        },
+        {
+          "index": 5,
+          "usedBytes": 7940,
+          "itemCount": 13,
+          "continued": true
+        },
+        {
+          "index": 6,
+          "usedBytes": 2649,
+          "itemCount": 4,
+          "continued": false
+        }
+      ],
+      "sourceIds": [
+        "SRC-AWB-ARCHITECTURE",
+        "SRC-AWB-ARCHIVE-INDEX",
+        "SRC-AWB-AUDIT-METADATA",
+        "SRC-AWB-CONTEXT",
+        "SRC-AWB-CONTINUATION",
+        "SRC-AWB-COVERAGE",
+        "SRC-AWB-GATES",
+        "SRC-AWB-GENERALIZED",
+        "SRC-AWB-HARNESS",
+        "SRC-AWB-INQUIRY",
+        "SRC-AWB-LOGICAL-TYPES",
+        "SRC-AWB-ORIGINALS-LOCATOR",
+        "SRC-COMMON-GITWORK",
+        "SRC-COMMON-MEMORY",
+        "SRC-COMMON-OWNERS",
+        "SRC-COMMON-RECORD-TYPES",
+        "SRC-CURRENT-IMPROVEMENT",
+        "SRC-CURRENT-SCOPE",
+        "SRC-CURRENT-USER",
+        "SRC-DC-CHECKPOINT",
+        "SRC-DC-CONTRACT",
+        "SRC-DC-ENTRY",
+        "SRC-DC-OLD-CONTEXT",
+        "SRC-DC-OLD-MAP",
+        "SRC-DC-OLD-README",
+        "SRC-DC-PRIVATE-1016",
+        "SRC-DC-PRIVATE-1016-ADDENDUM",
+        "SRC-DC-TARGET",
+        "SRC-ED-ACADEMY-CHECK",
+        "SRC-ED-ACADEMY-TSC",
+        "SRC-ED-CHECK-ROUTER",
+        "SRC-ED-DAILY-INTERNAL",
+        "SRC-ED-ENTRY",
+        "SRC-ED-MONTHLY",
+        "SRC-ED-SOURCE-MAP",
+        "SRC-GANG-POLICY",
+        "SRC-GANG-SELECTOR",
+        "SRC-LEGACY-MEMORY",
+        "SRC-LEGACY-SSOT",
+        "SRC-LEGACY-TIERS",
+        "SRC-RESEARCH-CHRONOLOGY",
+        "SRC-RESEARCH-COVERAGE",
+        "SRC-RESEARCH-OWNERS",
+        "SRC-RESEARCH-TYPES",
+        "SRC-WORK-IDENTITY"
+      ],
+      "records": [
+        {
+          "id": "CTX-IMPROVEMENT",
+          "kind": "actual-user-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-INTERNAL-JOURNAL",
+          "kind": "actual-user-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-OWNERS",
+          "kind": "actual-user-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-SCOPE",
+          "kind": "actual-user-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-BOOK-IDENTITY",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-DC-ROUTE",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-ED-MAINTENANCE",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-WEB-POSTGRES",
+          "kind": "source-owner-decision",
+          "status": "current"
+        },
+        {
+          "id": "CTX-COVERAGE",
+          "kind": "coverage-gap",
+          "status": "unresolved"
+        },
+        {
+          "id": "CTX-CURRENTNESS",
+          "kind": "inference",
+          "status": "current"
+        },
+        {
+          "id": "CTX-MEMORY-BOUNDARY",
+          "kind": "inference",
+          "status": "current"
+        },
+        {
+          "id": "CTX-TOPOLOGY",
+          "kind": "inference",
+          "status": "current"
+        },
+        {
+          "id": "CTX-OLD-ROUTING",
+          "kind": "source-owner-decision",
+          "status": "historical"
+        }
+      ],
+      "findings": [
+        {
+          "id": "ACX-COVERAGE-001",
+          "status": "observed"
+        },
+        {
+          "id": "ACX-IDENTITY-001",
+          "status": "peer-in-progress"
+        },
+        {
+          "id": "ACX-OWNER-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-PAYLOAD-001",
+          "status": "peer-in-progress"
+        },
+        {
+          "id": "ACX-ROUTING-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-SOURCE-001",
+          "status": "peer-in-progress"
+        },
+        {
+          "id": "ACX-TOPOLOGY-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-VERIFY-001",
+          "status": "observed"
+        },
+        {
+          "id": "ACX-DECISION-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-DUPLICATE-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-INTEGRATION-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-INTERVIEW-001",
+          "status": "mitigated-locally"
+        },
+        {
+          "id": "ACX-MEMORY-001",
+          "status": "observed"
+        }
+      ],
+      "requiredReferenceIds": [
+        "SRC-CURRENT-SCOPE",
+        "SRC-CURRENT-USER",
+        "SRC-DC-CONTRACT",
+        "SRC-AWB-COVERAGE",
+        "SRC-AWB-HARNESS",
+        "SRC-ED-DAILY-INTERNAL"
+      ],
+      "sourceBodiesLoaded": false
+    }
+  ],
+  "sourceBodiesLoaded": false
+}

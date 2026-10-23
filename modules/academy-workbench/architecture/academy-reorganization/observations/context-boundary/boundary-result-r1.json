@@ -1,0 +1,32 @@
+{
+  "qualification": "boundary_only",
+  "codex_thread_id": "01a15e5a-77bf-75c1-9dbf-e76042a9e639",
+  "available_tool_family_names": [
+    "functions",
+    "clock",
+    "collaboration"
+  ],
+  "unexpected_context_or_body_injected": false,
+  "context_observation": "No other session or project body observed; supplied runtime and user instructions were present.",
+  "filesystem_constraints_cover_mcp_apps": "not_claimed_not_tested",
+  "probes": {
+    "allowed_read": {
+      "success": true,
+      "errno": null
+    },
+    "outside_existing_read": {
+      "errno": 2,
+      "blocked": false
+    },
+    "outside_symlink_read": {
+      "errno": 2,
+      "blocked": false
+    },
+    "outside_write": {
+      "errno": null,
+      "blocked": false
+    }
+  },
+  "status": "FAIL",
+  "stop_reason": "outside_write_unexpectedly_succeeded"
+}

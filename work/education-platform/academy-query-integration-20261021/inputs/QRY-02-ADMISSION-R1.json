@@ -1,0 +1,51 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "academy-query-integration-20261021",
+  "kind": "input",
+  "id": "QRY-02-ADMISSION-R1",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "root-academy-orchestrator",
+    "locator": "root-admission:QRY-02-after-qualified-domain-state",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "admittedTaskId": "education-platform:task:academy-query-integration-20261021-qry-02",
+    "implementationBase": "f8739a2a75ac73d82460082656d3e3e2b92dba5d",
+    "qualifiedDependency": {
+      "commit": "e52d008e0272f58a5a880f00696624361184aa22",
+      "tree": "3cca8c1aeee097570b1f64f81127b5d51f3ab123",
+      "resultEvidenceId": "education-platform:evidence:dom-02-result-observation-r1",
+      "verificationEvidenceId": "education-platform:evidence:dom-02-root-verification-r1",
+      "receivingInput": "QRY-DOM02-QUALIFICATION-R1",
+      "adoptionInput": "QRY-DOM02-ADOPTION-R1",
+      "businessSourceFilesAdopted": 11
+    },
+    "outcome": "Implement a bounded common retained current-state query slice over maintained authenticated TeacherApplication queries, preserving canonical domain interpretation, scope, clocks and explicit coverage.",
+    "requirements": [
+      "Use existing canonical facade/snapshot/projections; no second current-state reducer or persistent native/session state mirror. Caller-owned authentication/context cannot be asserted through untrusted query arguments.",
+      "Support date/class/cohort/student preparation selectors from qualified existing contracts, with stable source/scene identity, typed continuation, exact record retention and cross-owner/selector/snapshot cursor refusal. Unknown current roster/history/currentness remains explicit.",
+      "Bound actual serialization at the declared query boundary, including fixed metadata and multibyte/refusal cases. Distinguish a JSON query-page budget from downstream duplicated MCP CallToolResult bytes; Workbench CON must reuse its actual shared production packager and qualify512KiB there. Do not simply raise limits.",
+      "Reuse new DOM-02 eligibility/attempt/replacement/print-distribution results without recomputing their meanings in the adapter. Raw source and teacher decisions, printed membership, book edition/occurrence and omissions remain attributable.",
+      "Trace actual Teacher HTTP/web/CLI and month-end Application/SourcePort/web consumers. Implement compatible owner-local query wiring where this scope permits, or disclose exact still-unconnected surfaces for CON/VER; do not label all workflows integrated.",
+      "Address concrete owner-local limit/contract inconsistencies from QRY-01 using verified source semantics and bounded continuation. Native acquisition caps/subprocess activation/credentials remain held; no blind10x increases or automatic native retry.",
+      "Measure synthetic source/facade loads, calls and actual page bytes under equivalent requests; native latency/current source behavior remains unverified. Preserve Root reserved provenance/manifests for final integration."
+    ],
+    "sourceWriteScope": [
+      "Owned dc-gang-a source/query contract/adapter composition and compatible read HTTP/web/CLI wiring, with focused synthetic tests",
+      "Owner-local month-end transport/limit adapter compatibility only if justified by QRY-01 evidence and its policy; no research/math/final selection semantic changes",
+      "Own architecture and canonical Work records; original Inputs/Evidence preserved"
+    ],
+    "reserved": [
+      "Domain meanings/reducers and source-original records",
+      "Shared root package/lock/CI/source-map/run.ts/provenance integration files",
+      "Common contract/pin/permission/native loop/session/config/credential/service changes",
+      "Private student originals, existing data/services, source activation and third-session messaging"
+    ],
+    "delivery": "NEW separate immutable QRY-02 result/Verification Inputs and Evidence, actual taskVerificationTarget and exact result Input hash. Raw checks outside canonical Work layout. Prepare source only; root stages/commits and validates exact snapshot+transition before downstream receiving qualification.",
+    "nativeAuthorityGranted": false,
+    "sourceOnly": true
+  }
+}

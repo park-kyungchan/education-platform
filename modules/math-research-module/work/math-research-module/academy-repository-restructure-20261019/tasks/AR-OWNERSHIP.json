@@ -1,0 +1,44 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "mathematics-education",
+  "projectId": "math-research-module",
+  "workId": "academy-repository-restructure-20261019",
+  "kind": "task",
+  "id": "AR-OWNERSHIP",
+  "title": "Clarify repository source ownership and check routes",
+  "nextAction": "Repository routing and preservation are locally source-verified. Preserve separate project identities and existing native/domain owners. Independent review/shared publication remain pending; do not send status to the Orchestrator or resume held/external feature work.",
+  "logical": {
+    "domainId": "mathematics-education",
+    "projectId": "math-research-module",
+    "workId": "academy-repository-restructure-20261019",
+    "issueId": "AR-ISSUE",
+    "specId": "AR-SPEC",
+    "specRevision": 1,
+    "planId": "AR-PLAN",
+    "planRevision": 1,
+    "taskId": "AR-OWNERSHIP"
+  },
+  "state": {
+    "execution": "complete",
+    "verification": "passed",
+    "localAudit": "result-durable",
+    "sharedAudit": "pending",
+    "formalCompletion": "audit-synchronization-pending"
+  },
+  "executionClass": "source-only",
+  "dependsOn": [
+    {
+      "taskId": "AR-WORKFLOW",
+      "milestone": "execution-and-verification"
+    }
+  ],
+  "decisionIds": [
+    "AR-DIRECTION",
+    "AR-PRIORITY",
+    "AR-NO-STEERING"
+  ],
+  "effectIds": [],
+  "verificationEvidenceIds": [
+    "AR-OWNERSHIP-VERIFICATION"
+  ]
+}

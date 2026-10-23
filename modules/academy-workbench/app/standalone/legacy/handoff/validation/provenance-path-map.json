@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "academy.export-provenance-map/1.0.0",
+  "defaultClassification": "historical_nonportable_locator",
+  "entries": [
+    {
+      "sourcePattern": "clinic/*.js",
+      "classification": "historical_nonportable_locator",
+      "availability": "omitted",
+      "exportReplacement": "reference/clinic/README.md",
+      "reason": "Technical source-observation locator; original current-source extracts are not exported."
+    },
+    {
+      "sourcePattern": "input-js/**; input-prestudy/**; evidence*/**",
+      "classification": "historical_nonportable_locator",
+      "availability": "omitted",
+      "exportReplacement": "reference/source-contracts/README.md",
+      "reason": "Original raw source/DOM/capture evidence intentionally absent."
+    },
+    {
+      "sourcePattern": "../clinic-read-research-20261013/*.json",
+      "classification": "historical_nonportable_locator",
+      "availability": "omitted",
+      "exportReplacement": "reference/clinic/adapter-contract.ts",
+      "reason": "Private saved evidence does not travel with the generic contract."
+    },
+    {
+      "sourcePattern": "lms-automation/**; rea-crosscheck.json",
+      "classification": "historical_nonportable_locator",
+      "availability": "omitted",
+      "exportReplacement": "architecture/function-relation-map.json",
+      "reason": "Historical source cross-check; metadata only, not a linked executable module."
+    },
+    {
+      "sourcePattern": "../dc-gang-a/research/backend-map/app-live.md; prestudy-read-contract-source.json",
+      "classification": "historical_nonportable_locator",
+      "availability": "omitted",
+      "exportReplacement": "reference/source-contracts/README.md",
+      "reason": "Historical private source observation; no original executor or account evidence is exported."
+    }
+  ],
+  "restoration": "Reobserve or retrieve only through authorized source access; do not infer missing evidence from a locator or hash."
+}

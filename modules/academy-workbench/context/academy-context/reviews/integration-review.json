@@ -1,0 +1,161 @@
+{
+  "schemaVersion": "academy.context-integration-review/1",
+  "id": "ACX-INTEGRATION-REVIEW-20261021",
+  "projectId": "academy-workbench",
+  "workId": "academy-context-consolidation-20261021",
+  "reviewedAt": "2026-10-21T04:15:19.041127Z",
+  "status": "pass",
+  "requiredUnresolvedFindings": 0,
+  "authority": "none",
+  "nativePermissionGranted": false,
+  "reviewer": {
+    "agent": "/root/academy_history_map",
+    "scope": "Independent review of root/education-authored integration files only. Selector implementation was authored by this reviewer and is not independently certified here.",
+    "separateSelectorReview": "context/academy-context/reviews/selector-review.json"
+  },
+  "artifacts": [
+    {
+      "path": "context/academy-context/catalog.json",
+      "sha256": "3beb4adba25512867a1823cf9ac69dae7ffe52a013cba7fb5f01b5cdeaab1d3d",
+      "byteLength": 64386
+    },
+    {
+      "path": "context/academy-context/cli.ts",
+      "sha256": "16faea4fe983e2905ca42751c8fd9584defb05d54d4993ebddc1666868e83145",
+      "byteLength": 3144
+    },
+    {
+      "path": "context/academy-context/reading-plan.ts",
+      "sha256": "d0d5a5bfdcebb88195826451314ac6d340c9817b594e3eafc90bacd2027a561e",
+      "byteLength": 2508
+    },
+    {
+      "path": "context/academy-context/catalog.test.ts",
+      "sha256": "661725ae8220811b797f6b47c06c5b87f6238253bb16c65b01ed123564b13450",
+      "byteLength": 2654
+    },
+    {
+      "path": "context/academy-context/execution-contracts.ts",
+      "sha256": "97da48787c699617e3a3edccd8f1bd06f99357ad8558b3b46ee21630fd5c55f2",
+      "byteLength": 24980
+    },
+    {
+      "path": "context/academy-context/repository-plan.json",
+      "sha256": "5986ed3b1b24d278c61d09e0fc2819acdda32cdc6ead7386bc8b53e8aa1d9c22",
+      "byteLength": 15654
+    },
+    {
+      "path": "context/academy-context/README.md",
+      "sha256": "cc2080db206cc66a216c2c8a2c844d641cb406d2be616700b1b783e34571d39b",
+      "byteLength": 5243
+    },
+    {
+      "path": "README.md",
+      "sha256": "799c755aebd40869234066a357398288d3aac0d483e2b5d8f6a50106b114e7ba",
+      "byteLength": 9559
+    },
+    {
+      "path": "package.json",
+      "sha256": "91c64b6c9ae4fa086769688072571a1f35e9706a0abba98f0b50102c5fed2afa",
+      "byteLength": 2764
+    }
+  ],
+  "checks": [
+    {
+      "id": "ACX-INT-CHECK-DOCS",
+      "status": "passed",
+      "evidence": "README entrypoint, local README, catalog scope and repository plan consistently declare partial history, preserved repository/data/code owners, excluded counseling/parent communication and non-activated designs. Source metadata pins and no-content-read locators do not grant source access."
+    },
+    {
+      "id": "ACX-INT-CHECK-IDENTITY",
+      "status": "passed",
+      "evidence": "execution-contracts.ts:151-159 now distinguishes existing common logicalTaskRef from Qualified nativeExecution observations. Source-only preparation may retain unknown native binding; native Task/Run identifiers are not invented common Artifact kinds."
+    },
+    {
+      "id": "ACX-INT-CHECK-TS",
+      "status": "passed",
+      "command": "bun node_modules/typescript/bin/tsc -p context/academy-context/tsconfig.json",
+      "observedTypeScript": "7.0.2",
+      "exitCode": 0,
+      "scope": "--listFilesOnly independently confirmed cli.ts, reading-plan.ts, catalog.test.ts and execution-contracts.ts are inside the actual module typecheck."
+    },
+    {
+      "id": "ACX-INT-CHECK-TEST",
+      "status": "passed",
+      "command": "bun test context/academy-context/catalog.test.ts",
+      "observedBun": "1.4.3",
+      "testsPassed": 4,
+      "assertions": 68,
+      "exitCode": 0,
+      "scope": "Actual-catalog integration, complete bounded continuation, required references, scope/CLI rejection and truthful metadata-only entrypoint."
+    },
+    {
+      "id": "ACX-INT-CHECK-PLANS",
+      "status": "passed",
+      "workflowsChecked": 7,
+      "classPreparationRequiredReferences": 8,
+      "classPreparationDiscoveryReferences": 39,
+      "sourceBodiesLoaded": false,
+      "evidence": "Independently invoked readingPlan for each current internal workflow; every plan retained authority none, no native permission and separate discovery references."
+    },
+    {
+      "id": "ACX-INT-CHECK-CLI",
+      "status": "passed",
+      "extraMalformedOrExcludedCasesRejected": 5,
+      "subprocessExitCode": 0,
+      "subprocessStderrBytes": 0,
+      "serializedSelectionBytes": 24165,
+      "declaredUsedBytes": 24165,
+      "maxBytes": 24576,
+      "evidence": "Real cli.ts select subprocess emitted compact JSON with exact UTF8 byte accounting; first page contained CTX-COMPLETION and current decisions. No native wrapper framing claim is inferred."
+    }
+  ],
+  "resolvedFindings": [
+    {
+      "id": "ACX-INTEGRATION-IDENTITY-001",
+      "priority": "P2",
+      "status": "resolved",
+      "path": "context/academy-context/execution-contracts.ts",
+      "line": 151,
+      "initialSha256": "cabc86d136030bfa98359b874096dc13fbfaebef585814c4d08b22cfb0993143",
+      "initialIssue": "Mandatory bare taskRef/runRef ObjectRef did not identify common-local versus native custody and could require an unobserved native reference during held preparation.",
+      "resolution": "Root replaced the ambiguous pair with documented logicalTaskRef and Qualified nativeExecution containing nullable observed session/task/run values; unknown remains representable. No runtime was activated."
+    },
+    {
+      "id": "ACX-INTEGRATION-BUDGET-001",
+      "priority": "P3",
+      "status": "resolved",
+      "path": "context/academy-context/README.md",
+      "line": 15,
+      "initialSha256": "9807a9badfe85183a947e78ebb9d7be2a90f23039c601a9cbcf127f8bc447fd1",
+      "initialIssue": "Whole-response wording could be read as covering a native tool wrapper in addition to serialized selection JSON.",
+      "resolution": "Root states exact serialized JSON budget and separate native framing budget. CLI compact stdout measurement supports only the former."
+    }
+  ],
+  "nonblockingAdvisories": [
+    {
+      "id": "ACX-INTEGRATION-INSPECT-001",
+      "priority": "P3",
+      "path": "context/academy-context/cli.ts",
+      "line": 34,
+      "scope": "Future catalog evolution only; present catalog has no excluded workflow descendants.",
+      "observation": "inspect workflow listing excludes exact topic IDs. If future workflows are nested below an excluded root, discovery listing should use the same ancestor-aware scope rule as actual selection. Current select and reading-plan exclusions remain independently reviewed; no present catalog bypass was observed.",
+      "nextAction": "Keep this condition in the domain catalog maintenance checklist; qualify descendant-aware listing when adding nested excluded workflows."
+    }
+  ],
+  "limitations": [
+    "This is local source/design integration review, not user acceptance, full historical reconciliation or formal shared Work completion.",
+    "No private student payloads, original message excerpts, archive payloads, credentials or source paths named in the catalog were opened by CLI/selection verification.",
+    "Source hashes in the catalog were reviewed as metadata; this review does not independently re-fetch or certify every external repository source byte.",
+    "No live academy request, native invocation, authentication change, print, send, deployment, publication, merge or repository/data ownership transfer was performed.",
+    "Selector algorithm certification is intentionally delegated to the independent selector-review.json; running integration tests that call it is not self-review acceptance."
+  ],
+  "closeoutBoundary": {
+    "localOnly": true,
+    "publishPerformed": false,
+    "mergePerformed": false,
+    "deployPerformed": false,
+    "sourceFilesChangedByReviewer": false,
+    "nextAction": "Retain this exact-artifact review in the independent worktree and wait for the user."
+  }
+}

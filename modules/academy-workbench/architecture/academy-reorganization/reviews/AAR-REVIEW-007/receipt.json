@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "academy.independent-review-consumption/1",
+  "consumedAt": "2026-10-21T10:36:08.395719+00:00",
+  "reviewId": "AAR-REVIEW-007",
+  "reviewSha256": "6cc24fb09a3fee36d169d26264546be18fa45503009c74aea6c50ce164568053",
+  "reviewedCommit": "1d9096225969ac249aaa018663896e7bfb69243b",
+  "reviewedTree": "e9597cbd81f8643f7fdd59e0160d7bd0b9bc00ce",
+  "reviewer": {
+    "nativeThreadId": "01a15da6-5c63-71a2-a73d-8e881564e94c",
+    "nativeThreadIdSource": "Observed CODEX_THREAD_ID; not independent authentication of authorship.",
+    "model": null,
+    "effort": null,
+    "modelEffortSelfExposed": false,
+    "rootReportedNativeAssignment": {
+      "model": "gpt-6-astra",
+      "effort": "xhigh",
+      "source": "Root request and user-authorized independent reviewer assignment; launch UI observation was previously attributed to Root."
+    },
+    "checkout": "/home/palantirkc/worktrees/academy-architecture-review-20261021",
+    "tab": "wA:t1",
+    "pane": "wA:p7",
+    "extraAgents": 0,
+    "extraPanes": 0,
+    "goalCreated": false,
+    "heavyCheckInvocations": 1
+  },
+  "status": "scoped_source_review_completed_repairs_required",
+  "findings": [
+    {
+      "id": "AAR-REVIEW-007-F1",
+      "priority": "P2",
+      "title": "Bound SDK-generated invalid-input errors before they bypass the result packager"
+    },
+    {
+      "id": "AAR-REVIEW-007-F2",
+      "priority": "P2",
+      "title": "Render catalog parent links instead of treating every catalog entry as a single hierarchy"
+    },
+    {
+      "id": "AAR-REVIEW-007-F3",
+      "priority": "P2",
+      "title": "Do not print a blanket physical-stage unknown when the canonical review confirms printing"
+    },
+    {
+      "id": "AAR-REVIEW-007-F4",
+      "priority": "P2",
+      "title": "Preserve the teacher's reported clock separately from storage clocks"
+    }
+  ],
+  "disposition": "Repair all4owned consumer findings in NEW distinct repair Task/Plan3; preserve originalfailed Task/R1 and source-qualified Task/R2. Root control/reviewer stdio mismatch remains explicit. No source publication or activation."
+}

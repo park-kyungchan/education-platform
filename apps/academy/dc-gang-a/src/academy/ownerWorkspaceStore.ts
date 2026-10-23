@@ -2,7 +2,8 @@ import {validateTeacherExamDraft,type TeacherExamSelectionDraft} from './teacher
 import type {SQL} from 'bun';
 import {assertExactKeys,assertInstant,canonicalJson,digest,requireText,stableId} from '../learning/model';
 import {academyOperatingSelection} from './operatingWorkspace';
-import {TeacherWorkspaceRefusal,validateTeacherWorkspace,workspaceEntityId,isTeacherWorkspaceRecord,type TeacherOperationalCase,type TeacherWorkspaceRecord} from './teacherWorkspace';
+import {TeacherWorkspaceRefusal,validateTeacherWorkspace,workspaceEntityId,isTeacherWorkspaceRecord,assertActivityReviewAttemptBinding,type TeacherOperationalCase,type TeacherWorkspaceRecord} from './teacherWorkspace';
+import {assertAssignmentNotReplaced,type AssignmentVersion} from './learningWorkBindings';
 import type {WriteAcknowledgement} from './contracts/storageRecords';
 export type OwnerWorkspaceRecord=TeacherWorkspaceRecord|TeacherOperationalCase|TeacherExamSelectionDraft;
 export function ownerWorkspaceEntityId(payload:OwnerWorkspaceRecord){return payload.kind==='teacher_exam_selection_draft'?'teacher-exam-selection-'+payload.draftId:workspaceEntityId(payload);}
@@ -65,9 +66,18 @@ export async function appendOwnerWorkspace(db:SQL,command:OwnerWorkspaceCommand)
   if(command.payload.kind==='teacher_activity_review'){
    const payload=command.payload,binding=payload.studentBinding;
    if(!payload.evidenceRevisionIds.includes(payload.assignmentRevisionId))throw Error('work_assignment_basis_conflict');
-   const [row]=await tx`SELECT v.payload FROM academy.record_heads h JOIN academy.record_versions v USING(owner_id,student_id,entity_id,sequence) WHERE h.owner_id=${command.ownerId} AND h.student_id=${binding.studentId} AND v.revision_id=${payload.assignmentRevisionId}`;
+   const [row]=await tx`SELECT v.* FROM academy.record_heads h JOIN academy.record_versions v USING(owner_id,student_id,entity_id,sequence) WHERE h.owner_id=${command.ownerId} AND h.student_id=${binding.studentId} AND v.revision_id=${payload.assignmentRevisionId}`;
    const assignment=row?.payload;
    if(assignment?.kind!=='learning_work_assignment'||assignment.status!=='assigned')throw Error('work_assignment_basis_conflict');
+   const scoped=(v:any)=>({ownerId:v.owner_id,studentId:v.student_id,entityId:v.entity_id,revisionId:v.revision_id,payload:v.payload});
+   const successors=await tx`SELECT v.* FROM academy.record_versions v WHERE v.owner_id=${command.ownerId} AND v.student_id=${binding.studentId} AND v.payload->>'kind'='learning_work_assignment'`;
+   assertAssignmentNotReplaced(scoped(row) as AssignmentVersion,successors.map((v:any)=>scoped(v) as AssignmentVersion),new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date(payload.reportedAt)));
+   let attempt=null;
+   if(payload.attemptBinding?.state==='known'){
+     const [retained]=await tx`SELECT v.* FROM academy.record_heads h JOIN academy.record_versions v USING(owner_id,student_id,entity_id,sequence) WHERE h.owner_id=${command.ownerId} AND h.student_id=${binding.studentId} AND h.entity_id=${payload.attemptBinding.value.attemptEntityId} AND v.revision_id=${payload.attemptBinding.value.attemptRevisionId}`;
+     attempt=retained?scoped(retained):null;
+   }
+   assertActivityReviewAttemptBinding(payload,scoped(row),attempt);
    if(payload.selectedItemIds.some(id=>!assignment.items.some((item:{assignedItemId:string})=>item.assignedItemId===id))||payload.coverage==='whole_assigned_items'&&payload.selectedItemIds.length!==assignment.items.length)throw Error('work_item_binding_conflict');
    if(canonicalJson(payload.paper.issuance)!==canonicalJson(assignment.paper))throw Error('work_paper_binding_conflict');
    if((payload.mindmap.state!=='not_requested'||payload.mindmap.explanation!==null)&&assignment.activity!=='concept_blank_test')throw Error('mindmap_activity_scope_conflict');

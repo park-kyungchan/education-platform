@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectId": "math-research-module",
+  "domainId": "mathematics-education",
+  "createdAt": "2026-10-16T21:25:49.904089+00:00",
+  "kind": "run",
+  "id": "math-research-module:run:portable-source-ci-successor-20261017-01",
+  "references": [
+    {
+      "artifactId": "math-research-module:task:portable-source-ci-successor-20261017",
+      "relation": "attemptOf"
+    }
+  ],
+  "payload": {
+    "taskRef": "math-research-module:task:portable-source-ci-successor-20261017",
+    "state": "completed",
+    "startedAt": "2026-10-16T21:25:49.904089+00:00",
+    "inputHashes": [
+      {
+        "path": "harness/agent-platform.lock.json",
+        "sha256": "000c650b51d5b3009cf5efdc319fe2fa5b9e74123f0bf3dddb1d638b6f8e6b99"
+      },
+      {
+        "path": "harness/common-ci-provider.json",
+        "sha256": "81f8b6d8a401fff0e811f2bc80d6dc7cb8182337b80a1d553d15636d10eef639"
+      },
+      {
+        "path": "bun.lock",
+        "sha256": "4fff474e722cc30c4104f31700197d906af3ba4ff1c108d612384cd480773122"
+      }
+    ],
+    "runtime": {
+      "name": "local-source-engineering-and-synthetic-QA",
+      "version": "Bun1.4.2/Node24.19.0; projection compilerBun1.4.3"
+    },
+    "evidenceRefs": [],
+    "verificationRefs": [],
+    "details": {
+      "workId": "portable-source-ci-successor-20261017",
+      "scope": "Bounded local source implementation and synthetic checks finished. Subsequent read-only validation does not resume this Run. Independent actual native review, immutable evidence/status publication, hosted CI, merge and user acceptance remain separate Root gates.",
+      "authority": "none",
+      "nativePermissionGranted": false,
+      "checks": [
+        "full-verify-compiled-canonical-ci-projection",
+        "full-verify-physical-pinned-Git",
+        "real-four-commit-synthetic-owner-gate",
+        "fresh-process-preimport-and-source-drift-negatives",
+        "strict-typecheck",
+        "actionlint-shellcheck",
+        "zizmor-regular",
+        "171-protected-source-blob-preservation"
+      ],
+      "sourceAuthorTask": "/root/review_codex_successor",
+      "canonicalReviewApiCommit": "7eabcdb20e358955c771e5aa0dc500448fa84534",
+      "hostedResult": "not-observed",
+      "nativeActivation": "not-performed",
+      "userAcceptance": "not-observed"
+    },
+    "finishedAt": "2026-10-16T22:41:03.016414+00:00"
+  }
+}

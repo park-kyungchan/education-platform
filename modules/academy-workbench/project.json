@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "project",
+  "id": "academy-workbench:project:manifest",
+  "projectId": "academy-workbench",
+  "domainId": "academy-operations",
+  "createdAt": "2026-10-13T23:11:05Z",
+  "payload": {
+    "name": "Academy Workbench",
+    "status": "active",
+    "scope": "Private academy operations consumer module: preservation, synthetic read-only runtime, and bounded harness integration.",
+    "ontologyPackage": {
+      "name": "@palantirkc/ontology",
+      "version": "0.2.0"
+    },
+    "commands": {
+      "check:harness": "bun run check:harness",
+      "test:harness": "bun run test:harness"
+    },
+    "details": {
+      "moduleId": "academy-workbench",
+      "registration": "local-module-record",
+      "globallyRegistered": false,
+      "authorityGrantedByManifest": false,
+      "nativePermissionGranted": false,
+      "actualUserAdoptionInferred": false,
+      "semanticOwner": "academy-workbench domain owner; Upper Ontology remains ontology-foundation",
+      "canonicalSourceOwner": "park-kyungchan/agent-platform",
+      "runtimeLoopOwner": "native Codex or Hermes, selected explicitly by the operator",
+      "existingOperationalGates": "migration/current-status.json"
+    }
+  }
+}

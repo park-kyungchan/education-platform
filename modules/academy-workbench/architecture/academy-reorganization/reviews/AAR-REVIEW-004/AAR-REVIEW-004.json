@@ -1,0 +1,309 @@
+{
+  "schemaVersion": "academy.focused-repair-review/4",
+  "reviewId": "AAR-REVIEW-004",
+  "createdAtUtc": "2026-10-21T05:44:40.138269+00:00",
+  "role": "Independent child reviewer; focused final-source successor",
+  "logicalIdentity": {
+    "domainId": "academy-operations",
+    "projectId": "academy-workbench",
+    "workId": "academy-architecture-orchestration-20261021",
+    "issueId": "AAR-ISSUE-20261021",
+    "specRef": "AAR-SPEC@1",
+    "currentPlanRef": "AAR-PLAN@2",
+    "retainedPriorPlanRef": "AAR-PLAN@1",
+    "taskId": "academy-workbench:task:academy-architecture-orchestration-20261021-t03",
+    "nativeTaskId": null,
+    "nativeRunId": null
+  },
+  "reviewer": {
+    "actualNativeCODEX_THREAD_ID": "01a15cd8-368e-7322-bb15-20755a7bf9d5",
+    "independentlyObservedModel": null,
+    "independentlyObservedEffort": null,
+    "requestedModel": "gpt-6-astra",
+    "requestedEffort": "xhigh",
+    "rootLaunchObservation": "The separately attributed root launch/readback retained in AAR-REVIEW-002 reports gpt-6-astra/xhigh for this native thread. No fresh independent native model/configuration observation was made.",
+    "nativeTaskId": null,
+    "nativeRunId": null
+  },
+  "reviewedSource": {
+    "commit": "5e5017e6dff174343dcb6e95685837fd0f6093a6",
+    "tree": "26404252c76315dd9e68dd12dac5fae08f23e0f7",
+    "checkout": "/home/palantirkc/worktrees/academy-architecture-review-r3-20261021",
+    "comparedAgainstCommit": "05bef45afecafec97e99ca8a58b8637bb6ef4a1e",
+    "comparedAgainstTree": "4159a342706551aaa7ba1350ea1858710fcabcd2",
+    "currentEntrypoint": {
+      "repositoryRoot": "/home/palantirkc/worktrees/academy-architecture-review-r3-20261021",
+      "commit": "5e5017e6dff174343dcb6e95685837fd0f6093a6",
+      "path": "architecture/academy-reorganization/entrypoint.json",
+      "sha256": "4dc2fd627fd8ab18a27f4c0e7452ba830b07dcdd961f1e2f7c3d353325652bc9",
+      "locator": "#/currentArchitecture; #/currentExecution; #/currentVerification; #/crossWorkProtocol"
+    },
+    "qualificationHelperUnchangedSince003": true
+  },
+  "priorCompletedReviews": [
+    {
+      "path": ".local/reviews/AAR-REVIEW-001.json",
+      "sha256": "f2b0b090d760e9b50babeee12eafe7cae28ae85a7a7f418911cd9c33213d5c1f"
+    },
+    {
+      "path": ".local/reviews/AAR-REVIEW-002.json",
+      "sha256": "ad097fa5b2429b7269efbd66e51cdc95edc26a75512ef79292e6df040e77774d"
+    },
+    {
+      "path": ".local/reviews/AAR-REVIEW-003.json",
+      "sha256": "b1f5fd2abaf5db5df67925abb644b39441e194c1d2ed04fd2f463506cbda73e2"
+    }
+  ],
+  "conclusion": {
+    "disposition": "no-unresolved-findings-in-declared-scope",
+    "unresolvedFindingCount": 0,
+    "newFindingCount": 0,
+    "allOriginalFourFindingsDispositioned": true,
+    "allDirectlyIntroduced002FindingsDispositioned": true,
+    "summary": "The remaining graph and perfect-score oracle findings are resolved as architecture/verification-design contracts. The receiver qualification repair remains intact by exact byte identity. No further actionable finding was identified in this narrow successor delta.",
+    "blanketArchitectureOrOperationalAcceptance": false,
+    "implementationCompleted": false,
+    "nativeActivationVerified": false,
+    "teacherOrUserAcceptanceEstablished": false,
+    "additionalAuthorityGranted": false
+  },
+  "declaredScope": [
+    "The original AAR-REVIEW-001-F03 runtime graph inconsistency and its immediate migration/dependency repair",
+    "AAR-REVIEW-002-F02 perfect-score oracle separation against the preserved business rule",
+    "Carry-forward of the 003 receiver-scope disposition with exact helper/test bytes",
+    "Entry-point selection, affected source validator, new cross-Work endpoints and preservation of prior evidence"
+  ],
+  "findingDispositions": [
+    {
+      "findingId": "AAR-REVIEW-001-F01",
+      "status": "resolved-in-declared-architecture-source-scope",
+      "basis": "The existing canonical API bridge, producer-result/Verification binding and receiver-owned local qualification protocol remain intact. Receiver Input registration/domain/equality and source-only consumer checks were independently exercised in 003. The helper and its tests are byte-identical to 05bef45; cross-work-protocol-r3 now states the canonical receiving Input requirement explicitly.",
+      "evidence": [
+        {
+          "path": ".local/reviews/AAR-REVIEW-003.json",
+          "sha256": "b1f5fd2abaf5db5df67925abb644b39441e194c1d2ed04fd2f463506cbda73e2"
+        },
+        {
+          "path": ".local/reviews/AAR-REVIEW-003-check-receiver-memory.json",
+          "sha256": "3ddc864e4d0be0e36c54592ca6e05fabeea806625b0442438d96d37fd09b80c7"
+        },
+        {
+          "repositoryRoot": "/home/palantirkc/worktrees/academy-architecture-review-r3-20261021",
+          "commit": "5e5017e6dff174343dcb6e95685837fd0f6093a6",
+          "path": "architecture/academy-reorganization/cross-work-protocol-r3.json",
+          "sha256": "5ed9d543a8ac4b6f7f1df4fe43bbb5445b48b21e3839e84d93a00c0fe4abd22d",
+          "locator": "#/qualificationSequence"
+        }
+      ],
+      "notClaimed": "Native authentication, scheduler behavior, shared delivery, completed child qualifications or runtime authority."
+    },
+    {
+      "findingId": "AAR-REVIEW-001-F02",
+      "status": "resolved-in-declared-architecture-scope-carried-forward",
+      "basis": "The maintained teacher application, seven-workflow consumer inventory and month-end source/web dispositions reviewed in 002 remain selected. The corrected /api/class route and existing canonical state composition are retained. The workflow inventory is byte-identical to the 003 target.",
+      "evidence": [
+        {
+          "repositoryRoot": "/home/palantirkc/worktrees/academy-architecture-review-r3-20261021",
+          "commit": "5e5017e6dff174343dcb6e95685837fd0f6093a6",
+          "path": "architecture/academy-reorganization/workflow-capabilities-r2.json",
+          "sha256": "2f13bcde17bac9045bed07296998424e1cb14dc5d4a272e146c07be9c07eee72",
+          "locator": "#/rows; #/canonicalStatePath; #/sourceSelectionGate"
+        },
+        {
+          "path": ".local/reviews/AAR-REVIEW-003.json",
+          "sha256": "b1f5fd2abaf5db5df67925abb644b39441e194c1d2ed04fd2f463506cbda73e2"
+        }
+      ],
+      "notClaimed": "Adapter implementation, live adoption or actual seven-workflow acceptance."
+    },
+    {
+      "findingId": "AAR-REVIEW-001-F03",
+      "status": "resolved-in-declared-architecture-scope",
+      "basis": "The CURRENT observed coarse runtime graph explicitly contains both the TeacherQueries-to-lms value import and the managed-sites adapter-to-application import, with assertAcyclic:false and no file-level-cycle claim. The PROPOSED target DAG is separate, implemented:false and requires the owner-local QRY-BOUNDARY refinement/extraction. Both DOM-02 and QRY-02 depend on that Task; its new foreign edges are explicitly receiver-qualified. The source paths are not silently reclassified.",
+      "evidence": [
+        {
+          "repositoryRoot": "/home/palantirkc/worktrees/academy-architecture-review-r3-20261021",
+          "commit": "5e5017e6dff174343dcb6e95685837fd0f6093a6",
+          "path": "architecture/academy-reorganization/architecture-r3.json",
+          "sha256": "fa7c49448405292c312d19eb1e3063cf9b073a56dbd29836b4152036b24e708f",
+          "locator": "#/moduleGraphs/observedRuntimeImports; #/moduleGraphs/targetRuntimeImports; #/targetBoundaryGate"
+        },
+        {
+          "repositoryRoot": "/home/palantirkc/worktrees/academy-architecture-review-r3-20261021",
+          "commit": "5e5017e6dff174343dcb6e95685837fd0f6093a6",
+          "path": "architecture/academy-reorganization/execution-plan-r3.json",
+          "sha256": "3157166ea7c5334e2e4a319b69f69e3e6dcc118224211f823d4e0dc4580082f5",
+          "locator": "#/nodes; QRY-BOUNDARY, DOM-02, QRY-02"
+        },
+        {
+          "repositoryRoot": "/home/palantirkc/worktrees/academy-architecture-review-r3-20261021",
+          "commit": "5e5017e6dff174343dcb6e95685837fd0f6093a6",
+          "path": "architecture/academy-reorganization/cross-work-protocol-r3.json",
+          "sha256": "5ed9d543a8ac4b6f7f1df4fe43bbb5445b48b21e3839e84d93a00c0fe4abd22d",
+          "locator": "#/edges; AAR-XW-DOM-01-TO-QRY-BOUNDARY, AAR-XW-QRY-BOUNDARY-TO-DOM-02"
+        },
+        {
+          "path": ".local/reviews/AAR-REVIEW-004-check-focused-contracts.json",
+          "sha256": "c3f34eecd74016aa6e5e1327ac95a3d8a8b57f47e93f10157659782d7fd67113"
+        }
+      ],
+      "notClaimed": "The target extraction is not implemented or behaviorally verified. The actual current import remains as observed until its named gate completes."
+    },
+    {
+      "findingId": "AAR-REVIEW-001-F04",
+      "status": "resolved-in-declared-architecture-verification-design-scope",
+      "basis": "The early VER-02, final VER-03 after CON-03, and INT-VERIFY after integration before delivery remain in the entrypoint-selected plan. Current-source invalidation and per-workflow coverage remain explicit. The remaining score-oracle ambiguity from 002 is repaired as described below.",
+      "evidence": [
+        {
+          "repositoryRoot": "/home/palantirkc/worktrees/academy-architecture-review-r3-20261021",
+          "commit": "5e5017e6dff174343dcb6e95685837fd0f6093a6",
+          "path": "architecture/academy-reorganization/execution-plan-r3.json",
+          "sha256": "3157166ea7c5334e2e4a319b69f69e3e6dcc118224211f823d4e0dc4580082f5",
+          "locator": "#/nodes; VER-02, VER-03, INT-VERIFY, INT-02"
+        },
+        {
+          "repositoryRoot": "/home/palantirkc/worktrees/academy-architecture-review-r3-20261021",
+          "commit": "5e5017e6dff174343dcb6e95685837fd0f6093a6",
+          "path": "architecture/academy-reorganization/verification-plan-r3.json",
+          "sha256": "594a9f2ca4debdef374da0a8dddb1781a0b66a29a3aded73df888b39fe581077",
+          "locator": "#/gates; #/evidenceInvalidation; #/futureBehaviorChecks"
+        }
+      ],
+      "notClaimed": "Future consumer, integrated-tree, physical, teacher-review or user acceptance checks have not run."
+    },
+    {
+      "findingId": "AAR-REVIEW-002-F01",
+      "status": "resolved-in-declared-source-scope-carried-from-003",
+      "basis": "No qualifier changes occurred after the 003-reviewed receiver repair. Six receiver boundary cases and the affected source typecheck remain historical evidence at 05bef45, now carried forward by exact byte identity.",
+      "evidence": [
+        {
+          "path": ".local/reviews/AAR-REVIEW-003.json",
+          "sha256": "b1f5fd2abaf5db5df67925abb644b39441e194c1d2ed04fd2f463506cbda73e2"
+        },
+        {
+          "path": ".local/reviews/AAR-REVIEW-003-check-receiver-memory.json",
+          "sha256": "3ddc864e4d0be0e36c54592ca6e05fabeea806625b0442438d96d37fd09b80c7"
+        },
+        {
+          "path": ".local/reviews/AAR-REVIEW-004-evidence.json",
+          "sha256": "c32a88ec9434d2f75e38902cdf4726aebfd2a8a6ad16959e962bf9251f042de2"
+        }
+      ],
+      "notClaimed": "The owner-reported temporary-Git suite was not independently rerun."
+    },
+    {
+      "findingId": "AAR-REVIEW-002-F02",
+      "status": "resolved-in-declared-verification-design-scope",
+      "basis": "The ambiguous combined oracle is removed. Separate cases now deny default exclusion for unresolved assessment identity, allow default wrong/similar clinic exclusion for a verified exact 100-point assessment even with unknown teacher review, and apply an explicit teacher exception only to its named scope. Each case preserves independent physical and final-review states. This agrees with the unchanged business rule.",
+      "evidence": [
+        {
+          "repositoryRoot": "/home/palantirkc/worktrees/academy-architecture-review-r3-20261021",
+          "commit": "5e5017e6dff174343dcb6e95685837fd0f6093a6",
+          "path": "architecture/academy-reorganization/verification-plan-r3.json",
+          "sha256": "594a9f2ca4debdef374da0a8dddb1781a0b66a29a3aded73df888b39fe581077",
+          "locator": "#/futureBehaviorChecks/10; #/futureBehaviorChecks/11; #/futureBehaviorChecks/12"
+        },
+        {
+          "path": ".local/reviews/AAR-REVIEW-004-check-focused-contracts.json",
+          "sha256": "c3f34eecd74016aa6e5e1327ac95a3d8a8b57f47e93f10157659782d7fd67113"
+        }
+      ],
+      "notClaimed": "These are reviewed acceptance criteria, not executed production clinic behavior."
+    }
+  ],
+  "activeFindings": [],
+  "checksActuallyRun": [
+    {
+      "id": "AAR-REVIEW-004-C01",
+      "result": "passed",
+      "scope": "Current r3 entrypoint-selected validator: 213 assertions, 14 modules, 21 macro nodes, 18 foreign qualifications, 7 workflows. Installed TypeScript 5.9.3 no-emit compilation of the changed validator also passed.",
+      "receipt": {
+        "path": ".local/reviews/AAR-REVIEW-004-check-successor.json",
+        "sha256": "3232d6c248d26490dc35a57fe6c93d072245c381c73dbbe1dbd4a1d1970f8cd4"
+      },
+      "limit": "Authored design consistency only. The observed coarse graph intentionally has no DAG assertion; the proposed target DAG is not promoted to an implemented graph."
+    },
+    {
+      "id": "AAR-REVIEW-004-C02",
+      "result": "passed",
+      "scope": "Independent exact domain/project/work/task endpoint reconciliation of all 18 foreign edges; source hash checks for the previously reported value import; review of the three separated score oracles and their preserved rule.",
+      "receipt": {
+        "path": ".local/reviews/AAR-REVIEW-004-check-focused-contracts.json",
+        "sha256": "c3f34eecd74016aa6e5e1327ac95a3d8a8b57f47e93f10157659782d7fd67113"
+      },
+      "limit": "No application migration, real source read, clinic calculation or operational effect executed."
+    },
+    {
+      "id": "AAR-REVIEW-004-C03",
+      "result": "passed",
+      "scope": "Twelve selected files match exact candidate Git blobs. Helper/test, canonical root Work subtree, consumer pin, business decisions and workflow inventory match 05bef45. Twenty-nine prior local review artifacts remain preserved; all fourteen committed 002 copies match original reviewer artifacts.",
+      "receipt": {
+        "path": ".local/reviews/AAR-REVIEW-004-evidence.json",
+        "sha256": "c32a88ec9434d2f75e38902cdf4726aebfd2a8a6ad16959e962bf9251f042de2"
+      }
+    }
+  ],
+  "carriedChecksNotRelabeledAsFresh": [
+    {
+      "sourceReview": "AAR-REVIEW-003",
+      "scope": "Six real-helper memory-reader receiver scenarios and affected qualifier/test no-emit compilation",
+      "receipt": {
+        "path": ".local/reviews/AAR-REVIEW-003-check-receiver-memory.json",
+        "sha256": "3ddc864e4d0be0e36c54592ca6e05fabeea806625b0442438d96d37fd09b80c7"
+      },
+      "sourceCommit": "05bef45afecafec97e99ca8a58b8637bb6ef4a1e",
+      "carryBasis": "Exact helper and test Git object identity confirmed at 5e5017e.",
+      "limit": "The source readers and tree/commit identities in those unit probes were synthetic memory fixtures; canonical record validators and the candidate helper were real."
+    },
+    {
+      "sourceReview": "AAR-REVIEW-002",
+      "scope": "Real Git-backed canonical root Work snapshot and transitions at 1a3f9e3",
+      "receipt": {
+        "path": ".local/reviews/AAR-REVIEW-002-check-final-common-topology.json",
+        "sha256": "242395fa7f7a181b47b06102bd039da2df8156b841fe5a44234dae08dfdd283d"
+      },
+      "carryBasis": "No new canonical Work record change in this narrow delta; current Work subtree identity matches the already-reviewed 05bef45 target.",
+      "limit": "No fresh snapshot/transition command was run or claimed for 5e5017e."
+    }
+  ],
+  "checksNotRun": [
+    {
+      "scope": "Owner temporary-Git qualifier test suite",
+      "reason": "It creates temporary files and Git commits, outside the preserved JSON-only/no-commit boundary. Owner 11-test/18-assertion report remains separately attributed."
+    },
+    {
+      "scope": "Broad repository suites, live academy/source/native integration, actual QRY-BOUNDARY extraction, final consumer/integrated behavior, physical effects and teacher/user acceptance",
+      "reason": "Outside this focused source-only repair review. Existing operational and implementation gates remain necessary."
+    }
+  ],
+  "remainingImplementationGates": [
+    "DOM-01 must freeze exact owner-local producer/consumer/contract selections.",
+    "QRY-BOUNDARY is proposed and unimplemented; its actual compatibility, import-closure and affected behavior checks must pass before DOM-02/QRY-02.",
+    "Each future cross-Work edge remains held until its exact producer and receiver qualification evidence exists.",
+    "VER-03 and INT-VERIFY must validate the final delivered and integrated source closures; this architecture review cannot substitute for them.",
+    "Native activation, source effects and teacher/user acceptance retain separate authority and evidence requirements."
+  ],
+  "limitations": [
+    "This concludes only the declared original/focused repair findings and directly affected design contracts; it is not an exhaustive repository or security scan.",
+    "Passing a proposed target graph does not prove the current source has been migrated; the observed current coupling remains explicit.",
+    "The corrected perfect-score cases are reviewed test specifications, not newly executed domain implementation tests.",
+    "Current native model/effort were not independently re-observed; inherited thread identity and root launch evidence remain separately scoped.",
+    "Source hashes establish byte identity, not native authentication, execution authority or semantic truth of external owner claims."
+  ],
+  "preservation": {
+    "completedReviewsOverwritten": false,
+    "failedOriginalOrIntermediateEvidenceModified": false,
+    "writesRestrictedTo": ".local/reviews/AAR-REVIEW-004*.json in the original reviewer checkout",
+    "sourceChanges": false,
+    "commonContractsOrPinsChanged": false,
+    "goalsOrAgentsCreated": false,
+    "otherSessionMessages": false,
+    "networkOrNativeEffects": false,
+    "sourceImplementationLaunched": false,
+    "evidence": {
+      "path": ".local/reviews/AAR-REVIEW-004-evidence.json",
+      "sha256": "c32a88ec9434d2f75e38902cdf4726aebfd2a8a6ad16959e962bf9251f042de2"
+    }
+  },
+  "nextOwnerAction": "Use this scoped disposition with the existing approved staged plan and its explicit implementation/verification gates. No additional permission or operational acceptance is granted by this review."
+}

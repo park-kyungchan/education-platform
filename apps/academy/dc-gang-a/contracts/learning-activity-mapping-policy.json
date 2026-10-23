@@ -1,0 +1,78 @@
+{
+  "schemaVersion": "academy.learning-activity-mapping-policy/1",
+  "decisionDate": "2026-10-19",
+  "decisionSource": "Current direct teacher interview; interpretation rules only.",
+  "classification": "teacher-confirmed-policy-not-native-membership-verification",
+  "hierarchy": [
+    "studentSourceIdentity",
+    "textbook",
+    "majorUnit",
+    "subunit",
+    "activity",
+    "round"
+  ],
+  "bookNotation": {
+    "components": [
+      "grade",
+      "semester",
+      "series"
+    ],
+    "example": {
+      "literal": "5-2-1",
+      "grade": 5,
+      "semester": 2,
+      "series": 1
+    },
+    "seriesMeaning": "Textbook series/volume; never a unit or test round.",
+    "requiresAttributedContext": [
+      "schoolStage",
+      "publisher",
+      "sourceNamespace",
+      "nativeBookIdentity"
+    ]
+  },
+  "unitNotation": {
+    "components": [
+      "majorUnit",
+      "subunit"
+    ],
+    "example": {
+      "literal": "2-1",
+      "majorUnit": 2,
+      "subunit": 1
+    },
+    "intermediateUnitMapped": false,
+    "ambiguousHistoricalLabel": "Preserve the literal and ask for an explicit teacher/source binding; do not strip prefixes or infer rounds from suffixes."
+  },
+  "activityDimensions": [
+    "kind",
+    "track",
+    "round",
+    "lifecycleStage",
+    "assignmentScope"
+  ],
+  "dailyTest": {
+    "completionReportDefaultRounds": [
+      "basic",
+      "advanced"
+    ],
+    "defaultAppliesUnlessTeacherExplicitlyLimitsRound": true,
+    "defaultEstablishesScores": false,
+    "defaultEstablishesExecutionDate": false,
+    "correctionOfEarlierTestEstablishesNewTestToday": false
+  },
+  "correctionScope": "Apply each correction only to the identified student/book/activity/period. Retain earlier source observation and the overriding teacher decision separately.",
+  "sourceMeaning": [
+    "Track vocabulary does not identify or change a textbook publisher/series.",
+    "Class practice, assigned homework, excluded homework, solving, grading and correction are separate facts.",
+    "Reported activity labels or default rounds do not establish physical print counts.",
+    "An unscheduled student is not an absent student.",
+    "Source IDs require fresh qualified native observation; notation is not a native identity join."
+  ],
+  "nativeExecutionAuthority": "none",
+  "acceptanceDecision": null,
+  "homeworkAssessment": {
+    "numericCompletionToNativeGrade": "Requires an attributed teacher decision for the specific case; no inferred global conversion table.",
+    "parentMemo": "Do not automatically repeat internal grade-conversion details in the parent-facing memo."
+  }
+}

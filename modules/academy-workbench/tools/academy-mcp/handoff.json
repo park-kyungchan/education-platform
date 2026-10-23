@@ -1,0 +1,75 @@
+{
+  "schemaVersion": "academy.operations-mcp-handoff/1",
+  "recordedAt": "2026-10-14T14:09:32.124Z",
+  "nativeGoal": {
+    "threadId": "01a13a84-404f-7940-8c0d-6ce9e400cf01",
+    "completionOwner": "native_goal_tool"
+  },
+  "implementationStatus": "complete_for_agreed_first_stage",
+  "baseCommit": "900616a09b54742418ca333cd30e391e8cfc069b",
+  "workRoot": "tools/academy-mcp",
+  "entrypoint": "tools/academy-mcp/src/server.ts",
+  "transport": "stdio",
+  "tools": [
+    "academy_capabilities",
+    "academy_query",
+    "academy_source_status"
+  ],
+  "inventory": {
+    "sourceOperations": 95,
+    "sourceDomains": 13,
+    "businessWorkflows": 8,
+    "sourceOperationsExecutable": 0
+  },
+  "coverage": {
+    "intendedPopulation": "all_students_managed_by_Park_Kyungchan",
+    "availablePreservedStudents": 5,
+    "completeTeacherRosterVerified": false,
+    "savedFacets": 9,
+    "completeHistoricalCoverage": false
+  },
+  "completedEffects": [
+    "PR12 merged state and remote main verified; fresh main cloned",
+    "Project-local REA and MCP dependencies installed and pinned",
+    "Typed operational hierarchy and saved-context MCP implemented",
+    "Actual SDK stdio calls verified under outbound HTTP/TCP denial",
+    "Original source inputs preserved; independent review found no material issues"
+  ],
+  "excludedEffects": {
+    "academyRequests": 0,
+    "academyWrites": 0,
+    "parentSends": 0,
+    "dailyRecordInput": 0,
+    "nativeRegistrationChanges": 0,
+    "commonHarnessIntegration": false,
+    "scope": "agreed_first_stage_mcp_implementation_and_verification"
+  },
+  "nextIncrementalWork": [
+    {
+      "kind": "workflow_adapter_design",
+      "status": "future_scope",
+      "constraint": "Only preserved source evidence until a separate valid source-access contract exists"
+    },
+    {
+      "kind": "complete_teacher_roster_preservation",
+      "status": "source_gap",
+      "constraint": "Do not infer completeness from the five preserved students or retrieve inaccessible server data"
+    }
+  ],
+  "sourceVisibilityPolicy": "User-reported two-week site hiding is not deletion, nonperformance or local evidence expiry",
+  "verification": "tools/academy-mcp/verification/final.json",
+  "recoveryInstructions": "tools/academy-mcp/README.md",
+  "priorCancelledTask": {
+    "browserLoginAndOfficialMenuReadsOccurred": true,
+    "dailyRecordInput": 0,
+    "academyWrites": 0,
+    "parentSends": 0,
+    "taskOwnedBrowserClosed": true
+  },
+  "priorReferenceCheckout": {
+    "path": "/home/palantirkc/code/shared/rea",
+    "createdBeforeCloneOnlyBoundary": true,
+    "currentUse": "read_only_reference",
+    "dependenciesInstalledThere": false
+  }
+}

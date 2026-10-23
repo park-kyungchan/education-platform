@@ -1,0 +1,499 @@
+{
+  "schemaVersion": "academy-context.final-source-work-review/1.0.0",
+  "id": "ACX-REVIEW-FINAL-964CA56-001",
+  "reviewedAtUtc": "2026-10-21T04:21:27.917Z",
+  "reviewer": {
+    "agent": "education_domain_map",
+    "role": "independent-canonical-Work-snapshot-auditor",
+    "sourceEditsPerformed": false,
+    "nativeAuthorshipIndependentlyAuthenticated": false
+  },
+  "result": "pass_exact_local_source_snapshot",
+  "findings": [],
+  "source": {
+    "repositoryId": "park-kyungchan/academy-workbench",
+    "branch": "work/academy-context-consolidation-20261021",
+    "commit": "964ca5637550ef8600a90d3726cc03a45ff74359",
+    "tree": "767d8077e63157aab5f33adb062030a948cf51c7",
+    "reviewScope": "Canonical Work/source-bound result records only; previously reviewed integration/selector/design code is not re-certified by this audit.",
+    "workRecordCount": 50,
+    "kindCounts": {
+      "decision": 9,
+      "evidence": 13,
+      "input": 15,
+      "plan": 1,
+      "relation": 5,
+      "spec": 1,
+      "task": 5,
+      "work": 1
+    },
+    "workFiles": [
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/decisions/ACX-DECISION-BOTTLENECK-IDS.json",
+        "sha256": "2e42264361709bb89bcb49034fa1c456b65328d426142364a8dfba95a4a18299",
+        "bytes": 941
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/decisions/ACX-DECISION-BOUNDARY-NOTICE.json",
+        "sha256": "1dff9a1121633e1f626ddae82523ed45ea2aff1860a22a6a104ed1780b50a8c5",
+        "bytes": 921
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/decisions/ACX-DECISION-CONTEXT-OBJECTIVE.json",
+        "sha256": "9438282410abbfc265220f469faac7170f08e850a7957622aabba86682bff4dc",
+        "bytes": 1590
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/decisions/ACX-DECISION-DEFAULT-NAVIGATION.json",
+        "sha256": "57eae422551481c8ac4cfa20e2c526d3d8838a067a2989e674ac394d02a6ff01",
+        "bytes": 793
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/decisions/ACX-DECISION-EXECUTION-DESIGN.json",
+        "sha256": "534dea381603e91e6b451fb753eaddf7b4acced7b3e64b5848e395bf0479f411",
+        "bytes": 1438
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/decisions/ACX-DECISION-KEEP-OWNERS.json",
+        "sha256": "0e1bfa8e36510256276dc9448eedf1b28f292d717f7fa79b1c8c7539e2b00603",
+        "bytes": 822
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/decisions/ACX-DECISION-LOCAL-ONLY.json",
+        "sha256": "1f341dbbfbcb3c1d3f2b24e9699304d90d05875ca5fc434c8e21ca7708b11f40",
+        "bytes": 1055
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/decisions/ACX-DECISION-OPERATION-SCOPE.json",
+        "sha256": "e5b3f434407c49db20681d5eed45016a3c147c62a509ee2a3dd950ef3dfd68c6",
+        "bytes": 1405
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/decisions/ACX-DECISION-PEER-DIRECTION.json",
+        "sha256": "9b9f1b3d4bd1584a74a80c2fb956e5f8e19f89accdd58a85519b2b0b72cd8cb0",
+        "bytes": 900
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/evidence/ACX-FRESH-MAIN-OBSERVATION.json",
+        "sha256": "7145f666005ee15bff392c08412788e4204b7a808c2c1db3bc602338b2d3a52c",
+        "bytes": 448
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/evidence/ACX-OWNER-SCOPE-OBSERVATION.json",
+        "sha256": "f0c102c754ac22cd2814843f90daeb21f963bc98b83af30bc22df70dbe600091",
+        "bytes": 530
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/evidence/ACX-START-REQUEST-OBSERVATION.json",
+        "sha256": "7ed4ca9e1d6f51ed5dbbceca74e1d574db92ad238e94cd3dca38b4e6a64b6cc4",
+        "bytes": 454
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/evidence/academy-workbench%3Aevidence%3Aacademy-context-t01-observation.json",
+        "sha256": "cad8ed9d5ad23fa416a781b2734fb2deafb576bc25988c4c5b825207fea130af",
+        "bytes": 556
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/evidence/academy-workbench%3Aevidence%3Aacademy-context-t01-verification.json",
+        "sha256": "3e6af317f9dadfd7121e03a5000997f242641ff516ae7c730ae319992fc6a037",
+        "bytes": 563
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/evidence/academy-workbench%3Aevidence%3Aacademy-context-t02-observation.json",
+        "sha256": "79417674547618693baca98229287ccce99441d48a13ca350855eaa56d22cc6c",
+        "bytes": 556
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/evidence/academy-workbench%3Aevidence%3Aacademy-context-t02-verification.json",
+        "sha256": "67b2ac0538e0a5c6fdf26bfb25eb1238beddca8a6f1e2aa24e0c5a519fe4fad2",
+        "bytes": 563
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/evidence/academy-workbench%3Aevidence%3Aacademy-context-t03-observation.json",
+        "sha256": "8f6a480034a1db5866a043e17d2f848ff75c119f2d6f38b7dfe0f4b6a88654a2",
+        "bytes": 556
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/evidence/academy-workbench%3Aevidence%3Aacademy-context-t03-verification.json",
+        "sha256": "309be084d14d928c94f2c6c5fe5661271b6727c7a3393ad4b714dc5ed8a015dd",
+        "bytes": 563
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/evidence/academy-workbench%3Aevidence%3Aacademy-context-t04-observation.json",
+        "sha256": "d74d834b338fbecfaa1fe82818a0e714bbc5a56fca0d08edd1a830703ea3e02c",
+        "bytes": 556
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/evidence/academy-workbench%3Aevidence%3Aacademy-context-t04-verification.json",
+        "sha256": "dafcd9c7d115ba094ce488c20cc6e0e6933aad2c969f9004b9b646aa51b6ca07",
+        "bytes": 563
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/evidence/academy-workbench%3Aevidence%3Aacademy-context-t05-observation.json",
+        "sha256": "903b6f1e08440f3b75e8655c51457c1cebfed0296e1565e310b2817c90cff979",
+        "bytes": 556
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/evidence/academy-workbench%3Aevidence%3Aacademy-context-t05-verification.json",
+        "sha256": "9b5a6e0289ae2368c112bea325206a17bed55aadcae8228bf9e21325c6b4f6e2",
+        "bytes": 563
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/inputs/ACX-OWNER-SCOPE-AND-CONTINUITY.json",
+        "sha256": "7ce246e0f7b7b12e22db63aada9bf0d4a5c363b2a934f83a40ec3b4650e6e2e5",
+        "bytes": 5385
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/inputs/ACX-RESULT-T01-R1.json",
+        "sha256": "9c66d02c787b6b85561f73e12248e7f9f0842ce7c25a2071c6caf15af45f5781",
+        "bytes": 4843
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/inputs/ACX-RESULT-T02-R1.json",
+        "sha256": "19e6d6a1ed5cc2e8ee8532e140e17fec28143d42eac3bdfdc1bca427765cd836",
+        "bytes": 4962
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/inputs/ACX-RESULT-T03-R1.json",
+        "sha256": "e11dd87dd5de2e4cabb98c96d4358df5979b1a3c305efdb259dd2345efc5a871",
+        "bytes": 4928
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/inputs/ACX-RESULT-T04-R1.json",
+        "sha256": "13bd981bd7a0b3ca06c3f61ee041c2d4abbdbdb98c38e0bfddc22fa4dcdcd1eb",
+        "bytes": 4977
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/inputs/ACX-RESULT-T05-R1.json",
+        "sha256": "3b101d05166d0fd0e90550488b0589fd70f0db2bd94637c96525ee2d8fd9012e",
+        "bytes": 5054
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/inputs/ACX-USER-BOTTLENECK-IDS.json",
+        "sha256": "b4f47fd1e74ab6a54517816a3035faf1b033fca33068fe38b3591ddc9c74e14f",
+        "bytes": 1031
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/inputs/ACX-USER-BOUNDARY-NOTICE.json",
+        "sha256": "6105e74b97994e83f791e25f5c2250bb59a8d18842ec5d8a99cf458617a487c0",
+        "bytes": 866
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/inputs/ACX-USER-CONTEXT-OBJECTIVE.json",
+        "sha256": "512dfeb2b95c369fb53e94efeca95f5d55b87d41adb130f908a78cd6b412007d",
+        "bytes": 1602
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/inputs/ACX-USER-DEFAULT-NAVIGATION.json",
+        "sha256": "fe3c5effc99739e2c6a9cd7f6a304fa7d32da9fc9a55ac3cf2ab56e3f90322ea",
+        "bytes": 767
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/inputs/ACX-USER-EXECUTION-DESIGN.json",
+        "sha256": "25faa6e479e07e04ba23aa669ea616d8876731cd6088dbc1b0df79f18ca22b8b",
+        "bytes": 1177
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/inputs/ACX-USER-KEEP-OWNERS.json",
+        "sha256": "e33c52a7fad7b536efeff6241c047cc8d34478fa20a8c4072a29a9384309f17b",
+        "bytes": 755
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/inputs/ACX-USER-LOCAL-ONLY.json",
+        "sha256": "b16e4166420ff50bfd1ac5d03fd8bceea1d7f11e10482dfc7797e18c8e7156b7",
+        "bytes": 797
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/inputs/ACX-USER-OPERATION-SCOPE.json",
+        "sha256": "b8866635342ab0c20c6b6ec495c027241150cbba7102e1c4152f50811ad1e748",
+        "bytes": 1183
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/inputs/ACX-USER-PEER-DIRECTION.json",
+        "sha256": "8e03c3e3f828f202f28b66c804b082ac070906bcab0023bd1d5d6f45d61b844c",
+        "bytes": 858
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/plans/ACX-PLAN@1.json",
+        "sha256": "5fb711c3ad2ba8369fce8a08efa548f039fabc0799a4c1403e99765d981635dd",
+        "bytes": 1327
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/relations/ACX-CONTAINS-T01.json",
+        "sha256": "8170a1585be83edfd2d6e75a2fccb4cc97f1ac08fc1c8ca9545babf82df9d23e",
+        "bytes": 440
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/relations/ACX-CONTAINS-T02.json",
+        "sha256": "aebc153eed0eb041982b00c45048124a8f77a49b59bbec220a7a3e892164fb97",
+        "bytes": 440
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/relations/ACX-CONTAINS-T03.json",
+        "sha256": "3c7c90d183d09a9c4ecbfefb330df1e52ac5cb4e02487692f298b19342a3c618",
+        "bytes": 440
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/relations/ACX-CONTAINS-T04.json",
+        "sha256": "717101f52c8074df9ddd3a585e92a66b613e168e19ce212f31ab4d5dc97f118c",
+        "bytes": 440
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/relations/ACX-CONTAINS-T05.json",
+        "sha256": "4b8d2b354cddeea4fb6baaabaf290aaebcc2ee738dfa8a8d80e92529c9082105",
+        "bytes": 440
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/specs/ACX-SPEC@1.json",
+        "sha256": "8fbe5e6956ed3305a86b0e70c2b07021db1eb43131ca9b5f8b150cab31e424de",
+        "bytes": 1205
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/tasks/academy-workbench%3Atask%3Aacademy-context-consolidation-20261021-t01.json",
+        "sha256": "960eea6e01ed73dce4a364d3b31c0817c06138d3cb9cf5d77b57bca374ae4530",
+        "bytes": 1480
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/tasks/academy-workbench%3Atask%3Aacademy-context-consolidation-20261021-t02.json",
+        "sha256": "6aaa4d2d0fab6597d90def5b2547c11b413e177ae9d6225e54ea53f7d344ff3f",
+        "bytes": 1483
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/tasks/academy-workbench%3Atask%3Aacademy-context-consolidation-20261021-t03.json",
+        "sha256": "a4e098fc12faa7daa12cc5f79e9d877221484abae4d239e205ced175d7c449a7",
+        "bytes": 1483
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/tasks/academy-workbench%3Atask%3Aacademy-context-consolidation-20261021-t04.json",
+        "sha256": "6d2912fe4a49b3ec71c116889b2dc5f5fc9d1f7f2cbab114f1cbd990884aa076",
+        "bytes": 1483
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/tasks/academy-workbench%3Atask%3Aacademy-context-consolidation-20261021-t05.json",
+        "sha256": "a0ba17ca4f157922e0e2677da00fe5b688d4713b0ec378d97e017ecff9ad9907",
+        "bytes": 1484
+      },
+      {
+        "path": "work/academy-workbench/academy-context-consolidation-20261021/work.json",
+        "sha256": "f26f95cff8d35ac4908dbc40c5e95ed45bbb6ea62bb52cdbcc8ea69cd9a1f1a0",
+        "bytes": 3412
+      }
+    ]
+  },
+  "canonicalAudit": {
+    "owner": "agent-platform",
+    "commit": "712f90deac0676e662dc5d75d88d89f7b6773bfe",
+    "runtime": "Bun 1.4.3",
+    "api": "@palantirkc/work-continuity/git-work external source reader",
+    "calls": [
+      "openGitWork(exact immutable commit)",
+      "validateGitWorkRecords",
+      "taskVerificationTarget",
+      "GitWorkReader.readSource"
+    ],
+    "sourceFiles": [
+      {
+        "path": "packages/work-continuity/src/git-work/records.ts",
+        "sha256": "8054265ca54243a7ad22619af85ae39cd66f1385a202a2e6ae4925d8de616806"
+      },
+      {
+        "path": "packages/work-continuity/src/git-work/source.ts",
+        "sha256": "9dfc1b8d9a17dcc896bd015f9702b2c4585b01a4477aa3dc9febca3bd18ef8c1"
+      },
+      {
+        "path": "packages/work-continuity/src/git-work/context.ts",
+        "sha256": "6460d178086cf423920d0bc8566ac53bb84e9e12efe85bb39876256e2ff8a4d9"
+      },
+      {
+        "path": "packages/work-continuity/src/git-work/types.ts",
+        "sha256": "8fbc20bd25886c2cd10663c6a0a0bc8b1b9a4620fd70c56b45f544fca3b55144"
+      }
+    ],
+    "result": {
+      "valid": true,
+      "findings": [],
+      "authority": "none",
+      "nativePermissionGranted": false,
+      "semanticAcceptanceEstablished": false
+    },
+    "consumption": "external-read-only-audit-not-consumer-adoption",
+    "consumerPin": "ffba2462a08b9f8c83c6f87b1043403e5cb748d7",
+    "consumerLockUnchangedFromBase": true,
+    "consumerLockSha256": "000c650b51d5b3009cf5efdc319fe2fa5b9e74123f0bf3dddb1d638b6f8e6b99"
+  },
+  "checks": {
+    "taskTargets": [
+      {
+        "id": "academy-workbench:task:academy-context-consolidation-20261021-t01",
+        "target": "common-harness:task:2ce67109a154a0728f824a5105a2dc858cd35a852149968f73acb6243475d921",
+        "verificationId": "academy-workbench:verification:academy-context-t01",
+        "evidenceId": "academy-workbench:evidence:academy-context-t01-verification",
+        "verificationSourcePath": "work/academy-workbench/academy-context-consolidation-20261021/inputs/ACX-RESULT-T01-R1.json",
+        "verificationSourceSha256": "9c66d02c787b6b85561f73e12248e7f9f0842ce7c25a2071c6caf15af45f5781",
+        "state": {
+          "execution": "complete",
+          "verification": "passed",
+          "localAudit": "result-durable",
+          "sharedAudit": "unsynchronized",
+          "formalCompletion": "pending"
+        }
+      },
+      {
+        "id": "academy-workbench:task:academy-context-consolidation-20261021-t02",
+        "target": "common-harness:task:fe61742121f875bda9b6abe884710eb246cdc3f5eb719e8ee37bb93d0b90a213",
+        "verificationId": "academy-workbench:verification:academy-context-t02",
+        "evidenceId": "academy-workbench:evidence:academy-context-t02-verification",
+        "verificationSourcePath": "work/academy-workbench/academy-context-consolidation-20261021/inputs/ACX-RESULT-T02-R1.json",
+        "verificationSourceSha256": "19e6d6a1ed5cc2e8ee8532e140e17fec28143d42eac3bdfdc1bca427765cd836",
+        "state": {
+          "execution": "complete",
+          "verification": "passed",
+          "localAudit": "result-durable",
+          "sharedAudit": "unsynchronized",
+          "formalCompletion": "pending"
+        }
+      },
+      {
+        "id": "academy-workbench:task:academy-context-consolidation-20261021-t03",
+        "target": "common-harness:task:94d25e6e796df80e75b407ab87425a1385c586c397de9e069ad359161da0335f",
+        "verificationId": "academy-workbench:verification:academy-context-t03",
+        "evidenceId": "academy-workbench:evidence:academy-context-t03-verification",
+        "verificationSourcePath": "work/academy-workbench/academy-context-consolidation-20261021/inputs/ACX-RESULT-T03-R1.json",
+        "verificationSourceSha256": "e11dd87dd5de2e4cabb98c96d4358df5979b1a3c305efdb259dd2345efc5a871",
+        "state": {
+          "execution": "complete",
+          "verification": "passed",
+          "localAudit": "result-durable",
+          "sharedAudit": "unsynchronized",
+          "formalCompletion": "pending"
+        }
+      },
+      {
+        "id": "academy-workbench:task:academy-context-consolidation-20261021-t04",
+        "target": "common-harness:task:54cb5774af344d3d8993956e6c806eea741d4a59727e924bec20145cb3702fa3",
+        "verificationId": "academy-workbench:verification:academy-context-t04",
+        "evidenceId": "academy-workbench:evidence:academy-context-t04-verification",
+        "verificationSourcePath": "work/academy-workbench/academy-context-consolidation-20261021/inputs/ACX-RESULT-T04-R1.json",
+        "verificationSourceSha256": "13bd981bd7a0b3ca06c3f61ee041c2d4abbdbdb98c38e0bfddc22fa4dcdcd1eb",
+        "state": {
+          "execution": "complete",
+          "verification": "passed",
+          "localAudit": "result-durable",
+          "sharedAudit": "unsynchronized",
+          "formalCompletion": "pending"
+        }
+      },
+      {
+        "id": "academy-workbench:task:academy-context-consolidation-20261021-t05",
+        "target": "common-harness:task:f39d2b461ad85101d7554c2e2423d2b35cd79f27eb582715bb8b7fcca6f51b06",
+        "verificationId": "academy-workbench:verification:academy-context-t05",
+        "evidenceId": "academy-workbench:evidence:academy-context-t05-verification",
+        "verificationSourcePath": "work/academy-workbench/academy-context-consolidation-20261021/inputs/ACX-RESULT-T05-R1.json",
+        "verificationSourceSha256": "3b101d05166d0fd0e90550488b0589fd70f0db2bd94637c96525ee2d8fd9012e",
+        "state": {
+          "execution": "complete",
+          "verification": "passed",
+          "localAudit": "result-durable",
+          "sharedAudit": "unsynchronized",
+          "formalCompletion": "pending"
+        }
+      }
+    ],
+    "verificationArtifacts": 5,
+    "newResultEvidenceRecords": 10,
+    "totalEvidenceRecords": 13,
+    "inputHashAssertions": 35,
+    "uniquePinnedInputs": [
+      {
+        "path": "context/academy-context/catalog.json",
+        "sha256": "3beb4adba25512867a1823cf9ac69dae7ffe52a013cba7fb5f01b5cdeaab1d3d",
+        "bytes": 64386
+      },
+      {
+        "path": "context/academy-context/observations/local-checks.json",
+        "sha256": "08915e69feb66237269b8a86e1ab1aeffc7fe3c17ac626d828f615076bdafa43",
+        "bytes": 3031
+      },
+      {
+        "path": "context/academy-context/observations/source-pins.json",
+        "sha256": "693ab14533c06852b2ec57188541461e7b29496535685b3f89076d984fefcaad",
+        "bytes": 8552
+      },
+      {
+        "path": "context/academy-context/reviews/integration-review.json",
+        "sha256": "e8b56238ff1902a0ab1cea8c6d9f5c4e3e4819d8eaa4edd01c56b8c78b200acc",
+        "bytes": 7899
+      },
+      {
+        "path": "context/academy-context/reviews/mcp-df8b9f7-review.json",
+        "sha256": "a3b45dc283f8fe63133c430f55a15084968fd9211a32ee78b24227e3c2ac220c",
+        "bytes": 13290
+      },
+      {
+        "path": "context/academy-context/reviews/selector-review.json",
+        "sha256": "7d4bbad0a3a406bd1c72753aad07036842599ea78888e23f5782694243242631",
+        "bytes": 10123
+      },
+      {
+        "path": "context/academy-context/reviews/work-records-review.json",
+        "sha256": "b9dbe466e796be47728138c4917c43d9e61035fdc897a7ac3e23a7442c4c6707",
+        "bytes": 15780
+      }
+    ],
+    "priorUserInputFilesPreserved": 8,
+    "actualUserInputTotal": 9,
+    "sourceOnlyTasksWithoutNativeOccurrence": 5,
+    "nativeEffectRecords": 0,
+    "nativeExecutionReceiverAcceptanceEvidenceRecords": 0,
+    "sourceOwnerPurposeAndInventoryBinding": "Validated by canonical immutable Git reader; source-owner summary remains distinct from actual-user-answer Inputs."
+  },
+  "currentDecision": {
+    "localOnlyDecisionId": "ACX-DECISION-LOCAL-ONLY",
+    "status": "accepted",
+    "originalSourcePath": "work/academy-workbench/academy-context-consolidation-20261021/inputs/ACX-USER-LOCAL-ONLY.json",
+    "originalSourceSha256": "b16e4166420ff50bfd1ac5d03fd8bceea1d7f11e10482dfc7797e18c8e7156b7",
+    "scope": "Complete local source work and wait; no further third-session messages or remote publication/native activation inferred.",
+    "historicalNoticeDecisionId": "ACX-DECISION-BOUNDARY-NOTICE",
+    "historicalNoticeStatus": "superseded",
+    "historicalOriginalSourceSha256": "6105e74b97994e83f791e25f5c2250bb59a8d18842ec5d8a99cf458617a487c0",
+    "historicalOriginalPreserved": true,
+    "removedFromCurrentGoverningList": true,
+    "explicitSuccessorSupersedesLink": true
+  },
+  "retainedFailure": {
+    "commit": "07d35461b031746550c3d53dba5bfcff350e9ae1",
+    "independentlyReproduced": {
+      "valid": false,
+      "findings": [
+        "GOVERNING_DECISION_NOT_CURRENT:academy-context-consolidation-20261021"
+      ],
+      "authority": "none",
+      "nativePermissionGranted": false,
+      "semanticAcceptanceEstablished": false
+    },
+    "preservedReceiptPath": "context/academy-context/observations/git-validation-07d3546.json",
+    "preservedReceiptSha256": "c301e8f307c85641d6c57055bd4db97afd991a7e9203811a2566556449a8c89c",
+    "repair": "Only remove the superseded historical notice Decision from active Work governing decisions; retain its original Input, Decision and explicit supersession. The successor also records the old failed validation receipt."
+  },
+  "completionBoundary": {
+    "localSourceExecution": "complete",
+    "localSourceVerification": "passed",
+    "localAudit": "result-durable",
+    "sharedAudit": "unsynchronized",
+    "formalCompletion": "pending",
+    "sharedDeliveryEstablished": false,
+    "userAcceptanceEstablished": false,
+    "nativeActivationEstablished": false,
+    "operationalCompletionEstablished": false
+  },
+  "limitations": [
+    "Git-object source hashes prove exact source bytes and bindings, not native authorship, real business effects or pedagogical correctness.",
+    "Original user text is preserved and source-bound; this audit does not recreate native message authentication.",
+    "No unrelated/full private-data umbrella, live Academy request, real student payload, credential, remote fetch/publication, print/send or third-session message was performed.",
+    "This report is created after the reviewed source commit and is not part of that immutable source tree; root may bind it in a later local audit-only record."
+  ],
+  "authority": "none",
+  "nativePermissionGranted": false,
+  "semanticAcceptanceEstablished": false,
+  "publicationEstablished": false
+}

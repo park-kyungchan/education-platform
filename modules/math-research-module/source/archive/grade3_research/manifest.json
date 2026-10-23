@@ -1,0 +1,28 @@
+{
+  "status": "final-validated",
+  "basePath": "/workspace/scratch/3bd8c10a8771/grade3_research",
+  "renderingInstructions": [
+    "내용 트리는 four_level_hierarchy.json을 사용한다. core_taxonomy.json의 parentId를 최종 4단계 트리로 사용하지 않는다.",
+    "초3 유형 상세는 core_taxonomy.json의 problem-type 노드와 variants를 읽는다.",
+    "상위 연결은 grade3_to_6_connections.json, 상위 유형은 upper_problem_types.json을 읽는다.",
+    "내용 계층·선수 간선·유형 연결은 서로 다른 관계이다.",
+    "모든 선수 간선은 교수 설계 추론이며 scopeCondition을 함께 표시한다."
+  ],
+  "files": [
+    "four_level_hierarchy.json",
+    "core_taxonomy.json",
+    "grade3_to_6_connections.json",
+    "upper_problem_types.json",
+    "schema.ts",
+    "problem_types.md",
+    "validation.json"
+  ],
+  "counts": {
+    "contentHierarchyNodes": 88,
+    "coreTypes": 33,
+    "upperTypes": 34,
+    "allTypes": 67,
+    "connectedNodes": 15,
+    "scopedEdges": 45
+  }
+}

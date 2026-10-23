@@ -1,0 +1,155 @@
+{
+  "schema": "math-research-module.identity-pilot-verification.v1",
+  "status": "pass",
+  "scope": "module-local identity/schema/graph/source-pin implementation pilot",
+  "checks": {
+    "nodeTests": {
+      "passed": 56,
+      "failed": 0
+    },
+    "independentDraft202012": {
+      "schemaValid": true,
+      "positiveFixturePassed": true,
+      "negativeCasesPassed": 4
+    },
+    "sourcePins": "actual bytes + Artifact ID/kind + Work pair + legacy pointer matched",
+    "typescript": {
+      "strictNoEmit": "pass",
+      "version": "7.0.2"
+    }
+  },
+  "coverage": {
+    "syntheticCases": 3,
+    "entityRevisions": 51,
+    "typedEdges": 95,
+    "harnessCrosswalkLinks": 102,
+    "realLearnersDiagnosed": 0,
+    "full105TypesDiagnosed": false
+  },
+  "authority": {
+    "nativePermissionGranted": false,
+    "actualUserAcceptanceInferred": false,
+    "centralRegistryEnrollmentInferred": false
+  },
+  "acceptance": "acceptedBy reserved but fail-closed; no local acceptance mirror admitted",
+  "limitations": [
+    "Canonical shared Artifact/checkpoint validation remains owning mathmodule check:harness.",
+    "Passing schema/tests does not validate latent constructs or learning effects.",
+    "Rebuild samples and rerun checks after relocating package or changing source bytes.",
+    "UUID Set reservation is module-local, not a distributed uniqueness service."
+  ],
+  "files": [
+    {
+      "path": "README.ko.md",
+      "sha256": "3befd1d6139287283718b4b976b5bc9a5cc659773a402964b96459aac0563ba1",
+      "bytes": 4585
+    },
+    {
+      "path": "docs/design.ko.md",
+      "sha256": "072d34601fd7b2b123f6947b7ca5a96d2f30ce533dfb760e41eed82a9a5a01a2",
+      "bytes": 10073
+    },
+    {
+      "path": "package.json",
+      "sha256": "ee6c68a6e6454ab1375176b1ba6b49315f2ef6a3e92ab62b450f4ef8d9261759",
+      "bytes": 563
+    },
+    {
+      "path": "requirements-validation.txt",
+      "sha256": "7bfcbabd5abf340bc1f74b07b0e4120642656f494c89381978612a40fa948172",
+      "bytes": 125
+    },
+    {
+      "path": "samples/fixture-index.json",
+      "sha256": "7b18338d090278c87def7cec54b57880c7f2274225e593945ae5d4b44408e124",
+      "bytes": 2278
+    },
+    {
+      "path": "samples/legacy-crosswalk.json",
+      "sha256": "118f36e13ab2376ba7ddea5d4dea039f41a8e64f680c21abaf78bf9bddea7ba9",
+      "bytes": 1553
+    },
+    {
+      "path": "samples/research-bundle.json",
+      "sha256": "aa0564aa0db573cbd94c753098db53b0324c11d762ebaf362055b034464383a1",
+      "bytes": 111830
+    },
+    {
+      "path": "samples/synthetic-observations.json",
+      "sha256": "9af6ae7199d012f1ea2395a2c6653b5f53d8f7b4ad254925e3c01975080675b2",
+      "bytes": 3318
+    },
+    {
+      "path": "schemas/relation-registry.json",
+      "sha256": "58184c9308c216dd94a5ccd060e573ab8f7a1f8703aaed56ab7ec9f512fe358d",
+      "bytes": 4934
+    },
+    {
+      "path": "schemas/research-bundle.schema.json",
+      "sha256": "0c29afc16e481c10b87bde0c9794ed7d17949b2f48b64ddee431887dc7c6e4ad",
+      "bytes": 14721
+    },
+    {
+      "path": "scripts/build-samples.ts",
+      "sha256": "a92e9b5419cad525279a3dca2551da6f3008ce93d75a6dfc51cfc52174fb081b",
+      "bytes": 14801
+    },
+    {
+      "path": "scripts/check-schema.py",
+      "sha256": "ad11632167cad160263028417974eed15e4d36065b10cd479936189b4fb27097",
+      "bytes": 1105
+    },
+    {
+      "path": "scripts/check-sources.ts",
+      "sha256": "fa1bd50959cb11ca7ca4cd04b682381ba3e43ff8395bd8876afb1bc201a57f49",
+      "bytes": 1171
+    },
+    {
+      "path": "src/identity.ts",
+      "sha256": "dd1562d1de7f1bc8f3b1c511d918c19f4cf33e71eb1107cb63c2306b17ecb9f4",
+      "bytes": 3113
+    },
+    {
+      "path": "src/index.ts",
+      "sha256": "2a01dd52557432cbfc16aa3326bd7133969d3be01e916a047616f068fe34b34a",
+      "bytes": 157
+    },
+    {
+      "path": "src/model.ts",
+      "sha256": "bbad4517466a47aa675809f4d8b646084a5c6f55a3372478e7ce9857343c325d",
+      "bytes": 5082
+    },
+    {
+      "path": "src/paths.ts",
+      "sha256": "6119195f3ea3c0fbe24f481d91bd262f8b037383f01bc0797a48aaf1c546510b",
+      "bytes": 590
+    },
+    {
+      "path": "src/schema.ts",
+      "sha256": "752694c1042bf3a160830cd96ae9e1d1e4857b96a0625442ef21eab5441555a7",
+      "bytes": 5469
+    },
+    {
+      "path": "src/source-checks.ts",
+      "sha256": "b630d9d6006cc89cc88f39def7f9efccca4ee59a3685702413e9f7942439245e",
+      "bytes": 3151
+    },
+    {
+      "path": "src/validation.ts",
+      "sha256": "85cf0e4dd9ef1a6363fb8eb1956695ad747934bc6a1e000bf1f0719c61732319",
+      "bytes": 12432
+    },
+    {
+      "path": "tests/pilot.test.ts",
+      "sha256": "ec5ebe8678fbe38c1785b1263198b87a5925c1798d634d8e3619f1edd7233ef8",
+      "bytes": 18216
+    },
+    {
+      "path": "tsconfig.json",
+      "sha256": "88007687738bd3511c3d2d600af55f7e93721cfe09429108d3b1a74b3f96499b",
+      "bytes": 265
+    }
+  ],
+  "verificationRelations": "verifiedBy reserved but fail-closed; Task-target Verification never implies each research revision verified",
+  "integrationLayout": "research/identity-pilot inside owning module; source paths regenerated after final harness metadata; integrated check:all passed"
+}

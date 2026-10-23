@@ -1,0 +1,95 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> academy-workbench@0.3.0 validate
+> npm run typecheck && npm run build && npm test && npm run test:ui && npm run verify:runtime
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> academy-workbench@0.3.0 typecheck
+> tsc -p tsconfig.json
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> academy-workbench@0.3.0 build
+> node scripts/build.mjs
+
+Built independent local assets with no embedded source data.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> academy-workbench@0.3.0 test
+> node --test tests/*.test.ts
+
+✔ five invented students have valid separate renderer/evidence contracts (7.322916ms)
+✔ default config is uncredentialed loopback preview (0.177962ms)
+✔ external binds fail closed (0.374982ms)
+✔ owner mode requires separately configured secret and DB path (0.17682ms)
+✔ synthetic in-memory auth values validate Basic and Bearer, never platform claims (0.641344ms)
+✔ SQLite survives real close/reopen with restricted file mode (18.355191ms)
+✔ same import id is idempotent and immutable (30.082618ms)
+✔ conflict rolls back all newly inserted student data (18.501906ms)
+✔ identity change requires reconciliation (19.515979ms)
+✔ all storage reads are owner scoped (12.7347ms)
+✔ private import requires approval flag and rejects mode mixing (21.540938ms)
+✔ preview refuses private-mode DB containing only synthetic test values (14.737167ms)
+✔ schema rejects owner mismatches, unexpected keys and unsafe JSON (16.693826ms)
+✔ cycles and malformed book counts are rejected (9.597012ms)
+✔ projection source records cannot cross students (4.150017ms)
+✔ teacher review requires exact original attempt join (5.304976ms)
+✔ artifact paths and signed URL metadata are rejected (3.704662ms)
+✔ namespace collisions in a batch and wrong student identity evidence are rejected (6.731917ms)
+✔ cross-import source namespace rebinding is rejected (13.566474ms)
+✔ cross-student historical correction relations are rejected (2.946667ms)
+✔ a SQLite file cannot mix owners or modes across owners (23.999546ms)
+✔ arbitrary data cannot grant itself unauthenticated preview access (17.357263ms)
+✔ preview pin is rechecked on every protected request (42.351483ms)
+✔ real HTTP server returns protected status/students/projection/panels (44.056061ms)
+✔ record pagination is explicit and never proves source completeness (31.138822ms)
+✔ bad student/domain/query cannot widen owner scope (43.381018ms)
+✔ all writes and archived/static traversal are unavailable (49.955883ms)
+✔ Host/Origin/proxy boundary rejects DNS rebinding and cross-site requests (20.500508ms)
+✔ platform headers never authenticate owner mode (18.371655ms)
+✔ static responses prohibit cross-origin connections and caching (37.044673ms)
+✔ malformed absolute request target does not terminate server (20.217582ms)
+✔ workflow policy browsing and date/session membership retain uncertainty (18.301812ms)
+✔ workflow rejects stale revisions, invalid dates and unknown policies (16.389463ms)
+✔ unknown historical membership never creates a past class (17.854063ms)
+✔ new panels are scoped and do not assert actual source/auth proof (13.617199ms)
+✔ Today and workflow endpoints are independent GET reads (40.194669ms)
+✔ grading observation inherited/reserved names cannot address projection records (42.62126ms)
+✔ withdrawn/superseded/conflicted completion never becomes current checked completion (48.857256ms)
+✔ withdrawn assignment is retained historically and excluded from current assignments (12.40154ms)
+✔ unsupported session request is rejected rather than returning an empty class (12.880534ms)
+✔ large event history has explicit bounded summaries and raw records remain available (24.18521ms)
+✔ withdrawn superseded or conflicted membership cannot create a cohort (42.28149ms)
+✔ withdrawn superseded or conflicted policy is history rather than active reference (42.059223ms)
+ℹ tests 43
+ℹ suites 0
+ℹ pass 43
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1012.333597
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> academy-workbench@0.3.0 test:ui
+> node --test tests-ui/*.test.ts
+
+✔ all restored views mount on actual built app with real HTTP and external fetch denied (627.762879ms)
+✔ date/session policy hierarchy and Today summary are real independent read flows (214.434813ms)
+✔ malformed selected-student renderer input cannot leave previous student records (156.551836ms)
+✔ malicious count is escaped by pure renderer even when validator is bypassed (28.173694ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1337.382708
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> academy-workbench@0.3.0 verify:runtime
+> node scripts/verify-runtime.mjs
+
+{"runtimeDigest":"553473f450fcff22d4fe7b1d567fd77d9d73dc4a3d162fe9f6348dd7cb54e180","files":37,"serverClosure":9,"browserInputs":25,"results":{"serverExternalPackages":0,"browserExternalImports":0,"platformMarkers":0,"outboundServerCalls":0,"legacyInRuntime":false,"privateDataInBrowserBundle":false}}

@@ -1,0 +1,50 @@
+{
+  "kind": "verification",
+  "checkedAt": "2026-10-13T23:28:57.636779+00:00",
+  "checks": [
+    {
+      "name": "source and context invariants",
+      "command": "node scripts/validate.mjs (default read-only)",
+      "result": "passed",
+      "groups": 12
+    },
+    {
+      "name": "positive, adversarial and CLI no-mutation fixtures",
+      "command": "node scripts/test.mjs",
+      "result": "passed",
+      "tests": 21
+    },
+    {
+      "name": "JSON Schema Draft 2020-12",
+      "result": "passed",
+      "documents": 3,
+      "implementation": "python jsonschema.Draft202012Validator"
+    },
+    {
+      "name": "TypeScript declarations",
+      "result": "passed",
+      "compilerVersion": "7.0.2",
+      "command": "tsc -p tsconfig.json",
+      "compilerSource": "consumer math module local development dependency"
+    },
+    {
+      "name": "known student-identifier exclusion",
+      "result": "passed",
+      "scope": "selected known names and obvious credential patterns, not exhaustive privacy audit"
+    },
+    {
+      "name": "structured assessment source/derived-value boundaries",
+      "result": "passed",
+      "scope": "invalid 16:99/999 derived values and altered duration fail"
+    },
+    {
+      "name": "default CLI read-only",
+      "result": "passed",
+      "scope": "all package files byte-identical before and after CLI"
+    }
+  ],
+  "remoteWritePerformed": false,
+  "nativeRuntimeTested": false,
+  "semanticValidityVerified": false,
+  "userAcceptanceCreated": false
+}

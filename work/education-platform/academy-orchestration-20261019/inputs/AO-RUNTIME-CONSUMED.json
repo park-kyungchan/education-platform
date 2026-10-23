@@ -1,0 +1,27 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "academy-orchestration-20261019",
+  "kind": "input",
+  "id": "AO-RUNTIME-CONSUMED",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "education-platform",
+    "locator": "parent-observed-native-setup:2026-10-19",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "inventory": {
+      "completedEffectIds": [
+        "AO-FRONTEND-TUI-READINESS",
+        "AO-BOT-SCREEN-START",
+        "AO-RESEARCH-PREVIEW-START",
+        "AO-OWNED-BROWSER-START"
+      ],
+      "uncertainEffectIds": []
+    },
+    "receiptInputId": "AO-RUNTIME-READINESS",
+    "meaning": "Observed local setup processes were launched and remain running. Do not replay them. No native model Task/Run IDs are exposed and no model turn was dispatched; formal native Task verification remains distinct."
+  }
+}

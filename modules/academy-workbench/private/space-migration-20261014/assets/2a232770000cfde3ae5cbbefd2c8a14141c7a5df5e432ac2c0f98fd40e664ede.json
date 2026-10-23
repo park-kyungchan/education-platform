@@ -1,0 +1,86 @@
+{
+  "$schema": "academy-cartography-0.3.schema.json",
+  "kind": "cartography_validation",
+  "id": "academy:cartography-validation:r3",
+  "schemaVersion": "0.3.0",
+  "revision": 3,
+  "projectId": "project:academy-practical",
+  "canonicalParentId": "project:academy-practical",
+  "updatedAt": "2026-10-06T07:14:06.386Z",
+  "sourceIds": [],
+  "authorityGrantedByDocument": false,
+  "checks": [
+    {
+      "name": "분리 정본 스키마",
+      "status": "passed",
+      "detail": "PracticalContext, SiteExecutionContract, SemanticOperationContract, ActionAttempt, Observation, AtomicUIEvent와 패키지 타입을 JSON Schema Draft 2020-12로 검증했다."
+    },
+    {
+      "name": "참조 관계",
+      "status": "passed",
+      "detail": "실행 계약의 맥락, 경로, 질문, 출처와 시도 및 관찰 및 이벤트 ID를 대조했다."
+    },
+    {
+      "name": "실제 결과와 미확인 상태",
+      "status": "passed",
+      "detail": "오 생성 1회 실행은 관찰 보고로 기록했고 외부 뷰어 열림은 사용자 확인으로 구분했다. 헤더와 페이지, 실제 PDF 파일과 물리 출력은 검증 완료로 표시하지 않았다."
+    },
+    {
+      "name": "감사 기록 출처",
+      "status": "passed",
+      "detail": "기록한 1개 실행 요약은 관찰 보고에서 재구성한 것으로 표시했다. 현지 9개 이벤트 원문은 읽지 않았고 정확한 시각 및 당시 계약 버전도 만들지 않았다."
+    },
+    {
+      "name": "환경과 종료 범위",
+      "status": "passed",
+      "detail": "학원은 강아PC 전용이며 클라우드 로그인과 설치 및 학교와 Excel은 종료 또는 취소 상태이다."
+    },
+    {
+      "name": "업로드 후 재읽기",
+      "status": "passed",
+      "detail": "분리 정본 5개와 Schema 1개의 접근 확인 및 업로드 후 재읽기 SHA-256 일치를 확인했다."
+    },
+    {
+      "name": "PDF 내용과 인쇄",
+      "status": "pending",
+      "detail": "외부 뷰어 열림은 사용자 확인이지만 현재 실행기의 앱 접근으로 헤더와 문항 및 페이지와 인쇄 설정을 검증하지 못했다."
+    },
+    {
+      "name": "전체 탐색과 실행 준비",
+      "status": "pending",
+      "detail": "초기 구조와 읽기 관찰을 전체 기능 성공으로 확대하지 않았으며 인쇄 경계와 일부 인계 맥락 및 UI 제약이 남아 있다."
+    }
+  ],
+  "fileHashes": [
+    {
+      "fileName": "academy-cartography-0.3.schema.json",
+      "sha256": "80fef4fe5b443695e66ba2fa9b4774b31b3b3bb100d8fade0b68b87b218a4bc6"
+    },
+    {
+      "fileName": "academy-practical-context.r3.json",
+      "sha256": "8b3de1f964336bd88eb75288f592fead3986aced2a6e21dec5dcf2806202e632"
+    },
+    {
+      "fileName": "academy-site-execution.r3.json",
+      "sha256": "c3e1a7bfef11f1e2aaae57f3631735e472c32a5851e2dc321e290730acd7a2d6"
+    },
+    {
+      "fileName": "academy-clinic-operations.r3.json",
+      "sha256": "86fee16ab4fb65bc9d1f34de718d999afe1ca9ad1d71ec23d36c0da71e615789"
+    },
+    {
+      "fileName": "academy-coverage.r3.json",
+      "sha256": "f50362cc0338c0c250eb1d74f1bd9e3b6b9cae45d6c1ee13ca727962159d58ba"
+    },
+    {
+      "fileName": "academy-evidence.r3.json",
+      "sha256": "f8c4e16ee228296039254f2792d32b177ba68261938cc43715cc57a35f8657e4"
+    }
+  ],
+  "limitations": [
+    "현재 승인과 실제 실행 결과는 최신 대화 및 근거와 다시 대조해야 한다.",
+    "가드레일은 문서와 타입 설계이며 런타임에서의 절대적인 강제 통제를 검증한 것이 아니다.",
+    "원문 학생 PDF를 이 공간에 업로드하지 않았다.",
+    "이 검증 기록과 색인 자체의 업로드 후 해시는 게시 후 별도로 재읽는다."
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "academy.architecture-review-disposition/3",
+  "predecessors": [
+    "review-disposition-r2.json",
+    "reviews/AAR-REVIEW-002/AAR-REVIEW-002.json"
+  ],
+  "status": "repair-proposed-awaiting-independent-final-disposition",
+  "items": [
+    {
+      "findingId": "AAR-REVIEW-002-F01",
+      "repair": "Receiver Input must match complete domain/project/work/id, actual canonical readRecord Input and local qualification Verification. Source-only phase also refuses native consumer Tasks.",
+      "evidence": [
+        "qualify-external-work.ts",
+        "qualify-external-work.test.ts",
+        "receiver-record-scope-successor.json"
+      ],
+      "actualGitChecks": "11pass18assertions; positive source bridge, canonical wrong-domain rejection, valid-snapshot unregistered-envelope rejection and native scope refusal."
+    },
+    {
+      "findingId": "AAR-REVIEW-001-F03",
+      "repair": "Observed current coarse runtime graph truthfully includes both directions and has no DAG assertion. Proposed target graph has a new owner-local read-contract boundary, explicitly unimplemented until QRY-BOUNDARY. Both DOM-02 and QRY-02 depend on that migration.",
+      "evidence": [
+        "architecture-r3.json",
+        "execution-plan-r3.json",
+        "validate-successor.ts"
+      ]
+    },
+    {
+      "findingId": "AAR-REVIEW-002-F02",
+      "repair": "Split unverified100-point identity, verified exact100-point default clinic exclusion with unknown teacher review, and separately scoped teacher exception. No print/distribution/final completion inference.",
+      "evidence": [
+        "verification-plan-r3.json",
+        "context/business-decisions.json perfect-score/zero-wrong-review"
+      ]
+    }
+  ],
+  "sourceImplementationWorkersDispatched": false,
+  "commonContractOrPinChanged": false,
+  "nativeEffectAuthorityExpanded": false
+}

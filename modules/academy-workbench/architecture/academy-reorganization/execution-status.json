@@ -1,0 +1,165 @@
+{
+  "schemaVersion": "academy.source-execution-status/1",
+  "observedAt": "2026-10-21T12:10:07.395394+00:00",
+  "designRef": "execution-plan-r3.json",
+  "designStateIsHistoricalProposal": true,
+  "sourceOnly": true,
+  "workAssignments": [
+    {
+      "domainId": "academy-operations",
+      "projectId": "academy-workbench",
+      "workId": "academy-architecture-orchestration-20261021",
+      "branch": "work/academy-architecture-candidate-20261021",
+      "worktree": "/home/palantirkc/worktrees/academy-architecture-orchestration-20261021",
+      "accountableRole": "root-coordinator",
+      "nativeSessionId": "01a15c7e-9584-7e91-b429-62a53d7ba5bc",
+      "tabId": "wA:t1",
+      "paneId": "wA:p1",
+      "activeTaskId": "academy-workbench:task:academy-architecture-orchestration-20261021-t08",
+      "milestones": {
+        "t01": "source-execution-and-verification-complete",
+        "t02": "source-execution-and-verification-complete",
+        "t03": "scoped-independent-review-complete",
+        "t04": "source-delivery-qualified",
+        "t05": "held-on-final-consumer-verification-environment-deliveries",
+        "t07": "held-after-actual-integration",
+        "t06": "held-after-integrated-verification"
+      }
+    },
+    {
+      "domainId": "education",
+      "projectId": "education-platform",
+      "workId": "academy-state-model-20261021",
+      "branch": "work/academy-state-model-20261021",
+      "worktree": "/home/palantirkc/worktrees/academy-state-model-20261021",
+      "initialSourceCommit": "4bdef2c77cb9a537cecf806ba16054646147dbc5",
+      "accountableRole": "domain-subLead",
+      "nativeSessionId": "01a15d19-e804-7a12-87c2-07c0b82d9807",
+      "tabId": "wA:t2",
+      "paneId": "wA:p4",
+      "nativeAgentName": "academy-domain-lead",
+      "activeTaskId": null,
+      "receivingQualification": "actual-domain-receiving-qualification.json",
+      "milestones": {
+        "DOM-01": "completed-and-source-qualified",
+        "DOM-02": "completed/passed/local-result-durable; source-root-verified; native/formal pending"
+      },
+      "sourceCommit": "e52d008e0272f58a5a880f00696624361184aa22",
+      "postDependencyAdoptionBase": "3adb273aa1125aa8d6beff7dc51a4c5076710d9f"
+    },
+    {
+      "domainId": "education",
+      "projectId": "education-platform",
+      "workId": "academy-query-integration-20261021",
+      "branch": "work/academy-query-integration-20261021",
+      "worktree": "/home/palantirkc/worktrees/academy-query-integration-20261021",
+      "initialSourceCommit": "b2bb0bf0886f8069a723cbb900b98ea53fbf22cf",
+      "accountableRole": "query-subLead",
+      "nativeSessionId": "01a15d3e-8769-7061-983f-880f73d33289",
+      "tabId": "wA:t4",
+      "paneId": "wA:p6",
+      "nativeAgentName": "academy-query-lead",
+      "activeTaskId": null,
+      "receivingQualification": "actual-query-receiving-qualification.json",
+      "milestones": {
+        "QRY-01": "completed; committed78a3453; canonical snapshot+transition/result binding passed",
+        "QRY-BOUNDARY": "completed-and-source-qualified",
+        "QRY-02": "source-qualified; independent006 scoped pass; no native/SDK/final integration acceptance"
+      },
+      "nativeModel": "gpt-6.1-sol",
+      "nativeEffort": "high",
+      "sourceCommit": "8f8c9bd61bd5e55445780b5569ecc40effcecef6",
+      "implementationBase": "f8739a2a75ac73d82460082656d3e3e2b92dba5d"
+    },
+    {
+      "domainId": "academy-operations",
+      "projectId": "academy-workbench",
+      "workId": "academy-environment-qualification-20261021",
+      "branch": "work/academy-environment-qualification-20261021",
+      "worktree": "/home/palantirkc/worktrees/academy-environment-qualification-20261021",
+      "sourceCommit": "188da829e41d8923aadf948f69e72af5749a84cd",
+      "accountableRole": "env-subLead-proposed-unassigned",
+      "nativeSessionId": null,
+      "tabId": null,
+      "paneId": null,
+      "nativeAgentName": null,
+      "activeTaskId": null,
+      "receivingQualification": "actual-env-receiving-qualification.json",
+      "milestones": {
+        "ENV-01": "source admission prepared; native actor unassigned",
+        "ENV-02": "DOM-02 qualified; holds on ENV-01/admission"
+      }
+    },
+    {
+      "domainId": "academy-operations",
+      "projectId": "academy-workbench",
+      "workId": "academy-consumer-integration-20261021",
+      "branch": "work/academy-consumer-integration-20261021",
+      "worktree": "/home/palantirkc/worktrees/academy-consumer-integration-20261021",
+      "sourceCommit": "76aa96544b27fdcd32bd244892391bd20ec289e7",
+      "accountableRole": "consumer-subLead",
+      "nativeSessionId": "01a15dd0-03ed-71a0-8372-936776e22669",
+      "tabId": "wA:t5",
+      "paneId": "wA:p8",
+      "nativeAgentName": "academy-consumer-lead",
+      "activeTaskId": null,
+      "receivingQualification": "actual-con-receiving-qualification.json",
+      "milestones": {
+        "CON-01": "complete/passed/local-result-durable; Root exact source audit valid; original SDK child failure preserved with Root9pass synthetic recheck",
+        "CON-02": "Four007repairs sourcecommitted and Root16tests523assertions passed; finalrepairTaskcomplete/pass/localdurable exact712snapshot+transition valid/28artifactpins/4Verificationpins; independent008 dispatched",
+        "CON-03": "held-on-consumer-review-repair-and-VER02-plus-Rootadmission"
+      },
+      "nativeModel": "gpt-6.1-sol",
+      "nativeEffort": "high"
+    },
+    {
+      "domainId": "education",
+      "projectId": "education-platform",
+      "workId": "academy-workflow-verification-20261021",
+      "branch": "work/academy-workflow-verification-20261021",
+      "worktree": "/home/palantirkc/worktrees/academy-workflow-verification-20261021",
+      "sourceCommit": "df2c146ed47e2b96e1719e6268f3452b597f0166",
+      "accountableRole": "verification-subLead-boundary-qualification-only",
+      "nativeSessionId": "01a15e5a-77bf-75c1-9dbf-e76042a9e639",
+      "tabId": "wA:t7",
+      "paneId": "wA:pA",
+      "nativeAgentName": "academy-verification-clean",
+      "activeTaskId": null,
+      "receivingQualification": "actual-ver-receiving-qualification.json",
+      "milestones": {
+        "VER-01": "held before fresh design: native shell scope probes pass; alternate retrieval/delegation channel constraints unqualified",
+        "VER-02": "DOM02/QRY02receivingqualificationscomplete; holdonownVER01checkpoint+Rootadmission",
+        "VER-03": "held-on-named-producer-qualification"
+      },
+      "nativeModel": "gpt-6.1-sol",
+      "nativeEffort": "high"
+    }
+  ],
+  "identityRule": "Stable Domain/Project/Work/Task identity is not the branch, worktree, native session, pane or execution order. Native unknowns stay null.",
+  "completionLimits": {
+    "nativeAdoption": "unverified",
+    "sharedAuditDelivery": "not-established",
+    "formalWorkAcceptance": "pending",
+    "publication": "held",
+    "merge": "held",
+    "activation": "held"
+  },
+  "closedAssignments": [
+    {
+      "nativeAgentName": "academy-query-lead",
+      "tabId": "wA:t3",
+      "paneId": "wA:p5",
+      "nativeSessionId": null,
+      "state": "Prior idle tab/pane no longer live; first task prompt rejected agent_not_found before delivery; no replay or completed effect inferred.",
+      "replacement": "wA:t4/wA:p6, same logical Work/Task"
+    },
+    {
+      "nativeAgentName": "academy-verification-lead",
+      "paneId": "wA:p9",
+      "tabId": "wA:t6",
+      "nativeSessionId": null,
+      "state": "Interrupted for scope contamination; artifacts quarantined/unadmitted; do not resume",
+      "recoveryRef": "context-contamination-recovery-r1.json"
+    }
+  ]
+}

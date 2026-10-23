@@ -1,0 +1,144 @@
+{
+  "$schema": "academy-development-0.1.schema.json",
+  "kind": "development_task_contract",
+  "schemaVersion": "0.1.0",
+  "revision": 5,
+  "projectId": "project:academy-practical",
+  "canonicalParentId": "development:academy-owned-app",
+  "updatedAt": "2026-10-06T11:58:32.221Z",
+  "id": "contract:academy-development-preparation:v1",
+  "taskId": "01a11084-8e3c-77ac-bcf4-7ba1a15c003d",
+  "authoritySource": "Sentinel_d8e190b101408191bb8e4c930da2ce04",
+  "goal": "분리된 개발 준비 환경을 확인하고 합성 자료로 초기 데이터·작업 계약과 검증 기반을 만든다.",
+  "status": "synthetic_workbench_verified_wrong_repository_restored_new_target_unverified",
+  "allowedActions": [
+    "사용 가능한 도구와 버전 읽기",
+    "새로 분리된 작업 폴더 준비",
+    "구조화 계약과 합성 사례 작성",
+    "현재 설치된 도구로 가능한 초기 검증",
+    "결과와 한계 보고",
+    "사용자 요청 범위의 프로젝트 전용 TypeScript 공식 npm 설치 시도"
+  ],
+  "excludedActions": [
+    "기존 dc-gang-a 저장소 수정",
+    "기존 학원 사이트 수정",
+    "자격 증명 생성 또는 저장",
+    "공개 서버 시작",
+    "실제 학생 상세 자료 반입",
+    "차단된 전체 이력 자료의 대체 경로 전송",
+    "PDF 생성 또는 인쇄",
+    "승인 범위를 벗어난 설치 또는 권한 제한 우회"
+  ],
+  "preconditions": [
+    "부모가 만든 강아PC의 지정 개발 작업에서만 컴퓨터 작업을 한다.",
+    "현재 작업 폴더와 저장소 경계를 확인한다.",
+    "새 변경은 분리된 위치에만 둔다.",
+    "검증 데이터는 합성임을 표시한다."
+  ],
+  "expectedDeliverables": [
+    "실측 환경 버전과 작업 경로",
+    "생성한 파일 목록",
+    "타입과 작업 계약",
+    "개인정보가 없는 합성 사례",
+    "실제 실행한 검증과 미실행 항목"
+  ],
+  "successCriteria": [
+    "도구와 작업 위치가 실제 관찰 근거로 확인됨",
+    "기존 저장소와 학원 사이트 변경 없음",
+    "합성 자료에서 필요한 검증 결과가 명시됨",
+    "환경 준비 상태와 앱 구현 상태를 따로 보고함"
+  ],
+  "failureRecovery": [
+    "지원 도구 부족은 해당 항목을 blocked로 남기고 가능한 문서·계약 준비를 진행한다.",
+    "설치나 접근 확대가 필요하면 정확한 항목과 이유를 부모에게 보고한다.",
+    "거부되거나 취소된 자료 전달은 재시도나 우회하지 않는다."
+  ],
+  "externalEffectsAuthorized": false,
+  "runtimeGuardrailsImplemented": false,
+  "actionEvents": [],
+  "reportedOutcome": {
+    "scaffoldPath": "task-5/academy-workbench",
+    "checksPassed": 87,
+    "checksFailed": 0,
+    "staticTypeCheck": "passed_source_and_tests",
+    "appBuilt": false,
+    "serverStarted": false,
+    "sourceReference": "https://github.com/park-kyungchan/dc-gang-a/commit/308b621d2ba4ab9369237a2e152512b211c64040",
+    "assertionsPassed": 400,
+    "scenarioFullyPassed": 0,
+    "scenarioPartial": 16,
+    "scenarioNotRun": 0,
+    "foundationVersion": null,
+    "syntheticScenariosWithEvidence": 16,
+    "validatedSourceSnapshotCommit": "308b621d2ba4ab9369237a2e152512b211c64040"
+  },
+  "executionHistory": [
+    {
+      "taskId": "01a11064-c620-72ba-afbd-c7db0545f008",
+      "workspacePath": "task-4/academy-workbench",
+      "role": "prior_scaffold",
+      "reportedPassed": 14,
+      "reportedFailed": 0
+    },
+    {
+      "taskId": "01a11084-8e3c-77ac-bcf4-7ba1a15c003d",
+      "workspacePath": "task-5/academy-workbench",
+      "role": "default_model_recovery_scaffold",
+      "reportedPassed": 28,
+      "reportedFailed": 0
+    }
+  ],
+  "installScope": {
+    "package": "TypeScript",
+    "registry": "official npm",
+    "projectOnly": true,
+    "result": "project_local_pinned_install_and_npm_ci_passed",
+    "bypassAllowed": false,
+    "attemptedPackages": [
+      "typescript",
+      "@types/bun"
+    ],
+    "blockingActor": "prior_failure_resolved_through_official_approval",
+    "installedVersions": {
+      "typescript": "7.0.2",
+      "@types/bun": "1.4.2"
+    },
+    "lockfile": "package-lock.json"
+  },
+  "remainingScope": [
+    "private park-kyungchan/gang-a 생성·코드 이전 및 독립 검증",
+    "실제 DOM adapter 검증",
+    "영구 저장과 crash 복구",
+    "프로세스 간 잠금",
+    "실제 WebMCP 등록·실행",
+    "실제 학생 데이터의 별도 구조화·신원 연결 및 허용된 반영"
+  ],
+  "repositoryDisposition": {
+    "previousTarget": "park-kyungchan/dc-gang-a",
+    "previousTargetWasIncorrect": true,
+    "revertedPullRequests": [
+      25,
+      26
+    ],
+    "rollbackPullRequest": "https://github.com/park-kyungchan/dc-gang-a/pull/27",
+    "rollbackMerged": true,
+    "restoredMergeCommit": "2cd65bed1261c627e75b978ca02b7261b6280ed6",
+    "preTaskCommit": "7a08a152c0443f938d66134747f19b1dcadcde98",
+    "restoredTree": "74eb9ba8661460a2979acd04338bbf905d09e739",
+    "preTaskTree": "74eb9ba8661460a2979acd04338bbf905d09e739",
+    "exactTreeMatchVerified": true,
+    "rollbackMainCi": {
+      "id": 37456717079,
+      "state": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/park-kyungchan/dc-gang-a/actions/runs/37456717079"
+    },
+    "intendedRepository": "park-kyungchan/gang-a",
+    "intendedVisibility": "private",
+    "newRepositoryState": "creation_and_source_transfer_reported_in_progress_not_verified",
+    "newRepositoryUrl": null,
+    "connectorVerification": "404_Not_Found_does_not_establish_absence",
+    "localSourcePreserved": true,
+    "archivedRepositoryIsCurrentProject": false
+  }
+}

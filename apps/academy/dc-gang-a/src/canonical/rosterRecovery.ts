@@ -1,5 +1,6 @@
 import {assertExactKeys,assertInstant,assertRefs,canonicalJson,stableId} from '../learning/model';
-import {readInputRecord,readLiteralKey,readLiteralName} from '../lms/academyReadProtocol';
+import {readLiteralKey,readLiteralName} from '../lms/academyReadProtocol';
+import {readInputRecord} from '../contracts/readInputRecord';
 import type {StoredStudent} from '../academy/postgresStore';
 import type {CanonicalRosterData} from './canonicalRegistry';
 export const recoveredRosterVersion='retained-identities-1';

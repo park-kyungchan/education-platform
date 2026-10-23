@@ -1,3 +1,5 @@
+import {readInputRecord} from '../contracts/readInputRecord';
+export {readInputRecord} from '../contracts/readInputRecord';
 /** Scoped read preparation, not an authentication provider or generic HTTP dispatcher. */
 import {parseScoreView,readAssessmentBatch,type AssessmentReadTarget,type AssessmentReadResult} from './assessmentReadProtocol';
 import {readDayRecordSource,type DayRecordColumnContract,type DayRecordSourceRow} from './dayRecordReadProtocol';
@@ -35,12 +37,7 @@ export interface ItemAnswerReadPlan extends Omit<AcademyReadPlan,'family'|'reque
 export interface StudentCourseReadRequest extends StudentCourseRequest {family:'student_course'}
 export interface StudentCourseReadPlan extends Omit<AcademyReadPlan,'family'|'request'> {family:'student_course';request:StudentCourseReadRequest}
 export type ScopedAcademyReadPlan=AcademyReadPlan|DailyReadPlan|DayRecordReadPlan|ItemMetadataReadPlan|ItemAnswerReadPlan|StudentCourseReadPlan;
-export function readInputRecord(input: unknown): Record<string, unknown> {
-  if (!input || typeof input !== 'object' || Array.isArray(input)) throw new Error('invalid_read_request');
-  const descriptors = Object.getOwnPropertyDescriptors(input);
-  if (Object.values(descriptors).some(value => !Object.hasOwn(value, 'value'))) throw new Error('accessor_read_request');
-  return Object.fromEntries(Object.entries(descriptors).map(([name,value])=>[name,value.value]));
-}
+
 export function readLiteralName(value: unknown): string {
   if (typeof value !== 'string' || !value.trim() || value.length > 200) throw new Error('invalid_read_name');
   return value;

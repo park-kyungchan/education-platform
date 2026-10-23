@@ -1,0 +1,528 @@
+{
+  "schemaVersion": "academy.independent-architecture-review/1",
+  "reviewId": "AAR-REVIEW-001",
+  "createdAtUtc": "2026-10-21T05:13:42.591913+00:00",
+  "role": "independent-child-reviewer",
+  "logicalIdentity": {
+    "domainId": "academy-operations",
+    "projectId": "academy-workbench",
+    "workId": "academy-architecture-orchestration-20261021",
+    "issueId": "AAR-ISSUE-20261021",
+    "specRef": "AAR-SPEC@1",
+    "planRef": "AAR-PLAN@1",
+    "taskId": "academy-workbench:task:academy-architecture-orchestration-20261021-t03",
+    "registrationMeaning": "Existing logical source records; no new global/native Task or Run registration."
+  },
+  "reviewer": {
+    "actualNativeCODEX_THREAD_ID": "01a15cd8-368e-7322-bb15-20755a7bf9d5",
+    "observationSource": "Inherited CODEX_THREAD_ID environment variable",
+    "nativeAuthorshipCryptographicallyVerified": false,
+    "actualNativeTaskId": null,
+    "actualNativeRunId": null,
+    "actualPaneId": null,
+    "requestedCLI": "codex",
+    "requestedModel": "gpt-6-astra",
+    "requestedEffort": "xhigh",
+    "observedModel": null,
+    "observedEffort": null,
+    "modelEffortObservationLimit": "No trusted in-scope launch receipt was available in the checkout. Native configuration, session logs and other-agent state were not inspected. Requested identity is not promoted to observed model/effort.",
+    "independence": "Separate designated review checkout; no implementation writes or messages to other sessions."
+  },
+  "reviewedSource": {
+    "reviewedCommit": "6cf0a518d68e21b3d7a7624d0fba2f9c4d31dde6",
+    "reviewedTree": "20aa98bdb31de50a4f6079200d4f6536a1aec62a",
+    "branch": "review/academy-architecture-astra-20261021",
+    "approvedDesignCommit": "cb41685437d0f3fabf9f32ae00667e3b88fec4c4",
+    "approvedDesignTree": "d4a9556d6755adb1ae2455d73818207f6ebc4bbb"
+  },
+  "approvalInterpretation": {
+    "actualApprovalInput": {
+      "repositoryRoot": "/home/palantirkc/worktrees/academy-architecture-review-20261021",
+      "commit": "6cf0a518d68e21b3d7a7624d0fba2f9c4d31dde6",
+      "path": "work/academy-workbench/academy-architecture-orchestration-20261021/inputs/AAR-USER-APPROVAL-001.json",
+      "sha256": "1cda6ccb32ced2e795c26d2e5df11cf7410f178ec6cdb5219fd405f05101bf38",
+      "locator": "#/content/originalText"
+    },
+    "approvalDecision": {
+      "repositoryRoot": "/home/palantirkc/worktrees/academy-architecture-review-20261021",
+      "commit": "6cf0a518d68e21b3d7a7624d0fba2f9c4d31dde6",
+      "path": "work/academy-workbench/academy-architecture-orchestration-20261021/decisions/AAR-DECISION-ARCHITECTURE-APPROVED-001.json",
+      "sha256": "e25288d6069db9d209cbac41062ed177fb159f095b0f244b7dfd5ba65a4f5448",
+      "locator": "#"
+    },
+    "historicalBaseline": "Approval-pending and unlaunched fields in approved design artifacts are historical and were not reported as defects. The successor adds approval/checkpoint/task metadata; the target architecture and its identity/execution/capability/topology files remain byte-identical to cb41685.",
+    "reviewAuthority": "Proposal for owner disposition only; not an AcceptanceDecision and not implementation, merge, publication, activation or operational authority."
+  },
+  "conclusion": {
+    "disposition": "repair-required-before-dependent-implementation",
+    "summary": "The evidence supports the preservation and ownership principles, local source identities and conservative runtime holds. It does not yet support executable cross-Work qualification or complete target consumer/verification coverage. Four actionable architectural findings require focused repair or an explicit narrower scope disposition.",
+    "unresolvedFindings": 4,
+    "high": 2,
+    "medium": 2,
+    "blanketArchitectureAcceptance": false,
+    "operationalAcceptance": false,
+    "noUnresolvedFindingsInDeclaredScope": false
+  },
+  "declaredScope": {
+    "included": [
+      "Approved architecture and approval successor at exact source identities",
+      "Existing academy and shared-contract source metadata and selected code paths",
+      "Canonical ownership, actual source consumers, preserved IDs and Task milestone semantics",
+      "Single accountable Work/tab policy, shared writes, runtime effect holds and resource bounds",
+      "Environment-specific qualification and implementation/verification/integration/activation/acceptance separation"
+    ],
+    "excluded": [
+      "Private student/source bodies and archives",
+      "Credentials, native configuration and native session logs",
+      "Other agent/session inspection or messaging",
+      "Network, live source queries, runtime launch, publication, merge, deployment, print, send and activation",
+      "Common contract/pin changes and implementation edits"
+    ]
+  },
+  "findings": [
+    {
+      "id": "AAR-REVIEW-001-F01",
+      "severity": "high",
+      "priority": "P1",
+      "status": "unresolved",
+      "category": "cross-work-dependency-contract",
+      "title": "Define an admissible cross-Work prerequisite protocol before dispatching the child DAG",
+      "finding": "Fourteen execution edges cross Work boundaries, but the design supplies only graph aliases, target milestone labels and proposed Task strings. It does not select a concrete owner-maintained protocol that qualifies a foreign Work result for the receiving Work. The common GitWork API being used for this architecture resolves TaskDependency.taskId inside the selected Work record set and rejects records with another projectId/workId. Supplying a foreign Task ID directly therefore does not implement the drawn edge. The current root t05 record depends only on local t04; the passing canonical snapshot does not cover the future child edges.",
+      "trigger": "For example, root INT-01 needs CON-03 from academy-consumer-integration-20261021, and QRY-02 needs DOM-02 from academy-state-model-20261021. Their producer results must be qualified before the receiving source Task starts.",
+      "impact": "Implementers can either bypass the intended prerequisites with an informal done flag, falsely relocate producer identity into the consumer Work, or discover that the existing common API cannot admit the assumed direct dependency. Any of these defeats stable Work identity or the promised milestone semantics. This is an omitted architecture binding, not a defect in the canonical validator.",
+      "evidence": [
+        {
+          "repositoryRoot": "/home/palantirkc/worktrees/academy-architecture-review-20261021",
+          "commit": "6cf0a518d68e21b3d7a7624d0fba2f9c4d31dde6",
+          "path": "architecture/academy-reorganization/execution-plan.json",
+          "sha256": "dacbe6c9b2e93bd9afc19a237dffab5afe90206b1643d4f41b4f06a23d521cc4",
+          "locator": "#/nodes; QRY-02, CON-02, INT-01"
+        },
+        {
+          "repositoryRoot": "/home/palantirkc/worktrees/academy-architecture-review-20261021",
+          "commit": "6cf0a518d68e21b3d7a7624d0fba2f9c4d31dde6",
+          "path": "work/academy-workbench/academy-architecture-orchestration-20261021/tasks/academy-workbench%3Atask%3Aacademy-architecture-orchestration-20261021-t05.json",
+          "sha256": "6f9eec20b1a31609bb72f6cd25b16cbd013ba988b5c45a80309fa633479f9fd0",
+          "locator": "#/dependsOn"
+        },
+        {
+          "repositoryRoot": "/home/palantirkc/projects/agent-platform",
+          "commit": "712f90deac0676e662dc5d75d88d89f7b6773bfe",
+          "path": "packages/work-continuity/src/git-work/types.ts",
+          "sha256": "8fbc20bd25886c2cd10663c6a0a0bc8b1b9a4620fd70c56b45f544fca3b55144",
+          "locator": "TaskDependency and GitWorkSelection, lines 100-108 and 188-199"
+        },
+        {
+          "repositoryRoot": "/home/palantirkc/projects/agent-platform",
+          "commit": "712f90deac0676e662dc5d75d88d89f7b6773bfe",
+          "path": "packages/work-continuity/src/git-work/records.ts",
+          "sha256": "8054265ca54243a7ad22619af85ae39cd66f1385a202a2e6ae4925d8de616806",
+          "locator": "recordDependencies; dependencyFindings; validateRecordSet, lines 435, 558-566, 694-711"
+        }
+      ],
+      "observedCheck": {
+        "path": ".local/reviews/AAR-REVIEW-001-check-cross-work.json",
+        "sha256": "d51feab3f05a48e5218b101bf932b221afac398329f7d7518856d6e21db40b58"
+      },
+      "checkInterpretation": "An in-memory direct binding of the proposed foreign CON-03 Task into root t05 was rejected with DEPENDENCY_MISSING and RECORD_DEPENDENCY_MISSING. No source record was changed. The producer is deliberately not yet created; the stronger same-Work restriction is established by the inspected canonical code, not inferred solely from its present absence.",
+      "repair": "Choose and document a concrete consumer-owned qualification step for every cross-Work edge. Bind immutable producer repository/project/work/task and source commit/tree, required milestone, exact result and Verification evidence, and a receiving qualification record. Use the existing owner APIs and source-reference kinds; preserve the producer Task identity and require a separately approved common-owner change only if existing contracts truly cannot express the chosen bridge. Make dispatch and integration fail closed until those qualifications are present.",
+      "repairAcceptance": [
+        "One source-only cross-Work example is accepted through the chosen existing canonical APIs without copying producer records into a foreign Work or changing common pins.",
+        "Wrong producer Work, stale commit, missing Verification, pending producer milestone and absent receiving qualification each hold dependent execution.",
+        "The architecture distinguishes local producer execution/verification from shared delivery, native receiver evidence, formal completion and user acceptance."
+      ],
+      "gates": [
+        "Before dispatch of child Tasks that consume another Work result",
+        "Before INT-01 integration"
+      ]
+    },
+    {
+      "id": "AAR-REVIEW-001-F02",
+      "severity": "high",
+      "priority": "P1",
+      "status": "unresolved",
+      "category": "target-capability-and-consumer-coverage",
+      "title": "Include the maintained teacher application and assessment consumers in the target ownership map",
+      "finding": "The target academy-consumers module lists only Academy Workbench MCP, synthetic standalone and report skill. The domain candidates list gang-a domain/application and dc-gang-a assessment/learning/textbooks, but omit the already-maintained dc-gang-a/src/academy TeacherApplication, TeacherQueries and their teacher-state projection/store ports. The maintained month-end-workbench/month-end-web pair is also absent from the target module and consumer map. Source proves these are actual application consumers, not merely repository names: TeacherApplication.student and classPreparation compose TeacherQueries inside a store read snapshot, HTTP routes call those methods, and the month-end server composes its own research/source application for the web client.",
+      "trigger": "DOM-01 selects a canonical current-state implementation and CON-02/CON-03 claim to route seven internal workflows through it.",
+      "impact": "The existing preparation/correction application can retain independent state semantics while a second path is built for Workbench, and assessment preparation can be declared routed without covering its maintained application/UI. Per-capability selection is explicitly deferred to DOM-01, which is reasonable, but the present candidate and consumer inventory excludes consequential existing owners and lacks an explicit retain, adapt or defer decision for them.",
+      "evidence": [
+        {
+          "repositoryRoot": "/home/palantirkc/worktrees/academy-architecture-review-20261021",
+          "commit": "6cf0a518d68e21b3d7a7624d0fba2f9c4d31dde6",
+          "path": "architecture/academy-reorganization/architecture.json",
+          "sha256": "65c0a4dfffdeb15f45e16055087c3feb62ca15279e83df0226427c4a5e07576f",
+          "locator": "#/modules/1; #/modules/4; #/consumerTrace"
+        },
+        {
+          "repositoryRoot": "/home/palantirkc/worktrees/academy-architecture-review-20261021",
+          "commit": "6cf0a518d68e21b3d7a7624d0fba2f9c4d31dde6",
+          "path": "architecture/academy-reorganization/execution-plan.json",
+          "sha256": "dacbe6c9b2e93bd9afc19a237dffab5afe90206b1643d4f41b4f06a23d521cc4",
+          "locator": "#/nodes; DOM-01, DOM-02, CON-01, CON-02, CON-03"
+        },
+        {
+          "repositoryRoot": "/home/palantirkc/projects/education-platform",
+          "commit": "cb7e571262593f230d21401994a507e94960f967",
+          "path": "apps/academy/dc-gang-a/src/academy/application.ts",
+          "sha256": "83f2cbf1be5886376987a02e26157ea70fc07c050137a024fae9767183010aa7",
+          "locator": "TeacherApplication; imports and student/cohort/classPreparation methods"
+        },
+        {
+          "repositoryRoot": "/home/palantirkc/projects/education-platform",
+          "commit": "cb7e571262593f230d21401994a507e94960f967",
+          "path": "apps/academy/dc-gang-a/src/academy/usecases/studentScene.ts",
+          "sha256": "4880bba11a8d9f367b5dec0c6d41df2f45e25bc869a54fd41fe3e1ed503adaf6",
+          "locator": "TeacherQueries.student and classPreparation; projectLearningWork/buildTeacherWorkContext imports and composition"
+        },
+        {
+          "repositoryRoot": "/home/palantirkc/projects/education-platform",
+          "commit": "cb7e571262593f230d21401994a507e94960f967",
+          "path": "apps/academy/dc-gang-a/src/academy/server.ts",
+          "sha256": "94b2fe1eb66c617097cf4eed9ffdff483c21b64b5fd7f1e18b2411dde7c0946d",
+          "locator": "HTTP dispatch to classPreparation and student, lines 312 and 317"
+        },
+        {
+          "repositoryRoot": "/home/palantirkc/projects/education-platform",
+          "commit": "cb7e571262593f230d21401994a507e94960f967",
+          "path": "apps/academy/month-end-workbench/src/main.ts",
+          "sha256": "7385f0a6c875c3d82c3bfae74112a9ff45e041d9b3e7e73aa2e229a958d86315",
+          "locator": "Application/source/research composition and month-end-web frontend root"
+        },
+        {
+          "repositoryRoot": "/home/palantirkc/projects/education-platform",
+          "commit": "cb7e571262593f230d21401994a507e94960f967",
+          "path": "apps/academy/month-end-web/src/client.ts",
+          "sha256": "a8a42e16e133c412c19e68c65b554841255046caa962a015f5ab2b1465933325",
+          "locator": "Actual HTTP client path, line 12"
+        },
+        {
+          "repositoryRoot": "/home/palantirkc/worktrees/academy-context-consolidation-20261021",
+          "commit": "ad42d0760df24df273cabf202b75fba5bbe8c68e",
+          "path": "context/academy-context/repository-plan.json",
+          "sha256": "5986ed3b1b24d278c61d09e0fc2819acdda32cdc6ead7386bc8b53e8aa1d9c22",
+          "locator": "#/decisionBasis/includedInternalWork; #/repositories; #/findings/0"
+        }
+      ],
+      "repair": "Add a bounded seven-workflow capability inventory naming the existing producer function, maintained repository/path and revision, actual application/MCP/UI/report consumers, owner and disposition. Include the dc-gang-a academy facade, query projections and ports, plus the month-end application/web pair. Decide explicitly which existing path remains canonical, which consumes an adapter, and which remains deferred. Bind DOM-01 output to this inventory and hold dependent implementation until the selected contracts are reviewed. Retain the previous exclusion of counseling and parent-facing drafting/transmission.",
+      "repairAcceptance": [
+        "Each of the seven included internal workflows resolves to an existing maintained producer and every intended consumer, or an explicit scoped defer with completion consequences.",
+        "A proposed current-state slice identifies how the existing TeacherApplication/TeacherQueries path and Workbench path preserve equivalent scoped state without introducing an unowned second reducer.",
+        "Assessment preparation names both month-end source and web verification routes, retains research/teacher selection authority and does not reinterpret an aggregate Academy check as their coverage."
+      ],
+      "gates": [
+        "Before DOM-02 and QRY-02 implementation",
+        "Before claiming whole-target consumer integration"
+      ]
+    },
+    {
+      "id": "AAR-REVIEW-001-F03",
+      "severity": "medium",
+      "priority": "P2",
+      "status": "unresolved",
+      "category": "module-dependency-semantics",
+      "title": "Separate port contracts from concrete adapters in the acyclic module-use graph",
+      "finding": "academy-source-ports groups both gang-a/packages/ports and concrete adapters. The graph declares academy-domain -> academy-source-ports as a requests-through-port dependency and validates the resulting module-use graph as acyclic. However, the inspected managed-sites adapter imports validateEvidenceProjection from the application group, so the actual grouped source edge is academy-source-ports -> academy-domain. The application also imports the observation-verifier port. The architecture itself cites the adapter-to-application import in consumerTrace but omits it from dependencyEdges. Restoring the traced edge creates a two-node cycle under the current grouping.",
+      "impact": "The green module DAG validates an incomplete graph and gives ambiguous direction for QRY-02 implementation and shared-file ownership. A worker cannot preserve the traced adapter edge and the declared acyclic module boundary simultaneously without an explicit regrouping or migration decision.",
+      "evidence": [
+        {
+          "repositoryRoot": "/home/palantirkc/worktrees/academy-architecture-review-20261021",
+          "commit": "6cf0a518d68e21b3d7a7624d0fba2f9c4d31dde6",
+          "path": "architecture/academy-reorganization/architecture.json",
+          "sha256": "65c0a4dfffdeb15f45e16055087c3feb62ca15279e83df0226427c4a5e07576f",
+          "locator": "#/modules/1; #/modules/2; #/dependencyEdges/2; #/consumerTrace/1"
+        },
+        {
+          "repositoryRoot": "/home/palantirkc/worktrees/academy-architecture-review-20261021",
+          "commit": "6cf0a518d68e21b3d7a7624d0fba2f9c4d31dde6",
+          "path": "architecture/academy-reorganization/validate.ts",
+          "sha256": "bdfec25281e87b2dc006813115a8c51cc6a9e23f24c75730e0696fe9bbfa462f",
+          "locator": "module-use acyclic check"
+        },
+        {
+          "repositoryRoot": "/home/palantirkc/projects/education-platform",
+          "commit": "cb7e571262593f230d21401994a507e94960f967",
+          "path": "apps/academy/gang-a/packages/adapters/managed-sites/handler.ts",
+          "sha256": "8b03ffaf5f58f3ba27cbb4e9d09088659b7c705a87d1707d316d246060e9cd67",
+          "locator": "line 1"
+        },
+        {
+          "repositoryRoot": "/home/palantirkc/projects/education-platform",
+          "commit": "cb7e571262593f230d21401994a507e94960f967",
+          "path": "apps/academy/gang-a/packages/application/refresh-student.ts",
+          "sha256": "5ba6bf084f2035fa3ba3b830468f8f2d068420ef6549660e6f5dd36499f86573",
+          "locator": "line 2"
+        }
+      ],
+      "observedCheck": {
+        "path": ".local/reviews/AAR-REVIEW-001-check-graph-semantics.json",
+        "sha256": "e9b7173e2950268f2628a9ba20abf2ed20240e465ada731b56bc2e2962aa5558"
+      },
+      "repair": "Represent pure port contracts separately from concrete source/hosting adapters and identify the composition owner. Application code may depend on the port contract; concrete adapters may depend on application/port contracts as appropriate. Alternatively distinguish data-flow/request edges from source import dependencies and validate each graph according to its meaning. Do not omit actual imports to obtain an acyclic result.",
+      "repairAcceptance": [
+        "The refreshed import/call trace includes both inspected directions with no unmodeled edge.",
+        "The source dependency graph is acyclic at the selected module granularity; any intentionally cyclic relation is named and excluded from that assertion explicitly.",
+        "The selected owner for application contracts, port interfaces and concrete adapters is unambiguous for parallel workers."
+      ],
+      "gates": [
+        "Before freezing the DOM-01/QRY-01 module boundary"
+      ]
+    },
+    {
+      "id": "AAR-REVIEW-001-F04",
+      "severity": "medium",
+      "priority": "P2",
+      "status": "unresolved",
+      "category": "final-consumer-verification-and-acceptance",
+      "title": "Add final consumer and integrated-source verification after the remaining workflow changes",
+      "finding": "VER-02 promises projection/query parity and full workflow routing but depends on DOM-02, QRY-02 and VER-01 only. It can finish before CON-02, and CON-03 explicitly depends on it. INT-01 then consumes CON-03 and the earlier VER-02. No dedicated verification node consumes the final CON-03 revision, and the seven future behavior cases do not map each workflow or actual consumer to a concrete acceptance check. The generic execution-and-verification labels on CON-03/INT-01 and reviewBeforeIntegration flag are useful but do not specify a rerun of the claimed full-routing verification against the delivered composition.",
+      "impact": "A domain/query pass can be reused as evidence for consumers changed afterward. In particular, routing a new correction/clinic or assessment surface can omit or misinterpret source scope while the listed VER-02 prerequisite remains satisfied. The known month-end aggregate check gap is recorded as a scenario but is not closed by an assigned final coverage gate.",
+      "evidence": [
+        {
+          "repositoryRoot": "/home/palantirkc/worktrees/academy-architecture-review-20261021",
+          "commit": "6cf0a518d68e21b3d7a7624d0fba2f9c4d31dde6",
+          "path": "architecture/academy-reorganization/execution-plan.json",
+          "sha256": "dacbe6c9b2e93bd9afc19a237dffab5afe90206b1643d4f41b4f06a23d521cc4",
+          "locator": "#/nodes; VER-02, CON-02, CON-03, INT-01, INT-02"
+        },
+        {
+          "repositoryRoot": "/home/palantirkc/worktrees/academy-architecture-review-20261021",
+          "commit": "6cf0a518d68e21b3d7a7624d0fba2f9c4d31dde6",
+          "path": "architecture/academy-reorganization/verification-plan.json",
+          "sha256": "376eab6cea608c54a270ff7a9138da961a03d98b3a6c8f6ba972831b0a73df34",
+          "locator": "#/futureBehaviorChecks; #/completionAxes"
+        },
+        {
+          "repositoryRoot": "/home/palantirkc/projects/education-platform",
+          "commit": "cb7e571262593f230d21401994a507e94960f967",
+          "path": "apps/academy/run.ts",
+          "sha256": "39e3931f5556389e6a915a28f6eaa9305fb2b9e45529aa4389f6bee0be53a678",
+          "locator": "check route covers gang-a and dc-gang-a only, line 4"
+        },
+        {
+          "repositoryRoot": "/home/palantirkc/projects/education-platform",
+          "commit": "cb7e571262593f230d21401994a507e94960f967",
+          "path": "apps/academy/month-end-workbench/package.json",
+          "sha256": "e288965177fdcfc208664df85d6dcafc259ab725239d14b9565a4ca66c45f1fb",
+          "locator": "#/scripts/check"
+        },
+        {
+          "repositoryRoot": "/home/palantirkc/projects/education-platform",
+          "commit": "cb7e571262593f230d21401994a507e94960f967",
+          "path": "apps/academy/month-end-web/package.json",
+          "sha256": "1dae2816a73989dcef15fdf05d5ce85cbe846226c9fea857553d6b81409b3fb0",
+          "locator": "#/scripts/check"
+        },
+        {
+          "repositoryRoot": "/home/palantirkc/worktrees/academy-architecture-review-20261021",
+          "commit": "6cf0a518d68e21b3d7a7624d0fba2f9c4d31dde6",
+          "path": "context/business-decisions.json",
+          "sha256": "cdebb97ff2e8f41f7151ee12451d2b3c869279996ae2a1c0b63d9b6a472222fc",
+          "locator": "#/decisions; assessment-identities, perfect-score, print-snapshot, assignment-scope, correction-history"
+        }
+      ],
+      "observedCheck": {
+        "path": ".local/reviews/AAR-REVIEW-001-check-graph-semantics.json",
+        "sha256": "e9b7173e2950268f2628a9ba20abf2ed20240e465ada731b56bc2e2962aa5558"
+      },
+      "repair": "Keep an early domain/query parity gate, then add final consumer verification after CON-03 and a current integrated-tree verification boundary before INT-02 reports delivery. Pin tests and review results to the actual delivered source closure. Map each included workflow and consumer to checks and explicit non-coverage. Include synthetic negative cases for scoped teacher corrections, assignment replacement, occurrence/edition identity, verified perfect-score clinic eligibility without inferred review/printing, and immutable historical printed membership across regeneration. Keep native activation, physical outcomes and teacher/user acceptance separately unverified.",
+      "repairAcceptance": [
+        "The dependency order admits no full-routing pass before the final consumer revision exists.",
+        "A consumer-only regression introduced after the early VER-02 pass is rejected by the final gate.",
+        "Every intended package, including month-end source/web when in scope, has an explicit check and exact source result; excluded or unavailable surfaces remain visible.",
+        "Integration composition changes invalidate earlier source evidence where required and trigger a fresh bounded check; tests never establish operational or user acceptance."
+      ],
+      "gates": [
+        "Before CON-03 integration",
+        "Before INT-02 scoped delivery report"
+      ]
+    }
+  ],
+  "supportedConclusions": [
+    {
+      "topic": "Identity preservation",
+      "assessment": "The six preserved Work records retain exact heads/hashes and projectId/workId pairs. Equal historical Work names across Projects are explicitly not merged. Proposed native IDs remain null.",
+      "evidence": {
+        "path": ".local/reviews/AAR-REVIEW-001-check-preserved-identities.json",
+        "sha256": "eaca6150a730e30a5ce680f8ab277d3755d1af07f317eb907a1bfd4e68c4f26e"
+      }
+    },
+    {
+      "topic": "Canonical common implementation",
+      "assessment": "The review uses the clean external agent-platform@712f90de canonical validator as an auditor. Academy ffba2462 consumer pin remains unchanged. No shared implementation was copied or forked.",
+      "evidence": {
+        "repositoryRoot": "/home/palantirkc/worktrees/academy-architecture-review-20261021",
+        "commit": "6cf0a518d68e21b3d7a7624d0fba2f9c4d31dde6",
+        "path": "harness/agent-platform.lock.json",
+        "sha256": "000c650b51d5b3009cf5efdc319fe2fa5b9e74123f0bf3dddb1d638b6f8e6b99",
+        "locator": "#"
+      }
+    },
+    {
+      "topic": "Single accountable owner and resource policy",
+      "assessment": "The design explicitly assigns one Work and one accountable subLead per tab, uses a child reviewer in the root Work, reserves shared scripts/locks/routing to the root integrator, and caps owned active turns at two including root with one heavy check. These are adequate design policies; future assignments and enforcement are not observed.",
+      "evidence": {
+        "repositoryRoot": "/home/palantirkc/worktrees/academy-architecture-review-20261021",
+        "commit": "6cf0a518d68e21b3d7a7624d0fba2f9c4d31dde6",
+        "path": "architecture/academy-reorganization/execution-plan.json",
+        "sha256": "dacbe6c9b2e93bd9afc19a237dffab5afe90206b1643d4f41b4f06a23d521cc4",
+        "locator": "#/serialization; #/tabPolicy"
+      }
+    },
+    {
+      "topic": "Runtime effects and environment qualification",
+      "assessment": "The six environment rows distinguish declared, implemented, configured and behavioral evidence. Installed executables and adapter package declarations do not become adoption. Native permissions, receipts, retries and uncertain effects remain native-owned, with unsupported environments explicit. Current installed adoption was not tested by this review.",
+      "evidence": {
+        "repositoryRoot": "/home/palantirkc/worktrees/academy-architecture-review-20261021",
+        "commit": "6cf0a518d68e21b3d7a7624d0fba2f9c4d31dde6",
+        "path": "architecture/academy-reorganization/capability-matrix.json",
+        "sha256": "3d046c591a419f975e3429650d5bb0eb14aa27f1eba4bf18b5ec094ddd25d60d",
+        "locator": "#/rows; #/commonCapabilityPolicy"
+      }
+    },
+    {
+      "topic": "Domain evidence and acceptance",
+      "assessment": "Source observations, scoped teacher decisions, reproducible derived state and prepared effects are separated. Unknown/conflict/partial/stale states, edition/attempt/print identities and independent activation/teacher/user acceptance are retained as design requirements. Behavior satisfying them remains future work.",
+      "evidence": {
+        "repositoryRoot": "/home/palantirkc/worktrees/academy-architecture-review-20261021",
+        "commit": "6cf0a518d68e21b3d7a7624d0fba2f9c4d31dde6",
+        "path": "architecture/academy-reorganization/architecture.json",
+        "sha256": "65c0a4dfffdeb15f45e16055087c3feb62ca15279e83df0226427c4a5e07576f",
+        "locator": "#/dataPlanes; #/currentStateDesign; #/approvalBoundaries"
+      }
+    }
+  ],
+  "checksActuallyRun": [
+    {
+      "id": "AAR-REVIEW-CHECK-001",
+      "result": "passed",
+      "scope": "245 architecture assertions; exact 6cf0a51 canonical Work snapshot; cb41685 to 6cf0a51 semantic transition",
+      "receipt": {
+        "path": ".local/reviews/AAR-REVIEW-001-check-topology-common.json",
+        "sha256": "30bb0d4f816f056b13688cde6ac8e31179d212c12890d4ef783657453a61c549"
+      },
+      "limitations": "The topology checker examines authored local graph edges, not a complete derived import graph or future child Work readiness. Its reviewerDispatched:false output is historical design state."
+    },
+    {
+      "id": "AAR-REVIEW-CHECK-002",
+      "result": "failed",
+      "scope": "Initial no-emit TypeScript command",
+      "receipt": {
+        "path": ".local/reviews/AAR-REVIEW-001-check-types.json",
+        "sha256": "d760eff1ec5fb94f171c278a932afcf9d45ae71f160af247effb700758e38976"
+      },
+      "reason": "The installed Node declaration entrypoint was not included in the isolated checkout. Five missing Node type errors. Preserved as failed evidence, not relabeled."
+    },
+    {
+      "id": "AAR-REVIEW-CHECK-003",
+      "result": "passed",
+      "scope": "No-emit architecture contracts/validator TypeScript with installed owner Bun and Node declarations",
+      "receipt": {
+        "path": ".local/reviews/AAR-REVIEW-001-check-types-qualified.json",
+        "sha256": "e66f9247de586a87cc8c016cc487466c511cdfb7aa3544516e3cc08f2ded5fb7"
+      },
+      "limitations": "TypeScript 5.9.3, Bun 1.4.3 declarations and Node 26.6.5 declarations were used. JSON.parse yields any, so this does not prove runtime JSON schema conformance."
+    },
+    {
+      "id": "AAR-REVIEW-CHECK-004",
+      "result": "expected-rejection-observed",
+      "scope": "In-memory direct foreign Work prerequisite binding probe through the canonical validator",
+      "receipt": {
+        "path": ".local/reviews/AAR-REVIEW-001-check-cross-work.json",
+        "sha256": "d51feab3f05a48e5218b101bf932b221afac398329f7d7518856d6e21db40b58"
+      },
+      "limitations": "An exploratory probe, not an operational test or a failure of the unmodified snapshot."
+    },
+    {
+      "id": "AAR-REVIEW-CHECK-005",
+      "result": "architectural-gaps-observed",
+      "scope": "Pure graph cross-Work and verification-order inspection plus a source-backed missing module edge",
+      "receipt": {
+        "path": ".local/reviews/AAR-REVIEW-001-check-graph-semantics.json",
+        "sha256": "e9b7173e2950268f2628a9ba20abf2ed20240e465ada731b56bc2e2962aa5558"
+      }
+    },
+    {
+      "id": "AAR-REVIEW-CHECK-006",
+      "result": "passed",
+      "scope": "Six preserved Work IDs, Work record hashes and pinned heads",
+      "receipt": {
+        "path": ".local/reviews/AAR-REVIEW-001-check-preserved-identities.json",
+        "sha256": "eaca6150a730e30a5ce680f8ab277d3755d1af07f317eb907a1bfd4e68c4f26e"
+      },
+      "limitations": "No native owner liveness, execution state or operational completion inferred."
+    },
+    {
+      "id": "AAR-REVIEW-CHECK-007",
+      "result": "passed",
+      "scope": "68 allowlisted source/metadata files match their pinned Git blob bytes; exact review branch, commit and tree; approval successor path inventory",
+      "receipt": {
+        "path": ".local/reviews/AAR-REVIEW-001-evidence.json",
+        "sha256": "e9478779529bedea70d21b43bd841128c1f4172f8bb3ee41b472fca7bc64a20f"
+      },
+      "limitations": "Hash equality is byte provenance, not proof that every file received a whole-file semantic review."
+    }
+  ],
+  "checksNotRun": [
+    {
+      "commands": [
+        "bun run check",
+        "bun run check:ci",
+        "bun run test",
+        "bun run test:synthetic-runtime",
+        "bun run test:offline-adapter"
+      ],
+      "status": "not-run",
+      "reason": "This assignment authorizes scoped read-only architecture/source/type/common Work validation only. No implementation changed, this isolated checkout has no local node_modules, and the broad suites include student-audit, filesystem/runtime and generated-fixture routes outside this bounded review. No dependencies were installed."
+    },
+    {
+      "scope": "WSL, Windows Desktop, VPS native harness integration, alternate models/runtimes, live source behavior, operational activation and teacher/user acceptance",
+      "status": "not-run",
+      "reason": "Outside the authorized review and not established by local source validation."
+    }
+  ],
+  "toolchain": {
+    "observedBun": "1.4.3",
+    "observedNode": "v24.21.0",
+    "typeScriptUsed": "5.9.3",
+    "bunDeclarations": "1.4.3",
+    "nodeDeclarations": "26.6.5",
+    "dependencyInstallPerformed": false
+  },
+  "evidenceManifest": {
+    "path": ".local/reviews/AAR-REVIEW-001-evidence.json",
+    "sha256": "e9478779529bedea70d21b43bd841128c1f4172f8bb3ee41b472fca7bc64a20f"
+  },
+  "initialObservationReceipt": {
+    "path": ".local/reviews/AAR-REVIEW-001-observations.json",
+    "sha256": "94221cc8d463865529d8e2ea11c88c433f91eee5cc0d5f83b1eb419f17a28490"
+  },
+  "limitations": [
+    "This is an independent architecture review of selected code/metadata, not a full security audit or exhaustive application correctness review.",
+    "The topology source includes dated host/container observations. They were not refreshed, and no service or other agent was inspected.",
+    "Proposed child Works are not dispatched; the findings identify missing or inconsistent design contracts rather than fabricated failed production outcomes.",
+    "Source reads are bounded and not an atomic multi-repository snapshot. The selected file bytes were checked against their pinned Git objects.",
+    "Requested model/effort was not independently observable through the permitted source-only surfaces. The actual CODEX_THREAD_ID is recorded without inventing native Task/Run IDs.",
+    "A passing local canonical snapshot covers the root Work only; it does not establish foreign-Work dispatch eligibility, installation, acceptance or authority."
+  ],
+  "preservation": {
+    "sourceFilesModified": false,
+    "sharedImplementationCopied": false,
+    "commonContractsOrPinsChanged": false,
+    "commitsCreated": false,
+    "goalsCreated": false,
+    "agentsLaunched": false,
+    "messagesToOtherSessions": false,
+    "networkOrOperationalEffects": false,
+    "writesRestrictedTo": ".local/reviews/*.json",
+    "failedEvidencePreserved": [
+      "AAR-REVIEW-001-check-types.json",
+      "AAR-REVIEW-001-observations.json"
+    ]
+  },
+  "focusedSuccessorReview": {
+    "available": true,
+    "scope": "One focused repair successor review of these stable findings and affected contracts/consumers, with a new immutable commit/tree and retained original review/check artifacts.",
+    "implementationLaunched": false
+  }
+}

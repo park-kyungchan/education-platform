@@ -1,0 +1,94 @@
+{
+  "schemaVersion": "academy.site-reference-migration-assessment/1",
+  "checkedAt": "2026-10-14T08:01:24.906Z",
+  "site": {
+    "projectId": "appgprj_6ac5bb9877408191995b02004fe8c5cc",
+    "url": "https://academy-learning-rails.kcpartner.chatgpt.site",
+    "latestSavedVersion": 21,
+    "sourceCommit": "54967bfc64278fb594d64887106b85c71facd80c",
+    "latestSavedVersionIsConfirmedLive": false,
+    "access": "custom, sole owner, no external visitors"
+  },
+  "observedCode": {
+    "repository": "park-kyungchan/academy-workbench",
+    "scope": "partial reference/sites-v21, not complete deployable source"
+  },
+  "dependencies": [
+    {
+      "file": "reference/sites-v21/src/app.ts",
+      "kind": "navigation",
+      "behavior": "Student source link constructs chatgpt.com/space/${student.pageId}; routes sourcePageId into desktop stepper",
+      "change": "Introduce separate verified sourceReference locator; retain historical student.pageId for identity consistency"
+    },
+    {
+      "file": "reference/sites-v21/src/desktop-stepper.ts",
+      "line": 114,
+      "kind": "navigation",
+      "behavior": "Constructs Space URL from sourcePageId",
+      "change": "Pass trusted sourceHref and render migration archive reference; do not infer URL from ID"
+    },
+    {
+      "file": "reference/sites-v21/src/worker-handler.ts",
+      "kind": "pinned_cache_and_identity",
+      "behavior": "Contracts loaded from config.contractTexts; pinned locator/pageId/hash compared; snapshots unpacked from config; no observed Pages HTTP fetch",
+      "change": "Preserve historic identifiers and all hash/scope checks. Add current reference map separately; refresh contracts only with full rebuild/repin tests."
+    },
+    {
+      "file": "reference/sites-v21/src/gate/runtime-context-gate.ts",
+      "line": 27,
+      "kind": "pin_validation",
+      "behavior": "Checks exact version/pageId/reference and SHA-256 bytes",
+      "change": "Never global replace pageId or URL values in pinned objects"
+    },
+    {
+      "file": "reference/sites-v21/src/academy-read-model.ts",
+      "kind": "provenance",
+      "behavior": "Exports sourcePageId and sourceUrls",
+      "change": "Add currentSourceReference + historicalSourceReference without relabeling old facts as new live records"
+    },
+    {
+      "file": "reference/sites-v21/src/workflow-api.ts",
+      "line": 60,
+      "kind": "source_pinned_contract",
+      "behavior": "Workflow contract already requires pageId null and fixed reference",
+      "change": "Retain existing independent contract mapping"
+    }
+  ],
+  "blockers": [
+    {
+      "action": "download Site saved archive",
+      "outcome": "failed",
+      "reason": "file could not be authorized or resolved",
+      "retry": false,
+      "archiveMeaning": "deployment artifact; not known full source"
+    },
+    {
+      "action": "read Sites skill",
+      "outcome": "unavailable",
+      "reason": "skill package is not available"
+    },
+    {
+      "action": "locate complete source in own cloud filesystem",
+      "outcome": "not_found_within_searched_workspace",
+      "scope": "hosting.json, worker-handler.ts, workflow-pins.ts names outside node_modules"
+    }
+  ],
+  "nextSupportedAction": "Obtain explicit per-action approval for short-lived Site source-repository Git credential; do not persist/expose token. Alternatively obtain user-provided source archive. No current runtime write/deploy has occurred.",
+  "requiredTests": [
+    "All five managed students read unchanged; wrong/outside student IDs remain denied",
+    "No rendered active Space hyperlinks remain; all replacement paths exist in merged private repository and exact migrated files",
+    "Namespace/pageId historical identity and source hashes stay stable unless explicit versioned migration",
+    "Owner-only dispatch and existing D1 bindings retained; no new access grants",
+    "API data source mode remains saved_snapshot and no false live-refresh label",
+    "Unknown/teacher-confirmed/raw-LMS states remain distinct",
+    "Build from exact committed full source; verify publication deployment terminal success and same Site URL",
+    "UI both shell and desktop stepper source links verified; MCP source provenance readback validated"
+  ],
+  "notPerformed": [
+    "No Site mutation",
+    "No source credential creation",
+    "No deploy",
+    "No LMS writes",
+    "No Space trash"
+  ]
+}

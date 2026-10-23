@@ -1,0 +1,522 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "학원 강사 의도와 동작 계약 Schema 0.1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "const": "academy-action-contracts.schema.json"
+    },
+    "kind": {
+      "const": "academy_action_contracts"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "schemaVersion": {
+      "const": "0.1.0"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "profileId": {
+      "const": "kyungchan"
+    },
+    "projectId": {
+      "const": "project:academy-practical"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "routeMapReference": {
+      "type": "string",
+      "minLength": 1
+    },
+    "evidenceReference": {
+      "type": "string",
+      "minLength": 1
+    },
+    "userDirectionSource": {
+      "type": "string",
+      "minLength": 1
+    },
+    "scope": {
+      "type": "string",
+      "minLength": 1
+    },
+    "contracts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "kind": {
+            "const": "action_contract"
+          },
+          "schemaVersion": {
+            "const": "0.1.0"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "canonicalParentId": {
+            "const": "project:academy-practical"
+          },
+          "routeId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "actionName": {
+            "type": "string",
+            "minLength": 1
+          },
+          "teacherGoal": {
+            "type": "string",
+            "minLength": 1
+          },
+          "whyUse": {
+            "type": "string",
+            "minLength": 1
+          },
+          "intentBasis": {
+            "enum": [
+              "explicit_user_request",
+              "working_hypothesis"
+            ]
+          },
+          "teacherActualUsage": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "status": {
+                "enum": [
+                  "not_interviewed",
+                  "user_confirmed",
+                  "rejected"
+                ]
+              },
+              "description": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "sourceIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              }
+            },
+            "required": [
+              "status",
+              "description",
+              "sourceIds"
+            ]
+          },
+          "siteObservedFunction": {
+            "type": "string",
+            "minLength": 1
+          },
+          "preconditions": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "expectedObservation": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "postconditions": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "sideEffects": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "riskClass": {
+            "enum": [
+              "read_only_with_guard",
+              "possible_autosave",
+              "effectful_unverified"
+            ]
+          },
+          "executionBoundary": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "mode": {
+                "enum": [
+                  "read_only",
+                  "prepare_only",
+                  "requires_current_authorization"
+                ]
+              },
+              "authorizationGrantedByContract": {
+                "const": false
+              },
+              "mustStopWhen": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            "required": [
+              "mode",
+              "authorizationGrantedByContract",
+              "mustStopWhen"
+            ]
+          },
+          "failureRecovery": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "failure": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "safeRecovery": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "failure",
+                "safeRecovery"
+              ]
+            }
+          },
+          "evidence": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "sourceIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "confidence": {
+                "enum": [
+                  "reported_observation",
+                  "hypothesis",
+                  "user_confirmed"
+                ]
+              },
+              "remainingUnknowns": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            "required": [
+              "sourceIds",
+              "confidence",
+              "remainingUnknowns"
+            ]
+          },
+          "questionIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "uniqueItems": true
+          },
+          "validationHistory": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "eventId": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "at": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "format": "date-time"
+                },
+                "kind": {
+                  "enum": [
+                    "reported_observation",
+                    "hypothesis",
+                    "user_feedback",
+                    "read_trial",
+                    "rejected_assumption"
+                  ]
+                },
+                "sourceIds": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "uniqueItems": true
+                },
+                "result": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "verifiedEffects": {
+                  "enum": [
+                    "read_only",
+                    "possible_write",
+                    "not_tested"
+                  ]
+                }
+              },
+              "required": [
+                "eventId",
+                "at",
+                "kind",
+                "sourceIds",
+                "result",
+                "verifiedEffects"
+              ]
+            }
+          },
+          "supersedesId": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "rejectedAssumptions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "assumption": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "reason": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sourceIds": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "uniqueItems": true
+                }
+              },
+              "required": [
+                "assumption",
+                "reason",
+                "sourceIds"
+              ]
+            }
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "schemaVersion",
+          "revision",
+          "canonicalParentId",
+          "routeId",
+          "actionName",
+          "teacherGoal",
+          "whyUse",
+          "intentBasis",
+          "teacherActualUsage",
+          "siteObservedFunction",
+          "preconditions",
+          "expectedObservation",
+          "postconditions",
+          "sideEffects",
+          "riskClass",
+          "executionBoundary",
+          "failureRecovery",
+          "evidence",
+          "questionIds",
+          "validationHistory",
+          "supersedesId",
+          "rejectedAssumptions"
+        ]
+      }
+    },
+    "questions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "question": {
+            "type": "string",
+            "minLength": 1
+          },
+          "askWhen": {
+            "type": "string",
+            "minLength": 1
+          },
+          "whyItMatters": {
+            "type": "string",
+            "minLength": 1
+          },
+          "status": {
+            "enum": [
+              "pending",
+              "answered",
+              "not_needed"
+            ]
+          },
+          "answer": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "answerSourceIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "uniqueItems": true
+          }
+        },
+        "required": [
+          "id",
+          "question",
+          "askWhen",
+          "whyItMatters",
+          "status",
+          "answer",
+          "answerSourceIds"
+        ]
+      }
+    },
+    "maintenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "approach": {
+          "type": "string",
+          "minLength": 1
+        },
+        "safeTrialBoundary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "versionRule": {
+          "type": "string",
+          "minLength": 1
+        },
+        "actualWebMcpRuntimeInstalled": {
+          "const": false
+        }
+      },
+      "required": [
+        "approach",
+        "safeTrialBoundary",
+        "versionRule",
+        "actualWebMcpRuntimeInstalled"
+      ]
+    },
+    "evidenceUpdates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sourceReference": {
+            "type": "string",
+            "minLength": 1
+          },
+          "reportedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "claim": {
+            "type": "string",
+            "minLength": 1
+          },
+          "scope": {
+            "type": "string",
+            "minLength": 1
+          },
+          "limitations": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "required": [
+          "id",
+          "sourceReference",
+          "reportedAt",
+          "claim",
+          "scope",
+          "limitations"
+        ]
+      }
+    }
+  },
+  "required": [
+    "$schema",
+    "kind",
+    "id",
+    "schemaVersion",
+    "revision",
+    "profileId",
+    "projectId",
+    "updatedAt",
+    "routeMapReference",
+    "evidenceReference",
+    "userDirectionSource",
+    "scope",
+    "contracts",
+    "questions",
+    "maintenance",
+    "evidenceUpdates"
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "academy-orchestration-20261019",
+  "kind": "work",
+  "id": "academy-orchestration-20261019",
+  "repositoryId": "park-kyungchan/education-platform",
+  "issueId": "AO-ISSUE-20261019",
+  "purpose": {
+    "objective": "Prepare academy operations orchestration with a separate Work branch, the maintained common Git harness, source-pinned academy repository inventory, an explicitly identified Hermes frontend TUI and Bot Screen, and a source-grounded user interview.",
+    "successCriteria": [
+      "A separate academy Work branch starts from an observed current Education main revision without altering existing Work records.",
+      "Canonical purpose, original user direction, Spec, Plan, Task ownership, dependencies and consumed-effect fences pass the maintained common Git Work reader.",
+      "All discovered academy-related repositories have explicit source ownership, revision and local readiness observations.",
+      "The frontend Hermes TUI and Bot Screen route are observed on hermes-agent-2q3y with exact native owner and terminal identity receipts.",
+      "An interview is ready to resolve current academy priorities, frontend feedback and assessment/MCP unknowns; answers remain pending until the user provides them."
+    ],
+    "inScope": [
+      "Local repository preparation and an isolated source-owned coordination Work.",
+      "Use of the existing agent-platform common Git reader without copying its implementation or modifying native hooks.",
+      "The requested frontend Hermes TUI pane and Bot Screen readiness on hermes-agent-2q3y, operated by the native runtime owner.",
+      "Source/context review and user interview preparation; additional panes only as needed."
+    ],
+    "outOfScope": [
+      "Native model/configuration/trust/credential changes, deployment, production or student-data writes.",
+      "Resuming unrelated paused Harness Work or replaying historical completed/uncertain academy effects.",
+      "Automatic final exam item selection, exam generation, parent transmission, SQL or database migration.",
+      "Repository push, PR, automatic merge, semantic acceptance or implicit native hook activation."
+    ]
+  },
+  "spec": {
+    "id": "AO-SPEC",
+    "revision": 1
+  },
+  "plan": {
+    "id": "AO-PLAN",
+    "revision": 2
+  },
+  "governingDecisionIds": [
+    "AO-DIRECTION",
+    "AO-MCP-FIRST",
+    "AO-ASSESSMENT24-DIRECTION",
+    "RESOURCE-DIRECTION-20261019",
+    "FRONTEND-HOLD-DIRECTION-20261019"
+  ],
+  "historicalFenceIds": [
+    "AO-HISTORICAL-MONTH-END-FENCE",
+    "AO-RUNTIME-SETUP-FENCE"
+  ],
+  "continuity": {
+    "schema": "common.git-work-continuity.v1",
+    "purposeSources": [
+      {
+        "kind": "snapshot",
+        "path": "work/education-platform/academy-orchestration-20261019/inputs/AO-PURPOSE.json",
+        "fragment": "#/content/purpose"
+      }
+    ],
+    "effectInventorySources": [
+      {
+        "kind": "snapshot",
+        "path": "work/education-platform/academy-orchestration-20261019/inputs/AO-CONSUMED-INVENTORY.json",
+        "fragment": "#/content/inventory"
+      },
+      {
+        "kind": "snapshot",
+        "path": "work/education-platform/academy-orchestration-20261019/inputs/AO-RUNTIME-CONSUMED.json",
+        "fragment": "#/content/inventory"
+      }
+    ]
+  }
+}

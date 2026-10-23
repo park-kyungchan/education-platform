@@ -1,0 +1,1970 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Academy inquiry context domain overlay",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": "academy.inquiry-context/1"
+    },
+    "preparedAt": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
+    },
+    "basisCommit": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{40}$"
+    },
+    "authority": {
+      "const": "none"
+    },
+    "nativePermissionGranted": {
+      "const": false
+    },
+    "coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "const": "partial"
+        },
+        "completeConversation": {
+          "const": false
+        },
+        "completeProgressTable": {
+          "const": false
+        },
+        "originalPrivateArtifactsIncluded": {
+          "const": false
+        },
+        "contextScope": {
+          "type": "string",
+          "minLength": 1
+        },
+        "excluded": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "status",
+        "completeConversation",
+        "completeProgressTable",
+        "originalPrivateArtifactsIncluded",
+        "contextScope",
+        "excluded"
+      ]
+    },
+    "hierarchy": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "parent": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "layer": {
+            "enum": [
+              "DATA",
+              "LOGIC",
+              "ACTION",
+              "GOVERNANCE"
+            ]
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "key",
+          "parent",
+          "layer",
+          "label"
+        ]
+      },
+      "minItems": 4,
+      "uniqueItems": true
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "summary": {
+                "type": "string",
+                "minLength": 1
+              },
+              "times": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "sourceTimestamp": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "snapshotCapturedAt": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "captureWindow": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "from": {
+                            "type": "string",
+                            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
+                          },
+                          "to": {
+                            "type": "string",
+                            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
+                          },
+                          "timeZone": {
+                            "const": "Asia/Seoul"
+                          }
+                        },
+                        "required": [
+                          "from",
+                          "to",
+                          "timeZone"
+                        ]
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "userReportTime": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "ingestedAt": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
+                  }
+                },
+                "required": [
+                  "sourceTimestamp",
+                  "snapshotCapturedAt",
+                  "captureWindow",
+                  "userReportTime",
+                  "ingestedAt"
+                ]
+              },
+              "rawPrivateDataIncluded": {
+                "const": false
+              },
+              "kind": {
+                "const": "trusted-user-history"
+              },
+              "messageId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "originalText": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "key",
+              "summary",
+              "times",
+              "rawPrivateDataIncluded",
+              "kind",
+              "messageId",
+              "originalText"
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "summary": {
+                "type": "string",
+                "minLength": 1
+              },
+              "times": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "sourceTimestamp": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "snapshotCapturedAt": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "captureWindow": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "from": {
+                            "type": "string",
+                            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
+                          },
+                          "to": {
+                            "type": "string",
+                            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
+                          },
+                          "timeZone": {
+                            "const": "Asia/Seoul"
+                          }
+                        },
+                        "required": [
+                          "from",
+                          "to",
+                          "timeZone"
+                        ]
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "userReportTime": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "ingestedAt": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
+                  }
+                },
+                "required": [
+                  "sourceTimestamp",
+                  "snapshotCapturedAt",
+                  "captureWindow",
+                  "userReportTime",
+                  "ingestedAt"
+                ]
+              },
+              "rawPrivateDataIncluded": {
+                "const": false
+              },
+              "kind": {
+                "const": "delegated-observation-report"
+              },
+              "originalObserver": {
+                "const": "parent-agent"
+              },
+              "reobservedByThisWorker": {
+                "const": false
+              },
+              "rawArtifactAvailableHere": {
+                "const": false
+              }
+            },
+            "required": [
+              "key",
+              "summary",
+              "times",
+              "rawPrivateDataIncluded",
+              "kind",
+              "originalObserver",
+              "reobservedByThisWorker",
+              "rawArtifactAvailableHere"
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "summary": {
+                "type": "string",
+                "minLength": 1
+              },
+              "times": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "sourceTimestamp": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "snapshotCapturedAt": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "captureWindow": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "from": {
+                            "type": "string",
+                            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
+                          },
+                          "to": {
+                            "type": "string",
+                            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
+                          },
+                          "timeZone": {
+                            "const": "Asia/Seoul"
+                          }
+                        },
+                        "required": [
+                          "from",
+                          "to",
+                          "timeZone"
+                        ]
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "userReportTime": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "ingestedAt": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
+                  }
+                },
+                "required": [
+                  "sourceTimestamp",
+                  "snapshotCapturedAt",
+                  "captureWindow",
+                  "userReportTime",
+                  "ingestedAt"
+                ]
+              },
+              "rawPrivateDataIncluded": {
+                "const": false
+              },
+              "kind": {
+                "const": "delegated-history-report"
+              },
+              "originalAuthor": {
+                "enum": [
+                  "user",
+                  "parent",
+                  "historical-analysis"
+                ]
+              },
+              "originalText": {
+                "type": "null"
+              }
+            },
+            "required": [
+              "key",
+              "summary",
+              "times",
+              "rawPrivateDataIncluded",
+              "kind",
+              "originalAuthor",
+              "originalText"
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "summary": {
+                "type": "string",
+                "minLength": 1
+              },
+              "times": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "sourceTimestamp": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "snapshotCapturedAt": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "captureWindow": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "from": {
+                            "type": "string",
+                            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
+                          },
+                          "to": {
+                            "type": "string",
+                            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
+                          },
+                          "timeZone": {
+                            "const": "Asia/Seoul"
+                          }
+                        },
+                        "required": [
+                          "from",
+                          "to",
+                          "timeZone"
+                        ]
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "userReportTime": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "ingestedAt": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
+                  }
+                },
+                "required": [
+                  "sourceTimestamp",
+                  "snapshotCapturedAt",
+                  "captureWindow",
+                  "userReportTime",
+                  "ingestedAt"
+                ]
+              },
+              "rawPrivateDataIncluded": {
+                "const": false
+              },
+              "kind": {
+                "const": "repository-file"
+              },
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "commit": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{40}$"
+              }
+            },
+            "required": [
+              "key",
+              "summary",
+              "times",
+              "rawPrivateDataIncluded",
+              "kind",
+              "path",
+              "commit"
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "summary": {
+                "type": "string",
+                "minLength": 1
+              },
+              "times": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "sourceTimestamp": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "snapshotCapturedAt": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "captureWindow": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "from": {
+                            "type": "string",
+                            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
+                          },
+                          "to": {
+                            "type": "string",
+                            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
+                          },
+                          "timeZone": {
+                            "const": "Asia/Seoul"
+                          }
+                        },
+                        "required": [
+                          "from",
+                          "to",
+                          "timeZone"
+                        ]
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "userReportTime": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "ingestedAt": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
+                  }
+                },
+                "required": [
+                  "sourceTimestamp",
+                  "snapshotCapturedAt",
+                  "captureWindow",
+                  "userReportTime",
+                  "ingestedAt"
+                ]
+              },
+              "rawPrivateDataIncluded": {
+                "const": false
+              },
+              "kind": {
+                "const": "github-observation"
+              },
+              "url": {
+                "type": "string",
+                "minLength": 1
+              },
+              "headSha": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{40}$"
+              }
+            },
+            "required": [
+              "key",
+              "summary",
+              "times",
+              "rawPrivateDataIncluded",
+              "kind",
+              "url",
+              "headSha"
+            ]
+          }
+        ]
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "records": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "node": {
+                "type": "string",
+                "minLength": 1
+              },
+              "summary": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sourceKeys": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 1,
+                "uniqueItems": true
+              },
+              "scope": {
+                "type": "string",
+                "minLength": 1
+              },
+              "limitations": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 0,
+                "uniqueItems": true
+              },
+              "links": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "relation": {
+                      "enum": [
+                        "corrects",
+                        "supersedes",
+                        "qualifies",
+                        "supports"
+                      ]
+                    },
+                    "target": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "relation",
+                    "target"
+                  ]
+                },
+                "minItems": 0,
+                "uniqueItems": true
+              },
+              "kind": {
+                "const": "observation"
+              },
+              "layer": {
+                "const": "DATA"
+              },
+              "observation": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "facet": {
+                        "const": "authentication"
+                      },
+                      "status": {
+                        "const": "login-and-learning-menu-observed"
+                      },
+                      "unattendedReuse": {
+                        "const": "unverified"
+                      },
+                      "liveMcp": {
+                        "const": "unverified"
+                      },
+                      "vpsOperation": {
+                        "const": "unverified"
+                      },
+                      "timeoutMs": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "unlimitedTimeout": {
+                        "const": "unverified"
+                      }
+                    },
+                    "required": [
+                      "facet",
+                      "status",
+                      "unattendedReuse",
+                      "liveMcp",
+                      "vpsOperation",
+                      "timeoutMs",
+                      "unlimitedTimeout"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "facet": {
+                        "const": "source-read"
+                      },
+                      "endpoint": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "query": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "outcome": {
+                        "const": "read"
+                      },
+                      "completeness": {
+                        "const": "bounded"
+                      },
+                      "diagnosticMethod": {
+                        "const": "ui"
+                      }
+                    },
+                    "required": [
+                      "facet",
+                      "endpoint",
+                      "query",
+                      "outcome",
+                      "completeness",
+                      "diagnosticMethod"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "facet": {
+                        "const": "source-read"
+                      },
+                      "endpoint": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "query": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "outcome": {
+                        "const": "blocked-extension-install"
+                      },
+                      "completeness": {
+                        "const": "not-read"
+                      },
+                      "diagnosticMethod": {
+                        "const": "screenshot"
+                      },
+                      "axDomBarrierClarity": {
+                        "const": "insufficient"
+                      },
+                      "installed": {
+                        "const": false
+                      },
+                      "bypassed": {
+                        "const": false
+                      },
+                      "overlayText": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": [
+                      "facet",
+                      "endpoint",
+                      "query",
+                      "outcome",
+                      "completeness",
+                      "diagnosticMethod",
+                      "axDomBarrierClarity",
+                      "installed",
+                      "bypassed",
+                      "overlayText"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "facet": {
+                        "const": "app-grading-coverage"
+                      },
+                      "assignedUnits": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "scoreVisibleUnits": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "resultUnconfirmedUnits": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "unit": {
+                        "const": "app-grading-unit"
+                      },
+                      "paperCompletion": {
+                        "const": "unknown"
+                      },
+                      "questionCount": {
+                        "type": "null"
+                      },
+                      "studyMinutes": {
+                        "type": "null"
+                      },
+                      "completionRatio": {
+                        "type": "null"
+                      }
+                    },
+                    "required": [
+                      "facet",
+                      "assignedUnits",
+                      "scoreVisibleUnits",
+                      "resultUnconfirmedUnits",
+                      "unit",
+                      "paperCompletion",
+                      "questionCount",
+                      "studyMinutes",
+                      "completionRatio"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "facet": {
+                        "const": "daily-record"
+                      },
+                      "date": {
+                        "type": "string",
+                        "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                      },
+                      "rawStatus": {
+                        "enum": [
+                          "absent",
+                          "blank"
+                        ]
+                      },
+                      "attendanceInterpretation": {
+                        "enum": [
+                          "absence-record",
+                          "unresolved"
+                        ]
+                      },
+                      "learningInterpretation": {
+                        "const": "unknown"
+                      }
+                    },
+                    "required": [
+                      "facet",
+                      "date",
+                      "rawStatus",
+                      "attendanceInterpretation",
+                      "learningInterpretation"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "facet": {
+                        "const": "video-status"
+                      },
+                      "rawStatus": {
+                        "const": "OK"
+                      },
+                      "meaning": {
+                        "const": "upload-or-video-status"
+                      },
+                      "teacherInspection": {
+                        "const": "unknown"
+                      }
+                    },
+                    "required": [
+                      "facet",
+                      "rawStatus",
+                      "meaning",
+                      "teacherInspection"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "facet": {
+                        "const": "clinic-server-status"
+                      },
+                      "rawStatus": {
+                        "const": "미학습"
+                      },
+                      "paperCompletion": {
+                        "const": "unknown"
+                      },
+                      "teacherJudgment": {
+                        "const": "separate"
+                      }
+                    },
+                    "required": [
+                      "facet",
+                      "rawStatus",
+                      "paperCompletion",
+                      "teacherJudgment"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "facet": {
+                        "const": "historical-re"
+                      },
+                      "analyzedScreens": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "menuCount": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "status": {
+                        "const": "reported-static-analysis"
+                      },
+                      "singleRequestSlotOverwrite": {
+                        "const": "possible"
+                      },
+                      "historicalFailureCause": {
+                        "const": "unproven"
+                      }
+                    },
+                    "required": [
+                      "facet",
+                      "analyzedScreens",
+                      "menuCount",
+                      "status",
+                      "singleRequestSlotOverwrite",
+                      "historicalFailureCause"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "facet": {
+                        "const": "operational-limit"
+                      },
+                      "targets": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "minItems": 1,
+                        "uniqueItems": true
+                      },
+                      "status": {
+                        "const": "unverified"
+                      }
+                    },
+                    "required": [
+                      "facet",
+                      "targets",
+                      "status"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "facet": {
+                        "const": "pr-status"
+                      },
+                      "prNumber": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "headSha": {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{40}$"
+                      },
+                      "syntheticChecks": {
+                        "const": "pass"
+                      },
+                      "canonicalCheckout": {
+                        "const": "fail"
+                      },
+                      "independentReview": {
+                        "const": "fail"
+                      },
+                      "aggregate": {
+                        "const": "fail"
+                      },
+                      "merge": {
+                        "const": "open"
+                      }
+                    },
+                    "required": [
+                      "facet",
+                      "prNumber",
+                      "headSha",
+                      "syntheticChecks",
+                      "canonicalCheckout",
+                      "independentReview",
+                      "aggregate",
+                      "merge"
+                    ]
+                  }
+                ]
+              }
+            },
+            "required": [
+              "key",
+              "node",
+              "summary",
+              "sourceKeys",
+              "scope",
+              "limitations",
+              "links",
+              "kind",
+              "layer",
+              "observation"
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "node": {
+                "type": "string",
+                "minLength": 1
+              },
+              "summary": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sourceKeys": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 1,
+                "uniqueItems": true
+              },
+              "scope": {
+                "type": "string",
+                "minLength": 1
+              },
+              "limitations": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 0,
+                "uniqueItems": true
+              },
+              "links": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "relation": {
+                      "enum": [
+                        "corrects",
+                        "supersedes",
+                        "qualifies",
+                        "supports"
+                      ]
+                    },
+                    "target": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "relation",
+                    "target"
+                  ]
+                },
+                "minItems": 0,
+                "uniqueItems": true
+              },
+              "kind": {
+                "const": "report"
+              },
+              "layer": {
+                "const": "DATA"
+              },
+              "report": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "facet": {
+                        "const": "parent-observation"
+                      },
+                      "signals": {
+                        "type": "array",
+                        "items": {
+                          "enum": [
+                            "delayed-start",
+                            "attention-drift",
+                            "volume-burden",
+                            "planning-difficulty"
+                          ]
+                        },
+                        "minItems": 1,
+                        "uniqueItems": true
+                      },
+                      "causeDiagnosis": {
+                        "const": false
+                      }
+                    },
+                    "required": [
+                      "facet",
+                      "signals",
+                      "causeDiagnosis"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "facet": {
+                        "const": "paper-delivery"
+                      },
+                      "auditOrdinals": {
+                        "type": "array",
+                        "items": {
+                          "type": "integer",
+                          "minimum": 1
+                        },
+                        "minItems": 1,
+                        "uniqueItems": true
+                      },
+                      "status": {
+                        "const": "printed-and-enclosed-reported"
+                      },
+                      "receipt": {
+                        "const": "unknown"
+                      },
+                      "studentSolving": {
+                        "const": "unknown"
+                      },
+                      "teacherJudgment": {
+                        "const": "unknown"
+                      }
+                    },
+                    "required": [
+                      "facet",
+                      "auditOrdinals",
+                      "status",
+                      "receipt",
+                      "studentSolving",
+                      "teacherJudgment"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "facet": {
+                        "const": "prior-scope"
+                      },
+                      "first": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "last": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "status": {
+                        "const": "superseded"
+                      },
+                      "label": {
+                        "const": "TEST"
+                      }
+                    },
+                    "required": [
+                      "facet",
+                      "first",
+                      "last",
+                      "status",
+                      "label"
+                    ]
+                  }
+                ]
+              }
+            },
+            "required": [
+              "key",
+              "node",
+              "summary",
+              "sourceKeys",
+              "scope",
+              "limitations",
+              "links",
+              "kind",
+              "layer",
+              "report"
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "node": {
+                "type": "string",
+                "minLength": 1
+              },
+              "summary": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sourceKeys": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 1,
+                "uniqueItems": true
+              },
+              "scope": {
+                "type": "string",
+                "minLength": 1
+              },
+              "limitations": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 0,
+                "uniqueItems": true
+              },
+              "links": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "relation": {
+                      "enum": [
+                        "corrects",
+                        "supersedes",
+                        "qualifies",
+                        "supports"
+                      ]
+                    },
+                    "target": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "relation",
+                    "target"
+                  ]
+                },
+                "minItems": 0,
+                "uniqueItems": true
+              },
+              "kind": {
+                "const": "interpretation"
+              },
+              "layer": {
+                "const": "LOGIC"
+              },
+              "status": {
+                "const": "superseded"
+              },
+              "value": {
+                "const": "unresolved"
+              },
+              "notHistoricalAbsenceClaim": {
+                "const": true
+              }
+            },
+            "required": [
+              "key",
+              "node",
+              "summary",
+              "sourceKeys",
+              "scope",
+              "limitations",
+              "links",
+              "kind",
+              "layer",
+              "status",
+              "value",
+              "notHistoricalAbsenceClaim"
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "node": {
+                "type": "string",
+                "minLength": 1
+              },
+              "summary": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sourceKeys": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 1,
+                "uniqueItems": true
+              },
+              "scope": {
+                "type": "string",
+                "minLength": 1
+              },
+              "limitations": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 0,
+                "uniqueItems": true
+              },
+              "links": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "relation": {
+                      "enum": [
+                        "corrects",
+                        "supersedes",
+                        "qualifies",
+                        "supports"
+                      ]
+                    },
+                    "target": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "relation",
+                    "target"
+                  ]
+                },
+                "minItems": 0,
+                "uniqueItems": true
+              },
+              "kind": {
+                "const": "rule"
+              },
+              "layer": {
+                "const": "LOGIC"
+              },
+              "rule": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "stages": {
+                    "type": "array",
+                    "items": {
+                      "enum": [
+                        "paper-solving",
+                        "app-entry",
+                        "app-grading",
+                        "wrong-answer-correction",
+                        "teacher-review",
+                        "video-inspection",
+                        "attendance"
+                      ]
+                    },
+                    "minItems": 0,
+                    "uniqueItems": true
+                  },
+                  "forbiddenInferences": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "minItems": 1,
+                    "uniqueItems": true
+                  },
+                  "reusedContracts": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "minItems": 0,
+                    "uniqueItems": true
+                  }
+                },
+                "required": [
+                  "stages",
+                  "forbiddenInferences",
+                  "reusedContracts"
+                ]
+              }
+            },
+            "required": [
+              "key",
+              "node",
+              "summary",
+              "sourceKeys",
+              "scope",
+              "limitations",
+              "links",
+              "kind",
+              "layer",
+              "rule"
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "node": {
+                "type": "string",
+                "minLength": 1
+              },
+              "summary": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sourceKeys": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 1,
+                "uniqueItems": true
+              },
+              "scope": {
+                "type": "string",
+                "minLength": 1
+              },
+              "limitations": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 0,
+                "uniqueItems": true
+              },
+              "links": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "relation": {
+                      "enum": [
+                        "corrects",
+                        "supersedes",
+                        "qualifies",
+                        "supports"
+                      ]
+                    },
+                    "target": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "relation",
+                    "target"
+                  ]
+                },
+                "minItems": 0,
+                "uniqueItems": true
+              },
+              "kind": {
+                "const": "decision"
+              },
+              "layer": {
+                "const": "GOVERNANCE"
+              },
+              "decision": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "facet": {
+                        "const": "closure-correction"
+                      },
+                      "date": {
+                        "type": "string",
+                        "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                      },
+                      "value": {
+                        "const": "academy-closed"
+                      },
+                      "reason": {
+                        "const": "Hangul-Day"
+                      },
+                      "appliesTo": {
+                        "const": "this-academy-this-date-only"
+                      },
+                      "allPublicHolidaysClosed": {
+                        "const": false
+                      }
+                    },
+                    "required": [
+                      "facet",
+                      "date",
+                      "value",
+                      "reason",
+                      "appliesTo",
+                      "allPublicHolidaysClosed"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "facet": {
+                        "const": "latest-delivery-scope"
+                      },
+                      "first": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "last": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "label": {
+                        "const": "TEST"
+                      },
+                      "scopeAuthority": {
+                        "const": "latest-conveyed-range"
+                      },
+                      "globalRewrite": {
+                        "const": false
+                      }
+                    },
+                    "required": [
+                      "facet",
+                      "first",
+                      "last",
+                      "label",
+                      "scopeAuthority",
+                      "globalRewrite"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "facet": {
+                        "const": "teacher-completion"
+                      },
+                      "auditCohortSize": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "completedOrdinals": {
+                        "type": "array",
+                        "items": {
+                          "type": "integer",
+                          "minimum": 1
+                        },
+                        "minItems": 1,
+                        "uniqueItems": true
+                      },
+                      "paths": {
+                        "type": "array",
+                        "items": {
+                          "enum": [
+                            "original-wrong",
+                            "similar-clinic"
+                          ]
+                        },
+                        "minItems": 2,
+                        "uniqueItems": true
+                      },
+                      "judgmentCount": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "status": {
+                        "const": "teacher-completed"
+                      },
+                      "overridesServerLearningLabel": {
+                        "const": false
+                      },
+                      "serverCanRevokeTeacherJudgment": {
+                        "const": false
+                      }
+                    },
+                    "required": [
+                      "facet",
+                      "auditCohortSize",
+                      "completedOrdinals",
+                      "paths",
+                      "judgmentCount",
+                      "status",
+                      "overridesServerLearningLabel",
+                      "serverCanRevokeTeacherJudgment"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "facet": {
+                        "const": "perfect-score-exclusion"
+                      },
+                      "excludedCount": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "appliesTo": {
+                        "const": "historical-comparison-list-only"
+                      },
+                      "teacherReviewInferred": {
+                        "const": false
+                      }
+                    },
+                    "required": [
+                      "facet",
+                      "excludedCount",
+                      "appliesTo",
+                      "teacherReviewInferred"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "facet": {
+                        "const": "repository-delivery"
+                      },
+                      "actions": {
+                        "type": "array",
+                        "items": {
+                          "enum": [
+                            "commit",
+                            "push",
+                            "open-pr",
+                            "verify",
+                            "merge"
+                          ]
+                        },
+                        "minItems": 1,
+                        "uniqueItems": true
+                      },
+                      "externalMessageSendingIncluded": {
+                        "const": false
+                      }
+                    },
+                    "required": [
+                      "facet",
+                      "actions",
+                      "externalMessageSendingIncluded"
+                    ]
+                  }
+                ]
+              }
+            },
+            "required": [
+              "key",
+              "node",
+              "summary",
+              "sourceKeys",
+              "scope",
+              "limitations",
+              "links",
+              "kind",
+              "layer",
+              "decision"
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "node": {
+                "type": "string",
+                "minLength": 1
+              },
+              "summary": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sourceKeys": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 1,
+                "uniqueItems": true
+              },
+              "scope": {
+                "type": "string",
+                "minLength": 1
+              },
+              "limitations": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 0,
+                "uniqueItems": true
+              },
+              "links": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "relation": {
+                      "enum": [
+                        "corrects",
+                        "supersedes",
+                        "qualifies",
+                        "supports"
+                      ]
+                    },
+                    "target": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "relation",
+                    "target"
+                  ]
+                },
+                "minItems": 0,
+                "uniqueItems": true
+              },
+              "kind": {
+                "const": "action-boundary"
+              },
+              "layer": {
+                "const": "ACTION"
+              },
+              "effects": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "academyMutation": {
+                    "const": false
+                  },
+                  "send": {
+                    "const": false
+                  },
+                  "print": {
+                    "const": false
+                  },
+                  "installExtension": {
+                    "const": false
+                  },
+                  "bypass": {
+                    "const": false
+                  },
+                  "credentialSetup": {
+                    "const": false
+                  },
+                  "deployment": {
+                    "const": false
+                  },
+                  "contextLoadAuthority": {
+                    "const": "none"
+                  }
+                },
+                "required": [
+                  "academyMutation",
+                  "send",
+                  "print",
+                  "installExtension",
+                  "bypass",
+                  "credentialSetup",
+                  "deployment",
+                  "contextLoadAuthority"
+                ]
+              }
+            },
+            "required": [
+              "key",
+              "node",
+              "summary",
+              "sourceKeys",
+              "scope",
+              "limitations",
+              "links",
+              "kind",
+              "layer",
+              "effects"
+            ]
+          }
+        ]
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "preparedAt",
+    "basisCommit",
+    "authority",
+    "nativePermissionGranted",
+    "coverage",
+    "hierarchy",
+    "sources",
+    "records"
+  ]
+}

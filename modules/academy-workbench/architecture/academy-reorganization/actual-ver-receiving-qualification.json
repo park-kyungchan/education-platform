@@ -1,0 +1,83 @@
+{
+  "binding": {
+    "producer": {
+      "selection": {
+        "repositoryRoot": "/home/palantirkc/worktrees/academy-architecture-orchestration-20261021",
+        "repositoryId": "park-kyungchan/academy-workbench",
+        "projectId": "academy-workbench",
+        "workId": "academy-architecture-orchestration-20261021",
+        "commit": "d79237566a86dfce9e633d5270e8b409d0d4a025"
+      },
+      "tree": "05e8f3567c29524b2f83bb7959e3a15c908d0310",
+      "logical": {
+        "domainId": "academy-operations",
+        "projectId": "academy-workbench",
+        "workId": "academy-architecture-orchestration-20261021",
+        "issueId": "AAR-ISSUE-20261021",
+        "specId": "AAR-SPEC",
+        "specRevision": 1,
+        "planId": "AAR-PLAN",
+        "planRevision": 2,
+        "taskId": "academy-workbench:task:academy-architecture-orchestration-20261021-t04"
+      },
+      "resultEvidenceId": "academy-workbench:evidence:aar-t04-delivery-observation-r2",
+      "verificationEvidenceId": "academy-workbench:evidence:aar-t04-delivery-verification-r2",
+      "milestone": "execution-and-verification"
+    },
+    "consumer": {
+      "selection": {
+        "repositoryRoot": "/home/palantirkc/worktrees/academy-workflow-verification-20261021",
+        "repositoryId": "park-kyungchan/education-platform",
+        "projectId": "education-platform",
+        "workId": "academy-workflow-verification-20261021",
+        "commit": "5f056c4de3aca657e05ef74ac82870567957aa8e"
+      },
+      "logical": {
+        "domainId": "education",
+        "projectId": "education-platform",
+        "workId": "academy-workflow-verification-20261021",
+        "issueId": "VER-ISSUE-20261021",
+        "specId": "VER-SPEC",
+        "specRevision": 1,
+        "planId": "VER-PLAN",
+        "planRevision": 1,
+        "taskId": "education-platform:task:academy-workflow-verification-20261021-ver-01"
+      },
+      "qualificationTaskId": "education-platform:task:academy-workflow-verification-20261021-ver-01-qualify-aar-05"
+    },
+    "receiverSource": {
+      "kind": "snapshot",
+      "path": "work/education-platform/academy-workflow-verification-20261021/inputs/VER-ROOT-QUALIFICATION-R1.json",
+      "sha256": "57652d880f8655883980e12d98959f0a6cf11bdacaf32fd47f2a5947d79be4f2",
+      "fragment": "#/content"
+    }
+  },
+  "result": {
+    "qualified": true,
+    "scope": "source-only-execution-and-verification",
+    "producer": {
+      "domainId": "academy-operations",
+      "projectId": "academy-workbench",
+      "workId": "academy-architecture-orchestration-20261021",
+      "taskId": "academy-workbench:task:academy-architecture-orchestration-20261021-t04"
+    },
+    "consumer": {
+      "domainId": "education",
+      "projectId": "education-platform",
+      "workId": "academy-workflow-verification-20261021",
+      "taskId": "education-platform:task:academy-workflow-verification-20261021-ver-01"
+    },
+    "qualificationTaskId": "education-platform:task:academy-workflow-verification-20261021-ver-01-qualify-aar-05",
+    "producerCommit": "d79237566a86dfce9e633d5270e8b409d0d4a025",
+    "producerTree": "05e8f3567c29524b2f83bb7959e3a15c908d0310",
+    "receiverSource": {
+      "kind": "snapshot",
+      "path": "work/education-platform/academy-workflow-verification-20261021/inputs/VER-ROOT-QUALIFICATION-R1.json",
+      "sha256": "57652d880f8655883980e12d98959f0a6cf11bdacaf32fd47f2a5947d79be4f2",
+      "fragment": "#/content"
+    },
+    "nativeReceiverAuthenticated": false,
+    "sharedDeliveryEstablished": false,
+    "activationAuthorized": false
+  }
+}

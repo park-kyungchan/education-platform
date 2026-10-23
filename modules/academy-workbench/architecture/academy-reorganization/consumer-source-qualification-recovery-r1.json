@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "academy.execution-recovery/1",
+  "createdAt": "2026-10-21T10:17:36.613196+00:00",
+  "workId": "academy-consumer-integration-20261021",
+  "sourceOnly": true,
+  "originalTaskId": "academy-workbench:task:academy-consumer-integration-20261021-con-02",
+  "originalState": {
+    "execution": "complete",
+    "verification": "failed",
+    "localAudit": "result-durable"
+  },
+  "newTaskId": "academy-workbench:task:academy-consumer-integration-20261021-con-02-source-qualification",
+  "specRef": "CON-SPEC@1",
+  "oldPlanRef": "CON-PLAN@1",
+  "successorPlanRef": "CON-PLAN@2",
+  "admissionCommit": "382957c494382789496fc10510f9b758b5ff92d7",
+  "admissionTree": "b8f8a3829d2edfb14e3017522a265cebd96aa831",
+  "nativeAssignment": {
+    "agentName": "academy-consumer-lead",
+    "tabId": "wA:t5",
+    "paneId": "wA:p8",
+    "sessionId": "01a15dd0-03ed-71a0-8372-936776e22669",
+    "cli": "codex0.163.0",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "role": "accountable-consumer-subLead",
+    "sameWork": true
+  },
+  "reason": "Canonical completed-task history is immutable. Every Verification referenced by passed Task must pass, while completed Task cannot delete old failed Verification refs. Keep the historical failure rather than rewriting it.",
+  "topology": {
+    "relation": "verifiedBy originalTask -> distinctSourceQualificationTask",
+    "dependencies": [
+      "Completed/passed CON01",
+      "Completed/passed local QRY02 qualification"
+    ],
+    "notDependency": "Original complete/failed Task stays provenance; it is not a falsely passed execution-and-verification prerequisite.",
+    "downstream": "Planned CON03 now references distinctSourceQualificationTask plus VER02 local gate. Existing CON03 identity retained under Plan2.",
+    "macroOutcome": "CON02 consumer implementation outcome remains the same architecture outcome; new subordinate source-qualification identity is distinct from native session, test occurrence or Git location."
+  },
+  "preservation": [
+    "All original Task bytes, Inputs, failed Verification and Plan1 retained",
+    "Root SDK exact05797da source10pass/289assertions is a separately attributed control, not native-author success",
+    "No common-contract change, new business implementation, native invocation/authentication or Goal"
+  ],
+  "canonicalAudit": {
+    "snapshotValid": true,
+    "transitionValid": true,
+    "from": "20d9a6c4c08c170a6befd3ce91611c3ab2a47942",
+    "to": "382957c494382789496fc10510f9b758b5ff92d7",
+    "auditor": "agent-platform712f90de"
+  },
+  "next": "Complete new exact source qualification metadata, independent review, VER01/02 then CON03; all activation/publication/private/native holds remain."
+}

@@ -1,5 +1,5 @@
 import {assertExactKeys,canonicalJson,requireText} from '../../learning/model';
-import {readInputRecord} from '../../lms/academyReadProtocol';
+import {readInputRecord} from '../../contracts/readInputRecord';
 import type {TeacherStore} from '../ports/teacherStore';
 import type {TrustedTeacherContext} from '../contracts/teacherOperations';
 import {assertTeacherScope} from './requestRecovery';

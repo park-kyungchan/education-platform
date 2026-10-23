@@ -1,0 +1,24 @@
+{
+  "index": 67,
+  "reference": "library-file:fde1_bGliZmlsZV8tNVNxTklSVk5pWGd1MWRCcEE4N3h3_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+  "metadata_available": true,
+  "mime_type": "text/x-typescript",
+  "byte_size": 2466,
+  "pages": [
+    "page_d9818d5817f08191835ba0a0e85936bc"
+  ],
+  "retrievedAt": "2026-10-16T10:23:44.304Z",
+  "result": {
+    "page_id": "page_d9818d5817f08191835ba0a0e85936bc",
+    "reference": "library-file:fde1_bGliZmlsZV8tNVNxTklSVk5pWGd1MWRCcEE4N3h3_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+    "mime_type": "text/x-typescript",
+    "byte_size": 2466,
+    "sha256": "7f7692c52fff0d9d2e23a2d02d00ebfdd784207c6eed13e95c95fa4762e1b694",
+    "text": "/** Non-sensitive reconciliation contract. Source datasets remain immutable. */\nexport type BindingStatus = 'candidate' | 'composite_supported' | 'authoritatively_verified' | 'conflicted' | 'unmatched' | 'rejected';\nexport interface EvidenceReference { kind: 'source_record' | 'published_record' | 'task_scope' | 'user_decision'; documentSha256: string | null; pointerOrMessageId: string; }\nexport interface IdentityScope { authority: string; tenant: string; namespace: string; stableNonReused: boolean; }\nexport interface NativeIdentity { value: string; scope: IdentityScope; canonicalAssociationDocumented: boolean; }\nexport interface BookClaim { key: string | null; series: string; school: string | null; grade: number | null; semester: number | null; volume: number | null; version: string | null; }\nexport interface StudentFacts { id: string; label: string; nativeIdentity: NativeIdentity | null; books: BookClaim[]; groups: string[]; }\nexport interface BindingContext { userDesignatedClosedPopulation: boolean; sameRoster: boolean; snapshotSha256: string; registrySha256: string; sourceScopeRef: EvidenceReference; }\nexport interface PairSupport { exactBookKeys: number; partialBookMatches: number; matchedKnownBooks: number; knownBooks: number; missingKnownBooks: number; matchedGroups: number; knownGroups: number; groupDisagreement: boolean; }\nexport interface LocalIdentityResolution {\n  id: string; rulesVersion: '1.0.0'; snapshotStudentId: string;\n  candidateCanonicalStudentIds: string[]; resolvedCanonicalStudentId: string | null;\n  status: BindingStatus; method: 'composite_evidence_local_binding' | 'scoped_authoritative_id' | null;\n  confidence: 'supported_within_user_designated_population' | 'authoritative' | 'insufficient' | 'conflicting';\n  scope: { snapshotSha256: string; registrySha256: string; crossSnapshotReuse: false };\n  support: PairSupport | null; reasons: string[]; evidence: EvidenceReference[];\n  nativeIdVerified: boolean; sourceIdentityMutated: false; publicationAuthorizedByThisRecord: false;\n}\nexport interface IncrementalComparison {\n  comparisonKind: 'observation_inventory_only'; sourceSnapshotSha256: string; baselineSha256: string;\n  locallySupportedStudents: number; blockedStudents: number;\n  sourceCounts: Record<string, number>; detailEventDelta: null;\n  detailEventDeltaReason: 'baseline_is_summary_and_native_event_ids_absent';\n  deletionsProposed: 0; completionClaimsAdded: 0; historyCompletenessPromoted: false;\n}\n",
+    "text_representation": "source",
+    "text_byte_size": 2466,
+    "kind": "text"
+  },
+  "status": "source_text_saved",
+  "localFile": "attachments/ref-67.json"
+}

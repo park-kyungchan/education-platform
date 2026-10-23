@@ -1,0 +1,200 @@
+{
+  "source_reference": "library-file:fde1_bGliZmlsZV8xOG9rc2g3eGNLSl9HblVfdGE1QjVB_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+  "source_sha256": "a2f08b9cbd3ada7e24becb6cf0e7e267a591ef339b5b914ef40a02d4d722a249",
+  "data": {
+    "type": "teacher_review_append_revision",
+    "collection_id": "ruhan-clinic-review-20261007-001",
+    "revision_id": "revision_0002",
+    "from_version": "1.1.0",
+    "to_version": "1.2.0",
+    "recorded_at_utc": "2026-10-07T05:15:36.930Z",
+    "base": {
+      "file_name": "이루한_100미만_교사대조_1.1.0.json",
+      "sha256": "57dc94b915a2fee46772c34e4e3c7f758459a1a69df4cb218c6d8b6880c94e13"
+    },
+    "source_message_id": "Sentinel_d6646a40228c8191abfb048e7985938c",
+    "authority": {
+      "source": "exact_user_statement_and_prior_question_provided_in_parent_transcript_evidence",
+      "actor": "user"
+    },
+    "events": [
+      {
+        "event_id": "revision0002-event01",
+        "kind": "number_reference_corrected_by_user",
+        "source": {
+          "message_id": "Sentinel_d6646a40228c8191abfb048e7985938c",
+          "actor": "user",
+          "recorded_at_utc": "2026-10-07T05:15:36.930Z",
+          "exact_relevant_text": "1. 20+21인데 잘못 말했음.",
+          "prior_assistant_question_exact": null
+        },
+        "effective_at": null,
+        "payload": {
+          "corrects_event_id": "revision0001-event04",
+          "original_reference": "21+22",
+          "original_reference_state": "invalid_reference",
+          "corrected_reference": "20+21",
+          "corrected_target_numbers": [
+            20,
+            21
+          ],
+          "resolution_state": "resolved_by_user",
+          "automatic_correction": false,
+          "original_event_preserved": true
+        }
+      },
+      {
+        "event_id": "revision0002-event02",
+        "kind": "teacher_review_confirmed_complete",
+        "source": {
+          "message_id": "Sentinel_d6646a40228c8191abfb048e7985938c",
+          "actor": "user",
+          "recorded_at_utc": "2026-10-07T05:15:36.930Z",
+          "exact_relevant_text": "2. 맞아.",
+          "prior_assistant_question_exact": "12~19번도 오·클 둘 다 완료이고, 11번은 오·클 둘 다 전달할 예정이야?"
+        },
+        "effective_at": null,
+        "target_numbers": [
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19
+        ],
+        "target_paths": [
+          "original_wrong_review",
+          "similar_clinic_review"
+        ],
+        "payload": {
+          "resolves_event_id": "revision0001-event02",
+          "state": "teacher_confirmed_complete",
+          "evidence_class": "user_confirmed",
+          "completed_at": null,
+          "completed_at_state": "not_supplied",
+          "scope": "both_original_wrong_and_similar_clinic"
+        }
+      },
+      {
+        "event_id": "revision0002-event03",
+        "kind": "remediation_delivery_scope_confirmed",
+        "source": {
+          "message_id": "Sentinel_d6646a40228c8191abfb048e7985938c",
+          "actor": "user",
+          "recorded_at_utc": "2026-10-07T05:15:36.930Z",
+          "exact_relevant_text": "2. 맞아.",
+          "prior_assistant_question_exact": "12~19번도 오·클 둘 다 완료이고, 11번은 오·클 둘 다 전달할 예정이야?"
+        },
+        "effective_at": null,
+        "target_numbers": [
+          11
+        ],
+        "payload": {
+          "resolves_event_id": "revision0001-event03",
+          "plan_state": "planned",
+          "remediation_paths": [
+            "original_wrong",
+            "similar_clinic"
+          ],
+          "receiver_role": "guardian",
+          "date": "2026-10-07",
+          "pickup_at_local": "2026-10-07T16:00:00+09:00",
+          "pickup_at_utc": "2026-10-07T07:00:00Z",
+          "pickup_timezone": "Asia/Seoul",
+          "pickup_precision": "approximate",
+          "pickup_source_message_id": "Sentinel_5604726453208191a6df31cf9d3efe18",
+          "original_wrong_review": "unknown",
+          "similar_clinic_review": "unknown",
+          "generated_at": null,
+          "printed_at": null,
+          "delivered_at": null
+        }
+      },
+      {
+        "event_id": "revision0002-event04",
+        "kind": "corrected_remediation_delivery_planned",
+        "source": {
+          "message_id": "Sentinel_d6646a40228c8191abfb048e7985938c",
+          "actor": "user",
+          "recorded_at_utc": "2026-10-07T05:15:36.930Z",
+          "exact_relevant_text": "1. 20+21인데 잘못 말했음.",
+          "prior_assistant_question_exact": null
+        },
+        "effective_at": null,
+        "target_numbers": [
+          20,
+          21
+        ],
+        "payload": {
+          "original_plan_event_id": "revision0001-event04",
+          "correction_event_id": "revision0002-event01",
+          "original_plan_source_message_id": "Sentinel_5604726453208191a6df31cf9d3efe18",
+          "plan_state": "planned",
+          "remediation_paths": [
+            "original_wrong",
+            "similar_clinic"
+          ],
+          "receiver_role": "guardian",
+          "date": "2026-10-07",
+          "pickup_at_local": "2026-10-07T16:00:00+09:00",
+          "pickup_at_utc": "2026-10-07T07:00:00Z",
+          "pickup_timezone": "Asia/Seoul",
+          "pickup_precision": "approximate",
+          "original_wrong_review": "unknown",
+          "similar_clinic_review": "unknown",
+          "generated_at": null,
+          "printed_at": null,
+          "delivered_at": null
+        }
+      },
+      {
+        "event_id": "revision0002-event05",
+        "kind": "new_homework_selection_criterion_confirmed",
+        "source": {
+          "message_id": "Sentinel_d6646a40228c8191abfb048e7985938c",
+          "actor": "user",
+          "recorded_at_utc": "2026-10-07T05:15:36.930Z",
+          "exact_relevant_text": "3. 다빈치의 소단원 6개에 대해서, 아직 앱에 채점 입력하지 않은것을 기준으로 리스트업해보고 정할 것임. 이미 기록된 2-2의 1~6차시 이후 새 범위인데, 이미 기록된 것들에 대한 오/클 클리닉 검토 완료가 안된 것들은 프린트로 전달해줘야한다.",
+          "prior_assistant_question_exact": null
+        },
+        "effective_at": null,
+        "payload": {
+          "updates_event_id": "revision0001-event06",
+          "book_display_name": "다빈치 1-1",
+          "desired_count": 6,
+          "count_precision": "approximate",
+          "declared_unit_kind": "소단원",
+          "mapped_unit_kind": null,
+          "selection_state": "not_selected",
+          "selection_criterion": "no_app_grading_entry_in_saved_or_authorized_observation_scope",
+          "new_range_boundary": {
+            "after_unit_label": "2-2",
+            "after_lesson_indices": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "after_section_label": "유형다지기"
+          },
+          "exact_selected_targets": null,
+          "selection_steps": [
+            "list_candidates",
+            "teacher_selects_targets"
+          ],
+          "assignment_state": "planned_not_confirmed_assigned",
+          "assignment_due_at": null,
+          "existing_record_remediation_is_separate": true,
+          "existing_record_remediation_delivery_rule": "teacher_review_not_complete_original_wrong_and_similar_clinic_require_print_delivery",
+          "generated_at": null,
+          "printed_at": null,
+          "delivered_at": null
+        }
+      }
+    ]
+  }
+}

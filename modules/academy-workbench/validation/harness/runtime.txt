@@ -1,0 +1,52 @@
+$ cd app/standalone && node --test tests/*.test.ts
+✔ five invented students have valid separate renderer/evidence contracts (7.997253ms)
+✔ default config is uncredentialed loopback preview (0.167317ms)
+✔ external binds fail closed (0.489033ms)
+✔ owner mode requires separately configured secret and DB path (0.186185ms)
+✔ synthetic in-memory auth values validate Basic and Bearer, never platform claims (0.640868ms)
+✔ SQLite survives real close/reopen with restricted file mode (25.572212ms)
+✔ same import id is idempotent and immutable (32.176137ms)
+✔ conflict rolls back all newly inserted student data (25.382731ms)
+✔ identity change requires reconciliation (19.744174ms)
+✔ all storage reads are owner scoped (13.580804ms)
+✔ private import requires approval flag and rejects mode mixing (20.656763ms)
+✔ preview refuses private-mode DB containing only synthetic test values (12.988928ms)
+✔ schema rejects owner mismatches, unexpected keys and unsafe JSON (17.001846ms)
+✔ cycles and malformed book counts are rejected (9.144701ms)
+✔ projection source records cannot cross students (7.804147ms)
+✔ teacher review requires exact original attempt join (2.032057ms)
+✔ artifact paths and signed URL metadata are rejected (3.371789ms)
+✔ namespace collisions in a batch and wrong student identity evidence are rejected (6.078734ms)
+✔ cross-import source namespace rebinding is rejected (15.358033ms)
+✔ cross-student historical correction relations are rejected (2.038366ms)
+✔ a SQLite file cannot mix owners or modes across owners (21.555623ms)
+✔ arbitrary data cannot grant itself unauthenticated preview access (16.778726ms)
+✔ preview pin is rechecked on every protected request (53.387276ms)
+✔ real HTTP server returns protected status/students/projection/panels (48.5609ms)
+✔ record pagination is explicit and never proves source completeness (37.805597ms)
+✔ bad student/domain/query cannot widen owner scope (45.364582ms)
+✔ all writes and archived/static traversal are unavailable (46.223963ms)
+✔ Host/Origin/proxy boundary rejects DNS rebinding and cross-site requests (23.898821ms)
+✔ platform headers never authenticate owner mode (16.432223ms)
+✔ static responses prohibit cross-origin connections and caching (38.272938ms)
+✔ malformed absolute request target does not terminate server (23.749119ms)
+✔ workflow policy browsing and date/session membership retain uncertainty (16.431793ms)
+✔ workflow rejects stale revisions, invalid dates and unknown policies (16.248882ms)
+✔ unknown historical membership never creates a past class (15.928228ms)
+✔ new panels are scoped and do not assert actual source/auth proof (14.8957ms)
+✔ Today and workflow endpoints are independent GET reads (42.015946ms)
+✔ grading observation inherited/reserved names cannot address projection records (45.133208ms)
+✔ withdrawn/superseded/conflicted completion never becomes current checked completion (44.59326ms)
+✔ withdrawn assignment is retained historically and excluded from current assignments (12.680913ms)
+✔ unsupported session request is rejected rather than returning an empty class (12.55079ms)
+✔ large event history has explicit bounded summaries and raw records remain available (26.003635ms)
+✔ withdrawn superseded or conflicted membership cannot create a cohort (48.218123ms)
+✔ withdrawn superseded or conflicted policy is history rather than active reference (44.11987ms)
+ℹ tests 43
+ℹ suites 0
+ℹ pass 43
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1066.665324

@@ -2,7 +2,7 @@ import type { TrustedTeacherContext } from './contracts/teacherOperations';
 import type { SourceRefreshStore } from './ports/sourceRefreshStore';
 import type { SourceDiscoveryRequest } from './nativeBookSource';
 import { normalizeCohortDiscovery } from './sourceBridge';
-import {readInputRecord} from '../lms/academyReadProtocol';
+import {readInputRecord} from '../contracts/readInputRecord';
 import {planSourceAreas,type SourceAreaTask} from './sourceSynchronization';
 export type Acquisition = {status:'blocked';reason:string}|{status:'uncertain';reason:string}|{status:'observed';data:unknown};
 export type SourceAcquirer=(request:SourceDiscoveryRequest)=>Promise<Acquisition>;

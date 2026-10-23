@@ -139,6 +139,75 @@
         "bindingMeaning": "profile-associated backend project; public product source remains module-owned"
       },
       "runtimePin": "1.4.3"
+    },
+    {
+      "id": "math-research",
+      "root": "modules/math-research-module",
+      "projectId": "math-research-module",
+      "sourceKind": "exact-private-repository-source-snapshot",
+      "commit": "1fa8b3b046fd029d2bd9578f4416ec6ac75dd08b",
+      "runtime": "bun",
+      "runtimePin": "1.4.3",
+      "dependsOn": [],
+      "checks": [
+        "verify"
+      ],
+      "entrypoints": [
+        "scripts/serve.ts",
+        "scripts/context-prepare.ts"
+      ],
+      "native": {
+        "ownerProfile": null,
+        "projectId": null,
+        "projectRoot": null,
+        "workIssueIds": [],
+        "authority": "none"
+      }
+    },
+    {
+      "id": "academy-workbench",
+      "root": "modules/academy-workbench",
+      "projectId": "academy-workbench",
+      "sourceKind": "exact-private-repository-source-snapshot-with-explicit-context-successor",
+      "commit": "020e7e483e46990f9393b64368f06b24cf5ace8c",
+      "runtime": "bun",
+      "runtimePin": "1.4.3",
+      "dependsOn": [
+        "academy",
+        "math-research"
+      ],
+      "checks": [
+        "check",
+        "check:ci",
+        "test",
+        "test:synthetic-runtime",
+        "test:offline-adapter",
+        "check:mcp",
+        "test:mcp"
+      ],
+      "entrypoints": [
+        "context/academy-context/cli.ts",
+        "tools/academy-mcp/src/server.ts"
+      ],
+      "native": {
+        "ownerProfile": null,
+        "projectId": null,
+        "projectRoot": null,
+        "workIssueIds": [],
+        "authority": "none"
+      },
+      "verificationDependency": {
+        "purpose": "Fictional teacher MCP source tests",
+        "sourceRepository": "park-kyungchan/education-platform",
+        "commit": "8f8c9bd61bd5e55445780b5569ecc40effcecef6",
+        "tree": "ccb0fc6302f664abe069086881961cec99cf2d85",
+        "setup": "scripts/setup-academy-teacher-fixture.ts",
+        "root": ".private/academy-teacher-fixture",
+        "mode": "detached-sparse-local-ancestor",
+        "requiresFullGitHistory": true,
+        "nativeActivation": false,
+        "privateStudentDataIncluded": false
+      }
     }
   ],
   "academySources": [
@@ -206,5 +275,7 @@
     "runtimeAuthority": "none",
     "nativeOrDataCutoverPerformed": false,
     "retirementAuthorized": false
-  }
+  },
+  "academyRepositoryIntegrationRef": "architecture/academy-integration.json",
+  "privateContextImportRef": "provenance/private-context-integration.json"
 }

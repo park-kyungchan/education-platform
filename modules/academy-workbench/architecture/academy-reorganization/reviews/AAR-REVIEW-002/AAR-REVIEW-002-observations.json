@@ -1,0 +1,106 @@
+{
+  "schemaVersion": "academy.review-observations/2",
+  "reviewId": "AAR-REVIEW-002",
+  "observedAtUtc": "2026-10-21T05:25:56.009422+00:00",
+  "nativeThreadId": "01a15cd8-368e-7322-bb15-20755a7bf9d5",
+  "sourceCheckout": "/home/palantirkc/worktrees/academy-architecture-review-r2-20261021",
+  "resultDirectory": "/home/palantirkc/worktrees/academy-architecture-review-20261021/.local/reviews",
+  "expectedCommit": "9db3043992d31110622337daa20cf8ca64f35a1e",
+  "expectedTree": "915f9ed71f8edce8cf196c994823ac7b41b57c8f",
+  "priorArtifacts": [
+    {
+      "name": "AAR-REVIEW-001-artifact-validation.json",
+      "sha256": "aae8b93bd9e73efbb37a410a741067b3069889648aeaea6d71d12fa23b016170",
+      "retainedCopyMatches": true
+    },
+    {
+      "name": "AAR-REVIEW-001-check-cross-work.json",
+      "sha256": "d51feab3f05a48e5218b101bf932b221afac398329f7d7518856d6e21db40b58",
+      "retainedCopyMatches": true
+    },
+    {
+      "name": "AAR-REVIEW-001-check-graph-semantics.json",
+      "sha256": "e9b7173e2950268f2628a9ba20abf2ed20240e465ada731b56bc2e2962aa5558",
+      "retainedCopyMatches": true
+    },
+    {
+      "name": "AAR-REVIEW-001-check-preserved-identities.json",
+      "sha256": "eaca6150a730e30a5ce680f8ab277d3755d1af07f317eb907a1bfd4e68c4f26e",
+      "retainedCopyMatches": true
+    },
+    {
+      "name": "AAR-REVIEW-001-check-topology-common.json",
+      "sha256": "30bb0d4f816f056b13688cde6ac8e31179d212c12890d4ef783657453a61c549",
+      "retainedCopyMatches": true
+    },
+    {
+      "name": "AAR-REVIEW-001-check-types-qualified.json",
+      "sha256": "e66f9247de586a87cc8c016cc487466c511cdfb7aa3544516e3cc08f2ded5fb7",
+      "retainedCopyMatches": true
+    },
+    {
+      "name": "AAR-REVIEW-001-check-types.json",
+      "sha256": "d760eff1ec5fb94f171c278a932afcf9d45ae71f160af247effb700758e38976",
+      "retainedCopyMatches": true
+    },
+    {
+      "name": "AAR-REVIEW-001-evidence.json",
+      "sha256": "e9478779529bedea70d21b43bd841128c1f4172f8bb3ee41b472fca7bc64a20f",
+      "retainedCopyMatches": true
+    },
+    {
+      "name": "AAR-REVIEW-001-observations.json",
+      "sha256": "94221cc8d463865529d8e2ea11c88c433f91eee5cc0d5f83b1eb419f17a28490",
+      "retainedCopyMatches": true
+    },
+    {
+      "name": "AAR-REVIEW-001.json",
+      "sha256": "f2b0b090d760e9b50babeee12eafe7cae28ae85a7a7f418911cd9c33213d5c1f",
+      "retainedCopyMatches": true
+    }
+  ],
+  "priorInstructionAndContextReads": [
+    {
+      "path": "AGENTS.md",
+      "matchesPriorRead": true
+    },
+    {
+      "path": "README.md",
+      "matchesPriorRead": true
+    },
+    {
+      "path": "MIGRATION_PLAN.md",
+      "matchesPriorRead": true
+    },
+    {
+      "path": "context/business-decisions.json",
+      "matchesPriorRead": true
+    },
+    {
+      "path": "migration/README.md",
+      "matchesPriorRead": true
+    },
+    {
+      "path": "project.json",
+      "matchesPriorRead": true
+    },
+    {
+      "path": "harness/module.json",
+      "matchesPriorRead": true
+    },
+    {
+      "path": "harness/work/identity.json",
+      "matchesPriorRead": true
+    },
+    {
+      "path": "docs/harness/README.ko.md",
+      "matchesPriorRead": true
+    },
+    {
+      "path": "docs/harness/continuation-ci.md",
+      "matchesPriorRead": true
+    }
+  ],
+  "preservedTestExecutionBoundary": "The committed qualify-external-work.test.ts creates and deletes temporary files and creates Git commits. It is not executed verbatim under the only-JSON-writes/no-commits constraint. Independent probes will invoke the real helper and canonical record validators with memory-only fixture readers; actual Git snapshots/transitions are checked separately.",
+  "outputTruncations": "Oversized batched reads were repeated as bounded focused sections; omitted sections are not claimed as read."
+}

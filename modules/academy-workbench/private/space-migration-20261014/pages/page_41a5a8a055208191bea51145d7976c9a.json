@@ -1,0 +1,711 @@
+{
+  "id": "page_41a5a8a055208191bea51145d7976c9a",
+  "page": {
+    "metadata": {
+      "page_id": "page_41a5a8a055208191bea51145d7976c9a",
+      "layout": "document",
+      "symbol": null,
+      "title": "구조화 원본과 검증",
+      "preview": "학원 업무 원본과 조회 지도는 버전이 있는 JSON과 JSON Schema로 관리합니다. 사람이 읽는 Page는 원본을 찾아가는 화면입니다.\n\n## 교재 구조와 학생 흐름 확장\n\n[교재 구조와 흐름 규칙](page:page_f689e004893481919f9e8bc018d99807)에서 교재 네이밍, 초등 9개·중등 8개 섹션, 실제 관찰된 단원 연결과 이력·DATA/LOGIC/ACTION 계약을 조회합니다. 기존 문제 섹션 ",
+      "creator_account_user_id": "user-rWH9gln1NM29y9CcdR6tl3Ye",
+      "owner_workspace_id": null,
+      "parent": {
+        "page_id": "page_f18c68ae5c808191b723b4eb693016fa",
+        "title": "강의하는아이들 학원 실무"
+      },
+      "drive_scope": "space",
+      "drive_space_id": "page_space_2aa12ec5eb008191ab5e779c8c107777",
+      "library_container_id": "fde3_cGFnZV80MWE1YThhMDU1MjA4MTkxYmVhNTExNDVkNzk3NmM5YQ_73e3d24e44d881918a9b9622fd5a4193",
+      "file_upload_page_id": "page_41a5a8a055208191bea51145d7976c9a",
+      "position": 1834255400229888,
+      "created_at": "2026-10-06T05:37:19.565577Z",
+      "updated_at": "2026-10-07T02:44:38.968279Z",
+      "deleted_at": null,
+      "current_sequence": 9,
+      "projection_through_sequence": 9,
+      "access": {
+        "can_read": true,
+        "can_comment": true,
+        "can_write": true,
+        "can_share": true,
+        "can_delete": true,
+        "sources": [
+          "library"
+        ]
+      },
+      "url": "https://chatgpt.com/space/page_41a5a8a055208191bea51145d7976c9a"
+    },
+    "content": {
+      "schema_version": 2,
+      "symbol": null,
+      "title": "구조화 원본과 검증",
+      "title_hash": "76cdf02e4ebd615b23d0c1eaf9ba36779f328af15d0c57f560071dbc18a52332",
+      "blocks": [
+        {
+          "id": "7c56a2ee-2c49-4575-9e9f-8ee370e3dc55",
+          "kind": "markdown",
+          "markdown": "학원 업무 원본과 조회 지도는 버전이 있는 JSON과 JSON Schema로 관리합니다. 사람이 읽는 Page는 원본을 찾아가는 화면입니다.",
+          "hash": "fd45f3393e11e3c56fa8f8df955e514aae219afcd192a92c5767eea5e7036061",
+          "metadata": {}
+        },
+        {
+          "id": "79933257-8d74-433a-829e-a8bd16562a3a",
+          "kind": "markdown",
+          "markdown": "## 교재 구조와 학생 흐름 확장",
+          "hash": "28bb785950f770eb597ad2ce62af7d9a4e51f885f382bfd877fc38794f02bb1b",
+          "metadata": {}
+        },
+        {
+          "id": "28f18385-1a0b-4974-b003-5834da24b22a",
+          "kind": "markdown",
+          "markdown": "[교재 구조와 흐름 규칙](page:page_f689e004893481919f9e8bc018d99807)에서 교재 네이밍, 초등 9개·중등 8개 섹션, 실제 관찰된 단원 연결과 이력·DATA/LOGIC/ACTION 계약을 조회합니다. 기존 문제 섹션 목록은 이 확장 구조의 일부로 보존합니다. 영상 요구를 교재 문제 섹션으로 합치지 않습니다.",
+          "hash": "bc34966326c18fcbceda0d8177f40dc19b4a876d0ef45637af6611b283887ff8",
+          "metadata": {}
+        },
+        {
+          "id": "d0a01e6d-3d0d-4498-9b72-429682629ae3",
+          "kind": "markdown",
+          "markdown": "[학생 디렉터리](page:page_d9818d5817f08191835ba0a0e85936bc)에서 최근 승인 자료의 교재별 흐름 정본과 학생별 검토 보기를 연결합니다. Space를 관계형 DB로 가정하지 않고 안정된 도메인 ID와 저장 adapter를 분리합니다.",
+          "hash": "9bcdbcf567482b5bd083ea362f0a18240fbc728ef92b7ed8a4bbb26467657d26",
+          "metadata": {}
+        },
+        {
+          "id": "7d0feb3c-73e0-413e-adcf-a23507d1c067",
+          "kind": "markdown",
+          "markdown": "## 현재 조회 색인 리비전 4",
+          "hash": "ee97cd591ab3e0b522b09e77d2d7cf20a57f7a722ba20ceae42caadfb6ca8c89",
+          "metadata": {}
+        },
+        {
+          "id": "23104b47-be11-4c00-8b89-6fe5abe0c163",
+          "kind": "markdown",
+          "markdown": "기존 실무·사이트·출력 정본은 재사용하고 숙제 확인 모듈만 추가했습니다. 같은 학생과 날짜의 Assignment 아래 예습 영상과 문제풀이 섹션을 독립적으로 확인합니다.",
+          "hash": "378d12f8c8d92d8047ddb6d90026152c456fe3b6d907d377f719d26736716993",
+          "metadata": {}
+        },
+        {
+          "id": "7395cfcc-196c-4c9b-a946-2d8f3175d94a",
+          "kind": "markdown",
+          "markdown": "[학원 Cartography 빠른 조회 색인 리비전 4](library-file:fde1_bGliZmlsZV9KSVJPNXZjN2E4cV9HUVJwQXJXYUVn_FileDrive_73e3d24e44d881918a9b9622fd5a4193)",
+          "hash": "65f7e11d3e1959394f36de88bd552013abf9682745d09295145e8d61fd0735fb",
+          "metadata": {}
+        },
+        {
+          "id": "28bdea09-3e15-4837-b7e8-4ae331d3ddb7",
+          "kind": "markdown",
+          "markdown": "[영상과 문제 섹션별 숙제 확인 정본 리비전 4](library-file:fde1_bGliZmlsZV9EeEFwajRNSUZPSVpLb1F2eXFKb3ln_FileDrive_73e3d24e44d881918a9b9622fd5a4193)",
+          "hash": "1f320b530efa6ee25927dde42df7d5eaf643e25670487ef3d2a79a1f6ca90134",
+          "metadata": {}
+        },
+        {
+          "id": "f0335f60-1eb5-4b56-874c-15da8906706c",
+          "kind": "markdown",
+          "markdown": "[학원 숙제 확인 확장 Schema 0.4.0](library-file:fde1_bGliZmlsZV9UOTdUTmN6c1hsLWJlUUM5dmVjclln_FileDrive_73e3d24e44d881918a9b9622fd5a4193)",
+          "hash": "e33cd6d33af6b7dc03281efa0b83ae929321546eb2bc09ef91201d451ab14e7b",
+          "metadata": {}
+        },
+        {
+          "id": "bf8bd14b-fb1c-4136-8665-74898d7ec862",
+          "kind": "markdown",
+          "markdown": "[숙제 확인 분리와 게시 검증 리비전 4](library-file:fde1_bGliZmlsZV82MXJ0QVlZMXhqLXR5WDNHUjNvaXlR_FileDrive_73e3d24e44d881918a9b9622fd5a4193)",
+          "hash": "6389a01f5f1f5f524b2ce2e26d7acf57a5f601319ce45808fbe6bc809401a2ff",
+          "metadata": {}
+        },
+        {
+          "id": "46b432ca-9bd4-4d44-b6e8-fb67e345d030",
+          "kind": "markdown",
+          "markdown": "BookSectionRegistry에는 필수예제, 유형다지기, 실력다지기, 실력올리기 등 실제 교재별 문제 섹션만 둡니다. 예습 영상은 별도 페이지와 타입이며 섹션 목록에 넣지 않습니다. 영상 요구와 문제 요구를 하나의 자동 완료 상태로 합치지 않습니다.",
+          "hash": "0282876a86171031004310e18af9ae6fda48713f26737ee36b6cda3ae38701fe",
+          "metadata": {}
+        },
+        {
+          "id": "a7689910-80ff-4e1f-abb6-82dc1d8a4ad3",
+          "kind": "markdown",
+          "markdown": "새 정본은 과제 범위, 채점 시도와 원래 오답 및 유사문항 근거를 참조로 연결합니다. 학생 원문이나 비공개 채점 상세는 복제하지 않았습니다. 실제 UI에서 확인한 섹션·시험 코드와 아직 읽지 못한 PDF 헤더 및 페이지·문항 대응도 구분했습니다.",
+          "hash": "7556a51ba79584f7e1b41ddc0fa867ad673264b8c7070845a4021e2111afa12e",
+          "metadata": {}
+        },
+        {
+          "id": "d84229ef-e381-41ac-8435-8a1f79456649",
+          "kind": "markdown",
+          "markdown": "종이로 풀어 와 수업 중 채점하는 과제는 집에서 앱 입력과 채점 기록을 요구하지 않습니다. QR 도움 영상은 완료 근거가 아닙니다. 이 예외를 일반 가우스 예습이나 종류가 불명확한 오답 정리 숙제에 자동 적용하지 않습니다.",
+          "hash": "0e3cfc54e78a73f7f3015fefe6481809bc794a5dbde9f308ac05c3424a3020cc",
+          "metadata": {}
+        },
+        {
+          "id": "38bf4993-a584-443d-ba50-3b83ce16871c",
+          "kind": "markdown",
+          "markdown": "검색 뒤 이전 학생 표가 남거나 필터가 적용되지 않으면 해당 결과를 근거에서 제외합니다. 이전 점수는 새 숙제 근거가 아니며 일부 단원 채점을 전체 지정 범위 완료로 바꾸지 않습니다. 사이트 시각의 시간대도 아직 미확인입니다.",
+          "hash": "4c9de06593de5455cef6246724ca003811efb495d3c455672a4cede49f5fe8b4",
+          "metadata": {}
+        },
+        {
+          "id": "fb8b58db-fcb7-41ce-b148-4b2c4d18b7f5",
+          "kind": "markdown",
+          "markdown": "영상의 섹션 등록, 영상에 문제 섹션 키를 붙이는 입력, 근거 없는 PDF 헤더 확인 승격을 거부하는 검증을 통과했습니다. 현재 범위의 안전한 추가 조회는 마쳤고, 남은 페이지·문항 및 종이 검토는 필요한 근거가 더 있어야 확인할 수 있습니다.",
+          "hash": "02316784be40ae769be454bde807311bf37dace1d6ea64444aa8532a8972e50b",
+          "metadata": {}
+        },
+        {
+          "id": "88aed855-c68c-4476-8be6-a2d2438cc38d",
+          "kind": "markdown",
+          "markdown": "## 실무와 사이트 및 출력 정본 리비전 3",
+          "hash": "1b25c17e75f0cf8bfc028aaea28ea46994b873c79c38068d56b0cf6f4b44fb42",
+          "metadata": {}
+        },
+        {
+          "id": "26f122d1-1c9f-4045-aba8-3de6ccab5fbc",
+          "kind": "markdown",
+          "markdown": "빠른 조회 색인에서 요청에 맞는 파일과 레코드를 먼저 찾습니다. 실무 맥락, 사이트 조회와 실행, 오와 클의 작업 계약, 관찰 근거와 남은 제약을 분리했습니다. 아래 파일은 이 원본 자료 Page의 ID와 정확한 파일 참조로 읽습니다.",
+          "hash": "859ac78a108e6d6071dedf996f1bafc3bd0d9493fb23d2fb1066e1cfd88b9374",
+          "metadata": {}
+        },
+        {
+          "id": "20899c24-ff6a-4d57-b720-72b8fa423768",
+          "kind": "markdown",
+          "markdown": "[학원 Cartography 빠른 조회 색인 리비전 3](library-file:fde1_bGliZmlsZV9VdGNVNkphTUsyZWZKYUppM2E4QnV3_FileDrive_73e3d24e44d881918a9b9622fd5a4193)",
+          "hash": "49c974f64063b03b5214cb6e93c55a68467917d67b5e415eb163472c563ed3dd",
+          "metadata": {}
+        },
+        {
+          "id": "0cb8e2bf-b673-4728-9478-eed3843a1b9c",
+          "kind": "markdown",
+          "markdown": "[강사 실무 맥락 정본 리비전 3](library-file:fde1_bGliZmlsZV9JckJ4Z2xVZ3Budmo1RV9SdUlQVDdR_FileDrive_73e3d24e44d881918a9b9622fd5a4193)",
+          "hash": "3b751a4442cda1c62615d6068618a1f5400ef88f5debf1ee3b9916f7007d0c99",
+          "metadata": {}
+        },
+        {
+          "id": "357d1d1a-88f5-4178-aa2e-00c5fc50089d",
+          "kind": "markdown",
+          "markdown": "[학원 사이트 조회와 실행 계약 리비전 3](library-file:fde1_bGliZmlsZV9CcC03eV9BUkZsYkRJS0JtdkdJRjBR_FileDrive_73e3d24e44d881918a9b9622fd5a4193)",
+          "hash": "698693ba46be05723f452f72c5cfff68a414acfcbbc415f4d02ddab09180987d",
+          "metadata": {}
+        },
+        {
+          "id": "eee6d8f3-707c-41b8-8f92-e6dd946cc78b",
+          "kind": "markdown",
+          "markdown": "[오와 클 작업 계약 및 관찰 추적 리비전 3](library-file:fde1_bGliZmlsZV9NZ3VFMWgyVUhGb1p2djFXLVptc3ZB_FileDrive_73e3d24e44d881918a9b9622fd5a4193)",
+          "hash": "977814a36bdd5a48493fcb5f34e89c03f11a5c865853bb9cb63e2a5b6809041a",
+          "metadata": {}
+        },
+        {
+          "id": "b8db8846-2235-4341-bda4-72b2db0253ed",
+          "kind": "markdown",
+          "markdown": "[학원 탐색 범위와 현재 제약 리비전 3](library-file:fde1_bGliZmlsZV93a2RaZWxKZ0RPZHBhYVBuS3lJSENR_FileDrive_73e3d24e44d881918a9b9622fd5a4193)",
+          "hash": "fc890cba4e7882a88e53a2b8bd11dbf99b629bac86f5650fd393e2083b389037",
+          "metadata": {}
+        },
+        {
+          "id": "f3deb657-d4f3-47d5-ab36-4755f66280f0",
+          "kind": "markdown",
+          "markdown": "[학원 Cartography 근거 리비전 3](library-file:fde1_bGliZmlsZV95ZHBQOVlBY3Z2bEJiRXZ4SjVGVXJn_FileDrive_73e3d24e44d881918a9b9622fd5a4193)",
+          "hash": "818955ba9b71cf14399a6956d51d4b4362fee6ad95ec239b46dfc8d9abff69b9",
+          "metadata": {}
+        },
+        {
+          "id": "d80921b9-7fa4-4da6-9913-357aaeabcb68",
+          "kind": "markdown",
+          "markdown": "[학원 Cartography 분리 정본 Schema 0.3.0](library-file:fde1_bGliZmlsZV9EcFdhZjhaLXZGRnZ2ZW5Sb3dsd0JR_FileDrive_73e3d24e44d881918a9b9622fd5a4193)",
+          "hash": "b657773d103c0f04caed6983f84fb7523a4929500795c7afe7b5c504621a7539",
+          "metadata": {}
+        },
+        {
+          "id": "3b38402b-3eb9-433e-b796-3c959079c023",
+          "kind": "markdown",
+          "markdown": "[학원 Cartography 검증 기록 리비전 3](library-file:fde1_bGliZmlsZV9LTXg2eHFxLWhUS0piNWluZnY2ZFZB_FileDrive_73e3d24e44d881918a9b9622fd5a4193)",
+          "hash": "5ab61881d23ab3e92de05a6b487b65e971c4a84ea20937ffb61d47c1b204688d",
+          "metadata": {}
+        },
+        {
+          "id": "e15fb648-03f5-4afb-bd9c-b211be845880",
+          "kind": "markdown",
+          "markdown": "## 현재 실행 상태",
+          "hash": "294ba638b7791a900a6a88917fac453b51e9cc424ad169066f371e18824de82a",
+          "metadata": {}
+        },
+        {
+          "id": "f2b8fc26-4836-4fe4-8e3f-2fa50eb93507",
+          "kind": "markdown",
+          "markdown": "학원 사이트 실행은 강아PC만 사용합니다. 학원 업무의 클라우드 로그인과 설치는 취소됐고 인증 요청이나 자격증명 사용 및 저장, 설치는 수행하지 않았다고 확인했습니다.",
+          "hash": "787f2144738a0aebe44a0e5ad178cef10d6a981f265f4f2762a708b7c7fe6a22",
+          "metadata": {}
+        },
+        {
+          "id": "5186c4e8-88aa-4e06-b19e-34b983cca1a9",
+          "kind": "markdown",
+          "markdown": "알려진 최근 한 행의 오만 켜고 클을 끈 상태로 일괄생성을 한 번 실행했습니다. 사용자는 외부 PDF 뷰어가 열린 것을 확인했습니다. PDF 내용과 헤더 및 페이지는 현재 도구에서 검증하지 못했고 물리 인쇄는 하지 않았습니다. 같은 생성을 반복하지 않습니다.",
+          "hash": "c3178dd526b3984146e955339ffe4b51af44dc44b3dd8cd706ae2a12aae33e06",
+          "metadata": {}
+        },
+        {
+          "id": "b5d057e5-a152-424e-ba2f-5c279fdb3a1c",
+          "kind": "markdown",
+          "markdown": "행별 클은 개별 클리닉 생성 모달을 열며 유사문항 설정 1을 확인했습니다. 상단 일괄 클 설정은 2로 달랐습니다. 수량을 적용하거나 클 자료를 생성하지 않았고, 원래 오답당 유사문항 수와 종이 인쇄 매수는 구분합니다.",
+          "hash": "9a05bbb6d34c8c805d6bd062bdec0ac93fbfd32777d8a72cf9d9961ddbdf6444",
+          "metadata": {}
+        },
+        {
+          "id": "a72646ba-5096-48f9-84b9-32a183d549fe",
+          "kind": "markdown",
+          "markdown": "한 실행 요약은 전달된 실제 관찰에서 재구성한 기록입니다. 현지 9개 이벤트 원문은 읽기가 취소돼 가져오지 않았으며, 정확한 클릭 시각이나 당시 계약 버전을 만들어 넣지 않았습니다. 문서와 타입 설계를 런타임의 절대적인 강제 통제로 주장하지 않습니다.",
+          "hash": "a3ab44e55e3c8712150120c43f99f1d92ae04444c3efec21395f6e4906bfc185",
+          "metadata": {}
+        },
+        {
+          "id": "68a77681-e863-4292-ad79-ba30d3e3f381",
+          "kind": "markdown",
+          "markdown": "리비전 3의 정본과 색인 및 검증 파일 8개는 타입과 참조 관계를 검사했고 게시 후 재읽기 해시가 일치했습니다. 전체 기능 성공이나 물리 인쇄 준비 완료를 뜻하지 않습니다.",
+          "hash": "8669e59e5a5b0d81f9b7e12c5aa1971f9c30b1e76f2cc1ec62037bcdb2e0cadd",
+          "metadata": {}
+        },
+        {
+          "id": "c38e0128-1281-4ea1-9118-3a6f2b1e0f7e",
+          "kind": "markdown",
+          "markdown": "## 이전 지도 리비전 2",
+          "hash": "8585d58fa86a8106dba209610da12f5c54a7179efa87b73dd664b3b12b77584a",
+          "metadata": {}
+        },
+        {
+          "id": "d30fe707-e41b-46eb-a3c6-a76d03e88913",
+          "kind": "markdown",
+          "markdown": "학원 실무 맥락과 사이트 실행 계약을 분리했습니다. PracticalContext는 수업 루틴, 역할, 종이 자료와 강사 판단을 담고 SiteExecutionContract는 대상 식별, 조회 입력, 버튼, 미리보기와 출력 검증을 담습니다. 실행 계약은 contextualBasisIds로 실무 맥락을 참조합니다.",
+          "hash": "d5968602ba2f34f043338c80823545141209c6878f40c9fce3808025af9433b4",
+          "metadata": {}
+        },
+        {
+          "id": "139855ce-9e97-4c8d-a9fd-b96d98b56478",
+          "kind": "markdown",
+          "markdown": "사이트의 점수나 미학습 표시는 실제 종이 자료의 완료 판단을 대신하지 않습니다. 출력 자료는 PrintArtifact로 식별하고, 실제 완료는 사용자의 TeacherCompletionAssertion으로 별도 기록합니다. 심화 평가 기준 질문은 현재 중단했습니다.",
+          "hash": "371aad4c75230a57d48d96d5975a2c11d707b16be16bbfabace6a5622a668323",
+          "metadata": {}
+        },
+        {
+          "id": "682285f1-684b-4ff9-a209-a47e0ef650f0",
+          "kind": "markdown",
+          "markdown": "[학원 실무 맥락과 사이트 실행 지도 리비전 2](library-file:fde1_bGliZmlsZV90TXhiYnZKcGhGZXhfZkZtMjM4MGdn_FileDrive_73e3d24e44d881918a9b9622fd5a4193)",
+          "hash": "556654e515cfd5f01fd070242c13ec60356248de05addc5762c72b6fb88c8d85",
+          "metadata": {}
+        },
+        {
+          "id": "7b0de6c2-f20c-4c9a-af42-f7c47b0e4740",
+          "kind": "markdown",
+          "markdown": "[학원 실무 맥락과 사이트 실행 Schema 0.2.0](library-file:fde1_bGliZmlsZV9GeTZQZWY4bGRIZzl3M1pkYXVFSl9R_FileDrive_73e3d24e44d881918a9b9622fd5a4193)",
+          "hash": "f59c6198e81b7d28116731ea47a43fd62ed2f1596ce37379b4b646d7c36cfd01",
+          "metadata": {}
+        },
+        {
+          "id": "cb844e65-2af1-44c4-9bb2-407b793d9f84",
+          "kind": "markdown",
+          "markdown": "이 지도는 탐색 중인 체크포인트입니다. 미탐색, 읽기 근거 부족, 의미 미확인, 사용자 맥락 필요, 효과 있는 동작 미실행을 구분합니다. 17항목과 10메뉴라는 대상 범위를 모두 확인한 것으로 계산하지 않습니다. 학교와 Excel은 종료된 범위입니다.",
+          "hash": "12f39422544ef959d0b6931f2352ec9caa9ba9dde6fbab767c6a627ff06941bd",
+          "metadata": {}
+        },
+        {
+          "id": "e63c9035-1606-4937-acdb-d9a29b2d7951",
+          "kind": "markdown",
+          "markdown": "## 파일 구성",
+          "hash": "6b861eda9348a7d27e0bf943ea84ea9d45682ebafd9372de7012347e789e59de",
+          "metadata": {}
+        },
+        {
+          "id": "f5eb64db-d10e-4d81-8346-c8c1504dc8dc",
+          "kind": "markdown",
+          "markdown": "- 업무 타입 Schema: 학생, 등록, 수업, 출결, 결석, 보강, 수업 기록, 안내와 할 일",
+          "hash": "b80e13d5256dcfdb1dca82cbbe1f5b06ac6e192362eda669c1845f196530f518",
+          "metadata": {}
+        },
+        {
+          "id": "b26cad8c-4faf-43d8-8447-538516723beb",
+          "kind": "markdown",
+          "markdown": "- 업무 자료 목록: 실제 Page 부모 관계와 파일 연결",
+          "hash": "dd7a51ad6df94b85e83ec0ec9f7961175b8739643e4ad61fc3888a2c88408615",
+          "metadata": {}
+        },
+        {
+          "id": "1b01fcfd-6788-4473-9416-09945086aaa8",
+          "kind": "markdown",
+          "markdown": "- 조회 경로: 요청과 화면, 필드, 읽기 순서, 검증 및 변경 경계",
+          "hash": "7bbe9ad1c62d7c9192a30b7c13b798d492f2adcbdda53016252e8a268ed1220e",
+          "metadata": {}
+        },
+        {
+          "id": "be800d4f-7e97-4cca-a495-3d3a817ca594",
+          "kind": "markdown",
+          "markdown": "- 출처: 관찰 범위와 확인 수준",
+          "hash": "a4d1dff11894af32a14c55dc6b58991aa5446c7a4771078c91624db6bf5910bd",
+          "metadata": {}
+        },
+        {
+          "id": "a1ae067d-afe5-46ba-8ec3-1c3e45d9fcb1",
+          "kind": "markdown",
+          "markdown": "- 검증 결과: 타입과 참조 관계 및 게시 파일 재읽기",
+          "hash": "f1efef4bd8e890850937b0b0e21c6ca754ad1050cbec411b060a6016cbad6268",
+          "metadata": {}
+        },
+        {
+          "id": "149add38-a118-48aa-aaaf-7188c0e5d500",
+          "kind": "markdown",
+          "markdown": "## 기존 자료와 관계",
+          "hash": "e952054e93b8ffafd8b56466fa523531ccd3a34adb5210c2b26424d0f6233a81",
+          "metadata": {}
+        },
+        {
+          "id": "b9ae4471-1b93-46c1-8159-6ca02ddee2ea",
+          "kind": "markdown",
+          "markdown": "Workspace의 2026년 10월 5일 자료 목록과 Schema 2.0.0은 관찰 당시 스냅샷으로 보존합니다. 학원 실무 자료는 별도 Schema 0.1.0으로 추가하며 기존 자료를 덮어쓰지 않습니다.",
+          "hash": "a446e0d1312a143adf59643cc1659cf402f1c84490418888c6da63dcae2604bd",
+          "metadata": {}
+        },
+        {
+          "id": "9f708dd1-002e-44ea-ae9a-cb501fa31b6e",
+          "kind": "markdown",
+          "markdown": "## 개인정보",
+          "hash": "f479990298c7fe8e4f4927b530cc325459aed36395310d6b3cdd334ec9aa0225",
+          "metadata": {}
+        },
+        {
+          "id": "e4c5c55f-5ecb-4505-8fab-badbd3ea870f",
+          "kind": "markdown",
+          "markdown": "첫 게시 범위는 업무 구조와 조회 경로입니다. 학생별 학교, 연락처나 상세 학습 기록은 이 초기 파일에 포함하지 않습니다. 필요한 학생 정보는 요청 범위와 목적지 접근권한을 확인한 뒤 최소한으로 추가합니다.",
+          "hash": "46bd5cf1bcc2b6ee0d9238bc2b3f4290c11d047564844b6709a341ea968de666",
+          "metadata": {}
+        },
+        {
+          "id": "7523394f-67ae-4cd2-a5b3-c7d0e070738d",
+          "kind": "markdown",
+          "markdown": "## 초기 원본 리비전 1",
+          "hash": "4a26119adb3f8d23c378afa0297d3ee5436716b1fe8724506fb7dd95807fe184",
+          "metadata": {}
+        },
+        {
+          "id": "b7e49f1e-6ac0-4dbc-b80a-1eb49f5e5dc0",
+          "kind": "markdown",
+          "markdown": "[학원 실무 타입 Schema 0.1.0](library-file:fde1_bGliZmlsZV9ZYzk3aEJUSHFkS01GS3BpWDdxTTNB_FileDrive_73e3d24e44d881918a9b9622fd5a4193)",
+          "hash": "fdb3238bc819a27e4be8828c1305d49ada1b67106ed7deb0199ac446d886f51e",
+          "metadata": {}
+        },
+        {
+          "id": "27757695-928c-423a-b8cd-acc2fc0dd20f",
+          "kind": "markdown",
+          "markdown": "[학원 실무 자료 목록 2026 10 06](library-file:fde1_bGliZmlsZV9BVFFZMnF5N2VsendBZ0NfMm1UV1BR_FileDrive_73e3d24e44d881918a9b9622fd5a4193)",
+          "hash": "721c6ee11c7a766a2b7ea1b3607f369b35b916137dd01ca4434431a3eb81c55a",
+          "metadata": {}
+        },
+        {
+          "id": "d6192320-051f-4246-8a4c-43534ff2bd69",
+          "kind": "markdown",
+          "markdown": "[학원 사이트 Cartography 조회 경로](library-file:fde1_bGliZmlsZV8yNGN0cHItZHh6dlBNRXk4UVQ4dVdB_FileDrive_73e3d24e44d881918a9b9622fd5a4193)",
+          "hash": "ba5dcffb29cbe6d5d9fd554831ab00e3c7ddbf31fc4db8f6593280e6c1c4961d",
+          "metadata": {}
+        },
+        {
+          "id": "e1cabfdc-08fc-4828-9e43-920e05bd60fb",
+          "kind": "markdown",
+          "markdown": "[학원 사이트 관찰 근거](library-file:fde1_bGliZmlsZV9mRHBGRWxlc1BDNFhVeFFSaU9WeV93_FileDrive_73e3d24e44d881918a9b9622fd5a4193)",
+          "hash": "49969a22750401de12e7c3a7cf35cc0010fd81e9906aa38667ee8c9c2d9d297a",
+          "metadata": {}
+        },
+        {
+          "id": "9340cf4e-1522-47a4-b937-0d8a5fcaf5df",
+          "kind": "markdown",
+          "markdown": "[학원 실무 초기 작업 스냅샷](library-file:fde1_bGliZmlsZV9oOUlRU2o2NjlRLWhhYlpXN0NIWHV3_FileDrive_73e3d24e44d881918a9b9622fd5a4193)",
+          "hash": "443c347587c993b377d1a3233c655a9a70fe388603e310aec4f2317c4da427d7",
+          "metadata": {}
+        },
+        {
+          "id": "17516fcd-3cb4-44e1-875b-05169d3f7c64",
+          "kind": "markdown",
+          "markdown": "초기 자료는 업무 타입 15개, 요청 경로 9개, 화면 항목 10개를 정의합니다. 학생 실데이터를 넣지 않은 진행 중 작업 3개를 담았습니다. Schema와 ID 및 참조 관계 검사를 통과했고 원본 파일 5개의 게시 후 재읽기 해시가 일치했습니다.",
+          "hash": "4014ef8dcb159e893a1ca9d8a893ea95e79ac21ad385a59c5797cc7785b5c9fb",
+          "metadata": {}
+        },
+        {
+          "id": "ac29ca72-747c-4033-84f6-88be87cb2e5a",
+          "kind": "markdown",
+          "markdown": "## 강사 의도와 동작 계약",
+          "hash": "dbdbbb682dc5915e894eef48bef7dd69788319450d9f5c16e5f1028bf070d529",
+          "metadata": {}
+        },
+        {
+          "id": "3885f069-dcca-433d-aec1-e64e96450cfe",
+          "kind": "markdown",
+          "markdown": "같은 화면이나 버튼도 강사가 하려는 일에 따라 의미가 달라집니다. 각 요청 경로에 강사의 목적과 사용하는 이유, 전제 조건, 예상 결과, 부작용, 실패와 복구 방법, 근거와 남은 질문을 연결합니다.",
+          "hash": "315e8b8928310766d5266c909c6e5e785abae2e6293aad4b8639ec1fee7e4e61",
+          "metadata": {}
+        },
+        {
+          "id": "19573ad4-dff4-4176-b75d-93abfa514ed8",
+          "kind": "markdown",
+          "markdown": "사이트에서 관찰한 기능과 경찬님이 실제로 쓰는 방식은 별도 상태입니다. 실제 사용 의도는 필요한 순간에 최소한으로 확인하고, 답변과 시행착오 및 기각한 가설을 다음 리비전에 남깁니다.",
+          "hash": "71ded63032321a90342a4882c0836630fa6108fa2c36889cd1c6aa1e3cfa038a",
+          "metadata": {}
+        },
+        {
+          "id": "f015064e-7881-4bd6-93b1-0c0c3a3808e0",
+          "kind": "markdown",
+          "markdown": "초기 지도에서 제기한 완료 처리 기준은 이후 사용자 설명으로 정리됐습니다. 강사가 종이 자료의 실제 완료를 판단하며 별도 사이트 완료 처리는 하지 않습니다. 초기 파일은 당시 관찰과 가설의 이력으로 보존합니다.",
+          "hash": "8e5c40c9202071eeeddc8505cb2f31195cbd7c0d6da6ae2f8aad9865eef5e1a6",
+          "metadata": {}
+        },
+        {
+          "id": "2ef427d9-ac52-46bd-bdf4-2907e672d02c",
+          "kind": "markdown",
+          "markdown": "[강사 의도와 동작 계약 및 확인 질문](library-file:fde1_bGliZmlsZV9pRF9lVTVhX2llbFZUOS1BYWM4NVZn_FileDrive_73e3d24e44d881918a9b9622fd5a4193)",
+          "hash": "bb86a24fd00b49c81357cba3333a7acecf2b2f6992b67cf42da1d26d133da865",
+          "metadata": {}
+        },
+        {
+          "id": "cf769db6-920c-43b4-ba8e-c23175a2b861",
+          "kind": "markdown",
+          "markdown": "[강사 의도와 동작 계약 Schema 0.1.0](library-file:fde1_bGliZmlsZV82bzlYeG1BQTFtWmNtTklkSHJHTWJ3_FileDrive_73e3d24e44d881918a9b9622fd5a4193)",
+          "hash": "7b6df677a2062a4440872e19f2b227e7a2a79f9bfc8c99260e61d1585ab1998f",
+          "metadata": {}
+        },
+        {
+          "id": "90ef420a-dbe9-423d-8e83-ad933c4ba81e",
+          "kind": "markdown",
+          "markdown": "초기 계약과 질문은 리비전 1 이력입니다. 현재 작업에서는 위의 리비전 2와 최신 사용자 지시를 우선하며, 종료되거나 답변된 질문을 다시 묻지 않습니다.",
+          "hash": "d6ceac924f1b37727811567e2828fff5cfada249e0084a32c1732fc1810964ad",
+          "metadata": {}
+        },
+        {
+          "id": "fea66134-c32a-46fb-b489-bdaee1596d30",
+          "kind": "markdown",
+          "markdown": "## 게시 검증",
+          "hash": "d6c5c58f11821b5b0ee509462206e0ea1a71a8ec8f2268e50946a7d5a45fa4aa",
+          "metadata": {}
+        },
+        {
+          "id": "8fcdcfd1-0aa6-4576-af12-c9e6c6f73740",
+          "kind": "markdown",
+          "markdown": "[학원 실무 구조와 게시 검증 기록](library-file:fde1_bGliZmlsZV9McVZEZGxzaEhJZlhnNVVPWGN5X1Z3_FileDrive_73e3d24e44d881918a9b9622fd5a4193)",
+          "hash": "82c212ad14b33f265c7381b3c2a64ecad1f7679fa7f75d96643cc79468711d2a",
+          "metadata": {}
+        },
+        {
+          "id": "9ab11c5b-dbf3-499a-8d0e-0417661a82d1",
+          "kind": "markdown",
+          "markdown": "원본 7개와 검증 기록 1개를 게시했습니다. JSON 타입과 ID 및 참조 관계, Page의 실제 부모와 탐색 링크, 게시된 파일의 재읽기 해시를 확인했습니다. 시각적 렌더링과 강사의 실제 사용 방식에 관한 미확인 항목은 검증 기록에 남겼습니다.",
+          "hash": "6472d4d363cbf74e7c7c807371535745ad8ba44611cefd07cafd99b55b515408",
+          "metadata": {}
+        },
+        {
+          "id": "6f78c2ea-098f-4331-a16d-40dff1e71f66",
+          "kind": "markdown",
+          "markdown": "자료 목록은 초기 Page 5개와 핵심 원본 4개 파일을 기록한 부분 스냅샷입니다. 이후 추가한 강사 의도와 동작 계약 및 검증 파일은 이 Page의 별도 링크에서 확인합니다.",
+          "hash": "1e75b503d81a7bd973ce34a3d9e5d77aa80d97665e866a36db2129de70fd0847",
+          "metadata": {}
+        },
+        {
+          "id": "ef00d29c-802b-4aa0-ba77-3abc80d1f4d9",
+          "kind": "markdown",
+          "markdown": "## 현재 작업 상태",
+          "hash": "6920f57c284d5d01ba175b35e09fcb541172d6c6e74a928e39536df73e304b90",
+          "metadata": {}
+        },
+        {
+          "id": "a1e91f0c-2f61-467c-9c58-9284d8a185b5",
+          "kind": "markdown",
+          "markdown": "학교 정보 조회는 사용자 결정으로 종료했습니다. 출석부 B열은 빈칸으로 유지합니다. 초기 작업 JSON과 동작 계약의 미확인 표시는 당시 관찰 기록이며, 학교 조회를 계속하거나 다시 시작하라는 요청이 아닙니다. 향후 별도 수학교육 프로젝트는 이 학원 운영 공간과 분리합니다.",
+          "hash": "7872f06914effdaa3941d354c8ca4c0c64d56e2b3b6c9ced82fb9eaf3226ae86",
+          "metadata": {}
+        },
+        {
+          "id": "6a38c79e-ff3e-484c-8f52-e764c0361adf",
+          "kind": "markdown",
+          "markdown": "## 공유 교재 판본 분석",
+          "hash": "5a921b16f679cc5373acc52e0a8ffdf5eb09e92047c9da0faf79aaf7169b74e0",
+          "metadata": {}
+        },
+        {
+          "id": "7f2bd422-6d55-4eef-a0ec-f13c597a9bc2",
+          "kind": "markdown",
+          "markdown": "[교재 판본 정본](page:page_e98ea934bd688191b1a242772989cce8)에 공식 공개 샘플의 목차·섹션 앵커와 코드 대응 근거를 원본 해시별로 보관합니다. [실무 거버넌스](page:page_7058921f1a988191a136a172c81a2487)에서 재사용·무효화 계약을 확인합니다.",
+          "hash": "73701cf04ee5cc85ac29d3a83276b5cc7f148fb4e342cdab0b449df881979b14",
+          "metadata": {}
+        }
+      ],
+      "markdown": "학원 업무 원본과 조회 지도는 버전이 있는 JSON과 JSON Schema로 관리합니다. 사람이 읽는 Page는 원본을 찾아가는 화면입니다.\n\n## 교재 구조와 학생 흐름 확장\n\n[교재 구조와 흐름 규칙](page:page_f689e004893481919f9e8bc018d99807)에서 교재 네이밍, 초등 9개·중등 8개 섹션, 실제 관찰된 단원 연결과 이력·DATA/LOGIC/ACTION 계약을 조회합니다. 기존 문제 섹션 목록은 이 확장 구조의 일부로 보존합니다. 영상 요구를 교재 문제 섹션으로 합치지 않습니다.\n\n[학생 디렉터리](page:page_d9818d5817f08191835ba0a0e85936bc)에서 최근 승인 자료의 교재별 흐름 정본과 학생별 검토 보기를 연결합니다. Space를 관계형 DB로 가정하지 않고 안정된 도메인 ID와 저장 adapter를 분리합니다.\n\n## 현재 조회 색인 리비전 4\n\n기존 실무·사이트·출력 정본은 재사용하고 숙제 확인 모듈만 추가했습니다. 같은 학생과 날짜의 Assignment 아래 예습 영상과 문제풀이 섹션을 독립적으로 확인합니다.\n\n[학원 Cartography 빠른 조회 색인 리비전 4](library-file:fde1_bGliZmlsZV9KSVJPNXZjN2E4cV9HUVJwQXJXYUVn_FileDrive_73e3d24e44d881918a9b9622fd5a4193)\n\n[영상과 문제 섹션별 숙제 확인 정본 리비전 4](library-file:fde1_bGliZmlsZV9EeEFwajRNSUZPSVpLb1F2eXFKb3ln_FileDrive_73e3d24e44d881918a9b9622fd5a4193)\n\n[학원 숙제 확인 확장 Schema 0.4.0](library-file:fde1_bGliZmlsZV9UOTdUTmN6c1hsLWJlUUM5dmVjclln_FileDrive_73e3d24e44d881918a9b9622fd5a4193)\n\n[숙제 확인 분리와 게시 검증 리비전 4](library-file:fde1_bGliZmlsZV82MXJ0QVlZMXhqLXR5WDNHUjNvaXlR_FileDrive_73e3d24e44d881918a9b9622fd5a4193)\n\nBookSectionRegistry에는 필수예제, 유형다지기, 실력다지기, 실력올리기 등 실제 교재별 문제 섹션만 둡니다. 예습 영상은 별도 페이지와 타입이며 섹션 목록에 넣지 않습니다. 영상 요구와 문제 요구를 하나의 자동 완료 상태로 합치지 않습니다.\n\n새 정본은 과제 범위, 채점 시도와 원래 오답 및 유사문항 근거를 참조로 연결합니다. 학생 원문이나 비공개 채점 상세는 복제하지 않았습니다. 실제 UI에서 확인한 섹션·시험 코드와 아직 읽지 못한 PDF 헤더 및 페이지·문항 대응도 구분했습니다.\n\n종이로 풀어 와 수업 중 채점하는 과제는 집에서 앱 입력과 채점 기록을 요구하지 않습니다. QR 도움 영상은 완료 근거가 아닙니다. 이 예외를 일반 가우스 예습이나 종류가 불명확한 오답 정리 숙제에 자동 적용하지 않습니다.\n\n검색 뒤 이전 학생 표가 남거나 필터가 적용되지 않으면 해당 결과를 근거에서 제외합니다. 이전 점수는 새 숙제 근거가 아니며 일부 단원 채점을 전체 지정 범위 완료로 바꾸지 않습니다. 사이트 시각의 시간대도 아직 미확인입니다.\n\n영상의 섹션 등록, 영상에 문제 섹션 키를 붙이는 입력, 근거 없는 PDF 헤더 확인 승격을 거부하는 검증을 통과했습니다. 현재 범위의 안전한 추가 조회는 마쳤고, 남은 페이지·문항 및 종이 검토는 필요한 근거가 더 있어야 확인할 수 있습니다.\n\n## 실무와 사이트 및 출력 정본 리비전 3\n\n빠른 조회 색인에서 요청에 맞는 파일과 레코드를 먼저 찾습니다. 실무 맥락, 사이트 조회와 실행, 오와 클의 작업 계약, 관찰 근거와 남은 제약을 분리했습니다. 아래 파일은 이 원본 자료 Page의 ID와 정확한 파일 참조로 읽습니다.\n\n[학원 Cartography 빠른 조회 색인 리비전 3](library-file:fde1_bGliZmlsZV9VdGNVNkphTUsyZWZKYUppM2E4QnV3_FileDrive_73e3d24e44d881918a9b9622fd5a4193)\n\n[강사 실무 맥락 정본 리비전 3](library-file:fde1_bGliZmlsZV9JckJ4Z2xVZ3Budmo1RV9SdUlQVDdR_FileDrive_73e3d24e44d881918a9b9622fd5a4193)\n\n[학원 사이트 조회와 실행 계약 리비전 3](library-file:fde1_bGliZmlsZV9CcC03eV9BUkZsYkRJS0JtdkdJRjBR_FileDrive_73e3d24e44d881918a9b9622fd5a4193)\n\n[오와 클 작업 계약 및 관찰 추적 리비전 3](library-file:fde1_bGliZmlsZV9NZ3VFMWgyVUhGb1p2djFXLVptc3ZB_FileDrive_73e3d24e44d881918a9b9622fd5a4193)\n\n[학원 탐색 범위와 현재 제약 리비전 3](library-file:fde1_bGliZmlsZV93a2RaZWxKZ0RPZHBhYVBuS3lJSENR_FileDrive_73e3d24e44d881918a9b9622fd5a4193)\n\n[학원 Cartography 근거 리비전 3](library-file:fde1_bGliZmlsZV95ZHBQOVlBY3Z2bEJiRXZ4SjVGVXJn_FileDrive_73e3d24e44d881918a9b9622fd5a4193)\n\n[학원 Cartography 분리 정본 Schema 0.3.0](library-file:fde1_bGliZmlsZV9EcFdhZjhaLXZGRnZ2ZW5Sb3dsd0JR_FileDrive_73e3d24e44d881918a9b9622fd5a4193)\n\n[학원 Cartography 검증 기록 리비전 3](library-file:fde1_bGliZmlsZV9LTXg2eHFxLWhUS0piNWluZnY2ZFZB_FileDrive_73e3d24e44d881918a9b9622fd5a4193)\n\n## 현재 실행 상태\n\n학원 사이트 실행은 강아PC만 사용합니다. 학원 업무의 클라우드 로그인과 설치는 취소됐고 인증 요청이나 자격증명 사용 및 저장, 설치는 수행하지 않았다고 확인했습니다.\n\n알려진 최근 한 행의 오만 켜고 클을 끈 상태로 일괄생성을 한 번 실행했습니다. 사용자는 외부 PDF 뷰어가 열린 것을 확인했습니다. PDF 내용과 헤더 및 페이지는 현재 도구에서 검증하지 못했고 물리 인쇄는 하지 않았습니다. 같은 생성을 반복하지 않습니다.\n\n행별 클은 개별 클리닉 생성 모달을 열며 유사문항 설정 1을 확인했습니다. 상단 일괄 클 설정은 2로 달랐습니다. 수량을 적용하거나 클 자료를 생성하지 않았고, 원래 오답당 유사문항 수와 종이 인쇄 매수는 구분합니다.\n\n한 실행 요약은 전달된 실제 관찰에서 재구성한 기록입니다. 현지 9개 이벤트 원문은 읽기가 취소돼 가져오지 않았으며, 정확한 클릭 시각이나 당시 계약 버전을 만들어 넣지 않았습니다. 문서와 타입 설계를 런타임의 절대적인 강제 통제로 주장하지 않습니다.\n\n리비전 3의 정본과 색인 및 검증 파일 8개는 타입과 참조 관계를 검사했고 게시 후 재읽기 해시가 일치했습니다. 전체 기능 성공이나 물리 인쇄 준비 완료를 뜻하지 않습니다.\n\n## 이전 지도 리비전 2\n\n학원 실무 맥락과 사이트 실행 계약을 분리했습니다. PracticalContext는 수업 루틴, 역할, 종이 자료와 강사 판단을 담고 SiteExecutionContract는 대상 식별, 조회 입력, 버튼, 미리보기와 출력 검증을 담습니다. 실행 계약은 contextualBasisIds로 실무 맥락을 참조합니다.\n\n사이트의 점수나 미학습 표시는 실제 종이 자료의 완료 판단을 대신하지 않습니다. 출력 자료는 PrintArtifact로 식별하고, 실제 완료는 사용자의 TeacherCompletionAssertion으로 별도 기록합니다. 심화 평가 기준 질문은 현재 중단했습니다.\n\n[학원 실무 맥락과 사이트 실행 지도 리비전 2](library-file:fde1_bGliZmlsZV90TXhiYnZKcGhGZXhfZkZtMjM4MGdn_FileDrive_73e3d24e44d881918a9b9622fd5a4193)\n\n[학원 실무 맥락과 사이트 실행 Schema 0.2.0](library-file:fde1_bGliZmlsZV9GeTZQZWY4bGRIZzl3M1pkYXVFSl9R_FileDrive_73e3d24e44d881918a9b9622fd5a4193)\n\n이 지도는 탐색 중인 체크포인트입니다. 미탐색, 읽기 근거 부족, 의미 미확인, 사용자 맥락 필요, 효과 있는 동작 미실행을 구분합니다. 17항목과 10메뉴라는 대상 범위를 모두 확인한 것으로 계산하지 않습니다. 학교와 Excel은 종료된 범위입니다.\n\n## 파일 구성\n\n- 업무 타입 Schema: 학생, 등록, 수업, 출결, 결석, 보강, 수업 기록, 안내와 할 일\n\n- 업무 자료 목록: 실제 Page 부모 관계와 파일 연결\n\n- 조회 경로: 요청과 화면, 필드, 읽기 순서, 검증 및 변경 경계\n\n- 출처: 관찰 범위와 확인 수준\n\n- 검증 결과: 타입과 참조 관계 및 게시 파일 재읽기\n\n## 기존 자료와 관계\n\nWorkspace의 2026년 10월 5일 자료 목록과 Schema 2.0.0은 관찰 당시 스냅샷으로 보존합니다. 학원 실무 자료는 별도 Schema 0.1.0으로 추가하며 기존 자료를 덮어쓰지 않습니다.\n\n## 개인정보\n\n첫 게시 범위는 업무 구조와 조회 경로입니다. 학생별 학교, 연락처나 상세 학습 기록은 이 초기 파일에 포함하지 않습니다. 필요한 학생 정보는 요청 범위와 목적지 접근권한을 확인한 뒤 최소한으로 추가합니다.\n\n## 초기 원본 리비전 1\n\n[학원 실무 타입 Schema 0.1.0](library-file:fde1_bGliZmlsZV9ZYzk3aEJUSHFkS01GS3BpWDdxTTNB_FileDrive_73e3d24e44d881918a9b9622fd5a4193)\n\n[학원 실무 자료 목록 2026 10 06](library-file:fde1_bGliZmlsZV9BVFFZMnF5N2VsendBZ0NfMm1UV1BR_FileDrive_73e3d24e44d881918a9b9622fd5a4193)\n\n[학원 사이트 Cartography 조회 경로](library-file:fde1_bGliZmlsZV8yNGN0cHItZHh6dlBNRXk4UVQ4dVdB_FileDrive_73e3d24e44d881918a9b9622fd5a4193)\n\n[학원 사이트 관찰 근거](library-file:fde1_bGliZmlsZV9mRHBGRWxlc1BDNFhVeFFSaU9WeV93_FileDrive_73e3d24e44d881918a9b9622fd5a4193)\n\n[학원 실무 초기 작업 스냅샷](library-file:fde1_bGliZmlsZV9oOUlRU2o2NjlRLWhhYlpXN0NIWHV3_FileDrive_73e3d24e44d881918a9b9622fd5a4193)\n\n초기 자료는 업무 타입 15개, 요청 경로 9개, 화면 항목 10개를 정의합니다. 학생 실데이터를 넣지 않은 진행 중 작업 3개를 담았습니다. Schema와 ID 및 참조 관계 검사를 통과했고 원본 파일 5개의 게시 후 재읽기 해시가 일치했습니다.\n\n## 강사 의도와 동작 계약\n\n같은 화면이나 버튼도 강사가 하려는 일에 따라 의미가 달라집니다. 각 요청 경로에 강사의 목적과 사용하는 이유, 전제 조건, 예상 결과, 부작용, 실패와 복구 방법, 근거와 남은 질문을 연결합니다.\n\n사이트에서 관찰한 기능과 경찬님이 실제로 쓰는 방식은 별도 상태입니다. 실제 사용 의도는 필요한 순간에 최소한으로 확인하고, 답변과 시행착오 및 기각한 가설을 다음 리비전에 남깁니다.\n\n초기 지도에서 제기한 완료 처리 기준은 이후 사용자 설명으로 정리됐습니다. 강사가 종이 자료의 실제 완료를 판단하며 별도 사이트 완료 처리는 하지 않습니다. 초기 파일은 당시 관찰과 가설의 이력으로 보존합니다.\n\n[강사 의도와 동작 계약 및 확인 질문](library-file:fde1_bGliZmlsZV9pRF9lVTVhX2llbFZUOS1BYWM4NVZn_FileDrive_73e3d24e44d881918a9b9622fd5a4193)\n\n[강사 의도와 동작 계약 Schema 0.1.0](library-file:fde1_bGliZmlsZV82bzlYeG1BQTFtWmNtTklkSHJHTWJ3_FileDrive_73e3d24e44d881918a9b9622fd5a4193)\n\n초기 계약과 질문은 리비전 1 이력입니다. 현재 작업에서는 위의 리비전 2와 최신 사용자 지시를 우선하며, 종료되거나 답변된 질문을 다시 묻지 않습니다.\n\n## 게시 검증\n\n[학원 실무 구조와 게시 검증 기록](library-file:fde1_bGliZmlsZV9McVZEZGxzaEhJZlhnNVVPWGN5X1Z3_FileDrive_73e3d24e44d881918a9b9622fd5a4193)\n\n원본 7개와 검증 기록 1개를 게시했습니다. JSON 타입과 ID 및 참조 관계, Page의 실제 부모와 탐색 링크, 게시된 파일의 재읽기 해시를 확인했습니다. 시각적 렌더링과 강사의 실제 사용 방식에 관한 미확인 항목은 검증 기록에 남겼습니다.\n\n자료 목록은 초기 Page 5개와 핵심 원본 4개 파일을 기록한 부분 스냅샷입니다. 이후 추가한 강사 의도와 동작 계약 및 검증 파일은 이 Page의 별도 링크에서 확인합니다.\n\n## 현재 작업 상태\n\n학교 정보 조회는 사용자 결정으로 종료했습니다. 출석부 B열은 빈칸으로 유지합니다. 초기 작업 JSON과 동작 계약의 미확인 표시는 당시 관찰 기록이며, 학교 조회를 계속하거나 다시 시작하라는 요청이 아닙니다. 향후 별도 수학교육 프로젝트는 이 학원 운영 공간과 분리합니다.\n\n## 공유 교재 판본 분석\n\n[교재 판본 정본](page:page_e98ea934bd688191b1a242772989cce8)에 공식 공개 샘플의 목차·섹션 앵커와 코드 대응 근거를 원본 해시별로 보관합니다. [실무 거버넌스](page:page_7058921f1a988191a136a172c81a2487)에서 재사용·무효화 계약을 확인합니다.",
+      "page_id": "page_41a5a8a055208191bea51145d7976c9a"
+    },
+    "references": [
+      {
+        "reference": "library-file:fde1_bGliZmlsZV9KSVJPNXZjN2E4cV9HUVJwQXJXYUVn_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+        "metadata_available": true,
+        "mime_type": "application/json",
+        "byte_size": 13907
+      },
+      {
+        "reference": "library-file:fde1_bGliZmlsZV9EeEFwajRNSUZPSVpLb1F2eXFKb3ln_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+        "metadata_available": true,
+        "mime_type": "application/json",
+        "byte_size": 40235
+      },
+      {
+        "reference": "library-file:fde1_bGliZmlsZV9UOTdUTmN6c1hsLWJlUUM5dmVjclln_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+        "metadata_available": true,
+        "mime_type": "application/json",
+        "byte_size": 137029
+      },
+      {
+        "reference": "library-file:fde1_bGliZmlsZV82MXJ0QVlZMXhqLXR5WDNHUjNvaXlR_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+        "metadata_available": true,
+        "mime_type": "application/json",
+        "byte_size": 3465
+      },
+      {
+        "reference": "library-file:fde1_bGliZmlsZV9VdGNVNkphTUsyZWZKYUppM2E4QnV3_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+        "metadata_available": true,
+        "mime_type": "application/json",
+        "byte_size": 11609
+      },
+      {
+        "reference": "library-file:fde1_bGliZmlsZV9JckJ4Z2xVZ3Budmo1RV9SdUlQVDdR_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+        "metadata_available": true,
+        "mime_type": "application/json",
+        "byte_size": 10708
+      },
+      {
+        "reference": "library-file:fde1_bGliZmlsZV9CcC03eV9BUkZsYkRJS0JtdkdJRjBR_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+        "metadata_available": true,
+        "mime_type": "application/json",
+        "byte_size": 194284
+      },
+      {
+        "reference": "library-file:fde1_bGliZmlsZV9NZ3VFMWgyVUhGb1p2djFXLVptc3ZB_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+        "metadata_available": true,
+        "mime_type": "application/json",
+        "byte_size": 20528
+      },
+      {
+        "reference": "library-file:fde1_bGliZmlsZV93a2RaZWxKZ0RPZHBhYVBuS3lJSENR_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+        "metadata_available": true,
+        "mime_type": "application/json",
+        "byte_size": 19454
+      },
+      {
+        "reference": "library-file:fde1_bGliZmlsZV95ZHBQOVlBY3Z2bEJiRXZ4SjVGVXJn_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+        "metadata_available": true,
+        "mime_type": "application/json",
+        "byte_size": 22617
+      },
+      {
+        "reference": "library-file:fde1_bGliZmlsZV9EcFdhZjhaLXZGRnZ2ZW5Sb3dsd0JR_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+        "metadata_available": true,
+        "mime_type": "application/json",
+        "byte_size": 95289
+      },
+      {
+        "reference": "library-file:fde1_bGliZmlsZV9LTXg2eHFxLWhUS0piNWluZnY2ZFZB_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+        "metadata_available": true,
+        "mime_type": "application/json",
+        "byte_size": 3775
+      },
+      {
+        "reference": "library-file:fde1_bGliZmlsZV90TXhiYnZKcGhGZXhfZkZtMjM4MGdn_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+        "metadata_available": true,
+        "mime_type": "application/json",
+        "byte_size": 107932
+      },
+      {
+        "reference": "library-file:fde1_bGliZmlsZV9GeTZQZWY4bGRIZzl3M1pkYXVFSl9R_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+        "metadata_available": true,
+        "mime_type": "application/json",
+        "byte_size": 48409
+      },
+      {
+        "reference": "library-file:fde1_bGliZmlsZV9ZYzk3aEJUSHFkS01GS3BpWDdxTTNB_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+        "metadata_available": true,
+        "mime_type": "application/json",
+        "byte_size": 69647
+      },
+      {
+        "reference": "library-file:fde1_bGliZmlsZV9BVFFZMnF5N2VsendBZ0NfMm1UV1BR_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+        "metadata_available": true,
+        "mime_type": "application/json",
+        "byte_size": 5951
+      },
+      {
+        "reference": "library-file:fde1_bGliZmlsZV8yNGN0cHItZHh6dlBNRXk4UVQ4dVdB_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+        "metadata_available": true,
+        "mime_type": "application/json",
+        "byte_size": 41379
+      },
+      {
+        "reference": "library-file:fde1_bGliZmlsZV9mRHBGRWxlc1BDNFhVeFFSaU9WeV93_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+        "metadata_available": true,
+        "mime_type": "application/json",
+        "byte_size": 6114
+      },
+      {
+        "reference": "library-file:fde1_bGliZmlsZV9oOUlRU2o2NjlRLWhhYlpXN0NIWHV3_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+        "metadata_available": true,
+        "mime_type": "application/json",
+        "byte_size": 3041
+      },
+      {
+        "reference": "library-file:fde1_bGliZmlsZV9pRF9lVTVhX2llbFZUOS1BYWM4NVZn_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+        "metadata_available": true,
+        "mime_type": "application/json",
+        "byte_size": 42313
+      },
+      {
+        "reference": "library-file:fde1_bGliZmlsZV82bzlYeG1BQTFtWmNtTklkSHJHTWJ3_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+        "metadata_available": true,
+        "mime_type": "application/json",
+        "byte_size": 12783
+      },
+      {
+        "reference": "library-file:fde1_bGliZmlsZV9McVZEZGxzaEhJZlhnNVVPWGN5X1Z3_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+        "metadata_available": true,
+        "mime_type": "application/json",
+        "byte_size": 4173
+      }
+    ],
+    "references_truncated": false
+  },
+  "automations": {
+    "automations": []
+  },
+  "sharing": {
+    "inherited_access": {
+      "complete": true,
+      "sources": []
+    },
+    "workspace_id": null,
+    "space_id": null,
+    "owner": {
+      "principal_type": "user",
+      "principal_id": "user-rWH9gln1NM29y9CcdR6tl3Ye"
+    },
+    "owner_display_name": "kyungchan park",
+    "caller_permissions": [
+      "library_folder.read",
+      "library_file.read",
+      "library_folder.download",
+      "library_file.download",
+      "library_file.comment",
+      "library_folder.write",
+      "library_file.write",
+      "library_folder.delete",
+      "library_file.delete"
+    ],
+    "shares": [],
+    "allowed_roles": [
+      "role-library-folder-viewer",
+      "role-library-folder-commenter",
+      "role-library-folder-editor"
+    ],
+    "next_cursor": null,
+    "page_id": "page_41a5a8a055208191bea51145d7976c9a",
+    "backing_type": "drive",
+    "scope": "page_and_backing_library_folder",
+    "sharing_available": true,
+    "concurrency": "no_revision_precondition"
+  },
+  "errors": {
+    "page": false,
+    "automations": false,
+    "sharing": false
+  }
+}

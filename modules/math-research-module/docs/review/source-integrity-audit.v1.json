@@ -1,0 +1,132 @@
+{
+  "schemaVersion": "1.0.0",
+  "auditVersion": "2026-10-13.v1",
+  "status": "structural_audit_and_targeted_math_review_complete_not_full_math_or_pedagogy_audit",
+  "method": "Independent read-only local checks; source files and archived validators were not executed or modified. Only allowlisted arithmetic expressions were recomputed.",
+  "sourceIntegrity": {
+    "actualFileCount": 109,
+    "manifestEntryCount": 108,
+    "manifestSha256": "e0876a29f1abf49261a654dd92c83bb094488794c09b9ec77905abafda780d05",
+    "failures": [],
+    "unlistedFiles": [
+      "FILES.sha256.json"
+    ],
+    "note": "FILES.sha256.json intentionally does not hash itself."
+  },
+  "counts": {
+    "details": 82,
+    "coreDetails": 55,
+    "upperDetails": 27,
+    "researchTypes": 151,
+    "coreTypes": 105,
+    "upperTypes": 46,
+    "primaryOriginalExamples": 151,
+    "originalVariants": 19,
+    "originalExamplesIncludingVariants": 170,
+    "microActions": 1216,
+    "domains": {
+      "multiplication": {
+        "types": 38,
+        "microActions": 270
+      },
+      "division": {
+        "types": 36,
+        "microActions": 442
+      },
+      "circle": {
+        "types": 31,
+        "microActions": 164
+      },
+      "upper": {
+        "types": 46,
+        "microActions": 340
+      }
+    },
+    "capabilityMappings": 105,
+    "capabilityCandidates": 28
+  },
+  "identityChecks": {
+    "duplicateTypes": [],
+    "duplicateVariants": [],
+    "typeVariantIdCollisions": [],
+    "duplicateMicroActions": [],
+    "duplicateDetails": [],
+    "duplicateNodesWithinNamespaces": {
+      "nodes": [],
+      "core": [],
+      "upper": [],
+      "edges": []
+    },
+    "missingDesignTypes": [],
+    "unexpectedDesignTypes": [],
+    "duplicateCapabilityIds": [],
+    "duplicateCapabilityMappings": [],
+    "missingCapabilityMappings": []
+  },
+  "cycleChecks": {
+    "hierarchies": {
+      "nodes": [],
+      "core": [],
+      "upper": []
+    },
+    "prerequisiteAndConnectionEdges": []
+  },
+  "referenceIssues": [],
+  "designConsistencyIssues": [],
+  "capabilityConsistencyIssues": [],
+  "replicaChecks": {
+    "designFiles": [
+      {
+        "domain": "multiplication",
+        "byteIdentical": true,
+        "sha256": "88d3c74c8c1427c0a72dd95416faeb126d3de77e699293b8e630ede05d7ffd05"
+      },
+      {
+        "domain": "division",
+        "byteIdentical": true,
+        "sha256": "49b15fe9872521486fdda29f41431ca568f67fc020ce025311740f2246dfb29b"
+      },
+      {
+        "domain": "circle",
+        "byteIdentical": true,
+        "sha256": "1b4d3da7b54c32d904b0ec7a54ce02138214a44420bee1c963e1a67d9901590a"
+      },
+      {
+        "domain": "upper",
+        "byteIdentical": true,
+        "sha256": "9e813c32c18b8e062e791dd9fa1b51a5cae798901e0fd37ffaf5b024722a6261"
+      }
+    ],
+    "appMathDataEqualsOriginalBundle": true,
+    "appDesignCount": 151,
+    "duplicateAppDesignIds": [],
+    "appDesignDifferences": []
+  },
+  "numericCheckReplay": {
+    "occurrences": 278,
+    "passed": 278,
+    "failed": 0,
+    "skipped": 0,
+    "uniqueCheckDefinitions": 231,
+    "failuresOrSkips": [],
+    "coverageWarning": "Persisted arithmetic checks do not validate every problem statement, diagram, answer, solution, proof, or pedagogical interpretation."
+  },
+  "confirmedTargetedFindings": [
+    "MATH-HC11-D1-T02-001"
+  ],
+  "interpretationLimits": [
+    "No student observations or personal learner data were supplied.",
+    "Learning effects, latent ability constructs, mastery inference, and causal explanations are not validated.",
+    "No claim of a full mathematical or pedagogical audit of all 151 types or 170 examples.",
+    "External literature claims, curriculum placement, diagram realization, classroom wording, and complete free-text arithmetic have not been independently validated in this local audit.",
+    "Checksums demonstrate preservation against the supplied manifest, not the truth or external authenticity of the content."
+  ],
+  "sourceHashes": {
+    "source/archive/research_review/original_170_examples_and_hierarchy.json": "e4215602b70359eb3fdfc152fb42932ba2c996d651a80bfb1df933844ac872ed",
+    "source/capability-research/초3_105유형_능력후보_근거대응.json": "cc76d2fb3ce9f7eb0723ea8775da72a28b269b788c67509af7314b6e8bbd7451",
+    "source/archive/research_review/multiplication_designs.json": "88d3c74c8c1427c0a72dd95416faeb126d3de77e699293b8e630ede05d7ffd05",
+    "source/archive/research_review/division_designs.json": "49b15fe9872521486fdda29f41431ca568f67fc020ce025311740f2246dfb29b",
+    "source/archive/research_review/circle_designs.json": "1b4d3da7b54c32d904b0ec7a54ce02138214a44420bee1c963e1a67d9901590a",
+    "source/archive/research_review/upper_designs.json": "9e813c32c18b8e062e791dd9fa1b51a5cae798901e0fd37ffaf5b024722a6261"
+  }
+}

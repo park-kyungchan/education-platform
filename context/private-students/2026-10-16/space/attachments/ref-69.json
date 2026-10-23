@@ -1,0 +1,24 @@
+{
+  "index": 69,
+  "reference": "library-file:fde1_bGliZmlsZV9uTGlBWDZRSTg1T05qc0Vpb1NwT013_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+  "metadata_available": true,
+  "mime_type": "application/json",
+  "byte_size": 4161,
+  "pages": [
+    "page_7aef4f4523048191833f31ccb7c0bdad"
+  ],
+  "retrievedAt": "2026-10-16T10:23:44.325Z",
+  "result": {
+    "page_id": "page_7aef4f4523048191833f31ccb7c0bdad",
+    "reference": "library-file:fde1_bGliZmlsZV9uTGlBWDZRSTg1T05qc0Vpb1NwT013_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+    "mime_type": "application/json",
+    "byte_size": 4161,
+    "sha256": "b5b2fd0798aa46aca037c7a83be8e58ad04c45235b5d299304e7cadb0a053bd2",
+    "text": "{\n  \"kind\": \"academy_output_contract\",\n  \"schemaVersion\": \"1.0.0\",\n  \"contractId\": \"academy.progress-output\",\n  \"version\": \"1.1.0\",\n  \"revision\": 2,\n  \"sourceIds\": [\n    \"Sentinel_8f111332acf48191b03fa70f8fd15397\",\n    \"source:reviewed-output-pattern-v1\",\n    \"source:reviewed-output-pattern-v1.1-axis-correction\"\n  ],\n  \"scope\": {\n    \"student\": \"runtime_selected_private_student\",\n    \"bookEditions\": \"runtime_selected_verified_editions\",\n    \"defaultSourceMode\": \"saved_snapshot\",\n    \"actualStudentData\": false\n  },\n  \"rowKinds\": [\n    \"observed_section\",\n    \"verification_slot\"\n  ],\n  \"stateDefinitions\": {\n    \"observed\": \"정해진 범위의 수행 또는 채점 근거를 관찰\",\n    \"observed_absent\": \"조회한 해당 소스 범위에 결과행이 없음; 미수행 확정 아님\",\n    \"app_not_recorded\": \"사용자가 앱에 기록하지 않는다고 확인한 정확한 원문 라벨; 실제 수행 확인불가\",\n    \"mapping_unknown\": \"단원·섹션·페이지·문항 또는 근거의 대응이 검증되지 않음\",\n    \"toc_unverified\": \"단원별 섹션의 존재·적용 또는 교재 전체 목차 완전성 미검증\"\n  },\n  \"independentAxes\": [\n    \"catalogPresence\",\n    \"tocState\",\n    \"evidenceState\",\n    \"mappingState\",\n    \"teacherVerdict\",\n    \"paperEvidence\",\n    \"progressDecision\"\n  ],\n  \"requiredRecordFields\": [\n    \"bookDisplayName\",\n    \"bookCode\",\n    \"edition\",\n    \"majorGroupingLabel\",\n    \"parentRelationState\",\n    \"unitLabel\",\n    \"unitTitle\",\n    \"sectionSourceLabel\",\n    \"sectionDisplayLabel\",\n    \"catalogCode\",\n    \"lessonIndex\",\n    \"catalogPresence\",\n    \"tocState\",\n    \"evidenceState\",\n    \"mappingState\",\n    \"attemptEvidence\",\n    \"diaryAssertions\",\n    \"teacherVerdict\",\n    \"paperEvidence\",\n    \"progressDecision\",\n    \"absenceReason\",\n    \"sourceUrls\",\n    \"rowKind\",\n    \"sourceAsOf\",\n    \"sourceScope\",\n    \"contractVersion\",\n    \"denominatorAxis\",\n    \"axisVerificationState\",\n    \"durationEstimate\"\n  ],\n  \"topologyRules\": [\n    \"상위 그룹은 단원 번호 접두사로 배열하되 실제 부모 관계를 확정하지 않는다.\",\n    \"학교급별 사용자 확인 vocabulary는 존재 미검증 확인칸으로 표시할 수 있다. 이를 실제 섹션 엔티티나 배정 과제로 생성하지 않는다.\",\n    \"총괄은 관찰된 목록 범위에 한 번 기록하고 각 소단원에 코드와 수행을 복제하지 않는다.\",\n    \"다빈치는 해당 판본의 실제 목록 섹션과 차시만 사용한다.\",\n    \"실제 목차의 중단원과 소단원을 별도 레벨로 보존한다. 번호 접두사만으로 공식 부모를 확정하지 않는다.\"\n  ],\n  \"coverageRules\": [\n    \"목차 coverage와 수행 coverage를 분리한다.\",\n    \"현재 catalog 파싱은 자료 내 전수이며 종이 목차와 교재 전체의 완전성 검증이 아니다.\",\n    \"빈칸과 빈 evidence 배열을 생략하지 않고 사유를 기록한다.\",\n    \"점수는 관찰된 채점 수치이며 섹션·소단원·교재 전체 완료를 뜻하지 않는다.\",\n    \"중단원·소단원·섹션의 분모를 혼합하지 않는다. 진행 속도와 잔여량은 같은 검증된 축·범위·단위에서만 비교한다.\",\n    \"진행 축이나 목차 대응이 미검증이면 예상 기간은 null로 두고 계산하지 않는다. 목차가 확인되어도 수행 근거가 없으면 완료·잔여량을 단정하지 않는다.\"\n  ],\n  \"labelRules\": [\n    \"기본예제는 기본 문제 또는 개념 예제와 임의로 합치지 않는다.\",\n    \"다빈치 결과 실전 유형과 목록 유형다지기 대응은 잠정 연결로 보존한다.\",\n    \"DT와 Daily Restudy 동일성은 미검증이다.\",\n    \"시험·목록 코드와 사이트 고유 응시 ID를 구분한다.\"\n  ],\n  \"privacyRules\": [\n    \"학생 이름·개별 점수·수행 기록은 공통 계약에 넣지 않는다.\",\n    \"사례 보고서와 학생 범위 계약의 실제 파일 참조를 공통 자동 로드 목록에 넣지 않는다.\",\n    \"보고서 생성, 사이트 PDF 생성과 물리 인쇄는 서로 다른 intent와 권한 확인을 사용한다.\"\n  ],\n  \"authorityGranted\": false\n}\n",
+    "text_representation": "source",
+    "text_byte_size": 4161,
+    "kind": "text"
+  },
+  "status": "source_text_saved",
+  "localFile": "attachments/ref-69.json"
+}

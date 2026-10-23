@@ -1,0 +1,219 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "academy-orchestration-20261019",
+  "kind": "input",
+  "id": "AO-HARNESS-CHECKS",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "education-platform",
+    "locator": "canonical-reader-verification:755d0df65fef7b975c376dfc06b8cdfa20ea3c62",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "schema": "academy.common-harness-verification.v1",
+    "status": "pass",
+    "checkedAtUtc": "2026-10-19T03:21:36.437881+00:00",
+    "testedCommit": "755d0df65fef7b975c376dfc06b8cdfa20ea3c62",
+    "providerCommit": "b59c5230cd435fc94fc757474ca74f45a124817e",
+    "providerTrackedWorktreeCleanBeforeAndAfter": true,
+    "checks": [
+      {
+        "id": "records-valid",
+        "command": [
+          "bun",
+          "--no-env-file",
+          "scripts/harness.ts",
+          "validate",
+          "/dev/stdin"
+        ],
+        "inputSelection": {
+          "repositoryRoot": "/home/palantirkc/worktrees/academy-orchestration-20261019",
+          "repositoryId": "park-kyungchan/education-platform",
+          "commit": "755d0df65fef7b975c376dfc06b8cdfa20ea3c62",
+          "projectId": "education-platform",
+          "workId": "academy-orchestration-20261019"
+        },
+        "expectedExitCode": 0,
+        "actualExitCode": 0,
+        "status": null,
+        "valid": true,
+        "findings": [],
+        "holdReasons": [],
+        "stdoutSha256": "10e556a039be47aec25f2986272ba577482903f204e652ec58cc8a22c600c0eb",
+        "stdoutBytes": 139,
+        "stderr": "",
+        "authority": "none",
+        "nativePermissionGranted": false,
+        "semanticAcceptanceEstablished": false
+      },
+      {
+        "id": "harness-source-qualified",
+        "command": [
+          "bun",
+          "--no-env-file",
+          "scripts/harness.ts",
+          "context",
+          "/dev/stdin"
+        ],
+        "inputSelection": {
+          "repositoryRoot": "/home/palantirkc/worktrees/academy-orchestration-20261019",
+          "repositoryId": "park-kyungchan/education-platform",
+          "commit": "755d0df65fef7b975c376dfc06b8cdfa20ea3c62",
+          "projectId": "education-platform",
+          "workId": "academy-orchestration-20261019"
+        },
+        "expectedExitCode": 0,
+        "actualExitCode": 0,
+        "status": "source-qualified",
+        "valid": null,
+        "findings": [],
+        "holdReasons": [],
+        "stdoutSha256": "3404b51a51e552f087a27bd77951acff531c9ddb3e46a9539d8d01bc877079fe",
+        "stdoutBytes": 9218,
+        "stderr": "",
+        "authority": "none",
+        "nativePermissionGranted": false,
+        "semanticAcceptanceEstablished": false
+      },
+      {
+        "id": "currentness-unknown-held",
+        "command": [
+          "bun",
+          "--no-env-file",
+          "scripts/harness.ts",
+          "context",
+          "/dev/stdin"
+        ],
+        "inputSelection": {
+          "repositoryRoot": "/home/palantirkc/worktrees/academy-orchestration-20261019",
+          "repositoryId": "park-kyungchan/education-platform",
+          "commit": "755d0df65fef7b975c376dfc06b8cdfa20ea3c62",
+          "projectId": "education-platform",
+          "workId": "academy-orchestration-20261019"
+        },
+        "expectedExitCode": 1,
+        "actualExitCode": 1,
+        "status": "held",
+        "valid": null,
+        "findings": [],
+        "holdReasons": [
+          "REQUIRED_LATEST_CONTEXT_UNKNOWN"
+        ],
+        "stdoutSha256": "0fe309a206c95cb5ac92fa0b7a0b542ce88c206d5591ef70dd31289e66d73c6e",
+        "stdoutBytes": 9247,
+        "stderr": "",
+        "authority": "none",
+        "nativePermissionGranted": false,
+        "semanticAcceptanceEstablished": false
+      },
+      {
+        "id": "interview-prerequisites-held",
+        "command": [
+          "bun",
+          "--no-env-file",
+          "scripts/harness.ts",
+          "context",
+          "/dev/stdin"
+        ],
+        "inputSelection": {
+          "repositoryRoot": "/home/palantirkc/worktrees/academy-orchestration-20261019",
+          "repositoryId": "park-kyungchan/education-platform",
+          "commit": "755d0df65fef7b975c376dfc06b8cdfa20ea3c62",
+          "projectId": "education-platform",
+          "workId": "academy-orchestration-20261019"
+        },
+        "expectedExitCode": 1,
+        "actualExitCode": 1,
+        "status": "held",
+        "valid": null,
+        "findings": [],
+        "holdReasons": [
+          "DEPENDENCY_NOT_DURABLE:AO-REPOSITORIES",
+          "SOURCE_PREREQUISITE_VERIFICATION_REQUIRED:AO-REPOSITORIES",
+          "DEPENDENCY_NOT_DURABLE:AO-HARNESS",
+          "SOURCE_PREREQUISITE_VERIFICATION_REQUIRED:AO-HARNESS",
+          "DEPENDENCY_NOT_DURABLE:AO-FRONTEND",
+          "PREREQUISITE_RECEIPT_REQUIRED:AO-FRONTEND"
+        ],
+        "stdoutSha256": "cb1fc34213be47f9fa3d305b2075eaead23040ff9d8af2ef0cdef2e9c7a9b2b8",
+        "stdoutBytes": 13890,
+        "stderr": "",
+        "authority": "none",
+        "nativePermissionGranted": false,
+        "semanticAcceptanceEstablished": false
+      },
+      {
+        "id": "continuation-qualified",
+        "command": [
+          "bun",
+          "--no-env-file",
+          "scripts/harness.ts",
+          "start",
+          "/dev/stdin"
+        ],
+        "inputSelection": {
+          "repositoryRoot": "/home/palantirkc/worktrees/academy-orchestration-20261019",
+          "repositoryId": "park-kyungchan/education-platform",
+          "commit": "755d0df65fef7b975c376dfc06b8cdfa20ea3c62",
+          "projectId": "education-platform",
+          "workId": "academy-orchestration-20261019"
+        },
+        "expectedExitCode": 0,
+        "actualExitCode": 0,
+        "status": null,
+        "valid": true,
+        "findings": [],
+        "holdReasons": [],
+        "stdoutSha256": "10e556a039be47aec25f2986272ba577482903f204e652ec58cc8a22c600c0eb",
+        "stdoutBytes": 139,
+        "stderr": "",
+        "authority": "none",
+        "nativePermissionGranted": false,
+        "semanticAcceptanceEstablished": false
+      },
+      {
+        "id": "changed-work-identity-refused",
+        "command": [
+          "bun",
+          "--no-env-file",
+          "scripts/harness.ts",
+          "start",
+          "/dev/stdin"
+        ],
+        "inputSelection": {
+          "repositoryRoot": "/home/palantirkc/worktrees/academy-orchestration-20261019",
+          "repositoryId": "park-kyungchan/education-platform",
+          "commit": "755d0df65fef7b975c376dfc06b8cdfa20ea3c62",
+          "projectId": "education-platform",
+          "workId": "academy-orchestration-20261019"
+        },
+        "expectedExitCode": 1,
+        "actualExitCode": 1,
+        "status": null,
+        "valid": false,
+        "findings": [
+          "CONTINUING_WORK_IDENTITY_REQUIRED"
+        ],
+        "holdReasons": [],
+        "stdoutSha256": "bed5b3c20c11a399927a462939f4b7a04e725b3dd13878da6f355af51a752d9d",
+        "stdoutBytes": 183,
+        "stderr": "",
+        "authority": "none",
+        "nativePermissionGranted": false,
+        "semanticAcceptanceEstablished": false
+      }
+    ],
+    "workStatus": "active-in-progress",
+    "pending": [
+      "Parent final repository Verification",
+      "Parent native frontend TUI/Bot Screen receipt",
+      "Actual user interview answers"
+    ],
+    "limitations": [
+      "Source validation and context qualification only; no native activation, model evaluation, semantic acceptance, deployment or user-data access.",
+      "An earlier preparatory commit containing noncanonical README was refused with UNRECOGNIZED_WORK_RECORD_PATH; guidance was moved into canonical Input AO-READER-GUIDE before these checks."
+    ]
+  }
+}

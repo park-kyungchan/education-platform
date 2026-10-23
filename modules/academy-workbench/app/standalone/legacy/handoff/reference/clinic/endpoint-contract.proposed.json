@@ -1,0 +1,79 @@
+{
+  "schema": "academy.clinic-context-endpoint-proposal/1",
+  "status": "proposed_only_not_registered_or_operational",
+  "method": "POST",
+  "path": "/api/v1/clinic/read-context",
+  "transportImplemented": false,
+  "mcpImplemented": false,
+  "deploymentPerformed": false,
+  "currentlyExecutable": "unavailable_in_sanitized_export: private fixture loader and raw samples intentionally omitted",
+  "effect": "reference_contract_only_no_runtime_adapter",
+  "requestType": "ClinicReadRequest in integration.ts",
+  "responseType": "ClinicReadResult in integration.ts",
+  "requestFields": {
+    "operation": [
+      "read_current_wrong_subset",
+      "read_historical_print"
+    ],
+    "evidenceMode": "saved_snapshot only; live is rejected",
+    "student": "sourceKey and/or exactName; an ambiguous name is rejected",
+    "printHeader": "required exact observed header, or one evidence-backed observed alias",
+    "assessment": "optional exact originalPaperId and testingNo, only for disambiguation",
+    "includeAnswers": "optional boolean; false by default",
+    "candidateSelection": "For an abbreviated-header collision: exact fullTestingName, section and all observed assNo/pNo/testingNo/priNo. Partial selection or conflicting IDs rejected."
+  },
+  "unsupportedHistoricalPrintBehavior": "PRINT_INSTANCE_NOT_RESOLVED, no partial success or regenerated substitute",
+  "requestExclusions": [
+    "source URLs",
+    "cookies",
+    "credentials",
+    "session identifiers",
+    "handler names",
+    "arbitrary operation names",
+    "permissions",
+    "context objects",
+    "student scope grants",
+    "regeneration",
+    "print",
+    "send"
+  ],
+  "dataPath": [
+    "validate bounded request",
+    "resolve effective purposes and latest explicitly superseding decisions",
+    "apply separate offline fixture scope",
+    "resolve exact student and header",
+    "require one exact paper/attempt",
+    "validate original order and O/X judgments",
+    "verify shared-assessment ordinal join",
+    "return wrong subset and requested answers with provenance, saved observedAt and unknowns"
+  ],
+  "scopeBoundary": "Context is business evidence and cannot authorize an operation. Offline scope is a caller-owned local fixture filter, not proof of LMS permission.",
+  "freshnessBoundary": "observedAt is the original saved observation. projectedAt is local computation time. Local content hashes are not server revisions. Saved bracket reread equality and later row-scoped icon agreement do not establish atomicity, server revisions, or historical printing.",
+  "futureOperationalPrerequisites": [
+    "trusted actor/student authorization outside request/context",
+    "supported isolated authenticated read transport without credential or cookie export",
+    "effect-verified source read provider excluding TagManager.saveTag wrapper",
+    "complete header discovery including duplicate full titles, true retake history, pagination and expanded date filters; observed short-title collisions now fail closed",
+    "source revision/freshness consistency policy",
+    "general route and grading-enum validation before supporting new routes/enums"
+  ],
+  "priority": [
+    "resolve print-header issue",
+    "interview only remaining business decisions",
+    "implement verified optimized API contracts",
+    "expose proven APIs as purpose-specific MCP"
+  ],
+  "sourceRoutes": {
+    "savedActualNaGrading": "PupilSearch initial GET/DOM in three exact saved cases",
+    "savedActualOriginalMembership": "ViewAnswerList for the same paper and attempt",
+    "wholeHandler": "blocked: onPopupViewTestResultButtonClick calls MODULE.TagManager.saveTag before navigation; persistence effect unverified",
+    "wrongAnswerNoteCandidate": "unbound and uncalled; getWrongAnswerNoteResult server effects/schema unverified",
+    "retake": "재응시 is a static deleteTestResult write/reset route, not read-only retake history. Never invoked.",
+    "iconReads": "Only unique exact student/paper/attempt row plus result-row _id/index and td[exam-no] may corroborate O/X. Whole-page icons contain a hidden grading-input template. No onClickOX or hidden-control clicks."
+  },
+  "responseAdditions": {
+    "candidates": "HEADER_AMBIGUOUS contains observed full title, section, date label and exact IDs; no selected grading output",
+    "discovery": "Observation time and displayed NA/date/page filters; completeHistory always false for this limited saved coverage",
+    "selection": "Observed discovery without saved grade/membership returns ASSESSMENT_SNAPSHOT_UNAVAILABLE"
+  }
+}

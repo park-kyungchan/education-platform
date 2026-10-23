@@ -1,0 +1,443 @@
+{
+  "schemaVersion": "academy.cross-work-source-protocol/2",
+  "owner": "Root orchestrator and each receiving Work source owner",
+  "existingCanonicalAPIs": [
+    "openGitWork",
+    "validateGitWorkRecords",
+    "GitWorkReader.readRecord/readSource",
+    "taskVerificationTarget"
+  ],
+  "sourceAuditor": "agent-platform@712f90de; external source audit only, consumer ffba pin unchanged",
+  "implementation": "qualify-external-work.ts",
+  "sameWorkRule": "Canonical Task.dependsOn references a local qualification Task, never a foreign Task. Original producer logical identity is retained in exact source references and receiving evidence.",
+  "qualificationSequence": [
+    "Pin producer repository/domain/project/work/task, immutable commit/tree, result and bound Verification evidence.",
+    "Use producer canonical reader and exact source APIs; require source-only execution complete, verification passed and local result durable.",
+    "Receiver actually reads/qualifies those source results; records a NEW source-owner Input containing exact producer identity/pins/hash and receiving Task identity.",
+    "A local qualification Task has its own Verification targeting itself and pinning that receiving Input. It remains incomplete until this work is actually done.",
+    "Receiving implementation Task depends on the completed local qualification Task; root admission checks producer and receiver binding before actual dispatch.",
+    "Keep source proof and source-owner attribution separate from native receiver authentication, shared delivery, formal completion and acceptance."
+  ],
+  "unsupportedMilestones": "Native-effect prerequisites require existing real native prerequisite/receiver contracts and exact occurrence receipts. They are held in this source-only phase. Formal completion or acceptance is never inferred from source qualification.",
+  "failurePolicy": "Missing/pending/mismatched producer, pin, Verification, receiving Input, qualified local Task or source binding holds the consumer; do not silently skip or substitute.",
+  "commonChangesPerformed": false,
+  "nativeSchedulerCreated": false,
+  "edges": [
+    {
+      "id": "AAR-XW-AAR-05-TO-DOM-01",
+      "producer": {
+        "domainId": "academy-operations",
+        "projectId": "academy-workbench",
+        "workId": "academy-architecture-orchestration-20261021",
+        "taskRef": "academy-workbench:task:academy-architecture-orchestration-20261021-t04",
+        "alias": "AAR-05",
+        "commit": null,
+        "tree": null,
+        "resultEvidenceId": null,
+        "verificationEvidenceId": null
+      },
+      "consumer": {
+        "domainId": "education",
+        "projectId": "education-platform",
+        "workId": "academy-state-model-20261021",
+        "taskRef": "education-platform:task:academy-state-model-20261021-dom-01",
+        "alias": "DOM-01"
+      },
+      "qualificationTaskId": "education-platform:task:academy-state-model-20261021-dom-01-qualify-aar-05",
+      "requiredMilestone": "execution-and-verification",
+      "status": "held-until-exact-producer-and-receiving-qualification",
+      "sourceValidation": "Separate canonical GitWork reader for producer and consumer; no foreign record transplantation",
+      "nativeReceiptClaim": false
+    },
+    {
+      "id": "AAR-XW-AAR-05-TO-QRY-01",
+      "producer": {
+        "domainId": "academy-operations",
+        "projectId": "academy-workbench",
+        "workId": "academy-architecture-orchestration-20261021",
+        "taskRef": "academy-workbench:task:academy-architecture-orchestration-20261021-t04",
+        "alias": "AAR-05",
+        "commit": null,
+        "tree": null,
+        "resultEvidenceId": null,
+        "verificationEvidenceId": null
+      },
+      "consumer": {
+        "domainId": "education",
+        "projectId": "education-platform",
+        "workId": "academy-query-integration-20261021",
+        "taskRef": "education-platform:task:academy-query-integration-20261021-qry-01",
+        "alias": "QRY-01"
+      },
+      "qualificationTaskId": "education-platform:task:academy-query-integration-20261021-qry-01-qualify-aar-05",
+      "requiredMilestone": "execution-and-verification",
+      "status": "held-until-exact-producer-and-receiving-qualification",
+      "sourceValidation": "Separate canonical GitWork reader for producer and consumer; no foreign record transplantation",
+      "nativeReceiptClaim": false
+    },
+    {
+      "id": "AAR-XW-DOM-02-TO-QRY-02",
+      "producer": {
+        "domainId": "education",
+        "projectId": "education-platform",
+        "workId": "academy-state-model-20261021",
+        "taskRef": "education-platform:task:academy-state-model-20261021-dom-02",
+        "alias": "DOM-02",
+        "commit": null,
+        "tree": null,
+        "resultEvidenceId": null,
+        "verificationEvidenceId": null
+      },
+      "consumer": {
+        "domainId": "education",
+        "projectId": "education-platform",
+        "workId": "academy-query-integration-20261021",
+        "taskRef": "education-platform:task:academy-query-integration-20261021-qry-02",
+        "alias": "QRY-02"
+      },
+      "qualificationTaskId": "education-platform:task:academy-query-integration-20261021-qry-02-qualify-dom-02",
+      "requiredMilestone": "execution-and-verification",
+      "status": "held-until-exact-producer-and-receiving-qualification",
+      "sourceValidation": "Separate canonical GitWork reader for producer and consumer; no foreign record transplantation",
+      "nativeReceiptClaim": false
+    },
+    {
+      "id": "AAR-XW-AAR-05-TO-VER-01",
+      "producer": {
+        "domainId": "academy-operations",
+        "projectId": "academy-workbench",
+        "workId": "academy-architecture-orchestration-20261021",
+        "taskRef": "academy-workbench:task:academy-architecture-orchestration-20261021-t04",
+        "alias": "AAR-05",
+        "commit": null,
+        "tree": null,
+        "resultEvidenceId": null,
+        "verificationEvidenceId": null
+      },
+      "consumer": {
+        "domainId": "education",
+        "projectId": "education-platform",
+        "workId": "academy-workflow-verification-20261021",
+        "taskRef": "education-platform:task:academy-workflow-verification-20261021-ver-01",
+        "alias": "VER-01"
+      },
+      "qualificationTaskId": "education-platform:task:academy-workflow-verification-20261021-ver-01-qualify-aar-05",
+      "requiredMilestone": "execution-and-verification",
+      "status": "held-until-exact-producer-and-receiving-qualification",
+      "sourceValidation": "Separate canonical GitWork reader for producer and consumer; no foreign record transplantation",
+      "nativeReceiptClaim": false
+    },
+    {
+      "id": "AAR-XW-DOM-02-TO-VER-02",
+      "producer": {
+        "domainId": "education",
+        "projectId": "education-platform",
+        "workId": "academy-state-model-20261021",
+        "taskRef": "education-platform:task:academy-state-model-20261021-dom-02",
+        "alias": "DOM-02",
+        "commit": null,
+        "tree": null,
+        "resultEvidenceId": null,
+        "verificationEvidenceId": null
+      },
+      "consumer": {
+        "domainId": "education",
+        "projectId": "education-platform",
+        "workId": "academy-workflow-verification-20261021",
+        "taskRef": "education-platform:task:academy-workflow-verification-20261021-ver-02",
+        "alias": "VER-02"
+      },
+      "qualificationTaskId": "education-platform:task:academy-workflow-verification-20261021-ver-02-qualify-dom-02",
+      "requiredMilestone": "execution-and-verification",
+      "status": "held-until-exact-producer-and-receiving-qualification",
+      "sourceValidation": "Separate canonical GitWork reader for producer and consumer; no foreign record transplantation",
+      "nativeReceiptClaim": false
+    },
+    {
+      "id": "AAR-XW-QRY-02-TO-VER-02",
+      "producer": {
+        "domainId": "education",
+        "projectId": "education-platform",
+        "workId": "academy-query-integration-20261021",
+        "taskRef": "education-platform:task:academy-query-integration-20261021-qry-02",
+        "alias": "QRY-02",
+        "commit": null,
+        "tree": null,
+        "resultEvidenceId": null,
+        "verificationEvidenceId": null
+      },
+      "consumer": {
+        "domainId": "education",
+        "projectId": "education-platform",
+        "workId": "academy-workflow-verification-20261021",
+        "taskRef": "education-platform:task:academy-workflow-verification-20261021-ver-02",
+        "alias": "VER-02"
+      },
+      "qualificationTaskId": "education-platform:task:academy-workflow-verification-20261021-ver-02-qualify-qry-02",
+      "requiredMilestone": "execution-and-verification",
+      "status": "held-until-exact-producer-and-receiving-qualification",
+      "sourceValidation": "Separate canonical GitWork reader for producer and consumer; no foreign record transplantation",
+      "nativeReceiptClaim": false
+    },
+    {
+      "id": "AAR-XW-AAR-05-TO-CON-01",
+      "producer": {
+        "domainId": "academy-operations",
+        "projectId": "academy-workbench",
+        "workId": "academy-architecture-orchestration-20261021",
+        "taskRef": "academy-workbench:task:academy-architecture-orchestration-20261021-t04",
+        "alias": "AAR-05",
+        "commit": null,
+        "tree": null,
+        "resultEvidenceId": null,
+        "verificationEvidenceId": null
+      },
+      "consumer": {
+        "domainId": "academy-operations",
+        "projectId": "academy-workbench",
+        "workId": "academy-consumer-integration-20261021",
+        "taskRef": "academy-workbench:task:academy-consumer-integration-20261021-con-01",
+        "alias": "CON-01"
+      },
+      "qualificationTaskId": "academy-workbench:task:academy-consumer-integration-20261021-con-01-qualify-aar-05",
+      "requiredMilestone": "execution-and-verification",
+      "status": "held-until-exact-producer-and-receiving-qualification",
+      "sourceValidation": "Separate canonical GitWork reader for producer and consumer; no foreign record transplantation",
+      "nativeReceiptClaim": false
+    },
+    {
+      "id": "AAR-XW-QRY-02-TO-CON-02",
+      "producer": {
+        "domainId": "education",
+        "projectId": "education-platform",
+        "workId": "academy-query-integration-20261021",
+        "taskRef": "education-platform:task:academy-query-integration-20261021-qry-02",
+        "alias": "QRY-02",
+        "commit": null,
+        "tree": null,
+        "resultEvidenceId": null,
+        "verificationEvidenceId": null
+      },
+      "consumer": {
+        "domainId": "academy-operations",
+        "projectId": "academy-workbench",
+        "workId": "academy-consumer-integration-20261021",
+        "taskRef": "academy-workbench:task:academy-consumer-integration-20261021-con-02",
+        "alias": "CON-02"
+      },
+      "qualificationTaskId": "academy-workbench:task:academy-consumer-integration-20261021-con-02-qualify-qry-02",
+      "requiredMilestone": "execution-and-verification",
+      "status": "held-until-exact-producer-and-receiving-qualification",
+      "sourceValidation": "Separate canonical GitWork reader for producer and consumer; no foreign record transplantation",
+      "nativeReceiptClaim": false
+    },
+    {
+      "id": "AAR-XW-VER-02-TO-CON-03",
+      "producer": {
+        "domainId": "education",
+        "projectId": "education-platform",
+        "workId": "academy-workflow-verification-20261021",
+        "taskRef": "education-platform:task:academy-workflow-verification-20261021-ver-02",
+        "alias": "VER-02",
+        "commit": null,
+        "tree": null,
+        "resultEvidenceId": null,
+        "verificationEvidenceId": null
+      },
+      "consumer": {
+        "domainId": "academy-operations",
+        "projectId": "academy-workbench",
+        "workId": "academy-consumer-integration-20261021",
+        "taskRef": "academy-workbench:task:academy-consumer-integration-20261021-con-03",
+        "alias": "CON-03"
+      },
+      "qualificationTaskId": "academy-workbench:task:academy-consumer-integration-20261021-con-03-qualify-ver-02",
+      "requiredMilestone": "execution-and-verification",
+      "status": "held-until-exact-producer-and-receiving-qualification",
+      "sourceValidation": "Separate canonical GitWork reader for producer and consumer; no foreign record transplantation",
+      "nativeReceiptClaim": false
+    },
+    {
+      "id": "AAR-XW-AAR-05-TO-ENV-01",
+      "producer": {
+        "domainId": "academy-operations",
+        "projectId": "academy-workbench",
+        "workId": "academy-architecture-orchestration-20261021",
+        "taskRef": "academy-workbench:task:academy-architecture-orchestration-20261021-t04",
+        "alias": "AAR-05",
+        "commit": null,
+        "tree": null,
+        "resultEvidenceId": null,
+        "verificationEvidenceId": null
+      },
+      "consumer": {
+        "domainId": "academy-operations",
+        "projectId": "academy-workbench",
+        "workId": "academy-environment-qualification-20261021",
+        "taskRef": "academy-workbench:task:academy-environment-qualification-20261021-env-01",
+        "alias": "ENV-01"
+      },
+      "qualificationTaskId": "academy-workbench:task:academy-environment-qualification-20261021-env-01-qualify-aar-05",
+      "requiredMilestone": "execution-and-verification",
+      "status": "held-until-exact-producer-and-receiving-qualification",
+      "sourceValidation": "Separate canonical GitWork reader for producer and consumer; no foreign record transplantation",
+      "nativeReceiptClaim": false
+    },
+    {
+      "id": "AAR-XW-DOM-02-TO-ENV-02",
+      "producer": {
+        "domainId": "education",
+        "projectId": "education-platform",
+        "workId": "academy-state-model-20261021",
+        "taskRef": "education-platform:task:academy-state-model-20261021-dom-02",
+        "alias": "DOM-02",
+        "commit": null,
+        "tree": null,
+        "resultEvidenceId": null,
+        "verificationEvidenceId": null
+      },
+      "consumer": {
+        "domainId": "academy-operations",
+        "projectId": "academy-workbench",
+        "workId": "academy-environment-qualification-20261021",
+        "taskRef": "academy-workbench:task:academy-environment-qualification-20261021-env-02",
+        "alias": "ENV-02"
+      },
+      "qualificationTaskId": "academy-workbench:task:academy-environment-qualification-20261021-env-02-qualify-dom-02",
+      "requiredMilestone": "execution-and-verification",
+      "status": "held-until-exact-producer-and-receiving-qualification",
+      "sourceValidation": "Separate canonical GitWork reader for producer and consumer; no foreign record transplantation",
+      "nativeReceiptClaim": false
+    },
+    {
+      "id": "AAR-XW-CON-03-TO-INT-01",
+      "producer": {
+        "domainId": "academy-operations",
+        "projectId": "academy-workbench",
+        "workId": "academy-consumer-integration-20261021",
+        "taskRef": "academy-workbench:task:academy-consumer-integration-20261021-con-03",
+        "alias": "CON-03",
+        "commit": null,
+        "tree": null,
+        "resultEvidenceId": null,
+        "verificationEvidenceId": null
+      },
+      "consumer": {
+        "domainId": "academy-operations",
+        "projectId": "academy-workbench",
+        "workId": "academy-architecture-orchestration-20261021",
+        "taskRef": "academy-workbench:task:academy-architecture-orchestration-20261021-t05",
+        "alias": "INT-01"
+      },
+      "qualificationTaskId": "academy-workbench:task:academy-architecture-orchestration-20261021-int-01-qualify-con-03",
+      "requiredMilestone": "execution-and-verification",
+      "status": "held-until-exact-producer-and-receiving-qualification",
+      "sourceValidation": "Separate canonical GitWork reader for producer and consumer; no foreign record transplantation",
+      "nativeReceiptClaim": false
+    },
+    {
+      "id": "AAR-XW-VER-03-TO-INT-01",
+      "producer": {
+        "domainId": "education",
+        "projectId": "education-platform",
+        "workId": "academy-workflow-verification-20261021",
+        "taskRef": "education-platform:task:academy-workflow-verification-20261021-ver-03",
+        "alias": "VER-03",
+        "commit": null,
+        "tree": null,
+        "resultEvidenceId": null,
+        "verificationEvidenceId": null
+      },
+      "consumer": {
+        "domainId": "academy-operations",
+        "projectId": "academy-workbench",
+        "workId": "academy-architecture-orchestration-20261021",
+        "taskRef": "academy-workbench:task:academy-architecture-orchestration-20261021-t05",
+        "alias": "INT-01"
+      },
+      "qualificationTaskId": "academy-workbench:task:academy-architecture-orchestration-20261021-int-01-qualify-ver-03",
+      "requiredMilestone": "execution-and-verification",
+      "status": "held-until-exact-producer-and-receiving-qualification",
+      "sourceValidation": "Separate canonical GitWork reader for producer and consumer; no foreign record transplantation",
+      "nativeReceiptClaim": false
+    },
+    {
+      "id": "AAR-XW-ENV-02-TO-INT-01",
+      "producer": {
+        "domainId": "academy-operations",
+        "projectId": "academy-workbench",
+        "workId": "academy-environment-qualification-20261021",
+        "taskRef": "academy-workbench:task:academy-environment-qualification-20261021-env-02",
+        "alias": "ENV-02",
+        "commit": null,
+        "tree": null,
+        "resultEvidenceId": null,
+        "verificationEvidenceId": null
+      },
+      "consumer": {
+        "domainId": "academy-operations",
+        "projectId": "academy-workbench",
+        "workId": "academy-architecture-orchestration-20261021",
+        "taskRef": "academy-workbench:task:academy-architecture-orchestration-20261021-t05",
+        "alias": "INT-01"
+      },
+      "qualificationTaskId": "academy-workbench:task:academy-architecture-orchestration-20261021-int-01-qualify-env-02",
+      "requiredMilestone": "execution-and-verification",
+      "status": "held-until-exact-producer-and-receiving-qualification",
+      "sourceValidation": "Separate canonical GitWork reader for producer and consumer; no foreign record transplantation",
+      "nativeReceiptClaim": false
+    },
+    {
+      "id": "AAR-XW-CON-03-TO-VER-03",
+      "producer": {
+        "domainId": "academy-operations",
+        "projectId": "academy-workbench",
+        "workId": "academy-consumer-integration-20261021",
+        "taskRef": "academy-workbench:task:academy-consumer-integration-20261021-con-03",
+        "alias": "CON-03",
+        "commit": null,
+        "tree": null,
+        "resultEvidenceId": null,
+        "verificationEvidenceId": null
+      },
+      "consumer": {
+        "domainId": "education",
+        "projectId": "education-platform",
+        "workId": "academy-workflow-verification-20261021",
+        "taskRef": "education-platform:task:academy-workflow-verification-20261021-ver-03",
+        "alias": "VER-03"
+      },
+      "qualificationTaskId": "education-platform:task:academy-workflow-verification-20261021-ver-03-qualify-con-03",
+      "requiredMilestone": "execution-and-verification",
+      "status": "held-until-exact-producer-and-receiving-qualification",
+      "sourceValidation": "Separate canonical GitWork reader for producer and consumer; no foreign record transplantation",
+      "nativeReceiptClaim": false
+    },
+    {
+      "id": "AAR-XW-VER-03-TO-INT-VERIFY",
+      "producer": {
+        "domainId": "education",
+        "projectId": "education-platform",
+        "workId": "academy-workflow-verification-20261021",
+        "taskRef": "education-platform:task:academy-workflow-verification-20261021-ver-03",
+        "alias": "VER-03",
+        "commit": null,
+        "tree": null,
+        "resultEvidenceId": null,
+        "verificationEvidenceId": null
+      },
+      "consumer": {
+        "domainId": "academy-operations",
+        "projectId": "academy-workbench",
+        "workId": "academy-architecture-orchestration-20261021",
+        "taskRef": "academy-workbench:task:academy-architecture-orchestration-20261021-t07",
+        "alias": "INT-VERIFY"
+      },
+      "qualificationTaskId": "academy-workbench:task:academy-architecture-orchestration-20261021-int-verify-qualify-ver-03",
+      "requiredMilestone": "execution-and-verification",
+      "status": "held-until-exact-producer-and-receiving-qualification",
+      "sourceValidation": "Separate canonical GitWork reader for producer and consumer; no foreign record transplantation",
+      "nativeReceiptClaim": false
+    }
+  ]
+}

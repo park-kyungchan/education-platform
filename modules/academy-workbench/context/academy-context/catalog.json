@@ -1,0 +1,1768 @@
+{
+  "schemaVersion": "academy.context-catalog/1",
+  "projectId": "academy-workbench",
+  "workId": "academy-context-consolidation-20261021",
+  "authority": "none",
+  "nativePermissionGranted": false,
+  "defaultNavigation": [
+    "date",
+    "class",
+    "student"
+  ],
+  "coverage": {
+    "status": "partial",
+    "denominator": null,
+    "complete": false,
+    "note": "Observed 2026-10-21 local source revisions. All known routed entrypoints in this bounded inventory are referenced; complete conversation/Space history, private payload bodies and fresh live business state are not established."
+  },
+  "scope": {
+    "included": [
+      "academy",
+      "foundation"
+    ],
+    "excluded": [
+      "academy.counseling",
+      "academy.parent-communication"
+    ]
+  },
+  "repositories": [
+    {
+      "id": "academy-workbench",
+      "path": "/home/palantirkc/projects/academy-workbench",
+      "commit": "1479a086ef2bcf26fbc9a94a8e9c79dc63bb0abe",
+      "role": "Selected context, preservation and synthetic/offline consumer; current metadata hub candidate, not a transfer of academy product ownership.",
+      "observation": "local-checkout",
+      "dirty": false
+    },
+    {
+      "id": "dc-gang-a",
+      "path": "/home/palantirkc/projects/dc-gang-a",
+      "commit": "2d8855b4728c652313b3e1840c53f780c60eac2d",
+      "role": "Current academy operational policy and native/domain owner.",
+      "observation": "local-checkout",
+      "dirty": false
+    },
+    {
+      "id": "education-platform",
+      "path": "/home/palantirkc/projects/education-platform",
+      "commit": "cb7e571262593f230d21401994a507e94960f967",
+      "role": "Maintained education integration and gang-a implementation; source-map edges are verification order.",
+      "observation": "local-checkout",
+      "dirty": false
+    },
+    {
+      "id": "math-research-module",
+      "path": "/home/palantirkc/projects/math-research-module",
+      "commit": "7b58fe361593d8578c6fe1bdec488f93944ea836",
+      "role": "Research semantics, monthly assessment context and item/type identities.",
+      "observation": "local-checkout",
+      "dirty": false
+    },
+    {
+      "id": "math-education",
+      "path": "/home/palantirkc/projects/math-education",
+      "commit": "4a666ef6ff568f15495ff8219db583bf6dfbfe2a",
+      "role": "Retained curriculum source/provenance; canonical input gaps remain.",
+      "observation": "local-checkout",
+      "dirty": false
+    },
+    {
+      "id": "gang-a",
+      "path": "/home/palantirkc/projects/gang-a",
+      "commit": "c4475511b347e9fdc83a7ebbc4b5a1779fa1be6e",
+      "role": "Retained standalone compatibility/source policy; maintained implementation is in education-platform.",
+      "observation": "local-checkout",
+      "dirty": false
+    },
+    {
+      "id": "palantirkc",
+      "path": "/home/palantirkc/projects/palantirkc",
+      "commit": "f1845231c2c36d4d059e0cfd60e90a706491d05a",
+      "role": "Historical July governance/teaching/SSOT contracts; current runtime authority not established by checkout.",
+      "observation": "local-checkout",
+      "dirty": false
+    },
+    {
+      "id": "agent-platform",
+      "path": "/home/palantirkc/projects/agent-platform",
+      "commit": "712f90deac0676e662dc5d75d88d89f7b6773bfe",
+      "role": "Canonical common Work/Memory/Recall implementation; external source validator is distinct from academy pinned consumer.",
+      "observation": "local-checkout",
+      "dirty": false
+    },
+    {
+      "id": "academy-context-candidate",
+      "path": "/home/palantirkc/worktrees/academy-context-consolidation-20261021",
+      "commit": "1479a086ef2bcf26fbc9a94a8e9c79dc63bb0abe",
+      "role": "This Work candidate working tree. commit denotes its observed base, while each new source file hash denotes working bytes; committed validation is separate.",
+      "observation": "local-checkout",
+      "dirty": true
+    }
+  ],
+  "sources": [
+    {
+      "id": "SRC-AWB-COVERAGE",
+      "repositoryId": "academy-workbench",
+      "path": "context/user-context/coverage.json",
+      "sha256": "42ca9e2d24b5b05dc5220f9d81fd72313bb19f252f20526451ff80c3641c1f28",
+      "byteLength": 7060,
+      "classification": "current-owner",
+      "readPolicy": "selected-design",
+      "ownerId": "academy-workbench",
+      "topicIds": [
+        "academy",
+        "foundation.provenance"
+      ],
+      "note": "Selected 64 messages, 13 Space blocks and 52 records through 2026-10-13; denominator and full coverage unknown."
+    },
+    {
+      "id": "SRC-AWB-CONTEXT",
+      "repositoryId": "academy-workbench",
+      "path": "context/user-context/README.md",
+      "sha256": "baf8988f454201572af28308bdd2149b9abfa669d1368873858ee1c2f054babb",
+      "byteLength": 10150,
+      "classification": "original-reference",
+      "readPolicy": "selected-design",
+      "ownerId": "academy-workbench",
+      "topicIds": [
+        "academy",
+        "foundation.currentness"
+      ],
+      "note": "Read coverage then records/source-map and only needed original source keys. This is a design-context package, not all histories."
+    },
+    {
+      "id": "SRC-AWB-GENERALIZED",
+      "repositoryId": "academy-workbench",
+      "path": "context/business-decisions.json",
+      "sha256": "cdebb97ff2e8f41f7151ee12451d2b3c869279996ae2a1c0b63d9b6a472222fc",
+      "byteLength": 10310,
+      "classification": "historical-summary",
+      "readPolicy": "selected-design",
+      "ownerId": "academy-workbench",
+      "topicIds": [
+        "academy"
+      ],
+      "note": "Generalized handoff summaries are not direct user quotations or current effect approval."
+    },
+    {
+      "id": "SRC-AWB-INQUIRY",
+      "repositoryId": "academy-workbench",
+      "path": "context/academy-inquiry/README.ko.md",
+      "sha256": "d6a49ccb3726edd98364e86afa523380da71e973b471e6097715d33ce6675cc4",
+      "byteLength": 5686,
+      "classification": "original-reference",
+      "readPolicy": "selected-design",
+      "ownerId": "academy-workbench",
+      "topicIds": [
+        "academy.progress-audit",
+        "foundation.provenance"
+      ],
+      "note": "Sanitized successor context preserves scoped corrections, source observations and teacher judgments independently."
+    },
+    {
+      "id": "SRC-AWB-AUDIT-METADATA",
+      "repositoryId": "academy-workbench",
+      "path": "context/student-audit-20261014/README.ko.md",
+      "sha256": "5b5ccd72a3b8de7233b10e4ce89d8052894b0e75775f00a12b092866c6cfd8ad",
+      "byteLength": 4063,
+      "classification": "original-reference",
+      "readPolicy": "selected-design",
+      "ownerId": "academy-workbench",
+      "topicIds": [
+        "academy.progress-audit",
+        "foundation.identity"
+      ],
+      "note": "Design/instruction entrypoint only; no student record body is opened."
+    },
+    {
+      "id": "SRC-AWB-ARCHITECTURE",
+      "repositoryId": "academy-workbench",
+      "path": "architecture/architecture.json",
+      "sha256": "54ed7299e54554c31a423548aeab3cec4c0ee39018616edc9f83a5594637b50b",
+      "byteLength": 2557,
+      "classification": "historical-summary",
+      "readPolicy": "selected-design",
+      "ownerId": "academy-workbench",
+      "topicIds": [
+        "foundation.identity"
+      ],
+      "note": "Entity relationships, task DAG, provenance graph and repeated business cycles have different topology."
+    },
+    {
+      "id": "SRC-AWB-LOGICAL-TYPES",
+      "repositoryId": "academy-workbench",
+      "path": "architecture/logical-model-v2.ts",
+      "sha256": "686ac315ed94b072fecb9fb72f8d99b6cf14ae525810a8375bc261768f973190",
+      "byteLength": 30135,
+      "classification": "current-owner",
+      "readPolicy": "selected-design",
+      "ownerId": "academy-workbench",
+      "topicIds": [
+        "foundation.identity",
+        "foundation.curriculum"
+      ],
+      "note": "Edition-local content hierarchy and explicit missing levels; concept graph differs from book containment."
+    },
+    {
+      "id": "SRC-AWB-HARNESS",
+      "repositoryId": "academy-workbench",
+      "path": "docs/harness/README.ko.md",
+      "sha256": "348d434ac4b1836a8acbeb4b12f3e01ef4fcc37f5eb40af7d2b2497a431ab068",
+      "byteLength": 5955,
+      "classification": "current-owner",
+      "readPolicy": "selected-design",
+      "ownerId": "academy-workbench",
+      "topicIds": [
+        "foundation.harness"
+      ],
+      "note": "Existing pinned Artifact/WorkContext consumer; this catalog does not upgrade the lock or adopt newer GitWork reader."
+    },
+    {
+      "id": "SRC-AWB-CONTINUATION",
+      "repositoryId": "academy-workbench",
+      "path": "docs/harness/continuation-ci.md",
+      "sha256": "0262cc62854e5908fc1eb73d3d71679d3d68650a42155b56ed6c6ceccc5b40ce",
+      "byteLength": 7099,
+      "classification": "current-owner",
+      "readPolicy": "selected-design",
+      "ownerId": "academy-workbench",
+      "topicIds": [
+        "foundation.currentness",
+        "foundation.harness"
+      ],
+      "note": "Known-checkpoint inspection is read-only and source drift holds continuation; historical projection remains historical."
+    },
+    {
+      "id": "SRC-AWB-GATES",
+      "repositoryId": "academy-workbench",
+      "path": "migration/current-status.json",
+      "sha256": "dd8f1500d2e079079317dcf6ac2acaf62605a6ff531d2aee6c0aed53b5683fa4",
+      "byteLength": 14461,
+      "classification": "current-owner",
+      "readPolicy": "selected-design",
+      "ownerId": "academy-workbench",
+      "topicIds": [
+        "foundation.verification"
+      ],
+      "note": "Seven operational gates are separate from synthetic source correctness; this index does not close them."
+    },
+    {
+      "id": "SRC-AWB-ARCHIVE-INDEX",
+      "repositoryId": "academy-workbench",
+      "path": "archives/academy-20261013/README.md",
+      "sha256": "88b3cab44ee3afad713679b3f1e04f5427575e1e446d93f38413d070e3166432",
+      "byteLength": 2004,
+      "classification": "original-reference",
+      "readPolicy": "selected-design",
+      "ownerId": "academy-workbench",
+      "topicIds": [
+        "foundation.provenance"
+      ],
+      "note": "Archive aliases/manifests preserve four packages and historical Git metadata; payloads not extracted."
+    },
+    {
+      "id": "SRC-AWB-ORIGINALS-LOCATOR",
+      "repositoryId": "academy-workbench",
+      "path": "context/user-context/sources/source-excerpts.json",
+      "sha256": null,
+      "byteLength": null,
+      "classification": "private-metadata",
+      "readPolicy": "no-content-read",
+      "ownerId": "academy-workbench",
+      "topicIds": [
+        "foundation.provenance"
+      ],
+      "note": "Original selected message payload locator only. Not opened by this consolidation; hash and byte length intentionally unknown. Metadata only; not read."
+    },
+    {
+      "id": "SRC-DC-ENTRY",
+      "repositoryId": "dc-gang-a",
+      "path": "AGENTS.md",
+      "sha256": "51dd1258885360232fea7b3171e06bbd892e0b626213fc13ce59230de6e035f5",
+      "byteLength": 12087,
+      "classification": "current-owner",
+      "readPolicy": "selected-design",
+      "ownerId": "dc-gang-a-dev",
+      "topicIds": [
+        "academy",
+        "foundation.harness"
+      ],
+      "note": "Current runtime/policy routing, source-only engineering boundaries and exact source qualification; preserve native owners."
+    },
+    {
+      "id": "SRC-DC-CONTRACT",
+      "repositoryId": "dc-gang-a",
+      "path": "docs/academy-operational-contract.json",
+      "sha256": "b06a4f5f33c3fafb6130c37ab7bde6b4c0c5402f73065d1a6510fd42860bf9b0",
+      "byteLength": 6139,
+      "classification": "current-owner",
+      "readPolicy": "selected-design",
+      "ownerId": "dc-gang-a-dev",
+      "topicIds": [
+        "academy"
+      ],
+      "note": "Selected current operational contract owns roles, product, source access and meaning; native permission remains separate."
+    },
+    {
+      "id": "SRC-DC-CHECKPOINT",
+      "repositoryId": "dc-gang-a",
+      "path": "handoffs/workflow-current-state.json",
+      "sha256": "222ad232a2c1d662d84b638fbeb87186247e533bb4a7d003c37a092c78b107f0",
+      "byteLength": 24651,
+      "classification": "current-owner",
+      "readPolicy": "selected-design",
+      "ownerId": "dc-gang-a-dev",
+      "topicIds": [
+        "foundation.currentness"
+      ],
+      "note": "Confirmed teacher web app transition A and private PostgreSQL coexist with retained earlier pending interview questions; reconcile scope, do not erase history."
+    },
+    {
+      "id": "SRC-DC-CLASSROOM",
+      "repositoryId": "dc-gang-a",
+      "path": "src/academy/classroomCyclePolicy.ts",
+      "sha256": "37da1efe017af254d0f10ab18542955e39eb1646648fcfa8659808a95cc2fa4e",
+      "byteLength": 8746,
+      "classification": "current-owner",
+      "readPolicy": "selected-design",
+      "ownerId": "dc-gang-a-dev",
+      "topicIds": [
+        "academy.class-preparation",
+        "academy.lesson-delivery",
+        "academy.progress-audit",
+        "academy.homework-followup",
+        "academy.wrong-answer-clinic"
+      ],
+      "note": "Assignment scope, grading, correction, teacher review/completion, video differences and reopened evidence have explicit separate states."
+    },
+    {
+      "id": "SRC-DC-TARGET",
+      "repositoryId": "dc-gang-a",
+      "path": "docs/academy-whole-lens-target-architecture.json",
+      "sha256": "710fe239c505d609f1baa0ea35ffb4eab8f840e1381850d7a6c7fd0debc29007",
+      "byteLength": 27660,
+      "classification": "current-owner",
+      "readPolicy": "selected-design",
+      "ownerId": "dc-gang-a-dev",
+      "topicIds": [
+        "academy"
+      ],
+      "note": "One instructor operational system; preserve Main/shared consumers until accepted transition."
+    },
+    {
+      "id": "SRC-DC-OLD-README",
+      "repositoryId": "dc-gang-a",
+      "path": "README.md",
+      "sha256": "964edf3ac6a90354b851178fc1ad84df2ca5adc429a4e2da3da07e268337069b",
+      "byteLength": 4346,
+      "classification": "historical-summary",
+      "readPolicy": "selected-design",
+      "ownerId": "dc-gang-a-dev",
+      "topicIds": [
+        "foundation.currentness"
+      ],
+      "note": "Older Windows/Main/mobile onboarding must be read through the current AGENTS/operational-contract route."
+    },
+    {
+      "id": "SRC-DC-OLD-CONTEXT",
+      "repositoryId": "dc-gang-a",
+      "path": "docs/CODEX_CONTEXT.md",
+      "sha256": "e7924114cede13c772b5f8971e77e4f5325c87155f5cc184be4d4377531c11f9",
+      "byteLength": 6492,
+      "classification": "historical-summary",
+      "readPolicy": "selected-design",
+      "ownerId": "dc-gang-a-dev",
+      "topicIds": [
+        "foundation.currentness"
+      ],
+      "note": "Retain required historical intent while treating superseded runtime/priority routing as dated."
+    },
+    {
+      "id": "SRC-DC-OLD-MAP",
+      "repositoryId": "dc-gang-a",
+      "path": "harness/context-map.md",
+      "sha256": "f74815fb91c0629ba653e7024fd4d3443c79ef4095eefe2cf03a8ce4c5cf1171",
+      "byteLength": 5030,
+      "classification": "historical-summary",
+      "readPolicy": "selected-design",
+      "ownerId": "dc-gang-a-dev",
+      "topicIds": [
+        "foundation.currentness"
+      ],
+      "note": "Old context map is not evidence of current runtime selection."
+    },
+    {
+      "id": "SRC-DC-PRIVATE-1016",
+      "repositoryId": "dc-gang-a",
+      "path": "context/private-students/2026-10-16",
+      "sha256": null,
+      "byteLength": null,
+      "classification": "private-metadata",
+      "readPolicy": "no-content-read",
+      "ownerId": "dc-gang-a-dev",
+      "topicIds": [
+        "academy.progress-audit",
+        "foundation.provenance"
+      ],
+      "note": "Private original custody locator; no record content, listing or hash read. The catalog does not authorize ingestion or publication. Metadata only; not read."
+    },
+    {
+      "id": "SRC-DC-PRIVATE-1016-ADDENDUM",
+      "repositoryId": "dc-gang-a",
+      "path": "context/private-students/2026-10-16-part2-after-1928",
+      "sha256": null,
+      "byteLength": null,
+      "classification": "private-metadata",
+      "readPolicy": "no-content-read",
+      "ownerId": "dc-gang-a-dev",
+      "topicIds": [
+        "academy.progress-audit",
+        "foundation.provenance"
+      ],
+      "note": "Later dated private addendum remains a distinct original; not merged into prior observations and not read here. Metadata only; not read."
+    },
+    {
+      "id": "SRC-ED-SOURCE-MAP",
+      "repositoryId": "education-platform",
+      "path": "architecture/source-map.json",
+      "sha256": "216c6449ae2e7ad07a5b851fc583aa3a9fa64808a8084eff39cc80425063ea4c",
+      "byteLength": 7309,
+      "classification": "current-owner",
+      "readPolicy": "selected-design",
+      "ownerId": "education-platform",
+      "topicIds": [
+        "foundation.harness"
+      ],
+      "note": "Maintained gang-a code owner is explicit. Build dependencies mean verification order, not accepted semantic/data ownership."
+    },
+    {
+      "id": "SRC-ED-ENTRY",
+      "repositoryId": "education-platform",
+      "path": "AGENTS.md",
+      "sha256": "41ab811f94a4873d6b8a264fd95850a6c1523767bdd293138fd62a351fedaab0",
+      "byteLength": 2261,
+      "classification": "current-owner",
+      "readPolicy": "selected-design",
+      "ownerId": "education-platform",
+      "topicIds": [
+        "foundation.harness"
+      ],
+      "note": "Integration boundaries, package-local runtime contracts, private originals and month-end source context remain distinct."
+    },
+    {
+      "id": "SRC-ED-MONTHLY",
+      "repositoryId": "education-platform",
+      "path": "apps/academy/month-end-workbench/docs/source-context.md",
+      "sha256": "2669b79ca4b93f7584d8744d3ce6f02e787f34dd2f7d0b7897d23f727f378f2a",
+      "byteLength": 9086,
+      "classification": "current-owner",
+      "readPolicy": "selected-design",
+      "ownerId": "education-platform",
+      "topicIds": [
+        "academy.assessment-preparation",
+        "foundation.research"
+      ],
+      "note": "Current month-end intent/chronology, later scoped selection choices and native launch holds. Earlier prototype acceptance was not whole-work acceptance."
+    },
+    {
+      "id": "SRC-ED-DAILY-INTERNAL",
+      "repositoryId": "education-platform",
+      "path": "apps/academy/dc-gang-a/docs/daily-record-authoring-policy.md",
+      "sha256": "1ae5f207b485f9df09f3ee617b332743e1fe6e047eda0ed99ea1385dc6e56fd1",
+      "byteLength": 6129,
+      "classification": "current-owner",
+      "readPolicy": "selected-design",
+      "ownerId": "dc-gang-a-dev",
+      "topicIds": [
+        "academy.attendance-internal-journal"
+      ],
+      "note": "Use internal lesson/progress/homework/attendance intake only. Parent-facing drafting/transmission are excluded in this Work."
+    },
+    {
+      "id": "SRC-ED-CHECK-ROUTER",
+      "repositoryId": "education-platform",
+      "path": "scripts/check.ts",
+      "sha256": "8592efd7b046c177f840def992dd112f6f78cfc316dd6f70f2a00bc78bd2c530",
+      "byteLength": 1204,
+      "classification": "current-owner",
+      "readPolicy": "selected-design",
+      "ownerId": "education-platform",
+      "topicIds": [
+        "foundation.verification"
+      ],
+      "note": "Aggregate check routes registered source-map modules; it does not by itself cover every nested teacher-research workflow."
+    },
+    {
+      "id": "SRC-ED-ACADEMY-CHECK",
+      "repositoryId": "education-platform",
+      "path": "apps/academy/run.ts",
+      "sha256": "39e3931f5556389e6a915a28f6eaa9305fb2b9e45529aa4389f6bee0be53a678",
+      "byteLength": 759,
+      "classification": "current-owner",
+      "readPolicy": "selected-design",
+      "ownerId": "education-platform",
+      "topicIds": [
+        "foundation.verification"
+      ],
+      "note": "Academy aggregate route names gang-a and dc-gang-a; month-end/web need their explicit scoped checks."
+    },
+    {
+      "id": "SRC-ED-ACADEMY-TSC",
+      "repositoryId": "education-platform",
+      "path": "apps/academy/tsconfig.json",
+      "sha256": "f7579b5de051da279bfdc284c58f23cd7dc80ffecb5273ee0bd1c7c1b5855f32",
+      "byteLength": 336,
+      "classification": "current-owner",
+      "readPolicy": "selected-design",
+      "ownerId": "education-platform",
+      "topicIds": [
+        "foundation.verification"
+      ],
+      "note": "Integration TypeScript include list is not all nested application source verification."
+    },
+    {
+      "id": "SRC-GANG-POLICY",
+      "repositoryId": "education-platform",
+      "path": "apps/academy/gang-a/docs/ACADEMY_OPERATING_CONTEXT.md",
+      "sha256": "7d18e8f46f0ee50dc32d507e3791c8af43fae8106914bdda856837ea2535d864",
+      "byteLength": 15681,
+      "classification": "current-owner",
+      "readPolicy": "selected-design",
+      "ownerId": "education-platform",
+      "topicIds": [
+        "academy"
+      ],
+      "note": "Policy hierarchy with roles/artifacts/concepts, typed dependencies and preserved unavailable history."
+    },
+    {
+      "id": "SRC-GANG-SELECTOR",
+      "repositoryId": "education-platform",
+      "path": "apps/academy/gang-a/packages/application/select-operational-context.ts",
+      "sha256": "afcc6df4089038829523bf022c624d6ff407c13a849b4f252c756df90363e305",
+      "byteLength": 3436,
+      "classification": "current-owner",
+      "readPolicy": "selected-design",
+      "ownerId": "education-platform",
+      "topicIds": [
+        "foundation.harness"
+      ],
+      "note": "Existing domain selector expands policy ancestors/dependencies and evidence. New source locator catalog complements it; does not fork policy content."
+    },
+    {
+      "id": "SRC-RESEARCH-OWNERS",
+      "repositoryId": "math-research-module",
+      "path": "docs/ownership-and-identity.md",
+      "sha256": "3ab3e47d3194d1e7b174430c6c7825e6bc755c1453f4186b54e00190fc2b192a",
+      "byteLength": 3645,
+      "classification": "current-owner",
+      "readPolicy": "selected-design",
+      "ownerId": "math-research-module",
+      "topicIds": [
+        "foundation.research",
+        "foundation.identity"
+      ],
+      "note": "Research object IDs are distinct from common Work execution IDs and module-local context keys."
+    },
+    {
+      "id": "SRC-RESEARCH-COVERAGE",
+      "repositoryId": "math-research-module",
+      "path": "context/monthly-assessment-20261016/coverage.json",
+      "sha256": "48caf06c4436cd5cb59733f0f7379de491dfb6f95ef036dfc4a14ea1013f65d8",
+      "byteLength": 1685,
+      "classification": "current-owner",
+      "readPolicy": "selected-design",
+      "ownerId": "math-research-module",
+      "topicIds": [
+        "foundation.research",
+        "foundation.provenance"
+      ],
+      "note": "Monthly source coverage is partial and overlaps the selected user-context population; do not add counts as independent evidence."
+    },
+    {
+      "id": "SRC-RESEARCH-CHRONOLOGY",
+      "repositoryId": "math-research-module",
+      "path": "context/monthly-assessment-20261016/README.md",
+      "sha256": "9aa0ab291a18657ce844c5b64d28e351c1e31713942c1032933ebbef66421541",
+      "byteLength": 3930,
+      "classification": "original-reference",
+      "readPolicy": "selected-design",
+      "ownerId": "math-research-module",
+      "topicIds": [
+        "academy.assessment-preparation",
+        "foundation.research"
+      ],
+      "note": "Retained monthly assessment dossier and original selection chronology; user/assistant/hypothesis distinctions retained."
+    },
+    {
+      "id": "SRC-RESEARCH-TYPES",
+      "repositoryId": "math-research-module",
+      "path": "research/identity-pilot/src/model.ts",
+      "sha256": "bbad4517466a47aa675809f4d8b646084a5c6f55a3372478e7ce9857343c325d",
+      "byteLength": 5082,
+      "classification": "current-owner",
+      "readPolicy": "selected-design",
+      "ownerId": "math-research-module",
+      "topicIds": [
+        "foundation.research",
+        "foundation.identity"
+      ],
+      "note": "DATA/LOGIC/ACTION/GOVERNANCE types and relation endpoint/cycle rules belong to research owner."
+    },
+    {
+      "id": "SRC-CURRICULUM-GAPS",
+      "repositoryId": "math-education",
+      "path": "canonical/README.md",
+      "sha256": "c4d0134908f0f486033313478f395d0335e9cd285570f386137ff3cbfc222ea5",
+      "byteLength": 1211,
+      "classification": "current-owner",
+      "readPolicy": "selected-design",
+      "ownerId": "math-education",
+      "topicIds": [
+        "foundation.curriculum"
+      ],
+      "note": "Five canonical inputs are absent and boundary hash conflict is unresolved; preserved UI is not complete curriculum corpus."
+    },
+    {
+      "id": "SRC-LEGACY-SSOT",
+      "repositoryId": "palantirkc",
+      "path": "projects/ssot/INDEX.md",
+      "sha256": "49dd6d6ef001469ddc79c4525165fcd08a9722a7c8ec71d7878e6ebc597694e6",
+      "byteLength": 48801,
+      "classification": "historical-summary",
+      "readPolicy": "selected-design",
+      "ownerId": "palantirkc",
+      "topicIds": [
+        "foundation.identity"
+      ],
+      "note": "Historical teaching/student/daily-test/identity/observation contracts retained with their original IDs; not current admission proof."
+    },
+    {
+      "id": "SRC-LEGACY-TIERS",
+      "repositoryId": "palantirkc",
+      "path": "projects/ARCHITECTURE-TIERS.md",
+      "sha256": "8d708425586e934ffcb15c65f92d53897e45beac5f9d4ac2b73db6917acd00ee",
+      "byteLength": 52448,
+      "classification": "historical-summary",
+      "readPolicy": "selected-design",
+      "ownerId": "palantirkc",
+      "topicIds": [
+        "foundation.identity"
+      ],
+      "note": "Preserve SHAPE axes versus content axes and machine-matrix semantics as dated source, not a new universal hierarchy."
+    },
+    {
+      "id": "SRC-LEGACY-MEMORY",
+      "repositoryId": "palantirkc",
+      "path": "projects/ssot/contracts/static-core/c42_memory_domain.md",
+      "sha256": "be61d9907c283a25dde3c22089f86e298a15e714f52569816895ae81f94f05c9",
+      "byteLength": 26738,
+      "classification": "historical-summary",
+      "readPolicy": "selected-design",
+      "ownerId": "palantirkc",
+      "topicIds": [
+        "foundation.harness",
+        "foundation.identity"
+      ],
+      "note": "Authority tiers and memory categories are separate axes; same-named memoryLayers fields cannot be flattened across owner schemas."
+    },
+    {
+      "id": "SRC-COMMON-GITWORK",
+      "repositoryId": "agent-platform",
+      "path": "docs/git-work.md",
+      "sha256": "6a0f5900d077241f3cb640197ceb2aefd2204c823edc17d860e940836b72bbdd",
+      "byteLength": 10411,
+      "classification": "current-owner",
+      "readPolicy": "selected-design",
+      "ownerId": "agent-platform",
+      "topicIds": [
+        "foundation.harness"
+      ],
+      "note": "Canonical GitWork/context/Memory source ownership, exact source refs and native activation distinctions. External validation only for this Work."
+    },
+    {
+      "id": "SRC-COMMON-RECORD-TYPES",
+      "repositoryId": "agent-platform",
+      "path": "packages/work-continuity/src/git-work/types.ts",
+      "sha256": "8fbc20bd25886c2cd10663c6a0a0bc8b1b9a4620fd70c56b45f544fca3b55144",
+      "byteLength": 16374,
+      "classification": "current-owner",
+      "readPolicy": "selected-design",
+      "ownerId": "agent-platform",
+      "topicIds": [
+        "foundation.identity",
+        "foundation.harness"
+      ],
+      "note": "Closed Work relation enum; academy diagnostic relationships live in this domain catalog, not new shared enum values."
+    },
+    {
+      "id": "SRC-COMMON-OWNERS",
+      "repositoryId": "agent-platform",
+      "path": "architecture/capability-source-owners.json",
+      "sha256": "bebb30c4f0ef2fe43cb329bb7489650aa809cf8344cc41aeb47ec4f0d2eb4e6d",
+      "byteLength": 68123,
+      "classification": "current-owner",
+      "readPolicy": "selected-design",
+      "ownerId": "agent-platform",
+      "topicIds": [
+        "foundation.harness"
+      ],
+      "note": "Common algorithms versus native adapters/original stores; no second runtime, source-owner takeover or credential bridge."
+    },
+    {
+      "id": "SRC-COMMON-MEMORY",
+      "repositoryId": "agent-platform",
+      "path": "packages/work-continuity/src/workspace/qualification.ts",
+      "sha256": "c7ef10b6633657368b1a390dc44d93a557a647c61f7077e94ca619b82a847e6d",
+      "byteLength": 21603,
+      "classification": "current-owner",
+      "readPolicy": "selected-design",
+      "ownerId": "agent-platform",
+      "topicIds": [
+        "foundation.currentness",
+        "foundation.harness"
+      ],
+      "note": "Existing qualified Memory distinguishes derived inference from authoritative conflicts; this catalog is discovery metadata, not admitted Memory."
+    },
+    {
+      "id": "SRC-CURRENT-USER",
+      "repositoryId": "academy-context-candidate",
+      "path": "work/academy-workbench/academy-context-consolidation-20261021/inputs/ACX-USER-KEEP-OWNERS.json",
+      "sha256": "e33c52a7fad7b536efeff6241c047cc8d34478fa20a8c4072a29a9384309f17b",
+      "byteLength": 755,
+      "classification": "original-reference",
+      "readPolicy": "selected-design",
+      "ownerId": "native-codex",
+      "topicIds": [
+        "academy"
+      ],
+      "note": "Exact current answer capture in candidate working bytes. Hash does not recreate native authentication; later commit validation is separate."
+    },
+    {
+      "id": "SRC-CURRENT-NAVIGATION",
+      "repositoryId": "academy-context-candidate",
+      "path": "work/academy-workbench/academy-context-consolidation-20261021/inputs/ACX-USER-DEFAULT-NAVIGATION.json",
+      "sha256": "fe3c5effc99739e2c6a9cd7f6a304fa7d32da9fc9a55ac3cf2ab56e3f90322ea",
+      "byteLength": 767,
+      "classification": "original-reference",
+      "readPolicy": "selected-design",
+      "ownerId": "native-codex",
+      "topicIds": [
+        "academy.class-preparation"
+      ],
+      "note": "Exact current default-navigation answer, distinct from historical schedule/student facts."
+    },
+    {
+      "id": "SRC-CURRENT-SCOPE",
+      "repositoryId": "academy-context-candidate",
+      "path": "work/academy-workbench/academy-context-consolidation-20261021/inputs/ACX-USER-OPERATION-SCOPE.json",
+      "sha256": "b8866635342ab0c20c6b6ec495c027241150cbba7102e1c4152f50811ad1e748",
+      "byteLength": 1183,
+      "classification": "original-reference",
+      "readPolicy": "selected-design",
+      "ownerId": "native-codex",
+      "topicIds": [
+        "academy"
+      ],
+      "note": "Exact current answer excludes counseling and parent communication while keeping internal academy work."
+    },
+    {
+      "id": "SRC-CURRENT-IMPROVEMENT",
+      "repositoryId": "academy-context-candidate",
+      "path": "work/academy-workbench/academy-context-consolidation-20261021/inputs/ACX-USER-BOTTLENECK-IDS.json",
+      "sha256": "b4f47fd1e74ab6a54517816a3035faf1b033fca33068fe38b3591ddc9c74e14f",
+      "byteLength": 1031,
+      "classification": "original-reference",
+      "readPolicy": "selected-design",
+      "ownerId": "native-codex",
+      "topicIds": [
+        "academy"
+      ],
+      "note": "Exact user request broadens diagnosis to conflicts, duplicates and bottlenecks with stable bounded IDs and improvements."
+    },
+    {
+      "id": "SRC-WORK-IDENTITY",
+      "repositoryId": "academy-context-candidate",
+      "path": "work/academy-workbench/academy-context-consolidation-20261021/inputs/ACX-OWNER-SCOPE-AND-CONTINUITY.json",
+      "sha256": "7ce246e0f7b7b12e22db63aada9bf0d4a5c363b2a934f83a40ec3b4650e6e2e5",
+      "byteLength": 5385,
+      "classification": "original-reference",
+      "readPolicy": "selected-design",
+      "ownerId": "academy-workbench",
+      "topicIds": [
+        "foundation.harness"
+      ],
+      "note": "Source-owner Work purpose, limits, native-reference distinction and local registration declaration. Not a second checkpoint ledger."
+    },
+    {
+      "id": "SRC-INTEGRATION-USER-20261023",
+      "repositoryId": "education-platform",
+      "path": "work/education-platform/academy-repository-integration-20261023/inputs/AI-USER.json",
+      "sha256": "d903854f3014969495cc6957de9b8d8c6e4fd4a8cef02c57bffb6a45f08e1a31",
+      "byteLength": 1346,
+      "classification": "original-reference",
+      "readPolicy": "selected-design",
+      "ownerId": "current-user",
+      "topicIds": [
+        "academy",
+        "foundation.harness"
+      ],
+      "note": "Current direct user selection of private Education integration and broad approved-context migration review. Source capture is not native authentication or runtime authority."
+    },
+    {
+      "id": "SRC-PRIVATE-ADMISSION-20261023",
+      "repositoryId": "education-platform",
+      "path": "work/education-platform/academy-repository-integration-20261023/inputs/AI-PRIVATE-USER.json",
+      "sha256": "8c31afe8d6108550f222e33539a5d6dcf6b95ccaad9ce5cdf08ad039ae8c5969",
+      "byteLength": 1054,
+      "classification": "original-reference",
+      "readPolicy": "selected-design",
+      "ownerId": "current-user",
+      "topicIds": [
+        "academy"
+      ],
+      "note": "Exact current successor destination admission for three packages; no source-server, native-store, parent-send or other private-package authority."
+    },
+    {
+      "id": "SRC-ADDITIONAL-ADMISSION-20261023",
+      "repositoryId": "education-platform",
+      "path": "work/education-platform/academy-repository-integration-20261023/inputs/AI-ADDITIONAL-USER.json",
+      "sha256": "eafc168dfbcaebf330037e38ac4be79c1f258511505403ed055d9451bbf484d6",
+      "byteLength": 1013,
+      "classification": "original-reference",
+      "readPolicy": "selected-design",
+      "ownerId": "current-user",
+      "topicIds": [
+        "academy"
+      ],
+      "note": "Exact successor admission for the additional six custody groups and the independent reviewer assignment; no native/store/runtime or new data-acquisition authority."
+    }
+  ],
+  "topics": [
+    {
+      "id": "academy",
+      "parentId": null,
+      "kind": "domain",
+      "title": "Internal academy practice",
+      "sourceIds": [
+        "SRC-AWB-COVERAGE",
+        "SRC-AWB-CONTEXT",
+        "SRC-AWB-GENERALIZED",
+        "SRC-DC-ENTRY",
+        "SRC-DC-CONTRACT",
+        "SRC-DC-TARGET",
+        "SRC-GANG-POLICY",
+        "SRC-CURRENT-USER",
+        "SRC-CURRENT-SCOPE",
+        "SRC-CURRENT-IMPROVEMENT",
+        "SRC-INTEGRATION-USER-20261023",
+        "SRC-PRIVATE-ADMISSION-20261023",
+        "SRC-ADDITIONAL-ADMISSION-20261023"
+      ],
+      "dependsOn": []
+    },
+    {
+      "id": "foundation",
+      "parentId": null,
+      "kind": "domain",
+      "title": "Shared context foundations",
+      "sourceIds": [],
+      "dependsOn": []
+    },
+    {
+      "id": "foundation.identity",
+      "parentId": "foundation",
+      "kind": "foundation",
+      "title": "Separate identity namespaces and typed topology",
+      "sourceIds": [
+        "SRC-AWB-AUDIT-METADATA",
+        "SRC-AWB-ARCHITECTURE",
+        "SRC-AWB-LOGICAL-TYPES",
+        "SRC-RESEARCH-OWNERS",
+        "SRC-RESEARCH-TYPES",
+        "SRC-LEGACY-SSOT",
+        "SRC-LEGACY-TIERS",
+        "SRC-LEGACY-MEMORY",
+        "SRC-COMMON-RECORD-TYPES"
+      ],
+      "dependsOn": []
+    },
+    {
+      "id": "foundation.currentness",
+      "parentId": "foundation",
+      "kind": "foundation",
+      "title": "Scope-specific current decisions and unknown freshness",
+      "sourceIds": [
+        "SRC-AWB-CONTEXT",
+        "SRC-AWB-CONTINUATION",
+        "SRC-DC-CHECKPOINT",
+        "SRC-DC-OLD-README",
+        "SRC-DC-OLD-CONTEXT",
+        "SRC-DC-OLD-MAP",
+        "SRC-COMMON-MEMORY"
+      ],
+      "dependsOn": []
+    },
+    {
+      "id": "foundation.provenance",
+      "parentId": "foundation",
+      "kind": "foundation",
+      "title": "Original evidence, derivation and historical custody",
+      "sourceIds": [
+        "SRC-AWB-COVERAGE",
+        "SRC-AWB-INQUIRY",
+        "SRC-AWB-ARCHIVE-INDEX",
+        "SRC-AWB-ORIGINALS-LOCATOR",
+        "SRC-DC-PRIVATE-1016",
+        "SRC-DC-PRIVATE-1016-ADDENDUM",
+        "SRC-RESEARCH-COVERAGE"
+      ],
+      "dependsOn": []
+    },
+    {
+      "id": "foundation.harness",
+      "parentId": "foundation",
+      "kind": "foundation",
+      "title": "Common Work/Memory contracts and native ownership",
+      "sourceIds": [
+        "SRC-AWB-HARNESS",
+        "SRC-AWB-CONTINUATION",
+        "SRC-DC-ENTRY",
+        "SRC-ED-SOURCE-MAP",
+        "SRC-ED-ENTRY",
+        "SRC-GANG-SELECTOR",
+        "SRC-LEGACY-MEMORY",
+        "SRC-COMMON-GITWORK",
+        "SRC-COMMON-RECORD-TYPES",
+        "SRC-COMMON-OWNERS",
+        "SRC-COMMON-MEMORY",
+        "SRC-WORK-IDENTITY",
+        "SRC-INTEGRATION-USER-20261023"
+      ],
+      "dependsOn": []
+    },
+    {
+      "id": "foundation.verification",
+      "parentId": "foundation",
+      "kind": "foundation",
+      "title": "Exact source, useful behavior and independent verification",
+      "sourceIds": [
+        "SRC-AWB-GATES",
+        "SRC-ED-CHECK-ROUTER",
+        "SRC-ED-ACADEMY-CHECK",
+        "SRC-ED-ACADEMY-TSC"
+      ],
+      "dependsOn": []
+    },
+    {
+      "id": "foundation.curriculum",
+      "parentId": "foundation",
+      "kind": "foundation",
+      "title": "Book editions, curriculum hierarchy and missing originals",
+      "sourceIds": [
+        "SRC-AWB-LOGICAL-TYPES",
+        "SRC-CURRICULUM-GAPS"
+      ],
+      "dependsOn": []
+    },
+    {
+      "id": "foundation.research",
+      "parentId": "foundation",
+      "kind": "foundation",
+      "title": "Research meaning, assessment intent and hypothesis boundaries",
+      "sourceIds": [
+        "SRC-ED-MONTHLY",
+        "SRC-RESEARCH-OWNERS",
+        "SRC-RESEARCH-COVERAGE",
+        "SRC-RESEARCH-CHRONOLOGY",
+        "SRC-RESEARCH-TYPES"
+      ],
+      "dependsOn": []
+    },
+    {
+      "id": "academy.class-preparation",
+      "parentId": "academy",
+      "kind": "workflow",
+      "title": "Prepare the dated class and student pending work",
+      "sourceIds": [
+        "SRC-DC-CLASSROOM",
+        "SRC-CURRENT-NAVIGATION"
+      ],
+      "dependsOn": [
+        "foundation.identity",
+        "foundation.currentness",
+        "foundation.provenance",
+        "foundation.harness",
+        "foundation.verification",
+        "foundation.curriculum"
+      ]
+    },
+    {
+      "id": "academy.lesson-delivery",
+      "parentId": "academy",
+      "kind": "workflow",
+      "title": "Deliver the lesson and retain teacher observations",
+      "sourceIds": [
+        "SRC-DC-CLASSROOM"
+      ],
+      "dependsOn": [
+        "foundation.identity",
+        "foundation.currentness",
+        "foundation.provenance",
+        "foundation.harness",
+        "foundation.verification"
+      ]
+    },
+    {
+      "id": "academy.progress-audit",
+      "parentId": "academy",
+      "kind": "workflow",
+      "title": "Audit assigned progress against scoped evidence",
+      "sourceIds": [
+        "SRC-AWB-INQUIRY",
+        "SRC-AWB-AUDIT-METADATA",
+        "SRC-DC-CLASSROOM",
+        "SRC-DC-PRIVATE-1016",
+        "SRC-DC-PRIVATE-1016-ADDENDUM"
+      ],
+      "dependsOn": [
+        "foundation.identity",
+        "foundation.currentness",
+        "foundation.provenance",
+        "foundation.harness",
+        "foundation.verification",
+        "foundation.curriculum"
+      ]
+    },
+    {
+      "id": "academy.homework-followup",
+      "parentId": "academy",
+      "kind": "workflow",
+      "title": "Prepare and follow up assigned homework",
+      "sourceIds": [
+        "SRC-DC-CLASSROOM"
+      ],
+      "dependsOn": [
+        "foundation.identity",
+        "foundation.currentness",
+        "foundation.provenance",
+        "foundation.harness",
+        "foundation.verification",
+        "foundation.curriculum"
+      ]
+    },
+    {
+      "id": "academy.assessment-preparation",
+      "parentId": "academy",
+      "kind": "workflow",
+      "title": "Research and prepare a scoped assessment",
+      "sourceIds": [
+        "SRC-ED-MONTHLY",
+        "SRC-RESEARCH-CHRONOLOGY"
+      ],
+      "dependsOn": [
+        "foundation.identity",
+        "foundation.currentness",
+        "foundation.provenance",
+        "foundation.harness",
+        "foundation.verification",
+        "foundation.research",
+        "foundation.curriculum"
+      ]
+    },
+    {
+      "id": "academy.wrong-answer-clinic",
+      "parentId": "academy",
+      "kind": "workflow",
+      "title": "Track wrong-answer and similar-clinic cycles",
+      "sourceIds": [
+        "SRC-DC-CLASSROOM"
+      ],
+      "dependsOn": [
+        "foundation.identity",
+        "foundation.currentness",
+        "foundation.provenance",
+        "foundation.harness",
+        "foundation.verification",
+        "foundation.curriculum"
+      ]
+    },
+    {
+      "id": "academy.attendance-internal-journal",
+      "parentId": "academy",
+      "kind": "workflow",
+      "title": "Retain attendance and internal lesson journal",
+      "sourceIds": [
+        "SRC-ED-DAILY-INTERNAL"
+      ],
+      "dependsOn": [
+        "foundation.identity",
+        "foundation.currentness",
+        "foundation.provenance",
+        "foundation.harness",
+        "foundation.verification"
+      ]
+    },
+    {
+      "id": "academy.counseling",
+      "parentId": "academy",
+      "kind": "workflow",
+      "title": "Counseling: excluded current action scope",
+      "sourceIds": [],
+      "dependsOn": []
+    },
+    {
+      "id": "academy.parent-communication",
+      "parentId": "academy",
+      "kind": "workflow",
+      "title": "Parent communication: excluded current action scope",
+      "sourceIds": [],
+      "dependsOn": []
+    }
+  ],
+  "records": [
+    {
+      "id": "CTX-SCOPE",
+      "kind": "actual-user-decision",
+      "status": "current",
+      "title": "All internal practice except counseling/parent communication",
+      "text": "Include class preparation, lesson work, progress, homework, wrong answers, assessment, attendance and internal journals. Exclude counseling and parent-facing communication actions. Historical source custody is preserved.",
+      "topicIds": [
+        "academy"
+      ],
+      "sourceIds": [
+        "SRC-CURRENT-SCOPE"
+      ],
+      "originalIds": [
+        "ACX-DECISION-OPERATION-SCOPE"
+      ],
+      "supersedes": []
+    },
+    {
+      "id": "CTX-OWNERS",
+      "kind": "actual-user-decision",
+      "status": "historical",
+      "title": "Preserve ownership and integrate entrypoint/contracts first",
+      "text": "No repository relocation or student-original custody transfer is selected. Unify discovery and execution-contract references while keeping current policy, code, research and native owners.",
+      "topicIds": [
+        "academy",
+        "foundation.harness"
+      ],
+      "sourceIds": [
+        "SRC-CURRENT-USER"
+      ],
+      "originalIds": [
+        "ACX-DECISION-KEEP-OWNERS"
+      ],
+      "supersedes": []
+    },
+    {
+      "id": "CTX-NAVIGATION",
+      "kind": "actual-user-decision",
+      "status": "current",
+      "title": "Date then class then student",
+      "text": "Default navigation begins with the dated class/cohort, then student preparation and unfinished work. A weekday pattern or old class candidate does not establish today membership.",
+      "topicIds": [
+        "academy.class-preparation"
+      ],
+      "sourceIds": [
+        "SRC-CURRENT-NAVIGATION"
+      ],
+      "originalIds": [
+        "ACX-DECISION-DEFAULT-NAVIGATION"
+      ],
+      "supersedes": []
+    },
+    {
+      "id": "CTX-IMPROVEMENT",
+      "kind": "actual-user-decision",
+      "status": "current",
+      "title": "Diagnose and improve broad bottlenecks with scoped IDs",
+      "text": "Preserve per-finding evidence, impacted workflow, owner, Task, action and verification. A local finding ID is not a native Run or domain entity identifier.",
+      "topicIds": [
+        "academy",
+        "foundation.harness"
+      ],
+      "sourceIds": [
+        "SRC-CURRENT-IMPROVEMENT"
+      ],
+      "originalIds": [
+        "ACX-DECISION-BOTTLENECK-IDS"
+      ],
+      "supersedes": []
+    },
+    {
+      "id": "CTX-DC-ROUTE",
+      "kind": "source-owner-decision",
+      "status": "current",
+      "title": "Use the current operational contract route",
+      "text": "dc-gang-a/AGENTS.md selects academy-operational-contract.json and workflow-current-state.json. Older Windows/Main/mobile onboarding remains retained intent/history. This catalog does not rewrite those originals.",
+      "topicIds": [
+        "academy",
+        "foundation.currentness"
+      ],
+      "sourceIds": [
+        "SRC-DC-ENTRY",
+        "SRC-DC-CONTRACT",
+        "SRC-DC-CHECKPOINT"
+      ],
+      "originalIds": [],
+      "supersedes": []
+    },
+    {
+      "id": "CTX-WEB-POSTGRES",
+      "kind": "source-owner-decision",
+      "status": "current",
+      "title": "Do not reopen settled web app and storage choices",
+      "text": "The workflow checkpoint records transition A and private PostgreSQL. Earlier future-provider/Main-first pending questions need scope-qualified reconciliation, not a repeated broad storage interview.",
+      "topicIds": [
+        "foundation.currentness"
+      ],
+      "sourceIds": [
+        "SRC-DC-CHECKPOINT",
+        "SRC-DC-TARGET"
+      ],
+      "originalIds": [],
+      "supersedes": []
+    },
+    {
+      "id": "CTX-OLD-ROUTING",
+      "kind": "source-owner-decision",
+      "status": "historical",
+      "title": "Retain old runtime and priority context",
+      "text": "README/CODEX_CONTEXT/context-map contain dated Windows/Main/mobile routes. They remain original evidence but do not override the currently selected operational contract.",
+      "topicIds": [
+        "foundation.currentness"
+      ],
+      "sourceIds": [
+        "SRC-DC-OLD-README",
+        "SRC-DC-OLD-CONTEXT",
+        "SRC-DC-OLD-MAP"
+      ],
+      "originalIds": [],
+      "supersedes": []
+    },
+    {
+      "id": "CTX-CURRENTNESS",
+      "kind": "inference",
+      "status": "current",
+      "title": "Resolve by owner, scope and field, not global date",
+      "text": "Keep occurredAt, observedAt, retrievedAt, source version and teacher decision time distinct. A later report may correct class membership without changing book edition or proving completion. Unknown authoritative currentness holds only dependent effects.",
+      "topicIds": [
+        "foundation.currentness"
+      ],
+      "sourceIds": [
+        "SRC-AWB-GENERALIZED",
+        "SRC-DC-CONTRACT",
+        "SRC-COMMON-MEMORY"
+      ],
+      "originalIds": [],
+      "supersedes": []
+    },
+    {
+      "id": "CTX-COVERAGE",
+      "kind": "coverage-gap",
+      "status": "unresolved",
+      "title": "Entire history denominator remains unknown",
+      "text": "All identified entrypoints are indexed; neither selected 64-message/13-block context nor the overlapping monthly dossier establishes whole conversation/Space coverage. Missing originals, inaccessible histories and private payloads remain explicit.",
+      "topicIds": [
+        "foundation.provenance"
+      ],
+      "sourceIds": [
+        "SRC-AWB-COVERAGE",
+        "SRC-RESEARCH-COVERAGE",
+        "SRC-AWB-ORIGINALS-LOCATOR"
+      ],
+      "originalIds": [],
+      "supersedes": []
+    },
+    {
+      "id": "CTX-TOPOLOGY",
+      "kind": "inference",
+      "status": "current",
+      "title": "Use multiple topology types",
+      "text": "Containment and task dependencies require acyclic structure; semantic relations may cycle; original/revision provenance preserves lineage; repeated classroom steps may return to grading/correction. The repository build graph is a separate verification graph.",
+      "topicIds": [
+        "foundation.identity"
+      ],
+      "sourceIds": [
+        "SRC-AWB-ARCHITECTURE",
+        "SRC-AWB-LOGICAL-TYPES",
+        "SRC-RESEARCH-TYPES",
+        "SRC-ED-SOURCE-MAP"
+      ],
+      "originalIds": [],
+      "supersedes": []
+    },
+    {
+      "id": "CTX-COMPLETION",
+      "kind": "source-owner-decision",
+      "status": "current",
+      "title": "Teacher completion is its own evidence state",
+      "text": "Assignment, solving, app entry, grading, correction, teacher review, teacher completion, generated paper, print and distribution are separate. A score or empty LMS field cannot complete the rest.",
+      "topicIds": [
+        "academy.lesson-delivery",
+        "academy.progress-audit",
+        "academy.homework-followup",
+        "academy.wrong-answer-clinic",
+        "academy.class-preparation"
+      ],
+      "sourceIds": [
+        "SRC-DC-CLASSROOM",
+        "SRC-AWB-INQUIRY",
+        "SRC-AWB-GENERALIZED"
+      ],
+      "originalIds": [],
+      "supersedes": []
+    },
+    {
+      "id": "CTX-BOOK-IDENTITY",
+      "kind": "source-owner-decision",
+      "status": "current",
+      "title": "Edition hierarchy and source section identity must survive joins",
+      "text": "Keep edition-local exact labels and missing hierarchy levels. Current edition:CODE:vN identifiers and source edition hashes require an explicit candidate crosswalk; code/version similarity alone is not canonical equality.",
+      "topicIds": [
+        "foundation.identity",
+        "foundation.curriculum"
+      ],
+      "sourceIds": [
+        "SRC-AWB-LOGICAL-TYPES",
+        "SRC-RESEARCH-OWNERS"
+      ],
+      "originalIds": [],
+      "supersedes": []
+    },
+    {
+      "id": "CTX-ED-MAINTENANCE",
+      "kind": "source-owner-decision",
+      "status": "current",
+      "title": "Existing integrated code owner is not a new custody transfer",
+      "text": "education-platform/apps/academy/gang-a is the maintained gang-a code path. The retained standalone source, historical context, native bindings and student originals keep their owners.",
+      "topicIds": [
+        "foundation.harness"
+      ],
+      "sourceIds": [
+        "SRC-ED-SOURCE-MAP",
+        "SRC-ED-ENTRY"
+      ],
+      "originalIds": [],
+      "supersedes": []
+    },
+    {
+      "id": "CTX-INTERNAL-JOURNAL",
+      "kind": "actual-user-decision",
+      "status": "current",
+      "title": "Keep internal journal input while excluding parent communication",
+      "text": "Internal attendance, lesson observations, actual progress and future homework remain in scope. The parent-facing projection and transmission portion of DailyRecord is excluded in this Work.",
+      "topicIds": [
+        "academy.attendance-internal-journal"
+      ],
+      "sourceIds": [
+        "SRC-CURRENT-SCOPE",
+        "SRC-ED-DAILY-INTERNAL"
+      ],
+      "originalIds": [
+        "ACX-DECISION-OPERATION-SCOPE"
+      ],
+      "supersedes": []
+    },
+    {
+      "id": "CTX-ASSESSMENT-SCOPE",
+      "kind": "source-owner-decision",
+      "status": "current",
+      "title": "Assessment chronology is scope-qualified",
+      "text": "General monthly duration, a specific 80-minute research assessment, earlier proposed allocations and later item choices are distinct scopes/revisions. Later choices do not retroactively accept assistant ranking or research validity.",
+      "topicIds": [
+        "academy.assessment-preparation",
+        "foundation.research"
+      ],
+      "sourceIds": [
+        "SRC-ED-MONTHLY",
+        "SRC-RESEARCH-CHRONOLOGY"
+      ],
+      "originalIds": [],
+      "supersedes": []
+    },
+    {
+      "id": "CTX-MEMORY-BOUNDARY",
+      "kind": "inference",
+      "status": "current",
+      "title": "A catalog is not admitted Memory",
+      "text": "The selector returns source references, relevant current summaries and unresolved findings. Existing agent-platform remains the Work/Memory/Recall algorithm owner; admission/generation/source-lineage/native consumption are separate and not established by this catalog.",
+      "topicIds": [
+        "foundation.harness"
+      ],
+      "sourceIds": [
+        "SRC-COMMON-GITWORK",
+        "SRC-COMMON-MEMORY",
+        "SRC-AWB-HARNESS"
+      ],
+      "originalIds": [],
+      "supersedes": []
+    },
+    {
+      "id": "CTX-INTEGRATION-20261023",
+      "kind": "actual-user-decision",
+      "status": "current",
+      "title": "Integrate academy source and organize retained context in private Education",
+      "text": "The user selected education-platform as the integration repository, source/ownership/common-validation/Root-PR completion scope, and broad review of previously approved student/practical context with hierarchy. Three exact student packages and six exact workbench custody groups have separate current destination admissions (566 files total). Root October23 private outputs, native runtime, common algorithm ownership and all effect boundaries remain excluded.",
+      "topicIds": [
+        "academy",
+        "foundation.harness"
+      ],
+      "sourceIds": [
+        "SRC-INTEGRATION-USER-20261023",
+        "SRC-PRIVATE-ADMISSION-20261023",
+        "SRC-ADDITIONAL-ADMISSION-20261023"
+      ],
+      "originalIds": [
+        "AI-USER-DIRECTION"
+      ],
+      "supersedes": [
+        "CTX-OWNERS"
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "id": "REL-CURRENT-ROUTE",
+      "topology": "revision",
+      "from": "CTX-DC-ROUTE",
+      "to": "CTX-OLD-ROUTING",
+      "meaning": "Current entry controls runtime/policy routing; historical intent retained, not blanket semantic replacement."
+    },
+    {
+      "id": "REL-SUMMARY-ORIGINAL",
+      "topology": "provenance",
+      "from": "SRC-AWB-GENERALIZED",
+      "to": "SRC-AWB-CONTEXT",
+      "meaning": "Generalized handoff and selected original context are distinct provenance classes, not independent votes."
+    },
+    {
+      "id": "REL-RESEARCH-ASSESSMENT",
+      "topology": "semantic",
+      "from": "foundation.research",
+      "to": "academy.assessment-preparation",
+      "meaning": "Research semantics informs scoped assessment preparation without accepting the item choice."
+    },
+    {
+      "id": "REL-ASSESSMENT-RESEARCH",
+      "topology": "semantic",
+      "from": "academy.assessment-preparation",
+      "to": "foundation.research",
+      "meaning": "Observed assessment evidence can inform research hypotheses, never proves causal deficiency."
+    },
+    {
+      "id": "REL-LESSON-HOMEWORK",
+      "topology": "workflow-cycle",
+      "from": "academy.lesson-delivery",
+      "to": "academy.homework-followup",
+      "meaning": "Lesson yields a scoped next assignment."
+    },
+    {
+      "id": "REL-HOMEWORK-AUDIT",
+      "topology": "workflow-cycle",
+      "from": "academy.homework-followup",
+      "to": "academy.progress-audit",
+      "meaning": "New assignment work produces evidence for review."
+    },
+    {
+      "id": "REL-AUDIT-CLINIC",
+      "topology": "workflow-cycle",
+      "from": "academy.progress-audit",
+      "to": "academy.wrong-answer-clinic",
+      "meaning": "Scoped errors may require distinct clinic work."
+    },
+    {
+      "id": "REL-CLINIC-LESSON",
+      "topology": "workflow-cycle",
+      "from": "academy.wrong-answer-clinic",
+      "to": "academy.lesson-delivery",
+      "meaning": "Correction and teacher review feed the next lesson cycle."
+    }
+  ],
+  "findings": [
+    {
+      "id": "ACX-ROUTING-001",
+      "category": "currentness",
+      "priority": "P1",
+      "status": "mitigated-locally",
+      "title": "Conflicting current and historical onboarding routes",
+      "detail": "Current contract entry and old README/CODEX_CONTEXT/context-map disagree in runtime/priority framing. New selected context explicitly routes current owners and labels historical sources. Original owner files are preserved.",
+      "topicIds": [
+        "foundation.currentness"
+      ],
+      "sourceIds": [
+        "SRC-DC-ENTRY",
+        "SRC-DC-OLD-README",
+        "SRC-DC-OLD-CONTEXT",
+        "SRC-DC-OLD-MAP"
+      ],
+      "taskId": "academy-workbench:task:academy-context-consolidation-20261021-t03",
+      "nextAction": "Verify the new entrypoint/selector is actually consumed by the peer; any upstream owner edit requires its own reviewed change."
+    },
+    {
+      "id": "ACX-COVERAGE-001",
+      "category": "coverage",
+      "priority": "P1",
+      "status": "observed",
+      "title": "Whole context/history coverage is not established",
+      "detail": "Selected context and monthly dossier overlap and have unknown total population; private original contents remain at their owners.",
+      "topicIds": [
+        "foundation.provenance"
+      ],
+      "sourceIds": [
+        "SRC-AWB-COVERAGE",
+        "SRC-RESEARCH-COVERAGE"
+      ],
+      "taskId": "academy-workbench:task:academy-context-consolidation-20261021-t01",
+      "nextAction": "Maintain source/coverage matrix; use known source keys and exact missing locators, never claim all history recovered."
+    },
+    {
+      "id": "ACX-IDENTITY-001",
+      "category": "identity",
+      "priority": "P1",
+      "status": "peer-in-progress",
+      "title": "Edition/code/hash and section identifiers differ across sources",
+      "detail": "Peer independently reports incompatible edition namespace forms and nullable id with present sourceSectionId. This catalog records the reported failure class without reading student payloads or asserting canonical crosswalks.",
+      "topicIds": [
+        "foundation.identity",
+        "foundation.curriculum"
+      ],
+      "sourceIds": [
+        "SRC-AWB-LOGICAL-TYPES",
+        "SRC-RESEARCH-OWNERS"
+      ],
+      "taskId": "academy-workbench:task:academy-context-consolidation-20261021-t03",
+      "nextAction": "Require sourceSectionId plus edition/source namespace and explicit qualified crosswalk; preserve unmatched records, no naive equality drop."
+    },
+    {
+      "id": "ACX-INTERVIEW-001",
+      "category": "decision-history",
+      "priority": "P2",
+      "status": "mitigated-locally",
+      "title": "Settled provider choices coexist with retained pending interviews",
+      "detail": "The checkpoint confirms teacher web app transition A and PostgreSQL while old provider/Main-first questions remain pending. Catalog directs consumers to current decisions and classifies old questions by scope.",
+      "topicIds": [
+        "foundation.currentness"
+      ],
+      "sourceIds": [
+        "SRC-DC-CHECKPOINT"
+      ],
+      "taskId": "academy-workbench:task:academy-context-consolidation-20261021-t03",
+      "nextAction": "Use recorded decisions; interview only consequential current gaps and retain original question IDs."
+    },
+    {
+      "id": "ACX-DUPLICATE-001",
+      "category": "duplication",
+      "priority": "P2",
+      "status": "mitigated-locally",
+      "title": "Overlapping summaries and originals can be double-counted",
+      "detail": "Generalized decisions, selected originals, inquiry additions, shared context copies and archives are different evidence classes. Source metadata and selector dedup avoid treating copies as independent authority.",
+      "topicIds": [
+        "foundation.provenance"
+      ],
+      "sourceIds": [
+        "SRC-AWB-CONTEXT",
+        "SRC-AWB-GENERALIZED",
+        "SRC-AWB-INQUIRY",
+        "SRC-AWB-ARCHIVE-INDEX"
+      ],
+      "taskId": "academy-workbench:task:academy-context-consolidation-20261021-t02",
+      "nextAction": "Dedup emitted source IDs and preserve original IDs/provenance; do not delete original records to reduce context size."
+    },
+    {
+      "id": "ACX-TOPOLOGY-001",
+      "category": "topology",
+      "priority": "P1",
+      "status": "mitigated-locally",
+      "title": "One tree cannot represent every academy relationship",
+      "detail": "Book containment, task dependencies, semantic relations, revision/provenance and classroom cycles have different rules. New typed catalog validator checks acyclic dimensions separately while preserving valid cycles.",
+      "topicIds": [
+        "foundation.identity"
+      ],
+      "sourceIds": [
+        "SRC-AWB-ARCHITECTURE",
+        "SRC-RESEARCH-TYPES"
+      ],
+      "taskId": "academy-workbench:task:academy-context-consolidation-20261021-t02",
+      "nextAction": "Run cycle/dangling tests and keep typed edges in selected packets."
+    },
+    {
+      "id": "ACX-VERIFY-001",
+      "category": "verification",
+      "priority": "P1",
+      "status": "observed",
+      "title": "Aggregate education check does not cover the whole month-end flow",
+      "detail": "Root module check and academy route do not include every month-end backend/frontend/research projection dependency. Source presence or one green aggregate check does not verify the full teacher workflow.",
+      "topicIds": [
+        "foundation.verification",
+        "academy.assessment-preparation"
+      ],
+      "sourceIds": [
+        "SRC-ED-CHECK-ROUTER",
+        "SRC-ED-ACADEMY-CHECK",
+        "SRC-ED-ACADEMY-TSC",
+        "SRC-ED-MONTHLY"
+      ],
+      "taskId": "academy-workbench:task:academy-context-consolidation-20261021-t04",
+      "nextAction": "Consume explicit workflow verification inventory; propose owner-reviewed check routing after qualified package boundaries, not broader completion claims."
+    },
+    {
+      "id": "ACX-CURRICULUM-001",
+      "category": "missing-source",
+      "priority": "P2",
+      "status": "deferred-owner",
+      "title": "Canonical curriculum originals remain missing",
+      "detail": "The retained curriculum export declares five missing canonical inputs and unresolved boundary hash discrepancy.",
+      "topicIds": [
+        "foundation.curriculum"
+      ],
+      "sourceIds": [
+        "SRC-CURRICULUM-GAPS"
+      ],
+      "taskId": "academy-workbench:task:academy-context-consolidation-20261021-t04",
+      "nextAction": "Keep missing inputs/semantic acceptance unresolved; retrieve through owning research Lead before dependent semantic use."
+    },
+    {
+      "id": "ACX-DECISION-001",
+      "category": "scoped-history",
+      "priority": "P2",
+      "status": "mitigated-locally",
+      "title": "Monthly exam decisions can be flattened across revisions",
+      "detail": "Old allocations and not-selected states are historical; later exact item choices supersede only selected scope, not every earlier uncertainty.",
+      "topicIds": [
+        "academy.assessment-preparation",
+        "foundation.currentness"
+      ],
+      "sourceIds": [
+        "SRC-ED-MONTHLY",
+        "SRC-RESEARCH-CHRONOLOGY"
+      ],
+      "taskId": "academy-workbench:task:academy-context-consolidation-20261021-t03",
+      "nextAction": "Use current month-end entrypoint plus linked chronology, retaining prior original records."
+    },
+    {
+      "id": "ACX-SOURCE-001",
+      "category": "source-currentness",
+      "priority": "P1",
+      "status": "peer-in-progress",
+      "title": "Hosted/local/later-private saved sources diverge",
+      "detail": "Peer observes different saved-date populations in hosted, local and later private sources; actual bodies are excluded here. One successful saved read does not establish current live state.",
+      "topicIds": [
+        "academy.class-preparation",
+        "academy.progress-audit",
+        "foundation.currentness"
+      ],
+      "sourceIds": [
+        "SRC-AWB-AUDIT-METADATA",
+        "SRC-DC-PRIVATE-1016",
+        "SRC-DC-PRIVATE-1016-ADDENDUM"
+      ],
+      "taskId": "academy-workbench:task:academy-context-consolidation-20261021-t03",
+      "nextAction": "Record source version/observed clock/custody separately and qualify completeness per family before synthesis."
+    },
+    {
+      "id": "ACX-QUERY-001",
+      "category": "pagination",
+      "priority": "P1",
+      "status": "peer-in-progress",
+      "title": "Small query caps create repeated calls and silent truncation risk",
+      "detail": "Peer owns the local250-cap, batched-facets and continuing-cursor candidate; hosted20 cap remains unchanged and native deployment is not performed.",
+      "topicIds": [
+        "academy.class-preparation"
+      ],
+      "sourceIds": [
+        "SRC-AWB-COVERAGE"
+      ],
+      "taskId": "academy-workbench:task:academy-context-consolidation-20261021-t05",
+      "nextAction": "Independently review exact candidate code, pagination parity and advertised/runtime schema; preserve explicit continuation and oversize refusal."
+    },
+    {
+      "id": "ACX-PAYLOAD-001",
+      "category": "transport",
+      "priority": "P1",
+      "status": "peer-in-progress",
+      "title": "Repeated overlays and duplicated MCP envelope inflate actual context",
+      "detail": "Baseline repeated full overlay per query; transport may duplicate a bounded JSON payload as text and structuredContent. Payload byte bound alone does not establish full native result bound.",
+      "topicIds": [
+        "academy.class-preparation",
+        "foundation.harness"
+      ],
+      "sourceIds": [
+        "SRC-AWB-HARNESS"
+      ],
+      "taskId": "academy-workbench:task:academy-context-consolidation-20261021-t05",
+      "nextAction": "Review actual SDK result envelope with multibyte fixtures; have peer repair owned server/schema code and independently recheck exact successor."
+    },
+    {
+      "id": "ACX-OWNER-001",
+      "category": "ownership",
+      "priority": "P1",
+      "status": "mitigated-locally",
+      "title": "Repository proximity can be mistaken for source/data ownership",
+      "detail": "User selected keeping current owners. Integrated code, operational policy, research semantics, original custody and native execution remain separate even under common checks.",
+      "topicIds": [
+        "foundation.harness"
+      ],
+      "sourceIds": [
+        "SRC-CURRENT-USER",
+        "SRC-ED-SOURCE-MAP",
+        "SRC-COMMON-OWNERS"
+      ],
+      "taskId": "academy-workbench:task:academy-context-consolidation-20261021-t04",
+      "nextAction": "Enforce phased repository plan and explicit source refs; no relocation or activation inferred."
+    },
+    {
+      "id": "ACX-MEMORY-001",
+      "category": "type-collision",
+      "priority": "P2",
+      "status": "observed",
+      "title": "Same memoryLayers name carries different meaning",
+      "detail": "Historical authority tiers and memory categories are distinct owner-qualified fields. Catalog does not merge them or create a second Memory admission store.",
+      "topicIds": [
+        "foundation.identity",
+        "foundation.harness"
+      ],
+      "sourceIds": [
+        "SRC-LEGACY-MEMORY",
+        "SRC-COMMON-MEMORY"
+      ],
+      "taskId": "academy-workbench:task:academy-context-consolidation-20261021-t03",
+      "nextAction": "Retain schema/owner/type qualified names and use existing common Memory admission when separately requested."
+    },
+    {
+      "id": "ACX-NAVIGATION-001",
+      "category": "workflow",
+      "priority": "P1",
+      "status": "mitigated-locally",
+      "title": "Preparation needs dated class membership before student selection",
+      "detail": "Default is date/class/student per current user, not an inferred old timetable. Selector is workflow-aware metadata; actual class membership stays qualified private owner input.",
+      "topicIds": [
+        "academy.class-preparation"
+      ],
+      "sourceIds": [
+        "SRC-CURRENT-NAVIGATION",
+        "SRC-DC-CLASSROOM"
+      ],
+      "taskId": "academy-workbench:task:academy-context-consolidation-20261021-t02",
+      "nextAction": "Peer must use latest exact dated teacher correction for membership and preserve prior candidates as historical."
+    },
+    {
+      "id": "ACX-INTEGRATION-001",
+      "category": "source-pin",
+      "priority": "P2",
+      "status": "mitigated-locally",
+      "title": "New common source validation is not old consumer adoption",
+      "detail": "Existing Academy consumer pinffba remains unchanged; current common GitWork reader is used only as a separately identified external audit tool.",
+      "topicIds": [
+        "foundation.harness"
+      ],
+      "sourceIds": [
+        "SRC-AWB-HARNESS",
+        "SRC-COMMON-GITWORK"
+      ],
+      "taskId": "academy-workbench:task:academy-context-consolidation-20261021-t05",
+      "nextAction": "Record exact external validator commit and preserve old setup/consumer closure; no hidden dependency upgrade."
+    }
+  ]
+}

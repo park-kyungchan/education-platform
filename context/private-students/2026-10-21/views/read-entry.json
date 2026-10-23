@@ -1,0 +1,73 @@
+{
+  "schemaVersion": "academy.private-handoff-read-entry/1",
+  "businessDate": "2026-10-21",
+  "sourceAsOf": "2026-10-21T21:11:00+09:00",
+  "entryOrder": [
+    "history/academy-handoff-20261021/00-README.md",
+    "history/academy-handoff-20261021/01-mapping-rules.md",
+    "history/academy-handoff-20261021/02-book-features-and-workflow.md",
+    "history/academy-handoff-20261021/03-operations-and-planning.md",
+    "requested-student latest lesson-close section",
+    "requested-student retained historical sections",
+    "history/academy-handoff-20261021/80-open-questions.md",
+    "history/academy-handoff-20261021/90-source-ledger.md"
+  ],
+  "latestSectionSelector": "## 최신 적용 · 2026-10-21 수업 종료 정리",
+  "precedence": "Latest scoped teacher correction and lesson-close statement override the same target's retained 16:17 snapshot. Preserve distinct dates, editions, attempts and unknown mappings; do not apply global newest-timestamp-wins.",
+  "studentDocuments": {
+    "유지연": "history/academy-handoff-20261021/11-유지연.md",
+    "신지우": "history/academy-handoff-20261021/12-신지우.md",
+    "박세은": "history/academy-handoff-20261021/13-박세은.md",
+    "이현승": "history/academy-handoff-20261021/14-이현승.md",
+    "이루한": "history/academy-handoff-20261021/15-이루한.md"
+  },
+  "October21Targets": {
+    "part1": [
+      "신지우"
+    ],
+    "part2": [
+      "이현승",
+      "이루한"
+    ],
+    "notScheduledNotAbsent": [
+      "유지연",
+      "박세은"
+    ]
+  },
+  "mappingDecisions": [
+    {
+      "input": "5-1-2-1",
+      "meaning": [
+        "elementary_grade_5",
+        "term_1",
+        "major_unit_2",
+        "minor_unit_1"
+      ],
+      "parentName": "약수와 배수(1)",
+      "book": "다빈치 초5-1 시리즈1"
+    },
+    {
+      "input": "5-1-4-5",
+      "parentName": "분수와 소수의 크기 비교",
+      "book": "가우스 초5-1 시리즈2"
+    },
+    {
+      "rule": "Book series is separate from major/minor unit codes. Middle-school Davinci has no inferred series."
+    }
+  ],
+  "parentFormat": {
+    "bullet": "- ",
+    "separator": "\n",
+    "toneEvidence": "2026-10-19 same-student DailyRecord hyphen lines only; non-hyphen material ignored as a style exemplar. Prior content is not evidence of current-day work.",
+    "sectionGrouping": "One line per exact student/book edition/unit/activity/deadline; show all selected sections."
+  },
+  "executionState": "October21 three-student DailyRecords saved and read back; parentSends:0. See today/dailyrecord-save-readback.json. Archive draft status remains its original historical state.",
+  "contextCustody": "This is source-owned dated context, not an installed global model memory, context injector or native Work/Task registration.",
+  "mappingRulesLatestSelector": "## 2026-10-21 최종 정정·업무 피드백 적용",
+  "currentMappingOverlay": [
+    "views/mapping-corrections.json",
+    "views/learning-catalog.json",
+    "views/mapping-coverage.json"
+  ],
+  "mappingAmbiguity": "Always interview; three parts are grade/term/series, four parts are grade/term/major/minor. Never infer series from major."
+}

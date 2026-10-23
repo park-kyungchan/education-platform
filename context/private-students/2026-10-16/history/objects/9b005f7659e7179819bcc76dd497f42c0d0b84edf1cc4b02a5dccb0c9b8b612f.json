@@ -1,0 +1,114 @@
+{
+  "snapshot_requested_at": "2026-10-14T16:36:00+09:00",
+  "capture_window": "2026-10-14T16:37:00+09:00–2026-10-14T16:38:15+09:00",
+  "status": "superseded_by_live_current_verified",
+  "blocker": "Official extension-install-required modal visibly blocks interaction in all three checked learning views. No overlay bypass, extension installation, search/filter interaction, grading, review, printing, or sending performed.",
+  "source_views": [
+    {
+      "url": "https://dc.gang-a.kr/servlet/controller.tutor.base.TestPageListServlet?p_process=Main",
+      "captured_at": "2026-10-14T16:37:34+09:00",
+      "coverage": "Initial unfiltered screen only; no student search performed because overlay blocks interaction."
+    },
+    {
+      "url": "https://dc.gang-a.kr/servlet/controller.coursemanage.CourseManageServlet?reqCmd=WebUnPreStudy",
+      "captured_at": "2026-10-14T16:37:55+09:00",
+      "coverage": "Default pending-review table, seven rendered rows. Completed tab and filters not accessed. DOM and screenshot observed."
+    },
+    {
+      "url": "https://dc.gang-a.kr/servlet/controller.dailyzerotest.DailyZeroTestServlet?reqCmd=DailyZeroTestResult",
+      "captured_at": "2026-10-14T16:38:15+09:00",
+      "coverage": "Initial empty search screen; default recent week. Dropdown exposes through 5 months ago, but none selected due blocking modal."
+    }
+  ],
+  "students": [
+    {
+      "name": "이루한",
+      "pending_video_rows": [
+        {
+          "section": "7-1 다면체(ver. 1)",
+          "displayed_upload_time_kst": "2026-10-14 14:11",
+          "video_status": "OK",
+          "review_status": "검사 대기중 예습",
+          "book_mapping": "unverified"
+        },
+        {
+          "section": "6-5 부채꼴의 호의 길이와 넓이(ver. 1)",
+          "displayed_upload_time_kst": "2026-10-13 20:50",
+          "video_status": "OK",
+          "review_status": "검사 대기중 예습",
+          "book_mapping": "unverified"
+        },
+        {
+          "section": "6-4 원과 부채꼴(ver. 1)",
+          "displayed_upload_time_kst": "2026-10-05 17:03",
+          "video_status": "OK",
+          "review_status": "검사 대기중 예습",
+          "book_mapping": "unverified"
+        }
+      ],
+      "absence_interpretation": null
+    },
+    {
+      "name": "이현승",
+      "pending_video_rows": [
+        {
+          "section": "1-5 최대공약수와 최소공배수의 활용(ver. 1)",
+          "displayed_upload_time_kst": "2026-10-12 21:43",
+          "video_status": "OK",
+          "review_status": "검사 대기중 예습",
+          "book_mapping": "unverified"
+        },
+        {
+          "section": "1-4 공배수와 최소공배수(ver. 1)",
+          "displayed_upload_time_kst": "2026-10-06 21:44",
+          "video_status": "OK",
+          "review_status": "검사 대기중 예습",
+          "book_mapping": "unverified"
+        }
+      ],
+      "absence_interpretation": null
+    },
+    {
+      "name": "유지연",
+      "pending_video_rows": [],
+      "absence_interpretation": "Not present in currently rendered default pending table. This does not establish all videos reviewed, no assignments, or full historical absence."
+    },
+    {
+      "name": "박세은",
+      "pending_video_rows": [],
+      "absence_interpretation": "Not present in currently rendered default pending table. This does not establish all videos reviewed, no assignments, or full historical absence."
+    },
+    {
+      "name": "신지우",
+      "pending_video_rows": [
+        {
+          "section": "4-2 분수를 간단하게 나타내기(ver. 1)",
+          "displayed_upload_time_kst": "2026-10-12 17:52",
+          "video_status": "OK",
+          "review_status": "검사 대기중 예습",
+          "book_mapping": "unverified"
+        },
+        {
+          "section": "4-1 크기가 같은 분수 알아보기(ver. 1)",
+          "displayed_upload_time_kst": "2026-10-12 12:34",
+          "video_status": "OK",
+          "review_status": "검사 대기중 예습",
+          "book_mapping": "unverified"
+        }
+      ],
+      "absence_interpretation": null
+    }
+  ],
+  "limitations": [
+    "No complete mapped-book inventory verified.",
+    "No full chapter/section clinic records obtained.",
+    "No full reviewed-video history obtained.",
+    "No DT/ZT answers or grading history obtained.",
+    "No DailyRecord history obtained.",
+    "No statement of missing assignment is supported by this partial snapshot.",
+    "Video OK means video status, not teacher review.",
+    "App unstudied must not be interpreted as paper incomplete.",
+    "Shin Jiwoo old/new mapping 5-2-2 to 5-1-2 is parent-provided context, not verified here."
+  ],
+  "correction": "Initial blanket block conclusion was incorrect. Ordinary UI name entry + Enter works. Use live-current-verified.json for expanded actual results."
+}

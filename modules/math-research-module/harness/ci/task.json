@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectId": "math-research-module",
+  "domainId": "mathematics-education",
+  "createdAt": "2026-10-14T02:42:23.003155+00:00",
+  "kind": "task",
+  "id": "math-research-module:task:source-ci-20261014",
+  "references": [
+    {
+      "artifactId": "math-research-module:project:manifest",
+      "relation": "parent"
+    }
+  ],
+  "payload": {
+    "title": "Add fail-closed source CI",
+    "objective": "Validate math source and pinned contracts with exact-head independent native review.",
+    "status": "blocked",
+    "acceptanceCriteria": [
+      "preserved-historical-records",
+      "portable-source-checks",
+      "pinned-canonical-contracts",
+      "exact-head-independent-review"
+    ],
+    "details": {
+      "workId": "source-ci-20261014",
+      "registration": "local-module-record",
+      "globallyRegistered": false,
+      "userAcceptance": "not-observed",
+      "blocker": "Remote publication, hosted private-dependency access and exact-head independent native review remain unverified."
+    }
+  }
+}

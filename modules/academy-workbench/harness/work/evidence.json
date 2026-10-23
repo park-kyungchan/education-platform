@@ -1,0 +1,66 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "evidence",
+  "id": "academy-workbench:evidence:harness-consumer-upgrade-20261013",
+  "projectId": "academy-workbench",
+  "domainId": "academy-operations",
+  "createdAt": "2026-10-13T23:29:40Z",
+  "payload": {
+    "claim": "Pinned consumer contract checks, TypeScript and synthetic regression tests pass in the cloud source-snapshot environment.",
+    "method": "Bun 1.4.2 check/test plus Node 24.19.0 synthetic runtime and offline adapter tests; no live records.",
+    "sourceUrl": "urn:academy-workbench:local-verification:harness-consumer-upgrade-20261013",
+    "fetchedAt": "2026-10-13T23:29:40Z",
+    "upstreamRevision": "academy base 972046c875535614f432692442e8a47ba7c0780f; agent-platform ffba2462a08b9f8c83c6f87b1043403e5cb748d7",
+    "result": {
+      "outcome": "success",
+      "processExitCode": 0,
+      "contentMatched": true,
+      "details": {
+        "harnessTests": 19,
+        "syntheticRuntimeTests": 43,
+        "offlineAdapterTests": 25,
+        "typecheck": "pass",
+        "dependencyMode": "pinned-snapshot",
+        "userContextValidationGroups": 12,
+        "userContextTests": 21,
+        "userContextTypecheck": "pass",
+        "cleanMaterializedConsumerInstallCheckTest": "pass"
+      }
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "outcome": "failure",
+        "error": "Bun not initially on child-script PATH; local cache symlinks did not resolve Ajv consistently under bun test.",
+        "details": {
+          "sourceChangesRequired": false
+        }
+      },
+      {
+        "attempt": 2,
+        "outcome": "success",
+        "details": {
+          "resolution": "Used process-local Bun PATH and copied already-installed cache packages into the disposable dependency snapshot."
+        }
+      }
+    ],
+    "limitations": [
+      "WSL2 and VPS fresh-clone setup not executed",
+      "Full canonical native-provider closure not verified",
+      "Live data, credentials, deployment, print and send not exercised",
+      "Archive and original private record contents not opened or rehashed",
+      "User acceptance and native/global module registration not observed"
+    ],
+    "details": {
+      "logs": [
+        "validation/harness/install.txt",
+        "validation/harness/check.txt",
+        "validation/harness/harness.txt",
+        "validation/harness/runtime.txt",
+        "validation/harness/offline.txt",
+        "validation/harness/clean.txt"
+      ],
+      "verificationScope": "Local implementation tests only; no runtime permission inferred."
+    }
+  }
+}

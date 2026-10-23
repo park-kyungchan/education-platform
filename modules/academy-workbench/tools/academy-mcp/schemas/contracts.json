@@ -1,0 +1,2576 @@
+{
+  "schemaVersion": "academy.operations-mcp-contracts/1",
+  "sourceOwner": "src/contracts.ts, src/service.ts, src/item-labels.ts and src/dailyrecord.ts",
+  "transport": "stdio",
+  "sourceMode": "saved_context",
+  "tools": {
+    "academy_capabilities": {
+      "input": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "view": {
+            "default": "hierarchy",
+            "type": "string",
+            "enum": [
+              "hierarchy",
+              "operations",
+              "source_contract",
+              "workflow_rules"
+            ]
+          },
+          "workflow": {
+            "type": "string",
+            "enum": [
+              "people",
+              "teaching",
+              "learning",
+              "assessment",
+              "materials",
+              "student_care",
+              "communication",
+              "source_support"
+            ]
+          },
+          "domain": {
+            "type": "string",
+            "enum": [
+              "identity",
+              "lesson",
+              "curriculum",
+              "prestudy",
+              "assessment",
+              "clinic",
+              "materials",
+              "smartbook",
+              "communication",
+              "counseling",
+              "device",
+              "book_order",
+              "navigation"
+            ]
+          },
+          "operationId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "offset": {
+            "default": 0,
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "limit": {
+            "default": 10,
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50
+          }
+        },
+        "required": [
+          "view",
+          "offset",
+          "limit"
+        ],
+        "additionalProperties": false
+      },
+      "runtimeRefinements": "source_contract requires exact operationId; workflow_rules has no invented domain assignment; the server validates cross-field combinations."
+    },
+    "academy_query": {
+      "input": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "sourceMode": {
+            "default": "saved_context",
+            "type": "string",
+            "const": "saved_context"
+          },
+          "query": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "const": "roster"
+                  }
+                },
+                "required": [
+                  "kind"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "const": "student_summary"
+                  },
+                  "studentId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256,
+                    "description": "Exact opaque studentId from the preserved roster; not a student name or a native server identifier."
+                  }
+                },
+                "required": [
+                  "kind",
+                  "studentId"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "const": "student_history"
+                  },
+                  "studentId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256,
+                    "description": "Exact opaque studentId from the preserved roster; not a student name or a native server identifier."
+                  },
+                  "facets": {
+                    "minItems": 1,
+                    "maxItems": 9,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "books",
+                        "sections",
+                        "attempts",
+                        "assignments",
+                        "videos",
+                        "daily_tests",
+                        "daily_records",
+                        "teacher_events",
+                        "daily_record_drafts"
+                      ]
+                    },
+                    "uniqueItems": true
+                  }
+                },
+                "required": [
+                  "kind",
+                  "studentId"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "const": "student_records"
+                  },
+                  "studentId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256,
+                    "description": "Exact opaque studentId from the preserved roster; not a student name or a native server identifier."
+                  },
+                  "facet": {
+                    "type": "string",
+                    "enum": [
+                      "books",
+                      "sections",
+                      "attempts",
+                      "assignments",
+                      "videos",
+                      "daily_tests",
+                      "daily_records",
+                      "teacher_events",
+                      "daily_record_drafts"
+                    ]
+                  },
+                  "bookEditionId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  }
+                },
+                "required": [
+                  "kind",
+                  "studentId",
+                  "facet"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "const": "lesson_context"
+                  },
+                  "studentId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256,
+                    "description": "Exact opaque studentId from the preserved roster; not a student name or a native server identifier."
+                  },
+                  "date": {
+                    "type": "string",
+                    "format": "date",
+                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "studentId",
+                  "date"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "cursor": {
+            "type": "string",
+            "maxLength": 2048
+          },
+          "limit": {
+            "default": 10,
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 250
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "additionalProperties": false
+      },
+      "output": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "schemaVersion": {
+            "type": "number",
+            "const": 1
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "partial",
+              "unavailable"
+            ]
+          },
+          "sourceMode": {
+            "type": "string",
+            "const": "saved_context"
+          },
+          "retrievedAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+          },
+          "snapshot": {
+            "type": "object",
+            "properties": {
+              "sha256": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              "collectedAt": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+              },
+              "lessonDate": {
+                "type": "string",
+                "format": "date",
+                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+              },
+              "lessonPreparedAt": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+              }
+            },
+            "required": [
+              "sha256",
+              "collectedAt",
+              "lessonDate",
+              "lessonPreparedAt"
+            ],
+            "additionalProperties": false
+          },
+          "scope": {
+            "type": "object",
+            "properties": {
+              "teacherLabel": {
+                "type": "string",
+                "const": "박경찬"
+              },
+              "intendedPopulation": {
+                "type": "string",
+                "const": "all_teacher_managed_students"
+              },
+              "preservedStudentCount": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "completeTeacherRosterVerified": {
+                "type": "boolean",
+                "const": false
+              },
+              "totalTeacherManagedStudents": {
+                "type": "null"
+              }
+            },
+            "required": [
+              "teacherLabel",
+              "intendedPopulation",
+              "preservedStudentCount",
+              "completeTeacherRosterVerified",
+              "totalTeacherManagedStudents"
+            ],
+            "additionalProperties": false
+          },
+          "records": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "facet": {
+                  "type": "string",
+                  "enum": [
+                    "books",
+                    "sections",
+                    "attempts",
+                    "assignments",
+                    "videos",
+                    "daily_tests",
+                    "daily_records",
+                    "teacher_events",
+                    "daily_record_drafts"
+                  ]
+                },
+                "classification": {
+                  "type": "string",
+                  "enum": [
+                    "saved_source_record",
+                    "teacher_report",
+                    "user_supplied_context",
+                    "source_observation_snapshot",
+                    "unsaved_draft",
+                    "derived_saved_summary"
+                  ]
+                },
+                "source": {
+                  "type": "object",
+                  "properties": {
+                    "path": {
+                      "type": "string"
+                    },
+                    "sha256": {
+                      "type": "string",
+                      "pattern": "^[a-f0-9]{64}$"
+                    },
+                    "jsonPointer": {
+                      "type": "string",
+                      "pattern": "^\\/.*"
+                    }
+                  },
+                  "required": [
+                    "path",
+                    "sha256",
+                    "jsonPointer"
+                  ],
+                  "additionalProperties": false
+                },
+                "value": {}
+              },
+              "required": [
+                "classification",
+                "source",
+                "value"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "page": {
+            "type": "object",
+            "properties": {
+              "totalInSavedSelection": {
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "returned": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "exhausted": {
+                "type": "boolean"
+              },
+              "nextCursor": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "byteLimited": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "totalInSavedSelection",
+              "returned",
+              "exhausted",
+              "nextCursor"
+            ],
+            "additionalProperties": false
+          },
+          "coverage": {
+            "type": "string",
+            "const": "bounded_preserved_evidence"
+          },
+          "currentAcademyServerQueried": {
+            "type": "boolean",
+            "const": false
+          },
+          "absenceProvesNonperformance": {
+            "type": "boolean",
+            "const": false
+          },
+          "unknowns": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "code": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "status",
+          "sourceMode",
+          "retrievedAt",
+          "snapshot",
+          "scope",
+          "records",
+          "page",
+          "coverage",
+          "currentAcademyServerQueried",
+          "absenceProvesNonperformance",
+          "unknowns"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "academy_source_status": {
+      "input": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    "academy_item_label_scope": {
+      "input": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "assessmentBinding": {
+            "type": "object",
+            "properties": {
+              "schemaVersion": {
+                "type": "string",
+                "const": "academy.assessment-binding/1"
+              },
+              "research": {
+                "type": "object",
+                "properties": {
+                  "owner": {
+                    "type": "string",
+                    "const": "math-research-module"
+                  },
+                  "revision": {
+                    "type": "string",
+                    "const": "07edb2dea2e5997aea4318f0fa2efa21dde633df"
+                  },
+                  "pins": {
+                    "minItems": 1,
+                    "maxItems": 256,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 1024
+                        },
+                        "sha256": {
+                          "type": "string",
+                          "pattern": "^[a-f0-9]{64}$"
+                        }
+                      },
+                      "required": [
+                        "path",
+                        "sha256"
+                      ],
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "required": [
+                  "owner",
+                  "revision",
+                  "pins"
+                ],
+                "additionalProperties": false
+              },
+              "sourceContext": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "owner": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 1024
+                      },
+                      "sourceRevision": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 1024
+                      },
+                      "scopeId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 1024
+                      },
+                      "edition": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "maxLength": 4096
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "unit": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "maxLength": 4096
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "observationHash": {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      },
+                      "sourceHandle": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 1024
+                      },
+                      "observedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                      }
+                    },
+                    "required": [
+                      "owner",
+                      "sourceRevision",
+                      "scopeId",
+                      "edition",
+                      "unit"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "study": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "scope": {
+                        "type": "object",
+                        "properties": {
+                          "researchTypeIds": {
+                            "minItems": 1,
+                            "maxItems": 256,
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 1024
+                            }
+                          },
+                          "researchRevision": {
+                            "type": "string",
+                            "const": "07edb2dea2e5997aea4318f0fa2efa21dde633df"
+                          },
+                          "edition": {
+                            "anyOf": [
+                              {
+                                "type": "string",
+                                "maxLength": 4096
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "unit": {
+                            "anyOf": [
+                              {
+                                "type": "string",
+                                "maxLength": 4096
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          }
+                        },
+                        "required": [
+                          "researchTypeIds",
+                          "researchRevision",
+                          "edition",
+                          "unit"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "studied": {
+                        "type": "boolean"
+                      },
+                      "summary": {
+                        "type": "string",
+                        "maxLength": 20000
+                      },
+                      "evidenceNotes": {
+                        "maxItems": 128,
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "maxLength": 4096
+                        }
+                      },
+                      "attribution": {
+                        "type": "string",
+                        "const": "teacher-reported"
+                      },
+                      "acceptance": {
+                        "type": "boolean",
+                        "const": false
+                      }
+                    },
+                    "required": [
+                      "scope",
+                      "studied",
+                      "summary",
+                      "evidenceNotes",
+                      "attribution",
+                      "acceptance"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "intent": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "axes": {
+                        "type": "object",
+                        "properties": {
+                          "structure": {
+                            "type": "string",
+                            "maxLength": 4096
+                          },
+                          "reasoning": {
+                            "type": "string",
+                            "maxLength": 4096
+                          },
+                          "representation": {
+                            "type": "string",
+                            "maxLength": 4096
+                          },
+                          "conditions": {
+                            "type": "string",
+                            "maxLength": 4096
+                          },
+                          "errors": {
+                            "type": "string",
+                            "maxLength": 4096
+                          },
+                          "transfer": {
+                            "type": "string",
+                            "maxLength": 4096
+                          }
+                        },
+                        "required": [
+                          "structure",
+                          "reasoning",
+                          "representation",
+                          "conditions",
+                          "errors",
+                          "transfer"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "notes": {
+                        "type": "string",
+                        "maxLength": 20000
+                      }
+                    },
+                    "required": [
+                      "axes",
+                      "notes"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "research",
+              "sourceContext",
+              "study",
+              "intent"
+            ],
+            "additionalProperties": false
+          },
+          "view": {
+            "default": "hierarchy",
+            "type": "string",
+            "enum": [
+              "hierarchy",
+              "labels"
+            ]
+          },
+          "hierarchyId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "parentId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "offset": {
+            "default": 0,
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "limit": {
+            "default": 20,
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50
+          }
+        },
+        "required": [
+          "view",
+          "offset",
+          "limit"
+        ],
+        "additionalProperties": false
+      },
+      "runtimeRefinements": "labels view requires one exact hierarchyId and no parentId; hierarchy view disallows hierarchyId. Live IDs must first be returned by the configured source, not guessed."
+    },
+    "academy_find_item_labels": {
+      "input": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "assessmentBinding": {
+            "type": "object",
+            "properties": {
+              "schemaVersion": {
+                "type": "string",
+                "const": "academy.assessment-binding/1"
+              },
+              "research": {
+                "type": "object",
+                "properties": {
+                  "owner": {
+                    "type": "string",
+                    "const": "math-research-module"
+                  },
+                  "revision": {
+                    "type": "string",
+                    "const": "07edb2dea2e5997aea4318f0fa2efa21dde633df"
+                  },
+                  "pins": {
+                    "minItems": 1,
+                    "maxItems": 256,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 1024
+                        },
+                        "sha256": {
+                          "type": "string",
+                          "pattern": "^[a-f0-9]{64}$"
+                        }
+                      },
+                      "required": [
+                        "path",
+                        "sha256"
+                      ],
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "required": [
+                  "owner",
+                  "revision",
+                  "pins"
+                ],
+                "additionalProperties": false
+              },
+              "sourceContext": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "owner": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 1024
+                      },
+                      "sourceRevision": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 1024
+                      },
+                      "scopeId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 1024
+                      },
+                      "edition": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "maxLength": 4096
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "unit": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "maxLength": 4096
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "observationHash": {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      },
+                      "sourceHandle": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 1024
+                      },
+                      "observedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                      }
+                    },
+                    "required": [
+                      "owner",
+                      "sourceRevision",
+                      "scopeId",
+                      "edition",
+                      "unit"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "study": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "scope": {
+                        "type": "object",
+                        "properties": {
+                          "researchTypeIds": {
+                            "minItems": 1,
+                            "maxItems": 256,
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 1024
+                            }
+                          },
+                          "researchRevision": {
+                            "type": "string",
+                            "const": "07edb2dea2e5997aea4318f0fa2efa21dde633df"
+                          },
+                          "edition": {
+                            "anyOf": [
+                              {
+                                "type": "string",
+                                "maxLength": 4096
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "unit": {
+                            "anyOf": [
+                              {
+                                "type": "string",
+                                "maxLength": 4096
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          }
+                        },
+                        "required": [
+                          "researchTypeIds",
+                          "researchRevision",
+                          "edition",
+                          "unit"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "studied": {
+                        "type": "boolean"
+                      },
+                      "summary": {
+                        "type": "string",
+                        "maxLength": 20000
+                      },
+                      "evidenceNotes": {
+                        "maxItems": 128,
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "maxLength": 4096
+                        }
+                      },
+                      "attribution": {
+                        "type": "string",
+                        "const": "teacher-reported"
+                      },
+                      "acceptance": {
+                        "type": "boolean",
+                        "const": false
+                      }
+                    },
+                    "required": [
+                      "scope",
+                      "studied",
+                      "summary",
+                      "evidenceNotes",
+                      "attribution",
+                      "acceptance"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "intent": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "axes": {
+                        "type": "object",
+                        "properties": {
+                          "structure": {
+                            "type": "string",
+                            "maxLength": 4096
+                          },
+                          "reasoning": {
+                            "type": "string",
+                            "maxLength": 4096
+                          },
+                          "representation": {
+                            "type": "string",
+                            "maxLength": 4096
+                          },
+                          "conditions": {
+                            "type": "string",
+                            "maxLength": 4096
+                          },
+                          "errors": {
+                            "type": "string",
+                            "maxLength": 4096
+                          },
+                          "transfer": {
+                            "type": "string",
+                            "maxLength": 4096
+                          }
+                        },
+                        "required": [
+                          "structure",
+                          "reasoning",
+                          "representation",
+                          "conditions",
+                          "errors",
+                          "transfer"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "notes": {
+                        "type": "string",
+                        "maxLength": 20000
+                      }
+                    },
+                    "required": [
+                      "axes",
+                      "notes"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "research",
+              "sourceContext",
+              "study",
+              "intent"
+            ],
+            "additionalProperties": false
+          },
+          "intent": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1024
+          },
+          "hierarchyIds": {
+            "minItems": 1,
+            "maxItems": 100,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          "includeDescendants": {
+            "default": true,
+            "type": "boolean"
+          },
+          "learningState": {
+            "type": "string",
+            "enum": [
+              "in_progress",
+              "teacher_reported_complete"
+            ]
+          },
+          "limit": {
+            "default": 10,
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50
+          }
+        },
+        "required": [
+          "intent",
+          "hierarchyIds",
+          "includeDescendants",
+          "learningState",
+          "limit"
+        ],
+        "additionalProperties": false
+      },
+      "runtimeRefinements": "Exact retained hierarchy scope and teacher-reported completed type study; lexical overlap is not semantic probability or final question membership."
+    },
+    "academy_review_type_questions": {
+      "input": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "assessmentBinding": {
+            "type": "object",
+            "properties": {
+              "schemaVersion": {
+                "type": "string",
+                "const": "academy.assessment-binding/1"
+              },
+              "research": {
+                "type": "object",
+                "properties": {
+                  "owner": {
+                    "type": "string",
+                    "const": "math-research-module"
+                  },
+                  "revision": {
+                    "type": "string",
+                    "const": "07edb2dea2e5997aea4318f0fa2efa21dde633df"
+                  },
+                  "pins": {
+                    "minItems": 1,
+                    "maxItems": 256,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 1024
+                        },
+                        "sha256": {
+                          "type": "string",
+                          "pattern": "^[a-f0-9]{64}$"
+                        }
+                      },
+                      "required": [
+                        "path",
+                        "sha256"
+                      ],
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "required": [
+                  "owner",
+                  "revision",
+                  "pins"
+                ],
+                "additionalProperties": false
+              },
+              "sourceContext": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "owner": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 1024
+                      },
+                      "sourceRevision": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 1024
+                      },
+                      "scopeId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 1024
+                      },
+                      "edition": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "maxLength": 4096
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "unit": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "maxLength": 4096
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "observationHash": {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      },
+                      "sourceHandle": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 1024
+                      },
+                      "observedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                      }
+                    },
+                    "required": [
+                      "owner",
+                      "sourceRevision",
+                      "scopeId",
+                      "edition",
+                      "unit"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "study": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "scope": {
+                        "type": "object",
+                        "properties": {
+                          "researchTypeIds": {
+                            "minItems": 1,
+                            "maxItems": 256,
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 1024
+                            }
+                          },
+                          "researchRevision": {
+                            "type": "string",
+                            "const": "07edb2dea2e5997aea4318f0fa2efa21dde633df"
+                          },
+                          "edition": {
+                            "anyOf": [
+                              {
+                                "type": "string",
+                                "maxLength": 4096
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "unit": {
+                            "anyOf": [
+                              {
+                                "type": "string",
+                                "maxLength": 4096
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          }
+                        },
+                        "required": [
+                          "researchTypeIds",
+                          "researchRevision",
+                          "edition",
+                          "unit"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "studied": {
+                        "type": "boolean"
+                      },
+                      "summary": {
+                        "type": "string",
+                        "maxLength": 20000
+                      },
+                      "evidenceNotes": {
+                        "maxItems": 128,
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "maxLength": 4096
+                        }
+                      },
+                      "attribution": {
+                        "type": "string",
+                        "const": "teacher-reported"
+                      },
+                      "acceptance": {
+                        "type": "boolean",
+                        "const": false
+                      }
+                    },
+                    "required": [
+                      "scope",
+                      "studied",
+                      "summary",
+                      "evidenceNotes",
+                      "attribution",
+                      "acceptance"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "intent": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "axes": {
+                        "type": "object",
+                        "properties": {
+                          "structure": {
+                            "type": "string",
+                            "maxLength": 4096
+                          },
+                          "reasoning": {
+                            "type": "string",
+                            "maxLength": 4096
+                          },
+                          "representation": {
+                            "type": "string",
+                            "maxLength": 4096
+                          },
+                          "conditions": {
+                            "type": "string",
+                            "maxLength": 4096
+                          },
+                          "errors": {
+                            "type": "string",
+                            "maxLength": 4096
+                          },
+                          "transfer": {
+                            "type": "string",
+                            "maxLength": 4096
+                          }
+                        },
+                        "required": [
+                          "structure",
+                          "reasoning",
+                          "representation",
+                          "conditions",
+                          "errors",
+                          "transfer"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "notes": {
+                        "type": "string",
+                        "maxLength": 20000
+                      }
+                    },
+                    "required": [
+                      "axes",
+                      "notes"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "research",
+              "sourceContext",
+              "study",
+              "intent"
+            ],
+            "additionalProperties": false
+          },
+          "hierarchyId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1024
+          },
+          "labelId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1024
+          },
+          "purpose": {
+            "type": "string",
+            "enum": [
+              "teacher_requested_review",
+              "protocol_verification"
+            ]
+          },
+          "page": {
+            "default": 1,
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100000
+          },
+          "offset": {
+            "default": 0,
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 49
+          },
+          "limit": {
+            "default": 10,
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20
+          }
+        },
+        "required": [
+          "hierarchyId",
+          "labelId",
+          "purpose",
+          "page",
+          "offset",
+          "limit"
+        ],
+        "additionalProperties": false
+      },
+      "runtimeRefinements": "Native adapter requires a previously returned exact type/hierarchy; bounded source metadata/answers only, no image fetch, ranking or final selection. Retained labels do not establish questions."
+    },
+    "academy_dailyrecord_intake": {
+      "input": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "context": {
+            "type": "object",
+            "properties": {
+              "schemaVersion": {
+                "type": "string",
+                "const": "academy.dailyrecord-user-context/1"
+              },
+              "purpose": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              },
+              "currentRequestRef": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "scope": {
+                "type": "object",
+                "properties": {
+                  "sourceNamespace": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "teacherId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "studentId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "lessonDate": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                  }
+                },
+                "required": [
+                  "sourceNamespace",
+                  "teacherId",
+                  "studentId",
+                  "lessonDate"
+                ],
+                "additionalProperties": false
+              },
+              "selectedFields": {
+                "minItems": 1,
+                "maxItems": 6,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "progress",
+                    "homework",
+                    "lessonMemo",
+                    "attendance",
+                    "dailyTestAssessment",
+                    "previousHomeworkAssessment"
+                  ]
+                }
+              },
+              "memoAnswer": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "not_supplied"
+                      }
+                    },
+                    "required": [
+                      "kind"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "no_addition"
+                      },
+                      "requestRef": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "requestRef"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "content"
+                      },
+                      "requestRef": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                      },
+                      "text": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4096
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "requestRef",
+                      "text"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
+              },
+              "facts": {
+                "maxItems": 64,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "ref": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    "field": {
+                      "type": "string",
+                      "enum": [
+                        "progress",
+                        "homework",
+                        "lessonMemo",
+                        "attendance",
+                        "dailyTestAssessment",
+                        "previousHomeworkAssessment"
+                      ]
+                    },
+                    "text": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 4096
+                    },
+                    "origin": {
+                      "default": "user_supplied",
+                      "type": "string",
+                      "enum": [
+                        "user_supplied",
+                        "cism_section"
+                      ]
+                    },
+                    "explicitValue": {
+                      "type": "string",
+                      "maxLength": 8192
+                    },
+                    "requiredFragments": {
+                      "maxItems": 32,
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4096
+                      }
+                    },
+                    "questionCounts": {
+                      "maxItems": 32,
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "count": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 100000
+                          },
+                          "rendering": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 256
+                          }
+                        },
+                        "required": [
+                          "count",
+                          "rendering"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "deadlines": {
+                      "maxItems": 16,
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "date": {
+                            "type": "string",
+                            "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                          },
+                          "rendering": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 256
+                          }
+                        },
+                        "required": [
+                          "date",
+                          "rendering"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "stageClaims": {
+                      "maxItems": 32,
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "activity": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 256
+                          },
+                          "stage": {
+                            "type": "string",
+                            "enum": [
+                              "solving",
+                              "grading",
+                              "correction",
+                              "teacher_review",
+                              "assigned_homework"
+                            ]
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": [
+                              "in_progress",
+                              "complete",
+                              "unconfirmed",
+                              "assigned"
+                            ]
+                          },
+                          "rendering": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 256
+                          }
+                        },
+                        "required": [
+                          "activity",
+                          "stage",
+                          "status",
+                          "rendering"
+                        ],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "required": [
+                    "ref",
+                    "field",
+                    "text",
+                    "origin",
+                    "requiredFragments",
+                    "questionCounts",
+                    "deadlines",
+                    "stageClaims"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "purpose",
+              "currentRequestRef",
+              "scope",
+              "selectedFields",
+              "memoAnswer",
+              "facts"
+            ],
+            "additionalProperties": false
+          },
+          "suppliedValues": {
+            "default": [],
+            "maxItems": 6,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "field": {
+                  "type": "string",
+                  "enum": [
+                    "progress",
+                    "homework",
+                    "lessonMemo",
+                    "attendance",
+                    "dailyTestAssessment",
+                    "previousHomeworkAssessment"
+                  ]
+                },
+                "value": {
+                  "type": "string",
+                  "maxLength": 8192
+                },
+                "factRefs": {
+                  "minItems": 1,
+                  "maxItems": 32,
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  }
+                },
+                "decision": {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "type": "string",
+                      "enum": [
+                        "set",
+                        "replace",
+                        "clear"
+                      ]
+                    },
+                    "requestRef": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "requestRef"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "field",
+                "value",
+                "factRefs",
+                "decision"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "context",
+          "suppliedValues"
+        ],
+        "additionalProperties": false
+      },
+      "runtimeRefinements": "Current user context is required before any backend read. Existing field values are preserved; unknown assessment/attendance require explicit values. Today memo no-addition never authorizes deletion. Default source backend is unavailable."
+    },
+    "academy_dailyrecord_review": {
+      "input": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "context": {
+            "type": "object",
+            "properties": {
+              "schemaVersion": {
+                "type": "string",
+                "const": "academy.dailyrecord-user-context/1"
+              },
+              "purpose": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              },
+              "currentRequestRef": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "scope": {
+                "type": "object",
+                "properties": {
+                  "sourceNamespace": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "teacherId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "studentId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "lessonDate": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                  }
+                },
+                "required": [
+                  "sourceNamespace",
+                  "teacherId",
+                  "studentId",
+                  "lessonDate"
+                ],
+                "additionalProperties": false
+              },
+              "selectedFields": {
+                "minItems": 1,
+                "maxItems": 6,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "progress",
+                    "homework",
+                    "lessonMemo",
+                    "attendance",
+                    "dailyTestAssessment",
+                    "previousHomeworkAssessment"
+                  ]
+                }
+              },
+              "memoAnswer": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "not_supplied"
+                      }
+                    },
+                    "required": [
+                      "kind"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "no_addition"
+                      },
+                      "requestRef": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "requestRef"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "content"
+                      },
+                      "requestRef": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                      },
+                      "text": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4096
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "requestRef",
+                      "text"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
+              },
+              "facts": {
+                "maxItems": 64,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "ref": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    "field": {
+                      "type": "string",
+                      "enum": [
+                        "progress",
+                        "homework",
+                        "lessonMemo",
+                        "attendance",
+                        "dailyTestAssessment",
+                        "previousHomeworkAssessment"
+                      ]
+                    },
+                    "text": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 4096
+                    },
+                    "origin": {
+                      "default": "user_supplied",
+                      "type": "string",
+                      "enum": [
+                        "user_supplied",
+                        "cism_section"
+                      ]
+                    },
+                    "explicitValue": {
+                      "type": "string",
+                      "maxLength": 8192
+                    },
+                    "requiredFragments": {
+                      "maxItems": 32,
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4096
+                      }
+                    },
+                    "questionCounts": {
+                      "maxItems": 32,
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "count": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 100000
+                          },
+                          "rendering": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 256
+                          }
+                        },
+                        "required": [
+                          "count",
+                          "rendering"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "deadlines": {
+                      "maxItems": 16,
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "date": {
+                            "type": "string",
+                            "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                          },
+                          "rendering": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 256
+                          }
+                        },
+                        "required": [
+                          "date",
+                          "rendering"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "stageClaims": {
+                      "maxItems": 32,
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "activity": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 256
+                          },
+                          "stage": {
+                            "type": "string",
+                            "enum": [
+                              "solving",
+                              "grading",
+                              "correction",
+                              "teacher_review",
+                              "assigned_homework"
+                            ]
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": [
+                              "in_progress",
+                              "complete",
+                              "unconfirmed",
+                              "assigned"
+                            ]
+                          },
+                          "rendering": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 256
+                          }
+                        },
+                        "required": [
+                          "activity",
+                          "stage",
+                          "status",
+                          "rendering"
+                        ],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "required": [
+                    "ref",
+                    "field",
+                    "text",
+                    "origin",
+                    "requiredFragments",
+                    "questionCounts",
+                    "deadlines",
+                    "stageClaims"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "purpose",
+              "currentRequestRef",
+              "scope",
+              "selectedFields",
+              "memoAnswer",
+              "facts"
+            ],
+            "additionalProperties": false
+          },
+          "observationHandle": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "cismObservationHandle": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "proposals": {
+            "minItems": 1,
+            "maxItems": 6,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "field": {
+                  "type": "string",
+                  "enum": [
+                    "progress",
+                    "homework",
+                    "lessonMemo",
+                    "attendance",
+                    "dailyTestAssessment",
+                    "previousHomeworkAssessment"
+                  ]
+                },
+                "value": {
+                  "type": "string",
+                  "maxLength": 8192
+                },
+                "factRefs": {
+                  "minItems": 1,
+                  "maxItems": 32,
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  }
+                },
+                "decision": {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "type": "string",
+                      "enum": [
+                        "set",
+                        "replace",
+                        "clear"
+                      ]
+                    },
+                    "requestRef": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "requestRef"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "field",
+                "value",
+                "factRefs",
+                "decision"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "context",
+          "proposals"
+        ],
+        "additionalProperties": false
+      },
+      "runtimeRefinements": "Pure text review is available without source, but no patch is prepared without a fresh backend-owned scoped observation handle. Canonical safeguard, exact before-state and selected-field facts are required; semantic equivalence still needs teacher review. No source writer or approval flag."
+    },
+    "academy_cism_section": {
+      "input": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "context": {
+            "type": "object",
+            "properties": {
+              "schemaVersion": {
+                "type": "string",
+                "const": "academy.dailyrecord-user-context/1"
+              },
+              "purpose": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              },
+              "currentRequestRef": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "scope": {
+                "type": "object",
+                "properties": {
+                  "sourceNamespace": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "teacherId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "studentId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "lessonDate": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                  }
+                },
+                "required": [
+                  "sourceNamespace",
+                  "teacherId",
+                  "studentId",
+                  "lessonDate"
+                ],
+                "additionalProperties": false
+              },
+              "selectedFields": {
+                "minItems": 1,
+                "maxItems": 6,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "progress",
+                    "homework",
+                    "lessonMemo",
+                    "attendance",
+                    "dailyTestAssessment",
+                    "previousHomeworkAssessment"
+                  ]
+                }
+              },
+              "memoAnswer": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "not_supplied"
+                      }
+                    },
+                    "required": [
+                      "kind"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "no_addition"
+                      },
+                      "requestRef": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "requestRef"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "content"
+                      },
+                      "requestRef": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                      },
+                      "text": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4096
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "requestRef",
+                      "text"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
+              },
+              "facts": {
+                "maxItems": 64,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "ref": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    "field": {
+                      "type": "string",
+                      "enum": [
+                        "progress",
+                        "homework",
+                        "lessonMemo",
+                        "attendance",
+                        "dailyTestAssessment",
+                        "previousHomeworkAssessment"
+                      ]
+                    },
+                    "text": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 4096
+                    },
+                    "origin": {
+                      "default": "user_supplied",
+                      "type": "string",
+                      "enum": [
+                        "user_supplied",
+                        "cism_section"
+                      ]
+                    },
+                    "explicitValue": {
+                      "type": "string",
+                      "maxLength": 8192
+                    },
+                    "requiredFragments": {
+                      "maxItems": 32,
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4096
+                      }
+                    },
+                    "questionCounts": {
+                      "maxItems": 32,
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "count": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 100000
+                          },
+                          "rendering": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 256
+                          }
+                        },
+                        "required": [
+                          "count",
+                          "rendering"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "deadlines": {
+                      "maxItems": 16,
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "date": {
+                            "type": "string",
+                            "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                          },
+                          "rendering": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 256
+                          }
+                        },
+                        "required": [
+                          "date",
+                          "rendering"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "stageClaims": {
+                      "maxItems": 32,
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "activity": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 256
+                          },
+                          "stage": {
+                            "type": "string",
+                            "enum": [
+                              "solving",
+                              "grading",
+                              "correction",
+                              "teacher_review",
+                              "assigned_homework"
+                            ]
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": [
+                              "in_progress",
+                              "complete",
+                              "unconfirmed",
+                              "assigned"
+                            ]
+                          },
+                          "rendering": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 256
+                          }
+                        },
+                        "required": [
+                          "activity",
+                          "stage",
+                          "status",
+                          "rendering"
+                        ],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "required": [
+                    "ref",
+                    "field",
+                    "text",
+                    "origin",
+                    "requiredFragments",
+                    "questionCounts",
+                    "deadlines",
+                    "stageClaims"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "purpose",
+              "currentRequestRef",
+              "scope",
+              "selectedFields",
+              "memoAnswer",
+              "facts"
+            ],
+            "additionalProperties": false
+          },
+          "selection": {
+            "type": "object",
+            "properties": {
+              "reportId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "periodStart": {
+                "type": "string",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+              },
+              "periodEnd": {
+                "type": "string",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+              },
+              "section": {
+                "type": "string",
+                "const": "learning_support"
+              }
+            },
+            "required": [
+              "reportId",
+              "periodStart",
+              "periodEnd",
+              "section"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "context",
+          "selection"
+        ],
+        "additionalProperties": false
+      },
+      "runtimeRefinements": "Exact source-owner read backend, teacher/student, report, period and learning-support section required; default unavailable. No generic URL execution, submission, memo save or send."
+    }
+  }
+}

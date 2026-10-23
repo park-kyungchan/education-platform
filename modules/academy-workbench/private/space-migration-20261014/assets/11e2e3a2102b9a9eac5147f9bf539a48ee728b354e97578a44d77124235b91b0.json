@@ -1,0 +1,2333 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "academy-book-flow-1.0.schema.json",
+  "title": "Book naming hierarchy and evidence based student flow",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/Contract"
+    },
+    {
+      "$ref": "#/$defs/BookCatalog"
+    },
+    {
+      "$ref": "#/$defs/StudentBookFlow"
+    }
+  ],
+  "$defs": {
+    "BookEdition": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schoolLevel": {
+          "enum": [
+            "elementary",
+            "middle",
+            "high",
+            "unknown"
+          ]
+        },
+        "series": {
+          "type": "string",
+          "minLength": 1
+        },
+        "grade": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        },
+        "semester": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        },
+        "volume": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        },
+        "nativeBookCode": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "version": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "originalLabel": {
+          "type": "string",
+          "minLength": 1
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schoolLevelBadge": {
+          "type": "string",
+          "minLength": 1
+        },
+        "namingState": {
+          "enum": [
+            "verified_components",
+            "partial_components"
+          ]
+        },
+        "sourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "fieldEvidence": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "uniqueItems": true
+          }
+        }
+      },
+      "required": [
+        "id",
+        "schoolLevel",
+        "series",
+        "grade",
+        "semester",
+        "volume",
+        "nativeBookCode",
+        "version",
+        "originalLabel",
+        "displayName",
+        "schoolLevelBadge",
+        "namingState",
+        "sourceIds",
+        "fieldEvidence"
+      ]
+    },
+    "OutlineNode": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "bookEditionId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "level": {
+          "enum": [
+            "major_unit",
+            "middle_unit",
+            "subunit",
+            "section",
+            "unknown"
+          ]
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "originalLabel": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parentId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "parentRelation": {
+          "enum": [
+            "source_confirmed",
+            "unresolved"
+          ]
+        },
+        "sectionDefinitionId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sourceLabel": {
+          "type": "string",
+          "minLength": 1
+        },
+        "aliasState": {
+          "enum": [
+            "exact_literal",
+            "verified_alias",
+            "candidate_unconfirmed",
+            "unmapped"
+          ]
+        },
+        "nativeTestCodes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "sourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "structureCoverage": {
+          "enum": [
+            "partial",
+            "complete",
+            "unknown"
+          ]
+        },
+        "missingLevels": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "major_unit",
+              "middle_unit",
+              "subunit"
+            ]
+          }
+        }
+      },
+      "required": [
+        "id",
+        "bookEditionId",
+        "level",
+        "label",
+        "originalLabel",
+        "parentId",
+        "parentRelation",
+        "sectionDefinitionId",
+        "sourceLabel",
+        "aliasState",
+        "nativeTestCodes",
+        "sourceIds",
+        "structureCoverage",
+        "missingLevels"
+      ]
+    },
+    "RequirementFacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "applicability": {
+          "enum": [
+            "applicable",
+            "not_applicable",
+            "unknown"
+          ]
+        },
+        "assignment": {
+          "enum": [
+            "assigned",
+            "explicitly_unassigned",
+            "unknown"
+          ]
+        },
+        "requiredness": {
+          "enum": [
+            "required",
+            "optional",
+            "unknown"
+          ]
+        },
+        "completion": {
+          "enum": [
+            "confirmed_complete",
+            "confirmed_incomplete",
+            "unknown",
+            "disputed"
+          ]
+        },
+        "effort": {
+          "enum": [
+            "not_started_confirmed",
+            "started_confirmed",
+            "unknown"
+          ]
+        },
+        "mapping": {
+          "enum": [
+            "exact",
+            "partial",
+            "ambiguous",
+            "unresolved"
+          ]
+        },
+        "coverage": {
+          "enum": [
+            "complete",
+            "partial",
+            "not_queried",
+            "blocked",
+            "unsupported"
+          ]
+        },
+        "deadline": {
+          "enum": [
+            "not_due",
+            "due_now",
+            "past_due",
+            "unknown"
+          ]
+        },
+        "evidencePresence": {
+          "enum": [
+            "present",
+            "absent_in_verified_query",
+            "partial",
+            "unknown",
+            "conflicting"
+          ]
+        },
+        "supportingEvidenceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "relevantAssertionIsExact": {
+          "type": "boolean"
+        },
+        "unresolvedConflict": {
+          "type": "boolean"
+        },
+        "homeAppRequired": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "dueDate": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        },
+        "dueAt": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "dueTimezone": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "cutoffPolicy": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "applicability",
+        "assignment",
+        "requiredness",
+        "completion",
+        "effort",
+        "mapping",
+        "coverage",
+        "deadline",
+        "evidencePresence",
+        "supportingEvidenceIds",
+        "relevantAssertionIsExact",
+        "unresolvedConflict",
+        "homeAppRequired",
+        "dueDate",
+        "dueAt",
+        "dueTimezone",
+        "cutoffPolicy"
+      ]
+    },
+    "WorkScope": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "studentId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "bookEditionId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "assignmentId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "enrollmentId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "nodeIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "scopeLabel": {
+          "type": "string",
+          "minLength": 1
+        },
+        "requirementKind": {
+          "enum": [
+            "preview_video",
+            "problem_section",
+            "paper_practice",
+            "correction",
+            "clinic",
+            "unresolved"
+          ]
+        },
+        "sectionDefinitionId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "facts": {
+          "$ref": "#/$defs/RequirementFacts"
+        },
+        "sourceObservationRefs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "teacherAssertionRefs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "coverageRefs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "mappingLimitations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "asOf": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "id",
+        "studentId",
+        "bookEditionId",
+        "assignmentId",
+        "enrollmentId",
+        "nodeIds",
+        "scopeLabel",
+        "requirementKind",
+        "sectionDefinitionId",
+        "facts",
+        "sourceObservationRefs",
+        "teacherAssertionRefs",
+        "coverageRefs",
+        "mappingLimitations",
+        "asOf"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "requirementKind": {
+                "const": "preview_video"
+              }
+            },
+            "required": [
+              "requirementKind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "sectionDefinitionId": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "StudentBookBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "studentId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "bookEditionId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "enrollmentId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "bindingKind": {
+          "enum": [
+            "enrollment",
+            "assignment_only"
+          ]
+        },
+        "assignmentIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "workScopeIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "observationRefs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "sourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "id",
+        "studentId",
+        "bookEditionId",
+        "enrollmentId",
+        "bindingKind",
+        "assignmentIds",
+        "workScopeIds",
+        "observationRefs",
+        "sourceIds"
+      ]
+    },
+    "BookCatalog": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "book_flow_catalog"
+        },
+        "schemaVersion": {
+          "const": "1.0.0"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "bookEditions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/BookEdition"
+          }
+        },
+        "outlineNodes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/OutlineNode"
+          }
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "kind": {
+                "type": "string",
+                "minLength": 1
+              },
+              "reference": {
+                "type": "string",
+                "minLength": 1
+              },
+              "limitations": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              }
+            },
+            "required": [
+              "id",
+              "kind",
+              "reference",
+              "limitations"
+            ]
+          }
+        },
+        "studentDataIncluded": {
+          "const": false
+        }
+      },
+      "required": [
+        "kind",
+        "schemaVersion",
+        "revision",
+        "bookEditions",
+        "outlineNodes",
+        "sources",
+        "studentDataIncluded"
+      ]
+    },
+    "StudentBookFlow": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "student_book_flows"
+        },
+        "schemaVersion": {
+          "const": "1.0.0"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "canonicalRegistryPageId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "canonicalRegistryReference": {
+          "type": "string",
+          "minLength": 1
+        },
+        "bookCatalogPageId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "bookCatalogReference": {
+          "type": "string",
+          "minLength": 1
+        },
+        "contractReference": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceSnapshotWindowUtc": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "bindings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/StudentBookBinding"
+          }
+        },
+        "workScopes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/WorkScope"
+          }
+        },
+        "projectionPages": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "studentId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "pageId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "managedBookFlowBlockIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "protectedManualBlockIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              }
+            },
+            "required": [
+              "studentId",
+              "pageId",
+              "managedBookFlowBlockIds",
+              "protectedManualBlockIds"
+            ]
+          }
+        },
+        "fullHistoryImported": {
+          "const": false
+        },
+        "sourceFreshnessAdvanced": {
+          "const": false
+        },
+        "overallCompletionPercentage": {
+          "type": "null"
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "historyEvents": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/HistoryEvent"
+          }
+        },
+        "privateBookEditions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/BookEdition"
+          }
+        },
+        "unresolvedAssignmentScopes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "studentId": {
+                "type": "string"
+              },
+              "assignmentId": {
+                "type": "string"
+              },
+              "candidateBookEditionIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "scopeLabel": {
+                "type": "string"
+              },
+              "reason": {
+                "type": "string"
+              },
+              "sourceObservationRefs": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": [
+              "id",
+              "studentId",
+              "assignmentId",
+              "candidateBookEditionIds",
+              "scopeLabel",
+              "reason",
+              "sourceObservationRefs"
+            ]
+          }
+        }
+      },
+      "required": [
+        "kind",
+        "schemaVersion",
+        "revision",
+        "canonicalRegistryPageId",
+        "canonicalRegistryReference",
+        "bookCatalogPageId",
+        "bookCatalogReference",
+        "contractReference",
+        "sourceSnapshotWindowUtc",
+        "bindings",
+        "workScopes",
+        "projectionPages",
+        "fullHistoryImported",
+        "sourceFreshnessAdvanced",
+        "overallCompletionPercentage",
+        "limitations",
+        "historyEvents"
+      ]
+    },
+    "Contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "$schema": {
+          "type": "string"
+        },
+        "kind": {
+          "const": "book_flow_contract"
+        },
+        "contractId": {
+          "type": "string"
+        },
+        "schemaVersion": {
+          "type": "string"
+        },
+        "revision": {
+          "type": "number"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "dataClass": {
+          "type": "string"
+        },
+        "implementationState": {
+          "type": "string"
+        },
+        "userSourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "reusesEntities": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "naming": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "ruleId": {
+              "type": "string"
+            },
+            "template": {
+              "type": "string"
+            },
+            "unknownToken": {
+              "type": "string"
+            },
+            "schoolLevelBadges": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "elementary": {
+                  "type": "string"
+                },
+                "middle": {
+                  "type": "string"
+                },
+                "high": {
+                  "type": "string"
+                },
+                "unknown": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "elementary",
+                "middle",
+                "high",
+                "unknown"
+              ]
+            },
+            "bookIdentityIsDisplayName": {
+              "type": "boolean"
+            },
+            "editionIdentityFields": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "preserve": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "normalizationRules": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "examples": {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "series": {
+                        "type": "string"
+                      },
+                      "schoolLevel": {
+                        "type": "string"
+                      },
+                      "grade": {
+                        "type": "number"
+                      },
+                      "semester": {
+                        "type": "number"
+                      },
+                      "volume": {
+                        "type": "number"
+                      },
+                      "displayName": {
+                        "type": "string"
+                      },
+                      "badge": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "series",
+                      "schoolLevel",
+                      "grade",
+                      "semester",
+                      "volume",
+                      "displayName",
+                      "badge"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "series": {
+                        "type": "string"
+                      },
+                      "schoolLevel": {
+                        "type": "string"
+                      },
+                      "grade": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "semester": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "volume": {
+                        "type": "number"
+                      },
+                      "displayName": {
+                        "type": "string"
+                      },
+                      "badge": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "series",
+                      "schoolLevel",
+                      "grade",
+                      "semester",
+                      "volume",
+                      "displayName",
+                      "badge"
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "required": [
+            "ruleId",
+            "template",
+            "unknownToken",
+            "schoolLevelBadges",
+            "bookIdentityIsDisplayName",
+            "editionIdentityFields",
+            "preserve",
+            "normalizationRules",
+            "examples"
+          ]
+        },
+        "sectionProfiles": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "series": {
+                "type": "string"
+              },
+              "schoolLevel": {
+                "type": "string"
+              },
+              "verification": {
+                "type": "string"
+              },
+              "sourceId": {
+                "type": "string"
+              },
+              "createsUnitInstances": {
+                "type": "boolean"
+              },
+              "impliesAssignment": {
+                "type": "boolean"
+              },
+              "impliesCompletionRoute": {
+                "type": "boolean"
+              },
+              "definitions": {
+                "type": "array",
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "label": {
+                          "type": "string"
+                        },
+                        "displayOrder": {
+                          "type": "number"
+                        },
+                        "role": {
+                          "type": "string"
+                        },
+                        "parentLevelHint": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "activityKind": {
+                          "type": "string"
+                        },
+                        "verification": {
+                          "type": "string"
+                        },
+                        "sourceIds": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "label",
+                        "displayOrder",
+                        "role",
+                        "parentLevelHint",
+                        "activityKind",
+                        "verification",
+                        "sourceIds"
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "label": {
+                          "type": "string"
+                        },
+                        "displayOrder": {
+                          "type": "number"
+                        },
+                        "role": {
+                          "type": "string"
+                        },
+                        "parentLevelHint": {
+                          "type": "string"
+                        },
+                        "activityKind": {
+                          "type": "string"
+                        },
+                        "verification": {
+                          "type": "string"
+                        },
+                        "sourceIds": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "label",
+                        "displayOrder",
+                        "role",
+                        "parentLevelHint",
+                        "activityKind",
+                        "verification",
+                        "sourceIds"
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            "required": [
+              "id",
+              "series",
+              "schoolLevel",
+              "verification",
+              "sourceId",
+              "createsUnitInstances",
+              "impliesAssignment",
+              "impliesCompletionRoute",
+              "definitions"
+            ]
+          }
+        },
+        "hierarchy": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "levels": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "missingLevelStates": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "parentRelations": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "rules": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "nativeAliasPolicy": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "levels",
+            "missingLevelStates",
+            "parentRelations",
+            "rules",
+            "nativeAliasPolicy"
+          ]
+        },
+        "axes": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "applicability": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "assignment": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "requiredness": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "completion": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "effort": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "mapping": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "coverage": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "deadline": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "evidencePresence": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "applicability",
+            "assignment",
+            "requiredness",
+            "completion",
+            "effort",
+            "mapping",
+            "coverage",
+            "deadline",
+            "evidencePresence"
+          ]
+        },
+        "derivation": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "ruleVersion": {
+              "type": "string"
+            },
+            "headlineIsStoredFact": {
+              "type": "boolean"
+            },
+            "sequence": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "rules": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "rule": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id",
+                  "rule"
+                ]
+              }
+            },
+            "confirmedMissingWorkPredicate": {
+              "type": "string"
+            },
+            "confirmedNeverStartedPredicate": {
+              "type": "string"
+            },
+            "deadlinePolicy": {
+              "type": "string"
+            },
+            "auditFields": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "ruleVersion",
+            "headlineIsStoredFact",
+            "sequence",
+            "rules",
+            "confirmedMissingWorkPredicate",
+            "confirmedNeverStartedPredicate",
+            "deadlinePolicy",
+            "auditFields"
+          ]
+        },
+        "presentation": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "entry": {
+              "type": "string"
+            },
+            "studentDetail": {
+              "type": "string"
+            },
+            "unknownStructureLabel": {
+              "type": "string"
+            },
+            "unmappedSectionLabel": {
+              "type": "string"
+            },
+            "badges": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "confirmed_missing": {
+                  "type": "string"
+                },
+                "never_started_confirmed": {
+                  "type": "string"
+                },
+                "overdue_unknown": {
+                  "type": "string"
+                },
+                "not_queried": {
+                  "type": "string"
+                },
+                "blocked": {
+                  "type": "string"
+                },
+                "unknown": {
+                  "type": "string"
+                },
+                "explicitly_unassigned": {
+                  "type": "string"
+                },
+                "not_applicable": {
+                  "type": "string"
+                },
+                "ambiguous": {
+                  "type": "string"
+                },
+                "partial": {
+                  "type": "string"
+                },
+                "confirmed_complete": {
+                  "type": "string"
+                },
+                "disputed": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "confirmed_missing",
+                "never_started_confirmed",
+                "overdue_unknown",
+                "not_queried",
+                "blocked",
+                "unknown",
+                "explicitly_unassigned",
+                "not_applicable",
+                "ambiguous",
+                "partial",
+                "confirmed_complete",
+                "disputed"
+              ]
+            },
+            "doNotRelyOnColorAlone": {
+              "type": "boolean"
+            },
+            "redQueueRequiresConfirmedMissing": {
+              "type": "boolean"
+            },
+            "showExcludedEvidenceReason": {
+              "type": "boolean"
+            },
+            "overallPercentageRequiresClosedAssignedDenominator": {
+              "type": "boolean"
+            },
+            "catalogCountEqualsRequiredCount": {
+              "type": "boolean"
+            },
+            "emptyAssignmentRefsMeaning": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "entry",
+            "studentDetail",
+            "unknownStructureLabel",
+            "unmappedSectionLabel",
+            "badges",
+            "doNotRelyOnColorAlone",
+            "redQueueRequiresConfirmedMissing",
+            "showExcludedEvidenceReason",
+            "overallPercentageRequiresClosedAssignedDenominator",
+            "catalogCountEqualsRequiredCount",
+            "emptyAssignmentRefsMeaning"
+          ]
+        },
+        "queryContract": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "requiredInputs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "optionalInputs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "outputs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "readOnly": {
+              "type": "boolean"
+            },
+            "doesNotAuthorizeLmsWrites": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "name",
+            "requiredInputs",
+            "optionalInputs",
+            "outputs",
+            "readOnly",
+            "doesNotAuthorizeLmsWrites"
+          ]
+        },
+        "migration": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "additive": {
+              "type": "boolean"
+            },
+            "doNotRekeyExistingStudentEnrollmentAssignment": {
+              "type": "boolean"
+            },
+            "preserveOriginalObservationsAndTeacherNotes": {
+              "type": "boolean"
+            },
+            "legacyProblemSectionRegistryRemainsValidSubset": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "additive",
+            "doNotRekeyExistingStudentEnrollmentAssignment",
+            "preserveOriginalObservationsAndTeacherNotes",
+            "legacyProblemSectionRegistryRemainsValidSubset"
+          ]
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "storageAdapter": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "contract": {
+              "type": "string"
+            },
+            "typescriptFile": {
+              "type": "string"
+            },
+            "spaceRole": {
+              "type": "string"
+            },
+            "relationalDatabaseClaim": {
+              "type": "boolean"
+            },
+            "multiRecordAtomicity": {
+              "type": "string"
+            },
+            "rules": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "canonicalAuthority": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "contract",
+            "typescriptFile",
+            "spaceRole",
+            "relationalDatabaseClaim",
+            "multiRecordAtomicity",
+            "rules",
+            "canonicalAuthority"
+          ]
+        },
+        "history": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "contract": {
+              "type": "string"
+            },
+            "timestampFields": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "rules": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "queryTool": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "contract",
+            "timestampFields",
+            "rules",
+            "queryTool"
+          ]
+        },
+        "implementationLanguage": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "projectLanguage": {
+              "type": "string"
+            },
+            "runtime": {
+              "type": "string"
+            },
+            "newOtherLanguageRuntimeAllowed": {
+              "type": "boolean"
+            },
+            "initialJsonValidation": {
+              "type": "string"
+            },
+            "typescriptFile": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "projectLanguage",
+            "runtime",
+            "newOtherLanguageRuntimeAllowed",
+            "initialJsonValidation",
+            "typescriptFile"
+          ]
+        },
+        "dataLogicAction": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "status": {
+              "type": "string"
+            },
+            "executionPath": {
+              "type": "string"
+            },
+            "data": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "purpose": {
+                  "type": "string"
+                },
+                "requiredFields": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "purpose",
+                "requiredFields"
+              ]
+            },
+            "logic": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "ruleSet": {
+                  "type": "string"
+                },
+                "requiredFields": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "ruleSet",
+                "requiredFields"
+              ]
+            },
+            "action": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "requiredFields": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "requiredFields"
+              ]
+            },
+            "webMcp": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "intended": {
+                  "type": "boolean"
+                },
+                "actualRegistration": {
+                  "type": "string"
+                },
+                "runtimeExecutionImplemented": {
+                  "type": "boolean"
+                },
+                "notAnLmsBackendApi": {
+                  "type": "boolean"
+                },
+                "notAuthorityToBypassStudentTransferLimits": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "intended",
+                "actualRegistration",
+                "runtimeExecutionImplemented",
+                "notAnLmsBackendApi",
+                "notAuthorityToBypassStudentTransferLimits"
+              ]
+            },
+            "audit": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "type": {
+                  "type": "string"
+                },
+                "actualEvents": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "domainHistoryType": {
+                  "type": "string"
+                },
+                "rules": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "type",
+                "actualEvents",
+                "domainHistoryType",
+                "rules"
+              ]
+            },
+            "operations": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "intent": {
+                    "type": "string"
+                  },
+                  "dataRefs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "logicRefs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "actionTool": {
+                    "type": "string"
+                  },
+                  "sideEffects": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "authorization": {
+                    "type": "string"
+                  },
+                  "verification": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "id",
+                  "intent",
+                  "dataRefs",
+                  "logicRefs",
+                  "actionTool",
+                  "sideEffects",
+                  "authorization",
+                  "verification"
+                ]
+              }
+            }
+          },
+          "required": [
+            "status",
+            "executionPath",
+            "data",
+            "logic",
+            "action",
+            "webMcp",
+            "audit",
+            "operations"
+          ]
+        },
+        "practicalContexts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "teacherGoal": {
+                "type": "string"
+              },
+              "whyUse": {
+                "type": "string"
+              },
+              "sourceIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": [
+              "id",
+              "teacherGoal",
+              "whyUse",
+              "sourceIds"
+            ]
+          }
+        },
+        "dataContexts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "practicalContextIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "purpose": {
+                "type": "string"
+              },
+              "entityTypes": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "scopeRequired": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "asOfRequired": {
+                "type": "boolean"
+              },
+              "provenanceRequired": {
+                "type": "boolean"
+              },
+              "coverageRequired": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "id",
+              "practicalContextIds",
+              "purpose",
+              "entityTypes",
+              "scopeRequired",
+              "asOfRequired",
+              "provenanceRequired",
+              "coverageRequired"
+            ]
+          }
+        },
+        "logicContracts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "ruleId": {
+                "type": "string"
+              },
+              "version": {
+                "type": "string"
+              },
+              "practicalContextIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "rationale": {
+                "type": "string"
+              },
+              "inputDataContextIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "inputSchemaRef": {
+                "type": "string"
+              },
+              "outputSchemaRef": {
+                "type": "string"
+              },
+              "uncertaintyPolicy": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "sourceIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": [
+              "ruleId",
+              "version",
+              "practicalContextIds",
+              "rationale",
+              "inputDataContextIds",
+              "inputSchemaRef",
+              "outputSchemaRef",
+              "uncertaintyPolicy",
+              "sourceIds"
+            ]
+          }
+        },
+        "actionContracts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "version": {
+                "type": "string"
+              },
+              "practicalContextIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "intent": {
+                "type": "string"
+              },
+              "dataContextIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "logicRuleIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "targetSchemaRef": {
+                "type": "string"
+              },
+              "preconditions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "sideEffects": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "authorization": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "evaluatedAtRuntime": {
+                    "type": "boolean"
+                  },
+                  "allowedScopeRequired": {
+                    "type": "boolean"
+                  },
+                  "explicitAuthorityForEffects": {
+                    "type": "boolean"
+                  },
+                  "documentGrantsPermission": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "evaluatedAtRuntime",
+                  "allowedScopeRequired",
+                  "explicitAuthorityForEffects",
+                  "documentGrantsPermission"
+                ]
+              },
+              "idempotency": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "strategy": {
+                    "type": "string"
+                  },
+                  "uncertainOutcomePolicy": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "strategy",
+                  "uncertainOutcomePolicy"
+                ]
+              },
+              "verification": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "auditEventType": {
+                "type": "string"
+              },
+              "webMcp": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "toolName": {
+                    "type": "string"
+                  },
+                  "registrationState": {
+                    "type": "string"
+                  },
+                  "executionImplemented": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "toolName",
+                  "registrationState",
+                  "executionImplemented"
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "version",
+              "practicalContextIds",
+              "intent",
+              "dataContextIds",
+              "logicRuleIds",
+              "targetSchemaRef",
+              "preconditions",
+              "sideEffects",
+              "authorization",
+              "idempotency",
+              "verification",
+              "auditEventType",
+              "webMcp"
+            ]
+          }
+        }
+      },
+      "required": [
+        "$schema",
+        "kind",
+        "contractId",
+        "schemaVersion",
+        "revision",
+        "createdAt",
+        "dataClass",
+        "implementationState",
+        "userSourceIds",
+        "reusesEntities",
+        "naming",
+        "sectionProfiles",
+        "hierarchy",
+        "axes",
+        "derivation",
+        "presentation",
+        "queryContract",
+        "migration",
+        "limitations",
+        "storageAdapter",
+        "history",
+        "implementationLanguage"
+      ]
+    },
+    "HistoryEvent": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schemaVersion": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "kind": {
+          "enum": [
+            "assignment_created",
+            "requirement_changed",
+            "deadline_changed",
+            "source_observed",
+            "teacher_assertion_recorded",
+            "mapping_changed",
+            "coverage_recorded",
+            "correction_recorded",
+            "class_scheduled",
+            "class_occurred"
+          ]
+        },
+        "target": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "studentId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "bookEditionId": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "nodeId": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "assignmentId": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "requirementId": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "classSessionId": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "studentId",
+            "bookEditionId",
+            "nodeId",
+            "assignmentId",
+            "requirementId",
+            "classSessionId"
+          ]
+        },
+        "occurredAt": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "effectiveAt": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "observedAt": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "recordedAt": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceEventTimezone": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "payloadReference": {
+          "type": "object",
+          "properties": {
+            "entityId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "entityKind": {
+              "type": "string",
+              "minLength": 1
+            },
+            "schemaVersion": {
+              "type": "string",
+              "minLength": 1
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "contentHash": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "entityId",
+            "entityKind",
+            "schemaVersion",
+            "revision",
+            "contentHash"
+          ]
+        },
+        "provenance": {
+          "type": "object",
+          "properties": {
+            "sourceIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "coverageIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "originalLabel": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "sourceIds",
+            "coverageIds"
+          ],
+          "additionalProperties": false
+        },
+        "supersedesEventIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "correctionReason": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "factState": {
+          "enum": [
+            "observed",
+            "user_confirmed",
+            "derived",
+            "disputed"
+          ]
+        },
+        "synthetic": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "schemaVersion",
+        "revision",
+        "kind",
+        "target",
+        "occurredAt",
+        "effectiveAt",
+        "observedAt",
+        "recordedAt",
+        "sourceEventTimezone",
+        "payloadReference",
+        "provenance",
+        "supersedesEventIds",
+        "correctionReason",
+        "factState",
+        "synthetic"
+      ]
+    }
+  }
+}

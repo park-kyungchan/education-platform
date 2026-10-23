@@ -1,0 +1,288 @@
+{
+  "schemaVersion": "monthly-assessment.history-magicpath/1.0.0",
+  "scope": "Monthly assessment intent, research model, and MagicPath interaction feedback; no student records or credential/custom-rule copies.",
+  "coverage": {
+    "completeAllHistory": false,
+    "directRoomEvidence": "Parent supplied exact read/search response files; relevant records selected, unrelated private records excluded.",
+    "preservedEvidence": "Existing repository source-excerpts supplement fresh reads.",
+    "pageEvidence": "SI design Page is secondary historical summary, not fresh user confirmation.",
+    "gaps": [
+      "Deleted versions not returned by accessible sources cannot be claimed recovered.",
+      "Current live MagicPath behavior was not re-tested.",
+      "Exact meeting date, examination date, common scoring rubric and parent-result process remain unconfirmed here.",
+      "Broader SI design preferences do not automatically approve colors or styles for monthly assessment."
+    ]
+  },
+  "artifacts": [
+    {
+      "url": "https://www.magicpath.ai/files/460699133838258176",
+      "role": "monthly_assessment_related_math_research_pilot",
+      "sourceKey": "Sentinel_9f5b63e4e53c8191bae9747dfe798278"
+    },
+    {
+      "url": "https://www.magicpath.ai/files/460553295304486912",
+      "role": "separate_student_learning_map_do_not_conflate",
+      "source": "SI design Page"
+    }
+  ],
+  "claims": [
+    {
+      "id": "exam.deadline",
+      "path": "purpose.schedule",
+      "text": "출제 준비 기한은 2026-10-19 월요일. 최초 (화) 표기는 사용자 정정으로 폐기. 회의 날짜와 실제 시험 날짜는 별도 확인 필요.",
+      "sourceKeys": [
+        "Sentinel_71577bf027588191a45ed2b98003396a",
+        "Sentinel_a29fd32a2b908191af883aa93a8d3b88"
+      ],
+      "status": "current",
+      "kind": "user_requirement",
+      "supersedes": []
+    },
+    {
+      "id": "exam.duration.previous",
+      "path": "purpose.schedule",
+      "text": "10/8 일반 운영 인터뷰에서는 100분 후 하브루타 오답을 설명. 10/13 이번 월말평가의 구체적 80분 지시가 우선.",
+      "sourceKeys": [
+        "Sentinel_2f382439633c81918116a22682a5b368",
+        "Sentinel_2aea7acc8ff8819182a0af4fc465c1fe"
+      ],
+      "status": "superseded_for_this_exam",
+      "kind": "user_requirement",
+      "supersedes": []
+    },
+    {
+      "id": "exam.spec",
+      "path": "purpose.assessment",
+      "text": "초3 10월 월말평가: 24문항, 3점×12+5점×8+6점×4=100점, 모두 주관식/서술형. 학원 서버 라벨된 기존 문항 중 우수 문항을 난이도까지 고려해 사용자 선별. 단원 배분은 제안만.",
+      "sourceKeys": [
+        "Sentinel_6c10c77b7ee48191a65771fbde707150"
+      ],
+      "status": "current",
+      "kind": "user_requirement",
+      "supersedes": []
+    },
+    {
+      "id": "exam.time",
+      "path": "purpose.schedule",
+      "text": "15:00 시작, 시험 80분. 이후 18:00까지 채점 후 학생 간 하브루타 오답. 시험 종료 16:20은 산술 도출.",
+      "sourceKeys": [
+        "Sentinel_2aea7acc8ff8819182a0af4fc465c1fe"
+      ],
+      "status": "current",
+      "kind": "user_requirement",
+      "supersedes": []
+    },
+    {
+      "id": "exam.proposal",
+      "path": "purpose.proposals",
+      "text": "곱셈9/36점, 나눗셈9/39점, 원6/25점은 assistant 제안이며 승인된 시험지 아님. 24/28/20분+검토8분도 설계 제안.",
+      "sourceKeys": [
+        "Sentinel_b4ea79d108188191a5120482630c279d"
+      ],
+      "status": "proposal",
+      "kind": "assistant_proposal",
+      "supersedes": []
+    },
+    {
+      "id": "research.scope",
+      "path": "research.curriculum",
+      "text": "2022 개정 또는 이후 최신 교육과정 기반, 초3-2 곱셈·나눗셈·원, 연결된 초3–6 내용만 연구. 연구 연결범위를 실제 초3 시험범위로 자동 편입하지 않음.",
+      "sourceKeys": [
+        "Sentinel_2d70aa5091b08191ae0ab6701fbfd8f3",
+        "Sentinel_374bfcfca4c081919d8d1435e6db4125",
+        "Sentinel_5613555764908191b86e479993dc1ef0"
+      ],
+      "status": "current",
+      "kind": "user_requirement",
+      "supersedes": []
+    },
+    {
+      "id": "ux.rejection",
+      "path": "design.navigation",
+      "text": "전체 카드를 한꺼번에 보는 Miro 출력이 불편함. 카드를 눌러 progressively deep dive 가능한 UI/UX, ChatGPT 연결 플러그인의 무료 tier 또는 trial 검토.",
+      "sourceKeys": [
+        "Sentinel_e442c171b274819184bb454912862eb9"
+      ],
+      "status": "current",
+      "kind": "user_requirement",
+      "supersedes": []
+    },
+    {
+      "id": "ux.tool",
+      "path": "design.platform",
+      "text": "MagicPath 선택 및 당시 무료 20크레딧 내 제작 요청. 당시 예산 제약이며 현재 가격/잔여 한도 확인을 대신하지 않음.",
+      "sourceKeys": [
+        "Sentinel_274cf776219c8191b60fdabeb73aef77"
+      ],
+      "status": "historical_constraint",
+      "kind": "user_historical_budget_constraint",
+      "supersedes": []
+    },
+    {
+      "id": "ux.context",
+      "path": "design.navigation",
+      "text": "하위로 깊게 들어가도 이전 단계들을 작게 유지해 연결 맥락을 동시에 시각화할 것.",
+      "sourceKeys": [
+        "Sentinel_1c6da30765b4819181c2a25cd0e73609"
+      ],
+      "status": "current",
+      "kind": "user_requirement",
+      "supersedes": []
+    },
+    {
+      "id": "ux.ancestor_only",
+      "path": "design.navigation",
+      "text": "선택한 이전 카드만 남기는 전자 선택은 4초 뒤 후자로 정정됨.",
+      "sourceKeys": [
+        "Sentinel_4ebcaf9999608191944f51b35a84d676",
+        "Sentinel_def584c414508191bfda44d44ed7aa0f",
+        "Sentinel_f588d54739a081919f1df07815d95961"
+      ],
+      "status": "superseded",
+      "kind": "user_requirement",
+      "supersedes": []
+    },
+    {
+      "id": "ux.siblings",
+      "path": "design.navigation",
+      "text": "이전 단계의 형제 항목도 함께 작게 유지하는 후자가 최종 사용자 선택. 선택 경로와 비교/이동 맥락을 보존.",
+      "sourceKeys": [
+        "Sentinel_4ebcaf9999608191944f51b35a84d676",
+        "Sentinel_f588d54739a081919f1df07815d95961"
+      ],
+      "status": "current",
+      "kind": "user_requirement",
+      "supersedes": [
+        "ux.ancestor_only"
+      ]
+    },
+    {
+      "id": "ux.implementation",
+      "path": "design.verification",
+      "text": "10/13 기록상 작은 카드 열·선택 경로 색/선 강조·형제 클릭 경로변경·큰 현재 문항영역 구현, 170개 창작 예시 보존 및 DOM 테스트 통과. 당시 실제 클릭 스크린샷은 미확인. 이번 작업의 재실행 증거 아님.",
+      "sourceKeys": [
+        "Sentinel_c7e565775ea48191867952b46b28f294"
+      ],
+      "status": "historical_report",
+      "kind": "assistant_report",
+      "supersedes": []
+    },
+    {
+      "id": "content.examples",
+      "path": "research.examples",
+      "text": "세부단원 아래 유형별 예시문항 필수. 직접 생성 또는 공개 교재 연구 허용.",
+      "sourceKeys": [
+        "Sentinel_8c9fc1f3b96881918f9a2493afef06e9"
+      ],
+      "status": "current",
+      "kind": "user_requirement",
+      "supersedes": []
+    },
+    {
+      "id": "content.typical",
+      "path": "research.examples",
+      "text": "Freudenthal의 전형적인 예를 연구하고 유형별 예제 설계에 반영. 충분히 어렵고 복잡해도 되며 설계 이유를 충분히 설명.",
+      "sourceKeys": [
+        "Sentinel_1f20328b135c819194b15011c7efd6da",
+        "Sentinel_2e6892f7b1ac81919594b92571b16b09"
+      ],
+      "status": "current",
+      "kind": "user_requirement",
+      "supersedes": []
+    },
+    {
+      "id": "content.actions",
+      "path": "research.cognitive-model",
+      "text": "초3 수준 학습심리학 근거로 풀이를 미세 행동단위로 나누고, 각 행동에서 기대하는 수행과 설계 이유 설명.",
+      "sourceKeys": [
+        "Sentinel_e4fcfb7607d08191b13eee8f7e71855e"
+      ],
+      "status": "current",
+      "kind": "user_requirement",
+      "supersedes": []
+    },
+    {
+      "id": "content.audit",
+      "path": "research.evidence-model",
+      "text": "서술형 풀이에서 잘못된 행동단위와 근본 능력층까지 역추적 가능하도록 문항 설계. 근거 없는 학생 자동진단 아님.",
+      "sourceKeys": [
+        "Sentinel_f5e2573509b88191a4bd4c9f0335a550"
+      ],
+      "status": "current",
+      "kind": "user_requirement",
+      "supersedes": []
+    },
+    {
+      "id": "content.capabilities",
+      "path": "research.evidence-model",
+      "text": "105유형을 근본 수학능력으로 묶되 능력 개수 제한 없음, 문헌 근거 먼저. NCTM 해당시리즈 원문은 있으면 우선, 없으면 기존 근거로 진행.",
+      "sourceKeys": [
+        "Sentinel_828a6d5285a88191814d30b5f51c9f5f",
+        "Sentinel_f4637ced191c8191931ed4ee51ac8709",
+        "Sentinel_3e1f640013a881919698a1882a6a3266"
+      ],
+      "status": "current",
+      "kind": "user_requirement",
+      "supersedes": []
+    },
+    {
+      "id": "architecture.model",
+      "path": "architecture.research",
+      "text": "topological/hierarchical/structured/typed prototype. 강사들이 연구를 쉬운 자연어로 읽고 토론. 에이전트 판단 다양성 허용.",
+      "sourceKeys": [
+        "Sentinel_fa97dd88407481919becb7e7a427c9aa",
+        "Sentinel_d6d8c08f24208191afee73a63589ff96"
+      ],
+      "status": "current",
+      "kind": "user_requirement",
+      "supersedes": []
+    },
+    {
+      "id": "architecture.tone",
+      "path": "architecture.presentation",
+      "text": "강사별 톤앤매너는 언제든 교체 가능. 가변 표현과 바뀌면 안 되는 핵심의 경계 필요. 고정 강사스타일 매핑으로 해석하면 안 됨.",
+      "sourceKeys": [
+        "Sentinel_f7bae8a6bffc8191addb617944e9aa72",
+        "Sentinel_011cc2ef7c00819190d62db3bc7e0ada"
+      ],
+      "status": "current",
+      "kind": "user_requirement",
+      "supersedes": []
+    },
+    {
+      "id": "architecture.ids",
+      "path": "architecture.identity",
+      "text": "공통 하네스의 작업ID와 교육연구 DATA/LOGIC/ACTION/GOVERNANCE ID는 별도 영역. 각 영역 내부에도 위계·관계·타입을 적용.",
+      "sourceKeys": [
+        "Sentinel_c27ba16860188191ae566c090fdd5712",
+        "Sentinel_25e6e8eacffc819181e611cd26437aa1"
+      ],
+      "status": "current",
+      "kind": "user_requirement",
+      "supersedes": []
+    },
+    {
+      "id": "architecture.analogy",
+      "path": "architecture.research",
+      "text": "DATA=atomic concepts, LOGIC=행동 전 사고과정, ACTION=세부행동은 사용자 제안 관점이며 adversarial evaluation 가능; Palantir 공식 교육이론으로 단정하지 않음.",
+      "sourceKeys": [
+        "Sentinel_1322b7cb02d8819185ecb4ac7051fc41"
+      ],
+      "status": "proposal_open_to_revision",
+      "kind": "user_hypothesis",
+      "supersedes": []
+    },
+    {
+      "id": "delivery.pilot",
+      "path": "delivery.acceptance",
+      "text": "파일럿은 일단 충분하다고 승인 후 Dots의존성 제거·GitHub 모듈 이동 요청. 이것은 모든 연구 가설의 검증이나 최종 시험지 승인과 다름.",
+      "sourceKeys": [
+        "Sentinel_08d2a6244600819187ca20a8b1478fb0"
+      ],
+      "status": "current",
+      "kind": "user_requirement",
+      "supersedes": []
+    }
+  ],
+  "sourcesFile": "sources.json"
+}

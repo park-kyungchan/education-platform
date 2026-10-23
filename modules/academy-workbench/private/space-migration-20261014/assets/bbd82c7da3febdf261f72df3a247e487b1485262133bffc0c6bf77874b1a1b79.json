@@ -1,0 +1,142 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "kind": {
+      "type": "string",
+      "const": "academy_output_contract"
+    },
+    "schemaVersion": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "contractId": {
+      "type": "string",
+      "const": "academy.progress-output"
+    },
+    "version": {
+      "type": "string",
+      "enum": [
+        "1.0.0",
+        "1.1.0"
+      ]
+    },
+    "revision": {
+      "type": "integer",
+      "exclusiveMinimum": 0,
+      "maximum": 9007199254740991
+    },
+    "sourceIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "scope": {
+      "type": "object",
+      "properties": {
+        "student": {
+          "type": "string",
+          "const": "runtime_selected_private_student"
+        },
+        "bookEditions": {
+          "type": "string",
+          "const": "runtime_selected_verified_editions"
+        },
+        "defaultSourceMode": {
+          "type": "string",
+          "const": "saved_snapshot"
+        },
+        "actualStudentData": {
+          "type": "boolean",
+          "const": false
+        }
+      },
+      "required": [
+        "student",
+        "bookEditions",
+        "defaultSourceMode",
+        "actualStudentData"
+      ],
+      "additionalProperties": false
+    },
+    "rowKinds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "observed_section",
+          "verification_slot"
+        ]
+      }
+    },
+    "stateDefinitions": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string"
+      },
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "independentAxes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "requiredRecordFields": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "topologyRules": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "coverageRules": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "labelRules": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "privacyRules": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "authorityGranted": {
+      "type": "boolean",
+      "const": false
+    }
+  },
+  "required": [
+    "kind",
+    "schemaVersion",
+    "contractId",
+    "version",
+    "revision",
+    "sourceIds",
+    "scope",
+    "rowKinds",
+    "stateDefinitions",
+    "independentAxes",
+    "requiredRecordFields",
+    "topologyRules",
+    "coverageRules",
+    "labelRules",
+    "privacyRules",
+    "authorityGranted"
+  ],
+  "additionalProperties": false
+}

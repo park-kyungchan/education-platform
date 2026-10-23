@@ -1,0 +1,41 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "academy-operations",
+  "projectId": "academy-workbench",
+  "workId": "academy-architecture-orchestration-20261021",
+  "kind": "task",
+  "id": "academy-workbench:task:academy-architecture-orchestration-20261021-t08",
+  "logical": {
+    "domainId": "academy-operations",
+    "projectId": "academy-workbench",
+    "workId": "academy-architecture-orchestration-20261021",
+    "issueId": "AAR-ISSUE-20261021",
+    "specId": "AAR-SPEC",
+    "specRevision": 1,
+    "planId": "AAR-PLAN",
+    "planRevision": 3,
+    "taskId": "academy-workbench:task:academy-architecture-orchestration-20261021-t08"
+  },
+  "title": "Coordinate qualified source Work delegations",
+  "nextAction": "Monitor CON-01 selection after reviewed QRY source delivery, then Root checkpoint and admit CON-02. VER-02 prerequisites qualified but ownVER-01 pending; final integration/native effect gates retained.",
+  "state": {
+    "execution": "running",
+    "verification": "pending",
+    "localAudit": "intent-durable",
+    "sharedAudit": "pending",
+    "formalCompletion": "pending"
+  },
+  "executionClass": "source-only",
+  "dependsOn": [
+    {
+      "taskId": "academy-workbench:task:academy-architecture-orchestration-20261021-t04",
+      "milestone": "execution-and-verification"
+    }
+  ],
+  "decisionIds": [
+    "AAR-DECISION-APPROVAL-ORDER-R2",
+    "AAR-DECISION-ARCHITECTURE-APPROVED-001"
+  ],
+  "effectIds": [],
+  "verificationEvidenceIds": []
+}

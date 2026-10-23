@@ -1,0 +1,377 @@
+{
+  "schema": "academy.dom01-checks.v1",
+  "scope": "source-selection-and-existing-synthetic-behavior",
+  "sourceCommit": "4bdef2c77cb9a537cecf806ba16054646147dbc5",
+  "syntheticSocketAdmitted": false,
+  "records": [
+    {
+      "id": "initial-root-status",
+      "command": [
+        "bun",
+        "run",
+        "status"
+      ],
+      "exitCode": 0,
+      "summary": "Source metadata read; no runtime or production acceptance."
+    },
+    {
+      "id": "initial-root-check",
+      "command": [
+        "bun",
+        "run",
+        "check"
+      ],
+      "exitCode": 1,
+      "summary": "Before dependency setup: Cannot find module '@palantirkc/ontology'; aggregate stopped before checks. Original failure retained."
+    },
+    {
+      "id": "initial-nine-file-tests",
+      "cwd": "apps/academy/dc-gang-a",
+      "exitCode": 1,
+      "summary": "Before module dependency setup: 29 pass, 6 fail/6 import errors, 71 expectations; missing zod/jsdom. No PostgreSQL socket admitted."
+    },
+    {
+      "id": "initial-gang-frozen-setup",
+      "cwd": "apps/academy/gang-a",
+      "command": [
+        "bun",
+        "install",
+        "--frozen-lockfile",
+        "--ignore-scripts"
+      ],
+      "exitCode": 1,
+      "summary": "Sandbox EROFS on temporary directory; exact retry with approved escalation passed. Root/DC/month-end frozen ignore-scripts installs subsequently passed."
+    },
+    {
+      "id": "bun-version",
+      "command": [
+        "bun",
+        "--version"
+      ],
+      "cwd": ".",
+      "startedAt": "2026-10-21T06:35:39.500Z",
+      "finishedAt": "2026-10-21T06:35:39.503Z",
+      "exitCode": 0,
+      "stdoutSha256": "bd31e8d9cf8d14a1e9e3fdf3b9f6a524819aed0d1b14627523c6765767c7d8f1",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 6,
+      "stderrBytes": 0,
+      "stdoutTail": "1.4.3\n",
+      "stderrTail": ""
+    },
+    {
+      "id": "root-compiler-version",
+      "command": [
+        "bun",
+        "node_modules/typescript/bin/tsc",
+        "--version"
+      ],
+      "cwd": ".",
+      "startedAt": "2026-10-21T06:35:39.503Z",
+      "finishedAt": "2026-10-21T06:35:39.535Z",
+      "exitCode": 0,
+      "stdoutSha256": "41024334022fa58f9c7337359517de307cbcfc6055c19f2b734245eacc2fe97a",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 14,
+      "stderrBytes": 0,
+      "stdoutTail": "Version 7.0.2\n",
+      "stderrTail": ""
+    },
+    {
+      "id": "dc-compiler-version",
+      "command": [
+        "bun",
+        "node_modules/typescript/bin/tsc",
+        "--version"
+      ],
+      "cwd": "apps/academy/dc-gang-a",
+      "startedAt": "2026-10-21T06:35:39.536Z",
+      "finishedAt": "2026-10-21T06:35:39.564Z",
+      "exitCode": 0,
+      "stdoutSha256": "41024334022fa58f9c7337359517de307cbcfc6055c19f2b734245eacc2fe97a",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 14,
+      "stderrBytes": 0,
+      "stdoutTail": "Version 7.0.2\n",
+      "stderrTail": ""
+    },
+    {
+      "id": "root-typecheck",
+      "command": [
+        "bun",
+        "run",
+        "typecheck"
+      ],
+      "cwd": ".",
+      "startedAt": "2026-10-21T06:35:39.564Z",
+      "finishedAt": "2026-10-21T06:35:39.997Z",
+      "exitCode": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "20a7f6ddac8dfddfae008432d479755c5a411ed34c10316ad6e9ef2d44f4a5a9",
+      "stdoutBytes": 0,
+      "stderrBytes": 47,
+      "stdoutTail": "",
+      "stderrTail": "$ bun node_modules/typescript/bin/tsc --noEmit\n"
+    },
+    {
+      "id": "root-integration-tests",
+      "command": [
+        "bun",
+        "test",
+        "./tests"
+      ],
+      "cwd": ".",
+      "startedAt": "2026-10-21T06:35:39.998Z",
+      "finishedAt": "2026-10-21T06:35:42.486Z",
+      "exitCode": 1,
+      "stdoutSha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+      "stderrSha256": "db9d4538b7475fedf3a1cebea1a6253324c9ec2696368969d9c487af7d4cfd4f",
+      "stdoutBytes": 28,
+      "stderrBytes": 3399,
+      "stdoutTail": "bun test v1.4.3 (c6da4a4d3)\n",
+      "stderrTail": "\ntests/runtime.test.ts:\n(pass) Bun checks refuse old invokers and unadmitted scripts before spawning [2.10ms]\n(pass) every Bun module selects the invoking executable and nested Bun ignores stale PATH [76.38ms]\n(pass) mathematics preserves exact Node/npm reference routing and deferred Bun parity [0.52ms]\n(pass) setup plan, module runtime declarations and active doctor pin share Bun1.4.3 [2.86ms]\n(pass) only the existing Actions source step can use Bun1.4.2 as setup bootstrap [0.27ms]\n(pass) standalone module CI templates provision the maintained Bun runtime before checks [1.98ms]\n(pass) setup publishes Bun1.4.3 to later Actions steps without overwriting existing PATH entries [1.40ms]\n(pass) root source CI guards owner setup inside the shared action and preserves runtime, review and gate boundaries [35.04ms]\n\ntests/native-review-projection.test.ts:\n(pass) fixed owner policy and publisher are immutable [0.07ms]\n(pass) generated canonical owner gate accepts fixed owner acyclic raw/evidence/receipt chain [14.89ms]\n(pass) generated canonical owner gate rejects foreign semantic binding [1.59ms]\n(pass) generated canonical owner gate rejects self review [2.35ms]\n(pass) generated canonical owner gate rejects unfinished raw review [0.43ms]\n(pass) generated canonical owner gate rejects unresolved raw finding [1.11ms]\n(pass) generated canonical owner gate rejects different exact tree [0.45ms]\n(pass) generated canonical owner gate rejects fake Evidence kind [2.04ms]\n(pass) generated canonical owner gate rejects unaccepted Verification criterion [1.41ms]\n(pass) generated canonical owner gate rejects wrong domain evidence [1.74ms]\n(pass) latest status failure and incorrect publisher cannot reuse old pass [0.76ms]\n(pass) publication chain cannot reference itself or skip raw custody [0.35ms]\n(pass) fixed repository holds before any reader operation [0.21ms]\n(pass) bundled CLI runs without dependencies and rejects unknown repository before network [527.55ms]\n(pass) standalone bundled CLI accepts exact mocked owner chain with no dependencies or real network [448.08ms]\n(pass) projection proof rejects edited output, source graph, fixed policy and generator bytes [272.70ms]\n\ntests/integration.test.ts:\n(pass) source graph preserves pending domain acceptance and native ownership [0.81ms]\n(pass) source reader consumes canonical Gang ownership without native or retirement authority [0.83ms]\n(pass) ownership reader rejects mismatched maintained roots, source references and retained commits [1.31ms]\n(pass) ownership reader refuses freeze drift, native parity claims and authority escalation [1.07ms]\n(pass) dependency validator rejects missing, duplicate and cyclic module dependencies [0.36ms]\n(pass) module routing rejects traversal and arbitrary commands [0.45ms]\n(pass) curriculum exposes missing canonical inputs as a gap rather than accepted mathematics [0.92ms]\n(pass) project consumes pinned shared artifact validator [2.24ms]\nerror: Cannot find package 'zod' from '/home/palantirkc/worktrees/academy-state-model-20261021/examples/clinic-workbench/src/reference/domain/evidence.ts'\n(fail) academy integration exposes preserved domain facades without opening native stores [42.17ms]\n\n1 tests failed:\n(fail) academy integration exposes preserved domain facades without opening native stores [42.17ms]\n\n 32 pass\n 1 fail\n 173 expect() calls\nRan 33 tests across 3 files. [2.48s]\n"
+    },
+    {
+      "id": "root-import-verification",
+      "command": [
+        "bun",
+        "run",
+        "verify:imports"
+      ],
+      "cwd": ".",
+      "startedAt": "2026-10-21T06:35:42.486Z",
+      "finishedAt": "2026-10-21T06:35:42.895Z",
+      "exitCode": 0,
+      "stdoutSha256": "30ec5dca60be897209bd7db8f10a3c505b4c33a3c728330c52116722f50edb44",
+      "stderrSha256": "63fad52a757cd919ddf5a2658111b94045a81cccdb7f3675075d2ec7f3bf1dba",
+      "stdoutBytes": 1975,
+      "stderrBytes": 32,
+      "stdoutTail": "{\"scope\":\"imported-code-spec-bytes\",\"unchanged\":849,\"explicitAdaptations\":[\"apps/academy/dc-gang-a/package.json\",\"apps/academy/dc-gang-a/tsconfig.json\",\"apps/academy/dc-gang-a/bun.lock\",\"apps/mathcrew/src/development-sources.ts\",\"apps/mathcrew/tests/fixtures/expected-dist.json\",\"apps/mathcrew/src/render.ts\",\"apps/mathcrew/tests/development.test.ts\",\"apps/academy/dc-gang-a/src/academy/server.ts\",\"apps/academy/dc-gang-a/src/academy/main.ts\",\"apps/academy/dc-gang-a/src/academy/web/connectionView.ts\",\"apps/academy/dc-gang-a/src/academy/application.ts\",\"apps/academy/dc-gang-a/src/academy/postgresStore.ts\",\"apps/academy/dc-gang-a/src/academy/usecases/studentScene.ts\",\"apps/academy/dc-gang-a/src/academy/web/client.ts\",\"apps/academy/dc-gang-a/src/academy/web/teacherStyles.ts\",\"apps/academy/dc-gang-a/src/academy/contracts/teacherOperations.ts\",\"apps/academy/dc-gang-a/src/academy/ports/teacherStore.ts\",\"apps/academy/dc-gang-a/tests/academy/teacherReadSnapshot.test.ts\",\"apps/academy/dc-gang-a/docs/hermes-backend-profile.ts\",\"apps/academy/gang-a/README.md\",\"apps/academy/gang-a/package.json\",\"apps/mathcrew/README.md\",\"apps/mathcrew/package.json\",\"apps/mathcrew/src/check.ts\",\"examples/clinic-workbench/README.md\",\"examples/clinic-workbench/package.json\",\"packages/curriculum/.github/workflows/validate.yml\",\"packages/curriculum/README.md\",\"packages/curriculum/package.json\",\"packages/curriculum/runtime.manifest.json\",\"packages/curriculum/scripts/cloud/setup.sh\",\"apps/mathcrew/.github/workflows/ci.yml\",\"examples/clinic-workbench/.github/workflows/check.yml\",\"apps/academy/gang-a/.github/workflows/ci.yml\",\"apps/academy/dc-gang-a/src/lms/academyHttpClient.ts\",\"apps/academy/dc-gang-a/src/academy/teacherWorkspace.ts\",\"apps/academy/dc-gang-a/src/lms/lessonJournalTemplates.ts\",\"apps/academy/dc-gang-a/tests/academy/teacherWorkspace.test.ts\",\"apps/academy/dc-gang-a/tests/lms/lessonJournalTemplates.test.ts\"],\"originalCustody\":\"external-private-bundles-and-source-tars\"}\n",
+      "stderrTail": "$ bun scripts/verify-imports.ts\n"
+    },
+    {
+      "id": "dom01-typecheck",
+      "command": [
+        "bun",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "-p",
+        "architecture/academy-state-model/tsconfig.json"
+      ],
+      "cwd": ".",
+      "startedAt": "2026-10-21T06:35:42.895Z",
+      "finishedAt": "2026-10-21T06:35:44.831Z",
+      "exitCode": 1,
+      "stdoutSha256": "be2b7088d0a5552f597e9107d259f3cf24150b9e4b5140ff64628a06a49d27be",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 5843,
+      "stderrBytes": 0,
+      "stdoutTail": "\n  Type '{ record_seq: string | undefined; cm_seq: string | undefined; count: string | undefined; sourceHandler: \"openHomeWorkRate\"; columnGroup: \"previous_progress\"; sameRecordAsCurrent: boolean; sameMembershipAsCurrent: boolean; relationship: \"separate_previous_column_binding\"; occurrenceDateEvidence: \"not_established\"; }' is not assignable to type 'DayRecordPreviousProgressBinding'.\n    Types of property 'record_seq' are incompatible.\n      Type 'string | undefined' is not assignable to type 'string'.\n        Type 'undefined' is not assignable to type 'string'.\napps/academy/dc-gang-a/src/lms/dayRecordDomBinding.ts(287,16): error TS18048: 'year' is possibly 'undefined'.\napps/academy/dc-gang-a/src/lms/dayRecordDomBinding.ts(287,35): error TS18048: 'year' is possibly 'undefined'.\napps/academy/dc-gang-a/src/lms/dayRecordDomBinding.ts(287,55): error TS18048: 'year' is possibly 'undefined'.\napps/academy/dc-gang-a/src/lms/dayRecordDomBinding.ts(289,7): error TS18048: 'year' is possibly 'undefined'.\napps/academy/dc-gang-a/src/lms/dayRecordDomBinding.ts(289,19): error TS18048: 'month' is possibly 'undefined'.\napps/academy/dc-gang-a/src/lms/dayRecordDomBinding.ts(289,32): error TS18048: 'month' is possibly 'undefined'.\napps/academy/dc-gang-a/src/lms/dayRecordDomBinding.ts(289,46): error TS18048: 'day' is possibly 'undefined'.\napps/academy/dc-gang-a/src/lms/dayRecordDomBinding.ts(289,57): error TS18048: 'day' is possibly 'undefined'.\napps/academy/dc-gang-a/src/lms/dayRecordDomBinding.ts(289,63): error TS2532: Object is possibly 'undefined'.\napps/academy/dc-gang-a/src/lms/dayRecordDomBinding.ts(289,68): error TS18048: 'month' is possibly 'undefined'.\napps/academy/dc-gang-a/src/wholeLens/domain.ts(347,18): error TS18048: 'zone' is possibly 'undefined'.\napps/academy/dc-gang-a/src/wholeLens/domain.ts(348,36): error TS18048: 'zone' is possibly 'undefined'.\napps/academy/dc-gang-a/src/wholeLens/domain.ts(348,68): error TS18048: 'zone' is possibly 'undefined'.\napps/academy/gang-a/packages/adapters/repository-operating-context.ts(12,20): error TS18048: 'file' is possibly 'undefined'.\napps/academy/gang-a/packages/adapters/repository-operating-context.ts(12,41): error TS18048: 'file' is possibly 'undefined'.\narchitecture/academy-state-model/selection.test.ts(15,49): error TS2769: No overload matches this call.\n  The last overload gave the following error.\n    Argument of type 'string[]' is not assignable to parameter of type '(\"assessment-preparation\" | \"attendance-internal-journal\" | \"class-preparation\" | \"homework-followup\" | \"lesson-delivery\" | \"progress-audit\" | \"wrong-answer-clinic\")[]'.\n      Type 'string' is not assignable to type '\"assessment-preparation\" | \"attendance-internal-journal\" | \"class-preparation\" | \"homework-followup\" | \"lesson-delivery\" | \"progress-audit\" | \"wrong-answer-clinic\"'.\narchitecture/academy-state-model/verify.ts(42,136): error TS2353: Object literal may only specify known properties, and 'write' does not exist in type 'BuildConfig'.\n",
+      "stderrTail": ""
+    },
+    {
+      "id": "dom01-selection-and-preservation-tests",
+      "command": [
+        "bun",
+        "test",
+        "./architecture/academy-state-model/selection.test.ts"
+      ],
+      "cwd": ".",
+      "startedAt": "2026-10-21T06:35:44.832Z",
+      "finishedAt": "2026-10-21T06:35:44.890Z",
+      "exitCode": 0,
+      "stdoutSha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+      "stderrSha256": "f3933a424624ee1f40e2d68ac97f0e1b2426ce45240135b365a2ee0dfb1b49f2",
+      "stdoutBytes": 28,
+      "stderrBytes": 1074,
+      "stdoutTail": "bun test v1.4.3 (c6da4a4d3)\n",
+      "stderrTail": "\narchitecture/academy-state-model/selection.test.ts:\n(pass) seven selected workflows retain producers, actual consumers, contracts, gaps and exact evidence [0.94ms]\n(pass) frozen source hashes cover all selected implementation and consumer bytes [10.73ms]\n(pass) actual reverse coupling and all six DC-to-gang-a edges survive; omitted edge fails [2.39ms]\n(pass) Education QRY qualifies DOM-01 before owner-local boundary; CON follows later QRY-02 [0.06ms]\n(pass) maintained exact projection keeps raw incorrect score beside explicit teacher completion [3.10ms]\n(pass) attempt replacement retains prior teacher final without inspecting successor evidence [1.49ms]\n(pass) withdrawal archives previous work and does not keep it writable or erase its history [2.38ms]\n(pass) foreign student is rejected and absent assignments remain unknown coverage [0.15ms]\n(pass) exact100 current implementation excludes original wrong while independent stages remain pending; similar-default gap is retained [0.48ms]\n\n 9 pass\n 0 fail\n 349 expect() calls\nRan 9 tests across 1 file. [49.00ms]\n"
+    },
+    {
+      "id": "exact-source-metadata-verification",
+      "command": [
+        "bun",
+        "architecture/academy-state-model/inspect-source.ts"
+      ],
+      "cwd": ".",
+      "startedAt": "2026-10-21T06:35:44.890Z",
+      "finishedAt": "2026-10-21T06:35:50.082Z",
+      "exitCode": 0,
+      "stdoutSha256": "d952df632b884a4d5b0985571282a342bae0902b9382b88f21bb0939aa666f6f",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 2777,
+      "stderrBytes": 0,
+      "stdoutTail": "{\"sources\":241,\"imports\":600,\"crossLayerEdges\":96,\"readInputImports\":17,\"lmsBackImports\":[{\"from\":\"apps/academy/dc-gang-a/src/lms/academyHttpClient.ts\",\"to\":\"apps/academy/dc-gang-a/src/academy/nativeBookSource.ts\",\"specifier\":\"../academy/nativeBookSource\",\"line\":5,\"symbols\":[{\"name\":\"SourceDiscoveryRequest\",\"typeOnly\":true}],\"typeOnly\":true},{\"from\":\"apps/academy/dc-gang-a/src/lms/endpointCatalog.ts\",\"to\":\"apps/academy/dc-gang-a/src/academy/operationalContract.ts\",\"specifier\":\"../academy/operationalContract\",\"line\":6,\"symbols\":[{\"name\":\"operationalContractShape\",\"typeOnly\":false},{\"name\":\"OPERATIONAL_CONTRACT_PATH\",\"typeOnly\":false}],\"typeOnly\":false},{\"from\":\"apps/academy/dc-gang-a/src/lms/lessonJournalTemplates.ts\",\"to\":\"apps/academy/dc-gang-a/src/academy/teacherWorkspace.ts\",\"specifier\":\"../academy/teacherWorkspace\",\"line\":2,\"symbols\":[{\"name\":\"parentInternalLanguage\",\"typeOnly\":false}],\"typeOnly\":false}],\"dcGangImports\":[{\"from\":\"apps/academy/dc-gang-a/src/academy/bookCertificationEvidence.ts\",\"to\":\"apps/academy/gang-a/packages/application/project-book-certification.ts\",\"specifier\":\"../../../gang-a/packages/application/project-book-certification\",\"line\":2,\"symbols\":[{\"name\":\"projectBookCertification\",\"typeOnly\":false}],\"typeOnly\":false},{\"from\":\"apps/academy/dc-gang-a/src/academy/bookCertificationEvidence.ts\",\"to\":\"apps/academy/gang-a/packages/domain/book-certification.ts\",\"specifier\":\"../../../gang-a/packages/domain/book-certification\",\"line\":3,\"symbols\":[{\"name\":\"CertificationQuery\",\"typeOnly\":false}],\"typeOnly\":false},{\"from\":\"apps/academy/dc-gang-a/src/academy/bookCertificationEvidence.ts\",\"to\":\"apps/academy/gang-a/packages/domain/evidence.ts\",\"specifier\":\"../../../gang-a/packages/domain/evidence\",\"line\":4,\"symbols\":[{\"name\":\"Evidence\",\"typeOnly\":false},{\"name\":\"Evidence\",\"typeOnly\":true}],\"typeOnly\":false},{\"from\":\"apps/academy/dc-gang-a/src/academy/operatingWorkspace.ts\",\"to\":\"apps/academy/gang-a/packages/adapters/repository-operating-context.ts\",\"specifier\":\"../../../gang-a/packages/adapters/repository-operating-context\",\"line\":1,\"symbols\":[{\"name\":\"loadRepositoryOperatingContext\",\"typeOnly\":false}],\"typeOnly\":false},{\"from\":\"apps/academy/dc-gang-a/src/academy/operatingWorkspace.ts\",\"to\":\"apps/academy/gang-a/packages/application/select-operational-context.ts\",\"specifier\":\"../../../gang-a/packages/application/select-operational-context\",\"line\":2,\"symbols\":[{\"name\":\"selectOperationalContext\",\"typeOnly\":false}],\"typeOnly\":false},{\"from\":\"apps/academy/dc-gang-a/src/academy/operatingWorkspace.ts\",\"to\":\"apps/academy/gang-a/packages/domain/operational-context.ts\",\"specifier\":\"../../../gang-a/packages/domain/operational-context\",\"line\":3,\"symbols\":[{\"name\":\"OperationalId\",\"typeOnly\":true}],\"typeOnly\":true}],\"mode\":\"verify\"}\n",
+      "stderrTail": ""
+    },
+    {
+      "id": "dc-bounded-maintained-tests",
+      "command": [
+        "bun",
+        "test",
+        "tests/academy/preparationHistory.test.ts",
+        "tests/academy/teacherWorkContext.test.ts",
+        "tests/academy/learningWork.test.ts",
+        "tests/academy/teacherWorkspace.test.ts",
+        "tests/academy/teacherClinicReviewBlockers.test.ts",
+        "tests/academy/teacherReadSnapshot.test.ts",
+        "tests/academy/preparationView.test.ts",
+        "tests/academy/teacherObservation.test.ts",
+        "tests/academy/operationalContract.test.ts",
+        "tests/academy/teacherClinic.test.ts",
+        "tests/lms/endpointCatalog.test.ts"
+      ],
+      "cwd": "apps/academy/dc-gang-a",
+      "startedAt": "2026-10-21T06:35:50.083Z",
+      "finishedAt": "2026-10-21T06:35:51.364Z",
+      "exitCode": 1,
+      "stdoutSha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+      "stderrSha256": "bd74c94bf5d3f8a2bc8fbe28bc3ffba0f6f2a5e1839950fd887e6b0e237f754f",
+      "stdoutBytes": 28,
+      "stderrBytes": 36194,
+      "stdoutTail": "bun test v1.4.3 (c6da4a4d3)\n",
+      "stderrTail": "reSQL path > fresh identical observation requests retain their own revisions, predecessors and actor-bound recovery\n(skip) source-bound teacher observation through the actual HTTP/application/PostgreSQL path > saves an original, replays its exact request, appends a correction and reads persisted revisions after reopen\n(skip) persisted exact work bindings > R1: source-item identity must match its pinned problem while repeated assigned occurrences may share that exact source\n(skip) persisted exact work bindings > attempts bind an exact assigned revision and issuance; repeats and source-grade revisions remain distinct\n(skip) persisted exact work bindings > registration pins, assignment identity and paper reissuance cannot be silently rebound\n(skip) persisted exact work bindings > assignment refuses unknown catalog versions and unregistered course before storing anything\n(skip) exact teacher clinic decisions > a clock refusal cannot discard a previously protected pending clinic command\n(skip) exact teacher clinic decisions > attempt revision drift preserves prior completion without asserting inspection of the new evidence\n(skip) exact teacher clinic decisions > R8: a regressing report clock retains a terminal refusal instead of stranding the target pending\n(skip) exact teacher clinic decisions > R7: same-effective-date replacement retains prior exact assignment attempts and teacher histories read-only\n(skip) exact teacher clinic decisions > R6: rejected originals and exact refusals remain actor-scoped and visible after reconnection\n(skip) exact teacher clinic decisions > R4: policy drift rejects an unresolved original without rewriting its policy or teacher text\n(skip) exact teacher clinic decisions > R4: policy drift still permits exact readback and replay of an already committed outcome\n(skip) exact teacher clinic decisions > R3: an unresolved protected original blocks a fresh same-actor target across connections but permits exact retry\n(skip) exact teacher clinic decisions > R2: informational teacher grading retains completion until an explicit correction, explanation or reopen instruction\n(skip) exact teacher clinic decisions > protected original intent survives an interrupted commit and is recovered without browser persistence\n(skip) exact teacher clinic decisions > shared query folds only exact item decisions; grades, other attempts and later effective corrections cannot fabricate completion\n(skip) exact teacher clinic decisions > protected HTTP refuses forged scope and stale binding; concurrent writers have one winner and recovery survives reconnection\n(skip) exact teacher clinic decisions > teacher completes one item, preserves identical fresh intent and reopens with exact original-request recovery\n(skip) real PostgreSQL authenticated workspace durability > activity scope is checked in the transaction, CAS races once, exact lost-ack lookup and restart retain final/reopen history\n(skip) real PostgreSQL authenticated workspace durability > unknown paper membership stays partial and optional mindmap binds transactionally only to the exact concept explanation scope\n(skip) real PostgreSQL authenticated workspace durability > parent original edits survive revisions, actor outcome replay, and stale or cross-student references are rejected\n(skip) real PostgreSQL authenticated workspace durability > owner-only onboarding needs no fake student, keeps immutable case history and enforces policy/student/step boundaries\n(skip) real PostgreSQL authenticated workspace durability > exam selection drafts persist in owner ledger with exact source candidate pins and never claim source or teacher acceptance\n(skip) real PostgreSQL authenticated workspace durability > a real committed PostgreSQL owner command survives a misleading postcommit readback exception without being classified as rejected\n(skip) real PostgreSQL authenticated workspace durability > existing authenticated ingress rejects anonymous/foreign actor and accepts scoped local-only save\n\n\n13 tests failed:\n(fail) extensible canonical schema without source promotion > preserves every canonical evidence field and the dated baseline [0.73ms]\n(fail) extensible canonical schema without source promotion > accepts schema-valid additions and a smaller fixture without editing evidence files [0.21ms]\n(fail) extensible canonical schema without source promotion > rejects duplicate IDs, malformed arrays/methods/effects and contradictory safety [0.26ms]\n(fail) extensible canonical schema without source promotion > validation returns an independent copy and does not echo raw metadata on error [0.14ms]\n(fail) deterministic metadata query and fail-closed execution > source candidates stay distinct and have no live-safe declarations [0.27ms]\n(fail) deterministic metadata query and fail-closed execution > all effects including safe-looking GETs remain noncallable [0.47ms]\n(fail) deterministic metadata query and fail-closed execution > no mutation/send/unknown endpoint receives an executable classification [0.14ms]\n(fail) deterministic metadata query and fail-closed execution > sort/filter output is deterministic and limits are explicit [0.15ms]\n(fail) deterministic metadata query and fail-closed execution > projections are detached and unknown selectors fail closed [0.14ms]\n(fail) deterministic metadata query and fail-closed execution > compact and summary byte savings are measured on identical selected data [0.24ms]\n(fail) deterministic metadata query and fail-closed execution > CLI is strict, importable, and returns compact metadata by default [0.25ms]\n(fail) authenticated DOM-source evidence remains separate from transport proof > records six POST declarations without claiming submitted or captured requests [0.18ms]\n(fail) authenticated DOM-source evidence remains separate from transport proof > keeps new source tokens and write-associated controls noncallable [0.13ms]\n\n 43 pass\n 39 skip\n 13 fail\n 166 expect() calls\nRan 95 tests across 11 files. [1266.00ms]\n"
+    },
+    {
+      "id": "dc-typecheck",
+      "command": [
+        "bun",
+        "run",
+        "typecheck"
+      ],
+      "cwd": "apps/academy/dc-gang-a",
+      "startedAt": "2026-10-21T06:35:51.365Z",
+      "finishedAt": "2026-10-21T06:35:54.649Z",
+      "exitCode": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "20a7f6ddac8dfddfae008432d479755c5a411ed34c10316ad6e9ef2d44f4a5a9",
+      "stdoutBytes": 0,
+      "stderrBytes": 47,
+      "stdoutTail": "",
+      "stderrTail": "$ bun node_modules/typescript/bin/tsc --noEmit\n"
+    },
+    {
+      "id": "month-end-workbench-check",
+      "command": [
+        "bun",
+        "run",
+        "check"
+      ],
+      "cwd": "apps/academy/month-end-workbench",
+      "startedAt": "2026-10-21T06:35:54.649Z",
+      "finishedAt": "2026-10-21T06:35:58.117Z",
+      "exitCode": 1,
+      "stdoutSha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+      "stderrSha256": "fbd2632ff8503f8204421c7d727204d530e4df105661556738c6f65180420468",
+      "stdoutBytes": 28,
+      "stderrBytes": 7291,
+      "stdoutTail": "bun test v1.4.3 (c6da4a4d3)\n",
+      "stderrTail": "te payloads [28.06ms]\n(pass) actual retained research/candidate explanation case > missing notes, wrong source pin, and changed difficulty fail instead of fabricating explanations [146.01ms]\n(pass) actual retained research/candidate explanation case > supplied domain review is bound to exact bytes and never authenticates the reviewer [44.69ms]\n\ntests/server.test.ts:\n(pass) loopback Host/Origin/session/action guard and bounded exact routes [126.31ms]\n(pass) bounded sessions never share study and private transport exceptions are sanitized [0.15ms]\n(pass) transport exceptions never expose private owner paths or credential text [0.32ms]\n(pass) malformed percent-encoded asset path returns bounded400 without rejecting handler [0.14ms]\n(pass) alignment is an exact guarded ephemeral action and state read reports its proposal [12.27ms]\n(pass) static allowlist and canonical descriptor guard refuse unlisted paths and allowed asset symlinks outside root [5.95ms]\n\ntests/application.test.ts:\n(pass) source-backed study and governed discovery > original scope is151types/170examples/151designs/1216actions; source context proposals remain qualified [2.42ms]\n(pass) source-backed study and governed discovery > all previous levels retain siblings; prerequisite links are separate containment [0.96ms]\n(pass) source-backed study and governed discovery > empty text never completes study; type/edition changes invalidate completion [1.51ms]\n(pass) source-backed study and governed discovery > lexical zero-overlap survives and word-overlap false positive remains unknown; no final membership [1.75ms]\n(pass) source-backed study and governed discovery > intent/source/version/namespace bindings reject stale or foreign requests [0.81ms]\n(pass) source-backed study and governed discovery > pat_no and lecture_key may contain same numeric literal with distinct roles [0.83ms]\n(pass) source-backed study and governed discovery > uninspected types, foreign membership, duplicate question identity and arbitrary preview origins are held [1.16ms]\n(pass) source-backed study and governed discovery > direct application unknown action/tool/authority inputs never reach SourcePort [0.20ms]\n(pass) independent ingress rejects source-contract consistency holes > source claims cannot grant authority outside core.details [87.67ms]\n(pass) independent ingress rejects source-contract consistency holes > dangling context links and source keys are denied [72.45ms]\n(pass) independent ingress rejects source-contract consistency holes > assistant proposal cannot be promoted; corrections and revision pins remain held [80.40ms]\n(pass) independent ingress rejects source-contract consistency holes > identity graph references need actual immutable revision endpoints [58.47ms]\n(pass) source byte pointers and assistant reports cannot be silently promoted [124.74ms]\n(pass) in-flight discovery and review cannot publish after intent/study/scope revisions, including A→B→A [10.84ms]\n(pass) out-of-order source scope responses cannot overwrite newer observations or newer study state [3.47ms]\n(pass) rejected discovery page establishes no returned-type review authority, including valid prefix before invalid suffix [1.00ms]\n(pass) rejected source scope page changes no context, history, or type admission [1.10ms]\n(pass) empty navigation scope clears completion but cannot support a teacher study report or discovery [0.51ms]\n(pass) synthetic category capability explicitly separates labelable unit and nonlabelable grade scope [0.12ms]\n(pass) ephemeral alignment derives research/question evidence and preserves historical proposals after dependencies change [1.35ms]\n(pass) alignment rejects uninspected, cross-type, wrong-question-version, fake-hash, acceptance and incomplete evidence atomically [1.48ms]\n(pass) in-flight alignment publication is refused after dependency change; revised scope cannot reuse old inspected evidence [2.89ms]\n(pass) concurrent alignment publications preserve the40proposal cap atomically [49.44ms]\n(pass) teacher-declared edition/unit and native unknown metadata remain separate during provisional discovery/review/alignment [3.85ms]\n(pass) scope metadata comparison blocks only known conflict and never claims semantic identity from equal literals [0.56ms]\n\ntests/integrations/launch-safety.test.ts:\n(pass) launch snapshot owns and deeply freezes all configuration before any await [6.57ms]\n(pass) replacement of every verified launch path remains fail-closed, including bridge and snapshot [9.99ms]\n\ntests/integrations/mcp-source-port.test.ts:\n(pass) default unavailable; in-process SDK binds task context, type/question identity and page cursors [74.30ms]\n(pass) forged binding and read refusal latch with no automatic retry [19.91ms]\n(pass) pin drift, symlink, arbitrary credentials and superseded revision fail before startup [8.75ms]\nerror: Cannot find module '/home/palantirkc/worktrees/academy-workbench/tools/academy-mcp/src/item-labels.ts' from '/home/palantirkc/worktrees/academy-state-model-20261021/apps/academy/month-end-workbench/tests/integrations/mcp-source-port.test.ts'\n(fail) actual owner six-tool registration preserves bound context in-process without entrypoint execution [0.61ms]\n(pass) identical receipt label pages reuse context and preserve prior label/cursor; changed clock or receipt gets a new handle [17.19ms]\n(pass) every configured launch remains held while in-process synthetic capability stays unknown [12.83ms]\n(pass) teacher edition/unit with unknown source metadata permits provisional reads, preserves nulls and keeps cursor study binding exact [12.80ms]\n(pass) blank or malformed count metadata remains unknown through real in-process SDK responses [80.66ms]\n\n1 tests failed:\n(fail) actual owner six-tool registration preserves bound context in-process without entrypoint execution [0.61ms]\n\n 49 pass\n 1 fail\n 1510 expect() calls\nRan 50 tests across 5 files. [1.80s]\nerror: script \"test\" exited with code 1\nerror: script \"check\" exited with code 1\n"
+    },
+    {
+      "id": "month-end-web-typecheck",
+      "command": [
+        "bun",
+        "../../../node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "-p",
+        "tsconfig.json"
+      ],
+      "cwd": "apps/academy/month-end-web",
+      "startedAt": "2026-10-21T06:35:58.118Z",
+      "finishedAt": "2026-10-21T06:35:59.878Z",
+      "exitCode": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 0,
+      "stderrBytes": 0,
+      "stdoutTail": "",
+      "stderrTail": ""
+    },
+    {
+      "id": "month-end-web-tests",
+      "command": [
+        "bun",
+        "run",
+        "test"
+      ],
+      "cwd": "apps/academy/month-end-web",
+      "startedAt": "2026-10-21T06:35:59.878Z",
+      "finishedAt": "2026-10-21T06:35:59.914Z",
+      "exitCode": 0,
+      "stdoutSha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+      "stderrSha256": "604151de14821076536d5132147414badec1951b85088fe1fe53b701ab62f419",
+      "stdoutBytes": 28,
+      "stderrBytes": 288,
+      "stdoutTail": "bun test v1.4.3 (c6da4a4d3)\n",
+      "stderrTail": "$ bun test tests/model.test.ts\n\ntests/model.test.ts:\n(pass) independent calendar knowledge > real calendar dates only [0.28ms]\n(pass) independent calendar knowledge > timezones remain independently explicit [8.82ms]\n\n 2 pass\n 0 fail\n 6 expect() calls\nRan 2 tests across 1 file. [18.00ms]\n"
+    },
+    {
+      "id": "month-end-web-memory-build",
+      "success": true,
+      "artifactCount": 1,
+      "bytes": 92370,
+      "logs": [],
+      "outputFilesWritten": false
+    }
+  ],
+  "preservedPins": [
+    {
+      "path": "package.json",
+      "sha256": "8e95b949a3b7a4f78a763eb5b29df0bcb8bb322fd62b7ac7027e2bdc58cb0039",
+      "unchangedFromInitialSource": true
+    },
+    {
+      "path": "bun.lock",
+      "sha256": "bb598c9ccc3da2865c39a3d3a8aebda62304666a501e31965a1625ad20fa6d83",
+      "unchangedFromInitialSource": true
+    },
+    {
+      "path": "releases/palantirkc-ontology-0.2.0.tgz",
+      "sha256": "3f9995d0b91d2ad39dfc7cedbb6e35b1cb9d29c2e57223ca0c076d2030319406",
+      "unchangedFromInitialSource": true
+    },
+    {
+      "path": "apps/academy/dc-gang-a/package.json",
+      "sha256": "70ac030925bc3d5896a2b44c4ce08885a9e82d241562c528c2b335e48531b59b",
+      "unchangedFromInitialSource": true
+    },
+    {
+      "path": "apps/academy/dc-gang-a/bun.lock",
+      "sha256": "d53986a01470c2b85224a79de64c4d8b86b166b37cee6d329aa8cf50fd589288",
+      "unchangedFromInitialSource": true
+    },
+    {
+      "path": "apps/academy/gang-a/package.json",
+      "sha256": "c96949ee48da4409539f1848ddd7cb1046a4b1314c4e01b73229cb3fbf27012f",
+      "unchangedFromInitialSource": true
+    },
+    {
+      "path": "apps/academy/gang-a/bun.lock",
+      "sha256": "8e83adfc345d885345ffb18007184ab31c5bbad03d4796c1a9a981e5cc612efb",
+      "unchangedFromInitialSource": true
+    },
+    {
+      "path": "apps/academy/month-end-workbench/package.json",
+      "sha256": "e288965177fdcfc208664df85d6dcafc259ab725239d14b9565a4ca66c45f1fb",
+      "unchangedFromInitialSource": true
+    },
+    {
+      "path": "apps/academy/month-end-workbench/bun.lock",
+      "sha256": "dc405a84e0ecb417c967d29e09b0be926756fc0b9e684656cdaa68840dc713df",
+      "unchangedFromInitialSource": true
+    }
+  ],
+  "notRun": [
+    "PostgreSQL-dependent tests (explicitly skipped without a socket)",
+    "Native Academy reads/writes, printing/distribution and teacher acceptance",
+    "Full month-end-web package check/build writes dist assets outside allowed artifact paths; equivalent typecheck/test and in-memory browser bundle run separately",
+    "Full aggregate module check after root dependency restoration; DOM-01 changes architecture/Work only and retains initial aggregate failure"
+  ],
+  "effects": {
+    "native": 0,
+    "sourceBusinessWrites": 0,
+    "parentSends": 0,
+    "publication": 0
+  }
+}

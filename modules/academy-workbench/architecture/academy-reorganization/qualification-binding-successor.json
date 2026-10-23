@@ -1,0 +1,16 @@
+{
+  "schemaVersion": "academy.external-qualification-binding-repair/1",
+  "baseCandidate": "9db3043992d31110622337daa20cf8ca64f35a1e",
+  "reason": "While the focused review runs, root found a missing explicit result-to-Verification binding in the local source qualifier.",
+  "change": "Require both Verification criteria evidenceRefs pointing to the selected result Evidence ID and Verification inputHashes pinning the selected result source bytes.",
+  "negativeRegression": "An unrelated observation in the same valid producer Work cannot borrow the completed Task Verification.",
+  "checks": {
+    "tests": 8,
+    "assertions": 13,
+    "result": "pass"
+  },
+  "commonContractChanged": false,
+  "architectureScopeChanged": false,
+  "originalCandidatePreserved": true,
+  "independentReviewState": "pending; do not treat owner repair as closure"
+}

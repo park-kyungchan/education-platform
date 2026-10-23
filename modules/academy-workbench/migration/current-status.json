@@ -1,0 +1,317 @@
+{
+  "$schema": "./current-status.schema.json",
+  "schemaVersion": "academy.current-migration-status/1",
+  "checkedAt": "2026-10-13T05:51:31Z",
+  "sourceCommit": "ae0edf504f65dbb5fa4340f010daa16303528f24",
+  "authority": {
+    "grantsActionPermission": false,
+    "containsStudentValues": false,
+    "containsCredentials": false,
+    "runtimeModified": false
+  },
+  "precedence": {
+    "currentEntry": "migration/current-status.json",
+    "historicalEntry": "migration/hardlimits.json",
+    "rule": "Use this additive status index plus linked standalone/offline sources for the newer local-runtime scope. Preserve hardlimits.json as historical evidence. No current Sites-production or live academy status was rechecked.",
+    "supersededHistoricalClaims": [
+      {
+        "id": "MIGRATION.STANDALONE_SERVER",
+        "resolvedScope": "Standalone Node 24 loopback read-only runtime exists and has committed synthetic tests; operational deployment remains open."
+      },
+      {
+        "id": "MIGRATION.DB_ADAPTER",
+        "resolvedScope": "SQLite adapter and synthetic close/reopen persistence verified; private operational migration/backup remain open."
+      },
+      {
+        "id": "MIGRATION.SYNTHETIC_CONFIG",
+        "resolvedScope": "Independent exact fictional fixture and committed browser assets exist; no private runtime seed."
+      },
+      {
+        "id": "AUTH.SITES_IDENTITY",
+        "resolvedScope": "Standalone auth no longer trusts Sites identity; owner-secret boundary implemented, operational credential setup still open."
+      },
+      {
+        "id": "MIGRATION.EXPORT_BUILD",
+        "resolvedScope": "Standalone build/start has its own bounded validation; historical Sites export is still partial."
+      }
+    ]
+  },
+  "sources": [
+    {
+      "id": "S1",
+      "path": "app/standalone/README.md",
+      "commit": "ae0edf504f65dbb5fa4340f010daa16303528f24",
+      "checkedAt": "2026-10-13T05:51:31Z",
+      "url": "https://github.com/park-kyungchan/academy-workbench/blob/ae0edf504f65dbb5fa4340f010daa16303528f24/app/standalone/README.md",
+      "meaning": "Committed evidence readback; not a new execution, live academy observation or deployment check."
+    },
+    {
+      "id": "S2",
+      "path": "app/standalone/docs/private-import-contract.md",
+      "commit": "ae0edf504f65dbb5fa4340f010daa16303528f24",
+      "checkedAt": "2026-10-13T05:51:31Z",
+      "url": "https://github.com/park-kyungchan/academy-workbench/blob/ae0edf504f65dbb5fa4340f010daa16303528f24/app/standalone/docs/private-import-contract.md",
+      "meaning": "Committed evidence readback; not a new execution, live academy observation or deployment check."
+    },
+    {
+      "id": "S3",
+      "path": "app/standalone/src/server/auth.ts",
+      "commit": "ae0edf504f65dbb5fa4340f010daa16303528f24",
+      "checkedAt": "2026-10-13T05:51:31Z",
+      "url": "https://github.com/park-kyungchan/academy-workbench/blob/ae0edf504f65dbb5fa4340f010daa16303528f24/app/standalone/src/server/auth.ts",
+      "meaning": "Committed evidence readback; not a new execution, live academy observation or deployment check."
+    },
+    {
+      "id": "S4",
+      "path": "app/standalone/src/server/main.ts",
+      "commit": "ae0edf504f65dbb5fa4340f010daa16303528f24",
+      "checkedAt": "2026-10-13T05:51:31Z",
+      "url": "https://github.com/park-kyungchan/academy-workbench/blob/ae0edf504f65dbb5fa4340f010daa16303528f24/app/standalone/src/server/main.ts",
+      "meaning": "Committed evidence readback; not a new execution, live academy observation or deployment check."
+    },
+    {
+      "id": "S5",
+      "path": "app/standalone/independent-review/review.json",
+      "commit": "ae0edf504f65dbb5fa4340f010daa16303528f24",
+      "checkedAt": "2026-10-13T05:51:31Z",
+      "url": "https://github.com/park-kyungchan/academy-workbench/blob/ae0edf504f65dbb5fa4340f010daa16303528f24/app/standalone/independent-review/review.json",
+      "meaning": "Committed evidence readback; not a new execution, live academy observation or deployment check."
+    },
+    {
+      "id": "S6",
+      "path": "app/standalone/validation/clean-release-launch.json",
+      "commit": "ae0edf504f65dbb5fa4340f010daa16303528f24",
+      "checkedAt": "2026-10-13T05:51:31Z",
+      "url": "https://github.com/park-kyungchan/academy-workbench/blob/ae0edf504f65dbb5fa4340f010daa16303528f24/app/standalone/validation/clean-release-launch.json",
+      "meaning": "Committed evidence readback; not a new execution, live academy observation or deployment check."
+    },
+    {
+      "id": "S7",
+      "path": "app/standalone/validation/gui-smoke.json",
+      "commit": "ae0edf504f65dbb5fa4340f010daa16303528f24",
+      "checkedAt": "2026-10-13T05:51:31Z",
+      "url": "https://github.com/park-kyungchan/academy-workbench/blob/ae0edf504f65dbb5fa4340f010daa16303528f24/app/standalone/validation/gui-smoke.json",
+      "meaning": "Committed evidence readback; not a new execution, live academy observation or deployment check."
+    },
+    {
+      "id": "S8",
+      "path": "app/offline-import-adapter/README.md",
+      "commit": "ae0edf504f65dbb5fa4340f010daa16303528f24",
+      "checkedAt": "2026-10-13T05:51:31Z",
+      "url": "https://github.com/park-kyungchan/academy-workbench/blob/ae0edf504f65dbb5fa4340f010daa16303528f24/app/offline-import-adapter/README.md",
+      "meaning": "Committed evidence readback; not a new execution, live academy observation or deployment check."
+    },
+    {
+      "id": "S9",
+      "path": "private/offline-preservation-20261013/README.md",
+      "commit": "ae0edf504f65dbb5fa4340f010daa16303528f24",
+      "checkedAt": "2026-10-13T05:51:31Z",
+      "url": "https://github.com/park-kyungchan/academy-workbench/blob/ae0edf504f65dbb5fa4340f010daa16303528f24/private/offline-preservation-20261013/README.md",
+      "meaning": "Committed evidence readback; not a new execution, live academy observation or deployment check."
+    },
+    {
+      "id": "S10",
+      "path": "migration/hardlimits.json",
+      "commit": "ae0edf504f65dbb5fa4340f010daa16303528f24",
+      "checkedAt": "2026-10-13T05:51:31Z",
+      "url": "https://github.com/park-kyungchan/academy-workbench/blob/ae0edf504f65dbb5fa4340f010daa16303528f24/migration/hardlimits.json",
+      "meaning": "Committed evidence readback; not a new execution, live academy observation or deployment check."
+    }
+  ],
+  "resolvedScopes": [
+    {
+      "id": "local_runtime",
+      "domain": "runtime.synthetic",
+      "status": "resolved",
+      "claim": "Node 24, loopback-only, read-only app and persistent SQLite run without Sites/ChatGPT or production npm dependencies; five fictional students and 144 fictional records.",
+      "sourceIds": [
+        "S1",
+        "S4",
+        "S6"
+      ],
+      "nextVerification": [
+        "Revalidate affected code/build/runtime digest after runtime changes."
+      ]
+    },
+    {
+      "id": "synthetic_checks",
+      "domain": "verification.synthetic",
+      "status": "resolved",
+      "claim": "Committed review records typecheck, 43 runtime tests, 4 built-UI tests and 13 independent boundary checks; separate GUI/restart smoke is recorded. This edit did not rerun application tests.",
+      "sourceIds": [
+        "S5",
+        "S6",
+        "S7"
+      ],
+      "nextVerification": [
+        "Run actual operational auth/data/hosting tests before extending this synthetic-only clearance."
+      ]
+    },
+    {
+      "id": "offline_preservation",
+      "domain": "data.preservation",
+      "status": "resolved",
+      "claim": "Separate archive/adapter preserves 5 students, 38 saved-detail pages, 717 progress summaries, 55 ledger events, 13 source files, and an 815-record envelope. Active projections: 0. Byte preservation does not verify current state, identity or completeness.",
+      "sourceIds": [
+        "S8",
+        "S9"
+      ],
+      "nextVerification": [
+        "Verify archive parts/members before restoration; complete real_data gate before runtime use."
+      ]
+    }
+  ],
+  "remainingGates": [
+    {
+      "id": "real_data",
+      "status": "open",
+      "requirement": "Inventory approved source records, namespaces, attachments, conflicts and unavailable data. Independently reconcile source identities, record counts, projection mappings and correction history before real import.",
+      "domain": "data.reconciliation",
+      "dependencies": [
+        "private_storage",
+        "credential_setup"
+      ],
+      "next": [
+        "Independently verify native student bindings and current-state evidence.",
+        "Reconcile each displayed claim, edition, teacher-decision scope and correction/conflict history against retained source records.",
+        "Implement and test an explicit private import path and audited projection mapping; preserve unprojected/unknown states."
+      ],
+      "sourceIds": [
+        "S2",
+        "S5",
+        "S8",
+        "S9"
+      ]
+    },
+    {
+      "id": "credential_setup",
+      "status": "open",
+      "requirement": "Use separately approved secure operational authentication setup. Real secret loading, browser Basic-auth handling, rotation/revocation and local multi-user operating assumptions need testing.",
+      "domain": "auth.operational",
+      "dependencies": [],
+      "next": [
+        "Choose and separately approve secure operational credential setup; do not commit credentials.",
+        "Test actual configured secret loading, browser Basic-auth handling, rotation/revocation and local multi-user assumptions without secrets in logs."
+      ],
+      "sourceIds": [
+        "S1",
+        "S3",
+        "S5"
+      ]
+    },
+    {
+      "id": "private_storage",
+      "status": "open",
+      "requirement": "Use a separate private database/archive outside source fixtures/bundles; screen secrets/tokens/signed URLs, validate artifact bytes/hashes, and verify repository/recipient access.",
+      "domain": "data.storage",
+      "dependencies": [],
+      "next": [
+        "Select a separate owner-authenticated private database/archive outside fixtures and served assets.",
+        "Screen credentials and signed URLs, verify artifact bytes/hashes and authorized repository/recipient access."
+      ],
+      "sourceIds": [
+        "S2",
+        "S5"
+      ]
+    },
+    {
+      "id": "recovery",
+      "status": "open",
+      "requirement": "Test consistent SQLite/WAL backups, restore, corruption recovery, import rollback and storage migration on the selected operational deployment.",
+      "domain": "operations.recovery",
+      "dependencies": [
+        "private_storage"
+      ],
+      "next": [
+        "Test consistent SQLite/WAL backup and restore, corruption recovery, import rollback and storage migration on the chosen operational target."
+      ],
+      "sourceIds": [
+        "S5"
+      ]
+    },
+    {
+      "id": "hosting",
+      "status": "open",
+      "requirement": "Design/verify TLS, access management, secrets, logging, abuse controls and explicit proxy trust before any external hosting. Current external-bind rejection must not be bypassed casually.",
+      "domain": "deployment.external",
+      "dependencies": [
+        "credential_setup",
+        "private_storage",
+        "recovery"
+      ],
+      "next": [
+        "Choose an authorized hosting target and design TLS, access management, secrets, logging, abuse controls and explicit proxy trust.",
+        "Implement and test the deployment boundary before any external bind; obtain applicable deployment authorization and exact-commit deployment/readback evidence."
+      ],
+      "sourceIds": [
+        "S1",
+        "S3",
+        "S5"
+      ]
+    },
+    {
+      "id": "scope_parity",
+      "status": "open",
+      "requirement": "Restore and test missing actual data/domain semantics before claiming complete feature parity or all academy work. Restored panels and category catalogues are not sufficient.",
+      "domain": "workflow.coverage",
+      "dependencies": [
+        "real_data"
+      ],
+      "next": [
+        "Map and test actual assessment/attempts, attendance/schedules, policy graph, attachments, Clinic, forms, authored material, consultation and delivery semantics.",
+        "Keep printing, sending, source writes and live queries disabled unless separately implemented, tested and authorized; do not infer completion from preserved records or category buttons."
+      ],
+      "sourceIds": [
+        "S1",
+        "S2",
+        "S5",
+        "S8"
+      ]
+    },
+    {
+      "id": "release_hash",
+      "status": "open",
+      "requirement": "Associate this runtime digest with the final frozen tree/archive/commit and rehash after packaging. Any changed runtime file invalidates the verdict until rechecked.",
+      "domain": "deployment.integrity",
+      "dependencies": [],
+      "next": [
+        "Recompute the runtime closure against the frozen intended release and associate its digest with the final archive/tree/commit.",
+        "Rerun affected checks for any runtime change; documentation-only commits do not establish operational or external deployment approval."
+      ],
+      "sourceIds": [
+        "S5",
+        "S6",
+        "S7"
+      ]
+    }
+  ],
+  "boundaries": {
+    "realDataRuntimeActivated": false,
+    "operationalAuthConfigured": false,
+    "externalHostingSupported": false,
+    "sourceLiveRefreshIntegrated": false,
+    "sourceDeletionEligible": false,
+    "sourceCompletenessVerified": false
+  },
+  "coverageLimits": [
+    "Actual private source identity and semantic reconciliation are unverified.",
+    "Full source/build/history/import bytes, video and snapshot coverage remain incomplete where the source documents say so.",
+    "Owner-authenticated binary attachment serving and complete private import UI/command remain absent.",
+    "Physical mobile, Safari/touch and full WCAG verification are not established by responsive DOM tests.",
+    "No production/Sites/source status was refreshed during this repository documentation check."
+  ],
+  "verification": {
+    "performed": [
+      "Read private repository main and exact committed source documents.",
+      "Reconcile newer standalone/offline scope with historical hardlimits without changing history."
+    ],
+    "notPerformed": [
+      "Application test rerun",
+      "Real-data import or source query",
+      "Credential setup",
+      "External deployment",
+      "Academy mutation, print or send"
+    ],
+    "completionMeaning": "Documentation continuity only; seven operational gates remain open."
+  }
+}

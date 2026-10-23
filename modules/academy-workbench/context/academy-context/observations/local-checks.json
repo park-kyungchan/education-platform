@@ -1,0 +1,97 @@
+{
+  "schemaVersion": "academy.local-source-validation/1",
+  "observedAtUtc": "2026-10-21T04:16:28.575090Z",
+  "runtime": {
+    "bun": "1.4.3",
+    "node": "24.21.0",
+    "typescript": "7.0.2",
+    "consumerPin": "ffba2462a08b9f8c83c6f87b1043403e5cb748d7",
+    "externalCommonValidatorCommit": "712f90deac0676e662dc5d75d88d89f7b6773bfe"
+  },
+  "checks": [
+    {
+      "name": "new-context-types-and-catalog",
+      "status": "pass"
+    },
+    {
+      "name": "new-context-selector-and-integration",
+      "status": "pass",
+      "tests": 28,
+      "assertions": 262
+    },
+    {
+      "name": "existing-selected-context",
+      "status": "pass",
+      "tests": 21,
+      "scope": "design context, no student payloads"
+    },
+    {
+      "name": "existing-harness",
+      "status": "pass",
+      "tests": 19
+    },
+    {
+      "name": "existing-inquiry",
+      "status": "pass",
+      "tests": 23,
+      "scope": "sanitized design and synthetic tests"
+    },
+    {
+      "name": "ci-projection-and-onboarding",
+      "status": "pass",
+      "tests": 28
+    },
+    {
+      "name": "synthetic-standalone-runtime",
+      "status": "pass",
+      "tests": 43
+    },
+    {
+      "name": "synthetic-offline-import-adapter",
+      "status": "pass",
+      "tests": 25
+    },
+    {
+      "name": "student-viewer-typecheck",
+      "status": "pass"
+    },
+    {
+      "name": "source-pin-observation",
+      "status": "pass",
+      "matched": 45,
+      "unread": 3
+    }
+  ],
+  "retainedFailures": [
+    {
+      "command": "bun run check:ci",
+      "status": "failed",
+      "reason": "Explicit pinned-snapshot mode was omitted for the restored non-Git dependency;10onboarding tests failed.",
+      "resolution": "Reran with AGENT_PLATFORM_SOURCE_MODE=pinned-snapshot;28tests passed. No source-policy bypass or consumer-pin change."
+    },
+    {
+      "command": "bun run check:inquiry",
+      "status": "failed",
+      "reason": "Snapshot mode prefix applied only to earlier shell commands, not this command.",
+      "resolution": "Reran this exact command with explicit pinned-snapshot mode;passed."
+    }
+  ],
+  "notRun": [
+    {
+      "command": "bun run check (whole umbrella)",
+      "reason": "The existing check:student-audit step opens private/student-audit-20261014/audit.json. Current task forbids reading real student-data contents. Relevant nonprivate constituent checks were run individually."
+    },
+    {
+      "command": "live academy/native integration",
+      "reason": "Outside current source-only local task; no activation, deployment, printing, sending or student-data migration."
+    }
+  ],
+  "independentReviews": [
+    "context/academy-context/reviews/work-records-review.json",
+    "context/academy-context/reviews/selector-review.json",
+    "context/academy-context/reviews/integration-review.json",
+    "context/academy-context/reviews/mcp-df8b9f7-review.json"
+  ],
+  "userAcceptance": "not-inferred-from-tests",
+  "sourceBodyCoverage": "known allowlisted design sources only; complete history denominator unknown"
+}

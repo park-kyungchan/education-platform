@@ -1,0 +1,1493 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:academy-workbench:hardlimits:1.0.0",
+  "title": "Sanitized academy workbench hard-limit handoff",
+  "description": "Documentation only. Dependencies are a DAG; workflow cycles are separate. No authority or source payloads are granted or embedded.",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "const": "./hardlimits.schema.json"
+    },
+    "schemaVersion": {
+      "const": "1.0.0"
+    },
+    "generatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "artifactKind": {
+      "enum": [
+        "sanitized_handoff_documentation",
+        "synthetic_schema_example"
+      ]
+    },
+    "intendedRepository": {
+      "const": "park-kyungchan/academy-workbench"
+    },
+    "repositoryVisibilityRequired": {
+      "const": "private"
+    },
+    "authority": {
+      "type": "object",
+      "properties": {
+        "grantsActionPermission": {
+          "const": false
+        },
+        "historicalPermissionsAreCurrentGrants": {
+          "const": false
+        },
+        "sourceFilesEmbedded": {
+          "const": false
+        },
+        "studentValuesEmbedded": {
+          "const": false
+        },
+        "credentialValuesEmbedded": {
+          "const": false
+        },
+        "writesPerformedByThisArtifact": {
+          "const": false
+        }
+      },
+      "required": [
+        "grantsActionPermission",
+        "historicalPermissionsAreCurrentGrants",
+        "sourceFilesEmbedded",
+        "studentValuesEmbedded",
+        "credentialValuesEmbedded",
+        "writesPerformedByThisArtifact"
+      ],
+      "additionalProperties": false
+    },
+    "currentState": {
+      "type": "object",
+      "properties": {
+        "sites": {
+          "type": "object",
+          "properties": {
+            "productionVersion": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "productionCommit": {
+              "type": "string",
+              "minLength": 1
+            },
+            "storedCandidateVersion": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "storedCandidateCommit": {
+              "type": "string",
+              "minLength": 1
+            },
+            "candidateDeployed": {
+              "type": "boolean"
+            },
+            "rollbackVersion": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "productionVersion",
+            "productionCommit",
+            "storedCandidateVersion",
+            "storedCandidateCommit",
+            "candidateDeployed",
+            "rollbackVersion"
+          ],
+          "additionalProperties": false
+        },
+        "coverageAxes": {
+          "type": "object",
+          "properties": {
+            "officialUiReadSupportedCatalogEntries": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "historicalCatalogEntries": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "observedMenuEntries": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "independentlyActivatedProductionSourceApiAdapters": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "siteLiveSourceRefreshIntegrated": {
+              "type": "boolean"
+            },
+            "uiReadMeaning": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "officialUiReadSupportedCatalogEntries",
+            "historicalCatalogEntries",
+            "observedMenuEntries",
+            "independentlyActivatedProductionSourceApiAdapters",
+            "siteLiveSourceRefreshIntegrated",
+            "uiReadMeaning"
+          ],
+          "additionalProperties": false
+        },
+        "qa": {
+          "type": "object",
+          "properties": {
+            "responsiveChromiumWidthsPassed": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "minItems": 1
+            },
+            "actualMobileDeviceVerified": {
+              "type": "boolean"
+            },
+            "safariTouchVerified": {
+              "type": "boolean"
+            },
+            "fullWcagAuditVerified": {
+              "type": "boolean"
+            },
+            "nativeWebMcpVerified": {
+              "type": "boolean"
+            },
+            "actualDeviceIsAdditionalMandatoryGate": {
+              "const": false
+            }
+          },
+          "required": [
+            "responsiveChromiumWidthsPassed",
+            "actualMobileDeviceVerified",
+            "safariTouchVerified",
+            "fullWcagAuditVerified",
+            "nativeWebMcpVerified",
+            "actualDeviceIsAdditionalMandatoryGate"
+          ],
+          "additionalProperties": false
+        },
+        "pilotAudience": {
+          "const": "owner_only"
+        },
+        "evidenceCutoff": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "sites",
+        "coverageAxes",
+        "qa",
+        "pilotAudience",
+        "evidenceCutoff"
+      ],
+      "additionalProperties": false
+    },
+    "goals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9_.-]+$"
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "id",
+          "description"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    },
+    "domainHierarchy": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "enum": [
+              "environments",
+              "auth",
+              "source-read",
+              "integration",
+              "privacy",
+              "deployment",
+              "migration"
+            ]
+          },
+          "children": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 1
+          }
+        },
+        "required": [
+          "id",
+          "children"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 7
+    },
+    "statusSemantics": {
+      "type": "object",
+      "properties": {
+        "failed": {
+          "type": "string",
+          "minLength": 1
+        },
+        "blocked": {
+          "type": "string",
+          "minLength": 1
+        },
+        "unverified": {
+          "type": "string",
+          "minLength": 1
+        },
+        "approval_pending": {
+          "type": "string",
+          "minLength": 1
+        },
+        "resolved": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "failed",
+        "blocked",
+        "unverified",
+        "approval_pending",
+        "resolved"
+      ],
+      "additionalProperties": false
+    },
+    "limits": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/limit"
+      },
+      "minItems": 1
+    },
+    "dependencyGraph": {
+      "type": "object",
+      "properties": {
+        "semantics": {
+          "type": "string",
+          "minLength": 1
+        },
+        "edges": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "from": {
+                "type": "string",
+                "pattern": "^[A-Z][A-Z0-9_.-]+$"
+              },
+              "to": {
+                "type": "string",
+                "pattern": "^[A-Z][A-Z0-9_.-]+$"
+              },
+              "relation": {
+                "const": "requires"
+              }
+            },
+            "required": [
+              "from",
+              "to",
+              "relation"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "semantics",
+        "edges"
+      ],
+      "additionalProperties": false
+    },
+    "workflowCycles": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/workflowCycle"
+      },
+      "minItems": 0
+    },
+    "evidenceManifest": {
+      "const": "./evidence-manifest.json"
+    }
+  },
+  "required": [
+    "$schema",
+    "schemaVersion",
+    "generatedAt",
+    "artifactKind",
+    "intendedRepository",
+    "repositoryVisibilityRequired",
+    "authority",
+    "currentState",
+    "goals",
+    "domainHierarchy",
+    "statusSemantics",
+    "limits",
+    "dependencyGraph",
+    "workflowCycles",
+    "evidenceManifest"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "evidence": {
+      "type": "object",
+      "properties": {
+        "sourceId": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9_.-]+$"
+        },
+        "observedAt": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "observationMeaning": {
+          "type": "string",
+          "minLength": 1
+        },
+        "jsonPointer": {
+          "type": "string",
+          "pattern": "^/"
+        }
+      },
+      "required": [
+        "sourceId",
+        "observedAt",
+        "observationMeaning"
+      ],
+      "additionalProperties": false
+    },
+    "attempt": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "type": "string",
+          "minLength": 1
+        },
+        "outcome": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidenceSourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9_.-]+$"
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "method",
+        "outcome",
+        "evidenceSourceIds"
+      ],
+      "additionalProperties": false
+    },
+    "acceptanceCheck": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9_.-]+$"
+        },
+        "criterion": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidenceNeeded": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "id",
+        "criterion",
+        "evidenceNeeded"
+      ],
+      "additionalProperties": false
+    },
+    "failed": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9_.-]+$"
+        },
+        "domainPath": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "enum": [
+                "environments",
+                "auth",
+                "source-read",
+                "integration",
+                "privacy",
+                "deployment",
+                "migration"
+              ]
+            },
+            {
+              "type": "string",
+              "minLength": 1
+            }
+          ],
+          "items": false,
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "currentFact": {
+          "type": "string",
+          "minLength": 1
+        },
+        "impactedGoals": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9_.-]+$"
+          },
+          "minItems": 1
+        },
+        "requiredForCurrentDelivery": {
+          "type": "boolean"
+        },
+        "scopeClassification": {
+          "enum": [
+            "mandatory_gate",
+            "coverage_limit",
+            "conditional_research",
+            "resolved_scope",
+            "example_only"
+          ]
+        },
+        "dependencies": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9_.-]+$"
+          },
+          "minItems": 0
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence"
+          },
+          "minItems": 1
+        },
+        "attemptedMethods": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/attempt"
+          },
+          "minItems": 0
+        },
+        "whatNotToRetry": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "smallestRequiredInput": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "enum": [
+                "none",
+                "tooling",
+                "artifact",
+                "implementation",
+                "evidence",
+                "decision"
+              ]
+            },
+            "description": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "kind",
+            "description"
+          ],
+          "additionalProperties": false
+        },
+        "acceptanceChecks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/acceptanceCheck"
+          },
+          "minItems": 1
+        },
+        "ownership": {
+          "type": "object",
+          "properties": {
+            "accountableRole": {
+              "type": "string",
+              "minLength": 1
+            },
+            "supportingRoles": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 0
+            }
+          },
+          "required": [
+            "accountableRole",
+            "supportingRoles"
+          ],
+          "additionalProperties": false
+        },
+        "nextSafeAction": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "const": "failed"
+        },
+        "failure": {
+          "type": "object",
+          "properties": {
+            "stage": {
+              "type": "string",
+              "minLength": 1
+            },
+            "code": {
+              "type": "string",
+              "minLength": 1
+            },
+            "retryPolicy": {
+              "type": "string",
+              "minLength": 1
+            },
+            "taskId": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "stage",
+            "code",
+            "retryPolicy"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "id",
+        "domainPath",
+        "title",
+        "currentFact",
+        "impactedGoals",
+        "requiredForCurrentDelivery",
+        "scopeClassification",
+        "dependencies",
+        "evidence",
+        "attemptedMethods",
+        "whatNotToRetry",
+        "smallestRequiredInput",
+        "acceptanceChecks",
+        "ownership",
+        "nextSafeAction",
+        "status",
+        "failure"
+      ],
+      "additionalProperties": false
+    },
+    "blocked": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9_.-]+$"
+        },
+        "domainPath": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "enum": [
+                "environments",
+                "auth",
+                "source-read",
+                "integration",
+                "privacy",
+                "deployment",
+                "migration"
+              ]
+            },
+            {
+              "type": "string",
+              "minLength": 1
+            }
+          ],
+          "items": false,
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "currentFact": {
+          "type": "string",
+          "minLength": 1
+        },
+        "impactedGoals": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9_.-]+$"
+          },
+          "minItems": 1
+        },
+        "requiredForCurrentDelivery": {
+          "type": "boolean"
+        },
+        "scopeClassification": {
+          "enum": [
+            "mandatory_gate",
+            "coverage_limit",
+            "conditional_research",
+            "resolved_scope",
+            "example_only"
+          ]
+        },
+        "dependencies": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9_.-]+$"
+          },
+          "minItems": 0
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence"
+          },
+          "minItems": 1
+        },
+        "attemptedMethods": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/attempt"
+          },
+          "minItems": 0
+        },
+        "whatNotToRetry": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "smallestRequiredInput": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "enum": [
+                "none",
+                "tooling",
+                "artifact",
+                "implementation",
+                "evidence",
+                "decision"
+              ]
+            },
+            "description": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "kind",
+            "description"
+          ],
+          "additionalProperties": false
+        },
+        "acceptanceChecks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/acceptanceCheck"
+          },
+          "minItems": 1
+        },
+        "ownership": {
+          "type": "object",
+          "properties": {
+            "accountableRole": {
+              "type": "string",
+              "minLength": 1
+            },
+            "supportingRoles": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 0
+            }
+          },
+          "required": [
+            "accountableRole",
+            "supportingRoles"
+          ],
+          "additionalProperties": false
+        },
+        "nextSafeAction": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "const": "blocked"
+        },
+        "blocker": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "enum": [
+                "missing_prerequisite",
+                "not_implemented",
+                "privacy_boundary",
+                "release_gate"
+              ]
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "kind",
+            "reason"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "id",
+        "domainPath",
+        "title",
+        "currentFact",
+        "impactedGoals",
+        "requiredForCurrentDelivery",
+        "scopeClassification",
+        "dependencies",
+        "evidence",
+        "attemptedMethods",
+        "whatNotToRetry",
+        "smallestRequiredInput",
+        "acceptanceChecks",
+        "ownership",
+        "nextSafeAction",
+        "status",
+        "blocker"
+      ],
+      "additionalProperties": false
+    },
+    "unverified": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9_.-]+$"
+        },
+        "domainPath": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "enum": [
+                "environments",
+                "auth",
+                "source-read",
+                "integration",
+                "privacy",
+                "deployment",
+                "migration"
+              ]
+            },
+            {
+              "type": "string",
+              "minLength": 1
+            }
+          ],
+          "items": false,
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "currentFact": {
+          "type": "string",
+          "minLength": 1
+        },
+        "impactedGoals": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9_.-]+$"
+          },
+          "minItems": 1
+        },
+        "requiredForCurrentDelivery": {
+          "type": "boolean"
+        },
+        "scopeClassification": {
+          "enum": [
+            "mandatory_gate",
+            "coverage_limit",
+            "conditional_research",
+            "resolved_scope",
+            "example_only"
+          ]
+        },
+        "dependencies": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9_.-]+$"
+          },
+          "minItems": 0
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence"
+          },
+          "minItems": 1
+        },
+        "attemptedMethods": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/attempt"
+          },
+          "minItems": 0
+        },
+        "whatNotToRetry": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "smallestRequiredInput": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "enum": [
+                "none",
+                "tooling",
+                "artifact",
+                "implementation",
+                "evidence",
+                "decision"
+              ]
+            },
+            "description": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "kind",
+            "description"
+          ],
+          "additionalProperties": false
+        },
+        "acceptanceChecks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/acceptanceCheck"
+          },
+          "minItems": 1
+        },
+        "ownership": {
+          "type": "object",
+          "properties": {
+            "accountableRole": {
+              "type": "string",
+              "minLength": 1
+            },
+            "supportingRoles": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 0
+            }
+          },
+          "required": [
+            "accountableRole",
+            "supportingRoles"
+          ],
+          "additionalProperties": false
+        },
+        "nextSafeAction": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "const": "unverified"
+        },
+        "verification": {
+          "type": "object",
+          "properties": {
+            "claimToEstablish": {
+              "type": "string",
+              "minLength": 1
+            },
+            "currentEvidenceInsufficientBecause": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "claimToEstablish",
+            "currentEvidenceInsufficientBecause"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "id",
+        "domainPath",
+        "title",
+        "currentFact",
+        "impactedGoals",
+        "requiredForCurrentDelivery",
+        "scopeClassification",
+        "dependencies",
+        "evidence",
+        "attemptedMethods",
+        "whatNotToRetry",
+        "smallestRequiredInput",
+        "acceptanceChecks",
+        "ownership",
+        "nextSafeAction",
+        "status",
+        "verification"
+      ],
+      "additionalProperties": false
+    },
+    "approval_pending": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9_.-]+$"
+        },
+        "domainPath": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "enum": [
+                "environments",
+                "auth",
+                "source-read",
+                "integration",
+                "privacy",
+                "deployment",
+                "migration"
+              ]
+            },
+            {
+              "type": "string",
+              "minLength": 1
+            }
+          ],
+          "items": false,
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "currentFact": {
+          "type": "string",
+          "minLength": 1
+        },
+        "impactedGoals": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9_.-]+$"
+          },
+          "minItems": 1
+        },
+        "requiredForCurrentDelivery": {
+          "type": "boolean"
+        },
+        "scopeClassification": {
+          "enum": [
+            "mandatory_gate",
+            "coverage_limit",
+            "conditional_research",
+            "resolved_scope",
+            "example_only"
+          ]
+        },
+        "dependencies": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9_.-]+$"
+          },
+          "minItems": 0
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence"
+          },
+          "minItems": 1
+        },
+        "attemptedMethods": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/attempt"
+          },
+          "minItems": 0
+        },
+        "whatNotToRetry": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "smallestRequiredInput": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "enum": [
+                "none",
+                "tooling",
+                "artifact",
+                "implementation",
+                "evidence",
+                "decision"
+              ]
+            },
+            "description": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "kind",
+            "description"
+          ],
+          "additionalProperties": false
+        },
+        "acceptanceChecks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/acceptanceCheck"
+          },
+          "minItems": 1
+        },
+        "ownership": {
+          "type": "object",
+          "properties": {
+            "accountableRole": {
+              "type": "string",
+              "minLength": 1
+            },
+            "supportingRoles": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 0
+            }
+          },
+          "required": [
+            "accountableRole",
+            "supportingRoles"
+          ],
+          "additionalProperties": false
+        },
+        "nextSafeAction": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "const": "approval_pending"
+        },
+        "approval": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "string",
+              "minLength": 1
+            },
+            "target": {
+              "type": "string",
+              "minLength": 1
+            },
+            "requestedAt": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "approvalState": {
+              "const": "not_granted"
+            },
+            "executeUntilApproved": {
+              "const": false
+            }
+          },
+          "required": [
+            "action",
+            "target",
+            "requestedAt",
+            "approvalState",
+            "executeUntilApproved"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "id",
+        "domainPath",
+        "title",
+        "currentFact",
+        "impactedGoals",
+        "requiredForCurrentDelivery",
+        "scopeClassification",
+        "dependencies",
+        "evidence",
+        "attemptedMethods",
+        "whatNotToRetry",
+        "smallestRequiredInput",
+        "acceptanceChecks",
+        "ownership",
+        "nextSafeAction",
+        "status",
+        "approval"
+      ],
+      "additionalProperties": false
+    },
+    "resolved": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9_.-]+$"
+        },
+        "domainPath": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "enum": [
+                "environments",
+                "auth",
+                "source-read",
+                "integration",
+                "privacy",
+                "deployment",
+                "migration"
+              ]
+            },
+            {
+              "type": "string",
+              "minLength": 1
+            }
+          ],
+          "items": false,
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "currentFact": {
+          "type": "string",
+          "minLength": 1
+        },
+        "impactedGoals": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9_.-]+$"
+          },
+          "minItems": 1
+        },
+        "requiredForCurrentDelivery": {
+          "type": "boolean"
+        },
+        "scopeClassification": {
+          "enum": [
+            "mandatory_gate",
+            "coverage_limit",
+            "conditional_research",
+            "resolved_scope",
+            "example_only"
+          ]
+        },
+        "dependencies": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9_.-]+$"
+          },
+          "minItems": 0
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence"
+          },
+          "minItems": 1
+        },
+        "attemptedMethods": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/attempt"
+          },
+          "minItems": 0
+        },
+        "whatNotToRetry": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "smallestRequiredInput": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "enum": [
+                "none",
+                "tooling",
+                "artifact",
+                "implementation",
+                "evidence",
+                "decision"
+              ]
+            },
+            "description": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "kind",
+            "description"
+          ],
+          "additionalProperties": false
+        },
+        "acceptanceChecks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/acceptanceCheck"
+          },
+          "minItems": 1
+        },
+        "ownership": {
+          "type": "object",
+          "properties": {
+            "accountableRole": {
+              "type": "string",
+              "minLength": 1
+            },
+            "supportingRoles": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 0
+            }
+          },
+          "required": [
+            "accountableRole",
+            "supportingRoles"
+          ],
+          "additionalProperties": false
+        },
+        "nextSafeAction": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "const": "resolved"
+        },
+        "resolution": {
+          "type": "object",
+          "properties": {
+            "resolvedScope": {
+              "type": "string",
+              "minLength": 1
+            },
+            "remainingLimits": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 1
+            }
+          },
+          "required": [
+            "resolvedScope",
+            "remainingLimits"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "id",
+        "domainPath",
+        "title",
+        "currentFact",
+        "impactedGoals",
+        "requiredForCurrentDelivery",
+        "scopeClassification",
+        "dependencies",
+        "evidence",
+        "attemptedMethods",
+        "whatNotToRetry",
+        "smallestRequiredInput",
+        "acceptanceChecks",
+        "ownership",
+        "nextSafeAction",
+        "status",
+        "resolution"
+      ],
+      "additionalProperties": false
+    },
+    "limit": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/failed"
+        },
+        {
+          "$ref": "#/$defs/blocked"
+        },
+        {
+          "$ref": "#/$defs/unverified"
+        },
+        {
+          "$ref": "#/$defs/approval_pending"
+        },
+        {
+          "$ref": "#/$defs/resolved"
+        }
+      ]
+    },
+    "workflowCycle": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9_.-]+$"
+        },
+        "purpose": {
+          "type": "string",
+          "minLength": 1
+        },
+        "stages": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 2
+        },
+        "transitions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "from": {
+                "type": "string",
+                "minLength": 1
+              },
+              "to": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "from",
+              "to"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 2
+        },
+        "executionEnabled": {
+          "const": false
+        }
+      },
+      "required": [
+        "id",
+        "purpose",
+        "stages",
+        "transitions",
+        "executionEnabled"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

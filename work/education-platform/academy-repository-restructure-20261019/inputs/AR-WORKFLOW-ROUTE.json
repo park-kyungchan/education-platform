@@ -1,0 +1,49 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "academy-repository-restructure-20261019",
+  "kind": "input",
+  "id": "AR-WORKFLOW-ROUTE",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "education-platform",
+    "locator": "typed-source-only-common-workflow-route",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "coordinationWork": {
+      "domainId": "education",
+      "projectId": "education-platform",
+      "workId": "academy-repository-restructure-20261019"
+    },
+    "selectedProjectLocalWork": {
+      "domainId": "education",
+      "projectId": "education-platform",
+      "workId": "academy-repository-restructure-20261019"
+    },
+    "registration": "local-source-only",
+    "provider": {
+      "repositoryId": "park-kyungchan/agent-platform",
+      "repository": "agent-platform",
+      "commit": "ff8e5d56612fab5ce41d4ed9e8b4947987943d4a",
+      "entrypoint": "scripts/harness.ts"
+    },
+    "transport": {
+      "repositoryId": "park-kyungchan/education-platform",
+      "path": "scripts/academy-repositories.ts",
+      "guide": "architecture/academy-workflow.json",
+      "invocation": "Run the Education harness:work command with an explicit snapshot selecting this repository/project Work and exact commit; do not infer a parent Work selection from a shared bare workId.",
+      "pinPolicy": "Caller selects the exact reviewed/committed Education source. No implicit main update or native activation."
+    },
+    "unchanged": "Historical module source/research/intent locks, old Work/Task/Run and domain/native owners remain distinct and unchanged.",
+    "checkRoute": {
+      "runtime": "Bun 1.4.3",
+      "commands": [
+        "bun run status",
+        "bun run check"
+      ],
+      "mode": "owner-only"
+    }
+  }
+}

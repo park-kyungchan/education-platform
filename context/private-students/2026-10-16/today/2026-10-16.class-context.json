@@ -1,0 +1,1316 @@
+{
+  "schemaVersion": "academy.class-context/1.0-draft",
+  "date": "2026-10-16",
+  "timezone": "Asia/Seoul",
+  "snapshotAsOf": "2026-10-16T19:10:00+09:00",
+  "snapshotType": "partial_day",
+  "privacy": {
+    "classification": "private_student_context",
+    "remotePublication": "blocked_pending_parent_authorization_and_repository_policy",
+    "unnecessaryContactAndBirthDataExcluded": true
+  },
+  "semantics": {
+    "null": "미확인 또는 미제공. 없음·미이행·실패를 의미하지 않음.",
+    "statusScope": "각 상태는 해당 엔터티에만 적용. 교재완료를 별도클리닉에 전파하지 않는다.",
+    "fieldReport": "사용자 현장 보고를 우선하되 서버 관측은 별도 보존한다.",
+    "teacherDecision": "사용자의 명시적 완료판정만 teacher_confirmed. 점수·정답조회·풀이·채점만으로 생성하지 않는다.",
+    "sectionCoverage": "목차 및 섹션 전체가 없는 교재는 완전성 미확인. 이름/페이지를 추정하지 않는다."
+  },
+  "sessions": [
+    {
+      "id": "part-1",
+      "label": "수업1부",
+      "students": [
+        {
+          "id": "yoo-jiyeon",
+          "name": "유지연",
+          "attendance": {
+            "actualArrival": "2026-10-16T15:05:00+09:00",
+            "plannedDeparture": "2026-10-16T17:35:00+09:00",
+            "actualDeparture": null,
+            "reason": "지각 반영",
+            "evidenceIds": [
+              "yoo_arrival",
+              "yoo_departure"
+            ]
+          },
+          "activities": [
+            {
+              "id": "yoo-homework-inspection",
+              "kind": "activity",
+              "status": "teacher_confirmed",
+              "evidenceIds": [
+                "yoo_initial_homework"
+              ],
+              "detail": null,
+              "label": "기존 숙제 검사",
+              "scope": "검사 완료. 추가숙제 이해도 최종판정과 별개."
+            },
+            {
+              "id": "yoo-additional-homework",
+              "kind": "activity",
+              "status": "unknown",
+              "evidenceIds": [
+                "yoo_initial_homework"
+              ],
+              "detail": null,
+              "label": "추가숙제",
+              "brought": true,
+              "teacherFinal": {
+                "status": "unknown",
+                "evidenceIds": [
+                  "yoo_initial_homework"
+                ],
+                "detail": null
+              }
+            }
+          ],
+          "books": [
+            {
+              "id": "gauss-plus-1-1",
+              "label": "가우스 플러스 1-1",
+              "hierarchy": [
+                {
+                  "level": "major",
+                  "label": "I. 소인수분해",
+                  "children": [
+                    {
+                      "level": "middle",
+                      "label": "01. 소인수분해",
+                      "children": [
+                        {
+                          "level": "subunit",
+                          "label": "1. 소수와 거듭제곱",
+                          "children": [],
+                          "mappingStatus": "user_confirmed",
+                          "sectionInventoryComplete": false
+                        },
+                        {
+                          "level": "subunit",
+                          "label": "2. 소인수분해",
+                          "children": [],
+                          "mappingStatus": "user_confirmed",
+                          "sectionInventoryComplete": false
+                        }
+                      ]
+                    },
+                    {
+                      "level": "middle",
+                      "label": "02. 최대공약수와 최소공배수",
+                      "children": [
+                        {
+                          "level": "subunit",
+                          "label": "3. 공약수와 최대공약수",
+                          "children": [],
+                          "mappingStatus": "user_confirmed",
+                          "sectionInventoryComplete": false
+                        },
+                        {
+                          "level": "subunit",
+                          "label": "4. 공배수와 최소공배수",
+                          "children": [],
+                          "mappingStatus": "user_confirmed",
+                          "sectionInventoryComplete": false
+                        },
+                        {
+                          "level": "subunit",
+                          "label": "5. 최대공약수와 최소공배수의 활용",
+                          "children": [],
+                          "mappingStatus": "user_confirmed",
+                          "sectionInventoryComplete": false
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "level": "major",
+                  "label": "II. 정수와 유리수",
+                  "children": [
+                    {
+                      "level": "middle",
+                      "label": "03. 정수와 유리수",
+                      "children": [
+                        {
+                          "level": "subunit",
+                          "label": "1. 정수와 유리수",
+                          "children": [],
+                          "mappingStatus": "user_confirmed",
+                          "sectionInventoryComplete": false
+                        },
+                        {
+                          "level": "subunit",
+                          "label": "2. 수의 대소 관계",
+                          "children": [],
+                          "mappingStatus": "user_confirmed",
+                          "sectionInventoryComplete": false
+                        }
+                      ]
+                    },
+                    {
+                      "level": "middle",
+                      "label": "04. 유리수의 계산",
+                      "children": [
+                        {
+                          "level": "subunit",
+                          "label": "3. 유리수의 덧셈과 뺄셈",
+                          "children": [],
+                          "mappingStatus": "user_confirmed",
+                          "sectionInventoryComplete": false
+                        },
+                        {
+                          "level": "subunit",
+                          "label": "4. 유리수의 곱셈",
+                          "children": [],
+                          "mappingStatus": "user_confirmed",
+                          "sectionInventoryComplete": false
+                        },
+                        {
+                          "level": "subunit",
+                          "label": "5. 유리수의 나눗셈",
+                          "children": [],
+                          "mappingStatus": "user_confirmed",
+                          "sectionInventoryComplete": false
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "hierarchyEvidenceIds": [
+                "toc"
+              ],
+              "wholeBookDecision": {
+                "id": "yoo-book-final",
+                "kind": "teacher_decision",
+                "status": "teacher_confirmed",
+                "evidenceIds": [
+                  "yoo_final"
+                ],
+                "detail": null,
+                "scope": "교재 본문 풀이 및 교재 내 오답까지",
+                "excludedScopes": [
+                  "별도 오답클리닉",
+                  "별도 유사클리닉"
+                ],
+                "notPerSectionServerWrite": true
+              },
+              "sectionActivities": [],
+              "history": [
+                {
+                  "id": "yoo-step-c-plan",
+                  "kind": "activity",
+                  "status": "superseded",
+                  "evidenceIds": [
+                    "progress"
+                  ],
+                  "detail": null,
+                  "sectionLabel": "스텝C 하브루타",
+                  "plannedFinish": "2026-10-16T16:30:00+09:00",
+                  "supersededBy": "yoo-book-final"
+                }
+              ],
+              "clinicDecisions": {
+                "wrongClinic": {
+                  "status": "unknown",
+                  "evidenceIds": [
+                    "yoo_final"
+                  ],
+                  "detail": "별도 교사 완료판정 대기"
+                },
+                "similarClinic": {
+                  "status": "unknown",
+                  "evidenceIds": [
+                    "yoo_final"
+                  ],
+                  "detail": "별도 교사 완료판정 대기"
+                }
+              }
+            }
+          ],
+          "assignments": [
+            {
+              "id": "yoo-linear-wrong-clinic",
+              "kind": "assignment",
+              "status": "planned",
+              "evidenceIds": [
+                "yoo_labels",
+                "yoo_method"
+              ],
+              "detail": null,
+              "topic": "일차방정식 활용",
+              "bookId": null,
+              "bookMapping": "unknown",
+              "questionLabels": [
+                "1257283",
+                "1257340",
+                "1257302",
+                "1257310",
+                "1257261",
+                "1306078",
+                "1424101",
+                "1257283",
+                "1257340",
+                "1257302",
+                "1257310",
+                "1257255",
+                "1257234",
+                "1257181",
+                "1257148",
+                "1257209",
+                "1257198"
+              ],
+              "questionCount": 17,
+              "uniqueQuestionCount": 13,
+              "printHeader": null,
+              "dueDate": null,
+              "method": "선생님과 수업에서 했던 방식대로 풀이 과정 적어오기",
+              "dailyRecord": {
+                "status": "draft",
+                "writeAfter": "수업2부 종료 후 사용자 지시",
+                "includePrintHeader": false,
+                "countAllowed": true
+              }
+            }
+          ]
+        },
+        {
+          "id": "park-seeun",
+          "name": "박세은",
+          "attendance": {
+            "plannedArrival": "2026-10-16T15:30:00+09:00",
+            "actualArrival": "2026-10-16T15:10:00+09:00",
+            "plannedDeparture": null,
+            "actualDeparture": null,
+            "reason": "영어 인터뷰로 예정시간 변경되었으나 실제 일찍 등원",
+            "evidenceIds": [
+              "park_arrival"
+            ]
+          },
+          "activities": [
+            {
+              "id": "park-three-errors",
+              "kind": "activity",
+              "status": "in_progress",
+              "evidenceIds": [
+                "progress"
+              ],
+              "detail": null,
+              "label": "기존 숙제 약 3문항 오답 수정",
+              "approximateQuestionCount": 3,
+              "teacherFinal": {
+                "status": "unknown",
+                "evidenceIds": [
+                  "progress"
+                ],
+                "detail": null
+              }
+            }
+          ],
+          "books": [
+            {
+              "id": "davinci-5-1-1",
+              "label": "다빈치 5-1-1",
+              "grade": 5,
+              "semester": 1,
+              "volume": 1,
+              "volume2Exists": true,
+              "hierarchy": [
+                {
+                  "level": "subunit",
+                  "label": "약수와 배수 (2)",
+                  "children": [
+                    {
+                      "level": "section",
+                      "label": "p.52부터 실력다지기 직전",
+                      "children": [],
+                      "activities": [
+                        {
+                          "id": "park-p52-errors",
+                          "kind": "activity",
+                          "status": "in_progress",
+                          "evidenceIds": [
+                            "progress"
+                          ],
+                          "detail": null,
+                          "label": "풀이·채점 후 오답",
+                          "teacherFinal": {
+                            "status": "unknown",
+                            "evidenceIds": [
+                              "progress"
+                            ],
+                            "detail": null
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "gauss-dt-mapping-unresolved",
+              "label": "가우스 (정확한 교재 매핑 미확인)",
+              "hierarchy": [
+                {
+                  "level": "subunit",
+                  "label": "1-4-1",
+                  "children": [
+                    {
+                      "level": "section",
+                      "label": "DailyTest",
+                      "children": [],
+                      "activities": [
+                        {
+                          "id": "park-dt-1-4-1-기본편",
+                          "kind": "assessment",
+                          "status": "unknown",
+                          "evidenceIds": [
+                            "park_dt"
+                          ],
+                          "detail": null,
+                          "assessmentKind": "daily_test",
+                          "variant": "기본편",
+                          "questionCount": 4,
+                          "performedUserReported": true,
+                          "grading": {
+                            "status": "unknown",
+                            "evidenceIds": [],
+                            "detail": null
+                          },
+                          "score": null
+                        }
+                      ]
+                    },
+                    {
+                      "level": "section",
+                      "label": "DailyTest",
+                      "children": [],
+                      "activities": [
+                        {
+                          "id": "park-dt-1-4-1-발전편",
+                          "kind": "assessment",
+                          "status": "unknown",
+                          "evidenceIds": [
+                            "park_dt"
+                          ],
+                          "detail": null,
+                          "assessmentKind": "daily_test",
+                          "variant": "발전편",
+                          "questionCount": 4,
+                          "performedUserReported": true,
+                          "grading": {
+                            "status": "unknown",
+                            "evidenceIds": [],
+                            "detail": null
+                          },
+                          "score": null
+                        }
+                      ]
+                    }
+                  ],
+                  "mappingStatus": "unknown"
+                },
+                {
+                  "level": "subunit",
+                  "label": "1-4-2",
+                  "children": [
+                    {
+                      "level": "section",
+                      "label": "DailyTest",
+                      "children": [],
+                      "activities": [
+                        {
+                          "id": "park-dt-1-4-2-기본편",
+                          "kind": "assessment",
+                          "status": "unknown",
+                          "evidenceIds": [
+                            "park_dt"
+                          ],
+                          "detail": null,
+                          "assessmentKind": "daily_test",
+                          "variant": "기본편",
+                          "questionCount": 4,
+                          "performedUserReported": true,
+                          "grading": {
+                            "status": "unknown",
+                            "evidenceIds": [],
+                            "detail": null
+                          },
+                          "score": null
+                        }
+                      ]
+                    },
+                    {
+                      "level": "section",
+                      "label": "DailyTest",
+                      "children": [],
+                      "activities": [
+                        {
+                          "id": "park-dt-1-4-2-발전편",
+                          "kind": "assessment",
+                          "status": "unknown",
+                          "evidenceIds": [
+                            "park_dt"
+                          ],
+                          "detail": null,
+                          "assessmentKind": "daily_test",
+                          "variant": "발전편",
+                          "questionCount": 4,
+                          "performedUserReported": true,
+                          "grading": {
+                            "status": "unknown",
+                            "evidenceIds": [],
+                            "detail": null
+                          },
+                          "score": null
+                        }
+                      ]
+                    }
+                  ],
+                  "mappingStatus": "unknown"
+                }
+              ]
+            }
+          ],
+          "assignments": [
+            {
+              "id": "park-davinci-current",
+              "kind": "assignment",
+              "status": "planned",
+              "evidenceIds": [
+                "park_old_hw",
+                "park_new_hw"
+              ],
+              "detail": null,
+              "bookId": "davinci-5-1-1",
+              "revision": 2,
+              "dueDate": "2026-10-19",
+              "dueTime": null,
+              "pagesInclusive": [
+                53,
+                59
+              ],
+              "sectionLabels": [
+                "실력다지기",
+                "실력올리기",
+                "만점도전 생각근육 키우기"
+              ],
+              "individualSectionPages": null,
+              "submission": {
+                "status": "unknown",
+                "evidenceIds": [],
+                "detail": null
+              },
+              "teacherFinal": {
+                "status": "unknown",
+                "evidenceIds": [],
+                "detail": null
+              }
+            }
+          ],
+          "history": [
+            {
+              "id": "park-davinci-old",
+              "kind": "assignment",
+              "status": "superseded",
+              "evidenceIds": [
+                "park_old_hw",
+                "park_new_hw"
+              ],
+              "detail": null,
+              "bookId": "davinci-5-1-1",
+              "revision": 1,
+              "pagesInclusive": [
+                53,
+                68
+              ],
+              "sectionLabels": [
+                "실력다지기",
+                "실력올리기",
+                "만점도전 생각근육 키우기",
+                "대단원 총괄평가",
+                "읽기+쓰기",
+                "개념 복습"
+              ],
+              "supersededBy": "park-davinci-current",
+              "reason": "숙제가 너무 많아 사용자 축소"
+            }
+          ],
+          "historicalAssessmentDistinction": {
+            "evidenceIds": [
+              "assessment_distinction"
+            ],
+            "occurrences": [
+              {
+                "date": "2026-09-19",
+                "kind": "printed_major_unit_assessment",
+                "score": 90
+              },
+              {
+                "date": "2026-10-02",
+                "kind": "textbook_major_unit_section",
+                "score": null
+              }
+            ],
+            "notTodayActivity": true,
+            "doNotMergeByTitle": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "part-2",
+      "label": "수업2부",
+      "students": [
+        {
+          "id": "lee-ruhan",
+          "name": "이루한",
+          "attendance": {
+            "actualArrival": "2026-10-16T18:05:00+09:00",
+            "plannedDeparture": "2026-10-16T21:35:00+09:00",
+            "actualDeparture": null,
+            "evidenceIds": [
+              "ruhan_arrival"
+            ]
+          },
+          "books": [
+            {
+              "id": "gauss-print-mapping-unresolved",
+              "label": "가우스 연계 프린트 (교재 매핑 추가 확인)",
+              "hierarchy": [
+                {
+                  "level": "major",
+                  "label": "5. 기본도형",
+                  "children": [
+                    {
+                      "level": "section",
+                      "label": "대단원 총괄평가(프린트)",
+                      "children": [],
+                      "activities": [
+                        {
+                          "id": "ruhan-print-5",
+                          "kind": "assessment",
+                          "status": "planned",
+                          "evidenceIds": [
+                            "part2_plan"
+                          ],
+                          "detail": null,
+                          "assessmentKind": "printed_major_unit_assessment",
+                          "workflow": [
+                            "오답 풀이",
+                            "사용자 채점 확인",
+                            "사용자 최종 완료판정"
+                          ],
+                          "teacherFinal": {
+                            "status": "unknown",
+                            "evidenceIds": [],
+                            "detail": null
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "level": "major",
+                  "label": "6. 평면도형",
+                  "children": [
+                    {
+                      "level": "section",
+                      "label": "대단원 총괄평가(프린트)",
+                      "children": [],
+                      "activities": [
+                        {
+                          "id": "ruhan-print-6",
+                          "kind": "assessment",
+                          "status": "planned",
+                          "evidenceIds": [
+                            "part2_plan"
+                          ],
+                          "detail": null,
+                          "assessmentKind": "printed_major_unit_assessment",
+                          "workflow": [
+                            "오답 풀이",
+                            "사용자 채점 확인",
+                            "사용자 최종 완료판정"
+                          ],
+                          "teacherFinal": {
+                            "status": "unknown",
+                            "evidenceIds": [],
+                            "detail": null
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "davinci-middle-1-1",
+              "label": "다빈치 중1-1",
+              "hierarchy": []
+            }
+          ],
+          "activities": [
+            {
+              "id": "ruhan-next-clinic",
+              "kind": "activity",
+              "status": "planned",
+              "evidenceIds": [
+                "part2_plan"
+              ],
+              "detail": null,
+              "label": "후속 오답클리닉 프린트",
+              "questionLabels": null,
+              "reason": "사용자 문항라벨 전달 대기"
+            }
+          ],
+          "assignments": [
+            {
+              "id": "ruhan-existing-hw",
+              "kind": "assignment",
+              "status": "unknown",
+              "evidenceIds": [
+                "bounded_snapshot",
+                "ruhan_p140"
+              ],
+              "detail": null,
+              "bookId": "davinci-middle-1-1",
+              "pagesInclusive": [
+                112,
+                140
+              ],
+              "parts": [
+                {
+                  "pagesInclusive": [
+                    112,
+                    125
+                  ],
+                  "dueAt": "2026-10-15T23:00:00+09:00"
+                },
+                {
+                  "pagesInclusive": [
+                    126,
+                    140
+                  ],
+                  "dueAt": "2026-10-16T18:00:00+09:00"
+                }
+              ],
+              "submission": {
+                "status": "unknown",
+                "evidenceIds": [],
+                "detail": "현재 시각 재조회 결과 없음. 질문 자체는 제출 증거가 아님."
+              },
+              "teacherFinal": {
+                "status": "unknown",
+                "evidenceIds": [],
+                "detail": null
+              }
+            }
+          ]
+        },
+        {
+          "id": "lee-hyunseung",
+          "name": "이현승",
+          "attendance": {
+            "plannedArrival": "2026-10-16T18:00:00+09:00",
+            "actualArrival": null,
+            "plannedDeparture": null,
+            "actualDeparture": null,
+            "evidenceIds": [
+              "lee_schedule_user"
+            ],
+            "priorContext": "지난번 예정22:00보다 이른21:30 하원, 오늘18:00 등원 계획. 오늘 출석으로 해석하지 않음."
+          },
+          "books": [
+            {
+              "id": "gauss-middle-1-1-volume1",
+              "label": "가우스 중1-1 1권",
+              "hierarchy": [
+                {
+                  "level": "subunit",
+                  "label": "소단원 1",
+                  "children": [
+                    {
+                      "level": "section",
+                      "label": "오답클리닉",
+                      "children": [],
+                      "activities": [
+                        {
+                          "id": "lee-clinic-1",
+                          "kind": "activity",
+                          "status": "planned",
+                          "evidenceIds": [
+                            "part2_plan"
+                          ],
+                          "detail": null,
+                          "label": "숙제검사 동안 및 이후 문제풀이",
+                          "teacherFinal": {
+                            "status": "unknown",
+                            "evidenceIds": [],
+                            "detail": null
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "mappingStatus": "exact_subunit_name_unverified"
+                },
+                {
+                  "level": "subunit",
+                  "label": "소단원 2",
+                  "children": [
+                    {
+                      "level": "section",
+                      "label": "오답클리닉",
+                      "children": [],
+                      "activities": [
+                        {
+                          "id": "lee-clinic-2",
+                          "kind": "activity",
+                          "status": "planned",
+                          "evidenceIds": [
+                            "part2_plan"
+                          ],
+                          "detail": null,
+                          "label": "숙제검사 동안 및 이후 문제풀이",
+                          "teacherFinal": {
+                            "status": "unknown",
+                            "evidenceIds": [],
+                            "detail": null
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "mappingStatus": "exact_subunit_name_unverified"
+                },
+                {
+                  "level": "subunit",
+                  "label": "소단원 3",
+                  "children": [
+                    {
+                      "level": "section",
+                      "label": "오답클리닉",
+                      "children": [],
+                      "activities": [
+                        {
+                          "id": "lee-clinic-3",
+                          "kind": "activity",
+                          "status": "planned",
+                          "evidenceIds": [
+                            "part2_plan"
+                          ],
+                          "detail": null,
+                          "label": "숙제검사 동안 및 이후 문제풀이",
+                          "teacherFinal": {
+                            "status": "unknown",
+                            "evidenceIds": [],
+                            "detail": null
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "mappingStatus": "exact_subunit_name_unverified"
+                },
+                {
+                  "level": "subunit",
+                  "label": "소단원 4",
+                  "children": [
+                    {
+                      "level": "section",
+                      "label": "오답클리닉",
+                      "children": [],
+                      "activities": [
+                        {
+                          "id": "lee-clinic-4",
+                          "kind": "activity",
+                          "status": "planned",
+                          "evidenceIds": [
+                            "part2_plan"
+                          ],
+                          "detail": null,
+                          "label": "숙제검사 동안 및 이후 문제풀이",
+                          "teacherFinal": {
+                            "status": "unknown",
+                            "evidenceIds": [],
+                            "detail": null
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "mappingStatus": "exact_subunit_name_unverified"
+                },
+                {
+                  "level": "subunit",
+                  "label": "소단원 5",
+                  "children": [
+                    {
+                      "level": "section",
+                      "label": "오답클리닉",
+                      "children": [],
+                      "activities": [
+                        {
+                          "id": "lee-clinic-5",
+                          "kind": "activity",
+                          "status": "planned",
+                          "evidenceIds": [
+                            "part2_plan"
+                          ],
+                          "detail": null,
+                          "label": "숙제검사 동안 및 이후 문제풀이",
+                          "teacherFinal": {
+                            "status": "unknown",
+                            "evidenceIds": [],
+                            "detail": null
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "mappingStatus": "exact_subunit_name_unverified"
+                }
+              ]
+            },
+            {
+              "id": "davinci-elementary-6-2-volume1",
+              "label": "다빈치 초6-2 1권",
+              "hierarchy": [
+                {
+                  "level": "subunit",
+                  "label": "1-1 분수의 나눗셈 (1)",
+                  "children": [
+                    {
+                      "level": "section",
+                      "label": "필수예제",
+                      "children": [],
+                      "mappingStatus": "historical_catalog_1UFJ00"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "assignments": [
+            {
+              "id": "lee-existing-hw",
+              "kind": "assignment",
+              "status": "unknown",
+              "evidenceIds": [
+                "bounded_snapshot"
+              ],
+              "detail": null,
+              "bookId": "gauss-middle-1-1-volume1",
+              "label": "소인수분해 대단원총괄평가 남은 문제와 오답",
+              "submission": {
+                "status": "unknown",
+                "evidenceIds": [],
+                "detail": null
+              },
+              "teacherFinal": {
+                "status": "unknown",
+                "evidenceIds": [],
+                "detail": null
+              }
+            },
+            {
+              "id": "lee-carryover-1N8200",
+              "kind": "assignment",
+              "status": "unknown",
+              "evidenceIds": [
+                "lee_carryover_prints"
+              ],
+              "detail": "10/14 숙제 지정의 이월 문맥; 소인수분해 총괄 숙제와 별도",
+              "bookId": "gauss-middle-1-1-volume1",
+              "subunitCode": "1-1",
+              "subunitTitle": "소수와 거듭제곱",
+              "sectionLabel": "필수예제",
+              "catalogCode": "1N8200",
+              "assignedDate": "2026-10-14",
+              "dueDate": null,
+              "clinicKind": "unknown",
+              "wrongClinic": {
+                "status": "unknown",
+                "evidenceIds": [
+                  "lee_carryover_prints"
+                ],
+                "detail": "후속 수행·교사 최종판정 보고 미확인"
+              },
+              "similarClinic": {
+                "status": "unknown",
+                "evidenceIds": [
+                  "lee_carryover_prints"
+                ],
+                "detail": "후속 수행·교사 최종판정 보고 미확인"
+              },
+              "submission": {
+                "status": "unknown",
+                "evidenceIds": [
+                  "lee_carryover_prints"
+                ],
+                "detail": "후속 수행·교사 최종판정 보고 미확인"
+              },
+              "teacherFinal": {
+                "status": "unknown",
+                "evidenceIds": [
+                  "lee_carryover_prints"
+                ],
+                "detail": "후속 수행·교사 최종판정 보고 미확인"
+              },
+              "notTodayCompletion": true
+            },
+            {
+              "id": "lee-carryover-1UFJ00",
+              "kind": "assignment",
+              "status": "unknown",
+              "evidenceIds": [
+                "lee_carryover_prints"
+              ],
+              "detail": "10/14 숙제 지정의 이월 문맥; 소인수분해 총괄 숙제와 별도",
+              "bookId": "davinci-elementary-6-2-volume1",
+              "subunitCode": "1-1",
+              "subunitTitle": "분수의 나눗셈 (1)",
+              "sectionLabel": "필수예제",
+              "catalogCode": "1UFJ00",
+              "assignedDate": "2026-10-14",
+              "dueDate": null,
+              "clinicKind": "unknown",
+              "wrongClinic": {
+                "status": "unknown",
+                "evidenceIds": [
+                  "lee_carryover_prints"
+                ],
+                "detail": "후속 수행·교사 최종판정 보고 미확인"
+              },
+              "similarClinic": {
+                "status": "unknown",
+                "evidenceIds": [
+                  "lee_carryover_prints"
+                ],
+                "detail": "후속 수행·교사 최종판정 보고 미확인"
+              },
+              "submission": {
+                "status": "unknown",
+                "evidenceIds": [
+                  "lee_carryover_prints"
+                ],
+                "detail": "후속 수행·교사 최종판정 보고 미확인"
+              },
+              "teacherFinal": {
+                "status": "unknown",
+                "evidenceIds": [
+                  "lee_carryover_prints"
+                ],
+                "detail": "후속 수행·교사 최종판정 보고 미확인"
+              },
+              "notTodayCompletion": true
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "crossSession": [
+    {
+      "id": "dailyrecord-draft",
+      "kind": "activity",
+      "status": "planned",
+      "evidenceIds": [
+        "yoo_method"
+      ],
+      "detail": null,
+      "label": "수업2부 후 사용자 요청 시 DailyRecord 작성",
+      "externalWritePerformed": false
+    },
+    {
+      "id": "teacher-review2135",
+      "kind": "activity",
+      "status": "planned",
+      "evidenceIds": [
+        "review_reminder"
+      ],
+      "detail": null,
+      "label": "전체 학생 매핑 교재 섹션별 history 포함 교사판정 검토",
+      "at": "2026-10-16T21:35:00+09:00",
+      "automatedFinalJudgment": false
+    }
+  ],
+  "relatedNotTodayAttendance": [
+    {
+      "student": "신지우",
+      "kind": "handover_context",
+      "scheduledDate": "2026-10-17",
+      "plannedStart": "10:00",
+      "plannedEnd": "12:30",
+      "teacher": "김예원T",
+      "scope": "보강 인계. 오늘 출석/수업활동 아님.",
+      "evidenceArtifact": "../jiwoo-handover.md",
+      "verification": "existing_local_handover_not_fresh_server_read"
+    }
+  ],
+  "evidence": {
+    "yoo_arrival": {
+      "kind": "user_report",
+      "messageId": "Sentinel_8d6162821bfc8191a736ce184b5687b8",
+      "quote": "15:05 유지연 학생 등원.",
+      "observedAt": null,
+      "localArtifact": null
+    },
+    "park_arrival": {
+      "kind": "user_report",
+      "messageId": "Sentinel_c673a4f247948191b2715a3221ec90e9",
+      "quote": "박세은 영어인터뷰로 15:30 등원 예정이었는데, 15:10 등원함.",
+      "observedAt": null,
+      "localArtifact": null
+    },
+    "yoo_initial_homework": {
+      "kind": "user_report",
+      "messageId": "Sentinel_c673a4f247948191b2715a3221ec90e9",
+      "quote": "유지연은 숙제검사 완료. 추가숙제는 내가 채점하면서 제대로 이해했는지 확인 후에 최종완료 판정 할 것이니까 대기해라, 일단 추가숙제도 해왔다.",
+      "observedAt": null,
+      "localArtifact": null
+    },
+    "progress": {
+      "kind": "user_report",
+      "messageId": "Sentinel_79911dad4ac881918a00ebe640ae060d",
+      "quote": "유지연 학생은 숙제 검사 완료한 후에, 1-1 가우스 플러스 교재에 남은 부분들을 모두 해결하는 중이다, 스텝C 하브루타 섹션 못했던 것들 16:30까지 모두 마무리할 것이다.\n박세은 학생은 숙제 검사에 대해서 채점을 진행했고, 오답이 3문항 정도 있어서, 그것을 고치고 있다. 최종 완료 판정은 이 오답 3문항을 완료한 후에 할 것이다. 또한 1-1 다빈치 부교재의 '약수와 배수 (2)' 소단원의 p.52부터 실력다지기 직전까지 풀고 채점 후 오답 진행중이다.",
+      "observedAt": null,
+      "localArtifact": null
+    },
+    "yoo_final": {
+      "kind": "user_report",
+      "messageId": "Sentinel_c84792f1b3188191a7d45a5cc47a6fbc",
+      "quote": "유지연 학생 1-1 가우스 플러스 교재 오답까지 완료판정해라. 다만 오답클리닉과 유사클리닉은 별도 완료판정을 대기해라.",
+      "observedAt": null,
+      "localArtifact": null
+    },
+    "yoo_departure": {
+      "kind": "user_report",
+      "messageId": "Sentinel_5dd739b692b48191bfbaa2ad743643a9",
+      "quote": "유지연 학생 15:05 등원했으므로 17:35에 하원해야한다(사유: 지각).",
+      "observedAt": null,
+      "localArtifact": null
+    },
+    "yoo_labels": {
+      "kind": "user_report",
+      "messageId": "Sentinel_93a0f5261c1c8191a06447a94cecf0a6",
+      "quote": "1257283 1257340 1257302 1257310 1257261 1306078 1424101 1257283 1257340 1257302 1257310 1257255 1257234 1257181 1257148 1257209 1257198",
+      "observedAt": null,
+      "localArtifact": null
+    },
+    "yoo_method": {
+      "kind": "user_report",
+      "messageId": "Sentinel_35b9a31073b08191923d64b2c7f3a7f2",
+      "quote": "일차방정식 활용 문제 오답클리닉에 관한 풀이는 쌤이랑 했던 방식대로 적어와야한다고 명시해놓으면 된다. 내가 오늘 수업2부까지 끝나고 DailyRecord 작성시킬 때 하면 돼.",
+      "observedAt": null,
+      "localArtifact": null
+    },
+    "park_old_hw": {
+      "kind": "user_report",
+      "messageId": "Sentinel_965fbd8909e88191933f47a3e9f4bc90",
+      "quote": "10월19일(월)까지 숙제로 나갈 것은, 다빈치 5-1-1(5학년 1학기 1권인데, 2권도 있다)의 p.53~p.68",
+      "observedAt": null,
+      "localArtifact": null
+    },
+    "park_new_hw": {
+      "kind": "user_report",
+      "messageId": "Sentinel_8672244bd4c48191b384418f5652942a",
+      "quote": "박세은 학생 숙제가 너무 많다고 해서 수정한다, p.59까지 진행하고, 섹션은 \"만점도전 생각근육 키우기\"까지.",
+      "observedAt": null,
+      "localArtifact": null
+    },
+    "park_dt": {
+      "kind": "user_report",
+      "messageId": "Sentinel_89935979f1fc8191a6191286144a2565",
+      "quote": "박세은 학생은 가우스 1-4-1과 1-4-2 DailyTest(각 소단원당 기본편 발전편 2회분이고, 각 회당 4문제씩 존재) 진행했으니까 너가 채점기록 조회하고 알아봐.",
+      "observedAt": null,
+      "localArtifact": null
+    },
+    "part2_plan": {
+      "kind": "user_report",
+      "messageId": "Sentinel_c3366ede4894819184677f995867973b",
+      "quote": "이루한은 등원 후 숙제검사 할 동안 및 끝나고 나서도, \"5. 기본도형 대단원 총괄평가(프린트)\"와 \"6. 평면도형 대단원 총괄평가(프린트)\" 오답 진행한 후에 내가 채점까지 확인하고 완료판정해야한다. 그다음 오답클리닉 프린트 남았는데, 차후에 문항라벨로 알려줄게.\n이현승은 등원 후 숙제검사 할 동안 및 끝나고 나서도, 소단원1~5 오답클리닉 문제풀이 진행한다.",
+      "observedAt": null,
+      "localArtifact": null
+    },
+    "ruhan_arrival": {
+      "kind": "user_report",
+      "messageId": "Sentinel_f32d20d028888191bb94cb9aca84b046",
+      "quote": "이루한 학생 18:05 출석. 5분 지각으로 21:35 하원할 때 알려라.",
+      "observedAt": null,
+      "localArtifact": null
+    },
+    "ruhan_p140": {
+      "kind": "user_report",
+      "messageId": "Sentinel_d1c501423bdc8191817780a0d9978ddc",
+      "quote": "아, p.140?",
+      "observedAt": null,
+      "localArtifact": null
+    },
+    "review_reminder": {
+      "kind": "user_report",
+      "messageId": "Sentinel_de300b87a5b081919b32f6da79001128",
+      "quote": "21:35에, 그동안의 모든 학생들에 대해서, 매핑된 교재들 각각에 대해서 섹션단위까지 교사 완료판정 안된 것들 완료판정 작업해야하니까, 알림을 줘. history 포함해서 학생별로 아까처럼 출력해서 주면 돼.",
+      "observedAt": null,
+      "localArtifact": null
+    },
+    "assessment_distinction": {
+      "kind": "user_report",
+      "messageId": "Sentinel_419b5d27e68881919a7db14a946e3b4c",
+      "quote": "9/19 총괄 90점은 학원서버에 있는 프린트로 풀게 한 대단원 총괄평가이고(이것이 더 중요한 시험이다), 10/2 일지의 대단원 총괄평가는 가우스 교재 내에 있는 대단원 총괄평가 섹션에 대한 것이다.",
+      "observedAt": null,
+      "localArtifact": null
+    },
+    "toc": {
+      "kind": "user_report",
+      "messageId": "Sentinel_c9998a42b2648191968dd2c7e69096ce",
+      "quote": null,
+      "observedAt": null,
+      "localArtifact": null,
+      "summary": "사용자 제공 대단원→중단원→소단원 목차; 아래 hierarchy에 정확한 이름과 번호 보존."
+    },
+    "bounded_snapshot": {
+      "kind": "server_observed",
+      "messageId": null,
+      "quote": null,
+      "observedAt": "2026-10-16T14:10:00+09:00",
+      "localArtifact": "../four-student-check.md",
+      "observationEndedAt": "2026-10-16T14:23:00+09:00",
+      "scope": "앞선 공식화면 읽기 전용 스냅샷. 현재 상태 재조회 아님."
+    },
+    "answer38": {
+      "kind": "server_observed",
+      "messageId": null,
+      "quote": null,
+      "observedAt": "2026-10-16T07:27:01.327Z",
+      "localArtifact": "../answers38.json",
+      "scope": "정답 원문 조회만. 학생 풀이·채점·교사 판정 증거 아님."
+    },
+    "lee_schedule_user": {
+      "kind": "user_report",
+      "messageId": "Sentinel_dfb7e4f88374819185c31855610def54",
+      "quote": "이현승도 지난번에 22:00 못채우고 21:30에 가서 오늘 18:00 등원인데 맥락 없었어?",
+      "observedAt": null,
+      "localArtifact": null
+    },
+    "field_priority": {
+      "kind": "user_report",
+      "messageId": "Sentinel_c673a4f247948191b2715a3221ec90e9",
+      "quote": "앱보다 현장이 우선.",
+      "observedAt": null,
+      "localArtifact": null
+    },
+    "dailyrecord_interview": {
+      "kind": "user_report",
+      "messageId": "Sentinel_89935979f1fc8191a6191286144a2565",
+      "quote": "수업1부 유지연 박세은 학생에 대해서, 오늘 DailyRecord의 진도와 숙제와 메모 섹션 각각에 적어야할 것들 지금 시각 기준 정리하자. 일단 진도에 관해서 인터뷰하면서 오늘 한 것들 추가해서 물어봐라.",
+      "observedAt": null,
+      "localArtifact": null
+    },
+    "lee_carryover_prints": {
+      "kind": "user_report",
+      "messageId": "Sentinel_b8542964d2ac8191a53eed0d702df567",
+      "quote": null,
+      "summary": "10/14 인쇄한 목록 중 가우스1-1 소수와 거듭제곱 필수예제와 다빈치1-1 분수의 나눗셈(1) 필수예제를 숙제로 지정. 오답/유사별 구분과 후속 완료판정은 미확인.",
+      "observedAt": null,
+      "localArtifact": "../clinic-audit/lee-history-ledger.json",
+      "scope": "M1014HEADERS 및 lee-section-matrix.csv의1N8200(2행),1UFJ00(24행). 과거 숙제 이월 문맥이며 오늘 신규 수행이 아님."
+    }
+  },
+  "limitations": [
+    "최신 서버 조회 실패로 이루한p140 제출 및 박세은DailyTest 채점기록 미확인.",
+    "원문 질문 라벨의 답 조회는 학생의 제출/채점/교사완료 증거가 아니다.",
+    "학생별 모든 교재·섹션의 완전한 서버 history는 이 현재상태 문서만으로 대체하지 않는다. 별도 원본원장 대조 필요.",
+    "로컬 초안 작성 외 학원 데이터 변경, 인쇄, 발송, Git 원격 쓰기 없음."
+  ],
+  "historicalArtifactIndex": [
+    {
+      "path": "../four-student-check.md",
+      "scope": "14:10~14:23 bounded homework check"
+    },
+    {
+      "path": "../clinic-audit/park-assignment-20261019.json",
+      "scope": "박세은 숙제 수정 이력 및 기존 서버 교재 식별"
+    },
+    {
+      "path": "../clinic-audit/park-section-status-history.csv",
+      "scope": "박세은 과거 섹션 원장, 오늘 수행으로 전환 금지"
+    },
+    {
+      "path": "../clinic-audit/lee-section-matrix.csv",
+      "scope": "이현승 과거 섹션 원장"
+    },
+    {
+      "path": "../clinic-history/유지연-workbook55-live-ordered.json",
+      "scope": "유지연 과거 시도 이력, 교사판정과 구분"
+    },
+    {
+      "path": "../answers38.json",
+      "scope": "38개 문항 정답 조회 원본. 학생 채점 아님."
+    },
+    {
+      "path": "../answers40/batch.json",
+      "scope": "40개 문항 정답 조회 원본. 학생 채점 아님."
+    }
+  ],
+  "dailyRecordDrafts": [
+    {
+      "studentId": "yoo-jiyeon",
+      "status": "draft",
+      "progress": [
+        "가우스 플러스1-1 남은 부분 및 스텝C 하브루타 진행 후 교재 내 오답까지 사용자 완료판정. 별도 오답·유사클리닉은 대기."
+      ],
+      "homework": [
+        "일차방정식 활용 오답클리닉17문항. 선생님과 했던 방식대로 풀이 과정을 적어오기."
+      ],
+      "memo": [
+        "15:05 등원, 지각 반영17:35 하원 예정. 실제 하원 확인 필요."
+      ],
+      "evidenceIds": [
+        "progress",
+        "yoo_final",
+        "yoo_labels",
+        "yoo_method",
+        "yoo_arrival",
+        "yoo_departure"
+      ],
+      "interviewRequired": [
+        "교재 외 추가 진도 여부",
+        "추가숙제 이해도 최종 확인 여부"
+      ],
+      "savedToServer": false
+    },
+    {
+      "studentId": "park-seeun",
+      "status": "draft",
+      "progress": [
+        "기존 숙제 약3문항 오답 수정 중, 최종판정 미확인.",
+        "다빈치 약수와 배수(2) p52부터 실력다지기 직전까지 풀이·채점 후 오답 진행 중.",
+        "가우스1-4-1 및1-4-2 DailyTest 기본·발전4회16문항 수행 사용자 보고. 채점·점수 미확인."
+      ],
+      "homework": [
+        "10/19까지 다빈치5-1-1 p53–59, 만점도전 생각근육 키우기까지."
+      ],
+      "memo": [
+        "영어 인터뷰로15:30 예정이었으나15:10 실제 등원."
+      ],
+      "evidenceIds": [
+        "progress",
+        "park_dt",
+        "park_new_hw",
+        "park_old_hw",
+        "park_arrival"
+      ],
+      "interviewRequired": [
+        "숙제3오답 교사 최종확인 여부",
+        "다빈치p52범위 오답 최종확인 여부",
+        "오늘 추가 진도 여부"
+      ],
+      "savedToServer": false
+    }
+  ]
+}

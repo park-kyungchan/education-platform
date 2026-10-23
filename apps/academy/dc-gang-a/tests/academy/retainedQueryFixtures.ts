@@ -1,0 +1,29 @@
+import {TeacherApplication} from '../../src/academy/application';
+import type {TeacherStore,TeacherReadStore} from '../../src/academy/ports/teacherStore';
+import type {CurrentRecord,RecordVersion,StoredStudent} from '../../src/academy/contracts/storageRecords';
+import type {AcademyRecord} from '../../src/academy/records';
+import {digest,known,unknown} from '../../src/learning/model';
+import {exactWorkFixture,exactAttemptFixture} from './learningWorkFixtures';
+import {createAcademySourceAudit} from '../../src/lms/academySourceAudit';
+export function retainedFixture(studentCount=1,noteCount=80){
+  const owner='synthetic-query-owner',actor={ownerId:owner,actorId:'synthetic-query-teacher',role:'teacher' as const},date='2090-01-03',time='2090-01-02T00:00:00.000Z';
+  const counters:Record<string,number>={snapshots:0,students:0,current:0,catalog:0,preparationRevisions:0,pinnedCatalog:0,studentWorkspaces:0,append:0};
+  const students:StoredStudent[]=Array.from({length:studentCount},(_,i)=>({ownerId:owner,id:'synthetic-student-'+i,displayName:'Invented Query '+i,sourceKey:{namespace:'academy_student',literalKey:String(91001+i)},proofRefs:['synthetic'],registeredAt:time}));
+  const student=students[0]!;
+  const version=<T extends AcademyRecord>(payload:T,entityId:string,revisionId=entityId+'-r1'):CurrentRecord&{payload:T}=>({ownerId:owner,studentId:student.id,entityId,sequence:1,revisionId,previousRevisionId:null,previousDigest:null,payload,contentDigest:payload.kind==='source_audit'?createAcademySourceAudit(payload.acquisition).contentDigest:digest(payload),integrityDigest:'synthetic',sourceObservedAt:time,lastVerifiedAt:time,recordedAt:time,actorId:actor.actorId,idempotencyKey:revisionId,commandDigest:'synthetic'});
+  const assignment=version({...exactWorkFixture(),activity:'daily_test' as const,effectiveDate:'2090-01-02',paper:known({...((exactWorkFixture().paper as any).value),paperKey:{namespace:'academy_textbook_paper',literalKey:'51001'}},['synthetic-paper'])},'work-A');
+  const source=version({kind:'source_audit',contractRef:'synthetic-exact-source',acquisition:{schemaVersion:1,family:'textbook',status:'observed',records:[{studentKey:'91001',studentName:student.displayName,courseKey:'92001',bookNo:'94001',paperKey:'51001',attemptKey:'41001',sourceTitle:'Invented test',score:100,items:[{originalOrdinal:'1',lectureKey:'31001',outerLectureKey:'21001',scoring:'O'}],sourceDate:{literal:'01-02',precision:'month_day',meaning:'source_apply_date_not_exact_grade_time'}}],dailyResults:[],dayRecords:[],observedAt:time,coverage:'exact_selected_existing_records_not_whole_book',unknownStates:['teacher_acceptance_unknown'],nativePrintInvoked:false,automaticRetryAllowed:false}},'source-A');
+  const attempt=version({...exactAttemptFixture(),assignmentRevisionId:assignment.revisionId,attemptKey:{namespace:'academy_textbook_attempt',literalKey:'41001'},assessmentBasis:known({sourceAuditRevisionId:source.revisionId,paperKey:'51001',attemptKey:'41001'},['synthetic-crosswalk']),evidenceRefs:[source.revisionId]},'attempt-A');
+  const explicit=version({...assignment.payload,activity:'similar_clinic',assignmentKey:{namespace:'fixture_assignment',literalKey:'explicit'},effectiveDate:date},'explicit');
+  const withdrawn=version({...assignment.payload,status:'withdrawn',assignmentKey:{namespace:'fixture_assignment',literalKey:'withdrawn'}},'withdrawn');
+  const calendars=['1','2'].map((groupId,i)=>version({kind:'source_audit',contractRef:'synthetic-calendar',acquisition:{schemaVersion:1,family:'day_record',status:'observed',records:[],dailyResults:[],dayRecords:[{studentName:student.displayName,studentKey:student.sourceKey.literalKey,date,groupId,teacherKey:'5',courseKey:'92001',recordKey:String(100+i),membershipKey:String(200+i),fields:{attendance:'Synthetic raw field'}}],observedAt:time,coverage:'requested_date_groups_students_not_cohort_completeness',unknownStates:[],nativePrintInvoked:false,automaticRetryAllowed:false}},'calendar-'+groupId));
+  const notes=Array.from({length:noteCount},(_,i)=>version({kind:'teacher_reported_note',text:'가😀\\"\n'.repeat(80)+i,directiveRef:'synthetic-directive'},'note-'+i));
+  const rows:CurrentRecord[]=[assignment,attempt,source,explicit,withdrawn,...calendars,...notes];
+  const pinned=assignment.payload.catalogRefs.map((ref,index)=>({revisionId:ref.revisionId,node:{id:ref.nodeId,kind:({book:'book_edition',major:'major_unit',middle:'middle_unit',minor:'minor_unit',section:'learning_section',page:'printed_page','problem-1':'problem','problem-2':'problem'} as const)[ref.nodeId]!,sourceKey:ref.nodeId==='book'?assignment.payload.sourceBook:{namespace:'synthetic_catalog',literalKey:ref.nodeId},label:'Invented '+ref.nodeId,parent:index===0?unknown<string>('root'):known(index>=6?'page':['book','major','middle','minor','section'][index-1]!,['synthetic-parent'])}}));
+  let duringRead:(()=>void)|null=null;
+  const count=<T>(method:string,value:T)=>{counters[method]++;return Promise.resolve(structuredClone(value));};
+  const read:TeacherReadStore={students:async()=>{const value=await count('students',students);duringRead?.();return value;},current:(_o,id)=>count('current',id===student.id?rows:[]),catalog:()=>count('catalog',[]),preparationRevisions:(_o,id)=>count('preparationRevisions',id===student.id?rows as RecordVersion[]:[]),pinnedCatalog:()=>count('pinnedCatalog',pinned),studentWorkspaces:()=>count('studentWorkspaces',[]),history:async()=>[],observationRequest:async()=>null,observationResult:async()=>null,clinicRequest:async()=>null,clinicResult:async()=>null};
+  const store:TeacherStore={...read,readSnapshot:async callback=>{counters.snapshots++;return callback(read);},append:async()=>{counters.append++;throw Error('synthetic_write_forbidden');}};
+  const app=new TeacherApplication(store,owner);
+  return {owner,actor,date,time,student,students,rows,counters,app,store,setDuringRead:(fn:(()=>void)|null)=>{duringRead=fn;}};
+}

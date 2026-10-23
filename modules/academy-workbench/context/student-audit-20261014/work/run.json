@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "run",
+  "id": "academy-workbench:run:five-student-evidence-audit-20261014-cloud-01",
+  "projectId": "academy-workbench",
+  "domainId": "academy-operations",
+  "createdAt": "2026-10-14T07:41:11Z",
+  "payload": {
+    "taskRef": "academy-workbench:task:five-student-evidence-audit-20261014",
+    "state": "running",
+    "startedAt": "2026-10-14T07:41:11Z",
+    "inputHashes": [
+      {
+        "path": "AGENTS.md",
+        "sha256": "0bfcfa0024103b5d842ce08c02e0d163acce8e0ded6f270c241b9669dfa4e125"
+      },
+      {
+        "path": "project.json",
+        "sha256": "191065134c998695aa89a2908c6698a0fa9972733f0cfdc115f224563f2d5c58"
+      },
+      {
+        "path": "harness/module.json",
+        "sha256": "e49138c1e22bb8688f1940584f7b5b84ee2c82d73ba34f208819dd4e1fb054e9"
+      },
+      {
+        "path": "harness/agent-platform.lock.json",
+        "sha256": "000c650b51d5b3009cf5efdc319fe2fa5b9e74123f0bf3dddb1d638b6f8e6b99"
+      },
+      {
+        "path": "context/business-decisions.json",
+        "sha256": "cdebb97ff2e8f41f7151ee12451d2b3c869279996ae2a1c0b63d9b6a472222fc"
+      },
+      {
+        "path": "migration/current-status.json",
+        "sha256": "dd8f1500d2e079079317dcf6ac2acaf62605a6ff531d2aee6c0aed53b5683fa4"
+      }
+    ],
+    "runtime": {
+      "name": "dot-cloud-filesystem",
+      "version": "Bun1.4.2-Node24.19.0"
+    },
+    "evidenceRefs": [],
+    "verificationRefs": [],
+    "details": {
+      "workId": "five-student-evidence-audit-20261014",
+      "registration": "local-module-record",
+      "baseCommit": "ca8389744c1d5ebf756973f1ee45b03d2b7ad0be",
+      "nativeGlobalRegistration": false,
+      "publication": "pending",
+      "dependencyValidationMode": "pinned-snapshot",
+      "userAcceptance": "not-observed"
+    },
+    "finishedAt": null
+  },
+  "references": [
+    {
+      "artifactId": "academy-workbench:task:five-student-evidence-audit-20261014",
+      "relation": "parent"
+    }
+  ]
+}

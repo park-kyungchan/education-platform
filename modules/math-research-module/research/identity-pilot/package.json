@@ -1,0 +1,17 @@
+{
+  "name": "@math-research-module/identity-pilot",
+  "version": "0.1.0-pilot",
+  "private": true,
+  "type": "module",
+  "description": "Math semantic identity pilot; never a common harness replacement or authority service",
+  "scripts": {
+    "test": "node --test tests/*.test.ts",
+    "build:samples": "node scripts/build-samples.ts",
+    "schema:check": "python scripts/check-schema.py",
+    "check": "npm test && npm run schema:check && npm run sources:check",
+    "sources:check": "node scripts/check-sources.ts"
+  },
+  "engines": {
+    "node": ">=24"
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "schemaVersion": "academy.sanitized-architecture/1.0.0",
+  "status": "logical_design_and_partial_reference_only",
+  "actualDatabaseIntrospected": false,
+  "independentBackendImplemented": false,
+  "layers": [
+    {
+      "id": "source_observation",
+      "responsibility": "Bounded authenticated read with identity, effects, coverage and source version verified"
+    },
+    {
+      "id": "evidence_store",
+      "responsibility": "Server-only immutable observations and explicit corrective events"
+    },
+    {
+      "id": "domain",
+      "responsibility": "Identity, membership, work, clinic, print, teacher-review and uncertainty rules"
+    },
+    {
+      "id": "application",
+      "responsibility": "Scoped preparation and derived read models with independent action stages"
+    },
+    {
+      "id": "presentation",
+      "responsibility": "Teacher workbench, exact evidence drilldown and parent-facing projection"
+    },
+    {
+      "id": "adapters",
+      "responsibility": "Host auth, source read, durable store and purpose-specific MCP; missing independent implementation"
+    }
+  ],
+  "entitySpine": [
+    "actor",
+    "student",
+    "enrollment",
+    "lesson",
+    "book_edition",
+    "book_section",
+    "content_item",
+    "assignment",
+    "original_test",
+    "testing",
+    "judgment_revision",
+    "clinic_plan",
+    "generated_paper",
+    "print_snapshot",
+    "distribution",
+    "work_attempt",
+    "teacher_review",
+    "dayrecord",
+    "parent_projection"
+  ],
+  "graphKinds": {
+    "entityRelations": "May contain valid cycles; constrain endpoint kinds and references.",
+    "taskDependencies": "DAG for actionable preparation dependencies; keep execution state distinct.",
+    "sourceProvenance": "Evidence and versions, not a source of permission."
+  },
+  "nonNegotiableBoundaries": [
+    "No real student payloads in Git or browser bundles",
+    "Unknown is distinct from absent or complete",
+    "Printed membership is immutable historical evidence",
+    "Parent progress projection excludes internal completion/review state",
+    "Read-only effect must be verified, not inferred from endpoint names",
+    "Context never grants action authority"
+  ],
+  "referenceLimitations": [
+    "Legacy context adapter expects an older context shape and is reference-only; the new sanitized business packet is intentionally not a fabricated provenance-compatible replacement.",
+    "Legacy source modules contain unresolved imports and pins; see validation/dependency-gaps.json.",
+    "Native WebMCP requires separate verification."
+  ]
+}

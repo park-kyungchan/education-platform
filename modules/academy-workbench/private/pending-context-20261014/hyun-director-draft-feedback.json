@@ -1,0 +1,71 @@
+{
+  "schemaVersion": "academy.communication-context/1",
+  "recordedAt": "2026-10-14T11:05:03.691906+00:00",
+  "recordedAtBasis": "local_capture_of_parent_forwarded_messages",
+  "studentId": "stu_e656cff00f3b420c98c002588c6f58a6",
+  "publicationStatus": "local_pending_next_context_batch",
+  "sourceMessages": [
+    {
+      "id": "Sentinel_07f28c7e6ac481918b747a49a0471c7e",
+      "speaker": "user",
+      "text": "학생의 문제가 뭐고, 왜 주단위 진도량을 대폭 줄여야하는지 정의해서 작성해야한다."
+    },
+    {
+      "id": "Sentinel_14707b0a407c81919d75ff0d8883e18e",
+      "speaker": "user",
+      "text": "\"기존 오답은 해왔지만 아직 교사 채점 전이며\"이러한 것은 왜 넣는거야?"
+    },
+    {
+      "id": "Sentinel_58d78d6b51f48191afefaa056d3352b6",
+      "speaker": "user",
+      "text": "무슨 내용을 적고, 무슨 내용을 빼야할지, 톤앤매너 어떻게할지에 대해서 고려해서 작성해라."
+    }
+  ],
+  "communicationPurpose": {
+    "recipientRole": "부원장",
+    "channel": "DM",
+    "purpose": [
+      "현재 학습 수행 문제 정의",
+      "주단위 진도 대폭 축소 근거",
+      "지도 방향 협의"
+    ],
+    "draftStatus": "revised_provided",
+    "externalMessageSent": false,
+    "recipientApproval": "unverified"
+  },
+  "assistantDraftReasoning": {
+    "attribution": "assistant_proposed_explanation_not_teacher_diagnosis",
+    "workingHypothesis": "현재 독립학습 수행 속도와 과제량의 불일치",
+    "certainty": "working_hypothesis_not_diagnosis",
+    "proposedLogic": [
+      "주간 범위 축소",
+      "풀이·오답·교사 확인 시간을 확보",
+      "수행 속도를 확인한 뒤 진도량 재조정"
+    ],
+    "newWeeklyAssignmentsCreated": false
+  },
+  "selectionRule": {
+    "attribution": "explicit_user_feedback_on_this_draft",
+    "includeOnly": "문제 정의·진도 축소 근거·지도 방향에 직접 필요한 내용",
+    "excludeFromExternalDraft": "목적과 무관한 내부 진행 상태인 기존 오답 수행/교사 채점 대기",
+    "preserveInternalLearningFacts": true,
+    "deletePriorEvents": false
+  },
+  "existingFiveFilePublishCandidateModified": false,
+  "draftCompositionFeedback": {
+    "scope": "this_director_DM_writing_feedback_not_permission_rule",
+    "structure": [
+      "관찰 근거",
+      "학습 병목",
+      "주간 분량 감축 제안"
+    ],
+    "tone": "협의하는 전문적이고 간결한 톤",
+    "exclude": [
+      "학생 비난",
+      "고정 능력 단정",
+      "불필요한 채점 현황"
+    ],
+    "draftOnly": true,
+    "sent": false
+  }
+}

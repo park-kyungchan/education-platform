@@ -1,0 +1,44 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "academy-query-integration-20261021",
+  "kind": "task",
+  "id": "education-platform:task:academy-query-integration-20261021-qry-boundary",
+  "logical": {
+    "domainId": "education",
+    "projectId": "education-platform",
+    "workId": "academy-query-integration-20261021",
+    "issueId": "QRY-ISSUE-20261021",
+    "specId": "QRY-SPEC",
+    "specRevision": 1,
+    "planId": "QRY-PLAN",
+    "planRevision": 1,
+    "taskId": "education-platform:task:academy-query-integration-20261021-qry-boundary"
+  },
+  "title": "Resolve and verify application/read-adapter contract boundary",
+  "state": {
+    "execution": "complete",
+    "verification": "passed",
+    "localAudit": "result-durable",
+    "sharedAudit": "unsynchronized",
+    "formalCompletion": "pending"
+  },
+  "executionClass": "source-only",
+  "dependsOn": [
+    {
+      "taskId": "education-platform:task:academy-query-integration-20261021-qry-01",
+      "milestone": "execution-and-verification"
+    },
+    {
+      "taskId": "education-platform:task:academy-query-integration-20261021-qry-boundary-qualify-dom-01",
+      "milestone": "execution-and-verification"
+    }
+  ],
+  "decisionIds": [],
+  "effectIds": [],
+  "verificationEvidenceIds": [
+    "education-platform:evidence:qry-boundary-verification-r1"
+  ],
+  "nextAction": "QRY-BOUNDARY source extraction prepared. WAIT for root exact source commit and canonical snapshot+transition checkpoint, then DOM-02 receiver qualification. QRY-02 held on qualified DOM-02. Full canonical catalog behavior still needs the2 absent baseline code/spec JSON inputs; no native use or teacher acceptance inferred."
+}

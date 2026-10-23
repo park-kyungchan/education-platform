@@ -1,0 +1,7 @@
+/** Internal IDs never claim academy native identity. Confirmed joins require source evidence. */
+export type EntityType='student'|'book_edition'|'assignment'|'print_instance'|'attempt'|'item';
+export type IdentityBinding={kind:EntityType;internalId:string;studentId:string;nativeId:string|null;nativeNamespace:string|null;identityState:'unresolved'|'user_reported'|'source_verified'|'conflicted';evidenceEventIds:string[]};
+export function validateBinding(b:IdentityBinding){if(!b.internalId||!b.studentId||!Array.isArray(b.evidenceEventIds))throw Error('identity_fields_required');if(b.identityState==='source_verified'&&(!b.nativeId||!b.nativeNamespace||!b.evidenceEventIds.length))throw Error('native_identity_requires_source');if(b.nativeId!==null&&b.identityState!=='source_verified')throw Error('unverified_native_id');return b;}
+export type PrintBundleReview={bundleId:string;studentId:string;paperInstanceIds:string[];membershipState:'unresolved'|'user_reported'|'source_verified';printedEvidenceIds:string[];distributedEvidenceIds:string[];gradedEvidenceIds:string[];correctionEvidenceIds:string[];teacherReviewEvidenceIds:string[];wrongItemExceptions:Array<{itemLabel:string;evidenceIds:string[];correctionState:'unknown'|'pending'|'complete';teacherReviewState:'unknown'|'pending'|'complete'}>};
+/** A server print mark, physical paper, and distribution are separate evidence. */
+export function projectBundleReview(b:PrintBundleReview){return {...b,completionInferred:false,unknownItemCoverage:b.membershipState==='unresolved'};}

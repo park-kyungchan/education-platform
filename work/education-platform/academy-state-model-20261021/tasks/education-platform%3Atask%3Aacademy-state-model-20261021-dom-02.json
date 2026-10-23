@@ -1,0 +1,45 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "academy-state-model-20261021",
+  "kind": "task",
+  "id": "education-platform:task:academy-state-model-20261021-dom-02",
+  "logical": {
+    "domainId": "education",
+    "projectId": "education-platform",
+    "workId": "academy-state-model-20261021",
+    "issueId": "DOM-ISSUE-20261021",
+    "specId": "DOM-SPEC",
+    "specRevision": 1,
+    "planId": "DOM-PLAN",
+    "planRevision": 1,
+    "taskId": "education-platform:task:academy-state-model-20261021-dom-02"
+  },
+  "title": "Extend scoped teacher preparation projection contract gaps",
+  "state": {
+    "execution": "complete",
+    "verification": "passed",
+    "localAudit": "result-durable",
+    "sharedAudit": "unsynchronized",
+    "formalCompletion": "pending"
+  },
+  "executionClass": "source-only",
+  "dependsOn": [
+    {
+      "taskId": "education-platform:task:academy-state-model-20261021-dom-01",
+      "milestone": "execution-and-verification"
+    },
+    {
+      "taskId": "education-platform:task:academy-state-model-20261021-dom-02-qualify-qry-boundary",
+      "milestone": "execution-and-verification"
+    }
+  ],
+  "decisionIds": [],
+  "effectIds": [],
+  "verificationEvidenceIds": [
+    "education-platform:evidence:dom-02-verification-r1",
+    "education-platform:evidence:dom-02-root-verification-r1"
+  ],
+  "nextAction": "Preserve exact committed source qualification and originals. Downstream consumers require their own receiving qualifications; native effects/shared delivery/formal acceptance remain held."
+}

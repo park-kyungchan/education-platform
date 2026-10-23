@@ -1,0 +1,42 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "academy-workflow-verification-20261021",
+  "kind": "task",
+  "id": "education-platform:task:academy-workflow-verification-20261021-ver-03",
+  "logical": {
+    "domainId": "education",
+    "projectId": "education-platform",
+    "workId": "academy-workflow-verification-20261021",
+    "issueId": "VER-ISSUE-20261021",
+    "specId": "VER-SPEC",
+    "specRevision": 1,
+    "planId": "VER-PLAN",
+    "planRevision": 1,
+    "taskId": "education-platform:task:academy-workflow-verification-20261021-ver-03"
+  },
+  "title": "Verify final intended consumer/workflow closure after CON-03",
+  "state": {
+    "execution": "planned",
+    "verification": "pending",
+    "localAudit": "intent-durable",
+    "sharedAudit": "pending",
+    "formalCompletion": "pending"
+  },
+  "executionClass": "source-only",
+  "dependsOn": [
+    {
+      "taskId": "education-platform:task:academy-workflow-verification-20261021-ver-02",
+      "milestone": "execution-and-verification"
+    },
+    {
+      "taskId": "education-platform:task:academy-workflow-verification-20261021-ver-03-qualify-con-03",
+      "milestone": "execution-and-verification"
+    }
+  ],
+  "decisionIds": [],
+  "effectIds": [],
+  "verificationEvidenceIds": [],
+  "nextAction": "Hold until exact qualified prerequisites and root dispatch; no native effects."
+}

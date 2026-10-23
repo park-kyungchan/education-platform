@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0",
+  "events": [
+    {
+      "event_id": "Sentinel_f32d20d028888191bb94cb9aca84b046",
+      "source_type": "user_message",
+      "source_text": "이루한 학생 18:05 출석. 5분 지각으로 21:35 하원할 때 알려라.",
+      "student": "이루한",
+      "date": "2026-10-16",
+      "timezone": "Asia/Seoul",
+      "facts": [
+        {
+          "type": "attendance.actual_arrival",
+          "time": "18:05",
+          "status": "user_confirmed"
+        },
+        {
+          "type": "attendance.lateness_minutes",
+          "value": 5,
+          "status": "user_reported"
+        },
+        {
+          "type": "attendance.planned_departure",
+          "time": "21:35",
+          "status": "planned"
+        },
+        {
+          "type": "attendance.actual_departure",
+          "status": "unconfirmed"
+        }
+      ],
+      "source_snapshot_overwritten": false,
+      "deduplication_key": "source_message_id"
+    }
+  ]
+}

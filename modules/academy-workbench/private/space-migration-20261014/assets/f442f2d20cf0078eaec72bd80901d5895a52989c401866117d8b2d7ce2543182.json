@@ -1,0 +1,100 @@
+{
+  "$schema": "academy-operations.schema.json",
+  "kind": "academy_operations",
+  "id": "academy:operations:2026-10-06:r1",
+  "schemaVersion": "0.1.0",
+  "revision": 1,
+  "profileId": "kyungchan",
+  "projectId": "project:academy-practical",
+  "updatedAt": "2026-10-06T05:39:28.149Z",
+  "sourceIds": [
+    "source:user-cartography-request"
+  ],
+  "scope": "학교 조회, 다음 수업 준비, Cartography 보완의 진행 중 업무. 학생 실데이터는 포함하지 않는 초기 작업 원본.",
+  "records": [
+    {
+      "id": "task:lookup-school",
+      "kind": "task",
+      "schemaVersion": "0.1.0",
+      "revision": 1,
+      "profileId": "kyungchan",
+      "canonicalParentId": "project:academy-practical",
+      "relatedProjectIds": [
+        "project:academy-practical"
+      ],
+      "sourceIds": [
+        "source:user-cartography-request"
+      ],
+      "observedAt": null,
+      "updatedAt": "2026-10-06T05:39:28.149Z",
+      "title": "학생 학교를 사이트에서 확인하고 출석부 B열에 연결하기",
+      "dueAt": null,
+      "relatedRecordIds": [],
+      "routeIds": [
+        "route:school"
+      ],
+      "status": "in_progress",
+      "blockingQuestion": null,
+      "completionEvidenceIds": []
+    },
+    {
+      "id": "task:prepare-next-class",
+      "kind": "task",
+      "schemaVersion": "0.1.0",
+      "revision": 1,
+      "profileId": "kyungchan",
+      "canonicalParentId": "project:academy-practical",
+      "relatedProjectIds": [
+        "project:academy-practical"
+      ],
+      "sourceIds": [
+        "source:user-cartography-request"
+      ],
+      "observedAt": null,
+      "updatedAt": "2026-10-06T05:39:28.149Z",
+      "title": "다음 수업을 학생별 최신 기록과 과정으로 준비하기",
+      "dueAt": null,
+      "relatedRecordIds": [],
+      "routeIds": [
+        "route:next-class"
+      ],
+      "status": "in_progress",
+      "blockingQuestion": null,
+      "completionEvidenceIds": []
+    },
+    {
+      "id": "task:maintain-cartography",
+      "kind": "task",
+      "schemaVersion": "0.1.0",
+      "revision": 1,
+      "profileId": "kyungchan",
+      "canonicalParentId": "project:academy-practical",
+      "relatedProjectIds": [
+        "project:academy-practical"
+      ],
+      "sourceIds": [
+        "source:user-cartography-request"
+      ],
+      "observedAt": null,
+      "updatedAt": "2026-10-06T05:39:28.149Z",
+      "title": "실제 탐색 결과로 화면 경로와 필드 위치를 보완하기",
+      "dueAt": null,
+      "relatedRecordIds": [],
+      "routeIds": [
+        "route:attendance",
+        "route:next-class",
+        "route:school",
+        "route:makeup"
+      ],
+      "status": "in_progress",
+      "blockingQuestion": null,
+      "completionEvidenceIds": []
+    }
+  ],
+  "studentRecordCount": 0,
+  "dataLimitations": [
+    "학교 매핑은 미완료이다.",
+    "최신 수업 내용은 아직 추가 확인이 필요하다.",
+    "조회 경로 정의와 JSON 검증은 사이트 자동 실행을 활성화하지 않는다."
+  ]
+}

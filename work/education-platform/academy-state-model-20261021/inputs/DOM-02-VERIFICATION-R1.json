@@ -1,0 +1,211 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "academy-state-model-20261021",
+  "kind": "input",
+  "id": "DOM-02-VERIFICATION-R1",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "education-platform-dom-sublead",
+    "locator": "codex-thread:01a15d19-e804-7a12-87c2-07c0b82d9807/DOM-02/prepared-verification",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "verification": {
+      "schemaVersion": "1.0.0",
+      "kind": "verification",
+      "id": "education-platform:verification:dom-02-r1",
+      "projectId": "education-platform",
+      "domainId": "education",
+      "createdAt": "2026-10-21T08:14:40.967Z",
+      "payload": {
+        "targetRefs": [
+          "common-harness:task:2356ff2a7f67ee778f367900a196efebd5cb9600073a4159467e0d10532d3321"
+        ],
+        "criteria": [
+          {
+            "id": "g100-exact-default-targets",
+            "status": "pass",
+            "message": "Exact100 excludes both defaults only with retained same-student/book/paper/attempt/source-digest binding. Zero/non100, stale/mismatched/unknown evidence, explicit assignments and teacher finals remain separate.",
+            "evidenceRefs": [
+              "education-platform:evidence:dom-02-result-observation-r1"
+            ]
+          },
+          {
+            "id": "attempt-scope-and-legacy-originals",
+            "status": "pass",
+            "message": "Known activity reviews validate exact assignment/item/attempt scope; independent revision-scoped identities preserve originals. Legacy payloads stay byte-identical and unknown attempt scope cannot finalize every attempt.",
+            "evidenceRefs": [
+              "education-platform:evidence:dom-02-result-observation-r1"
+            ]
+          },
+          {
+            "id": "replacement-withdrawal-and-recovery",
+            "status": "pass",
+            "message": "Qualified replacement/withdrawal excludes exact predecessor obligations without losing history. Cycles, ambiguity and foreign scope cannot cause cancellation; shared lesson-effective selection and terminal clinic original-request recovery are tested.",
+            "evidenceRefs": [
+              "education-platform:evidence:dom-02-result-observation-r1"
+            ]
+          },
+          {
+            "id": "independent-paper-stages",
+            "status": "pass",
+            "message": "Printing/distribution evidence is independently scoped to issuance and report clocks. Identity, app entry, score, correction and teacher final are not conflated; absent stages remain derived unknowns.",
+            "evidenceRefs": [
+              "education-platform:evidence:dom-02-result-observation-r1"
+            ]
+          },
+          {
+            "id": "bounded-maintained-consumer-verification",
+            "status": "pass",
+            "message": "40 adversarial tests/123 assertions and28 maintained consumer tests/145 assertions pass; root/DC/new test typechecks and in-memory teacher bundle pass.47 DB skips and failing aggregate provenance are explicitly retained.",
+            "evidenceRefs": [
+              "education-platform:evidence:dom-02-result-observation-r1"
+            ]
+          },
+          {
+            "id": "root-custody-and-exact-prepared-source",
+            "status": "pass",
+            "message": "Existing Inputs, five qualified neutral leaves and reserved pins remain unchanged. Exact prepared source hashes, actual taskVerificationTarget and result Input SHA256 are bound. Root commit/snapshot/semantic transition and native/acceptance milestones remain pending.",
+            "evidenceRefs": [
+              "education-platform:evidence:dom-02-result-observation-r1"
+            ]
+          }
+        ],
+        "inputHashes": [
+          {
+            "path": "work/education-platform/academy-state-model-20261021/inputs/DOM-02-RESULT-R1.json",
+            "sha256": "8e8d9b51bb61ab3c1f1c101ac681b63a5a2a653412b7b8043c3832edf730e95d"
+          },
+          {
+            "path": "apps/academy/dc-gang-a/src/academy/learningWork.ts",
+            "sha256": "747f44cb2eda9844d6fdc266f51d89eeb71f7d8c90618a11c4f967dd3f120261"
+          },
+          {
+            "path": "apps/academy/dc-gang-a/src/academy/learningWorkBindings.ts",
+            "sha256": "a9772e2c4b161cd4f30d05a4e1b87ce1dd7cdd9bdcda73294ae505ac39dbe0cc"
+          },
+          {
+            "path": "apps/academy/dc-gang-a/src/academy/learningWorkProjection.ts",
+            "sha256": "bb2a6435379692009d7a688dfbf3cfc57fbdf35e57e0bb6936be8fe758e9d9d2"
+          },
+          {
+            "path": "apps/academy/dc-gang-a/src/academy/ownerWorkspaceStore.ts",
+            "sha256": "5ccdcefce2294c1a6578aac318fe282632e700584e3e274124f644d15169a1c6"
+          },
+          {
+            "path": "apps/academy/dc-gang-a/src/academy/postgresStore.ts",
+            "sha256": "f74213e45b6e81ad992d629a08e706707fc11dacb50c8a2c865e87c0c16b22c9"
+          },
+          {
+            "path": "apps/academy/dc-gang-a/src/academy/teacherWorkContext.ts",
+            "sha256": "79e85dbb464b96252b2547dba94d237fac992b692d40861e5ca791cb7bedd38e"
+          },
+          {
+            "path": "apps/academy/dc-gang-a/src/academy/teacherWorkspace.ts",
+            "sha256": "dae77c929fc05a356e9619f83ca1fcf70b4af5e5b33f2c1094a0df6b855e418e"
+          },
+          {
+            "path": "apps/academy/dc-gang-a/src/academy/usecases/studentScene.ts",
+            "sha256": "4ff2876a57a295a371795e0db28366b69f7aeef3bbbde5db338a33ff0c188b63"
+          },
+          {
+            "path": "apps/academy/dc-gang-a/src/academy/web/learningWorkView.ts",
+            "sha256": "eb86537b86ba3f480532e831a2b0901404bdfbbfd898187b24161dfc0dcb4cec"
+          },
+          {
+            "path": "apps/academy/dc-gang-a/src/academy/web/teacherWorkspaceView.ts",
+            "sha256": "ea1f50c5d7e0df4b1afc547da7ac1d5169cdc14095738243538f230b1f28229f"
+          },
+          {
+            "path": "apps/academy/dc-gang-a/tests/academy/learningWorkRefinements.test.ts",
+            "sha256": "464fcc0a3723ccef7d01af2f75f5af552fb282c65d123ce6641519311fd9d38b"
+          },
+          {
+            "path": "architecture/academy-state-model/dom-02-entrypoint.json",
+            "sha256": "d6586d6ed0d728c61a78f665592d593c85c0c80bb05e47bdcd68634269afbf6f"
+          },
+          {
+            "path": "architecture/academy-state-model/dom-02-design-r1.json",
+            "sha256": "024b6c2c0f5ed33e8bd41b121e379d7320ff080787002340e1270aa78f8930ba"
+          },
+          {
+            "path": "architecture/academy-state-model/verify-dom02.ts",
+            "sha256": "2742d806009a7ed3cde63d59e5cbf4a50bb40a9c085d07ba017127e2edf4446a"
+          },
+          {
+            "path": "architecture/academy-state-model/tsconfig.dom02.json",
+            "sha256": "4acd8f999bfa84363736dcdfe788ad546cc77943d821dcf61e7a40d3f85b7bfe"
+          },
+          {
+            "path": "architecture/academy-state-model/observations/DOM-02-CHECKS-R1.json",
+            "sha256": "189f1a5aa7de0434e490af369a594ba1ec58fb4536b49f408e0f902ee9fd31da"
+          },
+          {
+            "path": "architecture/academy-state-model/observations/DOM-02-CHECKS-R2.json",
+            "sha256": "756b88c58c560935abb11bd0add145cf990cc904ae5ad3d48fe0d5e382f6e9c2"
+          },
+          {
+            "path": "work/education-platform/academy-state-model-20261021/inputs/DOM-02-ADMISSION-R1.json",
+            "sha256": "6d50deee09bbba29329c4f533441583f4354a7c5c2ccd7bc70c78e4495909671"
+          },
+          {
+            "path": "work/education-platform/academy-state-model-20261021/inputs/DOM-01-RESULT-R1.json",
+            "sha256": "c9e4db697cacc1de7ce54711f56a471411c5e7845c9db7251b8eed395cd0f6f2"
+          },
+          {
+            "path": "work/education-platform/academy-state-model-20261021/inputs/DOM-01-VERIFICATION-R2.json",
+            "sha256": "b8d9cdcd7b0d32d1d07cd31c9758b30c677f164b04837ffeb351d276937cbf1f"
+          },
+          {
+            "path": "work/education-platform/academy-state-model-20261021/inputs/DOM-QRY-BOUNDARY-QUALIFICATION-R1.json",
+            "sha256": "802b2c17738aed53831bff8999865f013b4894174068edb6dfac5f21e15ca58d"
+          },
+          {
+            "path": "work/education-platform/academy-state-model-20261021/inputs/DOM-QRY-BOUNDARY-QUALIFICATION-VERIFICATION-R1.json",
+            "sha256": "bee32060d54a2d1d346f23a56e41dfc0e659c79de30e91895ff0e4c6925aa081"
+          },
+          {
+            "path": "work/education-platform/academy-state-model-20261021/inputs/DOM-ROOT-QUALIFICATION-R1.json",
+            "sha256": "abdf282846ede7c1bc60c7c3edc0605b5cde21b3ae8e86dd098809cce0cb6d71"
+          },
+          {
+            "path": "work/education-platform/academy-state-model-20261021/inputs/DOM-01-RESULT-R2.json",
+            "sha256": "57ec1d6f7e18af67c3b9add0cd674c0d29e58c29b7e865db70048058a4788298"
+          },
+          {
+            "path": "work/education-platform/academy-state-model-20261021/inputs/DOM-01-VERIFICATION-R1.json",
+            "sha256": "e9325a087075e7741f8189ed5812e047251299dc39da1d6c0e8e1b7fefa22a65"
+          },
+          {
+            "path": "work/education-platform/academy-state-model-20261021/inputs/DOM-ROOT-QUALIFICATION-VERIFICATION-R1.json",
+            "sha256": "03150bbe11d86db66ec80c0b0eecf88abf8b655760ca36da26776c7ee8a6bc89"
+          },
+          {
+            "path": "work/education-platform/academy-state-model-20261021/inputs/DOM-QRY-BOUNDARY-ADOPTION-R1.json",
+            "sha256": "71c0fbe385606454af0910853e8af1d55f3864ea82cc93d663d6a059e45a8e9e"
+          },
+          {
+            "path": "work/education-platform/academy-state-model-20261021/inputs/DOM-DELEGATED-SCOPE-R1.json",
+            "sha256": "79ecf9b872c44c9635635ee46283c51dea1396077c5cc62451dd4534051092de"
+          }
+        ],
+        "runtime": {
+          "name": "Bun source/synthetic checks; canonical task identity API externally pinned",
+          "version": "1.4.3; actual TypeScript7.0.2"
+        },
+        "details": {
+          "verificationClass": "prepared-source-scoped-checks-not-committed-canonical-qualification",
+          "fullAggregatePassing": false,
+          "dbSocketAdmitted": false,
+          "committedSnapshotPerformed": false,
+          "semanticTransitionPerformed": false,
+          "sourceResultDurableCommit": false,
+          "nativeAdoption": false,
+          "formalAcceptance": false
+        }
+      }
+    }
+  }
+}

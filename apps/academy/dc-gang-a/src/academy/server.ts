@@ -175,6 +175,15 @@ export function createTeacherServerHandler(options:TeacherServerOptions){
       }
       if(path.startsWith('/api/')){
         const actor=context(req);if(!actor)return preDispatchRefusal('teacher_authentication_required',401);
+        if(path==='/api/retained-query'){
+          if(req.method!=='POST'||url.search)return json({error:'unexpected_query_scope'},400);
+          let input:Record<string,unknown>;try{input=await body(req);}catch{return json({error:'retained_query_input_invalid'},400);}
+          if(options.currentAuthentication){const current=options.currentAuthentication();identity=current.identity;sessionKey=current.sessionKey;}
+          const currentActor=context(req);if(!currentActor||currentActor.ownerId!==actor.ownerId||currentActor.actorId!==actor.actorId)return json({error:'teacher_authentication_required'},401);
+          const reply=await options.app.retainedQuery(currentActor,input);
+          if(options.currentAuthentication){const current=options.currentAuthentication();identity=current.identity;sessionKey=current.sessionKey;}
+          const after=context(req);return after?.ownerId===actor.ownerId&&after.actorId===actor.actorId?json(reply):json({error:'teacher_authentication_required'},401);
+        }
         if(['/api/preserved-history','/api/preserved-history-records','/api/preserved-history-record','/api/preserved-history-artifact'].includes(path)){
           if(req.method!=='GET')return json({error:'method_not_allowed'},405);
           const required=path==='/api/preserved-history'?[]:path==='/api/preserved-history-artifact'?['id','snapshot']:['namespace','scope','snapshot',...(url.searchParams.get('scope')==='student'?['studentId']:[]),...(path==='/api/preserved-history-record'?['recordId']:[])];

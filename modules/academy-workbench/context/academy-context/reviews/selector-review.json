@@ -1,0 +1,210 @@
+{
+  "schemaVersion": "academy-context.selector-review/1.0.0",
+  "id": "ACX-REVIEW-SELECTOR-001",
+  "reviewedAtUtc": "2026-10-21T04:09:27.397987Z",
+  "reviewer": {
+    "agent": "education_domain_map",
+    "role": "independent-selector-integration-reviewer",
+    "sourceChangesPerformed": false,
+    "ownExecutionContractArtifactsReviewed": false
+  },
+  "result": "pass_for_exact_reviewed_successor_files",
+  "unresolvedRequiredFindings": [],
+  "candidate": {
+    "kind": "uncommitted-file-manifest-not-immutable-commit-or-git-tree",
+    "repositoryId": "park-kyungchan/academy-workbench",
+    "baseCommit": "1479a086ef2bcf26fbc9a94a8e9c79dc63bb0abe",
+    "reviewedFiles": [
+      {
+        "path": "context/academy-context/types.ts",
+        "sha256": "c49a1863ddd1540f6d591c0175c08d0a720747762c3be74af9bb459ef889abd1",
+        "bytes": 3431
+      },
+      {
+        "path": "context/academy-context/validate.ts",
+        "sha256": "ffa530db92b98368740e0942ee7b8f0f3b41e87101602b44e7ee0e7e1be2e08f",
+        "bytes": 9878
+      },
+      {
+        "path": "context/academy-context/select.ts",
+        "sha256": "c668446e2fe5b8d76ac1294bbe7a63a1d13f066e87a490c5bbd471cf904e8cca",
+        "bytes": 11400
+      },
+      {
+        "path": "context/academy-context/select.test.ts",
+        "sha256": "401468bd49898d8699aaccef47b1272675600ac461ad3b53235fbbf06b8bc5e9",
+        "bytes": 19426
+      },
+      {
+        "path": "context/academy-context/catalog.json",
+        "sha256": "44f8b2acb8c42a856d95071c63de3a7a3172b62cb93d9db5bc13f42e2a922a17",
+        "bytes": 64349
+      },
+      {
+        "path": "context/academy-context/tsconfig.json",
+        "sha256": "fe4252c572548f2080fcb05124a5dde3d88bbd8bd955f72c04a167a6227b6531",
+        "bytes": 320
+      }
+    ],
+    "catalogCanonicalSha256": "f52659b1bd77f0a0cfd1c452a15e60aa0e8d4f11d11e496ceab01344c7b0bb65",
+    "catalogByteHashMeaning": "Hash of catalog.json bytes is separate from selector canonical object hash."
+  },
+  "findings": [
+    {
+      "id": "ACX-SELECT-SCOPE-001",
+      "priority": "P1",
+      "status": "resolved_in_reviewed_successor",
+      "title": "Required source and historical references bypassed excluded-topic scope",
+      "baselineObservation": "Initial selectContext accepted an otherwise valid catalog and reintroduced counseling Source metadata through topic.sourceIds, record.sourceIds, finding.sourceIds and provenance references. A required excluded historical record also returned its reference metadata and sources. Initial 15 existing tests passed despite these paths. Baseline code was observed before concurrent repair; no immutable baseline commit/hash claim is made.",
+      "reproduction": {
+        "input": "In-memory clone of current catalog; no source file or student payload is read.",
+        "commonMutation": "Copy a nonprivate Source as REVIEW-EXCLUDED-SOURCE with topicIds=[academy.counseling].",
+        "routes": [
+          "Attach source ID to academy.class-preparation.sourceIds.",
+          "Attach source ID to CTX-NAVIGATION.sourceIds.",
+          "Attach source ID to a selected finding.sourceIds.",
+          "Add provenance CTX-NAVIGATION -> excluded source.",
+          "Attach source ID to historical CTX-OLD-ROUTING.sourceIds.",
+          "Add historical record in academy.counseling and reference it from CTX-NAVIGATION.supersedes.",
+          "Add current record in academy.counseling and provenance CTX-NAVIGATION -> excluded record."
+        ],
+        "independentSuccessorChecks": 14,
+        "historyModes": [
+          false,
+          true
+        ]
+      },
+      "successorEvidence": {
+        "code": [
+          {
+            "path": "context/academy-context/select.ts",
+            "line": 72
+          },
+          {
+            "path": "context/academy-context/select.ts",
+            "line": 83
+          }
+        ],
+        "behavior": "All required source routes use addSource and require every declared source topic to remain allowed. Required excluded historical/current records explicitly refuse. Details return only sourceId/recordId; no source prose or relation meaning is returned. Unrelated excluded history and unscoped unread metadata locators preserve their previous behavior.",
+        "observedErrors": [
+          "referenced-source-outside-scope",
+          "historical-reference-outside-scope",
+          "referenced-record-outside-scope"
+        ]
+      }
+    },
+    {
+      "id": "ACX-SELECT-ORDER-001",
+      "priority": "P2",
+      "status": "resolved_in_reviewed_successor",
+      "title": "Source inventory starved current decisions and findings on the first bounded page",
+      "baselineObservation": {
+        "topicId": "academy.class-preparation",
+        "maxBytes": 24576,
+        "firstPage": {
+          "topics": 9,
+          "sources": 41,
+          "records": 0,
+          "findings": 0,
+          "usedBytes": 24356
+        },
+        "totalItems": 87,
+        "totalSources": 47,
+        "totalPages": 2
+      },
+      "successorEvidence": {
+        "code": [
+          {
+            "path": "context/academy-context/select.ts",
+            "line": 60
+          },
+          {
+            "path": "context/academy-context/select.ts",
+            "line": 108
+          }
+        ],
+        "ordering": "Topics, current actual-user and source-owner decisions, unresolved/current constraints, P1/P2/P3 findings, source inventory, other/history records, historical references, relations. Ties remain deterministic.",
+        "firstPage": {
+          "topics": 9,
+          "sources": 6,
+          "records": 12,
+          "findings": 16,
+          "usedBytes": 24544
+        },
+        "totalItems": 87,
+        "totalSources": 47,
+        "totalPages": 2
+      },
+      "interpretation": "Verified first-page usefulness changed for this catalog. Total closure remains broad and unchanged. This is not empirical optimization, lower aggregate bytes, reduced source exposure, learner benefit or proof of faster work."
+    }
+  ],
+  "independentValidation": {
+    "runtime": "Bun 1.4.3",
+    "focusedCommand": "bun test context/academy-context/select.test.ts",
+    "focusedResult": {
+      "passed": 24,
+      "failed": 0,
+      "assertions": 194
+    },
+    "actualCatalog": {
+      "repositories": 9,
+      "sources": 48,
+      "topics": 18,
+      "records": 16,
+      "relations": 8,
+      "findings": 16,
+      "validateCatalog": "pass"
+    },
+    "paginationSweep": {
+      "workflowTopics": 7,
+      "historyModes": 2,
+      "maxBytes": [
+        4096,
+        8192,
+        16384,
+        24576,
+        65536
+      ],
+      "combinations": 70,
+      "result": "pass",
+      "checks": [
+        "Every compact JSON response byte count equals usedBytes and stays within maxBytes.",
+        "Concatenated pages exactly equal the complete high-budget result for the same query.",
+        "No duplicate item IDs and no missing ordered items.",
+        "Continuation terminates without silently truncating closure."
+      ]
+    },
+    "cursorChecks": "Changed byte budget rejects cursor-query-mismatch; changed catalog content rejects stale-catalog-cursor. Existing focused tests cover topic/history binding, malformed cursors, offset bounds, deterministic pages and object-key-order stability.",
+    "graphChecks": "Containment, dependency and revision each validate their combined explicit and shorthand edges independently; semantic cycles and repeated workflow cycles remain allowed. Ancestor and dependency closure does not flatten them into one DAG.",
+    "pinAndPrivacyChecks": "Validator checks supplied metadata syntax, references and declared byte/hash pairs only. It does not open paths or claim hashes prove currentness, permission or mathematical validity. Null pins are limited to explicitly unread no-content-read sources. No real source payload/credential was opened by this selector review.",
+    "typecheck": "Not independently rerun in ACX-REVIEW-SELECTOR-001; implementer reports compatibility tsc5.9.3 passed. This review independently ran Bun focused tests and metadata mutations/pagination."
+  },
+  "advisoryObservations": [
+    {
+      "id": "ACX-SELECT-ADVISORY-CLOSURE",
+      "requiredForCurrentDelivery": false,
+      "detail": "Class-preparation dependency closure selects 47 of 48 source locators and all16 findings through broad foundations/ancestors. Ordering fixes first-page starvation without narrowing this closure. A later owner-selected relevance model may separate direct task evidence from optional foundation inventory while preserving complete references and holds."
+    },
+    {
+      "id": "ACX-SELECT-ADVISORY-COMPLETION",
+      "requiredForCurrentDelivery": false,
+      "detail": "CTX-COMPLETION is tagged lesson/progress/homework/clinic but not class-preparation. The class-preparation packet includes classroomCyclePolicy source yet omits this concise completion distinction record. Consider domain-owner review of preparation/pending relevance before changing tags or dependency edges."
+    },
+    {
+      "id": "ACX-SELECT-ADVISORY-NOTES",
+      "requiredForCurrentDelivery": false,
+      "detail": "Unread-note prose regex is a brittle extra metadata convention. The actual no-content-read policy and null hash/length pair remain the semantic boundary; future schema work should prefer explicit fields over expanding English phrase matching."
+    }
+  ],
+  "limitations": [
+    "Review covers only the enumerated selector/validator/types/tests/config/catalog bytes; changes need a successor hash binding.",
+    "Catalog cursor currentness means exact supplied catalog content, not fresh native/remote source state.",
+    "The default date/class/student tuple describes navigation; this pure selector does not read an actual class roster or student state.",
+    "No full private-history reconstruction, canonical Memory admission, native activation, operational execution, publication or user acceptance is established."
+  ],
+  "authority": "none",
+  "nativePermissionGranted": false,
+  "semanticAcceptanceEstablished": false,
+  "operationalCompletionEstablished": false,
+  "publicationEstablished": false
+}

@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:academy:sanitized-business-decisions:1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "preparedAt",
+    "purpose",
+    "authorityGranted",
+    "containsStudentData",
+    "provenanceMode",
+    "decisions",
+    "openQuestions"
+  ],
+  "properties": {
+    "preparedAt": {
+      "type": "string"
+    },
+    "purpose": {
+      "type": "string"
+    },
+    "provenanceMode": {
+      "type": "string"
+    },
+    "schemaVersion": {
+      "const": "academy.sanitized-business-decisions/1.0.0"
+    },
+    "authorityGranted": {
+      "const": false
+    },
+    "containsStudentData": {
+      "const": false
+    },
+    "openQuestions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "decisions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "kind",
+          "status",
+          "statement",
+          "implementationImplication",
+          "executionAuthority"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "kind": {
+            "enum": [
+              "purpose",
+              "business_rule",
+              "output_rule",
+              "scope"
+            ]
+          },
+          "status": {
+            "const": "active"
+          },
+          "statement": {
+            "type": "string",
+            "minLength": 1
+          },
+          "implementationImplication": {
+            "type": "string"
+          },
+          "executionAuthority": {
+            "const": "none"
+          }
+        }
+      }
+    }
+  }
+}

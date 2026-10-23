@@ -1,0 +1,247 @@
+{
+  "schemaVersion": "academy.independent-recovery-review/1",
+  "generatedAt": "2026-10-13T04:37:24.185681+00:00",
+  "verdict": "scoped_clearance",
+  "summary": "Fresh independent review found no remaining mandatory blocker for the exact synthetic, loopback-only, read-only recovery runtime. Earlier 240bb2ec clearance is invalid for this reconstructed candidate and was not reused.",
+  "candidate": {
+    "path": "/workspace/scratch/3bd8c10a8771/academy-workbench-recovery-20261013",
+    "runtimeDigest": "553473f450fcff22d4fe7b1d567fd77d9d73dc4a3d162fe9f6348dd7cb54e180",
+    "runtimeFileCount": 37,
+    "digestDefinition": "SHA-256 of compact JSON serialization of the path-sorted ordered files array in runtime-closure.json; each element has keys path, bytes, sha256 in that order. Matches builder validation/runtime-dependency-audit.json.",
+    "commit": null,
+    "fullTreeFrozen": false,
+    "invalidation": "Any runtime change requires affected checks and a new digest before this verdict is reused.",
+    "runtimeFrozen": true,
+    "runtimeFreezeEvidence": "Builder confirmed runtime files frozen at 2026-10-13T04:37Z; all 37 current entries independently matched the builder receipt byte/hash values. Full release tree and GUI evidence still pending."
+  },
+  "allowedScope": {
+    "packagedSyntheticFixture": true,
+    "loopbackReadOnlyHttp": true,
+    "syntheticSqlitePersistence": true,
+    "realPrivateDataImport": false,
+    "operationalAuthSetup": false,
+    "externalHosting": false,
+    "academyMutation": false,
+    "printingOrSending": false,
+    "completeFeatureParityClaim": false
+  },
+  "verification": [
+    {
+      "id": "current_typecheck",
+      "status": "passed",
+      "count": null,
+      "evidence": "candidate-tests.txt",
+      "detail": "Fresh independent TypeScript check on reconstructed candidate."
+    },
+    {
+      "id": "current_runtime_suite",
+      "status": "passed",
+      "count": 43,
+      "evidence": "candidate-tests.txt",
+      "detail": "Storage, auth, HTTP boundaries, scope, workflow/date/session, history correction, exact preview fixture, source identity, bounded summary tests."
+    },
+    {
+      "id": "built_ui_suite",
+      "status": "passed",
+      "count": 4,
+      "evidence": "candidate-tests.txt",
+      "detail": "Built JS with real loopback HTTP in a DOM emulator: restored panels, workflow/Today flows, races/auth loss, malformed-student switch cleanup, and HTML escaping. External application fetch denied."
+    },
+    {
+      "id": "independent_boundary_suite",
+      "status": "passed",
+      "count": 13,
+      "evidence": "check-results.json; review-checks.mjs",
+      "detail": "Separately authored tests for private-mode route auth, platform/query/header rejection, Host/Origin/proxy rejection, malformed paths, no writes/static traversal, identity/history scopes, fixture self-labeling, withdrawn completion/membership/policies and inherited-key record refs."
+    },
+    {
+      "id": "fresh_runtime_closure",
+      "status": "passed",
+      "count": 37,
+      "evidence": "runtime-closure.json; inspect-closure.mjs",
+      "detail": "Native Node server imports only, explicit client/shared-date browser inputs, no fixture/server/archive browser input, no external runtime package/import or hosted ChatGPT/Sites marker found."
+    },
+    {
+      "id": "built_assets_match_source",
+      "status": "passed",
+      "count": 2,
+      "evidence": "Independent esbuild write:false comparison performed 2026-10-13T04:34Z",
+      "detail": "public/app.js and public/app.css matched a fresh in-memory build byte-for-byte; no candidate file was rewritten by the reviewer."
+    },
+    {
+      "id": "real_browser_gui",
+      "status": "not_run",
+      "count": null,
+      "evidence": null,
+      "detail": "Not performed by this independent reviewer. Any builder/browser-worker result must be considered separately, on this recovery digest. Prior milestone browser results are not carried forward."
+    },
+    {
+      "id": "real_data_credentials_sources",
+      "status": "not_run",
+      "count": null,
+      "evidence": null,
+      "detail": "No actual student data, operational secret, source academy service, production credential configuration, public bind, repository push or deployment was used by this review."
+    }
+  ],
+  "newFindingsResolved": [
+    {
+      "id": "RR1",
+      "status": "fixed_and_retested",
+      "issue": "Inherited recordRef values such as toString/__proto__ passed a prototype lookup and crashed studentPanels.",
+      "fix": "Object.hasOwn on the projection records plus a null-prototype evidence dictionary.",
+      "evidence": [
+        "src/server/read-models.ts:22-24",
+        "tests/runtime.test.ts",
+        "check-results.json"
+      ]
+    },
+    {
+      "id": "RR2",
+      "status": "fixed_and_retested",
+      "issue": "Retracted/superseded/conflicted completion and assignment history was displayed as current checked work.",
+      "fix": "Conservative exclusion of retracted/superseded records and conflicted state without a completion check; raw history remains readable.",
+      "evidence": [
+        "src/server/read-models.ts:11-19",
+        "tests/runtime.test.ts",
+        "check-results.json"
+      ]
+    },
+    {
+      "id": "RR3",
+      "status": "fixed_and_retested",
+      "issue": "Unsupported request/membership sessions could silently yield no cohort.",
+      "fix": "Only all, 1 and 2 are admitted for requested sessions; membership slots outside 1/2 remain unverified.",
+      "evidence": [
+        "src/server/read-models.ts:31-45",
+        "tests/runtime.test.ts",
+        "check-results.json"
+      ]
+    },
+    {
+      "id": "RR4",
+      "status": "fixed_and_retested",
+      "issue": "A failed renderer after changing selected student could leave the prior student record list under the new heading.",
+      "fix": "Selection commit invalidates/aborts record requests and clears the old record panel before mounting the new student.",
+      "evidence": [
+        "src/client/app.ts:10",
+        "tests-ui/browser.test.ts malformed selected-student case"
+      ]
+    },
+    {
+      "id": "RR5",
+      "status": "fixed_and_retested",
+      "issue": "Server summary sizes could exceed the client 200-entry contract and blank otherwise valid imported histories.",
+      "fix": "Assignment/checklist summaries capped at 100 each and supporting evidence at 200, with explicit visible count/partial coverage and paged raw-record availability.",
+      "evidence": [
+        "src/server/read-models.ts:18-19",
+        "src/client/renderers/student-event-view.ts",
+        "tests/runtime.test.ts large event history case"
+      ]
+    },
+    {
+      "id": "RR6",
+      "status": "fixed_and_retested",
+      "issue": "Withdrawn/superseded/conflicted workflow policies or memberships could remain current selections/class members.",
+      "fix": "Conservative history exclusion/unverified membership and correction-sensitive catalog/membership revision digests.",
+      "evidence": [
+        "src/server/read-models.ts:36-45",
+        "tests/runtime.test.ts",
+        "check-results.json"
+      ]
+    }
+  ],
+  "reverifiedBaselineControls": [
+    "Unauthenticated preview requires the single exact packaged fixture envelope and is rechecked on every protected request; an imported synthetic label cannot confer access.",
+    "SQLite imports enforce one owner and one mode inside BEGIN IMMEDIATE; identity/evidence joins and immutable record/dataset conflicts are rejected atomically.",
+    "All operational data/static routes require configured owner authentication in owner mode; only non-sensitive health is public.",
+    "Socket loopback, exact Host/Origin, cross-site fetch and unconfigured forwarding headers enforce the boundary. Platform identity and query tokens do not authenticate.",
+    "Authentication comparison hashes submitted values to a fixed-size SHA-256 digest then uses timingSafeEqual. Real secret-file loading and operational auth lifecycle were not exercised.",
+    "HTTP APIs are GET/HEAD-only; SQL inputs are parameterized; static serving is an exact three-file map; artifact bytes and archive paths are not served.",
+    "Renderer dynamic content uses escaping or textContent; restored panels do not grant execution authority from source context.",
+    "Private no-store, same-origin resource policy, restrictive CSP, no CORS allowance and bounded generic failure responses remain in place."
+  ],
+  "restoredSurfaces": [
+    "Book rails, teacher overlay, included-content placement and desktop stepper.",
+    "Student current-report view, Today saved-summary view, date/session workflow policy view, evidence view, empty-assessment/diary view and unavailable refresh-readiness view.",
+    "New independent GET read models with owner/student scope and explicit absence of live source proof."
+  ],
+  "knownFunctionalLimits": [
+    {
+      "area": "Actual migration",
+      "detail": "Five purpose-written fictional students and 144 fictional source records only. No existing private student archive has been normalized, reconciled or imported."
+    },
+    {
+      "area": "Current-event model",
+      "detail": "Projects recognized teacher_assignment and activity_checkpoint records. Attendance, schedule, richer stage events and many old domain mappings remain empty/unprojected; original raw records remain separately accessible. Conservative history suppression does not prove semantic reconciliation."
+    },
+    {
+      "area": "Today",
+      "detail": "Returns current.state=unverified and an all-owner saved event summary. It does not establish the requested date/session actual tasks, DailyRecord completion, attendance or today-specific source freshness."
+    },
+    {
+      "area": "Workflow graph",
+      "detail": "Projects recognized workflow_policy steps as contains relations and recognized membership patterns. It does not reconstruct the complete historical policy graph, preconditions, role/artifact/dependency relations, confirmed binding ledger or actual execution tasks."
+    },
+    {
+      "area": "Assessment and diary",
+      "detail": "Actual assessment/attempt records are not projected; their presence is surfaced as unprojected instead of a false empty assessment. Only recognized saved diary rows are shown. Authentic student identity, source clocks and complete record coverage require migration work."
+    },
+    {
+      "area": "Generic domains",
+      "detail": "Seventeen domain buttons count/filter stored records; these categories do not establish that all academy workflows or actions are implemented. Generic raw-record next pages are available through the API rather than a complete UI pager."
+    },
+    {
+      "area": "Runtime/API compatibility",
+      "detail": "Independent Node/SQLite auth/read contracts replace hosted Sites trust. Prior POST contracts and native browser modelContext registration are not reproduced. Historical UI appearance does not establish old API, data or functional parity."
+    },
+    {
+      "area": "Operations",
+      "detail": "No source live login/read refresh adapter, source mutations, printing, sending, actual distribution, artifact byte serving, private-import command, full backup/restore flow or external deployment is implemented/verified."
+    }
+  ],
+  "hardRemainingGates": [
+    {
+      "id": "real_data",
+      "status": "open",
+      "requirement": "Inventory approved source records, namespaces, attachments, conflicts and unavailable data. Independently reconcile source identities, record counts, projection mappings and correction history before real import."
+    },
+    {
+      "id": "credential_setup",
+      "status": "open",
+      "requirement": "Use separately approved secure operational authentication setup. Real secret loading, browser Basic-auth handling, rotation/revocation and local multi-user operating assumptions need testing."
+    },
+    {
+      "id": "private_storage",
+      "status": "open",
+      "requirement": "Use a separate private database/archive outside source fixtures/bundles; screen secrets/tokens/signed URLs, validate artifact bytes/hashes, and verify repository/recipient access."
+    },
+    {
+      "id": "recovery",
+      "status": "open",
+      "requirement": "Test consistent SQLite/WAL backups, restore, corruption recovery, import rollback and storage migration on the selected operational deployment."
+    },
+    {
+      "id": "hosting",
+      "status": "open",
+      "requirement": "Design/verify TLS, access management, secrets, logging, abuse controls and explicit proxy trust before any external hosting. Current external-bind rejection must not be bypassed casually."
+    },
+    {
+      "id": "scope_parity",
+      "status": "open",
+      "requirement": "Restore and test missing actual data/domain semantics before claiming complete feature parity or all academy work. Restored panels and category catalogues are not sufficient."
+    },
+    {
+      "id": "release_hash",
+      "status": "open",
+      "requirement": "Associate this runtime digest with the final frozen tree/archive/commit and rehash after packaging. Any changed runtime file invalidates the verdict until rechecked."
+    }
+  ],
+  "limitations": [
+    "Bounded independent static review plus synthetic local tests, not a blanket security guarantee.",
+    "No complete GUI/browser-security-engine validation, adversarial filesystem/OS attacker, production load or real private data test.",
+    "Read models fail closed above 10000 queried records; large-history scalability and total graph cost remain operational limits.",
+    "Freshness maxima currently use serialized timestamp ordering and require validation with real mixed-offset/source-clock data before operational interpretation.",
+    "No external dependency advisory scan was performed. Runtime requires native Node only; development tools remain separate pinned dependencies.",
+    "Archive/runtime provenance and factual source identity must not be treated as authorization or evidence of successful academy action."
+  ]
+}

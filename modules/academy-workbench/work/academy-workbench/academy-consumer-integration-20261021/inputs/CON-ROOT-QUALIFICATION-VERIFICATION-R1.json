@@ -1,0 +1,49 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "academy-operations",
+  "projectId": "academy-workbench",
+  "workId": "academy-consumer-integration-20261021",
+  "kind": "input",
+  "id": "CON-ROOT-QUALIFICATION-VERIFICATION-R1",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "root-academy-orchestrator",
+    "locator": "actual-root-source-qualification:academy-consumer-integration-20261021:verification",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "verification": {
+      "schemaVersion": "1.0.0",
+      "kind": "verification",
+      "id": "academy-workbench:verification:con-root-qualification-r1",
+      "domainId": "academy-operations",
+      "projectId": "academy-workbench",
+      "createdAt": "2026-10-21T07:07:44.341Z",
+      "payload": {
+        "targetRefs": [
+          "common-harness:task:f47b3adb91f7dcddbe66ded96399ff776fefcdf666f3d1ae43213565590ed72b"
+        ],
+        "criteria": [
+          {
+            "id": "exact-root-source-qualified",
+            "status": "pass",
+            "message": "Canonical producer Task, exact result and bound Verification read; receiver local source gate only.",
+            "evidenceRefs": [
+              "academy-workbench:evidence:con-root-qualification-observation-r1"
+            ]
+          }
+        ],
+        "inputHashes": [
+          {
+            "path": "work/academy-workbench/academy-consumer-integration-20261021/inputs/CON-ROOT-QUALIFICATION-R1.json",
+            "sha256": "8ff4ee05571633ed5beac0a7f4c14b101c54314edf6462c716708e8d6a20e3c1"
+          }
+        ],
+        "runtime": {
+          "name": "Bun canonical source reader",
+          "version": "1.4.3"
+        }
+      }
+    }
+  }
+}

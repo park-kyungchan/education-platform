@@ -1,0 +1,45 @@
+{
+  "schema": "academy.consumer-response-repair-entrypoint.v1",
+  "taskId": "academy-workbench:task:academy-consumer-integration-20261021-con-response-contract-repair",
+  "logical": {
+    "domainId": "academy-operations",
+    "projectId": "academy-workbench",
+    "workId": "academy-consumer-integration-20261021",
+    "issueId": "CON-ISSUE-20261021",
+    "specId": "CON-SPEC",
+    "specRevision": 1,
+    "planId": "CON-PLAN",
+    "planRevision": 3,
+    "taskId": "academy-workbench:task:academy-consumer-integration-20261021-con-response-contract-repair"
+  },
+  "state": "READY_FOR_ROOT_SOURCE_CHECKPOINT",
+  "taskState": {
+    "execution": "running",
+    "verification": "pending"
+  },
+  "sourceEvidence": "response-repair-source-evidence-r1.json",
+  "authorChecks": [
+    "observations/CON-RESPONSE-REPAIR-CHECKS-R1.json",
+    "observations/CON-RESPONSE-REPAIR-FOCUSED-R2.json"
+  ],
+  "preservation": "observations/CON-RESPONSE-REPAIR-PRESERVATION-R1.json",
+  "checkpointInput": "CON-RESPONSE-REPAIR-CHECKPOINT-R1",
+  "observationEvidenceId": "academy-workbench:evidence:con-response-repair-author-observation-r1",
+  "taskVerificationTarget": "common-harness:task:6654b2aa07105c3426ae90ec0ce771aab0ee8d15177f845fc7fb045afbd9fa24",
+  "finalVerificationInput": null,
+  "expectedRootControl": "Exact changed-source production stdio/SDK receipt after writer idle",
+  "suggestedRootSuite": [
+    "bun",
+    "test",
+    "--preload",
+    "./tests/network-deny.ts",
+    "tests/teacher-report.test.ts",
+    "tests/teacher-tools-mcp.test.ts",
+    "tests/teacher-response-contract.test.ts"
+  ],
+  "rootSuiteCwd": "tools/academy-mcp",
+  "canonicalCheckpoint": "Root exact candidate snapshot/transition pending",
+  "next": "WAIT writer idle. After Root control, append NEW final result and Verification; do not complete Task or attach failed author-phase Verification now.",
+  "nativeActivation": false,
+  "formalWorkComplete": false
+}

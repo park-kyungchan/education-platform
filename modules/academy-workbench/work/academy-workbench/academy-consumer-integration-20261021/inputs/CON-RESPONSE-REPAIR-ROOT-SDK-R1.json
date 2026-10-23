@@ -1,0 +1,46 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "academy-operations",
+  "projectId": "academy-workbench",
+  "workId": "academy-consumer-integration-20261021",
+  "kind": "input",
+  "id": "CON-RESPONSE-REPAIR-ROOT-SDK-R1",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "root-academy-orchestrator",
+    "locator": "root-changed-source-synthetic-SDK-control:1d72361428ec6e0356fb80d840959926819135c4",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "checkedCommit": "1d72361428ec6e0356fb80d840959926819135c4",
+    "checkedTree": "78047897b870626123108fb57ebf269335e75dba",
+    "command": [
+      "/usr/local/bin/bun",
+      "test",
+      "--preload",
+      "./tests/network-deny.ts",
+      "tests/teacher-report.test.ts",
+      "tests/teacher-tools-mcp.test.ts",
+      "tests/teacher-response-contract.test.ts"
+    ],
+    "receiptPath": "architecture/academy-consumer-integration/observations/CON-RESPONSE-REPAIR-ROOT-SDK-R1.json",
+    "receiptSha256": "47bc436d7d652c4064652f510e03e02336193dde75485b4b2b15891af70f4504",
+    "pass": 16,
+    "fail": 0,
+    "assertions": 523,
+    "runtime": "Bun1.4.3 Root authorized tools path",
+    "sourceStillExact": true,
+    "nearCapMeasurement": {
+      "callToolResultBytes": 524286,
+      "jsonRpcFrameBytes": 524321,
+      "overheadBytes": 35,
+      "frameAccepted": true,
+      "universal512KiBFrameCapClaimed": false
+    },
+    "scope": "Existing and repaired canonical report/source guards plus actualSDKproduction registration/stdioserver and in-processSDK/wirecodec boundary regressions; invented fixtures only.",
+    "attribution": "Root changed-source SDK/control result. Author/reviewer prior native stdio failures and initial repair type/fixture failure remain historical; no native-runtime cause or success inferred.",
+    "recordingRule": "Expected Root control now available; append NEW final repair Result/Verification target-bound to current repair Task, preserve all Inputs/observations and previous completed Tasks.",
+    "nativeActivation": false,
+    "teacherAcceptance": false
+  }
+}

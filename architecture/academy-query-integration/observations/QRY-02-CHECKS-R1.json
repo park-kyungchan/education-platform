@@ -1,0 +1,190 @@
+{
+  "schema": "academy.qry02-checks.v1",
+  "createdAt": "2026-10-21T09:04:04.203Z",
+  "sourceBase": "29510c7ee9a5f8e6fc68bb6dbe5cf320bb66fc95",
+  "nativeThreadId": "01a15d3e-8769-7061-983f-880f73d33289",
+  "records": [
+    {
+      "id": "actual-compiler",
+      "args": [
+        "bun",
+        "node_modules/typescript/bin/tsc",
+        "--version"
+      ],
+      "cwd": ".",
+      "startedAt": "2026-10-21T09:03:55.381Z",
+      "finishedAt": "2026-10-21T09:03:55.412Z",
+      "exitCode": 0,
+      "stdoutSha256": "41024334022fa58f9c7337359517de307cbcfc6055c19f2b734245eacc2fe97a",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutTail": "Version 7.0.2\n",
+      "stderrTail": ""
+    },
+    {
+      "id": "dc-typecheck",
+      "args": [
+        "bun",
+        "run",
+        "typecheck"
+      ],
+      "cwd": "apps/academy/dc-gang-a",
+      "startedAt": "2026-10-21T09:03:55.412Z",
+      "finishedAt": "2026-10-21T09:03:57.404Z",
+      "exitCode": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "20a7f6ddac8dfddfae008432d479755c5a411ed34c10316ad6e9ef2d44f4a5a9",
+      "stdoutTail": "",
+      "stderrTail": "$ bun node_modules/typescript/bin/tsc --noEmit\n"
+    },
+    {
+      "id": "qry02-focused-typecheck",
+      "args": [
+        "bun",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "-p",
+        "architecture/academy-query-integration/qry02-tsconfig.json"
+      ],
+      "cwd": ".",
+      "startedAt": "2026-10-21T09:03:57.405Z",
+      "finishedAt": "2026-10-21T09:03:58.497Z",
+      "exitCode": 1,
+      "stdoutSha256": "09686d39d20fcaea3e15caf2db522414a100ab8e9ccbf42c5cb05bff13836962",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutTail": "architecture/academy-query-integration/qry02-measure.ts(27,82): error TS2339: Property 'code' does not exist on type 'never'.\n",
+      "stderrTail": ""
+    },
+    {
+      "id": "dc-production-query-adversarial-and-affected-consumers",
+      "args": [
+        "bun",
+        "test",
+        "tests/academy/retainedQuery.test.ts",
+        "tests/academy/teacherObservation.test.ts",
+        "tests/academy/preparationView.test.ts",
+        "tests/academy/teacherReadSnapshot.test.ts"
+      ],
+      "cwd": "apps/academy/dc-gang-a",
+      "startedAt": "2026-10-21T09:03:58.497Z",
+      "finishedAt": "2026-10-21T09:04:02.262Z",
+      "exitCode": 0,
+      "stdoutSha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+      "stderrSha256": "f1852c2951cbb1b082e7db92910f5407eb72bcb696eb968d70f404fbf16aa2c5",
+      "stdoutTail": "bun test v1.4.3 (c6da4a4d3)\n",
+      "stderrTail": "\ntests/academy/retainedQuery.test.ts:\n(pass) retained current-state production query path > reconstructs every requested student field through real facade/snapshot/projections with exact DOM02 meaning [165.06ms]\n(pass) retained current-state production query path > cohort preserves canonical fields and original source clocks [45.49ms]\n(pass) retained current-state production query path > class_preparation preserves canonical fields and original source clocks [11.65ms]\n(pass) retained current-state production query path > class selector uses exact observed group without equating missing rows to absence [4.50ms]\n(pass) retained current-state production query path > page JSON bytes include fixed metadata, Unicode, escapes and actual continuation without truncation [2736.45ms]\n(pass) retained current-state production query path > cursor refuses changed actor before facade read [27.87ms]\n(pass) retained current-state production query path > cursor refuses changed owner before facade read [29.02ms]\n(pass) retained current-state production query path > cursor refuses changed selector before facade read [26.15ms]\n(pass) retained current-state production query path > cursor refuses changed date before facade read [31.12ms]\n(pass) retained current-state production query path > cursor refuses changed limit before facade read [19.49ms]\n(pass) retained current-state production query path > cursor refuses changed budget before facade read [24.26ms]\n(pass) retained current-state production query path > cursor refuses changed forged before facade read [36.25ms]\n(pass) retained current-state production query path > source/verification/teacher revision drift refuses an old continuation after one canonical snapshot [42.17ms]\n(pass) retained current-state production query path > caller mutation during a yielded read does not redirect the selection [15.83ms]\n(pass) retained current-state production query path > rejects exact input violations before source loads: {\"ownerId\":\"override\"} [5.12ms]\n(pass) retained current-state production query path > rejects exact input violations before source loads: {\"url\":\"https://invalid\"} [8.53ms]\n(pass) retained current-state production query path > rejects exact input violations before source loads: {\"cursor\":\"x\",\"maxBytes\":1} [4.43ms]\n(pass) retained current-state production query path > rejects exact input violations before source loads: {\"limit\":251} [2.07ms]\n(pass) retained current-state production query path > rejects exact input violations before source loads: {\"selector\":{\"kind\":\"student\",\"studentId\":\"x\",\"date\":\"2090-02-30\"}} [1.66ms]\n(pass) retained current-state production query path > rejects exact input violations before source loads: {\"selector\":{\"kind\":\"cohort\",\"ownerId\":\"x\"}} [2.15ms]\n(pass) retained current-state production query path > accessor request is refused without invocation or source loads [2.48ms]\n(pass) retained current-state production query path > fixed metadata and oversized atomic record refusals themselves stay small [9.89ms]\n(pass) retained current-state production query path > HTTP authenticated production route and shared client retain the exact document [204.45ms]\n(pass) retained current-state production query path > anonymous/origin/owner override inputs cannot authenticate themselves or read source [2.93ms]\n(pass) retained current-state production query path > identity rotation during awaited facade read prevents HTTP result disclosure [4.20ms]\n(pass) retained current-state production query path > pagination client refuses reordered, changed or replayed pages [39.14ms]\n(pass) retained current-state production query path > web/CLI production consumers use common reader; legacy GET and final WebMCP packaging remain distinct [0.47ms]\n(pass) retained current-state production query path > new reader instances refuse old cursors without storing a scene or session [24.50ms]\n(pass) retained current-state production query path > oversized retained documents refuse with bounded metadata and no truncation [26.79ms]\n(pass) retained current-state production query path > transport digest detects content changes even if page serialization size still matches [6.75ms]\n(pass) retained current-state production query path > canonical replacement, exact attempt teacher final and independent physical stages survive paging [95.15ms]\n\ntests/academy/preparationView.test.ts:\n(pass) teacher presentation preserves unknown coverage and rejects another selected date [0.27ms]\n\ntests/academy/teacherReadSnapshot.test.ts:\n(skip) coherent teacher read snapshot > keeps one read-only snapshot while a separate writer commits\n(skip) coherent teacher read snapshot > exposes a frozen read facade and expires it at callback completion or exception\n(skip) coherent teacher read snapshot > PostgreSQL refuses an actual write inside the adapter snapshot transaction\n(skip) coherent teacher read snapshot > all scene query consumers enter the snapshot after authentication\n\ntests/academy/teacherObservation.test.ts:\n(pass) exported observation ingress rejects nested accessors before any store call [0.89ms]\n(pass) valid maximal Korean observations cross HTTP byte ingress and oversized bodies refuse before application calls [1.64ms]\n(skip) source-bound teacher observation through the actual HTTP/application/PostgreSQL path > fresh identical observation requests retain their own revisions, predecessors and actor-bound recovery\n(skip) source-bound teacher observation through the actual HTTP/application/PostgreSQL path > saves an original, replays its exact request, appends a correction and reads persisted revisions after reopen\n\n6 tests skipped:\n(skip) coherent teacher read snapshot > keeps one read-only snapshot while a separate writer commits\n(skip) coherent teacher read snapshot > exposes a frozen read facade and expires it at callback completion or exception\n(skip) coherent teacher read snapshot > PostgreSQL refuses an actual write inside the adapter snapshot transaction\n(skip) coherent teacher read snapshot > all scene query consumers enter the snapshot after authentication\n(skip) source-bound teacher observation through the actual HTTP/application/PostgreSQL path > fresh identical observation requests retain their own revisions, predecessors and actor-bound recovery\n(skip) source-bound teacher observation through the actual HTTP/application/PostgreSQL path > saves an original, replays its exact request, appends a correction and reads persisted revisions after reopen\n\n 34 pass\n 6 skip\n 0 fail\n 557 expect() calls\nRan 40 tests across 4 files. [3.74s]\n"
+    },
+    {
+      "id": "month-end-actual-transport-limit-pagination",
+      "args": [
+        "bun",
+        "test",
+        "./architecture/academy-query-integration/qry02-month-end.test.ts"
+      ],
+      "cwd": ".",
+      "startedAt": "2026-10-21T09:04:02.263Z",
+      "finishedAt": "2026-10-21T09:04:02.307Z",
+      "exitCode": 0,
+      "stdoutSha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+      "stderrSha256": "4ad86f489ee27bb7567bd924882c9eab70312fbed08e9d29865b5750b66d2dc0",
+      "stdoutTail": "bun test v1.4.3 (c6da4a4d3)\n",
+      "stderrTail": "\narchitecture/academy-query-integration/qry02-month-end.test.ts:\n(pass) actual month-end frontend requests drain all hierarchy and label pages within existing MCP bounds [9.10ms]\n\n 1 pass\n 0 fail\n 11 expect() calls\nRan 1 test across 1 file. [33.00ms]\n"
+    },
+    {
+      "id": "month-end-web-typecheck",
+      "args": [
+        "bun",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "-p",
+        "apps/academy/month-end-web/tsconfig.json"
+      ],
+      "cwd": ".",
+      "startedAt": "2026-10-21T09:04:02.307Z",
+      "finishedAt": "2026-10-21T09:04:03.561Z",
+      "exitCode": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutTail": "",
+      "stderrTail": ""
+    },
+    {
+      "id": "synthetic-production-http-measurements",
+      "args": [
+        "bun",
+        "architecture/academy-query-integration/qry02-measure.ts"
+      ],
+      "cwd": ".",
+      "startedAt": "2026-10-21T09:04:03.562Z",
+      "finishedAt": "2026-10-21T09:04:04.094Z",
+      "exitCode": 0,
+      "stdoutSha256": "7eb7c00c8f175bc2e3ddafea68934b3edc2f027672967a26ff435162c99296a6",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutTail": "{\"status\":\"pass\",\"output\":\"architecture/academy-query-integration/observations/QRY-02-MEASUREMENTS-R1.json\",\"measurements\":[{\"kind\":\"student\",\"pages\":5,\"maxBytes\":65526,\"totalBytes\":264447,\"facadeCalls\":5},{\"kind\":\"cohort\",\"pages\":3,\"maxBytes\":44072,\"totalBytes\":124109,\"facadeCalls\":3},{\"kind\":\"class_preparation\",\"pages\":1,\"maxBytes\":3342,\"totalBytes\":3342,\"facadeCalls\":1}]}\n",
+      "stderrTail": ""
+    },
+    {
+      "id": "actual-two-browser-entrypoints-memory-build",
+      "exitCode": 0,
+      "bytes": 1259936,
+      "outputFilesWritten": false,
+      "logs": []
+    }
+  ],
+  "preservedPins": [
+    {
+      "path": "package.json",
+      "sha256": "8e95b949a3b7a4f78a763eb5b29df0bcb8bb322fd62b7ac7027e2bdc58cb0039"
+    },
+    {
+      "path": "bun.lock",
+      "sha256": "bb598c9ccc3da2865c39a3d3a8aebda62304666a501e31965a1625ad20fa6d83"
+    },
+    {
+      "path": "architecture/source-map.json",
+      "sha256": "216c6449ae2e7ad07a5b851fc583aa3a9fa64808a8084eff39cc80425063ea4c"
+    },
+    {
+      "path": "apps/academy/run.ts",
+      "sha256": "39e3931f5556389e6a915a28f6eaa9305fb2b9e45529aa4389f6bee0be53a678"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/package.json",
+      "sha256": "70ac030925bc3d5896a2b44c4ce08885a9e82d241562c528c2b335e48531b59b"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/bun.lock",
+      "sha256": "d53986a01470c2b85224a79de64c4d8b86b166b37cee6d329aa8cf50fd589288"
+    },
+    {
+      "path": "apps/academy/gang-a/package.json",
+      "sha256": "c96949ee48da4409539f1848ddd7cb1046a4b1314c4e01b73229cb3fbf27012f"
+    },
+    {
+      "path": "apps/academy/gang-a/bun.lock",
+      "sha256": "8e83adfc345d885345ffb18007184ab31c5bbad03d4796c1a9a981e5cc612efb"
+    },
+    {
+      "path": "apps/academy/month-end-workbench/package.json",
+      "sha256": "e288965177fdcfc208664df85d6dcafc259ab725239d14b9565a4ca66c45f1fb"
+    },
+    {
+      "path": "apps/academy/month-end-workbench/bun.lock",
+      "sha256": "dc405a84e0ecb417c967d29e09b0be926756fc0b9e684656cdaa68840dc713df"
+    }
+  ],
+  "retainedGaps": [
+    "No database socket admitted; PostgreSQL tests stay skipped, existing47 DOM skips remain source-qualified only",
+    "Historical catalog/DOM input/provenance gaps retained; reserved provenance is root-owned",
+    "Month-end native MCP launch remains held and SDK declarations may remain missing; only isolated in-process provider tested",
+    "Legacy teacher GET routes remain unbounded compatibility endpoints; actual teacher web/CLI use bounded pages then reconstruct documents",
+    "Browser modelContext and CLI final whole-document serialization are separate from page budget; downstream production MCP packaging belongs to CON"
+  ],
+  "notRun": [
+    "Unchanged full DOM suites/whole241 graph",
+    "Historical precommit-only QRY-01/QRY-BOUNDARY inspectors",
+    "Full all-module aggregate checks",
+    "Native/session/private source or credential/config/service access"
+  ],
+  "passed": false,
+  "nativeEffects": 0
+}

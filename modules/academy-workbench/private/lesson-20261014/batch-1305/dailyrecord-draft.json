@@ -1,0 +1,259 @@
+{
+  "schemaVersion": "academy.dailyrecord-draft/1.0.0",
+  "lessonDate": "2026-10-14",
+  "timezone": "Asia/Seoul",
+  "preparedAt": "2026-10-14T12:08:27.619781+00:00",
+  "requestSourceMessageId": "Sentinel_496140e89c8c819181b199bc3d2f9827",
+  "status": "local_draft_only_not_saved",
+  "serverState": {
+    "read": "blocked_502_per_parent_report",
+    "writePerformed": false,
+    "saved": false,
+    "parentMessageSent": false,
+    "existingUserEditedValues": "unknown",
+    "latestConnectionReport": "private/lesson-20261014/batch-1305/connection-stop-report.json",
+    "cloudRetryStatus": "stopped_per_parent_report"
+  },
+  "rulesSource": {
+    "file": "/workspace/shared/academy-audit/page_7aef4f4523048191833f31ccb7c0bdad.json",
+    "sourceUserMessageId": "Sentinel_b971fc6964bc8191998bdb6d801c33bc"
+  },
+  "writeGuards": [
+    "Read existing server fields before any write; preserve user edits and unrelated fields.",
+    "Draft save only; do not send to parents.",
+    "Do not alter individual DailyTest exam records.",
+    "Null parentInput values mean do not clear or fill that field until resolved.",
+    "Internal status and unresolved questions must not be pasted into parent-facing fields.",
+    "Do not automatically add provisional Ruhan December 18 completion forecast to memo.",
+    "Batch repository publication; no per-turn PR.",
+    "Use generic 프린트 in draft while exact 오답/유사 header awaits verification; no inferred choice."
+  ],
+  "students": [
+    {
+      "studentId": "stu_d7aad9a0d42049c2a8faa9e7bcd0c378",
+      "name": "이루한",
+      "assignedFields": {
+        "homeworkPerformance": "B",
+        "dailyTest": {
+          "kind": "teacher_dailyrecord_summary",
+          "value": 90,
+          "source": "explicit_user_instruction",
+          "individualExamScoresUnchanged": true
+        }
+      },
+      "parentInput": {
+        "progress": "- 문항 1273201 풀이 설명\n- [오답 클리닉·유사 클리닉] [필수예제] [가우스] 6-3 다각형의 내각과 외각\n- [오답 클리닉·유사 클리닉] [실전 유형(1회차)] [다빈치] 2-2 유리수의 계산(1차시)\n- [오답 클리닉·유사 클리닉] [실전 유형(2회차)] [다빈치] 2-2 유리수의 계산(2차시)\n- [개념백지테스트] [가우스 1-2-4] 소단원 1 다면체\n- [Daily Test] [가우스] 6-4 원과 부채꼴\n- [Daily Test] [가우스] 6-5 부채꼴의 호의 길이와 넓이\n- [대단원총괄평가] [가우스] 6단원 문제 풀이",
+        "homework": "- [다빈치 1-1] p.112~140 풀어오기",
+        "memo": "- 10/15(목) 23:00까지 다빈치 1-1 p.112~125(일차방정식의 활용 3회차까지) 학원서버에 답안 입력하기.\n- 10/16(금) 18:00 등원 전까지 나머지 p.126~140 학원서버에 답안 입력하기."
+      },
+      "confirmedProgress": [
+        "문항 1273201 풀이 설명",
+        "[오답 클리닉·유사 클리닉] [필수예제] [가우스] 6-3 다각형의 내각과 외각",
+        "[오답 클리닉·유사 클리닉] [실전 유형(1회차)] [다빈치] 2-2 유리수의 계산(1차시)",
+        "[오답 클리닉·유사 클리닉] [실전 유형(2회차)] [다빈치] 2-2 유리수의 계산(2차시)",
+        "[개념백지테스트] [가우스 1-2-4] 소단원 1 다면체",
+        "[Daily Test] [가우스] 6-4 원과 부채꼴",
+        "[Daily Test] [가우스] 6-5 부채꼴의 호의 길이와 넓이",
+        "[대단원총괄평가] [가우스] 6단원 문제 풀이"
+      ],
+      "awaitingProgress": [],
+      "internalJudgmentPending": [
+        {
+          "activity": "가우스6-3 클리닉",
+          "status": "Repeated raw labels retained; physical print count unknown. Do not invent paper count."
+        },
+        {
+          "activity": "6단원 대단원총괄평가",
+          "status": "Actual lesson work confirmed; planned through 21:30 and app input planned, neither completed nor entered yet.",
+          "source": "Sentinel_b8542964d2ac8191a53eed0d702df567"
+        }
+      ],
+      "homeworkUnassigned": {
+        "newScope": null,
+        "dueDate": "2026-10-16",
+        "dueDateTextOmitted": false
+      },
+      "optionalMemoProposals": [],
+      "teacherJudgments": [
+        {
+          "activity": "가우스 1-2-4 소단원1 다면체 개념백지테스트",
+          "status": "teacher_reported_complete",
+          "source": "Sentinel_b8542964d2ac8191a53eed0d702df567"
+        }
+      ],
+      "homeworkAssigned": [
+        {
+          "kind": "prior_unfinished_reassigned",
+          "book": "다빈치 1-1",
+          "pages": [
+            112,
+            140
+          ],
+          "dueDate": "2026-10-16",
+          "source": "Sentinel_b8542964d2ac8191a53eed0d702df567",
+          "dueBefore": "2026-10-16T18:00:00+09:00",
+          "scheduleSource": "Sentinel_b41410a8970c8191812b53adf7f01785"
+        }
+      ],
+      "memoSourceMessageId": "Sentinel_b41410a8970c8191812b53adf7f01785",
+      "homeworkDailyPlan": [
+        {
+          "date": "2026-10-15",
+          "deadline": "2026-10-15T23:00:00+09:00",
+          "deadlineRelation": "by",
+          "book": "다빈치 1-1",
+          "pages": [
+            112,
+            125
+          ],
+          "endUnitLabelRaw": "3.일차방정식의 활용 3회차",
+          "action": "학원서버 답안 입력",
+          "status": "planned_not_verified_entered",
+          "teacherFinal": "not_implied",
+          "source": "Sentinel_b41410a8970c8191812b53adf7f01785",
+          "provenance": {
+            "endPage": "explicit_teacher_report",
+            "deadline": "explicit_tomorrow_23:00_resolved_from_2026-10-14_KST",
+            "startPage": "derived_from_existing_assigned_pages_112_to_140"
+          }
+        },
+        {
+          "date": "2026-10-16",
+          "deadline": "2026-10-16T18:00:00+09:00",
+          "deadlineRelation": "before_arrival",
+          "book": "다빈치 1-1",
+          "pages": [
+            126,
+            140
+          ],
+          "action": "학원서버 답안 입력",
+          "status": "planned_not_verified_entered",
+          "teacherFinal": "not_implied",
+          "source": "Sentinel_b41410a8970c8191812b53adf7f01785",
+          "provenance": {
+            "pages": "derived_remaining_range_after_125_from_existing_assignment_112_to_140",
+            "deadline": "explicit_following_day_before_18:00_arrival_resolved_from_2026-10-14_KST"
+          }
+        }
+      ]
+    },
+    {
+      "studentId": "stu_e656cff00f3b420c98c002588c6f58a6",
+      "name": "이현승",
+      "assignedFields": {
+        "homeworkPerformance": "B",
+        "dailyTest": {
+          "kind": "not_administered",
+          "display": "미실시",
+          "source": "explicit_user_instruction",
+          "doNotRepresentAsZero": true
+        }
+      },
+      "parentInput": {
+        "progress": "- [대단원총괄평가] [가우스 1-1-1] 1 소인수분해 문제 풀이",
+        "homework": "- [프린트] [필수예제] [가우스] 1-1 소수와 거듭제곱 풀어오기\n- [프린트] [필수예제] [다빈치] 1-1 분수의 나눗셈(1) 풀어오기\n- [대단원총괄평가] [가우스 1-1-1] 1 소인수분해 남은 문제를 풀고 오답까지 해오기 (10월 16일 금요일까지)",
+        "memo": "- 어머님, 현승이 학습 방향을 부원장님과 상의했습니다. 앞으로는 필요한 개념을 수업 중에 설명해주고, 영상 학습과 풀이 쓰는 연습을 병행하며 진행하려고 합니다.\n- 현재 배우는 학기의 계산을 정확히 하고, 소단원별 Daily Test 두 회를 합한 8문항 중 5~6문항을 스스로 맞힐 수 있도록 하는 것을 우선 목표로 잡았습니다. 틀린 문제도 함께 확인하고 보완하겠습니다.\n- 가우스와 다빈치 교재는 3개월 동안 마무리하는 것을 목표로 하되, 현승이가 실제로 소화하는 정도를 확인하며 숙제량과 설명의 비중을 조절하겠습니다."
+      },
+      "memoSourceMessageId": "Sentinel_8789bb001d7c81919458fe4dba1d8456",
+      "memoFormattingChangeOnly": "Three original paragraphs preserved as three bullet items.",
+      "confirmedProgress": [
+        "[대단원총괄평가] [가우스 1-1-1] 1 소인수분해 문제 풀이"
+      ],
+      "awaitingProgress": [],
+      "homeworkUnassigned": {
+        "printKind": "wrong_or_similar_unverified_do_not_choose",
+        "dueDate": null,
+        "dueDateTextOmitted": true
+      },
+      "optionalMemoProposals": [
+        {
+          "text": "- 말씀 나눈 대로 10월 16일(금) 오후 6시에 등원 부탁드립니다.",
+          "source": "Sentinel_0602c0aeda548191bd7f7665b6ff38bb",
+          "autoInclude": false
+        }
+      ],
+      "scheduleGuard": "Prior today 21:30–22:00 extension was replaced by teacher outgoing Friday 18:00 instruction. Do not revive old extension notice. Actual attendance and departure not inferred.",
+      "internalActivities": [
+        {
+          "activity": "소단원1~5 클리닉",
+          "status": "not_performed",
+          "source": "Sentinel_b8542964d2ac8191a53eed0d702df567"
+        },
+        {
+          "activity": "1 소인수분해 대단원총괄평가",
+          "status": "teacher_guided_work_in_progress",
+          "paceContext": "First such work; teacher asks to account for slow initial pace and analyze gradual increase in per-session allocation. Not generalized ability judgment.",
+          "source": "Sentinel_b8542964d2ac8191a53eed0d702df567"
+        }
+      ],
+      "homeworkAssigned": [
+        {
+          "section": "필수예제",
+          "book": "가우스",
+          "unit": "1-1 소수와 거듭제곱",
+          "sourceAttemptDate": "2026-09-23 22:55",
+          "sourceAttemptScore": 75,
+          "printed": true,
+          "printKind": null,
+          "kindVerification": "unverified_pending_local_successor",
+          "dueDate": null,
+          "source": "Sentinel_b8542964d2ac8191a53eed0d702df567"
+        },
+        {
+          "section": "필수예제",
+          "book": "다빈치",
+          "unit": "1-1 분수의 나눗셈(1)",
+          "sourceAttemptDate": "2026-09-30 21:08",
+          "sourceAttemptScore": 75,
+          "printed": true,
+          "printKind": null,
+          "kindVerification": "unverified_pending_local_successor",
+          "dueDate": null,
+          "source": "Sentinel_b8542964d2ac8191a53eed0d702df567"
+        },
+        {
+          "kind": "unfinished_assessment_and_error_correction_assigned",
+          "section": "대단원총괄평가",
+          "book": "가우스 1-1-1",
+          "unit": "1 소인수분해",
+          "scope": [
+            "remaining_unsolved_problems",
+            "error_correction"
+          ],
+          "dueDate": "2026-10-16",
+          "dueDateBasis": "explicit_teacher_Friday_deadline_in_2026-10-14_lesson_context",
+          "status": "assigned_not_complete",
+          "source": "Sentinel_c19590823e5c81919abde7c6e0a5f7b0"
+        }
+      ],
+      "homeworkDraftState": "scope_confirmed_generic_print_label_pending_exact_kind",
+      "homeworkScopeGuard": "Keep the two previously selected print sections and add remaining prime-factorization comprehensive-assessment problems plus error correction due 2026-10-16. Do not assign all 11 print source sections or infer completion."
+    }
+  ],
+  "interview": {
+    "status": "main_scope_questions_answered_print_kind_verification_pending",
+    "messageId": "Sentinel_659c6b7f4d5c8191866a9394c14dad86",
+    "duplicateQuestionProhibited": true,
+    "unresolved": [
+      {
+        "student": "이현승",
+        "item": "Exact wrong/similar print kind",
+        "resolution": "unverified_pending_local_successor; generic print draft only, no invented type"
+      },
+      {
+        "student": "both",
+        "item": "Due dates for prior homework not supplied",
+        "resolution": "Omit deadlines for Hyun’s previously assigned two prints. Ruhan pages now have explicit daily answer-entry deadlines from Sentinel_b41410a8970c8191812b53adf7f01785; Hyun comprehensive assessment remains due 2026-10-16."
+      }
+    ],
+    "alreadyConfirmedDoNotAskAgain": [
+      "과제수행도 두 학생 B",
+      "이루한 DailyRecord DailyTest 90점",
+      "이현승 DailyTest 미실시",
+      "이현승 금요일 18시 등원 안내",
+      "이루한 명시 완료된 클리닉과 DailyTest"
+    ],
+    "answerSourceMessageId": "Sentinel_b8542964d2ac8191a53eed0d702df567"
+  },
+  "updatedAt": "2026-10-14T12:44:22.641931+00:00"
+}

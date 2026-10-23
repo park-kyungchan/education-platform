@@ -1,0 +1,123 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "academy-query-integration-20261021",
+  "kind": "input",
+  "id": "QRY-01-VERIFICATION-R1",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "education-query-sublead",
+    "locator": "result-bound-verification:QRY-01-RESULT-R1",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "verification": {
+      "schemaVersion": "1.0.0",
+      "kind": "verification",
+      "id": "education-platform:verification:qry-01-r1",
+      "domainId": "education",
+      "projectId": "education-platform",
+      "createdAt": "2026-10-21T07:07:31.184Z",
+      "payload": {
+        "targetRefs": [
+          "common-harness:task:03e17390ab8072458a394ad31546395a0fdedd233b57070310f8d54a18f2dc44"
+        ],
+        "criteria": [
+          {
+            "id": "bounded-maintained-source-ports",
+            "status": "pass",
+            "message": "39 exact source files,9 maintained read/query port groups and7 frozen DOM workflows inventoried with resolved file/hash/line citations;31 selected DOM hashes reused without whole graph/suite rerun.",
+            "evidenceRefs": [
+              "education-platform:evidence:qry-01-result-observation-r1"
+            ]
+          },
+          {
+            "id": "actual-consumers-and-gaps",
+            "status": "pass",
+            "message": "Source call paths for TeacherApplication snapshot/HTTP/web/CLI, month-end Application/SourcePort/HTTP/web and exact saved Workbench MCP traced;8 concrete gaps retain missing families, unknown currentness and native launch holds. Source/configured binding/actual behavior are distinct.",
+            "evidenceRefs": [
+              "education-platform:evidence:qry-01-result-observation-r1"
+            ]
+          },
+          {
+            "id": "clock-coverage-and-pagination",
+            "status": "pass",
+            "message": "Coverage and scoped clocks, retained history vs current roster,200-sequence pages/10000 preparation refusal, native50-row page+offset, opaque MCP cursors and saved whole-tool512KiB/no-loss/refusal semantics recorded. Prior root-qualified behavior reused; no native adoption inferred.",
+            "evidenceRefs": [
+              "education-platform:evidence:qry-01-result-observation-r1"
+            ]
+          },
+          {
+            "id": "proportional-owned-source-checks",
+            "status": "pass",
+            "message": "bun run status, actual tsc7.0.2 owned typecheck and2 isolated synthetic probes pass. Initial failed broader provider typecheck preserved; external SDK declarations remain missing/unqualified. No full-suite, database, native read or process launch claimed.",
+            "evidenceRefs": [
+              "education-platform:evidence:qry-01-result-observation-r1"
+            ]
+          },
+          {
+            "id": "scope-and-delivery-separation",
+            "status": "pass",
+            "message": "Only QRY-01 source records/artifacts prepared; no business/private/native/Git effects. Separate immutable result and Verification Inputs with actual taskVerificationTarget and exact result hash. Root committed snapshot/transition/shared delivery, native adoption and formal acceptance remain pending.",
+            "evidenceRefs": [
+              "education-platform:evidence:qry-01-result-observation-r1"
+            ]
+          }
+        ],
+        "inputHashes": [
+          {
+            "path": "work/education-platform/academy-query-integration-20261021/inputs/QRY-01-RESULT-R1.json",
+            "sha256": "d5bd8bce85699ca1ba4a90c84f4fd211fc721444dfcba7a205f004f0e3da918a"
+          },
+          {
+            "path": "architecture/academy-query-integration/inventory.ts",
+            "sha256": "83459b6bf11f325711bd7c723ad2694573c37b2644fbc743f04f225fba7c5479"
+          },
+          {
+            "path": "architecture/academy-query-integration/source-evidence.json",
+            "sha256": "de5fa2cd40a9a608b8d4b59cb18163aced2153297044e21250043061f1c392da"
+          },
+          {
+            "path": "architecture/academy-query-integration/verify.ts",
+            "sha256": "be37f84bd38d7ce66a7ed379182acfdcfbbf0061f0c92e7f8438e0272e4805af"
+          },
+          {
+            "path": "architecture/academy-query-integration/canonical-audit.ts",
+            "sha256": "4cfc6f34fc8cfea699293a76c9f27a61c12c6dc11cd487b70b2d17ff01424c69"
+          },
+          {
+            "path": "architecture/academy-query-integration/tsconfig.json",
+            "sha256": "844d3b8c79af95d9c14505d50139385cb8222172726b391047ab79da5e0ef8fd"
+          },
+          {
+            "path": "architecture/academy-query-integration/entrypoint.json",
+            "sha256": "e562c340565815001e9c752c1c919343b504c3f9a754e87aef568c5f05cbaf29"
+          },
+          {
+            "path": "architecture/academy-query-integration/observations/QRY-01-SOURCE-CHECKS-R1.json",
+            "sha256": "baace8dbac1a677fbabd4b3e8f55f36e1f5693993636512a1a8d669babadaed1"
+          },
+          {
+            "path": "architecture/academy-query-integration/observations/QRY-01-SOURCE-CHECKS-R2.json",
+            "sha256": "c5835983812c8adeaeb56b0995958de385a847239cf0efea3b0895069ed54f34"
+          }
+        ],
+        "runtime": {
+          "name": "Bun bounded source inventory and isolated synthetic probes; actual TypeScript",
+          "version": "1.4.3 / 7.0.2"
+        },
+        "details": {
+          "verificationClass": "bounded-source-inventory-and-isolated-synthetic-consumer-probes",
+          "canonicalApiPin": "712f90deac0676e662dc5d75d88d89f7b6773bfe",
+          "committedSnapshot": "pending root checkpoint",
+          "committedTransition": "pending root checkpoint",
+          "nativeBindingAuthenticated": false,
+          "nativeBehaviorVerified": false,
+          "nativeAdoption": false,
+          "formalAcceptance": false
+        }
+      }
+    }
+  }
+}

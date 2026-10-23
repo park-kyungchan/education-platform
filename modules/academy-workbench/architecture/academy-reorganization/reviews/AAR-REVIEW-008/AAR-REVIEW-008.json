@@ -1,0 +1,521 @@
+{
+  "schema": "academy.bounded-source-review/1",
+  "reviewId": "AAR-REVIEW-008",
+  "createdAt": "2026-10-21T11:42:08Z",
+  "status": "scoped_source_re_review_passed_with_separate_design_advisory",
+  "statusMeaning": "Exact primary consumer repair and bounded secondary historical-auditor selection passed the inspected source scope. Four prior findings are closed; no new concrete implementation defect was identified. The optional continuation-reuse proposal is unimplemented and receives a separate advisory, not implementation approval, native activation or acceptance.",
+  "request": {
+    "path": "/home/palantirkc/worktrees/academy-architecture-orchestration-20261021/architecture/academy-reorganization/reviews/AAR-REVIEW-008-request.json",
+    "sha256": "2a23a41b71f10c04137aad669179f664dfdb0a9f2f910738a86342c88979bc32",
+    "followupClarification": "Root explicitly fixed the secondary selection at fab920f while its live coordinator continued metadata-only commits. Exact selected file bytes were verified against fab Git objects; later checkpoint/request/learning metadata is excluded."
+  },
+  "reviewer": {
+    "nativeThreadId": "01a15da6-5c63-71a2-a73d-8e881564e94c",
+    "nativeThreadIdSource": "Observed CODEX_THREAD_ID; not independent authentication of authorship.",
+    "model": null,
+    "effort": null,
+    "modelEffortSelfExposed": false,
+    "rootReportedAssignment": {
+      "model": "gpt-6-astra",
+      "effort": "xhigh",
+      "tab": "wA:t1",
+      "pane": "wA:p7",
+      "source": "Root/user independent reviewer assignment and previously attributed launch UI observation"
+    },
+    "checkout": "/home/palantirkc/worktrees/academy-architecture-review-20261021",
+    "extraAgents": 0,
+    "extraPanes": 0,
+    "goalCreated": false,
+    "heavyCheckInvocations": 1
+  },
+  "primary": {
+    "root": "/home/palantirkc/worktrees/academy-consumer-integration-20261021",
+    "repositoryId": "park-kyungchan/academy-workbench",
+    "workId": "academy-consumer-integration-20261021",
+    "commit": "76aa96544b27fdcd32bd244892391bd20ec289e7",
+    "tree": "b6d97652e1e73520dde5e43b8486800d666a330e",
+    "base": "1d9096225969ac249aaa018663896e7bfb69243b",
+    "repairImplementationCommit": "1d72361428ec6e0356fb80d840959926819135c4",
+    "repairImplementationTree": "78047897b870626123108fb57ebf269335e75dba",
+    "entrypoint": "architecture/academy-consumer-integration/response-repair-entrypoint-r2.json",
+    "cleanBefore": true,
+    "cleanAfter": true,
+    "driftObserved": false,
+    "productionFilesEqualRepairImplementationCommit": true,
+    "sourceHashes": {
+      "tools/academy-mcp/src/teacher-source-binding.ts": "ea4cf411ee8ba332b56bc0d152d64ddf3b6f92be0aabc502ccdf514d66562460",
+      "tools/academy-mcp/src/teacher-retained.ts": "c26c81ac203fec158792e79316cdd4d24980361caeda319da78227ea34459963",
+      "tools/academy-mcp/src/teacher-report.ts": "67c7f5e210fd0082d6d8ea3e794fba145cb2a3074ce8f409088b931aefa314ae",
+      "tools/academy-mcp/src/teacher-query-tools.ts": "436fb85e8d8e8038aa0d8f046d492dc6b51dba56639d25032dfb0bed053c679d",
+      "tools/academy-mcp/src/teacher-server.ts": "6366f3772c5626ada8cf6ec5a051edc8c5469b3ac82329e039ca23aaaae321ef",
+      "tools/academy-mcp/src/teacher-schema.ts": "17a3b9a310de67a50b6518cd3bd93334217ed99138d44cfe355de6bd819985e0"
+    }
+  },
+  "secondary": {
+    "root": "/home/palantirkc/worktrees/academy-architecture-orchestration-20261021",
+    "selectedCommit": "fab920f48a79d2c88094180f014a84024eca9164",
+    "selectedTree": "144a82b9a514ce6a9a97184adfbc8c6a82fcf596",
+    "liveHeadUsedAsSelection": false,
+    "liveHeadObservedInitially": "fab920f48a79d2c88094180f014a84024eca9164",
+    "initialRawStatus": "?? architecture/academy-reorganization/reviews/AAR-REVIEW-008-request.json",
+    "initialStatusMeaning": "The supplied review request was untracked; selected tracked implementation files were unchanged.",
+    "liveHeadObservedAtFinalSelectedFileCheck": "e2bfda8c74ab950445736fe7be7846b14eaa1938",
+    "finalRawStatus": "",
+    "selectedLiveFilesMatchExactGitObjectsBeforeAfter": true,
+    "selectedSourceDriftObserved": false,
+    "excluded": "Coordinator commits after fab, their checkpoint/request/learning metadata, and untracked one-shot audit helpers. The latter are not reviewed as maintained or native runtime mechanisms.",
+    "selectedHashes": {
+      "architecture/academy-reorganization/source-auditor.ts": "1621eed4577961a3824cfe2cf7439c0591460ba4f48bb5186ddcf43bdee58293",
+      "architecture/academy-reorganization/source-auditor.test.ts": "caf5d7fe76a33c1b5aa3f643b3767ed48dcd6d4913bd3a42cfffc02a7600f6ff",
+      "architecture/academy-reorganization/qualify-external-work.ts": "770090c75d3193e4be448ee19a3ea35ed3f820640458c86c52970dcc48183cbe",
+      "architecture/academy-reorganization/qualify-external-work.test.ts": "10286c01f918feed1278e1d70dd8436b637c2ea5e7193fb8439233b7681fa772",
+      "architecture/academy-reorganization/validate.ts": "93fa6002f3346ff56b0b69a42668b68748ba9e92a77715cbb8106c16e6212c4c",
+      "architecture/academy-reorganization/source-auditor-selection-r1.json": "f0993071988090f3a8dddb3af15ea2d4aa6a4be926a18f347c863b97101ec52c",
+      "architecture/academy-reorganization/report-continuation-design-r1.json": "6468ed0c8812a257997524c117cdf7a0fa2ddd421d19166535f41e584d9dfe7c",
+      "architecture/academy-reorganization/consumer-report-load-profile-r1.json": "ee42b46e4a160c8de66b7201ce0426395c15c021569bc3673a4899058f6547da"
+    },
+    "disposition": "passed_for_bounded_selected_historical_source_auditor_and_baseline_pin_read"
+  },
+  "auditor": {
+    "root": "/home/palantirkc/worktrees/academy-architecture-orchestration-20261021/.local/auditors/agent-platform-712f90de",
+    "commit": "712f90deac0676e662dc5d75d88d89f7b6773bfe",
+    "tree": "9ffdf1773188fb9bb75ed5111b21d21f32b07a24",
+    "cleanBefore": true,
+    "cleanAfter": true,
+    "loadedVia": "Exact fab source-auditor.ts loadSourceAuditor(), after verifying loader bytes against fab",
+    "sourceRestorePinsMatched": 6,
+    "APIsUsed": [
+      "openGitWork",
+      "validateGitWorkRecords",
+      "validateGitWorkTransition",
+      "taskVerificationTarget"
+    ],
+    "mutableMainImported": false,
+    "mutableMainDivergence": "Root observed main at4d017552b33848744808a3ef2c1fcced88f29017. Calling the guarded loader with the mutable-main path was rejected; no fallback to it was used.",
+    "historicalMeasurementCommonPinsMatched": 3,
+    "historicalMeasurementBytesUnchangedFromFabParent": true,
+    "interpretation": "Valid under the previously admitted712 source auditor. This does not establish compliance with independently advanced main, native common adoption, an Academy consumer-pin upgrade or an immutable execution boundary."
+  },
+  "canonicalQuery": {
+    "root": "/home/palantirkc/worktrees/academy-query-integration-20261021",
+    "commit": "8f8c9bd61bd5e55445780b5569ecc40effcecef6",
+    "tree": "ccb0fc6302f664abe069086881961cec99cf2d85",
+    "cleanBefore": true,
+    "cleanAfter": true,
+    "priorReview": "AAR-REVIEW-006",
+    "canonicalClientValidatorAndDomainSourceUnchanged": true
+  },
+  "priorReview": {
+    "id": "AAR-REVIEW-007",
+    "path": ".local/reviews/AAR-REVIEW-007.json",
+    "sha256": "6cc24fb09a3fee36d169d26264546be18fa45503009c74aea6c50ce164568053",
+    "bytesPreserved": true
+  },
+  "priorFindingDispositions": [
+    {
+      "findingId": "AAR-REVIEW-007-F1",
+      "status": "resolved_in_exact_primary_source",
+      "locations": [
+        {
+          "path": "tools/academy-mcp/src/teacher-schema.ts",
+          "line": 7
+        },
+        {
+          "path": "tools/academy-mcp/src/teacher-query-tools.ts",
+          "line": 11
+        },
+        {
+          "path": "tools/academy-mcp/src/teacher-query-tools.ts",
+          "line": 16
+        }
+      ],
+      "repair": "The installed SDK-supported fromJsonSchema adapter advertises the unchanged strict input JSON Schema and delegates validation/defaulting to the original Zod parser. Invalid input returns a constant teacher_request_invalid message before SDK error serialization.",
+      "independentEvidence": "C03 exercises both tools with giant/nested/multiple unknown keys and malformed selectors, preserving advertised required/default shape. C04 reruns the original550009-character unknown-key trigger: query/report errors are151/152 bytes, no key echo or source callback. Valid requests retain query100/65536 defaults and canonical report-read250/65536 defaults.",
+      "resolvedScope": "Bounded SDK-generated CallToolResult error path; no SDK/common fork, schema weakening or result-cap increase."
+    },
+    {
+      "findingId": "AAR-REVIEW-007-F2",
+      "status": "resolved_in_exact_primary_source",
+      "locations": [
+        {
+          "path": "tools/academy-mcp/src/teacher-report.ts",
+          "line": 23
+        },
+        {
+          "path": "tools/academy-mcp/src/teacher-report.ts",
+          "line": 99
+        }
+      ],
+      "repair": "Catalog rendering follows returned parent links, emits separate leaf paths and explicit sibling groups, and labels missing/disconnected/cyclic parent information.",
+      "independentEvidence": "C03 verifies the original two problems remain separate siblings under page, separate section/page branches do not become one chain, and an absent parent body remains unknown.",
+      "resolvedScope": "Presentation of existing catalog relations only; no new edition/unit inference or source hierarchy change."
+    },
+    {
+      "findingId": "AAR-REVIEW-007-F3",
+      "status": "resolved_in_exact_primary_source",
+      "locations": [
+        {
+          "path": "tools/academy-mcp/src/teacher-report.ts",
+          "line": 53
+        },
+        {
+          "path": "tools/academy-mcp/src/teacher-report.ts",
+          "line": 102
+        }
+      ],
+      "repair": "The unconditional print/distribution-unknown claim is replaced with an issuance-only caveat. Physical-stage lines read canonical review summaries, retain each stage's evidence/clock and explicitly distinguish qualified exact attempt/issuance linkage from unqualified observation.",
+      "independentEvidence": "C03 covers printed-known/distribution-unknown, the inverse, both unknown, explicit not_done and foreign issuance. C04 proves raw payload known state does not override canonical summary unknown and false canonical applicability is not recomputed as true from matching raw identifiers.",
+      "resolvedScope": "Existing qualified summary semantics and applicability remain authoritative; no score-derived stage or completion."
+    },
+    {
+      "findingId": "AAR-REVIEW-007-F4",
+      "status": "resolved_in_exact_primary_source",
+      "locations": [
+        {
+          "path": "tools/academy-mcp/src/teacher-report.ts",
+          "line": 19
+        },
+        {
+          "path": "tools/academy-mcp/src/teacher-report.ts",
+          "line": 116
+        }
+      ],
+      "repair": "Evidence clocks now include payload.reportedAt as a separately labelled teacher report time. Exact current and retained item completion evidence also receives clock-qualified lines.",
+      "independentEvidence": "C03 exercises canonical teacher reportedAt, recordedAt, physical observedAt and query retrieval timestamps across the Asia/Seoul business-date boundary, with no substitution between clocks.",
+      "resolvedScope": "Available report provenance is preserved; unavailable source clocks remain unknown."
+    }
+  ],
+  "findings": [],
+  "findingCounts": {
+    "resolvedPrior": 4,
+    "openPrior": 0,
+    "new": 0,
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "checks": [
+    {
+      "id": "C01",
+      "name": "Exact primary/secondary/auditor/query selection",
+      "status": "passed",
+      "details": "Primary/query/auditor HEAD/tree and clean status observed before/after physical checks. Eight live secondary selected files matched exact fab Git blobs before/after use despite unrelated live coordinator HEAD advancement. Six auditor restore pins and prior007 receipt hash matched."
+    },
+    {
+      "id": "C02",
+      "name": "Primary MCP package no-emit typecheck",
+      "status": "passed",
+      "command": "bun node_modules/typescript/bin/tsc --noEmit",
+      "cwd": "/home/palantirkc/worktrees/academy-consumer-integration-20261021/tools/academy-mcp",
+      "exitCode": 0,
+      "heavyCheckInvocations": 1,
+      "limit": "Root's separate secondary TypeScript check is attributed to Root; not rerun here."
+    },
+    {
+      "id": "C03",
+      "name": "Focused report and response-repair SDK/wire tests",
+      "status": "passed",
+      "command": "bun test --preload ./tests/network-deny.ts tests/teacher-report.test.ts tests/teacher-response-contract.test.ts",
+      "cwd": "/home/palantirkc/worktrees/academy-consumer-integration-20261021/tools/academy-mcp",
+      "bun": "1.4.3",
+      "exitCode": 0,
+      "testsPassed": 13,
+      "testsFailed": 0,
+      "expectCalls": 340,
+      "durationSeconds": 5.46,
+      "sourceGuardsBeforeAfter": true,
+      "stdioStartupSuiteNotRepeated": true,
+      "details": "Actual in-process SDK plus installed wire codec, strict schemas/defaults, all four repairs, Unicode reassembly, canonical malformed/refusal/snapshot/caller cases, source guards and near-cap result/frame separation."
+    },
+    {
+      "id": "C04",
+      "name": "Independent original giant-key trigger and canonical-applicability controls",
+      "status": "passed",
+      "execution": "Bun stdin with network-deny, actual teacherMemory SDK path and invented canonical fixtures",
+      "details": {
+        "queryErrorResultBytes": 151,
+        "queryErrorFrameBytes": 186,
+        "reportErrorResultBytes": 152,
+        "reportErrorFrameBytes": 187,
+        "unknownKeyEcho": false,
+        "invalidRequestSourceCalls": 0,
+        "queryDefaults": {
+          "limit": 100,
+          "maxBytes": 65536
+        },
+        "canonicalReportReadDefaults": {
+          "limit": 250,
+          "maxBytes": 65536
+        },
+        "rawPayloadKnownDoesNotOverrideCanonicalUnknown": true,
+        "canonicalFalseApplicabilityNotOverriddenByRawIds": true
+      },
+      "limit": "The raw-payload/applicability differential controls mutate only reconstructed invented in-memory documents to test the renderer's authoritative input choice; no store/domain/source originals were changed."
+    },
+    {
+      "id": "C05",
+      "name": "Secondary loader guard and historical common-pin selection",
+      "status": "passed",
+      "details": "Verified fab loader bytes before importing it; default selected712 loaded. Mutable-main path rejected with source_auditor_revision_or_bytes_changed; unavailable path rejected. Guard-before-import ordering inspected. All3 historical common measurement hashes matched exact712 Git blobs, and measurement.json is byte-identical to fab's parent.",
+      "limit": "No writable fake-repository/sentinel test was run. No claim of atomic locking, hostile checkout protection, all installed dependency integrity or native activation."
+    },
+    {
+      "id": "C06",
+      "name": "Canonical consumer snapshot and requested transitions via pinned loader",
+      "status": "passed",
+      "snapshot": "76aa96544b27fdcd32bd244892391bd20ec289e7",
+      "auditor": "712f90deac0676e662dc5d75d88d89f7b6773bfe",
+      "transitions": [
+        {
+          "from": "1d9096225969ac249aaa018663896e7bfb69243b",
+          "to": "f81d349cb55773faa3219436b1a624d24ea7b19b",
+          "valid": true
+        },
+        {
+          "from": "f81d349cb55773faa3219436b1a624d24ea7b19b",
+          "to": "1d72361428ec6e0356fb80d840959926819135c4",
+          "valid": true
+        },
+        {
+          "from": "1d72361428ec6e0356fb80d840959926819135c4",
+          "to": "76aa96544b27fdcd32bd244892391bd20ec289e7",
+          "valid": true
+        }
+      ],
+      "findings": [],
+      "authority": "none",
+      "nativePermissionGranted": false,
+      "semanticAcceptanceEstablished": false
+    },
+    {
+      "id": "C07",
+      "name": "Artifact, target, Evidence and prior-history preservation",
+      "status": "passed",
+      "resultArtifactsMatched": 28,
+      "verificationInputHashesMatched": 4,
+      "priorWorkRecordsUnchanged": 45,
+      "priorCompletedTasksUnchanged": 5,
+      "priorPlansUnchanged": 2,
+      "taskVerificationTarget": "common-harness:task:6654b2aa07105c3426ae90ec0ce771aab0ee8d15177f845fc7fb045afbd9fa24",
+      "details": "Actual selected712 taskVerificationTarget matches Result and Verification targetRefs. Result/Verification Evidence hashes/fragments match Inputs. Original failed CON02 remains failed. Only prior work.json and planned CON03 metadata were excluded from byte-equality checks for the admitted new Plan3 dependency update."
+    },
+    {
+      "id": "C08",
+      "name": "Independent current teacher-report baseline",
+      "status": "passed",
+      "execution": "Production TeacherRetainedService and canonical reader over invented160-note fixture, maxBytes65536/limit100",
+      "details": {
+        "reportRequests": 8,
+        "canonicalPagesPerRequest": 6,
+        "canonicalFetchPageCalls": 48,
+        "sourceWrites": 0,
+        "observedProposed13Calls": false
+      },
+      "meaning": "Current repaired teacher-report behavior only; not the older saved-MCP48-to11 measurement. No reuse implementation was exercised."
+    },
+    {
+      "id": "C09",
+      "name": "Root-reported broader controls and stdio provenance",
+      "status": "not_rerun",
+      "details": "Root's changed-source full SDK/report suite16pass/523assertions and secondary14tests/27assertions plus TypeScript pass remain separately attributed. Known author/reviewer historical stdio startup failures are preserved; no blind retry or environment/policy weakening."
+    },
+    {
+      "id": "C10",
+      "name": "Native/private/operational and optional reuse validation",
+      "status": "not_run",
+      "details": "No private loader/data, native authentication/DB/WSL/browser/service adoption, source activation, printing/sending or publication. Optional reuse is proposal-only. Root auditor/qualification tests that create/write Git fixtures were not run under this read-only/no-Git-change review scope."
+    }
+  ],
+  "frameBoundary": {
+    "maxCallToolResultBytes": 524288,
+    "independentlyObservedNormalNearCapResultBytes": 524286,
+    "independentlyObservedJsonRpcFrameBytes": 524321,
+    "frameOverheadBytes": 35,
+    "SDKAccepted": true,
+    "universal512KiBFrameCapClaim": false,
+    "meaning": "Result and JSON-RPC frame are distinct. The normal result meets its512KiB cap; frame overhead is separately measured. Repaired invalid-input results are short."
+  },
+  "history": {
+    "previousFailedCON02Preserved": true,
+    "previousR1R2InputsEvidencePlansPreserved": true,
+    "currentRepairTask": {
+      "id": "academy-workbench:task:academy-consumer-integration-20261021-con-response-contract-repair",
+      "execution": "complete",
+      "verification": "passed",
+      "localAudit": "result-durable",
+      "sharedAudit": "pending",
+      "formalCompletion": "pending"
+    },
+    "repairResultInputSha256": "5c9f5524752d3aedc3f40c307f892df24fe88d9883a00654605474708a21e970",
+    "verificationInputPins": [
+      {
+        "path": "work/academy-workbench/academy-consumer-integration-20261021/inputs/CON-RESPONSE-REPAIR-RESULT-R1.json",
+        "sha256": "5c9f5524752d3aedc3f40c307f892df24fe88d9883a00654605474708a21e970"
+      },
+      {
+        "path": "work/academy-workbench/academy-consumer-integration-20261021/inputs/CON-RESPONSE-REPAIR-ROOT-SDK-R1.json",
+        "sha256": "5061a488e8cc71564bfcc38b03732127239c0a268c4ad5a5669df54a389d4565"
+      },
+      {
+        "path": "architecture/academy-consumer-integration/observations/CON-RESPONSE-REPAIR-ROOT-SDK-R1.json",
+        "sha256": "47bc436d7d652c4064652f510e03e02336193dde75485b4b2b15891af70f4504"
+      },
+      {
+        "path": "architecture/academy-consumer-integration/observations/CON-RESPONSE-REPAIR-FOCUSED-R2.json",
+        "sha256": "1b2474ab81a9657a81db4016c252a947d623330d5472732e7059e64c17382a71"
+      }
+    ],
+    "authorNativeStdioGap": "Unresolved historical environment observation. Root's separate same-source success is not native-author adoption or cause attribution."
+  },
+  "designAdvisory": {
+    "disposition": "conditionally_feasible_source_proposal_with_required_controls_not_approval",
+    "sourceDispositionIndependent": true,
+    "implemented": false,
+    "implementationApproved": false,
+    "activationApproved": false,
+    "formalAcceptance": false,
+    "selection": {
+      "commit": "fab920f48a79d2c88094180f014a84024eca9164",
+      "path": "architecture/academy-reorganization/report-continuation-design-r1.json",
+      "sha256": "6468ed0c8812a257997524c117cdf7a0fa2ddd421d19166535f41e584d9dfe7c",
+      "profilePath": "architecture/academy-reorganization/consumer-report-load-profile-r1.json",
+      "profileSha256": "ee42b46e4a160c8de66b7201ce0426395c15c021569bc3673a4899058f6547da"
+    },
+    "rationale": "A bounded immutable report basis can avoid reconstructing the same canonical document for every report page. At the qualified8f producer each page request recomputes the complete retained document snapshot, so a fresh authenticated first-page response can serve as a requalification signal under that exact producer/callback contract. The consumer cannot infer authentication or currentness merely from matching hashes.",
+    "baseline": {
+      "fixture": "invented one student with160notes",
+      "request": {
+        "maxBytes": 65536,
+        "limit": 100
+      },
+      "reportRequests": 8,
+      "canonicalPagesPerReportRequest": 6,
+      "canonicalFetches": 48,
+      "independentlyReproduced": true,
+      "pageResultBytes": [
+        64468,
+        63535,
+        63535,
+        63535,
+        63579,
+        63631,
+        63631,
+        33470
+      ],
+      "lineCounts": [
+        29,
+        22,
+        22,
+        22,
+        22,
+        22,
+        22,
+        47
+      ],
+      "oldSavedMcpMetricUsed": false
+    },
+    "prediction": {
+      "formula": "N + (M - 1)",
+      "N": 6,
+      "M": 8,
+      "predictedFetches": 13,
+      "observed": false,
+      "assumptions": "One fresh qualification page per continuation, unchanged report page count and no invalidation/fallback. Page-count/metadata overhead can change the actual result."
+    },
+    "requiredControls": [
+      {
+        "id": "AAR-REVIEW-008-D1",
+        "topic": "Fresh authorization remains source-owner supplied",
+        "requirement": "Every enabled continuation must invoke the authenticated owner callback before cached content is returned, including replayed cursors. A cache key/callerBinding/snapshot is not authentication. Refusal, revoked session, owner/actor change or transport failure must return no cached report text.",
+        "unresolvedAssumption": "The current callback type alone does not prove fresh authentication. The selected owner adapter must establish that it revalidates the current caller and actually executes the canonical retained query for each probe, without serving a stale cached page as authorization.",
+        "validation": "Pause an in-flight qualification and revoke/rotate the actor/session; test cross-owner/cross-actor and A-to-B-to-A changes. Require appropriate owner authorization through the last relevant asynchronous boundary. No native enablement until that owner contract is qualified."
+      },
+      {
+        "id": "AAR-REVIEW-008-D2",
+        "topic": "Full-basis integrity plus qualified first-page identity",
+        "requirement": "Construct a reusable basis only after the canonical strict reader exhausts every page and verifies the final document digest. A continuation probe must validate the canonical reply union, exact selector, offset0, page configuration and original snapshot/caller binding, and compare relevant metadata and a canonical first-page fragment fingerprint to the verified basis.",
+        "importantDetail": "Use the same source-reader request parameters as the initial canonical read: limit250/maxBytes65536. callerBinding includes request parameters, so report-output budgets or query defaults100 must not silently substitute. Do not blindly compare delivery timestamps or process-specific continuation signatures as semantic identity.",
+        "limit": "Matching a first-page hash field cannot independently prove unseen content is fresh if the callback does not honor the pinned producer contract. Unsupported adapters must remain stateless or refuse reuse."
+      },
+      {
+        "id": "AAR-REVIEW-008-D3",
+        "topic": "Selector/cursor/report-version isolation",
+        "requirement": "Bind each basis to service instance, canonical source selection, trusted caller binding, complete selector including date/group/student, report format/renderer identity, reportHash and output pagination parameters. Clone caller inputs before yielding. Validate offset/progress and refuse foreign, missing, stale or changed basis references.",
+        "validation": "Wrong selector, source revision, format, caller, report budget/limit, forged offset, repeated cursor, restart and another service instance must not disclose another basis or silently skip lines. Preserve explicit same-snapshot replay semantics."
+      },
+      {
+        "id": "AAR-REVIEW-008-D4",
+        "topic": "Currentness and clocks are not refreshed by reuse",
+        "requirement": "Preserve original source-observed/verified/recorded/teacher-reported and basis-retrieval timestamps. Add a separately labelled retained-snapshot qualification time if needed; never rewrite old clocks as current source acquisition.",
+        "accounting": "Separate pages used to build the basis from pages read by the current continuation. Keeping canonicalPagesConsumed=N without explaining reuse would misleadingly imply N fresh reads for a one-page qualification.",
+        "validation": "Same snapshot with new retrieval time, changed verification clock, teacher correction, cancellation/replacement, grade/attempt/issuance revision and metadata/coverage drift must have the predeclared refusal/invalidation behavior."
+      },
+      {
+        "id": "AAR-REVIEW-008-D5",
+        "topic": "Bounded instance-local custody",
+        "requirement": "Keep the option disabled by default and enable it only through owner-local service composition, never a tool argument or global/native setting. Predeclare finite entry-count, TTL and serialized-basis byte limits with a monotonic expiry basis. Retain only the immutable report/provenance/fingerprint material required by the design.",
+        "custody": "Deep-copy/freeze retained metadata and line arrays; do not retain mutable source callback objects, credentials, sessions, full private stores or repository files. Eviction/disposal and logout/refusal purge behavior must be explicit. Byte budgets are not RSS or secure-erasure guarantees.",
+        "validation": "Capacity pressure, large Unicode/escaped text, concurrent creation, expiry, eviction and instance disposal must remain bounded. Real-data retention policy requires separate source-owner qualification before activation."
+      },
+      {
+        "id": "AAR-REVIEW-008-D6",
+        "topic": "No implicit fallback or stale disclosure",
+        "requirement": "On source-module drift, snapshot/caller mismatch, malformed/refused probe, expired/evicted/missing basis or unsupported owner-auth guarantees, refuse before releasing cached content. Any full-reconstruction fallback must be explicitly selected, preserve coverage and be counted; it must not bypass refusal or trigger acquisition/business effects.",
+        "validation": "Do not relabel a stale basis as a new snapshot or silently switch to a new report mid-cursor. Concurrency tests must prove one immutable report basis is used throughout each result."
+      },
+      {
+        "id": "AAR-REVIEW-008-D7",
+        "topic": "Output and semantic quality gates stay mandatory",
+        "requirement": "Preserve all four007 repairs, strict bounded SDK input errors, the actual complete CallToolResult cap and requested report budget, source-owned hierarchy/stages/clocks, unknown-versus-pending semantics, all lines and explicit continuation.",
+        "validation": "Compare normalized full report lines/reportHash and source/teacher metadata against the stateless control. Predeclare exactly which delivery-time/accounting fields may differ. Measure JSON-RPC frame bytes separately; do not infer a universal512KiB frame cap."
+      },
+      {
+        "id": "AAR-REVIEW-008-D8",
+        "topic": "Paired measurement and source-only governance",
+        "requirement": "Before a candidate, retain the planned bounded Work Input/preflight, independent quality gates, two-attempt/time limit, exact source identities and absolute canonical-fetch reduction criterion using existing common helpers. Evaluate efficiency only after quality passes.",
+        "validation": "Use paired warm-hit and miss/drift/expiry cases with equal outputs or explicitly expected equivalent refusals. Record real page/fetch counts, cache bytes and evictions. The13-call figure remains a prediction until observed; native latency, cost and currentness are not inferred.",
+        "ownership": "No canonical query/domain/common fork or pin/config change. Root decides whether to allocate/admit the separate source task. This advisory is not that decision or a native retention/activation approval."
+      }
+    ],
+    "acceptanceBoundary": "The primary source repair can pass independently of whether reuse is pursued. The design is a bounded candidate direction only; unresolved owner-authentication and first-page freshness guarantees must be specified and tested before implementation qualification, and real-data enablement remains separately held."
+  },
+  "scopeAndLimits": [
+    "Primary pass applies only to exact76aa and its repaired consumer paths; four007 findings are resolved without rewriting consumed007 bytes.",
+    "Secondary pass is limited to exactfab selected loader/type-reference/validation changes and historical-source semantics. Later Root metadata and one-shot helpers are excluded.",
+    "Selected712 source auditing is deliberately separate from mutable common main4d01755 or later and from native/common runtime adoption. No common or Academy consumer pin was changed.",
+    "Git pre/post and selected-file hashes are bounded observations, not an atomic filesystem lock or a general hostile-root/dependency execution sandbox.",
+    "No current private data, DB, installed native callback/authentication, full browser/device/WSL operation or real-source latency was tested.",
+    "Root's full16-test SDK success and14-test auditor/qualification success are attributed evidence. Reviewer independently ran13 focused in-process tests and direct read-only audit/guard checks; no stdio failure was rewritten as a pass.",
+    "Optional report reuse remains unimplemented. Only its current48-fetch baseline was measured; no claimed improvement or formal acceptance follows."
+  ],
+  "effects": {
+    "implementationWrites": 0,
+    "gitMutations": 0,
+    "workRecordWrites": 0,
+    "commonSourceOrPinChanges": 0,
+    "configurationOrPermissionChanges": 0,
+    "credentialReads": 0,
+    "privateOriginalReads": 0,
+    "realDatabaseConnections": 0,
+    "nativeAcquisitions": 0,
+    "servicesLaunched": 0,
+    "browserExecutablesLaunched": 0,
+    "stdioStartupRetries": 0,
+    "printSendPublishMergeDeployActions": 0,
+    "thirdSessionMessages": 0,
+    "onlyWrittenArtifact": ".local/reviews/AAR-REVIEW-008.json",
+    "priorReviewBytesPreserved": true
+  },
+  "disposition": {
+    "primarySourceFix": "passed; all four007 findings resolved",
+    "secondaryHistoricalSourceSelection": "passed within exactfab bounded scope",
+    "newActionableSourceFindings": 0,
+    "designAdvisory": "conditionally feasible proposal; required controls specified; not implemented or approved",
+    "downstreamActivationApproved": false,
+    "sharedDeliveryApproved": false,
+    "formalAcceptanceGranted": false,
+    "wholeWorkCompletionClaim": false,
+    "nextAction": "Root may consume the exact source-review result separately from the design advisory and decide its next bounded source task. Reviewer finalizes this new receipt and waits; no implementation or further operational effect."
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "schemaVersion": "academy.history-capture/1.0.0",
+  "captureId": "capture_0600889018440285cbaf84b31916fbeac6a4b49772b0d4b83eceeca0d54d5516",
+  "studentId": "stu_c7c07d590b374817a8169633d2b625e7",
+  "studentIdNamespace": "existing_private_academy_projection_not_verified_lms_native_id",
+  "studentPageId": "page_f41ed87331708191866fdde4a23d3733",
+  "observedAt": "2026-10-12T05:11:02Z",
+  "mappingObservedAt": "2026-10-12T05:15:46Z",
+  "timezone": "Asia/Seoul",
+  "captureStatus": "partial",
+  "sourceURLs": {
+    "dailyRecord": "https://dc.gang-a.kr/servlet/controller.cct.tutor.DayRecordServlet?p_process=Main",
+    "videoSummary": "https://dc.gang-a.kr/servlet/controller.coursemanage.CourseManageServlet?reqCmd=TeacherPrestudySummary",
+    "pendingReview": "https://dc.gang-a.kr/servlet/controller.coursemanage.CourseManageServlet?reqCmd=WebUnPreStudy"
+  },
+  "sourceFingerprint": {
+    "algorithm": "sha256",
+    "scope": "canonicalized_scoped_receipt_payload_not_raw_server_response",
+    "value": "0600889018440285cbaf84b31916fbeac6a4b49772b0d4b83eceeca0d54d5516"
+  },
+  "eventKinds": [
+    "assignment",
+    "observation"
+  ],
+  "teacherDecision": null,
+  "bookId": null,
+  "bookIdentityStatus": "unresolved_do_not_join_by_name_alone",
+  "sourceNativeEventId": null,
+  "supersedesCaptureId": null,
+  "eventDate": "2026-10-05",
+  "dueDate": "2026-10-12",
+  "retention": {
+    "claim": "server deletes histories older than two weeks",
+    "source": "user_report_2026-10-12",
+    "providerVerified": false
+  },
+  "coverageLimits": [
+    "Video summary date filter was 2026-10-06 through 2026-10-12",
+    "Blank DailyRecord rows are not evidence of completion or absence of homework",
+    "Problem submission, app grading and error correction completion were not verified",
+    "No teacher review button, grading, save or send action was executed"
+  ],
+  "payload": {
+    "observation": {
+      "studentId": "stu_c7c07d590b374817a8169633d2b625e7",
+      "name": "박세은",
+      "session": 1,
+      "classPattern": "월금",
+      "membershipEvidence": "user_confirmed",
+      "assignment": {
+        "assignedDate": "2026-10-05",
+        "dueDate": "2026-10-12",
+        "text": "초5-2 가우스 1권 2단원 분수의 곱셈 대단원 총괄평가 오답클리닉, 클립으로 지정한 문항 풀이"
+      },
+      "carryForward": [
+        "3-2 합동인 도형의 성질 알아보기 문제풀이 미채점"
+      ],
+      "currentMatchedVideoEvidence": "not_observed_in_queried_summary",
+      "problemGrading": "unknown",
+      "teacherHomeworkCheck": "unknown"
+    },
+    "mappingEvidence": [],
+    "mappingUnverified": [
+      "full unit code for 크기가 같은 분수 알아보기",
+      "meaning of leading component in example1-4-1",
+      "full code and title for 분수를 간단하게 나타내기",
+      "Park Seeun multiplication chapter full code",
+      "Lee Hyeonseung subunit5 exact title and code",
+      "Yoo Jiyeon GaussPlus clinic type-to-unit mapping"
+    ]
+  }
+}

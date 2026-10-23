@@ -1,0 +1,24 @@
+{
+  "index": 65,
+  "reference": "library-file:fde1_bGliZmlsZV9TeVhjTkdqM3BKOVFqLVpBdlZEeTJR_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+  "metadata_available": true,
+  "mime_type": "text/x-typescript",
+  "byte_size": 1949,
+  "pages": [
+    "page_d9818d5817f08191835ba0a0e85936bc"
+  ],
+  "retrievedAt": "2026-10-16T10:23:34.043Z",
+  "result": {
+    "page_id": "page_d9818d5817f08191835ba0a0e85936bc",
+    "reference": "library-file:fde1_bGliZmlsZV9TeVhjTkdqM3BKOVFqLVpBdlZEeTJR_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+    "mime_type": "text/x-typescript",
+    "byte_size": 1949,
+    "sha256": "f9acd18c5febf9c86d7119aa95e9da974571838db4e9d25e653b73889b0682cf",
+    "text": "import type { HistoryDataset, SourceTime, SourceManifest, VideoObservation, AssignmentCheck } from './history-source.types.ts';\nimport type { LocalIdentityResolution } from './identity-binding.types.ts';\nexport interface ModuleCoverage {\n  module: string; observedRecordCount: number;\n  sourceAsOf: null; sourceAsOfState: 'not_supplied_for_this_module';\n  displayedRange: { first: SourceTime|null; last: SourceTime|null; orderBasis: 'uniform_raw_display_format'|'not_comparable'; missingTimeCount: number };\n  queryScope: string; queryScopeBasis: 'supplied_canonical_coverage';\n  completeness: 'bounded_only'; sourceExhausted: null; provesMissingWork: false;\n}\nexport interface StudentHistoryProjection {\n  kind: 'student_bounded_history_projection'; schemaVersion: '1.0.0'; revision: 1;\n  id: string; canonicalStudentId: string; sourceSnapshotStudentId: string; studentPageId: string;\n  createdAt: string; identityResolution: LocalIdentityResolution;\n  sourceArchive: {libraryFileId:string;sha256:string;canonicalFileBytesSha256:string;sourceFiles:SourceManifest[]};\n  catalogLocator: {pageId:string;reference:string|null};\n  asOfPolicy: 'ingestion_is_not_source_observation_time'; moduleCoverage: ModuleCoverage[];\n  entities: Pick<HistoryDataset,'enrollments'|'registeredBooks'|'attempts'|'diarySummaries'|'attendance'|'assignments'> & {\n    videos: Omit<VideoObservation,'sourceFields'>[];\n    assignmentChecks: Omit<AssignmentCheck,'observedFields'>[];\n  };\n  bookSummary: {sourceBookEditionId:string;catalogCode:string;version:number;displayName:string;schoolLevel:string;catalogSections:number;attemptObservations:number;completion:'not_determined'}[];\n  mappingCounts: {attempts:number;inferredCatalogMatches:number;unresolved:number};\n  sourceOnlyRecordPolicy:'append_observations_no_event_deduplication_claim';\n  preservedCurrentRegistryReference:string; exclusions:string[];\n  overallProgressPercentage:null; fullHistoryComplete:false;\n}\n",
+    "text_representation": "source",
+    "text_byte_size": 1949,
+    "kind": "text"
+  },
+  "status": "source_text_saved",
+  "localFile": "attachments/ref-65.json"
+}

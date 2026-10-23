@@ -1,8 +1,10 @@
+import {catalogLevels,type CatalogKind} from '../contracts/catalogLevels';
+export {catalogLevels,type CatalogKind} from '../contracts/catalogLevels';
 import { assertExactKeys, assertKnowledge, assertRefs, canonicalJson, immutableCopy, requireText, stableId, type Knowledge } from '../learning/model';
 
 /** Matches the existing student-evidence SourceKey definition; namespaces are never aliases. */
 export interface SourceKey { readonly namespace: string; readonly literalKey: string }
-export type CatalogKind = 'book_edition' | 'major_unit' | 'middle_unit' | 'minor_unit' | 'learning_section' | 'printed_page' | 'problem';
+
 /** Qualified display metadata, never a replacement for the edition's source key. */
 export interface BookDisplayIdentity {
   readonly series:'gauss'|'davinci'; readonly schoolStage:'elementary'|'middle';
@@ -16,7 +18,7 @@ export interface CatalogNode {
   readonly parent: Knowledge<string>;
   readonly bookIdentity?: BookDisplayIdentity;
 }
-export const catalogLevels: readonly CatalogKind[] = ['book_edition', 'major_unit', 'middle_unit', 'minor_unit', 'learning_section', 'printed_page', 'problem'];
+
 /** Sections attach to their observed unit scope; old page-to-minor bindings remain valid. */
 const catalogParents: Readonly<Record<CatalogKind, readonly CatalogKind[]>> = {
   book_edition: [], major_unit: ['book_edition'], middle_unit: ['major_unit'], minor_unit: ['middle_unit'],

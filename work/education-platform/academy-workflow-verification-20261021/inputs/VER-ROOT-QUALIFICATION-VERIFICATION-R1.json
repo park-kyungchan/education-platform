@@ -1,0 +1,49 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "academy-workflow-verification-20261021",
+  "kind": "input",
+  "id": "VER-ROOT-QUALIFICATION-VERIFICATION-R1",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "root-academy-orchestrator",
+    "locator": "actual-root-source-qualification:academy-workflow-verification-20261021:verification",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "verification": {
+      "schemaVersion": "1.0.0",
+      "kind": "verification",
+      "id": "education-platform:verification:ver-root-qualification-r1",
+      "domainId": "education",
+      "projectId": "education-platform",
+      "createdAt": "2026-10-21T07:07:45.048Z",
+      "payload": {
+        "targetRefs": [
+          "common-harness:task:bd42e35f525f8bea5e3eb3811af3c36372b42029a300620f6eb8af2338bc2c36"
+        ],
+        "criteria": [
+          {
+            "id": "exact-root-source-qualified",
+            "status": "pass",
+            "message": "Canonical producer Task, exact result and bound Verification read; receiver local source gate only.",
+            "evidenceRefs": [
+              "education-platform:evidence:ver-root-qualification-observation-r1"
+            ]
+          }
+        ],
+        "inputHashes": [
+          {
+            "path": "work/education-platform/academy-workflow-verification-20261021/inputs/VER-ROOT-QUALIFICATION-R1.json",
+            "sha256": "57652d880f8655883980e12d98959f0a6cf11bdacaf32fd47f2a5947d79be4f2"
+          }
+        ],
+        "runtime": {
+          "name": "Bun canonical source reader",
+          "version": "1.4.3"
+        }
+      }
+    }
+  }
+}

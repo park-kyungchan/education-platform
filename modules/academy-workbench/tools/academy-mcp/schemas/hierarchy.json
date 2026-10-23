@@ -1,0 +1,210 @@
+{
+  "hierarchy": {
+    "kind": "root",
+    "id": "academy_operations",
+    "label": "Academy operational queries",
+    "status": "business_query_design_not_source_completion",
+    "children": [
+      {
+        "kind": "business_workflow",
+        "id": "people",
+        "label": "People and enrollment",
+        "meaning": "Identify students and responsible actors without treating identity as permission.",
+        "children": [
+          {
+            "kind": "source_domain",
+            "id": "identity",
+            "label": "Students, instructors, staff and source identity",
+            "children": []
+          }
+        ]
+      },
+      {
+        "kind": "business_workflow",
+        "id": "teaching",
+        "label": "Teaching and lesson continuity",
+        "meaning": "Distinguish planned enrollment, dated lesson occurrences and observed attendance.",
+        "children": [
+          {
+            "kind": "source_domain",
+            "id": "lesson",
+            "label": "Schedules, groups, attendance and lesson occurrences",
+            "children": []
+          }
+        ]
+      },
+      {
+        "kind": "business_workflow",
+        "id": "learning",
+        "label": "Assignments and learning evidence",
+        "meaning": "Keep assignment, submission, grading and teacher review as separate facts.",
+        "children": [
+          {
+            "kind": "source_domain",
+            "id": "prestudy",
+            "label": "Preparation, video, notes and submissions",
+            "children": []
+          },
+          {
+            "kind": "source_domain",
+            "id": "smartbook",
+            "label": "Smartbook assignments and results",
+            "children": []
+          }
+        ]
+      },
+      {
+        "kind": "business_workflow",
+        "id": "assessment",
+        "label": "Assessment and correction evidence",
+        "meaning": "Keep original papers, attempts, judgments, wrong subsets and generated papers distinct.",
+        "children": [
+          {
+            "kind": "source_domain",
+            "id": "assessment",
+            "label": "Papers, attempts and item judgments",
+            "children": []
+          },
+          {
+            "kind": "source_domain",
+            "id": "clinic",
+            "label": "Wrong subsets, similar papers and correction follow-up",
+            "children": []
+          }
+        ]
+      },
+      {
+        "kind": "business_workflow",
+        "id": "materials",
+        "label": "Books and existing materials",
+        "meaning": "Preserve edition-local structure, existing print membership and distribution evidence.",
+        "children": [
+          {
+            "kind": "source_domain",
+            "id": "curriculum",
+            "label": "Curriculum, book editions and section structure",
+            "children": []
+          },
+          {
+            "kind": "source_domain",
+            "id": "materials",
+            "label": "Existing learning resources and print artifacts",
+            "children": []
+          },
+          {
+            "kind": "source_domain",
+            "id": "book_order",
+            "label": "Book requests and orders",
+            "children": []
+          }
+        ]
+      },
+      {
+        "kind": "business_workflow",
+        "id": "student_care",
+        "label": "Student care and follow-up",
+        "meaning": "Read counseling and follow-up context without inferring completed intervention.",
+        "children": [
+          {
+            "kind": "source_domain",
+            "id": "counseling",
+            "label": "Counseling and student follow-up",
+            "children": []
+          }
+        ]
+      },
+      {
+        "kind": "business_workflow",
+        "id": "communication",
+        "label": "Lesson records and parent communication evidence",
+        "meaning": "Distinguish draft, review, saved record, current report, sent label and delivery receipt.",
+        "children": [
+          {
+            "kind": "source_domain",
+            "id": "communication",
+            "label": "DailyRecord, reports and delivery observations",
+            "children": []
+          }
+        ]
+      },
+      {
+        "kind": "business_workflow",
+        "id": "source_support",
+        "label": "Source capability and provenance",
+        "meaning": "Describe source routes and device context without claiming a callable integration.",
+        "children": [
+          {
+            "kind": "source_domain",
+            "id": "device",
+            "label": "Application, device and session source support",
+            "children": []
+          },
+          {
+            "kind": "source_domain",
+            "id": "navigation",
+            "label": "Source menus, help and unmapped navigation",
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  "relationships": [
+    {
+      "from": "people",
+      "to": "teaching",
+      "relation": "enrollment_context",
+      "meaning": "Enrollment can scope a lesson query; it does not establish attendance.",
+      "status": "design_relation_requires_source_join_evidence"
+    },
+    {
+      "from": "teaching",
+      "to": "learning",
+      "relation": "dated_assignment_context",
+      "meaning": "An assignment needs its dated lesson and student scope.",
+      "status": "design_relation_requires_source_join_evidence"
+    },
+    {
+      "from": "materials",
+      "to": "learning",
+      "relation": "edition_local_assignment_scope",
+      "meaning": "Learning evidence refers to an exact edition and source section.",
+      "status": "design_relation_requires_source_join_evidence"
+    },
+    {
+      "from": "learning",
+      "to": "assessment",
+      "relation": "attempt_and_judgment_context",
+      "meaning": "Submission, item judgments and teacher review remain independent.",
+      "status": "design_relation_requires_source_join_evidence"
+    },
+    {
+      "from": "assessment",
+      "to": "materials",
+      "relation": "existing_print_identity",
+      "meaning": "Current judgments do not reconstruct historical print membership.",
+      "status": "design_relation_requires_source_join_evidence"
+    },
+    {
+      "from": "assessment",
+      "to": "student_care",
+      "relation": "follow_up_context",
+      "meaning": "Assessment evidence can inform follow-up without proving intervention.",
+      "status": "design_relation_requires_source_join_evidence"
+    },
+    {
+      "from": "teaching",
+      "to": "communication",
+      "relation": "parent_relevant_projection",
+      "meaning": "Only dated actual progress, next homework and parent-relevant notices belong in a parent projection.",
+      "status": "design_relation_requires_source_join_evidence"
+    },
+    {
+      "from": "source_support",
+      "to": "people",
+      "relation": "source_identity_provenance",
+      "meaning": "Source identity bindings need their own evidence and freshness.",
+      "status": "design_relation_requires_source_join_evidence"
+    }
+  ]
+}

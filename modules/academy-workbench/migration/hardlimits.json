@@ -1,0 +1,2824 @@
+{
+  "$schema": "./hardlimits.schema.json",
+  "schemaVersion": "1.0.0",
+  "generatedAt": "2026-10-13T03:16:01.146921Z",
+  "artifactKind": "sanitized_handoff_documentation",
+  "intendedRepository": "park-kyungchan/academy-workbench",
+  "repositoryVisibilityRequired": "private",
+  "authority": {
+    "grantsActionPermission": false,
+    "historicalPermissionsAreCurrentGrants": false,
+    "sourceFilesEmbedded": false,
+    "studentValuesEmbedded": false,
+    "credentialValuesEmbedded": false,
+    "writesPerformedByThisArtifact": false
+  },
+  "currentState": {
+    "sites": {
+      "productionVersion": 19,
+      "productionCommit": "e5760c53aeb723d3ad7a66dc1428301374394059",
+      "storedCandidateVersion": 21,
+      "storedCandidateCommit": "54967bfc64278fb594d64887106b85c71facd80c",
+      "candidateDeployed": false,
+      "rollbackVersion": 19
+    },
+    "coverageAxes": {
+      "officialUiReadSupportedCatalogEntries": 7,
+      "historicalCatalogEntries": 95,
+      "observedMenuEntries": 43,
+      "independentlyActivatedProductionSourceApiAdapters": 0,
+      "siteLiveSourceRefreshIntegrated": false,
+      "uiReadMeaning": "Bounded current-day normal-UI reads, including fixed GETs and scoped NA POST search. Not independent callable APIs."
+    },
+    "qa": {
+      "responsiveChromiumWidthsPassed": [
+        1440,
+        1100,
+        1099,
+        768,
+        390,
+        320
+      ],
+      "actualMobileDeviceVerified": false,
+      "safariTouchVerified": false,
+      "fullWcagAuditVerified": false,
+      "nativeWebMcpVerified": false,
+      "actualDeviceIsAdditionalMandatoryGate": false
+    },
+    "pilotAudience": "owner_only",
+    "evidenceCutoff": "2026-10-13; later source reports may supersede these scoped facts; generatedAt is not a new live observation."
+  },
+  "goals": [
+    {
+      "id": "G.OWNER_PILOT",
+      "description": "Provide an owner-only academy workbench pilot with truthful read coverage."
+    },
+    {
+      "id": "G.CURRENT_READS",
+      "description": "Use bounded, verified academy observations without unsafe replay or false absence claims."
+    },
+    {
+      "id": "G.WORKFLOW_MODEL",
+      "description": "Keep preparation, assessment, wrong-answer, print and journal evidence distinct."
+    },
+    {
+      "id": "G.V21_RELEASE",
+      "description": "Validate the stored v21 candidate against the requested release gates before production activation."
+    },
+    {
+      "id": "G.STANDALONE",
+      "description": "Prepare a private, portable workbench implementation path without exporting private source data."
+    },
+    {
+      "id": "G.ANDROID_RESEARCH",
+      "description": "Inspect an official academy Android artifact if supplied; distinguish client code from deployed server truth."
+    }
+  ],
+  "domainHierarchy": [
+    {
+      "id": "environments",
+      "children": [
+        "cloud-coding",
+        "cloud-browser",
+        "android",
+        "native-tools"
+      ]
+    },
+    {
+      "id": "auth",
+      "children": [
+        "platform-identity",
+        "source-session"
+      ]
+    },
+    {
+      "id": "source-read",
+      "children": [
+        "assets",
+        "interaction",
+        "coverage",
+        "identity",
+        "temporal-evidence",
+        "effects"
+      ]
+    },
+    {
+      "id": "integration",
+      "children": [
+        "source-adapters",
+        "domain-model",
+        "assessment",
+        "prestudy",
+        "connector"
+      ]
+    },
+    {
+      "id": "privacy",
+      "children": [
+        "source-export",
+        "pilot-access"
+      ]
+    },
+    {
+      "id": "deployment",
+      "children": [
+        "candidate",
+        "quality",
+        "connector-readback"
+      ]
+    },
+    {
+      "id": "migration",
+      "children": [
+        "standalone-runtime",
+        "persistence",
+        "synthetic-data",
+        "source-portability"
+      ]
+    }
+  ],
+  "statusSemantics": {
+    "failed": "An attempted operation returned a definite failure; retain stage and code.",
+    "blocked": "A known missing prerequisite, restriction or unimplemented component prevents the scoped goal.",
+    "unverified": "A claim has insufficient evidence; requiredForCurrentDelivery distinguishes a mandatory gate from a coverage limit.",
+    "approval_pending": "A specific actual requested approval is unresolved. Historical context is not a grant. Example-only entries do not create real approval requests.",
+    "resolved": "The exact scoped condition is supported by evidence; neighboring or broader claims remain unaffected."
+  },
+  "limits": [
+    {
+      "id": "ENV.SAVED_CLOUD",
+      "domainPath": [
+        "environments",
+        "cloud-coding"
+      ],
+      "title": "Saved cloud coding task cannot start",
+      "status": "failed",
+      "currentFact": "The latest selected saved coding task failed at container_creation with container_service_failed. This is an environment failure, not an application compile failure.",
+      "impactedGoals": [
+        "G.STANDALONE"
+      ],
+      "requiredForCurrentDelivery": true,
+      "scopeClassification": "mandatory_gate",
+      "dependencies": [],
+      "evidence": [
+        {
+          "sourceId": "E.REPORTED.ENV",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        }
+      ],
+      "attemptedMethods": [
+        {
+          "method": "Create the selected saved coding task",
+          "outcome": "Failed before a usable container existed",
+          "evidenceSourceIds": [
+            "E.REPORTED.ENV"
+          ]
+        }
+      ],
+      "whatNotToRetry": [
+        "Do not repeatedly create replacement cloud tasks without a changed environment condition.",
+        "Do not label unimplemented standalone components as container failures."
+      ],
+      "smallestRequiredInput": {
+        "kind": "tooling",
+        "description": "A healthy selected saved coding environment or its confirmed repair."
+      },
+      "acceptanceChecks": [
+        {
+          "id": "ENV.SAVED_CLOUD.CHECK.1",
+          "criterion": "A task in the selected environment reaches ready and can run a harmless workspace read.",
+          "evidenceNeeded": "Official task status plus bounded command receipt."
+        }
+      ],
+      "ownership": {
+        "accountableRole": "environment_provider",
+        "supportingRoles": [
+          "reviewer"
+        ]
+      },
+      "nextSafeAction": "Preserve the failed task receipt and continue documentation in the working cloud filesystem; resume implementation only in an authorized suitable environment.",
+      "failure": {
+        "stage": "container_creation",
+        "code": "container_service_failed",
+        "retryPolicy": "Retry only after a meaningful environment change or confirmed repair."
+      }
+    },
+    {
+      "id": "ENV.DOT_CLOUD",
+      "domainPath": [
+        "environments",
+        "cloud-browser"
+      ],
+      "title": "Separate cloud filesystem and browser remain usable",
+      "status": "resolved",
+      "currentFact": "The assistant cloud filesystem and supported browser work independently of the failed saved coding task.",
+      "impactedGoals": [
+        "G.CURRENT_READS",
+        "G.STANDALONE"
+      ],
+      "requiredForCurrentDelivery": false,
+      "scopeClassification": "resolved_scope",
+      "dependencies": [],
+      "evidence": [
+        {
+          "sourceId": "E.REPORTED.ENV",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        }
+      ],
+      "attemptedMethods": [
+        {
+          "method": "Read existing local source evidence",
+          "outcome": "Succeeded for this documentation",
+          "evidenceSourceIds": [
+            "E.REPORTED.ENV"
+          ]
+        }
+      ],
+      "whatNotToRetry": [
+        "Do not report all cloud access as unavailable because saved coding task creation failed."
+      ],
+      "smallestRequiredInput": {
+        "kind": "none",
+        "description": "No input is needed for the existing documentation path."
+      },
+      "acceptanceChecks": [
+        {
+          "id": "ENV.DOT_CLOUD.CHECK.1",
+          "criterion": "Local deliverables can be read and validated without creating a new cloud task.",
+          "evidenceNeeded": "This folder validation receipt."
+        }
+      ],
+      "ownership": {
+        "accountableRole": "implementer",
+        "supportingRoles": [
+          "reviewer"
+        ]
+      },
+      "nextSafeAction": "Use the existing filesystem for sanitized documentation; keep the failed coding environment separate.",
+      "resolution": {
+        "resolvedScope": "Separate cloud filesystem and browser remain usable",
+        "remainingLimits": [
+          "Resolution applies only to the scope and evidence cited here."
+        ]
+      }
+    },
+    {
+      "id": "ENV.ANDROID_RUNTIME",
+      "domainPath": [
+        "environments",
+        "android"
+      ],
+      "title": "Actual Android runtime is unavailable here",
+      "status": "blocked",
+      "currentFact": "The current cloud has no /dev/kvm and no vmx/svm CPU acceleration; official software-emulation fallback is unsupported. No academy APK has run.",
+      "impactedGoals": [
+        "G.ANDROID_RESEARCH"
+      ],
+      "requiredForCurrentDelivery": false,
+      "scopeClassification": "conditional_research",
+      "dependencies": [],
+      "evidence": [
+        {
+          "sourceId": "E.REPORTED.ENV",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        },
+        {
+          "sourceId": "E.ANDROID",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        }
+      ],
+      "attemptedMethods": [
+        {
+          "method": "Review current cloud Android runtime prerequisites",
+          "outcome": "Hardware acceleration absent; software fallback unsupported",
+          "evidenceSourceIds": [
+            "E.REPORTED.ENV"
+          ]
+        }
+      ],
+      "whatNotToRetry": [
+        "Do not spoof virtualization, alter security settings, pair a device, or substitute an unofficial emulator to bypass this limit."
+      ],
+      "smallestRequiredInput": {
+        "kind": "tooling",
+        "description": "A supported authorized Android runtime, only if runtime behavior is needed."
+      },
+      "acceptanceChecks": [
+        {
+          "id": "ENV.ANDROID_RUNTIME.CHECK.1",
+          "criterion": "The chosen supported runtime reports ready and runs an authorized non-sensitive fixture.",
+          "evidenceNeeded": "Runtime capability and fixture receipt."
+        }
+      ],
+      "ownership": {
+        "accountableRole": "implementer",
+        "supportingRoles": [
+          "reviewer"
+        ]
+      },
+      "nextSafeAction": "Continue static analysis only after an official academy artifact is available.",
+      "blocker": {
+        "reason": "The current cloud has no /dev/kvm and no vmx/svm CPU acceleration; official software-emulation fallback is unsupported. No academy APK has run.",
+        "kind": "missing_prerequisite"
+      }
+    },
+    {
+      "id": "ENV.ANDROID_TOOLCHAIN",
+      "domainPath": [
+        "environments",
+        "android"
+      ],
+      "title": "Offline REA/JDK/JADX fixture checks passed",
+      "status": "resolved",
+      "currentFact": "Five REA Android checks passed against the official public sample APK. The sample was not installed or executed; no academy data was used.",
+      "impactedGoals": [
+        "G.ANDROID_RESEARCH"
+      ],
+      "requiredForCurrentDelivery": false,
+      "scopeClassification": "resolved_scope",
+      "dependencies": [],
+      "evidence": [
+        {
+          "sourceId": "E.ANDROID",
+          "observedAt": "2026-10-13T02:03:00Z",
+          "observationMeaning": "Use the exact source scope; this is not a new live read.",
+          "jsonPointer": "/checks"
+        }
+      ],
+      "attemptedMethods": [
+        {
+          "method": "Inspect package, search classes, inspect class, inspect method, trace references",
+          "outcome": "All five sample checks passed",
+          "evidenceSourceIds": [
+            "E.ANDROID"
+          ]
+        }
+      ],
+      "whatNotToRetry": [
+        "Do not treat sample success as academy app API, authentication, DB or runtime verification."
+      ],
+      "smallestRequiredInput": {
+        "kind": "none",
+        "description": "No input needed to retain the bounded fixture result."
+      },
+      "acceptanceChecks": [
+        {
+          "id": "ENV.ANDROID_TOOLCHAIN.CHECK.1",
+          "criterion": "Five sample checks remain traceable to the source hash.",
+          "evidenceNeeded": "Android readiness source hash and check summary."
+        }
+      ],
+      "ownership": {
+        "accountableRole": "implementer",
+        "supportingRoles": [
+          "reviewer"
+        ]
+      },
+      "nextSafeAction": "Retain the verified toolchain result; wait for a genuine official academy artifact before app-specific claims.",
+      "resolution": {
+        "resolvedScope": "Offline REA/JDK/JADX fixture checks passed",
+        "remainingLimits": [
+          "Resolution applies only to the scope and evidence cited here."
+        ]
+      }
+    },
+    {
+      "id": "ENV.ACADEMY_APK",
+      "domainPath": [
+        "environments",
+        "android"
+      ],
+      "title": "Official academy APK is missing",
+      "status": "blocked",
+      "currentFact": "Official store links establish app identity only. No official academy APK was acquired. The bounded official-page review found no direct artifact URL; this is not an exhaustive absence claim.",
+      "impactedGoals": [
+        "G.ANDROID_RESEARCH"
+      ],
+      "requiredForCurrentDelivery": false,
+      "scopeClassification": "conditional_research",
+      "dependencies": [],
+      "evidence": [
+        {
+          "sourceId": "E.ANDROID",
+          "observedAt": "2026-10-13T02:03:00Z",
+          "observationMeaning": "Use the exact source scope; this is not a new live read.",
+          "jsonPointer": "/official_academy_acquisition_review"
+        }
+      ],
+      "attemptedMethods": [
+        {
+          "method": "Review bounded official public pages and store listings",
+          "outcome": "Identity found; downloadable academy artifact not obtained",
+          "evidenceSourceIds": [
+            "E.ANDROID"
+          ]
+        }
+      ],
+      "whatNotToRetry": [
+        "Do not download APK mirrors, extract credentials, or claim store metadata is app-code evidence."
+      ],
+      "smallestRequiredInput": {
+        "kind": "artifact",
+        "description": "Official student APK, complete official split set, or a direct developer-provided official artifact URL. No account or student records needed."
+      },
+      "acceptanceChecks": [
+        {
+          "id": "ENV.ACADEMY_APK.CHECK.1",
+          "criterion": "Provenance, digest and package/version identity are recorded before static inspection.",
+          "evidenceNeeded": "Artifact provenance and digest receipt."
+        }
+      ],
+      "ownership": {
+        "accountableRole": "implementer",
+        "supportingRoles": [
+          "reviewer"
+        ]
+      },
+      "nextSafeAction": "Request the smallest official artifact only if continuing Android research.",
+      "blocker": {
+        "reason": "Official store links establish app identity only. No official academy APK was acquired. The bounded official-page review found no direct artifact URL; this is not an exhaustive absence claim.",
+        "kind": "missing_prerequisite"
+      }
+    },
+    {
+      "id": "ENV.NATIVE_WEBMCP",
+      "domainPath": [
+        "environments",
+        "native-tools"
+      ],
+      "title": "Supported native WebMCP discovery and invocation are missing",
+      "status": "blocked",
+      "currentFact": "Current supported cloud browser tooling exposes no official current-page native WebMCP discovery/invoke capability. No shim or direct callback substitute was used.",
+      "impactedGoals": [
+        "G.V21_RELEASE"
+      ],
+      "requiredForCurrentDelivery": true,
+      "scopeClassification": "mandatory_gate",
+      "dependencies": [],
+      "evidence": [
+        {
+          "sourceId": "E.QA.V21",
+          "observedAt": "2026-10-13T02:45:28.644431+00:00",
+          "observationMeaning": "Use the exact source scope; this is not a new live read.",
+          "jsonPointer": "/nativeWebMcp"
+        }
+      ],
+      "attemptedMethods": [
+        {
+          "method": "Inspect browser, tab and deferred native tool capabilities",
+          "outcome": "Native discovery/invocation capability not found",
+          "evidenceSourceIds": [
+            "E.QA.V21"
+          ]
+        }
+      ],
+      "whatNotToRetry": [
+        "Do not replace native verification with direct JavaScript callbacks, a synthetic registry, Site MCP, new debug ports or restricted DevTools."
+      ],
+      "smallestRequiredInput": {
+        "kind": "tooling",
+        "description": "An official supported cloud integration exposing native WebMCP discovery/invocation for the allowed candidate page."
+      },
+      "acceptanceChecks": [
+        {
+          "id": "ENV.NATIVE_WEBMCP.CHECK.1",
+          "criterion": "Supported tooling can discover and invoke a native page tool with visible state readback.",
+          "evidenceNeeded": "Official native discovery and invocation receipts."
+        }
+      ],
+      "ownership": {
+        "accountableRole": "environment_provider",
+        "supportingRoles": [
+          "reviewer"
+        ]
+      },
+      "nextSafeAction": "Keep native QA pending until the supported capability becomes available.",
+      "blocker": {
+        "reason": "Current supported cloud browser tooling exposes no official current-page native WebMCP discovery/invoke capability. No shim or direct callback substitute was used.",
+        "kind": "missing_prerequisite"
+      }
+    },
+    {
+      "id": "AUTH.SITES_IDENTITY",
+      "domainPath": [
+        "auth",
+        "platform-identity"
+      ],
+      "title": "Sites identity headers are not portable authentication",
+      "status": "blocked",
+      "currentFact": "The current server trusts Sites-managed owner identity and platform-injected headers; the client uses a Sites-specific sign-in route. Copying these headers to an independent host would not create authenticated identity.",
+      "impactedGoals": [
+        "G.STANDALONE",
+        "G.OWNER_PILOT"
+      ],
+      "requiredForCurrentDelivery": true,
+      "scopeClassification": "mandatory_gate",
+      "dependencies": [],
+      "evidence": [
+        {
+          "sourceId": "E.CODE.AUTH",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        },
+        {
+          "sourceId": "E.CODE.APP",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        },
+        {
+          "sourceId": "E.REPORTED.EXPORT",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        }
+      ],
+      "attemptedMethods": [
+        {
+          "method": "Inspect current authentication boundary and sign-in entry point",
+          "outcome": "Platform-specific coupling confirmed",
+          "evidenceSourceIds": [
+            "E.CODE.AUTH",
+            "E.CODE.APP"
+          ]
+        }
+      ],
+      "whatNotToRetry": [
+        "Never trust public client-supplied identity headers on a standalone host.",
+        "Do not export owner identity material from source-generated files."
+      ],
+      "smallestRequiredInput": {
+        "kind": "implementation",
+        "description": "A standalone authentication design and implementation with server-verified owner identity and an owner-only access rule."
+      },
+      "acceptanceChecks": [
+        {
+          "id": "AUTH.SITES_IDENTITY.CHECK.1",
+          "criterion": "Forged identity headers, unauthenticated requests and other-user requests are rejected.",
+          "evidenceNeeded": "Synthetic standalone authentication tests."
+        },
+        {
+          "id": "AUTH.SITES_IDENTITY.CHECK.2",
+          "criterion": "Owner-only pilot sign-in and sign-out work on the chosen host.",
+          "evidenceNeeded": "Approved-host acceptance receipt without credentials in logs."
+        }
+      ],
+      "ownership": {
+        "accountableRole": "implementer",
+        "supportingRoles": [
+          "reviewer"
+        ]
+      },
+      "nextSafeAction": "Specify the authentication interface and synthetic rejection tests before host implementation.",
+      "blocker": {
+        "kind": "not_implemented",
+        "reason": "Standalone authentication is not implemented; existing Sites authentication is platform-specific."
+      }
+    },
+    {
+      "id": "AUTH.EXPIRED_SESSION",
+      "domainPath": [
+        "auth",
+        "source-session"
+      ],
+      "title": "Expired academy session behavior remains unverified",
+      "status": "unverified",
+      "currentFact": "Current saved observations do not establish expired-session detection or recovery behavior. A successful prior bounded read does not guarantee a later session.",
+      "impactedGoals": [
+        "G.CURRENT_READS"
+      ],
+      "requiredForCurrentDelivery": false,
+      "scopeClassification": "coverage_limit",
+      "dependencies": [],
+      "evidence": [
+        {
+          "sourceId": "E.CLINIC.LIVE_REPLAY",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read.",
+          "jsonPointer": "/notVerified"
+        }
+      ],
+      "attemptedMethods": [
+        {
+          "method": "Review saved live coverage limits",
+          "outcome": "Expired authentication is explicitly unverified",
+          "evidenceSourceIds": [
+            "E.CLINIC.LIVE_REPLAY"
+          ]
+        }
+      ],
+      "whatNotToRetry": [
+        "Do not infer login success from a blank result or silently classify a login page as no data.",
+        "Do not store credentials or create new persistent access as a side effect of this handoff."
+      ],
+      "smallestRequiredInput": {
+        "kind": "evidence",
+        "description": "A naturally occurring, permitted expired-session observation and supported recovery receipt, if this case is required."
+      },
+      "acceptanceChecks": [
+        {
+          "id": "AUTH.EXPIRED_SESSION.CHECK.1",
+          "criterion": "Authentication-required, empty-result and valid-result states are distinct.",
+          "evidenceNeeded": "Synthetic state tests plus bounded live observation when available."
+        }
+      ],
+      "ownership": {
+        "accountableRole": "implementer",
+        "supportingRoles": [
+          "reviewer"
+        ]
+      },
+      "nextSafeAction": "Keep source-session failure explicit in adapter design; do not force a session expiry.",
+      "verification": {
+        "claimToEstablish": "Expired academy session behavior remains unverified",
+        "currentEvidenceInsufficientBecause": "Current saved observations do not establish expired-session detection or recovery behavior. A successful prior bounded read does not guarantee a later session."
+      }
+    },
+    {
+      "id": "READ.ASSET_RESTRICTION",
+      "domainPath": [
+        "source-read",
+        "assets"
+      ],
+      "title": "Named JavaScript assets and DevTools are restricted",
+      "status": "blocked",
+      "currentFact": "module.js and common.js returned ERR_BLOCKED_BY_CLIENT. common_function.js was only referenced. Managed DevTools/CDP is restricted. These named failures do not make every official screen or GET unreadable.",
+      "impactedGoals": [
+        "G.CURRENT_READS"
+      ],
+      "requiredForCurrentDelivery": true,
+      "scopeClassification": "mandatory_gate",
+      "dependencies": [],
+      "evidence": [
+        {
+          "sourceId": "E.COVERAGE.LEDGER",
+          "observedAt": "2026-10-13T02:57:42.639Z",
+          "observationMeaning": "Use the exact source scope; this is not a new live read.",
+          "jsonPointer": "/assetAndTransportBoundaries"
+        }
+      ],
+      "attemptedMethods": [
+        {
+          "method": "Read named script assets through the supported route",
+          "outcome": "module.js/common.js blocked by client",
+          "evidenceSourceIds": [
+            "E.COVERAGE.LEDGER"
+          ]
+        },
+        {
+          "method": "Check managed DevTools availability",
+          "outcome": "Restricted",
+          "evidenceSourceIds": [
+            "E.COVERAGE.LEDGER"
+          ]
+        }
+      ],
+      "whatNotToRetry": [
+        "Do not retry the blocked assets through alternate REA, direct HTTP, proxies or another debug connection to bypass the same restriction."
+      ],
+      "smallestRequiredInput": {
+        "kind": "tooling",
+        "description": "A legitimate supported path made available by the environment owner, only for the missing source scope."
+      },
+      "acceptanceChecks": [
+        {
+          "id": "READ.ASSET_RESTRICTION.CHECK.1",
+          "criterion": "Any future acquisition uses a permitted route and preserves source/time provenance.",
+          "evidenceNeeded": "Supported-path receipt; no bypass."
+        }
+      ],
+      "ownership": {
+        "accountableRole": "environment_provider",
+        "supportingRoles": [
+          "reviewer"
+        ]
+      },
+      "nextSafeAction": "Use existing saved inert source and separately successful normal-UI reads; leave restricted asset evidence unknown.",
+      "blocker": {
+        "reason": "module.js and common.js returned ERR_BLOCKED_BY_CLIENT. common_function.js was only referenced. Managed DevTools/CDP is restricted. These named failures do not make every official screen or GET unreadable.",
+        "kind": "missing_prerequisite"
+      }
+    },
+    {
+      "id": "READ.INSTALLER_OVERLAY",
+      "domainPath": [
+        "source-read",
+        "interaction"
+      ],
+      "title": "Installer overlay obstructs specific interactions",
+      "status": "blocked",
+      "currentFact": "The site installation prompt showed only an installation-guide control, with no X/close/later. One normal Escape attempt left it visible. Specific searches/details are obstructed; some fixed-view reads still succeed.",
+      "impactedGoals": [
+        "G.CURRENT_READS"
+      ],
+      "requiredForCurrentDelivery": true,
+      "scopeClassification": "mandatory_gate",
+      "dependencies": [],
+      "evidence": [
+        {
+          "sourceId": "E.OVERLAY",
+          "observedAt": "2026-10-13T02:38:24.622Z",
+          "observationMeaning": "Use the exact source scope; this is not a new live read.",
+          "jsonPointer": "/overlayCheck"
+        }
+      ],
+      "attemptedMethods": [
+        {
+          "method": "Inspect available normal UI controls",
+          "outcome": "No dismissal control present",
+          "evidenceSourceIds": [
+            "E.OVERLAY"
+          ]
+        },
+        {
+          "method": "Press Escape once",
+          "outcome": "Overlay remained visible",
+          "evidenceSourceIds": [
+            "E.OVERLAY"
+          ]
+        }
+      ],
+      "whatNotToRetry": [
+        "Do not repeat dismissal attempts, remove DOM layers, click through the overlay or spoof installed state.",
+        "Do not install new software merely to clear this documented limit."
+      ],
+      "smallestRequiredInput": {
+        "kind": "tooling",
+        "description": "A naturally available supported UI path without the obstructing prompt, or official environment support."
+      },
+      "acceptanceChecks": [
+        {
+          "id": "READ.INSTALLER_OVERLAY.CHECK.1",
+          "criterion": "The intended interaction is reachable through normal supported UI.",
+          "evidenceNeeded": "Current normal-UI observation."
+        }
+      ],
+      "ownership": {
+        "accountableRole": "environment_provider",
+        "supportingRoles": [
+          "reviewer"
+        ]
+      },
+      "nextSafeAction": "Retain successful fixed-view observations and stop only the obstructed interaction.",
+      "blocker": {
+        "reason": "The site installation prompt showed only an installation-guide control, with no X/close/later. One normal Escape attempt left it visible. Specific searches/details are obstructed; some fixed-view reads still succeed.",
+        "kind": "missing_prerequisite"
+      }
+    },
+    {
+      "id": "READ.BOUNDED_UI",
+      "domainPath": [
+        "source-read",
+        "coverage"
+      ],
+      "title": "Bounded official UI reads are real but not independent APIs",
+      "status": "resolved",
+      "currentFact": "Seven of 95 historical catalog entries have current-day bounded official UI read support. Reads include fixed GET surfaces and a scoped NA POST search. Independently activated production source API adapters remain zero.",
+      "impactedGoals": [
+        "G.CURRENT_READS"
+      ],
+      "requiredForCurrentDelivery": false,
+      "scopeClassification": "resolved_scope",
+      "dependencies": [],
+      "evidence": [
+        {
+          "sourceId": "E.COVERAGE.LEDGER",
+          "observedAt": "2026-10-13T02:57:42.639Z",
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        },
+        {
+          "sourceId": "E.COVERAGE.CHECKS",
+          "observedAt": "2026-10-13T02:57:42.644Z",
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        }
+      ],
+      "attemptedMethods": [
+        {
+          "method": "Reconcile menu observations, source catalog, methods and dated read receipts",
+          "outcome": "Seven current-day supported catalog entries; all executable adapter flags remain disabled",
+          "evidenceSourceIds": [
+            "E.COVERAGE.LEDGER"
+          ]
+        }
+      ],
+      "whatNotToRetry": [
+        "Do not say seven live APIs or no successful source reads.",
+        "Do not add 43 menu observations to 95 catalog entries as distinct APIs."
+      ],
+      "smallestRequiredInput": {
+        "kind": "none",
+        "description": "No new input needed to state the bounded current coverage."
+      },
+      "acceptanceChecks": [
+        {
+          "id": "READ.BOUNDED_UI.CHECK.1",
+          "criterion": "UI evidence, static candidates, production source adapters and app integration remain separate coverage axes.",
+          "evidenceNeeded": "Registry currentState and coverage ledger references."
+        }
+      ],
+      "ownership": {
+        "accountableRole": "implementer",
+        "supportingRoles": [
+          "reviewer"
+        ]
+      },
+      "nextSafeAction": "Use the corrected coverage ledger as evidence authority, with exact method/category/time scope.",
+      "resolution": {
+        "resolvedScope": "Bounded official UI reads are real but not independent APIs",
+        "remainingLimits": [
+          "Resolution applies only to the scope and evidence cited here."
+        ]
+      }
+    },
+    {
+      "id": "READ.CATALOG_GAPS",
+      "domainPath": [
+        "source-read",
+        "coverage"
+      ],
+      "title": "Most catalog operations lack current-day child-read evidence",
+      "status": "unverified",
+      "currentFact": "88 of 95 entries lack current-day child-read evidence. Static-only, unknown and write-associated entries are not callable capabilities. The 43 menu observations have a separate denominator and four remain unmapped.",
+      "impactedGoals": [
+        "G.CURRENT_READS",
+        "G.WORKFLOW_MODEL"
+      ],
+      "requiredForCurrentDelivery": false,
+      "scopeClassification": "coverage_limit",
+      "dependencies": [],
+      "evidence": [
+        {
+          "sourceId": "E.COVERAGE.LEDGER",
+          "observedAt": "2026-10-13T02:57:42.639Z",
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        }
+      ],
+      "attemptedMethods": [
+        {
+          "method": "Reconcile catalog and menu ledger",
+          "outcome": "Coverage gaps retained rather than inferred away",
+          "evidenceSourceIds": [
+            "E.COVERAGE.LEDGER"
+          ]
+        }
+      ],
+      "whatNotToRetry": [
+        "Do not bulk-probe catalog routes or inherit historical safe-to-probe flags as present permission."
+      ],
+      "smallestRequiredInput": {
+        "kind": "evidence",
+        "description": "For each needed operation: current supported entry point, exact method/path/action/category, effect review and a bounded receipt."
+      },
+      "acceptanceChecks": [
+        {
+          "id": "READ.CATALOG_GAPS.CHECK.1",
+          "criterion": "An upgraded entry records explicit time, method, effect and scope; history is preserved.",
+          "evidenceNeeded": "A new scoped evidence receipt and ledger review."
+        }
+      ],
+      "ownership": {
+        "accountableRole": "implementer",
+        "supportingRoles": [
+          "reviewer"
+        ]
+      },
+      "nextSafeAction": "Prioritize the next user-relevant workflow; investigate one permitted operation at a time.",
+      "verification": {
+        "claimToEstablish": "Most catalog operations lack current-day child-read evidence",
+        "currentEvidenceInsufficientBecause": "88 of 95 entries lack current-day child-read evidence. Static-only, unknown and write-associated entries are not callable capabilities. The 43 menu observations have a separate denominator and four remain unmapped."
+      }
+    },
+    {
+      "id": "READ.SEARCH_COMPLETENESS",
+      "domainPath": [
+        "source-read",
+        "coverage"
+      ],
+      "title": "Search filters and completeness are not optional",
+      "status": "unverified",
+      "currentFact": "Direct result URL entry can omit assessment filters and return an empty list. The observed normal search is a filtered POST. Second-page transitions, wider date boundaries and complete-history coverage remain unverified.",
+      "impactedGoals": [
+        "G.CURRENT_READS",
+        "G.WORKFLOW_MODEL"
+      ],
+      "requiredForCurrentDelivery": true,
+      "scopeClassification": "mandatory_gate",
+      "dependencies": [],
+      "evidence": [
+        {
+          "sourceId": "E.PRODUCTION.REVIEW",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        },
+        {
+          "sourceId": "E.CLINIC.LIVE_REPLAY",
+          "observedAt": "2026-10-13T02:26:57.055Z",
+          "observationMeaning": "Use the exact source scope; this is not a new live read.",
+          "jsonPointer": "/ambiguousHeader/discovery"
+        }
+      ],
+      "attemptedMethods": [
+        {
+          "method": "Compare normal search with direct result entry",
+          "outcome": "Missing filters explain a false-empty risk",
+          "evidenceSourceIds": [
+            "E.PRODUCTION.REVIEW"
+          ]
+        },
+        {
+          "method": "Replay saved filter/page boundary checks",
+          "outcome": "Scoped page accepted; complete-history inference rejected",
+          "evidenceSourceIds": [
+            "E.CLINIC.CHECKS"
+          ]
+        }
+      ],
+      "whatNotToRetry": [
+        "Do not optimize an empty response into no tasks or complete history.",
+        "Do not invent year, inclusive date boundaries, page size or total counts."
+      ],
+      "smallestRequiredInput": {
+        "kind": "evidence",
+        "description": "A scoped receipt containing entry point, method, submitted filters, exact displayed dates, page and completeness status."
+      },
+      "acceptanceChecks": [
+        {
+          "id": "READ.SEARCH_COMPLETENESS.CHECK.1",
+          "criterion": "Missing filters fail closed, and empty results retain unknown completeness.",
+          "evidenceNeeded": "Synthetic tests and bounded source receipt."
+        },
+        {
+          "id": "READ.SEARCH_COMPLETENESS.CHECK.2",
+          "criterion": "Further pages/dates are claimed only if actually observed.",
+          "evidenceNeeded": "Per-page/date observation receipts."
+        }
+      ],
+      "ownership": {
+        "accountableRole": "implementer",
+        "supportingRoles": [
+          "reviewer"
+        ]
+      },
+      "nextSafeAction": "Preserve exact observed scope and explicit completeness=false until additional safe evidence exists.",
+      "verification": {
+        "claimToEstablish": "Search filters and completeness are not optional",
+        "currentEvidenceInsufficientBecause": "Direct result URL entry can omit assessment filters and return an empty list. The observed normal search is a filtered POST. Second-page transitions, wider date boundaries and complete-history coverage remain unverified."
+      }
+    },
+    {
+      "id": "READ.NAMESPACE_BINDING",
+      "domainPath": [
+        "source-read",
+        "identity"
+      ],
+      "title": "Site and academy student namespaces are not joined",
+      "status": "unverified",
+      "currentFact": "The Site student namespace and academy native student/attempt keys have no proven direct binding. A name match or unique displayed name is insufficient. No raw identity values are included here.",
+      "impactedGoals": [
+        "G.OWNER_PILOT",
+        "G.CURRENT_READS",
+        "G.STANDALONE"
+      ],
+      "requiredForCurrentDelivery": true,
+      "scopeClassification": "mandatory_gate",
+      "dependencies": [],
+      "evidence": [
+        {
+          "sourceId": "E.PRODUCTION.REVIEW",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        }
+      ],
+      "attemptedMethods": [
+        {
+          "method": "Inspect Site projection and official observation key namespaces",
+          "outcome": "nativeStudentId remains null and nativeIdentityVerified remains false",
+          "evidenceSourceIds": [
+            "E.PRODUCTION.REVIEW"
+          ]
+        }
+      ],
+      "whatNotToRetry": [
+        "Do not join on a student name, infer an ID from another namespace, or flip verification flags without direct evidence."
+      ],
+      "smallestRequiredInput": {
+        "kind": "evidence",
+        "description": "A minimal authorized direct binding receipt for the exact Site entity and native source entity, retained privately outside the repository."
+      },
+      "acceptanceChecks": [
+        {
+          "id": "READ.NAMESPACE_BINDING.CHECK.1",
+          "criterion": "Conflicting/missing binding fails closed and exact namespaces remain distinct.",
+          "evidenceNeeded": "Synthetic binding tests plus a privately held binding receipt."
+        }
+      ],
+      "ownership": {
+        "accountableRole": "implementer",
+        "supportingRoles": [
+          "reviewer"
+        ]
+      },
+      "nextSafeAction": "Define a server-only binding contract with synthetic keys; leave real bindings unresolved.",
+      "verification": {
+        "claimToEstablish": "Site and academy student namespaces are not joined",
+        "currentEvidenceInsufficientBecause": "The Site student namespace and academy native student/attempt keys have no proven direct binding. A name match or unique displayed name is insufficient. No raw identity values are included here."
+      }
+    },
+    {
+      "id": "READ.SHORT_HEADER",
+      "domainPath": [
+        "source-read",
+        "identity"
+      ],
+      "title": "A shortened print header matches three assessment rows",
+      "status": "unverified",
+      "currentFact": "One observed shortened header matched three different assessment sections. Source row identity also omits the attempt key. General header-only lookup remains ambiguous even when one fixture can be resolved using complete selection context.",
+      "impactedGoals": [
+        "G.CURRENT_READS",
+        "G.WORKFLOW_MODEL"
+      ],
+      "requiredForCurrentDelivery": true,
+      "scopeClassification": "mandatory_gate",
+      "dependencies": [],
+      "evidence": [
+        {
+          "sourceId": "E.CLINIC.LIVE_REPLAY",
+          "observedAt": "2026-10-13T02:26:57.055Z",
+          "observationMeaning": "Use the exact source scope; this is not a new live read.",
+          "jsonPointer": "/ambiguousHeader"
+        },
+        {
+          "sourceId": "E.CLINIC.CHECKS",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        }
+      ],
+      "attemptedMethods": [
+        {
+          "method": "Replay short-header lookup",
+          "outcome": "HEADER_AMBIGUOUS returned with no external action",
+          "evidenceSourceIds": [
+            "E.CLINIC.LIVE_REPLAY"
+          ]
+        }
+      ],
+      "whatNotToRetry": [
+        "Do not choose the latest row, normalize away a section, or auto-select by IDs alone."
+      ],
+      "smallestRequiredInput": {
+        "kind": "evidence",
+        "description": "Full title, section/type, exact displayed date and independently verified complete source selection keys."
+      },
+      "acceptanceChecks": [
+        {
+          "id": "READ.SHORT_HEADER.CHECK.1",
+          "criterion": "Ambiguous, incomplete and conflicting selections are rejected.",
+          "evidenceNeeded": "Synthetic header collision tests."
+        },
+        {
+          "id": "READ.SHORT_HEADER.CHECK.2",
+          "criterion": "The selected scope is independently confirmed.",
+          "evidenceNeeded": "A privately retained exact selection receipt."
+        }
+      ],
+      "ownership": {
+        "accountableRole": "implementer",
+        "supportingRoles": [
+          "reviewer"
+        ]
+      },
+      "nextSafeAction": "Keep header ambiguity visible and require full verified selection before any projection.",
+      "verification": {
+        "claimToEstablish": "A shortened print header matches three assessment rows",
+        "currentEvidenceInsufficientBecause": "One observed shortened header matched three different assessment sections. Source row identity also omits the attempt key. General header-only lookup remains ambiguous even when one fixture can be resolved using complete selection context."
+      }
+    },
+    {
+      "id": "READ.ATOMIC_REVISION",
+      "domainPath": [
+        "source-read",
+        "temporal-evidence"
+      ],
+      "title": "Repeated equal reads do not prove an atomic snapshot",
+      "status": "unverified",
+      "currentFact": "Grading, label and grading-again observations agreed over a bounded interval, but no server revision token or atomic snapshot guarantee was observed. A local content hash is not a server revision.",
+      "impactedGoals": [
+        "G.CURRENT_READS",
+        "G.WORKFLOW_MODEL"
+      ],
+      "requiredForCurrentDelivery": true,
+      "scopeClassification": "mandatory_gate",
+      "dependencies": [],
+      "evidence": [
+        {
+          "sourceId": "E.CLINIC.LIVE_REPLAY",
+          "observedAt": "2026-10-13T02:29:13.688Z",
+          "observationMeaning": "Use the exact source scope; this is not a new live read.",
+          "jsonPointer": "/bracketComparison"
+        }
+      ],
+      "attemptedMethods": [
+        {
+          "method": "Compare grading before and after label read",
+          "outcome": "Values equal; atomic snapshot and serverRevision remain unproven",
+          "evidenceSourceIds": [
+            "E.CLINIC.LIVE_REPLAY"
+          ]
+        }
+      ],
+      "whatNotToRetry": [
+        "Do not rename a local hash as server revision or replace source time with build time."
+      ],
+      "smallestRequiredInput": {
+        "kind": "evidence",
+        "description": "An explicit source revision/snapshot guarantee, or a design that truthfully retains the non-atomic observation interval."
+      },
+      "acceptanceChecks": [
+        {
+          "id": "READ.ATOMIC_REVISION.CHECK.1",
+          "criterion": "Each observation retains its source time and interval; uncertainty survives projection.",
+          "evidenceNeeded": "Temporal contract tests and preserved receipt."
+        }
+      ],
+      "ownership": {
+        "accountableRole": "implementer",
+        "supportingRoles": [
+          "reviewer"
+        ]
+      },
+      "nextSafeAction": "Use bracket-consistency metadata and distinct source/projected timestamps without asserting atomicity.",
+      "verification": {
+        "claimToEstablish": "Repeated equal reads do not prove an atomic snapshot",
+        "currentEvidenceInsufficientBecause": "Grading, label and grading-again observations agreed over a bounded interval, but no server revision token or atomic snapshot guarantee was observed. A local content hash is not a server revision."
+      }
+    },
+    {
+      "id": "READ.PRINT_HISTORY",
+      "domainPath": [
+        "source-read",
+        "temporal-evidence"
+      ],
+      "title": "Current grading does not identify a historical printed sheet",
+      "status": "unverified",
+      "currentFact": "Current same-assessment O/X and labels do not prove which similar-question array was printed earlier, whether printing occurred or whether material was distributed. Source generation can produce a different array.",
+      "impactedGoals": [
+        "G.WORKFLOW_MODEL"
+      ],
+      "requiredForCurrentDelivery": true,
+      "scopeClassification": "mandatory_gate",
+      "dependencies": [],
+      "evidence": [
+        {
+          "sourceId": "E.PRODUCTION.REVIEW",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        },
+        {
+          "sourceId": "E.CLINIC.LIVE_REPLAY",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read.",
+          "jsonPointer": "/bracketComparison"
+        }
+      ],
+      "attemptedMethods": [
+        {
+          "method": "Review current grading and source print evidence",
+          "outcome": "Historical print identity remains unproven",
+          "evidenceSourceIds": [
+            "E.PRODUCTION.REVIEW"
+          ]
+        }
+      ],
+      "whatNotToRetry": [
+        "Do not regenerate a similar-question array to stand in for an earlier print.",
+        "Do not infer printed/distributed from generated or viewed."
+      ],
+      "smallestRequiredInput": {
+        "kind": "evidence",
+        "description": "A naturally available immutable print receipt or retained original sheet identifying that exact historical instance."
+      },
+      "acceptanceChecks": [
+        {
+          "id": "READ.PRINT_HISTORY.CHECK.1",
+          "criterion": "Generated, displayed, physically printed, distributed and source-history states remain independent.",
+          "evidenceNeeded": "Synthetic print-state tests and a private exact-instance receipt if available."
+        }
+      ],
+      "ownership": {
+        "accountableRole": "implementer",
+        "supportingRoles": [
+          "reviewer"
+        ]
+      },
+      "nextSafeAction": "Keep historical print unknown and preserve any original evidence without regeneration.",
+      "verification": {
+        "claimToEstablish": "Current grading does not identify a historical printed sheet",
+        "currentEvidenceInsufficientBecause": "Current same-assessment O/X and labels do not prove which similar-question array was printed earlier, whether printing occurred or whether material was distributed. Source generation can produce a different array."
+      }
+    },
+    {
+      "id": "READ.WRITE_BOUNDARIES",
+      "domainPath": [
+        "source-read",
+        "effects"
+      ],
+      "title": "Retake and full print/detail handlers are not read-only",
+      "status": "resolved",
+      "currentFact": "Retake calls deleteTestResult POST and resets prior results. A detail wrapper includes tag saving; an apparent get-prefixed wrong-answer chain can trigger paper generation. No such action was executed for this handoff.",
+      "impactedGoals": [
+        "G.CURRENT_READS",
+        "G.WORKFLOW_MODEL"
+      ],
+      "requiredForCurrentDelivery": false,
+      "scopeClassification": "resolved_scope",
+      "dependencies": [],
+      "evidence": [
+        {
+          "sourceId": "E.CLINIC.LIVE_REPLAY",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read.",
+          "jsonPointer": "/retakeBoundary"
+        },
+        {
+          "sourceId": "E.PRODUCTION.REVIEW",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        },
+        {
+          "sourceId": "E.CONTRACTS",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        }
+      ],
+      "attemptedMethods": [
+        {
+          "method": "Inspect inert source effects and offline boundary tests",
+          "outcome": "Reset, tag, generate and print chains excluded from read replay",
+          "evidenceSourceIds": [
+            "E.CLINIC.CHECKS",
+            "E.CONTRACTS"
+          ]
+        }
+      ],
+      "whatNotToRetry": [
+        "Do not classify by UI label, get prefix or HTTP method alone.",
+        "Do not execute whole wrappers that contain unreviewed effects."
+      ],
+      "smallestRequiredInput": {
+        "kind": "none",
+        "description": "No action approval is inferred from this documentation."
+      },
+      "acceptanceChecks": [
+        {
+          "id": "READ.WRITE_BOUNDARIES.CHECK.1",
+          "criterion": "Effect lists keep reset/write/generation/print/send separate from each proven pure read.",
+          "evidenceNeeded": "Source-effect review and synthetic exclusion tests."
+        }
+      ],
+      "ownership": {
+        "accountableRole": "implementer",
+        "supportingRoles": [
+          "reviewer"
+        ]
+      },
+      "nextSafeAction": "Keep write-capable handlers disabled; use only an independently verified permitted pure read.",
+      "resolution": {
+        "resolvedScope": "Retake and full print/detail handlers are not read-only",
+        "remainingLimits": [
+          "Resolution applies only to the scope and evidence cited here."
+        ]
+      }
+    },
+    {
+      "id": "READ.APP_SERVER_MODEL",
+      "domainPath": [
+        "source-read",
+        "coverage"
+      ],
+      "title": "Actual academy app API and physical DB equivalence are unverified",
+      "status": "unverified",
+      "currentFact": "Web/native bridge declarations and a public Android fixture do not establish deployed academy app endpoints, shared physical databases, authentication contracts or production server schemas.",
+      "impactedGoals": [
+        "G.ANDROID_RESEARCH",
+        "G.STANDALONE"
+      ],
+      "requiredForCurrentDelivery": false,
+      "scopeClassification": "conditional_research",
+      "dependencies": [
+        "ENV.ACADEMY_APK"
+      ],
+      "evidence": [
+        {
+          "sourceId": "E.ANDROID",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        },
+        {
+          "sourceId": "E.CONTRACTS",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        }
+      ],
+      "attemptedMethods": [
+        {
+          "method": "Review web-to-app declarations and fixture limitations",
+          "outcome": "Candidate contracts only; deployed app/server equivalence not established",
+          "evidenceSourceIds": [
+            "E.ANDROID",
+            "E.CONTRACTS"
+          ]
+        }
+      ],
+      "whatNotToRetry": [
+        "Do not promote static literals or matching names into verified deployed APIs or a shared DB claim."
+      ],
+      "smallestRequiredInput": {
+        "kind": "evidence",
+        "description": "Official app artifact plus separately permitted deployment-side evidence for any server/DB claim."
+      },
+      "acceptanceChecks": [
+        {
+          "id": "READ.APP_SERVER_MODEL.CHECK.1",
+          "criterion": "Static candidates, runtime observations and deployed-server evidence are labeled separately.",
+          "evidenceNeeded": "Source provenance and explicit deployment evidence."
+        }
+      ],
+      "ownership": {
+        "accountableRole": "implementer",
+        "supportingRoles": [
+          "reviewer"
+        ]
+      },
+      "nextSafeAction": "Retain candidate names as hypotheses only.",
+      "verification": {
+        "claimToEstablish": "Actual academy app API and physical DB equivalence are unverified",
+        "currentEvidenceInsufficientBecause": "Web/native bridge declarations and a public Android fixture do not establish deployed academy app endpoints, shared physical databases, authentication contracts or production server schemas."
+      }
+    },
+    {
+      "id": "INTEGRATION.LIVE_ADAPTER",
+      "domainPath": [
+        "integration",
+        "source-adapters"
+      ],
+      "title": "No independent source read adapter is activated",
+      "status": "blocked",
+      "currentFact": "The clinic integration replays saved evidence locally. It does not implement an authenticated live HTTP server, live source transport, deployed MCP adapter or Site refresh integration.",
+      "impactedGoals": [
+        "G.OWNER_PILOT",
+        "G.CURRENT_READS",
+        "G.STANDALONE"
+      ],
+      "requiredForCurrentDelivery": true,
+      "scopeClassification": "mandatory_gate",
+      "dependencies": [
+        "READ.NAMESPACE_BINDING",
+        "READ.SEARCH_COMPLETENESS",
+        "READ.ATOMIC_REVISION"
+      ],
+      "evidence": [
+        {
+          "sourceId": "E.CLINIC.BASELINE",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        },
+        {
+          "sourceId": "E.CLINIC.CHECKS",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        },
+        {
+          "sourceId": "E.COVERAGE.MANIFEST",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        }
+      ],
+      "attemptedMethods": [
+        {
+          "method": "Run/review offline integration tests",
+          "outcome": "Local contract behavior checked; no live requests or deployment",
+          "evidenceSourceIds": [
+            "E.CLINIC.BASELINE",
+            "E.CLINIC.CHECKS"
+          ]
+        }
+      ],
+      "whatNotToRetry": [
+        "Do not toggle liveRefreshConnected after a browser observation or label fixture replay as a live integration.",
+        "Do not create a new broad HTTP replay transport to bypass blocked UI."
+      ],
+      "smallestRequiredInput": {
+        "kind": "implementation",
+        "description": "A separately scoped supported authenticated read adapter with validated binding, method/effect, filter and provenance contracts."
+      },
+      "acceptanceChecks": [
+        {
+          "id": "INTEGRATION.LIVE_ADAPTER.CHECK.1",
+          "criterion": "Only supported pure reads are callable and failures remain explicit.",
+          "evidenceNeeded": "Adapter contract tests and bounded end-to-end receipt."
+        },
+        {
+          "id": "INTEGRATION.LIVE_ADAPTER.CHECK.2",
+          "criterion": "Site state reflects an actual authorized integration rather than a fixture.",
+          "evidenceNeeded": "End-to-end source-to-view evidence."
+        }
+      ],
+      "ownership": {
+        "accountableRole": "implementer",
+        "supportingRoles": [
+          "reviewer"
+        ]
+      },
+      "nextSafeAction": "Draft the interface with synthetic data and keep execution disabled.",
+      "blocker": {
+        "kind": "not_implemented",
+        "reason": "Only offline evidence replay exists."
+      }
+    },
+    {
+      "id": "INTEGRATION.ASSESSMENT_MODEL",
+      "domainPath": [
+        "integration",
+        "domain-model"
+      ],
+      "title": "Existing assessment arrays are not an import contract",
+      "status": "blocked",
+      "currentFact": "The current protected Site assessment model deliberately enforces uncollected independent assessments and an empty array. actualAttemptCount=0 is a model boundary, not proof of zero exams.",
+      "impactedGoals": [
+        "G.OWNER_PILOT",
+        "G.WORKFLOW_MODEL"
+      ],
+      "requiredForCurrentDelivery": true,
+      "scopeClassification": "mandatory_gate",
+      "dependencies": [
+        "READ.NAMESPACE_BINDING",
+        "READ.ATOMIC_REVISION"
+      ],
+      "evidence": [
+        {
+          "sourceId": "E.PRODUCTION.REVIEW",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        }
+      ],
+      "attemptedMethods": [
+        {
+          "method": "Inspect current assessment contract",
+          "outcome": "New NA records cannot safely be inserted into the existing empty-array model",
+          "evidenceSourceIds": [
+            "E.PRODUCTION.REVIEW"
+          ]
+        }
+      ],
+      "whatNotToRetry": [
+        "Do not insert newly observed NA data into the protected array or reinterpret model zero as a factual exam count."
+      ],
+      "smallestRequiredInput": {
+        "kind": "implementation",
+        "description": "An explicit versioned read model designed after source identity, scope and time contracts are verified."
+      },
+      "acceptanceChecks": [
+        {
+          "id": "INTEGRATION.ASSESSMENT_MODEL.CHECK.1",
+          "criterion": "Unknown/uncollected and observed-zero remain distinct.",
+          "evidenceNeeded": "Synthetic read-model and migration tests."
+        }
+      ],
+      "ownership": {
+        "accountableRole": "implementer",
+        "supportingRoles": [
+          "reviewer"
+        ]
+      },
+      "nextSafeAction": "Specify a separate versioned read projection before changing protected domain contracts.",
+      "blocker": {
+        "kind": "not_implemented",
+        "reason": "New source observations need a separately reviewed read model."
+      }
+    },
+    {
+      "id": "INTEGRATION.PRESTUDY",
+      "domainPath": [
+        "integration",
+        "prestudy"
+      ],
+      "title": "Prestudy status and lesson/student joins are incomplete",
+      "status": "unverified",
+      "currentFact": "Waiting/completed fixed views and a search/detail candidate do not prove a specific student-video-attempt-lesson join. Video status, AI score, rating, workbook grade, teacher confirmation and distribution are distinct.",
+      "impactedGoals": [
+        "G.WORKFLOW_MODEL",
+        "G.OWNER_PILOT"
+      ],
+      "requiredForCurrentDelivery": true,
+      "scopeClassification": "mandatory_gate",
+      "dependencies": [
+        "READ.NAMESPACE_BINDING"
+      ],
+      "evidence": [
+        {
+          "sourceId": "E.PRODUCTION.REVIEW",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        },
+        {
+          "sourceId": "E.COVERAGE.LEDGER",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        },
+        {
+          "sourceId": "E.PRESTUDY.BOUNDARY",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        }
+      ],
+      "attemptedMethods": [
+        {
+          "method": "Review bounded prestudy view and source declarations",
+          "outcome": "Fixed view metadata observed; detailed semantic joins not verified",
+          "evidenceSourceIds": [
+            "E.COVERAGE.LEDGER"
+          ]
+        }
+      ],
+      "whatNotToRetry": [
+        "Do not collapse all states into complete or invent a detail key.",
+        "Do not transfer GET fixed-view evidence to a POST search."
+      ],
+      "smallestRequiredInput": {
+        "kind": "evidence",
+        "description": "The exact permitted detail/search contract plus private same-entity join evidence and status meanings."
+      },
+      "acceptanceChecks": [
+        {
+          "id": "INTEGRATION.PRESTUDY.CHECK.1",
+          "criterion": "Separate state fields and namespace keys survive projection.",
+          "evidenceNeeded": "Synthetic status/identity tests and bounded detail receipt."
+        }
+      ],
+      "ownership": {
+        "accountableRole": "implementer",
+        "supportingRoles": [
+          "reviewer"
+        ]
+      },
+      "nextSafeAction": "Keep independent unknown fields and verify only the next required scoped prestudy read.",
+      "verification": {
+        "claimToEstablish": "Prestudy status and lesson/student joins are incomplete",
+        "currentEvidenceInsufficientBecause": "Waiting/completed fixed views and a search/detail candidate do not prove a specific student-video-attempt-lesson join. Video status, AI score, rating, workbook grade, teacher confirmation and distribution are distinct."
+      }
+    },
+    {
+      "id": "INTEGRATION.CATEGORY_SCOPE",
+      "domainPath": [
+        "integration",
+        "assessment"
+      ],
+      "title": "NA evidence does not verify DA/FA routes",
+      "status": "unverified",
+      "currentFact": "NA runtime observations do not verify DA or FA route, selector, hidden category value or identity namespace equivalence. Category-name replacement can produce an incorrect path.",
+      "impactedGoals": [
+        "G.CURRENT_READS",
+        "G.WORKFLOW_MODEL"
+      ],
+      "requiredForCurrentDelivery": false,
+      "scopeClassification": "coverage_limit",
+      "dependencies": [],
+      "evidence": [
+        {
+          "sourceId": "E.CONTRACTS",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        },
+        {
+          "sourceId": "E.COVERAGE.LEDGER",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        },
+        {
+          "sourceId": "E.CLINIC.LIVE_REPLAY",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read.",
+          "jsonPointer": "/notVerified"
+        }
+      ],
+      "attemptedMethods": [
+        {
+          "method": "Compare method-aware category contracts",
+          "outcome": "DA/FA inheritance rejected",
+          "evidenceSourceIds": [
+            "E.COVERAGE.CHECKS"
+          ]
+        }
+      ],
+      "whatNotToRetry": [
+        "Do not substitute category names in URLs or share native keys without exact evidence."
+      ],
+      "smallestRequiredInput": {
+        "kind": "evidence",
+        "description": "Current method/path/action/category and identity evidence for each additional category actually needed."
+      },
+      "acceptanceChecks": [
+        {
+          "id": "INTEGRATION.CATEGORY_SCOPE.CHECK.1",
+          "criterion": "NA, DA and FA stay distinct until independently established.",
+          "evidenceNeeded": "Category-scoped contract tests and receipts."
+        }
+      ],
+      "ownership": {
+        "accountableRole": "implementer",
+        "supportingRoles": [
+          "reviewer"
+        ]
+      },
+      "nextSafeAction": "Keep DA/FA runtime adapters disabled.",
+      "verification": {
+        "claimToEstablish": "NA evidence does not verify DA/FA routes",
+        "currentEvidenceInsufficientBecause": "NA runtime observations do not verify DA or FA route, selector, hidden category value or identity namespace equivalence. Category-name replacement can produce an incorrect path."
+      }
+    },
+    {
+      "id": "INTEGRATION.ROW_ICONS",
+      "domainPath": [
+        "integration",
+        "assessment"
+      ],
+      "title": "Exact row-bound icon reconciliation is verified narrowly",
+      "status": "resolved",
+      "currentFact": "The later observation joins the selected result row and each cell ordinal to exactly five item icons. The earlier global icon collection had six icons and remains inadmissible. Hidden/template icons are not result items.",
+      "impactedGoals": [
+        "G.CURRENT_READS",
+        "G.WORKFLOW_MODEL"
+      ],
+      "requiredForCurrentDelivery": false,
+      "scopeClassification": "resolved_scope",
+      "dependencies": [],
+      "evidence": [
+        {
+          "sourceId": "E.CLINIC.LIVE_REPLAY",
+          "observedAt": "2026-10-13T02:39:44.762Z",
+          "observationMeaning": "Use the exact source scope; this is not a new live read.",
+          "jsonPointer": "/rowScopedIcons"
+        },
+        {
+          "sourceId": "E.CLINIC.CHECKS",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        }
+      ],
+      "attemptedMethods": [
+        {
+          "method": "Join the exact selected row/cell ordinals to five icons",
+          "outcome": "Saved evidence admitted for the exact observed assessment; no click allowed",
+          "evidenceSourceIds": [
+            "E.CLINIC.LIVE_REPLAY"
+          ]
+        },
+        {
+          "method": "Reject global arrays, wrong rows, duplicate/missing cells",
+          "outcome": "Synthetic boundary checks passed",
+          "evidenceSourceIds": [
+            "E.CLINIC.CHECKS"
+          ]
+        }
+      ],
+      "whatNotToRetry": [
+        "Do not zip global icon arrays, discard the first icon, truncate arrays or permit grading clicks."
+      ],
+      "smallestRequiredInput": {
+        "kind": "none",
+        "description": "No input needed for this bounded saved-observation result."
+      },
+      "acceptanceChecks": [
+        {
+          "id": "INTEGRATION.ROW_ICONS.CHECK.1",
+          "criterion": "Every admitted icon is bound to the exact row and unique item ordinal.",
+          "evidenceNeeded": "Row-scoped evidence and exclusion tests."
+        }
+      ],
+      "ownership": {
+        "accountableRole": "implementer",
+        "supportingRoles": [
+          "reviewer"
+        ]
+      },
+      "nextSafeAction": "Reuse only the typed row-scoped validation rule; retain separate temporal and historical-print limits.",
+      "resolution": {
+        "resolvedScope": "Exact row-bound icon reconciliation is verified narrowly",
+        "remainingLimits": [
+          "Resolution applies only to the scope and evidence cited here."
+        ]
+      }
+    },
+    {
+      "id": "INTEGRATION.ATTEMPT_EDGECASES",
+      "domainPath": [
+        "integration",
+        "assessment"
+      ],
+      "title": "Retake identity, duplicate titles and non-O/X codes are unverified",
+      "status": "unverified",
+      "currentFact": "Actual historical retake rows, immutable per-retake identity, duplicate full titles for one student, concurrent grading changes and non-O/X grading enums remain unverified.",
+      "impactedGoals": [
+        "G.WORKFLOW_MODEL",
+        "G.CURRENT_READS"
+      ],
+      "requiredForCurrentDelivery": false,
+      "scopeClassification": "coverage_limit",
+      "dependencies": [],
+      "evidence": [
+        {
+          "sourceId": "E.CLINIC.LIVE_REPLAY",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read.",
+          "jsonPointer": "/notVerified"
+        }
+      ],
+      "attemptedMethods": [
+        {
+          "method": "Review saved live coverage and synthetic negative cases",
+          "outcome": "Rejection behavior tested; real edge cases not observed",
+          "evidenceSourceIds": [
+            "E.CLINIC.LIVE_REPLAY",
+            "E.CLINIC.CHECKS"
+          ]
+        }
+      ],
+      "whatNotToRetry": [
+        "Do not manufacture a retake, edit grading or select latest-title wins just to obtain evidence."
+      ],
+      "smallestRequiredInput": {
+        "kind": "evidence",
+        "description": "Naturally occurring permitted source observations of the required edge cases."
+      },
+      "acceptanceChecks": [
+        {
+          "id": "INTEGRATION.ATTEMPT_EDGECASES.CHECK.1",
+          "criterion": "Unrecognized grades and ambiguous attempt identity fail closed.",
+          "evidenceNeeded": "Synthetic tests plus scoped real receipts when available."
+        }
+      ],
+      "ownership": {
+        "accountableRole": "implementer",
+        "supportingRoles": [
+          "reviewer"
+        ]
+      },
+      "nextSafeAction": "Preserve unknowns and collect only naturally encountered authorized examples.",
+      "verification": {
+        "claimToEstablish": "Retake identity, duplicate titles and non-O/X codes are unverified",
+        "currentEvidenceInsufficientBecause": "Actual historical retake rows, immutable per-retake identity, duplicate full titles for one student, concurrent grading changes and non-O/X grading enums remain unverified."
+      }
+    },
+    {
+      "id": "INTEGRATION.CONNECTOR_SCHEMA",
+      "domainPath": [
+        "integration",
+        "connector"
+      ],
+      "title": "v21 local schema compatibility fix passed",
+      "status": "resolved",
+      "currentFact": "The stored v21 candidate removes only the top-level inputSchema.oneOf that hid input fields in the connector projection. Server validation remains strict; all ten properties and six existing tools are preserved.",
+      "impactedGoals": [
+        "G.V21_RELEASE"
+      ],
+      "requiredForCurrentDelivery": false,
+      "scopeClassification": "resolved_scope",
+      "dependencies": [],
+      "evidence": [
+        {
+          "sourceId": "E.PRODUCTION.REVIEW",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        },
+        {
+          "sourceId": "E.QA.V21",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        }
+      ],
+      "attemptedMethods": [
+        {
+          "method": "Apply minimal input schema change and run local regression suites",
+          "outcome": "Strict checks and 25 test files passed; actual connector rediscovery remains separate",
+          "evidenceSourceIds": [
+            "E.PRODUCTION.REVIEW",
+            "E.QA.V21"
+          ]
+        }
+      ],
+      "whatNotToRetry": [
+        "Do not call a local schema test proof of actual connector discovery or change validation semantics to force success."
+      ],
+      "smallestRequiredInput": {
+        "kind": "none",
+        "description": "No input needed to retain the local fix result."
+      },
+      "acceptanceChecks": [
+        {
+          "id": "INTEGRATION.CONNECTOR_SCHEMA.CHECK.1",
+          "criterion": "All ten properties and strict required/forbidden branch validation remain intact.",
+          "evidenceNeeded": "Local regression receipt bound to candidate commit."
+        }
+      ],
+      "ownership": {
+        "accountableRole": "implementer",
+        "supportingRoles": [
+          "reviewer"
+        ]
+      },
+      "nextSafeAction": "Retain the candidate and complete the actual publication/discovery gate separately.",
+      "resolution": {
+        "resolvedScope": "v21 local schema compatibility fix passed",
+        "remainingLimits": [
+          "Resolution applies only to the scope and evidence cited here."
+        ]
+      }
+    },
+    {
+      "id": "PRIVACY.SOURCE_PAYLOAD",
+      "domainPath": [
+        "privacy",
+        "source-export"
+      ],
+      "title": "Real student-bearing source and generated payloads must be excluded",
+      "status": "blocked",
+      "currentFact": "The current source tree contains private bundle/projection inputs, compressed generated configuration, history/events, approved deltas and real binding modules. Token redaction alone cannot make this source safe to export.",
+      "impactedGoals": [
+        "G.STANDALONE",
+        "G.OWNER_PILOT"
+      ],
+      "requiredForCurrentDelivery": true,
+      "scopeClassification": "mandatory_gate",
+      "dependencies": [],
+      "evidence": [
+        {
+          "sourceId": "E.CODE.BUILD",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        },
+        {
+          "sourceId": "E.REPORTED.EXPORT",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        }
+      ],
+      "attemptedMethods": [
+        {
+          "method": "Inventory build inputs and generated/binding modules",
+          "outcome": "Private payload dependencies identified without exporting their contents",
+          "evidenceSourceIds": [
+            "E.CODE.BUILD",
+            "E.REPORTED.EXPORT"
+          ]
+        }
+      ],
+      "whatNotToRetry": [
+        "Do not copy an entire source tree, private reports, database exports, screenshots or compressed generated files into the repository.",
+        "Do not treat a private repository as permission to export student data or credentials."
+      ],
+      "smallestRequiredInput": {
+        "kind": "implementation",
+        "description": "An allowlisted sanitized export with private/generated/binding modules excluded and synthetic replacements authored from scratch."
+      },
+      "acceptanceChecks": [
+        {
+          "id": "PRIVACY.SOURCE_PAYLOAD.CHECK.1",
+          "criterion": "No raw student facts, native values, credentials, owner identity material or personal contact data appear in any exported file.",
+          "evidenceNeeded": "Allowlist inventory and content scan plus manual review."
+        },
+        {
+          "id": "PRIVACY.SOURCE_PAYLOAD.CHECK.2",
+          "criterion": "Opaque/compressed payload files are excluded rather than superficially token-redacted.",
+          "evidenceNeeded": "Excluded-path list and export manifest."
+        }
+      ],
+      "ownership": {
+        "accountableRole": "implementer",
+        "supportingRoles": [
+          "reviewer"
+        ]
+      },
+      "nextSafeAction": "Export only reviewed safe modules and this sanitized documentation; keep original evidence reference-only.",
+      "blocker": {
+        "kind": "privacy_boundary",
+        "reason": "Safe replacement is required before private-data-dependent source can be included."
+      }
+    },
+    {
+      "id": "PRIVACY.OWNER_PILOT",
+      "domainPath": [
+        "privacy",
+        "pilot-access"
+      ],
+      "title": "First pilot remains owner-only",
+      "status": "resolved",
+      "currentFact": "The initial pilot scope is the owner alone. Existing Sites review reports owner-only access with no sharing change. This handoff does not authorize additional accounts or distribute private evidence.",
+      "impactedGoals": [
+        "G.OWNER_PILOT",
+        "G.STANDALONE"
+      ],
+      "requiredForCurrentDelivery": false,
+      "scopeClassification": "resolved_scope",
+      "dependencies": [],
+      "evidence": [
+        {
+          "sourceId": "E.REPORTED.SCOPE",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        },
+        {
+          "sourceId": "E.PRODUCTION.REVIEW",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        }
+      ],
+      "attemptedMethods": [
+        {
+          "method": "Review current pilot scope and recorded Sites access",
+          "outcome": "Owner-only scope retained",
+          "evidenceSourceIds": [
+            "E.REPORTED.SCOPE",
+            "E.PRODUCTION.REVIEW"
+          ]
+        }
+      ],
+      "whatNotToRetry": [
+        "Do not add staff access, public deployment, broad sharing or new persistent credentials from historical context."
+      ],
+      "smallestRequiredInput": {
+        "kind": "none",
+        "description": "No broader-audience input is needed for the owner-only pilot."
+      },
+      "acceptanceChecks": [
+        {
+          "id": "PRIVACY.OWNER_PILOT.CHECK.1",
+          "criterion": "The selected deployment denies non-owner access.",
+          "evidenceNeeded": "Access test and verified owner-only policy receipt."
+        }
+      ],
+      "ownership": {
+        "accountableRole": "implementer",
+        "supportingRoles": [
+          "reviewer"
+        ]
+      },
+      "nextSafeAction": "Preserve owner-only scope throughout design and validate again before any deployment.",
+      "resolution": {
+        "resolvedScope": "First pilot remains owner-only",
+        "remainingLimits": [
+          "Resolution applies only to the scope and evidence cited here."
+        ]
+      }
+    },
+    {
+      "id": "DEPLOYMENT.V21",
+      "domainPath": [
+        "deployment",
+        "candidate"
+      ],
+      "title": "v21 is stored and remains undeployed",
+      "status": "blocked",
+      "currentFact": "Production remains v19. Stored v21 commit 54967bfc64278fb594d64887106b85c71facd80c has no deployment. A stored version is not production activation; v20 is also not a verified production rollback.",
+      "impactedGoals": [
+        "G.V21_RELEASE"
+      ],
+      "requiredForCurrentDelivery": true,
+      "scopeClassification": "mandatory_gate",
+      "dependencies": [
+        "DEPLOYMENT.NATIVE_QA"
+      ],
+      "evidence": [
+        {
+          "sourceId": "E.PRODUCTION.MANIFEST",
+          "observedAt": "2026-10-13T02:37:45.967896+00:00",
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        },
+        {
+          "sourceId": "E.QA.V21",
+          "observedAt": "2026-10-13T02:45:28.644431+00:00",
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        }
+      ],
+      "attemptedMethods": [
+        {
+          "method": "Store candidate through the official source/version route and read back",
+          "outcome": "v21 saved; deployment absent",
+          "evidenceSourceIds": [
+            "E.PRODUCTION.REVIEW"
+          ]
+        }
+      ],
+      "whatNotToRetry": [
+        "Do not deploy solely because local QA passed or report stored version as live.",
+        "Do not treat undeployed v20 as the production rollback."
+      ],
+      "smallestRequiredInput": {
+        "kind": "evidence",
+        "description": "Complete the mandatory native verification and release/data-preservation checks through supported tools; use the applicable current deployment authorization."
+      },
+      "acceptanceChecks": [
+        {
+          "id": "DEPLOYMENT.V21.CHECK.1",
+          "criterion": "An official deployment receipt identifies the exact candidate commit.",
+          "evidenceNeeded": "Post-activation version/deployment readback."
+        },
+        {
+          "id": "DEPLOYMENT.V21.CHECK.2",
+          "criterion": "Owner access and source student data remain preserved.",
+          "evidenceNeeded": "Fresh bounded access/data-preservation receipt."
+        }
+      ],
+      "ownership": {
+        "accountableRole": "implementer",
+        "supportingRoles": [
+          "reviewer"
+        ]
+      },
+      "nextSafeAction": "Keep v19 as the production baseline; finish the missing gate before activation.",
+      "blocker": {
+        "kind": "release_gate",
+        "reason": "Mandatory native WebMCP acceptance has not been verified."
+      }
+    },
+    {
+      "id": "DEPLOYMENT.NATIVE_QA",
+      "domainPath": [
+        "deployment",
+        "quality"
+      ],
+      "title": "Real native WebMCP acceptance remains unverified",
+      "status": "unverified",
+      "currentFact": "Native registration, valid invocation, invalid-input rejection and visible-state readback have not been verified for v21. In-process tests and connector MCP are not substitutes.",
+      "impactedGoals": [
+        "G.V21_RELEASE"
+      ],
+      "requiredForCurrentDelivery": true,
+      "scopeClassification": "mandatory_gate",
+      "dependencies": [
+        "ENV.NATIVE_WEBMCP"
+      ],
+      "evidence": [
+        {
+          "sourceId": "E.QA.V21",
+          "observedAt": "2026-10-13T02:45:28.644431+00:00",
+          "observationMeaning": "Use the exact source scope; this is not a new live read.",
+          "jsonPointer": "/nativeWebMcp"
+        }
+      ],
+      "attemptedMethods": [
+        {
+          "method": "Check available supported browser capabilities",
+          "outcome": "No native discovery/invoke route available",
+          "evidenceSourceIds": [
+            "E.QA.V21"
+          ]
+        }
+      ],
+      "whatNotToRetry": [
+        "Do not waive this mandatory requested check by running a JavaScript callback or installing a shim."
+      ],
+      "smallestRequiredInput": {
+        "kind": "tooling",
+        "description": "The official native discovery/invoke capability on the allowed candidate page."
+      },
+      "acceptanceChecks": [
+        {
+          "id": "DEPLOYMENT.NATIVE_QA.CHECK.1",
+          "criterion": "Discover academy_work_context with all ten input properties.",
+          "evidenceNeeded": "Native discovery receipt."
+        },
+        {
+          "id": "DEPLOYMENT.NATIVE_QA.CHECK.2",
+          "criterion": "Invoke policy-index with a bounded domain/page and preparation using observed revisions.",
+          "evidenceNeeded": "Native invocation plus visible-state/readback receipt."
+        },
+        {
+          "id": "DEPLOYMENT.NATIVE_QA.CHECK.3",
+          "criterion": "Reject incomplete preparation and verify unchanged state.",
+          "evidenceNeeded": "Invalid-input native invocation and unchanged-state evidence."
+        }
+      ],
+      "ownership": {
+        "accountableRole": "implementer",
+        "supportingRoles": [
+          "reviewer"
+        ]
+      },
+      "nextSafeAction": "Run this exact small acceptance sequence once supported native tooling is available.",
+      "verification": {
+        "claimToEstablish": "Real native WebMCP acceptance remains unverified",
+        "currentEvidenceInsufficientBecause": "Native registration, valid invocation, invalid-input rejection and visible-state readback have not been verified for v21. In-process tests and connector MCP are not substitutes."
+      }
+    },
+    {
+      "id": "DEPLOYMENT.RESPONSIVE_QA",
+      "domainPath": [
+        "deployment",
+        "quality"
+      ],
+      "title": "Six responsive widths and major keyboard behavior passed",
+      "status": "resolved",
+      "currentFact": "Desktop Chromium checks passed at 1440, 1100, 1099, 768, 390 and 320 CSS iframe widths with zero observed overflow/runtime/load errors. Focus, labels, navigation and major narrow-layout behavior were checked using fictional data.",
+      "impactedGoals": [
+        "G.V21_RELEASE"
+      ],
+      "requiredForCurrentDelivery": false,
+      "scopeClassification": "resolved_scope",
+      "dependencies": [],
+      "evidence": [
+        {
+          "sourceId": "E.QA.V21",
+          "observedAt": "2026-10-13T02:45:28.644431+00:00",
+          "observationMeaning": "Use the exact source scope; this is not a new live read.",
+          "jsonPointer": "/layout"
+        }
+      ],
+      "attemptedMethods": [
+        {
+          "method": "Run six-width candidate UI and keyboard checks",
+          "outcome": "Passed with fictional data; source unchanged",
+          "evidenceSourceIds": [
+            "E.QA.V21"
+          ]
+        }
+      ],
+      "whatNotToRetry": [
+        "Do not relabel iframe widths as real mobile hardware or a full WCAG audit."
+      ],
+      "smallestRequiredInput": {
+        "kind": "none",
+        "description": "No input needed for the completed responsive scope."
+      },
+      "acceptanceChecks": [
+        {
+          "id": "DEPLOYMENT.RESPONSIVE_QA.CHECK.1",
+          "criterion": "The recorded candidate commit and all six width results are preserved.",
+          "evidenceNeeded": "Candidate QA receipt."
+        }
+      ],
+      "ownership": {
+        "accountableRole": "implementer",
+        "supportingRoles": [
+          "reviewer"
+        ]
+      },
+      "nextSafeAction": "Retain these completed checks; rerun only if relevant candidate UI source changes.",
+      "resolution": {
+        "resolvedScope": "Six responsive widths and major keyboard behavior passed",
+        "remainingLimits": [
+          "Resolution applies only to the scope and evidence cited here."
+        ]
+      }
+    },
+    {
+      "id": "DEPLOYMENT.DEVICE_COVERAGE",
+      "domainPath": [
+        "deployment",
+        "quality"
+      ],
+      "title": "Actual device, Safari/touch and full WCAG coverage are unknown",
+      "status": "unverified",
+      "currentFact": "The checks used desktop Chromium. Actual mobile hardware, Safari/touch and a full WCAG audit were not performed. This is a coverage limitation, not an added mandatory user requirement.",
+      "impactedGoals": [
+        "G.V21_RELEASE"
+      ],
+      "requiredForCurrentDelivery": false,
+      "scopeClassification": "coverage_limit",
+      "dependencies": [],
+      "evidence": [
+        {
+          "sourceId": "E.QA.V21",
+          "observedAt": "2026-10-13T02:45:28.644431+00:00",
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        }
+      ],
+      "attemptedMethods": [
+        {
+          "method": "Record tested browser/platform scope",
+          "outcome": "Actual device, Safari/touch and full WCAG marked false",
+          "evidenceSourceIds": [
+            "E.QA.V21"
+          ]
+        }
+      ],
+      "whatNotToRetry": [
+        "Do not claim actual-device validation or block the current release by inventing an additional user requirement."
+      ],
+      "smallestRequiredInput": {
+        "kind": "none",
+        "description": "Only obtain these environments if that extended coverage is later requested or otherwise authorized."
+      },
+      "acceptanceChecks": [
+        {
+          "id": "DEPLOYMENT.DEVICE_COVERAGE.CHECK.1",
+          "criterion": "Reports distinguish responsive Chromium checks from actual-device/browser coverage.",
+          "evidenceNeeded": "Truthful QA coverage statement."
+        }
+      ],
+      "ownership": {
+        "accountableRole": "implementer",
+        "supportingRoles": [
+          "reviewer"
+        ]
+      },
+      "nextSafeAction": "Keep these fields explicitly unverified without expanding the present release gate.",
+      "verification": {
+        "claimToEstablish": "Actual device, Safari/touch and full WCAG coverage are unknown",
+        "currentEvidenceInsufficientBecause": "The checks used desktop Chromium. Actual mobile hardware, Safari/touch and a full WCAG audit were not performed. This is a coverage limitation, not an added mandatory user requirement."
+      }
+    },
+    {
+      "id": "DEPLOYMENT.CONNECTOR_READBACK",
+      "domainPath": [
+        "deployment",
+        "connector-readback"
+      ],
+      "title": "Published connector schema must be rediscovered and tested",
+      "status": "unverified",
+      "currentFact": "The actual connector must rediscover the approved published candidate before all input fields and revision-bound preparation can be confirmed. Local schema success does not prove the deployed connector projection.",
+      "impactedGoals": [
+        "G.V21_RELEASE"
+      ],
+      "requiredForCurrentDelivery": true,
+      "scopeClassification": "mandatory_gate",
+      "dependencies": [
+        "DEPLOYMENT.V21"
+      ],
+      "evidence": [
+        {
+          "sourceId": "E.PRODUCTION.REVIEW",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        }
+      ],
+      "attemptedMethods": [
+        {
+          "method": "Observe pre-fix connector and validate candidate locally",
+          "outcome": "Policy-index worked; preparation previously rejected before reaching server; publication readback not yet done",
+          "evidenceSourceIds": [
+            "E.PRODUCTION.REVIEW"
+          ]
+        }
+      ],
+      "whatNotToRetry": [
+        "Do not infer actual connector repair from TypeScript or in-process tests."
+      ],
+      "smallestRequiredInput": {
+        "kind": "evidence",
+        "description": "An approved published candidate and official connector rediscovery/readback."
+      },
+      "acceptanceChecks": [
+        {
+          "id": "DEPLOYMENT.CONNECTOR_READBACK.CHECK.1",
+          "criterion": "All ten fields, filters and pagination are visible.",
+          "evidenceNeeded": "Official connector schema readback."
+        },
+        {
+          "id": "DEPLOYMENT.CONNECTOR_READBACK.CHECK.2",
+          "criterion": "Valid revision-bound preparation succeeds and invalid/stale cases reject safely.",
+          "evidenceNeeded": "Bounded connector call receipts."
+        }
+      ],
+      "ownership": {
+        "accountableRole": "implementer",
+        "supportingRoles": [
+          "reviewer"
+        ]
+      },
+      "nextSafeAction": "After authorized publication, rediscover and verify the real connector without creating a second adapter.",
+      "verification": {
+        "claimToEstablish": "Published connector schema must be rediscovered and tested",
+        "currentEvidenceInsufficientBecause": "The actual connector must rediscover the approved published candidate before all input fields and revision-bound preparation can be confirmed. Local schema success does not prove the deployed connector projection."
+      }
+    },
+    {
+      "id": "DEPLOYMENT.DATA_PRESERVATION",
+      "domainPath": [
+        "deployment",
+        "candidate"
+      ],
+      "title": "Recorded candidate QA preserved protected source and student data",
+      "status": "resolved",
+      "currentFact": "The review found protected files byte-identical and a bounded production head/revision/hash readback unchanged. No migration, academy data write or journal change was made. This is dated evidence, not a perpetual guarantee.",
+      "impactedGoals": [
+        "G.V21_RELEASE",
+        "G.OWNER_PILOT"
+      ],
+      "requiredForCurrentDelivery": false,
+      "scopeClassification": "resolved_scope",
+      "dependencies": [],
+      "evidence": [
+        {
+          "sourceId": "E.PRODUCTION.REVIEW",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        },
+        {
+          "sourceId": "E.QA.V21",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        }
+      ],
+      "attemptedMethods": [
+        {
+          "method": "Compare protected files and read bounded production invariants",
+          "outcome": "Unchanged for the recorded candidate review",
+          "evidenceSourceIds": [
+            "E.PRODUCTION.REVIEW",
+            "E.QA.V21"
+          ]
+        }
+      ],
+      "whatNotToRetry": [
+        "Do not export raw source records or assume dated invariants prove a later deployment unchanged."
+      ],
+      "smallestRequiredInput": {
+        "kind": "none",
+        "description": "No input needed to retain the dated preservation result; repeat bounded checks at an actual release."
+      },
+      "acceptanceChecks": [
+        {
+          "id": "DEPLOYMENT.DATA_PRESERVATION.CHECK.1",
+          "criterion": "Source commit and preservation time are explicit.",
+          "evidenceNeeded": "Dated candidate review."
+        },
+        {
+          "id": "DEPLOYMENT.DATA_PRESERVATION.CHECK.2",
+          "criterion": "Any actual release repeats access/data-preservation checks without writing records.",
+          "evidenceNeeded": "Fresh bounded release receipt."
+        }
+      ],
+      "ownership": {
+        "accountableRole": "implementer",
+        "supportingRoles": [
+          "reviewer"
+        ]
+      },
+      "nextSafeAction": "Retain v19 as rollback and repeat minimal invariants only when activation is authorized.",
+      "resolution": {
+        "resolvedScope": "Recorded candidate QA preserved protected source and student data",
+        "remainingLimits": [
+          "Resolution applies only to the scope and evidence cited here."
+        ]
+      }
+    },
+    {
+      "id": "MIGRATION.STANDALONE_SERVER",
+      "domainPath": [
+        "migration",
+        "standalone-runtime"
+      ],
+      "title": "Independent application server is not implemented",
+      "status": "blocked",
+      "currentFact": "The exported design is not a ready standalone application. A standalone server and host integration must be implemented; repairing the saved coding environment alone will not supply missing code.",
+      "impactedGoals": [
+        "G.STANDALONE"
+      ],
+      "requiredForCurrentDelivery": true,
+      "scopeClassification": "mandatory_gate",
+      "dependencies": [
+        "ENV.SAVED_CLOUD",
+        "AUTH.SITES_IDENTITY",
+        "MIGRATION.DB_ADAPTER",
+        "MIGRATION.SYNTHETIC_CONFIG"
+      ],
+      "evidence": [
+        {
+          "sourceId": "E.REPORTED.EXPORT",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        },
+        {
+          "sourceId": "E.CODE.WORKER",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        },
+        {
+          "sourceId": "E.CODE.APP",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        }
+      ],
+      "attemptedMethods": [
+        {
+          "method": "Inspect current Sites runtime entry points",
+          "outcome": "No independent server implementation found",
+          "evidenceSourceIds": [
+            "E.REPORTED.EXPORT"
+          ]
+        }
+      ],
+      "whatNotToRetry": [
+        "Do not call the handoff a runnable standalone app or conceal missing implementation behind environment failure."
+      ],
+      "smallestRequiredInput": {
+        "kind": "implementation",
+        "description": "A server for the selected authorized runtime, wired to standalone authentication, persistence and safe synthetic configuration."
+      },
+      "acceptanceChecks": [
+        {
+          "id": "MIGRATION.STANDALONE_SERVER.CHECK.1",
+          "criterion": "A documented clean build and start work without Sites-only infrastructure or private files.",
+          "evidenceNeeded": "Synthetic clean-room build/start receipt."
+        },
+        {
+          "id": "MIGRATION.STANDALONE_SERVER.CHECK.2",
+          "criterion": "Owner-only and fail-closed source boundaries remain enforced.",
+          "evidenceNeeded": "Standalone integration tests."
+        }
+      ],
+      "ownership": {
+        "accountableRole": "implementer",
+        "supportingRoles": [
+          "reviewer"
+        ]
+      },
+      "nextSafeAction": "Use the handoff as an implementation plan after the chosen environment is ready.",
+      "blocker": {
+        "kind": "not_implemented",
+        "reason": "Standalone server and hosting integration do not exist yet."
+      }
+    },
+    {
+      "id": "MIGRATION.DB_ADAPTER",
+      "domainPath": [
+        "migration",
+        "persistence"
+      ],
+      "title": "Independent persistence adapter is not implemented",
+      "status": "blocked",
+      "currentFact": "Current worker code requires a D1 DB binding and a D1-compatible ledger interface. A SQLite-backed test adapter exists as test evidence, but it is not an operational standalone storage implementation.",
+      "impactedGoals": [
+        "G.STANDALONE"
+      ],
+      "requiredForCurrentDelivery": true,
+      "scopeClassification": "mandatory_gate",
+      "dependencies": [],
+      "evidence": [
+        {
+          "sourceId": "E.CODE.WORKER",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        },
+        {
+          "sourceId": "E.CODE.LEDGER",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        },
+        {
+          "sourceId": "E.REPORTED.EXPORT",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        }
+      ],
+      "attemptedMethods": [
+        {
+          "method": "Inspect D1 interface and existing test adapter usage",
+          "outcome": "Production runtime still depends on D1",
+          "evidenceSourceIds": [
+            "E.REPORTED.EXPORT"
+          ]
+        }
+      ],
+      "whatNotToRetry": [
+        "Do not copy a production DB or present a test adapter as ready durable storage."
+      ],
+      "smallestRequiredInput": {
+        "kind": "implementation",
+        "description": "A selected storage engine and implemented adapter preserving transactions, revisions and the ledger contract, tested with synthetic data."
+      },
+      "acceptanceChecks": [
+        {
+          "id": "MIGRATION.DB_ADAPTER.CHECK.1",
+          "criterion": "Synthetic persistence survives restart and transactional/revision invariants hold.",
+          "evidenceNeeded": "Persistence integration and restart tests."
+        },
+        {
+          "id": "MIGRATION.DB_ADAPTER.CHECK.2",
+          "criterion": "No production dataset is imported by default.",
+          "evidenceNeeded": "Configuration and seed review."
+        }
+      ],
+      "ownership": {
+        "accountableRole": "implementer",
+        "supportingRoles": [
+          "reviewer"
+        ]
+      },
+      "nextSafeAction": "Specify the D1 compatibility boundary and implement against synthetic fixtures in the authorized environment.",
+      "blocker": {
+        "kind": "not_implemented",
+        "reason": "A standalone durable persistence adapter is absent."
+      }
+    },
+    {
+      "id": "MIGRATION.SYNTHETIC_CONFIG",
+      "domainPath": [
+        "migration",
+        "synthetic-data"
+      ],
+      "title": "Safe generated configuration must be rebuilt from synthetic inputs",
+      "status": "blocked",
+      "currentFact": "The existing build consumes private bundles and projections to generate configuration. Generated history/events and real binding modules must be excluded and replaced. Removing only credentials is insufficient.",
+      "impactedGoals": [
+        "G.STANDALONE"
+      ],
+      "requiredForCurrentDelivery": true,
+      "scopeClassification": "mandatory_gate",
+      "dependencies": [
+        "PRIVACY.SOURCE_PAYLOAD"
+      ],
+      "evidence": [
+        {
+          "sourceId": "E.CODE.BUILD",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        },
+        {
+          "sourceId": "E.REPORTED.EXPORT",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        }
+      ],
+      "attemptedMethods": [
+        {
+          "method": "Inspect build inputs and generated outputs",
+          "outcome": "Private-data dependency confirmed",
+          "evidenceSourceIds": [
+            "E.CODE.BUILD",
+            "E.REPORTED.EXPORT"
+          ]
+        }
+      ],
+      "whatNotToRetry": [
+        "Do not reuse private compressed payloads, real binding tables or actual approved deltas as seed data."
+      ],
+      "smallestRequiredInput": {
+        "kind": "implementation",
+        "description": "A new synthetic fixture set and configuration generator that never reads private source artifacts."
+      },
+      "acceptanceChecks": [
+        {
+          "id": "MIGRATION.SYNTHETIC_CONFIG.CHECK.1",
+          "criterion": "Clean generation succeeds with no original private paths present.",
+          "evidenceNeeded": "Isolated synthetic-generation test."
+        },
+        {
+          "id": "MIGRATION.SYNTHETIC_CONFIG.CHECK.2",
+          "criterion": "Generated output contains only obviously fictional identities and data.",
+          "evidenceNeeded": "Scan and manual synthetic-data review."
+        }
+      ],
+      "ownership": {
+        "accountableRole": "implementer",
+        "supportingRoles": [
+          "reviewer"
+        ]
+      },
+      "nextSafeAction": "Author synthetic inputs and generator from the public schema; keep all original private modules excluded.",
+      "blocker": {
+        "kind": "not_implemented",
+        "reason": "A privacy-safe standalone config generator is not implemented."
+      }
+    },
+    {
+      "id": "MIGRATION.EXPORT_BUILD",
+      "domainPath": [
+        "migration",
+        "source-portability"
+      ],
+      "title": "Sanitized source export does not imply full-build readiness",
+      "status": "blocked",
+      "currentFact": "Safe modules and tests can be exported, but the current full build depends on excluded private inputs and platform components. Documentation validation is separate from application build validation. Non-import dependencies also matter: selected build/test metadata reads omitted runner/build files and generated .sites-runtime/dist/worker outputs. Static import-edge coverage is not a complete build dependency inventory. Original evidence/file locators are historical provenance, not guaranteed portable repository paths.",
+      "impactedGoals": [
+        "G.STANDALONE"
+      ],
+      "requiredForCurrentDelivery": true,
+      "scopeClassification": "mandatory_gate",
+      "dependencies": [
+        "MIGRATION.STANDALONE_SERVER",
+        "PRIVACY.SOURCE_PAYLOAD"
+      ],
+      "evidence": [
+        {
+          "sourceId": "E.CODE.BUILD",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        },
+        {
+          "sourceId": "E.REPORTED.EXPORT",
+          "observedAt": null,
+          "observationMeaning": "Use the exact source scope; this is not a new live read."
+        }
+      ],
+      "attemptedMethods": [
+        {
+          "method": "Assess source portability after private exclusions",
+          "outcome": "Full independent build remains unavailable without replacement components",
+          "evidenceSourceIds": [
+            "E.REPORTED.EXPORT"
+          ]
+        }
+      ],
+      "whatNotToRetry": [
+        "Do not weaken privacy exclusions to make a build pass or mark documentation tests as application tests.",
+        "Do not resolve missing private/generated files by copying originals, and do not present original evidence locators as portable bundled files."
+      ],
+      "smallestRequiredInput": {
+        "kind": "implementation",
+        "description": "The safe replacements for private config, standalone auth, storage and server, followed by a clean synthetic full build."
+      },
+      "acceptanceChecks": [
+        {
+          "id": "MIGRATION.EXPORT_BUILD.CHECK.1",
+          "criterion": "Exported repository contains an explicit runnable/non-runnable inventory.",
+          "evidenceNeeded": "Sanitized source export manifest."
+        },
+        {
+          "id": "MIGRATION.EXPORT_BUILD.CHECK.2",
+          "criterion": "Full application build is marked verified only after it actually succeeds in a clean environment.",
+          "evidenceNeeded": "Version-bound build/test/start receipts."
+        },
+        {
+          "id": "MIGRATION.EXPORT_BUILD.CHECK.3",
+          "criterion": "Validate package scripts, runner/build entry points, file-system reads and generated outputs in addition to static imports.",
+          "evidenceNeeded": "Complete runtime/build/test dependency inventory and an actual clean synthetic build when replacements exist."
+        }
+      ],
+      "ownership": {
+        "accountableRole": "implementer",
+        "supportingRoles": [
+          "reviewer"
+        ]
+      },
+      "nextSafeAction": "Label the handoff accurately and preserve a minimal safe test subset while missing pieces are implemented.",
+      "blocker": {
+        "kind": "not_implemented",
+        "reason": "Sanitization intentionally excludes required private inputs; safe replacements are still needed."
+      }
+    }
+  ],
+  "dependencyGraph": {
+    "semantics": "from requires to; dependencies form a DAG and do not describe recurring user workflows.",
+    "edges": [
+      {
+        "from": "READ.APP_SERVER_MODEL",
+        "to": "ENV.ACADEMY_APK",
+        "relation": "requires"
+      },
+      {
+        "from": "INTEGRATION.LIVE_ADAPTER",
+        "to": "READ.NAMESPACE_BINDING",
+        "relation": "requires"
+      },
+      {
+        "from": "INTEGRATION.LIVE_ADAPTER",
+        "to": "READ.SEARCH_COMPLETENESS",
+        "relation": "requires"
+      },
+      {
+        "from": "INTEGRATION.LIVE_ADAPTER",
+        "to": "READ.ATOMIC_REVISION",
+        "relation": "requires"
+      },
+      {
+        "from": "INTEGRATION.ASSESSMENT_MODEL",
+        "to": "READ.NAMESPACE_BINDING",
+        "relation": "requires"
+      },
+      {
+        "from": "INTEGRATION.ASSESSMENT_MODEL",
+        "to": "READ.ATOMIC_REVISION",
+        "relation": "requires"
+      },
+      {
+        "from": "INTEGRATION.PRESTUDY",
+        "to": "READ.NAMESPACE_BINDING",
+        "relation": "requires"
+      },
+      {
+        "from": "DEPLOYMENT.V21",
+        "to": "DEPLOYMENT.NATIVE_QA",
+        "relation": "requires"
+      },
+      {
+        "from": "DEPLOYMENT.NATIVE_QA",
+        "to": "ENV.NATIVE_WEBMCP",
+        "relation": "requires"
+      },
+      {
+        "from": "DEPLOYMENT.CONNECTOR_READBACK",
+        "to": "DEPLOYMENT.V21",
+        "relation": "requires"
+      },
+      {
+        "from": "MIGRATION.STANDALONE_SERVER",
+        "to": "ENV.SAVED_CLOUD",
+        "relation": "requires"
+      },
+      {
+        "from": "MIGRATION.STANDALONE_SERVER",
+        "to": "AUTH.SITES_IDENTITY",
+        "relation": "requires"
+      },
+      {
+        "from": "MIGRATION.STANDALONE_SERVER",
+        "to": "MIGRATION.DB_ADAPTER",
+        "relation": "requires"
+      },
+      {
+        "from": "MIGRATION.STANDALONE_SERVER",
+        "to": "MIGRATION.SYNTHETIC_CONFIG",
+        "relation": "requires"
+      },
+      {
+        "from": "MIGRATION.SYNTHETIC_CONFIG",
+        "to": "PRIVACY.SOURCE_PAYLOAD",
+        "relation": "requires"
+      },
+      {
+        "from": "MIGRATION.EXPORT_BUILD",
+        "to": "MIGRATION.STANDALONE_SERVER",
+        "relation": "requires"
+      },
+      {
+        "from": "MIGRATION.EXPORT_BUILD",
+        "to": "PRIVACY.SOURCE_PAYLOAD",
+        "relation": "requires"
+      }
+    ]
+  },
+  "workflowCycles": [
+    {
+      "id": "WF.SOURCE_EVIDENCE",
+      "purpose": "Reusable evidence refresh, not a dependency edge cycle.",
+      "stages": [
+        "select_exact_scope",
+        "read_supported_source",
+        "validate_identity_scope_time",
+        "project_read_model",
+        "review_uncertainty"
+      ],
+      "transitions": [
+        {
+          "from": "select_exact_scope",
+          "to": "read_supported_source"
+        },
+        {
+          "from": "read_supported_source",
+          "to": "validate_identity_scope_time"
+        },
+        {
+          "from": "validate_identity_scope_time",
+          "to": "project_read_model"
+        },
+        {
+          "from": "project_read_model",
+          "to": "review_uncertainty"
+        },
+        {
+          "from": "review_uncertainty",
+          "to": "select_exact_scope"
+        }
+      ],
+      "executionEnabled": false
+    },
+    {
+      "id": "WF.CLINIC_REVIEW",
+      "purpose": "Model recurring academy work without authorizing source mutations.",
+      "stages": [
+        "review_prestudy",
+        "review_assessment",
+        "identify_wrong_answers",
+        "review_existing_print_evidence",
+        "record_teacher_review"
+      ],
+      "transitions": [
+        {
+          "from": "review_prestudy",
+          "to": "review_assessment"
+        },
+        {
+          "from": "review_assessment",
+          "to": "identify_wrong_answers"
+        },
+        {
+          "from": "identify_wrong_answers",
+          "to": "review_existing_print_evidence"
+        },
+        {
+          "from": "review_existing_print_evidence",
+          "to": "record_teacher_review"
+        },
+        {
+          "from": "record_teacher_review",
+          "to": "review_prestudy"
+        }
+      ],
+      "executionEnabled": false
+    }
+  ],
+  "evidenceManifest": "./evidence-manifest.json"
+}
