@@ -1,0 +1,74 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "verification",
+  "id": "education-platform:verification:git-sync-review-ab1b1680b4743af5ba6c854ac09c6fddb9f33ebf",
+  "projectId": "education-platform",
+  "domainId": "education",
+  "createdAt": "2026-10-23T15:20:35.793Z",
+  "payload": {
+    "targetRefs": [
+      "education-platform:evidence:git-sync-review-ab1b1680b4743af5ba6c854ac09c6fddb9f33ebf"
+    ],
+    "criteria": [
+      {
+        "id": "independent-native-source-review",
+        "status": "pass",
+        "message": "Actual native output binds exact head/tree/complete manifest and distinct truthful author/reviewer; current zero findings and any prior same-tree reuse are explicit.",
+        "evidenceRefs": [
+          "education-platform:evidence:git-sync-review-ab1b1680b4743af5ba6c854ac09c6fddb9f33ebf"
+        ]
+      }
+    ],
+    "inputHashes": [
+      {
+        "path": "native-review-results/ab1b1680b4743af5ba6c854ac09c6fddb9f33ebf.json",
+        "sha256": "bd9f6878ba6d335acf9a6efc82c31899dcc00b90f4bb396073941814a5b73f49"
+      },
+      {
+        "path": "native-review-evidence/ab1b1680b4743af5ba6c854ac09c6fddb9f33ebf.json",
+        "sha256": "8f980b5c16007f0a01cc9ab62a2b38421055c6272bb211d1b0f9ee6aaa51f2f8"
+      },
+      {
+        "path": "native-review-raw/ab1b1680b4743af5ba6c854ac09c6fddb9f33ebf.json",
+        "sha256": "6db37d5247595b05088fc65c056a0784ef8f3752a2df4f68f7ac5657ed5dacc1"
+      }
+    ],
+    "runtime": {
+      "name": "native-codex",
+      "version": "observed-native-thread-not-cryptographic-authentication"
+    },
+    "details": {
+      "semanticOwner": "education-platform",
+      "review": {
+        "binding": {
+          "repository": "park-kyungchan/education-platform",
+          "projectId": "education-platform",
+          "domainId": "education",
+          "semanticOwner": "education-platform",
+          "scope": "month-end-source-redesign"
+        },
+        "headSha": "ab1b1680b4743af5ba6c854ac09c6fddb9f33ebf",
+        "reviewedTreeSha": "8ad723e7b504119acb4494632d5e26530c85e110",
+        "reviewedSourceManifestSha256": "6b00d4b3ce9bef1bcc789934fe3542173516cba37f0a30ea5c6e8b3580ad9d18",
+        "reviewer": {
+          "runtime": "native-codex",
+          "taskId": "01a1693c-f688-74c1-971a-ab89c1a393e9",
+          "threadId": "01a1693c-f688-74c1-971a-ab89c1a393e9",
+          "nativeTaskId": null,
+          "nativeRunId": null,
+          "role": "Independent native source synchronization reviewer; metadata/tree and policy scope only",
+          "implementationWriter": false
+        },
+        "author": {
+          "runtime": "native-codex",
+          "taskId": "01a16944-9f9f-7a40-9bbb-dea79a1a9411",
+          "threadId": "01a16944-9f9f-7a40-9bbb-dea79a1a9411",
+          "nativeTaskId": null,
+          "nativeRunId": null
+        },
+        "conclusion": "pass",
+        "unresolvedFindings": 0
+      }
+    }
+  }
+}
