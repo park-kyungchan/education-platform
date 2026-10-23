@@ -11,7 +11,13 @@ test('the plan routes all source families without executing owner checks or feat
   expect(plan.repositories).toHaveLength(15);
   expect(plan.execution).toBe('plan-only');
   expect(plan.featureImplementation).toBe('external-pr');
-  expect(workflow.repositories.filter(r => r.work).map(r => r.repository)).toEqual(['education-platform', 'academy-workbench', 'math-research-module']);
+  expect(workflow.repositories.filter(r => r.work).map(r => r.repository)).toEqual(['education-platform']);
+  expect(workflow.repositories.find(r => r.repository === 'education-platform')!.work!.workId).toBe('academy-repository-integration-20261023');
+  for (const name of ['academy-workbench', 'math-research-module']) {
+    const row = workflow.repositories.find(r => r.repository === name)!;
+    expect(row.role).toBe('retained'); expect(row.work).toBeNull();
+    expect(row.routes[0]).toMatchObject({repository:'education-platform', relationship:'maintained', path:'modules/'+name});
+  }
   expect(repositoryPlan(workflow, 'gang-a').repositories[0]!.routes[0]!.repository).toBe('education-platform');
   expect(() => repositoryPlan(workflow, 'unknown')).toThrow('unknown_repository');
 });
