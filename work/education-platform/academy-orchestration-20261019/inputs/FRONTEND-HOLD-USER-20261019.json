@@ -1,0 +1,35 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "academy-orchestration-20261019",
+  "kind": "input",
+  "id": "FRONTEND-HOLD-USER-20261019",
+  "inputKind": "actual-user-answer",
+  "origin": {
+    "ownerId": "current-user",
+    "locator": "current-thread:stop-frontend-until-user-review",
+    "kind": "native-user-message"
+  },
+  "content": {
+    "answer": "프론트엔드도 끄고 나중에 내가 확인할 때만 진행하자.",
+    "hold": {
+      "schema": "academy.frontend-hold.v1",
+      "requestedBy": "current-user",
+      "status": "paused-until-user-review",
+      "frontendTui": "stopped-native-quit",
+      "researchPreview": "stopped-SIGTERM-owned-process",
+      "browser": "observed-stopped",
+      "botScreen": "observed-stopped",
+      "restartCondition": "Only a later explicit user request to review or resume frontend work. Resource recovery, dependency completion, handoff or another WorkLead starting does not release this hold.",
+      "preserve": [
+        "Work IDs",
+        "source Work records",
+        "worktrees",
+        "native saved sessions"
+      ],
+      "automaticRestart": false
+    },
+    "nativeAuthorshipIndependentlyAuthenticated": false
+  }
+}

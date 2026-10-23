@@ -1,0 +1,47 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "academy-orchestration-20261019",
+  "kind": "input",
+  "id": "AO-PROVIDER",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "agent-platform",
+    "locator": "/home/palantirkc/projects/agent-platform@b59c5230cd435fc94fc757474ca74f45a124817e",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "repositoryId": "park-kyungchan/agent-platform",
+    "commit": "b59c5230cd435fc94fc757474ca74f45a124817e",
+    "entrypoint": "scripts/harness.ts",
+    "publicApi": "@palantirkc/work-continuity/git-work",
+    "runtime": "Bun 1.4.3",
+    "pins": [
+      {
+        "path": "package.json",
+        "sha256": "a2d83cc9464156a83b3f6536517923fceb6b20bd7d36d29b214fcfc81dfa11e5"
+      },
+      {
+        "path": "bun.lock",
+        "sha256": "423ea4c01100bf11d34eedb3357dc19d15d2b0e2806937120ebc843404a139f0"
+      },
+      {
+        "path": "scripts/harness.ts",
+        "sha256": "ca6d7aa1fc1e7f08646afb5dea9eecd5e51fe9ce14f3b6bf359f4107baa4cdc2"
+      },
+      {
+        "path": "packages/work-continuity/package.json",
+        "sha256": "8c382dba4a0bd93ff3805e3cdccb95d119130e05ad198ce80f3d669decad12c8"
+      },
+      {
+        "path": "releases/palantirkc-ontology-0.2.0.tgz",
+        "sha256": "3f9995d0b91d2ad39dfc7cedbb6e35b1cb9d29c2e57223ca0c076d2030319406"
+      }
+    ],
+    "nativeActivation": false,
+    "dependencyRepin": false,
+    "implementationCopied": false,
+    "limitation": "Direct source CLI application is separate from native Codex/Hermes provider first-import guards and native hook activation. All existing guards remain owned by their native source owners."
+  }
+}

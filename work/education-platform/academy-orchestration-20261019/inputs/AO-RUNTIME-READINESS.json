@@ -1,0 +1,113 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "academy-orchestration-20261019",
+  "kind": "input",
+  "id": "AO-RUNTIME-READINESS",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "education-platform",
+    "locator": "parent-native-runtime-observation:2026-10-19T03:21Z",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "schema": "academy.frontend-task.v1",
+    "createdAt": "2026-10-19T03:20:37.968046+00:00",
+    "role": "frontend",
+    "coordinator": "Codex academy orchestrator",
+    "source": {
+      "repositoryId": "park-kyungchan/education-platform",
+      "commit": "8611a84705f1fe796d6d9a1a3efe8fc1d26a1c9e",
+      "branch": "frontend/academy-interview-20261019",
+      "containerRoot": "/opt/data/workspace/academy-frontend-20261019"
+    },
+    "ownerRoots": {
+      "frontend": "apps/academy/month-end-web",
+      "backend": "apps/academy/month-end-workbench",
+      "research": "park-kyungchan/math-research-module",
+      "academyMcp": "park-kyungchan/academy-workbench/tools/academy-mcp"
+    },
+    "runtime": {
+      "container": "hermes-agent-2q3y-hermes-serve-1",
+      "profile": "dc-gang-a-dev",
+      "herdrWorkspace": "w4",
+      "herdrPane": "w4:p2",
+      "frontendSessionId": "fd17ca18",
+      "storedSessionKey": null
+    },
+    "scope": {
+      "allowed": [
+        "read sanitized source entrypoints",
+        "prepare UI interview",
+        "view owned research-only preview"
+      ],
+      "pendingUserInterview": [
+        "implementation priorities",
+        "new frontend changes",
+        "native Academy integration"
+      ],
+      "excluded": [
+        "student or original runtime data reads",
+        "save/send/print",
+        "credentials changes",
+        "configuration changes",
+        "deployment",
+        "completed effect replay"
+      ]
+    },
+    "preview": {
+      "url": "http://127.0.0.1:4179/",
+      "sourceMode": "unavailable",
+      "privateOperationalPayloads": 0,
+      "pid": 580710,
+      "verification": {
+        "schema": "academy.visible-preview-verification.v1",
+        "observedAt": "2026-10-19T03:21:25.379Z",
+        "status": "pass",
+        "story": "Owned headed Chromium on the dc-gang-a-dev Bot Screen renders the research-only frontend and its loopback context API.",
+        "page": {
+          "title": "수학 연구 작업실 · 월말평가 준비",
+          "heading": "어떤 풀이가, 어떤 이해를 보여 줄까요?",
+          "researchNodes": 18,
+          "url": "http://127.0.0.1:4179/"
+        },
+        "api": {
+          "status": 200,
+          "ok": true
+        },
+        "width": 1392,
+        "height": 703,
+        "academySourceMode": "unavailable",
+        "realStudentDataRead": false,
+        "windowsDesktopViewerVerified": false
+      }
+    },
+    "mustRead": [
+      "AGENTS.md",
+      "apps/academy/month-end-workbench/docs/source-context.md",
+      "apps/academy/month-end-web/README.md",
+      "apps/academy/month-end-web/work/month-end-context-rebuild-20261017/checkpoint.json"
+    ],
+    "mcpCurrentHold": "mcp_verified_execution_boundary_unavailable",
+    "nativeModelInvocationDispatched": false,
+    "nativeGlobalHarnessActivationClaimed": false,
+    "screen": {
+      "running": true,
+      "display": ":21",
+      "geometry": "1440x900",
+      "pid": 580244,
+      "leaseHolder": "agent",
+      "placement": "gateway",
+      "nativeViewerRequired": "Hermes Desktop > dc-gang-a-dev > Screen",
+      "windowsViewerVerified": false,
+      "nativeIdleStopMinutes": 30
+    },
+    "nativeLaunches": {
+      "tuiPid": 580605,
+      "tuiNodePid": 580651,
+      "previewPid": 580710,
+      "identityLimit": "Herdr pane/process identities are observations, not native Task/Run/Attempt IDs; no model turn was dispatched."
+    }
+  }
+}
