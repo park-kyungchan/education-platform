@@ -1,0 +1,397 @@
+{
+  "schema": "owner-scoped-native-review-output.v1",
+  "reviewStatus": "complete",
+  "recordedAtUtc": "2026-10-23T15:33:32.049Z",
+  "assignmentId": "review-education-source-sync-main-and-doc-successors",
+  "binding": {
+    "repository": "park-kyungchan/education-platform",
+    "projectId": "education-platform",
+    "domainId": "education",
+    "semanticOwner": "education-platform",
+    "scope": "month-end-source-redesign"
+  },
+  "headSha": "25ba31bc404b1c5667c913d67d3ffa7c480262ad",
+  "reviewHead": "25ba31bc404b1c5667c913d67d3ffa7c480262ad",
+  "reviewedTreeSha": "8ad723e7b504119acb4494632d5e26530c85e110",
+  "reviewedSourceManifestSha256": "6b00d4b3ce9bef1bcc789934fe3542173516cba37f0a30ea5c6e8b3580ad9d18",
+  "reviewedSourceManifest": {
+    "schema": "agent-platform.reviewed-source-manifest.v1",
+    "reviewedTreeSha": "8ad723e7b504119acb4494632d5e26530c85e110",
+    "entryCount": 3824,
+    "blobCount": 3299,
+    "sha256": "6b00d4b3ce9bef1bcc789934fe3542173516cba37f0a30ea5c6e8b3580ad9d18"
+  },
+  "reviewer": {
+    "runtime": "native-codex",
+    "taskId": "01a1693c-f688-74c1-971a-ab89c1a393e9",
+    "threadId": "01a1693c-f688-74c1-971a-ab89c1a393e9",
+    "nativeTaskId": null,
+    "nativeRunId": null,
+    "role": "Independent native source synchronization reviewer; metadata/tree and policy scope only",
+    "implementationWriter": false
+  },
+  "author": {
+    "runtime": "native-codex",
+    "taskId": "01a16944-9f9f-7a40-9bbb-dea79a1a9411",
+    "threadId": "01a16944-9f9f-7a40-9bbb-dea79a1a9411",
+    "nativeTaskId": null,
+    "nativeRunId": null
+  },
+  "nativeTaskId": null,
+  "nativeRunId": null,
+  "identitySemantics": "Compatibility taskId slots carry observed native thread IDs; unexposed native Task/Run remain null. Author identity is exact inherited source-author metadata, not a claim about merge committer or native authentication.",
+  "conclusion": "pass",
+  "findings": [],
+  "unresolvedFindings": 0,
+  "sourceReviewDecision": "Pass for actual final main ordered mechanical source synchronization. Exact complete tree, canonical manifest and source-author equality to genuine reviewed PR21 H are established; genuine PR21 documentation/provenance review and unchanged H22/M22 feature evidence are explicitly reused with all failures/limits preserved. Zero current unresolved source findings in this bounded review.",
+  "details": {
+    "path": "details.json",
+    "sha256": "d9a06710f903d3d76b332ebf8000b9a537491c1b7b83d9235d67cd6418a63f1c"
+  },
+  "reuse": {
+    "explicit": true,
+    "priorPR21": {
+      "headSha": "ab1b1680b4743af5ba6c854ac09c6fddb9f33ebf",
+      "resultPath": "/home/palantirkc/operations/git-sync-cleanup-20261023T1300Z/pr21-review/result.json",
+      "resultSha256": "6db37d5247595b05088fc65c056a0784ef8f3752a2df4f68f7ac5657ed5dacc1",
+      "detailsPath": "/home/palantirkc/operations/git-sync-cleanup-20261023T1300Z/pr21-review/details.json",
+      "detailsSha256": "c82beca6a21d303adfe3419a9f603688b856d217f25b7a871a1632f390e41561",
+      "donePath": "/home/palantirkc/operations/git-sync-cleanup-20261023T1300Z/pr21-review/done.json",
+      "doneSha256": "39883d47569c33fefdaf48dfaa512956453ffa55d83dbfd4b4fb1093833fee29",
+      "reviewer": {
+        "runtime": "native-codex",
+        "taskId": "01a1693c-f688-74c1-971a-ab89c1a393e9",
+        "threadId": "01a1693c-f688-74c1-971a-ab89c1a393e9",
+        "nativeTaskId": null,
+        "nativeRunId": null,
+        "role": "Independent native source synchronization reviewer; metadata/tree and policy scope only",
+        "implementationWriter": false
+      },
+      "author": {
+        "runtime": "native-codex",
+        "taskId": "01a16944-9f9f-7a40-9bbb-dea79a1a9411",
+        "threadId": "01a16944-9f9f-7a40-9bbb-dea79a1a9411",
+        "nativeTaskId": null,
+        "nativeRunId": null
+      },
+      "entire45LineDocumentReviewed": true,
+      "sourceDecision": "The entire original 45-line direct-edit audit policy is consistent with existing authoring, privacy, scoped teacher-decision and no-replay boundaries. Exact main22 ancestry and equality of all other maintained source are established; fresh source-author metadata truthfully matches the independent source author. Genuine full-feature H22/M22 source evidence is explicitly reused for unchanged code only.",
+      "document": {
+        "path": "apps/academy/dc-gang-a/docs/direct-edit-audit.md",
+        "gitBlob": "017c8dc363c778df7d4f69a669b22e686f57e057",
+        "sha256": "dac8c735398099dff58e609d5d098481fbc35bfc2bc915e32c0dd80895d6f75e",
+        "bytes": 2132,
+        "lines": 45,
+        "entireCommittedDocumentDirectlyInspected": true,
+        "originalCommit": "161b1d79760bc385da7d5686eb62e93e51000a09",
+        "originalBytesUnchanged": true,
+        "workingDocumentExact": true,
+        "assessment": [
+          {
+            "id": "fresh-read-and-source-preservation",
+            "status": "clean",
+            "documentLines": "3-13,34-39",
+            "policySections": [
+              "Intake and field ownership",
+              "Compatibility and effect boundaries"
+            ],
+            "basis": "Pre-save fresh read and last authoritative/verification comparison preserve current user-entered values. Save after-state starts from fresh live values; whole-batch before equality and final readback stop drift for reconciliation. This does not authorize a save, automatically retry, or replace scoped teacher decisions."
+          },
+          {
+            "id": "truthful-attribution-and-uncertainty",
+            "status": "clean",
+            "documentLines": "20-32",
+            "policySections": [
+              "Intake and field ownership",
+              "Compatibility and effect boundaries"
+            ],
+            "basis": "The actor is expressly inferred_by_elimination; basis must identify checked ledgers and absence of covering writes, and must never describe direct actor observation. Detection window, read dispatch/observation evidence, exact before/after and disposition retain attribution and uncertainty. No score-to-grade, attendance or completion inference is introduced."
+          },
+          {
+            "id": "private-audit-custody",
+            "status": "clean",
+            "documentLines": "17-21,43-45",
+            "policySections": [
+              "Compatibility and effect boundaries"
+            ],
+            "basis": "Audit file is restricted to private operations beside the selected save controls, mode 0600. Student-identifying contents are forbidden from Git, fixtures, browser assets, hosted previews and public output. The shared convention contains no actual student identifiers or records. Private import custody approval does not authorize later audits in Git."
+          },
+          {
+            "id": "teacher-and-effect-authority",
+            "status": "clean",
+            "documentLines": "1-45",
+            "policySections": [
+              "Parent-facing wording",
+              "Compatibility and effect boundaries",
+              "Permanent line and mapping rules"
+            ],
+            "basis": "This is a recurring audit convention interpreted with the existing authoring policy and current user scope. It changes neither parent wording nor field/mapping/completion decisions and grants no save/send/native authority. Required audit references and session IDs belong to private artifacts, not shared policy."
+          },
+          {
+            "id": "runtime-claims-limited",
+            "status": "clean",
+            "documentLines": "36-39",
+            "policySections": [
+              "Compatibility and effect boundaries"
+            ],
+            "basis": "The document describes existing worker preflight/readback expectations; this documentation-only review does not prove new runtime operation or actual live enforcement. Code is unchanged from reviewed M22/H22, and their runtime and verification limitations remain in force."
+          }
+        ]
+      },
+      "hostedReceipt": {
+        "commit": "a2958c299eef3e4e6f37c73b29f1e8495826d0d4",
+        "path": "native-reviews/ab1b1680b4743af5ba6c854ac09c6fddb9f33ebf.json",
+        "sha256": "21cc0bb502873f4a53c46800bd516cfc2fc461fe9d09918775214f2569f990bd"
+      }
+    },
+    "unchangedH22M22": {
+      "explicit": true,
+      "fullFeatureHead": "3cd90a5b9f1289997aa5ce159179a41aba3f4c04",
+      "fullFeatureReviewer": {
+        "runtime": "native-codex",
+        "taskId": "01a16907-d8cd-7a13-b9bc-bab20ce80d88",
+        "threadId": "01a16907-d8cd-7a13-b9bc-bab20ce80d88",
+        "nativeTaskId": null,
+        "nativeRunId": null,
+        "paneId": "wF:p9",
+        "role": "independent exact-H source reviewer only",
+        "implementationWriter": false,
+        "actualModelAsShownInUi": null,
+        "actualEffortAsShownInUi": null,
+        "requestedEffort": "xhigh"
+      },
+      "fullFeatureAuthor": {
+        "runtime": "native-codex",
+        "taskId": "01a168b8-471f-74c0-84c2-3bcf9dcddfb6",
+        "threadId": "01a168b8-471f-74c0-84c2-3bcf9dcddfb6",
+        "nativeTaskId": null,
+        "nativeRunId": null
+      },
+      "immutableRaw": {
+        "commit": "2496934f03c45921d65ac872745c62039718ead1",
+        "path": "native-review-raw/3cd90a5b9f1289997aa5ce159179a41aba3f4c04.json",
+        "sha256": "b6d2ed7f5a277ab4d75171bebdb16d3cd543be562e5d61517d21f4b8ace74946",
+        "bytes": 96245
+      },
+      "immutableReceipt": {
+        "commit": "1e2ba48ff6ed06817d6990fa40854e68e988a085",
+        "path": "native-reviews/3cd90a5b9f1289997aa5ce159179a41aba3f4c04.json",
+        "sha256": "27cceaa8afa115fc844171775b354eac62506fc4aa713ec543bbb27e260e3700"
+      },
+      "fullFeatureSourceDecision": "Explicit clean source verdict for the entire 8409ba7..H feature diff and its H-tree integration/contract context. Direct inspection and current independent controls established no concrete unresolved source findings. This is not a claim that all independent test invocations passed or that runtime/production/actual-effort qualifications are complete.",
+      "fullFeatureCoverage": true,
+      "fullFeatureChangedFiles": 21,
+      "priorM22": {
+        "headSha": "7cb34a796ea3a68c98cbeb68772da8213adfdc98",
+        "resultPath": "/home/palantirkc/operations/git-sync-cleanup-20261023T1300Z/education-main22-review/result.json",
+        "resultSha256": "6ad1dd11cefb434358f9a05f36758801049f7acef31cb4c5c535b215ebb7e95c",
+        "detailsPath": "/home/palantirkc/operations/git-sync-cleanup-20261023T1300Z/education-main22-review/details.json",
+        "detailsSha256": "a623f65b69d85d2657903ea2d5408990453cfb9426adc760f8d4305e23677864",
+        "donePath": "/home/palantirkc/operations/git-sync-cleanup-20261023T1300Z/education-main22-review/done.json",
+        "doneSha256": "b2461173f5cdb096c6129a480a1f0af2149b0f03299747568932986316524816"
+      },
+      "basis": "Original H22 and M22 complete tree metadata are identical; all PR21 leaf objects and modes except the independently assessed original document and fresh source-author metadata are exactly M22.",
+      "scope": "Unchanged code/spec/contracts and prior feature-source conclusion only; no new full-feature/native/business acceptance.",
+      "newFullFeatureReview": false,
+      "verificationLimitationsPreserved": [
+        {
+          "id": "sdk-stdio-connection-closed",
+          "kind": "verification_uncertainty",
+          "sourceFinding": false,
+          "status": "low-level cause unestablished; exact-base/H reproduction preserved",
+          "evidence": "With the same installed client/server 2.3.1 and zod 4.4.3 dependency directories, both unchanged-base stdio tests and both H stdio tests returned SdkError: Connection closed. H combined service/backend/stdio invocation had 26 pass / 2 fail; base stdio invocation had 0 pass / 2 fail. This does not establish an introduced source defect or prove an environmental root cause. Independent Python-pipe legacy-wire controls initialized/listed exact tools on both base and H and called H metadata's unconfigured backend successfully; H real-SDK in-memory composition tests passed.",
+          "retainedContext": "The supplied historical source-free failure receipts and current 159/0 receipt were inspected only as context; neither substitutes for these current controls.",
+          "decision": "Preserve failed executions and uncertainty. Do not claim all independent checks passed; no source/config/permission changes or transport bypass were used."
+        },
+        {
+          "id": "positive-student-paper-wire-fixture",
+          "kind": "missing_qualification_input",
+          "sourceFinding": false,
+          "missingInput": "An admitted fixture containing the exact already-pinned onSearchPage function bytes for a positive UserBySearchTestResult date-override wire test.",
+          "evidence": "apps/academy/dc-gang-a/tests/lms/academyFollowupComposition.test.ts:10-13,100-110,247-259; client wire guard retained. Positive student-paper path remains unqualified; stubbed lookup plumbing is not live/source-wire proof.",
+          "decision": "No replacement fixture, relaxed digest, guessed function or live read used. This source review grants no positive native-use qualification."
+        },
+        {
+          "id": "actual-ui-model-effort",
+          "kind": "reviewer_runtime_observability",
+          "sourceFinding": false,
+          "requestedEffort": "xhigh",
+          "actualModelAsShownInUi": null,
+          "actualEffortAsShownInUi": null,
+          "evidence": "Own native UI badge is not exposed. Earlier escalation for herdr agent read wF:p9 --source visible --lines 70 was denied, execution remains unconfirmed, and it was not retried. Own native identity was independently observed through CODEX_THREAD_ID and successful Herdr agent get. User subsequently instructed continuation.",
+          "decision": "Do not relabel requested effort as observed effort or claim the xhigh UI qualification was verified."
+        },
+        {
+          "id": "native-and-completion-boundaries",
+          "kind": "excluded_acceptance",
+          "sourceFinding": false,
+          "decision": "No native activation/config/credentials/store/lock access, actual-use qualification, live Academy save/send, publishing, required hosted CI observation, mathematical acceptance or production completion performed. Full repository check was not rerun in the read-only reviewed worktree; retained full-check receipts are context only."
+        }
+      ],
+      "priorFailedAttemptsPreserved": [
+        {
+          "kind": "test-runner-argument-order",
+          "resolution": "Bun interpreted preload-before-test as script mode; no tests ran. Corrected the invocation only, following installed help."
+        },
+        {
+          "kind": "incomplete-isolated-copy-import-closure",
+          "resolution": "Copied missing code-only H dependencies into /tmp. No raw_sessions data or private student data copied. Completed affected suite and retained-query test subsequently passed."
+        },
+        {
+          "kind": "initial-isolated-stdio-failures",
+          "resolution": "Failure retained, not relabeled pass. Exact base reproduces the same SDK close; alternate legacy-wire control passes. Low-level cause remains unknown."
+        },
+        {
+          "kind": "scratch-closure-boundary-assertion",
+          "resolution": "Closure expansion stopped before copying an excluded raw_sessions type import. Already-created scratch code files were inventoried and reconciled; that data import was never copied. Later targeted test runs succeeded after admitting only missing code dependencies."
+        },
+        {
+          "kind": "diagnostic-bun-path",
+          "resolution": "The guessed /root/.bun/bin/bun did not exist; no diagnostic child launched. Observed actual process.execPath /usr/local/bin/bun and used it for completed controls."
+        }
+      ],
+      "m22Failure": {
+        "path": "prerequisite-failure.json",
+        "sha256": "5395c251177aa73fa3d2191e78cf22a9796df1f5c73b6e34f6ffb5dce865df9a",
+        "resolution": "Observed exact-M detached checkout and origin/main=M; stale local main is first parent. Removed unsupported branch-checkout precondition; no Git effects occurred."
+      },
+      "m22Limitations": [
+        "This is a fresh independent ordered-merge/tree/source-author synchronization review of actual M. The genuine full-feature H review is explicitly reused because complete trees and canonical manifests are identical; no new full-feature behavior review is claimed.",
+        "Git publisher custody does not authenticate the native author or reviewer process. Current reviewer identity is observed through CODEX_THREAD_ID and allowlisted own-process metadata; exposed native Task/Run remain null.",
+        "No private student/context body was read. Tree entry inventory binds object metadata only and is not private-content inspection.",
+        "Prior full-feature failures, uncertainty and missing qualification inputs remain unchanged. No broad tests were rerun; no claim that all prior independent checks passed.",
+        "Hosted validation is the pinned prior-H observation; current M hosted CI/status/publication is a separate gate and was neither queried nor changed.",
+        "No new native-use qualification, teacher acceptance, mathematical acceptance, runtime activation, deployment or production completion is established."
+      ]
+    },
+    "pr21Limitations": [
+      "Independent review covers the complete 45-line original document and fresh committed source-author provenance plus exact ancestry/tree metadata. The prior genuine full-feature H22 review and own M22 synchronization review are explicitly reused only for unchanged source.",
+      "The entire PR21 tree and canonical manifest differ from M22 because the document is added and source-author metadata changes. No claim of whole-tree equality to M22 or a new full-feature behavior review is made; every other maintained leaf path, mode and object is equal.",
+      "Prior H22 failed SDK stdio controls, unestablished low-level cause, missing positive student-paper wire fixture and unobserved UI effort qualification are unchanged. Prior M22 failed branch-checkout assumption and its detached-checkout reconciliation remain preserved.",
+      "No broad tests, live Academy reads/writes, native-store or private student/context body access occurred. This policy review does not prove worker execution, native qualification, teacher acceptance, parent delivery, mathematical acceptance, activation or production completion.",
+      "Native author/reviewer thread identities are observed metadata, not authenticated native authorship. Native Task/Run remain unexposed and null; model and effort are retained without changes and actual UI values are unexposed.",
+      "Current exact-PR21 hosted CI, publication, merge and cleanup remain separate Root-owner gates. No GitHub interaction occurred."
+    ],
+    "pr21AuthorFailuresAndUnknowns": {
+      "failures": [
+        {
+          "operation": "Optional source-author-schema.ts read",
+          "exitCode": 1,
+          "reason": "File does not exist; schema and validators are exported from inspected source-author.ts; no dependent mutation was issued on the failed read."
+        }
+      ],
+      "unknowns": [
+        "Native Task/Run unexposed and null",
+        "Model/effort inherited; no explicit argv override, configuration not read",
+        "Fresh native thread was supplied by owner; no-resume/fork argv observed; native history/store not inspected",
+        "Native authorship is observed metadata, not authenticated authorship or publisher identity"
+      ],
+      "remainingGates": [
+        "Independent exact-final-head review by owner workflow",
+        "Full required hosted CI on final source head",
+        "Publication/merge/cleanup by Root owner only"
+      ],
+      "authorVerdictNotUsedAsIndependentDocumentDecision": true
+    },
+    "m22Failure": {
+      "path": "prerequisite-failure.json",
+      "sha256": "5395c251177aa73fa3d2191e78cf22a9796df1f5c73b6e34f6ffb5dce865df9a",
+      "resolution": "Observed exact-M detached checkout and origin/main=M; stale local main is first parent. Removed unsupported branch-checkout precondition; no Git effects occurred."
+    },
+    "m22Limitations": [
+      "This is a fresh independent ordered-merge/tree/source-author synchronization review of actual M. The genuine full-feature H review is explicitly reused because complete trees and canonical manifests are identical; no new full-feature behavior review is claimed.",
+      "Git publisher custody does not authenticate the native author or reviewer process. Current reviewer identity is observed through CODEX_THREAD_ID and allowlisted own-process metadata; exposed native Task/Run remain null.",
+      "No private student/context body was read. Tree entry inventory binds object metadata only and is not private-content inspection.",
+      "Prior full-feature failures, uncertainty and missing qualification inputs remain unchanged. No broad tests were rerun; no claim that all prior independent checks passed.",
+      "Hosted validation is the pinned prior-H observation; current M hosted CI/status/publication is a separate gate and was neither queried nor changed.",
+      "No new native-use qualification, teacher acceptance, mathematical acceptance, runtime activation, deployment or production completion is established."
+    ],
+    "fullFeatureH22VerificationLimitations": [
+      {
+        "id": "sdk-stdio-connection-closed",
+        "kind": "verification_uncertainty",
+        "sourceFinding": false,
+        "status": "low-level cause unestablished; exact-base/H reproduction preserved",
+        "evidence": "With the same installed client/server 2.3.1 and zod 4.4.3 dependency directories, both unchanged-base stdio tests and both H stdio tests returned SdkError: Connection closed. H combined service/backend/stdio invocation had 26 pass / 2 fail; base stdio invocation had 0 pass / 2 fail. This does not establish an introduced source defect or prove an environmental root cause. Independent Python-pipe legacy-wire controls initialized/listed exact tools on both base and H and called H metadata's unconfigured backend successfully; H real-SDK in-memory composition tests passed.",
+        "retainedContext": "The supplied historical source-free failure receipts and current 159/0 receipt were inspected only as context; neither substitutes for these current controls.",
+        "decision": "Preserve failed executions and uncertainty. Do not claim all independent checks passed; no source/config/permission changes or transport bypass were used."
+      },
+      {
+        "id": "positive-student-paper-wire-fixture",
+        "kind": "missing_qualification_input",
+        "sourceFinding": false,
+        "missingInput": "An admitted fixture containing the exact already-pinned onSearchPage function bytes for a positive UserBySearchTestResult date-override wire test.",
+        "evidence": "apps/academy/dc-gang-a/tests/lms/academyFollowupComposition.test.ts:10-13,100-110,247-259; client wire guard retained. Positive student-paper path remains unqualified; stubbed lookup plumbing is not live/source-wire proof.",
+        "decision": "No replacement fixture, relaxed digest, guessed function or live read used. This source review grants no positive native-use qualification."
+      },
+      {
+        "id": "actual-ui-model-effort",
+        "kind": "reviewer_runtime_observability",
+        "sourceFinding": false,
+        "requestedEffort": "xhigh",
+        "actualModelAsShownInUi": null,
+        "actualEffortAsShownInUi": null,
+        "evidence": "Own native UI badge is not exposed. Earlier escalation for herdr agent read wF:p9 --source visible --lines 70 was denied, execution remains unconfirmed, and it was not retried. Own native identity was independently observed through CODEX_THREAD_ID and successful Herdr agent get. User subsequently instructed continuation.",
+        "decision": "Do not relabel requested effort as observed effort or claim the xhigh UI qualification was verified."
+      },
+      {
+        "id": "native-and-completion-boundaries",
+        "kind": "excluded_acceptance",
+        "sourceFinding": false,
+        "decision": "No native activation/config/credentials/store/lock access, actual-use qualification, live Academy save/send, publishing, required hosted CI observation, mathematical acceptance or production completion performed. Full repository check was not rerun in the read-only reviewed worktree; retained full-check receipts are context only."
+      }
+    ],
+    "fullFeatureH22OriginalFailedAttempts": [
+      {
+        "kind": "test-runner-argument-order",
+        "resolution": "Bun interpreted preload-before-test as script mode; no tests ran. Corrected the invocation only, following installed help."
+      },
+      {
+        "kind": "incomplete-isolated-copy-import-closure",
+        "resolution": "Copied missing code-only H dependencies into /tmp. No raw_sessions data or private student data copied. Completed affected suite and retained-query test subsequently passed."
+      },
+      {
+        "kind": "initial-isolated-stdio-failures",
+        "resolution": "Failure retained, not relabeled pass. Exact base reproduces the same SDK close; alternate legacy-wire control passes. Low-level cause remains unknown."
+      },
+      {
+        "kind": "scratch-closure-boundary-assertion",
+        "resolution": "Closure expansion stopped before copying an excluded raw_sessions type import. Already-created scratch code files were inventoried and reconciled; that data import was never copied. Later targeted test runs succeeded after admitting only missing code dependencies."
+      },
+      {
+        "kind": "diagnostic-bun-path",
+        "resolution": "The guessed /root/.bun/bin/bun did not exist; no diagnostic child launched. Observed actual process.execPath /usr/local/bin/bun and used it for completed controls."
+      }
+    ],
+    "scope": "Reuse genuine PR21 document/provenance review for exact unchanged H tree and genuine H22/M22 source conclusions only for unchanged underlying feature source.",
+    "newFullFeatureReview": false,
+    "newDocumentReview": false,
+    "newNativeTeacherAcceptance": false
+  },
+  "limitations": [
+    "Current independent review is limited to actual final main ordered mechanical merge, complete Git tree/canonical manifest equality and inherited source-author metadata. No new document content, full-feature behavior or business/native acceptance review was performed.",
+    "Exact PR21 document-plus-metadata review is explicitly reused because actual M and reviewed H have identical complete trees and canonical manifest. Genuine unchanged H22 full-feature review and own M22 synchronization evidence remain applicable only to unchanged source.",
+    "All original PR21/M22/H22 failures, uncertainties and qualification limits remain preserved in their original artifacts and in explicit reuse details. Prior SDK stdio failures, unknown low-level cause, missing positive student-paper wire fixture, unobserved UI effort and M22 detached-checkout prerequisite failure were not relabeled as passing executions.",
+    "Git source custody and published proof establish publisher/source evidence only, not authenticated native authorship, native permission, teacher acceptance, mathematical acceptance, runtime activation, parent delivery, deployment or production completion.",
+    "No private student/context contents, native stores or credentials were read; manifest derivation used Git object/tree metadata only. No broad tests or GitHub interactions occurred.",
+    "The provided hosted validation is the prior exact-H PR21 observation; actual final main hosted CI/proof gate, publication and cleanup are separate owner actions. Its stated 300-second wait was not modified, polled, or claimed passed; no current timeout was observed by this review."
+  ],
+  "effectAccounting": {
+    "sourceWrites": 0,
+    "gitWrites": 0,
+    "githubReads": 0,
+    "githubWrites": 0,
+    "globalOrRuntimeChanges": 0,
+    "privateStudentOrContextBodyReads": 0,
+    "credentialOrNativeStoreReads": 0,
+    "nativeOrBusinessEffects": 0,
+    "parentSends": 0,
+    "otherAgents": 0,
+    "otherAgentMessages": 0,
+    "broadTestRuns": 0,
+    "backgroundJobsStarted": 0,
+    "pendingEffects": 0,
+    "unresolvedEffects": [],
+    "writerRoot": "/home/palantirkc/operations/git-sync-cleanup-20261023T1300Z/education-main21-review"
+  }
+}
