@@ -217,7 +217,8 @@ export function inspectAssessmentSearchMetadata(html:string,target:{studentKey:s
     if(name(row.userName)!==target.studentName)throw Error('student_search_identity_conflict');
     const titles:Record<string,string>={};for(const key of ['testpageName','testPageName','pName','examName','title','testName','testingName','printTestingName','testTypeName','applyDate'])if(typeof row[key]==='string'&&(row[key] as string).length<2000)titles[key]=row[key] as string;
     const questionMetadata=Object.fromEntries(['dQuestions','oQuestions','sQuestions'].map(key=>[key,typeof row[key]==='number'?row[key]:{valueKind:Array.isArray(row[key])?'array':typeof row[key],keys:row[key]&&typeof row[key]==='object'?Object.keys(row[key] as object):[]} ]));
-    return {studentKey:target.studentKey,studentName:target.studentName,paperKey:sourceKey(row.pNo),attemptKey:sourceKey(row.testingNo),fieldNames:Object.keys(row).sort(),titles,questionMetadata,sourceScore:typeof row.score==='number'&&Number.isFinite(row.score)?row.score:null};
+    const sourceRowId=['string','number'].includes(typeof row._id)&&/^[A-Za-z0-9_-]{1,64}$/.test(String(row._id))?String(row._id):null;
+    return {studentKey:target.studentKey,studentName:target.studentName,paperKey:sourceKey(row.pNo),attemptKey:sourceKey(row.testingNo),sourceRowId,fieldNames:Object.keys(row).sort(),titles,questionMetadata,sourceScore:typeof row.score==='number'&&Number.isFinite(row.score)?row.score:null};
   });
   if(new Set(rows.map(r=>JSON.stringify([r.paperKey,r.attemptKey]))).size!==rows.length)throw Error('duplicate_student_search_row');
   return {rows,coverage:'one_observed_student_search_page_not_complete_history' as const,generatedMembership:'unqualified' as const};

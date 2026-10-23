@@ -8,6 +8,7 @@ import {projectLearningWork,type LearningWorkProjection} from './learningWorkPro
 import {createAcademySourceAudit} from '../lms/academySourceAudit';
 import {type StoredSourceRecord} from '../lms/academyReadProtocol';
 import {readInputRecord} from '../contracts/readInputRecord';
+import {validateAcademyRecord,type TeacherLessonCarryover} from './records';
 
 export interface TeacherSourceResult {
   readonly revisionRef:string;readonly entityRef:string;readonly record:StoredSourceRecord;
@@ -38,6 +39,7 @@ export interface TeacherWorkContext {
     readonly exactWork:LearningWorkProjection;
     readonly currentObligations?:LearningWorkProjection['currentObligations'];
     readonly sourceResults:readonly TeacherSourceResult[];
+    readonly lessonCarryovers:readonly {record:TeacherLessonCarryover;revisionRef:string;sourceObservedAt:string;recordedAt:string}[];
   };
   readonly logic:{
     readonly policyRef:'src/academy/classroomCyclePolicy.ts';
@@ -88,6 +90,23 @@ export function buildTeacherWorkContext(input:{
       sourceResults.push({revisionRef:version.revisionId,entityRef:version.entityId,record:structuredClone(raw),sourceObservedAt:version.sourceObservedAt,lastVerifiedAt:version.lastVerifiedAt,recordedAt:version.recordedAt,bookBinding:matched?'current_registration':'unmatched_retained',sectionBinding:'unknown',teacherCompletion:'not_inferred'});
     }
   }
+  // Preserve each attributed reminder, including unknown links, without merging it into duties or official fields.
+  const lessonCarryovers=input.versions.flatMap(version=>{
+    if(version.payload.kind!=='teacher_lesson_carryover')return [];
+    const record=version.payload;validateAcademyRecord(record);
+    const sameKey=(a:SourceKey,b:SourceKey)=>canonicalJson(a)===canonicalJson(b);
+    let ancestor=record.sourceMinorUnit===null?undefined:input.catalog.find(node=>sameKey(node.sourceKey,record.sourceMinorUnit!));
+    if(ancestor&&ancestor.kind!=='minor_unit')throw Error('work_context_carryover_unit_conflict');
+    // Only known catalog edges establish ancestry. An unmatched key or unknown parent is not a wildcard or a guessed join.
+    while(ancestor&&ancestor.kind!=='book_edition'){
+      const parent=ancestor.parent;ancestor=parent.state==='known'?input.catalog.find(node=>node.id===parent.value):undefined;
+    }
+    if(ancestor&&record.sourceBook!==null&&!sameKey(ancestor.sourceKey,record.sourceBook))throw Error('work_context_carryover_book_conflict');
+    // Observed book registrations are neither exhaustive nor exclusive course membership.
+    // A missing course/book registration stays unqualified; it cannot contradict this reminder.
+    // Only explicit course/occurrence keys (validated above) and known catalog ancestry can conflict.
+    return [{record,revisionRef:version.revisionId,sourceObservedAt:version.sourceObservedAt,recordedAt:version.recordedAt}];
+  });
   const scene={studentId:input.studentId,date:input.date,revision:input.revision};
   const sourceAcquisition=input.sourceAcquisition??academyConnectionStatus.acquisition;
   const exactWork=input.exactWork??projectLearningWork(input.studentId,input.studentKey,input.date,[],[],[]);
@@ -99,7 +118,7 @@ export function buildTeacherWorkContext(input:{
       unitWork:input.preparation.books.flatMap(book=>book.units.map(unit=>({sourceBook:book.sourceBook,sourceCourse:book.sourceCourse,sourceMinorUnit:unit.sourceMinorUnit,duty:unit.duty,teacherActivities:unit.teacherActivities,evidenceGrain:'minor_unit_not_section_paper_or_item' as const}))),
       sectionAssignments:exactWork.currentObligations.length?{state:'known',value:exactWork.currentObligations.map(row=>row.assignmentRevisionId),evidenceRefs:exactWork.currentObligations.map(row=>row.assignmentRevisionId)}:{state:'unknown',reason:'exact_assigned_section_and_item_scope_not_qualified'},
       paperIssuance:exactWork.assignments.some(row=>row.record.payload.paper.state==='known')?{state:'known',value:exactWork.assignments.filter(row=>row.record.payload.paper.state==='known').map(row=>row.record.revisionId),evidenceRefs:exactWork.assignments.filter(row=>row.record.payload.paper.state==='known').map(row=>row.record.revisionId)}:{state:'unknown',reason:'paper_content_issuance_reissuance_and_attempt_bindings_not_qualified'},
-      exactWork,currentObligations:exactWork.currentObligations,sourceResults,
+      exactWork,currentObligations:exactWork.currentObligations,sourceResults,lessonCarryovers,
     },
     logic:{policyRef:'src/academy/classroomCyclePolicy.ts',policyRevision:classroomCyclePolicy.operationalContextRevision,sectionWork:classroomCyclePolicy.sectionWork,clinicWorkflow:classroomCyclePolicy.clinicWorkflow},
     action:{target:scene,sourceAcquisition,operations:[
