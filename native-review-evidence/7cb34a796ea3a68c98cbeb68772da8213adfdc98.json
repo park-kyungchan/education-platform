@@ -1,0 +1,64 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "evidence",
+  "id": "education-platform:evidence:git-sync-review-7cb34a796ea3a68c98cbeb68772da8213adfdc98",
+  "projectId": "education-platform",
+  "domainId": "education",
+  "createdAt": "2026-10-23T15:05:43.453Z",
+  "payload": {
+    "claim": "A genuine independent native source synchronization reviewer qualified this exact source head/tree with zero current unresolved source findings.",
+    "method": "native-codex-independent-source-review",
+    "sourceUrl": "https://github.com/park-kyungchan/education-platform/blob/9636d23bb7dd506153ae34471eb4471a8f441a6e/native-review-raw/7cb34a796ea3a68c98cbeb68772da8213adfdc98.json",
+    "fetchedAt": "2026-10-23T15:05:43.453Z",
+    "upstreamRevision": "7cb34a796ea3a68c98cbeb68772da8213adfdc98",
+    "result": {
+      "outcome": "success",
+      "processExitCode": 0,
+      "contentMatched": true
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "outcome": "success"
+      }
+    ],
+    "limitations": [
+      "Git custody authenticates the publisher, not native authorship or runtime permission.",
+      "Same-tree review reuse, when present, retains the producer's explicit prior full-review binding; it is not a new teacher/native-use assessment.",
+      "Native activation, actual business use and Acceptance remain separately held."
+    ],
+    "details": {
+      "semanticOwner": "education-platform",
+      "review": {
+        "binding": {
+          "repository": "park-kyungchan/education-platform",
+          "projectId": "education-platform",
+          "domainId": "education",
+          "semanticOwner": "education-platform",
+          "scope": "month-end-source-redesign"
+        },
+        "headSha": "7cb34a796ea3a68c98cbeb68772da8213adfdc98",
+        "reviewedTreeSha": "bea7feb1ca68c5dd99e8336483472a3ed94aafd8",
+        "reviewedSourceManifestSha256": "817ad9002d5c2b2ebe998303451c1bd22c90606390d636aaff96dcfbfb6b42a4",
+        "reviewer": {
+          "runtime": "native-codex",
+          "taskId": "01a1693c-f688-74c1-971a-ab89c1a393e9",
+          "threadId": "01a1693c-f688-74c1-971a-ab89c1a393e9",
+          "nativeTaskId": null,
+          "nativeRunId": null,
+          "role": "Independent native source synchronization reviewer; metadata/tree and policy scope only",
+          "implementationWriter": false
+        },
+        "author": {
+          "runtime": "native-codex",
+          "taskId": "01a168b8-471f-74c0-84c2-3bcf9dcddfb6",
+          "threadId": "01a168b8-471f-74c0-84c2-3bcf9dcddfb6",
+          "nativeTaskId": null,
+          "nativeRunId": null
+        },
+        "conclusion": "pass",
+        "unresolvedFindings": 0
+      }
+    }
+  }
+}
