@@ -4,7 +4,7 @@ import {dirname,resolve} from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {z} from 'zod';
 import {readPinnedLocalBytes} from './item-label-store.ts';
-import {dailyRecordObservationSchema,type DailyRecordReadBackend,type DailyRecordObservation} from './dailyrecord.ts';
+import {dailyRecordObservationSchema,studentMetadataBatchSchema,type DailyRecordReadBackend,type DailyRecordObservation,type StudentMetadataBatch,type StudentMetadataObservation} from './dailyrecord.ts';
 import type {DailyRecordScope} from './dailyrecord-context.ts';
 
 const home='/opt/data/profiles/dc-gang-a-dev';
@@ -24,23 +24,123 @@ interface SourcePort {
   execute(input:unknown):Promise<{dayRecords:Row[]}>;
   journalState(target:Target):Promise<{target:Target;fields:Record<string,string>;previousRecordKey:string;previousDate:string;wireDigest:string}>;
   close():void;
+  searchStudentPaperMetadata?(input:{teacherLabel:string;studentName:string;studentKey:string;period:{from:string;through:string}}):Promise<unknown>;
+  searchDailyTestMetadata?(input:{teacherLabel:string;studentName:string;studentKey:string}):Promise<unknown>;
+  inspectDailyTestInventory?(input:{teacherLabel:string;studentName:string;studentKey:string}):Promise<unknown>;
+  readDailyTestHistory?(input:{teacherLabel:string;studentName:string;studentKey:string;periods:string[]}):Promise<unknown>;
+  lookupPrintedPaperMetadata?(input:{teacherLabel:string;studentName:string;studentKey:string;paperCode:string;period:{from:string;through:string}}):Promise<unknown>;
 }
 type Admission={teacherId:string;teacherLabel:string;date:string;students:{studentId:string;displayName:string}[];sourceBundleSha256:string};
 const fields=['progress','homework','lessonMemo','attendance','dailyTestAssessment','previousHomeworkAssessment'] as const;
 const targetOf=(row:Target):Target=>Object.fromEntries(['studentName','date','groupId','teacherKey','studentKey','courseKey','recordKey','membershipKey'].map(k=>[k,row[k as keyof Target]])) as Target;
 const observationTarget=(t:Target):DailyRecordObservation['target']=>({sourceNamespace:'academy.lms.dayrecord',teacherId:t.teacherKey,studentId:t.studentKey,lessonDate:t.date,courseId:t.courseKey,membershipId:t.membershipKey,recordId:t.recordKey});
 
+const sourceInstant=z.iso.datetime({offset:true}),sourcePeriod=z.object({from:z.iso.date(),to:z.iso.date()});
+const sourceTitle=z.string().max(2000).optional();
+// These schemas deliberately strip every unlisted key. Page diagnostics, field inventories,
+// scripts/handlers, controls, navigation and whole TR cells never cross the MCP boundary.
+const metadataRow=z.object({studentKey:key,studentName:z.string().min(1).max(200),paperKey:key,attemptKey:key,
+  sourceRowId:z.string().regex(/^[A-Za-z0-9_-]{1,64}$/).nullable(),sourceScore:z.number().finite().nullable(),
+  titles:z.object({testpageName:sourceTitle,testPageName:sourceTitle,pName:sourceTitle,examName:sourceTitle,title:sourceTitle,
+    testName:sourceTitle,testingName:sourceTitle,printTestingName:sourceTitle,testTypeName:sourceTitle,applyDate:sourceTitle}),
+});
+const metadataRows=z.array(metadataRow).max(2000);
+const metadataPage=z.object({rows:metadataRows,operation:z.enum(['UserBySearchTestResult','DtResultSearch']),page:z.literal(1),
+  sourcePeriod:sourcePeriod.nullable(),observedAt:sourceInstant,coverage:z.literal('one_observed_student_search_page_not_complete_history'),
+  generatedMembership:z.literal('unqualified'),fixedSourceFilter:z.object({sort_date:z.enum(['1','11','12','13','14','15','16'])}).optional(),
+  expectedPaperDefinitions:z.literal('not_observed').optional(),
+});
+function projectStudentMetadata(query:StudentMetadataBatch['queries'][number],value:unknown,student:Admission['students'][number]):unknown{
+  const checkRows=(rows:z.infer<typeof metadataRows>)=>{
+    if(rows.some(row=>row.studentKey!==student.studentId||row.studentName!==student.displayName)
+      ||new Set(rows.map(row=>JSON.stringify([row.paperKey,row.attemptKey]))).size!==rows.length)throw Error('native_metadata_row_identity_conflict');
+  };
+  const checkPeriod=(period:z.infer<typeof sourcePeriod>|null,requested:{from:string;through:string})=>{
+    if(period?.from!==requested.from||period.to!==requested.through)throw Error('native_metadata_period_conflict');
+  };
+  const checkDaily=(page:z.infer<typeof metadataPage>,selector:string)=>{
+    checkRows(page.rows);
+    if(page.operation!=='DtResultSearch'||page.sourcePeriod!==null||page.fixedSourceFilter?.sort_date!==selector)throw Error('native_metadata_selector_conflict');
+  };
+  if(query.kind==='daily_history'){
+    const history=z.object({status:z.literal('observed'),studentKey:key,studentName:z.string(),
+      currentFilterQualification:z.object({observedAt:sourceInstant,selector:z.literal('1'),rows:metadataRows}),
+      observations:z.array(metadataPage.extend({selector:z.enum(['11','12','13','14','15','16']),expectedPaperDefinitions:z.literal('not_observed')})).max(6),
+      calendarBounds:z.literal('source_relative_labels_only_not_exact_calendar_bounds'),expectedPaperDefinitions:z.literal('not_observed'),
+      coverage:z.literal('all_parsed_embedded_rows_on_each_observed_response_not_complete_history'),
+    }).parse(value);
+    if(history.studentKey!==student.studentId||history.studentName!==student.displayName||history.observations.length!==query.periods.length)throw Error('native_metadata_history_scope_conflict');
+    checkRows(history.currentFilterQualification.rows);
+    history.observations.forEach((page,i)=>{if(page.selector!==query.periods[i])throw Error('native_metadata_selector_conflict');checkDaily(page,page.selector);});
+    return history;
+  }
+  if(query.kind==='printed_paper_metadata'){
+    const lookup=z.object({paperCode:z.string(),paperKey:key,status:z.enum(['observed','not_found_in_scope']),rows:metadataRows,
+      sourcePeriod:sourcePeriod.nullable(),page:z.literal(1),observedAt:sourceInstant,coverage:z.literal('observed_source_pages_not_complete_history'),
+      matchedSourceFamily:z.enum(['student_assessment','daily_zero']).nullable(),generatedMembership:z.literal('unqualified'),
+      searchedSources:z.array(z.object({family:z.enum(['student_assessment','daily_zero']),operation:z.enum(['UserBySearchTestResult','DtResultSearch']),
+        page:z.literal(1),sourcePeriod:sourcePeriod.nullable(),requestedPeriodApplied:z.boolean(),coverage:z.literal('one_observed_student_search_page_not_complete_history'),observedAt:sourceInstant})).min(1).max(2),
+    }).parse(value);
+    checkRows(lookup.rows);
+    if(lookup.paperCode!==query.paperCode||lookup.rows.some(row=>row.paperKey!==lookup.paperKey)
+      ||(lookup.status==='observed')!==(lookup.rows.length>0)||(lookup.matchedSourceFamily!==null)!==(lookup.rows.length>0))throw Error('native_metadata_paper_conflict');
+    lookup.searchedSources.forEach((source,i)=>{
+      if(i===0){if(source.family!=='student_assessment'||source.operation!=='UserBySearchTestResult'||!source.requestedPeriodApplied)throw Error('native_metadata_lookup_scope_conflict');checkPeriod(source.sourcePeriod,query.period);}
+      else if(source.family!=='daily_zero'||source.operation!=='DtResultSearch'||source.requestedPeriodApplied||source.sourcePeriod!==null)throw Error('native_metadata_lookup_scope_conflict');
+    });
+    if(lookup.matchedSourceFamily==='daily_zero'){if(lookup.sourcePeriod!==null||lookup.searchedSources.length!==2)throw Error('native_metadata_lookup_scope_conflict');}
+    else checkPeriod(lookup.sourcePeriod,query.period);
+    return lookup;
+  }
+  const page=metadataPage.parse(value);
+  if(query.kind==='student_papers'){
+    checkRows(page.rows);checkPeriod(page.sourcePeriod,query.period);
+    if(page.operation!=='UserBySearchTestResult'||page.fixedSourceFilter!==undefined||page.expectedPaperDefinitions!==undefined)throw Error('native_metadata_operation_conflict');
+  }else{
+    checkDaily(page,'1');
+    if(query.kind==='daily_inventory'&&page.expectedPaperDefinitions!=='not_observed')throw Error('native_metadata_inventory_conflict');
+  }
+  return page;
+}
+
 /** Consumer transport glue. The existing Education client owns authentication, parsing,
  * source/wire qualification and independent occurrence binding. This port never writes. */
 export class NativeDailyRecordBackend implements DailyRecordReadBackend {
   #ready:Promise<unknown>|undefined;
   constructor(readonly client:SourcePort,readonly admission:Admission,readonly credential:()=>{username:string;password:string}){}
+  #authenticate(){
+    // One retained promise for every read family, including synchronous credential/auth failures.
+    return this.#ready??=Promise.resolve().then(()=>this.client.authenticate(this.credential()));
+  }
+  async readStudentMetadata(value:Readonly<StudentMetadataBatch>):Promise<StudentMetadataObservation>{
+    const input=studentMetadataBatchSchema.parse(value),scope=input.scope;
+    const student=this.admission.students.find(s=>s.studentId===scope.studentId);
+    if(scope.teacherId!==this.admission.teacherId||scope.lessonDate!==this.admission.date||!student)throw Error('native_metadata_scope_refused');
+    const methods={student_papers:'searchStudentPaperMetadata',daily_metadata:'searchDailyTestMetadata',daily_inventory:'inspectDailyTestInventory',daily_history:'readDailyTestHistory',printed_paper_metadata:'lookupPrintedPaperMetadata'} as const;
+    // Refuse missing capabilities before login or any source request, never fall back to another family.
+    for(const query of input.queries)if(typeof this.client[methods[query.kind]]!=='function')throw Error('native_metadata_method_unavailable');
+    await this.#authenticate();
+    const target={teacherLabel:this.admission.teacherLabel,studentName:student.displayName,studentKey:student.studentId};
+    const results:StudentMetadataObservation['results']=[];
+    for(const query of input.queries){
+      let observation:unknown;
+      switch(query.kind){
+        case 'student_papers':observation=await this.client.searchStudentPaperMetadata!({...target,period:query.period});break;
+        case 'daily_metadata':observation=await this.client.searchDailyTestMetadata!(target);break;
+        case 'daily_inventory':observation=await this.client.inspectDailyTestInventory!(target);break;
+        case 'daily_history':observation=await this.client.readDailyTestHistory!({...target,periods:query.periods});break;
+        case 'printed_paper_metadata':observation=await this.client.lookupPrintedPaperMetadata!({...target,paperCode:query.paperCode,period:query.period});break;
+      }
+      results.push({query,observation:projectStudentMetadata(query,observation,student)});
+    }
+    return {scope,results};
+  }
   async readDailyRecord(scope:Readonly<DailyRecordScope>){
     const student=this.admission.students.find(s=>s.studentId===scope.studentId);
     if(scope.sourceNamespace!=='academy.lms.dayrecord'||scope.teacherId!==this.admission.teacherId
       ||scope.lessonDate!==this.admission.date||!student)throw Error('native_dailyrecord_scope_refused');
     // Keep a failed authentication promise: subsequent calls must not retry login.
-    this.#ready??=this.client.authenticate(this.credential());await this.#ready;
+    await this.#authenticate();
     const selector=await this.client.discoverDayRecordGroups({teacherLabel:this.admission.teacherLabel,date:scope.lessonDate});
     const request={family:'day_record',teacherLabel:this.admission.teacherLabel,date:scope.lessonDate,
       groupIds:selector.groups.map(g=>g.groupId),studentNames:[student.displayName]};

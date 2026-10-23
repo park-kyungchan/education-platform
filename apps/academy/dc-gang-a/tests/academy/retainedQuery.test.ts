@@ -40,11 +40,12 @@ describe('retained current-state production query path',()=>{
     expect(result.rows).toHaveLength(1);expect(result.rows[0].occurrence.groupId).toBe('2');expect(result.rowCount).toBe(1);expect(pages[0]!.coverage.sourceRowCount).toBe(2);expect(result.knowledge.completeCurrentRoster).toBe('not_established');
     expect((await collect(f,{kind:'class_preparation',date:f.date,groupId:'missing'})).result.knowledge.missingRows).toBe('not_evidence_of_absence_or_nonperformance');
   });
+  // Operational check budget: observed 13.234s; 5x former 5s, not a product/business deadline.
   test('page JSON bytes include fixed metadata, Unicode, escapes and actual continuation without truncation',async()=>{
     const f=retainedFixture(),selector={kind:'student',studentId:f.student.id,date:f.date} as const;let cursor:string|null=null,offset=0,pages=0;const all:any[]=[];
     do{const page=await f.app.retainedQuery(f.actor,{selector,cursor,limit:250,maxBytes:4096});expect(page.status).toBe('page');if(page.status!=='page')throw Error(page.code);expect(bytes(page)).toBe(page.page.serializedBytes);expect(bytes(page)).toBeLessThanOrEqual(4096);expect(page.page.offset).toBe(offset);all.push(...page.records);offset+=page.records.length;cursor=page.page.nextCursor;pages++;if(pages>1000)throw Error('no progress');}while(cursor);
     expect(all.map(r=>r.ordinal)).toEqual(Array.from({length:all.length},(_,i)=>i));expect(new Set(all.map(r=>JSON.stringify(r.path))).size).toBe(all.length);expect(pages).toBeGreaterThan(1);
-  });
+  },25000);
   test.each(['actor','owner','selector','date','limit','budget','forged'] as const)('cursor refuses changed %s before facade read',async change=>{
     const f=retainedFixture(),input:any={selector:{kind:'student',studentId:f.student.id,date:f.date},limit:1,maxBytes:4096};const first=await f.app.retainedQuery(f.actor,input);expect(first.status).toBe('page');if(first.status!=='page')return;
     const actor={...f.actor};input.cursor=first.page.nextCursor;if(change==='actor')actor.actorId='other';if(change==='owner')actor.ownerId='other';if(change==='selector')input.selector.studentId='other';if(change==='date')input.selector.date='2090-01-04';if(change==='limit')input.limit=2;if(change==='budget')input.maxBytes=8192;if(change==='forged')input.cursor=input.cursor.slice(0,-5)+'aaaaa';

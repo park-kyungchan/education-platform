@@ -1,12 +1,17 @@
 import type {McpServer} from '@modelcontextprotocol/server';
 import {readOnlyAnnotations} from './contracts.ts';
-import {DailyRecordService,dailyRecordIntakeSchema,dailyRecordReviewSchema,cismSectionSchema,type DailyRecordParentSafeguard} from './dailyrecord.ts';
+import {DailyRecordService,dailyRecordIntakeSchema,dailyRecordReviewSchema,cismSectionSchema,studentMetadataBatchSchema,type DailyRecordParentSafeguard} from './dailyrecord.ts';
 import {readPinnedLocalBytes} from './item-label-store.ts';
 
 export function registerDailyRecordTools(server:McpServer,service=new DailyRecordService()){
   const annotations={...readOnlyAnnotations,openWorldHint:service.backend!==null,idempotentHint:service.backend===null};
   const result=(value:unknown)=>{const structuredContent=JSON.parse(JSON.stringify(value)) as Record<string,unknown>;
     return {content:[{type:'text' as const,text:JSON.stringify(structuredContent)}],structuredContent};};
+  server.registerTool('academy_student_metadata',{
+    title:'Read a bounded selected-student metadata batch',
+    description:'Exact source namespace academy.lms.metadata, admitted teacher/student/date and explicit queries required. Student names and teacher labels come only from the owner admission. Uses the same client/authentication lifecycle and serialized failure fence as DailyRecord reads. Paper queries require an explicit period; DT relative selectors have no inferred calendar bounds. Exports only owner-matched metadata rows, known period/selectors, observedAt and coverage/unknowns, including history; never page functions, forms, controls, navigation, script sources or TR cells. No content/definition reads, paging traversal, DailyRecord fields, writes, printing, sending or automatic retry. Older-paper positive wire qualification remains unavailable without the exact approved source function bytes.',
+    inputSchema:studentMetadataBatchSchema,annotations,
+  },async input=>result(await service.metadata(input)));
   server.registerTool('academy_dailyrecord_intake',{
     title:'Prepare scoped DailyRecord intake and missing-only interview',
     description:'Requires current user purpose, request reference, exact teacher/student/date/namespace, selected fields, today\'s memo answer and user facts/references. Preserves qualified existing values. No inference of attendance or assessment codes. Live source is unavailable unless the source owner injects a qualified read backend. Caller context is not authority. No Academy writes or parent sending.',

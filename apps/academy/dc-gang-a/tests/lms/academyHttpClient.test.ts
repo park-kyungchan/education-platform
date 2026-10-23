@@ -5,6 +5,36 @@ const login='<form id="loginForm" name="loginForm" method="post"><input name="p_
 // Construct explicitly invented cookie pairs at runtime; no captured session literal is stored.
 const anonymousCookie=['JSESSIONID','synthetic-anonymous'].join('=');
 const authenticatedCookie=['JSESSIONID','synthetic-authenticated'].join('=');
+test('inventory discovers exact-student attempts and period contracts without assigning completion or expected missing papers',async()=>{
+ const {AcademyHttpClient}=await import('../../src/lms/academyHttpClient');let calls=0;
+ const rows=[{pNo:7101,score:0,testingNo:8101,priNo:9101,userName:'Invented Student',testName:'Invented basic test',applyDate:'2099-01-01'},{pNo:7102,score:100,testingNo:8102,priNo:9102,userName:'Other Student',testName:'Excluded neighboring test'}];
+ const html='<input name="sort_date" value="1"><input name="unrelated_secret" value="omitted"><script>const EXTERN_DIALOG={testResultList:JSON.parse('+JSON.stringify(JSON.stringify(rows)).replace(/^"|"$/g,"'")+')};function onSearchResult(){return "inert";}</script>';
+ const client=new AcademyHttpClient({teacherLabel:'Invented Teacher',teacherKey:'99001',collegeKey:'88001'},async()=>new Response(++calls===1?login:calls<=3?principal:html));
+ try{
+  await client.authenticate({username:'inventedUser',password:'inventedPassword'});
+  const result=await client.inspectDailyTestInventory({teacherLabel:'Invented Teacher',studentName:'Invented Student',studentKey:'9101'});
+  expect(result.rows).toHaveLength(1);expect(result.rows[0]!.sourceScore).toBe(0);
+  expect(result.expectedPaperDefinitions).toBe('not_observed');expect(result.sourcePeriod).toBeNull();
+  expect(result.filterContracts.functions.onSearchResult).toContain('inert');
+  expect(JSON.stringify(result)).not.toContain('Other Student');expect(JSON.stringify(result)).not.toContain('unrelated_secret');
+  expect(calls).toBe(4);
+ }finally{client.close();}
+});
+test('history accepts only current UI month selectors and stops before an unqualified selector request',async()=>{
+ const {AcademyHttpClient}=await import('../../src/lms/academyHttpClient');let calls=0;
+ const html='<select name="sort_date"><option value="1">Recent week</option><option value="11">Recent month</option><option value="12">Previous month</option></select><script>const EXTERN_DIALOG={testResultList:JSON.parse(\'[]\')};</script>';
+ const seen:string[]=[];
+ const client=new AcademyHttpClient({teacherLabel:'Invented Teacher',teacherKey:'99001',collegeKey:'88001'},async(_url,init)=>{calls++;if(calls>3)seen.push(new URLSearchParams(init.body as string).get('sort_date')!);return new Response(calls===1?login:calls<=3?principal:html);});
+ const target={teacherLabel:'Invented Teacher',studentName:'Invented Student',studentKey:'9101'};
+ await expect(client.readDailyTestHistory({...target,periods:['99']})).rejects.toThrow('daily_history_period_rejected');expect(calls).toBe(0);
+ try{
+  await client.authenticate({username:'inventedUser',password:'inventedPassword'});
+  const result=await client.readDailyTestHistory({...target,periods:['11','12']});expect(seen).toEqual(['1','11','12']);
+  expect(result.observations.map(o=>o.label)).toEqual(['Recent month','Previous month']);
+  expect(result.expectedPaperDefinitions).toBe('not_observed');
+  await expect(client.readDailyTestHistory({...target,periods:['13']})).rejects.toThrow('daily_history_selector_drift');expect(seen.at(-1)).toBe('1');
+ }finally{client.close();}
+});
 test('a source login challenge closes the ephemeral client instead of becoming an ordinary area miss',async()=>{
  const {AcademyHttpClient}=await import('../../src/lms/academyHttpClient');let calls=0;
  const client=new AcademyHttpClient({teacherLabel:'Invented Teacher',teacherKey:'99001',collegeKey:'88001'},async()=>new Response(++calls===1?login:calls<=3?principal:'<form name="loginForm"><input type="password"></form>'));
@@ -128,6 +158,50 @@ test('one-page student paper search requires authentication before any request',
  const {AcademyHttpClient}=await import('../../src/lms/academyHttpClient');let calls=0;
  const client=new AcademyHttpClient({teacherLabel:'Invented Teacher',teacherKey:'99001',collegeKey:'88001'},async()=>{calls++;return new Response('');});
  expect(typeof client.searchStudentPaperMetadata).toBe('function');await expect(client.searchStudentPaperMetadata({teacherLabel:'Invented Teacher',studentName:'Invented Learner',studentKey:'77001'})).rejects.toThrow('authentication_required');expect(calls).toBe(0);
+});
+test('an explicit older paper-search period is qualified without replacing its literal dates',async()=>{
+ const {qualifyStudentPaperSearchPeriod}=await import('../../src/lms/studentPaperSearchPeriod');
+ expect(qualifyStudentPaperSearchPeriod({from:'2098-09-01',through:'2099-01-05'})).toEqual({from:'2098-09-01',through:'2099-01-05'});
+ expect(()=>qualifyStudentPaperSearchPeriod({from:'2099-02-29',through:'2099-03-01'})).toThrow();
+ expect(()=>qualifyStudentPaperSearchPeriod({from:'2099-01-06',through:'2099-01-05'})).toThrow('student_paper_period_reversed');
+ expect(()=>qualifyStudentPaperSearchPeriod({from:'2099-01-01',through:'2099-01-05',studentKey:'77002'})).toThrow();
+});
+test('invalid explicit paper periods and foreign teacher scope never issue a source request',async()=>{
+ const {AcademyHttpClient}=await import('../../src/lms/academyHttpClient');let calls=0;
+ const client=new AcademyHttpClient({teacherLabel:'Invented Teacher',teacherKey:'99001',collegeKey:'88001'},async()=>{calls++;return new Response('');});
+ const target={teacherLabel:'Invented Teacher',studentName:'Invented Learner',studentKey:'77001'};
+ await expect(client.searchStudentPaperMetadata({...target,period:{from:'2099-01-06',through:'2099-01-05'}})).rejects.toThrow('student_paper_period_reversed');
+ await expect(client.searchStudentPaperMetadata({...target,teacherLabel:'Foreign Teacher',period:{from:'2099-01-01',through:'2099-01-05'}})).rejects.toThrow('student_paper_principal_conflict');
+ await expect(client.searchStudentPaperMetadata({...target,period:{from:'2098-09-01',through:'2099-01-05'}})).rejects.toThrow('authentication_required');
+ expect(calls).toBe(0);
+});
+test('stubbed student-search lookup plumbing joins the exact paper and retains one-page coverage',async()=>{
+ const {AcademyHttpClient}=await import('../../src/lms/academyHttpClient');
+ const {encodePaperCode}=await import('../../src/lms/printedPaperCode');let searches=0;
+ const client=new AcademyHttpClient({teacherLabel:'Invented Teacher',teacherKey:'99001',collegeKey:'88001'});
+ client.searchStudentPaperMetadata=async input=>{
+  searches++;expect(input.period).toEqual({from:'2098-09-01',through:'2099-01-05'});
+  return {rows:[{paperKey:'82001',attemptKey:'81001'},{paperKey:'82002',attemptKey:'81002'}],sourcePeriod:{from:input.period!.from,to:input.period!.through},page:1,observedAt:'2099-01-05T00:00:00.000Z',coverage:'one_observed_student_search_page_not_complete_history'} as any;
+ };
+ const input={teacherLabel:'Invented Teacher',studentName:'Invented Learner',studentKey:'77001',paperCode:encodePaperCode('82001'),period:{from:'2098-09-01',through:'2099-01-05'}};
+ let dailySearches=0;client.searchDailyTestMetadata=async()=>{dailySearches++;return {rows:[],operation:'DtResultSearch',page:1,observedAt:'2099-01-05T00:00:00.000Z',coverage:'one_observed_student_search_page_not_complete_history',sourcePeriod:null,fixedSourceFilter:{sort_date:'1'}} as any;};
+ const result=await client.lookupPrintedPaperMetadata(input);
+ expect(result.rows.map(row=>row.paperKey)).toEqual(['82001']);expect(result.coverage).toBe('observed_source_pages_not_complete_history');expect(result.generatedMembership).toBe('unqualified');expect(dailySearches).toBe(0);
+ await expect(client.lookupPrintedPaperMetadata({...input,paperCode:'#INVALID'})).rejects.toThrow('invalid_printed_paper_code');expect(searches).toBe(1);
+ const missing=await client.lookupPrintedPaperMetadata({...input,paperCode:encodePaperCode('82003')});expect(missing.status).toBe('not_found_in_scope');expect(missing.rows).toEqual([]);expect(dailySearches).toBe(1);expect(missing.searchedSources[1]?.requestedPeriodApplied).toBe(false);
+});
+test('DT metadata fallback with stubbed student search identifies a paper without claiming its semantic kind',async()=>{
+ const {AcademyHttpClient}=await import('../../src/lms/academyHttpClient');const {encodePaperCode}=await import('../../src/lms/printedPaperCode');let calls=0;
+ const rows=[{priNo:77001,userName:'Invented Learner',pNo:82003,testingNo:81003,score:75,testpageName:'Invented chapter comprehensive assessment'},{priNo:77002,userName:'Foreign Learner',pNo:82003,testingNo:81004,score:100,testpageName:'Withheld foreign title'}];
+ const html="<script>const results={testResultList:JSON.parse('"+JSON.stringify(rows)+"')};</script>";
+ const client=new AcademyHttpClient({teacherLabel:'Invented Teacher',teacherKey:'99001',collegeKey:'88001'},async(url,init)=>{
+  calls++;if(calls===1)return new Response(login);if(calls<=3)return new Response(principal);
+  expect(url).toContain('DailyZeroTestServlet?reqCmd=DtResultSearch');expect(Object.fromEntries(new URLSearchParams(init.body as string))).toEqual({sort_date:'1',stu_name:'Invented Learner'});return new Response(html);
+ });
+ await client.authenticate({username:'inventedUser',password:'inventedPassword'});
+ client.searchStudentPaperMetadata=async()=>({rows:[],operation:'UserBySearchTestResult',page:1,sourcePeriod:{from:'2098-09-01',to:'2099-01-05'},observedAt:'2099-01-05T00:00:00.000Z',coverage:'one_observed_student_search_page_not_complete_history'} as any);
+ const result=await client.lookupPrintedPaperMetadata({teacherLabel:'Invented Teacher',studentName:'Invented Learner',studentKey:'77001',paperCode:encodePaperCode('82003'),period:{from:'2098-09-01',through:'2099-01-05'}});
+ expect(result.status).toBe('observed');expect(result.matchedSourceFamily).toBe('daily_zero');expect(result.rows.length).toBe(1);expect(result.rows[0]!.titles.testpageName).toBe('Invented chapter comprehensive assessment');expect(JSON.stringify(result)).not.toContain('Withheld foreign title');expect(result).not.toHaveProperty('assessmentKind');client.close();
 });
 
 test('textbook index exposes existing subject-bound headers without generation or answer content',async()=>{
