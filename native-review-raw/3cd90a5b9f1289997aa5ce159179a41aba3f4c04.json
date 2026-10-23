@@ -1,0 +1,1000 @@
+{
+  "schema": "owner-scoped-native-review-output.v1",
+  "reviewStatus": "complete",
+  "recordedAtUtc": "2026-10-23T14:23:46.482Z",
+  "assignmentId": "academy-followup-implementation-20261023",
+  "binding": {
+    "repository": "park-kyungchan/education-platform",
+    "projectId": "education-platform",
+    "domainId": "education",
+    "semanticOwner": "education-platform",
+    "scope": "month-end-source-redesign"
+  },
+  "bindingNote": "The binding uses the unchanged generated gate's fixed policy label. The actual bounded review assignment and source coverage are stated separately below; the policy label grants no runtime or domain authority.",
+  "author": {
+    "runtime": "native-codex",
+    "taskId": "01a168b8-471f-74c0-84c2-3bcf9dcddfb6",
+    "threadId": "01a168b8-471f-74c0-84c2-3bcf9dcddfb6",
+    "nativeTaskId": null,
+    "nativeRunId": null
+  },
+  "reviewer": {
+    "runtime": "native-codex",
+    "taskId": "01a16907-d8cd-7a13-b9bc-bab20ce80d88",
+    "threadId": "01a16907-d8cd-7a13-b9bc-bab20ce80d88",
+    "nativeTaskId": null,
+    "nativeRunId": null,
+    "paneId": "wF:p9",
+    "role": "independent exact-H source reviewer only",
+    "implementationWriter": false,
+    "actualModelAsShownInUi": null,
+    "actualEffortAsShownInUi": null,
+    "requestedEffort": "xhigh"
+  },
+  "identitySemantics": "The unchanged gate's taskId compatibility slots carry observed native thread identities; they do not assert exposed native Task IDs. Native Task/Run remain null. Author identity comes from H source-author metadata; reviewer identity is this actual thread. No prior reviewer identity was reused.",
+  "nativeTaskId": null,
+  "nativeRunId": null,
+  "reviewBaseSha": "8409ba7cf38ede78cc62d41560327a56072c6f60",
+  "reviewHead": "3cd90a5b9f1289997aa5ce159179a41aba3f4c04",
+  "headSha": "3cd90a5b9f1289997aa5ce159179a41aba3f4c04",
+  "reviewedTreeSha": "bea7feb1ca68c5dd99e8336483472a3ed94aafd8",
+  "reviewedSourceManifestSha256": "817ad9002d5c2b2ebe998303451c1bd22c90606390d636aaff96dcfbfb6b42a4",
+  "reviewedSourceManifest": {
+    "schema": "agent-platform.reviewed-source-manifest.v1",
+    "reviewedTreeSha": "bea7feb1ca68c5dd99e8336483472a3ed94aafd8",
+    "entryCount": 3823,
+    "blobCount": 3298,
+    "sha256": "817ad9002d5c2b2ebe998303451c1bd22c90606390d636aaff96dcfbfb6b42a4"
+  },
+  "manifestDerivation": {
+    "command": "git --no-optional-locks ls-tree -r -t -z --full-tree 3cd90a5b9f1289997aa5ce159179a41aba3f4c04",
+    "method": "git ls-tree -r -t -z --full-tree exact H; unchanged exported deriveReviewedSourceManifest on observed entries",
+    "gitTreeWalkSha256": "fb51cf2aad19a49332754ffb84a24017a4f7c18b0affd735b1402907575e4b6c",
+    "unchangedGatePath": "ci/native-review-gate.js",
+    "unchangedGateSha256": "1d4a7509df49602d84e9d053a1a80d63f64b747091b7a1f8268b80908b1d17f8",
+    "algorithm": "Existing exported deriveReviewedSourceManifest; no predicate changes or copied manifest. API checks/sorts entries and hashes schema plus LF plus JSON.stringify(entries).",
+    "unchangedProjectionVerification": {
+      "status": "pass",
+      "schema": "education.owner-review-projection.v1",
+      "sourceCommit": "7eabcdb20e358955c771e5aa0dc500448fa84534",
+      "compiledInputs": 108,
+      "dependencyPackages": 6,
+      "ontologyFiles": 38,
+      "nativePermissionGranted": false
+    },
+    "independentCountsMatchedSuppliedCrossCheck": true,
+    "fullPublicationGateInvoked": false
+  },
+  "verdict": "pass",
+  "conclusion": "pass",
+  "unresolvedFindings": 0,
+  "findings": [],
+  "perFindingEvidence": [],
+  "sourceReviewDecision": "Explicit clean source verdict for the entire 8409ba7..H feature diff and its H-tree integration/contract context. Direct inspection and current independent controls established no concrete unresolved source findings. This is not a claim that all independent test invocations passed or that runtime/production/actual-effort qualifications are complete.",
+  "coverage": {
+    "entireFeatureDiffDirectlyInspected": true,
+    "changedFileCount": 21,
+    "fullHTreeInventoried": true,
+    "treeScope": "All H tree entries are bound by the self-derived canonical manifest. Contents of private student/custody packages were not read. Direct code inspection covers every changed hunk and relevant H callers, contracts, policy, projections, verification and provenance; manifest coverage is not a claim that all unchanged private blob bodies were opened.",
+    "priorReviewVerdictsAdopted": false,
+    "independentSubagentsUsed": false,
+    "reviewedFiles": [
+      {
+        "path": ".github/source-author.json",
+        "sha256": "d380771c27a370ac82c18c72cc411aa5df61780b5c689d88791311b01251eaa5",
+        "gitBlob": "49ac64039d61cbb249ab9cfe4e431c8ddeafa28d",
+        "workingBytesMatchH": true
+      },
+      {
+        "path": "apps/academy/dc-gang-a/package.json",
+        "sha256": "949ddc661398c260b648ee06fb66f5c1c5df890526f082ab82cb01d830478551",
+        "gitBlob": "c351e213ccea2c5eae0ca09ba0ea0ba9c1d74174",
+        "workingBytesMatchH": true
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/records.ts",
+        "sha256": "7ed81d2fa383da7165b504eb1414c9d0ccedeec81e47889f68933552e88c32d2",
+        "gitBlob": "4cb1a3d348cbdbd081b9898a827bca3edb78522e",
+        "workingBytesMatchH": true
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/academy/teacherWorkContext.ts",
+        "sha256": "ea3c506162fbe17aba5590a8588d74137b6d4533e643b8341b9a849f05f1f23f",
+        "gitBlob": "0fa4b6ce0c468d6aec71d090e5e18e387cce48c4",
+        "workingBytesMatchH": true
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/lms/academyHttpClient.ts",
+        "sha256": "83078b21ed831d5f95496eedad6cc1b86f27de6a9ebbc1610bb76df94afb8d90",
+        "gitBlob": "630642987049d948f81a11543cc4c1a51c4561ca",
+        "workingBytesMatchH": true
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/lms/assessmentReadProtocol.ts",
+        "sha256": "3b94b567ee0f1979f3d2a21636488ba1695660dc91675a91eb040ef02fa64208",
+        "gitBlob": "11fdc06b533a760ddbc30373aad6353137aab794",
+        "workingBytesMatchH": true
+      },
+      {
+        "path": "apps/academy/dc-gang-a/src/lms/studentPaperSearchPeriod.ts",
+        "sha256": "b7a09572247b269927682e02be3f1cf8106ba365cb11e7c1d4b7bb37f7dc5fb8",
+        "gitBlob": "82b3b5a94c11e01233cad40246ae33ad92252fdb",
+        "workingBytesMatchH": true
+      },
+      {
+        "path": "apps/academy/dc-gang-a/tests/academy/retainedQuery.test.ts",
+        "sha256": "e671d43cffaa4e2638d3ad0fe9217ef3c54b3c9c49cf73c92408073e42dfcd7b",
+        "gitBlob": "1e4cf794db7c10b00ae7833b4a43416abfdd07d2",
+        "workingBytesMatchH": true
+      },
+      {
+        "path": "apps/academy/dc-gang-a/tests/lms/academyFollowupComposition.test.ts",
+        "sha256": "2787c7799810a924fadcdff190fdb422eb3db2558381372248f750977919483e",
+        "gitBlob": "428fbc89d41994d1495b218f5cce1406a1419b13",
+        "workingBytesMatchH": true
+      },
+      {
+        "path": "apps/academy/dc-gang-a/tests/lms/academyHttpClient.test.ts",
+        "sha256": "6be45cfb5615662de0d542c4a1909a3de2738429a3278dd8065be9e43396bb37",
+        "gitBlob": "9ebbcb0e75aa6c6478c095801b266a737f216d87",
+        "workingBytesMatchH": true
+      },
+      {
+        "path": "apps/academy/dc-gang-a/tests/lms/followupSyntheticFixtures.ts",
+        "sha256": "7b5e0bb06c91521576fe73d92cd8c1c9a3b3697f82bc56a373fcf139791f492f",
+        "gitBlob": "9f9d7041a39ecfe61f8924af4e3f99014076ab5e",
+        "workingBytesMatchH": true
+      },
+      {
+        "path": "apps/academy/dc-gang-a/tests/lms/teacherLessonCarryover.test.ts",
+        "sha256": "af2f68c38d2befdd1565bca12bde074f3de10615c1c5665247870eaa0937ee24",
+        "gitBlob": "d19b973862bd20deaa814a7ff3f93b8dce32dfde",
+        "workingBytesMatchH": true
+      },
+      {
+        "path": "modules/academy-workbench/tools/academy-mcp/src/dailyrecord-tools.ts",
+        "sha256": "f8fc192a86eadaf60cd0df6b23a642924f3cf54287d84c1a74afc3632f99bd88",
+        "gitBlob": "f235b0478e31b29089038b371b078b724c7e8495",
+        "workingBytesMatchH": true
+      },
+      {
+        "path": "modules/academy-workbench/tools/academy-mcp/src/dailyrecord.ts",
+        "sha256": "b9d8998934e59d52e7257a1da516cfbbab50f369f86a8cabac70c3e0d89966e1",
+        "gitBlob": "02f62df475dcb5356e81ba70170c4c295653ae3e",
+        "workingBytesMatchH": true
+      },
+      {
+        "path": "modules/academy-workbench/tools/academy-mcp/src/native-dailyrecord-backend.ts",
+        "sha256": "5e9b2632af4acdae08eecce0b295e14ab60f8c63aab449e5dd1433d8e9b220d0",
+        "gitBlob": "67522f1f289f303af567ca8ca761a869271e7acc",
+        "workingBytesMatchH": true
+      },
+      {
+        "path": "modules/academy-workbench/tools/academy-mcp/src/verify-academy-mcp.ts",
+        "sha256": "f5bfec0ca33fdac26531d39e76decacffcdc673795d862c1f2d7b6d2f7f8b42b",
+        "gitBlob": "35a22f8ea19d8ce0605d890b96543b22eda2ad1d",
+        "workingBytesMatchH": true
+      },
+      {
+        "path": "modules/academy-workbench/tools/academy-mcp/tests/dailyrecord-mcp.test.ts",
+        "sha256": "853bd25aeac378091df81b47669518bc0f888c39f774c3b3c6449fb01d368560",
+        "gitBlob": "c2c777596db85b6669c6abc92d438ac80f893a07",
+        "workingBytesMatchH": true
+      },
+      {
+        "path": "modules/academy-workbench/tools/academy-mcp/tests/dailyrecord-memory.ts",
+        "sha256": "e44f161a12863d02040bb56ae18c6ff98658d8e9a7120ab9fc35bd3175e17c93",
+        "gitBlob": "66ebe4315cc22c641a092279c96b722a500797cd",
+        "workingBytesMatchH": true
+      },
+      {
+        "path": "modules/academy-workbench/tools/academy-mcp/tests/item-label-mcp.test.ts",
+        "sha256": "f2aef626580b5946bf6624e49ba0daa0114bb5e22733370a03e99890e7120655",
+        "gitBlob": "58a227c691284451f6bfb49680e5a07aa970259f",
+        "workingBytesMatchH": true
+      },
+      {
+        "path": "provenance/academy-source-integration.json",
+        "sha256": "4dc89045e7ec9f536018ac84104b6559bdac562a94f9e76d000bffb0560f7ad5",
+        "gitBlob": "82ded01c59b23ff7da5250b6cab3b01bdb328123",
+        "workingBytesMatchH": true
+      },
+      {
+        "path": "provenance/adaptations.json",
+        "sha256": "61ad0db753dc38934875d6daa14e9f2dbae76d811af54ebe026814c34a24642d",
+        "gitBlob": "11d82fd3626aff048a4455eebfc13b62d2bce5a4",
+        "workingBytesMatchH": true
+      }
+    ],
+    "cleanEvidence": [
+      {
+        "id": "metadata-scope-and-history",
+        "verdict": "clean",
+        "locations": [
+          {
+            "path": "apps/academy/dc-gang-a/src/lms/studentPaperSearchPeriod.ts",
+            "lineStart": 1,
+            "lineEnd": 12
+          },
+          {
+            "path": "apps/academy/dc-gang-a/src/lms/academyHttpClient.ts",
+            "lineStart": 523,
+            "lineEnd": 640
+          },
+          {
+            "path": "apps/academy/dc-gang-a/src/lms/assessmentReadProtocol.ts",
+            "lineStart": 209,
+            "lineEnd": 226
+          }
+        ],
+        "basis": "Direct inspection: exact-key and real-calendar period validation preserves literal dates and rejects reversal before source access; fixed student-paper wire pin remains. DT reads filter exact student key/name under authenticated teacher scope. History accepts only unique currently observed selectors 11..16, visits explicitly requested responses only, and retains unknown exact calendar bounds and incomplete-history coverage. Printed-code lookup joins metadata only, and its separate daily_zero fallback does not claim the requested paper period was applied or infer assessment kind/completion."
+      },
+      {
+        "id": "maintained-mcp-caller",
+        "verdict": "clean",
+        "locations": [
+          {
+            "path": "modules/academy-workbench/tools/academy-mcp/src/dailyrecord-server.ts",
+            "lineStart": 1,
+            "lineEnd": 14
+          },
+          {
+            "path": "modules/academy-workbench/tools/academy-mcp/src/dailyrecord-tools.ts",
+            "lineStart": 6,
+            "lineEnd": 16
+          },
+          {
+            "path": "modules/academy-workbench/tools/academy-mcp/src/dailyrecord.ts",
+            "lineStart": 38,
+            "lineEnd": 57
+          },
+          {
+            "path": "modules/academy-workbench/tools/academy-mcp/src/native-dailyrecord-backend.ts",
+            "lineStart": 108,
+            "lineEnd": 143
+          }
+        ],
+        "basis": "The existing server constructs one backend/service and registers the new read-only route. Strict query schema uses academy.lms.metadata separately from all six DailyRecord fields. Owner admission supplies teacher label and student name; mismatched teacher/student/date or missing method is refused before authentication. One retained authentication promise covers both read families, including synchronous credential/auth failures; no new global cache, native configuration activation or credential input route."
+      },
+      {
+        "id": "metadata-export-boundary",
+        "verdict": "clean",
+        "locations": [
+          {
+            "path": "modules/academy-workbench/tools/academy-mcp/src/native-dailyrecord-backend.ts",
+            "lineStart": 35,
+            "lineEnd": 103
+          },
+          {
+            "path": "modules/academy-workbench/tools/academy-mcp/src/dailyrecord.ts",
+            "lineStart": 129,
+            "lineEnd": 145
+          },
+          {
+            "path": "modules/academy-workbench/tools/academy-mcp/src/tool-result.ts",
+            "lineStart": 1,
+            "lineEnd": 10
+          },
+          {
+            "path": "apps/academy/dc-gang-a/tests/lms/academyFollowupComposition.test.ts",
+            "lineStart": 272,
+            "lineEnd": 319
+          }
+        ],
+        "basis": "Whitelist projection strips functions, forms, controls, navigation, script sources, TR cells, field inventories and other unlisted source material. It independently checks exact student/name, paper/attempt uniqueness, query ordering, period/selector and operation consistency. Finite source scores remain raw, including -1 and 150. Actual dual MCP serialized output is bounded to 512 KiB inside the shared refusal boundary; oversize output publishes no partial results."
+      },
+      {
+        "id": "queued-refusal-fence",
+        "verdict": "clean",
+        "locations": [
+          {
+            "path": "modules/academy-workbench/tools/academy-mcp/src/dailyrecord.ts",
+            "lineStart": 116,
+            "lineEnd": 145
+          },
+          {
+            "path": "modules/academy-workbench/tools/academy-mcp/src/dailyrecord.ts",
+            "lineStart": 238,
+            "lineEnd": 254
+          },
+          {
+            "path": "apps/academy/dc-gang-a/tests/lms/academyFollowupComposition.test.ts",
+            "lineStart": 196,
+            "lineEnd": 245
+          },
+          {
+            "path": "apps/academy/dc-gang-a/tests/lms/academyFollowupComposition.test.ts",
+            "lineStart": 321,
+            "lineEnd": 349
+          }
+        ],
+        "basis": "Backend result qualification and unavailable-result latching now occur within the same serialized callback. A queued metadata call cannot enter after resolved-but-invalid/unavailable DailyRecord or CISM results. Authentication, parsing and projection errors retain the latch without error-body leakage, automatic login, retry or replay. Independently executed concurrency/failure tests passed."
+      },
+      {
+        "id": "carryover-record-and-projection",
+        "verdict": "clean",
+        "locations": [
+          {
+            "path": "apps/academy/dc-gang-a/src/academy/records.ts",
+            "lineStart": 19,
+            "lineEnd": 71
+          },
+          {
+            "path": "apps/academy/dc-gang-a/src/academy/teacherWorkContext.ts",
+            "lineStart": 68,
+            "lineEnd": 108
+          },
+          {
+            "path": "apps/academy/dc-gang-a/tests/lms/teacherLessonCarryover.test.ts",
+            "lineStart": 47,
+            "lineEnd": 92
+          }
+        ],
+        "basis": "Closed attributable reminder variant accepts all canonical activities, including app_problem_grading, without changing their completion authority. Mandatory student identity, explicit nullable links/dates, target occurrence, namespaces, bounded text, directive and evidence are validated. Target-date/course occurrence conflicts and known catalog ancestry conflicts are refused. Partial registration, unmatched catalog keys and null links remain unqualified rather than creating guessed joins or contradictory enrollment claims. Teacher projection preserves originals and owns an immutable copy."
+      },
+      {
+        "id": "six-field-noninterference",
+        "verdict": "clean",
+        "locations": [
+          {
+            "path": "apps/academy/dc-gang-a/tests/lms/teacherLessonCarryover.test.ts",
+            "lineStart": 94,
+            "lineEnd": 224
+          },
+          {
+            "path": "apps/academy/dc-gang-a/tests/lms/academyFollowupComposition.test.ts",
+            "lineStart": 351,
+            "lineEnd": 371
+          },
+          {
+            "path": "apps/academy/dc-gang-a/src/academy/preparationHistory.ts",
+            "lineStart": 18,
+            "lineEnd": 59
+          },
+          {
+            "path": "apps/academy/dc-gang-a/src/academy/learningWorkProjection.ts",
+            "lineStart": 17,
+            "lineEnd": 19
+          }
+        ],
+        "basis": "Reminder kind is not consumed as an assignment, attempt, completion revision, exemption or deadline. Strict official input refuses reminder/history payload transport. Independent synthetic execution covered two editions with identical unit labels, co-scheduled distinct activities, unknown future occurrence, mutable caller inputs and unchanged six-field source values, parent text and actual stubbed HTTP save-payload composition. No live save or parent send occurred."
+      },
+      {
+        "id": "tests-timeout-and-provenance",
+        "verdict": "clean",
+        "locations": [
+          {
+            "path": "apps/academy/dc-gang-a/package.json",
+            "symbol": "scripts.test:pool-read"
+          },
+          {
+            "path": "apps/academy/dc-gang-a/tests/academy/retainedQuery.test.ts",
+            "lineStart": 42,
+            "lineEnd": 49
+          },
+          {
+            "path": "modules/academy-workbench/tools/academy-mcp/src/verify-academy-mcp.ts",
+            "symbol": "exact tool discovery"
+          },
+          {
+            "path": "modules/academy-workbench/tools/academy-mcp/tests/dailyrecord-mcp.test.ts",
+            "symbol": "default-backend discovery and unavailable metadata result"
+          },
+          {
+            "path": "modules/academy-workbench/tools/academy-mcp/tests/item-label-mcp.test.ts",
+            "symbol": "tool discovery"
+          },
+          {
+            "path": "provenance/adaptations.json",
+            "symbol": "six affected adaptation hashes"
+          },
+          {
+            "path": "provenance/academy-source-integration.json",
+            "symbol": "six affected MCP adaptation hashes"
+          }
+        ],
+        "basis": "Every test and manifest hunk inspected, including shared fictional fixtures and memory/wire helper. Only the named retained-query test gains a 25,000 ms budget; its assertions/fixture and global/business timeouts are unchanged. New tests are selected by the existing source-check graph. Twelve affected adaptation hashes match H bytes. All 20 retained final-input hashes match H source files. No deferred printed-definition/content modules, private-custody files, common gate/provider, original import manifest or dependency lock changed."
+      },
+      {
+        "id": "exact-h-and-ownership",
+        "verdict": "clean",
+        "locations": [
+          {
+            "path": ".github/source-author.json",
+            "symbol": "fresh authored metadata"
+          },
+          {
+            "path": "project.json",
+            "symbol": "committed project owner"
+          },
+          {
+            "path": "ci/native-review-gate.js",
+            "symbol": "deriveReviewedSourceManifest"
+          },
+          {
+            "path": "ci/verify-projection.ts",
+            "symbol": "verifyProjection"
+          }
+        ],
+        "basis": "Observed base -> implementation A 6b14c1a5a3ec9f60d84abe24f634cf9e96a36f87 -> H ancestry. Unchanged source-author helper independently passed fresh parent/blob/working-byte/project-owner checks on H. Unchanged gate projection independently passed. Entire H tree walked through Git and fed to the existing exported manifest algorithm. Final source check found exact H/tree, clean branch/worktree, and matching working bytes for every changed file. Native-authorship authentication and publisher inference remain false."
+      }
+    ]
+  },
+  "independentVerification": {
+    "bunVersion": "1.4.3",
+    "exactSourceAuthorCheck": {
+      "schema": "agent-platform.source-author-readback.v1",
+      "sourceHead": "3cd90a5b9f1289997aa5ce159179a41aba3f4c04",
+      "sourceTree": "bea7feb1ca68c5dd99e8336483472a3ed94aafd8",
+      "metadataPath": ".github/source-author.json",
+      "metadataGitBlob": "49ac64039d61cbb249ab9cfe4e431c8ddeafa28d",
+      "metadataSha256": "d380771c27a370ac82c18c72cc411aa5df61780b5c689d88791311b01251eaa5",
+      "metadata": {
+        "schema": "agent-platform.source-author-metadata.v1",
+        "sourceOwner": {
+          "repository": "park-kyungchan/education-platform",
+          "projectId": "education-platform",
+          "domainId": "education"
+        },
+        "logicalWork": {
+          "domainId": "education",
+          "projectId": "education-platform",
+          "workId": "academy-followup-implementation-20261023",
+          "taskId": "AI-FOLLOWUP-R1"
+        },
+        "sourceBaseSha": "6b14c1a5a3ec9f60d84abe24f634cf9e96a36f87",
+        "author": {
+          "runtime": "native-codex",
+          "threadId": "01a168b8-471f-74c0-84c2-3bcf9dcddfb6",
+          "sessionId": null,
+          "nativeTaskId": null,
+          "nativeRunId": null,
+          "observedVia": "CODEX_THREAD_ID"
+        },
+        "capturedAtUtc": "2026-10-23T13:44:35.381Z",
+        "nativeAuthorshipAuthenticated": false,
+        "publisherIdentityInferred": false
+      },
+      "nativeAuthorshipAuthenticated": false,
+      "publisherIdentityInferred": false
+    },
+    "exactSourceFinalRecheck": {
+      "head": "3cd90a5b9f1289997aa5ce159179a41aba3f4c04",
+      "tree": "bea7feb1ca68c5dd99e8336483472a3ed94aafd8",
+      "branch": "work/academy-followup-pr-20261023",
+      "clean": true,
+      "diffCheck": "pass",
+      "currentThreadId": "01a16907-d8cd-7a13-b9bc-bab20ce80d88",
+      "changedFiles": [
+        {
+          "path": ".github/source-author.json",
+          "sha256": "d380771c27a370ac82c18c72cc411aa5df61780b5c689d88791311b01251eaa5",
+          "gitBlob": "49ac64039d61cbb249ab9cfe4e431c8ddeafa28d",
+          "workingBytesMatchH": true
+        },
+        {
+          "path": "apps/academy/dc-gang-a/package.json",
+          "sha256": "949ddc661398c260b648ee06fb66f5c1c5df890526f082ab82cb01d830478551",
+          "gitBlob": "c351e213ccea2c5eae0ca09ba0ea0ba9c1d74174",
+          "workingBytesMatchH": true
+        },
+        {
+          "path": "apps/academy/dc-gang-a/src/academy/records.ts",
+          "sha256": "7ed81d2fa383da7165b504eb1414c9d0ccedeec81e47889f68933552e88c32d2",
+          "gitBlob": "4cb1a3d348cbdbd081b9898a827bca3edb78522e",
+          "workingBytesMatchH": true
+        },
+        {
+          "path": "apps/academy/dc-gang-a/src/academy/teacherWorkContext.ts",
+          "sha256": "ea3c506162fbe17aba5590a8588d74137b6d4533e643b8341b9a849f05f1f23f",
+          "gitBlob": "0fa4b6ce0c468d6aec71d090e5e18e387cce48c4",
+          "workingBytesMatchH": true
+        },
+        {
+          "path": "apps/academy/dc-gang-a/src/lms/academyHttpClient.ts",
+          "sha256": "83078b21ed831d5f95496eedad6cc1b86f27de6a9ebbc1610bb76df94afb8d90",
+          "gitBlob": "630642987049d948f81a11543cc4c1a51c4561ca",
+          "workingBytesMatchH": true
+        },
+        {
+          "path": "apps/academy/dc-gang-a/src/lms/assessmentReadProtocol.ts",
+          "sha256": "3b94b567ee0f1979f3d2a21636488ba1695660dc91675a91eb040ef02fa64208",
+          "gitBlob": "11fdc06b533a760ddbc30373aad6353137aab794",
+          "workingBytesMatchH": true
+        },
+        {
+          "path": "apps/academy/dc-gang-a/src/lms/studentPaperSearchPeriod.ts",
+          "sha256": "b7a09572247b269927682e02be3f1cf8106ba365cb11e7c1d4b7bb37f7dc5fb8",
+          "gitBlob": "82b3b5a94c11e01233cad40246ae33ad92252fdb",
+          "workingBytesMatchH": true
+        },
+        {
+          "path": "apps/academy/dc-gang-a/tests/academy/retainedQuery.test.ts",
+          "sha256": "e671d43cffaa4e2638d3ad0fe9217ef3c54b3c9c49cf73c92408073e42dfcd7b",
+          "gitBlob": "1e4cf794db7c10b00ae7833b4a43416abfdd07d2",
+          "workingBytesMatchH": true
+        },
+        {
+          "path": "apps/academy/dc-gang-a/tests/lms/academyFollowupComposition.test.ts",
+          "sha256": "2787c7799810a924fadcdff190fdb422eb3db2558381372248f750977919483e",
+          "gitBlob": "428fbc89d41994d1495b218f5cce1406a1419b13",
+          "workingBytesMatchH": true
+        },
+        {
+          "path": "apps/academy/dc-gang-a/tests/lms/academyHttpClient.test.ts",
+          "sha256": "6be45cfb5615662de0d542c4a1909a3de2738429a3278dd8065be9e43396bb37",
+          "gitBlob": "9ebbcb0e75aa6c6478c095801b266a737f216d87",
+          "workingBytesMatchH": true
+        },
+        {
+          "path": "apps/academy/dc-gang-a/tests/lms/followupSyntheticFixtures.ts",
+          "sha256": "7b5e0bb06c91521576fe73d92cd8c1c9a3b3697f82bc56a373fcf139791f492f",
+          "gitBlob": "9f9d7041a39ecfe61f8924af4e3f99014076ab5e",
+          "workingBytesMatchH": true
+        },
+        {
+          "path": "apps/academy/dc-gang-a/tests/lms/teacherLessonCarryover.test.ts",
+          "sha256": "af2f68c38d2befdd1565bca12bde074f3de10615c1c5665247870eaa0937ee24",
+          "gitBlob": "d19b973862bd20deaa814a7ff3f93b8dce32dfde",
+          "workingBytesMatchH": true
+        },
+        {
+          "path": "modules/academy-workbench/tools/academy-mcp/src/dailyrecord-tools.ts",
+          "sha256": "f8fc192a86eadaf60cd0df6b23a642924f3cf54287d84c1a74afc3632f99bd88",
+          "gitBlob": "f235b0478e31b29089038b371b078b724c7e8495",
+          "workingBytesMatchH": true
+        },
+        {
+          "path": "modules/academy-workbench/tools/academy-mcp/src/dailyrecord.ts",
+          "sha256": "b9d8998934e59d52e7257a1da516cfbbab50f369f86a8cabac70c3e0d89966e1",
+          "gitBlob": "02f62df475dcb5356e81ba70170c4c295653ae3e",
+          "workingBytesMatchH": true
+        },
+        {
+          "path": "modules/academy-workbench/tools/academy-mcp/src/native-dailyrecord-backend.ts",
+          "sha256": "5e9b2632af4acdae08eecce0b295e14ab60f8c63aab449e5dd1433d8e9b220d0",
+          "gitBlob": "67522f1f289f303af567ca8ca761a869271e7acc",
+          "workingBytesMatchH": true
+        },
+        {
+          "path": "modules/academy-workbench/tools/academy-mcp/src/verify-academy-mcp.ts",
+          "sha256": "f5bfec0ca33fdac26531d39e76decacffcdc673795d862c1f2d7b6d2f7f8b42b",
+          "gitBlob": "35a22f8ea19d8ce0605d890b96543b22eda2ad1d",
+          "workingBytesMatchH": true
+        },
+        {
+          "path": "modules/academy-workbench/tools/academy-mcp/tests/dailyrecord-mcp.test.ts",
+          "sha256": "853bd25aeac378091df81b47669518bc0f888c39f774c3b3c6449fb01d368560",
+          "gitBlob": "c2c777596db85b6669c6abc92d438ac80f893a07",
+          "workingBytesMatchH": true
+        },
+        {
+          "path": "modules/academy-workbench/tools/academy-mcp/tests/dailyrecord-memory.ts",
+          "sha256": "e44f161a12863d02040bb56ae18c6ff98658d8e9a7120ab9fc35bd3175e17c93",
+          "gitBlob": "66ebe4315cc22c641a092279c96b722a500797cd",
+          "workingBytesMatchH": true
+        },
+        {
+          "path": "modules/academy-workbench/tools/academy-mcp/tests/item-label-mcp.test.ts",
+          "sha256": "f2aef626580b5946bf6624e49ba0daa0114bb5e22733370a03e99890e7120655",
+          "gitBlob": "58a227c691284451f6bfb49680e5a07aa970259f",
+          "workingBytesMatchH": true
+        },
+        {
+          "path": "provenance/academy-source-integration.json",
+          "sha256": "4dc89045e7ec9f536018ac84104b6559bdac562a94f9e76d000bffb0560f7ad5",
+          "gitBlob": "82ded01c59b23ff7da5250b6cab3b01bdb328123",
+          "workingBytesMatchH": true
+        },
+        {
+          "path": "provenance/adaptations.json",
+          "sha256": "61ad0db753dc38934875d6daa14e9f2dbae76d811af54ebe026814c34a24642d",
+          "gitBlob": "11d82fd3626aff048a4455eebfc13b62d2bce5a4",
+          "workingBytesMatchH": true
+        }
+      ],
+      "retainedFinalInputHashesMatched": 20,
+      "installedDependenciesSharedByExactBaseAndHControls": {
+        "@modelcontextprotocol/client": {
+          "version": "2.3.1",
+          "packageJsonSha256": "4a886cbee0d611f822618e4ee94ae4589655c282fa0dbafc17e80da9697f2d91"
+        },
+        "@modelcontextprotocol/server": {
+          "version": "2.3.1",
+          "packageJsonSha256": "66d43886157bb694672d5e24a590dc543ff44a482e0ec86fd78d437a2d5e0451"
+        },
+        "zod": {
+          "version": "4.4.3",
+          "packageJsonSha256": "c630bd10b52dcf71c112a2bf78dbf2734b9db58d62de663b8d86c2ec2c8cda2e"
+        }
+      },
+      "noReviewedSourceWrites": true
+    },
+    "affectedSyntheticTests": {
+      "passed": 54,
+      "failed": 0,
+      "expectCalls": 1419,
+      "cwd": "/tmp/academy-reviewer2-H-_jx2q37h",
+      "source": "Exact H Git-blob code/synthetic snapshot; credential environment cleared; fetch denied; injected fictional source transport",
+      "exitCode": 0
+    },
+    "dailyRecordServiceAndBackendCases": {
+      "passed": 26,
+      "combinedCommandIncludesStdio": true,
+      "combinedCommandExitCode": 1,
+      "stdioFailures": 2
+    },
+    "scopedRetainedQueryTest": {
+      "passed": 1,
+      "failed": 0,
+      "filteredOut": 31,
+      "expectCalls": 443,
+      "exitCode": 0,
+      "globalTimeoutOverride": false
+    },
+    "exactBaseStdioControl": {
+      "base": "8409ba7cf38ede78cc62d41560327a56072c6f60",
+      "passed": 0,
+      "failed": 2,
+      "exitCode": 1,
+      "sameInstalledDependenciesAsH": true
+    },
+    "legacyWireControls": {
+      "status": "pass",
+      "exactBaseAndHeadLegacyWireControls": [
+        {
+          "revision": "8409ba7",
+          "entry": "dailyrecord-server.ts",
+          "transport": "Python pipes; exact unmodified Bun source server; preexisting network-deny preload; protocol 2025-06-18",
+          "tools": [
+            "academy_cism_section",
+            "academy_dailyrecord_intake",
+            "academy_dailyrecord_review"
+          ],
+          "readOnlyAnnotations": true,
+          "exitCode": 0
+        },
+        {
+          "revision": "8409ba7",
+          "entry": "label-server.ts",
+          "transport": "Python pipes; exact unmodified Bun source server; preexisting network-deny preload; protocol 2025-06-18",
+          "tools": [
+            "academy_cism_section",
+            "academy_dailyrecord_intake",
+            "academy_dailyrecord_review",
+            "academy_find_item_labels",
+            "academy_item_label_scope",
+            "academy_review_type_questions"
+          ],
+          "readOnlyAnnotations": true,
+          "exitCode": 0
+        },
+        {
+          "revision": "3cd90a5",
+          "entry": "dailyrecord-server.ts",
+          "transport": "Python pipes; exact unmodified Bun source server; preexisting network-deny preload; protocol 2025-06-18",
+          "tools": [
+            "academy_cism_section",
+            "academy_dailyrecord_intake",
+            "academy_dailyrecord_review",
+            "academy_student_metadata"
+          ],
+          "readOnlyAnnotations": true,
+          "metadataDefaultBackendResult": {
+            "scope": {
+              "sourceNamespace": "academy.lms.metadata",
+              "teacherId": "99001",
+              "studentId": "77001",
+              "lessonDate": "2099-01-05"
+            },
+            "purpose": "Invented independent review",
+            "currentRequestRef": "invented-review-request",
+            "academyWrites": 0,
+            "parentSends": 0,
+            "automaticRetryAllowed": false,
+            "sourceContentIsUntrustedData": true,
+            "execution": "read_only",
+            "status": "unavailable",
+            "reasonCode": "student_metadata_backend_not_configured"
+          },
+          "exitCode": 0
+        },
+        {
+          "revision": "3cd90a5",
+          "entry": "label-server.ts",
+          "transport": "Python pipes; exact unmodified Bun source server; preexisting network-deny preload; protocol 2025-06-18",
+          "tools": [
+            "academy_cism_section",
+            "academy_dailyrecord_intake",
+            "academy_dailyrecord_review",
+            "academy_find_item_labels",
+            "academy_item_label_scope",
+            "academy_review_type_questions",
+            "academy_student_metadata"
+          ],
+          "readOnlyAnnotations": true,
+          "metadataDefaultBackendResult": {
+            "scope": {
+              "sourceNamespace": "academy.lms.metadata",
+              "teacherId": "99001",
+              "studentId": "77001",
+              "lessonDate": "2099-01-05"
+            },
+            "purpose": "Invented independent review",
+            "currentRequestRef": "invented-review-request",
+            "academyWrites": 0,
+            "parentSends": 0,
+            "automaticRetryAllowed": false,
+            "sourceContentIsUntrustedData": true,
+            "execution": "read_only",
+            "status": "unavailable",
+            "reasonCode": "student_metadata_backend_not_configured"
+          },
+          "exitCode": 0
+        }
+      ],
+      "nativeActivation": false,
+      "sourceWrites": 0,
+      "lowLevelSdkConnectionClosedCause": "not established by this control"
+    },
+    "fullRepositoryCheck": "Not independently rerun in reviewed worktree; retained receipt only.",
+    "allIndependentTestInvocationsPassed": false
+  },
+  "verificationLimitations": [
+    {
+      "id": "sdk-stdio-connection-closed",
+      "kind": "verification_uncertainty",
+      "sourceFinding": false,
+      "status": "low-level cause unestablished; exact-base/H reproduction preserved",
+      "evidence": "With the same installed client/server 2.3.1 and zod 4.4.3 dependency directories, both unchanged-base stdio tests and both H stdio tests returned SdkError: Connection closed. H combined service/backend/stdio invocation had 26 pass / 2 fail; base stdio invocation had 0 pass / 2 fail. This does not establish an introduced source defect or prove an environmental root cause. Independent Python-pipe legacy-wire controls initialized/listed exact tools on both base and H and called H metadata's unconfigured backend successfully; H real-SDK in-memory composition tests passed.",
+      "retainedContext": "The supplied historical source-free failure receipts and current 159/0 receipt were inspected only as context; neither substitutes for these current controls.",
+      "decision": "Preserve failed executions and uncertainty. Do not claim all independent checks passed; no source/config/permission changes or transport bypass were used."
+    },
+    {
+      "id": "positive-student-paper-wire-fixture",
+      "kind": "missing_qualification_input",
+      "sourceFinding": false,
+      "missingInput": "An admitted fixture containing the exact already-pinned onSearchPage function bytes for a positive UserBySearchTestResult date-override wire test.",
+      "evidence": "apps/academy/dc-gang-a/tests/lms/academyFollowupComposition.test.ts:10-13,100-110,247-259; client wire guard retained. Positive student-paper path remains unqualified; stubbed lookup plumbing is not live/source-wire proof.",
+      "decision": "No replacement fixture, relaxed digest, guessed function or live read used. This source review grants no positive native-use qualification."
+    },
+    {
+      "id": "actual-ui-model-effort",
+      "kind": "reviewer_runtime_observability",
+      "sourceFinding": false,
+      "requestedEffort": "xhigh",
+      "actualModelAsShownInUi": null,
+      "actualEffortAsShownInUi": null,
+      "evidence": "Own native UI badge is not exposed. Earlier escalation for herdr agent read wF:p9 --source visible --lines 70 was denied, execution remains unconfirmed, and it was not retried. Own native identity was independently observed through CODEX_THREAD_ID and successful Herdr agent get. User subsequently instructed continuation.",
+      "decision": "Do not relabel requested effort as observed effort or claim the xhigh UI qualification was verified."
+    },
+    {
+      "id": "native-and-completion-boundaries",
+      "kind": "excluded_acceptance",
+      "sourceFinding": false,
+      "decision": "No native activation/config/credentials/store/lock access, actual-use qualification, live Academy save/send, publishing, required hosted CI observation, mathematical acceptance or production completion performed. Full repository check was not rerun in the read-only reviewed worktree; retained full-check receipts are context only."
+    }
+  ],
+  "retainedContextEvidence": [
+    {
+      "path": "check-final-after-scoped-budget-r1-receipt.json",
+      "log": "check-final-after-scoped-budget-r1.log",
+      "logSha256": "336bf7ec08addadadfba32a143499cc8690403c08759fe22524b408a59cf0375",
+      "classification": "retained source verification context; 20 final-input source hashes independently matched H"
+    },
+    {
+      "path": "mcp-final-after-m3-tests-r1-receipt.json",
+      "log": "mcp-final-after-m3-tests-r1.log",
+      "logSha256": "2ff8cbb1e6bebab33bd108f6015849f76440c4425670b3dc819d65dede785615",
+      "summary": "159 pass / 0 fail",
+      "classification": "retained context only; not this reviewer's independently reproduced full-suite result"
+    },
+    {
+      "path": "/home/palantirkc/operations/academy-workspace-cleanup-20261023/integration-lead-astra/review-sol-r1/scratch/stdio-runtime-probe-reviewer-r1.json",
+      "classification": "historical source-free failure context only; not current cause proof"
+    },
+    {
+      "path": "/home/palantirkc/operations/academy-workspace-cleanup-20261023/integration-lead-astra/review-sol-r1/scratch/r2-node-parent-sdk-diagnostic.json",
+      "sha256": "bc649eac18ce60821fbce8a3ac7752262cf609d0733dd1c49221f5bc0e242d01",
+      "classification": "historical failure context only"
+    },
+    {
+      "path": "/home/palantirkc/operations/academy-workspace-cleanup-20261023/integration-lead-astra/review-sol-r1/scratch/r2-node-parent-sdk-frame-diagnostic.json",
+      "sha256": "16d083588738bc62b519a817c8e218ae129b195c8192e6954021d4667a86f13e",
+      "classification": "historical failure context only"
+    }
+  ],
+  "rawIndependentToolEvidence": [
+    {
+      "id": "exact-h-helper-and-manifest",
+      "chunk_id": "b4bcb0",
+      "wall_time_seconds": 0.486094305,
+      "exit_code": 0,
+      "original_token_count": 600,
+      "output": "{\"kind\":\"independent_source_author_verification\",\"result\":{\"schema\":\"agent-platform.source-author-readback.v1\",\"sourceHead\":\"3cd90a5b9f1289997aa5ce159179a41aba3f4c04\",\"sourceTree\":\"bea7feb1ca68c5dd99e8336483472a3ed94aafd8\",\"metadataPath\":\".github/source-author.json\",\"metadataGitBlob\":\"49ac64039d61cbb249ab9cfe4e431c8ddeafa28d\",\"metadataSha256\":\"d380771c27a370ac82c18c72cc411aa5df61780b5c689d88791311b01251eaa5\",\"metadata\":{\"schema\":\"agent-platform.source-author-metadata.v1\",\"sourceOwner\":{\"repository\":\"park-kyungchan/education-platform\",\"projectId\":\"education-platform\",\"domainId\":\"education\"},\"logicalWork\":{\"domainId\":\"education\",\"projectId\":\"education-platform\",\"workId\":\"academy-followup-implementation-20261023\",\"taskId\":\"AI-FOLLOWUP-R1\"},\"sourceBaseSha\":\"6b14c1a5a3ec9f60d84abe24f634cf9e96a36f87\",\"author\":{\"runtime\":\"native-codex\",\"threadId\":\"01a168b8-471f-74c0-84c2-3bcf9dcddfb6\",\"sessionId\":null,\"nativeTaskId\":null,\"nativeRunId\":null,\"observedVia\":\"CODEX_THREAD_ID\"},\"capturedAtUtc\":\"2026-10-23T13:44:35.381Z\",\"nativeAuthorshipAuthenticated\":false,\"publisherIdentityInferred\":false},\"nativeAuthorshipAuthenticated\":false,\"publisherIdentityInferred\":false}}\n{\"kind\":\"unchanged_gate_projection_verification\",\"result\":{\"status\":\"pass\",\"schema\":\"education.owner-review-projection.v1\",\"sourceCommit\":\"7eabcdb20e358955c771e5aa0dc500448fa84534\",\"compiledInputs\":108,\"dependencyPackages\":6,\"ontologyFiles\":38,\"nativePermissionGranted\":false}}\n{\"kind\":\"independent_full_tree_manifest\",\"sourceHead\":\"3cd90a5b9f1289997aa5ce159179a41aba3f4c04\",\"manifest\":{\"schema\":\"agent-platform.reviewed-source-manifest.v1\",\"reviewedTreeSha\":\"bea7feb1ca68c5dd99e8336483472a3ed94aafd8\",\"entryCount\":3823,\"blobCount\":3298,\"sha256\":\"817ad9002d5c2b2ebe998303451c1bd22c90606390d636aaff96dcfbfb6b42a4\"},\"policy\":{\"repository\":\"park-kyungchan/education-platform\",\"projectId\":\"education-platform\",\"domainId\":\"education\",\"semanticOwner\":\"education-platform\",\"scope\":\"month-end-source-redesign\",\"statusContext\":\"native-independent-review\",\"publisher\":{\"id\":\"241037670\",\"login\":\"park-kyungchan\",\"type\":\"User\"}},\"gitTreeWalkSha256\":\"fb51cf2aad19a49332754ffb84a24017a4f7c18b0affd735b1402907575e4b6c\",\"gateSha256\":\"1d4a7509df49602d84e9d053a1a80d63f64b747091b7a1f8268b80908b1d17f8\",\"runtime\":\"1.4.3\",\"derivation\":\"git ls-tree -r -t -z --full-tree exact H; unchanged exported deriveReviewedSourceManifest on observed entries\"}\n"
+    },
+    {
+      "id": "affected-tests-final-completed",
+      "chunk_id": "db9627",
+      "wall_time_seconds": 0.00001454,
+      "exit_code": 0,
+      "original_token_count": 1617,
+      "output": "(pass) inventory discovers exact-student attempts and period contracts without assigning completion or expected missing papers [1474.13ms]\n(pass) history accepts only current UI month selectors and stops before an unqualified selector request [84.08ms]\n(pass) a source login challenge closes the ephemeral client instead of becoming an ordinary area miss [61.50ms]\n(pass) direct DT/ZT results retain direct transport rather than fabricating historical browser provenance [24.05ms]\n(pass) fixed-origin fresh HTTP login independently qualifies principal and keeps secrets in request memory [29.33ms]\n(pass) inert HTTP DOM reader works without a global browser DOM [74.44ms]\n(pass) failure metadata distinguishes password challenge from principal drift without disclosing source or secrets [46.65ms]\n(pass) logout display whitespace does not alter independently matched opaque principal keys [38.93ms]\n(pass) StudyCourse account-menu logout and two exact principal forms qualify without a name dropdown [30.71ms]\n(pass) current span logout control qualifies only alongside both exact principal forms [38.39ms]\n(pass) field-wire inspection fetches only validated DayRecord Main and never invokes handlers [42.99ms]\n(pass) direct book discovery refuses foreign teacher scope without a source request [1.13ms]\n(pass) journal admission does not authorize unauthenticated HTTP or foreign teacher targets [0.89ms]\n(pass) item-header qualification exposes field names, not answers or generated paper membership [46.80ms]\n(pass) student-paper source qualification inspects only canonical read form metadata, never retains branch rows [70.81ms]\n(pass) student result metadata matches exact subject namespace and preserves titles without another student [0.42ms]\n(pass) one-page student paper search requires authentication before any request [0.65ms]\n(pass) an explicit older paper-search period is qualified without replacing its literal dates [0.90ms]\n(pass) invalid explicit paper periods and foreign teacher scope never issue a source request [0.19ms]\n(pass) stubbed student-search lookup plumbing joins the exact paper and retains one-page coverage [0.93ms]\n(pass) DT metadata fallback with stubbed student search identifies a paper without claiming its semantic kind [31.93ms]\n(pass) textbook index exposes existing subject-bound headers without generation or answer content [41.53ms]\n(pass) HTTP failure exposes only safe status and operation metadata, not source content or credentials [0.35ms]\n(pass) textbook index refuses foreign teacher and unauthenticated access before source requests [0.49ms]\n(pass) textbook index refuses a foreign subject returned by the scoped wrong-note query [25.97ms]\n\napps/academy/dc-gang-a/tests/lms/academyFollowupComposition.test.ts:\n(pass) C0/C1 direct client only: one login across the DT-family batch; fresh-client-per-read fails [215.16ms]\n(pass) C2: foreign teacher and caller college overrides stop before transport; exact-student filtering persists across the batch [71.26ms]\n(pass) C3: <input type=\"password\"> fences the shared session without retry or replay [61.47ms]\n(pass) C3: webUserPass fences the shared session without retry or replay [65.26ms]\n(pass) C3: 세션이 만료 fences the shared session without retry or replay [64.91ms]\n(pass) C4: one observed DT page per requested selector; page-2 target is never traversed or called globally absent [50.92ms]\n(pass) invented UserByMain bytes cannot bypass the unchanged pinned student-paper wire guard [29.32ms]\n(pass) admitted sourceRowId remains nullable, bounded and independent from paper/attempt identity [0.40ms]\n(pass) MCP C0/C1: actual registered tool/service/backend executes a DT-family batch with one login; fresh caller per read fails [251.55ms]\n(pass) MCP C2: strict unknown/foreign/principal/date/query inputs stop before authentication or source reads [75.01ms]\n(pass) MCP concurrency: metadata batches and DailyRecord reads share one auth promise and the same serialized boundary [171.25ms]\n(pass) MCP failure fences persist across concurrent metadata and subsequent DailyRecord calls without retry or error leakage [98.61ms]\n(pass) MCP retains failed auth once, retains reverse DailyRecord failure fence, and refuses missing metadata capability before login [37.00ms]\n(pass) MCP student-paper/printed-lookup routes reach the fixed wire guard; the positive date-override fixture gap remains explicit [59.46ms]\n(pass) MCP C4: empty DT pages retain partial coverage through the actual registered route without traversal [78.51ms]\n(pass) MCP metadata bounds its actual dual result before publication and retains the refusal fence [533.08ms]\n(pass) MCP M1: inventory and history omit foreign page anchors, controls, functions and selected-row TR cells [85.71ms]\n(pass) MCP M1: owner admission independently rejects a client-returned foreign row before publication [45.52ms]\n(pass) MCP M2: resolved invalid/unavailable DailyRecord and CISM results latch before queued metadata can enter the backend [114.77ms]\n(pass) MCP M3: finite raw metadata scores outside a grading scale stay raw and leave all six official fields unchanged [60.04ms]\n\napps/academy/dc-gang-a/tests/lms/teacherLessonCarryover.test.ts:\n(pass) carryover accepts every canonical activity including app grading, without completion authority [2.25ms]\n(pass) carryover rejects extra/missing keys, namespace/activity/status/date drift and malformed occurrences [2.64ms]\n(pass) known ancestry and occurrence conflicts are refused; partial registration, unmatched and null links stay unqualified [12.65ms]\n(pass) N1: teacher-only projection retains unknown links and attributable originals; all other context bytes are unchanged [48.22ms]\n(pass) N1-N3: two registered editions with identical unit labels and co-scheduled activity occurrences retain distinct reminders [65.45ms]\n(pass) N2/N3: same unit in a different edition leaves six-field serialization, parent text and real save payloads byte-identical [56.69ms]\n(pass) N2/N3: same date wrong-clinic activity leaves six-field serialization, parent text and real save payloads byte-identical [65.06ms]\n(pass) N2/N3: same date daily-test activity leaves six-field serialization, parent text and real save payloads byte-identical [79.08ms]\n(pass) N2/N3: unknown future occurrence leaves six-field serialization, parent text and real save payloads byte-identical [45.43ms]\n\n 54 pass\n 0 fail\n 1419 expect() calls\nRan 54 tests across 3 files. [4.94s]\n"
+    },
+    {
+      "id": "service-backend-stdio-final-initial-chunk",
+      "chunk_id": "16136f",
+      "wall_time_seconds": 1.002121928,
+      "session_id": 32133,
+      "original_token_count": 1151,
+      "output": "bun test v1.4.3 (c6da4a4d3)\n\nmodules/academy-workbench/tools/academy-mcp/tests/dailyrecord.test.ts:\n(pass) missing context and caller authority/source flags fail before any backend call [8.57ms]\n(pass) unconfigured intake performs useful missing-only interview without inventing source success [0.89ms]\n(pass) qualified existing assessments/attendance stay preserved and previous target stays independent [4.77ms]\n(pass) caller mutation of returned context cannot retarget an issued source handle [7.48ms]\n(pass) unknown assessments need explicit field values; activity prose does not establish scores or attendance [5.49ms]\n(pass) qualified blank attendance/text remains missing information, not recorded attendance or activity [3.12ms]\n(pass) contradictory typed deadline rendering is rejected before backend reads [0.91ms]\n(pass) today memo is always interviewed when absent; no-addition never authorizes deletion [4.29ms]\n(pass) exact handles reject foreign task/student before source reads; before drift and staleness block patch [4.00ms]\n(pass) foreign current/prior/tone target, invalid date, and unbound previous value are unqualified [2.53ms]\n(pass) completed solving/grading cannot justify completed unconfirmed correction [1.80ms]\n(pass) review preserves counts, deadlines, stages and existing edits; canonical blockers are field-local [10.78ms]\n(pass) missing canonical safeguard holds text review and no-op remains nonwriting [7.25ms]\n(pass) pure parent-text review works without source and emits substantive blockers without a patch [1.34ms]\n(pass) review digest binds full current context, canonical pins and exact CISM source identity [3.54ms]\n(pass) new read evidence refs preserve value comparisons and transmission state remains observational [1.77ms]\n(pass) read failures latch and serialize; no automatic retry or leaked backend error [7.04ms]\n(pass) CISM is unavailable by default; exact period/student/section and bound source handles are required [7.43ms]\n(pass) CISM rejects an outside-period source reference date and latches qualification failures [2.28ms]\n(pass) launch configuration reuses hash-pinned canonical regex bytes without importing source [9.22ms]\n\nmodules/academy-workbench/tools/academy-mcp/tests/native-dailyrecord-backend.test.ts:\n(pass) the native source port rereads current/prior occurrences, exports only six selected fields and keeps source revision independent of read time [1.66ms]\n(pass) unadmitted namespace, teacher, student and date are refused before authentication [0.32ms]\n(pass) a matching name cannot substitute for current native student identity [0.11ms]\n(pass) a foreign previous occurrence cannot supply homework assessment or a tone sample [0.13ms]\n(pass) authentication failure is retained, without automatically issuing another login [0.12ms]\n(pass) native configuration rejects caller authority fields, duplicates and non-native launch [3.06ms]\n\nmodules/academy-workbench/tools/academy-mcp/tests/dailyrecord-mcp.test.ts:\n5865 | \t\tthis._pendingDebouncedNotifications.clear();\n5866 | \t\tfor (const info of this._timeoutInfo.values()) clearTimeout(info.timeoutId);\n5867 | \t\tthis._timeoutInfo.clear();\n5868 | \t\tconst requestHandlerAbortControllers = this._requestHandlerAbortControllers;\n5869 | \t\tthis._requestHandlerAbortControllers = /* @__PURE__ */ new Map();\n5870 | \t\tconst error = new SdkError(SdkErrorCode.ConnectionClosed, \"Connection closed\");\n                       ^\nSdkError: Connection closed\n data: undefined,\n code: \"CONNECTION_CLOSED\"\n\n      at _onclose (/home/palantirkc/worktrees/academy-followup-pr-20261023/education-platform/modules/academy-workbench/tools/academy-mcp/node_modules/@modelcontextprotocol/client/dist/src-WCy6ifGf.mjs:5870:17)\n      at _onclose (/home/palantirkc/worktrees/academy-followup-pr-20261023/education-platform/modules/academy-workbench/tools/academy-mcp/node_modules/@modelcontextprotocol/client/dist/index.mjs:4181:9)\n      at <anonymous> (/home/palantirkc/worktrees/academy-followup-pr-20261023/education-platform/modules/academy-workbench/tools/academy-mcp/node_modules/@modelcontextprotocol/client/dist/src-WCy6ifGf.mjs:5837:10)\n      at <anonymous> (/home/palantirkc/worktrees/academy-followup-pr-20261023/education-platform/modules/academy-workbench/tools/academy-mcp/node_modules/@modelcontextprotocol/client/dist/stdio.mjs:97:10)\n      at emit (node:events:103:22)\n      at #maybeClose (node:child_process:833:16)\n      at #handleOnExit (node:child_process:571:72)\n(fail) existing label MCP discovers context-required DailyRecord tools while preserving all three label tools [353.01ms]\n"
+    },
+    {
+      "id": "service-backend-stdio-final-completed",
+      "chunk_id": "82da24",
+      "wall_time_seconds": 0.00001423,
+      "exit_code": 1,
+      "original_token_count": 483,
+      "output": "5865 | \t\tthis._pendingDebouncedNotifications.clear();\n5866 | \t\tfor (const info of this._timeoutInfo.values()) clearTimeout(info.timeoutId);\n5867 | \t\tthis._timeoutInfo.clear();\n5868 | \t\tconst requestHandlerAbortControllers = this._requestHandlerAbortControllers;\n5869 | \t\tthis._requestHandlerAbortControllers = /* @__PURE__ */ new Map();\n5870 | \t\tconst error = new SdkError(SdkErrorCode.ConnectionClosed, \"Connection closed\");\n                       ^\nSdkError: Connection closed\n data: undefined,\n code: \"CONNECTION_CLOSED\"\n\n      at _onclose (/home/palantirkc/worktrees/academy-followup-pr-20261023/education-platform/modules/academy-workbench/tools/academy-mcp/node_modules/@modelcontextprotocol/client/dist/src-WCy6ifGf.mjs:5870:17)\n      at _onclose (/home/palantirkc/worktrees/academy-followup-pr-20261023/education-platform/modules/academy-workbench/tools/academy-mcp/node_modules/@modelcontextprotocol/client/dist/index.mjs:4181:9)\n      at <anonymous> (/home/palantirkc/worktrees/academy-followup-pr-20261023/education-platform/modules/academy-workbench/tools/academy-mcp/node_modules/@modelcontextprotocol/client/dist/src-WCy6ifGf.mjs:5837:10)\n      at <anonymous> (/home/palantirkc/worktrees/academy-followup-pr-20261023/education-platform/modules/academy-workbench/tools/academy-mcp/node_modules/@modelcontextprotocol/client/dist/stdio.mjs:97:10)\n      at emit (node:events:103:22)\n      at #maybeClose (node:child_process:833:16)\n      at #handleOnExit (node:child_process:571:72)\n(fail) dedicated entrypoint discovers four read-only DailyRecord/metadata tools with network denied [528.37ms]\n\n2 tests failed:\n(fail) existing label MCP discovers context-required DailyRecord tools while preserving all three label tools [353.01ms]\n(fail) dedicated entrypoint discovers four read-only DailyRecord/metadata tools with network denied [528.37ms]\n\n 26 pass\n 2 fail\n 129 expect() calls\nRan 28 tests across 3 files. [1258.00ms]\n"
+    },
+    {
+      "id": "base-stdio-control-failed",
+      "chunk_id": "01bfbf",
+      "wall_time_seconds": 0.833259526,
+      "exit_code": 1,
+      "original_token_count": 833,
+      "output": "bun test v1.4.3 (c6da4a4d3)\n\ntests/dailyrecord-mcp.test.ts:\n5865 | \t\tthis._pendingDebouncedNotifications.clear();\n5866 | \t\tfor (const info of this._timeoutInfo.values()) clearTimeout(info.timeoutId);\n5867 | \t\tthis._timeoutInfo.clear();\n5868 | \t\tconst requestHandlerAbortControllers = this._requestHandlerAbortControllers;\n5869 | \t\tthis._requestHandlerAbortControllers = /* @__PURE__ */ new Map();\n5870 | \t\tconst error = new SdkError(SdkErrorCode.ConnectionClosed, \"Connection closed\");\n                       ^\nSdkError: Connection closed\n data: undefined,\n code: \"CONNECTION_CLOSED\"\n\n      at _onclose (/home/palantirkc/worktrees/academy-followup-pr-20261023/education-platform/modules/academy-workbench/tools/academy-mcp/node_modules/@modelcontextprotocol/client/dist/src-WCy6ifGf.mjs:5870:17)\n      at _onclose (/home/palantirkc/worktrees/academy-followup-pr-20261023/education-platform/modules/academy-workbench/tools/academy-mcp/node_modules/@modelcontextprotocol/client/dist/index.mjs:4181:9)\n      at <anonymous> (/home/palantirkc/worktrees/academy-followup-pr-20261023/education-platform/modules/academy-workbench/tools/academy-mcp/node_modules/@modelcontextprotocol/client/dist/src-WCy6ifGf.mjs:5837:10)\n      at <anonymous> (/home/palantirkc/worktrees/academy-followup-pr-20261023/education-platform/modules/academy-workbench/tools/academy-mcp/node_modules/@modelcontextprotocol/client/dist/stdio.mjs:97:10)\n      at emit (node:events:103:22)\n      at #maybeClose (node:child_process:833:16)\n      at #handleOnExit (node:child_process:571:72)\n(fail) existing label MCP discovers context-required DailyRecord tools while preserving all three label tools [329.92ms]\n5865 | \t\tthis._pendingDebouncedNotifications.clear();\n5866 | \t\tfor (const info of this._timeoutInfo.values()) clearTimeout(info.timeoutId);\n5867 | \t\tthis._timeoutInfo.clear();\n5868 | \t\tconst requestHandlerAbortControllers = this._requestHandlerAbortControllers;\n5869 | \t\tthis._requestHandlerAbortControllers = /* @__PURE__ */ new Map();\n5870 | \t\tconst error = new SdkError(SdkErrorCode.ConnectionClosed, \"Connection closed\");\n                       ^\nSdkError: Connection closed\n data: undefined,\n code: \"CONNECTION_CLOSED\"\n\n      at _onclose (/home/palantirkc/worktrees/academy-followup-pr-20261023/education-platform/modules/academy-workbench/tools/academy-mcp/node_modules/@modelcontextprotocol/client/dist/src-WCy6ifGf.mjs:5870:17)\n      at _onclose (/home/palantirkc/worktrees/academy-followup-pr-20261023/education-platform/modules/academy-workbench/tools/academy-mcp/node_modules/@modelcontextprotocol/client/dist/index.mjs:4181:9)\n      at <anonymous> (/home/palantirkc/worktrees/academy-followup-pr-20261023/education-platform/modules/academy-workbench/tools/academy-mcp/node_modules/@modelcontextprotocol/client/dist/src-WCy6ifGf.mjs:5837:10)\n      at <anonymous> (/home/palantirkc/worktrees/academy-followup-pr-20261023/education-platform/modules/academy-workbench/tools/academy-mcp/node_modules/@modelcontextprotocol/client/dist/stdio.mjs:97:10)\n      at emit (node:events:103:22)\n      at #maybeClose (node:child_process:833:16)\n      at #handleOnExit (node:child_process:571:72)\n(fail) dedicated entrypoint discovers only three nonwriting DailyRecord tools with network denied [283.58ms]\n\n 0 pass\n 2 fail\nRan 2 tests across 1 file. [817.00ms]\n"
+    },
+    {
+      "id": "retained-query-final-completed",
+      "chunk_id": "89552e",
+      "wall_time_seconds": 0.00001337,
+      "exit_code": 0,
+      "original_token_count": 64,
+      "output": "(pass) retained current-state production query path > page JSON bytes include fixed metadata, Unicode, escapes and actual continuation without truncation [2744.35ms]\n\n 1 pass\n 31 filtered out\n 0 fail\n 443 expect() calls\nRan 1 test across 1 file. [2.99s]\n"
+    },
+    {
+      "id": "current-base-head-legacy-wire-controls-completed",
+      "chunk_id": "101c85",
+      "wall_time_seconds": 0.000015379,
+      "exit_code": 0,
+      "original_token_count": 651,
+      "output": "{\"status\": \"pass\", \"exactBaseAndHeadLegacyWireControls\": [{\"revision\": \"8409ba7\", \"entry\": \"dailyrecord-server.ts\", \"transport\": \"Python pipes; exact unmodified Bun source server; preexisting network-deny preload; protocol 2025-06-18\", \"tools\": [\"academy_cism_section\", \"academy_dailyrecord_intake\", \"academy_dailyrecord_review\"], \"readOnlyAnnotations\": true, \"exitCode\": 0}, {\"revision\": \"8409ba7\", \"entry\": \"label-server.ts\", \"transport\": \"Python pipes; exact unmodified Bun source server; preexisting network-deny preload; protocol 2025-06-18\", \"tools\": [\"academy_cism_section\", \"academy_dailyrecord_intake\", \"academy_dailyrecord_review\", \"academy_find_item_labels\", \"academy_item_label_scope\", \"academy_review_type_questions\"], \"readOnlyAnnotations\": true, \"exitCode\": 0}, {\"revision\": \"3cd90a5\", \"entry\": \"dailyrecord-server.ts\", \"transport\": \"Python pipes; exact unmodified Bun source server; preexisting network-deny preload; protocol 2025-06-18\", \"tools\": [\"academy_cism_section\", \"academy_dailyrecord_intake\", \"academy_dailyrecord_review\", \"academy_student_metadata\"], \"readOnlyAnnotations\": true, \"metadataDefaultBackendResult\": {\"scope\": {\"sourceNamespace\": \"academy.lms.metadata\", \"teacherId\": \"99001\", \"studentId\": \"77001\", \"lessonDate\": \"2099-01-05\"}, \"purpose\": \"Invented independent review\", \"currentRequestRef\": \"invented-review-request\", \"academyWrites\": 0, \"parentSends\": 0, \"automaticRetryAllowed\": false, \"sourceContentIsUntrustedData\": true, \"execution\": \"read_only\", \"status\": \"unavailable\", \"reasonCode\": \"student_metadata_backend_not_configured\"}, \"exitCode\": 0}, {\"revision\": \"3cd90a5\", \"entry\": \"label-server.ts\", \"transport\": \"Python pipes; exact unmodified Bun source server; preexisting network-deny preload; protocol 2025-06-18\", \"tools\": [\"academy_cism_section\", \"academy_dailyrecord_intake\", \"academy_dailyrecord_review\", \"academy_find_item_labels\", \"academy_item_label_scope\", \"academy_review_type_questions\", \"academy_student_metadata\"], \"readOnlyAnnotations\": true, \"metadataDefaultBackendResult\": {\"scope\": {\"sourceNamespace\": \"academy.lms.metadata\", \"teacherId\": \"99001\", \"studentId\": \"77001\", \"lessonDate\": \"2099-01-05\"}, \"purpose\": \"Invented independent review\", \"currentRequestRef\": \"invented-review-request\", \"academyWrites\": 0, \"parentSends\": 0, \"automaticRetryAllowed\": false, \"sourceContentIsUntrustedData\": true, \"execution\": \"read_only\", \"status\": \"unavailable\", \"reasonCode\": \"student_metadata_backend_not_configured\"}, \"exitCode\": 0}], \"nativeActivation\": false, \"sourceWrites\": 0, \"lowLevelSdkConnectionClosedCause\": \"not established by this control\"}\n"
+    },
+    {
+      "id": "provenance-and-private-exclusion-check",
+      "chunk_id": "0d489d",
+      "wall_time_seconds": 0.387272292,
+      "exit_code": 0,
+      "original_token_count": 279,
+      "output": "{\"adaptationHashes\": [{\"manifest\": \"provenance/adaptations.json\", \"changedAdaptationsChecked\": [\"apps/academy/dc-gang-a/package.json\", \"apps/academy/dc-gang-a/src/academy/teacherWorkContext.ts\", \"apps/academy/dc-gang-a/src/lms/academyHttpClient.ts\", \"apps/academy/dc-gang-a/src/academy/records.ts\", \"apps/academy/dc-gang-a/src/lms/assessmentReadProtocol.ts\", \"apps/academy/dc-gang-a/tests/lms/academyHttpClient.test.ts\"]}, {\"manifest\": \"provenance/academy-source-integration.json\", \"changedAdaptationsChecked\": [\"modules/academy-workbench/tools/academy-mcp/src/dailyrecord-tools.ts\", \"modules/academy-workbench/tools/academy-mcp/src/dailyrecord.ts\", \"modules/academy-workbench/tools/academy-mcp/src/native-dailyrecord-backend.ts\", \"modules/academy-workbench/tools/academy-mcp/src/verify-academy-mcp.ts\", \"modules/academy-workbench/tools/academy-mcp/tests/dailyrecord-mcp.test.ts\", \"modules/academy-workbench/tools/academy-mcp/tests/item-label-mcp.test.ts\"]}], \"changedFiles\": 21, \"privateCustodyGroupsUnchanged\": true, \"commonGateLockAndOriginalManifestUnchanged\": true, \"deferredModulesPresentInChangedSet\": []}\n"
+    },
+    {
+      "id": "final-source-and-identity-recheck",
+      "chunk_id": "8e0d8c",
+      "wall_time_seconds": 0.244154557,
+      "exit_code": 0,
+      "original_token_count": 2729,
+      "output": "{\"head\": \"3cd90a5b9f1289997aa5ce159179a41aba3f4c04\", \"tree\": \"bea7feb1ca68c5dd99e8336483472a3ed94aafd8\", \"branch\": \"work/academy-followup-pr-20261023\", \"clean\": true, \"diffCheck\": \"pass\", \"currentThreadId\": \"01a16907-d8cd-7a13-b9bc-bab20ce80d88\", \"changedFiles\": [{\"path\": \".github/source-author.json\", \"sha256\": \"d380771c27a370ac82c18c72cc411aa5df61780b5c689d88791311b01251eaa5\", \"gitBlob\": \"49ac64039d61cbb249ab9cfe4e431c8ddeafa28d\", \"workingBytesMatchH\": true}, {\"path\": \"apps/academy/dc-gang-a/package.json\", \"sha256\": \"949ddc661398c260b648ee06fb66f5c1c5df890526f082ab82cb01d830478551\", \"gitBlob\": \"c351e213ccea2c5eae0ca09ba0ea0ba9c1d74174\", \"workingBytesMatchH\": true}, {\"path\": \"apps/academy/dc-gang-a/src/academy/records.ts\", \"sha256\": \"7ed81d2fa383da7165b504eb1414c9d0ccedeec81e47889f68933552e88c32d2\", \"gitBlob\": \"4cb1a3d348cbdbd081b9898a827bca3edb78522e\", \"workingBytesMatchH\": true}, {\"path\": \"apps/academy/dc-gang-a/src/academy/teacherWorkContext.ts\", \"sha256\": \"ea3c506162fbe17aba5590a8588d74137b6d4533e643b8341b9a849f05f1f23f\", \"gitBlob\": \"0fa4b6ce0c468d6aec71d090e5e18e387cce48c4\", \"workingBytesMatchH\": true}, {\"path\": \"apps/academy/dc-gang-a/src/lms/academyHttpClient.ts\", \"sha256\": \"83078b21ed831d5f95496eedad6cc1b86f27de6a9ebbc1610bb76df94afb8d90\", \"gitBlob\": \"630642987049d948f81a11543cc4c1a51c4561ca\", \"workingBytesMatchH\": true}, {\"path\": \"apps/academy/dc-gang-a/src/lms/assessmentReadProtocol.ts\", \"sha256\": \"3b94b567ee0f1979f3d2a21636488ba1695660dc91675a91eb040ef02fa64208\", \"gitBlob\": \"11fdc06b533a760ddbc30373aad6353137aab794\", \"workingBytesMatchH\": true}, {\"path\": \"apps/academy/dc-gang-a/src/lms/studentPaperSearchPeriod.ts\", \"sha256\": \"b7a09572247b269927682e02be3f1cf8106ba365cb11e7c1d4b7bb37f7dc5fb8\", \"gitBlob\": \"82b3b5a94c11e01233cad40246ae33ad92252fdb\", \"workingBytesMatchH\": true}, {\"path\": \"apps/academy/dc-gang-a/tests/academy/retainedQuery.test.ts\", \"sha256\": \"e671d43cffaa4e2638d3ad0fe9217ef3c54b3c9c49cf73c92408073e42dfcd7b\", \"gitBlob\": \"1e4cf794db7c10b00ae7833b4a43416abfdd07d2\", \"workingBytesMatchH\": true}, {\"path\": \"apps/academy/dc-gang-a/tests/lms/academyFollowupComposition.test.ts\", \"sha256\": \"2787c7799810a924fadcdff190fdb422eb3db2558381372248f750977919483e\", \"gitBlob\": \"428fbc89d41994d1495b218f5cce1406a1419b13\", \"workingBytesMatchH\": true}, {\"path\": \"apps/academy/dc-gang-a/tests/lms/academyHttpClient.test.ts\", \"sha256\": \"6be45cfb5615662de0d542c4a1909a3de2738429a3278dd8065be9e43396bb37\", \"gitBlob\": \"9ebbcb0e75aa6c6478c095801b266a737f216d87\", \"workingBytesMatchH\": true}, {\"path\": \"apps/academy/dc-gang-a/tests/lms/followupSyntheticFixtures.ts\", \"sha256\": \"7b5e0bb06c91521576fe73d92cd8c1c9a3b3697f82bc56a373fcf139791f492f\", \"gitBlob\": \"9f9d7041a39ecfe61f8924af4e3f99014076ab5e\", \"workingBytesMatchH\": true}, {\"path\": \"apps/academy/dc-gang-a/tests/lms/teacherLessonCarryover.test.ts\", \"sha256\": \"af2f68c38d2befdd1565bca12bde074f3de10615c1c5665247870eaa0937ee24\", \"gitBlob\": \"d19b973862bd20deaa814a7ff3f93b8dce32dfde\", \"workingBytesMatchH\": true}, {\"path\": \"modules/academy-workbench/tools/academy-mcp/src/dailyrecord-tools.ts\", \"sha256\": \"f8fc192a86eadaf60cd0df6b23a642924f3cf54287d84c1a74afc3632f99bd88\", \"gitBlob\": \"f235b0478e31b29089038b371b078b724c7e8495\", \"workingBytesMatchH\": true}, {\"path\": \"modules/academy-workbench/tools/academy-mcp/src/dailyrecord.ts\", \"sha256\": \"b9d8998934e59d52e7257a1da516cfbbab50f369f86a8cabac70c3e0d89966e1\", \"gitBlob\": \"02f62df475dcb5356e81ba70170c4c295653ae3e\", \"workingBytesMatchH\": true}, {\"path\": \"modules/academy-workbench/tools/academy-mcp/src/native-dailyrecord-backend.ts\", \"sha256\": \"5e9b2632af4acdae08eecce0b295e14ab60f8c63aab449e5dd1433d8e9b220d0\", \"gitBlob\": \"67522f1f289f303af567ca8ca761a869271e7acc\", \"workingBytesMatchH\": true}, {\"path\": \"modules/academy-workbench/tools/academy-mcp/src/verify-academy-mcp.ts\", \"sha256\": \"f5bfec0ca33fdac26531d39e76decacffcdc673795d862c1f2d7b6d2f7f8b42b\", \"gitBlob\": \"35a22f8ea19d8ce0605d890b96543b22eda2ad1d\", \"workingBytesMatchH\": true}, {\"path\": \"modules/academy-workbench/tools/academy-mcp/tests/dailyrecord-mcp.test.ts\", \"sha256\": \"853bd25aeac378091df81b47669518bc0f888c39f774c3b3c6449fb01d368560\", \"gitBlob\": \"c2c777596db85b6669c6abc92d438ac80f893a07\", \"workingBytesMatchH\": true}, {\"path\": \"modules/academy-workbench/tools/academy-mcp/tests/dailyrecord-memory.ts\", \"sha256\": \"e44f161a12863d02040bb56ae18c6ff98658d8e9a7120ab9fc35bd3175e17c93\", \"gitBlob\": \"66ebe4315cc22c641a092279c96b722a500797cd\", \"workingBytesMatchH\": true}, {\"path\": \"modules/academy-workbench/tools/academy-mcp/tests/item-label-mcp.test.ts\", \"sha256\": \"f2aef626580b5946bf6624e49ba0daa0114bb5e22733370a03e99890e7120655\", \"gitBlob\": \"58a227c691284451f6bfb49680e5a07aa970259f\", \"workingBytesMatchH\": true}, {\"path\": \"provenance/academy-source-integration.json\", \"sha256\": \"4dc89045e7ec9f536018ac84104b6559bdac562a94f9e76d000bffb0560f7ad5\", \"gitBlob\": \"82ded01c59b23ff7da5250b6cab3b01bdb328123\", \"workingBytesMatchH\": true}, {\"path\": \"provenance/adaptations.json\", \"sha256\": \"61ad0db753dc38934875d6daa14e9f2dbae76d811af54ebe026814c34a24642d\", \"gitBlob\": \"11d82fd3626aff048a4455eebfc13b62d2bce5a4\", \"workingBytesMatchH\": true}], \"retainedFinalInputHashesMatched\": 20, \"installedDependenciesSharedByExactBaseAndHControls\": {\"@modelcontextprotocol/client\": {\"version\": \"2.3.1\", \"packageJsonSha256\": \"4a886cbee0d611f822618e4ee94ae4589655c282fa0dbafc17e80da9697f2d91\"}, \"@modelcontextprotocol/server\": {\"version\": \"2.3.1\", \"packageJsonSha256\": \"66d43886157bb694672d5e24a590dc543ff44a482e0ec86fd78d437a2d5e0451\"}, \"zod\": {\"version\": \"4.4.3\", \"packageJsonSha256\": \"c630bd10b52dcf71c112a2bf78dbf2734b9db58d62de663b8d86c2ec2c8cda2e\"}}, \"noReviewedSourceWrites\": true}\napps/academy/dc-gang-a/src/lms/academyHttpClient.ts:523:  async lookupPrintedPaperMetadata(input:{teacherLabel:string;studentName:string;studentKey:string;paperCode:string;period:StudentPaperSearchPeriod}){\napps/academy/dc-gang-a/src/lms/academyHttpClient.ts:527:    const result=await this.searchStudentPaperMetadata(searchInput);\napps/academy/dc-gang-a/src/lms/academyHttpClient.ts:536:      const daily=await this.searchDailyTestMetadata({teacherLabel:input.teacherLabel,studentName:input.studentName,studentKey:input.studentKey});\napps/academy/dc-gang-a/src/lms/academyHttpClient.ts:546:  async searchDailyTestMetadata(input:{teacherLabel:string;studentName:string;studentKey:string}){\napps/academy/dc-gang-a/src/lms/academyHttpClient.ts:560:  async inspectDailyTestInventory(input:{teacherLabel:string;studentName:string;studentKey:string}){\napps/academy/dc-gang-a/src/lms/academyHttpClient.ts:564:  async readDailyTestHistory(input:{teacherLabel:string;studentName:string;studentKey:string;periods:string[]}){\napps/academy/dc-gang-a/src/lms/academyHttpClient.ts:568:    const current=await this.inspectDailyTestInventory(target);\napps/academy/dc-gang-a/src/lms/academyHttpClient.ts:580:  async #dailyTestInventory(input:{teacherLabel:string;studentName:string;studentKey:string},sortDate:string){\napps/academy/dc-gang-a/src/lms/academyHttpClient.ts:614:  async searchStudentPaperMetadata(input:{teacherLabel:string;studentName:string;studentKey:string;period?:StudentPaperSearchPeriod}){\nmodules/academy-workbench/tools/academy-mcp/src/native-dailyrecord-backend.ts:27:  searchStudentPaperMetadata?(input:{teacherLabel:string;studentName:string;studentKey:string;period:{from:string;through:string}}):Promise<unknown>;\nmodules/academy-workbench/tools/academy-mcp/src/native-dailyrecord-backend.ts:28:  searchDailyTestMetadata?(input:{teacherLabel:string;studentName:string;studentKey:string}):Promise<unknown>;\nmodules/academy-workbench/tools/academy-mcp/src/native-dailyrecord-backend.ts:29:  inspectDailyTestInventory?(input:{teacherLabel:string;studentName:string;studentKey:string}):Promise<unknown>;\nmodules/academy-workbench/tools/academy-mcp/src/native-dailyrecord-backend.ts:30:  readDailyTestHistory?(input:{teacherLabel:string;studentName:string;studentKey:string;periods:string[]}):Promise<unknown>;\nmodules/academy-workbench/tools/academy-mcp/src/native-dailyrecord-backend.ts:31:  lookupPrintedPaperMetadata?(input:{teacherLabel:string;studentName:string;studentKey:string;paperCode:string;period:{from:string;through:string}}):Promise<unknown>;\nmodules/academy-workbench/tools/academy-mcp/src/native-dailyrecord-backend.ts:53:function projectStudentMetadata(query:StudentMetadataBatch['queries'][number],value:unknown,student:Admission['students'][number]):unknown{\nmodules/academy-workbench/tools/academy-mcp/src/native-dailyrecord-backend.ts:111:  #authenticate(){\nmodules/academy-workbench/tools/academy-mcp/src/native-dailyrecord-backend.ts:115:  async readStudentMetadata(value:Readonly<StudentMetadataBatch>):Promise<StudentMetadataObservation>{\nmodules/academy-workbench/tools/academy-mcp/src/native-dailyrecord-backend.ts:119:    const methods={student_papers:'searchStudentPaperMetadata',daily_metadata:'searchDailyTestMetadata',daily_inventory:'inspectDailyTestInventory',daily_history:'readDailyTestHistory',printed_paper_metadata:'lookupPrintedPaperMetadata'} as const;\nmodules/academy-workbench/tools/academy-mcp/src/native-dailyrecord-backend.ts:122:    await this.#authenticate();\nmodules/academy-workbench/tools/academy-mcp/src/native-dailyrecord-backend.ts:128:        case 'student_papers':observation=await this.client.searchStudentPaperMetadata!({...target,period:query.period});break;\nmodules/academy-workbench/tools/academy-mcp/src/native-dailyrecord-backend.ts:129:        case 'daily_metadata':observation=await this.client.searchDailyTestMetadata!(target);break;\nmodules/academy-workbench/tools/academy-mcp/src/native-dailyrecord-backend.ts:130:        case 'daily_inventory':observation=await this.client.inspectDailyTestInventory!(target);break;\nmodules/academy-workbench/tools/academy-mcp/src/native-dailyrecord-backend.ts:131:        case 'daily_history':observation=await this.client.readDailyTestHistory!({...target,periods:query.periods});break;\nmodules/academy-workbench/tools/academy-mcp/src/native-dailyrecord-backend.ts:132:        case 'printed_paper_metadata':observation=await this.client.lookupPrintedPaperMetadata!({...target,paperCode:query.paperCode,period:query.period});break;\nmodules/academy-workbench/tools/academy-mcp/src/native-dailyrecord-backend.ts:134:      results.push({query,observation:projectStudentMetadata(query,observation,student)});\nmodules/academy-workbench/tools/academy-mcp/src/native-dailyrecord-backend.ts:143:    await this.#authenticate();\nmodules/academy-workbench/tools/academy-mcp/src/dailyrecord.ts:116:  async #serial<T>(run:()=>Promise<T>):Promise<T>{\nmodules/academy-workbench/tools/academy-mcp/src/dailyrecord.ts:120:  async #read(scope:DailyRecordScope){\nmodules/academy-workbench/tools/academy-mcp/src/dailyrecord.ts:129:  async metadata(value:unknown){\nmodules/academy-workbench/tools/academy-mcp/src/dailyrecord.ts:238:  async cism(value:unknown){\n"
+    }
+  ],
+  "originalFailedAttemptsPreserved": [
+    {
+      "kind": "test-runner-argument-order",
+      "evidence": [
+        {
+          "chunk_id": "27ba09",
+          "wall_time_seconds": 0.000024671,
+          "exit_code": 1,
+          "original_token_count": 8,
+          "output": "error: Script not found \"test\"\n"
+        },
+        {
+          "chunk_id": "91fafc",
+          "wall_time_seconds": 0.005006527,
+          "exit_code": 1,
+          "original_token_count": 8,
+          "output": "error: Script not found \"test\"\n"
+        },
+        {
+          "chunk_id": "adfa8d",
+          "wall_time_seconds": 0.00001675,
+          "exit_code": 1,
+          "original_token_count": 8,
+          "output": "error: Script not found \"test\"\n"
+        }
+      ],
+      "resolution": "Bun interpreted preload-before-test as script mode; no tests ran. Corrected the invocation only, following installed help."
+    },
+    {
+      "kind": "incomplete-isolated-copy-import-closure",
+      "evidence": [
+        {
+          "chunk_id": "ec15ec",
+          "wall_time_seconds": 0.00001209,
+          "exit_code": 1,
+          "original_token_count": 1394,
+          "output": "(pass) inventory discovers exact-student attempts and period contracts without assigning completion or expected missing papers [1239.63ms]\n(pass) history accepts only current UI month selectors and stops before an unqualified selector request [101.78ms]\n(pass) a source login challenge closes the ephemeral client instead of becoming an ordinary area miss [51.80ms]\n(pass) direct DT/ZT results retain direct transport rather than fabricating historical browser provenance [27.84ms]\n(pass) fixed-origin fresh HTTP login independently qualifies principal and keeps secrets in request memory [14.54ms]\n(pass) inert HTTP DOM reader works without a global browser DOM [36.56ms]\n(pass) failure metadata distinguishes password challenge from principal drift without disclosing source or secrets [33.75ms]\n(pass) logout display whitespace does not alter independently matched opaque principal keys [30.14ms]\n(pass) StudyCourse account-menu logout and two exact principal forms qualify without a name dropdown [20.45ms]\n(pass) current span logout control qualifies only alongside both exact principal forms [22.16ms]\n(pass) field-wire inspection fetches only validated DayRecord Main and never invokes handlers [33.49ms]\n(pass) direct book discovery refuses foreign teacher scope without a source request [0.82ms]\n(pass) journal admission does not authorize unauthenticated HTTP or foreign teacher targets [0.89ms]\n(pass) item-header qualification exposes field names, not answers or generated paper membership [37.59ms]\n(pass) student-paper source qualification inspects only canonical read form metadata, never retains branch rows [39.65ms]\n(pass) student result metadata matches exact subject namespace and preserves titles without another student [0.48ms]\n(pass) one-page student paper search requires authentication before any request [1.22ms]\n(pass) an explicit older paper-search period is qualified without replacing its literal dates [0.29ms]\n(pass) invalid explicit paper periods and foreign teacher scope never issue a source request [0.68ms]\n(pass) stubbed student-search lookup plumbing joins the exact paper and retains one-page coverage [1.21ms]\n(pass) DT metadata fallback with stubbed student search identifies a paper without claiming its semantic kind [35.44ms]\n(pass) textbook index exposes existing subject-bound headers without generation or answer content [35.70ms]\n(pass) HTTP failure exposes only safe status and operation metadata, not source content or credentials [0.66ms]\n(pass) textbook index refuses foreign teacher and unauthenticated access before source requests [0.50ms]\n(pass) textbook index refuses a foreign subject returned by the scoped wrong-note query [28.78ms]\n\napps/academy/dc-gang-a/tests/lms/academyFollowupComposition.test.ts:\n(pass) C0/C1 direct client only: one login across the DT-family batch; fresh-client-per-read fails [257.98ms]\n(pass) C2: foreign teacher and caller college overrides stop before transport; exact-student filtering persists across the batch [129.40ms]\n(pass) C3: <input type=\"password\"> fences the shared session without retry or replay [83.52ms]\n(pass) C3: webUserPass fences the shared session without retry or replay [96.25ms]\n(pass) C3: 세션이 만료 fences the shared session without retry or replay [94.79ms]\n(pass) C4: one observed DT page per requested selector; page-2 target is never traversed or called globally absent [53.14ms]\n(pass) invented UserByMain bytes cannot bypass the unchanged pinned student-paper wire guard [31.96ms]\n(pass) admitted sourceRowId remains nullable, bounded and independent from paper/attempt identity [0.50ms]\n(pass) MCP C0/C1: actual registered tool/service/backend executes a DT-family batch with one login; fresh caller per read fails [272.91ms]\n(pass) MCP C2: strict unknown/foreign/principal/date/query inputs stop before authentication or source reads [121.62ms]\n(pass) MCP concurrency: metadata batches and DailyRecord reads share one auth promise and the same serialized boundary [221.46ms]\n(pass) MCP failure fences persist across concurrent metadata and subsequent DailyRecord calls without retry or error leakage [148.61ms]\n(pass) MCP retains failed auth once, retains reverse DailyRecord failure fence, and refuses missing metadata capability before login [87.39ms]\n(pass) MCP student-paper/printed-lookup routes reach the fixed wire guard; the positive date-override fixture gap remains explicit [116.92ms]\n(pass) MCP C4: empty DT pages retain partial coverage through the actual registered route without traversal [75.38ms]\n(pass) MCP metadata bounds its actual dual result before publication and retains the refusal fence [654.87ms]\n(pass) MCP M1: inventory and history omit foreign page anchors, controls, functions and selected-row TR cells [103.42ms]\n(pass) MCP M1: owner admission independently rejects a client-returned foreign row before publication [49.88ms]\n(pass) MCP M2: resolved invalid/unavailable DailyRecord and CISM results latch before queued metadata can enter the backend [118.17ms]\n(pass) MCP M3: finite raw metadata scores outside a grading scale stay raw and leave all six official fields unchanged [95.39ms]\n\napps/academy/dc-gang-a/tests/lms/teacherLessonCarryover.test.ts:\n\n# Unhandled error between tests\n-------------------------------\nerror: Cannot find module '../../harness/academy_private_io' from '/tmp/academy-reviewer2-H-_jx2q37h/apps/academy/dc-gang-a/src/academy/nativeDirectSource.ts'\n-------------------------------\n\n\n1 tests failed:\n\n 45 pass\n 1 fail\n 1 error\n 491 expect() calls\nRan 46 tests across 3 files. [4.88s]\n"
+        },
+        {
+          "chunk_id": "e72854",
+          "wall_time_seconds": 0.05048619,
+          "exit_code": 1,
+          "original_token_count": 110,
+          "output": "bun test v1.4.3 (c6da4a4d3)\n\napps/academy/dc-gang-a/tests/academy/retainedQuery.test.ts:\n\n# Unhandled error between tests\n-------------------------------\nerror: Cannot find module '../../../gang-a/packages/adapters/repository-operating-context' from '/tmp/academy-reviewer2-H-_jx2q37h/apps/academy/dc-gang-a/src/academy/operatingWorkspace.ts'\n-------------------------------\n\n\n 0 pass\n 1 fail\n 1 error\nRan 1 test across 1 file. [48.00ms]\n"
+        },
+        {
+          "chunk_id": "841a22",
+          "wall_time_seconds": 0.089864904,
+          "exit_code": 1,
+          "original_token_count": 104,
+          "output": "bun test v1.4.3 (c6da4a4d3)\n\napps/academy/dc-gang-a/tests/academy/retainedQuery.test.ts:\n\n# Unhandled error between tests\n-------------------------------\nerror: Cannot find module '../../docs/teacher-exam-selection-contract' from '/tmp/academy-reviewer2-H-_jx2q37h/apps/academy/dc-gang-a/src/academy/examSelection.ts'\n-------------------------------\n\n\n 0 pass\n 1 fail\n 1 error\nRan 1 test across 1 file. [48.00ms]\n"
+        },
+        {
+          "chunk_id": "5e7421",
+          "wall_time_seconds": 0.00001399,
+          "exit_code": 1,
+          "original_token_count": 112,
+          "output": "bun test v1.4.3 (c6da4a4d3)\n\napps/academy/dc-gang-a/tests/academy/retainedQuery.test.ts:\n\n# Unhandled error between tests\n-------------------------------\nerror: Cannot find module '../../../gang-a/packages/application/project-book-certification' from '/tmp/academy-reviewer2-H-_jx2q37h/apps/academy/dc-gang-a/src/academy/bookCertificationEvidence.ts'\n-------------------------------\n\n\n 0 pass\n 1 fail\n 1 error\nRan 1 test across 1 file. [45.00ms]\n"
+        }
+      ],
+      "resolution": "Copied missing code-only H dependencies into /tmp. No raw_sessions data or private student data copied. Completed affected suite and retained-query test subsequently passed."
+    },
+    {
+      "kind": "initial-isolated-stdio-failures",
+      "evidence": [
+        {
+          "chunk_id": "4003cb",
+          "wall_time_seconds": 0.393769549,
+          "exit_code": 1,
+          "original_token_count": 1633,
+          "output": "bun test v1.4.3 (c6da4a4d3)\n\nmodules/academy-workbench/tools/academy-mcp/tests/dailyrecord.test.ts:\n(pass) missing context and caller authority/source flags fail before any backend call [10.55ms]\n(pass) unconfigured intake performs useful missing-only interview without inventing source success [2.53ms]\n(pass) qualified existing assessments/attendance stay preserved and previous target stays independent [7.35ms]\n(pass) caller mutation of returned context cannot retarget an issued source handle [6.52ms]\n(pass) unknown assessments need explicit field values; activity prose does not establish scores or attendance [4.59ms]\n(pass) qualified blank attendance/text remains missing information, not recorded attendance or activity [0.72ms]\n(pass) contradictory typed deadline rendering is rejected before backend reads [1.84ms]\n(pass) today memo is always interviewed when absent; no-addition never authorizes deletion [1.97ms]\n(pass) exact handles reject foreign task/student before source reads; before drift and staleness block patch [1.49ms]\n(pass) foreign current/prior/tone target, invalid date, and unbound previous value are unqualified [1.80ms]\n(pass) completed solving/grading cannot justify completed unconfirmed correction [3.77ms]\n(pass) review preserves counts, deadlines, stages and existing edits; canonical blockers are field-local [10.43ms]\n(pass) missing canonical safeguard holds text review and no-op remains nonwriting [1.70ms]\n(pass) pure parent-text review works without source and emits substantive blockers without a patch [0.60ms]\n(pass) review digest binds full current context, canonical pins and exact CISM source identity [3.19ms]\n(pass) new read evidence refs preserve value comparisons and transmission state remains observational [0.93ms]\n(pass) read failures latch and serialize; no automatic retry or leaked backend error [6.57ms]\n(pass) CISM is unavailable by default; exact period/student/section and bound source handles are required [5.78ms]\n(pass) CISM rejects an outside-period source reference date and latches qualification failures [0.44ms]\n(pass) launch configuration reuses hash-pinned canonical regex bytes without importing source [4.11ms]\n\nmodules/academy-workbench/tools/academy-mcp/tests/native-dailyrecord-backend.test.ts:\n(pass) the native source port rereads current/prior occurrences, exports only six selected fields and keeps source revision independent of read time [1.87ms]\n(pass) unadmitted namespace, teacher, student and date are refused before authentication [0.27ms]\n(pass) a matching name cannot substitute for current native student identity [0.14ms]\n(pass) a foreign previous occurrence cannot supply homework assessment or a tone sample [0.17ms]\n(pass) authentication failure is retained, without automatically issuing another login [0.14ms]\n(pass) native configuration rejects caller authority fields, duplicates and non-native launch [1.74ms]\n\nmodules/academy-workbench/tools/academy-mcp/tests/dailyrecord-mcp.test.ts:\n5865 | \t\tthis._pendingDebouncedNotifications.clear();\n5866 | \t\tfor (const info of this._timeoutInfo.values()) clearTimeout(info.timeoutId);\n5867 | \t\tthis._timeoutInfo.clear();\n5868 | \t\tconst requestHandlerAbortControllers = this._requestHandlerAbortControllers;\n5869 | \t\tthis._requestHandlerAbortControllers = /* @__PURE__ */ new Map();\n5870 | \t\tconst error = new SdkError(SdkErrorCode.ConnectionClosed, \"Connection closed\");\n                       ^\nSdkError: Connection closed\n data: undefined,\n code: \"CONNECTION_CLOSED\"\n\n      at _onclose (/home/palantirkc/worktrees/academy-followup-pr-20261023/education-platform/modules/academy-workbench/tools/academy-mcp/node_modules/@modelcontextprotocol/client/dist/src-WCy6ifGf.mjs:5870:17)\n      at _onclose (/home/palantirkc/worktrees/academy-followup-pr-20261023/education-platform/modules/academy-workbench/tools/academy-mcp/node_modules/@modelcontextprotocol/client/dist/index.mjs:4181:9)\n      at <anonymous> (/home/palantirkc/worktrees/academy-followup-pr-20261023/education-platform/modules/academy-workbench/tools/academy-mcp/node_modules/@modelcontextprotocol/client/dist/src-WCy6ifGf.mjs:5837:10)\n      at <anonymous> (/home/palantirkc/worktrees/academy-followup-pr-20261023/education-platform/modules/academy-workbench/tools/academy-mcp/node_modules/@modelcontextprotocol/client/dist/stdio.mjs:97:10)\n      at emit (node:events:103:22)\n      at #maybeClose (node:child_process:833:16)\n      at #handleOnExit (node:child_process:571:72)\n(fail) existing label MCP discovers context-required DailyRecord tools while preserving all three label tools [25.14ms]\n5865 | \t\tthis._pendingDebouncedNotifications.clear();\n5866 | \t\tfor (const info of this._timeoutInfo.values()) clearTimeout(info.timeoutId);\n5867 | \t\tthis._timeoutInfo.clear();\n5868 | \t\tconst requestHandlerAbortControllers = this._requestHandlerAbortControllers;\n5869 | \t\tthis._requestHandlerAbortControllers = /* @__PURE__ */ new Map();\n5870 | \t\tconst error = new SdkError(SdkErrorCode.ConnectionClosed, \"Connection closed\");\n                       ^\nSdkError: Connection closed\n data: undefined,\n code: \"CONNECTION_CLOSED\"\n\n      at _onclose (/home/palantirkc/worktrees/academy-followup-pr-20261023/education-platform/modules/academy-workbench/tools/academy-mcp/node_modules/@modelcontextprotocol/client/dist/src-WCy6ifGf.mjs:5870:17)\n      at _onclose (/home/palantirkc/worktrees/academy-followup-pr-20261023/education-platform/modules/academy-workbench/tools/academy-mcp/node_modules/@modelcontextprotocol/client/dist/index.mjs:4181:9)\n      at <anonymous> (/home/palantirkc/worktrees/academy-followup-pr-20261023/education-platform/modules/academy-workbench/tools/academy-mcp/node_modules/@modelcontextprotocol/client/dist/src-WCy6ifGf.mjs:5837:10)\n      at <anonymous> (/home/palantirkc/worktrees/academy-followup-pr-20261023/education-platform/modules/academy-workbench/tools/academy-mcp/node_modules/@modelcontextprotocol/client/dist/stdio.mjs:97:10)\n      at emit (node:events:103:22)\n      at #maybeClose (node:child_process:833:16)\n      at #handleOnExit (node:child_process:571:72)\n(fail) dedicated entrypoint discovers four read-only DailyRecord/metadata tools with network denied [12.93ms]\n\n2 tests failed:\n(fail) existing label MCP discovers context-required DailyRecord tools while preserving all three label tools [25.14ms]\n(fail) dedicated entrypoint discovers four read-only DailyRecord/metadata tools with network denied [12.93ms]\n\n 26 pass\n 2 fail\n 129 expect() calls\nRan 28 tests across 3 files. [382.00ms]\n"
+        },
+        {
+          "chunk_id": "82da24",
+          "wall_time_seconds": 0.00001423,
+          "exit_code": 1,
+          "original_token_count": 483,
+          "output": "5865 | \t\tthis._pendingDebouncedNotifications.clear();\n5866 | \t\tfor (const info of this._timeoutInfo.values()) clearTimeout(info.timeoutId);\n5867 | \t\tthis._timeoutInfo.clear();\n5868 | \t\tconst requestHandlerAbortControllers = this._requestHandlerAbortControllers;\n5869 | \t\tthis._requestHandlerAbortControllers = /* @__PURE__ */ new Map();\n5870 | \t\tconst error = new SdkError(SdkErrorCode.ConnectionClosed, \"Connection closed\");\n                       ^\nSdkError: Connection closed\n data: undefined,\n code: \"CONNECTION_CLOSED\"\n\n      at _onclose (/home/palantirkc/worktrees/academy-followup-pr-20261023/education-platform/modules/academy-workbench/tools/academy-mcp/node_modules/@modelcontextprotocol/client/dist/src-WCy6ifGf.mjs:5870:17)\n      at _onclose (/home/palantirkc/worktrees/academy-followup-pr-20261023/education-platform/modules/academy-workbench/tools/academy-mcp/node_modules/@modelcontextprotocol/client/dist/index.mjs:4181:9)\n      at <anonymous> (/home/palantirkc/worktrees/academy-followup-pr-20261023/education-platform/modules/academy-workbench/tools/academy-mcp/node_modules/@modelcontextprotocol/client/dist/src-WCy6ifGf.mjs:5837:10)\n      at <anonymous> (/home/palantirkc/worktrees/academy-followup-pr-20261023/education-platform/modules/academy-workbench/tools/academy-mcp/node_modules/@modelcontextprotocol/client/dist/stdio.mjs:97:10)\n      at emit (node:events:103:22)\n      at #maybeClose (node:child_process:833:16)\n      at #handleOnExit (node:child_process:571:72)\n(fail) dedicated entrypoint discovers four read-only DailyRecord/metadata tools with network denied [528.37ms]\n\n2 tests failed:\n(fail) existing label MCP discovers context-required DailyRecord tools while preserving all three label tools [353.01ms]\n(fail) dedicated entrypoint discovers four read-only DailyRecord/metadata tools with network denied [528.37ms]\n\n 26 pass\n 2 fail\n 129 expect() calls\nRan 28 tests across 3 files. [1258.00ms]\n"
+        }
+      ],
+      "resolution": "Failure retained, not relabeled pass. Exact base reproduces the same SDK close; alternate legacy-wire control passes. Low-level cause remains unknown."
+    },
+    {
+      "kind": "scratch-closure-boundary-assertion",
+      "resolution": "Closure expansion stopped before copying an excluded raw_sessions type import. Already-created scratch code files were inventoried and reconciled; that data import was never copied. Later targeted test runs succeeded after admitting only missing code dependencies."
+    },
+    {
+      "kind": "diagnostic-bun-path",
+      "evidence": {
+        "chunk_id": "98b574",
+        "wall_time_seconds": 0.00001467,
+        "exit_code": 1,
+        "original_token_count": 142,
+        "output": "Traceback (most recent call last):\n  File \"<stdin>\", line 5, in <module>\n  File \"/usr/lib/python3.12/subprocess.py\", line 548, in run\n    with Popen(*popenargs, **kwargs) as process:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/subprocess.py\", line 1026, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n  File \"/usr/lib/python3.12/subprocess.py\", line 1955, in _execute_child\n    raise child_exception_type(errno_num, err_msg, err_filename)\nFileNotFoundError: [Errno 2] No such file or directory: '/root/.bun/bin/bun'\n"
+      },
+      "resolution": "The guessed /root/.bun/bin/bun did not exist; no diagnostic child launched. Observed actual process.execPath /usr/local/bin/bun and used it for completed controls."
+    }
+  ],
+  "delivery": {
+    "readback": "/home/palantirkc/operations/academy-workspace-cleanup-20261023/integration-lead-astra/handoff-01a16897-r2/reviewer2-readback.json",
+    "raw": "/home/palantirkc/operations/academy-workspace-cleanup-20261023/integration-lead-astra/handoff-01a16897-r2/reviewer2-native-review-output.v1.json",
+    "verdict": "/home/palantirkc/operations/academy-workspace-cleanup-20261023/integration-lead-astra/handoff-01a16897-r2/reviewer2-verdict.json",
+    "syntheticScratchReceipt": "/tmp/academy-reviewer2-H-_jx2q37h/scratch-receipt.json"
+  },
+  "effectAccounting": {
+    "reviewedSourceWrites": 0,
+    "gitBranchOrCheckoutWrites": 0,
+    "globalOrNativeConfigurationChanges": 0,
+    "liveAcademyWrites": 0,
+    "parentSends": 0,
+    "credentialStoreReads": 0,
+    "privateStudentBodyReads": 0,
+    "deniedPaneReadRetried": false,
+    "publicationPerformed": false,
+    "allIssuedTestAndDiagnosticSessionsCompleted": true,
+    "rawOutputIsReviewerOriginal": true,
+    "nativeAuthorshipAuthenticated": false,
+    "publisherIdentityInferred": false
+  }
+}
