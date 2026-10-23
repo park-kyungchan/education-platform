@@ -1,5 +1,7 @@
 import {loadTeacherSource,type TeacherSourceBinding} from '../src/teacher-source-binding.ts';
-export const sourceRoot='/home/palantirkc/worktrees/academy-query-integration-20261021';
+import {resolve} from 'node:path';
+// Prepared by the integrated setup from the immutable local ancestor; no host fallback.
+export const sourceRoot=resolve(import.meta.dir,'../../../../..','.private/academy-teacher-fixture');
 /** Invented canonical-owner test fixture only; no production server/CLI, DB or original loader. */
 export async function teacherFixture(noteCount=20){
   const binding=await loadTeacherSource(sourceRoot);

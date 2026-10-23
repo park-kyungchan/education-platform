@@ -181,7 +181,9 @@
         "check:ci",
         "test",
         "test:synthetic-runtime",
-        "test:offline-adapter"
+        "test:offline-adapter",
+        "check:mcp",
+        "test:mcp"
       ],
       "entrypoints": [
         "context/academy-context/cli.ts",
@@ -193,6 +195,18 @@
         "projectRoot": null,
         "workIssueIds": [],
         "authority": "none"
+      },
+      "verificationDependency": {
+        "purpose": "Fictional teacher MCP source tests",
+        "sourceRepository": "park-kyungchan/education-platform",
+        "commit": "8f8c9bd61bd5e55445780b5569ecc40effcecef6",
+        "tree": "ccb0fc6302f664abe069086881961cec99cf2d85",
+        "setup": "scripts/setup-academy-teacher-fixture.ts",
+        "root": ".private/academy-teacher-fixture",
+        "mode": "detached-sparse-local-ancestor",
+        "requiresFullGitHistory": true,
+        "nativeActivation": false,
+        "privateStudentDataIncluded": false
       }
     }
   ],

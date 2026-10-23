@@ -1,5 +1,6 @@
 import {expect,test} from 'bun:test';
 import {privatePackageRoutes,runIntegratedAcademyContext} from '../src/academy-context';
+import {resolve} from 'node:path';
 
 const packageRoute=(packageId:string)=>({packageId,sourceCommit:'a'.repeat(40),proposedDestinationRoot:'context/private-students/'+packageId,fileCount:1,bytes:10,manifestSha256:'b'.repeat(64)});
 const manifest={schema:'education.private-context-integration/v1' as const,targetRepository:'park-kyungchan/education-platform',visibilityRequired:'private',packages:[packageRoute('2099-01-05'),packageRoute('2099-01-05-part2')]};
@@ -30,4 +31,14 @@ test('an unmatched date preserves archival discovery and never becomes a claim o
  const entry=await runIntegratedAcademyContext(['entry','--date','2099-01-06']);
  expect(entry).toMatchObject({privatePackages:[],sourceBodiesLoaded:false});
  expect((entry as {dateCoverage:string}).dateCoverage).toContain('unknown coverage');
+});
+test('the actual CLI selection stdout fits its requested UTF8 budget and reports the exact emitted size',async()=>{
+ for(const budget of [4096,8192]){
+  const child=Bun.spawn([process.execPath,'--no-env-file',resolve(import.meta.dir,'../scripts/academy-context.ts'),'select','--topic','academy.class-preparation','--max-bytes',String(budget)],{stdout:'pipe',stderr:'pipe'});
+  const [stdout,stderr,code]=await Promise.all([new Response(child.stdout).arrayBuffer(),new Response(child.stderr).text(),child.exited]);
+  expect({code,stderr}).toEqual({code:0,stderr:''});
+  const selection=JSON.parse(new TextDecoder().decode(stdout));
+  expect(stdout.byteLength).toBeLessThanOrEqual(budget);
+  expect(selection.usedBytes).toBe(stdout.byteLength);
+ }
 });

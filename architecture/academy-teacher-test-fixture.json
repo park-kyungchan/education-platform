@@ -1,0 +1,618 @@
+{
+  "schema": "education.academy-teacher-test-fixture.v1",
+  "repository": "park-kyungchan/education-platform",
+  "commit": "8f8c9bd61bd5e55445780b5569ecc40effcecef6",
+  "tree": "ccb0fc6302f664abe069086881961cec99cf2d85",
+  "purpose": "Exact local historical canonical source closure and fictional test fixtures only; no native activation or student data",
+  "derivation": "Bun parser runtime import/export and literal dynamic import closure from declared entrypoints; type-only contract pin explicitly retained",
+  "entrypoints": [
+    "apps/academy/dc-gang-a/src/academy/contracts/retainedQuery.ts",
+    "apps/academy/dc-gang-a/tests/academy/retainedQueryFixtures.ts",
+    "apps/academy/dc-gang-a/tests/academy/learningWorkFixtures.ts",
+    "apps/academy/dc-gang-a/src/academy/retainedQueryClient.ts",
+    "apps/academy/dc-gang-a/src/academy/retainedQueryValidation.ts"
+  ],
+  "externalImports": [
+    "bun",
+    "node:child_process",
+    "node:crypto",
+    "node:fs",
+    "node:path",
+    "zod"
+  ],
+  "files": [
+    {
+      "path": ".gitignore",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0d7cf9582edb7c76181b4679b913eaebd8cd1a0f",
+      "sha256": "516e18fe6ca0f70b9f0b9bfd58752a1e75cc04bf11ade747c19d219406bf5326",
+      "bytes": 168
+    },
+    {
+      "path": "apps/academy/dc-gang-a/docs/teacher-exam-selection-contract.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "75a015832629722aab0d06473a556b569ed27528",
+      "sha256": "5a92c5bb576e2d2454044be792de5fb52228b1b03aced851cb9a926dc0055daf",
+      "bytes": 2726
+    },
+    {
+      "path": "apps/academy/dc-gang-a/harness/academy_private_io.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "814f43697b79f091b84a1e7bea2a5c9a6343eff0",
+      "sha256": "912e785c2c1ee19c7cf6510dd8440c746dcb75b3866a13490bc85bf375783063",
+      "bytes": 4100
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/application.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7087c476285f4b784cce22a2999deefcd2b170e3",
+      "sha256": "20f8a75e264c1dc4626dd095cb9381e58a80815706f44edbdd63af9f2cbec0ce",
+      "bytes": 5547
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/bookCertificationEvidence.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8e3e9dcff1dd84621dbe4b0df7b16d63755e37e3",
+      "sha256": "f18b1b0341bba2c01350be4ea0dc3a5c568b4359cf6b2a6f7a01040f85442704",
+      "bytes": 7004
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/bookPreparation.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4f45f84e58df3cedd30f2d8160569c504b5d8780",
+      "sha256": "d4773d7d5156b4058fa382ecdcfc239860b9984e3519a464bf624ba0f3a5007b",
+      "bytes": 8486
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/classroomCyclePolicy.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6c7ee495fc7dde30aa1bb154dfaf82badd5d1edb",
+      "sha256": "37da1efe017af254d0f10ab18542955e39eb1646648fcfa8659808a95cc2fa4e",
+      "bytes": 8746
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/conceptEvidenceAdapter.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0231f6ef2275564d4be8139f0deeb52bb5875925",
+      "sha256": "0b495ec789ee881991405365b51554f23e311a1f679cd6d3ea4106275c655b37",
+      "bytes": 4046
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/conceptEvidenceGraph.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "457bd39543cfae5f3d75ffc697df0a4102ad6297",
+      "sha256": "3a220ecbf44889ce7e2315947234f966cf0baf28aa3b7b440ebd7bc0f5ab47db",
+      "bytes": 11216
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/conceptWorkspace.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "368255cd40602ca453cd024ead93cd1a94776dcf",
+      "sha256": "de3f5641da0e38ab383404bbeb1ee4a9c7420fcd183c8725bae6eec13b647cd8",
+      "bytes": 5575
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/conceptWorkspaceStore.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c8d691b675ba663ea0a6035a4febb58a9ba303f2",
+      "sha256": "f8c416cd4488f0ce345b1795b45e66778fd0b0eb860e4896c1a35fe99031018a",
+      "bytes": 17199
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/contracts/retainedQuery.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "65aadf549242073a4206e597ae032cada27e3d0a",
+      "sha256": "390d83478a73afdcc0863b75c5b013ca9e065deb25c763cf2f19622caf9a9965",
+      "bytes": 1878
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/domain.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9d563176f6109ac8063ffa90fcb049fd9eda74ce",
+      "sha256": "eb8ee7f8bace1799fd1b1a97ffcd44e507c671811fc4b123cde77f06d6737493",
+      "bytes": 5102
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/examSelection.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "82a507779174ac72b806b6b2458338419531c324",
+      "sha256": "b520d19fb53f4a0aefa8cc121561031fead5f888a63b0a24d7e10ef8faf3b8f4",
+      "bytes": 15384
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/learningWork.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5f80ced587f61df8b2a53993b14d60503cdb8a59",
+      "sha256": "747f44cb2eda9844d6fdc266f51d89eeb71f7d8c90618a11c4f967dd3f120261",
+      "bytes": 11892
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/learningWorkBindings.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0aa440ff4d35b3e4d895d3160d28c9945ac6e574",
+      "sha256": "a9772e2c4b161cd4f30d05a4e1b87ce1dd7cdd9bdcda73294ae505ac39dbe0cc",
+      "bytes": 7301
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/learningWorkProjection.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ee086e9b493ac5495ff7d1a9c78502e6412ebcf1",
+      "sha256": "bb2a6435379692009d7a688dfbf3cfc57fbdf35e57e0bb6936be8fe758e9d9d2",
+      "bytes": 9096
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/nativeConnector.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f8a6eac97e2ea35cc7cf2872fd59affa4c26c5c5",
+      "sha256": "2dcb6607a35ea5e8c005fadaedb95da86395417ea9b829c33232b73a0ffd3016",
+      "bytes": 9159
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/nativeDirectSource.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b811cd28aeb0b482f44fe423269b5dd157451366",
+      "sha256": "fea68cbb3c87c54c3c5891e29013f6b0aeb0b156ed9195e9f9ee1ee630fbd15d",
+      "bytes": 6935
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/operatingWorkspace.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "99657072ac312c7eb4b55dd845f0f47c82577b57",
+      "sha256": "56a47ca4efce742bdda038fc9b91db8c3c74dafcc64452486046bd4a6dfc6d27",
+      "bytes": 1224
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/operationalContract.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ffa95c28847f11c4ff2b30df9b550ca6393de47d",
+      "sha256": "f3d1f79d0b93d2db1626aca1969f754113abcb42b38f31bcc66521f8113b9b75",
+      "bytes": 4729
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/ownerWorkspaceStore.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "074e0af9178aba2aac0732db5bdc35fd61f2c346",
+      "sha256": "5ccdcefce2294c1a6578aac318fe282632e700584e3e274124f644d15169a1c6",
+      "bytes": 17678
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/postgresStore.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9cdfe4117531f975ee6ca0789711a728daafb2c4",
+      "sha256": "f74213e45b6e81ad992d629a08e706707fc11dacb50c8a2c865e87c0c16b22c9",
+      "bytes": 67743
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/preparationHistory.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "40c9bfa3f7339545dc0cc0ea6affe6dbae31eaa4",
+      "sha256": "822bffbbecd03d0b1a52d71e84ddb70bcc19f70129ae124848684c6c0ab554ae",
+      "bytes": 12664
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/records.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3ba18dabbc3ade832bdd8d8160a1aaf549de27dc",
+      "sha256": "a3a9a81fa1fc2c5d9089105bd910f2f6a098b838913f39fa363bcd2b3b9c9bb8",
+      "bytes": 10346
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/retainedQuery.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d8dd206310d94a9dec048e8dec058eb4e7ace165",
+      "sha256": "084615bbfe033cb3098371a491cf5ca82d807d3268b3c85adb947a009e666cb4",
+      "bytes": 9731
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/retainedQueryClient.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2f15e0ed0c48dbb6b4392729c28a1c6b32373710",
+      "sha256": "c458e74bce4ef63530c5480e2148646cacd81f5ceeb56ed1ec6570823b26288d",
+      "bytes": 4695
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/retainedQueryValidation.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e9b65d39a946b3dc79f3a6ab8d4c790f2f302043",
+      "sha256": "b5c1c09cd288a6d380776dbd67acb0b78b49cc125c020f7517f771d27b81ad9d",
+      "bytes": 6293
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/sourceBridge.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2c5ef608c9fd8fa059419f1d0f26b5053649a42b",
+      "sha256": "e328b3cb41b15c31e1cf2788bbf218d87f00af39f1fe225f01c62a39084359fa",
+      "bytes": 7783
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/sourceEvidence.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2a2e5e9fc8218b9953385e59d32ed5ff5898b9b0",
+      "sha256": "c94f96db81b5c61f1d1a277e0f055def5ae25e4964b9230795f28a5c78dce5cb",
+      "bytes": 5161
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/sourceSynchronization.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b34fbaebb34dbc7b1fb0a3b739956c9836554ea8",
+      "sha256": "ed09a845da5a0d15e9f76b0952615ab8484da7941d5361e4cee4763801537124",
+      "bytes": 8776
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/teacherExamWorkspace.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8426adacb2211d574624dac703c836994048f21a",
+      "sha256": "e18e6deb40f2fb29cca9a4cf66ef8749600aba0889d973bb03759560e08b64c2",
+      "bytes": 1514
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/teacherWorkContext.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0f2a4e5895a0966ecba4f672c85bae005dfa20de",
+      "sha256": "79e85dbb464b96252b2547dba94d237fac992b692d40861e5ca791cb7bedd38e",
+      "bytes": 11607
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/teacherWorkspace.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5cfbc13ccae2f66f105f77398512210cba9d7e67",
+      "sha256": "dae77c929fc05a356e9619f83ca1fcf70b4af5e5b33f2c1094a0df6b855e418e",
+      "bytes": 17422
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/usecases/conceptWorkspace.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f42d7aa7e417f8f8536e7c4be1787254ef7d24be",
+      "sha256": "32a3637265fc2d2e79ce712f98cb98b0c986845ff483bd1165b1d49c267aa5ab",
+      "bytes": 4348
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/usecases/requestRecovery.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f40837830d1c7a3b53e49ff33ad27a43833a7429",
+      "sha256": "e92cb9a01fad6c4c6951adb147c799ff1868c81d9be30eaf550da57ca48f3e08",
+      "bytes": 2078
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/usecases/studentScene.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1c924aed0de509a94596a758197896a85faea726",
+      "sha256": "4ff2876a57a295a371795e0db28366b69f7aeef3bbbde5db338a33ff0c188b63",
+      "bytes": 10504
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/usecases/teacherClinic.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2e396a501e3b075f9e6cc30bcd41a087e345fcef",
+      "sha256": "85ca55edadc7e95e42a734a8476eb04ad52630ee767fcf85454a0c9ec6d8b559",
+      "bytes": 6010
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/usecases/teacherObservation.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c8fe8bba51e2ad4abf5a322e2e66eab00f289de3",
+      "sha256": "f328d4a35ed209e3bb07bcf6c7a9ad615b92176902fec30a7c08b173316ba528",
+      "bytes": 6027
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/usecases/teacherWorkspace.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "eff6bcf01ec4267c7f56f73697066dbc8d66046f",
+      "sha256": "50a6c9f6ec114bf2f8ac429d63ffd6327ed3c144bb8ab894b4c0f809597ab9c4",
+      "bytes": 7937
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/contracts/catalogLevels.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0f46476dc4121de91b3bf025de9f34fd1b3a2661",
+      "sha256": "fb582c9e4d292537db98d818e78fdd1c5e6fe7bf895f2959a75ae9c447c78c17",
+      "bytes": 367
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/contracts/operationalContractShape.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fecc544bf4a865d4bea335fe46afa321132851fc",
+      "sha256": "85c5c0c65c26f0ed7b842bed9c6908470eb746e2d6633b5459ddb6bb90645403",
+      "bytes": 5660
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/contracts/parentInternalLanguage.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "00e00d13d0af4b0d53ec3cf949cc68d74482f2dc",
+      "sha256": "60742973557e383b57c065dc7ef9cb806677f15ca4a571f48f7b2184f93aa456",
+      "bytes": 385
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/contracts/readInputRecord.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fbf670d86d78adad299b2bb4f93b5692d9c1d757",
+      "sha256": "ba2eda95e601ccd9eba44fc77c43ed5fde50801d34c8f77ea0f9d0dedd65db0c",
+      "bytes": 557
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/learning/model.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6e97d04897ed60d622f5fab4db93b2cb150c8ed0",
+      "sha256": "72e1969820c62c867f0d334cb0376516901848b21e82c0e87ea87b185ba44aa3",
+      "bytes": 21133
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/lms/academyReadProtocol.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0bdadc276280acb6b9d7568fa12b29fc54d4f8b2",
+      "sha256": "ac462984b3a0fbaef4ea8c802f0c962b5a0bbbaa3f2e46e0a3cb1576c88d82fc",
+      "bytes": 21801
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/lms/academySourceAudit.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "37a8a86834e3e9c41a5ae626cf43584b6e789fee",
+      "sha256": "33aa474df60db400f12513e6050ef1f1e4c48bef1eee4fd134ff1128658ffd74",
+      "bytes": 18372
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/lms/assessmentReadProtocol.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7afb06efdf7e306c0b5036793081321b0ce7d8d4",
+      "sha256": "ad7f55926af369e6de58230f9b57af3efe68514604bf3e37a272cc7a79662c34",
+      "bytes": 17214
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/lms/dayRecordColumnContract.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9a3648574d02ff16f468ee2a3e66ec6df47777d2",
+      "sha256": "88840882b0a88c3a6482ee7a78f28affc6faa2c92c6bbb9338389834c8a1cf84",
+      "bytes": 2276
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/lms/dayRecordDomBinding.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "15a88be7e91f0792a89fc5968211f3a0902ab851",
+      "sha256": "2621ede29edc04e39356145a2ec5cb723cb557a1e99feb3e6587bdec085bec70",
+      "bytes": 19419
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/lms/dayRecordReadProtocol.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "db88187659cd80c3afd6106b6587a976fef351c9",
+      "sha256": "28188190d156b1a1fd7aba6a2e33beb055aa49c963ec0d2187b3b67804898d65",
+      "bytes": 9446
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/lms/itemAnswerAudit.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6d1af1a356a4defa37b955b7255a06f07e461ca6",
+      "sha256": "20b4e9b8cba6f5ca3a641ee4c8f3622129c6eb8b826b9e77f4abdca9124feac2",
+      "bytes": 3855
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/lms/itemAnswerBatch.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "be8729034ddd52947c40c19bf28d8dd09a6af608",
+      "sha256": "d25c9e9a29fd361b38e69f16e396d77b5b38baff9f1bcfc7d75eea529512c977",
+      "bytes": 1697
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/lms/itemAnswerRead.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "106c796624f0ada487ac1ff78d3e1814f150f42c",
+      "sha256": "0667be75b064011e419cf51f5951b142e722b170062768d3be8a359afdbeca76",
+      "bytes": 2250
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/lms/itemMetadataRead.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6d956de3c56d19b4d49618678e643ebef4169270",
+      "sha256": "952bf8d6bd2779b043b9087d91f4238699a9a7e9f22cc902bd51159419c489ef",
+      "bytes": 3098
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/lms/printedPaperCode.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "25d1fc88cb68ed510be5f40fe1ef4314331ac9dc",
+      "sha256": "e753d51df93843921b6c481df4e9a9da5776c799eed1d0328b5eac2494409e22",
+      "bytes": 1017
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/lms/studentCourseRead.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c40a4842bc33415ea90a5ca659900ee22d5e699d",
+      "sha256": "668325f2328d33eef20bde9b67c1dbece33133565423c839c9100fa94ce9b236",
+      "bytes": 7064
+    },
+    {
+      "path": "apps/academy/dc-gang-a/tests/academy/learningWorkFixtures.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "28598df4170c032e4c00f33d8f8327b0e82e4ae5",
+      "sha256": "e7b1c99a37fa6a51f0fd4080f5db1a0d0f2660be483b87f0053b1dccedad151c",
+      "bytes": 5410
+    },
+    {
+      "path": "apps/academy/dc-gang-a/tests/academy/retainedQueryFixtures.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "574e9e8281b0b80c2cff45c0f9859956ed6094ec",
+      "sha256": "a2f9ff6abda9a4d51c2763f1ae350789b9f8c9e6dca70b2b4c2f13bdc7fa2cd3",
+      "bytes": 5940
+    },
+    {
+      "path": "apps/academy/gang-a/bun.lock",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6115fb043404f82b09f29d452cb0e42aa4f666d3",
+      "sha256": "8e83adfc345d885345ffb18007184ab31c5bbad03d4796c1a9a981e5cc612efb",
+      "bytes": 8945
+    },
+    {
+      "path": "apps/academy/gang-a/package.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b4c7ab2bc576c103573a1d97121d19900f2d4cd6",
+      "sha256": "c96949ee48da4409539f1848ddd7cb1046a4b1314c4e01b73229cb3fbf27012f",
+      "bytes": 1200
+    },
+    {
+      "path": "apps/academy/gang-a/packages/adapters/repository-operating-context.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0eac0ca3427978ec955fd4fa4e5f01755d573615",
+      "sha256": "b4741d7dc41ed6a6f60875cd313ec70bcea403d3ffcb4821f54785abca4a8631",
+      "bytes": 1421
+    },
+    {
+      "path": "apps/academy/gang-a/packages/application/project-book-certification.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "687cabcba0f627f92a13f45a9917ed705a27702f",
+      "sha256": "25abcdb6a08ef413677351fa51d4da123bf3e018acfb015c38a52c3123e21b49",
+      "bytes": 3854
+    },
+    {
+      "path": "apps/academy/gang-a/packages/application/select-operational-context.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4375588ca80be1f53ff7de2887bbae41029c6b19",
+      "sha256": "afcc6df4089038829523bf022c624d6ff407c13a849b4f252c756df90363e305",
+      "bytes": 3436
+    },
+    {
+      "path": "apps/academy/gang-a/packages/application/validate-operational-context.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2a602f2b92d6f223f3f4ef35ff8d21c76ce9b432",
+      "sha256": "df7eff78ab5a77b945012f27eca41828b09b883a676302e42b3f97333d03de4a",
+      "bytes": 13967
+    },
+    {
+      "path": "apps/academy/gang-a/packages/audit/event-log.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f2edbf0263707a5a2bfd56c50b45aa6fb97024c5",
+      "sha256": "bff8adff258eeedf68ca1f508021238c84f48b413ed855f0197ff75d083b4847",
+      "bytes": 3021
+    },
+    {
+      "path": "apps/academy/gang-a/packages/domain/book-certification.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "32514f409f7f68b8d16f7ee4b3036d8b38ad15a7",
+      "sha256": "f7235f127407428d483c65a5b7e387b6a8dbb21ffebcf88805cc91de6f6a5d1f",
+      "bytes": 1305
+    },
+    {
+      "path": "apps/academy/gang-a/packages/domain/evidence.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d6cb62e67baad8e68defbb26e736bbedb834eb97",
+      "sha256": "932c818b1eacedad571a54afd94a3b171007bf3111c7e0ea5aa9204b88c3b930",
+      "bytes": 3361
+    },
+    {
+      "path": "apps/academy/gang-a/packages/domain/ids.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3c9818263553b344dcc032f49e2111edb122afa3",
+      "sha256": "4c543f6c21f2d23cdf3532950a9890bf6065aef61d30077ef058edc2f9a3aea6",
+      "bytes": 1330
+    },
+    {
+      "path": "apps/academy/gang-a/packages/domain/operational-context.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ccce5f3b591b233c9bed60f140b7ae9bf0e8f3da",
+      "sha256": "b81218070a23f72559c3f4d07ca1488249af7fe4a95953e45e6cb934fd8a9ff4",
+      "bytes": 13064
+    },
+    {
+      "path": "apps/academy/gang-a/packages/domain/operational-followup.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "61e514ec5153560ca027435cf867c7f5c5d13cb2",
+      "sha256": "0212ef6e9e5e201ca3de705e07c94a6c959bb3a26fba98cccd30d4e7f22e6f31",
+      "bytes": 5070
+    },
+    {
+      "path": "apps/academy/gang-a/packages/domain/scope.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e9089116aab623cb8cc6be7caef8ae3749821879",
+      "sha256": "1c847eb87a8ea56412a87ed7ab9d3ac11840677601382e582a34d5713a8ddd43",
+      "bytes": 765
+    },
+    {
+      "path": "apps/academy/gang-a/packages/schema/academy-operating-context.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bc7986260bae0745321a98dbd7fcdc45f473ed96",
+      "sha256": "e6a31b24e29ab0af9e078bfc734b78f3a6e9e0d30bec6bb9b8705d9f6ee29b29",
+      "bytes": 7617
+    },
+    {
+      "path": "apps/academy/gang-a/packages/security/operational-context.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "67a8acc4068d8858dda31ccd403185e686fbf2cc",
+      "sha256": "f124f8323a5d84e96098a216a10c479def75742101d85f3dac78b01ef0a5a26f",
+      "bytes": 550
+    }
+  ],
+  "scopeLimit": "Static runtime closure plus pinned type contract; canonical native functions are not invoked. This test fixture does not establish native acceptance."
+}

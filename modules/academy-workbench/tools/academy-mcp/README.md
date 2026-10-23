@@ -20,7 +20,9 @@ The existing MCP entrypoints also register `academy_dailyrecord_intake`, `academ
 
 ## Install and run
 
-Run from the `academy-workbench` repository root:
+In the integrated Education repository, run `bun run setup` from its root first. This installs this package and prepares `.private/academy-teacher-fixture`: a detached sparse worktree of the exact local ancestor `8f8c9bd61bd5e55445780b5569ecc40effcecef6` (tree `ccb0fc6302f664abe069086881961cec99cf2d85`). Only the 74 exact files in `architecture/academy-teacher-test-fixture.json` are checked out and hash-verified: canonical DC/Gang-a source, two fictional fixture files, and frozen dependency/ignore metadata. The native reader's commit, tree and file-hash guards are unchanged. Full Git history is required (`source.yml` uses `fetch-depth: 0`); setup performs no remote fetch and refuses an existing changed/incomplete fixture. It does not use historical absolute host worktrees or private student originals. Root `bun run check` includes this package's typecheck and complete synthetic tests.
+
+After root setup, run these package commands from `modules/academy-workbench`:
 
 ```sh
 bun install --cwd tools/academy-mcp --frozen-lockfile --ignore-scripts --cache-dir "$PWD/.local/cache/bun"

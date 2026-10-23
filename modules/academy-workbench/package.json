@@ -28,7 +28,9 @@
     "check:student-viewer": "node node_modules/typescript/bin/tsc -p app/student-audit-viewer/tsconfig.json",
     "context:academy": "bun context/academy-context/cli.ts",
     "check:academy-context": "bun node_modules/typescript/bin/tsc -p context/academy-context/tsconfig.json && bun context/academy-context/cli.ts inspect",
-    "test:academy-context": "bun test context/academy-context/select.test.ts context/academy-context/catalog.test.ts"
+    "test:academy-context": "bun test context/academy-context/select.test.ts context/academy-context/catalog.test.ts",
+    "check:mcp": "bun run --cwd tools/academy-mcp check",
+    "test:mcp": "bun run --cwd tools/academy-mcp test"
   },
   "engines": {
     "bun": ">=1.3.14",
