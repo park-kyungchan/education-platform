@@ -1,0 +1,48 @@
+{
+  "type": "student_homework_review_plan_append_revision",
+  "plan_id": "ruhan-homework-review-plan-20261007-001",
+  "revision_id": "revision_0002",
+  "from_version": "1.1.0",
+  "to_version": "1.2.0",
+  "recorded_at_utc": "2026-10-07T05:58:15Z",
+  "base": {
+    "version": "1.1.0",
+    "file_name": "이루한_숙제제출_교사확인계획_1.1.0.json",
+    "sha256": "f3e0f03ca3710a88afeec66209ddae8b0388c09425c475485f739a852e76f727"
+  },
+  "events": [
+    {
+      "kind": "current_grading_registration_absence_user_reported",
+      "source": {
+        "message_id": "Sentinel_076a282e64b8819197666bab223755c0",
+        "actor": "user",
+        "sent_at_utc": "2026-10-07T05:56:04.982985+00:00",
+        "exact_relevant_text": "1. 내가 확인했는데, 아직 안올라옴.18:25에 알림해라,그때도 너가해결할수없으면내가직접조회한다.2. 대단원 실전 TEST 채점기록도안올라옴,학교 시험 서술형 정복은각소단원별마지막차시에추가섹션으로붙어있으니까,앱채점대상에기록은되는데따로섹션분리는하지마."
+      },
+      "targets": [
+        "gauss_1N87_unit6_total",
+        "davinci_unit2_print_TEST"
+      ],
+      "evidence_class": "user_reported_observation",
+      "final_decision_state": "pending_final_preclass_check",
+      "assistant_query_performed": false
+    },
+    {
+      "kind": "written_response_embedded_section_relationship_corrected",
+      "source": {
+        "message_id": "Sentinel_076a282e64b8819197666bab223755c0",
+        "actor": "user",
+        "sent_at_utc": "2026-10-07T05:56:04.982985+00:00",
+        "exact_relevant_text": "1. 내가 확인했는데, 아직 안올라옴.18:25에 알림해라,그때도 너가해결할수없으면내가직접조회한다.2. 대단원 실전 TEST 채점기록도안올라옴,학교 시험 서술형 정복은각소단원별마지막차시에추가섹션으로붙어있으니까,앱채점대상에기록은되는데따로섹션분리는하지마."
+      },
+      "previous_independent_scope_item_id": "scope:ruhan:20261002:davinci:written_response",
+      "current_parent_scope_item_id": "scope:ruhan:20261002:davinci:lesson6",
+      "parent_lesson_index": 6,
+      "source_label": "학교 시험 서술형 정복",
+      "independent_grading_unit_count_before": 4,
+      "independent_grading_unit_count_after": 3,
+      "independent_missing_status_created": false,
+      "prior_scope_structure_preserved": true
+    }
+  ]
+}

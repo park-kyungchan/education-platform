@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "monthly-assessment.verification/1.0.0",
+  "checkedAt": "2026-10-16T14:48:00Z",
+  "scope": "Candidate-local data validation only",
+  "checks": [
+    {
+      "name": "node scripts/validate.mjs",
+      "status": "passed",
+      "claims": 65,
+      "sources": 73
+    },
+    {
+      "name": "node scripts/test.mjs",
+      "status": "passed",
+      "negativeCases": 11
+    },
+    {
+      "name": "curated-source known student identifiers/private-key heuristic",
+      "status": "passed",
+      "limitation": "Heuristic plus independent review pending; not comprehensive security certification"
+    },
+    {
+      "name": "bun run check:all",
+      "status": "not_run",
+      "reason": "Bun unavailable; full repository not materialized"
+    },
+    {
+      "name": "bun run check:harness",
+      "status": "not_run",
+      "reason": "Bun unavailable; pinned canonical upstream unchanged and not executed"
+    },
+    {
+      "name": "browser QA",
+      "status": "not_run",
+      "reason": "Context-only additive deliverable; no UI change or live test claimed"
+    },
+    {
+      "name": "remote publication",
+      "status": "not_run",
+      "reason": "Await independent review and parent authorization"
+    }
+  ],
+  "acceptanceInferred": false,
+  "mathematicalValidation": false,
+  "empiricalLearningValidation": false,
+  "independentReview": "pending"
+}

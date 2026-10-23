@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "academy.receiving-source-scope-repair/1",
+  "baseCandidate": "1a3f9e3ed977560e29ea91209ba6bdb7249b8be4",
+  "changes": [
+    "Receiving Input must match consumer domain/project/work.",
+    "Receiving Input must resolve as the actual canonical input record in the consumer Work, not merely an Input-shaped unregistered source envelope.",
+    "This source-only adapter refuses native-effect consumer Tasks.",
+    "Correct the observed teacher class HTTP route to /api/class."
+  ],
+  "checks": {
+    "actualGitCanonicalAPITests": 11,
+    "assertions": 18,
+    "result": "pass"
+  },
+  "observationPrecision": "The canonical validator already rejects a wrong-domain Input if it is registered in the selected Work. An unregistered Input-shaped source is not covered by that record-set check; the local qualifier now requires canonical Input resolution explicitly. No shared validator defect is claimed.",
+  "preservedFailedTest": {
+    "result": "9pass1fail",
+    "cause": "A new negative test initially assumed a wrong-domain registered Input would pass the common snapshot; current canonical validation actually rejects it.",
+    "correction": "Assert the actual common rejection and independently test an unregistered source envelope with a structurally valid common snapshot."
+  },
+  "scope": "Focused source-qualification boundary repair, not a common contract/pin/config change or native effect.",
+  "independentReview": "pending"
+}

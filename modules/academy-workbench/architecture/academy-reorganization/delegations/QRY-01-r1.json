@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "academy.source-delegation/1",
+  "id": "AAR-DELEGATION-QRY-01-R1",
+  "createdAt": "2026-10-21T06:57:34.264672+00:00",
+  "parentTaskId": "academy-workbench:task:academy-architecture-orchestration-20261021-t08",
+  "logicalWork": {
+    "domainId": "education",
+    "projectId": "education-platform",
+    "workId": "academy-query-integration-20261021"
+  },
+  "admittedTaskId": "education-platform:task:academy-query-integration-20261021-qry-01",
+  "sourceCommit": "f3427f736dfda2a50fbf80265582510b569fd5ef",
+  "nativeAssignment": {
+    "role": "accountable-query-subLead",
+    "cli": "codex",
+    "observedModel": "gpt-6.1-sol",
+    "observedEffort": "high",
+    "paneId": "wA:p6",
+    "tabId": "wA:t4",
+    "nativeSessionId": null,
+    "modelOverride": false
+  },
+  "contractInput": "work/education-platform/academy-query-integration-20261021/inputs/QRY-COORDINATION-CONTRACT-R1.json",
+  "qualification": "actual-dom01-query-qualification.json",
+  "scope": "Bounded source/query inventory; no production changes until QRY-BOUNDARY admission.",
+  "gitCustody": "Root stages/commits exact owned source paths after prepared result; subLead keeps native permission/config ownership and does not request Git bypass.",
+  "resourceBudget": "Root + one active worker; one heavy check; no extra agents initially.",
+  "effects": "source-only; existing publication/activation/data/common-permission fences retained"
+}

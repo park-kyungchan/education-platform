@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "academy.root-changed-source-sdk-control/1",
+  "observedAt": "2026-10-21T10:53:23.539481+00:00",
+  "consumerCommit": "1d72361428ec6e0356fb80d840959926819135c4",
+  "consumerTree": "78047897b870626123108fb57ebf269335e75dba",
+  "source": {
+    "queryCommit": "8f8c9bd61bd5e55445780b5569ecc40effcecef6",
+    "runtime": "Bun1.4.3",
+    "actor": "Root authorized tools path; not native author environment or installed/live integration"
+  },
+  "command": [
+    "/usr/local/bin/bun",
+    "test",
+    "--preload",
+    "./tests/network-deny.ts",
+    "tests/teacher-report.test.ts",
+    "tests/teacher-tools-mcp.test.ts",
+    "tests/teacher-response-contract.test.ts"
+  ],
+  "cwd": "/home/palantirkc/worktrees/academy-consumer-integration-20261021/tools/academy-mcp",
+  "elapsedSeconds": 11.028091469022911,
+  "exitCode": 0,
+  "stdout": "bun test v1.4.3 (c6da4a4d3)\n{\"measurement\":\"teacher-near-cap-result-and-frame\",\"resultBytes\":524286,\"frameBytes\":524321,\"frameOverheadBytes\":35,\"frameAccepted\":true,\"universalFrameCapClaim\":false}\n",
+  "stderr": "\ntests/teacher-response-contract.test.ts:\n(pass) F1 actual SDK/wire invalid inputs stay fixed-size before either tool handler, without caller-key echo [395.04ms]\n(pass) F2 canonical sibling problems and separate branches render only their actual parent paths [126.50ms]\n(pass) F3 canonical print/distribution observations remain independent and issuance-bound [281.66ms]\n(pass) F4 actual canonical report keeps teacher-reported, recorded, stage-observed and query-retrieved clocks separate across academy date boundary [127.25ms]\n(pass) actual SDK/wire retains Unicode pages, canonical refusals/drift and source guards without stdio child startup [794.52ms]\n(pass) near-cap accepted CallToolResult stays within512KiB while its separately measured JSONRPC frame may exceed it [1179.50ms]\n\ntests/teacher-report.test.ts:\n(pass) qualified loader requires explicit exact source root; no default/auth discovery [40.91ms]\n(pass) canonical projections render original100, explicit similar assignment and unknowns without second reducer [59.76ms]\n(pass) scoped final survives old low score; cancellation/replacement and distinct attempts remain separate [58.64ms]\n(pass) teacher corrections follow exact canonical unit/activity, preserve prior completion refs and missing edition [0.38ms]\n(pass) class occurrence scope preserves raw fields and multiple occurrences; no inferred attendance or full roster [34.03ms]\n(pass) full report paging is bounded and cursor binds snapshot, selector, format and caller [1779.93ms]\n(pass) a single oversized report line is refused without skipping; later report caller change invalidates continuation [347.16ms]\n\ntests/teacher-tools-mcp.test.ts:\n(pass) real SDK production discovery/schema and canonical Unicode pages reconstruct without loss [805.53ms]\n(pass) real SDK Korean report pages are individually bounded and include explicit continuation to final section [3113.36ms]\n(pass) real SDK reports refuse malformed, snapshot/caller drift, auth refusal and transport errors without echoing source errors [1700.31ms]\n\n 16 pass\n 0 fail\n 523 expect() calls\nRan 16 tests across 3 files. [11.01s]\n",
+  "stdoutSha256": "2737487f11079dafd8cae7af73a646f447e45e91a21451595caf748749d8fa6b",
+  "stderrSha256": "b813d68d907e2756fc62ced443c7903df89e1b6ad5c46454d95606a2f3b533df",
+  "sourceStillExact": true,
+  "originalObservations": "Immutable originalCON02R1 SDKfailures and changed-source authorrepairR1 type/fixturefailure plus focusedR2 correction retained. This new control does not overwrite or authenticate native behavior.",
+  "scope": "Existing and repaired canonical report/source guards plus actualSDKproduction registration/stdioserver and in-processSDK/wirecodec boundary regressions; invented fixtures only.",
+  "callToolResultLimitBytes": 524288,
+  "universalJsonRpcFrameLimitClaimed": false,
+  "privateOriginalReads": false,
+  "nativeActivation": false,
+  "sourceAcquisition": false
+}

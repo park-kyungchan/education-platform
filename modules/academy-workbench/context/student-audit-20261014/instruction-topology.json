@@ -1,0 +1,147 @@
+{
+  "schemaVersion": "academy.instruction-topology/1",
+  "domainId": "academy-operations",
+  "projectId": "academy-workbench",
+  "executionAuthority": "none",
+  "executionEnabled": false,
+  "environmentConstraint": "dot_cloud",
+  "directives": [
+    {
+      "id": "cloud-filesystem",
+      "kind": "environment_constraint",
+      "sourceMessageId": "Sentinel_fc46ffc302088191964a9039b4b0ebda",
+      "issuedAt": "2026-10-13T22:54:47.652003Z",
+      "scope": "academy",
+      "supersedes": []
+    },
+    {
+      "id": "five-student-scope",
+      "kind": "task_scope",
+      "sourceMessageId": "Sentinel_07d34e76c3f48191958ba6660c33b0db",
+      "issuedAt": "2026-10-14T07:35:00.555115Z",
+      "scope": "academy",
+      "supersedes": []
+    },
+    {
+      "id": "normal-read-routes",
+      "kind": "source_semantics",
+      "sourceMessageId": "Sentinel_02fc2212622c8191830c5e10802233cc",
+      "issuedAt": null,
+      "scope": "academy",
+      "supersedes": []
+    },
+    {
+      "id": "typed-topology-migration",
+      "kind": "migration_gate",
+      "sourceMessageId": "Sentinel_7f997e6dfd7c81919cd2bef2279ec16a",
+      "issuedAt": null,
+      "scope": "academy",
+      "supersedes": []
+    },
+    {
+      "id": "portable-no-sites",
+      "kind": "task_scope",
+      "sourceMessageId": "Sentinel_17a3d32dc61c8191826e267d9f6e143b",
+      "issuedAt": null,
+      "scope": "academy",
+      "supersedes": []
+    }
+  ],
+  "routes": [
+    {
+      "id": "assessment-name-enter",
+      "owner": "academy",
+      "purpose": "assessment",
+      "environment": "dot_cloud",
+      "operation": "query",
+      "interaction": "name_enter",
+      "target": "student_assessment_results",
+      "resultKind": "StudentNameSearch",
+      "requires": [
+        "existing_session",
+        "verified_student_scope",
+        "observed_official_route"
+      ],
+      "fallbacks": [
+        "assessment-official-menu"
+      ],
+      "sideEffects": "read_only"
+    },
+    {
+      "id": "assessment-official-menu",
+      "owner": "academy",
+      "purpose": "assessment",
+      "environment": "dot_cloud",
+      "operation": "query",
+      "interaction": "official_menu",
+      "target": "student_assessment_results",
+      "resultKind": "TestPageList",
+      "requires": [
+        "existing_session",
+        "verified_student_scope",
+        "observed_official_route"
+      ],
+      "fallbacks": [],
+      "sideEffects": "read_only"
+    },
+    {
+      "id": "daily-test-filter-enter",
+      "owner": "academy",
+      "purpose": "daily_test",
+      "environment": "dot_cloud",
+      "operation": "query",
+      "interaction": "filter_enter",
+      "target": "student_daily_test_results",
+      "resultKind": "DtResultSearch",
+      "requires": [
+        "existing_session",
+        "verified_student_scope",
+        "observed_official_route"
+      ],
+      "fallbacks": [],
+      "sideEffects": "read_only"
+    },
+    {
+      "id": "video-review-menu",
+      "owner": "academy",
+      "purpose": "video_review",
+      "environment": "dot_cloud",
+      "operation": "query",
+      "interaction": "official_menu",
+      "target": "student_video_review",
+      "resultKind": "WebUnPreStudy",
+      "requires": [
+        "existing_session",
+        "verified_student_scope",
+        "observed_official_route"
+      ],
+      "fallbacks": [],
+      "sideEffects": "read_only"
+    },
+    {
+      "id": "daily-record-menu",
+      "owner": "academy",
+      "purpose": "daily_record",
+      "environment": "dot_cloud",
+      "operation": "query",
+      "interaction": "official_menu",
+      "target": "student_daily_record",
+      "resultKind": "DayRecord",
+      "requires": [
+        "existing_session",
+        "verified_student_scope",
+        "observed_official_route"
+      ],
+      "fallbacks": [],
+      "sideEffects": "read_only"
+    }
+  ],
+  "deliveryContract": {
+    "sourceMessageId": "Sentinel_1f7f4676879c81919e8b9a5e563a2b64",
+    "finalOutput": "app_frontend_only",
+    "standaloneHtmlExport": false,
+    "zipDelivery": false,
+    "automaticArtifactFallback": false,
+    "interviewAndProgressMessagesAllowed": true
+  }
+}

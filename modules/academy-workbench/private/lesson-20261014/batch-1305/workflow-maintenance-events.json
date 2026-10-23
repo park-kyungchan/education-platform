@@ -1,0 +1,40 @@
+[
+  {
+    "id": "Sentinel_b2d5d1bcbb008191821bb1997eb4cf97",
+    "sourceKind": "user_workflow_requirement",
+    "recordedAt": "2026-10-14T12:46:56.145612+00:00",
+    "eventAt": null,
+    "sourceText": "연결 계속 시도하고있어? 그리고 23:30에 나에게 알림 줘야한다. 향후 이것을 유지/보수/확장 고려해서 개별학생 DB에 계속 감사/추적 가능하도록 할 것이다. 너는 repo 중심으로 공통하네스 적용해서 모든 작업을 진행해라.",
+    "scope": "student_scoped_academy_audit_and_common_harness",
+    "facts": [
+      {
+        "kind": "student_database_audit_requirement",
+        "status": "required_not_runtime_database_implemented",
+        "separateEventCategories": [
+          "homework_schedule",
+          "student_answer_entry_observation",
+          "teacher_final_judgment",
+          "server_persistence_receipt",
+          "reminder_schedule",
+          "reminder_delivery_receipt"
+        ]
+      },
+      {
+        "kind": "reminder_scheduled",
+        "scheduledFor": "2026-10-15T23:30:00+09:00",
+        "automationId": "6acf797013988191b92fbd70940fc6d8",
+        "evidence": "parent_report_of_successful_creation",
+        "delivered": "not_observed",
+        "studentSubmissionChecked": "not_implied",
+        "duplicateCreationProhibited": true
+      },
+      {
+        "kind": "repository_common_harness_requirement",
+        "status": "existing_pinned_consumer_contract_to_be_reused",
+        "newAuthorityGranted": false
+      }
+    ],
+    "publicationStatus": "local_only_pending_next_batch",
+    "externalWritePerformed": false
+  }
+]

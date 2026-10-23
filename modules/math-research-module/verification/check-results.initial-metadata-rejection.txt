@@ -1,0 +1,119 @@
+$ bun run check && bun run check:identity && bun run check:context && bun run check:harness
+$ bun run check:source && bun run typecheck && bun run check:research && bun run check:secrets && bun run test && bun run build && bun run test:server
+$ bun scripts/verify-source.ts
+PASS source integrity: {"archiveFiles":109,"manifestEntries":108,"admittedFiles":4}
+$ tsc --noEmit
+$ bun scripts/validate-research.ts
+PASS domain structure {"types":151,"core":105,"connected":46,"originalExamples":170,"microActions":1216,"capabilityCandidates":28,"mappings":105}
+$ bun scripts/scan-secrets.ts
+PASS scoped secret/nonportable-code scan: 223 text files. Heuristic scan, not a security certification.
+$ bun test tests/*.test.ts && bun scripts/test-dom.ts
+bun test v1.4.2 (744846f84)
+
+tests/source-integrity.test.ts:
+(pass) source plus its inner manifest cannot be silently rewritten [57.95ms]
+(pass) capability mapping bytes are included in fixed source admission [48.74ms]
+
+tests/structure.test.ts:
+(pass) research structure, distinct from mathematical validation > 151/105/46 types, 170 originals, 1216 actions, 28 candidates [1.69ms]
+(pass) research structure, distinct from mathematical validation > rejects a broken design link [2.01ms]
+(pass) research structure, distinct from mathematical validation > rejects an invented capability [4.39ms]
+(pass) research structure, distinct from mathematical validation > rejects conflating task analysis with student observation [1.16ms]
+
+ 6 pass
+ 0 fail
+ 6 expect() calls
+Ran 6 tests across 2 files. [226.00ms]
+PASS persistent ancestors, all siblings, five levels, sibling navigation, stale descendant cleanup, related origin retention and return, upper answer.
+PASS action UI: 16 persistent selectable steps, all detailed fields, source links, disclosure reset and end controls.
+PASS 151 research records and 1216 action steps rendered with exact prompts/answers, source links, disclosure defaults, persistent step selection, and upper-grade warning.
+$ bun scripts/build.ts
+Built 2 bundled assets; no host SDK or external font requests required.
+$ bun scripts/test-server.ts
+PASS HTTP smoke: Korean HTML, JS/CSS/font, security headers, 404 private source, traversal/method guards, HEAD. Browser rendering remains a separate check.
+$ node --test research/identity-pilot/tests/*.test.ts && node research/identity-pilot/scripts/check-sources.ts
+✔ positive: complete synthetic fixture obeys structural and semantic contract (9.998871ms)
+✔ positive: generated JSON Schema equals the module source (0.595281ms)
+✔ positive: 3 fixtures do not claim any real learner diagnosis or all 105 types (0.153677ms)
+✔ positive: random issuer produces 2,000 module-local unique opaque identities (3.103501ms)
+✔ positive: issuer detects collision before retrying (0.192575ms)
+✔ negative: issuer rejects malformed and semantic path IDs (0.234677ms)
+✔ negative: repeated collision has a finite failure and does not allocate (0.3177ms)
+✔ positive: research and common artifact ID domains are disjoint (0.227676ms)
+✔ negative: duplicate identity/version pair (10.801849ms)
+✔ negative: dangling semantic edge (8.536778ms)
+✔ negative: dangling evidence revision (6.802122ms)
+✔ negative: wrong DATA/LOGIC type layer (6.667142ms)
+✔ negative: supports edge domain/range cannot treat policy as observed evidence (10.072064ms)
+✔ negative: cross-layer strict parent edge is not admitted (6.735624ms)
+✔ negative: strict-parent is_a/part_of cycle (7.497641ms)
+✔ negative: prerequisite cycle (7.953395ms)
+✔ positive: cycles in uses relations remain valid in the full graph (5.580926ms)
+✔ positive: reclassification preserves identity and semantic meaning; adds immutable revision (9.222853ms)
+✔ negative: existing revision replacement remains forbidden even with new valid hash (19.653764ms)
+✔ negative: deleting a published revision is forbidden (19.148256ms)
+✔ negative: revision history cannot skip a version (7.518372ms)
+✔ negative: semantic core mutations invalidate hashes (9.873535ms)
+✔ positive: evidence and core changes produce a new version without erasing the prior claim (13.544566ms)
+✔ positive: teacher tone is dynamic while statement/evidence/status remain byte-equivalent (0.428955ms)
+✔ negative: presentation cannot override statement (3.629349ms)
+✔ negative: presentation cannot point to a mismatched core hash (12.144345ms)
+✔ negative: evidence claim without observation is not admitted (6.954508ms)
+✔ negative: hypotheses require an explicit probe/refutation route (7.729314ms)
+✔ negative: learner cognitive state cannot be declared established in structured data (7.171168ms)
+✔ negative: authorization policy is not native authority (15.050053ms)
+✔ negative: top-level native permission cannot be enabled by semantic schema (4.795794ms)
+✔ negative: acceptance record cannot be inferred from passing tests (7.098421ms)
+✔ negative: action event requires a separate action definition (7.604453ms)
+✔ negative: teacher/system actor identities cannot be conflated (6.974628ms)
+✔ positive: generic event and system event use separate IDs from action definitions (4.082059ms)
+✔ negative: malformed untrusted structures return issues rather than throwing (2.571404ms)
+✔ negative: duplicate relation IDs and triples (8.114133ms)
+✔ negative: duplicate harness IDs (7.387288ms)
+✔ negative: common Artifact ID prefix must agree with project and kind (7.162135ms)
+✔ negative: missing work artifact cannot be replaced with a research ID (6.252228ms)
+✔ negative: verification cannot serve as an acceptance decision (12.164514ms)
+✔ negative: independent decision is required for acceptedBy, even if kind is decision (6.412275ms)
+✔ negative: self-declared acceptance mirrors cannot manufacture actual acceptance (1.950265ms)
+✔ positive: work context IDs remain separate from common Artifact and research identities (0.143292ms)
+✔ positive: real source pins and original legacy pointers resolve without rewriting source (14.783629ms)
+✔ positive: hash is independent of object key insertion order, not semantic identity (0.248617ms)
+✔ negative: past typed-edge endpoints cannot silently change under the same edge ID (16.469793ms)
+✔ positive: classification topology change uses a new revision and edge while retaining old history (7.811976ms)
+✔ negative: observed event is an instance, not a subtype in is_a hierarchy (6.655916ms)
+✔ positive: source pins match bytes, actual artifact kinds, work IDs and original pointers (14.760174ms)
+✔ negative: changed harness source bytes invalidate the crosswalk (15.028521ms)
+✔ negative: a self-declared harness record absent from actual pinned bytes is rejected (16.705032ms)
+✔ negative: current Work pair must match its pinned context document (13.285293ms)
+✔ negative: legacy locator must resolve the recorded original ID (15.694146ms)
+✔ negative: source read errors are reported instead of inventing provenance (0.448183ms)
+✔ negative: Task-target Verification cannot imply research-revision verification without target/hash/criteria admission (12.216792ms)
+ℹ tests 56
+ℹ suites 0
+ℹ pass 56
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 575.550306
+PASS pinned source bytes, actual Artifact IDs/kinds, Work pair, legacy locators. Canonical common contract validation remains math-research-module check:harness; no actual acceptance admitted.
+$ bun scripts/check-context.ts
+{
+  "testsPassed": 15,
+  "coverage": "positive fixture and 14 adversarial data mutations; no semantic validity claim"
+}
+PASS selected user context: 77 preserved sources, 52 typed records, 11 checks; complete historical reconciliation is not claimed.
+$ bun scripts/check-harness.ts && bun test tests/harness
+4 | import { validatePinnedHarnessSources } from './check-harness-sources';
+5 | import { prepareContext } from './context-prepare';
+6 | const platform=await loadPlatform();
+7 | const records=JSON.parse(await readFile(resolve(moduleRoot,'harness/records.json'),'utf8'));
+8 | for(const record of records){const result=platform.validateArtifact(record);if(!result.valid)throw Error(`${record.id}: ${JSON.stringify(result.issues)}`);}
+9 | const references=platform.validateReferences(records);if(!references.valid)throw Error(JSON.stringify(references.issues));
+                                                                                     ^
+error: [{"code":"inapplicable-pass-evidence","path":"/artifacts/math-research-module:verification:standalone-harness-adoption-20261013/payload/criteria/0","message":"Passing criteria require successful evidence with no observed content mismatch."},{"code":"inapplicable-pass-evidence","path":"/artifacts/math-research-module:verification:standalone-harness-adoption-20261013/payload/criteria/1","message":"Passing criteria require successful evidence with no observed content mismatch."},{"code":"inapplicable-pass-evidence","path":"/artifacts/math-research-module:verification:standalone-harness-adoption-20261013/payload/criteria/2","message":"Passing criteria require successful evidence with no observed content mismatch."},{"code":"inapplicable-pass-evidence","path":"/artifacts/math-research-module:verification:standalone-harness-adoption-20261013/payload/criteria/3","message":"Passing criteria require successful evidence with no observed content mismatch."},{"code":"inapplicable-pass-evidence","path":"/artifacts/math-research-module:verification:standalone-harness-adoption-20261013/payload/criteria/4","message":"Passing criteria require successful evidence with no observed content mismatch."},{"code":"inapplicable-pass-evidence","path":"/artifacts/math-research-module:verification:standalone-harness-adoption-20261013/payload/criteria/5","message":"Passing criteria require successful evidence with no observed content mismatch."},{"code":"inapplicable-pass-evidence","path":"/artifacts/math-research-module:verification:standalone-harness-adoption-20261013/payload/criteria/6","message":"Passing criteria require successful evidence with no observed content mismatch."}]
+      at /workspace/scratch/3bd8c10a8771/implementation/math-research-module/scripts/check-harness.ts:9:82
+
+Bun v1.4.2 (Linux x64)
+error: script "check:harness" exited with code 1
+error: script "check:all" exited with code 1

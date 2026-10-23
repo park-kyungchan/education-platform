@@ -1,0 +1,217 @@
+{
+  "source_reference": "library-file:fde1_bGliZmlsZV9aZFJtUDh5RkFPaFhDZ2Y3eW9Ja0F3_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+  "source_sha256": "366fa05ec02f67288cea5c11655fa594d9747bd07374f405a5fd623c7f232e34",
+  "data": {
+    "type": "teacher_review_append_revision",
+    "collection_id": "ruhan-clinic-review-20261007-001",
+    "revision_id": "revision_0001",
+    "from_version": "1.0.0",
+    "to_version": "1.1.0",
+    "recorded_at_utc": "2026-10-07T05:12:38.375Z",
+    "base": {
+      "file_name": "이루한_100미만_교사대조_1.0.0.json",
+      "sha256": "efcb589fd93833c96b25d48f0bff63148ac7cc5ea481514b76a4dcff9d46016d"
+    },
+    "source_message_id": "Sentinel_5604726453208191a6df31cf9d3efe18",
+    "events": [
+      {
+        "event_id": "revision0001-event01",
+        "kind": "teacher_review_confirmed_complete",
+        "source": {
+          "message_id": "Sentinel_5604726453208191a6df31cf9d3efe18",
+          "actor": "user",
+          "recorded_at_utc": "2026-10-07T05:12:38.375Z",
+          "exact_relevant_text": "1~10번 오/클 완료"
+        },
+        "effective_at": null,
+        "target_numbers": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "target_paths": [
+          "original_wrong_review",
+          "similar_clinic_review"
+        ],
+        "payload": {
+          "state": "teacher_confirmed_complete",
+          "evidence_class": "user_confirmed",
+          "completed_at": null,
+          "completed_at_state": "not_supplied",
+          "scope": "both_original_wrong_and_similar_clinic"
+        }
+      },
+      {
+        "event_id": "revision0001-event02",
+        "kind": "completion_claim_scope_pending",
+        "source": {
+          "message_id": "Sentinel_5604726453208191a6df31cf9d3efe18",
+          "actor": "user",
+          "recorded_at_utc": "2026-10-07T05:12:38.375Z",
+          "exact_relevant_text": "12~19번 완료"
+        },
+        "effective_at": null,
+        "target_numbers": [
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19
+        ],
+        "payload": {
+          "completion_claim_state": "user_reported_complete",
+          "scope_state": "clarification_pending",
+          "original_wrong_review": "unknown",
+          "similar_clinic_review": "unknown",
+          "completed_at": null,
+          "completed_at_state": "not_supplied"
+        }
+      },
+      {
+        "event_id": "revision0001-event03",
+        "kind": "delivery_planned",
+        "source": {
+          "message_id": "Sentinel_5604726453208191a6df31cf9d3efe18",
+          "actor": "user",
+          "recorded_at_utc": "2026-10-07T05:12:38.375Z",
+          "exact_non_sensitive_spans": [
+            "11번은 오늘 결석이라서 프린트를",
+            "전달할 예정",
+            "16:00정도에 가지러 오심"
+          ]
+        },
+        "effective_at": null,
+        "target_numbers": [
+          11
+        ],
+        "payload": {
+          "plan_state": "planned",
+          "teacher_review_state": "unknown",
+          "remediation_path_scope": "clarification_pending",
+          "print_existence": "unknown",
+          "receiver_role": "guardian",
+          "service_date": "2026-10-07",
+          "pickup_at_local": "2026-10-07T16:00:00+09:00",
+          "pickup_at_utc": "2026-10-07T07:00:00Z",
+          "pickup_timezone": "Asia/Seoul",
+          "pickup_precision": "approximate",
+          "delivered_at": null,
+          "attendance_context": {
+            "date": "2026-10-07",
+            "state": "user_reported_absent",
+            "reason": null
+          }
+        }
+      },
+      {
+        "event_id": "revision0001-event04",
+        "kind": "print_delivery_plan_invalid_reference",
+        "source": {
+          "message_id": "Sentinel_5604726453208191a6df31cf9d3efe18",
+          "actor": "user",
+          "recorded_at_utc": "2026-10-07T05:12:38.375Z",
+          "exact_non_sensitive_spans": [
+            "21+22번",
+            "오늘 프린트해서",
+            "전달할 예정"
+          ]
+        },
+        "effective_at": null,
+        "target_numbers": [
+          21,
+          22
+        ],
+        "payload": {
+          "stated_reference": "21+22",
+          "reference_state": "invalid_reference",
+          "existing_number_mentions": [
+            21
+          ],
+          "invalid_number_mentions": [
+            22
+          ],
+          "remap_to_20_21": false,
+          "corrected_target_numbers": null,
+          "clarification_state": "pending",
+          "plan_state": "planned_target_resolution_pending",
+          "receiver_role": "guardian",
+          "service_date": "2026-10-07",
+          "printed_at": null,
+          "delivered_at": null,
+          "actual_printing_evidence": "unknown"
+        }
+      },
+      {
+        "event_id": "revision0001-event05",
+        "kind": "book_distribution_and_prestudy_planned",
+        "source": {
+          "message_id": "Sentinel_5604726453208191a6df31cf9d3efe18",
+          "actor": "user",
+          "recorded_at_utc": "2026-10-07T05:12:38.375Z",
+          "exact_non_sensitive_spans": [
+            "다음주 수요일에 올 예정",
+            "가우스 1-2-4 교재 배부 예정",
+            "소단원은 1개 예습해오라고 할 것임"
+          ]
+        },
+        "effective_at": null,
+        "payload": {
+          "plan_state": "planned",
+          "planned_return_date": "2026-10-14",
+          "return_date_state": "tentative",
+          "book_display_name": "가우스 1-2-4",
+          "actual_book_distribution_at": null,
+          "physical_edition_state": "unverified",
+          "prestudy_count": 1,
+          "declared_unit_kind": "소단원",
+          "exact_unit_refs": null,
+          "first_subunit_selected": "unknown",
+          "assignment_state": "planned_not_confirmed_assigned",
+          "assignment_due_at": null
+        }
+      },
+      {
+        "event_id": "revision0001-event06",
+        "kind": "davinci_homework_scope_planned",
+        "source": {
+          "message_id": "Sentinel_5604726453208191a6df31cf9d3efe18",
+          "actor": "user",
+          "recorded_at_utc": "2026-10-07T05:12:38.375Z",
+          "exact_relevant_text": "나머지는 다빈치 1-1에서 소단원 6개정도 해오도록 할 것이다."
+        },
+        "effective_at": null,
+        "payload": {
+          "plan_state": "planned",
+          "book_display_name": "다빈치 1-1",
+          "declared_unit_kind": "소단원",
+          "declared_count": 6,
+          "count_precision": "approximate",
+          "mapped_unit_kind": null,
+          "exact_targets": null,
+          "target_meaning_state": "clarification_pending",
+          "assignment_state": "planned_not_confirmed_assigned",
+          "assignment_due_at": null
+        }
+      }
+    ],
+    "authority": {
+      "source": "exact_user_statement_provided_in_parent_transcript_evidence",
+      "actor": "user"
+    },
+    "privacy": {
+      "receiver_identity_retained": false,
+      "receiver_role": "guardian",
+      "unnecessary_health_details_retained": false
+    }
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "academy-operations",
+  "projectId": "academy-workbench",
+  "workId": "academy-consumer-integration-20261021",
+  "kind": "input",
+  "id": "CON-02-ADMISSION-R1",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "root-academy-orchestrator",
+    "locator": "root-admission:consumer-implementation-after-exact-baseline-adoption",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "createdAt": "2026-10-21T09:59:03.987600+00:00",
+    "sourceBase": "e2fc8c8832b9c759933751ed8031ad5c24a07c98",
+    "admittedTaskId": "academy-workbench:task:academy-consumer-integration-20261021-con-02",
+    "sourceOnly": true,
+    "qualifiedPrerequisites": [
+      "CON-01 completed/passed/result-durable at73af2aa; Root snapshot+transition valid",
+      "CON-QRY02-QUALIFICATION-R1 receiver gate complete",
+      "CON-BASELINES-ADOPTION-R1 exact23blobs at e2fc8c8; source snapshot+transition valid"
+    ],
+    "canonicalSourceBinding": {
+      "repositoryRoot": "/home/palantirkc/worktrees/academy-query-integration-20261021",
+      "commit": "8f8c9bd61bd5e55445780b5569ecc40effcecef6",
+      "tree": "ccb0fc6302f664abe069086881961cec99cf2d85",
+      "files": [
+        {
+          "path": "apps/academy/dc-gang-a/src/academy/contracts/retainedQuery.ts",
+          "sha256": "390d83478a73afdcc0863b75c5b013ca9e065deb25c763cf2f19622caf9a9965"
+        },
+        {
+          "path": "apps/academy/dc-gang-a/src/academy/retainedQueryClient.ts",
+          "sha256": "c458e74bce4ef63530c5480e2148646cacd81f5ceeb56ed1ec6570823b26288d"
+        },
+        {
+          "path": "apps/academy/dc-gang-a/src/academy/retainedQueryValidation.ts",
+          "sha256": "b5c1c09cd288a6d380776dbd67acb0b78b49cc125c020f7517f771d27b81ad9d"
+        }
+      ]
+    },
+    "resolutionStrategy": {
+      "ownership": "Education remains canonical query contract/reconstruction/validation owner; Workbench owns consumer/tool/presentation glue only.",
+      "implementation": "Caller explicitly supplies a qualified source root and authenticated fetchPage or canonical module capabilities. Load the exact pinned retainedQueryClient/retainedQueryValidation implementation after source readback; no copied reducer or separately implemented wire validator. A source binding loader may verify Git HEAD and the three explicit dependency file hashes before dynamic import.",
+      "dependencyClosure": "These browser-safe modules import only the three pinned modules listed; source root configuration remains caller-owned and explicit. Do not modify native configuration or auto-discover credentials.",
+      "portability": "Current local source resolution is a qualified local composition boundary, not package publication or installed native capability. Future packaging remains an explicit gap.",
+      "authentication": "Authenticated fetchPage supplied by source owner/caller. No invented native login or credential selection; synthetic production-path injected transport only in this task."
+    },
+    "allowedWrites": [
+      "tools/academy-mcp/src/teacher-*.ts and dedicated owner-local source-binding glue",
+      "tools/academy-mcp/tests/teacher-*.ts and synthetic fixtures",
+      "Owned architecture/academy-consumer-integration/**",
+      "Own canonical Work records; NEW immutable Inputs only"
+    ],
+    "requiredOutcomes": [
+      "Register academy_teacher_query one canonical retained page and separately bounded hierarchy report, reuse shared toolResult full SDK byte accounting.",
+      "Render date/class/student -> day flow -> exact book/edition/unit/activity -> homework/direction, provenance and explicit uncertainty; follow selected report contract. No second domain reducer.",
+      "Preserve omitted facets/lesson-only saved observation advisory and saved-vs-canonical scope boundaries.",
+      "Use real SDK/shared production registration tests with injected synthetic fetchPage; validate tools/list/request schema, all pages/Unicode/no loss/refusal/malformed response/snapshot or caller drift, bounded page/report results, distinct attempts and stages, teacher-final/cancel/replacement/unknown cases.",
+      "Source-checkpoint CON-02 with separate result and Verification Inputs, verification target and exact result artifact hash pins. No nativeExecution field on source-only Task."
+    ],
+    "holds": [
+      "CON-03 until VER-02 receiver qualification and Root admission",
+      "Root shared package/CI/scripts/source-map manifests and common dependency pins",
+      "No private source data reads/writes, source acquisitions, print/send, publication/merge/deploy/native activation",
+      "No common/native permission/config/credential/session changes, global skill edits, third-session messages or Markdown"
+    ],
+    "operatorProtocol": "Root owns Git staging/commits and frozen dependencies. No install/Git approval prompts. At bounded checkpoint report READY_FOR_ROOT_SOURCE_CHECKPOINT with exact paths, tests/limits and wait. One owned worker plus Root; no extra panes/agents/Goal.",
+    "sdkHistory": {
+      "childOriginal": "7pass2CONNECTION_CLOSED preserved unchanged; exact cause unknown",
+      "rootRecheck": "same frozen df8b9f7/Bun1.4.3 real SDK synthetic suite9pass0fail135assertions",
+      "interpretation": "Do not rewrite R1 failure or assert source defect/resolution cause from one environment. New consumer SDK checks still required."
+    }
+  }
+}

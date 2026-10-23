@@ -1,0 +1,200 @@
+{
+  "schemaVersion": "academy.sanitized-business-decisions/1.0.0",
+  "preparedAt": "2026-10-13",
+  "purpose": "Portable business semantics, rewritten without private subjects or source conversations",
+  "authorityGranted": false,
+  "containsStudentData": false,
+  "provenanceMode": "generalized_handoff_summary; original private messages and identifiers omitted",
+  "decisions": [
+    {
+      "id": "workbench-purpose",
+      "kind": "purpose",
+      "status": "active",
+      "statement": "학원 원천 시스템을 대체하기보다 강사와 직원의 학생·수업·교재 업무를 한 실무 화면에 연결한다.",
+      "implementationImplication": "Begin with a single-instructor pilot; expand only after scoped validation.",
+      "executionAuthority": "none"
+    },
+    {
+      "id": "context-before-action",
+      "kind": "purpose",
+      "status": "active",
+      "statement": "업무 데이터, 사용자 목적, 판단 근거와 작업 효과를 연결해 재사용 가능한 TypeScript/typed JSON 계약으로 관리한다.",
+      "implementationImplication": "Business context describes meaning and never supplies execution authority.",
+      "executionAuthority": "none"
+    },
+    {
+      "id": "freshness",
+      "kind": "business_rule",
+      "status": "active",
+      "statement": "실시간은 필요할 때 학생별로 빠르게 갱신하고 그 조회 시점의 상태를 확인하는 뜻이다.",
+      "implementationImplication": "Keep requestedAt, queriedAt, observedAt, occurredAt and lastSuccessfulAt separate; retain per-domain partial failures.",
+      "executionAuthority": "none"
+    },
+    {
+      "id": "dynamic-work",
+      "kind": "business_rule",
+      "status": "active",
+      "statement": "활동 종류, 학생별 배정 범위, 실제 수행과 교사에게 남은 확인은 독립적으로 기록한다.",
+      "implementationImplication": "Do not force all students into one fixed linear activity timeline.",
+      "executionAuthority": "none"
+    },
+    {
+      "id": "assignment-scope",
+      "kind": "business_rule",
+      "status": "active",
+      "statement": "숙제 범위를 먼저 확정하고 그 범위의 예습영상·필기·풀이·앱 입력·채점·오답수정·교사 검토를 연결한다.",
+      "implementationImplication": "Older activity outside the assignment is not evidence that a newer assignment is complete.",
+      "executionAuthority": "none"
+    },
+    {
+      "id": "evidence-states",
+      "kind": "business_rule",
+      "status": "active",
+      "statement": "관찰됨, 조회 범위 내 미관찰, 앱 기록 대상 아님, 매핑 불명과 실제 섹션 존재 미검증을 구별한다.",
+      "implementationImplication": "Empty fields or a score do not establish full-unit completion.",
+      "executionAuthority": "none"
+    },
+    {
+      "id": "book-identity",
+      "kind": "business_rule",
+      "status": "active",
+      "statement": "교재명·학년·학기·권·판본·코드·원문 라벨과 실제 목차 위계를 보존한다.",
+      "implementationImplication": "Do not invent hierarchy levels or equate subunits with lesson counts.",
+      "executionAuthority": "none"
+    },
+    {
+      "id": "correction-history",
+      "kind": "business_rule",
+      "status": "active",
+      "statement": "명시적인 정정은 해당 범위와 속성에만 적용하고 철회된 설명을 과거 근거로 보존한다.",
+      "implementationImplication": "Do not propagate corrected names, times, assignments or identities to unrelated entities.",
+      "executionAuthority": "none"
+    },
+    {
+      "id": "assessment-identities",
+      "kind": "business_rule",
+      "status": "active",
+      "statement": "원시험지·학생 응시·채점결과·오답 집합·유사 생성물·인쇄본·배부·수행·교사 검토를 별개 대상으로 식별한다.",
+      "implementationImplication": "Require scoped joining evidence and versioned membership.",
+      "executionAuthority": "none"
+    },
+    {
+      "id": "perfect-score",
+      "kind": "business_rule",
+      "status": "active",
+      "statement": "검증된 해당 평가 100점은 오답·유사클리닉 기본 대상에서 제외한다. 교사의 명시적인 해당 범위 예외 요청은 따로 기록한다.",
+      "implementationImplication": "Score alone proves neither correction, teacher review, print nor distribution.",
+      "executionAuthority": "none"
+    },
+    {
+      "id": "zero-wrong-review",
+      "kind": "business_rule",
+      "status": "active",
+      "statement": "오답이 없고 교사 확인이 있을 때 해당 재풀이를 해당 없음으로 종료할 수 있다.",
+      "implementationImplication": "A zero count alone does not close teacher review.",
+      "executionAuthority": "none"
+    },
+    {
+      "id": "print-snapshot",
+      "kind": "business_rule",
+      "status": "active",
+      "statement": "실제 인쇄한 프린트의 구성·라벨·순서와 원본을 보존한다. 유사클리닉을 다시 생성한 배열로 역사적 인쇄본을 교체하지 않는다.",
+      "implementationImplication": "A generated PDF, open print dialog or current server grading does not prove past physical printing.",
+      "executionAuthority": "none"
+    },
+    {
+      "id": "clinic-cycle",
+      "kind": "business_rule",
+      "status": "active",
+      "statement": "예습 풀이·앱 채점·오답/유사 자료 준비·인쇄·배부·학생 풀이·교사 채점·보완 확인을 각각 추적한다.",
+      "implementationImplication": "Retain physical-paper evidence separately from source-site completion fields.",
+      "executionAuthority": "none"
+    },
+    {
+      "id": "dailytest-meaning",
+      "kind": "business_rule",
+      "status": "active",
+      "statement": "소단원 DailyTest와 Daily Restudy 교재 섹션을 같은 대상으로 합치지 않는다.",
+      "implementationImplication": "Retain assessment-kind identity and edition-specific structure.",
+      "executionAuthority": "none"
+    },
+    {
+      "id": "paper-only-scope",
+      "kind": "business_rule",
+      "status": "active",
+      "statement": "앱 기록 대상이 아닌 것으로 확인된 정확한 과제/섹션은 앱 기록 부재로 미수행 판정하지 않는다.",
+      "implementationImplication": "A scoped exception is not a blanket exemption from correction review.",
+      "executionAuthority": "none"
+    },
+    {
+      "id": "dailyrecord-projection",
+      "kind": "output_rule",
+      "status": "active",
+      "statement": "학부모 일지는 실제 진행한 범위인 진도, 이후 수행할 범위·기한인 숙제, 보호자에게 필요한 일정·준비물·특이사항인 메모로 구성한다.",
+      "implementationImplication": "Internal teaching plans and print-delivery instructions remain in teacher handoff.",
+      "executionAuthority": "none"
+    },
+    {
+      "id": "dailyrecord-filter",
+      "kind": "output_rule",
+      "status": "active",
+      "statement": "내부 채점·완료·교사확인 상태나 시간 부족 설명을 학부모 진도 문안으로 노출하지 않는다.",
+      "implementationImplication": "Excluded internal language must not be automatically moved into parent memo.",
+      "executionAuthority": "none"
+    },
+    {
+      "id": "dailyrecord-format",
+      "kind": "output_rule",
+      "status": "active",
+      "statement": "각 내용 항목은 하이픈과 공백으로 시작하고 항목별로 줄을 바꾼다.",
+      "implementationImplication": "Compare the current official saved document before replacing user-edited content.",
+      "executionAuthority": "none"
+    },
+    {
+      "id": "communication-states",
+      "kind": "business_rule",
+      "status": "active",
+      "statement": "초안·교사 검토·서버 저장·학부모 실제 발송은 독립 상태로 관리한다.",
+      "implementationImplication": "No draft or historical action grants permission to send.",
+      "executionAuthority": "none"
+    },
+    {
+      "id": "schedule-attendance",
+      "kind": "business_rule",
+      "status": "active",
+      "statement": "정기 등록 요일·부 편성과 날짜별 실제 출결을 구분하며 합반해도 개인별 진도는 유지한다.",
+      "implementationImplication": "A timetable or accepted makeup handoff does not establish attendance or completed teaching.",
+      "executionAuthority": "none"
+    },
+    {
+      "id": "cloud-direction",
+      "kind": "purpose",
+      "status": "active",
+      "statement": "특정 학원 PC 의존을 줄이고 클라우드 중심의 반복 가능한 조회와 캐시를 지향한다.",
+      "implementationImplication": "This is a direction, not evidence that cloud authentication or every native workflow already works.",
+      "executionAuthority": "none"
+    },
+    {
+      "id": "scope-priority",
+      "kind": "scope",
+      "status": "active",
+      "statement": "학원 실무와 백엔드·데이터 구조의 안정화를 우선하고 별도 모바일 프로젝트와 깊은 학습평가 모형 확장은 후순위로 둔다.",
+      "implementationImplication": "Responsive preview support is not a renewed instruction to implement a separate mobile app.",
+      "executionAuthority": "none"
+    },
+    {
+      "id": "workday-preparation-reminders",
+      "kind": "business_rule",
+      "status": "active",
+      "statement": "확인된 실제 본인 수업일에 설정된 출근 시각을 기준으로 예습을 점검한다. 다른 교사가 맡은 보강은 후속 감사와 결과 확인으로 구분한다.",
+      "implementationImplication": "Require evidence-backed dated teaching sessions and caller-configured workdayReminders time/timeZone; weekday patterns alone do not establish a teaching day. No reminder is created by the pure decision helper.",
+      "executionAuthority": "none"
+    }
+  ],
+  "openQuestions": [
+    "Which independent deployment and authentication provider will be selected?",
+    "Which exact source domains and response contracts are authorized and verified for the first read-only slice?",
+    "What evidence supports source retention duration and cross-query consistency?",
+    "What historical print artifacts remain available when generated similar items can change?"
+  ]
+}

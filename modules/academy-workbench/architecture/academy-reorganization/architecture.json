@@ -1,0 +1,225 @@
+{
+  "schemaVersion": "academy.target-architecture/1",
+  "status": "proposal-awaiting-architecture-approval",
+  "scope": {
+    "objective": "Reorganize academy repositories and autonomous execution around evidence-qualified canonical modules, stable identities, environment-specific native harnesses and accountable Work ownership, preserving existing owners and completed work.",
+    "successCriteria": [
+      "Measured scoped host, container, source, worktree and runtime capabilities have explicit source pins and unknowns.",
+      "Repository/module canonical ownership, dependency rules and consumer migration are reviewable and preserve historical references.",
+      "Identity continuity, Work/Task DAG, single-tab accountability, shared-resource serialization and review gates are explicit.",
+      "A separately approved independent Astra/xhigh review guides staged implementation and meaningful verification.",
+      "Implementation, source verification, integration, native activation and teacher/user acceptance remain distinct."
+    ],
+    "inScope": [
+      "Read-only academy-related infrastructure/source/runtime survey.",
+      "Typed English architecture, canonical local Work records and approval-first independent review design.",
+      "After architecture approval and review disposition, staged source implementation using existing maintained owners."
+    ],
+    "outOfScope": [
+      "Publication, PR, merge, deployment, native activation, real student writes, prints or sends under the retained hold.",
+      "Common contract, permission or unrelated Work changes without separate owner/user approval.",
+      "Credential inspection, private student original ingestion into architecture, source retirement or native loop replacement.",
+      "Taking over research/Ontology/Wiki semantics or unrelated runtime lifecycle."
+    ]
+  },
+  "acceptedDirection": {
+    "preserveOwners": true,
+    "wholeTargetBeforeWorkflowReplacement": true,
+    "businessNavigation": [
+      "business-date",
+      "class-cohort",
+      "student",
+      "book-edition",
+      "unit",
+      "activity-occurrence"
+    ],
+    "firstProductOutcome": "Teacher-reviewed state management, preparation and existing native execution handoff across seven internal workflows.",
+    "currentPhase": "source-only survey and architecture; no review dispatch yet"
+  },
+  "modules": [
+    {
+      "id": "common-contracts",
+      "repository": "agent-platform",
+      "path": "packages/work-continuity + packages/ontology + packages/operational-context",
+      "responsibility": "Work/identity/dependency/continuity/evidence/verification semantics",
+      "observedState": "canonical-existing",
+      "boundary": "Do not fork, silently upgrade pins or create another native loop."
+    },
+    {
+      "id": "academy-domain",
+      "repository": "education-platform",
+      "path": "apps/academy/gang-a/packages/domain + packages/application; dc-gang-a/src/assessment, learning, textbooks",
+      "responsibility": "Qualified student/book/occurrence state, teacher decisions and workflow rules",
+      "observedState": "existing-modules-with-overlap-to-qualify",
+      "boundary": "Choose exact per-capability canonical function after compatibility inventory; do not invent a new universal domain package."
+    },
+    {
+      "id": "academy-source-ports",
+      "repository": "education-platform",
+      "path": "apps/academy/gang-a/packages/ports + adapters; dc-gang-a/src/lms",
+      "responsibility": "Source-specific observations, admission, source clocks and scoped response contracts",
+      "observedState": "implemented-partial-live-unverified",
+      "boundary": "Retain external originals and current auth/DB owners; context locators do not admit full bodies."
+    },
+    {
+      "id": "academy-context",
+      "repository": "academy-workbench",
+      "path": "context/academy-context at ad42d07",
+      "responsibility": "Discovery/current decisions/reference selection and workflow designs",
+      "observedState": "reviewed-local-not-integrated",
+      "boundary": "Import only reviewed metadata/contracts after compatibility checks; no student body migration."
+    },
+    {
+      "id": "academy-consumers",
+      "repository": "academy-workbench",
+      "path": "tools/academy-mcp at df8b9f7; app/standalone; report skill",
+      "responsibility": "MCP, screen and report consume common qualified state via adapters",
+      "observedState": "saved-mcp-and-synthetic-app-distinct",
+      "boundary": "Replace duplicated business interpretation after contract parity; preserve partial/unavailable states."
+    },
+    {
+      "id": "research-semantics",
+      "repository": "math-research-module",
+      "path": "Existing owner-qualified research context, identity and chronology",
+      "responsibility": "Research/assessment meaning and final-selection evidence",
+      "observedState": "independent-owner-retained",
+      "boundary": "Research Lead retains semantics and acceptance; new integration cannot override selection."
+    },
+    {
+      "id": "native-execution",
+      "repository": "native-runtime-owners",
+      "path": "Codex/Hermes native adapters and environment-specific admitted interfaces",
+      "responsibility": "Sessions/tools/dispatch/permissions/credentials/effects",
+      "observedState": "per-environment-qualification-required",
+      "boundary": "Application prepares actions; native owners execute, read back and produce actual receipts."
+    }
+  ],
+  "dependencyEdges": [
+    {
+      "from": "academy-consumers",
+      "to": "academy-context",
+      "type": "selects-qualified-references"
+    },
+    {
+      "from": "academy-consumers",
+      "to": "academy-domain",
+      "type": "uses-application-contract"
+    },
+    {
+      "from": "academy-domain",
+      "to": "academy-source-ports",
+      "type": "requests-through-port"
+    },
+    {
+      "from": "academy-context",
+      "to": "common-contracts",
+      "type": "consumes-pinned-semantics"
+    },
+    {
+      "from": "academy-domain",
+      "to": "common-contracts",
+      "type": "consumes-owner-qualified-contracts"
+    },
+    {
+      "from": "academy-domain",
+      "to": "research-semantics",
+      "type": "consumes-qualified-research-reference"
+    },
+    {
+      "from": "native-execution",
+      "to": "academy-domain",
+      "type": "accepts-exact-prepared-operation-with-native-authority"
+    }
+  ],
+  "topologyRules": {
+    "containment": "Host contains container; repositories contain source modules; book edition contains units. These are distinct trees.",
+    "ownership": "One canonical maintained implementation per qualified capability; build location does not transfer semantic/data/native ownership.",
+    "semanticRelations": "Prerequisite/relatedness and pedagogical cycles do not become execution dependencies or universal DAGs.",
+    "execution": "Task milestone DAG separate from recurring lesson/clinic cycles and source provenance/supersession graphs."
+  },
+  "dataPlanes": {
+    "sourceEvidence": "Owner-held immutable source observations with observed/event/retrieved clocks and explicit coverage.",
+    "teacherDecisions": "Scoped corrective/assessment decisions preserve the referenced occurrence and prior evidence.",
+    "derivedCurrentState": "Reproducible projection under qualified source revisions and decision rules, with unknown/conflict/partial/stale retained.",
+    "preparedOperations": "Exact student/date/activity/field/effect intent with native qualification and authoritative readback kept separate.",
+    "privateStorage": "Existing private owners; PostgreSQL is retained as the previously selected target where applicable. Synthetic SQLite remains a bounded offline consumer, not the production choice. No database migration in this phase."
+  },
+  "currentStateDesign": {
+    "identityDimensions": [
+      "student",
+      "book-edition-and-source-namespace",
+      "unit",
+      "activity-kind",
+      "occurrence-attempt",
+      "material-item",
+      "stage",
+      "source-revision",
+      "teacher-decision"
+    ],
+    "joinRule": "Use exact source namespace plus qualified crosswalk; unmatched records remain visible.",
+    "reductionRule": "A later applicable scoped teacher correction supersedes the claim it actually corrects; newer unrelated timestamps do not erase other stages.",
+    "homeworkRule": "Assignment/cancellation/replacement/actual completion are distinct; unassigned catalog rows and unknown states are not overdue work.",
+    "materialRule": "Assessment original, attempt, generated paper, printed membership, distribution and teacher final judgment remain distinct.",
+    "implementationApproach": "Extend existing domain/port/application structures with small owner-qualified contracts. Use revisioned observations and deterministic projections; do not introduce a universal event platform."
+  },
+  "consumerTrace": [
+    {
+      "producer": "gang-a/packages/domain",
+      "consumer": "gang-a/packages/application",
+      "evidence": "normalize-legacy-evidence.ts, prepare-book-progress-facts.ts and project-book-certification.ts import domain primitives",
+      "claim": "implemented-source-edge; no new behavior run"
+    },
+    {
+      "producer": "gang-a/packages/application",
+      "consumer": "gang-a/packages/adapters/managed-sites/handler.ts",
+      "evidence": "handler imports validate-evidence-projection",
+      "claim": "implemented-source-edge; no native activation proved"
+    },
+    {
+      "producer": "saved-context service",
+      "consumer": "MCP query-tool/server at df8b9f7",
+      "evidence": "registerSavedQuery routes query through shared tool-result production path",
+      "claim": "prior exact-source SDK review; not live Academy adoption"
+    },
+    {
+      "producer": "local synthetic SQLite/store",
+      "consumer": "app/standalone/src/server/http.ts and read-models.ts",
+      "evidence": "sourceConnected:false, liveRefresh:false, synthetic fixture imports",
+      "claim": "implemented synthetic consumer; no current live adapter"
+    },
+    {
+      "producer": "common GitWork validator at 712f90de",
+      "consumer": "this architecture audit",
+      "evidence": "external source audit only; Academy consumer lock remains ffba2462",
+      "claim": "separate audit tool, not consumer upgrade"
+    }
+  ],
+  "migrationStrategy": [
+    "Qualify preserved Work results and unresolved effects before creating competing writers.",
+    "Select exact canonical per-capability implementations and freeze public contracts under existing owners.",
+    "Build source-backed projection/query slice and verify synthetic adversarial cases.",
+    "Route one workflow at a time through the common application contract; compare equivalent exposure and results.",
+    "Retain old compatibility paths until actual consumers are switched and equivalence is observed.",
+    "Remove duplicate maintained logic only with exact owner-reviewed replacement; preserve originals and history."
+  ],
+  "performanceCriteria": [
+    "Measure equivalent record/observation coverage before comparing calls, bytes or latency.",
+    "Bound actual transport envelopes and refusal paths; preserve exact continuation and all requested facets/overlays.",
+    "Profile source loading and query plans before choosing indexes, caching or parallel fetches.",
+    "Invalidate derived state by exact source/decision revision; stale caches cannot resurrect cancelled assignments."
+  ],
+  "approvalBoundaries": {
+    "architectureApproval": "required before reviewer or implementation dispatch",
+    "review": "requested independent gpt-6-astra/xhigh pane after approval; findings require disposition before dependent implementation",
+    "commonContractsOrOtherWork": "separate approval/owner coordination required",
+    "sourceImplementation": "after approved architecture and review, bounded owner-scoped source changes only",
+    "publicationMergeDeploymentActivation": "held; no authority inferred",
+    "teacherAndUserAcceptance": "separate from source tests, integration and runtime readiness"
+  },
+  "measuredStateRef": "measurement.json",
+  "identityRef": "identity-plan.json",
+  "executionRef": "execution-plan.json",
+  "capabilitiesRef": "capability-matrix.json",
+  "continuityRef": "continuity.json",
+  "infrastructureTopologyRef": "topology.json"
+}

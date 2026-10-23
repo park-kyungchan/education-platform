@@ -1,0 +1,104 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "academy-operations",
+  "projectId": "academy-workbench",
+  "workId": "academy-repository-restructure-20261019",
+  "kind": "evidence",
+  "id": "AR-WORKFLOW-OBSERVATION",
+  "evidenceKind": "observation",
+  "source": {
+    "kind": "snapshot",
+    "path": "work/academy-workbench/academy-repository-restructure-20261019/inputs/AR-WORKFLOW-CHECKS.json",
+    "fragment": "#/content/observation"
+  },
+  "artifact": {
+    "schemaVersion": "1.0.0",
+    "kind": "evidence",
+    "id": "academy-workbench:evidence:academy-restructure:workflow-checks",
+    "projectId": "academy-workbench",
+    "domainId": "academy-operations",
+    "createdAt": "2026-10-19T05:57:55.020Z",
+    "payload": {
+      "claim": "The canonical committed Work reader accepted the selected Work and current context, and preserved the two expected source-only holds.",
+      "method": "Serial invocation of the unchanged pinned common CLI through the Education source transport; capture exact output hashes and exit statuses.",
+      "sourceUrl": "urn:git:sha1:dc37174504c7f2017ebef696e40f6d636a73bfea",
+      "fetchedAt": "2026-10-19T05:57:55.020Z",
+      "upstreamRevision": "dc37174504c7f2017ebef696e40f6d636a73bfea",
+      "result": {
+        "outcome": "success",
+        "processExitCode": 0,
+        "contentMatched": true
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "outcome": "success"
+        }
+      ],
+      "limitations": [
+        "Local committed-source proof only; no shared delivery, independent review, native effect or semantic acceptance.",
+        "Broader integration stopped at the missing required Node26.7.0 executable; source typecheck,37 root tests and import checks passed."
+      ],
+      "details": {
+        "checks": [
+          {
+            "repository": "academy-workbench",
+            "label": "validate",
+            "snapshotCommit": "dc37174504c7f2017ebef696e40f6d636a73bfea",
+            "exitCode": 0,
+            "expectedExitCode": 0,
+            "status": null,
+            "valid": true,
+            "findings": [],
+            "holds": null,
+            "outputSha256": "10e556a039be47aec25f2986272ba577482903f204e652ec58cc8a22c600c0eb",
+            "outputBytes": 139,
+            "stderr": ""
+          },
+          {
+            "repository": "academy-workbench",
+            "label": "context",
+            "snapshotCommit": "dc37174504c7f2017ebef696e40f6d636a73bfea",
+            "exitCode": 0,
+            "expectedExitCode": 0,
+            "status": "source-qualified",
+            "valid": null,
+            "findings": null,
+            "holds": null,
+            "outputSha256": "e5a0b1d8448030507d255218b89f7b5ba592633634af723be66577453a977f47",
+            "outputBytes": 9111,
+            "stderr": ""
+          },
+          {
+            "repository": "academy-workbench",
+            "label": "context-unknown",
+            "snapshotCommit": "dc37174504c7f2017ebef696e40f6d636a73bfea",
+            "exitCode": 1,
+            "expectedExitCode": 1,
+            "status": "held",
+            "valid": null,
+            "findings": null,
+            "holds": null,
+            "outputSha256": "7e1591a432111f9aba99dc40263fdb906e73a091b0b9def9c6208b37b17b4fa2",
+            "outputBytes": 9140,
+            "stderr": ""
+          },
+          {
+            "repository": "academy-workbench",
+            "label": "context-ownership-held",
+            "snapshotCommit": "dc37174504c7f2017ebef696e40f6d636a73bfea",
+            "exitCode": 1,
+            "expectedExitCode": 1,
+            "status": "held",
+            "valid": null,
+            "findings": null,
+            "holds": null,
+            "outputSha256": "ce5d3805f409c36a40597d56c7213d912a503c0481703ac9ab335a439055420d",
+            "outputBytes": 10595,
+            "stderr": ""
+          }
+        ]
+      }
+    }
+  }
+}

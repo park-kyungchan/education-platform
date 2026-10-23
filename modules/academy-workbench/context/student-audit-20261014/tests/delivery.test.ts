@@ -1,0 +1,3 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {deliveryDecision} from '../delivery.ts';
+test('user wants only final frontend, never standalone HTML or ZIP fallback',()=>{for(const o of ['standalone_html','zip_bundle','report_file'] as const)assert.equal(deliveryDecision(o,{final:true,accessibleToOwner:true,authorizationVerified:true}).deliver,false);});
+test('inaccessible or unverified frontend never silently becomes an attachment',()=>{const d=deliveryDecision('final_app_frontend',{final:true,accessibleToOwner:false,authorizationVerified:true});assert.equal(d.deliver,false);assert.equal(d.fallbackToAttachment,false);});

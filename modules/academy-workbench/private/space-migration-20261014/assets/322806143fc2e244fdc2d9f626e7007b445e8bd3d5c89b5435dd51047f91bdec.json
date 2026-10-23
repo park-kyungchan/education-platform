@@ -1,0 +1,956 @@
+{
+  "$schema": "academy-action-contracts.schema.json",
+  "kind": "academy_action_contracts",
+  "id": "academy:action-contracts:2026-10-06:r1",
+  "schemaVersion": "0.1.0",
+  "revision": 1,
+  "profileId": "kyungchan",
+  "projectId": "project:academy-practical",
+  "updatedAt": "2026-10-06T05:49:32.739Z",
+  "routeMapReference": "library-file:fde1_bGliZmlsZV8yNGN0cHItZHh6dlBNRXk4UVQ4dVdB_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+  "evidenceReference": "library-file:fde1_bGliZmlsZV9mRHBGRWxlc1BDNFhVeFFSaU9WeV93_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+  "userDirectionSource": "Sentinel_6983cd6e29a0819192ded6289fc89080",
+  "scope": "초기 조회 지도의 의미 계층. 관찰된 사이트 기능과 강사의 실제 사용 방식은 분리하며, 효과가 있는 동작은 계약을 적은 것만으로 실행할 수 없다.",
+  "contracts": [
+    {
+      "id": "contract:attendance:read",
+      "kind": "action_contract",
+      "schemaVersion": "0.1.0",
+      "revision": 1,
+      "canonicalParentId": "project:academy-practical",
+      "routeId": "route:attendance",
+      "actionName": "학생과 기간의 실제 출결 확인",
+      "teacherGoal": "수업 대상일의 실제 출석과 결석을 정확히 정리한다.",
+      "whyUse": "예정 수업과 실제 출결의 차이를 확인하고 보강 연결의 출발점을 만든다.",
+      "intentBasis": "working_hypothesis",
+      "teacherActualUsage": {
+        "status": "not_interviewed",
+        "description": null,
+        "sourceIds": []
+      },
+      "siteObservedFunction": "대상 학생과 등록 과정, 등록 시작일 및 요일을 확인한다. 학생별 출결조회에서 대상 학생과 기간의 실제 표시, 지각 여부, 메모를 읽는다.",
+      "preconditions": [
+        "대상 학생",
+        "대상 기간",
+        "현재 계정과 대상 학생 또는 과정이 맞는지 확인",
+        "해당 파일은 권한을 부여하지 않으므로 현재 사용자 요청 범위 확인"
+      ],
+      "expectedObservation": [
+        "대상 기간의 적용 등록 범위가 확인됨",
+        "출결별 근거 또는 미확인 이유가 존재함"
+      ],
+      "postconditions": [
+        "읽은 대상과 기간 및 필터를 근거에 남김",
+        "관찰값과 해석 및 미확인을 구분함",
+        "업무 원본과 외부 사이트 변경 여부를 별도로 기록함"
+      ],
+      "sideEffects": [
+        "조회 필터 변경 외 부작용은 해당 경로에서 검증된 범위만 허용"
+      ],
+      "riskClass": "read_only_with_guard",
+      "executionBoundary": {
+        "mode": "read_only",
+        "authorizationGrantedByContract": false,
+        "mustStopWhen": [
+          "예상하지 않은 저장 또는 발송 동작이 나타남",
+          "학생이나 기간의 식별이 충돌함",
+          "권한 또는 로그인 경고가 나타남"
+        ]
+      },
+      "failureRecovery": [
+        {
+          "failure": "필터 결과가 다른 학생 또는 날짜를 가리킴",
+          "safeRecovery": "값을 확정하지 않고 현재 화면의 필터와 대상 관계를 다시 확인한다."
+        },
+        {
+          "failure": "예상하지 않은 저장이나 발송 가능성이 나타남",
+          "safeRecovery": "추가 동작을 멈추고 읽기 가능한 현재 상태만 확인해 사용자에게 정확한 결과와 불확실성을 알린다. 임의로 되돌리거나 재시도하지 않는다."
+        }
+      ],
+      "evidence": {
+        "sourceIds": [
+          "source:site-observation-initial",
+          "source:user-cartography-request"
+        ],
+        "confidence": "reported_observation",
+        "remainingUnknowns": [
+          "정확한 메뉴 진입 순서와 URL",
+          "화면의 조회 컨트롤 및 필드 locator",
+          "강사가 이 기능을 실제로 사용하는 목적과 완료 기준은 인터뷰 전"
+        ]
+      },
+      "questionIds": [],
+      "validationHistory": [
+        {
+          "eventId": "validation:attendance:initial",
+          "at": null,
+          "kind": "reported_observation",
+          "sourceIds": [
+            "source:site-observation-initial",
+            "source:user-cartography-request"
+          ],
+          "result": "보고된 실제 화면과 조회 순서를 기록했으며 전체 업무 완료 기준은 미확인",
+          "verifiedEffects": "not_tested"
+        }
+      ],
+      "supersedesId": null,
+      "rejectedAssumptions": []
+    },
+    {
+      "id": "contract:next-class:read",
+      "kind": "action_contract",
+      "schemaVersion": "0.1.0",
+      "revision": 1,
+      "canonicalParentId": "project:academy-practical",
+      "routeId": "route:next-class",
+      "actionName": "다음 수업의 학생별 준비",
+      "teacherGoal": "다음 수업에서 학생마다 무엇을 이어갈지 준비한다.",
+      "whyUse": "같은 시간의 합반 학생도 과정과 진도, 과제와 검사 대기 항목이 다를 수 있다.",
+      "intentBasis": "working_hypothesis",
+      "teacherActualUsage": {
+        "status": "not_interviewed",
+        "description": null,
+        "sourceIds": []
+      },
+      "siteObservedFunction": "수업일정관리에서 예정 수업을 확인하고 학생별 등록 과정과 그룹을 대조한다. DayRecord의 학생 및 그룹과 표시 날짜를 확인하고 최근 진도와 숙제 내용을 읽는다. 자동 저장 입력칸은 변경하지 않는다. 학년 → 반 → 학생 → 과정 순서로 선택하고 검색하여 학습진도 격자를 읽는다. 예습 검사의 학생 이름과 검사대기 및 완료 탭을 확인하고 영상 상태와 검사 상태를 구분한다. 필요한 경우 DT 결과의 날짜와 학생 이름으로 검색한 각 시험 결과를 확인한다.",
+      "preconditions": [
+        "대상 날짜 또는 다음 수업의 기준 시각",
+        "현재 계정과 대상 학생 또는 과정이 맞는지 확인",
+        "해당 파일은 권한을 부여하지 않으므로 현재 사용자 요청 범위 확인"
+      ],
+      "expectedObservation": [
+        "일정과 학생별 등록 과정 확인",
+        "학생별 최신 기록 날짜와 다음 준비 또는 미확인 표시"
+      ],
+      "postconditions": [
+        "읽은 대상과 기간 및 필터를 근거에 남김",
+        "관찰값과 해석 및 미확인을 구분함",
+        "업무 원본과 외부 사이트 변경 여부를 별도로 기록함"
+      ],
+      "sideEffects": [
+        "DayRecord 편집 입력칸은 blur 시 자동 저장될 수 있음"
+      ],
+      "riskClass": "possible_autosave",
+      "executionBoundary": {
+        "mode": "read_only",
+        "authorizationGrantedByContract": false,
+        "mustStopWhen": [
+          "예상하지 않은 저장 또는 발송 동작이 나타남",
+          "학생이나 기간의 식별이 충돌함",
+          "권한 또는 로그인 경고가 나타남"
+        ]
+      },
+      "failureRecovery": [
+        {
+          "failure": "필터 결과가 다른 학생 또는 날짜를 가리킴",
+          "safeRecovery": "값을 확정하지 않고 현재 화면의 필터와 대상 관계를 다시 확인한다."
+        },
+        {
+          "failure": "예상하지 않은 저장이나 발송 가능성이 나타남",
+          "safeRecovery": "추가 동작을 멈추고 읽기 가능한 현재 상태만 확인해 사용자에게 정확한 결과와 불확실성을 알린다. 임의로 되돌리거나 재시도하지 않는다."
+        },
+        {
+          "failure": "DayRecord 날짜 직접 입력이 적용되지 않음",
+          "safeRecovery": "관찰한 이전과 다음 날짜 버튼을 사용하고 표시 날짜와 기록을 재확인한다. 편집 입력에는 값을 쓰지 않는다."
+        }
+      ],
+      "evidence": {
+        "sourceIds": [
+          "source:site-observation-initial",
+          "source:user-cartography-request",
+          "source:site-observation-20261006-0540"
+        ],
+        "confidence": "reported_observation",
+        "remainingUnknowns": [
+          "학교 필드의 실제 위치",
+          "전체 사이트 탐색 범위",
+          "강사가 이 기능을 실제로 사용하는 목적과 완료 기준은 인터뷰 전"
+        ]
+      },
+      "questionIds": [
+        "question:lesson-next-step"
+      ],
+      "validationHistory": [
+        {
+          "eventId": "validation:next-class:initial",
+          "at": null,
+          "kind": "reported_observation",
+          "sourceIds": [
+            "source:site-observation-initial",
+            "source:user-cartography-request",
+            "source:site-observation-20261006-0540"
+          ],
+          "result": "보고된 실제 화면과 조회 순서를 기록했으며 전체 업무 완료 기준은 미확인",
+          "verifiedEffects": "not_tested"
+        }
+      ],
+      "supersedesId": null,
+      "rejectedAssumptions": []
+    },
+    {
+      "id": "contract:school:read",
+      "kind": "action_contract",
+      "schemaVersion": "0.1.0",
+      "revision": 1,
+      "canonicalParentId": "project:academy-practical",
+      "routeId": "route:school",
+      "actionName": "학생 학교 조회와 출석부 B열 매핑",
+      "teacherGoal": "출석부 B열을 실제 학생 학교 정보와 연결한다.",
+      "whyUse": "학년이나 반 이름을 학교로 추정하지 않고 학생의 실제 정보를 기록한다.",
+      "intentBasis": "explicit_user_request",
+      "teacherActualUsage": {
+        "status": "not_interviewed",
+        "description": null,
+        "sourceIds": []
+      },
+      "siteObservedFunction": "학생 조회에서 대상 5명 모두 상세 정보를 열었으나 학교 필드나 값은 보이지 않았다. 열어본 검색 상세와 학생 승인 및 반배정 초기 화면에서도 학교 위치를 확인하지 못했다.",
+      "preconditions": [
+        "대상 학생",
+        "대상 출석부와 학생 행",
+        "현재 계정과 대상 학생 또는 과정이 맞는지 확인",
+        "해당 파일은 권한을 부여하지 않으므로 현재 사용자 요청 범위 확인"
+      ],
+      "expectedObservation": [
+        "학교 필드 위치와 원문 근거 확보",
+        "대상 학생 행 매핑 검증"
+      ],
+      "postconditions": [
+        "읽은 대상과 기간 및 필터를 근거에 남김",
+        "관찰값과 해석 및 미확인을 구분함",
+        "업무 원본과 외부 사이트 변경 여부를 별도로 기록함"
+      ],
+      "sideEffects": [
+        "조회 필터 변경 외 부작용은 해당 경로에서 검증된 범위만 허용"
+      ],
+      "riskClass": "read_only_with_guard",
+      "executionBoundary": {
+        "mode": "prepare_only",
+        "authorizationGrantedByContract": false,
+        "mustStopWhen": [
+          "예상하지 않은 저장 또는 발송 동작이 나타남",
+          "학생이나 기간의 식별이 충돌함",
+          "권한 또는 로그인 경고가 나타남"
+        ]
+      },
+      "failureRecovery": [
+        {
+          "failure": "필터 결과가 다른 학생 또는 날짜를 가리킴",
+          "safeRecovery": "값을 확정하지 않고 현재 화면의 필터와 대상 관계를 다시 확인한다."
+        },
+        {
+          "failure": "예상하지 않은 저장이나 발송 가능성이 나타남",
+          "safeRecovery": "추가 동작을 멈추고 읽기 가능한 현재 상태만 확인해 사용자에게 정확한 결과와 불확실성을 알린다. 임의로 되돌리거나 재시도하지 않는다."
+        }
+      ],
+      "evidence": {
+        "sourceIds": [
+          "source:site-observation-initial",
+          "source:user-cartography-request",
+          "source:site-observation-20261006-0540",
+          "source:school-search-all-five-20261006"
+        ],
+        "confidence": "reported_observation",
+        "remainingUnknowns": [
+          "학교 정보가 있는 다른 메뉴 또는 매핑 위치",
+          "제한된 상담 화면 추가 탐색 결과"
+        ]
+      },
+      "questionIds": [],
+      "validationHistory": [
+        {
+          "eventId": "validation:school:initial",
+          "at": null,
+          "kind": "reported_observation",
+          "sourceIds": [
+            "source:site-observation-initial",
+            "source:user-cartography-request",
+            "source:site-observation-20261006-0540"
+          ],
+          "result": "일부 위치나 의미 미확인",
+          "verifiedEffects": "not_tested"
+        },
+        {
+          "eventId": "validation:school:searched-no-field",
+          "at": null,
+          "kind": "reported_observation",
+          "sourceIds": [
+            "source:school-search-all-five-20261006"
+          ],
+          "result": "searched_no_field: 대상 5명과 열어본 화면에서 학교 미확인. B4:B8은 변경하지 않음.",
+          "verifiedEffects": "read_only"
+        }
+      ],
+      "supersedesId": null,
+      "rejectedAssumptions": [
+        {
+          "assumption": "학생 상세에 학교 필드가 반드시 있음",
+          "reason": "대상 5명의 상세 및 제한된 추가 화면에서 확인하지 못했다.",
+          "sourceIds": [
+            "source:school-search-all-five-20261006"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "contract:makeup:read",
+      "kind": "action_contract",
+      "schemaVersion": "0.1.0",
+      "revision": 1,
+      "canonicalParentId": "project:academy-practical",
+      "routeId": "route:makeup",
+      "actionName": "결석과 보강의 연결 확인",
+      "teacherGoal": "결석별 보강 일정과 실시 여부를 확인한다.",
+      "whyUse": "예정만 잡힌 보강과 실제로 마친 보강을 구분해 남은 일을 찾는다.",
+      "intentBasis": "working_hypothesis",
+      "teacherActualUsage": {
+        "status": "not_interviewed",
+        "description": null,
+        "sourceIds": []
+      },
+      "siteObservedFunction": "확인된 출결에서 결석 원기록을 선택한다.",
+      "preconditions": [
+        "대상 학생",
+        "결석 또는 보강 기간",
+        "현재 계정과 대상 학생 또는 과정이 맞는지 확인",
+        "해당 파일은 권한을 부여하지 않으므로 현재 사용자 요청 범위 확인"
+      ],
+      "expectedObservation": [
+        "결석별 대응 보강 또는 연결 미확인 상태 존재",
+        "완료 주장에 실제 실시 근거 존재"
+      ],
+      "postconditions": [
+        "읽은 대상과 기간 및 필터를 근거에 남김",
+        "관찰값과 해석 및 미확인을 구분함",
+        "업무 원본과 외부 사이트 변경 여부를 별도로 기록함"
+      ],
+      "sideEffects": [
+        "조회 필터 변경 외 부작용은 해당 경로에서 검증된 범위만 허용"
+      ],
+      "riskClass": "read_only_with_guard",
+      "executionBoundary": {
+        "mode": "read_only",
+        "authorizationGrantedByContract": false,
+        "mustStopWhen": [
+          "예상하지 않은 저장 또는 발송 동작이 나타남",
+          "학생이나 기간의 식별이 충돌함",
+          "권한 또는 로그인 경고가 나타남"
+        ]
+      },
+      "failureRecovery": [
+        {
+          "failure": "필터 결과가 다른 학생 또는 날짜를 가리킴",
+          "safeRecovery": "값을 확정하지 않고 현재 화면의 필터와 대상 관계를 다시 확인한다."
+        },
+        {
+          "failure": "예상하지 않은 저장이나 발송 가능성이 나타남",
+          "safeRecovery": "추가 동작을 멈추고 읽기 가능한 현재 상태만 확인해 사용자에게 정확한 결과와 불확실성을 알린다. 임의로 되돌리거나 재시도하지 않는다."
+        }
+      ],
+      "evidence": {
+        "sourceIds": [
+          "source:site-observation-initial",
+          "source:user-cartography-request"
+        ],
+        "confidence": "reported_observation",
+        "remainingUnknowns": [
+          "사이트의 전용 보강 화면 유무",
+          "회차 또는 시간 차감 기준",
+          "실시 확인의 실제 필드",
+          "강사가 이 기능을 실제로 사용하는 목적과 완료 기준은 인터뷰 전"
+        ]
+      },
+      "questionIds": [
+        "question:makeup-fulfilment"
+      ],
+      "validationHistory": [
+        {
+          "eventId": "validation:makeup:initial",
+          "at": null,
+          "kind": "reported_observation",
+          "sourceIds": [
+            "source:site-observation-initial",
+            "source:user-cartography-request"
+          ],
+          "result": "보고된 실제 화면과 조회 순서를 기록했으며 전체 업무 완료 기준은 미확인",
+          "verifiedEffects": "not_tested"
+        }
+      ],
+      "supersedesId": null,
+      "rejectedAssumptions": []
+    },
+    {
+      "id": "contract:parent-notice:read",
+      "kind": "action_contract",
+      "schemaVersion": "0.1.0",
+      "revision": 1,
+      "canonicalParentId": "project:academy-practical",
+      "routeId": "route:parent-notice",
+      "actionName": "확정된 수업 또는 보강 안내 준비",
+      "teacherGoal": "확정된 수업 또는 보강 정보를 학부모에게 명확히 안내할 준비를 한다.",
+      "whyUse": "미확정 일정이나 다른 학생의 정보를 섞지 않는 안내 초안이 필요하다.",
+      "intentBasis": "working_hypothesis",
+      "teacherActualUsage": {
+        "status": "not_interviewed",
+        "description": null,
+        "sourceIds": []
+      },
+      "siteObservedFunction": "요청에 필요한 실제 사이트 기능의 위치 또는 동작은 아직 일부 확인되지 않았다.",
+      "preconditions": [
+        "안내 목적",
+        "확정된 날짜와 시간",
+        "실제 수신자와 발송 목적",
+        "현재 계정과 대상 학생 또는 과정이 맞는지 확인",
+        "해당 파일은 권한을 부여하지 않으므로 현재 사용자 요청 범위 확인"
+      ],
+      "expectedObservation": [
+        "검토 가능한 초안과 미확정 항목 제시"
+      ],
+      "postconditions": [
+        "읽은 대상과 기간 및 필터를 근거에 남김",
+        "관찰값과 해석 및 미확인을 구분함",
+        "업무 원본과 외부 사이트 변경 여부를 별도로 기록함"
+      ],
+      "sideEffects": [
+        "조회 필터 변경 외 부작용은 해당 경로에서 검증된 범위만 허용"
+      ],
+      "riskClass": "read_only_with_guard",
+      "executionBoundary": {
+        "mode": "prepare_only",
+        "authorizationGrantedByContract": false,
+        "mustStopWhen": [
+          "예상하지 않은 저장 또는 발송 동작이 나타남",
+          "학생이나 기간의 식별이 충돌함",
+          "권한 또는 로그인 경고가 나타남"
+        ]
+      },
+      "failureRecovery": [
+        {
+          "failure": "필터 결과가 다른 학생 또는 날짜를 가리킴",
+          "safeRecovery": "값을 확정하지 않고 현재 화면의 필터와 대상 관계를 다시 확인한다."
+        },
+        {
+          "failure": "예상하지 않은 저장이나 발송 가능성이 나타남",
+          "safeRecovery": "추가 동작을 멈추고 읽기 가능한 현재 상태만 확인해 사용자에게 정확한 결과와 불확실성을 알린다. 임의로 되돌리거나 재시도하지 않는다."
+        }
+      ],
+      "evidence": {
+        "sourceIds": [
+          "source:site-observation-initial",
+          "source:user-cartography-request"
+        ],
+        "confidence": "hypothesis",
+        "remainingUnknowns": [
+          "사이트의 안내 및 발송 기능",
+          "수신자 매핑과 발송 확인 화면",
+          "강사가 이 기능을 실제로 사용하는 목적과 완료 기준은 인터뷰 전"
+        ]
+      },
+      "questionIds": [],
+      "validationHistory": [
+        {
+          "eventId": "validation:parent-notice:initial",
+          "at": null,
+          "kind": "reported_observation",
+          "sourceIds": [
+            "source:site-observation-initial",
+            "source:user-cartography-request"
+          ],
+          "result": "일부 위치나 의미 미확인",
+          "verifiedEffects": "not_tested"
+        }
+      ],
+      "supersedesId": null,
+      "rejectedAssumptions": []
+    },
+    {
+      "id": "contract:course-progress:read",
+      "kind": "action_contract",
+      "schemaVersion": "0.1.0",
+      "revision": 1,
+      "canonicalParentId": "project:academy-practical",
+      "routeId": "route:course-progress",
+      "actionName": "학생별 단원 진도 조회",
+      "teacherGoal": "대상 학생이 어느 단원을 진행 중인지 확인한다.",
+      "whyUse": "과정별 진도와 수업 기록을 비교해 다음 설명과 문제를 준비한다.",
+      "intentBasis": "working_hypothesis",
+      "teacherActualUsage": {
+        "status": "not_interviewed",
+        "description": null,
+        "sourceIds": []
+      },
+      "siteObservedFunction": "학년, 반, 학생, 과정 순서로 필터를 선택하고 검색한다. 단원과 상태 격자를 읽고 과정 및 조회 학생을 다시 확인한다.",
+      "preconditions": [
+        "대상 학생 또는 교재",
+        "대상 기간 또는 과정",
+        "현재 계정과 대상 학생 또는 과정이 맞는지 확인",
+        "해당 파일은 권한을 부여하지 않으므로 현재 사용자 요청 범위 확인"
+      ],
+      "expectedObservation": [
+        "대상과 필터 확인",
+        "원문 상태와 관찰 날짜 또는 미확인 이유 기록"
+      ],
+      "postconditions": [
+        "읽은 대상과 기간 및 필터를 근거에 남김",
+        "관찰값과 해석 및 미확인을 구분함",
+        "업무 원본과 외부 사이트 변경 여부를 별도로 기록함"
+      ],
+      "sideEffects": [
+        "조회 필터 변경 외 부작용은 해당 경로에서 검증된 범위만 허용"
+      ],
+      "riskClass": "read_only_with_guard",
+      "executionBoundary": {
+        "mode": "read_only",
+        "authorizationGrantedByContract": false,
+        "mustStopWhen": [
+          "예상하지 않은 저장 또는 발송 동작이 나타남",
+          "학생이나 기간의 식별이 충돌함",
+          "권한 또는 로그인 경고가 나타남"
+        ]
+      },
+      "failureRecovery": [
+        {
+          "failure": "필터 결과가 다른 학생 또는 날짜를 가리킴",
+          "safeRecovery": "값을 확정하지 않고 현재 화면의 필터와 대상 관계를 다시 확인한다."
+        },
+        {
+          "failure": "예상하지 않은 저장이나 발송 가능성이 나타남",
+          "safeRecovery": "추가 동작을 멈추고 읽기 가능한 현재 상태만 확인해 사용자에게 정확한 결과와 불확실성을 알린다. 임의로 되돌리거나 재시도하지 않는다."
+        }
+      ],
+      "evidence": {
+        "sourceIds": [
+          "source:site-observation-20261006-0540"
+        ],
+        "confidence": "reported_observation",
+        "remainingUnknowns": [
+          "모든 격자 상태 코드의 의미",
+          "강사가 이 기능을 실제로 사용하는 목적과 완료 기준은 인터뷰 전"
+        ]
+      },
+      "questionIds": [],
+      "validationHistory": [
+        {
+          "eventId": "validation:course-progress:initial",
+          "at": null,
+          "kind": "reported_observation",
+          "sourceIds": [
+            "source:site-observation-20261006-0540"
+          ],
+          "result": "보고된 실제 화면과 조회 순서를 기록했으며 전체 업무 완료 기준은 미확인",
+          "verifiedEffects": "not_tested"
+        }
+      ],
+      "supersedesId": null,
+      "rejectedAssumptions": [
+        {
+          "assumption": "진도 격자의 '-'는 미완료를 뜻함",
+          "reason": "해당 상태 코드의 의미가 확인되지 않았다.",
+          "sourceIds": [
+            "source:site-observation-20261006-0540"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "contract:preview-inspection:read",
+      "kind": "action_contract",
+      "schemaVersion": "0.1.0",
+      "revision": 1,
+      "canonicalParentId": "project:academy-practical",
+      "routeId": "route:preview-inspection",
+      "actionName": "예습 영상과 검사 상태 조회",
+      "teacherGoal": "예습 자료의 영상 상태와 교사 검사 대기를 구분한다.",
+      "whyUse": "영상 OK라도 교사가 검사하지 않은 항목을 확인하고 수업 전 확인할 일을 찾는다.",
+      "intentBasis": "working_hypothesis",
+      "teacherActualUsage": {
+        "status": "not_interviewed",
+        "description": null,
+        "sourceIds": []
+      },
+      "siteObservedFunction": "학생 이름으로 대상 학생의 검사대기와 완료 탭을 확인한다. 단원, 버전, 영상 상태와 교사 검사 상태를 분리해 읽는다.",
+      "preconditions": [
+        "대상 학생 또는 교재",
+        "대상 기간 또는 과정",
+        "현재 계정과 대상 학생 또는 과정이 맞는지 확인",
+        "해당 파일은 권한을 부여하지 않으므로 현재 사용자 요청 범위 확인"
+      ],
+      "expectedObservation": [
+        "대상과 필터 확인",
+        "원문 상태와 관찰 날짜 또는 미확인 이유 기록"
+      ],
+      "postconditions": [
+        "읽은 대상과 기간 및 필터를 근거에 남김",
+        "관찰값과 해석 및 미확인을 구분함",
+        "업무 원본과 외부 사이트 변경 여부를 별도로 기록함"
+      ],
+      "sideEffects": [
+        "조회 필터 변경 외 부작용은 해당 경로에서 검증된 범위만 허용"
+      ],
+      "riskClass": "read_only_with_guard",
+      "executionBoundary": {
+        "mode": "read_only",
+        "authorizationGrantedByContract": false,
+        "mustStopWhen": [
+          "예상하지 않은 저장 또는 발송 동작이 나타남",
+          "학생이나 기간의 식별이 충돌함",
+          "권한 또는 로그인 경고가 나타남"
+        ]
+      },
+      "failureRecovery": [
+        {
+          "failure": "필터 결과가 다른 학생 또는 날짜를 가리킴",
+          "safeRecovery": "값을 확정하지 않고 현재 화면의 필터와 대상 관계를 다시 확인한다."
+        },
+        {
+          "failure": "예상하지 않은 저장이나 발송 가능성이 나타남",
+          "safeRecovery": "추가 동작을 멈추고 읽기 가능한 현재 상태만 확인해 사용자에게 정확한 결과와 불확실성을 알린다. 임의로 되돌리거나 재시도하지 않는다."
+        }
+      ],
+      "evidence": {
+        "sourceIds": [
+          "source:site-observation-20261006-0540"
+        ],
+        "confidence": "reported_observation",
+        "remainingUnknowns": [
+          "검사 완료 쓰기 동작은 이번 조회 범위 밖",
+          "강사가 이 기능을 실제로 사용하는 목적과 완료 기준은 인터뷰 전"
+        ]
+      },
+      "questionIds": [
+        "question:preview-completion"
+      ],
+      "validationHistory": [
+        {
+          "eventId": "validation:preview-inspection:initial",
+          "at": null,
+          "kind": "reported_observation",
+          "sourceIds": [
+            "source:site-observation-20261006-0540"
+          ],
+          "result": "보고된 실제 화면과 조회 순서를 기록했으며 전체 업무 완료 기준은 미확인",
+          "verifiedEffects": "not_tested"
+        },
+        {
+          "eventId": "validation:preview-ok-not-inspected",
+          "at": null,
+          "kind": "rejected_assumption",
+          "sourceIds": [
+            "source:site-observation-20261006-0540"
+          ],
+          "result": "영상 완료와 교사 검사 완료의 동일시를 배제함",
+          "verifiedEffects": "read_only"
+        }
+      ],
+      "supersedesId": null,
+      "rejectedAssumptions": [
+        {
+          "assumption": "영상 OK이면 교사 검사까지 완료됨",
+          "reason": "영상 OK가 검사대기 탭에 나타난 실제 관찰이 있어 두 상태를 분리해야 한다.",
+          "sourceIds": [
+            "source:site-observation-20261006-0540"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "contract:dt-results:read",
+      "kind": "action_contract",
+      "schemaVersion": "0.1.0",
+      "revision": 1,
+      "canonicalParentId": "project:academy-practical",
+      "routeId": "route:dt-results",
+      "actionName": "학생별 DT 결과 조회",
+      "teacherGoal": "학생의 최근 DT 결과에서 이해 확인과 오답 점검에 필요한 정보를 찾는다.",
+      "whyUse": "같은 날의 서로 다른 시도나 시험 결과를 구분해 다음 지도를 준비한다.",
+      "intentBasis": "working_hypothesis",
+      "teacherActualUsage": {
+        "status": "not_interviewed",
+        "description": null,
+        "sourceIds": []
+      },
+      "siteObservedFunction": "날짜와 학생 이름을 지정해 검색한다. 각 시험 시각과 시험명, 점수 및 문항 수를 구분해 읽는다.",
+      "preconditions": [
+        "대상 학생 또는 교재",
+        "대상 기간 또는 과정",
+        "현재 계정과 대상 학생 또는 과정이 맞는지 확인",
+        "해당 파일은 권한을 부여하지 않으므로 현재 사용자 요청 범위 확인"
+      ],
+      "expectedObservation": [
+        "대상과 필터 확인",
+        "원문 상태와 관찰 날짜 또는 미확인 이유 기록"
+      ],
+      "postconditions": [
+        "읽은 대상과 기간 및 필터를 근거에 남김",
+        "관찰값과 해석 및 미확인을 구분함",
+        "업무 원본과 외부 사이트 변경 여부를 별도로 기록함"
+      ],
+      "sideEffects": [
+        "조회 필터 변경 외 부작용은 해당 경로에서 검증된 범위만 허용"
+      ],
+      "riskClass": "read_only_with_guard",
+      "executionBoundary": {
+        "mode": "read_only",
+        "authorizationGrantedByContract": false,
+        "mustStopWhen": [
+          "예상하지 않은 저장 또는 발송 동작이 나타남",
+          "학생이나 기간의 식별이 충돌함",
+          "권한 또는 로그인 경고가 나타남"
+        ]
+      },
+      "failureRecovery": [
+        {
+          "failure": "필터 결과가 다른 학생 또는 날짜를 가리킴",
+          "safeRecovery": "값을 확정하지 않고 현재 화면의 필터와 대상 관계를 다시 확인한다."
+        },
+        {
+          "failure": "예상하지 않은 저장이나 발송 가능성이 나타남",
+          "safeRecovery": "추가 동작을 멈추고 읽기 가능한 현재 상태만 확인해 사용자에게 정확한 결과와 불확실성을 알린다. 임의로 되돌리거나 재시도하지 않는다."
+        }
+      ],
+      "evidence": {
+        "sourceIds": [
+          "source:site-observation-20261006-0540"
+        ],
+        "confidence": "reported_observation",
+        "remainingUnknowns": [
+          "결과 내보내기 기능",
+          "강사가 이 기능을 실제로 사용하는 목적과 완료 기준은 인터뷰 전"
+        ]
+      },
+      "questionIds": [],
+      "validationHistory": [
+        {
+          "eventId": "validation:dt-results:initial",
+          "at": null,
+          "kind": "reported_observation",
+          "sourceIds": [
+            "source:site-observation-20261006-0540"
+          ],
+          "result": "보고된 실제 화면과 조회 순서를 기록했으며 전체 업무 완료 기준은 미확인",
+          "verifiedEffects": "not_tested"
+        }
+      ],
+      "supersedesId": null,
+      "rejectedAssumptions": []
+    },
+    {
+      "id": "contract:teaching-material:read",
+      "kind": "action_contract",
+      "schemaVersion": "0.1.0",
+      "revision": 1,
+      "canonicalParentId": "project:academy-practical",
+      "routeId": "route:teaching-material",
+      "actionName": "과정에 맞는 교재 자료 찾기",
+      "teacherGoal": "학생 과정과 다음 단원에 맞는 교재 자료를 찾는다.",
+      "whyUse": "학년, 레벨, 학기와 권을 맞춰 필요한 자료만 확보할 준비를 한다.",
+      "intentBasis": "working_hypothesis",
+      "teacherActualUsage": {
+        "status": "not_interviewed",
+        "description": null,
+        "sourceIds": []
+      },
+      "siteObservedFunction": "학년, 레벨, 학기, 권 등 표시된 교재 조건을 확인한다. 답, D, 오, 무, 샘 버튼의 대상 자료를 확인한다.",
+      "preconditions": [
+        "대상 학생 또는 교재",
+        "대상 기간 또는 과정",
+        "현재 계정과 대상 학생 또는 과정이 맞는지 확인",
+        "해당 파일은 권한을 부여하지 않으므로 현재 사용자 요청 범위 확인"
+      ],
+      "expectedObservation": [
+        "대상과 필터 확인",
+        "원문 상태와 관찰 날짜 또는 미확인 이유 기록"
+      ],
+      "postconditions": [
+        "읽은 대상과 기간 및 필터를 근거에 남김",
+        "관찰값과 해석 및 미확인을 구분함",
+        "업무 원본과 외부 사이트 변경 여부를 별도로 기록함"
+      ],
+      "sideEffects": [
+        "조회 필터 변경 외 부작용은 해당 경로에서 검증된 범위만 허용"
+      ],
+      "riskClass": "read_only_with_guard",
+      "executionBoundary": {
+        "mode": "read_only",
+        "authorizationGrantedByContract": false,
+        "mustStopWhen": [
+          "예상하지 않은 저장 또는 발송 동작이 나타남",
+          "학생이나 기간의 식별이 충돌함",
+          "권한 또는 로그인 경고가 나타남"
+        ]
+      },
+      "failureRecovery": [
+        {
+          "failure": "필터 결과가 다른 학생 또는 날짜를 가리킴",
+          "safeRecovery": "값을 확정하지 않고 현재 화면의 필터와 대상 관계를 다시 확인한다."
+        },
+        {
+          "failure": "예상하지 않은 저장이나 발송 가능성이 나타남",
+          "safeRecovery": "추가 동작을 멈추고 읽기 가능한 현재 상태만 확인해 사용자에게 정확한 결과와 불확실성을 알린다. 임의로 되돌리거나 재시도하지 않는다."
+        }
+      ],
+      "evidence": {
+        "sourceIds": [
+          "source:site-observation-20261006-0540"
+        ],
+        "confidence": "reported_observation",
+        "remainingUnknowns": [
+          "각 버튼의 정확한 의미",
+          "실제 다운로드와 파일 내용",
+          "강사가 이 기능을 실제로 사용하는 목적과 완료 기준은 인터뷰 전"
+        ]
+      },
+      "questionIds": [],
+      "validationHistory": [
+        {
+          "eventId": "validation:teaching-material:initial",
+          "at": null,
+          "kind": "reported_observation",
+          "sourceIds": [
+            "source:site-observation-20261006-0540"
+          ],
+          "result": "보고된 실제 화면과 조회 순서를 기록했으며 전체 업무 완료 기준은 미확인",
+          "verifiedEffects": "not_tested"
+        }
+      ],
+      "supersedesId": null,
+      "rejectedAssumptions": []
+    },
+    {
+      "id": "contract:preview-inspection:mark-complete",
+      "kind": "action_contract",
+      "schemaVersion": "0.1.0",
+      "revision": 1,
+      "canonicalParentId": "project:academy-practical",
+      "routeId": "route:preview-inspection",
+      "actionName": "예습 검사 완료 처리",
+      "teacherGoal": "교사가 정한 검사 기준을 충족한 예습의 검사 상태를 완료로 바꾼다.",
+      "whyUse": "어떤 확인을 마친 뒤 완료 처리하는지가 확정돼야 수업 준비와 검사 대기 목록이 일치한다.",
+      "intentBasis": "working_hypothesis",
+      "teacherActualUsage": {
+        "status": "not_interviewed",
+        "description": null,
+        "sourceIds": []
+      },
+      "siteObservedFunction": "검사대기와 완료 탭은 관찰했지만 완료 처리 버튼의 정확한 동작과 부작용은 검증하지 않았다.",
+      "preconditions": [
+        "실제 완료 처리 대상 학생과 단원을 확인",
+        "강사의 검사 완료 기준을 확인",
+        "현재 사용자 요청이 상태 변경을 명시적으로 허용하는지 확인"
+      ],
+      "expectedObservation": [
+        "완료 처리 결과와 대상 단원의 변경 상태"
+      ],
+      "postconditions": [
+        "현재 승인이 있고 동작이 확인된 경우에만 결과를 재읽어 기록"
+      ],
+      "sideEffects": [
+        "학생의 교사 검사 상태와 대기 목록이 변경될 수 있음",
+        "알림 등 추가 부작용은 미확인"
+      ],
+      "riskClass": "effectful_unverified",
+      "executionBoundary": {
+        "mode": "requires_current_authorization",
+        "authorizationGrantedByContract": false,
+        "mustStopWhen": [
+          "완료 기준이 정해지지 않음",
+          "실제 변경 버튼과 부작용을 모름",
+          "현재 요청에 변경 승인이 없음"
+        ]
+      },
+      "failureRecovery": [
+        {
+          "failure": "동작 또는 결과가 불명확함",
+          "safeRecovery": "실험적으로 클릭하지 않는다. 읽기 자료와 사용자 설명으로 기준을 확인한 뒤 필요한 승인을 받는다."
+        }
+      ],
+      "evidence": {
+        "sourceIds": [
+          "source:site-observation-20261006-0540",
+          "Sentinel_6983cd6e29a0819192ded6289fc89080"
+        ],
+        "confidence": "hypothesis",
+        "remainingUnknowns": [
+          "실제 버튼과 완료 조건",
+          "완료 처리의 정확한 부작용",
+          "강사의 실제 사용 방식"
+        ]
+      },
+      "questionIds": [
+        "question:preview-completion"
+      ],
+      "validationHistory": [
+        {
+          "eventId": "validation:preview-mark-complete:untested",
+          "at": null,
+          "kind": "hypothesis",
+          "sourceIds": [
+            "source:site-observation-20261006-0540",
+            "Sentinel_6983cd6e29a0819192ded6289fc89080"
+          ],
+          "result": "상태 변경은 실험하지 않았으며 현재 승인과 완료 기준 확인 전 실행하지 않음",
+          "verifiedEffects": "not_tested"
+        }
+      ],
+      "supersedesId": null,
+      "rejectedAssumptions": [
+        {
+          "assumption": "영상 OK이면 교사 검사까지 완료됨",
+          "reason": "영상 OK가 검사대기 탭에 나타난 실제 관찰이 있어 두 상태를 분리해야 한다.",
+          "sourceIds": [
+            "source:site-observation-20261006-0540"
+          ]
+        }
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "question:preview-completion",
+      "question": "예습의 검사 완료는 영상 시청 확인만으로 처리하나요, 학생 설명이나 오답 확인까지 마친 뒤 처리하나요?",
+      "askWhen": "검사대기 정리 또는 검사 완료 처리를 실제로 요청받았고 기록만으로 기준을 판단할 수 없을 때",
+      "whyItMatters": "영상 OK와 교사 검사 완료를 혼동하지 않기 위해",
+      "status": "pending",
+      "answer": null,
+      "answerSourceIds": []
+    },
+    {
+      "id": "question:lesson-next-step",
+      "question": "다음 시간 준비에서 DayRecord의 숙제와 진도 중 어느 기록을 우선 기준으로 삼고, 사이트 밖에 따로 정하는 내용이 있나요?",
+      "askWhen": "학생별 다음 준비가 두 기록 사이에서 실제로 충돌할 때",
+      "whyItMatters": "단순 화면의 값을 실제 강사의 수업 준비 의도와 맞추기 위해",
+      "status": "pending",
+      "answer": null,
+      "answerSourceIds": []
+    },
+    {
+      "id": "question:makeup-fulfilment",
+      "question": "보강 완료는 회차와 시간 중 무엇을 기준으로 결석에 연결하나요?",
+      "askWhen": "한 보강이 여러 결석과 연결되거나 충족 여부를 결정해야 할 때",
+      "whyItMatters": "보강 예정과 실제 결석 해소를 구분하기 위해",
+      "status": "pending",
+      "answer": null,
+      "answerSourceIds": []
+    }
+  ],
+  "maintenance": {
+    "approach": "안전한 읽기 탐색에서 관찰을 남기고, 실제 업무에서 의미가 갈리는 최소 질문을 사용자에게 확인한 뒤 의도와 완료 기준을 갱신한다.",
+    "safeTrialBoundary": "조회 범위만 시험한다. 자동 저장 입력, 완료 처리, 채점 변경, 재시험, 발송 등 상태 변경은 실험하지 않는다.",
+    "versionRule": "새 근거와 사용자 답변마다 해당 계약의 revision을 올리고 validationHistory와 rejectedAssumptions에 변화를 남긴다. 기존 게시 파일과 초기 목록은 관찰 시점 기록으로 유지한다.",
+    "actualWebMcpRuntimeInstalled": false
+  },
+  "evidenceUpdates": [
+    {
+      "id": "source:school-search-all-five-20261006",
+      "sourceReference": "task:01a10fb5-7835-7589-8a54-c84ad351d02a",
+      "reportedAt": "2026-10-06T05:50:12.471Z",
+      "claim": "대상 학생 5명 모두 학생 조회에서 상세 정보를 열었으나 학교 필드나 값은 확인하지 못했다. 검색 상세에는 학반, 사용 상태, 로그인 허용 필터가 보였고 학교 필터는 보이지 않았다. StudentApproval과 ClassAssignment의 초기 화면에서도 학교 또는 내보내기를 확인하지 못했다.",
+      "scope": "대상 5명, 조회 상세와 실제로 열어본 검색 및 승인 및 반배정 초기 화면",
+      "limitations": [
+        "학교 정보가 사이트 또는 데이터베이스 전체에 없다는 뜻은 아니다.",
+        "생년월일 등 불필요한 학생 개인정보는 수집하지 않았다.",
+        "출석부 B4:B8은 변경되지 않았다.",
+        "상담 화면의 제한된 추가 탐색은 진행 중이다."
+      ]
+    }
+  ]
+}

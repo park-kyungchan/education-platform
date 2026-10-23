@@ -1,0 +1,58 @@
+{
+  "schemaVersion": "academy.consumer-module/1",
+  "moduleId": "academy-workbench",
+  "projectRef": "academy-workbench:project:manifest",
+  "canonicalDependency": {
+    "lockPath": "harness/agent-platform.lock.json",
+    "consumption": "pinned-source",
+    "copiedImplementation": false
+  },
+  "registration": {
+    "status": "local-module-record",
+    "globallyRegistered": false,
+    "centralIssuer": "not-established"
+  },
+  "surfaces": {
+    "runtime": "app/standalone",
+    "offlineAdapter": "app/offline-import-adapter",
+    "userContext": "context/business-decisions.json",
+    "historicalGates": "migration/current-status.json",
+    "selectedUserContext": "context/user-context/records.json"
+  },
+  "relationships": [
+    {
+      "moduleId": "agent-platform",
+      "relation": "uses-canonical-source",
+      "automaticDataTransfer": false
+    },
+    {
+      "moduleId": "math-research-module",
+      "relation": "research-context-only",
+      "automaticDataTransfer": false
+    }
+  ],
+  "capability": {
+    "profile": "synthetic-offline-development",
+    "executionEnabled": false,
+    "authority": "none",
+    "nativePermissionGranted": false,
+    "nativeRegistrationPerformed": false,
+    "allowedDevelopmentInputs": [
+      "project.json",
+      "harness/",
+      "context/business-decisions.json",
+      "migration/current-status.json",
+      "synthetic test fixtures"
+    ],
+    "liveStudentReadEnabled": false,
+    "sourceMutationEnabled": false,
+    "printEnabled": false,
+    "sendEnabled": false,
+    "credentialSetupEnabled": false,
+    "deploymentEnabled": false
+  },
+  "acceptance": {
+    "status": "not-observed",
+    "inferredFromTests": false
+  }
+}

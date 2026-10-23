@@ -1,0 +1,184 @@
+{
+  "schema": "academy.consumer-con02-checks.v1",
+  "createdAt": "2026-10-21T10:08:27.646Z",
+  "nativeThreadId": "01a15dd0-03ed-71a0-8372-936776e22669",
+  "runtime": {
+    "bun": "1.4.3",
+    "node": "v26.3.0"
+  },
+  "observations": [
+    {
+      "command": [
+        "/usr/local/bin/bun",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit"
+      ],
+      "cwd": "/home/palantirkc/worktrees/academy-consumer-integration-20261021/tools/academy-mcp",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/usr/local/bin/bun",
+        "test",
+        "--preload",
+        "./tests/network-deny.ts",
+        "tests/teacher-report.test.ts",
+        "tests/teacher-tools-mcp.test.ts"
+      ],
+      "cwd": "/home/palantirkc/worktrees/academy-consumer-integration-20261021/tools/academy-mcp",
+      "exitCode": 1,
+      "stdout": "bun test v1.4.3 (c6da4a4d3)\n",
+      "stderr": "\ntests/teacher-report.test.ts:\n(pass) qualified loader requires explicit exact source root; no default/auth discovery [64.04ms]\n(pass) canonical projections render original100, explicit similar assignment and unknowns without second reducer [161.73ms]\n(pass) scoped final survives old low score; cancellation/replacement and distinct attempts remain separate [55.87ms]\n(pass) teacher corrections follow exact canonical unit/activity, preserve prior completion refs and missing edition [0.28ms]\n(pass) class occurrence scope preserves raw fields and multiple occurrences; no inferred attendance or full roster [26.67ms]\n(pass) full report paging is bounded and cursor binds snapshot, selector, format and caller [1946.05ms]\n(pass) a single oversized report line is refused without skipping; later report caller change invalidates continuation [378.20ms]\n\ntests/teacher-tools-mcp.test.ts:\n 7 | const selector={kind:'student' as const,studentId:'synthetic-student-0',date:'2090-01-03'};\n 8 | async function connect(scenario='normal'){\n 9 |   const client=new Client({name:'synthetic-teacher-consumer-check',version:'1.0.0'});\n10 |   const transport=new StdioClientTransport({command:process.execPath,args:['--preload',resolve(import.meta.dir,'network-deny.ts'),resolve(import.meta.dir,'teacher-transport-fixture.ts'),scenario],env:{PATH:process.env.PATH??'/usr/bin:/bin'},stderr:'pipe'});\n11 |   const errors:string[]=[];transport.stderr?.on('data',chunk=>errors.push(String(chunk)));\n12 |   try{await client.connect(transport);}catch(error){await transport.close();throw Error(`synthetic_sdk_startup:${String(error)}:${errors.join('')}`);}\n                                                                                       ^\nerror: synthetic_sdk_startup:SdkError: Connection closed:\n      at connect (/home/palantirkc/worktrees/academy-consumer-integration-20261021/tools/academy-mcp/tests/teacher-tools-mcp.test.ts:12:83)\n      at async <anonymous> (/home/palantirkc/worktrees/academy-consumer-integration-20261021/tools/academy-mcp/tests/teacher-tools-mcp.test.ts:24:26)\n(fail) real SDK production discovery/schema and canonical Unicode pages reconstruct without loss [316.06ms]\n 7 | const selector={kind:'student' as const,studentId:'synthetic-student-0',date:'2090-01-03'};\n 8 | async function connect(scenario='normal'){\n 9 |   const client=new Client({name:'synthetic-teacher-consumer-check',version:'1.0.0'});\n10 |   const transport=new StdioClientTransport({command:process.execPath,args:['--preload',resolve(import.meta.dir,'network-deny.ts'),resolve(import.meta.dir,'teacher-transport-fixture.ts'),scenario],env:{PATH:process.env.PATH??'/usr/bin:/bin'},stderr:'pipe'});\n11 |   const errors:string[]=[];transport.stderr?.on('data',chunk=>errors.push(String(chunk)));\n12 |   try{await client.connect(transport);}catch(error){await transport.close();throw Error(`synthetic_sdk_startup:${String(error)}:${errors.join('')}`);}\n                                                                                       ^\nerror: synthetic_sdk_startup:SdkError: Connection closed:\n      at connect (/home/palantirkc/worktrees/academy-consumer-integration-20261021/tools/academy-mcp/tests/teacher-tools-mcp.test.ts:12:83)\n      at async <anonymous> (/home/palantirkc/worktrees/academy-consumer-integration-20261021/tools/academy-mcp/tests/teacher-tools-mcp.test.ts:39:26)\n(fail) real SDK Korean report pages are individually bounded and include explicit continuation to final section [278.51ms]\n 7 | const selector={kind:'student' as const,studentId:'synthetic-student-0',date:'2090-01-03'};\n 8 | async function connect(scenario='normal'){\n 9 |   const client=new Client({name:'synthetic-teacher-consumer-check',version:'1.0.0'});\n10 |   const transport=new StdioClientTransport({command:process.execPath,args:['--preload',resolve(import.meta.dir,'network-deny.ts'),resolve(import.meta.dir,'teacher-transport-fixture.ts'),scenario],env:{PATH:process.env.PATH??'/usr/bin:/bin'},stderr:'pipe'});\n11 |   const errors:string[]=[];transport.stderr?.on('data',chunk=>errors.push(String(chunk)));\n12 |   try{await client.connect(transport);}catch(error){await transport.close();throw Error(`synthetic_sdk_startup:${String(error)}:${errors.join('')}`);}\n                                                                                       ^\nerror: synthetic_sdk_startup:SdkError: Connection closed:\n      at connect (/home/palantirkc/worktrees/academy-consumer-integration-20261021/tools/academy-mcp/tests/teacher-tools-mcp.test.ts:12:83)\n      at async <anonymous> (/home/palantirkc/worktrees/academy-consumer-integration-20261021/tools/academy-mcp/tests/teacher-tools-mcp.test.ts:55:28)\n(fail) real SDK reports refuse malformed, snapshot/caller drift, auth refusal and transport errors without echoing source errors [290.05ms]\n\n 7 pass\n 3 fail\n 115 expect() calls\nRan 10 tests across 2 files. [3.65s]\n"
+    }
+  ],
+  "baselineHashes": [
+    {
+      "path": "tools/academy-mcp/src/contracts.ts",
+      "expected": "ccceb4123e866d677d002f54ce29205248708a2241a438dc63e9a5290e49b8ff",
+      "actual": "ccceb4123e866d677d002f54ce29205248708a2241a438dc63e9a5290e49b8ff",
+      "match": true
+    },
+    {
+      "path": "tools/academy-mcp/src/export-contracts.ts",
+      "expected": "3af2806decbbf73dce475bf0d1ce44af534d8ff4c17df6468dedc008ad9d695a",
+      "actual": "3af2806decbbf73dce475bf0d1ce44af534d8ff4c17df6468dedc008ad9d695a",
+      "match": true
+    },
+    {
+      "path": "tools/academy-mcp/src/pagination.ts",
+      "expected": "49f1b943240921714a9facd5f826225db3a1edc5a846b0671775d0dc67f3e657",
+      "actual": "49f1b943240921714a9facd5f826225db3a1edc5a846b0671775d0dc67f3e657",
+      "match": true
+    },
+    {
+      "path": "tools/academy-mcp/src/query-tool.ts",
+      "expected": "e7350a269f45984f8b83d60382cb0ce78935d34489aeac6ca054ed9aaa51b7c6",
+      "actual": "e7350a269f45984f8b83d60382cb0ce78935d34489aeac6ca054ed9aaa51b7c6",
+      "match": true
+    },
+    {
+      "path": "tools/academy-mcp/src/saved-context.ts",
+      "expected": "2ffd3205ee675f510639135b85568fb9c40722fda07ad1c5e1ab764e067fc5ab",
+      "actual": "2ffd3205ee675f510639135b85568fb9c40722fda07ad1c5e1ab764e067fc5ab",
+      "match": true
+    },
+    {
+      "path": "tools/academy-mcp/src/server.ts",
+      "expected": "395cf1c36010bc2ba9e67731ea2dea5200c2ab4b1b72a68489b10962a82408fe",
+      "actual": "395cf1c36010bc2ba9e67731ea2dea5200c2ab4b1b72a68489b10962a82408fe",
+      "match": true
+    },
+    {
+      "path": "tools/academy-mcp/src/tool-result.ts",
+      "expected": "68d1db6d259a5fed1591f47e03ac7f698991188ff9780281f4b57a18a9504582",
+      "actual": "68d1db6d259a5fed1591f47e03ac7f698991188ff9780281f4b57a18a9504582",
+      "match": true
+    },
+    {
+      "path": "tools/academy-mcp/schemas/contracts.json",
+      "expected": "ecfc318884cde593f7498e552b3fc9989ba49fb695f2ceecfd37d26486619141",
+      "actual": "ecfc318884cde593f7498e552b3fc9989ba49fb695f2ceecfd37d26486619141",
+      "match": true
+    },
+    {
+      "path": "tools/academy-mcp/tests/history-pagination.test.ts",
+      "expected": "8c370163dc1d262445538eda09bf32034c7cb57cc208ff2612d1ae7d0166b315",
+      "actual": "8c370163dc1d262445538eda09bf32034c7cb57cc208ff2612d1ae7d0166b315",
+      "match": true
+    },
+    {
+      "path": "tools/academy-mcp/tests/history-transport-fixture.ts",
+      "expected": "c598f55c02805dbf6f82ddde852b3838811d512c18fc36b20300119d26f175c6",
+      "actual": "c598f55c02805dbf6f82ddde852b3838811d512c18fc36b20300119d26f175c6",
+      "match": true
+    },
+    {
+      "path": "tools/academy-mcp/tests/history-transport.test.ts",
+      "expected": "3d917b954619bd935bacad8232fe943c4206862c648feb48138277a53a4318db",
+      "actual": "3d917b954619bd935bacad8232fe943c4206862c648feb48138277a53a4318db",
+      "match": true
+    },
+    {
+      "path": "tools/academy-mcp/tests/saved-context.test.ts",
+      "expected": "fa49db98ec45576602f06e74299c688ee50ac16eeb8f9fab45feb91453a74b00",
+      "actual": "fa49db98ec45576602f06e74299c688ee50ac16eeb8f9fab45feb91453a74b00",
+      "match": true
+    },
+    {
+      "path": "context/academy-context/catalog.json",
+      "expected": "3beb4adba25512867a1823cf9ac69dae7ffe52a013cba7fb5f01b5cdeaab1d3d",
+      "actual": "3beb4adba25512867a1823cf9ac69dae7ffe52a013cba7fb5f01b5cdeaab1d3d",
+      "match": true
+    },
+    {
+      "path": "context/academy-context/types.ts",
+      "expected": "c49a1863ddd1540f6d591c0175c08d0a720747762c3be74af9bb459ef889abd1",
+      "actual": "c49a1863ddd1540f6d591c0175c08d0a720747762c3be74af9bb459ef889abd1",
+      "match": true
+    },
+    {
+      "path": "context/academy-context/validate.ts",
+      "expected": "ffa530db92b98368740e0942ee7b8f0f3b41e87101602b44e7ee0e7e1be2e08f",
+      "actual": "ffa530db92b98368740e0942ee7b8f0f3b41e87101602b44e7ee0e7e1be2e08f",
+      "match": true
+    },
+    {
+      "path": "context/academy-context/select.ts",
+      "expected": "c668446e2fe5b8d76ac1294bbe7a63a1d13f066e87a490c5bbd471cf904e8cca",
+      "actual": "c668446e2fe5b8d76ac1294bbe7a63a1d13f066e87a490c5bbd471cf904e8cca",
+      "match": true
+    },
+    {
+      "path": "context/academy-context/reading-plan.ts",
+      "expected": "d0d5a5bfdcebb88195826451314ac6d340c9817b594e3eafc90bacd2027a561e",
+      "actual": "d0d5a5bfdcebb88195826451314ac6d340c9817b594e3eafc90bacd2027a561e",
+      "match": true
+    },
+    {
+      "path": "context/academy-context/cli.ts",
+      "expected": "16faea4fe983e2905ca42751c8fd9584defb05d54d4993ebddc1666868e83145",
+      "actual": "16faea4fe983e2905ca42751c8fd9584defb05d54d4993ebddc1666868e83145",
+      "match": true
+    },
+    {
+      "path": "context/academy-context/execution-contracts.ts",
+      "expected": "97da48787c699617e3a3edccd8f1bd06f99357ad8558b3b46ee21630fd5c55f2",
+      "actual": "97da48787c699617e3a3edccd8f1bd06f99357ad8558b3b46ee21630fd5c55f2",
+      "match": true
+    },
+    {
+      "path": "context/academy-context/repository-plan.json",
+      "expected": "5986ed3b1b24d278c61d09e0fc2819acdda32cdc6ead7386bc8b53e8aa1d9c22",
+      "actual": "5986ed3b1b24d278c61d09e0fc2819acdda32cdc6ead7386bc8b53e8aa1d9c22",
+      "match": true
+    },
+    {
+      "path": "context/academy-context/catalog.test.ts",
+      "expected": "661725ae8220811b797f6b47c06c5b87f6238253bb16c65b01ed123564b13450",
+      "actual": "661725ae8220811b797f6b47c06c5b87f6238253bb16c65b01ed123564b13450",
+      "match": true
+    },
+    {
+      "path": "context/academy-context/select.test.ts",
+      "expected": "401468bd49898d8699aaccef47b1272675600ac461ad3b53235fbbf06b8bc5e9",
+      "actual": "401468bd49898d8699aaccef47b1272675600ac461ad3b53235fbbf06b8bc5e9",
+      "match": true
+    },
+    {
+      "path": "context/academy-context/tsconfig.json",
+      "expected": "6e5b28d747c6e29415ce1219fa53077bd146fbbdfc853b4b9c182eb79c7c35d9",
+      "actual": "6e5b28d747c6e29415ce1219fa53077bd146fbbdfc853b4b9c182eb79c7c35d9",
+      "match": true
+    }
+  ],
+  "privateOriginalsRead": false,
+  "network": "network-deny preload in tests and SDK fixture subprocesses",
+  "notRun": [
+    "broad legacy suites with private loaders",
+    "native/WSL/VPS production integration",
+    "actual authentication/source acquisition/printing/sending",
+    "new committed snapshot/transition: Root owns exact commit"
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "academy-operations",
+  "projectId": "academy-workbench",
+  "workId": "academy-consumer-integration-20261021",
+  "kind": "input",
+  "id": "CON-02-VERIFICATION-R1",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "accountable-consumer-subLead",
+    "locator": "native-thread:01a15dd0-03ed-71a0-8372-936776e22669:CON-02-VERIFICATION-R1",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "verification": {
+      "schemaVersion": "1.0.0",
+      "kind": "verification",
+      "id": "academy-workbench:verification:con-02-r1",
+      "domainId": "academy-operations",
+      "projectId": "academy-workbench",
+      "createdAt": "2026-10-21T10:11:16.878Z",
+      "payload": {
+        "targetRefs": [
+          "common-harness:task:d3c2271f53fc88207adc400c6aa9a0f89604896fa632f2f2c78dc6f13ac3183c"
+        ],
+        "criteria": [
+          {
+            "id": "source-composition-and-typecheck",
+            "status": "pass",
+            "message": "Exact caller-configured canonical source loader and owner-local registration/presentation compile; 23 adopted baseline blobs unchanged.",
+            "evidenceRefs": [
+              "academy-workbench:evidence:con-02-result-observation-r1"
+            ]
+          },
+          {
+            "id": "report-adversarial-tests",
+            "status": "pass",
+            "message": "Seven source-only canonical/synthetic report tests pass, including uncertainty, scoped completion, distinct attempts, cancellations/replacements, page bounds and continuation.",
+            "evidenceRefs": [
+              "academy-workbench:evidence:con-02-result-observation-r1"
+            ]
+          },
+          {
+            "id": "production-sdk-transport",
+            "status": "fail",
+            "message": "Three required SDK tests fail at child startup CONNECTION_CLOSED with empty captured stderr. Exact cause unknown; Root same-source receipt required. This criterion is not passed by report tests or historical Root CON01 success.",
+            "evidenceRefs": [
+              "academy-workbench:evidence:con-02-result-observation-r1"
+            ]
+          },
+          {
+            "id": "readiness-and-preservation",
+            "status": "pass",
+            "message": "Immutable failure retained, heavy checks paused per CON-COORD-003, source-only Task has no native execution field; all operational/downstream holds retained.",
+            "evidenceRefs": [
+              "academy-workbench:evidence:con-02-result-observation-r1"
+            ]
+          }
+        ],
+        "inputHashes": [
+          {
+            "path": "work/academy-workbench/academy-consumer-integration-20261021/inputs/CON-02-RESULT-R1.json",
+            "sha256": "082e69e80d61f444d48de2b31f729174d6a7ea398ba7e7df01690072811736ea"
+          }
+        ],
+        "runtime": {
+          "name": "Bun bounded source-only checks and external canonical local record APIs",
+          "version": "1.4.3"
+        }
+      }
+    }
+  }
+}

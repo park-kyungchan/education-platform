@@ -1,0 +1,34 @@
+{
+  "name": "academy-operations-mcp",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "bun src/server.ts",
+    "start:labels": "bun src/label-server.ts",
+    "start:pool": "bun src/pool-server.ts",
+    "connect:pool": "bun src/native-pool-operator.ts",
+    "test:pool": "bun test tests/paper-preparation.test.ts tests/pool-candidate-comparison.test.ts tests/pool-explanation-review.test.ts tests/pool-question-content.test.ts tests/pool-tools-mcp.test.ts tests/native-pool-operator.test.ts",
+    "start:dailyrecord": "bun src/dailyrecord-server.ts",
+    "test:dailyrecord": "bun test tests/dailyrecord.test.ts tests/dailyrecord-mcp.test.ts tests/native-dailyrecord-backend.test.ts",
+    "test:labels": "bun test tests/item-labels.test.ts tests/native-pool-backend.test.ts tests/item-label-mcp.test.ts",
+    "catalog": "bun src/cli.ts",
+    "verify:academy-mcp": "bun src/verify-academy-mcp.ts",
+    "verify:academy-mcp:node": "node --experimental-transform-types src/verify-academy-mcp.ts",
+    "generate:contracts": "bun src/export-contracts.ts",
+    "verify:mcp": "bun src/verify-rea-mcp.ts",
+    "analyze": "bun src/analyze.ts",
+    "test": "bun test tests",
+    "check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/client": "2.3.1",
+    "@modelcontextprotocol/server": "2.3.1",
+    "rea-agents": "6.5.0",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "bun-types": "1.4.2",
+    "typescript": "7.0.2"
+  }
+}

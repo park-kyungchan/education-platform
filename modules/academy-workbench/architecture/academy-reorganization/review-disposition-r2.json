@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "academy.architecture-review-disposition/2",
+  "reviewId": "AAR-REVIEW-001",
+  "originalReviewSha256": "f2b0b090d760e9b50babeee12eafe7cae28ae85a7a7f418911cd9c33213d5c1f",
+  "originalReviewPath": "reviews/AAR-REVIEW-001/AAR-REVIEW-001.json",
+  "ownerAssessment": "Repair candidate ready for independent successor review; no finding marked independently closed.",
+  "items": [
+    {
+      "findingId": "AAR-REVIEW-001-F01",
+      "state": "repair-proposed",
+      "artifacts": [
+        "cross-work-protocol-r2.json",
+        "qualify-external-work.ts",
+        "qualify-external-work.test.ts"
+      ],
+      "checks": "7 actual canonical-API synthetic tests,12assertions pass; wrong Work/source/missing proof/pending milestone/refusal paths hold."
+    },
+    {
+      "findingId": "AAR-REVIEW-001-F02",
+      "state": "repair-proposed",
+      "artifacts": [
+        "workflow-capabilities-r2.json",
+        "architecture-r2.json"
+      ],
+      "checks": "7 workflows; existing teacher application and assessment source/web retain explicit canonical/adapter/unknown dispositions."
+    },
+    {
+      "findingId": "AAR-REVIEW-001-F03",
+      "state": "repair-proposed",
+      "artifacts": [
+        "architecture-r2.json",
+        "validate-successor.ts"
+      ],
+      "checks": "13modules with separate concrete adapters/ports; runtime imports DAG, observed type-only coupling and request flow separate."
+    },
+    {
+      "findingId": "AAR-REVIEW-001-F04",
+      "state": "repair-proposed",
+      "artifacts": [
+        "execution-plan-r2.json",
+        "verification-plan-r2.json"
+      ],
+      "checks": "VER-03 after CON-03; INT-VERIFY after actual integration; T06 depends on new T07.20macro nodes,16foreign qualification bindings."
+    }
+  ],
+  "additionalEvidenceCorrection": {
+    "historicalFile": "local-checks.json",
+    "historicalClaim": "Installed TypeScript7.0.2",
+    "actualVersionObserved": "5.9.3",
+    "meaning": "7.0.2 was the declared package version, not the actual installed compiler. Historical record preserved; this successor corrects it."
+  },
+  "testFixtureFailureRetained": {
+    "attempt": "First qualification fixture run",
+    "result": "4pass3fail",
+    "cause": "Extra SourceReference fields passed into strict Verification inputHashes in synthetic fixture.",
+    "repair": "Pass only canonical path and sha256; common contract unchanged.",
+    "successor": "7pass0fail12assertions"
+  },
+  "observedAtUtc": "2026-10-21T05:23:11.195579+00:00",
+  "sourceImplementationDispatched": false
+}

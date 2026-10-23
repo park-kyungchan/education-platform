@@ -1,0 +1,1855 @@
+{
+  "$schema": "이루한_숙제제출_교사확인계획_1.4.0.schema.json",
+  "type": "student_homework_submission_and_teacher_review_plan",
+  "plan_id": "ruhan-homework-review-plan-20261007-001",
+  "version": "1.4.0",
+  "student": {
+    "display_name": "이루한",
+    "canonical_snapshot_student_key": "student_700f4a05dcab5762d6ab37f8"
+  },
+  "created_at_utc": "2026-10-07T05:39:24Z",
+  "source_messages": [
+    {
+      "message_id": "Sentinel_c98dbe834e648191af53e089b0466150",
+      "actor": "user",
+      "sent_at_utc": "2026-10-07T05:29:37.623715+00:00",
+      "exact_relevant_text": "아, 내가 잘못말했다.10월02일(금) 숙제 기준으로 다시 정리해줘."
+    },
+    {
+      "message_id": "Sentinel_8aba737080808191afe9913f3301ce27",
+      "actor": "user",
+      "sent_at_utc": "2026-10-07T05:36:09.655361+00:00",
+      "exact_relevant_spans": [
+        "18:30 오늘 원래 등원예정 시간 직전까지 올라오면 숙제를 한 것으로 처리하면 된다.",
+        "만약 안올라오면 미숙제로 따로 학부모 DayRecord 전송하는 `메모`입력란에 미숙제에 대해서 언급해줘야한다.",
+        "기본도형 오답 1273201 고민해온 것에 대해서는 다음주 등원 때 내가 직접 확인해야하는 부분이다",
+        "이것은 오늘 DayRecord에서 한번 더 언급해주면 돼.",
+        "다빈치 2단원 대단원 총괄은 10월02(금)의 숙제에 포함되었었는지 확인하고, 안되어있으면 이번 숙제 범위로 내주면 되니까 확인해봐."
+      ]
+    },
+    {
+      "message_id": "Sentinel_04746caec34c8191919c2e24507335ed",
+      "actor": "user",
+      "sent_at_utc": "2026-10-07T05:40:06.642062+00:00",
+      "exact_relevant_text": "다빈치1-1 p.72~p.83은 유리수의 계산 단원의5차시와6차시,그리고 학교 시험 서술형 정복 섹션과 대단원 실전 TEST이다.그러므로숙제범위에포함되는것들이다."
+    },
+    {
+      "message_id": "Sentinel_076a282e64b8819197666bab223755c0",
+      "actor": "user",
+      "sent_at_utc": "2026-10-07T05:56:04.982985+00:00",
+      "exact_relevant_text": "1. 내가 확인했는데, 아직 안올라옴.18:25에 알림해라,그때도 너가해결할수없으면내가직접조회한다.2. 대단원 실전 TEST 채점기록도안올라옴,학교 시험 서술형 정복은각소단원별마지막차시에추가섹션으로붙어있으니까,앱채점대상에기록은되는데따로섹션분리는하지마."
+    },
+    {
+      "message_id": "Sentinel_f3165c5485d88191aa22e9ed37b0b8ef",
+      "actor": "user",
+      "sent_at_utc": "2026-10-07T06:25:11.954372+00:00",
+      "purpose": "evidence_provenance_schema_refinement_request"
+    },
+    {
+      "message_id": "Sentinel_2093e5b3f91c81919e01af814019d90e",
+      "actor": "user",
+      "sent_at_utc": "2026-10-07T06:55:32.455391+00:00",
+      "exact_relevant_text": "다빈치 새 진도는 방정식 소단원 3개에다가 방정식 대단원 총괄평가까지 숙제로 해오는 것으로 한다. 차시 몇개분량인지 체크해봐"
+    }
+  ],
+  "homework_comparison_basis": {
+    "date": "2026-10-02",
+    "timezone": "Asia/Seoul",
+    "state": "user_corrected_confirmed",
+    "source_message_id": "Sentinel_c98dbe834e648191af53e089b0466150"
+  },
+  "gauss_submission_check": {
+    "target": {
+      "book_code": "1N87",
+      "edition": 1,
+      "book_display_name": "가우스 1-2-3",
+      "unit_label": "6",
+      "unit_title": "평면도형 대단원 총괄",
+      "native_section_label": "단원평가",
+      "catalog_code": "1N870P",
+      "existing_record_reference": "record:1N87:6:1N870P",
+      "reference_kind": "existing_saved_mapping_record",
+      "creates_attempt_record": false
+    },
+    "scope": "final_preclass_app_grading_registration_check",
+    "scheduled_attendance_at_local": "2026-10-07T18:30:00+09:00",
+    "scheduled_attendance_at_utc": "2026-10-07T09:30:00Z",
+    "timezone": "Asia/Seoul",
+    "check_time_semantics": "immediately_before_scheduled_attendance",
+    "registration_criterion": "matching_student_book_edition_and_catalog_grading_record_registered_by_final_check",
+    "rules": [
+      {
+        "query_outcome": "successful_matching_registration_present",
+        "homework_submission_state": "homework_submitted",
+        "dayrecord_missing_homework_memo": "not_required_by_this_rule"
+      },
+      {
+        "query_outcome": "successful_matching_registration_absent_at_final_check",
+        "homework_submission_state": "homework_not_submitted",
+        "dayrecord_missing_homework_memo": "planned_mention_missing_homework"
+      },
+      {
+        "query_outcome": "failed_or_incomplete_or_identity_mismatch",
+        "homework_submission_state": "unknown",
+        "dayrecord_missing_homework_memo": "do_not_assert_missing_homework"
+      }
+    ],
+    "current_query_state": "awaiting_final_preclass_check",
+    "current_submission_state": "unknown",
+    "observed_at_utc": null,
+    "source_message_id": "Sentinel_8aba737080808191afe9913f3301ce27",
+    "paper_solution_review_state": "not_checked",
+    "submission_acceptance_and_paper_review_are_separate": true,
+    "latest_registration_observation": {
+      "evidence_class": "user_reported_observation",
+      "registration_state": "user_reported_not_registered",
+      "source_message_id": "Sentinel_076a282e64b8819197666bab223755c0",
+      "reported_at_utc": "2026-10-07T05:56:04.982985+00:00",
+      "observed_at_utc": null,
+      "observed_at_state": "user_actual_check_time_not_supplied",
+      "assistant_query_performed": false,
+      "final_submission_decision_state": "pending_final_preclass_check"
+    }
+  },
+  "teacher_solution_review": {
+    "target": {
+      "user_label": "기본도형 오답",
+      "problem_id": "1273201",
+      "book_edition_section_binding_state": "not_verified"
+    },
+    "action": "teacher_reviews_students_own_solution_at_next_attendance",
+    "state": "planned",
+    "attendance_timing": "next_attendance",
+    "tentative_attendance_date": "2026-10-14",
+    "actual_review_at": null,
+    "completion_state": "unknown",
+    "dayrecord_remention_date": "2026-10-07",
+    "dayrecord_remention_state": "planned_not_written_not_sent",
+    "source_message_id": "Sentinel_8aba737080808191afe9913f3301ce27"
+  },
+  "davinci_total_assignment_comparison": {
+    "target": {
+      "book_code": "1MHL",
+      "edition": 1,
+      "unit_label": "2",
+      "unit_title": "정수와 유리수 대단원 총괄",
+      "native_section_label": "단원평가",
+      "catalog_code": "1MHL0J",
+      "existing_record_reference": "record:1MHL:2:1MHL0J"
+    },
+    "past_homework_basis_date": "2026-10-02",
+    "past_inclusion_state": "user_confirmed_included",
+    "conditional_action": "if_not_included_in_2026_10_02_homework_teacher_may_assign_in_current_homework",
+    "actual_new_assignment_state": "not_confirmed",
+    "source_message_id": "Sentinel_8aba737080808191afe9913f3301ce27",
+    "conditional_action_state": "no_new_assignment_needed_for_already_included_scope",
+    "scope_confirmation_source_message_id": "Sentinel_04746caec34c8191919c2e24507335ed",
+    "scope_confirmation_sent_at_utc": "2026-10-07T05:40:06.642062+00:00",
+    "native_code_binding_state": "existing_native_catalog_code_candidate_print_TEST_equivalence_unverified",
+    "latest_registration_observation": {
+      "evidence_class": "user_reported_observation",
+      "registration_state": "user_reported_not_registered",
+      "source_message_id": "Sentinel_076a282e64b8819197666bab223755c0",
+      "reported_at_utc": "2026-10-07T05:56:04.982985+00:00",
+      "observed_at_utc": null,
+      "observed_at_state": "user_actual_check_time_not_supplied",
+      "assistant_query_performed": false,
+      "final_submission_decision_state": "pending_final_preclass_check"
+    }
+  },
+  "dayrecord_execution": {
+    "date": "2026-10-07",
+    "memo_preparation_state": "planned",
+    "draft_written_to_academy": "not_confirmed",
+    "submitted_to_academy": "not_confirmed",
+    "sent_to_guardian": "not_confirmed",
+    "actual_execution_evidence": null,
+    "final_missing_homework_decision_state": "pending_final_preclass_check"
+  },
+  "terminology": {
+    "authority": "academy_server_metadata",
+    "identity": "native_id",
+    "hierarchy": "native_server_hierarchy",
+    "labels": "native_server_label",
+    "automatic_alias_registration": false,
+    "alias_registration_condition": "explicit_user_distinct_designation_with_clear_referent",
+    "ambiguous_referent_handling": "ask_for_confirmation",
+    "source_collection_version": "1.3.0"
+  },
+  "evidence_boundary": {
+    "stored_mapping_absence_is_not_current_submission_failure": true,
+    "current_query_required": true,
+    "no_external_site_input_or_dayrecord_send_performed": true,
+    "score_does_not_prove_paper_review": true,
+    "print_execution_does_not_prove_student_remediation_completion": true,
+    "user_reported_observation_is_not_assistant_query": true,
+    "embedded_written_response_has_no_independent_denominator_or_missing_status": true
+  },
+  "revised_at_utc": "2026-10-07T07:00:39Z",
+  "previous_revision": {
+    "version": "1.3.0",
+    "file_name": "이루한_숙제제출_교사확인계획_1.3.0.json",
+    "sha256": "e453111d4fcf112726c1b800392f00bd0e4a4fe7317bd90af835e8486efbba01"
+  },
+  "historical_comparison_states": [
+    {
+      "target": {
+        "book_code": "1MHL",
+        "edition": 1,
+        "unit_label": "2",
+        "unit_title": "정수와 유리수 대단원 총괄",
+        "native_section_label": "단원평가",
+        "catalog_code": "1MHL0J",
+        "existing_record_reference": "record:1MHL:2:1MHL0J"
+      },
+      "past_homework_basis_date": "2026-10-02",
+      "past_inclusion_state": "pending_verification",
+      "conditional_action": "if_not_included_in_2026_10_02_homework_teacher_may_assign_in_current_homework",
+      "actual_new_assignment_state": "not_confirmed",
+      "source_message_id": "Sentinel_8aba737080808191afe9913f3301ce27"
+    }
+  ],
+  "davinci_assignment_scope": {
+    "homework_basis_date": "2026-10-02",
+    "book_display_name": "다빈치 1-1",
+    "book_code": "1MHL",
+    "edition": 1,
+    "page_range": {
+      "from": 72,
+      "to": 83
+    },
+    "page_scope_state": "teacher_user_confirmed",
+    "scope_confirmation_source": {
+      "message_id": "Sentinel_04746caec34c8191919c2e24507335ed",
+      "actor": "user",
+      "sent_at_utc": "2026-10-07T05:40:06.642062+00:00",
+      "exact_relevant_text": "다빈치1-1 p.72~p.83은 유리수의 계산 단원의5차시와6차시,그리고 학교 시험 서술형 정복 섹션과 대단원 실전 TEST이다.그러므로숙제범위에포함되는것들이다."
+    },
+    "ordered_items": [
+      {
+        "scope_item_id": "scope:ruhan:20261002:davinci:lesson5",
+        "order": 1,
+        "user_scope_label": "유리수의 계산 5차시",
+        "user_confirmed_assigned": true,
+        "unit_label": "2-2",
+        "native_section_label": "유형다지기",
+        "lesson_index": 5,
+        "observed_app_catalog_code": "1MHL0H",
+        "existing_record_reference": "record:1MHL:2-2:1MHL0H",
+        "app_catalog_code_state": "observed",
+        "printed_test_code": null,
+        "printed_code_binding_state": "not_verified",
+        "per_item_page_range": null,
+        "saved_app_observation": {
+          "score": 100,
+          "event_time_raw": "10-02 19:46",
+          "event_year_state": "unknown",
+          "event_timezone_state": "unknown",
+          "clinic_text": "- 미학습",
+          "current_requery_state": "not_completed",
+          "teacher_paper_review_state": "not_confirmed"
+        }
+      },
+      {
+        "scope_item_id": "scope:ruhan:20261002:davinci:lesson6",
+        "order": 2,
+        "user_scope_label": "유리수의 계산 6차시",
+        "user_confirmed_assigned": true,
+        "unit_label": "2-2",
+        "native_section_label": "유형다지기",
+        "lesson_index": 6,
+        "observed_app_catalog_code": "1MHL0I",
+        "existing_record_reference": "record:1MHL:2-2:1MHL0I",
+        "app_catalog_code_state": "observed",
+        "printed_test_code": null,
+        "printed_code_binding_state": "not_verified",
+        "per_item_page_range": null,
+        "saved_app_observation": {
+          "score": 100,
+          "event_time_raw": "10-05 22:00",
+          "event_year_state": "unknown",
+          "event_timezone_state": "unknown",
+          "clinic_text": "- 미학습",
+          "current_requery_state": "not_completed",
+          "teacher_paper_review_state": "not_confirmed"
+        },
+        "embedded_sections": [
+          {
+            "source_label": "학교 시험 서술형 정복",
+            "parent_scope_item_id": "scope:ruhan:20261002:davinci:lesson6",
+            "parent_lesson_index": 6,
+            "placement": "additional_section_attached_to_final_lesson",
+            "relationship_evidence_class": "user_confirmed",
+            "source_message_id": "Sentinel_076a282e64b8819197666bab223755c0",
+            "source_sent_at_utc": "2026-10-07T05:56:04.982985+00:00",
+            "included_in_parent_app_grading_target": true,
+            "native_section_id": null,
+            "independent_scope_item": false,
+            "independent_grading_denominator": false,
+            "independent_missing_status": false,
+            "saved_parent_score_proves_embedded_section_paper_review": false
+          }
+        ]
+      },
+      {
+        "scope_item_id": "scope:ruhan:20261002:davinci:unit2_TEST",
+        "order": 3,
+        "user_scope_label": "대단원 실전 TEST",
+        "user_confirmed_assigned": true,
+        "candidate_native_catalog_code": "1MHL0J",
+        "candidate_existing_record_reference": "record:1MHL:2:1MHL0J",
+        "native_catalog_candidate_label": "정수와 유리수 대단원 총괄 / 단원평가",
+        "native_print_label_binding_state": "candidate_equivalence_unverified",
+        "printed_test_code": null,
+        "per_item_page_range": null,
+        "saved_app_observation": {
+          "state": "no_saved_app_result_row_for_candidate_record",
+          "current_requery_state": "not_completed",
+          "homework_non_submission_inferred": false,
+          "teacher_paper_review_state": "not_confirmed"
+        },
+        "latest_registration_observation": {
+          "evidence_class": "user_reported_observation",
+          "registration_state": "user_reported_not_registered",
+          "source_message_id": "Sentinel_076a282e64b8819197666bab223755c0",
+          "reported_at_utc": "2026-10-07T05:56:04.982985+00:00",
+          "observed_at_utc": null,
+          "observed_at_state": "user_actual_check_time_not_supplied",
+          "assistant_query_performed": false,
+          "final_submission_decision_state": "pending_final_preclass_check"
+        }
+      }
+    ],
+    "observation_source": {
+      "mapping_file_name": "이루한_교재매핑_1.1.0.json",
+      "mapping_version": "1.1.0",
+      "mapping_sha256": "b2382b181d62ca86374dfcf7816376de576e1b02180d6a12b14418b1ac5c486c",
+      "mapping_pointers": [
+        "/records/102",
+        "/records/103",
+        "/records/130"
+      ],
+      "source_observed_at_utc": null,
+      "source_observed_at_state": "not_supplied_for_entire_saved_snapshot",
+      "performance_as_of": null,
+      "page_scope_confirmation_time_is_not_app_query_time": true,
+      "current_new_query_evidence": "none"
+    },
+    "app_assignment_unit_count": 3,
+    "count_state": "user_confirmed_grouping",
+    "standalone_written_response_scope_item_retired": "scope:ruhan:20261002:davinci:written_response",
+    "structure_confirmation_source_message_id": "Sentinel_076a282e64b8819197666bab223755c0",
+    "structure_confirmation_sent_at_utc": "2026-10-07T05:56:04.982985+00:00",
+    "independent_written_response_scope_item_count": 0,
+    "embedded_section_rule": {
+      "source_label": "학교 시험 서술형 정복",
+      "user_placement_rule_text": "각소단원별마지막차시에추가섹션으로붙어있음",
+      "independent_section_split": false,
+      "native_server_identity_authority_preserved": true,
+      "automatic_alias_created": false,
+      "source_message_id": "Sentinel_076a282e64b8819197666bab223755c0"
+    }
+  },
+  "reminder_plan": {
+    "requested_reminder_at_local": "2026-10-07T18:25:00+09:00",
+    "requested_reminder_at_utc": "2026-10-07T09:25:00Z",
+    "timezone": "Asia/Seoul",
+    "schedule_change_state": "parent_reported_tool_success",
+    "next_run_at_utc": null,
+    "next_run_verification_state": "unknown",
+    "recreated": false,
+    "if_assistant_cannot_query_at_reminder": "user_will_query_directly",
+    "source_message_id": "Sentinel_076a282e64b8819197666bab223755c0",
+    "source_sent_at_utc": "2026-10-07T05:56:04.982985+00:00"
+  },
+  "scope_structure_revision_history": [
+    {
+      "from_plan_version": "1.1.0",
+      "source_message_id": "Sentinel_076a282e64b8819197666bab223755c0",
+      "source_sent_at_utc": "2026-10-07T05:56:04.982985+00:00",
+      "previous_assignment_scope": {
+        "homework_basis_date": "2026-10-02",
+        "book_display_name": "다빈치 1-1",
+        "book_code": "1MHL",
+        "edition": 1,
+        "page_range": {
+          "from": 72,
+          "to": 83
+        },
+        "page_scope_state": "teacher_user_confirmed",
+        "scope_confirmation_source": {
+          "message_id": "Sentinel_04746caec34c8191919c2e24507335ed",
+          "actor": "user",
+          "sent_at_utc": "2026-10-07T05:40:06.642062+00:00",
+          "exact_relevant_text": "다빈치1-1 p.72~p.83은 유리수의 계산 단원의5차시와6차시,그리고 학교 시험 서술형 정복 섹션과 대단원 실전 TEST이다.그러므로숙제범위에포함되는것들이다."
+        },
+        "ordered_items": [
+          {
+            "scope_item_id": "scope:ruhan:20261002:davinci:lesson5",
+            "order": 1,
+            "user_scope_label": "유리수의 계산 5차시",
+            "user_confirmed_assigned": true,
+            "unit_label": "2-2",
+            "native_section_label": "유형다지기",
+            "lesson_index": 5,
+            "observed_app_catalog_code": "1MHL0H",
+            "existing_record_reference": "record:1MHL:2-2:1MHL0H",
+            "app_catalog_code_state": "observed",
+            "printed_test_code": null,
+            "printed_code_binding_state": "not_verified",
+            "per_item_page_range": null,
+            "saved_app_observation": {
+              "score": 100,
+              "event_time_raw": "10-02 19:46",
+              "event_year_state": "unknown",
+              "event_timezone_state": "unknown",
+              "clinic_text": "- 미학습",
+              "current_requery_state": "not_completed",
+              "teacher_paper_review_state": "not_confirmed"
+            }
+          },
+          {
+            "scope_item_id": "scope:ruhan:20261002:davinci:lesson6",
+            "order": 2,
+            "user_scope_label": "유리수의 계산 6차시",
+            "user_confirmed_assigned": true,
+            "unit_label": "2-2",
+            "native_section_label": "유형다지기",
+            "lesson_index": 6,
+            "observed_app_catalog_code": "1MHL0I",
+            "existing_record_reference": "record:1MHL:2-2:1MHL0I",
+            "app_catalog_code_state": "observed",
+            "printed_test_code": null,
+            "printed_code_binding_state": "not_verified",
+            "per_item_page_range": null,
+            "saved_app_observation": {
+              "score": 100,
+              "event_time_raw": "10-05 22:00",
+              "event_year_state": "unknown",
+              "event_timezone_state": "unknown",
+              "clinic_text": "- 미학습",
+              "current_requery_state": "not_completed",
+              "teacher_paper_review_state": "not_confirmed"
+            }
+          },
+          {
+            "scope_item_id": "scope:ruhan:20261002:davinci:written_response",
+            "order": 3,
+            "user_scope_label": "학교 시험 서술형 정복",
+            "user_confirmed_assigned": true,
+            "native_catalog_code": null,
+            "native_catalog_code_state": "unknown",
+            "existing_record_reference": null,
+            "creates_app_record": false,
+            "per_item_page_range": null,
+            "saved_app_observation": {
+              "state": "unknown",
+              "score": null,
+              "current_requery_state": "not_completed",
+              "teacher_paper_review_state": "not_confirmed"
+            }
+          },
+          {
+            "scope_item_id": "scope:ruhan:20261002:davinci:unit2_TEST",
+            "order": 4,
+            "user_scope_label": "대단원 실전 TEST",
+            "user_confirmed_assigned": true,
+            "candidate_native_catalog_code": "1MHL0J",
+            "candidate_existing_record_reference": "record:1MHL:2:1MHL0J",
+            "native_catalog_candidate_label": "정수와 유리수 대단원 총괄 / 단원평가",
+            "native_print_label_binding_state": "candidate_equivalence_unverified",
+            "printed_test_code": null,
+            "per_item_page_range": null,
+            "saved_app_observation": {
+              "state": "no_saved_app_result_row_for_candidate_record",
+              "current_requery_state": "not_completed",
+              "homework_non_submission_inferred": false,
+              "teacher_paper_review_state": "not_confirmed"
+            }
+          }
+        ],
+        "observation_source": {
+          "mapping_file_name": "이루한_교재매핑_1.1.0.json",
+          "mapping_version": "1.1.0",
+          "mapping_sha256": "b2382b181d62ca86374dfcf7816376de576e1b02180d6a12b14418b1ac5c486c",
+          "mapping_pointers": [
+            "/records/102",
+            "/records/103",
+            "/records/130"
+          ],
+          "source_observed_at_utc": null,
+          "source_observed_at_state": "not_supplied_for_entire_saved_snapshot",
+          "performance_as_of": null,
+          "page_scope_confirmation_time_is_not_app_query_time": true,
+          "current_new_query_evidence": "none"
+        }
+      },
+      "revision_kind": "standalone_written_response_item_retired_and_embedded_in_parent_final_lesson"
+    }
+  ],
+  "schema_refinement_request": {
+    "source_message_id": "Sentinel_f3165c5485d88191aa22e9ed37b0b8ef",
+    "reported_at_utc": "2026-10-07T06:25:11.954372+00:00",
+    "recorded_at_utc": "2026-10-07T06:33:00Z",
+    "purpose": "separate_user_statement_provenance_from_independent_source_verification",
+    "actual_observation_event": false
+  },
+  "evidence_contract": {
+    "version": "academy.evidence/1.1.0",
+    "canonical_field_style": "camelCase",
+    "storage_adapter_style": "legacy_snake_case_JSON_pointer_links",
+    "verification_status_semantics": {
+      "unverified": "not_independently_verified",
+      "corroborated": "corroborated_by_separate_evidence",
+      "contradicted": "conflicting_separate_evidence_exists"
+    },
+    "statement_provenance_semantics": "confirmed means the authenticated user made this statement, not that LMS state was independently verified",
+    "mutation_semantics": "append_new_evidence_and_relation_ids; preserve_existing_evidence_bytes",
+    "server_query_success_fields_created": false
+  },
+  "evidence_records": [
+    {
+      "sourceKind": "user_report",
+      "actor": {
+        "kind": "user",
+        "role": "teacher",
+        "id": null
+      },
+      "sourceRef": {
+        "sourceMessageId": "Sentinel_076a282e64b8819197666bab223755c0",
+        "reference": "library-file:fde1_bGliZmlsZV9ZQ3JoSl80NnhpUG5XLURKc3RjVEJn_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+        "sha256": "4c5172ae4781f3c3d3eb08fff4b227e1032293220a9a0291984d2ca3ee813c2b",
+        "jsonPointer": "/gauss_submission_check/latest_registration_observation"
+      },
+      "reportedAt": "2026-10-07T05:56:04.982985+00:00",
+      "observedAt": null,
+      "capturedAt": null,
+      "recordedAt": "2026-10-07T05:58:15Z",
+      "timeRaw": "아직",
+      "verificationStatus": "unverified",
+      "verificationDetail": "not_independently_verified",
+      "statementProvenance": {
+        "confirmed": true,
+        "sourceMessageId": "Sentinel_076a282e64b8819197666bab223755c0"
+      },
+      "scope": {
+        "studentId": "student_700f4a05dcab5762d6ab37f8",
+        "entityIds": [
+          "record:1N87:6:1N870P"
+        ],
+        "fields": [
+          "grading_registration"
+        ],
+        "window": null
+      },
+      "claim": {
+        "type": "grading_registration_user_report",
+        "value": {
+          "registrationState": "not_registered",
+          "interimOnly": true
+        }
+      },
+      "revision": 1,
+      "supersedesEvidenceIds": [],
+      "retractsEvidenceIds": [],
+      "conflictingEvidenceIds": [],
+      "evidenceId": "evidence:ruhan:18dac57417de7752789bd298"
+    },
+    {
+      "sourceKind": "user_report",
+      "actor": {
+        "kind": "user",
+        "role": "teacher",
+        "id": null
+      },
+      "sourceRef": {
+        "sourceMessageId": "Sentinel_076a282e64b8819197666bab223755c0",
+        "reference": "library-file:fde1_bGliZmlsZV9ZQ3JoSl80NnhpUG5XLURKc3RjVEJn_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+        "sha256": "4c5172ae4781f3c3d3eb08fff4b227e1032293220a9a0291984d2ca3ee813c2b",
+        "jsonPointer": "/davinci_total_assignment_comparison/latest_registration_observation"
+      },
+      "reportedAt": "2026-10-07T05:56:04.982985+00:00",
+      "observedAt": null,
+      "capturedAt": null,
+      "recordedAt": "2026-10-07T05:58:15Z",
+      "timeRaw": "아직",
+      "verificationStatus": "unverified",
+      "verificationDetail": "not_independently_verified",
+      "statementProvenance": {
+        "confirmed": true,
+        "sourceMessageId": "Sentinel_076a282e64b8819197666bab223755c0"
+      },
+      "scope": {
+        "studentId": "student_700f4a05dcab5762d6ab37f8",
+        "entityIds": [
+          "scope:ruhan:20261002:davinci:unit2_TEST"
+        ],
+        "fields": [
+          "grading_registration"
+        ],
+        "window": null
+      },
+      "claim": {
+        "type": "grading_registration_user_report",
+        "value": {
+          "registrationState": "not_registered",
+          "candidateNativeCatalogCode": "1MHL0J",
+          "nativeBindingState": "candidate_equivalence_unverified",
+          "interimOnly": true
+        }
+      },
+      "revision": 1,
+      "supersedesEvidenceIds": [],
+      "retractsEvidenceIds": [],
+      "conflictingEvidenceIds": [],
+      "evidenceId": "evidence:ruhan:146e9ded820067b1a6bdecd8"
+    },
+    {
+      "sourceKind": "user_report",
+      "actor": {
+        "kind": "user",
+        "role": "teacher",
+        "id": null
+      },
+      "sourceRef": {
+        "sourceMessageId": "Sentinel_8aba737080808191afe9913f3301ce27",
+        "reference": "library-file:fde1_bGliZmlsZV9ZQ3JoSl80NnhpUG5XLURKc3RjVEJn_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+        "sha256": "4c5172ae4781f3c3d3eb08fff4b227e1032293220a9a0291984d2ca3ee813c2b",
+        "jsonPointer": "/gauss_submission_check/rules"
+      },
+      "reportedAt": "2026-10-07T05:36:09.655361+00:00",
+      "observedAt": null,
+      "capturedAt": null,
+      "recordedAt": "2026-10-07T05:39:24Z",
+      "timeRaw": null,
+      "verificationStatus": "unverified",
+      "verificationDetail": "not_independently_verified",
+      "statementProvenance": {
+        "confirmed": true,
+        "sourceMessageId": "Sentinel_8aba737080808191afe9913f3301ce27"
+      },
+      "scope": {
+        "studentId": "student_700f4a05dcab5762d6ab37f8",
+        "entityIds": [
+          "record:1N87:6:1N870P"
+        ],
+        "fields": [
+          "homework_submission_acceptance_rule"
+        ],
+        "window": null
+      },
+      "claim": {
+        "type": "user_defined_submission_acceptance_rule",
+        "value": {
+          "rules": [
+            {
+              "query_outcome": "successful_matching_registration_present",
+              "homework_submission_state": "homework_submitted",
+              "dayrecord_missing_homework_memo": "not_required_by_this_rule"
+            },
+            {
+              "query_outcome": "successful_matching_registration_absent_at_final_check",
+              "homework_submission_state": "homework_not_submitted",
+              "dayrecord_missing_homework_memo": "planned_mention_missing_homework"
+            },
+            {
+              "query_outcome": "failed_or_incomplete_or_identity_mismatch",
+              "homework_submission_state": "unknown",
+              "dayrecord_missing_homework_memo": "do_not_assert_missing_homework"
+            }
+          ],
+          "scheduledAttendanceAt": "2026-10-07T09:30:00Z",
+          "checkTimeSemantics": "immediately_before_scheduled_attendance"
+        }
+      },
+      "revision": 1,
+      "supersedesEvidenceIds": [],
+      "retractsEvidenceIds": [],
+      "conflictingEvidenceIds": [],
+      "evidenceId": "evidence:ruhan:4c83fd8fea4890349a74a548"
+    },
+    {
+      "sourceKind": "user_report",
+      "actor": {
+        "kind": "user",
+        "role": "teacher",
+        "id": null
+      },
+      "sourceRef": {
+        "sourceMessageId": "Sentinel_2093e5b3f91c81919e01af814019d90e",
+        "reference": null,
+        "sha256": null,
+        "jsonPointer": null
+      },
+      "reportedAt": "2026-10-07T06:55:32.455391+00:00",
+      "observedAt": null,
+      "capturedAt": null,
+      "recordedAt": "2026-10-07T07:00:39Z",
+      "timeRaw": null,
+      "verificationStatus": "unverified",
+      "verificationDetail": "not_independently_verified",
+      "scope": {
+        "studentId": "student_700f4a05dcab5762d6ab37f8",
+        "entityIds": [
+          "record:1MHL:3-1:1MHL0K",
+          "record:1MHL:3-1:1MHL0L",
+          "record:1MHL:3-1:1MHL0M",
+          "record:1MHL:3-1:1MHL0N",
+          "record:1MHL:3-2:1MHL0O",
+          "record:1MHL:3-2:1MHL0P",
+          "record:1MHL:3-2:1MHL0Q",
+          "record:1MHL:3-2:1MHL0R",
+          "record:1MHL:3-2:1MHL0S",
+          "record:1MHL:3-3:1MHL0T",
+          "record:1MHL:3-3:1MHL0U",
+          "record:1MHL:3-3:1MHL0V",
+          "record:1MHL:3-3:1MHL0W",
+          "record:1MHL:3-3:1MHL0X",
+          "record:1MHL:3-3:1MHL0Y",
+          "record:1MHL:3-3:1MHL0Z",
+          "record:1MHL:3:1MHL10"
+        ],
+        "fields": [
+          "assignment_instruction"
+        ],
+        "window": null
+      },
+      "claim": {
+        "type": "teacher_new_homework_assignment_instruction",
+        "value": {
+          "assignmentId": "assignment:ruhan:20261007:davinci-equations-v1",
+          "userUnitLabelRaw": "소단원",
+          "requestedUnitCount": 3,
+          "includesMajorTotalAssessment": true,
+          "assignmentDate": "2026-10-07",
+          "dueAt": null
+        }
+      },
+      "revision": 1,
+      "supersedesEvidenceIds": [],
+      "retractsEvidenceIds": [],
+      "conflictingEvidenceIds": [],
+      "statementProvenance": {
+        "confirmed": true,
+        "sourceMessageId": "Sentinel_2093e5b3f91c81919e01af814019d90e"
+      },
+      "evidenceId": "evidence:ruhan:a3105d6b0e78dca56fc31b78"
+    },
+    {
+      "sourceKind": "imported_snapshot",
+      "actor": {
+        "kind": "assistant",
+        "role": "source_collector",
+        "id": null
+      },
+      "sourceRef": {
+        "sourceMessageId": null,
+        "reference": "official-book-catalog.json",
+        "sha256": "fd1534c77acbe8b7d5d6709658a3fdd1fe3bd23cf63fd147b21cbfcef59ffd22",
+        "jsonPointer": "/outlineSections"
+      },
+      "reportedAt": null,
+      "observedAt": null,
+      "capturedAt": null,
+      "recordedAt": "2026-10-07T07:00:39Z",
+      "timeRaw": null,
+      "verificationStatus": "unverified",
+      "verificationDetail": "cached_catalog_snapshot_not_live_LMS_observation",
+      "scope": {
+        "studentId": "student_700f4a05dcab5762d6ab37f8",
+        "entityIds": [
+          "record:1MHL:3-1:1MHL0K",
+          "record:1MHL:3-1:1MHL0L",
+          "record:1MHL:3-1:1MHL0M",
+          "record:1MHL:3-1:1MHL0N",
+          "record:1MHL:3-2:1MHL0O",
+          "record:1MHL:3-2:1MHL0P",
+          "record:1MHL:3-2:1MHL0Q",
+          "record:1MHL:3-2:1MHL0R",
+          "record:1MHL:3-2:1MHL0S",
+          "record:1MHL:3-3:1MHL0T",
+          "record:1MHL:3-3:1MHL0U",
+          "record:1MHL:3-3:1MHL0V",
+          "record:1MHL:3-3:1MHL0W",
+          "record:1MHL:3-3:1MHL0X",
+          "record:1MHL:3-3:1MHL0Y",
+          "record:1MHL:3-3:1MHL0Z",
+          "record:1MHL:3:1MHL10"
+        ],
+        "fields": [
+          "catalog_structure"
+        ],
+        "window": null
+      },
+      "claim": {
+        "type": "cached_native_catalog_structure",
+        "value": {
+          "bookCode": "1MHL",
+          "edition": 1,
+          "bookEditionId": "edition_a86bef75b8ed4187fec00645",
+          "catalogCodes": [
+            "1MHL0K",
+            "1MHL0L",
+            "1MHL0M",
+            "1MHL0N",
+            "1MHL0O",
+            "1MHL0P",
+            "1MHL0Q",
+            "1MHL0R",
+            "1MHL0S",
+            "1MHL0T",
+            "1MHL0U",
+            "1MHL0V",
+            "1MHL0W",
+            "1MHL0X",
+            "1MHL0Y",
+            "1MHL0Z",
+            "1MHL10"
+          ],
+          "groups": [
+            {
+              "label": "3-1",
+              "lessons": 4
+            },
+            {
+              "label": "3-2",
+              "lessons": 5
+            },
+            {
+              "label": "3-3",
+              "lessons": 7
+            }
+          ],
+          "totalAssessmentCode": "1MHL10"
+        }
+      },
+      "revision": 1,
+      "supersedesEvidenceIds": [],
+      "retractsEvidenceIds": [],
+      "conflictingEvidenceIds": [],
+      "evidenceId": "evidence:ruhan:26df1e663f915ad28cd0eabf"
+    },
+    {
+      "sourceKind": "user_report",
+      "actor": {
+        "kind": "user",
+        "role": "teacher",
+        "id": null
+      },
+      "sourceRef": {
+        "sourceMessageId": "Sentinel_076a282e64b8819197666bab223755c0",
+        "reference": "library-file:fde1_bGliZmlsZV8xa3hoNTFoV3E1RmNoVlR3MFRwSU5n_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+        "sha256": "e453111d4fcf112726c1b800392f00bd0e4a4fe7317bd90af835e8486efbba01",
+        "jsonPointer": "/davinci_assignment_scope/embedded_section_rule"
+      },
+      "reportedAt": "2026-10-07T05:56:04.982985+00:00",
+      "observedAt": null,
+      "capturedAt": null,
+      "recordedAt": "2026-10-07T05:58:15Z",
+      "timeRaw": null,
+      "verificationStatus": "unverified",
+      "verificationDetail": "not_independently_verified",
+      "scope": {
+        "studentId": "student_700f4a05dcab5762d6ab37f8",
+        "entityIds": [
+          "record:1MHL:3-1:1MHL0K",
+          "record:1MHL:3-1:1MHL0L",
+          "record:1MHL:3-1:1MHL0M",
+          "record:1MHL:3-1:1MHL0N",
+          "record:1MHL:3-2:1MHL0O",
+          "record:1MHL:3-2:1MHL0P",
+          "record:1MHL:3-2:1MHL0Q",
+          "record:1MHL:3-2:1MHL0R",
+          "record:1MHL:3-2:1MHL0S",
+          "record:1MHL:3-3:1MHL0T",
+          "record:1MHL:3-3:1MHL0U",
+          "record:1MHL:3-3:1MHL0V",
+          "record:1MHL:3-3:1MHL0W",
+          "record:1MHL:3-3:1MHL0X",
+          "record:1MHL:3-3:1MHL0Y",
+          "record:1MHL:3-3:1MHL0Z",
+          "record:1MHL:3:1MHL10"
+        ],
+        "fields": [
+          "assignment_instruction"
+        ],
+        "window": null
+      },
+      "claim": {
+        "type": "final_lesson_embedded_written_response_rule",
+        "value": {
+          "labelRaw": "학교 시험 서술형 정복",
+          "placementRuleRaw": "각소단원별마지막차시에추가섹션으로붙어있음",
+          "countsAsIndependentGradingUnit": false
+        }
+      },
+      "revision": 1,
+      "supersedesEvidenceIds": [],
+      "retractsEvidenceIds": [],
+      "conflictingEvidenceIds": [],
+      "statementProvenance": {
+        "confirmed": true,
+        "sourceMessageId": "Sentinel_076a282e64b8819197666bab223755c0"
+      },
+      "evidenceId": "evidence:ruhan:dd3641d932f1be77693d3077"
+    },
+    {
+      "sourceKind": "inference",
+      "actor": {
+        "kind": "assistant",
+        "role": "maintainer",
+        "id": null
+      },
+      "sourceRef": {
+        "sourceMessageId": null,
+        "reference": "derived:assignment:assignment:ruhan:20261007:davinci-equations-v1",
+        "sha256": null,
+        "jsonPointer": null
+      },
+      "reportedAt": null,
+      "observedAt": null,
+      "capturedAt": null,
+      "recordedAt": "2026-10-07T07:00:39Z",
+      "timeRaw": null,
+      "verificationStatus": "unverified",
+      "verificationDetail": "computed_from_declared_catalog_inputs_not_student_performance",
+      "scope": {
+        "studentId": "student_700f4a05dcab5762d6ab37f8",
+        "entityIds": [
+          "record:1MHL:3-1:1MHL0K",
+          "record:1MHL:3-1:1MHL0L",
+          "record:1MHL:3-1:1MHL0M",
+          "record:1MHL:3-1:1MHL0N",
+          "record:1MHL:3-2:1MHL0O",
+          "record:1MHL:3-2:1MHL0P",
+          "record:1MHL:3-2:1MHL0Q",
+          "record:1MHL:3-2:1MHL0R",
+          "record:1MHL:3-2:1MHL0S",
+          "record:1MHL:3-3:1MHL0T",
+          "record:1MHL:3-3:1MHL0U",
+          "record:1MHL:3-3:1MHL0V",
+          "record:1MHL:3-3:1MHL0W",
+          "record:1MHL:3-3:1MHL0X",
+          "record:1MHL:3-3:1MHL0Y",
+          "record:1MHL:3-3:1MHL0Z",
+          "record:1MHL:3:1MHL10"
+        ],
+        "fields": [
+          "assignment_scope_count"
+        ],
+        "window": null
+      },
+      "claim": {
+        "type": "assignment_catalog_unit_count",
+        "value": {
+          "inputEvidenceIds": [
+            "evidence:ruhan:a3105d6b0e78dca56fc31b78",
+            "evidence:ruhan:26df1e663f915ad28cd0eabf",
+            "evidence:ruhan:dd3641d932f1be77693d3077"
+          ],
+          "calculation": "4 + 5 + 7 = 16 lessons; 16 + 1 total assessment = 17",
+          "lessonCount": 16,
+          "majorAssessmentCount": 1,
+          "appGradingUnitCount": 17,
+          "independentEmbeddedSectionCount": 0
+        }
+      },
+      "revision": 1,
+      "supersedesEvidenceIds": [],
+      "retractsEvidenceIds": [],
+      "conflictingEvidenceIds": [],
+      "evidenceId": "evidence:ruhan:1a7a9892f31c34bacc1de958"
+    }
+  ],
+  "legacy_evidence_bindings": [
+    {
+      "legacyJsonPointer": "/gauss_submission_check/latest_registration_observation",
+      "evidenceId": "evidence:ruhan:18dac57417de7752789bd298"
+    },
+    {
+      "legacyJsonPointer": "/davinci_total_assignment_comparison/latest_registration_observation",
+      "evidenceId": "evidence:ruhan:146e9ded820067b1a6bdecd8"
+    },
+    {
+      "legacyJsonPointer": "/davinci_assignment_scope/ordered_items/2/latest_registration_observation",
+      "evidenceId": "evidence:ruhan:146e9ded820067b1a6bdecd8"
+    },
+    {
+      "legacyJsonPointer": "/gauss_submission_check/rules",
+      "evidenceId": "evidence:ruhan:4c83fd8fea4890349a74a548"
+    }
+  ],
+  "decision_records": [
+    {
+      "decisionId": "decision:ruhan:20261007:gauss6-submission:pending-v1",
+      "studentId": "student_700f4a05dcab5762d6ab37f8",
+      "targetEntityIds": [
+        "record:1N87:6:1N870P"
+      ],
+      "evidenceIds": [
+        "evidence:ruhan:18dac57417de7752789bd298",
+        "evidence:ruhan:4c83fd8fea4890349a74a548"
+      ],
+      "ruleVersion": "teacher.outcome/1.0.0",
+      "decisionStatus": "pending",
+      "decisionAuthority": {
+        "actorKind": "assistant",
+        "role": "maintainer"
+      },
+      "recordedAt": "2026-10-07T06:33:00Z"
+    },
+    {
+      "decisionId": "decision:ruhan:20261007:davinci2-TEST-submission:pending-v1",
+      "studentId": "student_700f4a05dcab5762d6ab37f8",
+      "targetEntityIds": [
+        "scope:ruhan:20261002:davinci:unit2_TEST"
+      ],
+      "evidenceIds": [
+        "evidence:ruhan:146e9ded820067b1a6bdecd8"
+      ],
+      "ruleVersion": "academy.evidence/1.1.0",
+      "decisionStatus": "pending",
+      "decisionAuthority": {
+        "actorKind": "assistant",
+        "role": "maintainer"
+      },
+      "recordedAt": "2026-10-07T06:33:00Z"
+    }
+  ],
+  "legacy_decision_bindings": [
+    {
+      "legacyJsonPointer": "/gauss_submission_check/current_submission_state",
+      "decisionId": "decision:ruhan:20261007:gauss6-submission:pending-v1"
+    },
+    {
+      "legacyJsonPointer": "/dayrecord_execution/final_missing_homework_decision_state",
+      "decisionId": "decision:ruhan:20261007:gauss6-submission:pending-v1"
+    },
+    {
+      "legacyJsonPointer": "/davinci_total_assignment_comparison/latest_registration_observation/final_submission_decision_state",
+      "decisionId": "decision:ruhan:20261007:davinci2-TEST-submission:pending-v1"
+    }
+  ],
+  "additive_refinement_audit": {
+    "base_version": "1.2.0",
+    "base_sha256": "4c5172ae4781f3c3d3eb08fff4b227e1032293220a9a0291984d2ca3ee813c2b",
+    "legacy_source_and_observation_objects_preserved": true,
+    "existing_user_confirmed_assignment_and_embedded_relationship_flags_preserved": true,
+    "same_TEST_report_is_one_central_evidence_record": true,
+    "reportedAt_reuses_actual_source_message_sentAt": true,
+    "observedAt_remains_null": true,
+    "recordedAt_reuses_original_legacy_record_timestamps": true,
+    "no_last_success_or_server_query_time_synthesized": true,
+    "current_homework_submission_pending": true
+  },
+  "assignments": [
+    {
+      "assignmentId": "assignment:ruhan:20261007:davinci-equations-v1",
+      "studentId": "student_700f4a05dcab5762d6ab37f8",
+      "bookCode": "1MHL",
+      "edition": 1,
+      "normalizedBookEditionId": "edition_a86bef75b8ed4187fec00645",
+      "nativeBookTitleRaw": "22개정 중1-1 다빈치",
+      "purpose": "new_homework",
+      "assignmentStatus": "teacher_instruction_confirmed",
+      "assignmentDate": "2026-10-07",
+      "assignedAt": null,
+      "dueDate": null,
+      "dueAt": null,
+      "tentativeNextAttendanceDate": "2026-10-14",
+      "tentativeAttendanceIsDeadline": false,
+      "userRequest": {
+        "sourceMessageId": "Sentinel_2093e5b3f91c81919e01af814019d90e",
+        "reportedAt": "2026-10-07T06:55:32.455391+00:00",
+        "userUnitLabelRaw": "소단원",
+        "requestedUnitCount": 3,
+        "requestedAssessmentLabelRaw": "방정식 대단원 총괄평가"
+      },
+      "nativeGroupingLabels": [
+        "3-1",
+        "3-2",
+        "3-3"
+      ],
+      "scopeItems": [
+        {
+          "scopeItemId": "assignment:ruhan:20261007:davinci-equations-v1:scope:1MHL0K",
+          "order": 1,
+          "catalogCode": "1MHL0K",
+          "normalizedCatalogSectionId": "section_84de4edaac37598f8a8bd120",
+          "existingRecordRef": "record:1MHL:3-1:1MHL0K",
+          "bookCode": "1MHL",
+          "edition": 1,
+          "nativeGroupingLabel": "3-1",
+          "nativeTitleRaw": "문자와 식",
+          "nativeSectionLabelRaw": "유형다지기",
+          "printedSectionLabelRaw": "내신 만점을 위한 실전 유형",
+          "printedTocNodeLabelRaw": "3-1",
+          "savedMappingUnitLevel": "middle",
+          "lessonIndex": 1,
+          "kind": "lesson",
+          "purpose": "assigned_new_homework",
+          "evidenceIds": [
+            "evidence:ruhan:a3105d6b0e78dca56fc31b78",
+            "evidence:ruhan:26df1e663f915ad28cd0eabf"
+          ],
+          "source": {
+            "catalogFileName": "official-book-catalog.json",
+            "catalogSha256": "fd1534c77acbe8b7d5d6709658a3fdd1fe3bd23cf63fd147b21cbfcef59ffd22",
+            "normalizedCatalogSectionId": "section_84de4edaac37598f8a8bd120",
+            "nativeOriginalSource": {
+              "evidenceLevel": "observed",
+              "fileName": "book-section-registry-local.json",
+              "fileSha256": "8da3798f73d1ad15d25eab9ed3e629f76acb38a4987b63bdd9f86d47dc65b306",
+              "jsonPointer": "/books/7/units/8/2/T/0"
+            },
+            "mappingFileName": "이루한_교재매핑_1.1.0.json",
+            "mappingSha256": "b2382b181d62ca86374dfcf7816376de576e1b02180d6a12b14418b1ac5c486c",
+            "mappingJsonPointer": "/records/104",
+            "sourceKind": "imported_snapshot",
+            "currentServerQueriedAt": null
+          },
+          "embeddedContents": [],
+          "performanceState": "not_checked",
+          "completionState": "unknown",
+          "performanceEvidenceIds": []
+        },
+        {
+          "scopeItemId": "assignment:ruhan:20261007:davinci-equations-v1:scope:1MHL0L",
+          "order": 2,
+          "catalogCode": "1MHL0L",
+          "normalizedCatalogSectionId": "section_da754052c67a88b5691b8611",
+          "existingRecordRef": "record:1MHL:3-1:1MHL0L",
+          "bookCode": "1MHL",
+          "edition": 1,
+          "nativeGroupingLabel": "3-1",
+          "nativeTitleRaw": "문자와 식",
+          "nativeSectionLabelRaw": "유형다지기",
+          "printedSectionLabelRaw": "내신 만점을 위한 실전 유형",
+          "printedTocNodeLabelRaw": "3-1",
+          "savedMappingUnitLevel": "middle",
+          "lessonIndex": 2,
+          "kind": "lesson",
+          "purpose": "assigned_new_homework",
+          "evidenceIds": [
+            "evidence:ruhan:a3105d6b0e78dca56fc31b78",
+            "evidence:ruhan:26df1e663f915ad28cd0eabf"
+          ],
+          "source": {
+            "catalogFileName": "official-book-catalog.json",
+            "catalogSha256": "fd1534c77acbe8b7d5d6709658a3fdd1fe3bd23cf63fd147b21cbfcef59ffd22",
+            "normalizedCatalogSectionId": "section_da754052c67a88b5691b8611",
+            "nativeOriginalSource": {
+              "evidenceLevel": "observed",
+              "fileName": "book-section-registry-local.json",
+              "fileSha256": "8da3798f73d1ad15d25eab9ed3e629f76acb38a4987b63bdd9f86d47dc65b306",
+              "jsonPointer": "/books/7/units/8/2/T/1"
+            },
+            "mappingFileName": "이루한_교재매핑_1.1.0.json",
+            "mappingSha256": "b2382b181d62ca86374dfcf7816376de576e1b02180d6a12b14418b1ac5c486c",
+            "mappingJsonPointer": "/records/105",
+            "sourceKind": "imported_snapshot",
+            "currentServerQueriedAt": null
+          },
+          "embeddedContents": [],
+          "performanceState": "not_checked",
+          "completionState": "unknown",
+          "performanceEvidenceIds": []
+        },
+        {
+          "scopeItemId": "assignment:ruhan:20261007:davinci-equations-v1:scope:1MHL0M",
+          "order": 3,
+          "catalogCode": "1MHL0M",
+          "normalizedCatalogSectionId": "section_863a95c365052aed2e66dab8",
+          "existingRecordRef": "record:1MHL:3-1:1MHL0M",
+          "bookCode": "1MHL",
+          "edition": 1,
+          "nativeGroupingLabel": "3-1",
+          "nativeTitleRaw": "문자와 식",
+          "nativeSectionLabelRaw": "유형다지기",
+          "printedSectionLabelRaw": "내신 만점을 위한 실전 유형",
+          "printedTocNodeLabelRaw": "3-1",
+          "savedMappingUnitLevel": "middle",
+          "lessonIndex": 3,
+          "kind": "lesson",
+          "purpose": "assigned_new_homework",
+          "evidenceIds": [
+            "evidence:ruhan:a3105d6b0e78dca56fc31b78",
+            "evidence:ruhan:26df1e663f915ad28cd0eabf"
+          ],
+          "source": {
+            "catalogFileName": "official-book-catalog.json",
+            "catalogSha256": "fd1534c77acbe8b7d5d6709658a3fdd1fe3bd23cf63fd147b21cbfcef59ffd22",
+            "normalizedCatalogSectionId": "section_863a95c365052aed2e66dab8",
+            "nativeOriginalSource": {
+              "evidenceLevel": "observed",
+              "fileName": "book-section-registry-local.json",
+              "fileSha256": "8da3798f73d1ad15d25eab9ed3e629f76acb38a4987b63bdd9f86d47dc65b306",
+              "jsonPointer": "/books/7/units/8/2/T/2"
+            },
+            "mappingFileName": "이루한_교재매핑_1.1.0.json",
+            "mappingSha256": "b2382b181d62ca86374dfcf7816376de576e1b02180d6a12b14418b1ac5c486c",
+            "mappingJsonPointer": "/records/106",
+            "sourceKind": "imported_snapshot",
+            "currentServerQueriedAt": null
+          },
+          "embeddedContents": [],
+          "performanceState": "not_checked",
+          "completionState": "unknown",
+          "performanceEvidenceIds": []
+        },
+        {
+          "scopeItemId": "assignment:ruhan:20261007:davinci-equations-v1:scope:1MHL0N",
+          "order": 4,
+          "catalogCode": "1MHL0N",
+          "normalizedCatalogSectionId": "section_aeee7d0652be6c8c5f75374c",
+          "existingRecordRef": "record:1MHL:3-1:1MHL0N",
+          "bookCode": "1MHL",
+          "edition": 1,
+          "nativeGroupingLabel": "3-1",
+          "nativeTitleRaw": "문자와 식",
+          "nativeSectionLabelRaw": "유형다지기",
+          "printedSectionLabelRaw": "내신 만점을 위한 실전 유형",
+          "printedTocNodeLabelRaw": "3-1",
+          "savedMappingUnitLevel": "middle",
+          "lessonIndex": 4,
+          "kind": "lesson",
+          "purpose": "assigned_new_homework",
+          "evidenceIds": [
+            "evidence:ruhan:a3105d6b0e78dca56fc31b78",
+            "evidence:ruhan:26df1e663f915ad28cd0eabf"
+          ],
+          "source": {
+            "catalogFileName": "official-book-catalog.json",
+            "catalogSha256": "fd1534c77acbe8b7d5d6709658a3fdd1fe3bd23cf63fd147b21cbfcef59ffd22",
+            "normalizedCatalogSectionId": "section_aeee7d0652be6c8c5f75374c",
+            "nativeOriginalSource": {
+              "evidenceLevel": "observed",
+              "fileName": "book-section-registry-local.json",
+              "fileSha256": "8da3798f73d1ad15d25eab9ed3e629f76acb38a4987b63bdd9f86d47dc65b306",
+              "jsonPointer": "/books/7/units/8/2/T/3"
+            },
+            "mappingFileName": "이루한_교재매핑_1.1.0.json",
+            "mappingSha256": "b2382b181d62ca86374dfcf7816376de576e1b02180d6a12b14418b1ac5c486c",
+            "mappingJsonPointer": "/records/107",
+            "sourceKind": "imported_snapshot",
+            "currentServerQueriedAt": null
+          },
+          "embeddedContents": [
+            {
+              "labelRaw": "학교 시험 서술형 정복",
+              "placement": "additional_section_in_final_lesson",
+              "parentCatalogCode": "1MHL0N",
+              "independentScopeItem": false,
+              "countsAsIndependentGradingUnit": false,
+              "independentMissingStatus": false,
+              "nativeBindingState": "user_report_rule_applied_not_requeried",
+              "evidenceIds": [
+                "evidence:ruhan:dd3641d932f1be77693d3077"
+              ]
+            }
+          ],
+          "performanceState": "not_checked",
+          "completionState": "unknown",
+          "performanceEvidenceIds": []
+        },
+        {
+          "scopeItemId": "assignment:ruhan:20261007:davinci-equations-v1:scope:1MHL0O",
+          "order": 5,
+          "catalogCode": "1MHL0O",
+          "normalizedCatalogSectionId": "section_477ba012c06686cc6a5287c2",
+          "existingRecordRef": "record:1MHL:3-2:1MHL0O",
+          "bookCode": "1MHL",
+          "edition": 1,
+          "nativeGroupingLabel": "3-2",
+          "nativeTitleRaw": "일차방정식",
+          "nativeSectionLabelRaw": "유형다지기",
+          "printedSectionLabelRaw": "내신 만점을 위한 실전 유형",
+          "printedTocNodeLabelRaw": "3-2",
+          "savedMappingUnitLevel": "middle",
+          "lessonIndex": 1,
+          "kind": "lesson",
+          "purpose": "assigned_new_homework",
+          "evidenceIds": [
+            "evidence:ruhan:a3105d6b0e78dca56fc31b78",
+            "evidence:ruhan:26df1e663f915ad28cd0eabf"
+          ],
+          "source": {
+            "catalogFileName": "official-book-catalog.json",
+            "catalogSha256": "fd1534c77acbe8b7d5d6709658a3fdd1fe3bd23cf63fd147b21cbfcef59ffd22",
+            "normalizedCatalogSectionId": "section_477ba012c06686cc6a5287c2",
+            "nativeOriginalSource": {
+              "evidenceLevel": "observed",
+              "fileName": "book-section-registry-local.json",
+              "fileSha256": "8da3798f73d1ad15d25eab9ed3e629f76acb38a4987b63bdd9f86d47dc65b306",
+              "jsonPointer": "/books/7/units/9/2/T/0"
+            },
+            "mappingFileName": "이루한_교재매핑_1.1.0.json",
+            "mappingSha256": "b2382b181d62ca86374dfcf7816376de576e1b02180d6a12b14418b1ac5c486c",
+            "mappingJsonPointer": "/records/108",
+            "sourceKind": "imported_snapshot",
+            "currentServerQueriedAt": null
+          },
+          "embeddedContents": [],
+          "performanceState": "not_checked",
+          "completionState": "unknown",
+          "performanceEvidenceIds": []
+        },
+        {
+          "scopeItemId": "assignment:ruhan:20261007:davinci-equations-v1:scope:1MHL0P",
+          "order": 6,
+          "catalogCode": "1MHL0P",
+          "normalizedCatalogSectionId": "section_77153d78d2f36f7471940dcd",
+          "existingRecordRef": "record:1MHL:3-2:1MHL0P",
+          "bookCode": "1MHL",
+          "edition": 1,
+          "nativeGroupingLabel": "3-2",
+          "nativeTitleRaw": "일차방정식",
+          "nativeSectionLabelRaw": "유형다지기",
+          "printedSectionLabelRaw": "내신 만점을 위한 실전 유형",
+          "printedTocNodeLabelRaw": "3-2",
+          "savedMappingUnitLevel": "middle",
+          "lessonIndex": 2,
+          "kind": "lesson",
+          "purpose": "assigned_new_homework",
+          "evidenceIds": [
+            "evidence:ruhan:a3105d6b0e78dca56fc31b78",
+            "evidence:ruhan:26df1e663f915ad28cd0eabf"
+          ],
+          "source": {
+            "catalogFileName": "official-book-catalog.json",
+            "catalogSha256": "fd1534c77acbe8b7d5d6709658a3fdd1fe3bd23cf63fd147b21cbfcef59ffd22",
+            "normalizedCatalogSectionId": "section_77153d78d2f36f7471940dcd",
+            "nativeOriginalSource": {
+              "evidenceLevel": "observed",
+              "fileName": "book-section-registry-local.json",
+              "fileSha256": "8da3798f73d1ad15d25eab9ed3e629f76acb38a4987b63bdd9f86d47dc65b306",
+              "jsonPointer": "/books/7/units/9/2/T/1"
+            },
+            "mappingFileName": "이루한_교재매핑_1.1.0.json",
+            "mappingSha256": "b2382b181d62ca86374dfcf7816376de576e1b02180d6a12b14418b1ac5c486c",
+            "mappingJsonPointer": "/records/109",
+            "sourceKind": "imported_snapshot",
+            "currentServerQueriedAt": null
+          },
+          "embeddedContents": [],
+          "performanceState": "not_checked",
+          "completionState": "unknown",
+          "performanceEvidenceIds": []
+        },
+        {
+          "scopeItemId": "assignment:ruhan:20261007:davinci-equations-v1:scope:1MHL0Q",
+          "order": 7,
+          "catalogCode": "1MHL0Q",
+          "normalizedCatalogSectionId": "section_6037319c9eb0943d060152ab",
+          "existingRecordRef": "record:1MHL:3-2:1MHL0Q",
+          "bookCode": "1MHL",
+          "edition": 1,
+          "nativeGroupingLabel": "3-2",
+          "nativeTitleRaw": "일차방정식",
+          "nativeSectionLabelRaw": "유형다지기",
+          "printedSectionLabelRaw": "내신 만점을 위한 실전 유형",
+          "printedTocNodeLabelRaw": "3-2",
+          "savedMappingUnitLevel": "middle",
+          "lessonIndex": 3,
+          "kind": "lesson",
+          "purpose": "assigned_new_homework",
+          "evidenceIds": [
+            "evidence:ruhan:a3105d6b0e78dca56fc31b78",
+            "evidence:ruhan:26df1e663f915ad28cd0eabf"
+          ],
+          "source": {
+            "catalogFileName": "official-book-catalog.json",
+            "catalogSha256": "fd1534c77acbe8b7d5d6709658a3fdd1fe3bd23cf63fd147b21cbfcef59ffd22",
+            "normalizedCatalogSectionId": "section_6037319c9eb0943d060152ab",
+            "nativeOriginalSource": {
+              "evidenceLevel": "observed",
+              "fileName": "book-section-registry-local.json",
+              "fileSha256": "8da3798f73d1ad15d25eab9ed3e629f76acb38a4987b63bdd9f86d47dc65b306",
+              "jsonPointer": "/books/7/units/9/2/T/2"
+            },
+            "mappingFileName": "이루한_교재매핑_1.1.0.json",
+            "mappingSha256": "b2382b181d62ca86374dfcf7816376de576e1b02180d6a12b14418b1ac5c486c",
+            "mappingJsonPointer": "/records/110",
+            "sourceKind": "imported_snapshot",
+            "currentServerQueriedAt": null
+          },
+          "embeddedContents": [],
+          "performanceState": "not_checked",
+          "completionState": "unknown",
+          "performanceEvidenceIds": []
+        },
+        {
+          "scopeItemId": "assignment:ruhan:20261007:davinci-equations-v1:scope:1MHL0R",
+          "order": 8,
+          "catalogCode": "1MHL0R",
+          "normalizedCatalogSectionId": "section_3c9df1a198543e486658e00a",
+          "existingRecordRef": "record:1MHL:3-2:1MHL0R",
+          "bookCode": "1MHL",
+          "edition": 1,
+          "nativeGroupingLabel": "3-2",
+          "nativeTitleRaw": "일차방정식",
+          "nativeSectionLabelRaw": "유형다지기",
+          "printedSectionLabelRaw": "내신 만점을 위한 실전 유형",
+          "printedTocNodeLabelRaw": "3-2",
+          "savedMappingUnitLevel": "middle",
+          "lessonIndex": 4,
+          "kind": "lesson",
+          "purpose": "assigned_new_homework",
+          "evidenceIds": [
+            "evidence:ruhan:a3105d6b0e78dca56fc31b78",
+            "evidence:ruhan:26df1e663f915ad28cd0eabf"
+          ],
+          "source": {
+            "catalogFileName": "official-book-catalog.json",
+            "catalogSha256": "fd1534c77acbe8b7d5d6709658a3fdd1fe3bd23cf63fd147b21cbfcef59ffd22",
+            "normalizedCatalogSectionId": "section_3c9df1a198543e486658e00a",
+            "nativeOriginalSource": {
+              "evidenceLevel": "observed",
+              "fileName": "book-section-registry-local.json",
+              "fileSha256": "8da3798f73d1ad15d25eab9ed3e629f76acb38a4987b63bdd9f86d47dc65b306",
+              "jsonPointer": "/books/7/units/9/2/T/3"
+            },
+            "mappingFileName": "이루한_교재매핑_1.1.0.json",
+            "mappingSha256": "b2382b181d62ca86374dfcf7816376de576e1b02180d6a12b14418b1ac5c486c",
+            "mappingJsonPointer": "/records/111",
+            "sourceKind": "imported_snapshot",
+            "currentServerQueriedAt": null
+          },
+          "embeddedContents": [],
+          "performanceState": "not_checked",
+          "completionState": "unknown",
+          "performanceEvidenceIds": []
+        },
+        {
+          "scopeItemId": "assignment:ruhan:20261007:davinci-equations-v1:scope:1MHL0S",
+          "order": 9,
+          "catalogCode": "1MHL0S",
+          "normalizedCatalogSectionId": "section_c0e6d1bc280a369838ad61a3",
+          "existingRecordRef": "record:1MHL:3-2:1MHL0S",
+          "bookCode": "1MHL",
+          "edition": 1,
+          "nativeGroupingLabel": "3-2",
+          "nativeTitleRaw": "일차방정식",
+          "nativeSectionLabelRaw": "유형다지기",
+          "printedSectionLabelRaw": "내신 만점을 위한 실전 유형",
+          "printedTocNodeLabelRaw": "3-2",
+          "savedMappingUnitLevel": "middle",
+          "lessonIndex": 5,
+          "kind": "lesson",
+          "purpose": "assigned_new_homework",
+          "evidenceIds": [
+            "evidence:ruhan:a3105d6b0e78dca56fc31b78",
+            "evidence:ruhan:26df1e663f915ad28cd0eabf"
+          ],
+          "source": {
+            "catalogFileName": "official-book-catalog.json",
+            "catalogSha256": "fd1534c77acbe8b7d5d6709658a3fdd1fe3bd23cf63fd147b21cbfcef59ffd22",
+            "normalizedCatalogSectionId": "section_c0e6d1bc280a369838ad61a3",
+            "nativeOriginalSource": {
+              "evidenceLevel": "observed",
+              "fileName": "book-section-registry-local.json",
+              "fileSha256": "8da3798f73d1ad15d25eab9ed3e629f76acb38a4987b63bdd9f86d47dc65b306",
+              "jsonPointer": "/books/7/units/9/2/T/4"
+            },
+            "mappingFileName": "이루한_교재매핑_1.1.0.json",
+            "mappingSha256": "b2382b181d62ca86374dfcf7816376de576e1b02180d6a12b14418b1ac5c486c",
+            "mappingJsonPointer": "/records/112",
+            "sourceKind": "imported_snapshot",
+            "currentServerQueriedAt": null
+          },
+          "embeddedContents": [
+            {
+              "labelRaw": "학교 시험 서술형 정복",
+              "placement": "additional_section_in_final_lesson",
+              "parentCatalogCode": "1MHL0S",
+              "independentScopeItem": false,
+              "countsAsIndependentGradingUnit": false,
+              "independentMissingStatus": false,
+              "nativeBindingState": "user_report_rule_applied_not_requeried",
+              "evidenceIds": [
+                "evidence:ruhan:dd3641d932f1be77693d3077"
+              ]
+            }
+          ],
+          "performanceState": "not_checked",
+          "completionState": "unknown",
+          "performanceEvidenceIds": []
+        },
+        {
+          "scopeItemId": "assignment:ruhan:20261007:davinci-equations-v1:scope:1MHL0T",
+          "order": 10,
+          "catalogCode": "1MHL0T",
+          "normalizedCatalogSectionId": "section_04600ae9efab54d7556d69f2",
+          "existingRecordRef": "record:1MHL:3-3:1MHL0T",
+          "bookCode": "1MHL",
+          "edition": 1,
+          "nativeGroupingLabel": "3-3",
+          "nativeTitleRaw": "일차방정식의 활용",
+          "nativeSectionLabelRaw": "유형다지기",
+          "printedSectionLabelRaw": "내신 만점을 위한 실전 유형",
+          "printedTocNodeLabelRaw": "3-3",
+          "savedMappingUnitLevel": "middle",
+          "lessonIndex": 1,
+          "kind": "lesson",
+          "purpose": "assigned_new_homework",
+          "evidenceIds": [
+            "evidence:ruhan:a3105d6b0e78dca56fc31b78",
+            "evidence:ruhan:26df1e663f915ad28cd0eabf"
+          ],
+          "source": {
+            "catalogFileName": "official-book-catalog.json",
+            "catalogSha256": "fd1534c77acbe8b7d5d6709658a3fdd1fe3bd23cf63fd147b21cbfcef59ffd22",
+            "normalizedCatalogSectionId": "section_04600ae9efab54d7556d69f2",
+            "nativeOriginalSource": {
+              "evidenceLevel": "observed",
+              "fileName": "book-section-registry-local.json",
+              "fileSha256": "8da3798f73d1ad15d25eab9ed3e629f76acb38a4987b63bdd9f86d47dc65b306",
+              "jsonPointer": "/books/7/units/10/2/T/0"
+            },
+            "mappingFileName": "이루한_교재매핑_1.1.0.json",
+            "mappingSha256": "b2382b181d62ca86374dfcf7816376de576e1b02180d6a12b14418b1ac5c486c",
+            "mappingJsonPointer": "/records/113",
+            "sourceKind": "imported_snapshot",
+            "currentServerQueriedAt": null
+          },
+          "embeddedContents": [],
+          "performanceState": "not_checked",
+          "completionState": "unknown",
+          "performanceEvidenceIds": []
+        },
+        {
+          "scopeItemId": "assignment:ruhan:20261007:davinci-equations-v1:scope:1MHL0U",
+          "order": 11,
+          "catalogCode": "1MHL0U",
+          "normalizedCatalogSectionId": "section_00b01bfd42f8a785a7702aad",
+          "existingRecordRef": "record:1MHL:3-3:1MHL0U",
+          "bookCode": "1MHL",
+          "edition": 1,
+          "nativeGroupingLabel": "3-3",
+          "nativeTitleRaw": "일차방정식의 활용",
+          "nativeSectionLabelRaw": "유형다지기",
+          "printedSectionLabelRaw": "내신 만점을 위한 실전 유형",
+          "printedTocNodeLabelRaw": "3-3",
+          "savedMappingUnitLevel": "middle",
+          "lessonIndex": 2,
+          "kind": "lesson",
+          "purpose": "assigned_new_homework",
+          "evidenceIds": [
+            "evidence:ruhan:a3105d6b0e78dca56fc31b78",
+            "evidence:ruhan:26df1e663f915ad28cd0eabf"
+          ],
+          "source": {
+            "catalogFileName": "official-book-catalog.json",
+            "catalogSha256": "fd1534c77acbe8b7d5d6709658a3fdd1fe3bd23cf63fd147b21cbfcef59ffd22",
+            "normalizedCatalogSectionId": "section_00b01bfd42f8a785a7702aad",
+            "nativeOriginalSource": {
+              "evidenceLevel": "observed",
+              "fileName": "book-section-registry-local.json",
+              "fileSha256": "8da3798f73d1ad15d25eab9ed3e629f76acb38a4987b63bdd9f86d47dc65b306",
+              "jsonPointer": "/books/7/units/10/2/T/1"
+            },
+            "mappingFileName": "이루한_교재매핑_1.1.0.json",
+            "mappingSha256": "b2382b181d62ca86374dfcf7816376de576e1b02180d6a12b14418b1ac5c486c",
+            "mappingJsonPointer": "/records/114",
+            "sourceKind": "imported_snapshot",
+            "currentServerQueriedAt": null
+          },
+          "embeddedContents": [],
+          "performanceState": "not_checked",
+          "completionState": "unknown",
+          "performanceEvidenceIds": []
+        },
+        {
+          "scopeItemId": "assignment:ruhan:20261007:davinci-equations-v1:scope:1MHL0V",
+          "order": 12,
+          "catalogCode": "1MHL0V",
+          "normalizedCatalogSectionId": "section_845d20306df9d6e0662f4891",
+          "existingRecordRef": "record:1MHL:3-3:1MHL0V",
+          "bookCode": "1MHL",
+          "edition": 1,
+          "nativeGroupingLabel": "3-3",
+          "nativeTitleRaw": "일차방정식의 활용",
+          "nativeSectionLabelRaw": "유형다지기",
+          "printedSectionLabelRaw": "내신 만점을 위한 실전 유형",
+          "printedTocNodeLabelRaw": "3-3",
+          "savedMappingUnitLevel": "middle",
+          "lessonIndex": 3,
+          "kind": "lesson",
+          "purpose": "assigned_new_homework",
+          "evidenceIds": [
+            "evidence:ruhan:a3105d6b0e78dca56fc31b78",
+            "evidence:ruhan:26df1e663f915ad28cd0eabf"
+          ],
+          "source": {
+            "catalogFileName": "official-book-catalog.json",
+            "catalogSha256": "fd1534c77acbe8b7d5d6709658a3fdd1fe3bd23cf63fd147b21cbfcef59ffd22",
+            "normalizedCatalogSectionId": "section_845d20306df9d6e0662f4891",
+            "nativeOriginalSource": {
+              "evidenceLevel": "observed",
+              "fileName": "book-section-registry-local.json",
+              "fileSha256": "8da3798f73d1ad15d25eab9ed3e629f76acb38a4987b63bdd9f86d47dc65b306",
+              "jsonPointer": "/books/7/units/10/2/T/2"
+            },
+            "mappingFileName": "이루한_교재매핑_1.1.0.json",
+            "mappingSha256": "b2382b181d62ca86374dfcf7816376de576e1b02180d6a12b14418b1ac5c486c",
+            "mappingJsonPointer": "/records/115",
+            "sourceKind": "imported_snapshot",
+            "currentServerQueriedAt": null
+          },
+          "embeddedContents": [],
+          "performanceState": "not_checked",
+          "completionState": "unknown",
+          "performanceEvidenceIds": []
+        },
+        {
+          "scopeItemId": "assignment:ruhan:20261007:davinci-equations-v1:scope:1MHL0W",
+          "order": 13,
+          "catalogCode": "1MHL0W",
+          "normalizedCatalogSectionId": "section_100cc7690d7beef8f9ed6c3f",
+          "existingRecordRef": "record:1MHL:3-3:1MHL0W",
+          "bookCode": "1MHL",
+          "edition": 1,
+          "nativeGroupingLabel": "3-3",
+          "nativeTitleRaw": "일차방정식의 활용",
+          "nativeSectionLabelRaw": "유형다지기",
+          "printedSectionLabelRaw": "내신 만점을 위한 실전 유형",
+          "printedTocNodeLabelRaw": "3-3",
+          "savedMappingUnitLevel": "middle",
+          "lessonIndex": 4,
+          "kind": "lesson",
+          "purpose": "assigned_new_homework",
+          "evidenceIds": [
+            "evidence:ruhan:a3105d6b0e78dca56fc31b78",
+            "evidence:ruhan:26df1e663f915ad28cd0eabf"
+          ],
+          "source": {
+            "catalogFileName": "official-book-catalog.json",
+            "catalogSha256": "fd1534c77acbe8b7d5d6709658a3fdd1fe3bd23cf63fd147b21cbfcef59ffd22",
+            "normalizedCatalogSectionId": "section_100cc7690d7beef8f9ed6c3f",
+            "nativeOriginalSource": {
+              "evidenceLevel": "observed",
+              "fileName": "book-section-registry-local.json",
+              "fileSha256": "8da3798f73d1ad15d25eab9ed3e629f76acb38a4987b63bdd9f86d47dc65b306",
+              "jsonPointer": "/books/7/units/10/2/T/3"
+            },
+            "mappingFileName": "이루한_교재매핑_1.1.0.json",
+            "mappingSha256": "b2382b181d62ca86374dfcf7816376de576e1b02180d6a12b14418b1ac5c486c",
+            "mappingJsonPointer": "/records/116",
+            "sourceKind": "imported_snapshot",
+            "currentServerQueriedAt": null
+          },
+          "embeddedContents": [],
+          "performanceState": "not_checked",
+          "completionState": "unknown",
+          "performanceEvidenceIds": []
+        },
+        {
+          "scopeItemId": "assignment:ruhan:20261007:davinci-equations-v1:scope:1MHL0X",
+          "order": 14,
+          "catalogCode": "1MHL0X",
+          "normalizedCatalogSectionId": "section_847516015d440b5aaff07d0c",
+          "existingRecordRef": "record:1MHL:3-3:1MHL0X",
+          "bookCode": "1MHL",
+          "edition": 1,
+          "nativeGroupingLabel": "3-3",
+          "nativeTitleRaw": "일차방정식의 활용",
+          "nativeSectionLabelRaw": "유형다지기",
+          "printedSectionLabelRaw": "내신 만점을 위한 실전 유형",
+          "printedTocNodeLabelRaw": "3-3",
+          "savedMappingUnitLevel": "middle",
+          "lessonIndex": 5,
+          "kind": "lesson",
+          "purpose": "assigned_new_homework",
+          "evidenceIds": [
+            "evidence:ruhan:a3105d6b0e78dca56fc31b78",
+            "evidence:ruhan:26df1e663f915ad28cd0eabf"
+          ],
+          "source": {
+            "catalogFileName": "official-book-catalog.json",
+            "catalogSha256": "fd1534c77acbe8b7d5d6709658a3fdd1fe3bd23cf63fd147b21cbfcef59ffd22",
+            "normalizedCatalogSectionId": "section_847516015d440b5aaff07d0c",
+            "nativeOriginalSource": {
+              "evidenceLevel": "observed",
+              "fileName": "book-section-registry-local.json",
+              "fileSha256": "8da3798f73d1ad15d25eab9ed3e629f76acb38a4987b63bdd9f86d47dc65b306",
+              "jsonPointer": "/books/7/units/10/2/T/4"
+            },
+            "mappingFileName": "이루한_교재매핑_1.1.0.json",
+            "mappingSha256": "b2382b181d62ca86374dfcf7816376de576e1b02180d6a12b14418b1ac5c486c",
+            "mappingJsonPointer": "/records/117",
+            "sourceKind": "imported_snapshot",
+            "currentServerQueriedAt": null
+          },
+          "embeddedContents": [],
+          "performanceState": "not_checked",
+          "completionState": "unknown",
+          "performanceEvidenceIds": []
+        },
+        {
+          "scopeItemId": "assignment:ruhan:20261007:davinci-equations-v1:scope:1MHL0Y",
+          "order": 15,
+          "catalogCode": "1MHL0Y",
+          "normalizedCatalogSectionId": "section_2577c7997ebc8bbf24df9315",
+          "existingRecordRef": "record:1MHL:3-3:1MHL0Y",
+          "bookCode": "1MHL",
+          "edition": 1,
+          "nativeGroupingLabel": "3-3",
+          "nativeTitleRaw": "일차방정식의 활용",
+          "nativeSectionLabelRaw": "유형다지기",
+          "printedSectionLabelRaw": "내신 만점을 위한 실전 유형",
+          "printedTocNodeLabelRaw": "3-3",
+          "savedMappingUnitLevel": "middle",
+          "lessonIndex": 6,
+          "kind": "lesson",
+          "purpose": "assigned_new_homework",
+          "evidenceIds": [
+            "evidence:ruhan:a3105d6b0e78dca56fc31b78",
+            "evidence:ruhan:26df1e663f915ad28cd0eabf"
+          ],
+          "source": {
+            "catalogFileName": "official-book-catalog.json",
+            "catalogSha256": "fd1534c77acbe8b7d5d6709658a3fdd1fe3bd23cf63fd147b21cbfcef59ffd22",
+            "normalizedCatalogSectionId": "section_2577c7997ebc8bbf24df9315",
+            "nativeOriginalSource": {
+              "evidenceLevel": "observed",
+              "fileName": "book-section-registry-local.json",
+              "fileSha256": "8da3798f73d1ad15d25eab9ed3e629f76acb38a4987b63bdd9f86d47dc65b306",
+              "jsonPointer": "/books/7/units/10/2/T/5"
+            },
+            "mappingFileName": "이루한_교재매핑_1.1.0.json",
+            "mappingSha256": "b2382b181d62ca86374dfcf7816376de576e1b02180d6a12b14418b1ac5c486c",
+            "mappingJsonPointer": "/records/118",
+            "sourceKind": "imported_snapshot",
+            "currentServerQueriedAt": null
+          },
+          "embeddedContents": [],
+          "performanceState": "not_checked",
+          "completionState": "unknown",
+          "performanceEvidenceIds": []
+        },
+        {
+          "scopeItemId": "assignment:ruhan:20261007:davinci-equations-v1:scope:1MHL0Z",
+          "order": 16,
+          "catalogCode": "1MHL0Z",
+          "normalizedCatalogSectionId": "section_25cf12d0f1fec128109c835f",
+          "existingRecordRef": "record:1MHL:3-3:1MHL0Z",
+          "bookCode": "1MHL",
+          "edition": 1,
+          "nativeGroupingLabel": "3-3",
+          "nativeTitleRaw": "일차방정식의 활용",
+          "nativeSectionLabelRaw": "유형다지기",
+          "printedSectionLabelRaw": "내신 만점을 위한 실전 유형",
+          "printedTocNodeLabelRaw": "3-3",
+          "savedMappingUnitLevel": "middle",
+          "lessonIndex": 7,
+          "kind": "lesson",
+          "purpose": "assigned_new_homework",
+          "evidenceIds": [
+            "evidence:ruhan:a3105d6b0e78dca56fc31b78",
+            "evidence:ruhan:26df1e663f915ad28cd0eabf"
+          ],
+          "source": {
+            "catalogFileName": "official-book-catalog.json",
+            "catalogSha256": "fd1534c77acbe8b7d5d6709658a3fdd1fe3bd23cf63fd147b21cbfcef59ffd22",
+            "normalizedCatalogSectionId": "section_25cf12d0f1fec128109c835f",
+            "nativeOriginalSource": {
+              "evidenceLevel": "observed",
+              "fileName": "book-section-registry-local.json",
+              "fileSha256": "8da3798f73d1ad15d25eab9ed3e629f76acb38a4987b63bdd9f86d47dc65b306",
+              "jsonPointer": "/books/7/units/10/2/T/6"
+            },
+            "mappingFileName": "이루한_교재매핑_1.1.0.json",
+            "mappingSha256": "b2382b181d62ca86374dfcf7816376de576e1b02180d6a12b14418b1ac5c486c",
+            "mappingJsonPointer": "/records/119",
+            "sourceKind": "imported_snapshot",
+            "currentServerQueriedAt": null
+          },
+          "embeddedContents": [
+            {
+              "labelRaw": "학교 시험 서술형 정복",
+              "placement": "additional_section_in_final_lesson",
+              "parentCatalogCode": "1MHL0Z",
+              "independentScopeItem": false,
+              "countsAsIndependentGradingUnit": false,
+              "independentMissingStatus": false,
+              "nativeBindingState": "user_report_rule_applied_not_requeried",
+              "evidenceIds": [
+                "evidence:ruhan:dd3641d932f1be77693d3077"
+              ]
+            }
+          ],
+          "performanceState": "not_checked",
+          "completionState": "unknown",
+          "performanceEvidenceIds": []
+        },
+        {
+          "scopeItemId": "assignment:ruhan:20261007:davinci-equations-v1:scope:1MHL10",
+          "order": 17,
+          "catalogCode": "1MHL10",
+          "normalizedCatalogSectionId": "section_39299053316bef5ed307608e",
+          "existingRecordRef": "record:1MHL:3:1MHL10",
+          "bookCode": "1MHL",
+          "edition": 1,
+          "nativeGroupingLabel": "3",
+          "nativeTitleRaw": "방정식 대단원 총괄",
+          "nativeSectionLabelRaw": "단원평가",
+          "printedSectionLabelRaw": "대단원 실전 TEST",
+          "printedTocNodeLabelRaw": "3:assessment",
+          "savedMappingUnitLevel": "major_assessment",
+          "lessonIndex": null,
+          "kind": "major_assessment",
+          "purpose": "assigned_new_homework",
+          "evidenceIds": [
+            "evidence:ruhan:a3105d6b0e78dca56fc31b78",
+            "evidence:ruhan:26df1e663f915ad28cd0eabf"
+          ],
+          "source": {
+            "catalogFileName": "official-book-catalog.json",
+            "catalogSha256": "fd1534c77acbe8b7d5d6709658a3fdd1fe3bd23cf63fd147b21cbfcef59ffd22",
+            "normalizedCatalogSectionId": "section_39299053316bef5ed307608e",
+            "nativeOriginalSource": {
+              "evidenceLevel": "observed",
+              "fileName": "book-section-registry-local.json",
+              "fileSha256": "8da3798f73d1ad15d25eab9ed3e629f76acb38a4987b63bdd9f86d47dc65b306",
+              "jsonPointer": "/books/7/units/2/2/D"
+            },
+            "mappingFileName": "이루한_교재매핑_1.1.0.json",
+            "mappingSha256": "b2382b181d62ca86374dfcf7816376de576e1b02180d6a12b14418b1ac5c486c",
+            "mappingJsonPointer": "/records/131",
+            "sourceKind": "imported_snapshot",
+            "currentServerQueriedAt": null
+          },
+          "embeddedContents": [],
+          "performanceState": "not_checked",
+          "completionState": "unknown",
+          "performanceEvidenceIds": []
+        }
+      ],
+      "counts": {
+        "lessons": 16,
+        "majorTotalAssessments": 1,
+        "appGradingUnits": 17,
+        "independentEmbeddedSections": 0
+      },
+      "evidenceIds": [
+        "evidence:ruhan:a3105d6b0e78dca56fc31b78",
+        "evidence:ruhan:26df1e663f915ad28cd0eabf",
+        "evidence:ruhan:dd3641d932f1be77693d3077",
+        "evidence:ruhan:1a7a9892f31c34bacc1de958"
+      ],
+      "ruleVersion": "academy.evidence/1.1.0",
+      "studentPerformance": {
+        "state": "not_checked",
+        "completionState": "unknown",
+        "observedAt": null,
+        "evidenceIds": []
+      },
+      "externalLMSWrite": {
+        "assistantWritePerformed": false,
+        "actualServerAssignmentState": "unknown"
+      },
+      "nativeLabelAndUserWordingSeparated": true,
+      "automaticAliasesCreated": false
+    }
+  ]
+}

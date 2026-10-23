@@ -1,0 +1,351 @@
+{
+  "schemaVersion": "academy.workflow-capability-inventory/2",
+  "rows": [
+    {
+      "workflowId": "class-preparation",
+      "maintainedRepository": "education-platform",
+      "sourceRevision": "cb7e571262593f230d21401994a507e94960f967",
+      "producer": "dc-gang-a/src/academy/application.ts TeacherApplication.classPreparation/student -> usecases/studentScene.ts TeacherQueries",
+      "actualAndIntendedConsumers": "Existing teacher HTTP /api/class and /api/student; web/client.ts; Workbench MCP/report adapters",
+      "disposition": "Retain canonical teacher application. Adapt Workbench saved/history consumer explicitly; synthetic standalone remains synthetic.",
+      "workbenchConsumerState": "adapter gap; must qualify/source-test before claiming connected",
+      "checks": [
+        "teacherReadSnapshot.test.ts",
+        "preparationHistory.test.ts",
+        "teacherWorkContext.test.ts"
+      ],
+      "implementationOwner": "Existing academy application/domain owner; consumer glue at its own owner",
+      "completionConsequence": "No whole-workflow integration claim while any intended source/consumer/check is deferred or unavailable. Operational activation and teacher acceptance remain separate.",
+      "canonicalProducerSelection": {
+        "repositoryId": "park-kyungchan/education-platform",
+        "commit": "cb7e571262593f230d21401994a507e94960f967",
+        "applicationRoot": "apps/academy/dc-gang-a/src/academy",
+        "functionLocator": "dc-gang-a/src/academy/application.ts TeacherApplication.classPreparation/student -> usecases/studentScene.ts TeacherQueries",
+        "status": "existing-source-qualified; exact consumer compatibility pending DOM-01"
+      },
+      "consumers": [
+        {
+          "id": "teacher-http",
+          "repositoryId": "park-kyungchan/education-platform",
+          "path": "apps/academy/dc-gang-a/src/academy/server.ts",
+          "state": "implemented-source; current native adoption unverified"
+        },
+        {
+          "id": "teacher-web-and-webmcp",
+          "repositoryId": "park-kyungchan/education-platform",
+          "path": "apps/academy/dc-gang-a/src/academy/web/client.ts",
+          "state": "implemented-source; current native behavior unverified"
+        },
+        {
+          "id": "workbench-mcp",
+          "repositoryId": "park-kyungchan/academy-workbench",
+          "path": "tools/academy-mcp",
+          "state": "saved-source queries implemented; application adapter missing"
+        },
+        {
+          "id": "teacher-report",
+          "repositoryId": "park-kyungchan/academy-workbench",
+          "path": "report adapter plus installed academy-student-context skill",
+          "state": "format skill installed; common application/result adapter missing"
+        }
+      ]
+    },
+    {
+      "workflowId": "lesson-delivery",
+      "maintainedRepository": "education-platform",
+      "sourceRevision": "cb7e571262593f230d21401994a507e94960f967",
+      "producer": "dc-gang-a/src/academy/usecases/teacherObservation.ts and teacherWorkspace.ts via TeacherApplication",
+      "actualAndIntendedConsumers": "Teacher HTTP observation/workspace routes and existing web/editor; prepared MCP/report handoff",
+      "disposition": "Retain teacher commands and existing CAS/store; physical teaching and native saves remain separate and held.",
+      "workbenchConsumerState": "adapter gap; must qualify/source-test before claiming connected",
+      "checks": [
+        "teacherObservation.test.ts",
+        "teacherWorkspace.test.ts"
+      ],
+      "implementationOwner": "Existing academy application/domain owner; consumer glue at its own owner",
+      "completionConsequence": "No whole-workflow integration claim while any intended source/consumer/check is deferred or unavailable. Operational activation and teacher acceptance remain separate.",
+      "canonicalProducerSelection": {
+        "repositoryId": "park-kyungchan/education-platform",
+        "commit": "cb7e571262593f230d21401994a507e94960f967",
+        "applicationRoot": "apps/academy/dc-gang-a/src/academy",
+        "functionLocator": "dc-gang-a/src/academy/usecases/teacherObservation.ts and teacherWorkspace.ts via TeacherApplication",
+        "status": "existing-source-qualified; exact consumer compatibility pending DOM-01"
+      },
+      "consumers": [
+        {
+          "id": "teacher-http",
+          "repositoryId": "park-kyungchan/education-platform",
+          "path": "apps/academy/dc-gang-a/src/academy/server.ts",
+          "state": "implemented-source; current native adoption unverified"
+        },
+        {
+          "id": "teacher-web-and-webmcp",
+          "repositoryId": "park-kyungchan/education-platform",
+          "path": "apps/academy/dc-gang-a/src/academy/web/client.ts",
+          "state": "implemented-source; current native behavior unverified"
+        },
+        {
+          "id": "workbench-mcp",
+          "repositoryId": "park-kyungchan/academy-workbench",
+          "path": "tools/academy-mcp",
+          "state": "saved-source queries implemented; application adapter missing"
+        },
+        {
+          "id": "teacher-report",
+          "repositoryId": "park-kyungchan/academy-workbench",
+          "path": "report adapter plus installed academy-student-context skill",
+          "state": "format skill installed; common application/result adapter missing"
+        }
+      ]
+    },
+    {
+      "workflowId": "progress-audit",
+      "maintainedRepository": "education-platform",
+      "sourceRevision": "cb7e571262593f230d21401994a507e94960f967",
+      "producer": "dc-gang-a/src/academy/learningWorkProjection.ts + preparationHistory.ts + TeacherQueries.student",
+      "actualAndIntendedConsumers": "StudentLearningScene, existing teacher view/WebMCP, bounded report/MCP adapter",
+      "disposition": "Extend existing exact-work projection for demonstrated gaps; no separate reducer in Workbench.",
+      "workbenchConsumerState": "adapter gap; must qualify/source-test before claiming connected",
+      "checks": [
+        "learningWork.test.ts",
+        "teacherWorkContext.test.ts"
+      ],
+      "implementationOwner": "Existing academy application/domain owner; consumer glue at its own owner",
+      "completionConsequence": "No whole-workflow integration claim while any intended source/consumer/check is deferred or unavailable. Operational activation and teacher acceptance remain separate.",
+      "canonicalProducerSelection": {
+        "repositoryId": "park-kyungchan/education-platform",
+        "commit": "cb7e571262593f230d21401994a507e94960f967",
+        "applicationRoot": "apps/academy/dc-gang-a/src/academy",
+        "functionLocator": "dc-gang-a/src/academy/learningWorkProjection.ts + preparationHistory.ts + TeacherQueries.student",
+        "status": "existing-source-qualified; exact consumer compatibility pending DOM-01"
+      },
+      "consumers": [
+        {
+          "id": "teacher-http",
+          "repositoryId": "park-kyungchan/education-platform",
+          "path": "apps/academy/dc-gang-a/src/academy/server.ts",
+          "state": "implemented-source; current native adoption unverified"
+        },
+        {
+          "id": "teacher-web-and-webmcp",
+          "repositoryId": "park-kyungchan/education-platform",
+          "path": "apps/academy/dc-gang-a/src/academy/web/client.ts",
+          "state": "implemented-source; current native behavior unverified"
+        },
+        {
+          "id": "workbench-mcp",
+          "repositoryId": "park-kyungchan/academy-workbench",
+          "path": "tools/academy-mcp",
+          "state": "saved-source queries implemented; application adapter missing"
+        },
+        {
+          "id": "teacher-report",
+          "repositoryId": "park-kyungchan/academy-workbench",
+          "path": "report adapter plus installed academy-student-context skill",
+          "state": "format skill installed; common application/result adapter missing"
+        }
+      ]
+    },
+    {
+      "workflowId": "homework-followup",
+      "maintainedRepository": "education-platform",
+      "sourceRevision": "cb7e571262593f230d21401994a507e94960f967",
+      "producer": "dc-gang-a/src/academy/learningWork.ts LearningWorkAssignment + projectLearningWork + TeacherApplication teacherWorkspace/history",
+      "actualAndIntendedConsumers": "Teacher application/UI and future exact assignment/query adapter",
+      "disposition": "Keep assigned/withdrawn and revision history. Qualify any missing cancellation/replacement authoring operation before implementing; missing mappings stay explicit.",
+      "workbenchConsumerState": "adapter gap; must qualify/source-test before claiming connected",
+      "checks": [
+        "learningWork.test.ts",
+        "teacherWorkspace.test.ts"
+      ],
+      "implementationOwner": "Existing academy application/domain owner; consumer glue at its own owner",
+      "completionConsequence": "No whole-workflow integration claim while any intended source/consumer/check is deferred or unavailable. Operational activation and teacher acceptance remain separate.",
+      "canonicalProducerSelection": {
+        "repositoryId": "park-kyungchan/education-platform",
+        "commit": "cb7e571262593f230d21401994a507e94960f967",
+        "applicationRoot": "apps/academy/dc-gang-a/src/academy",
+        "functionLocator": "dc-gang-a/src/academy/learningWork.ts LearningWorkAssignment + projectLearningWork + TeacherApplication teacherWorkspace/history",
+        "status": "existing-source-qualified; exact consumer compatibility pending DOM-01"
+      },
+      "consumers": [
+        {
+          "id": "teacher-http",
+          "repositoryId": "park-kyungchan/education-platform",
+          "path": "apps/academy/dc-gang-a/src/academy/server.ts",
+          "state": "implemented-source; current native adoption unverified"
+        },
+        {
+          "id": "teacher-web-and-webmcp",
+          "repositoryId": "park-kyungchan/education-platform",
+          "path": "apps/academy/dc-gang-a/src/academy/web/client.ts",
+          "state": "implemented-source; current native behavior unverified"
+        },
+        {
+          "id": "workbench-mcp",
+          "repositoryId": "park-kyungchan/academy-workbench",
+          "path": "tools/academy-mcp",
+          "state": "saved-source queries implemented; application adapter missing"
+        },
+        {
+          "id": "teacher-report",
+          "repositoryId": "park-kyungchan/academy-workbench",
+          "path": "report adapter plus installed academy-student-context skill",
+          "state": "format skill installed; common application/result adapter missing"
+        }
+      ]
+    },
+    {
+      "workflowId": "assessment-preparation",
+      "maintainedRepository": "education-platform",
+      "sourceRevision": "cb7e571262593f230d21401994a507e94960f967",
+      "producer": "month-end-workbench/src/application.ts createApplication + contracts.ts SourcePort; dc-gang-a projectExamCandidate where scoped",
+      "actualAndIntendedConsumers": "month-end-workbench server HTTP and month-end-web/src/client.ts; existing research/source MCP integration",
+      "disposition": "Retain separate assessment application and web consumer. No final selection, research semantic rewrite, live source launch or 100/80-minute scope flattening.",
+      "workbenchConsumerState": "adapter gap; must qualify/source-test before claiming connected",
+      "checks": [
+        "month-end-workbench package check",
+        "month-end-web package check"
+      ],
+      "implementationOwner": "Existing academy application/domain owner; consumer glue at its own owner",
+      "completionConsequence": "No whole-workflow integration claim while any intended source/consumer/check is deferred or unavailable. Operational activation and teacher acceptance remain separate.",
+      "canonicalProducerSelection": {
+        "repositoryId": "park-kyungchan/education-platform",
+        "commit": "cb7e571262593f230d21401994a507e94960f967",
+        "applicationRoot": "apps/academy/month-end-workbench/src",
+        "functionLocator": "month-end-workbench/src/application.ts createApplication + contracts.ts SourcePort; dc-gang-a projectExamCandidate where scoped",
+        "status": "existing-source-qualified; exact consumer compatibility pending DOM-01"
+      },
+      "consumers": [
+        {
+          "id": "assessment-http",
+          "repositoryId": "park-kyungchan/education-platform",
+          "path": "apps/academy/month-end-workbench/src/server.ts",
+          "state": "implemented-source; current native adoption unverified"
+        },
+        {
+          "id": "assessment-web",
+          "repositoryId": "park-kyungchan/education-platform",
+          "path": "apps/academy/month-end-web/src/client.ts",
+          "state": "implemented-source; current native behavior unverified"
+        },
+        {
+          "id": "workbench-mcp",
+          "repositoryId": "park-kyungchan/academy-workbench",
+          "path": "tools/academy-mcp",
+          "state": "saved-source queries implemented; application adapter missing"
+        },
+        {
+          "id": "teacher-report",
+          "repositoryId": "park-kyungchan/academy-workbench",
+          "path": "report adapter plus installed academy-student-context skill",
+          "state": "format skill installed; common application/result adapter missing"
+        }
+      ]
+    },
+    {
+      "workflowId": "wrong-answer-clinic",
+      "maintainedRepository": "education-platform",
+      "sourceRevision": "cb7e571262593f230d21401994a507e94960f967",
+      "producer": "dc-gang-a TeacherApplication.saveClinicDecision -> usecases/teacherClinic.ts -> projectLearningWork; existing classroomCyclePolicy",
+      "actualAndIntendedConsumers": "Teacher HTTP clinic routes, web/editor, StudentLearningScene and future scoped MCP/report consumer",
+      "disposition": "Retain exact assignment/attempt/item and printed snapshot identities; compatibility gang-a teacher-outcome never becomes an automatic identity bridge.",
+      "workbenchConsumerState": "adapter gap; must qualify/source-test before claiming connected",
+      "checks": [
+        "teacherClinic.test.ts",
+        "teacherClinicReviewBlockers.test.ts",
+        "learningWork.test.ts"
+      ],
+      "implementationOwner": "Existing academy application/domain owner; consumer glue at its own owner",
+      "completionConsequence": "No whole-workflow integration claim while any intended source/consumer/check is deferred or unavailable. Operational activation and teacher acceptance remain separate.",
+      "canonicalProducerSelection": {
+        "repositoryId": "park-kyungchan/education-platform",
+        "commit": "cb7e571262593f230d21401994a507e94960f967",
+        "applicationRoot": "apps/academy/dc-gang-a/src/academy",
+        "functionLocator": "dc-gang-a TeacherApplication.saveClinicDecision -> usecases/teacherClinic.ts -> projectLearningWork; existing classroomCyclePolicy",
+        "status": "existing-source-qualified; exact consumer compatibility pending DOM-01"
+      },
+      "consumers": [
+        {
+          "id": "teacher-http",
+          "repositoryId": "park-kyungchan/education-platform",
+          "path": "apps/academy/dc-gang-a/src/academy/server.ts",
+          "state": "implemented-source; current native adoption unverified"
+        },
+        {
+          "id": "teacher-web-and-webmcp",
+          "repositoryId": "park-kyungchan/education-platform",
+          "path": "apps/academy/dc-gang-a/src/academy/web/client.ts",
+          "state": "implemented-source; current native behavior unverified"
+        },
+        {
+          "id": "workbench-mcp",
+          "repositoryId": "park-kyungchan/academy-workbench",
+          "path": "tools/academy-mcp",
+          "state": "saved-source queries implemented; application adapter missing"
+        },
+        {
+          "id": "teacher-report",
+          "repositoryId": "park-kyungchan/academy-workbench",
+          "path": "report adapter plus installed academy-student-context skill",
+          "state": "format skill installed; common application/result adapter missing"
+        }
+      ]
+    },
+    {
+      "workflowId": "attendance-internal-journal",
+      "maintainedRepository": "education-platform",
+      "sourceRevision": "cb7e571262593f230d21401994a507e94960f967",
+      "producer": "dc-gang-a dayRecordReadProtocol + TeacherQueries.classPreparation + TeacherObservationCommands",
+      "actualAndIntendedConsumers": "Internal date/class view, teacher observation/history and internal report",
+      "disposition": "Include internal occurrence/attendance/intake only. Parent drafting/transmission and counseling remain excluded; journal write effects remain held.",
+      "workbenchConsumerState": "adapter gap; must qualify/source-test before claiming connected",
+      "checks": [
+        "teacherObservation.test.ts",
+        "preparationView.test.ts",
+        "teacherReadSnapshot.test.ts"
+      ],
+      "implementationOwner": "Existing academy application/domain owner; consumer glue at its own owner",
+      "completionConsequence": "No whole-workflow integration claim while any intended source/consumer/check is deferred or unavailable. Operational activation and teacher acceptance remain separate.",
+      "canonicalProducerSelection": {
+        "repositoryId": "park-kyungchan/education-platform",
+        "commit": "cb7e571262593f230d21401994a507e94960f967",
+        "applicationRoot": "apps/academy/dc-gang-a/src/academy",
+        "functionLocator": "dc-gang-a dayRecordReadProtocol + TeacherQueries.classPreparation + TeacherObservationCommands",
+        "status": "existing-source-qualified; exact consumer compatibility pending DOM-01"
+      },
+      "consumers": [
+        {
+          "id": "teacher-http",
+          "repositoryId": "park-kyungchan/education-platform",
+          "path": "apps/academy/dc-gang-a/src/academy/server.ts",
+          "state": "implemented-source; current native adoption unverified"
+        },
+        {
+          "id": "teacher-web-and-webmcp",
+          "repositoryId": "park-kyungchan/education-platform",
+          "path": "apps/academy/dc-gang-a/src/academy/web/client.ts",
+          "state": "implemented-source; current native behavior unverified"
+        },
+        {
+          "id": "workbench-mcp",
+          "repositoryId": "park-kyungchan/academy-workbench",
+          "path": "tools/academy-mcp",
+          "state": "saved-source queries implemented; application adapter missing"
+        },
+        {
+          "id": "teacher-report",
+          "repositoryId": "park-kyungchan/academy-workbench",
+          "path": "report adapter plus installed academy-student-context skill",
+          "state": "format skill installed; common application/result adapter missing"
+        }
+      ]
+    }
+  ],
+  "excluded": [
+    "counseling",
+    "parent-facing drafting and transmission"
+  ],
+  "canonicalStatePath": "Existing TeacherApplication/TeacherQueries -> exactWork/preparation/workContext. Workbench must consume its contract through a scoped adapter, not reproduce domain inference.",
+  "sourceSelectionGate": "DOM-01 freezes exact per-capability producer/consumer contracts from this inventory. DOM-02/QRY-02 cannot start without the reviewed selection.",
+  "assessmentVerification": "Both month-end-workbench and month-end-web have explicit package-local source checks; the Academy aggregate route alone is not coverage."
+}

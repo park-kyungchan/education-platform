@@ -1,0 +1,555 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:math-research-module:identity-pilot:0.1.0",
+  "title": "Math Research Identity Pilot (module-local)",
+  "description": "Structural schema only. Graph, evidence, immutable revisions and reference/source authenticity require additional checks. No authority or actual user acceptance is inferred.",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "const": "0.1.0-pilot"
+    },
+    "semanticOwner": {
+      "const": "math-research-module"
+    },
+    "namespace": {
+      "const": "mred"
+    },
+    "registryScope": {
+      "const": "module-local-pilot"
+    },
+    "coverage": {
+      "type": "object",
+      "properties": {
+        "fixtureCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "realLearnersDiagnosed": {
+          "const": 0
+        },
+        "full105TypesDiagnosed": {
+          "const": false
+        }
+      },
+      "required": [
+        "fixtureCount",
+        "realLearnersDiagnosed",
+        "full105TypesDiagnosed"
+      ],
+      "additionalProperties": false
+    },
+    "authority": {
+      "type": "object",
+      "properties": {
+        "nativePermissionGranted": {
+          "const": false
+        },
+        "actualAcceptanceInferred": {
+          "const": false
+        },
+        "grantsExecution": {
+          "const": false
+        }
+      },
+      "required": [
+        "nativePermissionGranted",
+        "actualAcceptanceInferred",
+        "grantsExecution"
+      ],
+      "additionalProperties": false
+    },
+    "revisions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^mred:[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "layer": {
+            "enum": [
+              "DATA",
+              "LOGIC",
+              "ACTION",
+              "GOVERNANCE"
+            ]
+          },
+          "type": {
+            "enum": [
+              "concept_family",
+              "atomic_concept",
+              "contextual_unit",
+              "source_document",
+              "item",
+              "observation",
+              "reasoning_family",
+              "evidence_claim",
+              "capability_hypothesis",
+              "strategy_hypothesis",
+              "diagnostic_rule",
+              "action_family",
+              "action_definition",
+              "probe_definition",
+              "action_event",
+              "teacher_action",
+              "system_action",
+              "governance_family",
+              "source_claim",
+              "provenance_record",
+              "review_record",
+              "acceptance_record",
+              "authorization_policy"
+            ]
+          },
+          "classification": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string",
+                "minLength": 1
+              },
+              "semanticPath": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 1
+              }
+            },
+            "required": [
+              "label",
+              "semanticPath"
+            ],
+            "additionalProperties": false
+          },
+          "core": {
+            "type": "object",
+            "properties": {
+              "statement": {
+                "type": "string",
+                "minLength": 1
+              },
+              "epistemicStatus": {
+                "enum": [
+                  "definition",
+                  "observed",
+                  "reported",
+                  "inference",
+                  "hypothesis",
+                  "rule",
+                  "pending",
+                  "recorded"
+                ]
+              },
+              "evidenceRefs": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "pattern": "^mred:[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+                    },
+                    "version": {
+                      "type": "integer",
+                      "minimum": 1
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "version"
+                  ],
+                  "additionalProperties": false
+                },
+                "minItems": 0
+              },
+              "sourceRefs": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "pattern": "^mred:[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+                    },
+                    "version": {
+                      "type": "integer",
+                      "minimum": 1
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "version"
+                  ],
+                  "additionalProperties": false
+                },
+                "minItems": 0
+              },
+              "targetRefs": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "pattern": "^mred:[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+                    },
+                    "version": {
+                      "type": "integer",
+                      "minimum": 1
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "version"
+                  ],
+                  "additionalProperties": false
+                },
+                "minItems": 0
+              },
+              "probeRefs": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "pattern": "^mred:[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+                    },
+                    "version": {
+                      "type": "integer",
+                      "minimum": 1
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "version"
+                  ],
+                  "additionalProperties": false
+                },
+                "minItems": 0
+              },
+              "limitations": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 0
+              },
+              "synthetic": {
+                "type": "boolean"
+              },
+              "details": {
+                "type": "object",
+                "additionalProperties": true
+              }
+            },
+            "required": [
+              "statement",
+              "epistemicStatus",
+              "evidenceRefs",
+              "sourceRefs",
+              "targetRefs",
+              "probeRefs",
+              "limitations",
+              "synthetic",
+              "details"
+            ],
+            "additionalProperties": false
+          },
+          "semanticCoreHash": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "revisionHash": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        },
+        "required": [
+          "id",
+          "version",
+          "layer",
+          "type",
+          "classification",
+          "core",
+          "semanticCoreHash",
+          "revisionHash"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "relation": {
+            "enum": [
+              "is_a",
+              "part_of",
+              "prerequisite",
+              "uses",
+              "observes",
+              "supports",
+              "refutes",
+              "probes",
+              "instance_of",
+              "derived_from"
+            ]
+          },
+          "from": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^mred:[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+              },
+              "version": {
+                "type": "integer",
+                "minimum": 1
+              }
+            },
+            "required": [
+              "id",
+              "version"
+            ],
+            "additionalProperties": false
+          },
+          "to": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^mred:[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+              },
+              "version": {
+                "type": "integer",
+                "minimum": 1
+              }
+            },
+            "required": [
+              "id",
+              "version"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "id",
+          "relation",
+          "from",
+          "to"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 0
+    },
+    "presentations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "subject": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^mred:[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+              },
+              "version": {
+                "type": "integer",
+                "minimum": 1
+              }
+            },
+            "required": [
+              "id",
+              "version"
+            ],
+            "additionalProperties": false
+          },
+          "semanticCoreHash": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "renderMode": {
+            "const": "exact-core"
+          },
+          "tone": {
+            "enum": [
+              "neutral",
+              "teacher-warm",
+              "teacher-concise"
+            ]
+          },
+          "language": {
+            "const": "ko"
+          }
+        },
+        "required": [
+          "id",
+          "subject",
+          "semanticCoreHash",
+          "renderMode",
+          "tone",
+          "language"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 0
+    },
+    "harnessRecords": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*:(project|task|proposal|decision|evidence|verification|run):[a-z0-9][a-z0-9._:-]*$"
+          },
+          "projectId": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*$"
+          },
+          "kind": {
+            "enum": [
+              "project",
+              "task",
+              "proposal",
+              "decision",
+              "evidence",
+              "verification",
+              "run"
+            ]
+          },
+          "sourcePath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sourceSha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        },
+        "required": [
+          "id",
+          "projectId",
+          "kind",
+          "sourcePath",
+          "sourceSha256"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 0
+    },
+    "workContexts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "projectId": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*$"
+          },
+          "workId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "sourcePath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sourceSha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        },
+        "required": [
+          "projectId",
+          "workId",
+          "sourcePath",
+          "sourceSha256"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 0
+    },
+    "crosswalk": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "relation": {
+            "enum": [
+              "createdBy",
+              "uses",
+              "verifiedBy",
+              "acceptedBy"
+            ]
+          },
+          "research": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^mred:[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+              },
+              "version": {
+                "type": "integer",
+                "minimum": 1
+              }
+            },
+            "required": [
+              "id",
+              "version"
+            ],
+            "additionalProperties": false
+          },
+          "harnessArtifactId": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*:(project|task|proposal|decision|evidence|verification|run):[a-z0-9][a-z0-9._:-]*$"
+          }
+        },
+        "required": [
+          "relation",
+          "research",
+          "harnessArtifactId"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 0
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "semanticOwner",
+    "namespace",
+    "registryScope",
+    "coverage",
+    "authority",
+    "revisions",
+    "edges",
+    "presentations",
+    "harnessRecords",
+    "workContexts",
+    "crosswalk"
+  ],
+  "additionalProperties": false
+}

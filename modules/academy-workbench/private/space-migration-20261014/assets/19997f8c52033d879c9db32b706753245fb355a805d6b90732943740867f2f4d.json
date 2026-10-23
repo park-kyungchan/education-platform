@@ -1,0 +1,54 @@
+{
+  "schemaVersion": "1.0.0",
+  "version": "1.0.0",
+  "revision": 1,
+  "dataClass": "non_sensitive_contract",
+  "authorityGranted": false,
+  "runtimeIntegration": "local_validator_only",
+  "kind": "student_refresh_contract",
+  "contractId": "academy.student-refresh",
+  "sourceIds": [
+    "Sentinel_dfcae0aa0480819198b6e720db07b1f8"
+  ],
+  "meaning": "Fast per-student requested refresh with per-source query timestamps, not continuous connection.",
+  "plan": "PerStudentRefreshPlan",
+  "run": "PerStudentRefreshRun",
+  "allowedReadPaths": [
+    "DaysMain retrospective lesson rows",
+    "StudyCourse student book/version",
+    "TeacherPrestudySummary videos",
+    "WebUnPreStudy and WebCtPreStudy state",
+    "TestPageList StudentNameSearch graded attempts",
+    "UserSearch scoped enrollment",
+    "verified attendance query route in current site contract"
+  ],
+  "routeAuthority": "Use exact observed paths, filters and effect boundaries from pinned academy.site; map unknown backend capabilities without executing unknown effects.",
+  "identityRule": "After each filter change wait for source completion and verify displayed student plus result rows. Reject stale previous-student tables.",
+  "timeRules": [
+    "queriedAt is actual source query observation, eventAt is source event time, lastSuccessAt requires verified scoped query and private readback.",
+    "Unknown source timezone/asOf stays unknown.",
+    "Request accepted is not query completed."
+  ],
+  "failureRules": [
+    "Preserve prior source values and lastSuccessAt for failed/inaccessible/stale results.",
+    "Partial run exposes source-specific status, not a globally fresh badge.",
+    "Unknown write outcome must be reconciled before retry."
+  ],
+  "optimization": [
+    "Batch independent source reads only when scopes remain verifiable.",
+    "Reuse matching edition/cache hash; validate freshness and scope before hit.",
+    "Record actual latency, rejected stale tables, checkpoint and idempotency.",
+    "No fake success measurements or backfilled audit events."
+  ],
+  "existingScheduledRefresh": {
+    "state": "configured_separately_not_changed",
+    "dependency": "Gang-a PC availability and current authorized tools",
+    "unattendedSuccess": "not_established_by_this_contract"
+  },
+  "implementation": "Types and local validation only; no new live collection or backend integration activated.",
+  "publicationGuards": [
+    "Read current Page head and reconcile identity registry, bounded-history index and book-view index; a historical managedBlocks hash is not the latest head.",
+    "Preserve human notes and teacher decisions; upsert only managed records with current guards.",
+    "The 2026-10-07 scheduled run was reported skipped for offline Gang-a PC; no source refresh or success timestamp is implied."
+  ]
+}

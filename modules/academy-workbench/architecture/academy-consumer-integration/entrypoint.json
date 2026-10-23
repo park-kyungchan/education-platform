@@ -1,0 +1,35 @@
+{
+  "schema": "academy.consumer-selection-entrypoint.v1",
+  "taskId": "academy-workbench:task:academy-consumer-integration-20261021-con-01",
+  "admission": "work/academy-workbench/academy-consumer-integration-20261021/inputs/CON-01-ADMISSION-R1.json",
+  "executionInput": "CON-01-EXECUTION-R1",
+  "sourceSelection": "source-selection.json",
+  "adoptionPlan": "adoption-plan.json",
+  "reportDesign": "report-contract.ts",
+  "checks": "observations/CON-01-CHECKS-R1.json",
+  "resultInput": "CON-01-RESULT-R2",
+  "verificationInput": "CON-01-VERIFICATION-R2",
+  "state": "READY_FOR_ROOT_SOURCE_CHECKPOINT",
+  "next": "READY_FOR_ROOT_SOURCE_CHECKPOINT then WAIT; no automatic CON-02/CON-03",
+  "productionAdapterImplemented": false,
+  "nativeActivation": false,
+  "formalWorkComplete": false,
+  "checkContinuation": "observations/CON-01-CHECK-CONTINUATION-R1.json",
+  "sdkTransport": "7 passed / 2 failed; exact current adoption gap, no transport acceptance",
+  "canonicalCheckpoint": {
+    "auditorRoot": "/home/palantirkc/projects/agent-platform",
+    "pin": "712f90deac0676e662dc5d75d88d89f7b6773bfe",
+    "taskVerificationTarget": "common-harness:task:b551d31f377136c8fd171345e27818e4a1cc4fc87faa7049196deecd2629e9bc",
+    "local": "assertRecord + canonical Artifact validation + result hash binding",
+    "committedSnapshotAndTransition": "pending Root exact source commit; no future self-commit embedded"
+  },
+  "resultEvidenceId": "academy-workbench:evidence:con-01-result-observation-r2",
+  "verificationEvidenceId": "academy-workbench:evidence:con-01-verification-r2",
+  "localRecordCheck": "observations/CON-01-LOCAL-RECORD-CHECK-R2.json",
+  "retainedAssembly": {
+    "resultInput": "CON-01-RESULT-R1",
+    "verificationInput": "CON-01-VERIFICATION-R1",
+    "failure": "observations/CON-01-LOCAL-ASSEMBLY-FAILURE-R1.json",
+    "status": "superseded local assembly; never final checkpoint"
+  }
+}

@@ -1,0 +1,331 @@
+{
+  "$schema": "academy-cartography-0.3.schema.json",
+  "kind": "practical_context_package",
+  "id": "academy:practical-context:r3",
+  "schemaVersion": "0.3.0",
+  "revision": 3,
+  "projectId": "project:academy-practical",
+  "canonicalParentId": "project:academy-practical",
+  "updatedAt": "2026-10-06T07:09:19.665Z",
+  "sourceIds": [
+    "Sentinel_d67bfc14a07481918e2b471c86b4476b",
+    "Sentinel_2c07ae3d1754819186787cfbdcd86843",
+    "Sentinel_673a2eca1710819180311b348e4d0e76"
+  ],
+  "authorityGrantedByDocument": false,
+  "practicalContexts": [
+    {
+      "id": "practical:academy-teaching-routine",
+      "kind": "practical_context",
+      "schemaVersion": "0.3.0",
+      "revision": 3,
+      "purpose": "가우스 소단원별 예습과 수업을 운영하고 필요한 종이 자료를 준비하며 강사의 완료 판단을 정확히 연결한다.",
+      "scope": "사용자가 설명한 학원 수업과 출력 및 채점 실무. 개별 학생 평가를 대신하지 않는다.",
+      "confirmationState": "user_confirmed",
+      "sourceIds": [
+        "Sentinel_d67bfc14a07481918e2b471c86b4476b",
+        "Sentinel_2c07ae3d1754819186787cfbdcd86843",
+        "Sentinel_673a2eca1710819180311b348e4d0e76"
+      ],
+      "classRoutine": [
+        {
+          "step": "preview",
+          "description": "학생이 가우스 소단원별 예습을 하고 학원 앱에 답을 입력한다.",
+          "basis": "user_confirmed",
+          "sourceIds": [
+            "Sentinel_d67bfc14a07481918e2b471c86b4476b"
+          ]
+        },
+        {
+          "step": "auto-grade-and-generate",
+          "description": "앱이 자동 채점하고 오답 및 유사문제 클리닉을 생성한다.",
+          "basis": "user_confirmed",
+          "sourceIds": [
+            "Sentinel_d67bfc14a07481918e2b471c86b4476b"
+          ]
+        },
+        {
+          "step": "concept-blank-test",
+          "description": "학생이 칠판 또는 자리에서 설명하거나 가우스 소단원 빈칸 테스트를 쓰고 강사가 완료를 판단한다.",
+          "basis": "user_confirmed",
+          "sourceIds": [
+            "Sentinel_2c07ae3d1754819186787cfbdcd86843"
+          ]
+        },
+        {
+          "step": "clinic-prints",
+          "description": "강사는 사이트 출력 목록에서 오답과 유사문제 자료를 찾아 출력하고 배부한다. 가우스 오답 수정과 재출력한 원문 오답의 재풀이를 확인한다.",
+          "basis": "user_confirmed",
+          "sourceIds": [
+            "Sentinel_2c07ae3d1754819186787cfbdcd86843"
+          ]
+        },
+        {
+          "step": "teacher-review",
+          "description": "수업 중 강사가 채점하며 필요할 때 설명을 묻고 실제 완료를 판단한다. 종이 출력물을 보관하고 별도 사이트 완료 처리는 하지 않는다.",
+          "basis": "user_confirmed",
+          "sourceIds": [
+            "Sentinel_2c07ae3d1754819186787cfbdcd86843"
+          ]
+        }
+      ],
+      "roles": [
+        {
+          "role": "학생",
+          "activities": [
+            "예습 및 앱 답 입력",
+            "설명 또는 빈칸 테스트 작성",
+            "배부 자료 풀이와 오답 수정"
+          ]
+        },
+        {
+          "role": "강사",
+          "activities": [
+            "자료 출력과 배부",
+            "수업 중 채점과 필요시 설명 확인",
+            "완료 판단과 종이 출력물 보관"
+          ]
+        },
+        {
+          "role": "학원 앱",
+          "activities": [
+            "학생 답 자동 채점",
+            "오답 및 유사문제 자료 생성"
+          ]
+        },
+        {
+          "role": "보조 에이전트",
+          "activities": [
+            "출력 목록 항목과 자료를 식별",
+            "사용자가 알려 준 완료 판단을 해당 자료에 연결",
+            "실제 사이트 실행 전에 대상과 결과 및 부작용 경계를 확인"
+          ]
+        }
+      ],
+      "judgmentPolicy": {
+        "judge": "teacher",
+        "conceptBlankTest": "학생의 설명 또는 작성 결과를 보고 교사가 완료 판단",
+        "clinic": "수업 중 채점과 필요시 설명 확인 및 오답 정리 후 교사가 판단",
+        "assistantRole": "출력 목록 식별과 사용자 완료 판단 기록. 심화 평가 기준을 만들거나 학생을 독자 평가하지 않는다.",
+        "siteSyncBack": false
+      },
+      "physicalArtifacts": [
+        "가우스 교재",
+        "개념 빈칸 테스트",
+        "오답 원문 및 유사문제 클리닉 출력물",
+        "강사가 보관하는 종이 출력물"
+      ],
+      "schedule": {
+        "weekdayPatterns": [
+          {
+            "label": "월수",
+            "weekdays": [
+              "MO",
+              "WE"
+            ]
+          },
+          {
+            "label": "월금",
+            "weekdays": [
+              "MO",
+              "FR"
+            ]
+          },
+          {
+            "label": "수금",
+            "weekdays": [
+              "WE",
+              "FR"
+            ]
+          },
+          {
+            "label": "월수금",
+            "weekdays": [
+              "MO",
+              "WE",
+              "FR"
+            ]
+          },
+          {
+            "label": "화목",
+            "weekdays": [
+              "TU",
+              "TH"
+            ]
+          }
+        ],
+        "periodTemplates": [
+          {
+            "id": "template:mwf-day-family:period1",
+            "applicableWeekdays": [
+              "MO",
+              "WE",
+              "FR"
+            ],
+            "period": 1,
+            "startLocal": "15:00",
+            "endLocal": "17:30",
+            "selfStudyStartLocal": null,
+            "selfStudyEndLocal": null,
+            "selfStudyLocation": null
+          },
+          {
+            "id": "template:tuth-day-family:period1",
+            "applicableWeekdays": [
+              "TU",
+              "TH"
+            ],
+            "period": 1,
+            "startLocal": "15:00",
+            "endLocal": "18:00",
+            "selfStudyStartLocal": null,
+            "selfStudyEndLocal": null,
+            "selfStudyLocation": null
+          },
+          {
+            "id": "template:mwf-day-family:period2",
+            "applicableWeekdays": [
+              "MO",
+              "WE",
+              "FR"
+            ],
+            "period": 2,
+            "startLocal": "18:30",
+            "endLocal": "21:30",
+            "selfStudyStartLocal": "18:30",
+            "selfStudyEndLocal": "19:30",
+            "selfStudyLocation": "자습실 자율학습"
+          },
+          {
+            "id": "template:tuth-day-family:period2",
+            "applicableWeekdays": [
+              "TU",
+              "TH"
+            ],
+            "period": 2,
+            "startLocal": "18:30",
+            "endLocal": "22:00",
+            "selfStudyStartLocal": "18:30",
+            "selfStudyEndLocal": "19:30",
+            "selfStudyLocation": "자습실 자율학습"
+          }
+        ],
+        "timezone": null,
+        "userAssignedTemplateIds": [],
+        "userAssignmentState": "unknown"
+      },
+      "curriculum": {
+        "coreTextbook": "가우스",
+        "unitGranularity": "소단원",
+        "previewAnswerEntry": "학생이 학원 앱에 예습 답 입력",
+        "previewGrading": "앱 자동 채점과 오답 및 유사문제 클리닉 생성",
+        "diagnosticTests": [
+          {
+            "ordinal": 1,
+            "difficulty": "중"
+          },
+          {
+            "ordinal": 2,
+            "difficulty": "중상"
+          }
+        ],
+        "supplementaryTextbooks": [
+          "가우스 플러스",
+          "다빈치",
+          "오일러",
+          "파스칼"
+        ]
+      },
+      "clinicStages": [
+        {
+          "id": "generated",
+          "label": "생성됨",
+          "actor": "system",
+          "basis": "user_confirmed",
+          "evidenceNeeded": "해당 학생과 소단원에 오답 및 유사문제 자료가 생성된 근거",
+          "doesNotImply": [
+            "출력됨",
+            "학생에게 배부됨",
+            "풀이 또는 채점 완료"
+          ]
+        },
+        {
+          "id": "print_ready",
+          "label": "출력 준비됨",
+          "actor": "teacher",
+          "basis": "model_separation",
+          "evidenceNeeded": "출력할 대상 자료와 학생 및 단원이 확인됨",
+          "doesNotImply": [
+            "실제 출력 완료"
+          ]
+        },
+        {
+          "id": "printed",
+          "label": "출력됨",
+          "actor": "teacher",
+          "basis": "user_confirmed",
+          "evidenceNeeded": "실제 출력 또는 확인된 출력 결과",
+          "doesNotImply": [
+            "배부 완료",
+            "풀이 완료"
+          ]
+        },
+        {
+          "id": "distributed",
+          "label": "배부됨",
+          "actor": "teacher",
+          "basis": "user_confirmed",
+          "evidenceNeeded": "대상 학생에게 자료를 건넨 확인",
+          "doesNotImply": [
+            "학생 풀이 완료"
+          ]
+        },
+        {
+          "id": "solved",
+          "label": "풀이함",
+          "actor": "student",
+          "basis": "user_confirmed",
+          "evidenceNeeded": "해당 자료의 학생 풀이 확인",
+          "doesNotImply": [
+            "강사 채점 완료",
+            "오답 정리 완료"
+          ]
+        },
+        {
+          "id": "teacher_graded",
+          "label": "강사 채점함",
+          "actor": "teacher",
+          "basis": "user_confirmed",
+          "evidenceNeeded": "강사의 채점 결과 확인",
+          "doesNotImply": [
+            "오답 정리 완료",
+            "검증 완료"
+          ]
+        },
+        {
+          "id": "error_corrected",
+          "label": "오답 정리함",
+          "actor": "unspecified",
+          "basis": "user_confirmed",
+          "evidenceNeeded": "해당 오답을 정리한 근거와 사용자의 완료 판단 기준",
+          "doesNotImply": [
+            "검사 기준 충족",
+            "사이트 완료 상태 변경"
+          ]
+        },
+        {
+          "id": "verified_complete",
+          "label": "완료 기준 확인됨",
+          "actor": "teacher",
+          "basis": "user_confirmed",
+          "evidenceNeeded": "식별된 출력 자료에 대한 사용자의 완료 판단",
+          "doesNotImply": [
+            "별도 사이트 완료 처리",
+            "자동 상태 동기화"
+          ]
+        }
+      ],
+      "instanceCompletionInferred": false
+    }
+  ]
+}

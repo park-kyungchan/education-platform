@@ -1,0 +1,600 @@
+{
+  "schema": "academy.bounded-source-review/1",
+  "reviewId": "AAR-REVIEW-005",
+  "status": "scoped_source_review_completed_with_findings",
+  "statusMeaning": "Independent read-only review of the exact incomplete source snapshot. This is not a QRY-02 delivery, canonical Verification, whole-Work verdict, activation approval, or acceptance.",
+  "createdAt": "2026-10-21T09:04:34Z",
+  "rootWork": {
+    "projectId": "academy-workbench",
+    "workId": "academy-architecture-orchestration-20261021"
+  },
+  "reviewedWork": {
+    "projectId": "education-platform",
+    "workId": "academy-query-integration-20261021",
+    "task": "QRY-02"
+  },
+  "reviewer": {
+    "nativeThreadId": "01a15da6-5c63-71a2-a73d-8e881564e94c",
+    "nativeThreadIdSource": "Observed CODEX_THREAD_ID environment variable in this reviewer process; not independent authentication of native authorship.",
+    "model": null,
+    "effort": null,
+    "modelEffortSelfExposed": false,
+    "rootReportedLaunchObservation": {
+      "model": "gpt-6-astra",
+      "effort": "xhigh",
+      "observer": "root",
+      "source": "User-supplied delegation reports actual UI observation at launch; not independently introspected by this reviewer."
+    },
+    "assignedLocation": {
+      "tab": "wA:t1",
+      "pane": "wA:p7",
+      "source": "User-supplied delegation"
+    },
+    "checkout": "/home/palantirkc/worktrees/academy-architecture-review-20261021",
+    "registration": "local bounded review artifact only; no new global/native Work, Task, Run, or Goal registration",
+    "extraAgents": 0,
+    "extraPanes": 0
+  },
+  "source": {
+    "checkout": "/home/palantirkc/worktrees/academy-query-integration-20261021",
+    "commit": "959920b0cf90201f878e719c284fea417da8289e",
+    "tree": "8a403a8b3e0319123a89019e464c1b8a01e574ad",
+    "implementationBase": "29510c7ee9a5f8e6fc68bb6dbe5cf320bb66fc95",
+    "changedFiles": 16,
+    "headAndTreeObserved": true,
+    "cleanBefore": true,
+    "cleanAfter": false,
+    "cleanAtLastPostProbeIdentityCheck": true,
+    "finalWorkingTreeObservation": {
+      "status": "external_uncommitted_drift_after_last_clean_check",
+      "headStillMatchesReviewedCommit": true,
+      "headTreeStillMatchesReviewedTree": true,
+      "reviewerMadeTheseChanges": false,
+      "unreviewedPaths": [
+        "apps/academy/dc-gang-a/src/academy/server.ts",
+        "apps/academy/dc-gang-a/tests/academy/retainedQuery.test.ts",
+        "architecture/academy-query-integration/observations/QRY-02-CHECKS-R1.json",
+        "architecture/academy-query-integration/observations/QRY-02-MEASUREMENTS-R1.json",
+        "architecture/academy-query-integration/qry02-checks.ts",
+        "architecture/academy-query-integration/qry02-measure.ts"
+      ],
+      "meaning": "The reviewed immutable commit remains the target. The checkout is no longer an exact clean realization of it. Root subsequently confirmed that the resumed academy-query-lead owns the later server/test/check edits; its resume trigger is unknown. Those edits are unreviewed. No source edit, rollback, effect replay, or implementation test after drift detection was performed by this reviewer.",
+      "ownerAttribution": {
+        "owner": "academy-query-lead",
+        "source": "Root confirmation in the follow-up source-coordination instruction",
+        "nativeTurnState": "resumed",
+        "resumeTrigger": "unknown",
+        "independentlyInspectedByReviewer": false
+      }
+    },
+    "deliveryState": "incomplete_source_preserved_after_native_model_capacity_refusal",
+    "checkpoint": "work/education-platform/academy-query-integration-20261021/inputs/QRY-02-CAPACITY-CHECKPOINT-R1.json",
+    "finalResultPresent": false,
+    "finalVerificationPresent": false,
+    "noReplayOfAuthorEffects": true,
+    "domainDependency": {
+      "commit": "e52d008e0272f58a5a880f00696624361184aa22",
+      "adoptedBusinessFiles": 11,
+      "actualFilesMatchingAdoptionHashes": 11
+    },
+    "neutralBoundary": {
+      "commit": "bfc2bcc5afccc13fd588c46447aa042732f14f36",
+      "ancestorOfReviewedCommit": true
+    },
+    "architecture": {
+      "entrypoint": "/home/palantirkc/worktrees/academy-architecture-orchestration-20261021/architecture/academy-reorganization/entrypoint.json",
+      "design": "architecture-r3.json",
+      "priorReview": "AAR-REVIEW-004",
+      "priorReviewDoesNotQualifyChangedCode": true
+    },
+    "commonOwner": {
+      "checkout": "/home/palantirkc/projects/agent-platform",
+      "commit": "712f90deac0676e662dc5d75d88d89f7b6773bfe",
+      "observedClean": true,
+      "consumerPinsChanged": false,
+      "canonicalWorkApisInvoked": false,
+      "reason": "No canonical Work mutations or final delivery verification requested; this is a separate local review receipt."
+    }
+  },
+  "scope": {
+    "inspected": [
+      "Exact base-to-commit implementation diff and retained query request/page/refusal contracts.",
+      "TeacherApplication -> scoped readSnapshot -> TeacherQueries -> canonical DOM-02 projections.",
+      "HTTP request origin, authenticated actor derivation, authentication rechecks across awaited body and facade reads.",
+      "Web initial reads, semantic query tools, remaining legacy GET reconciliation callbacks, workspace draft keys and consumer equality assumptions.",
+      "CLI cohort/student composition without executing native configuration or PostgreSQL entrypoint.",
+      "Month-end web page helpers -> Application.sourceScope -> maintained in-process synthetic MCP SourcePort.",
+      "Cursor actor/owner/selector/date/page-budget/snapshot binding, malformed/replayed pages, nested UTF-8 reconstruction, metadata/atomic/document refusals, mutation and measured load counts."
+    ],
+    "excluded": [
+      "Real PostgreSQL, native acquisition, subprocess activation, authentication configuration, source-owner runtime state, private originals.",
+      "Actual browser/device behavior, native CLI execution, WSL/native integration, production latency or operational acceptance.",
+      "Downstream CON duplicated MCP CallToolResult 512 KiB qualification, which is explicitly not integrated.",
+      "Root reserved provenance/hash reconciliation and final canonical QRY-02 result/Verification."
+    ],
+    "preservation": {
+      "implementationWrites": 0,
+      "workRecordWrites": 0,
+      "configWrites": 0,
+      "permissionChanges": 0,
+      "credentialReads": 0,
+      "serviceChanges": 0,
+      "privateOriginalReads": 0,
+      "realDatabaseConnections": 0,
+      "serversLaunched": 0,
+      "browsersLaunched": 0,
+      "nativeAcquisitions": 0,
+      "printSendPublishMergeDeployActions": 0,
+      "thirdSessionMessages": 0,
+      "onlyOutput": ".local/reviews/AAR-REVIEW-005.json",
+      "syntheticDom": "In-process JSDOM only; no browser executable, network service, or real persistence."
+    }
+  },
+  "findings": [
+    {
+      "id": "AAR-REVIEW-005-F1",
+      "severity": "medium",
+      "priority": "P2",
+      "title": "Normalize teacher-scope equality and draft identity across retained and legacy scene readers",
+      "classification": "new_concrete_consumer_regression",
+      "location": {
+        "path": "apps/academy/dc-gang-a/src/academy/web/client.ts",
+        "line": 148
+      },
+      "relatedLocations": [
+        {
+          "path": "apps/academy/dc-gang-a/src/academy/retainedQuery.ts",
+          "line": 59
+        },
+        {
+          "path": "apps/academy/dc-gang-a/src/academy/web/client.ts",
+          "line": 93
+        },
+        {
+          "path": "apps/academy/dc-gang-a/src/academy/web/client.ts",
+          "line": 113
+        },
+        {
+          "path": "apps/academy/dc-gang-a/src/academy/web/client.ts",
+          "line": 122
+        },
+        {
+          "path": "apps/academy/dc-gang-a/src/academy/web/teacherWorkspaceView.ts",
+          "line": 11
+        },
+        {
+          "path": "apps/academy/dc-gang-a/src/academy/web/teacherWorkspaceView.ts",
+          "line": 29
+        },
+        {
+          "path": "apps/academy/dc-gang-a/src/academy/web/teacherWorkspaceView.ts",
+          "line": 33
+        },
+        {
+          "path": "apps/academy/dc-gang-a/src/academy/web/teacherWorkspaceView.ts",
+          "line": 41
+        },
+        {
+          "path": "apps/academy/dc-gang-a/src/academy/web/clinicWorkView.ts",
+          "line": 88
+        },
+        {
+          "path": "apps/academy/dc-gang-a/src/academy/teacherActionScope.ts",
+          "line": 3
+        }
+      ],
+      "trigger": "Load a student through the new retained reader, then reconcile a stale activity review or parent draft through the unchanged legacy GET callback. A second trigger is adopting a legacy GET scene after clinic/observation reconciliation while a workspace draft is unsaved.",
+      "actual": "canonicalJson sorts teacherScope to actorId,ownerId. The legacy TeacherQueries scene inserts ownerId,actorId. teacherWorkspaceView compares JSON.stringify(scope), so equal actors are refused as teacher_scene_actor_conflict. Its draft map keys also stringify the whole scope object, so the same logical draft receives a second memory key when a legacy scene is adopted.",
+      "expected": "Identical ownerId/actorId/student/workspace identity must reconcile successfully and retain the same unsaved or pending draft regardless of JSON property order or read transport.",
+      "evidence": {
+        "check": "C07",
+        "canonicalScenesEqual": true,
+        "retainedScopeKeys": [
+          "actorId",
+          "ownerId"
+        ],
+        "legacyScopeKeys": [
+          "ownerId",
+          "actorId"
+        ],
+        "activityReconcile": "teacher_scene_actor_conflict",
+        "parentDraftReconcile": "teacher_scene_actor_conflict",
+        "inventedUnsavedDraftVisibleAfterLegacyScene": false,
+        "inventedDraftStillRetainedUnderOldMemoryKey": true,
+        "sourceReads": 2,
+        "writeCallbacksInvoked": 0
+      },
+      "impact": "Both activity and parent-draft recovery can be blocked for an unchanged teacher. Switching scene readers hides unsaved text in a separate in-memory draft entry. No permanent stored-data loss or duplicated real write was exercised or claimed.",
+      "repair": "Reuse sameTeacherScope for value-based equality and use a stable tuple of ownerId, actorId, studentId, and workspace identity for draft keys. Audit equivalent scope-object keys in affected views. Either route remaining scene reads through the shared reader or preserve compatibility with both formats; changing only the initial loader is insufficient.",
+      "validationRequired": "Synthetic actual-view tests must cover retained-to-legacy reconciliation, preservation of edited draft text and pending request identity across both scene formats, and rejection when owner or actor values actually change."
+    },
+    {
+      "id": "AAR-REVIEW-005-F2",
+      "severity": "medium",
+      "priority": "P2",
+      "title": "Validate the complete retained page envelope before accepting its document",
+      "classification": "new_concrete_transport_contract_gap",
+      "location": {
+        "path": "apps/academy/dc-gang-a/src/academy/retainedQueryClient.ts",
+        "line": 12
+      },
+      "relatedLocations": [
+        {
+          "path": "apps/academy/dc-gang-a/src/academy/retainedQueryClient.ts",
+          "line": 16
+        },
+        {
+          "path": "apps/academy/dc-gang-a/src/academy/contracts/retainedQuery.ts",
+          "line": 8
+        },
+        {
+          "path": "apps/academy/dc-gang-a/src/academy/contracts/retainedQuery.ts",
+          "line": 11
+        },
+        {
+          "path": "apps/academy/dc-gang-a/src/academy/contracts/retainedQuery.ts",
+          "line": 15
+        }
+      ],
+      "trigger": "A transport callback supplies otherwise valid JSON and document digest, recalculates serializedBytes, but uses exhausted:'false' on a terminal page, omits callerBinding or coverage, changes effects.sourceWrites to true, or returns an empty retrievedAt.",
+      "actual": "readRetainedDocument resolves successfully in each case. The checks only cover selected fields; terminal detection uses truthiness, and snapshot verification authenticates neither the page metadata nor its schema. The generic return value hides the rejected-or-missing coverage/effect metadata from the consumer.",
+      "expected": "Reject malformed or contradictory academy.retained-query.v1 envelopes before returning a trusted retained document, including exact boolean continuation state and required binding, provenance, coverage and read-only effect fields.",
+      "evidence": {
+        "check": "C06",
+        "reproducedAcceptedVariants": [
+          "exhausted-string-false",
+          "missing-callerBinding",
+          "missing-coverage",
+          "sourceWrites-true",
+          "empty-retrievedAt"
+        ],
+        "byteCountsRecomputed": true,
+        "documentContentAndDigestUnchanged": true
+      },
+      "impact": "The shared transport boundary accepts incomplete or contradictory pages, so a provider regression or mixed contract version can be presented to web/CLI consumers as a successful retained read. This is not a demonstrated authentication bypass or source write.",
+      "repair": "Add a browser-safe runtime validator for the declared reply union. Validate required fields and scalar types, hash/binding shape, finite safe page counters, boolean exhausted, continuation consistency, coverage constants and false effect flags before accumulation. Preserve the existing content digest and replay checks.",
+      "validationRequired": "Repeat these malformed cases with correct serializedBytes and a valid document hash. Each must fail with a bounded contract refusal/error, while genuine server pages and established legacy consumer semantics continue to work."
+    }
+  ],
+  "findingCounts": {
+    "total": 2,
+    "critical": 0,
+    "high": 0,
+    "medium": 2,
+    "low": 0
+  },
+  "checks": [
+    {
+      "id": "C01",
+      "name": "Exact source and dependency identity",
+      "status": "passed",
+      "details": "Observed required HEAD/tree and clean working tree before probes and at the post-probe identity check; all 11 DOM-02 adoption hashes match; reviewed neutral boundary is an ancestor. Common owner checkout is clean at the supplied pin. The later final receipt check detected new uncommitted drift; see C17."
+    },
+    {
+      "id": "C02",
+      "name": "Actual tool versions",
+      "status": "passed",
+      "details": {
+        "bun": "1.4.3",
+        "bunBuild": "c6da4a4d3",
+        "typescript": "7.0.2"
+      }
+    },
+    {
+      "id": "C03",
+      "name": "Focused no-emit type check",
+      "status": "passed",
+      "cwd": "/home/palantirkc/worktrees/academy-query-integration-20261021",
+      "command": "bun node_modules/typescript/bin/tsc --noEmit -p architecture/academy-query-integration/qry02-tsconfig.json",
+      "exitCode": 0,
+      "heavyCheckInvocations": 1,
+      "limitation": "Focused config and its imported closure only; not the complete repository typecheck."
+    },
+    {
+      "id": "C04",
+      "name": "Maintained focused synthetic suites",
+      "status": "passed",
+      "cwd": "/home/palantirkc/worktrees/academy-query-integration-20261021",
+      "command": "bun test ./apps/academy/dc-gang-a/tests/academy/retainedQuery.test.ts ./apps/academy/dc-gang-a/tests/academy/learningWorkRefinements.test.ts ./architecture/academy-query-integration/qry02-month-end.test.ts",
+      "exitCode": 0,
+      "testsPassed": 71,
+      "testsFailed": 0,
+      "testsSkipped": 0,
+      "expectCalls": 673,
+      "durationSeconds": 3.52,
+      "details": "Includes actual in-process HTTP handler, ownership/origin/identity rotation, cursor bindings and drift, bounded metadata/atomic/document refusals, DOM-02 domain refinements and month-end source paging. No DB/server launch."
+    },
+    {
+      "id": "C05",
+      "name": "Independent nested reassembly and source-load measurements",
+      "status": "passed",
+      "execution": "bun stdin; no script file written",
+      "details": "Three-page nested Unicode/escaped-string/empty-container/integer-key/__proto__/constructor round trip preserved canonical content without prototype pollution. Measured equivalent direct/retained facade requests; see loadMeasurements."
+    },
+    {
+      "id": "C06",
+      "name": "Malformed complete-envelope rejection",
+      "status": "failed",
+      "execution": "bun stdin; diagnostic process exit 0 records actual acceptance",
+      "findingIds": [
+        "AAR-REVIEW-005-F2"
+      ],
+      "details": "Five malformed envelope variants with corrected byte counts were accepted. A separate depth probe accepted an atomic JSON value nested 70 levels; current depth checks constrain fragment paths only. The latter is recorded as a limit observation, not an additional finding."
+    },
+    {
+      "id": "C07",
+      "name": "Actual teacher workspace consumer compatibility",
+      "status": "failed",
+      "execution": "bun stdin with in-process JSDOM and maintained teacherWorkspaceView/workspaceDraft; no browser or persistence",
+      "findingIds": [
+        "AAR-REVIEW-005-F1"
+      ],
+      "details": "Equal canonical scenes from retained and legacy readers produce two false actor conflicts and distinct draft keys. No write callback invoked.",
+      "probeAttempts": [
+        {
+          "status": "failed",
+          "cause": "Reviewer probe syntax error in stdin generic arrow function; implementation not executed.",
+          "exitCode": 1
+        },
+        {
+          "status": "passed_reproduction",
+          "cause": "Corrected probe syntax; both false conflicts and hidden unsaved draft independently reproduced.",
+          "exitCode": 0
+        }
+      ]
+    },
+    {
+      "id": "C08",
+      "name": "Actual month-end Application plus SourcePort continuation",
+      "status": "passed",
+      "execution": "bun stdin with maintained createApplication, page helpers and createSyntheticMcpSourcePort",
+      "details": {
+        "hierarchyRows": 120,
+        "labelRows": 120,
+        "toolCalls": 6,
+        "limitPerCall": 50,
+        "sourceOwnedNextOffsetPreserved": true,
+        "nativeLaunch": false
+      },
+      "limitation": "Invented in-process source replies and committed safe research projection; no real SDK subprocess/native observation."
+    },
+    {
+      "id": "C09",
+      "name": "Actual web and CLI import-closure builds",
+      "status": "passed",
+      "execution": "Bun.build with write:false; bundle bytes only in memory",
+      "details": [
+        {
+          "entrypoint": "apps/academy/dc-gang-a/src/academy/web/client.ts",
+          "target": "browser",
+          "format": "iife",
+          "bytes": 1213874
+        },
+        {
+          "entrypoint": "apps/academy/dc-gang-a/harness/academy_query.ts",
+          "target": "bun",
+          "format": "esm",
+          "bytes": 574050
+        }
+      ],
+      "executed": false,
+      "limitation": "No native CLI configuration/DB entrypoint execution, browser launch, or hosted artifact replacement."
+    },
+    {
+      "id": "C10",
+      "name": "Adversarial client negative controls with correct serialized sizes",
+      "status": "passed",
+      "execution": "bun stdin; three genuine pages, mutated in memory",
+      "details": {
+        "reorderedOrdinal": "retained_page_order_conflict",
+        "replayedFirstPage": "retained_page_contract_conflict",
+        "changedSnapshot": "retained_page_snapshot_conflict",
+        "repeatedCursor": "retained_page_continuation_conflict",
+        "duplicatePath": "retained_fragment_duplicate",
+        "invalidFragmentKind": "retained_fragment_kind_invalid",
+        "truncatedLastPage": "retained_page_continuation_conflict"
+      }
+    },
+    {
+      "id": "C11",
+      "name": "Caller and source object nonmutation",
+      "status": "passed",
+      "execution": "bun stdin",
+      "details": "Canonical before/after equality for caller selector/context, invented student records and source rows across complete retained reconstruction."
+    },
+    {
+      "id": "C12",
+      "name": "Additional DOM-02 scenarios through retained transport",
+      "status": "passed",
+      "execution": "bun stdin using actual TeacherApplication, invented read store and canonical projections",
+      "details": [
+        {
+          "scenario": "unknown score basis remains unknown for both default targets",
+          "pages": 3
+        },
+        {
+          "scenario": "replacement removes only its predecessor from active obligations",
+          "pages": 3
+        },
+        {
+          "scenario": "review binds attempt A only; print unknown, distribution known, app entry absent, attempts not auto-completed",
+          "pages": 4
+        }
+      ],
+      "canonicalFacadeEquality": true,
+      "sourceObjectsUnchanged": true
+    },
+    {
+      "id": "C13",
+      "name": "Real database and complete native integration",
+      "status": "not_run",
+      "details": "User-reported 47 DB skips remain explicit baseline coverage gaps. This review ran zero DB-backed tests, did not recount or erase those 47 skips, and opened no real DB socket."
+    },
+    {
+      "id": "C14",
+      "name": "Full repository checks and reserved provenance reconciliation",
+      "status": "not_run",
+      "details": "Bounded review used one focused no-emit check and focused tests. Root reserved hashes intentionally remain unreconciled; no whole-repository pass/fail is inferred."
+    },
+    {
+      "id": "C15",
+      "name": "Final QRY-02 canonical result/Verification and CON 512 KiB packaging",
+      "status": "not_run",
+      "details": "No final QRY-02 result/Verification exists. CON has not integrated the downstream production CallToolResult packager; query JSON-page measurements do not certify duplicated text plus structuredContent MCP bytes."
+    },
+    {
+      "id": "C16",
+      "name": "Existing JSDOM platform capability observation",
+      "status": "passed",
+      "execution": "bun stdin; in-process DOM only",
+      "details": {
+        "TextEncoder": "function",
+        "cryptoSubtle": "undefined"
+      },
+      "meaning": "Observed TextEncoder available and WebCrypto subtle unavailable in JSDOM. This late environment observation is excluded from exact-commit functional coverage and does not establish a native browser failure.",
+      "sourceBinding": "environment_only_not_exact_959920b_implementation_coverage"
+    },
+    {
+      "id": "C17",
+      "name": "Final live checkout equality with reviewed immutable commit",
+      "status": "failed",
+      "details": "Final receipt validation expected a clean source worktree and failed that assertion. Follow-up read-only Git metadata confirmed unchanged HEAD/tree but two modified tracked files and four new query-check files. This is externally observed working-tree drift, not an implementation finding, a reviewer write, or evidence that the earlier clean-commit checks failed. Root later attributed the newer edits to the resumed academy-query-lead; resume trigger remains unknown. No later implementation-tree probe is added by this finalization.",
+      "disposition": "Review remains bounded to 959920b0cf90201f878e719c284fea417da8289e / 8a403a8b3e0319123a89019e464c1b8a01e574ad. Later source requires its own exact checkpoint and qualification."
+    }
+  ],
+  "loadMeasurements": {
+    "status": "observed_synthetic_tradeoff_not_an_additional_correctness_finding",
+    "source": "retainedFixture with direct and retained requests over equivalent inputs; counters reset between paths",
+    "records": [
+      {
+        "selector": "student",
+        "students": 1,
+        "notes": 80,
+        "documentBytes": 177055,
+        "direct": {
+          "snapshots": 1,
+          "students": 1,
+          "current": 1,
+          "catalog": 1,
+          "preparationRevisions": 1,
+          "pinnedCatalog": 1,
+          "studentWorkspaces": 1,
+          "append": 0
+        },
+        "retained": {
+          "snapshots": 3,
+          "students": 3,
+          "current": 3,
+          "catalog": 3,
+          "preparationRevisions": 3,
+          "pinnedCatalog": 3,
+          "studentWorkspaces": 3,
+          "append": 0
+        },
+        "pages": 3,
+        "totalJsonBytes": 193103,
+        "maxJsonPageBytes": 64632,
+        "directMs": 26.289,
+        "retainedMs": 126.899
+      },
+      {
+        "selector": "cohort",
+        "students": 350,
+        "notes": 0,
+        "documentBytes": 38191,
+        "direct": {
+          "snapshots": 1,
+          "students": 1,
+          "current": 350
+        },
+        "retained": {
+          "snapshots": 2,
+          "students": 2,
+          "current": 700
+        },
+        "pages": 2,
+        "totalJsonBytes": 62937,
+        "maxJsonPageBytes": 42784,
+        "directMs": 3.044,
+        "retainedMs": 43.193
+      },
+      {
+        "selector": "class_preparation",
+        "students": 350,
+        "notes": 0,
+        "observedOccurrences": 2,
+        "documentBytes": 2235,
+        "direct": {
+          "snapshots": 1,
+          "students": 1,
+          "current": 350,
+          "preparationRevisions": 350
+        },
+        "retained": {
+          "snapshots": 1,
+          "students": 1,
+          "current": 350,
+          "preparationRevisions": 350
+        },
+        "pages": 1,
+        "totalJsonBytes": 3342,
+        "maxJsonPageBytes": 3342,
+        "directMs": 5.878,
+        "retainedMs": 4.807
+      }
+    ],
+    "interpretation": "Each page repeats a complete canonical facade/snapshot read and projection; this is transport pagination, not database/source-load pagination. Binding and digest checks prevent silently combining changed snapshots. The 250-fragment count can split a cohort whose unfragmented JSON fits 64 KiB. Timings are single-process synthetic observations, not a native latency benchmark or an optimization claim."
+  },
+  "baselineAndPartialDelivery": {
+    "declaredBaselineHolds": [
+      "No established authoritative currentness, complete current schedule/roster, complete history or unloaded source-family coverage.",
+      "Month-end configured MCP subprocess launch remains held; synthetic SourcePort success does not lift that hold.",
+      "Real PostgreSQL/native/WSL/browser acceptance is unverified; 47 DB skips remain user-reported baseline evidence.",
+      "Root reserved provenance hashes are intentionally not reconciled before final integration.",
+      "Downstream duplicated MCP CallToolResult 512 KiB enforcement belongs to CON and is not implemented here."
+    ],
+    "actualPartialDeliveryOmissions": [
+      "Capacity checkpoint explicitly preserves incomplete QRY-02 edits; no final result Input, Verification Input/Evidence, exact delivery target or final consumer qualification is present.",
+      "Main web cohort/student/date loads and semantic query tools use retainedQuery, but teacherWorkspaceView, clinicWorkView and teacherObservationEditor reconciliation still use legacy student/class GETs. F1 demonstrates a concrete incompatibility in that mixed path.",
+      "CLI keeps its existing cohort and student selector surface; no date/class/group CLI operation is added. Native CLI execution remains untested.",
+      "The month-end UI's explicit page requests are adapted to 50. The broader Application contract still allows up to 100 while its MCP adapter accepts at most 50; that is a pre-existing contract mismatch for other callers, not a newly introduced defect.",
+      "The maintained whole-client DB-backed UI tests were not updated by this patch: teacherClinicUi.test.ts still intercepts GET /api/student and counts every POST as a mutation, and its unchanged JSDOM setup lacks the WebCrypto subtle API required by the retained reader. These are observed test adaptation gaps, not claimed executed DB-test failures."
+    ],
+    "positiveEvidence": [
+      "No second eligibility/replacement/teacher-state reducer was added; retainedQuery delegates to canonical TeacherApplication and returns complete reconstructable JSON or explicit refusal.",
+      "Caller authority comes from trusted facade context and HTTP cookie-derived identity, never from selector fields. Origin, cross-owner, changed selector/actor/page parameters, forged/process-recreated cursors and source drift are refused in focused tests.",
+      "Metadata, Unicode, escapes, signed continuation and actual serializedBytes are included in server page budgeting; oversized fixed metadata, atomic values and total documents produce short refusals.",
+      "Query retrieval timestamps are separate from retained source clocks, and complete-current-roster/history/currentness limits remain explicit.",
+      "All 11 adopted DOM-02 business files retain their adopted hashes; canonical transport equality and targeted semantic cases preserved known/unknown eligibility, attempt identity, replacement and independent physical stages."
+    ]
+  },
+  "remainingUnverifiedAxes": [
+    "Externally observed uncommitted source changes at the final receipt check; they are excluded from this immutable-commit review.",
+    "Repair and fresh source review of F1/F2; existing passing focused tests do not close them.",
+    "DB-backed HTTP/transaction/isolation behavior and all 47 reported DB skips.",
+    "Real browser crypto availability, full UI interaction, accessibility/device behavior and actual CLI use.",
+    "Native source latency, store size distribution, repeated complete-facade load cost and concurrent update rate.",
+    "CON production packager with duplicated MCP CallToolResult bytes, exact 512 KiB enforcement and external adapter compatibility.",
+    "Final root source integration, reserved hashes, exact final canonical result/Verification and user/domain acceptance."
+  ],
+  "disposition": {
+    "scopedSourceReview": "completed_with_two_actionable_findings",
+    "sourceQualification": "repairs_required_for_reviewed_scope",
+    "deliveryComplete": false,
+    "activationApproved": false,
+    "acceptanceGranted": false,
+    "wholeWorkFailureInferred": false,
+    "nextAction": "Finalized from already completed evidence with two findings and explicit drift limits. Root will checkpoint the writer successor for a separate review. Reviewer waits; no implementation-tree probes, heavy checks, source edits, rollback, or effect replay follow this source-coordination instruction."
+  },
+  "finalizedAt": "2026-10-21T09:07:49.154927Z",
+  "coverageBinding": {
+    "reviewTarget": "959920b0cf90201f878e719c284fea417da8289e / 8a403a8b3e0319123a89019e464c1b8a01e574ad",
+    "completedImplementationEvidence": "C03-C12 were completed before the last observed clean source identity check. Their results remain bounded synthetic/type/build evidence, not final delivery or native acceptance.",
+    "observationLimit": "Clean Git observations bracket the completed implementation probes; they are not an atomic filesystem lock or proof of exclusive ownership. The resumed writer trigger and exact resume time are unknown.",
+    "lateCapabilityProbe": "C16 ran after the last clean check and before drift was detected. It is an environment-only JSDOM capability observation and is explicitly excluded from exact-commit implementation coverage.",
+    "postDriftEvidence": "C17 and subsequent review-artifact/immutable-location validation are metadata observations only. No post-drift physical test, successor test result, or newer check receipt is credited to the pinned commit.",
+    "currentOrSuccessorCoverage": "None. Root will create an exact successor checkpoint for separate re-review.",
+    "newImplementationProbesAfterCoordination": 0,
+    "newHeavyChecksAfterCoordination": 0
+  }
+}

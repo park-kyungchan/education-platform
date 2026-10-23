@@ -1,0 +1,54 @@
+{
+  "name": "@park-kyungchan/math-research-module",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "bun@1.4.2",
+  "engines": {
+    "bun": ">=1.4.2",
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "start": "bun scripts/serve.ts",
+    "dev": "bun scripts/serve.ts",
+    "build": "bun scripts/build.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "bun test tests/*.test.ts && bun scripts/test-dom.ts",
+    "check:source": "bun scripts/verify-source.ts",
+    "check:research": "bun scripts/validate-research.ts",
+    "check:secrets": "bun scripts/scan-secrets.ts",
+    "check": "bun run check:source && bun run typecheck && bun run check:research && bun run check:secrets && bun run test && bun run build && bun run test:server",
+    "check:harness": "bun scripts/check-harness.ts && bun test tests/harness",
+    "context:prepare": "bun scripts/context-prepare.ts",
+    "check:all": "bun run check && bun run check:identity && bun run check:context && bun run check:harness",
+    "test:browser": "bun scripts/test-browser.ts",
+    "setup:harness": "bun scripts/setup-harness.ts",
+    "context:init": "bun scripts/context-prepare.ts --initialize",
+    "test:server": "bun scripts/test-server.ts",
+    "check:identity": "node --test research/identity-pilot/tests/*.test.ts && node research/identity-pilot/scripts/check-sources.ts",
+    "check:context": "bun scripts/check-context.ts",
+    "check:schemas": "python3 scripts/check-json-schemas.py",
+    "check:onboarding": "bun scripts/check-onboarding.ts",
+    "verify": "bun run check:onboarding && bun run check:all && bun run check:monthly-context && bun run check:ci && bun run context:prepare",
+    "bootstrap": "bun install --frozen-lockfile --ignore-scripts && bun run setup:harness --fetch && bun run verify",
+    "check:ci": "bun test ci/*.test.ts && bun ci/check-identity.ts",
+    "check:monthly-context": "node context/monthly-assessment-20261016/scripts/validate.mjs && node context/monthly-assessment-20261016/scripts/test.mjs",
+    "check:ci-projection": "bun --no-env-file ci/verify-projection.ts",
+    "test:ci-workflow": "bun --no-env-file test ci/workflow.test.ts",
+    "check:ci-identity": "bun --no-env-file ci/check-identity.ts"
+  },
+  "dependencies": {
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@types/bun": "1.4.2",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "ajv": "8.20.0",
+    "ajv-formats": "3.0.1",
+    "jsdom": "30.1.2",
+    "playwright": "1.64.0",
+    "typescript": "7.0.2"
+  }
+}

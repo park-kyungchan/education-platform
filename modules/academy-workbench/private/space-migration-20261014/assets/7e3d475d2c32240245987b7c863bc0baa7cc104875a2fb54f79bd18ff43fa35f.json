@@ -1,0 +1,618 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "kind": {
+      "type": "string",
+      "const": "book_preview_content_verification_cache"
+    },
+    "schemaVersion": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "parserVersion": {
+      "type": "string"
+    },
+    "verifiedAt": {
+      "type": "string"
+    },
+    "studentDataIncluded": {
+      "type": "boolean",
+      "const": false
+    },
+    "sources": {
+      "type": "object",
+      "properties": {
+        "sampleCatalog": {
+          "type": "object",
+          "properties": {
+            "sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "sourceUrl": {
+              "type": "string",
+              "format": "uri"
+            },
+            "observedAt": {
+              "type": "string"
+            },
+            "method": {
+              "type": "string"
+            },
+            "linkState": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "sha256",
+            "sourceUrl",
+            "observedAt",
+            "method",
+            "linkState"
+          ],
+          "additionalProperties": false
+        },
+        "nativeCatalog": {
+          "type": "object",
+          "properties": {
+            "sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "pageId": {
+              "type": "string"
+            },
+            "reference": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "sha256",
+            "pageId",
+            "reference"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "sampleCatalog",
+        "nativeCatalog"
+      ],
+      "additionalProperties": false
+    },
+    "invalidation": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "books": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "cacheId": {
+            "type": "string"
+          },
+          "bookCode": {
+            "type": "string"
+          },
+          "version": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991
+          },
+          "series": {
+            "type": "string"
+          },
+          "grade": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991
+          },
+          "semester": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991
+          },
+          "volume": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": -9007199254740991,
+                "maximum": 9007199254740991
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "coverTitle": {
+            "type": "string"
+          },
+          "courseName": {
+            "type": "string"
+          },
+          "revisionLabel": {
+            "type": "string"
+          },
+          "revisionIso": {
+            "type": "string"
+          },
+          "filename": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "bytes": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "maximum": 9007199254740991
+          },
+          "pdfPageCount": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "maximum": 9007199254740991
+          },
+          "bodyPageCoverage": {
+            "type": "object",
+            "properties": {
+              "printed": {
+                "type": "array",
+                "prefixItems": [
+                  {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991
+                  }
+                ],
+                "items": false,
+                "minItems": 2,
+                "maxItems": 2
+              },
+              "pdf": {
+                "type": "array",
+                "prefixItems": [
+                  {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991
+                  }
+                ],
+                "items": false,
+                "minItems": 2,
+                "maxItems": 2
+              }
+            },
+            "required": [
+              "printed",
+              "pdf"
+            ],
+            "additionalProperties": false
+          },
+          "sourceUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "assignmentState": {
+            "type": "string",
+            "enum": [
+              "shared_reference_only",
+              "candidate_next_book_not_current_assignment"
+            ]
+          },
+          "coverEvidence": {
+            "type": "object",
+            "properties": {
+              "pdfPage": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 9007199254740991
+              },
+              "mode": {
+                "type": "string"
+              },
+              "codeVersionState": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "pdfPage",
+              "mode",
+              "codeVersionState"
+            ],
+            "additionalProperties": false
+          },
+          "structureGuide": {
+            "type": "object",
+            "properties": {
+              "pdfPages": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "exclusiveMinimum": 0,
+                  "maximum": 9007199254740991
+                }
+              },
+              "orderedLabels": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "evidence": {
+                "type": "string"
+              },
+              "scope": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "pdfPages",
+              "orderedLabels",
+              "evidence",
+              "scope"
+            ],
+            "additionalProperties": false
+          },
+          "toc": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "enum": [
+                    "answers",
+                    "major",
+                    "major_assessment",
+                    "middle",
+                    "subunit"
+                  ]
+                },
+                "label": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "parentLabel": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "order": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "printedStartPage": {
+                  "anyOf": [
+                    {
+                      "type": "integer",
+                      "exclusiveMinimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "tocEvidencePdfPage": {
+                  "type": "integer",
+                  "exclusiveMinimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "bodyEvidencePdfPage": {
+                  "anyOf": [
+                    {
+                      "type": "integer",
+                      "exclusiveMinimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "bodyEvidenceState": {
+                  "type": "string"
+                },
+                "tocEvidenceState": {
+                  "type": "string"
+                },
+                "labelProvenance": {
+                  "type": "string"
+                },
+                "nativeUnitLabel": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "kind",
+                "label",
+                "title",
+                "parentLabel",
+                "order",
+                "printedStartPage",
+                "tocEvidencePdfPage",
+                "bodyEvidencePdfPage",
+                "bodyEvidenceState",
+                "tocEvidenceState",
+                "labelProvenance",
+                "nativeUnitLabel"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "bodyAnchors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "unitLabel": {
+                  "type": "string"
+                },
+                "unitTitle": {
+                  "type": "string"
+                },
+                "label": {
+                  "type": "string"
+                },
+                "pdfPage": {
+                  "type": "integer",
+                  "exclusiveMinimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "printedPage": {
+                  "type": "integer",
+                  "exclusiveMinimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "lessonIndex": {
+                  "anyOf": [
+                    {
+                      "type": "integer",
+                      "minimum": -9007199254740991,
+                      "maximum": 9007199254740991
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "evidence": {
+                  "type": "string"
+                },
+                "nativeTestCode": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "headingTextObserved": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "labelAnchorState": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "unitLabel",
+                "unitTitle",
+                "label",
+                "pdfPage",
+                "printedPage",
+                "lessonIndex",
+                "evidence",
+                "nativeTestCode",
+                "headingTextObserved",
+                "labelAnchorState"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "catalogCodeBindings": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "catalogCode": {
+                  "type": "string"
+                },
+                "unitLabel": {
+                  "type": "string"
+                },
+                "unitTitle": {
+                  "type": "string"
+                },
+                "sectionKey": {
+                  "type": "string"
+                },
+                "nativeSectionLabel": {
+                  "type": "string"
+                },
+                "lessonIndex": {
+                  "anyOf": [
+                    {
+                      "type": "integer",
+                      "minimum": -9007199254740991,
+                      "maximum": 9007199254740991
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "source": {
+                  "type": "object",
+                  "properties": {
+                    "evidenceLevel": {
+                      "type": "string"
+                    },
+                    "fileName": {
+                      "type": "string"
+                    },
+                    "fileSha256": {
+                      "type": "string",
+                      "pattern": "^[a-f0-9]{64}$"
+                    },
+                    "jsonPointer": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "evidenceLevel",
+                    "fileName",
+                    "fileSha256",
+                    "jsonPointer"
+                  ],
+                  "additionalProperties": false
+                },
+                "tocNodeLabel": {
+                  "type": "string"
+                },
+                "tocPrintedStartPage": {
+                  "type": "integer",
+                  "exclusiveMinimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "tocUnitBindingState": {
+                  "type": "string"
+                },
+                "printSectionCodeBindingState": {
+                  "type": "string"
+                },
+                "printSectionLabel": {
+                  "type": "string"
+                },
+                "labelEquivalenceState": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "catalogCode",
+                "unitLabel",
+                "unitTitle",
+                "sectionKey",
+                "nativeSectionLabel",
+                "lessonIndex",
+                "source",
+                "tocNodeLabel",
+                "tocPrintedStartPage",
+                "tocUnitBindingState",
+                "printSectionCodeBindingState",
+                "printSectionLabel",
+                "labelEquivalenceState"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "observedNativeCatalogState": {
+            "type": "string"
+          },
+          "completeness": {
+            "type": "object",
+            "properties": {
+              "toc": {
+                "type": "string"
+              },
+              "body": {
+                "type": "string"
+              },
+              "nativeCatalog": {
+                "type": "string"
+              },
+              "testCodeToPrintSection": {
+                "type": "string"
+              },
+              "studentEvidence": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "toc",
+              "body",
+              "nativeCatalog",
+              "testCodeToPrintSection",
+              "studentEvidence"
+            ],
+            "additionalProperties": false
+          },
+          "notVerified": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "specialWarnings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "cacheId",
+          "bookCode",
+          "version",
+          "series",
+          "grade",
+          "semester",
+          "volume",
+          "coverTitle",
+          "courseName",
+          "revisionLabel",
+          "revisionIso",
+          "filename",
+          "sha256",
+          "bytes",
+          "pdfPageCount",
+          "bodyPageCoverage",
+          "sourceUrl",
+          "assignmentState",
+          "coverEvidence",
+          "structureGuide",
+          "toc",
+          "bodyAnchors",
+          "catalogCodeBindings",
+          "observedNativeCatalogState",
+          "completeness",
+          "notVerified"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "kind",
+    "schemaVersion",
+    "parserVersion",
+    "verifiedAt",
+    "studentDataIncluded",
+    "sources",
+    "invalidation",
+    "books"
+  ],
+  "additionalProperties": false
+}

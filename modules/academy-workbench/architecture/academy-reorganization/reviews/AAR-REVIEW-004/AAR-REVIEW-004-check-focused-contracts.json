@@ -1,0 +1,142 @@
+{
+  "schemaVersion": "academy.review-check/4",
+  "id": "AAR-REVIEW-004-C02",
+  "timeUtc": "2026-10-21T05:43:14.605827+00:00",
+  "scope": "Independent read-only exact endpoint reconciliation for the r3 Task DAG and source hash pins on the previously reported import. No implementation behavior test.",
+  "foreignEdges": [
+    {
+      "producer": "AAR-05",
+      "consumer": "DOM-01",
+      "fullLogicalEndpointBindingMatches": true
+    },
+    {
+      "producer": "QRY-BOUNDARY",
+      "consumer": "DOM-02",
+      "fullLogicalEndpointBindingMatches": true
+    },
+    {
+      "producer": "AAR-05",
+      "consumer": "QRY-01",
+      "fullLogicalEndpointBindingMatches": true
+    },
+    {
+      "producer": "DOM-01",
+      "consumer": "QRY-BOUNDARY",
+      "fullLogicalEndpointBindingMatches": true
+    },
+    {
+      "producer": "DOM-02",
+      "consumer": "QRY-02",
+      "fullLogicalEndpointBindingMatches": true
+    },
+    {
+      "producer": "AAR-05",
+      "consumer": "VER-01",
+      "fullLogicalEndpointBindingMatches": true
+    },
+    {
+      "producer": "DOM-02",
+      "consumer": "VER-02",
+      "fullLogicalEndpointBindingMatches": true
+    },
+    {
+      "producer": "QRY-02",
+      "consumer": "VER-02",
+      "fullLogicalEndpointBindingMatches": true
+    },
+    {
+      "producer": "AAR-05",
+      "consumer": "CON-01",
+      "fullLogicalEndpointBindingMatches": true
+    },
+    {
+      "producer": "QRY-02",
+      "consumer": "CON-02",
+      "fullLogicalEndpointBindingMatches": true
+    },
+    {
+      "producer": "VER-02",
+      "consumer": "CON-03",
+      "fullLogicalEndpointBindingMatches": true
+    },
+    {
+      "producer": "AAR-05",
+      "consumer": "ENV-01",
+      "fullLogicalEndpointBindingMatches": true
+    },
+    {
+      "producer": "DOM-02",
+      "consumer": "ENV-02",
+      "fullLogicalEndpointBindingMatches": true
+    },
+    {
+      "producer": "CON-03",
+      "consumer": "INT-01",
+      "fullLogicalEndpointBindingMatches": true
+    },
+    {
+      "producer": "VER-03",
+      "consumer": "INT-01",
+      "fullLogicalEndpointBindingMatches": true
+    },
+    {
+      "producer": "ENV-02",
+      "consumer": "INT-01",
+      "fullLogicalEndpointBindingMatches": true
+    },
+    {
+      "producer": "CON-03",
+      "consumer": "VER-03",
+      "fullLogicalEndpointBindingMatches": true
+    },
+    {
+      "producer": "VER-03",
+      "consumer": "INT-VERIFY",
+      "fullLogicalEndpointBindingMatches": true
+    }
+  ],
+  "foreignEdgeCount": 18,
+  "sourcePins": [
+    {
+      "path": "/home/palantirkc/projects/education-platform/apps/academy/dc-gang-a/src/academy/usecases/studentScene.ts",
+      "sha256": "4880bba11a8d9f367b5dec0c6d41df2f45e25bc869a54fd41fe3e1ed503adaf6",
+      "matches": true
+    },
+    {
+      "path": "/home/palantirkc/projects/education-platform/apps/academy/dc-gang-a/src/lms/academyReadProtocol.ts",
+      "sha256": "9082ccf9cb91ec3dbd08ec3931acc330ee24725e0b8679c3b367d745e36857f3",
+      "matches": true
+    }
+  ],
+  "currentAndTargetSeparation": {
+    "currentObservedAssertAcyclic": false,
+    "targetAssertAcyclic": true,
+    "targetImplemented": false,
+    "requiredMigrationTask": "QRY-BOUNDARY",
+    "boundaryTask": {
+      "id": "QRY-BOUNDARY",
+      "workId": "academy-query-integration-20261021",
+      "outcome": "Resolve current coarse application/lms adapter coupling via owner-local pure read-contract refinement/extraction; preserve legacy API and verify actual import closure",
+      "dependsOn": [
+        "DOM-01",
+        "QRY-01"
+      ],
+      "accountableRole": "query-subLead",
+      "writeScope": "Existing dc lms read protocol and selected owner-local contracts; root serializes shared contract changes",
+      "state": "awaiting-approval",
+      "milestone": "execution-and-verification",
+      "actualNativeOccurrence": null,
+      "canonicalTaskRef": "education-platform:task:academy-query-integration-20261021-qry-boundary",
+      "canonicalTaskStatus": "proposed-not-created"
+    },
+    "domDirectlyDependsOnBoundary": true,
+    "queryDirectlyDependsOnBoundary": true
+  },
+  "scoreOracleAssessment": {
+    "method": "Manual contract comparison against unchanged scoped perfect-score and teacher-review rules",
+    "unverifiedAssessmentIdentity": "Does not establish default clinic exclusion",
+    "verifiedExactScoreWithUnknownTeacherReview": "Default wrong/similar clinic exclusion; teacher review remains unknown; no physical or final completion inference",
+    "explicitTeacherException": "Applies only to its named assessment/activity/occurrence",
+    "result": "consistent-in-declared-design-scope"
+  }
+}

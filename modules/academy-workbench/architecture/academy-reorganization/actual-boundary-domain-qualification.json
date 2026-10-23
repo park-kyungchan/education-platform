@@ -1,0 +1,97 @@
+{
+  "binding": {
+    "producer": {
+      "selection": {
+        "repositoryRoot": "/home/palantirkc/worktrees/academy-query-integration-20261021",
+        "repositoryId": "park-kyungchan/education-platform",
+        "projectId": "education-platform",
+        "workId": "academy-query-integration-20261021",
+        "commit": "bfc2bcc5afccc13fd588c46447aa042732f14f36"
+      },
+      "tree": "aaa637a442fc2ca9e8eab8191db0e1231645f569",
+      "logical": {
+        "domainId": "education",
+        "projectId": "education-platform",
+        "workId": "academy-query-integration-20261021",
+        "issueId": "QRY-ISSUE-20261021",
+        "specId": "QRY-SPEC",
+        "specRevision": 1,
+        "planId": "QRY-PLAN",
+        "planRevision": 1,
+        "taskId": "education-platform:task:academy-query-integration-20261021-qry-boundary"
+      },
+      "resultEvidenceId": "education-platform:evidence:qry-boundary-result-observation-r1",
+      "verificationEvidenceId": "education-platform:evidence:qry-boundary-verification-r1",
+      "milestone": "execution-and-verification"
+    },
+    "consumer": {
+      "selection": {
+        "repositoryRoot": "/home/palantirkc/worktrees/academy-state-model-20261021",
+        "repositoryId": "park-kyungchan/education-platform",
+        "projectId": "education-platform",
+        "workId": "academy-state-model-20261021",
+        "commit": "fabce64cb5338101328900644462b98fa8209be9"
+      },
+      "logical": {
+        "domainId": "education",
+        "projectId": "education-platform",
+        "workId": "academy-state-model-20261021",
+        "issueId": "DOM-ISSUE-20261021",
+        "specId": "DOM-SPEC",
+        "specRevision": 1,
+        "planId": "DOM-PLAN",
+        "planRevision": 1,
+        "taskId": "education-platform:task:academy-state-model-20261021-dom-02"
+      },
+      "qualificationTaskId": "education-platform:task:academy-state-model-20261021-dom-02-qualify-qry-boundary"
+    },
+    "receiverSource": {
+      "kind": "snapshot",
+      "path": "work/education-platform/academy-state-model-20261021/inputs/DOM-QRY-BOUNDARY-QUALIFICATION-R1.json",
+      "sha256": "802b2c17738aed53831bff8999865f013b4894174068edb6dfac5f21e15ca58d",
+      "fragment": "#/content"
+    }
+  },
+  "snapshot": {
+    "valid": true,
+    "findings": [],
+    "authority": "none",
+    "nativePermissionGranted": false,
+    "semanticAcceptanceEstablished": false
+  },
+  "transition": {
+    "valid": true,
+    "findings": [],
+    "authority": "none",
+    "nativePermissionGranted": false,
+    "semanticAcceptanceEstablished": false
+  },
+  "result": {
+    "qualified": true,
+    "scope": "source-only-execution-and-verification",
+    "producer": {
+      "domainId": "education",
+      "projectId": "education-platform",
+      "workId": "academy-query-integration-20261021",
+      "taskId": "education-platform:task:academy-query-integration-20261021-qry-boundary"
+    },
+    "consumer": {
+      "domainId": "education",
+      "projectId": "education-platform",
+      "workId": "academy-state-model-20261021",
+      "taskId": "education-platform:task:academy-state-model-20261021-dom-02"
+    },
+    "qualificationTaskId": "education-platform:task:academy-state-model-20261021-dom-02-qualify-qry-boundary",
+    "producerCommit": "bfc2bcc5afccc13fd588c46447aa042732f14f36",
+    "producerTree": "aaa637a442fc2ca9e8eab8191db0e1231645f569",
+    "receiverSource": {
+      "kind": "snapshot",
+      "path": "work/education-platform/academy-state-model-20261021/inputs/DOM-QRY-BOUNDARY-QUALIFICATION-R1.json",
+      "sha256": "802b2c17738aed53831bff8999865f013b4894174068edb6dfac5f21e15ca58d",
+      "fragment": "#/content"
+    },
+    "nativeReceiverAuthenticated": false,
+    "sharedDeliveryEstablished": false,
+    "activationAuthorized": false
+  }
+}

@@ -1,0 +1,392 @@
+{
+  "id": "page_7058921f1a988191a136a172c81a2487",
+  "page": {
+    "metadata": {
+      "page_id": "page_7058921f1a988191a136a172c81a2487",
+      "layout": "document",
+      "symbol": null,
+      "title": "실무 거버넌스",
+      "preview": "학원 업무를 수행하기 전에 읽을 출력 계약, 조회·실행 경계와 상태 판정 규칙을 연결합니다. 학생별 원본은 각 학생의 비공개 범위에서 조회하고, 이 영역에는 공통 계약과 비민감 예제만 둡니다.\n\n## REA 기반 학원 API·MCP 작업 방법 — 2026-10-12 사용자 요청\n\n학원 서버 구조를 파악하고 사용자 의도·목적에 맞는 API와 MCP를 만드는 과정에는 REA를 사용한다. 병목도 위계·구조·타입을 갖춰 관리하며, 업",
+      "creator_account_user_id": "user-rWH9gln1NM29y9CcdR6tl3Ye",
+      "owner_workspace_id": null,
+      "parent": {
+        "page_id": "page_f18c68ae5c808191b723b4eb693016fa",
+        "title": "강의하는아이들 학원 실무"
+      },
+      "drive_scope": "space",
+      "drive_space_id": "page_space_2aa12ec5eb008191ab5e779c8c107777",
+      "library_container_id": "fde3_cGFnZV83MDU4OTIxZjFhOTg4MTkxYTEzNmExNzJjODFhMjQ4Nw_73e3d24e44d881918a9b9622fd5a4193",
+      "file_upload_page_id": "page_7058921f1a988191a136a172c81a2487",
+      "position": 1834331547636736,
+      "created_at": "2026-10-07T02:16:42.119757Z",
+      "updated_at": "2026-10-12T07:09:58.512261Z",
+      "deleted_at": null,
+      "current_sequence": 5,
+      "projection_through_sequence": 5,
+      "access": {
+        "can_read": true,
+        "can_comment": true,
+        "can_write": true,
+        "can_share": true,
+        "can_delete": true,
+        "sources": [
+          "library"
+        ]
+      },
+      "url": "https://chatgpt.com/space/page_7058921f1a988191a136a172c81a2487"
+    },
+    "content": {
+      "schema_version": 2,
+      "symbol": null,
+      "title": "실무 거버넌스",
+      "title_hash": "4c55f40a08ed40fa7748c0b5c0cca856992a23eaabd4feaa875deb9299d8f2dd",
+      "blocks": [
+        {
+          "id": "7ed18c3b-ea94-49a9-b973-c8fb0d9e1bfb",
+          "kind": "markdown",
+          "markdown": "학원 업무를 수행하기 전에 읽을 출력 계약, 조회·실행 경계와 상태 판정 규칙을 연결합니다. 학생별 원본은 각 학생의 비공개 범위에서 조회하고, 이 영역에는 공통 계약과 비민감 예제만 둡니다.",
+          "hash": "8d916a1f1bf90b47512db813a81be1f23c2a18a09d67db7178f0e96ea65f4f18",
+          "metadata": {}
+        },
+        {
+          "id": "1646ffe0-eb00-4131-88f9-a81e645f5aa1",
+          "kind": "markdown",
+          "markdown": "## REA 기반 학원 API·MCP 작업 방법 — 2026-10-12 사용자 요청",
+          "hash": "4be96ea5ca0b4507afbdb9a4fdf64e37ebc8eda608aa8bc287fd830b33b4cb7b",
+          "metadata": {
+            "work_method": {
+              "actual_success_receipts_in_reviewed_package": 0,
+              "offline_tests_passed": 6,
+              "permission_grant": false,
+              "schema_version": "academy.rea-work-method/1.0.0",
+              "source_message_id": "Sentinel_72f9f2e0cd248191aa66037a46daa1bb"
+            }
+          }
+        },
+        {
+          "id": "22c69419-af55-47b8-9afd-7321ea38f30d",
+          "kind": "markdown",
+          "markdown": "학원 서버 구조를 파악하고 사용자 의도·목적에 맞는 API와 MCP를 만드는 과정에는 REA를 사용한다. 병목도 위계·구조·타입을 갖춰 관리하며, 업무 의미나 판정 기준이 불명확하면 필요한 단계에서 인터뷰한다. 근거: 사용자 메시지 Sentinel_72f9f2e0cd248191aa66037a46daa1bb, 2026-10-12 16:05 한국시간경. 이는 작업 방법이며 권한·승인 범위를 새로 부여하는 규칙은 아니다.",
+          "hash": "208a03b39b222847dbe3c4d263956c75b76d2f99054011d2d2ef30ae802be92d",
+          "metadata": {}
+        },
+        {
+          "id": "f10f4d88-6e80-473c-bb92-53e8885665cb",
+          "kind": "markdown",
+          "markdown": "1. 관찰 증거: 실제 REA 호출의 성공 응답과 대상 범위를 남긴다. 설치·연결 표시·도구 목록만으로 관찰 완료를 표시하지 않는다.",
+          "hash": "388888f50429bbb94f7ab39b5e5a7418df429a5776f706799b34683dc45c0af3",
+          "metadata": {}
+        },
+        {
+          "id": "ec5e496a-1a49-4b22-861e-168d425ebce1",
+          "kind": "markdown",
+          "markdown": "2. 요청·응답: 실제 operation, method, 필드, 응답 구조와 범위를 확인하되 비밀번호·세션·인증값은 보존하지 않는다.",
+          "hash": "94d0d3c53d327b89dcb3a079e6935ace55d4dbc05d5accec488ffec278a76b07",
+          "metadata": {}
+        },
+        {
+          "id": "b3fa3bb9-63c9-4d6a-981d-74926824f90c",
+          "kind": "markdown",
+          "markdown": "3. 키와 정답 의미: 학생 → 응시 → 기존 출력물 → 문항 라벨 → native item key → 공식 정답의 동일성을 대조한다. 유사한 제목이나 합성 키로 대체하지 않는다.",
+          "hash": "823ef69f32fcf8aaa9d71837da49e560d1ebaf200418131959285c09b918d4f9",
+          "metadata": {}
+        },
+        {
+          "id": "b9ef85bd-eea0-4133-9260-5387b53bf2fe",
+          "kind": "markdown",
+          "markdown": "4. 읽기 API: 실제 효과가 조회인지 확인한 후 엄격한 입력·출력 타입, 범위, 소스 버전, 오류·부분 실패를 구현한다.",
+          "hash": "9f0544153dace58dad8e76a48eb213371a682bb4a3e00a6ae12dcdbeb899a8d0",
+          "metadata": {}
+        },
+        {
+          "id": "f82b6b98-9a54-4234-aee2-1383e0ea1a0c",
+          "kind": "markdown",
+          "markdown": "5. 의도별 MCP: 강사의 작업 목적별로 좁은 도구를 연결한다. 저장 조회·실시간 정답 조회·인쇄 생성·강사 확인·학부모 전송 상태를 분리한다.",
+          "hash": "984d9e9bfb89471de6d73cbe43ba8c3e64aeef30951c6d7154a844deff9fd53d",
+          "metadata": {}
+        },
+        {
+          "id": "9011c729-48c9-496f-84f7-2fa6fca6b7a4",
+          "kind": "markdown",
+          "markdown": "6. 회귀 검증: 실제 성공 근거와 학생·출력물·문항키 혼동, 오래된 자료, 권한 거부를 검증한다. 배포와 운영 검증은 별도로 확인한다.",
+          "hash": "daea3deff9b54a229e8a2b8e29c1842b1ed334c08c2354f46a20ddfa1ff372b3",
+          "metadata": {}
+        },
+        {
+          "id": "90e14ec6-bd6d-46a5-9946-3177aec019ff",
+          "kind": "markdown",
+          "markdown": "병목 분류: 연결, 도구 기능, 원본 식별키, 출력물 식별, 요청 계약, 정답 의미, 권한, 원본 수집, 최신성, 실행 검증. 각 항목은 status·observedEvidence·nextAction·owner·decisionNeeded로 기록한다. 앞 단계 근거 없이 다음 단계를 verified로 승격하지 않는다. 사용자 의도에 필요한 질문만 하고, 이미 확인된 답을 반복해서 요구하지 않는다.",
+          "hash": "1d8287383a478c3b7e01b7e84d375879dd6680da321a45f6b351efb79ba68433",
+          "metadata": {}
+        },
+        {
+          "id": "4a4c430e-219d-4fb1-ba3e-14945459c2f0",
+          "kind": "markdown",
+          "markdown": "현재 준비 상태: REA 설치와 172개 도구 가용성은 준비 보고이며 학원 대상 관찰·정답 조회 완료를 뜻하지 않는다. 이번 설계 자료의 실제 REA 성공 영수증은 0개이고, 기존 출력물과 문항키·공식 정답 연결은 미검증이다. 오프라인 구조 검사 6개와 타입 검사는 통과했으나 실서버 조회·배포 성공 근거가 아니다. 이 상태는 2026-10-12 16:09 한국시간에 읽은 준비 자료 기준이며 후속 실제 영수증으로 해당 범위만 갱신한다.",
+          "hash": "5f431e2f704c3080d58eb5301e9e512878af6dc6437bbc2e540ccd87689134ca",
+          "metadata": {}
+        },
+        {
+          "id": "e988eb13-b026-407f-b529-7197e027a6fd",
+          "kind": "markdown",
+          "markdown": "## 기존 정본",
+          "hash": "af704a5027caac26861e243b88c7fcd125b1c6ed078e7e1e7adde9f04d1192b3",
+          "metadata": {}
+        },
+        {
+          "id": "af169045-d3c4-4b2e-8e4d-84a81a1ad442",
+          "kind": "markdown",
+          "markdown": "[사이트 길찾기](page:page_f2fa45252bd08191b6c46d871bdb8da3) · [구조화 원본과 검증](page:page_41a5a8a055208191bea51145d7976c9a) · [교재 구조와 흐름 규칙](page:page_f689e004893481919f9e8bc018d99807)",
+          "hash": "c9c94e535bb52c3996e4c15dcbbf86ad084989b26b096ecd6693df9560a33cc6",
+          "metadata": {}
+        },
+        {
+          "id": "623a7928-76ee-4cde-a72c-b24c33cc3ff6",
+          "kind": "markdown",
+          "markdown": "## 실행 경계",
+          "hash": "80a3426fc86756f8d77699035fa72dae361da081278c2d99c3deeb22a0577818",
+          "metadata": {}
+        },
+        {
+          "id": "db8eecbb-7797-4378-8eef-ef1a78c56648",
+          "kind": "markdown",
+          "markdown": "결과 보고, PDF 생성과 실제 인쇄는 서로 다른 작업입니다. 조회 계약을 읽었다는 이유로 채점·사이트 수정·인쇄·외부 공유를 실행하지 않습니다. 최신 사용자 요청과 실제 도구 접근 상태를 작업별로 확인합니다.",
+          "hash": "f6b17e53fa0436a5c4f9ec6243d14a2602a4e717750d5a32f0d52c50eebfe01f",
+          "metadata": {}
+        },
+        {
+          "id": "1799c086-c11e-4d4f-a8ad-3ccb14b93aeb",
+          "kind": "markdown",
+          "markdown": "## 시작 순서",
+          "hash": "8c5f7fafa3d45e771e61d0e8b3f1b2be028235df5c6063a1501ddbe4defe0776",
+          "metadata": {}
+        },
+        {
+          "id": "a472c437-b947-442d-b15c-06cd1cfa4047",
+          "kind": "markdown",
+          "markdown": "[공통 거버넌스와 registry](page:page_c0e13c7e2bf48191aeb1cff1e1582fec)를 읽고 업무 intent를 선택합니다. [학원 오버레이 1.0](library-file:fde1_bGliZmlsZV9FVi1FX25iOWJGSFdkM29IOVQwSFpB_FileDrive_73e3d24e44d881918a9b9622fd5a4193)는 사용자 확인 실무와 사이트 관찰을 분리합니다.",
+          "hash": "270cdb9b51eef99e5a6f602bb86d2df4c8c9a0962e6aa2326368e1470fab6f0c",
+          "metadata": {}
+        },
+        {
+          "id": "7b7dd428-ded1-4990-b6fd-7ed621ec9582",
+          "kind": "markdown",
+          "markdown": "| 요청 | registry 경로 | 추가 경계 |\n|---|---|---|\n| 학생 교재 진행 보고 | academy.progress_report | 출력 계약·교재 캐시·선택 학생 자료 |\n| 숙제 확인 | academy.homework_check | 영상과 문제풀이를 분리. 현재 소스 조회 시 site 계약 추가 |\n| 출결 정리 | academy.attendance_review | 등록 시작일·요일·일정과 실제 출결을 구분 |\n| 사이트 조회 | academy.site_read | 검색 학생과 결과 행 검증, 자동 저장 입력 보호 |\n| 출력 준비 | academy.pdf_prepare | 출력 대상·판본·범위·중복을 확인 |\n| PDF 생성 | academy.pdf_generate | 실제 생성 권한과 결과 확인 |\n| 물리 인쇄 | academy.physical_print | 프린터·장수·부수·대상과 실행 권한 확인 |\n| 교재 캐시 유지보수 | academy.cache_maintain | 원본 변경·근거 누락 범위만 검증 |\n| 학생별 요청 갱신 | academy.student_refresh | 소스별 조회 완료·학생 일치·성공 시각·부분 실패 |\n| 문항 근거 유지보수 | academy.item_evidence | 판본·섹션·문항·시도·채점·강사 검토·노트를 별도 참조 |\n| Space 전환 점검 | academy.space_transition | 클라우드 보존과 로컬 미보존 자료를 구분 |",
+          "hash": "7f07fc909e6d2906a2b37afed825721468ea54c3f54a2c3ad672b91cf415c4f1",
+          "metadata": {}
+        },
+        {
+          "id": "c47bf682-5e30-4c27-a6b5-d123677f2f2e",
+          "kind": "markdown",
+          "markdown": "[출력 계약 1.1](page:page_7aef4f4523048191833f31ccb7c0bdad) · [공유 교재 판본 정본](page:page_e98ea934bd688191b1a242772989cce8)",
+          "hash": "c76ef19763563e74d4bfbcc6a7c277d0cd5aea6701b05fe8cabd0279586c195e",
+          "metadata": {}
+        },
+        {
+          "id": "32084d1d-61ab-4ceb-a5df-6fa4d266bd02",
+          "kind": "markdown",
+          "markdown": "[판본 캐시 계약 1.0](library-file:fde1_bGliZmlsZV96OUVYRUNhVFJxbDJGRFl0NFExeDF3_FileDrive_73e3d24e44d881918a9b9622fd5a4193)",
+          "hash": "0807d8223e1c336f8392bb56fa027f2b0f0642b06d179165c73c56a57ada68ec",
+          "metadata": {}
+        },
+        {
+          "id": "8e73e7d1-ee0c-431a-be85-41a0556b221e",
+          "kind": "markdown",
+          "markdown": "학생별 응시·종이 자료·강사 판단은 학생 범위에서 읽습니다. 공통 계약이나 공유 목차에 학생별 결과를 복사하지 않습니다. 일반 보고서 작성 요청이 사이트 생성·인쇄·채점·발송 요청으로 확대되지 않도록 의도를 나눕니다.",
+          "hash": "d8bab21652a1fc2911d795497377663653af2c1f69f887075b5124da59b63363",
+          "metadata": {}
+        },
+        {
+          "id": "ad1d6d35-0fa0-4b7c-8c07-5a0cb6d50f02",
+          "kind": "markdown",
+          "markdown": "## 기존 관찰의 한계",
+          "hash": "9910893f1f53e4e1b4d23ddc9786c1e43efd0e30168f34bcf2bf649335f37662",
+          "metadata": {}
+        },
+        {
+          "id": "b0f24496-62c3-4346-8165-9f621364e161",
+          "kind": "markdown",
+          "markdown": "과거 버튼 동작과 도구 가용성은 그 관찰 시점의 근거입니다. 현재 도구에서 가능한지 다시 확인하며, 생성 결과가 불명일 때 같은 요청을 반복하지 않습니다. 오·클의 행 버튼과 상단 일괄 버튼, 개별·일괄 문항 수를 따로 확인합니다.",
+          "hash": "2659e0c6ae014dfcb8558784c3c64f5d7216d9b81adc43db3244dbdad0f9e222",
+          "metadata": {}
+        },
+        {
+          "id": "5b590899-f5c0-4839-86a5-c312f6b8e4aa",
+          "kind": "markdown",
+          "markdown": "## 학생별 빠른 갱신",
+          "hash": "056e9c6c6e315173d40e96160354ee9f271ab5e8d1fbb2f974e2454248b8d23f",
+          "metadata": {}
+        },
+        {
+          "id": "ac0a3673-1952-4ead-a1dd-085c55b771ae",
+          "kind": "markdown",
+          "markdown": "사용자가 말한 실시간 갱신은 학생별로 필요한 소스를 빠르게 조회하고 그 조회 시각을 표시하는 방식입니다. 상시 연결을 전제로 하지 않습니다.",
+          "hash": "3cbd0d8790d5e4c73897a63ab95925810acbbf90f90d9a91011da0086b1521d8",
+          "metadata": {}
+        },
+        {
+          "id": "a6b1883d-49d3-4fb1-836e-27bdaeed40d1",
+          "kind": "markdown",
+          "markdown": "[학생별 요청 갱신 계약](library-file:fde1_bGliZmlsZV9HWWlIYnZOV05adlRiZzY1SDl1a3Fn_FileDrive_73e3d24e44d881918a9b9622fd5a4193) · [갱신 계획·실행·roster JSON Schema 1.0.1](library-file:fde1_bGliZmlsZV9kUXlvQ0s2b1pTU2NLMUxiVlVyZGRn_FileDrive_73e3d24e44d881918a9b9622fd5a4193)",
+          "hash": "87c24538a598608b352761fc746f124330f178c62c98562c9bcc887f47ec2fe0",
+          "metadata": {}
+        },
+        {
+          "id": "5309b762-f5f1-4661-a963-1c218dbdd1e7",
+          "kind": "markdown",
+          "markdown": "각 소스의 queriedAt·eventAt·lastSuccessAt과 범위·부분 실패를 구분합니다. 요청 접수는 조회 완료가 아닙니다. 검색 조건과 결과 행의 학생이 맞는지 검증하며, 이전 학생 표가 남아 있으면 결과를 버립니다. 실패한 소스는 이전값과 성공 시각을 유지합니다. 지연시간·배치·캐시 검증·체크포인트·중복 방지 근거를 함께 남깁니다.",
+          "hash": "bc0efcf6a298d8ccf8b2a797e6aecddcd57108ec5457dc8409259a5cde92ba1d",
+          "metadata": {}
+        },
+        {
+          "id": "6a812cbd-2c5c-4c7e-9298-b8cd30ab74a0",
+          "kind": "markdown",
+          "markdown": "저장할 때는 현재 Page와 최신 이력·교재 색인을 읽고 관리 블록을 대조합니다. 이전 학생 registry의 해시를 현재 값으로 간주하지 않으며 사용자 메모·강사 판단을 보존합니다. 기존 평일 13시 갱신은 별도 설정이고 강아PC 가용성에 의존합니다. 이번 계약 갱신은 실제 조회나 갱신 성공을 뜻하지 않습니다.",
+          "hash": "127861a33d254f62827839519141c2c7a686a32e54224369797077082a609f6b",
+          "metadata": {}
+        },
+        {
+          "id": "a29487e6-57a1-4133-861e-0df2b935e42e",
+          "kind": "markdown",
+          "markdown": "사이트 길찾기는 허용된 조회 경로를 점진적으로 넓힙니다. 미확인 버튼·쓰기·출력 효과는 실제 권한과 도구 검증을 거친 뒤 실행합니다.",
+          "hash": "23b816a6d400f77d8e04faa0bff72b6100549a699d81cc4ee036451066f904ef",
+          "metadata": {}
+        },
+        {
+          "id": "f1347577-43e3-448a-94e3-06ef3068b662",
+          "kind": "markdown",
+          "markdown": "## 전체 영역 조회 등록부",
+          "hash": "b6cc59e1b2aaca0e203f166ed4473233cf908e1faf9162cbec44b67a7e52e83e",
+          "metadata": {
+            "managed_contract": "academy.capabilities/1.0.0"
+          }
+        },
+        {
+          "id": "43ae214c-3f68-4508-bd9f-92ec7624955b",
+          "kind": "markdown",
+          "markdown": "학생·등록·반, 출결·보강·일정, 일지·숙제, 영상·검사·AI, 교재·채점·오클, DT·ZT, 진도·판본, 정답·리포트, 스마트북·제작·주문, 평가, 상담·학부모안내, 인수인계와 권한을 같은 조회 등록부로 연결합니다. 13개 업무 묶음의 32경로와 49동작마다 재사용 근거, 남은 최소 갭과 검증 기준을 따로 둡니다.",
+          "hash": "0096a176a9bc7efe2d63fcf8295e2f73ff43acd8508c421a6fd2db4dff2f18ce",
+          "metadata": {}
+        },
+        {
+          "id": "6789118a-9c71-46c9-96a5-aea2077b18c3",
+          "kind": "markdown",
+          "markdown": "현재 직접 요청 계약은 업로드된 StudentNameSearch POST 1개입니다. 그 경로의 오프라인 파서는 합성자료 28개 검사만 통과했으며 실제 학생 응답 파싱이나 현재 인증·실서버 읽기·학원 결과 저장 성공을 뜻하지 않습니다. 등록부의 37개 검증과 strict TypeScript 검사를 통과했습니다.",
+          "hash": "09316c54356884d5e391ef4690281dccff7aae2167f38ef399b42b5c9ac9d82c",
+          "metadata": {}
+        },
+        {
+          "id": "ed3a2fc5-0042-4788-ba4e-48546142bbff",
+          "kind": "markdown",
+          "markdown": "[학원 전체 영역 capability registry 1.0](library-file:fde1_bGliZmlsZV9OUVNqUmNzR0FhOTRDSUZMUlhxSU1R_FileDrive_73e3d24e44d881918a9b9622fd5a4193) · [학원 전체 영역 조회 등록부와 검증 기준](library-file:fde1_bGliZmlsZV8tSlhRbnRCTktBOFFIQkNZdlNPSi1B_FileDrive_73e3d24e44d881918a9b9622fd5a4193) · [학원 capability registry 타입과 검증](library-file:fde1_bGliZmlsZV9zb2JGdTVkQ2VUVHVQVkowUTlPS1FR_FileDrive_73e3d24e44d881918a9b9622fd5a4193) · [학원 capability registry 검증 receipt](library-file:fde1_bGliZmlsZV96bVRmUXh5TWtCSHdLNG1TTHdrUHhn_FileDrive_73e3d24e44d881918a9b9622fd5a4193)",
+          "hash": "c51572c86db09948acb81c09a013f7a9c5c2bc5b031d3dc7399ccd5579b52ec5",
+          "metadata": {}
+        },
+        {
+          "id": "a62c49e5-7d4e-4a40-879b-227a06484155",
+          "kind": "markdown",
+          "markdown": "UI 관찰, 요청 캡처, 오프라인 파서, 현재 인증, 실제 읽기와 결과 게시 단계는 각각 별도 근거로 검증합니다. DT 수업활동과 DailyRestudy 교재섹션, 사이트 상태와 강사 판단, PDF와 실제 인쇄는 독립적으로 유지합니다. 새 intent 제안은 기존 거버넌스 실행 경로로 자동 활성화하지 않습니다.",
+          "hash": "74606234d7455f390e53b48eb262f30b750baed0cdd677f174482c885ec9f09e",
+          "metadata": {}
+        }
+      ],
+      "markdown": "학원 업무를 수행하기 전에 읽을 출력 계약, 조회·실행 경계와 상태 판정 규칙을 연결합니다. 학생별 원본은 각 학생의 비공개 범위에서 조회하고, 이 영역에는 공통 계약과 비민감 예제만 둡니다.\n\n## REA 기반 학원 API·MCP 작업 방법 — 2026-10-12 사용자 요청\n\n학원 서버 구조를 파악하고 사용자 의도·목적에 맞는 API와 MCP를 만드는 과정에는 REA를 사용한다. 병목도 위계·구조·타입을 갖춰 관리하며, 업무 의미나 판정 기준이 불명확하면 필요한 단계에서 인터뷰한다. 근거: 사용자 메시지 Sentinel_72f9f2e0cd248191aa66037a46daa1bb, 2026-10-12 16:05 한국시간경. 이는 작업 방법이며 권한·승인 범위를 새로 부여하는 규칙은 아니다.\n\n1. 관찰 증거: 실제 REA 호출의 성공 응답과 대상 범위를 남긴다. 설치·연결 표시·도구 목록만으로 관찰 완료를 표시하지 않는다.\n\n2. 요청·응답: 실제 operation, method, 필드, 응답 구조와 범위를 확인하되 비밀번호·세션·인증값은 보존하지 않는다.\n\n3. 키와 정답 의미: 학생 → 응시 → 기존 출력물 → 문항 라벨 → native item key → 공식 정답의 동일성을 대조한다. 유사한 제목이나 합성 키로 대체하지 않는다.\n\n4. 읽기 API: 실제 효과가 조회인지 확인한 후 엄격한 입력·출력 타입, 범위, 소스 버전, 오류·부분 실패를 구현한다.\n\n5. 의도별 MCP: 강사의 작업 목적별로 좁은 도구를 연결한다. 저장 조회·실시간 정답 조회·인쇄 생성·강사 확인·학부모 전송 상태를 분리한다.\n\n6. 회귀 검증: 실제 성공 근거와 학생·출력물·문항키 혼동, 오래된 자료, 권한 거부를 검증한다. 배포와 운영 검증은 별도로 확인한다.\n\n병목 분류: 연결, 도구 기능, 원본 식별키, 출력물 식별, 요청 계약, 정답 의미, 권한, 원본 수집, 최신성, 실행 검증. 각 항목은 status·observedEvidence·nextAction·owner·decisionNeeded로 기록한다. 앞 단계 근거 없이 다음 단계를 verified로 승격하지 않는다. 사용자 의도에 필요한 질문만 하고, 이미 확인된 답을 반복해서 요구하지 않는다.\n\n현재 준비 상태: REA 설치와 172개 도구 가용성은 준비 보고이며 학원 대상 관찰·정답 조회 완료를 뜻하지 않는다. 이번 설계 자료의 실제 REA 성공 영수증은 0개이고, 기존 출력물과 문항키·공식 정답 연결은 미검증이다. 오프라인 구조 검사 6개와 타입 검사는 통과했으나 실서버 조회·배포 성공 근거가 아니다. 이 상태는 2026-10-12 16:09 한국시간에 읽은 준비 자료 기준이며 후속 실제 영수증으로 해당 범위만 갱신한다.\n\n## 기존 정본\n\n[사이트 길찾기](page:page_f2fa45252bd08191b6c46d871bdb8da3) · [구조화 원본과 검증](page:page_41a5a8a055208191bea51145d7976c9a) · [교재 구조와 흐름 규칙](page:page_f689e004893481919f9e8bc018d99807)\n\n## 실행 경계\n\n결과 보고, PDF 생성과 실제 인쇄는 서로 다른 작업입니다. 조회 계약을 읽었다는 이유로 채점·사이트 수정·인쇄·외부 공유를 실행하지 않습니다. 최신 사용자 요청과 실제 도구 접근 상태를 작업별로 확인합니다.\n\n## 시작 순서\n\n[공통 거버넌스와 registry](page:page_c0e13c7e2bf48191aeb1cff1e1582fec)를 읽고 업무 intent를 선택합니다. [학원 오버레이 1.0](library-file:fde1_bGliZmlsZV9FVi1FX25iOWJGSFdkM29IOVQwSFpB_FileDrive_73e3d24e44d881918a9b9622fd5a4193)는 사용자 확인 실무와 사이트 관찰을 분리합니다.\n\n| 요청 | registry 경로 | 추가 경계 |\n|---|---|---|\n| 학생 교재 진행 보고 | academy.progress_report | 출력 계약·교재 캐시·선택 학생 자료 |\n| 숙제 확인 | academy.homework_check | 영상과 문제풀이를 분리. 현재 소스 조회 시 site 계약 추가 |\n| 출결 정리 | academy.attendance_review | 등록 시작일·요일·일정과 실제 출결을 구분 |\n| 사이트 조회 | academy.site_read | 검색 학생과 결과 행 검증, 자동 저장 입력 보호 |\n| 출력 준비 | academy.pdf_prepare | 출력 대상·판본·범위·중복을 확인 |\n| PDF 생성 | academy.pdf_generate | 실제 생성 권한과 결과 확인 |\n| 물리 인쇄 | academy.physical_print | 프린터·장수·부수·대상과 실행 권한 확인 |\n| 교재 캐시 유지보수 | academy.cache_maintain | 원본 변경·근거 누락 범위만 검증 |\n| 학생별 요청 갱신 | academy.student_refresh | 소스별 조회 완료·학생 일치·성공 시각·부분 실패 |\n| 문항 근거 유지보수 | academy.item_evidence | 판본·섹션·문항·시도·채점·강사 검토·노트를 별도 참조 |\n| Space 전환 점검 | academy.space_transition | 클라우드 보존과 로컬 미보존 자료를 구분 |\n\n[출력 계약 1.1](page:page_7aef4f4523048191833f31ccb7c0bdad) · [공유 교재 판본 정본](page:page_e98ea934bd688191b1a242772989cce8)\n\n[판본 캐시 계약 1.0](library-file:fde1_bGliZmlsZV96OUVYRUNhVFJxbDJGRFl0NFExeDF3_FileDrive_73e3d24e44d881918a9b9622fd5a4193)\n\n학생별 응시·종이 자료·강사 판단은 학생 범위에서 읽습니다. 공통 계약이나 공유 목차에 학생별 결과를 복사하지 않습니다. 일반 보고서 작성 요청이 사이트 생성·인쇄·채점·발송 요청으로 확대되지 않도록 의도를 나눕니다.\n\n## 기존 관찰의 한계\n\n과거 버튼 동작과 도구 가용성은 그 관찰 시점의 근거입니다. 현재 도구에서 가능한지 다시 확인하며, 생성 결과가 불명일 때 같은 요청을 반복하지 않습니다. 오·클의 행 버튼과 상단 일괄 버튼, 개별·일괄 문항 수를 따로 확인합니다.\n\n## 학생별 빠른 갱신\n\n사용자가 말한 실시간 갱신은 학생별로 필요한 소스를 빠르게 조회하고 그 조회 시각을 표시하는 방식입니다. 상시 연결을 전제로 하지 않습니다.\n\n[학생별 요청 갱신 계약](library-file:fde1_bGliZmlsZV9HWWlIYnZOV05adlRiZzY1SDl1a3Fn_FileDrive_73e3d24e44d881918a9b9622fd5a4193) · [갱신 계획·실행·roster JSON Schema 1.0.1](library-file:fde1_bGliZmlsZV9kUXlvQ0s2b1pTU2NLMUxiVlVyZGRn_FileDrive_73e3d24e44d881918a9b9622fd5a4193)\n\n각 소스의 queriedAt·eventAt·lastSuccessAt과 범위·부분 실패를 구분합니다. 요청 접수는 조회 완료가 아닙니다. 검색 조건과 결과 행의 학생이 맞는지 검증하며, 이전 학생 표가 남아 있으면 결과를 버립니다. 실패한 소스는 이전값과 성공 시각을 유지합니다. 지연시간·배치·캐시 검증·체크포인트·중복 방지 근거를 함께 남깁니다.\n\n저장할 때는 현재 Page와 최신 이력·교재 색인을 읽고 관리 블록을 대조합니다. 이전 학생 registry의 해시를 현재 값으로 간주하지 않으며 사용자 메모·강사 판단을 보존합니다. 기존 평일 13시 갱신은 별도 설정이고 강아PC 가용성에 의존합니다. 이번 계약 갱신은 실제 조회나 갱신 성공을 뜻하지 않습니다.\n\n사이트 길찾기는 허용된 조회 경로를 점진적으로 넓힙니다. 미확인 버튼·쓰기·출력 효과는 실제 권한과 도구 검증을 거친 뒤 실행합니다.\n\n## 전체 영역 조회 등록부\n\n학생·등록·반, 출결·보강·일정, 일지·숙제, 영상·검사·AI, 교재·채점·오클, DT·ZT, 진도·판본, 정답·리포트, 스마트북·제작·주문, 평가, 상담·학부모안내, 인수인계와 권한을 같은 조회 등록부로 연결합니다. 13개 업무 묶음의 32경로와 49동작마다 재사용 근거, 남은 최소 갭과 검증 기준을 따로 둡니다.\n\n현재 직접 요청 계약은 업로드된 StudentNameSearch POST 1개입니다. 그 경로의 오프라인 파서는 합성자료 28개 검사만 통과했으며 실제 학생 응답 파싱이나 현재 인증·실서버 읽기·학원 결과 저장 성공을 뜻하지 않습니다. 등록부의 37개 검증과 strict TypeScript 검사를 통과했습니다.\n\n[학원 전체 영역 capability registry 1.0](library-file:fde1_bGliZmlsZV9OUVNqUmNzR0FhOTRDSUZMUlhxSU1R_FileDrive_73e3d24e44d881918a9b9622fd5a4193) · [학원 전체 영역 조회 등록부와 검증 기준](library-file:fde1_bGliZmlsZV8tSlhRbnRCTktBOFFIQkNZdlNPSi1B_FileDrive_73e3d24e44d881918a9b9622fd5a4193) · [학원 capability registry 타입과 검증](library-file:fde1_bGliZmlsZV9zb2JGdTVkQ2VUVHVQVkowUTlPS1FR_FileDrive_73e3d24e44d881918a9b9622fd5a4193) · [학원 capability registry 검증 receipt](library-file:fde1_bGliZmlsZV96bVRmUXh5TWtCSHdLNG1TTHdrUHhn_FileDrive_73e3d24e44d881918a9b9622fd5a4193)\n\nUI 관찰, 요청 캡처, 오프라인 파서, 현재 인증, 실제 읽기와 결과 게시 단계는 각각 별도 근거로 검증합니다. DT 수업활동과 DailyRestudy 교재섹션, 사이트 상태와 강사 판단, PDF와 실제 인쇄는 독립적으로 유지합니다. 새 intent 제안은 기존 거버넌스 실행 경로로 자동 활성화하지 않습니다.",
+      "page_id": "page_7058921f1a988191a136a172c81a2487"
+    },
+    "references": [
+      {
+        "reference": "library-file:fde1_bGliZmlsZV9FVi1FX25iOWJGSFdkM29IOVQwSFpB_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+        "metadata_available": true,
+        "mime_type": "application/json",
+        "byte_size": 2479
+      },
+      {
+        "reference": "library-file:fde1_bGliZmlsZV96OUVYRUNhVFJxbDJGRFl0NFExeDF3_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+        "metadata_available": true,
+        "mime_type": "application/json",
+        "byte_size": 2224
+      },
+      {
+        "reference": "library-file:fde1_bGliZmlsZV9HWWlIYnZOV05adlRiZzY1SDl1a3Fn_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+        "metadata_available": true,
+        "mime_type": "application/json",
+        "byte_size": 2805
+      },
+      {
+        "reference": "library-file:fde1_bGliZmlsZV9kUXlvQ0s2b1pTU2NLMUxiVlVyZGRn_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+        "metadata_available": true,
+        "mime_type": "application/json",
+        "byte_size": 21460
+      },
+      {
+        "reference": "library-file:fde1_bGliZmlsZV9OUVNqUmNzR0FhOTRDSUZMUlhxSU1R_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+        "metadata_available": true,
+        "mime_type": "application/json",
+        "byte_size": 254303
+      },
+      {
+        "reference": "library-file:fde1_bGliZmlsZV8tSlhRbnRCTktBOFFIQkNZdlNPSi1B_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+        "metadata_available": true,
+        "mime_type": "text/markdown",
+        "byte_size": 15606
+      },
+      {
+        "reference": "library-file:fde1_bGliZmlsZV9zb2JGdTVkQ2VUVHVQVkowUTlPS1FR_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+        "metadata_available": true,
+        "mime_type": "text/x-typescript",
+        "byte_size": 14651
+      },
+      {
+        "reference": "library-file:fde1_bGliZmlsZV96bVRmUXh5TWtCSHdLNG1TTHdrUHhn_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+        "metadata_available": true,
+        "mime_type": "application/json",
+        "byte_size": 4188
+      }
+    ],
+    "references_truncated": false
+  },
+  "automations": {
+    "automations": []
+  },
+  "sharing": {
+    "inherited_access": {
+      "complete": true,
+      "sources": []
+    },
+    "workspace_id": null,
+    "space_id": null,
+    "owner": {
+      "principal_type": "user",
+      "principal_id": "user-rWH9gln1NM29y9CcdR6tl3Ye"
+    },
+    "owner_display_name": "kyungchan park",
+    "caller_permissions": [
+      "library_folder.read",
+      "library_file.read",
+      "library_folder.download",
+      "library_file.download",
+      "library_file.comment",
+      "library_folder.write",
+      "library_file.write",
+      "library_folder.delete",
+      "library_file.delete"
+    ],
+    "shares": [],
+    "allowed_roles": [
+      "role-library-folder-viewer",
+      "role-library-folder-commenter",
+      "role-library-folder-editor"
+    ],
+    "next_cursor": null,
+    "page_id": "page_7058921f1a988191a136a172c81a2487",
+    "backing_type": "drive",
+    "scope": "page_and_backing_library_folder",
+    "sharing_available": true,
+    "concurrency": "no_revision_precondition"
+  },
+  "errors": {
+    "page": false,
+    "automations": false,
+    "sharing": false
+  }
+}

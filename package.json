@@ -14,7 +14,9 @@
     "setup": "bun scripts/setup.ts",
     "check:ci-projection": "bun ci/verify-projection.ts",
     "academy:repositories": "bun --no-env-file scripts/academy-repositories.ts plan",
-    "harness:work": "bun --no-env-file scripts/academy-repositories.ts work"
+    "harness:work": "bun --no-env-file scripts/academy-repositories.ts work",
+    "context:academy": "bun --no-env-file scripts/academy-context.ts",
+    "verify:academy-integration": "bun --no-env-file scripts/verify-academy-integration.ts"
   },
   "dependencies": {
     "@palantirkc/ontology": "file:releases/palantirkc-ontology-0.2.0.tgz"

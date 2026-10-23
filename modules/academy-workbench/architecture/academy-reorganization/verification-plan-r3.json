@@ -1,0 +1,122 @@
+{
+  "schemaVersion": "academy.architecture-verification/3",
+  "sourceChecks": [
+    "Validate JSON references, unique IDs, DAGs, ownership and planned/unlaunched native identities",
+    "Use canonical common GitWork validator for exact immutable source snapshot",
+    "Use canonical semantic transition validator for successors; preserve baseline failures",
+    "Typecheck new architecture tools using installed compiler and existing native/common types; no dependency changes"
+  ],
+  "futureBehaviorChecks": [
+    {
+      "case": "Two books share unit number but have different editions",
+      "expected": "No cross-book completion or homework join"
+    },
+    {
+      "case": "Older incomplete observation, later scoped teacher completion",
+      "expected": "Current applicable completion retained; history remains"
+    },
+    {
+      "case": "Homework replaced or cancelled",
+      "expected": "Removed from active pending count; original remains"
+    },
+    {
+      "case": "Same assessment name without occurrence identity",
+      "expected": "Unresolved link preserved, no merged scores"
+    },
+    {
+      "case": "Paginated multibyte records and oversized fixed metadata",
+      "expected": "Whole transport bounded; no silent loss; short refusal without echo"
+    },
+    {
+      "case": "One package check passes while month-end package was not checked",
+      "expected": "Coverage gap remains explicit"
+    },
+    {
+      "case": "Native timeout or missing output",
+      "expected": "Reconcile original occurrence/receipt; no blind replay"
+    },
+    {
+      "case": "Consumer-only regression introduced after early domain/query pass",
+      "expected": "Final VER-03 detects the changed interpretation; prior pass is not reused"
+    },
+    {
+      "case": "Similar paper regenerated with different item membership",
+      "expected": "Historical printed snapshot unchanged; new issuance identity and scoped review required"
+    },
+    {
+      "case": "Missing package source/web check or changed integrated source closure",
+      "expected": "INT-VERIFY holds full delivery; exact noncoverage remains visible"
+    },
+    {
+      "case": "A100-point value with unresolved assessment identity",
+      "expected": "Cannot establish exact-scope default clinic exclusion; teacher review, printing, distribution and final completion are not inferred."
+    },
+    {
+      "case": "Verified exact assessment score100 with unknown teacher review",
+      "expected": "Exclude that assessment from default wrong/similar clinic targets under the preserved rule. Keep teacher review unknown and infer no print, distribution or final completion."
+    },
+    {
+      "case": "Explicit scoped teacher exception to the verified100-point default",
+      "expected": "Apply only to its named assessment/activity/occurrence; preserve the default elsewhere and do not infer physical or final-review outcomes."
+    }
+  ],
+  "measurementCriteria": {
+    "quality": "Same exact requested source records, teacher decisions and scope across baseline/candidate",
+    "performance": [
+      "query calls",
+      "actual response bytes",
+      "source loads",
+      "elapsed time where actually measured"
+    ],
+    "missingMeasurement": "unknown, never inferred from a larger limit or fewer calls"
+  },
+  "completionAxes": [
+    "implementation",
+    "verification",
+    "local-durability",
+    "shared-delivery",
+    "integration",
+    "native-activation",
+    "teacher-review",
+    "user-acceptance"
+  ],
+  "reviewAndApproval": "Architecture approval precedes review dispatch. Review findings drive repairs; source pass is not activation or acceptance.",
+  "supersedesDesign": "verification-plan-r2.json",
+  "gates": [
+    {
+      "id": "VER-02",
+      "after": [
+        "DOM-02",
+        "QRY-02",
+        "VER-01"
+      ],
+      "scope": "early domain/query parity only"
+    },
+    {
+      "id": "VER-03",
+      "after": [
+        "CON-03",
+        "VER-02"
+      ],
+      "scope": "all final intended consumers/workflows at exact delivered source closure"
+    },
+    {
+      "id": "INT-VERIFY",
+      "after": [
+        "INT-01",
+        "VER-03"
+      ],
+      "scope": "actual integrated candidate tree, relevant affected source checks, exact review and canonical transitions"
+    }
+  ],
+  "workflowCoverageRef": "workflow-capabilities-r2.json",
+  "evidenceInvalidation": "Result binds exact source closure and check version; changing a consumed source or consumer invalidates affected prior coverage. No early VER-02 result stands in for VER-03/INT-VERIFY.",
+  "targetBoundaryVerification": {
+    "task": "QRY-BOUNDARY",
+    "mustPrecede": [
+      "DOM-02",
+      "QRY-02"
+    ],
+    "expected": "Current observed value import remains visible; target DAG is admitted only after the exact owner-local contract migration and affected import/behavior checks."
+  }
+}

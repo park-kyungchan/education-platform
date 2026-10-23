@@ -1,0 +1,242 @@
+{
+  "schemaVersion": "academy.independent-source-review/1",
+  "id": "ACX-REVIEW-MCP-001",
+  "reviewedAtUtc": "2026-10-21T04:01:59.217545Z",
+  "reviewer": {
+    "role": "independent-delegated-source-reviewer",
+    "nativeAuthorshipIndependentlyAuthenticated": false,
+    "peerBytesModified": false
+  },
+  "target": {
+    "repositoryId": "park-kyungchan/academy-workbench",
+    "localRoot": "/home/palantirkc/worktrees/academy-class-prep-20261021/work/class-prep-20261021/repositories/academy-workbench",
+    "baseCommit": "1479a086ef2bcf26fbc9a94a8e9c79dc63bb0abe",
+    "baseTree": "2b3d176890460af75bee49bd59dba87a1b7dad91",
+    "initialHeadCommit": "2d348f25ab064370e7f2afe9ac24aba96b1f0f53",
+    "initialHeadTree": "d7abad5190dc804cb0a3e5a8596d1b7246d51e5a",
+    "headCommit": "110db117d84a4ab694555ff96e7081630c168e51",
+    "headTree": "087e0d397f01363ff2cb3ee9ae556fc370b34356",
+    "codeTreeUnchangedBetweenReviewedHeads": true,
+    "reviewedChangedPaths": [
+      "tools/academy-mcp/README.md",
+      "tools/academy-mcp/schemas/contracts.json",
+      "tools/academy-mcp/src/contracts.ts",
+      "tools/academy-mcp/src/pagination.ts",
+      "tools/academy-mcp/src/saved-context.ts",
+      "tools/academy-mcp/tests/history-pagination.test.ts",
+      "tools/academy-mcp/tests/saved-context.test.ts",
+      "work/academy-workbench/academy-preparation-restructure-20261021/evidence/MCP-QUERY-VERIFICATION.json",
+      "work/academy-workbench/academy-preparation-restructure-20261021/evidence/academy-workbench%3Aevidence%3Aacademy-preparation-restructure-20261021%3Aquery-observation.json",
+      "work/academy-workbench/academy-preparation-restructure-20261021/inputs/ACADEMY-PREP-IMPROVEMENT-CONTRACT.json",
+      "work/academy-workbench/academy-preparation-restructure-20261021/inputs/ACADEMY-PREP-USER-REQUEST.json",
+      "work/academy-workbench/academy-preparation-restructure-20261021/inputs/MCP-QUERY-RESULT.json",
+      "work/academy-workbench/academy-preparation-restructure-20261021/inputs/MCP-WORK-VALIDATION-REPAIR.json",
+      "work/academy-workbench/academy-preparation-restructure-20261021/plans/ACADEMY-PREP-PLAN@1.json",
+      "work/academy-workbench/academy-preparation-restructure-20261021/specs/ACADEMY-PREP-SPEC@1.json",
+      "work/academy-workbench/academy-preparation-restructure-20261021/tasks/MCP-T01.json",
+      "work/academy-workbench/academy-preparation-restructure-20261021/tasks/MCP-T02.json",
+      "work/academy-workbench/academy-preparation-restructure-20261021/tasks/MCP-T03.json",
+      "work/academy-workbench/academy-preparation-restructure-20261021/work.json"
+    ],
+    "additionalReadPaths": [
+      "AGENTS.md",
+      "tools/academy-mcp/package.json",
+      "tools/academy-mcp/tsconfig.json",
+      "tools/academy-mcp/src/server.ts",
+      "tools/academy-mcp/src/service.ts",
+      "tools/academy-mcp/src/export-contracts.ts",
+      "tools/academy-mcp/tests/fixtures.ts"
+    ]
+  },
+  "scope": {
+    "kind": "ordinary-correctness-source-review",
+    "privateStudentBodiesRead": false,
+    "privatePreparationHtmlRead": false,
+    "sourceEffectsExecuted": false,
+    "nativeDeploymentEstablished": false,
+    "operationalAcceptanceEstablished": false,
+    "sourceOnly": true
+  },
+  "status": "repair-required",
+  "checks": [
+    {
+      "id": "ACX-MCP-CHECK-001",
+      "command": "bun test tests/history-pagination.test.ts tests/saved-context.test.ts",
+      "cwd": "tools/academy-mcp",
+      "status": "passed",
+      "testCount": 15,
+      "assertionCount": 85,
+      "failedTests": 0,
+      "runtime": "Bun 1.4.3",
+      "inputClass": "synthetic-only"
+    },
+    {
+      "id": "ACX-MCP-CHECK-002",
+      "command": "bun run check",
+      "cwd": "tools/academy-mcp",
+      "effectiveCommand": "tsc --noEmit",
+      "status": "passed",
+      "inputClass": "source-only"
+    },
+    {
+      "id": "ACX-MCP-CHECK-003",
+      "method": "External canonical openGitWork + validateGitWorkRecords at exact immutable commit",
+      "commit": "2d348f25ab064370e7f2afe9ac24aba96b1f0f53",
+      "status": "failed",
+      "findings": [
+        "VERIFICATION_SOURCE_KIND_MISMATCH:MCP-QUERY-VERIFICATION",
+        "TASK_VERIFICATION_TARGET_OR_STATUS_MISMATCH:MCP-T02"
+      ]
+    },
+    {
+      "id": "ACX-MCP-CHECK-004",
+      "method": "External canonical openGitWork + validateGitWorkRecords at exact immutable successor commit",
+      "commit": "110db117d84a4ab694555ff96e7081630c168e51",
+      "status": "passed",
+      "findings": [],
+      "authority": "none",
+      "nativePermissionGranted": false,
+      "semanticAcceptanceEstablished": false
+    },
+    {
+      "id": "ACX-MCP-CHECK-005",
+      "method": "Synthetic official SDK McpServer/Client InMemoryTransport roundtrip, registered academy_query with existing runtime input/output schemas and identical server result wrapper",
+      "status": "failed-whole-envelope-budget",
+      "recordCount": 37,
+      "unicodeCharsPerRecord": 18000,
+      "returnedRecords": 9,
+      "savedQueryResultBytes": 489325,
+      "serializedCallToolResultBytes": 979074,
+      "largestSerializedJsonRpcResponseBytes": 979108,
+      "declaredMaxBytes": 524288,
+      "toolReturnedIsError": false,
+      "networkOrPrivateInputsUsed": false
+    },
+    {
+      "id": "ACX-MCP-CHECK-006",
+      "method": "Compare committed JSON Schema, runtime parsing and official SDK tools/list for omitted student_history.facets",
+      "status": "failed-static-contract-equivalence",
+      "runtimeOmittedFacetsAccepted": true,
+      "officialSdkListsFacetsRequired": false,
+      "committedStaticSchemaListsFacetsRequired": true,
+      "runtimeDuplicateFacetsRejected": true,
+      "committedStaticSchemaHasUniqueItems": false
+    },
+    {
+      "id": "ACX-MCP-CHECK-007",
+      "method": "Synthetic default all-facet query and source-pointer inspection; bounded pagination/Unicode/changed-query continuation checks",
+      "status": "passed-with-coverage-limitation",
+      "allFacetResultRecords": 14,
+      "lessonOverlayObservationCount": 1,
+      "lessonOverlayObservationsIncluded": 0,
+      "coverageMeaning": "Every configured student_records facet is included; lesson_context observations are a separate exposed source subset."
+    }
+  ],
+  "findings": [
+    {
+      "id": "ACX-MCP-001",
+      "priority": "P1",
+      "status": "open-awaiting-successor",
+      "title": "The 512 KiB budget excludes the actual MCP response wrapper",
+      "file": "tools/academy-mcp/src/saved-context.ts",
+      "line": 104,
+      "relatedLocations": [
+        {
+          "file": "tools/academy-mcp/src/saved-context.ts",
+          "line": 108
+        },
+        {
+          "file": "tools/academy-mcp/src/server.ts",
+          "line": 16
+        },
+        {
+          "file": "tools/academy-mcp/src/server.ts",
+          "line": 18
+        }
+      ],
+      "scenario": "A student has 37 preserved section records with an 18,000-character Korean note each. limit=250 produces a byte-limited page of 9 records. SavedContext checks only its inner JSON; server.result emits the complete same payload in both content[0].text and structuredContent.",
+      "observed": "Official SDK in-memory response: CallToolResult 979074 bytes and JSON-RPC envelope 979108 bytes, despite MAX_QUERY_BYTES=524288. No tool error was returned.",
+      "impact": "A caller or connector enforcing the declared whole-response limit can reject or truncate a page even though this implementation reports a successful continuing page; the new large-query delivery guarantee is false.",
+      "recommendation": "Compute the byte budget against the actual serialized MCP envelope, including duplicated/escaped text and structured content, and test the official SDK result envelope using large Unicode fixtures. Keep one-record refusal and first-unread cursor guarantees.",
+      "independentRecheckRequired": true
+    },
+    {
+      "id": "ACX-MCP-002",
+      "priority": "P2",
+      "status": "open-awaiting-successor",
+      "title": "The committed input contract requires an optional defaulted facets field",
+      "file": "tools/academy-mcp/schemas/contracts.json",
+      "line": 169,
+      "relatedLocations": [
+        {
+          "file": "tools/academy-mcp/src/contracts.ts",
+          "line": 11
+        },
+        {
+          "file": "tools/academy-mcp/src/export-contracts.ts",
+          "line": 20
+        },
+        {
+          "file": "tools/academy-mcp/README.md",
+          "line": 64
+        }
+      ],
+      "scenario": "The documented student_history request omits facets. Runtime parsing and actual SDK tools/list accept that request, but the committed academy_query.input schema lists facets as required.",
+      "observed": "Runtime accepted default facets; official SDK tools/list required=false; committed schema required=true. The static schema also omits the runtime duplicate-facet refinement.",
+      "impact": "A client, form or preflight validator generated from the published inspection contract rejects a request that the README and actual tool accept, so saved and live contract surfaces disagree.",
+      "recommendation": "Export input schemas in input mode, preserve or explicitly document duplicate-facet runtime refinement, regenerate the committed artifact, and assert static/runtime/SDK equivalence for the documented omitted-facets request.",
+      "independentRecheckRequired": true
+    }
+  ],
+  "resolvedFindings": [
+    {
+      "id": "ACX-MCP-003",
+      "priority": "P2",
+      "status": "resolved-in-reviewed-successor",
+      "title": "Plain metrics JSON was marked as passing canonical Verification evidence",
+      "observedAtCommit": "2d348f25ab064370e7f2afe9ac24aba96b1f0f53",
+      "resolvedAtCommit": "110db117d84a4ab694555ff96e7081630c168e51",
+      "resolution": "Successor wraps the source result in a canonical Verification Artifact, uses the Work-qualified Task verification target and retains source-owner observations. Exact canonical snapshot validation passed.",
+      "remainingLimit": "Structural/source validation does not independently establish the private 511-record parity claim."
+    }
+  ],
+  "advisories": [
+    {
+      "id": "ACX-MCP-A01",
+      "priority": "advisory",
+      "title": "All configured history facets do not include lesson overlay observations",
+      "file": "tools/academy-mcp/src/saved-context.ts",
+      "line": 48,
+      "details": "student_history delegates to the nine student_records facets. Synthetic lesson overlay observations remain exposed only by lesson_context at lines64-68. Default history returns14 facet records but excludes1 overlay observation. This is consistent with the closed facet contract, so it is not a blocking facet-enumeration defect.",
+      "recommendation": "Name the coverage explicitly in consumer preparation flows, or retain a separate dated lesson_context read; do not infer complete saved student history from default student_history exhaustion."
+    }
+  ],
+  "sourceOwnerReportedResults": {
+    "recordsCompared": 511,
+    "baselineCalls": 48,
+    "candidateCalls": 4,
+    "testsPassed": 105,
+    "assertions": 1759,
+    "privateRecordParityIndependentlyReproduced": false,
+    "classification": "source-owner-report-not-independent-private-source-verification",
+    "nativeLatencyImprovement": "unmeasured"
+  },
+  "preservedBehavior": {
+    "oldQueryKindsRemainAccepted": true,
+    "defaultLimitRemains10": true,
+    "cursorBoundToParsedQueryAndFrozenSnapshot": true,
+    "facetOrderPreserved": true,
+    "byteLimitedPagesResumeAtFirstUnreadRecordForInnerPayload": true,
+    "oversizedFirstRecordRefusedWithoutSkip": true,
+    "sourceClassificationAndJsonPointersRetained": true,
+    "effectOrCredentialCapabilityExpansionObserved": false,
+    "privateMaterialAddedInReviewedSourceDiff": false
+  },
+  "limitations": [
+    "Tests ran on the initial code candidate; tools/academy-mcp code and tests are byte-identical in the reviewed metadata successor.",
+    "No private source audit files, preparation-v3.html, real student record bodies or credentials were read.",
+    "Only focused synthetic tests and source typecheck were rerun; peer full-suite and actual private parity observations remain attributed reports.",
+    "No merge, deployment, native authentication, real connector maximum or runtime latency was verified.",
+    "Findings remain open until independently checked against an exact immutable repaired successor."
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectId": "math-research-module",
+  "domainId": "mathematics-education",
+  "createdAt": "2026-10-16T21:25:49.904089+00:00",
+  "kind": "task",
+  "id": "math-research-module:task:portable-source-ci-successor-20261017",
+  "references": [
+    {
+      "artifactId": "math-research-module:project:manifest",
+      "relation": "parent"
+    }
+  ],
+  "payload": {
+    "title": "Integrate portable onboarding and correct source CI on current main",
+    "objective": "Preserve the merged monthly assessment context and immutable canonical core pins while preparing independently reviewable source-only PR2 integration.",
+    "status": "blocked",
+    "acceptanceCriteria": [
+      "preserve-archived-originals-and-monthly-context",
+      "portable-synthetic-verification",
+      "exact-canonical-projections-without-private-ci-checkout",
+      "independent-exact-tree-review-before-root-publication"
+    ],
+    "details": {
+      "workId": "portable-source-ci-successor-20261017",
+      "sourceBaseline": "07edb2dea2e5997aea4318f0fa2efa21dde633df",
+      "historicalPr2Head": "303a217973b03d81361ebd7959b0242f839e461e",
+      "scope": "Current user authorized repository PR source fixes; Root owns publication and merge. No native runtime, student operations or pedagogical acceptance.",
+      "authority": "none",
+      "nativePermissionGranted": false,
+      "userAcceptance": "not-observed",
+      "localSourceImplementation": "completed",
+      "remainingGates": [
+        "Root independent exact-source review",
+        "actual native raw review and immutable acyclic Evidence/Verification/receipt publication",
+        "authenticated exact-head status and hosted CI",
+        "current-main CAS and explicit Root merge"
+      ],
+      "blockedReason": "Publication and independent review belong to the accountable Root; this local source task grants no publication or native authority."
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "academy-operations",
+  "projectId": "academy-workbench",
+  "workId": "academy-consumer-integration-20261021",
+  "kind": "task",
+  "id": "academy-workbench:task:academy-consumer-integration-20261021-con-response-contract-repair",
+  "logical": {
+    "domainId": "academy-operations",
+    "projectId": "academy-workbench",
+    "workId": "academy-consumer-integration-20261021",
+    "issueId": "CON-ISSUE-20261021",
+    "specId": "CON-SPEC",
+    "specRevision": 1,
+    "planId": "CON-PLAN",
+    "planRevision": 3,
+    "taskId": "academy-workbench:task:academy-consumer-integration-20261021-con-response-contract-repair"
+  },
+  "title": "Repair independently reproduced consumer response and report contracts",
+  "state": {
+    "execution": "complete",
+    "verification": "passed",
+    "localAudit": "result-durable",
+    "sharedAudit": "pending",
+    "formalCompletion": "pending"
+  },
+  "executionClass": "source-only",
+  "dependsOn": [
+    {
+      "taskId": "academy-workbench:task:academy-consumer-integration-20261021-con-02-source-qualification",
+      "milestone": "execution-and-verification"
+    }
+  ],
+  "decisionIds": [],
+  "effectIds": [],
+  "verificationEvidenceIds": [
+    "academy-workbench:evidence:con-response-repair-verification-r1"
+  ],
+  "nextAction": "READY_FOR_ROOT_SOURCE_CHECKPOINT; WAIT writer idle for Root final exact snapshot/transition and independent review008. Root-attributed16pass523assertion source control consumed; original author failures preserved. Native/auth/real-data/teacher acceptance unverified. CON03 requires VER02+Root admission; shared/formal pending."
+}

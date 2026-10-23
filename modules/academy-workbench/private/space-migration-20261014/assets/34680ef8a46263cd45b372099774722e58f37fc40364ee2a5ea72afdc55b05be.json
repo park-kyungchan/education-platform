@@ -1,0 +1,299 @@
+{
+  "$schema": "academy-development-0.1.schema.json",
+  "kind": "development_test_plan",
+  "schemaVersion": "0.1.0",
+  "revision": 5,
+  "projectId": "project:academy-practical",
+  "canonicalParentId": "development:academy-owned-app",
+  "updatedAt": "2026-10-06T11:58:32.221Z",
+  "id": "testplan:academy-dev:v1",
+  "taskId": "01a11084-8e3c-77ac-bcf4-7ba1a15c003d",
+  "testDataClass": "synthetic_only",
+  "executionState": "87_synthetic_tests_passed_live_integration_partial",
+  "cases": [
+    {
+      "id": "T01",
+      "subject": "동명이인",
+      "fixture": "같은 표시 이름에 서로 다른 StudentID를 가진 합성 학생",
+      "expected": "서로의 기록이 합쳐지거나 잘못 조회되지 않는다.",
+      "status": "partial",
+      "actual": "합성 서비스에서 관련 일부 검증을 통과했으나 이 업무 시나리오 전체의 검증 근거는 확보하지 않았다. foundation-2에서 합성 검증 근거가 확인됐으며 실제 연동을 포함한 전체 시나리오는 부분 검증으로 유지한다.",
+      "evidenceRef": "task:01a11084-8e3c-77ac-bcf4-7ba1a15c003d/turn:01a11091-0d50-7641-82f6-5890871fa092",
+      "syntheticEvidenceState": "covered"
+    },
+    {
+      "id": "T02",
+      "subject": "관리 범위",
+      "fixture": "관리 대상 밖의 합성 StudentID 요청",
+      "expected": "최소 정보만 반환하며 접근을 거부한다.",
+      "status": "partial",
+      "actual": "합성 서비스에서 관련 일부 검증을 통과했으나 이 업무 시나리오 전체의 검증 근거는 확보하지 않았다. foundation-2에서 합성 검증 근거가 확인됐으며 실제 연동을 포함한 전체 시나리오는 부분 검증으로 유지한다.",
+      "evidenceRef": "task:01a11084-8e3c-77ac-bcf4-7ba1a15c003d/turn:01a11091-0d50-7641-82f6-5890871fa092",
+      "syntheticEvidenceState": "covered"
+    },
+    {
+      "id": "T03",
+      "subject": "등록 이동",
+      "fixture": "이전 등록과 새 등록이 다른 날짜·과정으로 존재",
+      "expected": "과거 과제의 등록 연결이 보존된다.",
+      "status": "partial",
+      "actual": "합성 서비스에서 관련 일부 검증을 통과했으나 이 업무 시나리오 전체의 검증 근거는 확보하지 않았다. foundation-2에서 합성 검증 근거가 확인됐으며 실제 연동을 포함한 전체 시나리오는 부분 검증으로 유지한다.",
+      "evidenceRef": "task:01a11084-8e3c-77ac-bcf4-7ba1a15c003d/turn:01a11091-0d50-7641-82f6-5890871fa092",
+      "syntheticEvidenceState": "covered"
+    },
+    {
+      "id": "T04",
+      "subject": "교재 버전",
+      "fixture": "같은 교재 제목에 다른 버전 두 개",
+      "expected": "제목만으로 병합하거나 잘못된 자료를 선택하지 않는다.",
+      "status": "partial",
+      "actual": "합성 서비스에서 관련 일부 검증을 통과했으나 이 업무 시나리오 전체의 검증 근거는 확보하지 않았다. foundation-2에서 합성 검증 근거가 확인됐으며 실제 연동을 포함한 전체 시나리오는 부분 검증으로 유지한다.",
+      "evidenceRef": "task:01a11084-8e3c-77ac-bcf4-7ba1a15c003d/turn:01a11091-0d50-7641-82f6-5890871fa092",
+      "syntheticEvidenceState": "covered"
+    },
+    {
+      "id": "T05",
+      "subject": "날짜 경계",
+      "fixture": "수업일이 등록 시작·종료일 및 미확인 경계에 놓임",
+      "expected": "정한 날짜 의미를 따르고 미확인 기간을 추정하지 않는다.",
+      "status": "partial",
+      "actual": "합성 서비스에서 관련 일부 검증을 통과했으나 이 업무 시나리오 전체의 검증 근거는 확보하지 않았다. foundation-2에서 합성 검증 근거가 확인됐으며 실제 연동을 포함한 전체 시나리오는 부분 검증으로 유지한다.",
+      "evidenceRef": "task:01a11084-8e3c-77ac-bcf4-7ba1a15c003d/turn:01a11091-0d50-7641-82f6-5890871fa092",
+      "syntheticEvidenceState": "covered"
+    },
+    {
+      "id": "T06",
+      "subject": "요구 유형",
+      "fixture": "예습 영상과 문제 섹션이 한 과제에 함께 존재",
+      "expected": "두 유형은 독립 상태를 유지하며 영상이 BookSection으로 들어가지 않는다.",
+      "status": "partial",
+      "actual": "합성 서비스에서 관련 일부 검증을 통과했으나 이 업무 시나리오 전체의 검증 근거는 확보하지 않았다. foundation-2에서 합성 검증 근거가 확인됐으며 실제 연동을 포함한 전체 시나리오는 부분 검증으로 유지한다.",
+      "evidenceRef": "task:01a11084-8e3c-77ac-bcf4-7ba1a15c003d/turn:01a11091-0d50-7641-82f6-5890871fa092",
+      "syntheticEvidenceState": "covered"
+    },
+    {
+      "id": "T07",
+      "subject": "종이 예외",
+      "fixture": "집 앱 입력·채점이 필요 없는 합성 종이 과제",
+      "expected": "앱 근거 부재를 미완료로 만들지 않고 종이 확인은 별도 미확인이다.",
+      "status": "partial",
+      "actual": "공통 서비스에서 종이 과제 예외를 검증했다. 실제 수업의 종이 확인과 사이트 연결까지 수행한 결과는 아니다.",
+      "evidenceRef": "task:01a11084-8e3c-77ac-bcf4-7ba1a15c003d/turn:01a11091-0d50-7641-82f6-5890871fa092",
+      "syntheticEvidenceState": "covered"
+    },
+    {
+      "id": "T08",
+      "subject": "과거 점수",
+      "fixture": "새 오답 과제보다 앞선 원래 시도의 점수",
+      "expected": "새 과제의 완료 근거로 연결하지 않는다.",
+      "status": "partial",
+      "actual": "합성 서비스에서 관련 일부 검증을 통과했으나 이 업무 시나리오 전체의 검증 근거는 확보하지 않았다. foundation-2에서 합성 검증 근거가 확인됐으며 실제 연동을 포함한 전체 시나리오는 부분 검증으로 유지한다.",
+      "evidenceRef": "task:01a11084-8e3c-77ac-bcf4-7ba1a15c003d/turn:01a11091-0d50-7641-82f6-5890871fa092",
+      "syntheticEvidenceState": "covered"
+    },
+    {
+      "id": "T09",
+      "subject": "부분 근거",
+      "fixture": "배정한 여러 섹션 중 일부만 대응",
+      "expected": "전체 완료 대신 부분 근거와 빈 범위를 반환한다.",
+      "status": "partial",
+      "actual": "합성 서비스에서 관련 일부 검증을 통과했으나 이 업무 시나리오 전체의 검증 근거는 확보하지 않았다. foundation-2에서 합성 검증 근거가 확인됐으며 실제 연동을 포함한 전체 시나리오는 부분 검증으로 유지한다.",
+      "evidenceRef": "task:01a11084-8e3c-77ac-bcf4-7ba1a15c003d/turn:01a11091-0d50-7641-82f6-5890871fa092",
+      "syntheticEvidenceState": "covered"
+    },
+    {
+      "id": "T10",
+      "subject": "조회 지연",
+      "fixture": "필터는 바뀌었으나 이전 학생 표가 남음",
+      "expected": "대상 행 불일치를 버리고 관측 부재로 저장하지 않는다.",
+      "status": "partial",
+      "actual": "서비스 조회에서 다음 학생이 이전 학생으로 나오지 않는 것은 검증했다. 실제 브라우저의 비동기 지연 표와 필터 갱신은 실행하지 않았다. foundation-2에서 합성 검증 근거가 확인됐으며 실제 연동을 포함한 전체 시나리오는 부분 검증으로 유지한다.",
+      "evidenceRef": "task:01a11084-8e3c-77ac-bcf4-7ba1a15c003d/turn:01a11091-0d50-7641-82f6-5890871fa092",
+      "syntheticEvidenceState": "covered"
+    },
+    {
+      "id": "T11",
+      "subject": "강사 판단",
+      "fixture": "사이트 미학습과 강사 종이 완료 판단이 공존",
+      "expected": "두 출처를 보존하고 묵시적으로 서로 덮어쓰지 않는다.",
+      "status": "partial",
+      "actual": "합성 서비스에서 관련 일부 검증을 통과했으나 이 업무 시나리오 전체의 검증 근거는 확보하지 않았다. foundation-2에서 합성 검증 근거가 확인됐으며 실제 연동을 포함한 전체 시나리오는 부분 검증으로 유지한다.",
+      "evidenceRef": "task:01a11084-8e3c-77ac-bcf4-7ba1a15c003d/turn:01a11091-0d50-7641-82f6-5890871fa092",
+      "syntheticEvidenceState": "covered"
+    },
+    {
+      "id": "T12",
+      "subject": "수동 변경",
+      "fixture": "사용자가 정본 보기의 메모 또는 관리 블록을 수정",
+      "expected": "해시 충돌을 감지하고 사용자 변경을 보존한다.",
+      "status": "partial",
+      "actual": "공통 서비스에서 메모 충돌 방지를 검증했다. 실제 사용자 화면·Space 또는 저장소 연결의 충돌 처리는 별도 확인이 필요하다.",
+      "evidenceRef": "task:01a11084-8e3c-77ac-bcf4-7ba1a15c003d/turn:01a11091-0d50-7641-82f6-5890871fa092",
+      "syntheticEvidenceState": "covered"
+    },
+    {
+      "id": "T13",
+      "subject": "범위와 분모",
+      "fixture": "최근 조회와 전체 교재 목록이 존재",
+      "expected": "최근 자료로 전체 학습 진도율이나 모든 배정 과제를 추정하지 않는다.",
+      "status": "partial",
+      "actual": "공통 서비스에 분모 정책을 추가하고 검증했다. 실제 전체 교재·등록·과제 자료의 완전성을 확인한 것은 아니다.",
+      "evidenceRef": "task:01a11084-8e3c-77ac-bcf4-7ba1a15c003d/turn:01a11091-0d50-7641-82f6-5890871fa092",
+      "syntheticEvidenceState": "covered"
+    },
+    {
+      "id": "T14",
+      "subject": "참조 무결성",
+      "fixture": "없는 학생·과제·근거 ID를 연결",
+      "expected": "고아 참조를 거부한다.",
+      "status": "partial",
+      "actual": "합성 서비스에서 관련 일부 검증을 통과했으나 이 업무 시나리오 전체의 검증 근거는 확보하지 않았다. foundation-2에서 합성 검증 근거가 확인됐으며 실제 연동을 포함한 전체 시나리오는 부분 검증으로 유지한다.",
+      "evidenceRef": "task:01a11084-8e3c-77ac-bcf4-7ba1a15c003d/turn:01a11091-0d50-7641-82f6-5890871fa092",
+      "syntheticEvidenceState": "covered"
+    },
+    {
+      "id": "T15",
+      "subject": "계획 저장",
+      "fixture": "미리보기 이후 입력 리비전이 달라짐",
+      "expected": "낡은 계획을 무조건 저장하지 않고 재검토를 요구한다.",
+      "status": "partial",
+      "actual": "공통 서비스에서 계획 미리보기 이후 데이터 리비전 충돌을 검증했다. 실제 UI와 지속 저장 연동의 동시성까지 검증한 것은 아니다.",
+      "evidenceRef": "task:01a11084-8e3c-77ac-bcf4-7ba1a15c003d/turn:01a11091-0d50-7641-82f6-5890871fa092",
+      "syntheticEvidenceState": "covered"
+    },
+    {
+      "id": "T16",
+      "subject": "중복과 불명",
+      "fixture": "같은 쓰기 요청 ID 또는 결과 불명의 과거 시도",
+      "expected": "중복 효과를 만들지 않고 기존 결과 확인으로 연결한다.",
+      "status": "partial",
+      "actual": "동일 프로세스의 중복 요청 방지는 검증했다. 재시작 뒤 지속성과 결과 불명 시나리오의 전체 복구는 미검증이다. foundation-2에서 합성 검증 근거가 확인됐으며 실제 연동을 포함한 전체 시나리오는 부분 검증으로 유지한다.",
+      "evidenceRef": "task:01a11084-8e3c-77ac-bcf4-7ba1a15c003d/turn:01a11091-0d50-7641-82f6-5890871fa092",
+      "syntheticEvidenceState": "covered"
+    }
+  ],
+  "separateArtifactValidation": "이 JSON과 스키마의 로컬 구조 검증은 개발 환경에서 위 테스트를 실제 실행한 것과 별개다.",
+  "completionRule": "합성 서비스·UI·동기화 검증과 실제 시스템 통합을 구분한다. 이전 저장소의 CI 성공을 새 저장소의 성공으로 재사용하지 않는다. T01–T16의 실제 DOM·영구 저장·프로세스 간 동작이 확인되기 전에는 전체 시나리오 PARTIAL을 유지한다.",
+  "notClaimed": [
+    "실제 학생 자료 검증",
+    "학원 사이트 전체 이력 완전성",
+    "무인 자동화 첫 실행 성공",
+    "실제 인쇄",
+    "실행 권한 강제 통제의 구현 완료",
+    "T01-T16 업무 시나리오 완전 통과"
+  ],
+  "observedCheckGroups": [
+    {
+      "sourceReference": "task:01a11064-c620-72ba-afbd-c7db0545f008",
+      "description": "개발 작업이 실행한 초기 검증",
+      "passed": 14,
+      "failed": 0,
+      "caseIds": [],
+      "caseMappingVerified": false,
+      "fixtures": "passed_reported",
+      "queryDemo": "passed_reported",
+      "staticTypeCheck": "not_run_typescript_missing"
+    },
+    {
+      "sourceReference": "task:01a11084-8e3c-77ac-bcf4-7ba1a15c003d/turn:01a1108b-d486-7062-9595-1625ddeb9d7b",
+      "description": "기본 모델로 복구한 새 개발 작업의 합성 검증",
+      "passed": 28,
+      "failed": 0,
+      "caseIds": [
+        "T01",
+        "T02",
+        "T03",
+        "T04",
+        "T05",
+        "T06",
+        "T07",
+        "T08",
+        "T09",
+        "T10",
+        "T11",
+        "T12",
+        "T13",
+        "T14",
+        "T15",
+        "T16"
+      ],
+      "caseMappingVerified": true,
+      "fixtures": "validation_passed_reported",
+      "queryDemo": "passed_reported",
+      "staticTypeCheck": "not_run_typescript_install_failed_eacces",
+      "assertions": 65,
+      "caseMappingScope": "Status matrix for T01-T16 verified from report; individual unit-test names per case were not supplied.",
+      "runCommand": "bun test",
+      "observedRunAtUtc": "2026-10-06T09:28:04.484Z"
+    },
+    {
+      "sourceReference": "task:01a11084-8e3c-77ac-bcf4-7ba1a15c003d/turn:01a11091-0d50-7641-82f6-5890871fa092",
+      "description": "foundation-2 공식 로컬 의존성 설치와 합성 공통 서비스 검증",
+      "passed": 36,
+      "failed": 0,
+      "assertions": 94,
+      "caseIds": [
+        "T01",
+        "T02",
+        "T03",
+        "T04",
+        "T05",
+        "T06",
+        "T07",
+        "T08",
+        "T09",
+        "T10",
+        "T11",
+        "T12",
+        "T13",
+        "T14",
+        "T15",
+        "T16"
+      ],
+      "caseMappingVerified": true,
+      "caseMappingScope": "All T01-T16 have synthetic common-service evidence; entire integrated scenarios remain PARTIAL.",
+      "fixtures": "passed_reported",
+      "queryDemo": "passed_reported",
+      "staticTypeCheck": "passed_source_and_tests",
+      "runCommand": null,
+      "observedRunAtUtc": null
+    },
+    {
+      "sourceReference": "https://github.com/park-kyungchan/dc-gang-a/commit/308b621d2ba4ab9369237a2e152512b211c64040",
+      "description": "Preserved synthetic UI and source-sync snapshot; later reverted from the wrong repository",
+      "passed": 87,
+      "failed": 0,
+      "assertions": 400,
+      "caseIds": [],
+      "caseMappingVerified": false,
+      "caseMappingScope": "R2 ten supplied semantic examples verified; original T01-T16 remain partial integrated scenarios.",
+      "fixtures": "r2_10_passed",
+      "queryDemo": "passed",
+      "staticTypeCheck": "passed_source_and_tests",
+      "runCommand": "CI bun run check",
+      "observedRunAtUtc": null
+    }
+  ],
+  "scenarioSummary": {
+    "total": 16,
+    "passed": 0,
+    "partial": 16,
+    "notRun": 0,
+    "failed": 0
+  },
+  "syntheticEvidenceSummary": {
+    "total": 16,
+    "covered": 16,
+    "missing": 0,
+    "sourceReference": "task:01a11084-8e3c-77ac-bcf4-7ba1a15c003d/turn:01a11091-0d50-7641-82f6-5890871fa092"
+  },
+  "additionalVerifiedChecks": [
+    "r2 four payload hashes unchanged",
+    "ten supplied semantic examples pass",
+    "scope and per-page completion validation",
+    "catalog cache and content-hash no-op",
+    "deduplication, failed refresh resume and bounded retry",
+    "teacher notes preserved",
+    "synthetic benchmark counters"
+  ]
+}

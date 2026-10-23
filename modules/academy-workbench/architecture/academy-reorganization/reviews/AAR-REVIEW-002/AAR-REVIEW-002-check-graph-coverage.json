@@ -1,0 +1,136 @@
+{
+  "schemaVersion": "academy.review-check/2",
+  "id": "AAR-REVIEW-002-C08",
+  "observedAtUtc": "2026-10-21T05:30:54.055477+00:00",
+  "sourceCommit": "1a3f9e3ed977560e29ea91209ba6bdb7249b8be4",
+  "runtimeGraph": {
+    "declaredRepresentativeOnly": "Representative qualified runtime edges; complete affected import closure must be derived and checked during implementation. No request-flow edge is silently treated as an import.",
+    "missingActualEdge": {
+      "from": "academy-application",
+      "to": "academy-source-adapters",
+      "evidence": "dc-gang-a/src/academy/usecases/studentScene.ts:3 imports readInputRecord from ../../lms/academyReadProtocol and calls it at lines 25,95"
+    },
+    "reverseEdgePresent": true,
+    "realCycleAtCurrentCoarseModuleGranularity": [
+      "academy-application",
+      "academy-source-adapters",
+      "academy-application"
+    ],
+    "codeCycleClaim": false,
+    "meaning": "The module grouping is inconsistent with an acyclic runtime graph of the retained composition; this is not a claim of a file-level import cycle. The validator explicitly prohibits adding application -> source-adapters."
+  },
+  "ordering": {
+    "VER-03_after_CON-03": true,
+    "INT-VERIFY_after_INT-01": true,
+    "INT-VERIFY_after_VER-03": true,
+    "INT-02_after_INT-VERIFY": true
+  },
+  "workflowTestLocators": [
+    {
+      "workflowId": "class-preparation",
+      "test": "teacherReadSnapshot.test.ts",
+      "matches": [
+        "apps/academy/dc-gang-a/tests/academy/teacherReadSnapshot.test.ts"
+      ]
+    },
+    {
+      "workflowId": "class-preparation",
+      "test": "preparationHistory.test.ts",
+      "matches": [
+        "apps/academy/dc-gang-a/tests/academy/preparationHistory.test.ts"
+      ]
+    },
+    {
+      "workflowId": "class-preparation",
+      "test": "teacherWorkContext.test.ts",
+      "matches": [
+        "apps/academy/dc-gang-a/tests/academy/teacherWorkContext.test.ts"
+      ]
+    },
+    {
+      "workflowId": "lesson-delivery",
+      "test": "teacherObservation.test.ts",
+      "matches": [
+        "apps/academy/dc-gang-a/tests/academy/teacherObservation.test.ts"
+      ]
+    },
+    {
+      "workflowId": "lesson-delivery",
+      "test": "teacherWorkspace.test.ts",
+      "matches": [
+        "apps/academy/dc-gang-a/tests/academy/teacherWorkspace.test.ts"
+      ]
+    },
+    {
+      "workflowId": "progress-audit",
+      "test": "learningWork.test.ts",
+      "matches": [
+        "apps/academy/dc-gang-a/tests/academy/learningWork.test.ts"
+      ]
+    },
+    {
+      "workflowId": "progress-audit",
+      "test": "teacherWorkContext.test.ts",
+      "matches": [
+        "apps/academy/dc-gang-a/tests/academy/teacherWorkContext.test.ts"
+      ]
+    },
+    {
+      "workflowId": "homework-followup",
+      "test": "learningWork.test.ts",
+      "matches": [
+        "apps/academy/dc-gang-a/tests/academy/learningWork.test.ts"
+      ]
+    },
+    {
+      "workflowId": "homework-followup",
+      "test": "teacherWorkspace.test.ts",
+      "matches": [
+        "apps/academy/dc-gang-a/tests/academy/teacherWorkspace.test.ts"
+      ]
+    },
+    {
+      "workflowId": "wrong-answer-clinic",
+      "test": "teacherClinic.test.ts",
+      "matches": [
+        "apps/academy/dc-gang-a/tests/academy/teacherClinic.test.ts"
+      ]
+    },
+    {
+      "workflowId": "wrong-answer-clinic",
+      "test": "teacherClinicReviewBlockers.test.ts",
+      "matches": [
+        "apps/academy/dc-gang-a/tests/academy/teacherClinicReviewBlockers.test.ts"
+      ]
+    },
+    {
+      "workflowId": "wrong-answer-clinic",
+      "test": "learningWork.test.ts",
+      "matches": [
+        "apps/academy/dc-gang-a/tests/academy/learningWork.test.ts"
+      ]
+    },
+    {
+      "workflowId": "attendance-internal-journal",
+      "test": "teacherObservation.test.ts",
+      "matches": [
+        "apps/academy/dc-gang-a/tests/academy/teacherObservation.test.ts"
+      ]
+    },
+    {
+      "workflowId": "attendance-internal-journal",
+      "test": "preparationView.test.ts",
+      "matches": [
+        "apps/academy/dc-gang-a/tests/academy/preparationView.test.ts"
+      ]
+    },
+    {
+      "workflowId": "attendance-internal-journal",
+      "test": "teacherReadSnapshot.test.ts",
+      "matches": [
+        "apps/academy/dc-gang-a/tests/academy/teacherReadSnapshot.test.ts"
+      ]
+    }
+  ],
+  "testBodiesNotReadOrExecuted": true
+}

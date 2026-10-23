@@ -1,0 +1,402 @@
+{
+  "schemaVersion": "academy.infrastructure-topology/1",
+  "scope": "Academy source, shared-contract dependencies and named Hermes deployment only",
+  "nodes": [
+    {
+      "id": "infra:host:srv1873899",
+      "type": "host",
+      "owner": "VPS infrastructure owner",
+      "identitySource": "measured hostname",
+      "state": "observed"
+    },
+    {
+      "id": "infra:container:4189cb30782e97cf38b97a0f91a99e14cb9dd1696990d2583c61304acde9d360",
+      "type": "container",
+      "owner": "existing Hermes deployment owner",
+      "name": "hermes-agent-2q3y-hermes-serve-1",
+      "state": "running"
+    },
+    {
+      "id": "runtime:hermes-installed",
+      "type": "native-runtime",
+      "owner": "Hermes native owner",
+      "installedCommit": "349e4f7e620ea1be6a8b5703d7152cf1e5ed9998",
+      "currentAcademyHarnessAdoption": "unknown"
+    },
+    {
+      "id": "source:native-dc",
+      "type": "native-working-tree",
+      "owner": "dc-gang-a operational/native owner",
+      "path": "/opt/data/workspace/dc-gang-a",
+      "head": "5074aeb5649c1a97ad06d33b9f895296fb4c3ad6",
+      "trackedChanges": 68
+    },
+    {
+      "id": "infra:container:ab25110fe27f2daad3a1a90d9b61d72ff751d56c3c4ffafd1bdd6f4c6f1290cd",
+      "type": "container",
+      "owner": "existing Hermes deployment owner",
+      "name": "hermes-agent-2q3y-traefik-1",
+      "state": "running"
+    },
+    {
+      "id": "source:repo:academy-workbench",
+      "type": "repository",
+      "owner": "academy-workbench source owner",
+      "path": "/home/palantirkc/projects/academy-workbench",
+      "observedCommit": "1479a086ef2bcf26fbc9a94a8e9c79dc63bb0abe"
+    },
+    {
+      "id": "source:worktree:/home/palantirkc/projects/academy-workbench",
+      "type": "git-worktree",
+      "owner": "existing Work owner; liveness not established",
+      "path": "/home/palantirkc/projects/academy-workbench",
+      "commit": "1479a086ef2bcf26fbc9a94a8e9c79dc63bb0abe",
+      "branch": "refs/heads/main"
+    },
+    {
+      "id": "source:worktree:/home/palantirkc/worktrees/academy-architecture-orchestration-20261021",
+      "type": "git-worktree",
+      "owner": "existing Work owner; liveness not established",
+      "path": "/home/palantirkc/worktrees/academy-architecture-orchestration-20261021",
+      "commit": "1479a086ef2bcf26fbc9a94a8e9c79dc63bb0abe",
+      "branch": "refs/heads/work/academy-architecture-orchestration-20261021"
+    },
+    {
+      "id": "source:worktree:/home/palantirkc/worktrees/academy-ci-metadata-adoption-20261019",
+      "type": "git-worktree",
+      "owner": "existing Work owner; liveness not established",
+      "path": "/home/palantirkc/worktrees/academy-ci-metadata-adoption-20261019",
+      "commit": "d0c7ddfad5e02d89897d8a5ed56e5e78b747d583",
+      "branch": "refs/heads/work/academy-ci-metadata-adoption-20261019"
+    },
+    {
+      "id": "source:worktree:/home/palantirkc/worktrees/academy-context-consolidation-20261021",
+      "type": "git-worktree",
+      "owner": "existing Work owner; liveness not established",
+      "path": "/home/palantirkc/worktrees/academy-context-consolidation-20261021",
+      "commit": "ad42d0760df24df273cabf202b75fba5bbe8c68e",
+      "branch": "refs/heads/work/academy-context-consolidation-20261021"
+    },
+    {
+      "id": "source:worktree:/home/palantirkc/worktrees/academy-pool-exit-status-20261019",
+      "type": "git-worktree",
+      "owner": "existing Work owner; liveness not established",
+      "path": "/home/palantirkc/worktrees/academy-pool-exit-status-20261019",
+      "commit": "cb56d3fa26a57f5c546713de39f2f8d38dd8aed5",
+      "branch": "refs/heads/fix/academy-pool-exit-status-20261019"
+    },
+    {
+      "id": "source:worktree:/home/palantirkc/worktrees/academy-restructure-20261019/academy-workbench",
+      "type": "git-worktree",
+      "owner": "existing Work owner; liveness not established",
+      "path": "/home/palantirkc/worktrees/academy-restructure-20261019/academy-workbench",
+      "commit": "11346a14f87abcd39d22b063984efdc193610e53",
+      "branch": "refs/heads/work/academy-restructure-20261019"
+    },
+    {
+      "id": "source:worktree:/home/palantirkc/worktrees/month-end-real-pool-read-20261019",
+      "type": "git-worktree",
+      "owner": "existing Work owner; liveness not established",
+      "path": "/home/palantirkc/worktrees/month-end-real-pool-read-20261019",
+      "commit": "5953c9abc14aaf6990f880848437449c0b4e3ab5",
+      "branch": "refs/heads/work/month-end-real-pool-read-20261019"
+    },
+    {
+      "id": "source:repo:education-platform",
+      "type": "repository",
+      "owner": "education-platform source owner",
+      "path": "/home/palantirkc/projects/education-platform",
+      "observedCommit": "cb7e571262593f230d21401994a507e94960f967"
+    },
+    {
+      "id": "source:worktree:/home/palantirkc/worktrees/academy-orchestration-20261019",
+      "type": "git-worktree",
+      "owner": "existing Work owner; liveness not established",
+      "path": "/home/palantirkc/worktrees/academy-orchestration-20261019",
+      "commit": "b1709450970c6413abbf2aefeb9d395b3f0d3f4b",
+      "branch": "refs/heads/work/academy-orchestration-20261019"
+    },
+    {
+      "id": "source:worktree:/home/palantirkc/worktrees/academy-restructure-20261019/education-platform",
+      "type": "git-worktree",
+      "owner": "existing Work owner; liveness not established",
+      "path": "/home/palantirkc/worktrees/academy-restructure-20261019/education-platform",
+      "commit": "6ce5ff1917094a8b25a8cc49c5690ca70350fb2e",
+      "branch": "refs/heads/work/academy-restructure-20261019"
+    },
+    {
+      "id": "source:worktree:/home/palantirkc/worktrees/month-end-bot-screen-review-20261019",
+      "type": "git-worktree",
+      "owner": "existing Work owner; liveness not established",
+      "path": "/home/palantirkc/worktrees/month-end-bot-screen-review-20261019",
+      "commit": "ae953a8b7f0da8f45139cff0e1bf4986f14a3f7a",
+      "branch": "refs/heads/work/month-end-bot-screen-review-20261019"
+    },
+    {
+      "id": "source:worktree:/home/palantirkc/worktrees/month-end-jev114-selection24-20261019",
+      "type": "git-worktree",
+      "owner": "existing Work owner; liveness not established",
+      "path": "/home/palantirkc/worktrees/month-end-jev114-selection24-20261019",
+      "commit": "da1bc59a119bb8c10c874567f594674075ba0451",
+      "branch": "refs/heads/work/month-end-jev114-selection24-20261019"
+    },
+    {
+      "id": "source:repo:agent-platform",
+      "type": "repository",
+      "owner": "agent-platform source owner",
+      "path": "/home/palantirkc/projects/agent-platform",
+      "observedCommit": "712f90deac0676e662dc5d75d88d89f7b6773bfe"
+    },
+    {
+      "id": "source:repo:dc-gang-a",
+      "type": "repository",
+      "owner": "dc-gang-a source owner",
+      "path": "/home/palantirkc/projects/dc-gang-a",
+      "observedCommit": "2d8855b4728c652313b3e1840c53f780c60eac2d"
+    },
+    {
+      "id": "source:worktree:/home/palantirkc/worktrees/academy-class-prep-20261021",
+      "type": "git-worktree",
+      "owner": "existing Work owner; liveness not established",
+      "path": "/home/palantirkc/worktrees/academy-class-prep-20261021",
+      "commit": "2d8855b4728c652313b3e1840c53f780c60eac2d",
+      "branch": "refs/heads/work/academy-class-prep-20261021"
+    },
+    {
+      "id": "source:repo:gang-a",
+      "type": "repository",
+      "owner": "gang-a source owner",
+      "path": "/home/palantirkc/projects/gang-a",
+      "observedCommit": "c4475511b347e9fdc83a7ebbc4b5a1779fa1be6e"
+    },
+    {
+      "id": "source:repo:math-research-module",
+      "type": "repository",
+      "owner": "math-research-module source owner",
+      "path": "/home/palantirkc/projects/math-research-module",
+      "observedCommit": "7b58fe361593d8578c6fe1bdec488f93944ea836"
+    },
+    {
+      "id": "source:worktree:/home/palantirkc/worktrees/academy-restructure-20261019/math-research-module",
+      "type": "git-worktree",
+      "owner": "existing Work owner; liveness not established",
+      "path": "/home/palantirkc/worktrees/academy-restructure-20261019/math-research-module",
+      "commit": "968429e58a3bada93f377853c3f90e353551aa2b",
+      "branch": "refs/heads/work/academy-restructure-20261019"
+    },
+    {
+      "id": "source:worktree:/home/palantirkc/worktrees/month-end-type-evidence-rubric-20261019",
+      "type": "git-worktree",
+      "owner": "existing Work owner; liveness not established",
+      "path": "/home/palantirkc/worktrees/month-end-type-evidence-rubric-20261019",
+      "commit": "c839eb206a6f71001a24a6dfde3744290d5f8d4e",
+      "branch": "refs/heads/work/month-end-type-evidence-rubric-20261019"
+    },
+    {
+      "id": "source:repo:math-education",
+      "type": "repository",
+      "owner": "math-education source owner",
+      "path": "/home/palantirkc/projects/math-education",
+      "observedCommit": "4a666ef6ff568f15495ff8219db583bf6dfbfe2a"
+    },
+    {
+      "id": "runtime:host-install:codex",
+      "type": "installed-executable",
+      "owner": "native codex owner",
+      "path": "/root/.local/bin/codex",
+      "academyHarnessAdoption": "unknown"
+    },
+    {
+      "id": "runtime:host-install:claude",
+      "type": "installed-executable",
+      "owner": "native claude owner",
+      "path": "/root/.local/bin/claude",
+      "academyHarnessAdoption": "unknown"
+    },
+    {
+      "id": "runtime:host-install:agy",
+      "type": "installed-executable",
+      "owner": "native agy owner",
+      "path": "/root/.local/bin/agy",
+      "academyHarnessAdoption": "unknown"
+    }
+  ],
+  "edges": [
+    {
+      "from": "infra:host:srv1873899",
+      "to": "infra:container:4189cb30782e97cf38b97a0f91a99e14cb9dd1696990d2583c61304acde9d360",
+      "relation": "hosts",
+      "qualification": "observed docker inspect"
+    },
+    {
+      "from": "infra:container:4189cb30782e97cf38b97a0f91a99e14cb9dd1696990d2583c61304acde9d360",
+      "to": "runtime:hermes-installed",
+      "relation": "contains-runtime",
+      "qualification": "installed launcher and TUI bundle observed; no startup"
+    },
+    {
+      "from": "infra:container:4189cb30782e97cf38b97a0f91a99e14cb9dd1696990d2583c61304acde9d360",
+      "to": "source:native-dc",
+      "relation": "contains-working-tree",
+      "qualification": "observed read-only; existing dirty bytes not written"
+    },
+    {
+      "from": "infra:host:srv1873899",
+      "to": "infra:container:ab25110fe27f2daad3a1a90d9b61d72ff751d56c3c4ffafd1bdd6f4c6f1290cd",
+      "relation": "hosts",
+      "qualification": "observed docker inspect"
+    },
+    {
+      "from": "infra:host:srv1873899",
+      "to": "source:repo:academy-workbench",
+      "relation": "hosts-source-checkout",
+      "qualification": "observed filesystem and Git"
+    },
+    {
+      "from": "source:worktree:/home/palantirkc/projects/academy-workbench",
+      "to": "source:repo:academy-workbench",
+      "relation": "worktree-of",
+      "qualification": "git worktree metadata; not execution identity"
+    },
+    {
+      "from": "source:worktree:/home/palantirkc/worktrees/academy-architecture-orchestration-20261021",
+      "to": "source:repo:academy-workbench",
+      "relation": "worktree-of",
+      "qualification": "git worktree metadata; not execution identity"
+    },
+    {
+      "from": "source:worktree:/home/palantirkc/worktrees/academy-ci-metadata-adoption-20261019",
+      "to": "source:repo:academy-workbench",
+      "relation": "worktree-of",
+      "qualification": "git worktree metadata; not execution identity"
+    },
+    {
+      "from": "source:worktree:/home/palantirkc/worktrees/academy-context-consolidation-20261021",
+      "to": "source:repo:academy-workbench",
+      "relation": "worktree-of",
+      "qualification": "git worktree metadata; not execution identity"
+    },
+    {
+      "from": "source:worktree:/home/palantirkc/worktrees/academy-pool-exit-status-20261019",
+      "to": "source:repo:academy-workbench",
+      "relation": "worktree-of",
+      "qualification": "git worktree metadata; not execution identity"
+    },
+    {
+      "from": "source:worktree:/home/palantirkc/worktrees/academy-restructure-20261019/academy-workbench",
+      "to": "source:repo:academy-workbench",
+      "relation": "worktree-of",
+      "qualification": "git worktree metadata; not execution identity"
+    },
+    {
+      "from": "source:worktree:/home/palantirkc/worktrees/month-end-real-pool-read-20261019",
+      "to": "source:repo:academy-workbench",
+      "relation": "worktree-of",
+      "qualification": "git worktree metadata; not execution identity"
+    },
+    {
+      "from": "infra:host:srv1873899",
+      "to": "source:repo:education-platform",
+      "relation": "hosts-source-checkout",
+      "qualification": "observed filesystem and Git"
+    },
+    {
+      "from": "source:worktree:/home/palantirkc/worktrees/academy-orchestration-20261019",
+      "to": "source:repo:education-platform",
+      "relation": "worktree-of",
+      "qualification": "git worktree metadata; not execution identity"
+    },
+    {
+      "from": "source:worktree:/home/palantirkc/worktrees/academy-restructure-20261019/education-platform",
+      "to": "source:repo:education-platform",
+      "relation": "worktree-of",
+      "qualification": "git worktree metadata; not execution identity"
+    },
+    {
+      "from": "source:worktree:/home/palantirkc/worktrees/month-end-bot-screen-review-20261019",
+      "to": "source:repo:education-platform",
+      "relation": "worktree-of",
+      "qualification": "git worktree metadata; not execution identity"
+    },
+    {
+      "from": "source:worktree:/home/palantirkc/worktrees/month-end-jev114-selection24-20261019",
+      "to": "source:repo:education-platform",
+      "relation": "worktree-of",
+      "qualification": "git worktree metadata; not execution identity"
+    },
+    {
+      "from": "infra:host:srv1873899",
+      "to": "source:repo:agent-platform",
+      "relation": "hosts-source-checkout",
+      "qualification": "observed filesystem and Git"
+    },
+    {
+      "from": "infra:host:srv1873899",
+      "to": "source:repo:dc-gang-a",
+      "relation": "hosts-source-checkout",
+      "qualification": "observed filesystem and Git"
+    },
+    {
+      "from": "source:worktree:/home/palantirkc/worktrees/academy-class-prep-20261021",
+      "to": "source:repo:dc-gang-a",
+      "relation": "worktree-of",
+      "qualification": "git worktree metadata; not execution identity"
+    },
+    {
+      "from": "infra:host:srv1873899",
+      "to": "source:repo:gang-a",
+      "relation": "hosts-source-checkout",
+      "qualification": "observed filesystem and Git"
+    },
+    {
+      "from": "infra:host:srv1873899",
+      "to": "source:repo:math-research-module",
+      "relation": "hosts-source-checkout",
+      "qualification": "observed filesystem and Git"
+    },
+    {
+      "from": "source:worktree:/home/palantirkc/worktrees/academy-restructure-20261019/math-research-module",
+      "to": "source:repo:math-research-module",
+      "relation": "worktree-of",
+      "qualification": "git worktree metadata; not execution identity"
+    },
+    {
+      "from": "source:worktree:/home/palantirkc/worktrees/month-end-type-evidence-rubric-20261019",
+      "to": "source:repo:math-research-module",
+      "relation": "worktree-of",
+      "qualification": "git worktree metadata; not execution identity"
+    },
+    {
+      "from": "infra:host:srv1873899",
+      "to": "source:repo:math-education",
+      "relation": "hosts-source-checkout",
+      "qualification": "observed filesystem and Git"
+    },
+    {
+      "from": "infra:host:srv1873899",
+      "to": "runtime:host-install:codex",
+      "relation": "contains-installed-executable",
+      "qualification": "PATH presence only; no model turn"
+    },
+    {
+      "from": "infra:host:srv1873899",
+      "to": "runtime:host-install:claude",
+      "relation": "contains-installed-executable",
+      "qualification": "PATH presence only; no model turn"
+    },
+    {
+      "from": "infra:host:srv1873899",
+      "to": "runtime:host-install:agy",
+      "relation": "contains-installed-executable",
+      "qualification": "PATH presence only; no model turn"
+    }
+  ],
+  "nonEquivalences": [
+    "Repository containment is not semantic ownership.",
+    "Worktree/branch/tab/pane is not persistent Work identity.",
+    "Native container/profile identity is not a Project ID.",
+    "Installed executable is not configured or behaviorally verified common-harness adoption."
+  ],
+  "currentContainerToSourceDivergence": "The native dc working tree has 68 tracked changes. No source parity, reset, migration or deployment is inferred.",
+  "mountEvidence": "measurement.json#/containers; bindings are locators and never effect authorization."
+}

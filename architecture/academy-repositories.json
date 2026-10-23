@@ -7,14 +7,14 @@
   "featureImplementation": "external-pr",
   "provider": {
     "repository": "agent-platform",
-    "commit": "ff8e5d56612fab5ce41d4ed9e8b4947987943d4a",
+    "commit": "b308033be9fceca4279e114d99a038f51a33ed12",
     "entrypoint": "scripts/harness.ts"
   },
   "repositories": [
     {
       "repository": "education-platform",
       "role": "maintained",
-      "sourceCommit": "8611a84705f1fe796d6d9a1a3efe8fc1d26a1c9e",
+      "sourceCommit": "da51312ed08d506853c46d17573a5b5a1f405bef",
       "sourceEvidence": [
         "AGENTS.md",
         "project.json",
@@ -22,7 +22,7 @@
       ],
       "routes": [
         {
-          "scope": "Integration, imported academy modules and retained Gang implementation",
+          "scope": "Current source maintenance in the integrated repository; domain and native runtime ownership retained",
           "repository": "education-platform",
           "path": ".",
           "relationship": "maintained"
@@ -39,13 +39,13 @@
       "work": {
         "domainId": "education",
         "projectId": "education-platform",
-        "workId": "academy-repository-restructure-20261019"
+        "workId": "academy-repository-integration-20261023"
       }
     },
     {
       "repository": "academy-workbench",
       "role": "maintained",
-      "sourceCommit": "1aa414537434054104a50e41bf193e2fefe1227c",
+      "sourceCommit": "020e7e483e46990f9393b64368f06b24cf5ace8c",
       "sourceEvidence": [
         "AGENTS.md",
         "project.json",
@@ -53,10 +53,16 @@
       ],
       "routes": [
         {
+          "scope": "Current source maintenance in the integrated repository; domain and native runtime ownership retained",
+          "repository": "education-platform",
+          "path": "modules/academy-workbench",
+          "relationship": "maintained"
+        },
+        {
           "scope": "Portable workbench and Academy MCP source; MCP feature changes are external PR scope",
           "repository": "academy-workbench",
           "path": ".",
-          "relationship": "maintained"
+          "relationship": "source-reference"
         }
       ],
       "check": {
@@ -79,7 +85,7 @@
     {
       "repository": "math-research-module",
       "role": "maintained",
-      "sourceCommit": "9cbef9432e418efde453cfdda1c79b6ea12bd882",
+      "sourceCommit": "1fa8b3b046fd029d2bd9578f4416ec6ac75dd08b",
       "sourceEvidence": [
         "AGENTS.md",
         "project.json",
@@ -87,10 +93,16 @@
       ],
       "routes": [
         {
+          "scope": "Current source maintenance in the integrated repository; domain and native runtime ownership retained",
+          "repository": "education-platform",
+          "path": "modules/math-research-module",
+          "relationship": "maintained"
+        },
+        {
           "scope": "Mathematical research and evidence; semantic acceptance remains with domain owner",
           "repository": "math-research-module",
           "path": ".",
-          "relationship": "maintained"
+          "relationship": "source-reference"
         }
       ],
       "check": {
@@ -109,7 +121,7 @@
     {
       "repository": "dc-gang-a",
       "role": "native-source",
-      "sourceCommit": "2d8855b4728c652313b3e1840c53f780c60eac2d",
+      "sourceCommit": "dc842d65946de41d2cbe3f3d9ea6ebf5c635d03c",
       "sourceEvidence": [
         "AGENTS.md",
         "README.md",
@@ -117,15 +129,15 @@
       ],
       "routes": [
         {
+          "scope": "Current source maintenance in the integrated repository; domain and native runtime ownership retained",
+          "repository": "education-platform",
+          "path": "apps/academy/dc-gang-a",
+          "relationship": "maintained"
+        },
+        {
           "scope": "Native operational source and current typed product policy",
           "repository": "dc-gang-a",
           "path": ".",
-          "relationship": "source-reference"
-        },
-        {
-          "scope": "Imported integration source; no native parity or cutover inferred",
-          "repository": "education-platform",
-          "path": "apps/academy/dc-gang-a",
           "relationship": "source-reference"
         }
       ],
@@ -150,7 +162,7 @@
       ],
       "routes": [
         {
-          "scope": "Implementation maintenance",
+          "scope": "Current source maintenance in the integrated repository; domain and native runtime ownership retained",
           "repository": "education-platform",
           "path": "apps/academy/gang-a",
           "relationship": "maintained"
@@ -181,10 +193,10 @@
       ],
       "routes": [
         {
-          "scope": "Imported curriculum integration; missing canonical inputs remain unknown",
+          "scope": "Current source maintenance in the integrated repository; domain and native runtime ownership retained",
           "repository": "education-platform",
           "path": "packages/curriculum",
-          "relationship": "source-reference"
+          "relationship": "maintained"
         },
         {
           "scope": "Preserved export/runtime provenance",
@@ -212,10 +224,10 @@
       ],
       "routes": [
         {
-          "scope": "Clinic workbench source successor, not a runtime profile change",
+          "scope": "Current source maintenance in the integrated repository; domain and native runtime ownership retained",
           "repository": "education-platform",
           "path": "examples/clinic-workbench",
-          "relationship": "contract-successor"
+          "relationship": "maintained"
         }
       ],
       "check": {
@@ -402,7 +414,7 @@
     {
       "repository": "agent-platform",
       "role": "provider",
-      "sourceCommit": "ff8e5d56612fab5ce41d4ed9e8b4947987943d4a",
+      "sourceCommit": "b308033be9fceca4279e114d99a038f51a33ed12",
       "sourceEvidence": [
         "AGENTS.md",
         "project.json",

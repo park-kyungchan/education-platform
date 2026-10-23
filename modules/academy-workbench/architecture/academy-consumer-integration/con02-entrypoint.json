@@ -1,0 +1,28 @@
+{
+  "schema": "academy.consumer-con02-entrypoint.v1",
+  "taskId": "academy-workbench:task:academy-consumer-integration-20261021-con-02",
+  "state": [
+    "ROOT_SDK_CHECK_NEEDED",
+    "READY_FOR_ROOT_SOURCE_CHECKPOINT"
+  ],
+  "sourceEvidence": "con02-source-evidence.json",
+  "productionEntrypoint": "tools/academy-mcp/src/teacher-server.ts",
+  "checks": "observations/CON-02-CHECKS-R1.json",
+  "resultInput": "CON-02-RESULT-R1",
+  "verificationInput": "CON-02-VERIFICATION-R1",
+  "resultEvidenceId": "academy-workbench:evidence:con-02-result-observation-r1",
+  "verificationEvidenceId": "academy-workbench:evidence:con-02-verification-r1",
+  "taskVerificationTarget": "common-harness:task:d3c2271f53fc88207adc400c6aa9a0f89604896fa632f2f2c78dc6f13ac3183c",
+  "localRecordCheck": "observations/CON-02-LOCAL-RECORD-CHECK-R1.json",
+  "canonicalCheckpoint": {
+    "auditorRoot": "/home/palantirkc/projects/agent-platform",
+    "pin": "712f90deac0676e662dc5d75d88d89f7b6773bfe",
+    "committedSnapshotAndTransition": "pending Root exact source commit"
+  },
+  "requiredSdkScope": "failed/not verified; Root receipt pending",
+  "next": "Writer idle; WAIT for Root exact same-source SDK receipt/checkpoint. No SDK retry or CON-03 admission inferred.",
+  "sharedAuditDelivery": false,
+  "nativeActivation": false,
+  "teacherAcceptance": false,
+  "formalWorkComplete": false
+}

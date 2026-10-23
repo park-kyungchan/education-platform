@@ -1,0 +1,73 @@
+{
+  "source_reference": "library-file:fde1_bGliZmlsZV9Lb2FZODIwV3Z5ZUVacE9keHhfOEtn_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+  "source_sha256": "e5cfe5c7a4ceb72a7b66cc041d426d02f30cbfa261a4add5674746dea86f28a7",
+  "data": {
+    "type": "academy_teacher_domain_rule",
+    "domainRuleId": "domain-rule:academy:DT-DailyRestudy:20261007:v1",
+    "version": "1.0.0",
+    "scope": "academy_teacher_operational_learning_terms",
+    "definitions": {
+      "DT": {
+        "expandedLabelRaw": "DailyTest",
+        "domain": "attendance_learning_cycle",
+        "role": "one_step_in_cycle_for_the_named_unit",
+        "userUnitLabelRaw": "소단원"
+      },
+      "DailyRestudy": {
+        "labelRaw": "Daily Restudy",
+        "domain": "textbook_section"
+      }
+    },
+    "currentRelation": {
+      "left": "DT",
+      "right": "Daily Restudy",
+      "equivalenceState": "rejected_not_equivalent",
+      "currentEquivalenceBinding": null,
+      "automaticAliasCreated": false
+    },
+    "sourceOrigin": "user_teacher_operational_rule",
+    "sourceEvidence": {
+      "sourceKind": "user_report",
+      "actor": {
+        "kind": "user",
+        "role": "teacher",
+        "id": null
+      },
+      "sourceRef": {
+        "sourceMessageId": "Sentinel_ce99e656aea48191a0707d589c7e4d2a",
+        "reference": null,
+        "sha256": null,
+        "jsonPointer": null
+      },
+      "reportedAt": "2026-10-07T08:20:43.884922+00:00",
+      "observedAt": null,
+      "capturedAt": null,
+      "recordedAt": "2026-10-07T08:29:22Z",
+      "verificationStatus": "unverified",
+      "verificationDetail": "teacher_defined_domain_rule; not_independent_LMS_metadata_observation",
+      "statementProvenance": {
+        "confirmed": true,
+        "sourceMessageId": "Sentinel_ce99e656aea48191a0707d589c7e4d2a"
+      }
+    },
+    "correctionHistory": [
+      {
+        "previousRepresentation": "DT_to_DailyRestudy_provisional_or_mapping_unknown",
+        "previousExactBindingId": null,
+        "currentRepresentation": "rejected_not_equivalent_no_current_equivalence_binding",
+        "reason": "explicit_teacher_definition",
+        "sourceMessageId": "Sentinel_ce99e656aea48191a0707d589c7e4d2a",
+        "previousHistoricalEvidenceDeleted": false
+      }
+    ],
+    "projectionRequirements": {
+      "removeCurrentDTtoDailyRestudyEquivalence": true,
+      "retainHistoricalCorrectionEvidence": true,
+      "doNotCreateStudentAttemptRecords": true,
+      "doNotChangeStudentPerformanceOrNotCollectedState": true
+    },
+    "studentPerformanceMutated": false,
+    "studentAttemptRecordsCreated": 0,
+    "networkRequests": 0
+  }
+}

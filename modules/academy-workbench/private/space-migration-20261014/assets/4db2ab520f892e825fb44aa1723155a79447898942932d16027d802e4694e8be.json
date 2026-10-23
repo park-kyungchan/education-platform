@@ -1,0 +1,461 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "kind": {
+      "type": "string",
+      "const": "student_book_evidence_view"
+    },
+    "schemaVersion": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "revision": {
+      "type": "integer",
+      "exclusiveMinimum": 0,
+      "maximum": 9007199254740991
+    },
+    "id": {
+      "type": "string"
+    },
+    "canonicalStudentId": {
+      "type": "string"
+    },
+    "studentPageId": {
+      "type": "string"
+    },
+    "outputContractVersion": {
+      "type": "string",
+      "const": "1.1.0"
+    },
+    "sourceSnapshot": {
+      "type": "object",
+      "properties": {
+        "pageId": {
+          "type": "string"
+        },
+        "reference": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "jsonPointer": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "pageId",
+        "reference",
+        "sha256",
+        "jsonPointer"
+      ],
+      "additionalProperties": false
+    },
+    "sharedEditionRegistry": {
+      "type": "object",
+      "properties": {
+        "pageId": {
+          "type": "string"
+        },
+        "reference": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "jsonPointer": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "pageId",
+        "reference",
+        "sha256",
+        "jsonPointer"
+      ],
+      "additionalProperties": false
+    },
+    "bookViews": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "bookEditionId": {
+            "type": "string"
+          },
+          "registeredBookId": {
+            "type": "string"
+          },
+          "rootNodeIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "tocState": {
+            "type": "string",
+            "enum": [
+              "printed_toc_verified",
+              "native_catalog_only"
+            ]
+          },
+          "rowIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "wholeBookProgress": {
+            "type": "string",
+            "const": "not_determined"
+          }
+        },
+        "required": [
+          "bookEditionId",
+          "registeredBookId",
+          "rootNodeIds",
+          "tocState",
+          "rowIds",
+          "wholeBookProgress"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "attemptIndex": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "sourceAttemptId": {
+            "type": "string"
+          },
+          "nativeAttemptId": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "recordIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "mappingState": {
+            "type": "string"
+          },
+          "sourceMappingReason": {
+            "type": "string"
+          },
+          "sourceSectionId": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "displayedAt": {
+            "type": "object",
+            "properties": {
+              "raw": {
+                "type": "string"
+              },
+              "precision": {
+                "type": "string"
+              },
+              "rawYear": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "yearStatus": {
+                "type": "string"
+              },
+              "inferredYear": {
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "minimum": -9007199254740991,
+                    "maximum": 9007199254740991
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "inferenceBasis": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "timezone": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "timezoneStatus": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "raw",
+              "precision",
+              "rawYear",
+              "yearStatus",
+              "inferredYear",
+              "inferenceBasis",
+              "timezone",
+              "timezoneStatus"
+            ],
+            "additionalProperties": false
+          },
+          "score": {
+            "type": "number"
+          },
+          "currentAssignmentCompletion": {
+            "type": "string",
+            "const": "not_determined"
+          }
+        },
+        "required": [
+          "sourceAttemptId",
+          "nativeAttemptId",
+          "recordIds",
+          "mappingState",
+          "sourceMappingReason",
+          "sourceSectionId",
+          "displayedAt",
+          "score",
+          "currentAssignmentCompletion"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "unresolvedResources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string",
+            "const": "unresolved_workbook_or_section"
+          },
+          "bookCode": {
+            "type": "null"
+          },
+          "edition": {
+            "type": "null"
+          },
+          "label": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "sourceAttemptIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "evidenceState": {
+            "type": "string",
+            "const": "mapping_unknown"
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "bookCode",
+          "edition",
+          "label",
+          "reason",
+          "sourceAttemptIds",
+          "evidenceState"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "assignmentIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "diaryIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "attendanceIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "videoIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "sourceCoverage": {
+      "type": "array",
+      "items": {}
+    },
+    "sourcePolicy": {
+      "type": "string",
+      "const": "already_published_user_upload_only"
+    },
+    "preservation": {
+      "type": "object",
+      "properties": {
+        "sourceStudentIdsUnchanged": {
+          "type": "boolean",
+          "const": true
+        },
+        "scoresUnchanged": {
+          "type": "boolean",
+          "const": true
+        },
+        "timestampsUnchanged": {
+          "type": "boolean",
+          "const": true
+        },
+        "teacherJudgementsNotOverwritten": {
+          "type": "boolean",
+          "const": true
+        },
+        "sourceObservationsCountedOnce": {
+          "type": "boolean",
+          "const": true
+        }
+      },
+      "required": [
+        "sourceStudentIdsUnchanged",
+        "scoresUnchanged",
+        "timestampsUnchanged",
+        "teacherJudgementsNotOverwritten",
+        "sourceObservationsCountedOnce"
+      ],
+      "additionalProperties": false
+    },
+    "overallProgressPercentage": {
+      "type": "null"
+    },
+    "durationEstimate": {
+      "type": "null"
+    },
+    "axisVerificationState": {
+      "type": "string",
+      "const": "not_sufficient_for_completion_denominator"
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "rowParts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "source": {
+            "type": "object",
+            "properties": {
+              "pageId": {
+                "type": "string"
+              },
+              "reference": {
+                "type": "string"
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              "jsonPointer": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "pageId",
+              "reference",
+              "sha256",
+              "jsonPointer"
+            ],
+            "additionalProperties": false
+          },
+          "byteSize": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991
+          },
+          "rowIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "source",
+          "byteSize",
+          "rowIds"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "rowCount": {
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+    }
+  },
+  "required": [
+    "kind",
+    "schemaVersion",
+    "revision",
+    "id",
+    "canonicalStudentId",
+    "studentPageId",
+    "outputContractVersion",
+    "sourceSnapshot",
+    "sharedEditionRegistry",
+    "bookViews",
+    "attemptIndex",
+    "unresolvedResources",
+    "assignmentIds",
+    "diaryIds",
+    "attendanceIds",
+    "videoIds",
+    "sourceCoverage",
+    "sourcePolicy",
+    "preservation",
+    "overallProgressPercentage",
+    "durationEstimate",
+    "axisVerificationState",
+    "limitations",
+    "rowParts",
+    "rowCount"
+  ],
+  "additionalProperties": false
+}

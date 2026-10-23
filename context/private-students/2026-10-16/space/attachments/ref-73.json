@@ -1,0 +1,24 @@
+{
+  "index": 73,
+  "reference": "library-file:fde1_bGliZmlsZV9ZdlJoSGxfc2NpWEVuN0owdThSRHpn_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+  "metadata_available": true,
+  "mime_type": "application/json",
+  "byte_size": 2461,
+  "pages": [
+    "page_7aef4f4523048191833f31ccb7c0bdad"
+  ],
+  "retrievedAt": "2026-10-16T10:23:53.642Z",
+  "result": {
+    "page_id": "page_7aef4f4523048191833f31ccb7c0bdad",
+    "reference": "library-file:fde1_bGliZmlsZV9ZdlJoSGxfc2NpWEVuN0owdThSRHpn_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+    "mime_type": "application/json",
+    "byte_size": 2461,
+    "sha256": "2b5ca8c9f54e15be465342fbfe449a06b4be3a55fd02f813b3fde637ae1b94fa",
+    "text": "{\n  \"kind\": \"academy_item_evidence_contract\",\n  \"contractId\": \"academy.item-evidence-extension\",\n  \"schemaVersion\": \"1.0.0\",\n  \"version\": \"1.0.0\",\n  \"revision\": 1,\n  \"dataClass\": \"non_sensitive_contract\",\n  \"authorityGranted\": false,\n  \"defaultView\": \"lanes\",\n  \"alternativeViews\": [\"matrix\", \"tree\", \"ledger\", \"icicle\"],\n  \"typescriptContract\": \"scripts/question-model.ts\",\n  \"viewContractVersion\": \"1.1.0\",\n  \"storage\": {\n    \"canonicalStructure\": \"shared_book_edition_registry\",\n    \"selectedStudentEvidence\": \"student_book_evidence_view\",\n    \"rendering\": \"disposable_private_projection\",\n    \"spaceIsTransactionalBackend\": false,\n    \"automaticRuntimeIntegration\": \"not_implemented\"\n  },\n  \"entities\": [\"EditionBinding\", \"UnitBinding\", \"SectionBinding\", \"Item\", \"ItemVariant\", \"ItemAttempt\", \"ItemGrade\", \"ItemReview\", \"ItemEvidence\", \"ItemNotebook\"],\n  \"identityRules\": [\n    \"Keep stable opaque domain IDs, revisions, native identities, original printed labels, and source row IDs separate.\",\n    \"Unknown native ID remains null; sourceAttemptId does not imply a known nativeAttemptId.\",\n    \"Require exact edition, unit, section, item, presented variant, assignment and student scope for a claim.\"\n  ],\n  \"variantKinds\": [\"source\", \"similar\", \"revised\", \"reprint\"],\n  \"notebookKinds\": [\"lecture_notes\", \"solution_notes\"],\n  \"evidenceKinds\": [\"source_record\", \"answer_image\", \"lecture_note_capture\", \"solution_note_capture\", \"grading_annotation\"],\n  \"orderingEdgeMeaning\": \"verified_printed_or_display_order_not_conceptual_dependency\",\n  \"stateRules\": [\n    \"No real item source means absent questionLayer or empty not_captured collections with null denominator.\",\n    \"Retain every attempt; distinguish retry of the same variant from remediation on another variant.\",\n    \"Keep score, correctness, teacher review, capture, and completion separate.\",\n    \"Append scoped supersession records; keep old records and unresolved conflicts.\",\n    \"Use private versioned image/note references and exact source hashes, not embedded binary or public uploads.\"\n  ],\n  \"migration\": {\n    \"policy\": \"additive_preserve_legacy\",\n    \"legacyIdsRekeyed\": false,\n    \"legacySnapshotContract\": \"1.1.0\",\n    \"frozenSamplesMutable\": false\n  },\n  \"implementationClaims\": {\n    \"schemaAndLocalValidation\": true,\n    \"questionDataAlreadyAvailable\": false,\n    \"automaticGrading\": false,\n    \"ocrOrHandwritingAssessment\": false,\n    \"operationalApplicationBackend\": false\n  }\n}\n",
+    "text_representation": "source",
+    "text_byte_size": 2461,
+    "kind": "text"
+  },
+  "status": "source_text_saved",
+  "localFile": "attachments/ref-73.json"
+}

@@ -1,0 +1,97 @@
+{
+  "binding": {
+    "producer": {
+      "selection": {
+        "repositoryRoot": "/home/palantirkc/worktrees/academy-query-integration-20261021",
+        "repositoryId": "park-kyungchan/education-platform",
+        "projectId": "education-platform",
+        "workId": "academy-query-integration-20261021",
+        "commit": "8f8c9bd61bd5e55445780b5569ecc40effcecef6"
+      },
+      "tree": "ccb0fc6302f664abe069086881961cec99cf2d85",
+      "logical": {
+        "domainId": "education",
+        "projectId": "education-platform",
+        "workId": "academy-query-integration-20261021",
+        "issueId": "QRY-ISSUE-20261021",
+        "specId": "QRY-SPEC",
+        "specRevision": 1,
+        "planId": "QRY-PLAN",
+        "planRevision": 1,
+        "taskId": "education-platform:task:academy-query-integration-20261021-qry-02"
+      },
+      "resultEvidenceId": "education-platform:evidence:qry-02-result-observation-r1",
+      "verificationEvidenceId": "education-platform:evidence:qry-02-verification-r1",
+      "milestone": "execution-and-verification"
+    },
+    "consumer": {
+      "selection": {
+        "repositoryRoot": "/home/palantirkc/worktrees/academy-workflow-verification-20261021",
+        "repositoryId": "park-kyungchan/education-platform",
+        "projectId": "education-platform",
+        "workId": "academy-workflow-verification-20261021",
+        "commit": "9e87b247fbba6c7a32ff95f84798c350ad35af49"
+      },
+      "logical": {
+        "domainId": "education",
+        "projectId": "education-platform",
+        "workId": "academy-workflow-verification-20261021",
+        "issueId": "VER-ISSUE-20261021",
+        "specId": "VER-SPEC",
+        "specRevision": 1,
+        "planId": "VER-PLAN",
+        "planRevision": 1,
+        "taskId": "education-platform:task:academy-workflow-verification-20261021-ver-02"
+      },
+      "qualificationTaskId": "education-platform:task:academy-workflow-verification-20261021-ver-02-qualify-qry-02"
+    },
+    "receiverSource": {
+      "kind": "snapshot",
+      "path": "work/education-platform/academy-workflow-verification-20261021/inputs/VER-QRY02-QUALIFICATION-R1.json",
+      "sha256": "7efca51f1d3fb7169bd0b7988b303c79519fbad83e3610637ecae7475321209a",
+      "fragment": "#/content"
+    }
+  },
+  "snapshot": {
+    "valid": true,
+    "findings": [],
+    "authority": "none",
+    "nativePermissionGranted": false,
+    "semanticAcceptanceEstablished": false
+  },
+  "transition": {
+    "valid": true,
+    "findings": [],
+    "authority": "none",
+    "nativePermissionGranted": false,
+    "semanticAcceptanceEstablished": false
+  },
+  "result": {
+    "qualified": true,
+    "scope": "source-only-execution-and-verification",
+    "producer": {
+      "domainId": "education",
+      "projectId": "education-platform",
+      "workId": "academy-query-integration-20261021",
+      "taskId": "education-platform:task:academy-query-integration-20261021-qry-02"
+    },
+    "consumer": {
+      "domainId": "education",
+      "projectId": "education-platform",
+      "workId": "academy-workflow-verification-20261021",
+      "taskId": "education-platform:task:academy-workflow-verification-20261021-ver-02"
+    },
+    "qualificationTaskId": "education-platform:task:academy-workflow-verification-20261021-ver-02-qualify-qry-02",
+    "producerCommit": "8f8c9bd61bd5e55445780b5569ecc40effcecef6",
+    "producerTree": "ccb0fc6302f664abe069086881961cec99cf2d85",
+    "receiverSource": {
+      "kind": "snapshot",
+      "path": "work/education-platform/academy-workflow-verification-20261021/inputs/VER-QRY02-QUALIFICATION-R1.json",
+      "sha256": "7efca51f1d3fb7169bd0b7988b303c79519fbad83e3610637ecae7475321209a",
+      "fragment": "#/content"
+    },
+    "nativeReceiverAuthenticated": false,
+    "sharedDeliveryEstablished": false,
+    "activationAuthorized": false
+  }
+}

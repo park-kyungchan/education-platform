@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "academy.gui-smoke/1",
+  "checkedAt": "2026-10-13T04:39:00Z",
+  "runtimeDigest": "553473f450fcff22d4fe7b1d567fd77d9d73dc4a3d162fe9f6348dd7cb54e180",
+  "environment": "dot cloud Chromium and a separate GUI Terminal; not the user's computer",
+  "url": "http://127.0.0.1:8787/",
+  "dataMode": "exact packaged synthetic fixture",
+  "actualPrivateRecordsUsed": false,
+  "platformLoginRequired": false,
+  "observations": {
+    "initialStudents": 5,
+    "sectionRows": 48,
+    "domainFilters": 17,
+    "selectSecondStudent": "가상학생 나래 shown selected",
+    "serverRestart": "Dedicated synthetic Node process stopped using Ctrl+C, then the identical launch command restarted with the same SQLite path; listening confirmed",
+    "afterRestartStudents": 5,
+    "afterRestartSectionRows": 48,
+    "secondIndependentReloadStudents": 5,
+    "stageNavigation": "practice selected after restart"
+  },
+  "screenshots": ["desktop-preview.jpg", "desktop-practice.jpg"],
+  "responsiveEvidence": {
+    "builtDomWidthsTested": [1100, 1099, 768, 390, 320, 1440],
+    "actualMobileViewportScreenshot": "not captured",
+    "blocker": "Chromium displayed that the organization disallows DevTools on this page when F12 was used to check device viewport emulation. The notice was dismissed; no policy/settings change or alternate DevTools route was attempted.",
+    "physicalPhoneTested": false
+  },
+  "limitations": ["This GUI observation does not prove operational owner authentication or actual source connectivity.", "The Node and browser loops were validated on the same GUI namespace. Managed command execution uses a separate loopback namespace."]
+}

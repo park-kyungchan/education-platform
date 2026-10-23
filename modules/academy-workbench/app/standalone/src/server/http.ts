@@ -1,0 +1,38 @@
+import {createServer,type ServerResponse,type IncomingMessage} from 'node:http';
+import {readFileSync} from 'node:fs';
+import {fileURLToPath} from 'node:url';
+import {join} from 'node:path';
+import {DOMAINS,type Domain} from './contracts.ts';
+import {Store} from './storage.ts';
+import {authenticate,requestBoundary,type Config} from './auth.ts';
+import {makeSyntheticDataset} from '../../fixtures/dataset.ts';
+import {eventSummary,studentPanels,workflowRead} from './read-models.ts';
+import {validDate} from '../shared/date.ts';
+const publicDir=fileURLToPath(new URL('../../public/',import.meta.url));
+const headers={'Cache-Control':'private, no-store','X-Content-Type-Options':'nosniff','Referrer-Policy':'no-referrer','Cross-Origin-Resource-Policy':'same-origin','Cross-Origin-Opener-Policy':'same-origin','X-Frame-Options':'DENY','Permissions-Policy':'camera=(), microphone=(), geolocation=()','Content-Security-Policy':"default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self'; img-src 'self' data:; font-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; object-src 'none'",'Vary':'Authorization'};
+function send(res:ServerResponse,status:number,body:unknown,extra:Record<string,string>={}){res.writeHead(status,{...headers,'Content-Type':'application/json; charset=utf-8',...extra});res.end(JSON.stringify(body));}
+export function createApplication(config:Config,store:Store,expectedSecretDigest:Buffer|null=null){
+ const preview=makeSyntheticDataset();store.assertDatabaseBoundary(config.ownerId);if(config.authMode==='loopback-preview'){if(store.modes(config.ownerId).some(m=>m!=='synthetic'))throw Error('private_data_forbidden_in_preview');store.assertPreviewFixture(preview);}if(config.authMode==='owner-secret'&&!expectedSecretDigest)throw Error('owner_secret_setup_required');
+ const server=createServer(async(req:IncomingMessage,res)=>{
+  const address=server.address(),port=typeof address==='object'&&address?address.port:config.port,boundary=requestBoundary(req,config,port);if(boundary){send(res,403,{error:boundary});return;}
+  let url:URL;try{if(!req.url?.startsWith('/')||req.url.startsWith('//')||req.url.length>16384)throw Error('invalid_target');url=new URL(req.url,'http://'+req.headers.host);}catch{send(res,400,{error:'invalid_request_target'});return;}
+  if(!['GET','HEAD'].includes(req.method??'')){send(res,405,{error:'read_only_runtime'},{Allow:'GET, HEAD'});return;}
+  if(url.pathname==='/health'){send(res,200,{status:'ok',application:'academy-workbench',runtime:'standalone-node',sourceConnected:false});return;}
+  const caller=authenticate(req.headers.authorization,config,expectedSecretDigest);if(!caller){send(res,401,{error:'owner_authentication_required'},{'WWW-Authenticate':'Basic realm="Academy Workbench", charset="UTF-8"'});return;}
+  try{store.assertDatabaseBoundary(caller.ownerId);if(config.authMode==='loopback-preview')store.assertPreviewFixture(preview);
+   if(url.pathname==='/api/status'){send(res,200,{status:'ready',runtime:'standalone-node-sqlite',authMode:config.authMode,assurance:caller.assurance,synthetic:store.modes(caller.ownerId).every(m=>m==='synthetic'),sourceConnected:false,sourceAdapter:{state:'disabled',reason:'Independent academy authentication and response contract not verified',externalRequests:0},capabilities:{read:true,localDurableStorage:true,academyWrites:false,print:false,send:false,liveRefresh:false},migration:{complete:false,privateDatasetImported:store.modes(caller.ownerId).includes('private')},runtimeReceipt:{ownerScopeChecked:true,modeGateChecked:true,doesNotProveSourceIdentity:true}});return;}
+   if(url.pathname==='/api/students'){send(res,200,{students:store.students(caller.ownerId)});return;}
+   if(url.pathname==='/api/work-domains'){const counts=store.domainCounts(caller.ownerId);send(res,200,{domains:DOMAINS.map(([id,label])=>({id,label,recordCount:counts[id]??0,coverage:counts[id]?'partial_saved_records':'not_imported',liveAdapterConnected:false})),allAcademyWorkComplete:false});return;}
+   if(url.pathname==='/api/records'){
+    if([...url.searchParams.keys()].some(k=>!['studentId','domain','offset','limit'].includes(k))){send(res,400,{error:'unknown_query_parameter'});return;}
+    const studentId=url.searchParams.get('studentId')??undefined,domain=url.searchParams.get('domain')??undefined,offset=Number(url.searchParams.get('offset')??0),limit=Number(url.searchParams.get('limit')??25);
+    if(studentId&&!store.hasStudent(caller.ownerId,studentId)){send(res,404,{error:'student_not_found_in_owner_scope'});return;}if(!Number.isInteger(offset)||offset<0||offset>10000000||!Number.isInteger(limit)||limit<1||limit>100||domain&&!DOMAINS.some(([id])=>id===domain)){send(res,400,{error:'invalid_query_scope'});return;}send(res,200,store.records(caller.ownerId,{studentId,domain:domain as Domain|undefined,offset,limit}));return;}
+   if(url.pathname.startsWith('/api/students/')){const studentId=decodeURIComponent(url.pathname.slice('/api/students/'.length));if(!store.hasStudent(caller.ownerId,studentId)){send(res,404,{error:'student_not_found_in_owner_scope'});return;}const projection=store.projection(caller.ownerId,studentId);send(res,200,{student:store.students(caller.ownerId).find(s=>s.id===studentId),...projection,panels:studentPanels(store,caller.ownerId,studentId),projectionAvailable:projection!==null,sourceMode:store.modes(caller.ownerId).includes('private')?'imported_snapshot':'synthetic',liveRefreshConnected:false,verification:{storageContentHash:projection?.contentHash??null,scopeChecked:true,sourceIdentityIndependentlyVerified:false}});return;}
+   if(url.pathname==='/api/academy/today'){const date=url.searchParams.get('date'),session=url.searchParams.get('session')??'all';if([...url.searchParams.keys()].some(k=>!['date','session'].includes(k))||!validDate(date)||!['all','1','2'].includes(session)){send(res,400,{error:'invalid_today_scope'});return;}send(res,200,{status:'success',result:{domain:'academy',kind:'daily_preparation',sourceMode:'saved_snapshot',liveRefreshConnected:false,requestedDate:date,current:{state:'unverified'},sessions:[{session:'1',state:'unverified'},{session:'2',state:'unverified'}],studentEventOverlay:eventSummary(store,caller.ownerId)}});return;}
+   if(url.pathname==='/api/academy/work-context'){if([...url.searchParams.keys()].some(k=>k!=='input')){send(res,400,{error:'unknown_query_parameter'});return;}let input:unknown;try{input=JSON.parse(url.searchParams.get('input')??'null');}catch{send(res,400,{error:'invalid_work_context_arguments'});return;}try{send(res,200,{status:'success',result:workflowRead(store,caller.ownerId,input)});}catch(e){const reason=(e as Error).message;send(res,reason==='workflow_revision_changed_reload_required'?409:400,{status:reason});}return;}
+   if(url.pathname==='/api/import-history'){send(res,200,{imports:store.audit(caller.ownerId)});return;}
+   if(url.pathname==='/api/artifacts'){send(res,200,{artifacts:store.artifactMetadata(caller.ownerId),fileServingEnabled:false});return;}
+   const files:Record<string,string>={'/':'index.html','/app.js':'app.js','/app.css':'app.css'},file=files[url.pathname];if(file){const body=readFileSync(join(publicDir,file)),type=file.endsWith('.js')?'text/javascript':file.endsWith('.css')?'text/css':'text/html';res.writeHead(200,{...headers,'Content-Type':type+'; charset=utf-8'});res.end(req.method==='HEAD'?undefined:body);return;}send(res,404,{error:'not_found'});
+  }catch{send(res,503,{error:'protected_read_unavailable'});}
+ });server.requestTimeout=5000;server.headersTimeout=5000;server.maxHeadersCount=50;return server;
+}

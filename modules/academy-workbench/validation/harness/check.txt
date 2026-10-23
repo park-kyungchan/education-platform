@@ -1,0 +1,43 @@
+$ bun run typecheck:harness && bun run check:harness && bun run typecheck:context && bun run check:context
+$ bun scripts/typecheck-harness.ts
+$ bun scripts/check-harness.ts
+{
+  "status": "pass",
+  "source": {
+    "root": "<AGENT_PLATFORM_ROOT>",
+    "commit": "ffba2462a08b9f8c83c6f87b1043403e5cb748d7",
+    "mode": "pinned-snapshot",
+    "scope": "Selected Artifact and WorkContext validator import closure plus immutable ontology 0.2.0 release; not all native provider closure.",
+    "fullNativeProviderClosureVerified": false,
+    "authority": "none",
+    "nativePermissionGranted": false
+  },
+  "artifactCount": 5,
+  "closedReferences": "pass",
+  "checkpoint": "pass",
+  "identity": {
+    "projectId": "academy-workbench",
+    "workId": "harness-consumer-upgrade-20261013",
+    "registration": "local-module-record"
+  },
+  "historicalGateBytes": "unchanged",
+  "archiveContentsRechecked": false,
+  "runtimeActivated": false,
+  "actualUserAcceptance": "not-observed"
+}
+$ bun node_modules/typescript/bin/tsc -p context/user-context/tsconfig.json
+$ cd context/user-context && bun run check
+$ bun scripts/validate.mjs && bun scripts/test.mjs
+{
+  "status": "passed",
+  "mode": "read-only",
+  "sources": 77,
+  "records": 52,
+  "checks": 12,
+  "errors": [],
+  "sourceFingerprint": "592c8bd54fc6ab067a33489e6dca6775e90c744834ca997fe35c97fdeedbacff"
+}
+{
+  "testsPassed": 21,
+  "coverage": "positive fixture, 19 adversarial data mutations, and byte-identical read-only CLI; no semantic validity claim"
+}

@@ -1,0 +1,196 @@
+{
+  "counts": {
+    "grade3_research/freudenthal/circle_designs.json": {
+      "designs": 31,
+      "actions": 164,
+      "sha256": "1b4d3da7b54c32d904b0ec7a54ce02138214a44420bee1c963e1a67d9901590a"
+    },
+    "grade3_research/freudenthal/division_designs.json": {
+      "designs": 36,
+      "actions": 442,
+      "sha256": "49b15fe9872521486fdda29f41431ca568f67fc020ce025311740f2246dfb29b"
+    },
+    "grade3_research/freudenthal/multiplication_designs.json": {
+      "designs": 38,
+      "actions": 270,
+      "sha256": "88d3c74c8c1427c0a72dd95416faeb126d3de77e699293b8e630ede05d7ffd05"
+    },
+    "grade3_research/freudenthal/upper_designs.json": {
+      "designs": 46,
+      "actions": 340,
+      "sha256": "9e813c32c18b8e062e791dd9fa1b51a5cae798901e0fd37ffaf5b024722a6261"
+    }
+  },
+  "missingIDs": [],
+  "issues": [],
+  "totals": [
+    151,
+    1216
+  ],
+  "auditDate": "2026-10-13",
+  "status": "reviewed_research_draft_not_empirically_validated",
+  "scope": {
+    "designs": 151,
+    "microActions": 1216,
+    "originalExamplesExactlyPreserved": 151,
+    "automated": "유형 ID, 필수 및 중첩 필드, 출처 ID, 상태 표기, 행동 ID 중복, chunk 전수 대응, 중심/전이/경계와 행동 설계의 문항·답 동기화, 원래 예시의 문항·답 정확 일치",
+    "manual": "151유형의 중심·전이·경계 문항과 풀이·불변량을 검토했다. 행동은 간추린 질문·예상 수행·오류·지원 목록 및 의심 항목의 전체 필드로 대조했고 개정된 상위 46유형의 수행 내용과 표적 지원을 재검토했다. 모든 장문 필드의 문장별 교정이나 모든 실제 수업 분기의 완전 검증을 뜻하지 않는다."
+  },
+  "resolvedFindings": [
+    {
+      "ids": [
+        "HD11-d2-T01"
+      ],
+      "issue": "86÷4에서 남은 십 2개라는 잘못된 전이 설명",
+      "resolution": "86÷3으로 바꾸어 남은 2십+6일=26일, 몫28 나머지2로 모든 연결 필드를 통일했다."
+    },
+    {
+      "ids": [
+        "HD11-d1-T02"
+      ],
+      "issue": "정수 몫에서 피제수10배→몫10배의 조건 누락",
+      "resolution": "같은 양의 정수 제수로 나누어떨어지는 경우로 적용 범위를 한정했다."
+    },
+    {
+      "ids": [
+        "HD23-d3-T02"
+      ],
+      "issue": "841에서844로 변하는 증가량을4로 기술",
+      "resolution": "증가3개와 기존나머지1개의 합으로 설명했다."
+    },
+    {
+      "ids": [
+        "HD11-d1-T01",
+        "HD21-d1-T01",
+        "HD12-d1-T01"
+      ],
+      "issue": "선수 기능 확인 불일치와 0 교환·최종 나머지의 가짜 오류",
+      "resolution": "구구 확인을 대상과 맞추고 잔여0의 불필요한 교환을 합쳤다. 최종 일 단계와 중간 단계를 구별하고 실제 인수 역할 오류로 수정했다."
+    },
+    {
+      "ids": [
+        "HC31-d3-T01"
+      ],
+      "issue": "고정 침에서 벌림이 변하면 어떤 중심의 원도 될 수 없다는 과도한 결론",
+      "resolution": "목표 O/K 중심의 원 조건 위반으로 한정하고 다른 중심 가능성은 배제하지 않음을 명시했다."
+    },
+    {
+      "ids": [
+        "HC32-d1-T01",
+        "HC32-d1-T02",
+        "HC32-d2-T01",
+        "HC33-d1-T01",
+        "HC33-d1-T02"
+      ],
+      "issue": "작도 동작의 과도한 통합과 침 이탈·벌림 변화의 지원 미분리",
+      "resolution": "손잡이·설정·초기 회전·두 오류의 진단 및 복구·종료를 분리했다. 반복 작도는 선행 단일 작도 수행 확인과 정확한 참조 행동을 둔다."
+    },
+    {
+      "ids": [
+        "HM12-d2-T01",
+        "HM23-d4-T02",
+        "HM12-d4-T02"
+      ],
+      "issue": "올림 재곱 오류 지원 불일치, 다른 전략을 오류로 단정, 단위 수치와 실제 양 혼동",
+      "resolution": "이미 곱한 양의 출처를 표시하고 요청한 부분곱 출처 미표현으로 오류를 한정했다. 단위 개수10배와 전체 양 보존을 구별했다."
+    },
+    {
+      "ids": [
+        "HM32-d2-T02",
+        "HM32-d1-T02",
+        "HM32-d3-T01"
+      ],
+      "issue": "같은 경계 판단을 연속 두 행동으로 반복",
+      "resolution": "중복 세 쌍을 통합하고 최초 무지원 반응과 지도 후 재응답을 분리했다. HM 행동수273→270."
+    },
+    {
+      "ids": [
+        "G4-D-SD03-T02",
+        "G6-FDIVN-SD01-T01",
+        "G5-DMULT-SD02-T01"
+      ],
+      "issue": "차량 동시 이동 조건 누락, 등분 몫의 단위 오류, 0 삭제와 소수점 삭제 혼동",
+      "resolution": "한 번에 전원 동시 이동 조건을 명시했다. 반복 운행에서는1대도 가능함, 한 병0L와 전체남음3L, 소수점 삭제에 따른 값 변화를 각각 구별했다."
+    },
+    {
+      "ids": [
+        "G5-FM-SD01-T01",
+        "G6-DDIVN-SD02-T01",
+        "G6-FDIVF-SD02-T01",
+        "G6-PI-SD03-T01"
+      ],
+      "issue": "핵심 탐색·단위 교환·약분·계산이 소수의 복합 행동에 숨음",
+      "resolution": "상위46유형을158행동에서340행동으로 재분절했다. 약수 후보 배제와 중단, 단계별 단위 변환, 분자·분모 약분, 원주 역산을 관찰 가능한 경계로 전개했다."
+    },
+    {
+      "ids": [
+        "G4-M-SD01-T01",
+        "G5-FM-SD03-T02",
+        "G6-AREA-SD02-T01"
+      ],
+      "issue": "이미 지도한 동일 문항을 독립 전이로 읽을 위험",
+      "resolution": "중복된 사전 지도 계산을 제거하고 assessmentOrder로 지원 전 최초 반응 및 지원 후 반응의 구별을 명시했다."
+    },
+    {
+      "ids": [
+        "G4-D-SD03-T01-A05",
+        "G6-DDIVN-SD02-T01-A07",
+        "G6-PI-SD01-T01-A01",
+        "G6-PI-SD01-T01-A10",
+        "G6-PI-SD01-T02-A04",
+        "G6-PI-SD01-T02-A05",
+        "G6-PI-SD03-T02-A06",
+        "G6-AREA-SD03-T01-A04",
+        "G5-FMULT-SD02-T01-A04"
+      ],
+      "issue": "지원 자동 분기에서 반올림/받아올림, 원주율의 근사·증명/길이·넓이 등을 혼동",
+      "resolution": "9개 항목을 구체 오류에 대응하는 별도 지원으로 재작성했다. 반올림을 받아올림 분기에서 제외하고 약분 오류를 우선 분류했다."
+    },
+    {
+      "ids": [
+        "G6-AREA-SD01-T01"
+      ],
+      "issue": "위아래 경계 길이를 정확히 절반씩 배분하는 유한 조작의 조건 누락",
+      "resolution": "같은 크기의 짝수 개 부채 조각 조건을 문항과 조건 필드에 명시했다."
+    },
+    {
+      "ids": [
+        "G6-PI-SD01-T01-A09",
+        "G6-PI-SD03-T02-A09",
+        "G6-AREA-SD01-T01-A01",
+        "G6-AREA-SD01-T01-A02",
+        "G6-AREA-SD01-T01-A03",
+        "G6-AREA-SD01-T01-A04",
+        "G6-AREA-SD03-T01-A05"
+      ],
+      "issue": "저자 후속 자체검사에서 원주와 비율, 굴림, 조각 보존·재배열, 두 반지름 인수의 지원 불일치 추가 발견",
+      "resolution": "각 대상에 직접 대응하는 명시적 지원으로 수정한 뒤 감사자가 지원문구와 구조 검사를 재확인했다."
+    }
+  ],
+  "sourceAndAttributionReview": {
+    "result": "출처 ID와 프로젝트 응용 추론 표시, 효과 미관찰 표시의 전수 일관성을 확인했다. 모든 미시행동 근거는 project_application_inference로 표시되어 있다.",
+    "basis": "sources.json, psychology_sources.json, research_memo.md 및 공통 설계 스키마",
+    "limit": "이번 감사는 원저·실험 논문을 새로 전부 대조한 독립 문헌 재검증이 아니다. 출처 확인 범위와 한계는 각 출처 기록 및 연구 메모를 따른다."
+  },
+  "remainingLimitations": [
+    "필드 완결성과 계산·조건 검토는 학습효과, 인지부하 감소, 표준화 진단 정확도를 입증하지 않는다.",
+    "지원 축소 기준과 행동 분절은 연구자의 설계 가설이다. 실제 학생의 최초 반응과 지원 이력을 기록하며 필요에 따라 합치거나 더 나누어야 한다.",
+    "상위학년 연결 문항은 초3 필수 수행이나 즉시 도달 목표가 아니다. 해당 개념의 선수 기능과 학습 범위를 먼저 확인해야 한다.",
+    "일부 지원·관찰 문구는 공통 양식을 사용한다. 실제 수업 전 읽기 부담, 조작 가능성, 오류별 적합성을 파일럿으로 점검해야 한다.",
+    "검토에서 발견된 구체 결함은 수정·재확인했으나 남은 오류가 전혀 없다는 보증이나 모든 문장·분기의 완전 검증은 아니다."
+  ],
+  "unresolvedBlockingFindings": [],
+  "copyeditingRecheck": {
+    "date": "2026-10-13",
+    "priorUpperSha256": "d9da3c9975786c743bd8af7683ca72323d475e36c96bf30f3c8198cd7f0ce6a6",
+    "currentUpperSha256": "9e813c32c18b8e062e791dd9fa1b51a5cae798901e0fd37ffaf5b024722a6261",
+    "changedStringFields": 4319,
+    "changeScope": "actionDesign.microActions 내부 문장 교정",
+    "structuralChanges": 0,
+    "numericTokenChanges": 0,
+    "centralTransferBoundaryChanges": 0,
+    "schemaIssues": 0,
+    "limitation": "표본 가독성 확인을 포함했으나 모든 한국어 띄어쓰기의 교정 완료를 보증하지 않는다. 일부 비표준 띄어쓰기는 후속 교정 대상으로 남는다.",
+    "finalFollowup": "fd840 이후 종결어·띄어쓰기 미세 교정까지 재대조했다. microActions 이외 변경, 숫자 토큰 변경, 구조 변경 모두 0건이다."
+  }
+}

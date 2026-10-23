@@ -1,0 +1,65 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "academy-operations",
+  "projectId": "academy-workbench",
+  "workId": "academy-consumer-integration-20261021",
+  "kind": "input",
+  "id": "CON-01-VERIFICATION-R2",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "accountable-consumer-subLead",
+    "locator": "native-thread:01a15dd0-03ed-71a0-8372-936776e22669:CON-01-VERIFICATION-R2",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "verification": {
+      "schemaVersion": "1.0.0",
+      "kind": "verification",
+      "id": "academy-workbench:verification:con-01-r2",
+      "domainId": "academy-operations",
+      "projectId": "academy-workbench",
+      "createdAt": "2026-10-21T09:46:53.753Z",
+      "payload": {
+        "targetRefs": [
+          "common-harness:task:b551d31f377136c8fd171345e27818e4a1cc4fc87faa7049196deecd2629e9bc"
+        ],
+        "criteria": [
+          {
+            "id": "exact-qualified-source-selection",
+            "status": "pass",
+            "message": "Exact admission sources, predecessor bytes, installed skill and received QRY qualification identified without source/body custody change.",
+            "evidenceRefs": [
+              "academy-workbench:evidence:con-01-result-observation-r2"
+            ]
+          },
+          {
+            "id": "bounded-caller-coverage-and-adoption-plan",
+            "status": "pass",
+            "message": "Actual callers, omissions, clocks, separate budgets and finite owner-local adoption steps recorded; all context pages consumed.",
+            "evidenceRefs": [
+              "academy-workbench:evidence:con-01-result-observation-r2"
+            ]
+          },
+          {
+            "id": "honest-check-and-hold-accounting",
+            "status": "pass",
+            "message": "7 saved tests pass; 2 SDK tests fail and remain adoption gaps. CON-01 selection is verified; SDK acceptance, production integration and downstream task admission are not claimed.",
+            "evidenceRefs": [
+              "academy-workbench:evidence:con-01-result-observation-r2"
+            ]
+          }
+        ],
+        "inputHashes": [
+          {
+            "path": "work/academy-workbench/academy-consumer-integration-20261021/inputs/CON-01-RESULT-R2.json",
+            "sha256": "dfc567fd1ad51b11bb258c70db8f92962105168fa3a816fa0bf3c20deb1c2205"
+          }
+        ],
+        "runtime": {
+          "name": "Bun canonical external source APIs + bounded selection checks",
+          "version": "1.4.3"
+        }
+      }
+    }
+  }
+}

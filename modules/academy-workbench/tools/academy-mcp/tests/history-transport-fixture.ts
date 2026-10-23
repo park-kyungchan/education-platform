@@ -1,0 +1,12 @@
+import {McpServer} from '@modelcontextprotocol/server';
+import {StdioServerTransport} from '@modelcontextprotocol/server/stdio';
+import {syntheticInputs} from './fixtures.ts';
+import {SavedContext} from '../src/saved-context.ts';
+import {queryResultSchema} from '../src/contracts.ts';
+import {registerSavedQuery} from '../src/query-tool.ts';
+const inputs=syntheticInputs();
+if(process.argv.includes('--oversized-clock'))inputs.audit.collectedAt='2026-10-14T08:00:00.'+'1'.repeat(270000)+'Z';
+inputs.audit.students[0]!.sections=Array.from({length:37},(_,i)=>({id:'unicode-'+i,bookEditionId:'edition-a',note:'한'.repeat(18000),escaped:'"\\\n'.repeat(200)}));
+const context=new SavedContext(inputs),server=new McpServer({name:'synthetic-history-transport',version:'1.0.0'});
+registerSavedQuery(server,input=>queryResultSchema.parse(context.query(input)));
+await server.connect(new StdioServerTransport());

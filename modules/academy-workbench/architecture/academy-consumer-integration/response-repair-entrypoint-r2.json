@@ -1,0 +1,42 @@
+{
+  "schema": "academy.consumer-response-repair-entrypoint.v2",
+  "taskId": "academy-workbench:task:academy-consumer-integration-20261021-con-response-contract-repair",
+  "logical": {
+    "domainId": "academy-operations",
+    "projectId": "academy-workbench",
+    "workId": "academy-consumer-integration-20261021",
+    "issueId": "CON-ISSUE-20261021",
+    "specId": "CON-SPEC",
+    "specRevision": 1,
+    "planId": "CON-PLAN",
+    "planRevision": 3,
+    "taskId": "academy-workbench:task:academy-consumer-integration-20261021-con-response-contract-repair"
+  },
+  "state": "READY_FOR_ROOT_SOURCE_CHECKPOINT",
+  "taskState": {
+    "execution": "complete",
+    "verification": "passed",
+    "localAudit": "result-durable",
+    "sharedAudit": "pending",
+    "formalCompletion": "pending"
+  },
+  "sourceEvidence": "response-repair-source-evidence-r2.json",
+  "rootSdkInput": "CON-RESPONSE-REPAIR-ROOT-SDK-R1",
+  "rootSdkReceipt": "architecture/academy-consumer-integration/observations/CON-RESPONSE-REPAIR-ROOT-SDK-R1.json",
+  "resultInput": "CON-RESPONSE-REPAIR-RESULT-R1",
+  "verificationInput": "CON-RESPONSE-REPAIR-VERIFICATION-R1",
+  "resultEvidenceId": "academy-workbench:evidence:con-response-repair-result-observation-r1",
+  "verificationEvidenceId": "academy-workbench:evidence:con-response-repair-verification-r1",
+  "rootSdkObservationEvidenceId": "academy-workbench:evidence:con-response-repair-root-sdk-observation-r1",
+  "taskVerificationTarget": "common-harness:task:6654b2aa07105c3426ae90ec0ce771aab0ee8d15177f845fc7fb045afbd9fa24",
+  "localRecordCheck": "observations/CON-RESPONSE-REPAIR-FINAL-LOCAL-RECORD-CHECK-R1.json",
+  "checkedCommit": "1d72361428ec6e0356fb80d840959926819135c4",
+  "checkedTree": "78047897b870626123108fb57ebf269335e75dba",
+  "independentReview008": "pending Root",
+  "nativeAuthorSdkEnvironment": "unresolved",
+  "nativeAuthentication": "unverified",
+  "nativeActivation": false,
+  "teacherAcceptance": false,
+  "formalWorkComplete": false,
+  "next": "WAIT for Root final source checkpoint and independent review008. CON03 remains held on VER02+Root admission."
+}

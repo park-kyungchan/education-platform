@@ -1,0 +1,50 @@
+{
+  "kind": "academy_item_evidence_contract",
+  "contractId": "academy.item-evidence-extension",
+  "schemaVersion": "1.0.0",
+  "version": "1.0.0",
+  "revision": 1,
+  "dataClass": "non_sensitive_contract",
+  "authorityGranted": false,
+  "defaultView": "lanes",
+  "alternativeViews": ["matrix", "tree", "ledger", "icicle"],
+  "typescriptContract": "scripts/question-model.ts",
+  "viewContractVersion": "1.1.0",
+  "storage": {
+    "canonicalStructure": "shared_book_edition_registry",
+    "selectedStudentEvidence": "student_book_evidence_view",
+    "rendering": "disposable_private_projection",
+    "spaceIsTransactionalBackend": false,
+    "automaticRuntimeIntegration": "not_implemented"
+  },
+  "entities": ["EditionBinding", "UnitBinding", "SectionBinding", "Item", "ItemVariant", "ItemAttempt", "ItemGrade", "ItemReview", "ItemEvidence", "ItemNotebook"],
+  "identityRules": [
+    "Keep stable opaque domain IDs, revisions, native identities, original printed labels, and source row IDs separate.",
+    "Unknown native ID remains null; sourceAttemptId does not imply a known nativeAttemptId.",
+    "Require exact edition, unit, section, item, presented variant, assignment and student scope for a claim."
+  ],
+  "variantKinds": ["source", "similar", "revised", "reprint"],
+  "notebookKinds": ["lecture_notes", "solution_notes"],
+  "evidenceKinds": ["source_record", "answer_image", "lecture_note_capture", "solution_note_capture", "grading_annotation"],
+  "orderingEdgeMeaning": "verified_printed_or_display_order_not_conceptual_dependency",
+  "stateRules": [
+    "No real item source means absent questionLayer or empty not_captured collections with null denominator.",
+    "Retain every attempt; distinguish retry of the same variant from remediation on another variant.",
+    "Keep score, correctness, teacher review, capture, and completion separate.",
+    "Append scoped supersession records; keep old records and unresolved conflicts.",
+    "Use private versioned image/note references and exact source hashes, not embedded binary or public uploads."
+  ],
+  "migration": {
+    "policy": "additive_preserve_legacy",
+    "legacyIdsRekeyed": false,
+    "legacySnapshotContract": "1.1.0",
+    "frozenSamplesMutable": false
+  },
+  "implementationClaims": {
+    "schemaAndLocalValidation": true,
+    "questionDataAlreadyAvailable": false,
+    "automaticGrading": false,
+    "ocrOrHandwritingAssessment": false,
+    "operationalApplicationBackend": false
+  }
+}

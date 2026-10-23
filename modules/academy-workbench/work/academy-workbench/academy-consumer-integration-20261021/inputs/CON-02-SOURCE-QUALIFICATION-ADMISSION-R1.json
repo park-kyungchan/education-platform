@@ -1,0 +1,44 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "academy-operations",
+  "projectId": "academy-workbench",
+  "workId": "academy-consumer-integration-20261021",
+  "kind": "input",
+  "id": "CON-02-SOURCE-QUALIFICATION-ADMISSION-R1",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "root-academy-orchestrator",
+    "locator": "root-source-requalification-with-original-failed-task-preserved",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "createdAt": "2026-10-21T10:16:28.360516+00:00",
+    "admittedTaskId": "academy-workbench:task:academy-consumer-integration-20261021-con-02-source-qualification",
+    "sourceBase": "20d9a6c4c08c170a6befd3ce91611c3ab2a47942",
+    "spec": "CON-SPEC@1 unchanged",
+    "plan": "CON-PLAN@2 new revision; CON-PLAN@1 retained",
+    "originalTask": {
+      "id": "academy-workbench:task:academy-consumer-integration-20261021-con-02",
+      "state": "complete/failed/result-durable",
+      "path": "work/academy-workbench/academy-consumer-integration-20261021/tasks/academy-workbench%3Atask%3Aacademy-consumer-integration-20261021-con-02.json",
+      "sha256": "b9e4d6f110b6a3f8f4eace14429e35e03ba3b2810378a42d9e8986b3e6ab3bdf",
+      "preservedBytes": true
+    },
+    "canonicalRationale": {
+      "sourceAuditor": "agent-platform712f90de",
+      "snapshotRule": "A passed Task requires every referenced Verification criterion to pass.",
+      "transitionRule": "A completed Task must retain its original contract and Verification references.",
+      "resolution": "A distinct source qualification Task preserves failed historical evidence and separately qualifies exact unchanged business source using Root execution control. No common contract change or original pass fabrication.",
+      "dependencyRule": "New Task depends on original already-passed CON01/QRY local qualification, references original failed Task as provenance/verifiedBy rather than a false passed dependency. Planned CON03 rebinds to the new source qualification under Plan2."
+    },
+    "qualifiedSource": "05797da1aad0ef1133d983fd4baac922c269b6f1/tree11bd6aa1c730a493757ad222955e1e854fbfde55 business/fixture/test bytes unchanged",
+    "rootControlInput": "CON-02-ROOT-SDK-CONTROL-R1,10pass0fail289assertions; exact command/source/Bun1.4.3, attribution Root authorized tools",
+    "requiredRecords": "NEW own ResultR2 and VerificationR2 bound to NEW Task verification target, exact Result Input and source/artifact hashes. Preserve R1 result/failed Verification/Task/plan bytes and all source history. Raw observations outside Work directory.",
+    "scope": "Source metadata/verification record completion only; no business code, tests, reducer/validator, package/pin/common/native modifications or more heavy checks. Report READY_FOR_ROOT_SOURCE_CHECKPOINT and wait; Root commits.",
+    "holds": [
+      "Native author SDK runtime cause unknown; real/native authentication/DB/source data/latency/adoption unverified",
+      "CON03 still held on VER02+Root admission",
+      "Shared delivery/formal/teacher acceptance pending; all original private/publication/activation/common holds retained"
+    ]
+  }
+}

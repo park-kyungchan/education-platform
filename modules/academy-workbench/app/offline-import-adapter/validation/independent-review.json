@@ -1,0 +1,106 @@
+{
+  "schemaVersion": "academy.offline-independent-review/1",
+  "reviewedAt": "2026-10-13T05:06:01.703Z",
+  "conclusion": "No blocking findings within offline private preservation and dry-run validation scope.",
+  "reviewedCode": {
+    ".gitignore": {
+      "sha256": "031fd962d18538b750aa21e7ec452d42647907bfcae15e4f7b5f75e33a4f14fe"
+    },
+    "AGENTS.md": {
+      "sha256": "42d45363736eb383a9059a65011e0c4a312ff0d4f7b43c11b57d9a8e6db4abb3"
+    },
+    "README.md": {
+      "sha256": "fb3bd8c60b95634ef6b2e3e1b43ff30b07365715625defc5f4aa7de2ec66ab59"
+    },
+    "package.json": {
+      "sha256": "7d0823fd0efe20edc611d8031c3af335a0ab2665dccfb6dfdae5d373ce6d0b7d"
+    },
+    "src/adapter.ts": {
+      "sha256": "50100f6fe215abb1bacc8576c42f51f1b52363a8790864d04422e7601cc81ae7"
+    },
+    "src/cli.ts": {
+      "sha256": "050f54b92bbd00a277b422a4710d6b92a95bcc7c90705dfc52b95aee40952b6f"
+    },
+    "src/verify-output.ts": {
+      "sha256": "00a6762350b8c1408e251134b081cabdb7d0c10e301c019612462087990ff6a7"
+    },
+    "tests/adapter.test.ts": {
+      "sha256": "4136d8c3c29fa2f25826463f2518a7916e96a6413eec861a7d78564213b0dccb"
+    },
+    "tests/cli.test.ts": {
+      "sha256": "bc55cf28a28efe4c9282cfb63fa311f7f8a9c9b31fb60ad9f45a7145446f3ad6"
+    },
+    "vendor/runtime-contracts.ts": {
+      "sha256": "37eb92845c37e60aa27baac7ffc1ea44411123aa45f3e4e9047246798429cf83"
+    }
+  },
+  "reviewedPrivateOutput": {
+    "envelopeSha256": "a198d8b8789ea717faa64c6bad398c58dda4e3b56f7e4ca4b0ab61de5978548e",
+    "envelopeBytes": 8308169,
+    "mappingReportSha256": "3210d0bde6fdd6d7b5fa6bca5a30de599d751f68fda68de4744efc724776097c",
+    "rawSourceFileCount": 13
+  },
+  "checks": {
+    "sourceFilesByteExact": 13,
+    "detailResponseCapsulesExact": 38,
+    "progressSummariesExact": 717,
+    "ledgerEventHashesExact": 55,
+    "privateEnvelopeRecords": 815,
+    "activeProjections": 0,
+    "activeRuntimeKinds": 0,
+    "unresolvedMappedRelationships": 0,
+    "finalEnvelopeMatchesFreshMapping": true,
+    "outputVerifierPassed": true,
+    "vendorContractByteIdentical": true,
+    "frozenRuntimeAllFilesUnchanged": true,
+    "frozenRuntimeDigestManifestSha256": "29f2ab93582e0c4609e4e8142881ce28c10d50f8a7e8321e7ea8a7caa6514fea"
+  },
+  "syntheticTests": {
+    "independentlyRun": true,
+    "passed": 25,
+    "failed": 0
+  },
+  "additionalIndependentSyntheticChecks": [
+    "Private directory 0700 and envelope/report 0600",
+    "Existing output refused without overwrite",
+    "Source symlink refused",
+    "Embedded Markdown signed URL and plaintext credential assignments rejected",
+    "Revised source snapshot/head obtains distinct immutable record IDs",
+    "Non-exhausted secondary pagination rejected"
+  ],
+  "fixedFindings": [
+    "Versioned identity, response, progress and artifact IDs",
+    "Credential scanning across all copied text and embedded URLs",
+    "Secondary evidence/decision/attempt pagination gates",
+    "Serialized envelope size checked before output creation",
+    "Runtime/public output roots and output ancestor symlinks rejected"
+  ],
+  "remainingGates": [
+    "No factual or native academy identity verification is established by structural validation or source hashes.",
+    "Original source/build/history bytes and truncated import/commit fields remain incomplete.",
+    "Correction/withdrawal/conflict and Clinic print semantics are preserved raw; active projections require independent semantic reconciliation.",
+    "Normalized minute and approximate-minute precision remains unknown; raw clocks are retained.",
+    "Later imports with revised identity evidence require reconciliation under the frozen runtime.",
+    "Secret scanning is bounded; private output must remain at the authorized private destination.",
+    "No operational import, database write, server, external request, auth change or credential creation was performed."
+  ],
+  "strictTypecheck": {
+    "independentlyRun": true,
+    "passed": true,
+    "compilerSource": "Existing recovery-build TypeScript installation",
+    "options": [
+      "strict",
+      "skipLibCheck",
+      "target ES2023",
+      "module NodeNext",
+      "noEmit",
+      "allowImportingTsExtensions",
+      "types node"
+    ],
+    "scope": [
+      "src/*.ts",
+      "tests/*.ts",
+      "vendor/*.ts"
+    ]
+  }
+}

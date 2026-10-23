@@ -1,0 +1,404 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "kind": {
+      "type": "string",
+      "const": "shared_book_edition_registry"
+    },
+    "schemaVersion": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "revision": {
+      "type": "integer",
+      "exclusiveMinimum": 0,
+      "maximum": 9007199254740991
+    },
+    "registryId": {
+      "type": "string"
+    },
+    "sourceIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "previousSharedCache": {
+      "type": "object",
+      "properties": {
+        "pageId": {
+          "type": "string"
+        },
+        "reference": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "jsonPointer": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "pageId",
+        "reference",
+        "sha256",
+        "jsonPointer"
+      ],
+      "additionalProperties": false
+    },
+    "newSharedCache": {
+      "type": "object",
+      "properties": {
+        "pageId": {
+          "type": "string"
+        },
+        "reference": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "jsonPointer": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "pageId",
+        "reference",
+        "sha256",
+        "jsonPointer"
+      ],
+      "additionalProperties": false
+    },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "bookCode": {
+            "type": "string"
+          },
+          "edition": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "schoolLevel": {
+            "type": "string",
+            "enum": [
+              "elementary",
+              "middle",
+              "unknown"
+            ]
+          },
+          "assignmentStatus": {
+            "type": "string",
+            "enum": [
+              "shared_reference_only",
+              "candidate_not_assigned"
+            ]
+          },
+          "topologyState": {
+            "type": "string",
+            "enum": [
+              "printed_toc_verified",
+              "native_catalog_only"
+            ]
+          },
+          "selectedCacheId": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "previewSource": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "pageId": {
+                    "type": "string"
+                  },
+                  "reference": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  },
+                  "jsonPointer": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "pageId",
+                  "reference",
+                  "sha256",
+                  "jsonPointer"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "nativeCatalogSource": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "pageId": {
+                    "type": "string"
+                  },
+                  "reference": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  },
+                  "jsonPointer": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "pageId",
+                  "reference",
+                  "sha256",
+                  "jsonPointer"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "sourceRevision": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "sourcePdfSha256": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "officialUrl": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "printedBodyComplete": {
+            "type": "boolean",
+            "const": false
+          },
+          "studentPhysicalRevisionVerified": {
+            "type": "boolean",
+            "const": false
+          },
+          "outline": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "kind": {
+                  "type": "string",
+                  "enum": [
+                    "major",
+                    "middle",
+                    "subunit",
+                    "major_assessment",
+                    "answers",
+                    "native_unit_unverified_level",
+                    "number_prefix_group"
+                  ]
+                },
+                "sourceLabel": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "parentId": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "parentRelation": {
+                  "type": "string",
+                  "enum": [
+                    "printed_toc_verified",
+                    "number_prefix_only",
+                    "not_verified"
+                  ]
+                },
+                "printedStartPage": {
+                  "anyOf": [
+                    {
+                      "type": "integer",
+                      "minimum": -9007199254740991,
+                      "maximum": 9007199254740991
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "pdfPage": {
+                  "anyOf": [
+                    {
+                      "type": "integer",
+                      "minimum": -9007199254740991,
+                      "maximum": 9007199254740991
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "nativeUnitLabel": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "id",
+                "kind",
+                "sourceLabel",
+                "title",
+                "parentId",
+                "parentRelation",
+                "printedStartPage",
+                "pdfPage",
+                "nativeUnitLabel"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "catalogSectionIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "sectionVocabulary": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "vocabularySource": {
+            "type": "string",
+            "enum": [
+              "observed_public_guide",
+              "user_confirmed_profile",
+              "catalog_labels_only"
+            ]
+          },
+          "sourceAsOf": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "limitations": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "bookCode",
+          "edition",
+          "displayName",
+          "schoolLevel",
+          "assignmentStatus",
+          "topologyState",
+          "selectedCacheId",
+          "previewSource",
+          "nativeCatalogSource",
+          "sourceRevision",
+          "sourcePdfSha256",
+          "officialUrl",
+          "printedBodyComplete",
+          "studentPhysicalRevisionVerified",
+          "outline",
+          "catalogSectionIds",
+          "sectionVocabulary",
+          "vocabularySource",
+          "sourceAsOf",
+          "limitations"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "studentDataIncluded": {
+      "type": "boolean",
+      "const": false
+    },
+    "oldCachedEditionsReanalysed": {
+      "type": "boolean",
+      "const": false
+    },
+    "rules": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "kind",
+    "schemaVersion",
+    "revision",
+    "registryId",
+    "sourceIds",
+    "previousSharedCache",
+    "newSharedCache",
+    "entries",
+    "studentDataIncluded",
+    "oldCachedEditionsReanalysed",
+    "rules"
+  ],
+  "additionalProperties": false
+}

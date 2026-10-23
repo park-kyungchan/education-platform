@@ -1,0 +1,67 @@
+{
+  "cwd": "/home/palantirkc/worktrees/academy-architecture-orchestration-20261021/.local/context-isolation/clean-verification",
+  "CODEX_THREAD_ID": "01a15e5a-77bf-75c1-9dbf-e76042a9e639",
+  "unexpected_context_or_body_injected": false,
+  "host_parent_write_effect_verified": false,
+  "filesystem_constraints_cover_mcp_apps_claimed": false,
+  "workflow_admission": false,
+  "probes": {
+    "allowed_read": {
+      "errno": null,
+      "success": true,
+      "inaccessible": false
+    },
+    "outside_existing_read": {
+      "errno": 2,
+      "success": false,
+      "inaccessible": true
+    },
+    "outside_symlink_read": {
+      "errno": 2,
+      "success": false,
+      "inaccessible": true
+    },
+    "allowed_write": {
+      "errno": null,
+      "success": true
+    },
+    "af_inet_socket_creation": {
+      "errno": 1,
+      "success": false,
+      "closed": false,
+      "connect_attempted": false
+    },
+    "parent_write": {
+      "errno": null,
+      "success": true
+    }
+  },
+  "available_tool_names": [
+    "functions.wait",
+    "functions.request_user_input",
+    "functions.request_user_input_async",
+    "functions.exec",
+    "clock.sleep",
+    "collaboration.followup_task",
+    "collaboration.interrupt_agent",
+    "collaboration.list_agents",
+    "collaboration.send_message",
+    "collaboration.spawn_agent",
+    "collaboration.wait_agent",
+    "apply_patch",
+    "create_goal",
+    "exec_command",
+    "get_goal",
+    "list_mcp_resource_templates",
+    "list_mcp_resources",
+    "read_mcp_resource",
+    "update_goal",
+    "update_plan",
+    "view_image",
+    "write_stdin",
+    "clock__curr_time",
+    "image_gen__imagegen",
+    "web__run"
+  ],
+  "additional_deferred_tool_names_known": false
+}

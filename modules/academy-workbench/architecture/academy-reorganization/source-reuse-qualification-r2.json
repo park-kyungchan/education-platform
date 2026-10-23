@@ -1,0 +1,66 @@
+{
+  "schemaVersion": "academy.source-reuse-qualification/2",
+  "supersedesInterpretation": "source-reuse-qualification.json",
+  "scope": "Additional source evidence for review disposition; no implementation choice or source write yet.",
+  "canonicalSourceOwner": "education-platform/apps/academy/dc-gang-a",
+  "sourcePins": [
+    {
+      "path": "src/academy/application.ts",
+      "sha256": "83f2cbf1be5886376987a02e26157ea70fc07c050137a024fae9767183010aa7"
+    },
+    {
+      "path": "src/academy/usecases/studentScene.ts",
+      "sha256": "4880bba11a8d9f367b5dec0c6d41df2f45e25bc869a54fd41fe3e1ed503adaf6"
+    },
+    {
+      "path": "src/academy/ports/teacherStore.ts",
+      "sha256": "379812d9011d075b100070a3b938514c84578bd98481f6f8a01b7d6892ce6f94"
+    },
+    {
+      "path": "src/academy/domain.ts",
+      "sha256": "c99a9a9b74899117156e7dd165dbdf3763a0eb050f6ae4d3d619d2d19a6c8607"
+    },
+    {
+      "path": "src/academy/learningWork.ts",
+      "sha256": "7598a30b6c3ad9e3c6cb9c9f1cb78753e18ca202349ec8660f033ed350c065ea"
+    },
+    {
+      "path": "src/academy/teacherWorkspace.ts",
+      "sha256": "277fe96d67970052c6d7e2e20861fa89ac18ceb10eecfa449ac3774b5782a496"
+    },
+    {
+      "path": "src/academy/learningWorkProjection.ts",
+      "sha256": "8dd95e4e4457940b6c3ad7a5fe4253f97aadf2fe495db3de3bac2b80a8b12e2b"
+    },
+    {
+      "path": "src/academy/preparationHistory.ts",
+      "sha256": "822bffbbecd03d0b1a52d71e84ddb70bcc19f70129ae124848684c6c0ab554ae"
+    },
+    {
+      "path": "src/academy/teacherWorkContext.ts",
+      "sha256": "e91c53f1c64b29642e1218d0d92a40ffa82eb3511eb12ea95ae33ab990d1ca02"
+    }
+  ],
+  "consumerTrace": [
+    {
+      "producer": "TeacherApplication",
+      "consumer": "TeacherQueries under usecases/studentScene.ts",
+      "evidence": "Facade-issued read snapshot, registered owner scope, date-class/student projections."
+    },
+    {
+      "producer": "learningWork + projectLearningWork",
+      "consumer": "TeacherQueries.student exactWork and workContext",
+      "evidence": "Existing assignment source namespaces, occurrence/attempt/paper identity, withdrawal and pinned catalog references."
+    },
+    {
+      "producer": "TeacherStore",
+      "consumer": "TeacherApplication and existing native adapters",
+      "evidence": "CAS/append/readSnapshot boundary already exists; keep existing store and runtime owner."
+    }
+  ],
+  "conclusion": "Prefer extension/composition of the existing teacher application and learning projections before introducing new gang-a current-state logic. Gang-a evidence contracts remain qualified reusable modules, not an automatic replacement for the actual dc application.",
+  "unknowns": [
+    "Exact per-capability ownership disposition awaits independent review.",
+    "Equivalent full workflow/query behavior not tested by these source reads."
+  ]
+}

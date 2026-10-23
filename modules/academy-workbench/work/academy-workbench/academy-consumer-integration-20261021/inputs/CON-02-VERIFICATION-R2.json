@@ -1,0 +1,86 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "academy-operations",
+  "projectId": "academy-workbench",
+  "workId": "academy-consumer-integration-20261021",
+  "kind": "input",
+  "id": "CON-02-VERIFICATION-R2",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "accountable-consumer-subLead",
+    "locator": "native-thread:01a15dd0-03ed-71a0-8372-936776e22669:CON-02-VERIFICATION-R2",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "verification": {
+      "schemaVersion": "1.0.0",
+      "kind": "verification",
+      "id": "academy-workbench:verification:con-02-source-qualification-r2",
+      "domainId": "academy-operations",
+      "projectId": "academy-workbench",
+      "createdAt": "2026-10-21T10:18:48.951Z",
+      "payload": {
+        "targetRefs": [
+          "common-harness:task:82a1e98d6218f255fb9c66bdfbaf7a12c5ac057e7674bbac0c4e74896c58ce36"
+        ],
+        "criteria": [
+          {
+            "id": "exact-unchanged-source-and-canonical-composition",
+            "status": "pass",
+            "message": "All16 R1 result artifacts match exact05797da Git bytes and current files; canonical QRY closure hashes remain pinned; no source code or tests changed.",
+            "evidenceRefs": [
+              "academy-workbench:evidence:con-02-source-qualification-result-observation-r2"
+            ]
+          },
+          {
+            "id": "own-typecheck-and-report-evidence",
+            "status": "pass",
+            "message": "Original own tsc pass and seven report tests consumed at exact receipt hash; original three SDK startup failures preserved separately.",
+            "evidenceRefs": [
+              "academy-workbench:evidence:con-02-source-qualification-result-observation-r2"
+            ]
+          },
+          {
+            "id": "root-controlled-production-sdk-source-qualification",
+            "status": "pass",
+            "message": "Root-attributed exact same-source/Bun1.4.3/network-deny full command passed10tests/289assertions. This verifies synthetic shared production registration/SDK scope, not native author authentication or activation.",
+            "evidenceRefs": [
+              "academy-workbench:evidence:con-02-source-qualification-result-observation-r2",
+              "academy-workbench:evidence:con-02-root-sdk-control-observation-r1"
+            ]
+          },
+          {
+            "id": "distinct-task-and-original-history-preserved",
+            "status": "pass",
+            "message": "New Plan2 source-only qualification target is distinct; old completed/failed CON02, R1 Verification/Inputs/refs and Plan1 remain unchanged. Shared/formal/native acceptance and CON03 gates remain pending.",
+            "evidenceRefs": [
+              "academy-workbench:evidence:con-02-source-qualification-result-observation-r2"
+            ]
+          }
+        ],
+        "inputHashes": [
+          {
+            "path": "work/academy-workbench/academy-consumer-integration-20261021/inputs/CON-02-RESULT-R2.json",
+            "sha256": "39abf49e916480b0623b14f1309b5c8037e7c0b7e322630dc5d67644dcc2fb32"
+          },
+          {
+            "path": "work/academy-workbench/academy-consumer-integration-20261021/inputs/CON-02-ROOT-SDK-CONTROL-R1.json",
+            "sha256": "081a36d77c5a561ff129f81c0d57dcd5133bd1ef51157a9c4c774e4b97ddd462"
+          },
+          {
+            "path": "architecture/academy-consumer-integration/observations/CON-02-ROOT-SDK-CONTROL-R1.json",
+            "sha256": "5bcd9c61c091e0b913688bbb750306de82a7d02aa4b263b371fac765547789e9"
+          },
+          {
+            "path": "architecture/academy-consumer-integration/observations/CON-02-CHECKS-R1.json",
+            "sha256": "2836c5e84f65c5ffccb6b08ed7039096b91bbf37cc949c1d32788e09f6249b15"
+          }
+        ],
+        "runtime": {
+          "name": "Bun local canonical source qualification; SDK executed separately by Root authorized tools",
+          "version": "1.4.3"
+        }
+      }
+    }
+  }
+}

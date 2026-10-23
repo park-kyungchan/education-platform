@@ -1,0 +1,98 @@
+name: Math research source verification
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: math-research-source-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  synthetic:
+    name: Math research synthetic source checks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version: 24.19.0
+          package-manager-cache: false
+      - name: Shared execution of Math research synthetic checks
+        uses: park-kyungchan/agent-platform/.github/actions/bun-source@8a91a8837d3b6454d7bba5e90d25651cb898f69b
+        with:
+          project-id: math-research-module
+          repository: park-kyungchan/math-research-module
+          source-sha: ${{ github.event.pull_request.head.sha || github.sha }}
+          source-author-metadata: .github/source-author.json
+          bun-version: 1.4.2
+          scripts: '["check:ci-projection", "test:ci-workflow", "check"]'
+  contracts:
+    name: Math research pinned canonical contracts
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      AGENT_PLATFORM_SOURCE_MODE: compiled-canonical-ci-projection
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version: 24.19.0
+          package-manager-cache: false
+      - name: Shared execution of Math research canonical contract checks
+        uses: park-kyungchan/agent-platform/.github/actions/bun-source@8a91a8837d3b6454d7bba5e90d25651cb898f69b
+        with:
+          project-id: math-research-module
+          repository: park-kyungchan/math-research-module
+          source-sha: ${{ github.event.pull_request.head.sha || github.sha }}
+          source-author-metadata: .github/source-author.json
+          bun-version: 1.4.2
+          scripts: '["check:ci-projection", "verify", "check:ci-identity"]'
+  native-review:
+    name: Math research exact head native independent review
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      statuses: read
+    steps:
+      # Execute only the reviewed generated canonical owner API, with fixed Math
+      # policy. No private cross-repository checkout or self-issued PASS exists.
+      - name: Read exact source and generated canonical review projection
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
+        with:
+          bun-version: 1.4.2
+      - name: Install frozen external canonical dependencies
+        run: bun --no-env-file install --frozen-lockfile --ignore-scripts
+      - name: Require immutable owner Evidence and Verification for this exact head
+        run: bun --no-env-file ci/native-review.ts
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          REVIEW_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+  source-gate:
+    name: Math research source gate
+    if: ${{ always() }}
+    needs: [synthetic, contracts, native-review]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 1
+    steps:
+      - name: Require all source checks and the exact head native independent review
+        env:
+          SYNTHETIC_RESULT: ${{ needs.synthetic.result }}
+          CONTRACT_RESULT: ${{ needs.contracts.result }}
+          REVIEW_RESULT: ${{ needs.native-review.result }}
+        run: test "$SYNTHETIC_RESULT" = success && test "$CONTRACT_RESULT" = success && test "$REVIEW_RESULT" = success

@@ -1,0 +1,158 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Independent recovery runtime review",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "generatedAt",
+    "verdict",
+    "summary",
+    "candidate",
+    "allowedScope",
+    "verification",
+    "newFindingsResolved",
+    "reverifiedBaselineControls",
+    "restoredSurfaces",
+    "knownFunctionalLimits",
+    "hardRemainingGates",
+    "limitations"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "academy.independent-recovery-review/1"
+    },
+    "generatedAt": {
+      "type": "string"
+    },
+    "verdict": {
+      "enum": [
+        "scoped_clearance",
+        "blocked"
+      ]
+    },
+    "summary": {
+      "type": "string"
+    },
+    "candidate": {
+      "type": "object",
+      "required": [
+        "runtimeDigest",
+        "runtimeFileCount"
+      ],
+      "properties": {
+        "runtimeDigest": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "runtimeFileCount": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "allowedScope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "packagedSyntheticFixture",
+        "loopbackReadOnlyHttp",
+        "syntheticSqlitePersistence",
+        "realPrivateDataImport",
+        "operationalAuthSetup",
+        "externalHosting",
+        "academyMutation",
+        "printingOrSending",
+        "completeFeatureParityClaim"
+      ],
+      "properties": {
+        "packagedSyntheticFixture": {
+          "type": "boolean"
+        },
+        "loopbackReadOnlyHttp": {
+          "type": "boolean"
+        },
+        "syntheticSqlitePersistence": {
+          "type": "boolean"
+        },
+        "realPrivateDataImport": {
+          "type": "boolean"
+        },
+        "operationalAuthSetup": {
+          "type": "boolean"
+        },
+        "externalHosting": {
+          "type": "boolean"
+        },
+        "academyMutation": {
+          "type": "boolean"
+        },
+        "printingOrSending": {
+          "type": "boolean"
+        },
+        "completeFeatureParityClaim": {
+          "type": "boolean"
+        }
+      }
+    },
+    "verification": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "status",
+          "count",
+          "evidence",
+          "detail"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "passed",
+              "failed",
+              "not_run"
+            ]
+          },
+          "count": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "evidence": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "detail": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "newFindingsResolved": {
+      "type": "array"
+    },
+    "reverifiedBaselineControls": {
+      "type": "array"
+    },
+    "restoredSurfaces": {
+      "type": "array"
+    },
+    "knownFunctionalLimits": {
+      "type": "array"
+    },
+    "hardRemainingGates": {
+      "type": "array"
+    },
+    "limitations": {
+      "type": "array"
+    }
+  }
+}

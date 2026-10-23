@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "academy.review-check/4",
+  "id": "AAR-REVIEW-004-C01",
+  "timeUtc": "2026-10-21T05:42:20.006111+00:00",
+  "sourceCommit": "5e5017e6dff174343dcb6e95685837fd0f6093a6",
+  "sourceTree": "26404252c76315dd9e68dd12dac5fae08f23e0f7",
+  "cwd": "/home/palantirkc/worktrees/academy-architecture-review-r3-20261021",
+  "checks": [
+    {
+      "command": [
+        "bun",
+        "architecture/academy-reorganization/validate-successor.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"valid\":true,\"assertions\":213,\"modules\":14,\"outcomeNodes\":21,\"crossWorkQualifications\":18,\"workflowCoverage\":7,\"scope\":\"repair-successor design only; no native dispatch or operational acceptance inferred\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bun",
+        "/home/palantirkc/projects/agent-platform/node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "--skipLibCheck",
+        "--strict",
+        "--target",
+        "ESNext",
+        "--module",
+        "Preserve",
+        "--moduleResolution",
+        "Bundler",
+        "--allowImportingTsExtensions",
+        "architecture/academy-reorganization/validate-successor.ts",
+        "/home/palantirkc/projects/agent-platform/node_modules/bun-types/index.d.ts",
+        "/home/palantirkc/projects/agent-platform/node_modules/.bun/@types+node@26.6.5/node_modules/@types/node/index.d.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "scope": "Current entrypoint-selected r3 topology and no-emit typecheck of the changed validator only. Not the old 18/20-node graph, actual migration or operational behavior."
+}

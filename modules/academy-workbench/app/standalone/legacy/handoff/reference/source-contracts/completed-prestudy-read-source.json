@@ -1,0 +1,206 @@
+{
+  "errorIndicators": {
+    "browserError": false,
+    "knownErrorHeading": []
+  },
+  "forms": [
+    {
+      "action": null,
+      "fields": [
+        {
+          "id": "",
+          "name": "p_process",
+          "tag": "INPUT",
+          "type": "hidden"
+        },
+        {
+          "id": "",
+          "name": "p_prino",
+          "tag": "INPUT",
+          "type": "hidden"
+        },
+        {
+          "id": "",
+          "name": "p_groupno",
+          "tag": "INPUT",
+          "type": "hidden"
+        },
+        {
+          "id": "",
+          "name": "p_url",
+          "tag": "INPUT",
+          "type": "hidden"
+        },
+        {
+          "id": "fran_no",
+          "name": "fran_no",
+          "tag": "INPUT",
+          "type": "hidden"
+        },
+        {
+          "id": "pri_no",
+          "name": "pri_no",
+          "tag": "INPUT",
+          "type": "hidden"
+        },
+        {
+          "id": "mem_type",
+          "name": "mem_type",
+          "tag": "INPUT",
+          "type": "hidden"
+        }
+      ],
+      "id": "userForm",
+      "method": "post",
+      "name": "userForm"
+    },
+    {
+      "action": "",
+      "fields": [
+        {
+          "id": "reqCmd",
+          "name": "reqCmd",
+          "tag": "INPUT",
+          "type": "hidden"
+        },
+        {
+          "id": "g_clg_no",
+          "name": "g_clg_no",
+          "tag": "INPUT",
+          "type": "hidden"
+        },
+        {
+          "id": "g_mem_type",
+          "name": "g_mem_type",
+          "tag": "INPUT",
+          "type": "hidden"
+        },
+        {
+          "id": "g_pri_no",
+          "name": "g_pri_no",
+          "tag": "INPUT",
+          "type": "hidden"
+        },
+        {
+          "id": "student_name",
+          "name": "student_name",
+          "tag": "INPUT",
+          "type": "text"
+        }
+      ],
+      "id": "form1",
+      "method": "post",
+      "name": "form1"
+    }
+  ],
+  "functions": [
+    {
+      "name": "onSearch",
+      "provenance": "inline-script DOM text; not invoked",
+      "source": "function onSearch() {\n  document.getElementById(\"reqCmd\").value=\"WebCtPreStudy\";\n  document.form1.action=\"/servlet/controller.coursemanage.CourseManageServlet\";\n  document.form1.submit();\n}"
+    },
+    {
+      "name": "prestudy_main",
+      "provenance": "inline-script DOM text; not invoked",
+      "source": "function prestudy_main(prestudy_key)\n{\n    var param = \"\";\n    param = \"?reqCmd=WebPreStudy&prestudy_key=\"+prestudy_key;  \n    //document.form1.action=\"/servlet/controller.coursemanage.CourseManageServlet\"+param;\n    //document.form1.submit();\n    location.href='/servlet/controller.coursemanage.CourseManageServlet'+param;\n\n}"
+    },
+    {
+      "name": "page_move",
+      "provenance": "inline-script DOM text; not invoked",
+      "source": "function page_move(){\n  \n     var param = \"\";\n      param = \"?reqCmd=WebUnPreStudy\";  \n      location.href='/servlet/controller.coursemanage.CourseManageServlet'+param;\n}"
+    }
+  ],
+  "installOverlayPresent": true,
+  "observedAt": "2026-10-13T02:49:08.709Z",
+  "passwordInputPresent": false,
+  "scriptSrc": [
+    "/renwal/common/js/jquery-1.12.4.min.js",
+    "/renwal/common/jquery-ui-1.11.4/jquery-ui.min.js",
+    "/renwal/common/jqGrid-4.15.6/dist/jquery.jqgrid.src.js",
+    "/renwal/common/jqGrid-4.15.6/dist/i18n/grid.locale-en.js",
+    "/js/alertify/alertify.js",
+    "/fontawesome-free-6.1.0-web/js/all.min.js",
+    "/moment-2.23.0/moment.js",
+    "/bootstrap-4.4.1/js/bootstrap.min.js",
+    "/bootstrap-dialog-1.35.2/js/bootstrap-dialog.js",
+    "/js/common.js?update_date=24032801",
+    "/js/common_function.js?update_date=24032801",
+    "/jsutil/module.js?update_date=25071401"
+  ],
+  "sourceURL": "https://dc.gang-a.kr/servlet/controller.coursemanage.CourseManageServlet?reqCmd=WebCtPreStudy",
+  "staticLabels": [
+    "학생이름",
+    "단원명",
+    "날짜",
+    "평점"
+  ],
+  "title": "강의하는 아이들",
+  "schemaVersion": 1,
+  "observationMethod": "Historical official browser view; executor and tab identifiers omitted.",
+  "authorizationState": {
+    "loginRequired": false,
+    "evidence": "Target URL retained, title is 강의하는 아이들, expected userForm and form1 present, password input absent.",
+    "limit": "Authenticated shell availability inferred from rendered DOM; no cookie, token, credential, session storage, or session setting was inspected."
+  },
+  "actualCallScope": {
+    "intentionalNavigations": [
+      {
+        "method": "GET",
+        "url": "https://dc.gang-a.kr/servlet/controller.coursemanage.CourseManageServlet?reqCmd=WebCtPreStudy",
+        "count": 1
+      }
+    ],
+    "readOnlyDOMEvaluations": 2,
+    "querySubmissionCount": 0,
+    "pageFunctionInvocationCount": 0,
+    "detailSelectionCount": 0,
+    "pageButtonClickCount": 0,
+    "installationActionCount": 0,
+    "overlayDismissalAttempts": 0,
+    "directScriptRequests": [],
+    "externalProtocolInvocations": 0,
+    "networkCapture": "Not performed. The normal page load may load its standard subresources; only the explicit top-level navigation count is asserted.",
+    "nonBrowserResultSerialization": "One serialization of already-extracted metadata; no further website request.",
+    "intentionalWriteRequestCount": 0
+  },
+  "requestContractFromSourceOnly": [
+    {
+      "entry": "onSearch",
+      "method": "POST",
+      "target": "/servlet/controller.coursemanage.CourseManageServlet",
+      "reqCmd": "WebCtPreStudy",
+      "form": "form1",
+      "executed": false,
+      "confidence": "Observed source; server effect and returned search data unverified"
+    },
+    {
+      "entry": "prestudy_main",
+      "method": "GET navigation",
+      "target": "/servlet/controller.coursemanage.CourseManageServlet",
+      "reqCmd": "WebPreStudy",
+      "parameterNames": [
+        "prestudy_key"
+      ],
+      "executed": false,
+      "confidence": "Observed source; detail request and response unverified"
+    },
+    {
+      "entry": "page_move",
+      "method": "GET navigation",
+      "target": "/servlet/controller.coursemanage.CourseManageServlet",
+      "reqCmd": "WebUnPreStudy",
+      "executed": false,
+      "confidence": "Observed source; function not invoked"
+    }
+  ],
+  "observationLimits": [
+    "Only static shell structure and the three named inline function definitions were emitted. No form values, student rows, student names or identifiers, grades, video URLs, or tokens are present.",
+    "The install backdrop remained present. No close, Escape, DOM-removal, installation-state spoofing, native launch, or protocol invocation was attempted.",
+    "Search, detail selection and page navigation functions were not executed. The observed POST contract does not prove server read-only behavior.",
+    "Static labels were restricted to an exact allowlist; absence from staticLabels does not prove a label is absent from the page.",
+    "Error detection only checked the browser-error element and exact generic error headings. It was not an exhaustive error-log or page-body inspection.",
+    "Script src values are DOM references only. No external script source was opened or fetched. Earlier ERR_BLOCKED_BY_CLIENT restrictions were respected, including common_function.",
+    "No date field or exact student-ID search control appears in the emitted form1 fields. This page does not establish selected-student or date-specific learning evidence.",
+    "No learner counts, rating interpretation, media state, completion state, or assignment/submission correctness was inferred from the page title or static labels."
+  ]
+}

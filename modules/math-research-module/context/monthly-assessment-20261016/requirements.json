@@ -1,0 +1,1162 @@
+{
+  "schemaVersion": "monthly-assessment.requirements/1.0.0",
+  "purpose": "User-requested educational/operating context reconstruction, not a new assessment or permission grant.",
+  "scopeStatus": "partial_source_backed",
+  "authority": "none",
+  "studentPrivateDataIncluded": false,
+  "retrievedAt": "2026-10-16T14:42:00Z",
+  "hierarchy": [
+    {
+      "key": "assessment",
+      "title": "월말평가의 실무 목적·출제 규격",
+      "recordKeys": [
+        "math-exam-context",
+        "math-exam-timing",
+        "math-exam-deadline",
+        "math-distribution-request",
+        "math-exam-distribution"
+      ]
+    },
+    {
+      "key": "scope",
+      "title": "교육과정·범위·계열성",
+      "recordKeys": [
+        "math-core-scope",
+        "math-curriculum-version",
+        "math-connected-scope",
+        "math-topology-and-visualization"
+      ]
+    },
+    {
+      "key": "research",
+      "title": "문항 설계와 근본 능력 연구",
+      "recordKeys": [
+        "math-typical-example",
+        "math-complex-examples",
+        "math-micro-actions",
+        "math-typical-example-interpretation",
+        "math-capability-research",
+        "math-nctm-preference",
+        "math-capability-candidate-model",
+        "math-backward-tracing",
+        "math-no-causal-certainty"
+      ]
+    },
+    {
+      "key": "presentation",
+      "title": "강사 연구 설명과 표현/의미 경계",
+      "recordKeys": [
+        "math-human-readable-research",
+        "math-research-disagreement",
+        "math-tone-previous-interpretation",
+        "math-tone-mapping",
+        "math-tone-change-boundary",
+        "math-tone-invariants-proposal"
+      ]
+    },
+    {
+      "key": "architecture",
+      "title": "연구 객체와 공통 하네스의 경계",
+      "recordKeys": [
+        "math-palantir-research",
+        "math-palantir-user-analogy",
+        "math-id-boundary",
+        "math-object-id-pilot",
+        "math-id-model-proposal",
+        "math-ontology-worked-example-24-times-3"
+      ]
+    },
+    {
+      "key": "delivery",
+      "title": "독립 저장소·이식성·구현 변경 이력",
+      "recordKeys": [
+        "math-single-module-repo",
+        "module-portable-setup",
+        "module-cloud-work",
+        "module-harness-first",
+        "module-research-hold",
+        "module-resume",
+        "math-pilot-result",
+        "math-pilot-sufficient"
+      ]
+    }
+  ],
+  "records": [
+    {
+      "key": "math-core-scope",
+      "kind": "decision",
+      "modules": [
+        "math"
+      ],
+      "summary": "이번 파일럿의 중심은 초3 2학기 2-1 곱셈·2-2 나눗셈·2-3 원이다.",
+      "basis": "explicit_user_message",
+      "status": "active",
+      "sourceKeys": [
+        "Sentinel_2d70aa5091b08191ae0ab6701fbfd8f3"
+      ],
+      "links": [],
+      "limitations": []
+    },
+    {
+      "key": "math-curriculum-version",
+      "kind": "decision",
+      "modules": [
+        "math"
+      ],
+      "summary": "2022 개정 수학과 교육과정 또는 그 이후 최신 교육과정 근거를 사용한다.",
+      "basis": "explicit_user_message",
+      "status": "active",
+      "sourceKeys": [
+        "Sentinel_374bfcfca4c081919d8d1435e6db4125",
+        "Sentinel_f4a77b7dd80c8191b96dbcfc1d380588"
+      ],
+      "links": [],
+      "limitations": [
+        "자료 작성 연도와 개정 교육과정 적용을 혼동하지 않는다.",
+        "이 패키지는 교육과정 최신성이나 모든 내용의 수학적 정확성을 재검증하지 않았다."
+      ]
+    },
+    {
+      "key": "math-connected-scope",
+      "kind": "decision",
+      "modules": [
+        "math"
+      ],
+      "summary": "확장 연구는 위 세 단원과 연결되는 초3~6 개념만 대상으로 하며 일반 초·중·고 전 범위를 자동 포함하지 않는다.",
+      "basis": "explicit_user_message",
+      "status": "active",
+      "sourceKeys": [
+        "Sentinel_5613555764908191b86e479993dc1ef0"
+      ],
+      "links": [
+        {
+          "relation": "extends",
+          "targetKey": "math-core-scope"
+        }
+      ],
+      "limitations": []
+    },
+    {
+      "key": "math-topology-and-visualization",
+      "kind": "decision",
+      "modules": [
+        "math"
+      ],
+      "summary": "세부 유형 연구 후 수학교육의 위계와 계열성을 유지하는 시각화를 구성한다.",
+      "basis": "explicit_user_message",
+      "status": "active",
+      "sourceKeys": [
+        "Sentinel_9f8d5c62867c81918dd689e613c00bac",
+        "Sentinel_8bbdaf519d208191bb4976da2a6df214"
+      ],
+      "links": [],
+      "limitations": []
+    },
+    {
+      "key": "math-typical-example",
+      "kind": "decision",
+      "modules": [
+        "math"
+      ],
+      "summary": "Freudenthal의 전형적인 예를 원문 연구하고 각 세부 유형의 예제 선정 기준에 적용한다.",
+      "basis": "explicit_user_message",
+      "status": "active",
+      "sourceKeys": [
+        "Sentinel_1f20328b135c819194b15011c7efd6da"
+      ],
+      "links": [],
+      "limitations": []
+    },
+    {
+      "key": "math-complex-examples",
+      "kind": "decision",
+      "modules": [
+        "math"
+      ],
+      "summary": "연구 목적상 예시는 어렵고 복잡해도 되며 설계 이유를 충분히 설명해야 한다.",
+      "basis": "explicit_user_message",
+      "status": "active",
+      "sourceKeys": [
+        "Sentinel_2e6892f7b1ac81919594b92571b16b09"
+      ],
+      "links": [],
+      "limitations": [
+        "난도를 높이는 것 자체를 전형성이나 교육적 타당성으로 간주하지 않는다."
+      ]
+    },
+    {
+      "key": "math-micro-actions",
+      "kind": "decision",
+      "modules": [
+        "math"
+      ],
+      "summary": "실제 풀이를 매우 상세히 분해하고 초3 학습수준에 맞는 학습심리 이론, 세부 행동에서 기대한 이해와 설계 이유를 제시한다.",
+      "basis": "explicit_user_message",
+      "status": "active",
+      "sourceKeys": [
+        "Sentinel_e4fcfb7607d08191b13eee8f7e71855e"
+      ],
+      "links": [],
+      "limitations": []
+    },
+    {
+      "key": "math-typical-example-interpretation",
+      "kind": "proposal",
+      "modules": [
+        "math"
+      ],
+      "summary": "일반 구조를 드러내는 중심 문항에 설계 이유·일반화 관계·전이 질문·경계 사례를 연결한다.",
+      "basis": "assistant_interpretation",
+      "status": "proposed",
+      "sourceKeys": [
+        "Sentinel_c02f2c139c088191be6e7f2a546296a9"
+      ],
+      "links": [
+        {
+          "relation": "interprets",
+          "targetKey": "math-typical-example"
+        }
+      ],
+      "limitations": [
+        "Freudenthal 원문 그 자체가 아닌 assistant의 적용 설계안이다.",
+        "학습효과 검증 결과가 아니다."
+      ]
+    },
+    {
+      "key": "math-capability-research",
+      "kind": "decision",
+      "modules": [
+        "math"
+      ],
+      "summary": "초3 중심 105개 세부 유형을 근본 수학 능력 후보에 다대다로 묶으며 후보 수를 임의 제한하지 않는다. 근거 문헌을 먼저 제시한다.",
+      "basis": "explicit_user_message",
+      "status": "active",
+      "sourceKeys": [
+        "Sentinel_828a6d5285a88191814d30b5f51c9f5f",
+        "Sentinel_f4637ced191c8191931ed4ee51ac8709"
+      ],
+      "links": [],
+      "limitations": []
+    },
+    {
+      "key": "math-nctm-preference",
+      "kind": "decision",
+      "modules": [
+        "math"
+      ],
+      "summary": "NCTM의 Developing Essential Understanding of Multiplication and Division 원문을 찾을 수 있으면 근거로 삼되 없으면 기존 문헌으로 진행한다.",
+      "basis": "explicit_user_message",
+      "status": "active",
+      "sourceKeys": [
+        "Sentinel_3e1f640013a881919698a1882a6a3266"
+      ],
+      "links": [],
+      "limitations": [
+        "요청된 전문을 확보했다는 증거가 아니다."
+      ]
+    },
+    {
+      "key": "math-capability-candidate-model",
+      "kind": "proposal",
+      "modules": [
+        "math"
+      ],
+      "summary": "22개 구조 능력 후보와 6개 횡단 관찰 차원은 문헌과 과제 분석을 조합한 잠정 연구 모델이다.",
+      "basis": "assistant_interpretation",
+      "status": "proposed",
+      "sourceKeys": [
+        "Sentinel_2ad3d29f28ac819186b5ea2f8ffa5b39",
+        "Sentinel_370e0f92093c8191821d33980195c613"
+      ],
+      "links": [
+        {
+          "relation": "responds_to",
+          "targetKey": "math-capability-research"
+        }
+      ],
+      "limitations": [
+        "28개의 독립·선천적 능력 확정이나 표준 진단검사로 해석하지 않는다.",
+        "105유형 대응 완전성은 이 대화 패키지에서 재검증하지 않는다."
+      ]
+    },
+    {
+      "key": "math-backward-tracing",
+      "kind": "decision",
+      "modules": [
+        "math"
+      ],
+      "summary": "서술형 풀이의 세분 행동 오류에서 더 근본적 능력 후보까지 감사·추적할 수 있게 예제와 학생별 DB 아키텍처를 설계한다.",
+      "basis": "explicit_user_message",
+      "status": "active",
+      "sourceKeys": [
+        "Sentinel_f5e2573509b88191a4bd4c9f0335a550",
+        "Sentinel_d4aaf66c6d0c8191a1adaa6ca5d5fe67"
+      ],
+      "links": [
+        {
+          "relation": "extends",
+          "targetKey": "math-micro-actions"
+        }
+      ],
+      "limitations": []
+    },
+    {
+      "key": "math-no-causal-certainty",
+      "kind": "proposal",
+      "modules": [
+        "math"
+      ],
+      "summary": "DATA는 원자 개념, LOGIC은 경쟁 가능한 사고 가설, ACTION은 관찰 행동으로 두며 동일 행동에서 사고·능력 부족의 인과를 확정하지 않는다.",
+      "basis": "assistant_interpretation",
+      "status": "proposed",
+      "sourceKeys": [
+        "Sentinel_d8e3dde586948191a5d4bb8c8ff8f192"
+      ],
+      "links": [
+        {
+          "relation": "qualifies",
+          "targetKey": "math-backward-tracing"
+        },
+        {
+          "relation": "interprets",
+          "targetKey": "math-palantir-user-analogy"
+        }
+      ],
+      "limitations": [
+        "행동이 계획과 다르거나 관찰되지 않은 경우를 실패·능력부족으로 자동 변환하지 않는다."
+      ]
+    },
+    {
+      "key": "math-human-readable-research",
+      "kind": "decision",
+      "modules": [
+        "math"
+      ],
+      "summary": "typed 연구 객체와 관계를 강사들이 이해하고 의견을 나눌 수 있는 자연어 연구 문장에 연결한다.",
+      "basis": "explicit_user_message",
+      "status": "active",
+      "sourceKeys": [
+        "Sentinel_fa97dd88407481919becb7e7a427c9aa",
+        "Sentinel_d6d8c08f24208191afee73a63589ff96"
+      ],
+      "links": [],
+      "limitations": []
+    },
+    {
+      "key": "math-research-disagreement",
+      "kind": "decision",
+      "modules": [
+        "math"
+      ],
+      "summary": "강사용 연구 설명에서 에이전트별 추론·판단 불일치를 허용한다.",
+      "basis": "explicit_user_message",
+      "status": "active",
+      "sourceKeys": [
+        "Sentinel_d6d8c08f24208191afee73a63589ff96"
+      ],
+      "links": [],
+      "limitations": [
+        "서로 다른 해석을 사용자 확정 판단 하나로 합치지 않는다.",
+        "출처·관찰 사실과 연구자 해석은 별도다."
+      ]
+    },
+    {
+      "key": "math-tone-previous-interpretation",
+      "kind": "proposal",
+      "modules": [
+        "math"
+      ],
+      "summary": "강사별 말투·용어·깊이·예시 방식 매핑이라는 assistant의 초기 해석.",
+      "basis": "assistant_interpretation",
+      "status": "superseded",
+      "sourceKeys": [
+        "Sentinel_28cdc289c3348191bd9dbb41c41e1a0c"
+      ],
+      "links": [
+        {
+          "relation": "corrected_by",
+          "targetKey": "math-tone-change-boundary"
+        }
+      ],
+      "limitations": []
+    },
+    {
+      "key": "math-tone-mapping",
+      "kind": "decision",
+      "modules": [
+        "math"
+      ],
+      "summary": "강사별 톤앤매너를 매핑하고 관련 피드백 맥락을 저장소에 포함한다.",
+      "basis": "explicit_user_message",
+      "status": "active",
+      "sourceKeys": [
+        "Sentinel_f7bae8a6bffc8191addb617944e9aa72"
+      ],
+      "links": [
+        {
+          "relation": "clarified_by",
+          "targetKey": "math-tone-change-boundary"
+        }
+      ],
+      "limitations": []
+    },
+    {
+      "key": "math-tone-change-boundary",
+      "kind": "decision",
+      "modules": [
+        "math"
+      ],
+      "summary": "톤앤매너는 언제든 변경 가능하게 하되 바꿔도 되는 표현과 바뀌면 안 되는 핵심의 경계를 설계한다.",
+      "basis": "explicit_user_message",
+      "status": "active",
+      "sourceKeys": [
+        "Sentinel_011cc2ef7c00819190d62db3bc7e0ada"
+      ],
+      "links": [
+        {
+          "relation": "corrects",
+          "targetKey": "math-tone-previous-interpretation"
+        },
+        {
+          "relation": "clarifies",
+          "targetKey": "math-tone-mapping"
+        }
+      ],
+      "limitations": []
+    },
+    {
+      "key": "math-tone-invariants-proposal",
+      "kind": "proposal",
+      "modules": [
+        "math"
+      ],
+      "summary": "말투·길이·용어 풀이·제시 순서는 표현층으로, 수학 조건·정답·출처·관찰 기준·불확실성은 의미층으로 관리한다. 의미 변경은 연구 리비전이다.",
+      "basis": "assistant_interpretation",
+      "status": "proposed",
+      "sourceKeys": [
+        "Sentinel_b6e2e33eed7c8191aca1325379c66b87"
+      ],
+      "links": [
+        {
+          "relation": "implements_intent",
+          "targetKey": "math-tone-change-boundary"
+        }
+      ],
+      "limitations": [
+        "사용자가 이 구체적 필드 목록 전부를 명시 승인한 것은 아니다."
+      ]
+    },
+    {
+      "key": "math-palantir-research",
+      "kind": "decision",
+      "modules": [
+        "math"
+      ],
+      "summary": "Palantir DATA/LOGIC/ACTION/SECURITY를 연구하여 문항 연구 객체와 관계를 구분하는 근거로 사용한다.",
+      "basis": "explicit_user_message",
+      "status": "active",
+      "sourceKeys": [
+        "Sentinel_493e92916be481919a26f52f15c1ae85"
+      ],
+      "links": [],
+      "limitations": []
+    },
+    {
+      "key": "math-palantir-user-analogy",
+      "kind": "proposal",
+      "modules": [
+        "math"
+      ],
+      "summary": "사용자는 DATA를 atomic concepts, LOGIC을 학생이 세부 ACTION 수행에 앞서 거치는 사고과정으로 보는 대응을 제안했고 연구 결과에 따른 반박·평가를 허용했다.",
+      "basis": "user_hypothesis",
+      "status": "open_to_revision",
+      "sourceKeys": [
+        "Sentinel_1322b7cb02d8819185ecb4ac7051fc41"
+      ],
+      "links": [
+        {
+          "relation": "narrows",
+          "targetKey": "math-palantir-research"
+        }
+      ],
+      "limitations": [
+        "Palantir 공식 문서의 교육이론 정의가 아니다."
+      ]
+    },
+    {
+      "key": "math-id-boundary",
+      "kind": "decision",
+      "modules": [
+        "math",
+        "academy"
+      ],
+      "summary": "공통 하네스의 작업·실행 ID와 DATA/LOGIC/ACTION/GOVERNANCE 연구 객체 ID는 별도 영역이다. 서로 대체하지 않는다.",
+      "basis": "explicit_user_message",
+      "status": "active",
+      "sourceKeys": [
+        "Sentinel_c27ba16860188191ae566c090fdd5712",
+        "Sentinel_25e6e8eacffc819181e611cd26437aa1"
+      ],
+      "links": [],
+      "limitations": []
+    },
+    {
+      "key": "math-object-id-pilot",
+      "kind": "decision",
+      "modules": [
+        "math"
+      ],
+      "summary": "각 DATA/LOGIC/ACTION/GOVERNANCE 내부 topology·hierarchy·typed 구조와 수학교육 ID 규약을 이번 파일럿에서 만든다.",
+      "basis": "explicit_user_message",
+      "status": "active",
+      "sourceKeys": [
+        "Sentinel_25e6e8eacffc819181e611cd26437aa1"
+      ],
+      "links": [
+        {
+          "relation": "extends",
+          "targetKey": "math-id-boundary"
+        }
+      ],
+      "limitations": [
+        "이 맥락 패키지의 local record key는 새로운 중앙 ID 규약이 아니다."
+      ]
+    },
+    {
+      "key": "math-id-model-proposal",
+      "kind": "proposal",
+      "modules": [
+        "math"
+      ],
+      "summary": "정의 객체·실제 관찰 사건·사고 가설·진단 규칙·검토와 승인·표현층을 분리하며 Run과 연구 객체 버전은 다대다로 연결한다.",
+      "basis": "assistant_interpretation",
+      "status": "proposed",
+      "sourceKeys": [
+        "Sentinel_93e97d95c4b881919e4d358ce0e4a493"
+      ],
+      "links": [
+        {
+          "relation": "responds_to",
+          "targetKey": "math-id-boundary"
+        }
+      ],
+      "limitations": [
+        "공통 Domain→Project→Work→Task→Run을 단일 발급 형식으로 가정할 수 없다. 실제 소스 계약을 우선한다.",
+        "이전 설명은 설계 제안이며 canonical 구현 증거가 아니다."
+      ]
+    },
+    {
+      "key": "math-single-module-repo",
+      "kind": "decision",
+      "modules": [
+        "math"
+      ],
+      "summary": "수학 파일럿의 문항·모델·감사 추적·강사용 설명·대화맥락·하네스 설정을 하나의 별도 private module 저장소로 묶는다.",
+      "basis": "explicit_user_message",
+      "status": "active",
+      "sourceKeys": [
+        "Sentinel_6e09a83825f081919c532aaf409096ea",
+        "Sentinel_579261100d48819198fdb9871b6d8f18"
+      ],
+      "links": [],
+      "limitations": [
+        "academy-workbench까지 같은 저장소에 합친다는 뜻은 아니다."
+      ]
+    },
+    {
+      "key": "module-portable-setup",
+      "kind": "decision",
+      "modules": [
+        "math",
+        "academy"
+      ],
+      "summary": "clone 후 WSL2 Codex CLI와 VPS Hermes에서 의존성·환경별 준비·실행·검증·Git 작업을 이어가기 쉽게 맥락과 설정을 제공한다.",
+      "basis": "explicit_user_message",
+      "status": "active",
+      "sourceKeys": [
+        "Sentinel_9be47a47419c8191aa8e3bb12b255868",
+        "Sentinel_08d2a6244600819187ca20a8b1478fb0"
+      ],
+      "links": [],
+      "limitations": [
+        "환경 간 자격증명·권한·native runtime 설정을 복제하거나 동일하게 취급하지 않는다.",
+        "클라우드 검증은 WSL/VPS 실행 성공 증거가 아니다."
+      ]
+    },
+    {
+      "key": "module-cloud-work",
+      "kind": "decision",
+      "modules": [
+        "math",
+        "academy"
+      ],
+      "summary": "현재 이후 작업은 assistant의 클라우드 파일시스템 기반으로 진행한다.",
+      "basis": "explicit_user_message",
+      "status": "active",
+      "sourceKeys": [
+        "Sentinel_fc46ffc302088191964a9039b4b0ebda"
+      ],
+      "links": [],
+      "limitations": [
+        "운영 권한은 현재 도구 권한과 최신 사용자 지시를 따른다. 역사 기록 자체는 인증·접근 권한을 부여하지 않는다."
+      ]
+    },
+    {
+      "key": "module-harness-first",
+      "kind": "decision",
+      "modules": [
+        "math",
+        "academy"
+      ],
+      "summary": "공통 하네스 실제 규약 확인이 작업 ID 부여에 선행하며 임의 규약 적용을 중단했던 이력을 보존한다.",
+      "basis": "explicit_user_message",
+      "status": "active",
+      "sourceKeys": [
+        "Sentinel_37a84ea80a748191b4975a73e3d130e7"
+      ],
+      "links": [],
+      "limitations": []
+    },
+    {
+      "key": "module-research-hold",
+      "kind": "decision",
+      "modules": [
+        "math",
+        "academy"
+      ],
+      "summary": "리서치까지만 진행하고 구현·업로드를 기다리라는 과거 중단 지시.",
+      "basis": "explicit_user_message",
+      "status": "superseded",
+      "sourceKeys": [
+        "Sentinel_8466119dbe048191ae3d97ce10600618"
+      ],
+      "links": [
+        {
+          "relation": "superseded_by",
+          "targetKey": "module-resume"
+        }
+      ],
+      "limitations": []
+    },
+    {
+      "key": "module-resume",
+      "kind": "decision",
+      "modules": [
+        "math",
+        "academy"
+      ],
+      "summary": "공통 하네스 적용에 맞춰 academy-workbench와 새 private module을 개선하고 업로드하라는 구현 재개 지시.",
+      "basis": "explicit_user_message",
+      "status": "active",
+      "sourceKeys": [
+        "Sentinel_bee6c1fa21448191a070f10f8a46eac9",
+        "Sentinel_e195237d33bc8191b4c43df7dd55ec69"
+      ],
+      "links": [
+        {
+          "relation": "supersedes",
+          "targetKey": "module-research-hold"
+        }
+      ],
+      "limitations": [
+        "실제 서비스 운영·실자료 활성화·원본 영구 삭제까지 완료 또는 승인된 것으로 자동 승격하지 않는다.",
+        "소스 기록은 native 권한을 부여하지 않는다."
+      ]
+    },
+    {
+      "key": "math-pilot-result",
+      "kind": "evidence",
+      "modules": [
+        "math"
+      ],
+      "summary": "이전 assistant는 151유형·1,216 행동 단위 연구 시안과 화면 반영을 보고했다.",
+      "basis": "assistant_report",
+      "status": "reported",
+      "sourceKeys": [
+        "Sentinel_863b14c144b88191a1e2825f53281ace"
+      ],
+      "links": [],
+      "limitations": [
+        "본 맥락 수집 작업이 그 151유형·1,216 행동 단위와 화면을 재검증한 것은 아니다.",
+        "초3 중심 105유형과 전체 연구 범위 151유형은 서로 다른 모집단이다."
+      ]
+    },
+    {
+      "key": "math-pilot-sufficient",
+      "kind": "acceptance",
+      "modules": [
+        "math"
+      ],
+      "summary": "사용자는 당시 파일럿의 설명 깊이·화면을 일단 충분하다고 평가하고 독립 저장소 이동을 요청했다.",
+      "basis": "explicit_user_message",
+      "status": "accepted_scoped",
+      "sourceKeys": [
+        "Sentinel_08d2a6244600819187ca20a8b1478fb0",
+        "Sentinel_863b14c144b88191a1e2825f53281ace"
+      ],
+      "links": [
+        {
+          "relation": "accepts_scope",
+          "targetKey": "math-pilot-result"
+        }
+      ],
+      "limitations": [],
+      "acceptance": {
+        "outcome": "accepted",
+        "targetKey": "math-pilot-result",
+        "scope": "2026-10-13 11:53에 제시된 연구 시안의 초기 검토 수준",
+        "excluded": [
+          "학생별 DB 완성",
+          "최신 ID·아키텍처 전면 검증",
+          "문항 타당성",
+          "학습효과",
+          "실제 시험 문항 선별"
+        ]
+      }
+    },
+    {
+      "key": "math-exam-context",
+      "kind": "intent",
+      "modules": [
+        "math",
+        "academy"
+      ],
+      "summary": "초3 10월 월말평가 24문항: 3점 12개·5점 8개·6점 4개, 총100점. 전부 주관식/서술형이며 학원 문항 중 선별하려는 맥락이다.",
+      "basis": "explicit_user_message",
+      "status": "active",
+      "sourceKeys": [
+        "Sentinel_6c10c77b7ee48191a65771fbde707150"
+      ],
+      "links": [],
+      "limitations": [
+        "사용자는 이 시점 단원별 배분 제안만 요청했다.",
+        "실제 학원 문항 조회·선별·시험지 변경을 수행했다는 뜻이 아니다.",
+        "과거 패키지 not_selected는 당시 보고 상태이며 현재 미선정 또는 선정완료를 단정할 근거가 아니다."
+      ],
+      "assessmentFacts": {
+        "questionCount": 24,
+        "scoreBands": [
+          {
+            "count": 12,
+            "points": 3
+          },
+          {
+            "count": 8,
+            "points": 5
+          },
+          {
+            "count": 4,
+            "points": 6
+          }
+        ],
+        "totalPoints": 100,
+        "selectionStatus": "not_verified_in_this_context_collection"
+      }
+    },
+    {
+      "key": "math-exam-timing",
+      "kind": "decision",
+      "modules": [
+        "math",
+        "academy"
+      ],
+      "summary": "시험은 15:00 시작 80분으로 16:20 종료이며 이후 18:00까지 채점과 학생끼리 하브루타 오답 활동을 진행한다.",
+      "basis": "explicit_user_message",
+      "status": "active",
+      "sourceKeys": [
+        "Sentinel_2aea7acc8ff8819182a0af4fc465c1fe"
+      ],
+      "links": [],
+      "limitations": [
+        "대화에서 시험 날짜와 명시 시간대는 이 두 메시지에 제시되지 않았다."
+      ],
+      "derivedValues": [
+        {
+          "field": "examEnd",
+          "value": "16:20",
+          "method": "15:00 + 80 minutes"
+        },
+        {
+          "field": "postExamMinutes",
+          "value": 100,
+          "method": "18:00 - 16:20"
+        }
+      ],
+      "timingFacts": {
+        "startLocal": "15:00",
+        "durationMinutes": 80,
+        "sessionEndLocal": "18:00",
+        "date": null,
+        "timeZone": null,
+        "timeZoneContext": "Asia/Seoul inferred from user conversation UTC+09:00; original quoted timing message omits zone."
+      }
+    },
+    {
+      "key": "math-exam-distribution",
+      "kind": "proposal",
+      "modules": [
+        "math",
+        "academy"
+      ],
+      "summary": "곱셈9·나눗셈9·원6, 점수36·39·25의 배분안.",
+      "basis": "assistant_interpretation",
+      "status": "proposed",
+      "sourceKeys": [
+        "Sentinel_b4ea79d108188191a5120482630c279d"
+      ],
+      "links": [
+        {
+          "relation": "responds_to",
+          "targetKey": "math-exam-context"
+        }
+      ],
+      "limitations": [
+        "사용자가 최종 채택했다고 확인되지 않았다.",
+        "배점과 난이도는 같지 않다.",
+        "초4~6 연결 개념을 초3 시험 범위에 자동 포함하지 않는다."
+      ]
+    },
+    {
+      "key": "transfer-incompleteness-report",
+      "kind": "evidence",
+      "modules": [
+        "math",
+        "academy"
+      ],
+      "summary": "이전 요약은 academy 보존 manifest가 있지만 전체 Space·대화 대조와 최신 맥락 반영이 미검증임을 밝혔다.",
+      "basis": "assistant_report",
+      "status": "reported",
+      "sourceKeys": [
+        "Sentinel_d6c73984a2b881918c9eb671e13593d9"
+      ],
+      "links": [],
+      "limitations": [
+        "이 패키지도 전체 대화 이전 완료를 주장하지 않는다."
+      ]
+    },
+    {
+      "key": "space-historical-math-scope",
+      "kind": "evidence",
+      "modules": [
+        "math"
+      ],
+      "summary": "MathEducation Page는 초5~6·중1~3의 별도 기존 지도와 2026-10-12 Space/Sites 중심 전환을 설명한다. 이후 10/13 초3 파일럿의 별도 module 재개와 구분한다.",
+      "basis": "observed_source_snapshot",
+      "status": "observed",
+      "sourceKeys": [
+        "page_065390e2f398819182db99f21477947e#2107cf7f-6194-44c8-97ef-03b11cd65ed7",
+        "page_065390e2f398819182db99f21477947e#4959ba58-19b5-40ef-a29e-867b235982f0"
+      ],
+      "links": [],
+      "limitations": [
+        "Page의 과거 상태를 최신 사용자 결정으로 덮어쓰거나 전체 MathEducation 완료로 해석하지 않는다."
+      ]
+    },
+    {
+      "key": "module-all-work-portable-boundary",
+      "kind": "decision",
+      "modules": [
+        "academy",
+        "math"
+      ],
+      "summary": "사용자는 담당했던 모든 작업과 향후 작업에 공통 하네스를 적용하여 GitHub 기반으로 PC·클라우드 간 휴대 가능한 계약을 유지하라고 범위를 확대했다. 현재 두 module 외 작업은 inventory 대상이다.",
+      "basis": "explicit_user_message",
+      "status": "active",
+      "sourceKeys": [
+        "Sentinel_6dcbf60163b48191b52ab4b19664917e"
+      ],
+      "links": [
+        {
+          "relation": "extends",
+          "targetKey": "module-resume"
+        }
+      ],
+      "limitations": [
+        "기타 작업 전체를 이미 조사·이관·등록했다는 뜻은 아니다.",
+        "이번 패키지는 무관한 개인자료를 수집하지 않고 나머지 작업을 범위 inventory로만 표시한다."
+      ]
+    },
+    {
+      "key": "module-runtime-adapter-exclusion",
+      "kind": "decision",
+      "modules": [
+        "academy",
+        "math"
+      ],
+      "summary": "GitHub에 두는 공통 하네스와 Dots built-in tools를 이용하는 실행환경별 최적화는 별도다. Dots 전용 하네스를 GitHub에 게시하지 않는다.",
+      "basis": "explicit_user_message",
+      "status": "active",
+      "sourceKeys": [
+        "Sentinel_6dcbf60163b48191b52ab4b19664917e"
+      ],
+      "links": [
+        {
+          "relation": "qualifies",
+          "targetKey": "module-all-work-portable-boundary"
+        },
+        {
+          "relation": "restricts",
+          "targetKey": "module-portable-setup"
+        }
+      ],
+      "limitations": [
+        "사용자 원문과 이 공개 가능한 경계 정의만 보존한다.",
+        "비공개 내부 규칙·조율·메모리·추론·자격증명·전용 runtime 설정을 이관 자료로 포함하지 않는다.",
+        "공통 source-provider 계약은 어느 실행환경에도 도구 권한을 부여하지 않는다."
+      ]
+    },
+    {
+      "key": "module-rapid-pilot-handoff",
+      "kind": "decision",
+      "modules": [
+        "academy",
+        "math"
+      ],
+      "summary": "Dots의 역할은 사용자 아이디어를 빠르게 공통 하네스 기반 파일럿으로 실현하여 module repo에 인계하는 것이다. Codex CLI 또는 Hostinger VPS Hermes-agent-2q3y가 후속 정교화·고도화·개선을 맡는다. 현재 academy-workbench와 초3 수학 연구 repo가 그 예다.",
+      "basis": "explicit_user_message",
+      "status": "active",
+      "sourceKeys": [
+        "Sentinel_b76022298cf48191bef56d5cbafd982a"
+      ],
+      "links": [
+        {
+          "relation": "clarifies",
+          "targetKey": "module-portable-setup"
+        },
+        {
+          "relation": "qualifies",
+          "targetKey": "module-all-work-portable-boundary"
+        }
+      ],
+      "limitations": [
+        "파일럿 인계와 실운영 완성·내용 타당성 검증을 구별한다.",
+        "후속 환경이 clone해 시작할 수 있도록 목적·범위·source pin·검증·미완료 게이트를 전달한다.",
+        "후속 Codex CLI/Hermes가 실제 작업을 시작하거나 완료했다는 증거는 아니다."
+      ]
+    },
+    {
+      "key": "math-exam-deadline",
+      "kind": "correction",
+      "modules": [
+        "math",
+        "academy"
+      ],
+      "summary": "출제 마감은 2026-10-19(월). 원래 10/19(화)라고 쓴 요일 오타를 사용자가 바로잡았다.",
+      "basis": "explicit_user_message",
+      "status": "active",
+      "sourceKeys": [
+        "Sentinel_71577bf027588191a45ed2b98003396a",
+        "Sentinel_a29fd32a2b908191af883aa93a8d3b88"
+      ],
+      "links": [],
+      "limitations": [
+        "화요일 회의의 정확한 날짜를 사용자가 별도로 재확정한 근거는 이 자료에 없다.",
+        "출제 마감일과 시험 시행일은 다르며 시험 날짜는 미확인."
+      ]
+    },
+    {
+      "key": "math-distribution-request",
+      "kind": "request",
+      "modules": [
+        "math"
+      ],
+      "summary": "세부유형 총수를 확인하고 24문항을 적절히 배분하는 제안을 요구했다.",
+      "basis": "explicit_user_message",
+      "status": "requested",
+      "sourceKeys": [
+        "Sentinel_09c825d4bf308191bb95d67a5aa83d7f"
+      ],
+      "links": [
+        {
+          "relation": "extends",
+          "targetKey": "math-exam-context"
+        }
+      ],
+      "limitations": [
+        "제안 요청은 자동 선택·최종 출제 승인과 다르다."
+      ]
+    },
+    {
+      "key": "math-ontology-worked-example-24-times-3",
+      "kind": "example",
+      "modules": [
+        "math"
+      ],
+      "summary": "24×3 사례로 DATA·LOGIC·ACTION·SECURITY를 적용한 당시 assistant의 설명과 반례 설계를 보존한다.",
+      "basis": "assistant_interpretation",
+      "status": "proposed",
+      "sourceKeys": [
+        "Sentinel_bdf7a9d530888191a903d73680416c4d"
+      ],
+      "links": [
+        {
+          "relation": "illustrates",
+          "targetKey": "math-palantir-user-analogy"
+        },
+        {
+          "relation": "qualifies",
+          "targetKey": "math-backward-tracing"
+        }
+      ],
+      "limitations": [
+        "사용자가 직접 작성한 문항이나 승인한 최종 사례가 아니다.",
+        "실제 학생의 응답·진단·검증된 학습효과가 아니다.",
+        "공식 Palantir 개념 자체와 교육 연구용 대응 해석을 구분한다."
+      ],
+      "workedExample": {
+        "expression": "24 × 3",
+        "DATA": [
+          "24=20+4의 자릿값 개념",
+          "같은 크기의 묶음",
+          "부분과 전체의 관계"
+        ],
+        "LOGIC_competingHypotheses": [
+          "20과4로 나누어 각각3배 한다",
+          "24를 세 번 더한다",
+          "외운 계산 절차를 재현한다"
+        ],
+        "ACTION_observables": [
+          "실제로 쓴 식",
+          "그림",
+          "고친 흔적",
+          "말로 한 설명(서면 흔적과 별도)"
+        ],
+        "SECURITY_GOVERNANCE": [
+          "학생 자료·판정·공유의 권한 경계",
+          "인지 요소를 억지로 대응시키지 않음"
+        ],
+        "contrastCases": [
+          {
+            "observation": "정답72만 있음",
+            "interpretation": "어떤 사고를 했는지는 아직 모름"
+          },
+          {
+            "observation": "20×3+4×3을 쓰지만 각 부분 의미를 설명하지 못함",
+            "interpretation": "절차를 재현했을 가능성이 남음"
+          },
+          {
+            "observation": "부분 의미 설명은 정확하지만 합계가 틀림",
+            "interpretation": "개념 이해와 계산 실수를 분리하여 추가 검토"
+          }
+        ],
+        "epistemicBoundary": "관찰 흔적에서 내적 사고 또는 능력 부족의 원인을 확정하지 않는다."
+      }
+    }
+  ],
+  "unknowns": [
+    {
+      "key": "actual-exam-date",
+      "question": "실제 시험 시행 날짜",
+      "status": "not_verified"
+    },
+    {
+      "key": "final-unit-allocation",
+      "question": "곱셈9·나눗셈9·원6 제안을 최종 채택했는지",
+      "status": "not_verified"
+    },
+    {
+      "key": "question-selection",
+      "question": "학원 서버 원문과 문항라벨의 최종 선택 목록, 교재 판본·범위·난도 검증",
+      "status": "not_verified"
+    },
+    {
+      "key": "rubric",
+      "question": "부분점수·서술형 채점기준·난도별 시간 모델",
+      "status": "not_verified"
+    },
+    {
+      "key": "meeting-date",
+      "question": "시험지를 가지고 참석할 화요일 회의의 정확한 날짜",
+      "status": "not_reconfirmed_after_deadline_correction"
+    },
+    {
+      "key": "research-validation",
+      "question": "Freudenthal/NCTM 원문 확보 범위, 105유형 대응 완전성, 잠정 능력 모델의 독립 교육적 검증",
+      "status": "not_revalidated_by_context_collection"
+    },
+    {
+      "key": "full-history",
+      "question": "삭제된 버전까지 포함한 전체 대화·Space·MagicPath 이력의 완전성",
+      "status": "unknown_denominator"
+    }
+  ],
+  "coverage": {
+    "recordCount": 43,
+    "sourceCount": 51,
+    "roomRevalidatedSourceCount": 27,
+    "existingPackageSource": "academy-workbench context/user-context package retrieved by parent repository worker",
+    "notes": [
+      "Repository excerpt provenance preserved; sources not re-fetched from room are labeled.",
+      "Global Search 월말평가 returned no conversation/project hits; room search independently supplied relevant evidence.",
+      "Current Space MathEducation and academy navigation were read for orientation, but stale operating plans were not promoted to current decisions.",
+      "MagicPath UI details are produced by the parallel design-history report; do not treat their omission here as absence.",
+      "No external writes, source selection, actual student diagnosis, login, or new permissions performed."
+    ]
+  },
+  "ontologyArchitecture": {
+    "status": "assistant_proposed_boundary_preserved",
+    "sourceKey": "Sentinel_93e97d95c4b881919e4d358ce0e4a493",
+    "DATA": {
+      "definitionHierarchy": [
+        "수학 영역",
+        "개념군",
+        "개념",
+        "과제 목적의 원자 개념"
+      ],
+      "evidenceBranch": [
+        "응답·수행 기록",
+        "관찰 증거"
+      ],
+      "separation": "개념 정의와 학생의 한 응답 기록은 다른 객체"
+    },
+    "LOGIC": {
+      "thinkingHypothesis": [
+        "전략군",
+        "전략",
+        "판단·전환 과정",
+        "미시 사고 단계"
+      ],
+      "diagnosticLogic": [
+        "경쟁 가설",
+        "증거 해석 규칙",
+        "추가 확인 질문 선택 기준"
+      ],
+      "separation": "학생이 사용했을 법한 사고와 연구자가 추정하는 규칙 구분; 풀이 중 점검·수정 포함"
+    },
+    "ACTION": {
+      "definition": [
+        "수행군",
+        "행동 묶음",
+        "세부 행동",
+        "관찰 기준"
+      ],
+      "event": "어느 시도에서 어떤 행동이 관찰됐는지",
+      "teacherSystemActions": [
+        "검토",
+        "보류",
+        "추가 질문 배정",
+        "버전 승인"
+      ],
+      "separation": "행동 정의와 실제 관찰 사건 구분"
+    },
+    "GOVERNANCE": {
+      "crossCutting": [
+        "버전",
+        "출처",
+        "검토와 이견",
+        "승인·보류",
+        "자료 접근권한",
+        "표현 변경과 의미 보존"
+      ],
+      "separation": "새 계정 접근권한 또는 자동 판정 권한을 부여하는 문서가 아님"
+    },
+    "relationTypes": [
+      "하위 개념",
+      "선행조건",
+      "사용한다",
+      "증거로 지지한다"
+    ],
+    "executionLink": "Run↔연구 객체 버전은 다대다 연결. 실제 하네스 ID 형식은 현재 공통 소스 계약을 확인해야 함."
+  },
+  "sourcesFile": "sources.json"
+}

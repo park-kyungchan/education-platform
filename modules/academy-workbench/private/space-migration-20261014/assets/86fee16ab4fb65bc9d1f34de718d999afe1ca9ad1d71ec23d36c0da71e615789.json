@@ -1,0 +1,488 @@
+{
+  "$schema": "academy-cartography-0.3.schema.json",
+  "kind": "semantic_operation_package",
+  "id": "academy:clinic-operations:r3",
+  "schemaVersion": "0.3.0",
+  "revision": 3,
+  "projectId": "project:academy-practical",
+  "canonicalParentId": "project:academy-practical",
+  "updatedAt": "2026-10-06T07:09:19.665Z",
+  "sourceIds": [
+    "Sentinel_2ec1ed2d632c8191b5035fd35fd0239c",
+    "Sentinel_77fc316efb90819184454f4f50f469d3",
+    "Sentinel_7f7305abaf20819187572ec1cb1e0c07",
+    "source:clinic-measured-attempt-20261006-0700",
+    "Sentinel_d575bf6839e08191b9e8d73a5fe93316",
+    "source:pdf-viewer-capability-20261006-0704"
+  ],
+  "authorityGrantedByDocument": false,
+  "operationContracts": [
+    {
+      "id": "clinic_material_inspection",
+      "kind": "semantic_operation_contract",
+      "version": "1.3.0",
+      "status": "attempted_result_unknown",
+      "contextualBasisIds": [
+        "practical:academy-teaching-routine"
+      ],
+      "routeIds": [
+        "route:learning-results"
+      ],
+      "buttonSemantics": "user_confirmed",
+      "clickEffect": "batch_generation_attempted_artifact_unverified",
+      "currentPrintAuthorized": false,
+      "sourceIds": [
+        "Sentinel_2ec1ed2d632c8191b5035fd35fd0239c",
+        "Sentinel_77fc316efb90819184454f4f50f469d3",
+        "Sentinel_7f7305abaf20819187572ec1cb1e0c07",
+        "source:clinic-measured-attempt-20261006-0700",
+        "Sentinel_d575bf6839e08191b9e8d73a5fe93316",
+        "source:pdf-viewer-capability-20261006-0704"
+      ],
+      "operations": [
+        {
+          "id": "wrong_original",
+          "buttonLabel": "오",
+          "meaning": "선택된 학습 범위에서 앱 채점으로 틀린 원래 문항을 대상으로 한다.",
+          "sourceAssessmentScopeRequired": true,
+          "headerVerificationRequired": true,
+          "mappingRule": "원래 오답 문항의 식별키와 출처 평가 및 범위를 보존하고 출력물 헤더와 대조한다.",
+          "requestedSimilarPerOriginal": null,
+          "observedUiSimilarPerOriginal": null,
+          "userReportedUsualSimilarRange": null,
+          "targetFieldNames": [
+            "studentReference",
+            "courseCode",
+            "bookVersion",
+            "unitLabel",
+            "assessmentType",
+            "attemptTimestamp",
+            "materialKind",
+            "headerText",
+            "originalWrongItemIds",
+            "similarItemIds",
+            "similarPerOriginal"
+          ],
+          "remainingUnknowns": [
+            "출력물 헤더와 실제 범위",
+            "안정적인 원래 오답 및 유사문항 식별키",
+            "버튼 클릭이 미리보기인지 물리 출력인지"
+          ],
+          "controlScope": "top_batch_verified",
+          "generationAuthorized": true,
+          "observedSettings": []
+        },
+        {
+          "id": "similar_mapped",
+          "buttonLabel": "클",
+          "meaning": "각 원래 오답 문항에 대응하는 유사문항을 대상으로 한다.",
+          "sourceAssessmentScopeRequired": true,
+          "headerVerificationRequired": true,
+          "mappingRule": "각 originalWrongItemId에 corresponding similarItemIds를 연결한다. 무작위 유사문항 풀로 뭉개지 않는다.",
+          "requestedSimilarPerOriginal": 1,
+          "observedUiSimilarPerOriginal": null,
+          "userReportedUsualSimilarRange": [
+            1,
+            2
+          ],
+          "targetFieldNames": [
+            "studentReference",
+            "courseCode",
+            "bookVersion",
+            "unitLabel",
+            "assessmentType",
+            "attemptTimestamp",
+            "materialKind",
+            "headerText",
+            "originalWrongItemIds",
+            "similarItemIds",
+            "similarPerOriginal"
+          ],
+          "remainingUnknowns": [
+            "출력물 헤더와 실제 범위",
+            "안정적인 원래 오답 및 유사문항 식별키",
+            "버튼 클릭이 미리보기인지 물리 출력인지",
+            "상단과 개별 설정이 다르므로 실행 경로별 수량을 검증해야 함"
+          ],
+          "controlScope": "top_batch_verified",
+          "generationAuthorized": false,
+          "observedSettings": [
+            {
+              "controlScope": "row_individual_clinic_modal",
+              "similarPerOriginal": 1,
+              "sourceIds": [
+                "source:clinic-measured-attempt-20261006-0700"
+              ]
+            },
+            {
+              "controlScope": "top_batch_clinic_settings",
+              "similarPerOriginal": 2,
+              "sourceIds": [
+                "source:clinic-measured-attempt-20261006-0700"
+              ]
+            }
+          ]
+        }
+      ],
+      "blockedBy": [
+        "외부 PDF 뷰어 열림은 사용자가 확인했으나 내용과 헤더 및 페이지는 미검증",
+        "현재 실행기의 앱 접근과 화면 확인 능력으로 외부 PDF 뷰어 및 인쇄 설정을 읽을 수 없음",
+        "원래 생성의 결과를 확인하기 전 중복 생성하지 않음",
+        "물리 인쇄 승인이 없고 실제 인쇄도 하지 않음",
+        "학원 클라우드 로그인과 설치는 취소되어 강아PC 이외 실행으로 바꾸지 않음"
+      ],
+      "recordingRule": "추후 허용된 실제 시도에서만 ActionAttempt와 Observation 및 AtomicUIEvent를 연결한다. 이전 조회를 이 계약의 성공 이벤트로 소급 작성하지 않는다. 기록된 승인은 해당 요청과 시험 범위의 이력이다. 다음 시도 전에 현재 요청 및 기존 실행 결과를 확인하며 영구적인 포괄 승인으로 사용하지 않는다.",
+      "runtimeLogImplemented": false,
+      "batchFlow": {
+        "selectionControlBasis": "사용자는 상단 빨간 오 및 클의 일괄 선택 흐름을 설명했다. 상단과 행별 제어의 대응은 실제 화면에서 검증해야 한다.",
+        "headerSelectionRequired": true,
+        "selectedHeaderIds": null,
+        "selectedHeaderOrder": null,
+        "selectedHeaderCount": null,
+        "batchGenerateLabel": "일괄생성",
+        "currentPdfGenerationAuthorized": true,
+        "generatedPdfReference": null,
+        "generatedPdfHash": null,
+        "pdfHeaderVerificationState": "unverified",
+        "pdfValidation": [
+          "선택된 학생과 과정 코드 및 버전, 범위와 시도, 자료 종류를 PDF 헤더와 대조",
+          "선택한 헤더의 순서와 PDF의 실제 페이지 순서 및 구간을 대조",
+          "누락과 중복 헤더가 없는지 확인",
+          "클 자료는 각 원래 오답의 유사문항 대응과 실제 문항 수를 확인",
+          "헤더 하나가 반드시 한 페이지만 만든다고 가정하지 않음"
+        ],
+        "physicalPrintIsSeparate": true,
+        "physicalPrintAttempts": 0,
+        "physicalPrintCopies": null,
+        "duplicateProtection": [
+          "이미 승인된 오 일괄생성을 한 번 실행했다. 결과를 확인하기 전 반복 생성하지 않는다.",
+          "선택 헤더의 안정 ID와 순서 및 자료 종류와 유사문항 수를 확인",
+          "생성된 PDF의 실제 파일과 해시 및 선택 대응을 확인하기 전 재생성하지 않음",
+          "물리 인쇄의 목적지와 매수 및 작업 결과를 확인",
+          "인쇄 상태가 불확실하면 동일 PDF를 다시 보내지 않음"
+        ],
+        "dependencyStatus": "not_verified",
+        "runtimeExecutionImplemented": false,
+        "pdfGenerationAuthorization": {
+          "sourceId": "Sentinel_7f7305abaf20819187572ec1cb1e0c07",
+          "approvedOperationIds": [
+            "wrong_original"
+          ],
+          "targetConstraint": "알려진 학생 한 명의 최근 한 행에서 선택한 오 자료를 하나의 일괄 PDF로 생성하고 헤더 및 문항과 페이지를 확인",
+          "exclusions": [
+            "physical_print",
+            "grading_change",
+            "retry_change",
+            "unrelated_student_data",
+            "upload",
+            "similar_mapped_generation"
+          ],
+          "authorizationStatus": "authorized_bounded_test"
+        },
+        "authorizationUseState": "attempted_outcome_unknown",
+        "observedUiMarkers": [
+          "오에 새 초록 체크 표시. 의미 미확인."
+        ],
+        "pdfViewerState": "user_confirmed_open",
+        "contentInspectionState": "blocked_current_capability",
+        "contentInspectionEvidenceSourceIds": [
+          "Sentinel_d575bf6839e08191b9e8d73a5fe93316",
+          "source:pdf-viewer-capability-20261006-0704"
+        ]
+      }
+    }
+  ],
+  "actionAttempts": [
+    {
+      "id": "attempt:wrong-batch-one-reported",
+      "kind": "action_attempt",
+      "contractId": "clinic_material_inspection",
+      "contractVersion": null,
+      "operationId": "wrong_original",
+      "purpose": "사용자가 허용한 한 학생의 최근 한 행 오 자료 PDF 생성과 헤더 및 문항과 페이지 확인",
+      "targetSnapshot": {
+        "studentReference": null,
+        "courseCode": null,
+        "bookVersion": null,
+        "unitLabel": null,
+        "assessmentType": null,
+        "attemptTimestamp": null,
+        "materialKind": "wrong_original",
+        "headerText": null,
+        "originalWrongItemIds": null,
+        "similarItemIds": null,
+        "similarPerOriginal": null,
+        "sourceAssessmentReference": null,
+        "scopeEvidenceReference": null
+      },
+      "preconditionsChecked": [
+        {
+          "condition": "한 알려진 학생의 최근 한 행 선택",
+          "state": "satisfied",
+          "observationIds": [
+            "observation:wrong-only-selection"
+          ]
+        },
+        {
+          "condition": "오 켜짐과 클 꺼짐",
+          "state": "satisfied",
+          "observationIds": [
+            "observation:wrong-only-selection"
+          ]
+        },
+        {
+          "condition": "PDF 헤더와 문항 및 페이지 검증",
+          "state": "unknown",
+          "observationIds": [
+            "observation:green-check-no-artifact"
+          ]
+        }
+      ],
+      "executionState": "executed",
+      "plannedAt": null,
+      "executedAt": null,
+      "observationIds": [
+        "observation:wrong-only-selection",
+        "observation:green-check-no-artifact",
+        "observation:downloads-access-blocked",
+        "observation:user-pdf-viewer-open"
+      ],
+      "atomicEventIds": [
+        "event:batch-generate-once"
+      ],
+      "recordingMode": "reconstructed_from_observation_report",
+      "sourceReportId": "source:clinic-measured-attempt-20261006-0700"
+    }
+  ],
+  "observations": [
+    {
+      "id": "observation:row-clinic-modal",
+      "kind": "observation",
+      "observedAt": null,
+      "sourceReference": "task:01a10fb5-7835-7589-8a54-c84ad351d02a",
+      "targetSnapshot": {
+        "studentReference": null,
+        "courseCode": null,
+        "bookVersion": null,
+        "unitLabel": null,
+        "assessmentType": null,
+        "attemptTimestamp": null,
+        "materialKind": "similar_mapped",
+        "headerText": null,
+        "originalWrongItemIds": null,
+        "similarItemIds": null,
+        "similarPerOriginal": 1,
+        "sourceAssessmentReference": null,
+        "scopeEvidenceReference": null
+      },
+      "verificationState": "observed",
+      "minimalEvidenceReference": null,
+      "containsStudentPersonalData": false,
+      "recordingMode": "reconstructed_from_observation_report",
+      "sourceReportId": "source:clinic-measured-attempt-20261006-0700",
+      "evidenceType": "structure",
+      "claim": "행별 클은 개별 클리닉 생성 모달을 열었다. 개별 유사문항 설정 1을 관찰했으며 실제 생성은 누르지 않았다."
+    },
+    {
+      "id": "observation:batch-clinic-setting",
+      "kind": "observation",
+      "observedAt": null,
+      "sourceReference": "task:01a10fb5-7835-7589-8a54-c84ad351d02a",
+      "targetSnapshot": {
+        "studentReference": null,
+        "courseCode": null,
+        "bookVersion": null,
+        "unitLabel": null,
+        "assessmentType": null,
+        "attemptTimestamp": null,
+        "materialKind": "similar_mapped",
+        "headerText": null,
+        "originalWrongItemIds": null,
+        "similarItemIds": null,
+        "similarPerOriginal": 2,
+        "sourceAssessmentReference": null,
+        "scopeEvidenceReference": null
+      },
+      "verificationState": "observed",
+      "minimalEvidenceReference": null,
+      "containsStudentPersonalData": false,
+      "recordingMode": "reconstructed_from_observation_report",
+      "sourceReportId": "source:clinic-measured-attempt-20261006-0700",
+      "evidenceType": "structure",
+      "claim": "상단 클 설정은 2로 개별 설정 1과 달랐다. 상단 클은 설정을 열고 선택 색상도 바꾸었다. 설정 적용과 클 생성은 하지 않았다."
+    },
+    {
+      "id": "observation:wrong-only-selection",
+      "kind": "observation",
+      "observedAt": null,
+      "sourceReference": "task:01a10fb5-7835-7589-8a54-c84ad351d02a",
+      "targetSnapshot": {
+        "studentReference": null,
+        "courseCode": null,
+        "bookVersion": null,
+        "unitLabel": null,
+        "assessmentType": null,
+        "attemptTimestamp": null,
+        "materialKind": "wrong_original",
+        "headerText": null,
+        "originalWrongItemIds": null,
+        "similarItemIds": null,
+        "similarPerOriginal": null,
+        "sourceAssessmentReference": null,
+        "scopeEvidenceReference": null
+      },
+      "verificationState": "observed",
+      "minimalEvidenceReference": null,
+      "containsStudentPersonalData": false,
+      "recordingMode": "reconstructed_from_observation_report",
+      "sourceReportId": "source:clinic-measured-attempt-20261006-0700",
+      "evidenceType": "structure",
+      "claim": "한 알려진 최근 행에서 오 켜짐, 클 꺼짐을 확인한 뒤 일괄생성을 한 번 실행했다."
+    },
+    {
+      "id": "observation:green-check-no-artifact",
+      "kind": "observation",
+      "observedAt": null,
+      "sourceReference": "task:01a10fb5-7835-7589-8a54-c84ad351d02a",
+      "targetSnapshot": {
+        "studentReference": null,
+        "courseCode": null,
+        "bookVersion": null,
+        "unitLabel": null,
+        "assessmentType": null,
+        "attemptTimestamp": null,
+        "materialKind": "wrong_original",
+        "headerText": null,
+        "originalWrongItemIds": null,
+        "similarItemIds": null,
+        "similarPerOriginal": null,
+        "sourceAssessmentReference": null,
+        "scopeEvidenceReference": null
+      },
+      "verificationState": "observed",
+      "minimalEvidenceReference": null,
+      "containsStudentPersonalData": false,
+      "recordingMode": "reconstructed_from_observation_report",
+      "sourceReportId": "source:clinic-measured-attempt-20261006-0700",
+      "evidenceType": "structure",
+      "claim": "오에 새 초록 체크가 생겼으나 PDF 탭과 설치 모달은 보이지 않았다. PDF 결과물과 체크의 의미는 미확인이다."
+    },
+    {
+      "id": "observation:downloads-access-blocked",
+      "kind": "observation",
+      "observedAt": null,
+      "sourceReference": "task:01a10fb5-7835-7589-8a54-c84ad351d02a",
+      "targetSnapshot": {
+        "studentReference": null,
+        "courseCode": null,
+        "bookVersion": null,
+        "unitLabel": null,
+        "assessmentType": null,
+        "attemptTimestamp": null,
+        "materialKind": "wrong_original",
+        "headerText": null,
+        "originalWrongItemIds": null,
+        "similarItemIds": null,
+        "similarPerOriginal": null,
+        "sourceAssessmentReference": null,
+        "scopeEvidenceReference": null
+      },
+      "verificationState": "observed",
+      "minimalEvidenceReference": null,
+      "containsStudentPersonalData": false,
+      "recordingMode": "reconstructed_from_observation_report",
+      "sourceReportId": "source:clinic-measured-attempt-20261006-0700",
+      "evidenceType": "structure",
+      "claim": "chrome://downloads 접근은 보안 프로토콜 제한으로 차단됐다. 다른 경로로 우회하거나 생성을 반복하지 않았다."
+    },
+    {
+      "id": "observation:user-pdf-viewer-open",
+      "kind": "observation",
+      "observedAt": null,
+      "sourceReference": "Sentinel_d575bf6839e08191b9e8d73a5fe93316",
+      "evidenceType": "user_statement",
+      "targetSnapshot": {
+        "studentReference": null,
+        "courseCode": null,
+        "bookVersion": null,
+        "unitLabel": null,
+        "assessmentType": null,
+        "attemptTimestamp": null,
+        "materialKind": "wrong_original",
+        "headerText": null,
+        "originalWrongItemIds": null,
+        "similarItemIds": null,
+        "similarPerOriginal": null,
+        "sourceAssessmentReference": null,
+        "scopeEvidenceReference": null
+      },
+      "claim": "사용자가 PDF 뷰어 열림을 확인함. 내용과 페이지는 에이전트 미검증.",
+      "verificationState": "observed",
+      "minimalEvidenceReference": null,
+      "containsStudentPersonalData": false,
+      "recordingMode": "reconstructed_from_observation_report",
+      "sourceReportId": "Sentinel_d575bf6839e08191b9e8d73a5fe93316"
+    }
+  ],
+  "executionEvents": [
+    {
+      "id": "event:batch-generate-once",
+      "kind": "atomic_ui_event",
+      "attemptId": "attempt:wrong-batch-one-reported",
+      "contractId": "clinic_material_inspection",
+      "contractVersion": null,
+      "purpose": "선택한 오 자료를 한 번 일괄 생성하고 PDF 결과를 확인",
+      "targetSnapshot": {
+        "studentReference": null,
+        "courseCode": null,
+        "bookVersion": null,
+        "unitLabel": null,
+        "assessmentType": null,
+        "attemptTimestamp": null,
+        "materialKind": "wrong_original",
+        "headerText": null,
+        "originalWrongItemIds": null,
+        "similarItemIds": null,
+        "similarPerOriginal": null,
+        "sourceAssessmentReference": null,
+        "scopeEvidenceReference": null
+      },
+      "preconditionsChecked": [
+        "알려진 학생 최근 한 행",
+        "오 켜짐",
+        "클 꺼짐"
+      ],
+      "operation": "wrong_original_batch_generate",
+      "actualAction": "일괄생성 버튼을 한 번 실행",
+      "performed": true,
+      "observedAt": null,
+      "evidenceObservationIds": [
+        "observation:wrong-only-selection",
+        "observation:green-check-no-artifact",
+        "observation:downloads-access-blocked",
+        "observation:user-pdf-viewer-open"
+      ],
+      "outcome": "unknown",
+      "recordingMode": "reconstructed_from_observation_report",
+      "sourceReportId": "source:clinic-measured-attempt-20261006-0700"
+    }
+  ],
+  "practicalRecordModel": {
+    "printArtifactSchemaRef": "#/$defs/PrintArtifact",
+    "teacherAssertionSchemaRef": "#/$defs/TeacherCompletionAssertion",
+    "identityRule": "실제 안정적인 목록 또는 시험지 식별키가 확인되면 사용한다. 아직 안정 키는 미확인이다. 후보 대응 키는 학생 참조 + 교재 또는 과정 코드와 버전 + 소단원 + 자료 종류 + 시험 시도 시각이다. 생성 시각이나 화면 행 번호를 안정 키로 사용하지 않는다. 여러 시도나 버전이 충돌하면 자동 연결하지 않고 필요한 최소 질문을 한다. 오/클 자료는 원래 오답 문항과 해당 평가 범위, 유사문항 대응을 보존하고 헤더로 대조한다. 현재 유사문항 요청 수 1은 종이 인쇄 매수와 다르다.",
+    "observationRule": "사이트 원문 상태는 관찰 날짜와 함께 별도 저장한다. 점수와 생성 및 출력과 실제 풀이 또는 완료를 서로 추정하지 않는다.",
+    "teacherJudgmentRule": "실제 완료 판단은 사용자의 명시적 말과 대상 출력 자료를 연결해 기록한다. 판단이 바뀌면 이전 근거를 보존하고 새 리비전을 추가한다. 사이트로 되돌려 쓰지 않는다.",
+    "deepAssessmentRequested": false,
+    "instanceRecordsCreated": 0
+  },
+  "externalAuditSource": {
+    "artifactName": "clinic-operation-contract-v1.1-probe.json",
+    "reportedEventCount": 9,
+    "ingestedExactEventCount": 0,
+    "readState": "user_cancelled_do_not_retry",
+    "sourceIds": [
+      "source:local-audit-handoff-cancelled-20261006"
+    ]
+  }
+}

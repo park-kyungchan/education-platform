@@ -1,0 +1,83 @@
+{
+  "binding": {
+    "producer": {
+      "selection": {
+        "repositoryRoot": "/home/palantirkc/worktrees/academy-architecture-orchestration-20261021",
+        "repositoryId": "park-kyungchan/academy-workbench",
+        "projectId": "academy-workbench",
+        "workId": "academy-architecture-orchestration-20261021",
+        "commit": "d79237566a86dfce9e633d5270e8b409d0d4a025"
+      },
+      "tree": "05e8f3567c29524b2f83bb7959e3a15c908d0310",
+      "logical": {
+        "domainId": "academy-operations",
+        "projectId": "academy-workbench",
+        "workId": "academy-architecture-orchestration-20261021",
+        "issueId": "AAR-ISSUE-20261021",
+        "specId": "AAR-SPEC",
+        "specRevision": 1,
+        "planId": "AAR-PLAN",
+        "planRevision": 2,
+        "taskId": "academy-workbench:task:academy-architecture-orchestration-20261021-t04"
+      },
+      "resultEvidenceId": "academy-workbench:evidence:aar-t04-delivery-observation-r2",
+      "verificationEvidenceId": "academy-workbench:evidence:aar-t04-delivery-verification-r2",
+      "milestone": "execution-and-verification"
+    },
+    "consumer": {
+      "selection": {
+        "repositoryRoot": "/home/palantirkc/worktrees/academy-consumer-integration-20261021",
+        "repositoryId": "park-kyungchan/academy-workbench",
+        "projectId": "academy-workbench",
+        "workId": "academy-consumer-integration-20261021",
+        "commit": "b3f8d9d7e5a2f080e3735ccddd13d4ef3a3a091e"
+      },
+      "logical": {
+        "domainId": "academy-operations",
+        "projectId": "academy-workbench",
+        "workId": "academy-consumer-integration-20261021",
+        "issueId": "CON-ISSUE-20261021",
+        "specId": "CON-SPEC",
+        "specRevision": 1,
+        "planId": "CON-PLAN",
+        "planRevision": 1,
+        "taskId": "academy-workbench:task:academy-consumer-integration-20261021-con-01"
+      },
+      "qualificationTaskId": "academy-workbench:task:academy-consumer-integration-20261021-con-01-qualify-aar-05"
+    },
+    "receiverSource": {
+      "kind": "snapshot",
+      "path": "work/academy-workbench/academy-consumer-integration-20261021/inputs/CON-ROOT-QUALIFICATION-R1.json",
+      "sha256": "8ff4ee05571633ed5beac0a7f4c14b101c54314edf6462c716708e8d6a20e3c1",
+      "fragment": "#/content"
+    }
+  },
+  "result": {
+    "qualified": true,
+    "scope": "source-only-execution-and-verification",
+    "producer": {
+      "domainId": "academy-operations",
+      "projectId": "academy-workbench",
+      "workId": "academy-architecture-orchestration-20261021",
+      "taskId": "academy-workbench:task:academy-architecture-orchestration-20261021-t04"
+    },
+    "consumer": {
+      "domainId": "academy-operations",
+      "projectId": "academy-workbench",
+      "workId": "academy-consumer-integration-20261021",
+      "taskId": "academy-workbench:task:academy-consumer-integration-20261021-con-01"
+    },
+    "qualificationTaskId": "academy-workbench:task:academy-consumer-integration-20261021-con-01-qualify-aar-05",
+    "producerCommit": "d79237566a86dfce9e633d5270e8b409d0d4a025",
+    "producerTree": "05e8f3567c29524b2f83bb7959e3a15c908d0310",
+    "receiverSource": {
+      "kind": "snapshot",
+      "path": "work/academy-workbench/academy-consumer-integration-20261021/inputs/CON-ROOT-QUALIFICATION-R1.json",
+      "sha256": "8ff4ee05571633ed5beac0a7f4c14b101c54314edf6462c716708e8d6a20e3c1",
+      "fragment": "#/content"
+    },
+    "nativeReceiverAuthenticated": false,
+    "sharedDeliveryEstablished": false,
+    "activationAuthorized": false
+  }
+}

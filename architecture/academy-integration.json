@@ -1,0 +1,108 @@
+{
+  "schema": "education.academy-integration.v1",
+  "status": "local-source-candidate_not-yet-independently-reviewed-or-published",
+  "repository": "park-kyungchan/education-platform",
+  "visibilityRequired": "private",
+  "workRef": "work/education-platform/academy-repository-integration-20261023/work.json",
+  "sourceBaseCommit": "da51312ed08d506853c46d17573a5b5a1f405bef",
+  "maintenanceRoutes": [
+    {
+      "sourceRepository": "park-kyungchan/education-platform",
+      "root": ".",
+      "sourceCommit": "da51312ed08d506853c46d17573a5b5a1f405bef",
+      "maintenanceOwner": "education-platform source integration with retained education-platform domain meaning",
+      "nativeRuntimeCutover": false
+    },
+    {
+      "sourceRepository": "park-kyungchan/dc-gang-a",
+      "root": "apps/academy/dc-gang-a",
+      "sourceCommit": "dc842d65946de41d2cbe3f3d9ea6ebf5c635d03c",
+      "maintenanceOwner": "education-platform source integration with retained dc-gang-a domain meaning",
+      "nativeRuntimeCutover": false
+    },
+    {
+      "sourceRepository": "park-kyungchan/academy-workbench",
+      "root": "modules/academy-workbench",
+      "sourceCommit": "020e7e483e46990f9393b64368f06b24cf5ace8c",
+      "maintenanceOwner": "education-platform source integration with retained academy-workbench domain meaning",
+      "nativeRuntimeCutover": false
+    },
+    {
+      "sourceRepository": "park-kyungchan/math-research-module",
+      "root": "modules/math-research-module",
+      "sourceCommit": "1fa8b3b046fd029d2bd9578f4416ec6ac75dd08b",
+      "maintenanceOwner": "education-platform source integration with retained math-research-module domain meaning",
+      "nativeRuntimeCutover": false
+    },
+    {
+      "sourceRepository": "park-kyungchan/math-education",
+      "root": "packages/curriculum",
+      "sourceCommit": "4a666ef6ff568f15495ff8219db583bf6dfbfe2a",
+      "maintenanceOwner": "education-platform source integration with retained math-education domain meaning",
+      "nativeRuntimeCutover": false
+    },
+    {
+      "sourceRepository": "park-kyungchan/gang-a",
+      "root": "apps/academy/gang-a",
+      "sourceCommit": "c4475511b347e9fdc83a7ebbc4b5a1779fa1be6e",
+      "maintenanceOwner": "education-platform source integration with retained gang-a domain meaning",
+      "nativeRuntimeCutover": false
+    },
+    {
+      "sourceRepository": "park-kyungchan/hermes-profile-dc-gang-a-dev",
+      "root": "examples/clinic-workbench",
+      "sourceCommit": "3d45dc0bceff9df9a84a9fde2d0ffcf8f362a512",
+      "maintenanceOwner": "education-platform source integration with retained hermes-profile-dc-gang-a-dev domain meaning",
+      "nativeRuntimeCutover": false
+    }
+  ],
+  "commonHarness": {
+    "canonicalRepository": "park-kyungchan/agent-platform",
+    "legacyConsumerPin": "ffba2462a08b9f8c83c6f87b1043403e5cb748d7",
+    "currentGitWorkflowProviderPin": "b308033be9fceca4279e114d99a038f51a33ed12",
+    "meaning": "Preserve consumer pins and source-qualified common APIs. Current integration records are local Git Work; native Task/Run remain unexposed.",
+    "newIndependentImplementationCreated": false,
+    "existingPinnedGeneratedCopiesPreserved": true
+  },
+  "context": {
+    "entry": "bun run context:academy entry",
+    "workflow": "bun run context:academy reading-plan --topic academy.class-preparation",
+    "sourceOwner": "modules/academy-workbench/context/academy-context",
+    "privateImport": "provenance/private-context-integration.json",
+    "hierarchy": [
+      "work-purpose",
+      "business-date",
+      "class-or-cohort",
+      "student",
+      "book-edition",
+      "unit",
+      "activity",
+      "occurrence-or-attempt",
+      "observation-stage-and-decision"
+    ],
+    "metadataOnlyByDefault": true,
+    "sourceBodiesAutomaticallyLoaded": false,
+    "allTimeCoverage": false,
+    "additionalPrivateArchives": "All 246 tracked private/archive files from the exact six-group proposal admitted by current user and byte-preserved within modules/academy-workbench; opaque archives remain unexpanded.",
+    "resolveSelectedSource": "bun run context:academy resolve --source <source-id>"
+  },
+  "preservation": {
+    "sourceManifest": "provenance/academy-source-integration.json",
+    "historicalWork": "Nested original Work records retain source repository identity and historical purpose/effect fences; they are not silently re-registered as current Education Work.",
+    "originalGitHistory": "Retained externally in verified private Git bundles; not imported into this repository.",
+    "mathematicsCoreAndMathcrew": "Preserve existing module ownership and pending acceptance; no domain rewrite.",
+    "rootOperationalExclusion": {
+      "branch": "work/academy-class-operations-20261023",
+      "worktreeRoot": "/home/palantirkc/worktrees/academy-class-operations-20261023",
+      "recordRoot": "/home/palantirkc/operations/academy-class-operations-20261023",
+      "nativeTaskArtifacts": true,
+      "fixedNativeRuntime": true
+    }
+  },
+  "rootPr": {
+    "target": "park-kyungchan/education-platform",
+    "baseCommit": null,
+    "ready": false,
+    "reason": "Exact final source, private scope, full imported-module checks, independent review and merged integration base remain pending."
+  }
+}

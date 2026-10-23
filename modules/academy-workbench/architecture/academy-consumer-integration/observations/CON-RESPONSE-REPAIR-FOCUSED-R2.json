@@ -1,0 +1,36 @@
+{
+  "schema": "academy.consumer-response-repair-focused-check.v1",
+  "createdAt": "2026-10-21T10:47:58.811Z",
+  "nativeThreadId": "01a15dd0-03ed-71a0-8372-936776e22669",
+  "reason": "Changed type-only JSON Schema bridge and isolated previously shared synthetic catalog arrays; rerun compiler and failed F2 only, no unchanged full suite or stdio retry.",
+  "observations": [
+    {
+      "command": [
+        "/usr/local/bin/bun",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit"
+      ],
+      "cwd": "/home/palantirkc/worktrees/academy-consumer-integration-20261021/tools/academy-mcp",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/usr/local/bin/bun",
+        "test",
+        "--preload",
+        "./tests/network-deny.ts",
+        "tests/teacher-response-contract.test.ts",
+        "--test-name-pattern",
+        "F2 canonical sibling"
+      ],
+      "cwd": "/home/palantirkc/worktrees/academy-consumer-integration-20261021/tools/academy-mcp",
+      "exitCode": 0,
+      "stdout": "bun test v1.4.3 (c6da4a4d3)\n",
+      "stderr": "\ntests/teacher-response-contract.test.ts:\n(pass) F2 canonical sibling problems and separate branches render only their actual parent paths [215.89ms]\n\n 1 pass\n 5 filtered out\n 0 fail\n 10 expect() calls\nRan 1 test across 1 file. [336.00ms]\n"
+    }
+  ],
+  "taskState": "running/pending",
+  "rootChangedSourceSdk": "not run; awaited"
+}

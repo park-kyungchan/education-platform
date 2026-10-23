@@ -1,0 +1,36 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "academy-operations",
+  "projectId": "academy-workbench",
+  "workId": "academy-consumer-integration-20261021",
+  "kind": "input",
+  "id": "CON-DELEGATED-SCOPE-R1",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "root-academy-orchestrator",
+    "locator": "approved-architecture-delegation:academy-consumer-integration-20261021",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "authorityReference": {
+      "kind": "git",
+      "repositoryId": "park-kyungchan/academy-workbench",
+      "commit": "d79237566a86dfce9e633d5270e8b409d0d4a025",
+      "path": "work/academy-workbench/academy-architecture-orchestration-20261021/inputs/AAR-USER-APPROVAL-001.json"
+    },
+    "meaning": "Root source-owner delegation under user-approved architecture, not a direct user answer/global or native registration.",
+    "initialTask": "academy-workbench:task:academy-consumer-integration-20261021-con-01",
+    "allowedWrites": [
+      "architecture/academy-consumer-integration/**",
+      "work/academy-workbench/academy-consumer-integration-20261021/** canonical records only",
+      "Later qualified scope only: selected owned MCP/report/context glue; no new Markdown or native/global skill edits."
+    ],
+    "recordLayout": "Canonical Work record layout only; raw receipts under owned architecture/observations. Existing Inputs immutable. Separate result/Verification Inputs with Evidence/hash binding.",
+    "gitCustody": "Root stages/commits exact owned paths; subLead authors source and bounded checks, no native permission/config changes.",
+    "holds": [
+      "No publication, merge, deploy, native activation, real student source reads/writes, printing/sending or parent communication.",
+      "No common contracts/dependency pins/permissions, native config/credentials/services or unrelated Work changes.",
+      "No duplicated domain reducer or independently maintained common validator; no original source/history rewrite."
+    ]
+  }
+}

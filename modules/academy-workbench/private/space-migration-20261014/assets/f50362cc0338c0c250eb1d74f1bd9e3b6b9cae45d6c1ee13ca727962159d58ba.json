@@ -1,0 +1,452 @@
+{
+  "$schema": "academy-cartography-0.3.schema.json",
+  "kind": "coverage_package",
+  "id": "academy:coverage:r3",
+  "schemaVersion": "0.3.0",
+  "revision": 3,
+  "projectId": "project:academy-practical",
+  "canonicalParentId": "project:academy-practical",
+  "updatedAt": "2026-10-06T07:09:19.665Z",
+  "sourceIds": [
+    "source:site-observation-window-20261006-063349-064420"
+  ],
+  "authorityGrantedByDocument": false,
+  "progress": {
+    "publicationIsExplorationComplete": false,
+    "inventoryComplete": false,
+    "reportedInventoryItemCount": 17,
+    "reportedTopMenuCount": 10,
+    "inventoryCountBasis": "초기 탐색 대상의 보고 수치이다. 하위 화면과 팝업을 별도 경로로 추가했으므로 현재 경로 수와 메뉴 수는 같지 않다.",
+    "continuationScope": "06:33:49–06:44:20 UTC 구간의 안전한 조회 결과를 반영했다. 출력 동작과 미리보기의 경계, 안정적인 자료 식별키, 제출 인계 맥락 및 UI 제한은 남아 있다. 읽기 탐색 완료와 전체 실행 가능을 구분한다.",
+    "excludedScope": [
+      "종료된 학교 정보 조회",
+      "종료된 Excel 출석부 업무",
+      "별도 수학교육 프로젝트",
+      "승인 없는 상태 변경 실험",
+      "요청대상 외 학생의 광범위한 집계 조회",
+      "학원 업무의 클라우드 로그인과 의존성 설치",
+      "사용자가 취소한 현지 9개 이벤트 원문 읽기의 재시도"
+    ]
+  },
+  "coverage": [
+    {
+      "id": "coverage:calendar",
+      "label": "수업일정관리",
+      "labelBasis": "reported_menu_or_workflow",
+      "routeId": "route:next-class",
+      "inspectionState": "partly_read",
+      "gaps": [
+        "partial_read_evidence"
+      ],
+      "nextReadOnlyCheck": "정확한 진입 경로와 날짜 및 그룹 필터 확인",
+      "sourceIds": [
+        "source:site-observation-initial"
+      ]
+    },
+    {
+      "id": "coverage:attendance",
+      "label": "학생별 출결조회와 등록 정보",
+      "labelBasis": "reported_menu_or_workflow",
+      "routeId": "route:attendance",
+      "inspectionState": "partly_read",
+      "gaps": [
+        "partial_read_evidence"
+      ],
+      "nextReadOnlyCheck": "정확한 조회 경로와 등록 시작일 및 요일 위치 확인",
+      "sourceIds": [
+        "source:site-observation-initial"
+      ]
+    },
+    {
+      "id": "coverage:day-record",
+      "label": "DayRecord",
+      "labelBasis": "reported_menu_or_workflow",
+      "routeId": "route:next-class",
+      "inspectionState": "read_observed",
+      "gaps": [
+        "user_context_needed",
+        "effectful_not_executed"
+      ],
+      "nextReadOnlyCheck": "날짜별 결과를 비교하되 자동 저장 입력은 수정하지 않음",
+      "sourceIds": [
+        "source:site-observation-20261006-0540"
+      ]
+    },
+    {
+      "id": "coverage:learning-results",
+      "label": "강아학습결과",
+      "labelBasis": "reported_menu_or_workflow",
+      "routeId": "route:learning-results",
+      "inspectionState": "partly_read",
+      "gaps": [
+        "partial_read_evidence",
+        "user_context_needed",
+        "effectful_not_executed"
+      ],
+      "nextReadOnlyCheck": "오답 등 안전한 하위 결과와 실제 작업 단계의 대응 확인",
+      "sourceIds": [
+        "source:learning-results-20261006-0628"
+      ]
+    },
+    {
+      "id": "coverage:school",
+      "label": "학교 정보와 Excel",
+      "labelBasis": "semantic_workflow",
+      "routeId": "route:school",
+      "inspectionState": "scope_closed",
+      "gaps": [
+        "scope_closed"
+      ],
+      "nextReadOnlyCheck": null,
+      "sourceIds": [
+        "source:school-closed-page-20261006"
+      ]
+    },
+    {
+      "id": "coverage:preview-completed",
+      "label": "예습완료조회와 영상현황",
+      "labelBasis": "reported_menu_or_workflow",
+      "routeId": "route:preview-inspection",
+      "inspectionState": "partly_read",
+      "gaps": [
+        "partial_read_evidence",
+        "effectful_not_executed"
+      ],
+      "nextReadOnlyCheck": "현재 안전한 조회 관찰을 보존하고 남은 UI 제약과 상태 변경 제어는 별도로 확인한다.",
+      "sourceIds": [
+        "source:pending-inventory-20261006-0628",
+        "source:site-observation-20261006-0637",
+        "source:site-observation-window-20261006-063349-064420"
+      ]
+    },
+    {
+      "id": "coverage:dt-zt",
+      "label": "DT와 ZT 목록",
+      "labelBasis": "reported_menu_or_workflow",
+      "routeId": "route:dt-results",
+      "inspectionState": "partly_read",
+      "gaps": [
+        "partial_read_evidence",
+        "effectful_not_executed"
+      ],
+      "nextReadOnlyCheck": "현재 안전한 조회 관찰을 보존하고 남은 UI 제약과 상태 변경 제어는 별도로 확인한다.",
+      "sourceIds": [
+        "source:pending-inventory-20261006-0628",
+        "source:site-observation-window-20261006-063349-064420"
+      ]
+    },
+    {
+      "id": "coverage:wrong-answers",
+      "label": "오답 읽기 상세",
+      "labelBasis": "reported_menu_or_workflow",
+      "routeId": null,
+      "inspectionState": "partly_read",
+      "gaps": [
+        "partial_read_evidence",
+        "effectful_not_executed"
+      ],
+      "nextReadOnlyCheck": "상단 일괄 제어와 행별 제어, 헤더 체크박스 및 일괄생성의 실제 구조를 읽기 확인한다. PDF 생성과 물리 출력은 선택 범위와 승인이 확보된 뒤 별도 검증한다.",
+      "sourceIds": [
+        "source:pending-inventory-20261006-0628",
+        "source:site-observation-window-20261006-063349-064420",
+        "Sentinel_77fc316efb90819184454f4f50f469d3"
+      ]
+    },
+    {
+      "id": "coverage:progress-report",
+      "label": "진도현황표와 개념진도 및 학습과정조회관리",
+      "labelBasis": "reported_menu_or_workflow",
+      "routeId": "route:course-progress",
+      "inspectionState": "partly_read",
+      "gaps": [
+        "partial_read_evidence",
+        "effectful_not_executed"
+      ],
+      "nextReadOnlyCheck": "현재 안전한 조회 관찰을 보존하고 남은 UI 제약과 상태 변경 제어는 별도로 확인한다.",
+      "sourceIds": [
+        "source:pending-inventory-20261006-0628",
+        "source:site-observation-20261006-0637",
+        "source:site-observation-window-20261006-063349-064420"
+      ]
+    },
+    {
+      "id": "coverage:print-materials",
+      "label": "출력자료 버튼 의미와 보기",
+      "labelBasis": "reported_menu_or_workflow",
+      "routeId": "route:teaching-material",
+      "inspectionState": "partly_read",
+      "gaps": [
+        "partial_read_evidence",
+        "effectful_not_executed"
+      ],
+      "nextReadOnlyCheck": "상단 일괄 제어와 행별 제어, 헤더 체크박스 및 일괄생성의 실제 구조를 읽기 확인한다. PDF 생성과 물리 출력은 선택 범위와 승인이 확보된 뒤 별도 검증한다.",
+      "sourceIds": [
+        "source:pending-inventory-20261006-0628",
+        "source:site-observation-window-20261006-063349-064420",
+        "Sentinel_77fc316efb90819184454f4f50f469d3"
+      ]
+    },
+    {
+      "id": "coverage:textbook-report",
+      "label": "교재리포트 초기 조회",
+      "labelBasis": "reported_menu_or_workflow",
+      "routeId": null,
+      "inspectionState": "partly_read",
+      "gaps": [
+        "partial_read_evidence",
+        "effectful_not_executed"
+      ],
+      "nextReadOnlyCheck": "현재 안전한 조회 관찰을 보존하고 남은 UI 제약과 상태 변경 제어는 별도로 확인한다.",
+      "sourceIds": [
+        "source:pending-inventory-20261006-0628",
+        "source:site-observation-window-20261006-063349-064420"
+      ]
+    },
+    {
+      "id": "coverage:daily-journal",
+      "label": "날짜별일지",
+      "labelBasis": "reported_menu_or_workflow",
+      "routeId": "route:next-class",
+      "inspectionState": "partly_read",
+      "gaps": [
+        "partial_read_evidence",
+        "effectful_not_executed"
+      ],
+      "nextReadOnlyCheck": "현재 안전한 조회 관찰을 보존하고 남은 UI 제약과 상태 변경 제어는 별도로 확인한다.",
+      "sourceIds": [
+        "source:pending-inventory-20261006-0628",
+        "source:site-observation-20261006-0637",
+        "source:site-observation-window-20261006-063349-064420"
+      ]
+    },
+    {
+      "id": "coverage:evaluation-subviews",
+      "label": "평가결과 하위 화면",
+      "labelBasis": "reported_menu_or_workflow",
+      "routeId": null,
+      "inspectionState": "partly_read",
+      "gaps": [
+        "partial_read_evidence",
+        "effectful_not_executed"
+      ],
+      "nextReadOnlyCheck": "현재 안전한 조회 관찰을 보존하고 남은 UI 제약과 상태 변경 제어는 별도로 확인한다.",
+      "sourceIds": [
+        "source:pending-inventory-20261006-0628",
+        "source:site-observation-window-20261006-063349-064420"
+      ]
+    },
+    {
+      "id": "coverage:smartbook",
+      "label": "스마트북",
+      "labelBasis": "reported_menu_or_workflow",
+      "routeId": null,
+      "inspectionState": "partly_read",
+      "gaps": [
+        "partial_read_evidence",
+        "effectful_not_executed"
+      ],
+      "nextReadOnlyCheck": "현재 안전한 조회 관찰을 보존하고 남은 UI 제약과 상태 변경 제어는 별도로 확인한다.",
+      "sourceIds": [
+        "source:pending-inventory-20261006-0628",
+        "source:site-observation-20261006-0637",
+        "source:site-observation-window-20261006-063349-064420"
+      ]
+    },
+    {
+      "id": "coverage:material-history",
+      "label": "교재요청과 제작이력",
+      "labelBasis": "reported_menu_or_workflow",
+      "routeId": null,
+      "inspectionState": "partly_read",
+      "gaps": [
+        "partial_read_evidence",
+        "effectful_not_executed"
+      ],
+      "nextReadOnlyCheck": "현재 안전한 조회 관찰을 보존하고 남은 UI 제약과 상태 변경 제어는 별도로 확인한다.",
+      "sourceIds": [
+        "source:pending-inventory-20261006-0628",
+        "source:site-observation-window-20261006-063349-064420"
+      ]
+    },
+    {
+      "id": "coverage:counsel-report",
+      "label": "상담과 안내 및 보고 제출 연결",
+      "labelBasis": "reported_menu_or_workflow",
+      "routeId": "route:parent-notice",
+      "inspectionState": "partly_read",
+      "gaps": [
+        "user_context_needed",
+        "effectful_not_executed"
+      ],
+      "nextReadOnlyCheck": "상담 및 안내의 기존 기록과 제출 대상 및 기한 및 인계 맥락을 필요한 시점에 확인한다.",
+      "sourceIds": [
+        "source:pending-inventory-20261006-0628",
+        "source:site-observation-window-20261006-063349-064420"
+      ]
+    },
+    {
+      "id": "coverage:permission-boundary",
+      "label": "권한과 조회 범위",
+      "labelBasis": "semantic_workflow",
+      "routeId": null,
+      "inspectionState": "partly_read",
+      "gaps": [
+        "partial_read_evidence",
+        "effectful_not_executed"
+      ],
+      "nextReadOnlyCheck": "현재 접근 범위와 비활성 제어를 존중한다. 다른 학생의 광범위 조회나 권한 우회는 하지 않는다.",
+      "sourceIds": [
+        "source:site-observation-window-20261006-063349-064420"
+      ]
+    },
+    {
+      "id": "coverage:external-pdf-viewer",
+      "label": "외부 PDF 뷰어와 인쇄 설정",
+      "labelBasis": "semantic_workflow",
+      "routeId": null,
+      "inspectionState": "partly_read",
+      "gaps": [
+        "capability_blocked",
+        "partial_read_evidence"
+      ],
+      "nextReadOnlyCheck": "현재 실행기가 외부 PDF 앱을 읽을 수 없으므로 헤더와 페이지 검증에 필요한 사용자 제공 자료 또는 지원되는 환경을 확인한다. 보안 제한을 우회하거나 같은 생성을 반복하지 않는다.",
+      "sourceIds": [
+        "Sentinel_d575bf6839e08191b9e8d73a5fe93316",
+        "source:pdf-viewer-capability-20261006-0704"
+      ]
+    }
+  ],
+  "workState": {
+    "activeScope": "학교와 Excel을 제외한 학원 사이트 읽기 탐색과 업무 맥락 지도 보완",
+    "closedWork": [
+      {
+        "id": "task:lookup-school",
+        "state": "closed_by_user",
+        "reason": "학교 정보는 빈칸으로 유지하고 조회 종료",
+        "sourceIds": [
+          "source:school-closed-page-20261006"
+        ]
+      },
+      {
+        "id": "task:september-attendance",
+        "state": "completed",
+        "reason": "Desktop 출결 정리 완료 및 Excel 업무 종료",
+        "sourceIds": [
+          "source:attendance-desktop-complete-20261006"
+        ]
+      }
+    ],
+    "remainingAttendanceWork": [
+      {
+        "label": "10월 17일 보강 관련 학부모 안내",
+        "date": "2026-10-12",
+        "state": "existing_reminder_scheduled",
+        "sourceIds": [
+          "source:attendance-desktop-complete-20261006"
+        ]
+      },
+      {
+        "label": "보강 예정",
+        "date": "2026-10-17",
+        "state": "scheduled_not_proven_occurred",
+        "sourceIds": [
+          "source:attendance-desktop-complete-20261006"
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "question:preview-completion",
+      "question": "예습의 검사 완료는 영상 시청 확인만으로 처리하나요, 학생 설명이나 오답 확인까지 마친 뒤 처리하나요?",
+      "askWhen": "검사대기 정리 또는 검사 완료 처리를 실제로 요청받았고 기록만으로 기준을 판단할 수 없을 때",
+      "whyItMatters": "영상 OK와 교사 검사 완료를 혼동하지 않기 위해",
+      "status": "retired_by_user",
+      "answer": "현재 보조 역할에서 별도 완료 처리 기준을 추적하지 않는다. 출력 항목 식별과 사용자의 완료 판단을 기록하며 더 깊은 기준 질문은 중단한다.",
+      "answerSourceIds": [
+        "Sentinel_2c07ae3d1754819186787cfbdcd86843"
+      ]
+    },
+    {
+      "id": "question:lesson-next-step",
+      "question": "다음 시간 준비에서 DayRecord의 숙제와 진도 중 어느 기록을 우선 기준으로 삼고, 사이트 밖에 따로 정하는 내용이 있나요?",
+      "askWhen": "학생별 다음 준비가 두 기록 사이에서 실제로 충돌할 때",
+      "whyItMatters": "단순 화면의 값을 실제 강사의 수업 준비 의도와 맞추기 위해",
+      "status": "pending",
+      "answer": null,
+      "answerSourceIds": []
+    },
+    {
+      "id": "question:makeup-fulfilment",
+      "question": "보강 완료는 회차와 시간 중 무엇을 기준으로 결석에 연결하나요?",
+      "askWhen": "한 보강이 여러 결석과 연결되거나 충족 여부를 결정해야 할 때",
+      "whyItMatters": "보강 예정과 실제 결석 해소를 구분하기 위해",
+      "status": "pending",
+      "answer": null,
+      "answerSourceIds": []
+    },
+    {
+      "id": "question:concept-blank-pass",
+      "question": "개념 빈칸 테스트는 어떤 기준으로 통과로 보나요?",
+      "askWhen": "현재 사용자에게 질문했고 답변을 기다리는 중",
+      "whyItMatters": "수업 진행 단계를 실제 강사의 판단 기준과 연결하기 위해",
+      "status": "answered",
+      "answer": "학생의 칠판 또는 자리 설명이나 가우스 소단원 빈칸 테스트 작성 결과를 보고 교사가 완료를 판단한다. 더 깊은 평가 기준은 지금 묻지 않는다.",
+      "answerSourceIds": [
+        "Sentinel_2c07ae3d1754819186787cfbdcd86843"
+      ]
+    },
+    {
+      "id": "question:clinic-completion",
+      "question": "클리닉 완료는 정답 수정까지인가요, 설명과 확인 및 사이트 완료 처리까지 포함하나요?",
+      "askWhen": "현재 사용자에게 질문했고 답변을 기다리는 중",
+      "whyItMatters": "풀이와 채점과 오답 정리 및 검증 완료를 구분하기 위해",
+      "status": "answered",
+      "answer": "수업 중 교사 채점과 필요시 설명 확인 및 오답 정리 후 교사가 완료를 판단하고 출력물을 보관한다. 별도 사이트 완료 처리 단계는 없다.",
+      "answerSourceIds": [
+        "Sentinel_2c07ae3d1754819186787cfbdcd86843"
+      ]
+    },
+    {
+      "id": "question:clinic-click-effect",
+      "question": "오 또는 클을 누르면 미리보기 화면이 먼저 열리나요, 바로 물리 인쇄가 진행되나요?",
+      "askWhen": "현재 사용자의 답변을 기다리는 중이며 답변 전 버튼을 실험적으로 누르지 않음",
+      "whyItMatters": "안전한 미리보기와 실제 인쇄의 실행 경계를 분리하기 위해",
+      "status": "answered",
+      "answer": "사용자가 설명한 상단 일괄 흐름은 헤더 선택 후 일괄생성으로 PDF를 만들고 그 PDF를 한 번 출력하는 방식이다. 행별 버튼과 상단 제어의 실제 대응은 UI 확인 전이며 같은 효과로 일반화하지 않는다.",
+      "answerSourceIds": [
+        "Sentinel_77fc316efb90819184454f4f50f469d3"
+      ]
+    }
+  ],
+  "interviewPolicy": {
+    "requestedMode": "사용자가 지속적인 능동적 인터뷰를 요청함",
+    "sourceIds": [
+      "Sentinel_d67bfc14a07481918e2b471c86b4476b",
+      "Sentinel_2c07ae3d1754819186787cfbdcd86843"
+    ],
+    "askStrategy": "필요한 출력 목록과 자료 종류, 실제 화면의 항목 대응 등 실무 맥락을 소수씩 확인한다. 개념 빈칸 테스트와 클리닉의 심화 평가 기준 질문은 현재 사용자가 불필요하다고 했으므로 반복하지 않는다. 학습 평가나 완료 판단은 사용자의 말을 기록한다."
+  },
+  "maintenance": {
+    "approach": "안전한 읽기 탐색에서 관찰을 남기고, 실제 업무에서 의미가 갈리는 최소 질문을 사용자에게 확인한 뒤 의도와 완료 기준을 갱신한다.",
+    "safeTrialBoundary": "안전한 조회를 계속하며 현재 사용자가 명시적으로 허용한 한 학생의 최근 한 행 오 자료 PDF 생성 시험만 범위 안에서 수행한다. 물리 인쇄, 채점, 재응시, 업로드나 다른 상태 변경으로 확장하지 않는다.",
+    "versionRule": "새 근거와 사용자 답변마다 해당 계약의 revision을 올리고 validationHistory와 rejectedAssumptions에 변화를 남긴다. 기존 게시 파일과 초기 목록은 관찰 시점 기록으로 유지한다.",
+    "actualWebMcpRuntimeInstalled": false
+  },
+  "executionEnvironment": {
+    "academyComputer": "강아PC",
+    "cloudLoginState": "cancelled",
+    "cloudInstallationState": "cancelled",
+    "cloudAuthenticationCreated": false,
+    "cloudCredentialsUsedOrStored": false,
+    "cloudInstallPerformed": false,
+    "supportedCurrentSurface": "현재 연결의 Chrome 확장 탭",
+    "externalPdfAccessState": "현재 실행기에서 앱 조회 apps=[] 및 네이티브 앱과 화면 확인 경로 부재로 접근 불가",
+    "physicalPrintControlState": "현재 연결에서 외부 PDF 인쇄 설정 조작 미지원이며 물리 인쇄는 하지 않음",
+    "scope": "학원 업무에만 적용. 다른 환경에서의 인쇄 가능성을 일반적으로 부정하지 않음.",
+    "sourceIds": [
+      "source:academy-environment-user-20261006-0705",
+      "source:pdf-viewer-capability-20261006-0704"
+    ]
+  }
+}

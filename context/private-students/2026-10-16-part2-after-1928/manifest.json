@@ -1,0 +1,59 @@
+{
+  "schemaVersion": "academy.private-student-context/1.0",
+  "dataClass": "real_student_evidence",
+  "asOf": "2026-10-16T21:32:00+09:00",
+  "timezone": "Asia/Seoul",
+  "publication": {
+    "repository": "park-kyungchan/dc-gang-a",
+    "visibility": "private",
+    "mergeAllowed": false,
+    "productionMutation": false,
+    "syntheticReplacement": false,
+    "authorizationMessageIds": [
+      "Sentinel_f1aadf5d09f88191b8224907cbef7e7a",
+      "Sentinel_57bb695dc14881919c875a9ebba705ca",
+      "Sentinel_47e3fe5ff48081919a8c69953168bd25"
+    ]
+  },
+  "artifacts": [
+    {
+      "path": "today/part2-events.json",
+      "sha256": "66b2ff200d1205a625a8b3defea671225193a7a697906abbc5199e3159f4cc99",
+      "bytes": 6789,
+      "provenanceKind": "user_report",
+      "sourceReferences": [
+        "Sentinel_586a1419a584819185ed940e60852db7",
+        "Sentinel_0fd419df14588191877a42f8a60765dd"
+      ],
+      "coverage": "complete_for_declared_scope"
+    },
+    {
+      "path": "views/admission.json",
+      "sha256": "4eae9c38ad2e93674473764ca42522b2ff4e5beac07fa66180d360928bd77b35",
+      "bytes": 1143,
+      "provenanceKind": "derived_view",
+      "sourceReferences": [
+        "Sentinel_586a1419a584819185ed940e60852db7",
+        "Sentinel_0fd419df14588191877a42f8a60765dd"
+      ],
+      "coverage": "complete_for_declared_scope"
+    },
+    {
+      "path": "views/README.ko.md",
+      "sha256": "08969f7c403d9c2f813064c2ac74106557ed6fe69cb409672540dd070af576e3",
+      "bytes": 1271,
+      "provenanceKind": "derived_view",
+      "sourceReferences": [
+        "Sentinel_586a1419a584819185ed940e60852db7",
+        "Sentinel_0fd419df14588191877a42f8a60765dd"
+      ],
+      "coverage": "complete_for_declared_scope"
+    }
+  ],
+  "limitations": [
+    "Source is user report, not a fresh academy-server observation.",
+    "No score, actual ending time, pass outcome or teacher-final completion is known.",
+    "Exact native student/book bindings remain unresolved.",
+    "Canonical native Work/Task registration and native review-status publication were not performed; this is a reviewed evidence-only connector publication."
+  ]
+}

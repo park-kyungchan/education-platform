@@ -1,0 +1,42 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "academy-operations",
+  "projectId": "academy-workbench",
+  "workId": "academy-consumer-integration-20261021",
+  "kind": "task",
+  "id": "academy-workbench:task:academy-consumer-integration-20261021-con-03",
+  "logical": {
+    "domainId": "academy-operations",
+    "projectId": "academy-workbench",
+    "workId": "academy-consumer-integration-20261021",
+    "issueId": "CON-ISSUE-20261021",
+    "specId": "CON-SPEC",
+    "specRevision": 1,
+    "planId": "CON-PLAN",
+    "planRevision": 3,
+    "taskId": "academy-workbench:task:academy-consumer-integration-20261021-con-03"
+  },
+  "title": "Route remaining internal workflow consumers with explicit gaps",
+  "state": {
+    "execution": "planned",
+    "verification": "pending",
+    "localAudit": "intent-durable",
+    "sharedAudit": "pending",
+    "formalCompletion": "pending"
+  },
+  "executionClass": "source-only",
+  "dependsOn": [
+    {
+      "taskId": "academy-workbench:task:academy-consumer-integration-20261021-con-response-contract-repair",
+      "milestone": "execution-and-verification"
+    },
+    {
+      "taskId": "academy-workbench:task:academy-consumer-integration-20261021-con-03-qualify-ver-02",
+      "milestone": "execution-and-verification"
+    }
+  ],
+  "decisionIds": [],
+  "effectIds": [],
+  "verificationEvidenceIds": [],
+  "nextAction": "Hold on reviewed consumer response repair and VER02 receiver qualification plus Root admission; old completed/failed and prior source qualification records remain exact historical evidence."
+}

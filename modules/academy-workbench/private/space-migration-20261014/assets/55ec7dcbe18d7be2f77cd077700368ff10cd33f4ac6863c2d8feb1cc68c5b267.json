@@ -1,0 +1,78 @@
+{
+  "schemaVersion": "1.0.0",
+  "version": "1.0.0",
+  "revision": 1,
+  "dataClass": "non_sensitive_contract",
+  "authorityGranted": false,
+  "runtimeIntegration": "local_validator_only",
+  "kind": "space_transition_manifest",
+  "contractId": "academy.space-transition",
+  "sourceIds": [
+    "Sentinel_6e5a7c3c967481918dcb5f3e045a2e17"
+  ],
+  "decision": "Space-centered canonical contracts and review projections; private UI deployment is separately verified.",
+  "localAppDevelopment": "paused_legacy_preserved",
+  "newRepositoryPushPlan": "on_hold",
+  "cloudPreservation": [
+    {
+      "category": "public_book_cache_and_typed_governance",
+      "state": "hash_readback_verified",
+      "locator": "Space shared book and governance Pages"
+    },
+    {
+      "category": "authorized_user_uploaded_student_baseline",
+      "state": "bounded_projection_preserved",
+      "privateLocator": "resolve_in_selected_student_scope_only"
+    },
+    {
+      "category": "development_r5_contracts",
+      "state": "hash_readback_verified",
+      "latestSourceEquivalent": false
+    },
+    {
+      "category": "older_cloud_archives",
+      "state": "metadata_verified_only",
+      "latestSourceEquivalent": false
+    }
+  ],
+  "localOnly": [
+    {
+      "name": "Latest independent gang-a source",
+      "path": "C:\\Users\\dcgan\\Documents\\Codex\\2026-10-06\\task-5\\gang-a",
+      "commit": "5d35421564eb5df218ebe656dc589c12147c2061",
+      "state": "local_only_reported",
+      "reason": "Latest completion explicitly states no external transfer/push. SQLite/lock/recovery implementation; 10 new storage tests/62 assertions; final full check/docs/live integration incomplete.",
+      "cloudEquivalentVerified": false
+    },
+    {
+      "name": "R3 collection source and followup",
+      "path": "C:\\Users\\dcgan\\Documents\\Codex\\2026-10-06\\task-3\\outputs\\revisions\\2026-10-06-r3",
+      "commit": null,
+      "state": "local_only_reported",
+      "reason": "Latest completion explicitly states no external transfer/upload; 277 rows, app208 unchanged fingerprint5d160c21, new DT/ZT55 and empty historical queries35. Sensitive bodies not re-extracted.",
+      "cloudEquivalentVerified": false
+    },
+    {
+      "name": "Rollback source backup ZIP",
+      "path": "C:\\Users\\dcgan\\Documents\\Codex\\2026-10-06\\task-5\\academy-workbench-before-rollback.zip",
+      "commit": null,
+      "state": "local_only_reported",
+      "reason": "Local ZIP recorded; no corresponding current cloud archive identified. ZIP byte hash/equivalence unknown.",
+      "cloudEquivalentVerified": false
+    }
+  ],
+  "latestLocalImplementation": {
+    "checkpoint": "5d35421564eb5df218ebe656dc589c12147c2061",
+    "source": "prior completion record; current source bytes not read",
+    "storage": "SQLite/process lock/recovery/migration dry-run reported implemented",
+    "validation": "10 added tests / 62 assertions reported passing; final full checks/docs/live integration incomplete"
+  },
+  "deletionSafe": false,
+  "assistantDeletionAuthorized": false,
+  "existingDailyRefresh": "unchanged_separate_schedule_with_Gang-a_PC_dependency",
+  "limits": [
+    "Space preservation does not prove latest local source is backed up.",
+    "No live collection or backend execution capability is implied by contracts.",
+    "No private student raw payload is embedded in this manifest."
+  ]
+}

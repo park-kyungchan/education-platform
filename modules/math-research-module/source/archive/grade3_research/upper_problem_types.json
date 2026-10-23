@@ -1,0 +1,669 @@
+{
+  "version": "0.1",
+  "scope": "상위학년 직접 연결 내용의 대표 유형; 경계 지원 노드는 확장하지 않음",
+  "types": [
+    {
+      "id": "U4M-T01",
+      "parentId": "G4-M",
+      "kind": "problem-type",
+      "title": "세 자리×두 자리 계산과 부분곱 해석",
+      "example": "124×23을 계산하고 둘째 부분곱의 뜻을 말하시오.",
+      "answer": "124×3=372, 124×20=2480, 합 2852. 둘째 부분곱은 124의 20배.",
+      "diagnosticNotes": "둘째 부분곱을 248로 더하는 오류.",
+      "reusedCoreTypeIds": [
+        "M-T05",
+        "M-T02"
+      ],
+      "conditionTags": [
+        "받아올림",
+        "0포함",
+        "부분곱정렬"
+      ],
+      "evidenceStatus": "proposed-original",
+      "sourceIds": [
+        "S4"
+      ],
+      "alignmentNote": "공식 교육과정 범위에 맞춰 새로 작성한 대표 유형·예시이며 출처 문항 인용이 아님"
+    },
+    {
+      "id": "U4M-T02",
+      "parentId": "G4-M",
+      "kind": "problem-type",
+      "title": "곱의 크기를 어림하여 결과 검증",
+      "example": "198×21을 200×20으로 어림하시오. 4158과 41580 중 타당한 값을 고르시오.",
+      "answer": "약 4000.4158이 타당하다.",
+      "diagnosticNotes": "어림값 4000을 정확한 답으로 쓰지 않는다.",
+      "reusedCoreTypeIds": [
+        "M-T09"
+      ],
+      "conditionTags": [
+        "어림전략",
+        "결과자리수"
+      ],
+      "evidenceStatus": "proposed-original",
+      "sourceIds": [
+        "S4"
+      ],
+      "alignmentNote": "공식 교육과정 범위에 맞춰 새로 작성한 대표 유형·예시이며 출처 문항 인용이 아님"
+    },
+    {
+      "id": "U4D-T01",
+      "parentId": "G4-D",
+      "kind": "problem-type",
+      "title": "두 자리 제수의 몫 어림·조정",
+      "example": "196÷24의 몫을 어림하고 정확한 몫과 나머지를 구하시오.",
+      "answer": "제수를 20으로 보면 196÷20은 약 9로 어림할 수 있다. 24×9=216은 196보다 크므로 8로 낮춘다. 24×8=192이므로 몫 8, 나머지 4.",
+      "diagnosticNotes": "제수를 20으로 본 임시 몫 9를 조정 없이 확정하지 않는다.",
+      "reusedCoreTypeIds": [
+        "D-T07"
+      ],
+      "conditionTags": [
+        "몫조정",
+        "나머지",
+        "몫자리수"
+      ],
+      "evidenceStatus": "proposed-original",
+      "sourceIds": [
+        "S4"
+      ],
+      "alignmentNote": "공식 교육과정 범위에 맞춰 새로 작성한 대표 유형·예시이며 출처 문항 인용이 아님"
+    },
+    {
+      "id": "U4D-T02",
+      "parentId": "G4-D",
+      "kind": "problem-type",
+      "title": "두 자리 제수 나눗셈의 검산·나머지 조건",
+      "example": "347÷15=22…17이라는 답을 검토하시오.",
+      "answer": "15×22+17=347이지만 17≥15라 틀림. 몫 23, 나머지 2.",
+      "diagnosticNotes": "검산 등식만 맞으면 정답이라고 보는 오류.",
+      "reusedCoreTypeIds": [
+        "D-T05",
+        "D-T06"
+      ],
+      "conditionTags": [
+        "나머지조건",
+        "오류수정"
+      ],
+      "evidenceStatus": "proposed-original",
+      "sourceIds": [
+        "S4"
+      ],
+      "alignmentNote": "공식 교육과정 범위에 맞춰 새로 작성한 대표 유형·예시이며 출처 문항 인용이 아님"
+    },
+    {
+      "id": "U5FM-T01",
+      "parentId": "G5-FM",
+      "kind": "problem-type",
+      "title": "곱의 짝·나누어떨어짐으로 약수 찾기",
+      "example": "18의 약수를 모두 구하시오.",
+      "answer": "1,2,3,6,9,18. 곱의 짝 1×18,2×9,3×6.",
+      "diagnosticNotes": "짝의 한쪽만 쓰거나 18을 빼는 오류.",
+      "reusedCoreTypeIds": [],
+      "conditionTags": [
+        "곱의짝",
+        "약수목록"
+      ],
+      "evidenceStatus": "proposed-original",
+      "sourceIds": [
+        "S3"
+      ],
+      "alignmentNote": "공식 교육과정 범위에 맞춰 새로 작성한 대표 유형·예시이며 출처 문항 인용이 아님"
+    },
+    {
+      "id": "U5FM-T02",
+      "parentId": "G5-FM",
+      "kind": "problem-type",
+      "title": "배수 생성·조건 판별",
+      "example": "6의 배수 중 10보다 크고 30보다 작은 수를 구하시오.",
+      "answer": "12,18,24.",
+      "diagnosticNotes": "6을 더하는 배수와 6으로 나누는 약수를 혼동한다.",
+      "reusedCoreTypeIds": [],
+      "conditionTags": [
+        "경계조건",
+        "배수"
+      ],
+      "evidenceStatus": "proposed-original",
+      "sourceIds": [
+        "S3"
+      ],
+      "alignmentNote": "공식 교육과정 범위에 맞춰 새로 작성한 대표 유형·예시이며 출처 문항 인용이 아님"
+    },
+    {
+      "id": "U5FM-T03",
+      "parentId": "G5-FM",
+      "kind": "problem-type",
+      "title": "공약수·최대공약수 구하기",
+      "example": "12와 18의 공약수와 최대공약수를 구하시오.",
+      "answer": "공약수 1,2,3,6. 최대공약수 6.",
+      "diagnosticNotes": "두 수의 약수 중 하나라도 되면 공약수라고 보는 오류.",
+      "reusedCoreTypeIds": [],
+      "conditionTags": [
+        "공약수",
+        "최대공약수"
+      ],
+      "evidenceStatus": "proposed-original",
+      "sourceIds": [
+        "S3"
+      ],
+      "alignmentNote": "공식 교육과정 범위에 맞춰 새로 작성한 대표 유형·예시이며 출처 문항 인용이 아님"
+    },
+    {
+      "id": "U5FM-T04",
+      "parentId": "G5-FM",
+      "kind": "problem-type",
+      "title": "공배수·최소공배수 구하기",
+      "example": "4와 6의 공배수 중 가장 작은 수를 구하시오.",
+      "answer": "최소공배수 12.",
+      "diagnosticNotes": "언제나 두 수의 곱 24라고 답하는 오류.",
+      "reusedCoreTypeIds": [],
+      "conditionTags": [
+        "공배수",
+        "최소공배수"
+      ],
+      "evidenceStatus": "proposed-original",
+      "sourceIds": [
+        "S3"
+      ],
+      "alignmentNote": "공식 교육과정 범위에 맞춰 새로 작성한 대표 유형·예시이며 출처 문항 인용이 아님"
+    },
+    {
+      "id": "U6PI-T01",
+      "parentId": "G6-PI",
+      "kind": "problem-type",
+      "title": "원주와 지름을 측정·비교해 원주율 해석",
+      "example": "어떤 원의 원주를 약 31.4cm, 지름을 10cm로 측정했다. 원주÷지름을 구하고 뜻을 말하시오.",
+      "answer": "약 3.14. 원주가 지름의 약 3.14배.",
+      "diagnosticNotes": "측정값의 비를 오차 없는 정확한 원주율로 단정하지 않기.",
+      "reusedCoreTypeIds": [],
+      "conditionTags": [
+        "측정오차",
+        "근삿값"
+      ],
+      "evidenceStatus": "proposed-original",
+      "sourceIds": [
+        "S3"
+      ],
+      "alignmentNote": "공식 교육과정 범위에 맞춰 새로 작성한 대표 유형·예시이며 출처 문항 인용이 아님"
+    },
+    {
+      "id": "U6PI-T02",
+      "parentId": "G6-PI",
+      "kind": "problem-type",
+      "title": "반지름·지름에서 원주 구하기",
+      "example": "반지름 5cm인 원의 원주를 구하시오. 원주율은 3.14로 계산한다.",
+      "answer": "지름 10cm, 원주 31.4cm.",
+      "diagnosticNotes": "반지름에 원주율만 곱해 15.7이라고 하는 오류.",
+      "reusedCoreTypeIds": [
+        "C-T04"
+      ],
+      "conditionTags": [
+        "반지름또는지름",
+        "원주율값"
+      ],
+      "evidenceStatus": "proposed-original",
+      "sourceIds": [
+        "S3"
+      ],
+      "alignmentNote": "공식 교육과정 범위에 맞춰 새로 작성한 대표 유형·예시이며 출처 문항 인용이 아님"
+    },
+    {
+      "id": "U6PI-T03",
+      "parentId": "G6-PI",
+      "kind": "problem-type",
+      "title": "원주에서 지름·반지름 역으로 구하기",
+      "example": "원주가 62.8cm인 원의 반지름을 구하시오. 원주율 3.14.",
+      "answer": "지름 62.8÷3.14=20cm, 반지름 10cm.",
+      "diagnosticNotes": "지름 20을 반지름으로 답하는 오류.",
+      "reusedCoreTypeIds": [],
+      "conditionTags": [
+        "역산",
+        "지름반지름구분"
+      ],
+      "evidenceStatus": "proposed-original",
+      "sourceIds": [
+        "S3"
+      ],
+      "alignmentNote": "공식 교육과정 범위에 맞춰 새로 작성한 대표 유형·예시이며 출처 문항 인용이 아님"
+    },
+    {
+      "id": "U6A-T01",
+      "parentId": "G6-AREA",
+      "kind": "problem-type",
+      "title": "원 조각 재구성으로 넓이 식 설명",
+      "example": "원을 잘게 나누어 번갈아 배열한 모양이 직사각형에 가까워질 때 가로·세로가 무엇에 가까워지는가?",
+      "answer": "가로는 원주의 절반, 세로는 반지름. 따라서 넓이는 반지름×반지름×원주율.",
+      "diagnosticNotes": "유한한 조각으로 만든 모양을 정확한 직사각형이라 단정하지 않기.",
+      "reusedCoreTypeIds": [],
+      "conditionTags": [
+        "재구성",
+        "근사모양"
+      ],
+      "evidenceStatus": "proposed-original",
+      "sourceIds": [
+        "S3"
+      ],
+      "alignmentNote": "공식 교육과정 범위에 맞춰 새로 작성한 대표 유형·예시이며 출처 문항 인용이 아님"
+    },
+    {
+      "id": "U6A-T02",
+      "parentId": "G6-AREA",
+      "kind": "problem-type",
+      "title": "반지름·지름에서 원 넓이 구하기",
+      "example": "지름 10cm인 원의 넓이를 구하시오. 원주율 3.14.",
+      "answer": "반지름 5cm, 넓이 5×5×3.14=78.5cm².",
+      "diagnosticNotes": "지름을 그대로제곱하거나 길이단위cm로 쓰는 오류.",
+      "reusedCoreTypeIds": [
+        "C-T04"
+      ],
+      "conditionTags": [
+        "길이단위",
+        "넓이단위",
+        "주어진요소"
+      ],
+      "evidenceStatus": "proposed-original",
+      "sourceIds": [
+        "S3"
+      ],
+      "alignmentNote": "공식 교육과정 범위에 맞춰 새로 작성한 대표 유형·예시이며 출처 문항 인용이 아님"
+    },
+    {
+      "id": "U6A-T03",
+      "parentId": "G6-AREA",
+      "kind": "problem-type",
+      "title": "원주 변화와 넓이 변화 비교",
+      "example": "반지름이 3cm에서 6cm로 2배가 되었다. 원주와 넓이는 각각 몇 배인가?",
+      "answer": "원주 2배, 넓이 4배.",
+      "diagnosticNotes": "길이 2배이면넓이도 2배라고 생각하는 오류.",
+      "reusedCoreTypeIds": [],
+      "conditionTags": [
+        "곱의관계",
+        "비교추론"
+      ],
+      "evidenceStatus": "proposed-original",
+      "sourceIds": [
+        "S3"
+      ],
+      "alignmentNote": "공식 교육과정 범위에 맞춰 새로 작성한 대표 유형·예시이며 출처 문항 인용이 아님"
+    },
+    {
+      "id": "FM-01",
+      "parentId": "G5-FMULT",
+      "kind": "problem-type",
+      "title": "부분의 부분을 그림·식으로 연결",
+      "example": "전체의 3/4를 칠하고 그 부분의 2/3에 빗금을 그었다. 빗금은 전체의 얼마인가?",
+      "answer": "3/4×2/3=1/2.",
+      "diagnosticNotes": "두 번째 분수의 기준량을 혼동하여 2/3으로 답함.",
+      "reusedCoreTypeIds": [],
+      "conditionTags": [
+        "전체를1로고정",
+        "분수×분수"
+      ],
+      "evidenceStatus": "proposed-original",
+      "sourceIds": [
+        "S3"
+      ],
+      "alignmentNote": "공식 교육과정 범위에 맞춰 새로 작성한 대표 유형·예시이며 출처 문항 인용이 아님"
+    },
+    {
+      "id": "FM-02",
+      "parentId": "G5-FMULT",
+      "kind": "problem-type",
+      "title": "분수 곱셈 계산·과정 설명",
+      "example": "1과 1/2 × 4/9를 계산하시오.",
+      "answer": "3/2×4/9=2/3.",
+      "diagnosticNotes": "대분수의 자연수 부분 누락, 잘못된 약분.",
+      "reusedCoreTypeIds": [],
+      "conditionTags": [
+        "대분수",
+        "약분가능"
+      ],
+      "evidenceStatus": "proposed-original",
+      "sourceIds": [
+        "S3"
+      ],
+      "alignmentNote": "공식 교육과정 범위에 맞춰 새로 작성한 대표 유형·예시이며 출처 문항 인용이 아님"
+    },
+    {
+      "id": "FM-03",
+      "parentId": "G5-FMULT",
+      "kind": "problem-type",
+      "title": "주어진 양의 몇 분의 몇 구하기",
+      "example": "20m인 끈의 3/5를 사용했다. 사용한 길이는?",
+      "answer": "20×3/5=12m.",
+      "diagnosticNotes": "분수가 보인다는 이유로 나눗셈을 선택함.",
+      "reusedCoreTypeIds": [],
+      "conditionTags": [
+        "기준량",
+        "부분량"
+      ],
+      "evidenceStatus": "proposed-original",
+      "sourceIds": [
+        "S3"
+      ],
+      "alignmentNote": "공식 교육과정 범위에 맞춰 새로 작성한 대표 유형·예시이며 출처 문항 인용이 아님"
+    },
+    {
+      "id": "FM-04",
+      "parentId": "G5-FMULT",
+      "kind": "problem-type",
+      "title": "계산 전 곱의 크기 판단",
+      "example": "5/6×3/4는 5/6보다 큰가, 작은가? 계산 없이 설명하시오.",
+      "answer": "작다. 5/6의 3/4만큼이기 때문이다.",
+      "diagnosticNotes": "곱하면 항상 커진다고 생각함.",
+      "reusedCoreTypeIds": [],
+      "conditionTags": [
+        "양수",
+        "승수1미만"
+      ],
+      "evidenceStatus": "proposed-original",
+      "sourceIds": [
+        "S3"
+      ],
+      "alignmentNote": "공식 교육과정 범위에 맞춰 새로 작성한 대표 유형·예시이며 출처 문항 인용이 아님"
+    },
+    {
+      "id": "DM-01",
+      "parentId": "G5-DMULT",
+      "kind": "problem-type",
+      "title": "소수 곱셈 계산",
+      "example": "1.6×0.35를 계산하시오.",
+      "answer": "0.56.",
+      "diagnosticNotes": "소수점 위치를 덧셈처럼 처리함.",
+      "reusedCoreTypeIds": [],
+      "conditionTags": [
+        "소수자리수"
+      ],
+      "evidenceStatus": "proposed-original",
+      "sourceIds": [
+        "S3"
+      ],
+      "alignmentNote": "공식 교육과정 범위에 맞춰 새로 작성한 대표 유형·예시이며 출처 문항 인용이 아님"
+    },
+    {
+      "id": "DM-02",
+      "parentId": "G5-DMULT",
+      "kind": "problem-type",
+      "title": "자연수 곱과 연결해 소수점 위치 설명",
+      "example": "24×18=432일 때 2.4×0.18의 값과 이유는?",
+      "answer": "0.432. 첫 인수는 1/10, 둘째는 1/100이므로 곱은 1/1000.",
+      "diagnosticNotes": "두 인수의 변화 중 하나만 반영함.",
+      "reusedCoreTypeIds": [],
+      "conditionTags": [
+        "자릿값",
+        "인수변화"
+      ],
+      "evidenceStatus": "proposed-original",
+      "sourceIds": [
+        "S3"
+      ],
+      "alignmentNote": "공식 교육과정 범위에 맞춰 새로 작성한 대표 유형·예시이며 출처 문항 인용이 아님"
+    },
+    {
+      "id": "DM-03",
+      "parentId": "G5-DMULT",
+      "kind": "problem-type",
+      "title": "반복되는 소수량 모델링",
+      "example": "0.45kg씩 6봉지인 쌀의 전체 무게는?",
+      "answer": "0.45×6=2.7kg.",
+      "diagnosticNotes": "27kg처럼 자리값을 잘못 해석함.",
+      "reusedCoreTypeIds": [],
+      "conditionTags": [
+        "묶음수자연수",
+        "단위"
+      ],
+      "evidenceStatus": "proposed-original",
+      "sourceIds": [
+        "S3"
+      ],
+      "alignmentNote": "공식 교육과정 범위에 맞춰 새로 작성한 대표 유형·예시이며 출처 문항 인용이 아님"
+    },
+    {
+      "id": "FN-01",
+      "parentId": "G6-FDIVN",
+      "kind": "problem-type",
+      "title": "자연수 나눗셈의 몫을 분수로 표현",
+      "example": "주스 5L를 4명에게 똑같이 나누면 한 명은 몇L를 받는가?",
+      "answer": "5÷4=5/4L, 즉 1과 1/4L.",
+      "diagnosticNotes": "나머지 1L를 더 나누지 않거나 4/5L로 뒤집음.",
+      "reusedCoreTypeIds": [],
+      "conditionTags": [
+        "등분",
+        "분할가능한양"
+      ],
+      "evidenceStatus": "proposed-original",
+      "sourceIds": [
+        "S3"
+      ],
+      "alignmentNote": "공식 교육과정 범위에 맞춰 새로 작성한 대표 유형·예시이며 출처 문항 인용이 아님"
+    },
+    {
+      "id": "FN-02",
+      "parentId": "G6-FDIVN",
+      "kind": "problem-type",
+      "title": "분수÷자연수 계산",
+      "example": "2와 1/4 ÷ 3을 계산하시오.",
+      "answer": "9/4÷3=3/4.",
+      "diagnosticNotes": "분자와 분모를 모두 3으로 나눔.",
+      "reusedCoreTypeIds": [],
+      "conditionTags": [
+        "대분수",
+        "분자나누어떨어짐"
+      ],
+      "evidenceStatus": "proposed-original",
+      "sourceIds": [
+        "S3"
+      ],
+      "alignmentNote": "공식 교육과정 범위에 맞춰 새로 작성한 대표 유형·예시이며 출처 문항 인용이 아님"
+    },
+    {
+      "id": "FN-03",
+      "parentId": "G6-FDIVN",
+      "kind": "problem-type",
+      "title": "등분할 의미로 계산 오류 수정",
+      "example": "3/5÷2=6/5라는 풀이를 고치고 설명하시오.",
+      "answer": "답은 3/10. 3/5를 두 몫으로 똑같이 나누면 한 몫은 절반이다.",
+      "diagnosticNotes": "제수 2를 곱하거나 분자가 안 나누어지면 계산 불가로 판단.",
+      "reusedCoreTypeIds": [],
+      "conditionTags": [
+        "분자나누어떨어지지않음"
+      ],
+      "evidenceStatus": "proposed-original",
+      "sourceIds": [
+        "S3"
+      ],
+      "alignmentNote": "공식 교육과정 범위에 맞춰 새로 작성한 대표 유형·예시이며 출처 문항 인용이 아님"
+    },
+    {
+      "id": "DN-01",
+      "parentId": "G6-DDIVN",
+      "kind": "problem-type",
+      "title": "소수÷자연수 계산",
+      "example": "8.4÷4를 계산하시오.",
+      "answer": "2.1.",
+      "diagnosticNotes": "자연수 계산 21에서 멈춤.",
+      "reusedCoreTypeIds": [],
+      "conditionTags": [
+        "소수자리수"
+      ],
+      "evidenceStatus": "proposed-original",
+      "sourceIds": [
+        "S3"
+      ],
+      "alignmentNote": "공식 교육과정 범위에 맞춰 새로 작성한 대표 유형·예시이며 출처 문항 인용이 아님"
+    },
+    {
+      "id": "DN-02",
+      "parentId": "G6-DDIVN",
+      "kind": "problem-type",
+      "title": "자연수 나눗셈을 이어 몫을 소수로 표현",
+      "example": "3÷8의 몫을 소수로 나타내시오.",
+      "answer": "0.375.",
+      "diagnosticNotes": "피제수가 작아 계산할 수 없다고 판단하거나 몫 0에서 멈춤.",
+      "reusedCoreTypeIds": [],
+      "conditionTags": [
+        "유한소수",
+        "몫1미만"
+      ],
+      "evidenceStatus": "proposed-original",
+      "sourceIds": [
+        "S3"
+      ],
+      "alignmentNote": "공식 교육과정 범위에 맞춰 새로 작성한 대표 유형·예시이며 출처 문항 인용이 아님"
+    },
+    {
+      "id": "DN-03",
+      "parentId": "G6-DDIVN",
+      "kind": "problem-type",
+      "title": "몫의 자리 오류 수정·곱셈 확인",
+      "example": "6.12÷6=1.2를 고치고 곱셈으로 확인하시오.",
+      "answer": "몫은 1.02. 검산하면 1.02 × 6 = 6.12.",
+      "diagnosticNotes": "몫의 0을 생략하여 자릿값을 바꿈.",
+      "reusedCoreTypeIds": [],
+      "conditionTags": [
+        "몫중간0"
+      ],
+      "evidenceStatus": "proposed-original",
+      "sourceIds": [
+        "S3"
+      ],
+      "alignmentNote": "공식 교육과정 범위에 맞춰 새로 작성한 대표 유형·예시이며 출처 문항 인용이 아님"
+    },
+    {
+      "id": "FF-01",
+      "parentId": "G6-FDIVF",
+      "kind": "problem-type",
+      "title": "분수량이 몇 번 들어가는지 모델링",
+      "example": "주스 3/4L를 한 컵에 1/8L씩 담으면 몇 컵인가?",
+      "answer": "3/4÷1/8=6컵.",
+      "diagnosticNotes": "분모 8을 컵 수로 읽거나 곱셈을 선택함.",
+      "reusedCoreTypeIds": [],
+      "conditionTags": [
+        "포함",
+        "같은단위"
+      ],
+      "evidenceStatus": "proposed-original",
+      "sourceIds": [
+        "S3"
+      ],
+      "alignmentNote": "공식 교육과정 범위에 맞춰 새로 작성한 대표 유형·예시이며 출처 문항 인용이 아님"
+    },
+    {
+      "id": "FF-02",
+      "parentId": "G6-FDIVF",
+      "kind": "problem-type",
+      "title": "분수로 나누는 식 계산",
+      "example": "1과 1/2 ÷ 3/4를 계산하시오.",
+      "answer": "3/2×4/3=2.",
+      "diagnosticNotes": "피제수까지 뒤집거나 제수를 뒤집지 않고 곱함.",
+      "reusedCoreTypeIds": [],
+      "conditionTags": [
+        "대분수",
+        "약분"
+      ],
+      "evidenceStatus": "proposed-original",
+      "sourceIds": [
+        "S3"
+      ],
+      "alignmentNote": "공식 교육과정 범위에 맞춰 새로 작성한 대표 유형·예시이며 출처 문항 인용이 아님"
+    },
+    {
+      "id": "FF-03",
+      "parentId": "G6-FDIVF",
+      "kind": "problem-type",
+      "title": "같은 단위로 바꾸어 나눗셈 설명",
+      "example": "2/3÷4/5를 분모가 같은 분수끼리의 나눗셈으로 설명하시오.",
+      "answer": "10/15÷12/15=10÷12=5/6. 같은 1/15 단위가 10개와 12개.",
+      "diagnosticNotes": "결과에 분모 15를 그대로 붙임.",
+      "reusedCoreTypeIds": [],
+      "conditionTags": [
+        "통분설명경로"
+      ],
+      "evidenceStatus": "proposed-original",
+      "sourceIds": [
+        "S3"
+      ],
+      "alignmentNote": "공식 교육과정 범위에 맞춰 새로 작성한 대표 유형·예시이며 출처 문항 인용이 아님"
+    },
+    {
+      "id": "FF-04",
+      "parentId": "G6-FDIVF",
+      "kind": "problem-type",
+      "title": "제수 크기로 몫의 크기 판단",
+      "example": "3/5÷2/3은 3/5보다 큰가, 작은가?",
+      "answer": "크다. 1보다 작은 2/3을 기준으로 몇 배인지 구한다. 정확한 몫 9/10.",
+      "diagnosticNotes": "나누면 항상 작아진다고 생각함.",
+      "reusedCoreTypeIds": [],
+      "conditionTags": [
+        "양수",
+        "제수1미만"
+      ],
+      "evidenceStatus": "proposed-original",
+      "sourceIds": [
+        "S3"
+      ],
+      "alignmentNote": "공식 교육과정 범위에 맞춰 새로 작성한 대표 유형·예시이며 출처 문항 인용이 아님"
+    },
+    {
+      "id": "DD-01",
+      "parentId": "G6-DDIVD",
+      "kind": "problem-type",
+      "title": "몫이 같은 나눗셈식으로 변환",
+      "example": "2.16÷0.6을 제수가 자연수인 식으로 바꾸시오.",
+      "answer": "21.6÷6. 두 수에 같은 10을 곱한다.",
+      "diagnosticNotes": "제수만 바꾸거나 서로 다른 배율을 적용함.",
+      "reusedCoreTypeIds": [],
+      "conditionTags": [
+        "동일배율"
+      ],
+      "evidenceStatus": "proposed-original",
+      "sourceIds": [
+        "S3"
+      ],
+      "alignmentNote": "공식 교육과정 범위에 맞춰 새로 작성한 대표 유형·예시이며 출처 문항 인용이 아님"
+    },
+    {
+      "id": "DD-02",
+      "parentId": "G6-DDIVD",
+      "kind": "problem-type",
+      "title": "소수로 나누는 식 계산",
+      "example": "4.2÷0.35를 계산하시오.",
+      "answer": "420÷35=12.",
+      "diagnosticNotes": "42÷35로 잘못 바꿈.",
+      "reusedCoreTypeIds": [],
+      "conditionTags": [
+        "소수자리수",
+        "0보충"
+      ],
+      "evidenceStatus": "proposed-original",
+      "sourceIds": [
+        "S3"
+      ],
+      "alignmentNote": "공식 교육과정 범위에 맞춰 새로 작성한 대표 유형·예시이며 출처 문항 인용이 아님"
+    },
+    {
+      "id": "DD-03",
+      "parentId": "G6-DDIVD",
+      "kind": "problem-type",
+      "title": "완성 묶음과 원래 단위의 남는 양 해석",
+      "example": "끈 4.1m를 0.6m씩 자른다. 조각 수와 남는 길이는?",
+      "answer": "6조각,0.5m. 0.6×6+0.5=4.1.",
+      "diagnosticNotes": "41÷6의 나머지 5를 5m로 잘못 해석함.",
+      "reusedCoreTypeIds": [],
+      "conditionTags": [
+        "완성묶음",
+        "단위복원"
+      ],
+      "evidenceStatus": "proposed-original",
+      "sourceIds": [
+        "S3"
+      ],
+      "alignmentNote": "공식 교육과정 범위에 맞춰 새로 작성한 대표 유형·예시이며 출처 문항 인용이 아님"
+    }
+  ],
+  "notes": [
+    "원주율의 값은 문제에서 명시한다.",
+    "계산 조건과 표현은 태그이며 별도 유형 수를 늘리지 않는다.",
+    "초3 핵심 유형과 행동이 같은 경우에도 상위 수 범위·의미 변화가 있어 연결 내용 아래 배치한다.",
+    "경계 지원 노드의 전체 유형 목록은 범위를 벗어나므로 만들지 않았다."
+  ]
+}

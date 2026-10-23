@@ -1,0 +1,407 @@
+{
+  "schemaVersion": "academy.target-architecture/2",
+  "status": "approved-direction-repair-successor-awaiting-independent-review",
+  "scope": {
+    "objective": "Reorganize academy repositories and autonomous execution around evidence-qualified canonical modules, stable identities, environment-specific native harnesses and accountable Work ownership, preserving existing owners and completed work.",
+    "successCriteria": [
+      "Measured scoped host, container, source, worktree and runtime capabilities have explicit source pins and unknowns.",
+      "Repository/module canonical ownership, dependency rules and consumer migration are reviewable and preserve historical references.",
+      "Identity continuity, Work/Task DAG, single-tab accountability, shared-resource serialization and review gates are explicit.",
+      "A separately approved independent Astra/xhigh review guides staged implementation and meaningful verification.",
+      "Implementation, source verification, integration, native activation and teacher/user acceptance remain distinct."
+    ],
+    "inScope": [
+      "Read-only academy-related infrastructure/source/runtime survey.",
+      "Typed English architecture, canonical local Work records and approval-first independent review design.",
+      "After architecture approval and review disposition, staged source implementation using existing maintained owners."
+    ],
+    "outOfScope": [
+      "Publication, PR, merge, deployment, native activation, real student writes, prints or sends under the retained hold.",
+      "Common contract, permission or unrelated Work changes without separate owner/user approval.",
+      "Credential inspection, private student original ingestion into architecture, source retirement or native loop replacement.",
+      "Taking over research/Ontology/Wiki semantics or unrelated runtime lifecycle."
+    ]
+  },
+  "acceptedDirection": {
+    "preserveOwners": true,
+    "wholeTargetBeforeWorkflowReplacement": true,
+    "businessNavigation": [
+      "business-date",
+      "class-cohort",
+      "student",
+      "book-edition",
+      "unit",
+      "activity-occurrence"
+    ],
+    "firstProductOutcome": "Teacher-reviewed state management, preparation and existing native execution handoff across seven internal workflows.",
+    "currentPhase": "source-only survey and architecture; no review dispatch yet"
+  },
+  "modules": [
+    {
+      "id": "common-contracts",
+      "repository": "agent-platform",
+      "path": "packages/work-continuity + packages/ontology + packages/operational-context",
+      "responsibility": "Canonical identity, evidence, Work validation and continuity; external source audit does not upgrade old consumer pin",
+      "observedState": "existing-source-traced; changes-not-yet-implemented",
+      "boundary": "One maintained owner per capability; no effect authority from this design"
+    },
+    {
+      "id": "academy-domain",
+      "repository": "education-platform",
+      "path": "apps/academy/dc-gang-a/src/academy/domain.ts, learningWork.ts, learningWorkProjection.ts, preparationHistory.ts, classroomCyclePolicy.ts; existing gang-a domain modules with explicit compatibility",
+      "responsibility": "Preserve existing namespace/assignment/attempt/paper/teacher rules. Extend existing exact-work projection before introducing any new reducer",
+      "observedState": "existing-source-traced; changes-not-yet-implemented",
+      "boundary": "One maintained owner per capability; no effect authority from this design"
+    },
+    {
+      "id": "academy-application",
+      "repository": "education-platform",
+      "path": "apps/academy/dc-gang-a/src/academy/application.ts, usecases/studentScene.ts, teacherWorkContext.ts; selected gang-a/packages/application",
+      "responsibility": "Maintained TeacherApplication/TeacherQueries and scoped composition are the canonical teacher state/query path",
+      "observedState": "existing-source-traced; changes-not-yet-implemented",
+      "boundary": "One maintained owner per capability; no effect authority from this design"
+    },
+    {
+      "id": "academy-port-contracts",
+      "repository": "education-platform",
+      "path": "apps/academy/dc-gang-a/src/academy/ports, contracts; gang-a/packages/ports",
+      "responsibility": "Pure interface ownership separated from concrete adapters. Existing type-only cycles are explicit, not runtime dependency edges",
+      "observedState": "existing-source-traced; changes-not-yet-implemented",
+      "boundary": "One maintained owner per capability; no effect authority from this design"
+    },
+    {
+      "id": "academy-source-adapters",
+      "repository": "education-platform",
+      "path": "apps/academy/dc-gang-a/src/lms and adapters; gang-a/packages/adapters",
+      "responsibility": "Concrete sources/storage/hosting adapt existing contracts; no hidden source/data/native ownership transfer",
+      "observedState": "existing-source-traced; changes-not-yet-implemented",
+      "boundary": "One maintained owner per capability; no effect authority from this design"
+    },
+    {
+      "id": "academy-composition",
+      "repository": "education-platform",
+      "path": "apps/academy/dc-gang-a/src/academy/server.ts and native entrypoints",
+      "responsibility": "Ingress composes scoped application, adapters and native access; teacher routes remain an actual maintained consumer",
+      "observedState": "existing-source-traced; changes-not-yet-implemented",
+      "boundary": "One maintained owner per capability; no effect authority from this design"
+    },
+    {
+      "id": "academy-teacher-ui",
+      "repository": "education-platform",
+      "path": "apps/academy/dc-gang-a/src/academy/web/client.ts and views",
+      "responsibility": "Existing teacher UI and WebMCP consume the same application/contract, not an unowned alternative reducer",
+      "observedState": "existing-source-traced; changes-not-yet-implemented",
+      "boundary": "One maintained owner per capability; no effect authority from this design"
+    },
+    {
+      "id": "assessment-application",
+      "repository": "education-platform",
+      "path": "apps/academy/month-end-workbench/src/application.ts, server.ts, main.ts, contracts.ts",
+      "responsibility": "Retain assessment application and SourcePort composition, exact research/source/teacher-selection identities",
+      "observedState": "existing-source-traced; changes-not-yet-implemented",
+      "boundary": "One maintained owner per capability; no effect authority from this design"
+    },
+    {
+      "id": "assessment-web",
+      "repository": "education-platform",
+      "path": "apps/academy/month-end-web/src/client.ts",
+      "responsibility": "Retain actual month-end HTTP consumer and package-local verification",
+      "observedState": "existing-source-traced; changes-not-yet-implemented",
+      "boundary": "One maintained owner per capability; no effect authority from this design"
+    },
+    {
+      "id": "academy-context",
+      "repository": "academy-workbench",
+      "path": "context/academy-context at ad42d07",
+      "responsibility": "Metadata discovery/currentness/contracts; no source body or native permission grant",
+      "observedState": "existing-source-traced; changes-not-yet-implemented",
+      "boundary": "One maintained owner per capability; no effect authority from this design"
+    },
+    {
+      "id": "academy-consumers",
+      "repository": "academy-workbench",
+      "path": "tools/academy-mcp at df8b9f7; app/standalone; academy-student-context skill",
+      "responsibility": "MCP/report use explicit application/query adapters; synthetic standalone remains an explicitly bounded synthetic consumer",
+      "observedState": "existing-source-traced; changes-not-yet-implemented",
+      "boundary": "One maintained owner per capability; no effect authority from this design"
+    },
+    {
+      "id": "research-semantics",
+      "repository": "math-research-module",
+      "path": "Existing research identity/context/chronology owner",
+      "responsibility": "Retain research meaning, source revisions and independent teacher final-selection authority",
+      "observedState": "existing-source-traced; changes-not-yet-implemented",
+      "boundary": "One maintained owner per capability; no effect authority from this design"
+    },
+    {
+      "id": "native-execution",
+      "repository": "native-runtime-owners",
+      "path": "Admitted Codex/Hermes and independently qualified environment interfaces",
+      "responsibility": "Native loop, tools, sessions, credentials, permissions and actual effects remain native",
+      "observedState": "existing-source-traced; changes-not-yet-implemented",
+      "boundary": "One maintained owner per capability; no effect authority from this design"
+    }
+  ],
+  "dependencyEdges": [
+    {
+      "from": "academy-application",
+      "to": "academy-domain",
+      "type": "runtime-source-import-or-pinned-projection"
+    },
+    {
+      "from": "academy-source-adapters",
+      "to": "academy-application",
+      "type": "runtime-source-import-or-pinned-projection"
+    },
+    {
+      "from": "academy-source-adapters",
+      "to": "academy-domain",
+      "type": "runtime-source-import-or-pinned-projection"
+    },
+    {
+      "from": "academy-composition",
+      "to": "academy-application",
+      "type": "runtime-source-import-or-pinned-projection"
+    },
+    {
+      "from": "academy-composition",
+      "to": "academy-source-adapters",
+      "type": "runtime-source-import-or-pinned-projection"
+    },
+    {
+      "from": "academy-teacher-ui",
+      "to": "academy-domain",
+      "type": "runtime-source-import-or-pinned-projection"
+    },
+    {
+      "from": "academy-context",
+      "to": "common-contracts",
+      "type": "runtime-source-import-or-pinned-projection"
+    },
+    {
+      "from": "academy-consumers",
+      "to": "academy-context",
+      "type": "runtime-source-import-or-pinned-projection"
+    },
+    {
+      "from": "assessment-web",
+      "to": "assessment-application",
+      "type": "runtime-source-import-or-pinned-projection"
+    },
+    {
+      "from": "assessment-application",
+      "to": "research-semantics",
+      "type": "runtime-source-import-or-pinned-projection"
+    }
+  ],
+  "topologyRules": {
+    "containment": "Host contains container; repositories contain source modules; book edition contains units. These are distinct trees.",
+    "ownership": "One canonical maintained implementation per qualified capability; build location does not transfer semantic/data/native ownership.",
+    "semanticRelations": "Prerequisite/relatedness and pedagogical cycles do not become execution dependencies or universal DAGs.",
+    "execution": "Task milestone DAG separate from recurring lesson/clinic cycles and source provenance/supersession graphs."
+  },
+  "dataPlanes": {
+    "sourceEvidence": "Owner-held immutable source observations with observed/event/retrieved clocks and explicit coverage.",
+    "teacherDecisions": "Scoped corrective/assessment decisions preserve the referenced occurrence and prior evidence.",
+    "derivedCurrentState": "Reproducible projection under qualified source revisions and decision rules, with unknown/conflict/partial/stale retained.",
+    "preparedOperations": "Exact student/date/activity/field/effect intent with native qualification and authoritative readback kept separate.",
+    "privateStorage": "Existing private owners; PostgreSQL is retained as the previously selected target where applicable. Synthetic SQLite remains a bounded offline consumer, not the production choice. No database migration in this phase."
+  },
+  "currentStateDesign": {
+    "identityDimensions": [
+      "student",
+      "book-edition-and-source-namespace",
+      "unit",
+      "activity-kind",
+      "occurrence-attempt",
+      "material-item",
+      "stage",
+      "source-revision",
+      "teacher-decision"
+    ],
+    "joinRule": "Use exact source namespace plus qualified crosswalk; unmatched records remain visible.",
+    "reductionRule": "A later applicable scoped teacher correction supersedes the claim it actually corrects; newer unrelated timestamps do not erase other stages.",
+    "homeworkRule": "Assignment/cancellation/replacement/actual completion are distinct; unassigned catalog rows and unknown states are not overdue work.",
+    "materialRule": "Assessment original, attempt, generated paper, printed membership, distribution and teacher final judgment remain distinct.",
+    "implementationApproach": "Extend existing domain/port/application structures with small owner-qualified contracts. Use revisioned observations and deterministic projections; do not introduce a universal event platform.",
+    "canonicalComposition": "TeacherApplication -> TeacherQueries -> existing projectLearningWork/buildStudentPreparation/buildTeacherWorkContext. Extend exact missing behavior there; consume the same typed result via ingress/consumer ports."
+  },
+  "consumerTrace": [
+    {
+      "producer": "gang-a/packages/domain",
+      "consumer": "gang-a/packages/application",
+      "evidence": "normalize-legacy-evidence.ts, prepare-book-progress-facts.ts and project-book-certification.ts import domain primitives",
+      "claim": "implemented-source-edge; no new behavior run"
+    },
+    {
+      "producer": "gang-a/packages/application",
+      "consumer": "gang-a/packages/adapters/managed-sites/handler.ts",
+      "evidence": "handler imports validate-evidence-projection",
+      "claim": "implemented-source-edge; no native activation proved"
+    },
+    {
+      "producer": "saved-context service",
+      "consumer": "MCP query-tool/server at df8b9f7",
+      "evidence": "registerSavedQuery routes query through shared tool-result production path",
+      "claim": "prior exact-source SDK review; not live Academy adoption"
+    },
+    {
+      "producer": "local synthetic SQLite/store",
+      "consumer": "app/standalone/src/server/http.ts and read-models.ts",
+      "evidence": "sourceConnected:false, liveRefresh:false, synthetic fixture imports",
+      "claim": "implemented synthetic consumer; no current live adapter"
+    },
+    {
+      "producer": "common GitWork validator at 712f90de",
+      "consumer": "this architecture audit",
+      "evidence": "external source audit only; Academy consumer lock remains ffba2462",
+      "claim": "separate audit tool, not consumer upgrade"
+    },
+    {
+      "producer": "TeacherApplication.student/classPreparation",
+      "consumer": "dc-gang-a/src/academy/server.ts and web/client.ts WebMCP",
+      "evidence": "TeacherQueries inside store.readSnapshot; exactWork and workContext composition",
+      "claim": "implemented-source-edge; current deployed adoption unverified"
+    },
+    {
+      "producer": "learningWorkProjection/preparationHistory/teacherWorkContext",
+      "consumer": "TeacherQueries.student",
+      "evidence": "Existing canonical scoped state is composed into StudentLearningScene",
+      "claim": "Retain and adapt this path; no independent Workbench reducer"
+    },
+    {
+      "producer": "month-end-workbench createApplication + SourcePort + researchProjection",
+      "consumer": "month-end server HTTP routes and month-end-web/src/client.ts",
+      "evidence": "src/main.ts composes applicationFactory and month-end-web frontend root",
+      "claim": "Maintained assessment path; check both packages; no source query or final selection inferred"
+    }
+  ],
+  "migrationStrategy": [
+    "Qualify preserved Work results and unresolved effects before creating competing writers.",
+    "Select exact canonical per-capability implementations and freeze public contracts under existing owners.",
+    "Build source-backed projection/query slice and verify synthetic adversarial cases.",
+    "Route one workflow at a time through the common application contract; compare equivalent exposure and results.",
+    "Retain old compatibility paths until actual consumers are switched and equivalence is observed.",
+    "Remove duplicate maintained logic only with exact owner-reviewed replacement; preserve originals and history."
+  ],
+  "performanceCriteria": [
+    "Measure equivalent record/observation coverage before comparing calls, bytes or latency.",
+    "Bound actual transport envelopes and refusal paths; preserve exact continuation and all requested facets/overlays.",
+    "Profile source loading and query plans before choosing indexes, caching or parallel fetches.",
+    "Invalidate derived state by exact source/decision revision; stale caches cannot resurrect cancelled assignments."
+  ],
+  "approvalBoundaries": {
+    "architectureApproval": "required before reviewer or implementation dispatch",
+    "review": "requested independent gpt-6-astra/xhigh pane after approval; findings require disposition before dependent implementation",
+    "commonContractsOrOtherWork": "separate approval/owner coordination required",
+    "sourceImplementation": "after approved architecture and review, bounded owner-scoped source changes only",
+    "publicationMergeDeploymentActivation": "held; no authority inferred",
+    "teacherAndUserAcceptance": "separate from source tests, integration and runtime readiness"
+  },
+  "measuredStateRef": "measurement.json",
+  "identityRef": "identity-plan.json",
+  "executionRef": "execution-plan-r2.json",
+  "capabilitiesRef": "capability-matrix.json",
+  "continuityRef": "continuity.json",
+  "infrastructureTopologyRef": "topology.json",
+  "supersedesDesign": "architecture.json",
+  "findingRefs": [
+    "AAR-REVIEW-001-F01",
+    "AAR-REVIEW-001-F02",
+    "AAR-REVIEW-001-F03",
+    "AAR-REVIEW-001-F04"
+  ],
+  "moduleGraphs": {
+    "runtimeImports": {
+      "assertAcyclic": true,
+      "edges": [
+        {
+          "from": "academy-application",
+          "to": "academy-domain",
+          "type": "runtime-source-import-or-pinned-projection"
+        },
+        {
+          "from": "academy-source-adapters",
+          "to": "academy-application",
+          "type": "runtime-source-import-or-pinned-projection"
+        },
+        {
+          "from": "academy-source-adapters",
+          "to": "academy-domain",
+          "type": "runtime-source-import-or-pinned-projection"
+        },
+        {
+          "from": "academy-composition",
+          "to": "academy-application",
+          "type": "runtime-source-import-or-pinned-projection"
+        },
+        {
+          "from": "academy-composition",
+          "to": "academy-source-adapters",
+          "type": "runtime-source-import-or-pinned-projection"
+        },
+        {
+          "from": "academy-teacher-ui",
+          "to": "academy-domain",
+          "type": "runtime-source-import-or-pinned-projection"
+        },
+        {
+          "from": "academy-context",
+          "to": "common-contracts",
+          "type": "runtime-source-import-or-pinned-projection"
+        },
+        {
+          "from": "academy-consumers",
+          "to": "academy-context",
+          "type": "runtime-source-import-or-pinned-projection"
+        },
+        {
+          "from": "assessment-web",
+          "to": "assessment-application",
+          "type": "runtime-source-import-or-pinned-projection"
+        },
+        {
+          "from": "assessment-application",
+          "to": "research-semantics",
+          "type": "runtime-source-import-or-pinned-projection"
+        }
+      ],
+      "meaning": "Representative qualified runtime edges; complete affected import closure must be derived and checked during implementation. No request-flow edge is silently treated as an import."
+    },
+    "typeReferences": {
+      "assertAcyclic": false,
+      "edges": [
+        {
+          "from": "academy-application",
+          "to": "academy-port-contracts",
+          "type": "type-only-port-import"
+        },
+        {
+          "from": "academy-port-contracts",
+          "to": "academy-application",
+          "type": "existing-type-only-RefreshResult-reference"
+        }
+      ],
+      "meaning": "Current source port references application DTO types. Preserve it as observed type coupling; DOM/QRY may extract owner-local contracts where needed, without hiding this edge."
+    },
+    "requestFlow": {
+      "assertAcyclic": false,
+      "edges": [
+        {
+          "from": "academy-application",
+          "to": "academy-port-contracts",
+          "type": "requests-through-interface"
+        },
+        {
+          "from": "academy-source-adapters",
+          "to": "academy-application",
+          "type": "validates-adapted-source"
+        }
+      ],
+      "meaning": "Calls/data flow and type dependencies are separate from runtime imports."
+    }
+  },
+  "capabilityInventoryRef": "workflow-capabilities-r2.json",
+  "crossWorkProtocolRef": "cross-work-protocol-r2.json",
+  "verificationRef": "verification-plan-r2.json"
+}

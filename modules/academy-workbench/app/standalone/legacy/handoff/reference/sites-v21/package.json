@@ -1,0 +1,24 @@
+{
+  "name": "academy-learning-rails",
+  "version": "0.3.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/run-bun.mjs build-worker.ts",
+    "typecheck": "tsc -p tsconfig.worker.json && tsc -p tsconfig.workflow.json",
+    "test": "node scripts/run-tests.mjs",
+    "validate": "npm run build && npm run typecheck && npm test",
+    "db:generate": "drizzle-kit generate"
+  },
+  "dependencies": {
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@types/bun": "1.4.2",
+    "@types/node": "26.6.4",
+    "happy-dom": "20.14.5",
+    "typescript": "7.0.2",
+    "drizzle-kit": "0.31.8",
+    "drizzle-orm": "0.44.7"
+  }
+}

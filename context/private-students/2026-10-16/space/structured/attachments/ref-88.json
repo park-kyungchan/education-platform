@@ -1,0 +1,342 @@
+{
+  "source_reference": "library-file:fde1_bGliZmlsZV9VRE1DeUxfenI2aWZmblJ6V2gyNWZn_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+  "source_sha256": "1a0e359b0a2dfaa66184b78741589ae60d06198fa362c0804ba48068991c9adb",
+  "data": {
+    "kind": "book_flow_semantic_fixtures",
+    "schemaVersion": "1.0.0",
+    "allSynthetic": true,
+    "personalDataIncluded": false,
+    "cases": [
+      {
+        "id": "fixture:empty-query-even-exhausted",
+        "synthetic": true,
+        "input": {
+          "applicability": "applicable",
+          "assignment": "assigned",
+          "requiredness": "required",
+          "completion": "unknown",
+          "effort": "unknown",
+          "mapping": "exact",
+          "coverage": "complete",
+          "deadline": "past_due",
+          "evidencePresence": "absent_in_verified_query",
+          "supportingEvidenceIds": [
+            "fixture:query"
+          ],
+          "relevantAssertionIsExact": false,
+          "unresolvedConflict": false,
+          "homeAppRequired": null,
+          "dueDate": null,
+          "dueAt": null,
+          "dueTimezone": null,
+          "cutoffPolicy": null
+        },
+        "expected": {
+          "confirmedMissing": false,
+          "confirmedNeverStarted": false,
+          "badgesInclude": [
+            "기한 경과 · 완료 미확인"
+          ]
+        }
+      },
+      {
+        "id": "fixture:explicit-never-started",
+        "synthetic": true,
+        "input": {
+          "applicability": "applicable",
+          "assignment": "assigned",
+          "requiredness": "required",
+          "completion": "confirmed_incomplete",
+          "effort": "not_started_confirmed",
+          "mapping": "exact",
+          "coverage": "complete",
+          "deadline": "not_due",
+          "evidencePresence": "unknown",
+          "supportingEvidenceIds": [
+            "fixture:teacher-never-started"
+          ],
+          "relevantAssertionIsExact": true,
+          "unresolvedConflict": false,
+          "homeAppRequired": null,
+          "dueDate": null,
+          "dueAt": null,
+          "dueTimezone": null,
+          "cutoffPolicy": null
+        },
+        "expected": {
+          "confirmedMissing": true,
+          "confirmedNeverStarted": true,
+          "badgesInclude": [
+            "미수행 확인"
+          ]
+        }
+      },
+      {
+        "id": "fixture:partially-solved-incomplete",
+        "synthetic": true,
+        "input": {
+          "applicability": "applicable",
+          "assignment": "assigned",
+          "requiredness": "required",
+          "completion": "confirmed_incomplete",
+          "effort": "started_confirmed",
+          "mapping": "exact",
+          "coverage": "complete",
+          "deadline": "not_due",
+          "evidencePresence": "unknown",
+          "supportingEvidenceIds": [
+            "fixture:teacher-partial"
+          ],
+          "relevantAssertionIsExact": true,
+          "unresolvedConflict": false,
+          "homeAppRequired": null,
+          "dueDate": null,
+          "dueAt": null,
+          "dueTimezone": null,
+          "cutoffPolicy": null
+        },
+        "expected": {
+          "confirmedMissing": true,
+          "confirmedNeverStarted": false,
+          "badgesInclude": [
+            "확정 미완료"
+          ]
+        }
+      },
+      {
+        "id": "fixture:paper-exception-complete",
+        "synthetic": true,
+        "input": {
+          "applicability": "applicable",
+          "assignment": "assigned",
+          "requiredness": "required",
+          "completion": "confirmed_complete",
+          "effort": "unknown",
+          "mapping": "exact",
+          "coverage": "complete",
+          "deadline": "not_due",
+          "evidencePresence": "absent_in_verified_query",
+          "supportingEvidenceIds": [
+            "fixture:teacher-paper-complete"
+          ],
+          "relevantAssertionIsExact": true,
+          "unresolvedConflict": false,
+          "homeAppRequired": false,
+          "dueDate": null,
+          "dueAt": null,
+          "dueTimezone": null,
+          "cutoffPolicy": null
+        },
+        "expected": {
+          "confirmedMissing": false,
+          "confirmedNeverStarted": false,
+          "badgesInclude": [
+            "완료 확인"
+          ],
+          "mustNotFlagMissingHomeApp": true
+        }
+      },
+      {
+        "id": "fixture:not-queried",
+        "synthetic": true,
+        "input": {
+          "applicability": "applicable",
+          "assignment": "assigned",
+          "requiredness": "required",
+          "completion": "unknown",
+          "effort": "unknown",
+          "mapping": "exact",
+          "coverage": "not_queried",
+          "deadline": "not_due",
+          "evidencePresence": "unknown",
+          "supportingEvidenceIds": [],
+          "relevantAssertionIsExact": false,
+          "unresolvedConflict": false,
+          "homeAppRequired": null,
+          "dueDate": null,
+          "dueAt": null,
+          "dueTimezone": null,
+          "cutoffPolicy": null
+        },
+        "expected": {
+          "confirmedMissing": false,
+          "confirmedNeverStarted": false,
+          "badgesInclude": [
+            "미조회"
+          ]
+        }
+      },
+      {
+        "id": "fixture:blocked-and-ambiguous",
+        "synthetic": true,
+        "input": {
+          "applicability": "applicable",
+          "assignment": "assigned",
+          "requiredness": "required",
+          "completion": "unknown",
+          "effort": "unknown",
+          "mapping": "ambiguous",
+          "coverage": "blocked",
+          "deadline": "not_due",
+          "evidencePresence": "unknown",
+          "supportingEvidenceIds": [],
+          "relevantAssertionIsExact": false,
+          "unresolvedConflict": false,
+          "homeAppRequired": null,
+          "dueDate": null,
+          "dueAt": null,
+          "dueTimezone": null,
+          "cutoffPolicy": null
+        },
+        "expected": {
+          "confirmedMissing": false,
+          "confirmedNeverStarted": false,
+          "badgesInclude": [
+            "조회 제한",
+            "매핑 확인 필요"
+          ]
+        }
+      },
+      {
+        "id": "fixture:voluntary-unassigned",
+        "synthetic": true,
+        "input": {
+          "applicability": "applicable",
+          "assignment": "explicitly_unassigned",
+          "requiredness": "optional",
+          "completion": "confirmed_complete",
+          "effort": "unknown",
+          "mapping": "exact",
+          "coverage": "complete",
+          "deadline": "not_due",
+          "evidencePresence": "unknown",
+          "supportingEvidenceIds": [
+            "fixture:voluntary"
+          ],
+          "relevantAssertionIsExact": true,
+          "unresolvedConflict": false,
+          "homeAppRequired": null,
+          "dueDate": null,
+          "dueAt": null,
+          "dueTimezone": null,
+          "cutoffPolicy": null
+        },
+        "expected": {
+          "confirmedMissing": false,
+          "confirmedNeverStarted": false,
+          "badgesInclude": [
+            "미배정"
+          ],
+          "includeInRequiredDenominator": false
+        }
+      },
+      {
+        "id": "fixture:not-applicable",
+        "synthetic": true,
+        "input": {
+          "applicability": "not_applicable",
+          "assignment": "explicitly_unassigned",
+          "requiredness": "optional",
+          "completion": "unknown",
+          "effort": "unknown",
+          "mapping": "exact",
+          "coverage": "complete",
+          "deadline": "not_due",
+          "evidencePresence": "unknown",
+          "supportingEvidenceIds": [],
+          "relevantAssertionIsExact": false,
+          "unresolvedConflict": false,
+          "homeAppRequired": null,
+          "dueDate": null,
+          "dueAt": null,
+          "dueTimezone": null,
+          "cutoffPolicy": null
+        },
+        "expected": {
+          "confirmedMissing": false,
+          "confirmedNeverStarted": false,
+          "badgesInclude": [
+            "해당 없음"
+          ],
+          "includeInRequiredDenominator": false
+        }
+      },
+      {
+        "id": "fixture:conflicting-assertions",
+        "synthetic": true,
+        "input": {
+          "applicability": "applicable",
+          "assignment": "assigned",
+          "requiredness": "required",
+          "completion": "disputed",
+          "effort": "unknown",
+          "mapping": "exact",
+          "coverage": "complete",
+          "deadline": "not_due",
+          "evidencePresence": "unknown",
+          "supportingEvidenceIds": [
+            "fixture:yes",
+            "fixture:no"
+          ],
+          "relevantAssertionIsExact": false,
+          "unresolvedConflict": true,
+          "homeAppRequired": null,
+          "dueDate": null,
+          "dueAt": null,
+          "dueTimezone": null,
+          "cutoffPolicy": null
+        },
+        "expected": {
+          "confirmedMissing": false,
+          "confirmedNeverStarted": false,
+          "badgesInclude": [
+            "판정 확인 필요"
+          ]
+        }
+      },
+      {
+        "id": "fixture:partial-source",
+        "synthetic": true,
+        "input": {
+          "applicability": "applicable",
+          "assignment": "assigned",
+          "requiredness": "required",
+          "completion": "unknown",
+          "effort": "unknown",
+          "mapping": "partial",
+          "coverage": "partial",
+          "deadline": "not_due",
+          "evidencePresence": "partial",
+          "supportingEvidenceIds": [
+            "fixture:partial-scope"
+          ],
+          "relevantAssertionIsExact": false,
+          "unresolvedConflict": false,
+          "homeAppRequired": null,
+          "dueDate": null,
+          "dueAt": null,
+          "dueTimezone": null,
+          "cutoffPolicy": null
+        },
+        "expected": {
+          "confirmedMissing": false,
+          "confirmedNeverStarted": false,
+          "badgesInclude": [
+            "부분 근거"
+          ]
+        }
+      }
+    ],
+    "additionalRequiredChecks": [
+      "같은 표시명·다른 학교급/판본을 합치지 않음",
+      "9/8 vocabulary로 실제 모든 단원 인스턴스를 만들지 않음",
+      "대단원 총괄평가를 소단원마다 복제하지 않음",
+      "문제 완료로 별도 영상 요구를 완료하지 않음",
+      "과거 시도로 새로운 과제를 완료하지 않음",
+      "recordedAt 순서로 occurred/effectiveAt를 덮어쓰지 않음",
+      "불완전 구조의 전체 진도율을 만들지 않음",
+      "Space adapter가 원자적 관계형 DB라고 가정하지 않음"
+    ],
+    "executionState": "awaiting_Bun_validation_in_designated_development_task"
+  }
+}

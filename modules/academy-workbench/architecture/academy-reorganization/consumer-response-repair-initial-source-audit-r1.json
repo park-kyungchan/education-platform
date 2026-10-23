@@ -1,0 +1,66 @@
+{
+  "schemaVersion": "academy.source-snapshot-audit/1",
+  "observedAt": "2026-10-21T10:53:12.406Z",
+  "selection": {
+    "repositoryRoot": "/home/palantirkc/worktrees/academy-consumer-integration-20261021",
+    "repositoryId": "park-kyungchan/academy-workbench",
+    "projectId": "academy-workbench",
+    "workId": "academy-consumer-integration-20261021",
+    "commit": "1d72361428ec6e0356fb80d840959926819135c4"
+  },
+  "tree": "78047897b870626123108fb57ebf269335e75dba",
+  "from": "f81d349cb55773faa3219436b1a624d24ea7b19b",
+  "snapshot": {
+    "valid": true,
+    "findings": [],
+    "authority": "none",
+    "nativePermissionGranted": false,
+    "semanticAcceptanceEstablished": false
+  },
+  "transition": {
+    "valid": true,
+    "findings": [],
+    "authority": "none",
+    "nativePermissionGranted": false,
+    "semanticAcceptanceEstablished": false
+  },
+  "task": {
+    "schema": "common.git-work.v1",
+    "domainId": "academy-operations",
+    "projectId": "academy-workbench",
+    "workId": "academy-consumer-integration-20261021",
+    "kind": "task",
+    "id": "academy-workbench:task:academy-consumer-integration-20261021-con-response-contract-repair",
+    "logical": {
+      "domainId": "academy-operations",
+      "projectId": "academy-workbench",
+      "workId": "academy-consumer-integration-20261021",
+      "issueId": "CON-ISSUE-20261021",
+      "specId": "CON-SPEC",
+      "specRevision": 1,
+      "planId": "CON-PLAN",
+      "planRevision": 3,
+      "taskId": "academy-workbench:task:academy-consumer-integration-20261021-con-response-contract-repair"
+    },
+    "title": "Repair independently reproduced consumer response and report contracts",
+    "state": {
+      "execution": "running",
+      "verification": "pending",
+      "localAudit": "intent-durable",
+      "sharedAudit": "pending",
+      "formalCompletion": "pending"
+    },
+    "executionClass": "source-only",
+    "dependsOn": [
+      {
+        "taskId": "academy-workbench:task:academy-consumer-integration-20261021-con-02-source-qualification",
+        "milestone": "execution-and-verification"
+      }
+    ],
+    "decisionIds": [],
+    "effectIds": [],
+    "verificationEvidenceIds": [],
+    "nextAction": "READY_FOR_ROOT_SOURCE_CHECKPOINT; remain RUNNING/PENDING. WAIT writer idle for Root exact changed-source SDK control and any required repair review. Author observations are immutable; no final completed-failed Verification. After control append NEW final result/Verification; CON03 and all operational holds remain."
+  },
+  "meaning": "Canonical source records and transition only; no implementation/result verification, native permission, activation or acceptance inferred."
+}

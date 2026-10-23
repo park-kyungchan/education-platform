@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "projectId": "academy-workbench",
+  "workId": "dailyrecord-native-read-repair-20261021",
+  "taskId": "connect-qualified-native-dailyrecord-read-port",
+  "registration": "local-source-record-not-native-registration",
+  "purpose": "Repair the user-requested custom MCP by allowing its existing intake/review tools to consume the qualified Education source client in the actual native owner process.",
+  "scope": [
+    "explicit native-only read launch",
+    "exact date/student admission",
+    "existing six-field current/prior observation",
+    "source-backed review",
+    "synthetic regressions"
+  ],
+  "excluded": [
+    "caller-supplied approval",
+    "credential export",
+    "new provider client",
+    "global runtime configuration",
+    "parent sending",
+    "approval-guard bypass"
+  ],
+  "canonicalClientOwner": "education-platform/apps/academy/dc-gang-a/src/lms/academyHttpClient.ts",
+  "nativeOwner": "dc-gang-a-dev",
+  "status": "source-and-scoped-native-read-review-verified",
+  "businessWriteAuthorityFromThisRecord": false,
+  "verificationScope": {
+    "syntheticTests": true,
+    "actualSdkIntakeAndReview": true,
+    "studentCount": 3,
+    "businessDate": "2026-10-21",
+    "sourceSavesPerformedByMcp": 0,
+    "parentSends": 0,
+    "nativeRegistration": false
+  }
+}

@@ -1,0 +1,3817 @@
+{
+  "schemaVersion": "0.1.0-pilot",
+  "semanticOwner": "math-research-module",
+  "namespace": "mred",
+  "registryScope": "module-local-pilot",
+  "coverage": {
+    "fixtureCount": 3,
+    "realLearnersDiagnosed": 0,
+    "full105TypesDiagnosed": false
+  },
+  "authority": {
+    "nativePermissionGranted": false,
+    "actualAcceptanceInferred": false,
+    "grantsExecution": false
+  },
+  "revisions": [
+    {
+      "id": "mred:00000000-0000-4000-8000-000000000001",
+      "version": 1,
+      "type": "concept_family",
+      "classification": {
+        "label": "수학적 대상과 과제",
+        "semanticPath": [
+          "DATA",
+          "concept_family",
+          "수학적 대상과 과제"
+        ]
+      },
+      "core": {
+        "statement": "자료·개념·맥락 과제의 module-local 분류",
+        "epistemicStatus": "definition",
+        "evidenceRefs": [],
+        "sourceRefs": [],
+        "targetRefs": [],
+        "probeRefs": [],
+        "limitations": [],
+        "synthetic": true,
+        "details": {}
+      },
+      "layer": "DATA",
+      "semanticCoreHash": "95a8190b67913e32ffaf55addb1b93216bd0dfd3a4b6b09ad7f9ae3423eafe32",
+      "revisionHash": "aad62497eb620c967435ccc7847ad4e44adb26ac1edc217edc4bbfb95699f815"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-000000000002",
+      "version": 1,
+      "type": "reasoning_family",
+      "classification": {
+        "label": "근거 기반 추론",
+        "semanticPath": [
+          "LOGIC",
+          "reasoning_family",
+          "근거 기반 추론"
+        ]
+      },
+      "core": {
+        "statement": "관찰에서 제한된 주장과 검증 가능한 가설로 이어지는 추론",
+        "epistemicStatus": "definition",
+        "evidenceRefs": [],
+        "sourceRefs": [],
+        "targetRefs": [],
+        "probeRefs": [],
+        "limitations": [],
+        "synthetic": true,
+        "details": {}
+      },
+      "layer": "LOGIC",
+      "semanticCoreHash": "946af36556f21237b254f30f326a14a8bd2915bc6487eae0ebab90a50298ac52",
+      "revisionHash": "a45c03a8bafb42d5946fb89aa827143a5813409eb7539b49557a97360468ea51"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-000000000003",
+      "version": 1,
+      "type": "action_family",
+      "classification": {
+        "label": "탐색 및 교수 행위",
+        "semanticPath": [
+          "ACTION",
+          "action_family",
+          "탐색 및 교수 행위"
+        ]
+      },
+      "core": {
+        "statement": "행동 정의와 실제 실행 기록을 별도 identity로 구분",
+        "epistemicStatus": "definition",
+        "evidenceRefs": [],
+        "sourceRefs": [],
+        "targetRefs": [],
+        "probeRefs": [],
+        "limitations": [],
+        "synthetic": true,
+        "details": {}
+      },
+      "layer": "ACTION",
+      "semanticCoreHash": "3c6f4c76c60ed87d6c90fd09f0df0c884aea24fbc22c6fe360d5e37608103653",
+      "revisionHash": "720d1fe342cef5b15bd48cadf072b11f94a23f5d38095e655303783bb1712d50"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-000000000004",
+      "version": 1,
+      "type": "governance_family",
+      "classification": {
+        "label": "출처와 검토",
+        "semanticPath": [
+          "GOVERNANCE",
+          "governance_family",
+          "출처와 검토"
+        ]
+      },
+      "core": {
+        "statement": "출처·검토·수락·권한 정책은 별개의 기록",
+        "epistemicStatus": "definition",
+        "evidenceRefs": [],
+        "sourceRefs": [],
+        "targetRefs": [],
+        "probeRefs": [],
+        "limitations": [],
+        "synthetic": true,
+        "details": {}
+      },
+      "layer": "GOVERNANCE",
+      "semanticCoreHash": "6ef1bc46bd79b8e3856671ad991ade5c76f15886e55cc0e8346339093b2c5b28",
+      "revisionHash": "665dfd1af5ed97430d53210e33803374b9c877c74d45be74037bde6ee8be8114"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-000000000005",
+      "version": 1,
+      "type": "source_document",
+      "classification": {
+        "label": "합성 관찰 fixture",
+        "semanticPath": [
+          "DATA",
+          "source_document",
+          "합성 관찰 fixture"
+        ]
+      },
+      "core": {
+        "statement": "자동 검증용 가상 사례 3개. 실제 학생 기록이 아니다.",
+        "epistemicStatus": "recorded",
+        "evidenceRefs": [],
+        "sourceRefs": [],
+        "targetRefs": [],
+        "probeRefs": [],
+        "limitations": [],
+        "synthetic": true,
+        "details": {
+          "sourcePath": "samples/synthetic-observations.json",
+          "sha256": "9af6ae7199d012f1ea2395a2c6653b5f53d8f7b4ad254925e3c01975080675b2",
+          "synthetic": true
+        }
+      },
+      "layer": "DATA",
+      "semanticCoreHash": "7e8f7bc5a38c8fd0b23b4ac2c344843144ad082760b206af4aef23e6a4c20d0b",
+      "revisionHash": "587102960c7a6eaee955335e41e799570afae70b2d8ba603fd7c9a79f1d93b37"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-000000000006",
+      "version": 1,
+      "type": "source_document",
+      "classification": {
+        "label": "HM11-d3-T02 원 설계자료",
+        "semanticPath": [
+          "DATA",
+          "source_document",
+          "HM11-d3-T02 원 설계자료"
+        ]
+      },
+      "core": {
+        "statement": "사용자가 제공한 연구 설계 원문. 학습효과나 인지구인 검증 자료로 간주하지 않는다.",
+        "epistemicStatus": "recorded",
+        "evidenceRefs": [],
+        "sourceRefs": [],
+        "targetRefs": [],
+        "probeRefs": [],
+        "limitations": [],
+        "synthetic": false,
+        "details": {
+          "sourcePath": "../../source/archive/research_review/multiplication_designs.json",
+          "sha256": "88d3c74c8c1427c0a72dd95416faeb126d3de77e699293b8e630ede05d7ffd05",
+          "jsonPointer": "/HM11-d3-T02",
+          "legacyId": "HM11-d3-T02"
+        }
+      },
+      "layer": "DATA",
+      "semanticCoreHash": "e27205b1d30deb13502ed906c59ade3dc946ebe55db138e0b9f92eb6130b7873",
+      "revisionHash": "380c7cbc89e57d0f8f23a3296b5cb1036af1d1e4ed697359c08a9c03fe2bfea6"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-000000000007",
+      "version": 1,
+      "type": "source_claim",
+      "classification": {
+        "label": "HM11-d3-T02 설계 의도",
+        "semanticPath": [
+          "GOVERNANCE",
+          "source_claim",
+          "HM11-d3-T02 설계 의도"
+        ]
+      },
+      "core": {
+        "statement": "같은 배수를 모든 분할 항에 적용하는 분배 구조를 식으로 표현한다.",
+        "epistemicStatus": "reported",
+        "evidenceRefs": [],
+        "sourceRefs": [
+          {
+            "id": "mred:00000000-0000-4000-8000-000000000006",
+            "version": 1
+          }
+        ],
+        "targetRefs": [],
+        "probeRefs": [],
+        "limitations": [
+          "프로젝트 저작 설계 의도이며 원저자 인증·학습효과·잠재능력 구인 타당화를 의미하지 않는다."
+        ],
+        "synthetic": false,
+        "details": {}
+      },
+      "layer": "GOVERNANCE",
+      "semanticCoreHash": "bcea0661bd7d24fbc931c9b824c90c4902aa9c92202d83f4238f8e27336e8bbf",
+      "revisionHash": "1f4f59d20aa313e47f08bd695f464fb993261c238e4be90f000f2a41df27bbb0"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-000000000008",
+      "version": 1,
+      "type": "atomic_concept",
+      "classification": {
+        "label": "분배와 전체 양 보존",
+        "semanticPath": [
+          "DATA",
+          "atomic_concept",
+          "분배와 전체 양 보존"
+        ]
+      },
+      "core": {
+        "statement": "분배와 전체 양 보존을 이번 module-local 분석에서 하나의 개념 단위로 다룬다.",
+        "epistemicStatus": "definition",
+        "evidenceRefs": [],
+        "sourceRefs": [],
+        "targetRefs": [],
+        "probeRefs": [],
+        "limitations": [],
+        "synthetic": true,
+        "details": {}
+      },
+      "layer": "DATA",
+      "semanticCoreHash": "1f8fe89fe27a3927f697a56c93bb801802c8c90fabd6591ef48f25ae073a6b16",
+      "revisionHash": "ea4bc8bebd0ba3423915d982a5ddde6d056494d1426f549510b91b7b7964509b"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-000000000009",
+      "version": 1,
+      "type": "contextual_unit",
+      "classification": {
+        "label": "분배와 전체 양 보존 맥락 단위",
+        "semanticPath": [
+          "DATA",
+          "contextual_unit",
+          "분배와 전체 양 보존 맥락 단위"
+        ]
+      },
+      "core": {
+        "statement": "개념·표상·조건·과제의 결합. 개념 자체와 다른 identity다.",
+        "epistemicStatus": "definition",
+        "evidenceRefs": [],
+        "sourceRefs": [],
+        "targetRefs": [],
+        "probeRefs": [],
+        "limitations": [],
+        "synthetic": true,
+        "details": {}
+      },
+      "layer": "DATA",
+      "semanticCoreHash": "7c1f80a1532d117c47f286140d2f7b9f2ce9caef96de847f9389e4fa5cbdaf67",
+      "revisionHash": "ec228c2da58f2e2dbdadb080dc00ab79ff94cd4a76911899ca99d4173795d0b8"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-00000000000a",
+      "version": 1,
+      "type": "item",
+      "classification": {
+        "label": "synthetic-multiplication",
+        "semanticPath": [
+          "DATA",
+          "item",
+          "synthetic-multiplication"
+        ]
+      },
+      "core": {
+        "statement": "24×3을 (20+4)×3으로 나누어 설명하시오.",
+        "epistemicStatus": "definition",
+        "evidenceRefs": [],
+        "sourceRefs": [
+          {
+            "id": "mred:00000000-0000-4000-8000-000000000006",
+            "version": 1
+          }
+        ],
+        "targetRefs": [],
+        "probeRefs": [],
+        "limitations": [],
+        "synthetic": true,
+        "details": {
+          "adaptedFromLegacyId": "HM11-d3-T02",
+          "exactCopy": false
+        }
+      },
+      "layer": "DATA",
+      "semanticCoreHash": "d4980f7ba775a4c5668b9db6fa35939915d0f8563d6ac389f0fe36afe30d7b89",
+      "revisionHash": "ea8b6d650130f7dc952d3160f64f2eb460a9de75e7df3588717a8c22bd20ba77"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-00000000000b",
+      "version": 1,
+      "type": "observation",
+      "classification": {
+        "label": "synthetic-multiplication 최초 관찰",
+        "semanticPath": [
+          "DATA",
+          "observation",
+          "synthetic-multiplication 최초 관찰"
+        ]
+      },
+      "core": {
+        "statement": "가상의 학습자가 20×3+4×3=72를 쓰고 두 부분 모두 세 배라고 말했다.",
+        "epistemicStatus": "observed",
+        "evidenceRefs": [],
+        "sourceRefs": [
+          {
+            "id": "mred:00000000-0000-4000-8000-000000000005",
+            "version": 1
+          }
+        ],
+        "targetRefs": [
+          {
+            "id": "mred:00000000-0000-4000-8000-00000000000a",
+            "version": 1
+          }
+        ],
+        "probeRefs": [],
+        "limitations": [],
+        "synthetic": true,
+        "details": {
+          "fixtureCaseId": "synthetic-multiplication",
+          "subjectKind": "synthetic_learner"
+        }
+      },
+      "layer": "DATA",
+      "semanticCoreHash": "3a01d8bd46aeb1d558f97a8049255340cf193fe772de2ac6e596efaa3c14e10b",
+      "revisionHash": "faa8cc1ed0ba50b2fbb7605a2e54e4e3a7cd6ba444f19c1cede21ec08705d0a2"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-00000000000c",
+      "version": 1,
+      "type": "evidence_claim",
+      "classification": {
+        "label": "synthetic-multiplication 제한된 주장",
+        "semanticPath": [
+          "LOGIC",
+          "evidence_claim",
+          "synthetic-multiplication 제한된 주장"
+        ]
+      },
+      "core": {
+        "statement": "이 한 장면에서는 분해된 각 부분에 같은 배수를 적용한 설명이 관찰되었다.",
+        "epistemicStatus": "inference",
+        "evidenceRefs": [
+          {
+            "id": "mred:00000000-0000-4000-8000-00000000000b",
+            "version": 1
+          }
+        ],
+        "sourceRefs": [],
+        "targetRefs": [],
+        "probeRefs": [],
+        "limitations": [
+          "한 문항의 가상 발화이며 절차 모방·힌트 의존을 배제하지 못한다."
+        ],
+        "synthetic": true,
+        "details": {}
+      },
+      "layer": "LOGIC",
+      "semanticCoreHash": "e48d1ce15b8c53217de421f8b6fbcbbd5429e4c248bbf73863212a275f43a6e4",
+      "revisionHash": "283f01245476ba31437ed7a3f1312e33285c5a1d39275c4b9124f1590bf1ef82"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-00000000000d",
+      "version": 1,
+      "type": "probe_definition",
+      "classification": {
+        "label": "synthetic-multiplication 확인·반증 과제",
+        "semanticPath": [
+          "ACTION",
+          "probe_definition",
+          "synthetic-multiplication 확인·반증 과제"
+        ]
+      },
+      "core": {
+        "statement": "24×3에서 20×3+4는 왜 다르며 34×3에서도 같은 설명이 되는지 확인한다.",
+        "epistemicStatus": "definition",
+        "evidenceRefs": [],
+        "sourceRefs": [],
+        "targetRefs": [],
+        "probeRefs": [],
+        "limitations": [],
+        "synthetic": true,
+        "details": {}
+      },
+      "layer": "ACTION",
+      "semanticCoreHash": "71d91a883771606c238e1a1c89dc590a7d974d4a53a8e2788f2f26bc6dac0d2d",
+      "revisionHash": "e1cf05c6150a7f7208f72bdd241e30ce620791728e45cdbf3d9e28a2f47c8614"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-00000000000e",
+      "version": 1,
+      "type": "capability_hypothesis",
+      "classification": {
+        "label": "synthetic-multiplication 능력 가설",
+        "semanticPath": [
+          "LOGIC",
+          "capability_hypothesis",
+          "synthetic-multiplication 능력 가설"
+        ]
+      },
+      "core": {
+        "statement": "부분 전체 관계를 보존하며 분배할 수 있을 가능성이 있다.",
+        "epistemicStatus": "hypothesis",
+        "evidenceRefs": [
+          {
+            "id": "mred:00000000-0000-4000-8000-00000000000c",
+            "version": 1
+          }
+        ],
+        "sourceRefs": [],
+        "targetRefs": [],
+        "probeRefs": [
+          {
+            "id": "mred:00000000-0000-4000-8000-00000000000d",
+            "version": 1
+          }
+        ],
+        "limitations": [
+          "한 문항의 가상 발화이며 절차 모방·힌트 의존을 배제하지 못한다."
+        ],
+        "synthetic": true,
+        "details": {}
+      },
+      "layer": "LOGIC",
+      "semanticCoreHash": "cad1ac15d445b5f4977a9fba8aaa9b9affc59ef38ec1eacf43d5ffb2e5df1037",
+      "revisionHash": "8d8ae546709802a106b20edcee5262f2427ebbe07287a43fd96fb54b09ade9dd"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-00000000000f",
+      "version": 1,
+      "type": "strategy_hypothesis",
+      "classification": {
+        "label": "synthetic-multiplication 전략 가설",
+        "semanticPath": [
+          "LOGIC",
+          "strategy_hypothesis",
+          "synthetic-multiplication 전략 가설"
+        ]
+      },
+      "core": {
+        "statement": "20과 4로 분해한 뒤 각각 세 배하는 전략을 사용했을 가능성이 있다.",
+        "epistemicStatus": "hypothesis",
+        "evidenceRefs": [
+          {
+            "id": "mred:00000000-0000-4000-8000-00000000000c",
+            "version": 1
+          }
+        ],
+        "sourceRefs": [],
+        "targetRefs": [],
+        "probeRefs": [
+          {
+            "id": "mred:00000000-0000-4000-8000-00000000000d",
+            "version": 1
+          }
+        ],
+        "limitations": [
+          "한 문항의 가상 발화이며 절차 모방·힌트 의존을 배제하지 못한다."
+        ],
+        "synthetic": true,
+        "details": {}
+      },
+      "layer": "LOGIC",
+      "semanticCoreHash": "7f815567e3f5cae02be2a7700a6614a943f90d58568821b833c784a73e2db743",
+      "revisionHash": "25e0a3ba6641d09afbb987891e8a447b2342b20f17856f016cdd785aa7453da7"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-000000000010",
+      "version": 1,
+      "type": "diagnostic_rule",
+      "classification": {
+        "label": "synthetic-multiplication 탐색 규칙",
+        "semanticPath": [
+          "LOGIC",
+          "diagnostic_rule",
+          "synthetic-multiplication 탐색 규칙"
+        ]
+      },
+      "core": {
+        "statement": "주장과 관찰을 함께 읽고 추가 probe의 지지·반박 결과를 분리해 기록한다.",
+        "epistemicStatus": "rule",
+        "evidenceRefs": [],
+        "sourceRefs": [],
+        "targetRefs": [
+          {
+            "id": "mred:00000000-0000-4000-8000-00000000000e",
+            "version": 1
+          },
+          {
+            "id": "mred:00000000-0000-4000-8000-00000000000f",
+            "version": 1
+          }
+        ],
+        "probeRefs": [],
+        "limitations": [],
+        "synthetic": true,
+        "details": {}
+      },
+      "layer": "LOGIC",
+      "semanticCoreHash": "624ba4d8a8e0f0016cd062a993fd10e5f4fd70c57b9bf906b9906bb31e4023d9",
+      "revisionHash": "9ed201d64bf1ab2f3d923af5b71be0f313e3e33927753ea937e32f2334e2aa8f"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-000000000011",
+      "version": 1,
+      "type": "action_definition",
+      "classification": {
+        "label": "synthetic-multiplication 설명 요청 정의",
+        "semanticPath": [
+          "ACTION",
+          "action_definition",
+          "synthetic-multiplication 설명 요청 정의"
+        ]
+      },
+      "core": {
+        "statement": "교사는 학생에게 조건을 바꿔 같은 설명이 성립하는지 물어본다.",
+        "epistemicStatus": "definition",
+        "evidenceRefs": [],
+        "sourceRefs": [],
+        "targetRefs": [],
+        "probeRefs": [],
+        "limitations": [],
+        "synthetic": true,
+        "details": {}
+      },
+      "layer": "ACTION",
+      "semanticCoreHash": "eab17646a5731350450a108d1b491f8e9cc461c4efb7107b4d33ffa6e1ec19ab",
+      "revisionHash": "54710ce3b2e1f83f5436ff6db670141fc45e36cfd9a3661fe058f00a3793d896"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-000000000012",
+      "version": 1,
+      "type": "teacher_action",
+      "classification": {
+        "label": "synthetic-multiplication 가상 교사 행위",
+        "semanticPath": [
+          "ACTION",
+          "teacher_action",
+          "synthetic-multiplication 가상 교사 행위"
+        ]
+      },
+      "core": {
+        "statement": "테스트 fixture 안에서만 설명 요청이 실행된 것으로 기록한다.",
+        "epistemicStatus": "recorded",
+        "evidenceRefs": [],
+        "sourceRefs": [
+          {
+            "id": "mred:00000000-0000-4000-8000-000000000005",
+            "version": 1
+          }
+        ],
+        "targetRefs": [],
+        "probeRefs": [],
+        "limitations": [],
+        "synthetic": true,
+        "details": {
+          "occurredAt": "2026-10-13T00:00:00Z",
+          "actorRole": "teacher",
+          "synthetic": true
+        }
+      },
+      "layer": "ACTION",
+      "semanticCoreHash": "a5067acd0a5788d1002d463488906084dc3edb25f0ed41d4a22d9f3e4062c57c",
+      "revisionHash": "65a6da15f113d30b2d75fad27dd132f6c600a5c81e1e28a052b5a592776ff244"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-000000000013",
+      "version": 1,
+      "type": "observation",
+      "classification": {
+        "label": "synthetic-multiplication 반박 관찰",
+        "semanticPath": [
+          "DATA",
+          "observation",
+          "synthetic-multiplication 반박 관찰"
+        ]
+      },
+      "core": {
+        "statement": "가상의 반례 응답: 34×3을 30×3+4로 적었다.",
+        "epistemicStatus": "observed",
+        "evidenceRefs": [],
+        "sourceRefs": [
+          {
+            "id": "mred:00000000-0000-4000-8000-000000000005",
+            "version": 1
+          }
+        ],
+        "targetRefs": [
+          {
+            "id": "mred:00000000-0000-4000-8000-00000000000a",
+            "version": 1
+          }
+        ],
+        "probeRefs": [],
+        "limitations": [],
+        "synthetic": true,
+        "details": {
+          "subjectKind": "synthetic_learner",
+          "phase": "probe"
+        }
+      },
+      "layer": "DATA",
+      "semanticCoreHash": "a0cf023a90861bbf6821a64686598f660e8a061363b921551f991bd1b637ef21",
+      "revisionHash": "d526d49766e8bfc9d06bbb64fb33655cf3add7c6de75a886bdde07fe01b7b00e"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-000000000014",
+      "version": 1,
+      "type": "source_document",
+      "classification": {
+        "label": "HD11-d1-T01 원 설계자료",
+        "semanticPath": [
+          "DATA",
+          "source_document",
+          "HD11-d1-T01 원 설계자료"
+        ]
+      },
+      "core": {
+        "statement": "사용자가 제공한 연구 설계 원문. 학습효과나 인지구인 검증 자료로 간주하지 않는다.",
+        "epistemicStatus": "recorded",
+        "evidenceRefs": [],
+        "sourceRefs": [],
+        "targetRefs": [],
+        "probeRefs": [],
+        "limitations": [],
+        "synthetic": false,
+        "details": {
+          "sourcePath": "../../source/archive/research_review/division_designs.json",
+          "sha256": "49b15fe9872521486fdda29f41431ca568f67fc020ce025311740f2246dfb29b",
+          "jsonPointer": "/designs/0",
+          "legacyId": "HD11-d1-T01"
+        }
+      },
+      "layer": "DATA",
+      "semanticCoreHash": "f7400dcbd7aea39e62daca3965b37e80325416d99b0a00c991f313ef5fc1f320",
+      "revisionHash": "f4edf6f28eba44ea1a0f86e6a1fab94f4451524d9bd8e7c7baac766274a615d4"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-000000000015",
+      "version": 1,
+      "type": "source_claim",
+      "classification": {
+        "label": "HD11-d1-T01 설계 의도",
+        "semanticPath": [
+          "GOVERNANCE",
+          "source_claim",
+          "HD11-d1-T01 설계 의도"
+        ]
+      },
+      "core": {
+        "statement": "같은 크기의 단위를 유지한 채 나누기: 8십÷2=4십",
+        "epistemicStatus": "reported",
+        "evidenceRefs": [],
+        "sourceRefs": [
+          {
+            "id": "mred:00000000-0000-4000-8000-000000000014",
+            "version": 1
+          }
+        ],
+        "targetRefs": [],
+        "probeRefs": [],
+        "limitations": [
+          "프로젝트 저작 설계 의도이며 원저자 인증·학습효과·잠재능력 구인 타당화를 의미하지 않는다."
+        ],
+        "synthetic": false,
+        "details": {}
+      },
+      "layer": "GOVERNANCE",
+      "semanticCoreHash": "c15eadf772090ccf60832ef81972417bfe6ebbd61895b4eb7d298718a2af4175",
+      "revisionHash": "0ccb6494e8dad96ac515a9787417979c7afe7362f57baf661860aae699cf3914"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-000000000016",
+      "version": 1,
+      "type": "atomic_concept",
+      "classification": {
+        "label": "등분과 단위 보존",
+        "semanticPath": [
+          "DATA",
+          "atomic_concept",
+          "등분과 단위 보존"
+        ]
+      },
+      "core": {
+        "statement": "등분과 단위 보존을 이번 module-local 분석에서 하나의 개념 단위로 다룬다.",
+        "epistemicStatus": "definition",
+        "evidenceRefs": [],
+        "sourceRefs": [],
+        "targetRefs": [],
+        "probeRefs": [],
+        "limitations": [],
+        "synthetic": true,
+        "details": {}
+      },
+      "layer": "DATA",
+      "semanticCoreHash": "e3f67dc71752f790598fd6b9a315469fa07be79a23554d33feec09d9040e96ba",
+      "revisionHash": "89c07b2921c9d9e5ecdbe19b681b70a62ce887f8875713f31dea235fbf3df0e7"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-000000000017",
+      "version": 1,
+      "type": "contextual_unit",
+      "classification": {
+        "label": "등분과 단위 보존 맥락 단위",
+        "semanticPath": [
+          "DATA",
+          "contextual_unit",
+          "등분과 단위 보존 맥락 단위"
+        ]
+      },
+      "core": {
+        "statement": "개념·표상·조건·과제의 결합. 개념 자체와 다른 identity다.",
+        "epistemicStatus": "definition",
+        "evidenceRefs": [],
+        "sourceRefs": [],
+        "targetRefs": [],
+        "probeRefs": [],
+        "limitations": [],
+        "synthetic": true,
+        "details": {}
+      },
+      "layer": "DATA",
+      "semanticCoreHash": "7c1f80a1532d117c47f286140d2f7b9f2ce9caef96de847f9389e4fa5cbdaf67",
+      "revisionHash": "77b7b4475dbf782b465c0572663c986c1142545b0f1b94ccdd67aebfd6449d0f"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-000000000018",
+      "version": 1,
+      "type": "item",
+      "classification": {
+        "label": "synthetic-division",
+        "semanticPath": [
+          "DATA",
+          "item",
+          "synthetic-division"
+        ]
+      },
+      "core": {
+        "statement": "84÷2에서 십 8개를 먼저 둘로 나누면 무엇을 얻는가?",
+        "epistemicStatus": "definition",
+        "evidenceRefs": [],
+        "sourceRefs": [
+          {
+            "id": "mred:00000000-0000-4000-8000-000000000014",
+            "version": 1
+          }
+        ],
+        "targetRefs": [],
+        "probeRefs": [],
+        "limitations": [],
+        "synthetic": true,
+        "details": {
+          "adaptedFromLegacyId": "HD11-d1-T01",
+          "exactCopy": false
+        }
+      },
+      "layer": "DATA",
+      "semanticCoreHash": "7a9fd02c009fda1a5573d78b71773a6f217788d55d1a5e5074a5a477721bb16c",
+      "revisionHash": "be80e43e2d82cf1de3d2c9f77637ce588b13d534fb23e9c7b4eac6d627086446"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-000000000019",
+      "version": 1,
+      "type": "observation",
+      "classification": {
+        "label": "synthetic-division 최초 관찰",
+        "semanticPath": [
+          "DATA",
+          "observation",
+          "synthetic-division 최초 관찰"
+        ]
+      },
+      "core": {
+        "statement": "가상의 학습자가 십 4개라고 말하고 40을 적은 뒤 일 2개를 합쳐 42를 적었다.",
+        "epistemicStatus": "observed",
+        "evidenceRefs": [],
+        "sourceRefs": [
+          {
+            "id": "mred:00000000-0000-4000-8000-000000000005",
+            "version": 1
+          }
+        ],
+        "targetRefs": [
+          {
+            "id": "mred:00000000-0000-4000-8000-000000000018",
+            "version": 1
+          }
+        ],
+        "probeRefs": [],
+        "limitations": [],
+        "synthetic": true,
+        "details": {
+          "fixtureCaseId": "synthetic-division",
+          "subjectKind": "synthetic_learner"
+        }
+      },
+      "layer": "DATA",
+      "semanticCoreHash": "663b9cebdf43cb57fbd4112eb360231c6dfeacaf399709344e4a181286ddb77f",
+      "revisionHash": "9de710fff9854dc461caaecc6dbfc66ca1cfa7bd19e668e50ef4cf1444e9de86"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-00000000001a",
+      "version": 1,
+      "type": "evidence_claim",
+      "classification": {
+        "label": "synthetic-division 제한된 주장",
+        "semanticPath": [
+          "LOGIC",
+          "evidence_claim",
+          "synthetic-division 제한된 주장"
+        ]
+      },
+      "core": {
+        "statement": "이 한 장면에서는 몫의 숫자와 십 단위를 함께 표현했다.",
+        "epistemicStatus": "inference",
+        "evidenceRefs": [
+          {
+            "id": "mred:00000000-0000-4000-8000-000000000019",
+            "version": 1
+          }
+        ],
+        "sourceRefs": [],
+        "targetRefs": [],
+        "probeRefs": [],
+        "limitations": [
+          "나누어떨어지는 사례 하나로 교환이 필요한 나눗셈까지 일반화하지 않는다."
+        ],
+        "synthetic": true,
+        "details": {}
+      },
+      "layer": "LOGIC",
+      "semanticCoreHash": "e9bbbdfba221bbe602224e9d0d5311f0949616c8bc9e4c5a8d1041e7b63e1e65",
+      "revisionHash": "7d60a32b9f7741cbbd3b0cf9d4d15a007cb6cb2b7bb645a3920ae988a97df52f"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-00000000001b",
+      "version": 1,
+      "type": "probe_definition",
+      "classification": {
+        "label": "synthetic-division 확인·반증 과제",
+        "semanticPath": [
+          "ACTION",
+          "probe_definition",
+          "synthetic-division 확인·반증 과제"
+        ]
+      },
+      "core": {
+        "statement": "86÷2와 84÷3에서 단위 보존과 남은 십의 교환을 따로 확인한다.",
+        "epistemicStatus": "definition",
+        "evidenceRefs": [],
+        "sourceRefs": [],
+        "targetRefs": [],
+        "probeRefs": [],
+        "limitations": [],
+        "synthetic": true,
+        "details": {}
+      },
+      "layer": "ACTION",
+      "semanticCoreHash": "43c7fdd52069b11792423ccf594abb3556214e0e9be8036261e6d9e0675d7998",
+      "revisionHash": "6b34070758f957b8d0945f3eeae3bbaf9c8cda82333a45b538b44899dfdae0dd"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-00000000001c",
+      "version": 1,
+      "type": "capability_hypothesis",
+      "classification": {
+        "label": "synthetic-division 능력 가설",
+        "semanticPath": [
+          "LOGIC",
+          "capability_hypothesis",
+          "synthetic-division 능력 가설"
+        ]
+      },
+      "core": {
+        "statement": "같은 단위를 유지한 채 등분하는 능력이 작동했을 가능성이 있다.",
+        "epistemicStatus": "hypothesis",
+        "evidenceRefs": [
+          {
+            "id": "mred:00000000-0000-4000-8000-00000000001a",
+            "version": 1
+          }
+        ],
+        "sourceRefs": [],
+        "targetRefs": [],
+        "probeRefs": [
+          {
+            "id": "mred:00000000-0000-4000-8000-00000000001b",
+            "version": 1
+          }
+        ],
+        "limitations": [
+          "나누어떨어지는 사례 하나로 교환이 필요한 나눗셈까지 일반화하지 않는다."
+        ],
+        "synthetic": true,
+        "details": {}
+      },
+      "layer": "LOGIC",
+      "semanticCoreHash": "8767bb3418eab673fdec89338c29bd554b7cb8a13e9622df538e4f21a9e3ef41",
+      "revisionHash": "6af3cbbabfbc6b1358b7d121e1b67e549bca32f8d82fafab565f2bcf484a11c6"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-00000000001d",
+      "version": 1,
+      "type": "strategy_hypothesis",
+      "classification": {
+        "label": "synthetic-division 전략 가설",
+        "semanticPath": [
+          "LOGIC",
+          "strategy_hypothesis",
+          "synthetic-division 전략 가설"
+        ]
+      },
+      "core": {
+        "statement": "십과 일을 분리하여 등분한 뒤 다시 합치는 전략 가설이다.",
+        "epistemicStatus": "hypothesis",
+        "evidenceRefs": [
+          {
+            "id": "mred:00000000-0000-4000-8000-00000000001a",
+            "version": 1
+          }
+        ],
+        "sourceRefs": [],
+        "targetRefs": [],
+        "probeRefs": [
+          {
+            "id": "mred:00000000-0000-4000-8000-00000000001b",
+            "version": 1
+          }
+        ],
+        "limitations": [
+          "나누어떨어지는 사례 하나로 교환이 필요한 나눗셈까지 일반화하지 않는다."
+        ],
+        "synthetic": true,
+        "details": {}
+      },
+      "layer": "LOGIC",
+      "semanticCoreHash": "3884c830b024e05989136f4d5a115af1e3cb9f09e56dbb5fb3759923adbc0dbc",
+      "revisionHash": "3dcdf1bc879200be33b9afd42b644e1f82e5a760f10bc61d21e71abd10af6e54"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-00000000001e",
+      "version": 1,
+      "type": "diagnostic_rule",
+      "classification": {
+        "label": "synthetic-division 탐색 규칙",
+        "semanticPath": [
+          "LOGIC",
+          "diagnostic_rule",
+          "synthetic-division 탐색 규칙"
+        ]
+      },
+      "core": {
+        "statement": "주장과 관찰을 함께 읽고 추가 probe의 지지·반박 결과를 분리해 기록한다.",
+        "epistemicStatus": "rule",
+        "evidenceRefs": [],
+        "sourceRefs": [],
+        "targetRefs": [
+          {
+            "id": "mred:00000000-0000-4000-8000-00000000001c",
+            "version": 1
+          },
+          {
+            "id": "mred:00000000-0000-4000-8000-00000000001d",
+            "version": 1
+          }
+        ],
+        "probeRefs": [],
+        "limitations": [],
+        "synthetic": true,
+        "details": {}
+      },
+      "layer": "LOGIC",
+      "semanticCoreHash": "671a97d7e7a1d5f007408bbdc21899bbf7a0770bf8e50f206c3bcca510d45eb2",
+      "revisionHash": "f9b35a33e75134bdf378f8b868cb3cb07be3244e5020645b80f16570a3b4932f"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-00000000001f",
+      "version": 1,
+      "type": "action_definition",
+      "classification": {
+        "label": "synthetic-division 설명 요청 정의",
+        "semanticPath": [
+          "ACTION",
+          "action_definition",
+          "synthetic-division 설명 요청 정의"
+        ]
+      },
+      "core": {
+        "statement": "교사는 학생에게 조건을 바꿔 같은 설명이 성립하는지 물어본다.",
+        "epistemicStatus": "definition",
+        "evidenceRefs": [],
+        "sourceRefs": [],
+        "targetRefs": [],
+        "probeRefs": [],
+        "limitations": [],
+        "synthetic": true,
+        "details": {}
+      },
+      "layer": "ACTION",
+      "semanticCoreHash": "eab17646a5731350450a108d1b491f8e9cc461c4efb7107b4d33ffa6e1ec19ab",
+      "revisionHash": "ea06e5464fd3874e3254a4ca1878568f0a951ef2ce431d97b81e4402f6ef3961"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-000000000020",
+      "version": 1,
+      "type": "teacher_action",
+      "classification": {
+        "label": "synthetic-division 가상 교사 행위",
+        "semanticPath": [
+          "ACTION",
+          "teacher_action",
+          "synthetic-division 가상 교사 행위"
+        ]
+      },
+      "core": {
+        "statement": "테스트 fixture 안에서만 설명 요청이 실행된 것으로 기록한다.",
+        "epistemicStatus": "recorded",
+        "evidenceRefs": [],
+        "sourceRefs": [
+          {
+            "id": "mred:00000000-0000-4000-8000-000000000005",
+            "version": 1
+          }
+        ],
+        "targetRefs": [],
+        "probeRefs": [],
+        "limitations": [],
+        "synthetic": true,
+        "details": {
+          "occurredAt": "2026-10-13T00:00:00Z",
+          "actorRole": "teacher",
+          "synthetic": true
+        }
+      },
+      "layer": "ACTION",
+      "semanticCoreHash": "a5067acd0a5788d1002d463488906084dc3edb25f0ed41d4a22d9f3e4062c57c",
+      "revisionHash": "31d9c88bc39f11ad6763a3b0872db391c77b113386fde688d0deef86a0a34b24"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-000000000021",
+      "version": 1,
+      "type": "observation",
+      "classification": {
+        "label": "synthetic-division 반박 관찰",
+        "semanticPath": [
+          "DATA",
+          "observation",
+          "synthetic-division 반박 관찰"
+        ]
+      },
+      "core": {
+        "statement": "가상의 반례 응답: 남은 십을 일 1개로 처리했다.",
+        "epistemicStatus": "observed",
+        "evidenceRefs": [],
+        "sourceRefs": [
+          {
+            "id": "mred:00000000-0000-4000-8000-000000000005",
+            "version": 1
+          }
+        ],
+        "targetRefs": [
+          {
+            "id": "mred:00000000-0000-4000-8000-000000000018",
+            "version": 1
+          }
+        ],
+        "probeRefs": [],
+        "limitations": [],
+        "synthetic": true,
+        "details": {
+          "subjectKind": "synthetic_learner",
+          "phase": "probe"
+        }
+      },
+      "layer": "DATA",
+      "semanticCoreHash": "c9b869d7c75ad260767ac051f8556b7096eaff41d1a49ed649a836b90d919717",
+      "revisionHash": "1deff23d96c062225b572dd7424e2d9b7f76e0600a644fdbd6cdc35110489e2f"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-000000000022",
+      "version": 1,
+      "type": "source_document",
+      "classification": {
+        "label": "HC11-d1-T01 원 설계자료",
+        "semanticPath": [
+          "DATA",
+          "source_document",
+          "HC11-d1-T01 원 설계자료"
+        ]
+      },
+      "core": {
+        "statement": "사용자가 제공한 연구 설계 원문. 학습효과나 인지구인 검증 자료로 간주하지 않는다.",
+        "epistemicStatus": "recorded",
+        "evidenceRefs": [],
+        "sourceRefs": [],
+        "targetRefs": [],
+        "probeRefs": [],
+        "limitations": [],
+        "synthetic": false,
+        "details": {
+          "sourcePath": "../../source/archive/research_review/circle_designs.json",
+          "sha256": "1b4d3da7b54c32d904b0ec7a54ce02138214a44420bee1c963e1a67d9901590a",
+          "jsonPointer": "/designs/0",
+          "legacyId": "HC11-d1-T01"
+        }
+      },
+      "layer": "DATA",
+      "semanticCoreHash": "509869a7ae7f827dd3d90853adee43ee59470e0e07539ba3da1da373b26ab28d",
+      "revisionHash": "36711731623bd1c732566da68248adebd28c7c48e7accb9997b32dcc5ea54daa"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-000000000023",
+      "version": 1,
+      "type": "source_claim",
+      "classification": {
+        "label": "HC11-d1-T01 설계 의도",
+        "semanticPath": [
+          "GOVERNANCE",
+          "source_claim",
+          "HC11-d1-T01 설계 의도"
+        ]
+      },
+      "core": {
+        "statement": "그리는 동안 움직이지 않는 기준점과 원 위를 움직이는 점을 구분하여 중심의 뜻을 파악한다.",
+        "epistemicStatus": "reported",
+        "evidenceRefs": [],
+        "sourceRefs": [
+          {
+            "id": "mred:00000000-0000-4000-8000-000000000022",
+            "version": 1
+          }
+        ],
+        "targetRefs": [],
+        "probeRefs": [],
+        "limitations": [
+          "프로젝트 저작 설계 의도이며 원저자 인증·학습효과·잠재능력 구인 타당화를 의미하지 않는다."
+        ],
+        "synthetic": false,
+        "details": {}
+      },
+      "layer": "GOVERNANCE",
+      "semanticCoreHash": "bf4ee587f1f38a1433e4a76be8b78a671558568b27f99ee245d1f0a13eb75df3",
+      "revisionHash": "cb16f3b04718331464b41af72ebfb3cd0d02b9ec6b551029b357069124bf88a4"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-000000000024",
+      "version": 1,
+      "type": "atomic_concept",
+      "classification": {
+        "label": "원의 중심과 등거리",
+        "semanticPath": [
+          "DATA",
+          "atomic_concept",
+          "원의 중심과 등거리"
+        ]
+      },
+      "core": {
+        "statement": "원의 중심과 등거리을 이번 module-local 분석에서 하나의 개념 단위로 다룬다.",
+        "epistemicStatus": "definition",
+        "evidenceRefs": [],
+        "sourceRefs": [],
+        "targetRefs": [],
+        "probeRefs": [],
+        "limitations": [],
+        "synthetic": true,
+        "details": {}
+      },
+      "layer": "DATA",
+      "semanticCoreHash": "67b2e4c7f3213029054b28c9beea9fbb97a924ce986742557b8e8c82f169c182",
+      "revisionHash": "21cc9eb4391529ad9ccf8e03d340ffccf60970d25b7333a726ab52687e39dbb1"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-000000000025",
+      "version": 1,
+      "type": "contextual_unit",
+      "classification": {
+        "label": "원의 중심과 등거리 맥락 단위",
+        "semanticPath": [
+          "DATA",
+          "contextual_unit",
+          "원의 중심과 등거리 맥락 단위"
+        ]
+      },
+      "core": {
+        "statement": "개념·표상·조건·과제의 결합. 개념 자체와 다른 identity다.",
+        "epistemicStatus": "definition",
+        "evidenceRefs": [],
+        "sourceRefs": [],
+        "targetRefs": [],
+        "probeRefs": [],
+        "limitations": [],
+        "synthetic": true,
+        "details": {}
+      },
+      "layer": "DATA",
+      "semanticCoreHash": "7c1f80a1532d117c47f286140d2f7b9f2ce9caef96de847f9389e4fa5cbdaf67",
+      "revisionHash": "6b6305d9b515dc6976322119bbc519f919056c4d250ed0238c40a9a4b4c14530"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-000000000026",
+      "version": 1,
+      "type": "item",
+      "classification": {
+        "label": "synthetic-circle",
+        "semanticPath": [
+          "DATA",
+          "item",
+          "synthetic-circle"
+        ]
+      },
+      "core": {
+        "statement": "침을 K에 고정하고 벌림 3cm를 유지해 그린 원의 중심을 설명하시오.",
+        "epistemicStatus": "definition",
+        "evidenceRefs": [],
+        "sourceRefs": [
+          {
+            "id": "mred:00000000-0000-4000-8000-000000000022",
+            "version": 1
+          }
+        ],
+        "targetRefs": [],
+        "probeRefs": [],
+        "limitations": [],
+        "synthetic": true,
+        "details": {
+          "adaptedFromLegacyId": "HC11-d1-T01",
+          "exactCopy": false
+        }
+      },
+      "layer": "DATA",
+      "semanticCoreHash": "5dd93332d7e9d5d23e4559bda3c27a0e64cbdb26e57056e7bb4ebbd54fd5a2c2",
+      "revisionHash": "f4198ebd5f6795d4f887490c770ceb688cb1f620c663ebe5476c9d25dae28632"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-000000000027",
+      "version": 1,
+      "type": "observation",
+      "classification": {
+        "label": "synthetic-circle 최초 관찰",
+        "semanticPath": [
+          "DATA",
+          "observation",
+          "synthetic-circle 최초 관찰"
+        ]
+      },
+      "core": {
+        "statement": "가상의 학습자가 K를 고르고 종이를 옮겨도 고정점 역할은 같다고 말했다.",
+        "epistemicStatus": "observed",
+        "evidenceRefs": [],
+        "sourceRefs": [
+          {
+            "id": "mred:00000000-0000-4000-8000-000000000005",
+            "version": 1
+          }
+        ],
+        "targetRefs": [
+          {
+            "id": "mred:00000000-0000-4000-8000-000000000026",
+            "version": 1
+          }
+        ],
+        "probeRefs": [],
+        "limitations": [],
+        "synthetic": true,
+        "details": {
+          "fixtureCaseId": "synthetic-circle",
+          "subjectKind": "synthetic_learner"
+        }
+      },
+      "layer": "DATA",
+      "semanticCoreHash": "d7346de9dd025d40b64a53505addfbd322545278e67693b4775ef14fe6620402",
+      "revisionHash": "d572649e1746f1c2ed60ad750d5a2076fb892baa1259820365c64fef2a3a8b75"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-000000000028",
+      "version": 1,
+      "type": "evidence_claim",
+      "classification": {
+        "label": "synthetic-circle 제한된 주장",
+        "semanticPath": [
+          "LOGIC",
+          "evidence_claim",
+          "synthetic-circle 제한된 주장"
+        ]
+      },
+      "core": {
+        "statement": "이 한 장면에서는 종이의 위치보다 고정된 기준점의 역할을 사용했다.",
+        "epistemicStatus": "inference",
+        "evidenceRefs": [
+          {
+            "id": "mred:00000000-0000-4000-8000-000000000027",
+            "version": 1
+          }
+        ],
+        "sourceRefs": [],
+        "targetRefs": [],
+        "probeRefs": [],
+        "limitations": [
+          "발화 하나로 등거리 정의의 일반적 이해나 실제 작도 능력을 확정하지 않는다."
+        ],
+        "synthetic": true,
+        "details": {}
+      },
+      "layer": "LOGIC",
+      "semanticCoreHash": "1d7b1e8d5191a60198aee3da9ac3cb65259f81ee3e23c165e08be35f1bd0c706",
+      "revisionHash": "ccf2396bf87960c57136d8fac74c293abcd6f094e1c08ef3f6e2ca5ebc94ae77"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-000000000029",
+      "version": 1,
+      "type": "probe_definition",
+      "classification": {
+        "label": "synthetic-circle 확인·반증 과제",
+        "semanticPath": [
+          "ACTION",
+          "probe_definition",
+          "synthetic-circle 확인·반증 과제"
+        ]
+      },
+      "core": {
+        "statement": "글자와 종이 방향을 바꾸고, 기준점이 움직이는 경우도 구별하게 한다.",
+        "epistemicStatus": "definition",
+        "evidenceRefs": [],
+        "sourceRefs": [],
+        "targetRefs": [],
+        "probeRefs": [],
+        "limitations": [],
+        "synthetic": true,
+        "details": {}
+      },
+      "layer": "ACTION",
+      "semanticCoreHash": "91a258d1e7cec87f144e40e8b7080c04237fa8fc7a9d0c97ba75c51a3c8a6514",
+      "revisionHash": "5ae2603c97f0b59d75f710c2f9c96d7b776c995fa94e6cb9446fcb2fd1ecdbc4"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-00000000002a",
+      "version": 1,
+      "type": "capability_hypothesis",
+      "classification": {
+        "label": "synthetic-circle 능력 가설",
+        "semanticPath": [
+          "LOGIC",
+          "capability_hypothesis",
+          "synthetic-circle 능력 가설"
+        ]
+      },
+      "core": {
+        "statement": "원의 중심을 일정한 거리의 기준점으로 파악할 가능성이 있다.",
+        "epistemicStatus": "hypothesis",
+        "evidenceRefs": [
+          {
+            "id": "mred:00000000-0000-4000-8000-000000000028",
+            "version": 1
+          }
+        ],
+        "sourceRefs": [],
+        "targetRefs": [],
+        "probeRefs": [
+          {
+            "id": "mred:00000000-0000-4000-8000-000000000029",
+            "version": 1
+          }
+        ],
+        "limitations": [
+          "발화 하나로 등거리 정의의 일반적 이해나 실제 작도 능력을 확정하지 않는다."
+        ],
+        "synthetic": true,
+        "details": {}
+      },
+      "layer": "LOGIC",
+      "semanticCoreHash": "c6d2b9a27f6855819c94b62268dff4e4bb5dd3927c6226e6402dd76f7a03fe17",
+      "revisionHash": "08ce641f4d4077fa66f87dfc0af1fed4b1c603fc1d7fc6595faa3236e2ea4352"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-00000000002b",
+      "version": 1,
+      "type": "strategy_hypothesis",
+      "classification": {
+        "label": "synthetic-circle 전략 가설",
+        "semanticPath": [
+          "LOGIC",
+          "strategy_hypothesis",
+          "synthetic-circle 전략 가설"
+        ]
+      },
+      "core": {
+        "statement": "움직이지 않는 침과 움직이는 연필 끝을 대비하는 전략 가설이다.",
+        "epistemicStatus": "hypothesis",
+        "evidenceRefs": [
+          {
+            "id": "mred:00000000-0000-4000-8000-000000000028",
+            "version": 1
+          }
+        ],
+        "sourceRefs": [],
+        "targetRefs": [],
+        "probeRefs": [
+          {
+            "id": "mred:00000000-0000-4000-8000-000000000029",
+            "version": 1
+          }
+        ],
+        "limitations": [
+          "발화 하나로 등거리 정의의 일반적 이해나 실제 작도 능력을 확정하지 않는다."
+        ],
+        "synthetic": true,
+        "details": {}
+      },
+      "layer": "LOGIC",
+      "semanticCoreHash": "b9ffb33c66548ad30d645ebd97fafbc160fcadf7932870493810d2006ce95dec",
+      "revisionHash": "b7dcc8a9c7ba417dce12dd4e7e96c0915e50919d47bf9d568e10dde8581a800c"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-00000000002c",
+      "version": 1,
+      "type": "diagnostic_rule",
+      "classification": {
+        "label": "synthetic-circle 탐색 규칙",
+        "semanticPath": [
+          "LOGIC",
+          "diagnostic_rule",
+          "synthetic-circle 탐색 규칙"
+        ]
+      },
+      "core": {
+        "statement": "주장과 관찰을 함께 읽고 추가 probe의 지지·반박 결과를 분리해 기록한다.",
+        "epistemicStatus": "rule",
+        "evidenceRefs": [],
+        "sourceRefs": [],
+        "targetRefs": [
+          {
+            "id": "mred:00000000-0000-4000-8000-00000000002a",
+            "version": 1
+          },
+          {
+            "id": "mred:00000000-0000-4000-8000-00000000002b",
+            "version": 1
+          }
+        ],
+        "probeRefs": [],
+        "limitations": [],
+        "synthetic": true,
+        "details": {}
+      },
+      "layer": "LOGIC",
+      "semanticCoreHash": "fe41b0feeb5fa16429d30f8fb047a09ac86cf9fe1428e901e9c5d310ded657fc",
+      "revisionHash": "2f84c40c732d1120d9454317d6cb054b7e7ccd853f5143540eadba1b3c010bee"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-00000000002d",
+      "version": 1,
+      "type": "action_definition",
+      "classification": {
+        "label": "synthetic-circle 설명 요청 정의",
+        "semanticPath": [
+          "ACTION",
+          "action_definition",
+          "synthetic-circle 설명 요청 정의"
+        ]
+      },
+      "core": {
+        "statement": "교사는 학생에게 조건을 바꿔 같은 설명이 성립하는지 물어본다.",
+        "epistemicStatus": "definition",
+        "evidenceRefs": [],
+        "sourceRefs": [],
+        "targetRefs": [],
+        "probeRefs": [],
+        "limitations": [],
+        "synthetic": true,
+        "details": {}
+      },
+      "layer": "ACTION",
+      "semanticCoreHash": "eab17646a5731350450a108d1b491f8e9cc461c4efb7107b4d33ffa6e1ec19ab",
+      "revisionHash": "4a0873ef1a320418bc3e8cc7a0eef13e86e7fc6cd43286ba21cbc34da4d334fd"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-00000000002e",
+      "version": 1,
+      "type": "teacher_action",
+      "classification": {
+        "label": "synthetic-circle 가상 교사 행위",
+        "semanticPath": [
+          "ACTION",
+          "teacher_action",
+          "synthetic-circle 가상 교사 행위"
+        ]
+      },
+      "core": {
+        "statement": "테스트 fixture 안에서만 설명 요청이 실행된 것으로 기록한다.",
+        "epistemicStatus": "recorded",
+        "evidenceRefs": [],
+        "sourceRefs": [
+          {
+            "id": "mred:00000000-0000-4000-8000-000000000005",
+            "version": 1
+          }
+        ],
+        "targetRefs": [],
+        "probeRefs": [],
+        "limitations": [],
+        "synthetic": true,
+        "details": {
+          "occurredAt": "2026-10-13T00:00:00Z",
+          "actorRole": "teacher",
+          "synthetic": true
+        }
+      },
+      "layer": "ACTION",
+      "semanticCoreHash": "a5067acd0a5788d1002d463488906084dc3edb25f0ed41d4a22d9f3e4062c57c",
+      "revisionHash": "5f8ab44d2ebf0227c999a63d5688e84f493690f7c56d4e6bf1c5f6cf2475dace"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-00000000002f",
+      "version": 1,
+      "type": "observation",
+      "classification": {
+        "label": "synthetic-circle 반박 관찰",
+        "semanticPath": [
+          "DATA",
+          "observation",
+          "synthetic-circle 반박 관찰"
+        ]
+      },
+      "core": {
+        "statement": "가상의 반례 응답: 기준점이 움직여도 벌림만 같으면 K 중심의 원이라고 말했다.",
+        "epistemicStatus": "observed",
+        "evidenceRefs": [],
+        "sourceRefs": [
+          {
+            "id": "mred:00000000-0000-4000-8000-000000000005",
+            "version": 1
+          }
+        ],
+        "targetRefs": [
+          {
+            "id": "mred:00000000-0000-4000-8000-000000000026",
+            "version": 1
+          }
+        ],
+        "probeRefs": [],
+        "limitations": [],
+        "synthetic": true,
+        "details": {
+          "subjectKind": "synthetic_learner",
+          "phase": "probe"
+        }
+      },
+      "layer": "DATA",
+      "semanticCoreHash": "1f631612ceac179a0b134a27ce091f11abacbd7e0c11688ae5f38b95e60e058b",
+      "revisionHash": "8fc01c93711433e38b4ac8a792534bf410e51c6ed48f291ec6608dd34b2beb84"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-000000000030",
+      "version": 1,
+      "type": "provenance_record",
+      "classification": {
+        "label": "원문 및 합성자료 분리",
+        "semanticPath": [
+          "GOVERNANCE",
+          "provenance_record",
+          "원문 및 합성자료 분리"
+        ]
+      },
+      "core": {
+        "statement": "원문 hash와 locator, 가상 관찰 출처를 구분하여 보존한다.",
+        "epistemicStatus": "recorded",
+        "evidenceRefs": [],
+        "sourceRefs": [
+          {
+            "id": "mred:00000000-0000-4000-8000-000000000005",
+            "version": 1
+          }
+        ],
+        "targetRefs": [],
+        "probeRefs": [],
+        "limitations": [],
+        "synthetic": true,
+        "details": {}
+      },
+      "layer": "GOVERNANCE",
+      "semanticCoreHash": "15996952b61464b25519e79b4c4017d6ec0c4796933d21622995b55e7817a2ed",
+      "revisionHash": "8f917547bf783ab04d69a9a6a2ec009ce1f1a299b38824322971f3e483878a4f"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-000000000031",
+      "version": 1,
+      "type": "review_record",
+      "classification": {
+        "label": "타당화 범위 검토 대기",
+        "semanticPath": [
+          "GOVERNANCE",
+          "review_record",
+          "타당화 범위 검토 대기"
+        ]
+      },
+      "core": {
+        "statement": "필드·관계 규약 검증과 교육학적·경험적 타당화는 별개의 검토다.",
+        "epistemicStatus": "pending",
+        "evidenceRefs": [],
+        "sourceRefs": [],
+        "targetRefs": [
+          {
+            "id": "mred:00000000-0000-4000-8000-000000000030",
+            "version": 1
+          }
+        ],
+        "probeRefs": [],
+        "limitations": [],
+        "synthetic": true,
+        "details": {}
+      },
+      "layer": "GOVERNANCE",
+      "semanticCoreHash": "33c0b2735fc97d0f0eb21a6f128545308d9d958f1f7971947289daa9b18aefa7",
+      "revisionHash": "bf14b1d3fa93e658470681b56373700a059cc3e359a84f50b7c0b326a99bcad7"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-000000000032",
+      "version": 1,
+      "type": "acceptance_record",
+      "classification": {
+        "label": "별도 사용자 수락 대기",
+        "semanticPath": [
+          "GOVERNANCE",
+          "acceptance_record",
+          "별도 사용자 수락 대기"
+        ]
+      },
+      "core": {
+        "statement": "구현 테스트 성공은 실제 사용자 수락으로 간주하지 않는다.",
+        "epistemicStatus": "pending",
+        "evidenceRefs": [],
+        "sourceRefs": [],
+        "targetRefs": [],
+        "probeRefs": [],
+        "limitations": [],
+        "synthetic": true,
+        "details": {}
+      },
+      "layer": "GOVERNANCE",
+      "semanticCoreHash": "15c19018394f5e09f38c636a913e9dfbd4890f09152dfbac20ff5f3079fdf4dd",
+      "revisionHash": "c43adbdd5fb2ab6b94f840c5a8aaa0a854ab72abcf8b690d282b3d127432f7f7"
+    },
+    {
+      "id": "mred:00000000-0000-4000-8000-000000000033",
+      "version": 1,
+      "type": "authorization_policy",
+      "classification": {
+        "label": "연구 기록의 비권한성",
+        "semanticPath": [
+          "GOVERNANCE",
+          "authorization_policy",
+          "연구 기록의 비권한성"
+        ]
+      },
+      "core": {
+        "statement": "연구 문서·ID·정책 정의는 native 실행 권한을 부여하지 않는다.",
+        "epistemicStatus": "definition",
+        "evidenceRefs": [],
+        "sourceRefs": [],
+        "targetRefs": [],
+        "probeRefs": [],
+        "limitations": [],
+        "synthetic": true,
+        "details": {
+          "nativePermissionGranted": false,
+          "grantsExecution": false
+        }
+      },
+      "layer": "GOVERNANCE",
+      "semanticCoreHash": "060ceb7665bf3377141e529efda64893a213f652c1af658d8245b36c4f933f20",
+      "revisionHash": "dd861b253403cc7cae4236011d408be7d69d0a2735cafefce3777d95217a8f82"
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-001",
+      "relation": "part_of",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000005",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000001",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-002",
+      "relation": "is_a",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000008",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000001",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-003",
+      "relation": "part_of",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000009",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000001",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-004",
+      "relation": "part_of",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-00000000000a",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000009",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-005",
+      "relation": "uses",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000009",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000008",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-006",
+      "relation": "uses",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-00000000000a",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000008",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-007",
+      "relation": "observes",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-00000000000b",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-00000000000a",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-008",
+      "relation": "supports",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-00000000000b",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-00000000000c",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-009",
+      "relation": "supports",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-00000000000c",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-00000000000e",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-010",
+      "relation": "supports",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-00000000000c",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-00000000000f",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-011",
+      "relation": "supports",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000007",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-00000000000e",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-012",
+      "relation": "probes",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-00000000000d",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-00000000000e",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-013",
+      "relation": "probes",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-00000000000d",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-00000000000f",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-014",
+      "relation": "refutes",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000013",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-00000000000e",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-015",
+      "relation": "refutes",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000013",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-00000000000f",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-016",
+      "relation": "observes",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000013",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-00000000000a",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-017",
+      "relation": "uses",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000011",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000010",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-018",
+      "relation": "uses",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000010",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000011",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-019",
+      "relation": "instance_of",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000012",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000011",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-020",
+      "relation": "derived_from",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000007",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000006",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-021",
+      "relation": "part_of",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000006",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000001",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-022",
+      "relation": "part_of",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-00000000000b",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000001",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-023",
+      "relation": "part_of",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000013",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000001",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-024",
+      "relation": "part_of",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-00000000000c",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000002",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-025",
+      "relation": "part_of",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-00000000000e",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000002",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-026",
+      "relation": "part_of",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-00000000000f",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000002",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-027",
+      "relation": "part_of",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000010",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000002",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-028",
+      "relation": "part_of",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-00000000000d",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000003",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-029",
+      "relation": "part_of",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000011",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000003",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-030",
+      "relation": "part_of",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000012",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000003",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-031",
+      "relation": "part_of",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000007",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000004",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-032",
+      "relation": "is_a",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000016",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000001",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-033",
+      "relation": "part_of",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000017",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000001",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-034",
+      "relation": "part_of",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000018",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000017",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-035",
+      "relation": "uses",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000017",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000016",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-036",
+      "relation": "uses",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000018",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000016",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-037",
+      "relation": "observes",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000019",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000018",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-038",
+      "relation": "supports",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000019",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-00000000001a",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-039",
+      "relation": "supports",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-00000000001a",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-00000000001c",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-040",
+      "relation": "supports",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-00000000001a",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-00000000001d",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-041",
+      "relation": "supports",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000015",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-00000000001c",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-042",
+      "relation": "probes",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-00000000001b",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-00000000001c",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-043",
+      "relation": "probes",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-00000000001b",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-00000000001d",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-044",
+      "relation": "refutes",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000021",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-00000000001c",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-045",
+      "relation": "refutes",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000021",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-00000000001d",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-046",
+      "relation": "observes",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000021",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000018",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-047",
+      "relation": "uses",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-00000000001f",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-00000000001e",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-048",
+      "relation": "uses",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-00000000001e",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-00000000001f",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-049",
+      "relation": "instance_of",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000020",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-00000000001f",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-050",
+      "relation": "derived_from",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000015",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000014",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-051",
+      "relation": "part_of",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000014",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000001",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-052",
+      "relation": "part_of",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000019",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000001",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-053",
+      "relation": "part_of",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000021",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000001",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-054",
+      "relation": "part_of",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-00000000001a",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000002",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-055",
+      "relation": "part_of",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-00000000001c",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000002",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-056",
+      "relation": "part_of",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-00000000001d",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000002",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-057",
+      "relation": "part_of",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-00000000001e",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000002",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-058",
+      "relation": "part_of",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-00000000001b",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000003",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-059",
+      "relation": "part_of",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-00000000001f",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000003",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-060",
+      "relation": "part_of",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000020",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000003",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-061",
+      "relation": "part_of",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000015",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000004",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-062",
+      "relation": "is_a",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000024",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000001",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-063",
+      "relation": "part_of",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000025",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000001",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-064",
+      "relation": "part_of",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000026",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000025",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-065",
+      "relation": "uses",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000025",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000024",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-066",
+      "relation": "uses",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000026",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000024",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-067",
+      "relation": "observes",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000027",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000026",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-068",
+      "relation": "supports",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000027",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000028",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-069",
+      "relation": "supports",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000028",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-00000000002a",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-070",
+      "relation": "supports",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000028",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-00000000002b",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-071",
+      "relation": "supports",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000023",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-00000000002a",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-072",
+      "relation": "probes",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000029",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-00000000002a",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-073",
+      "relation": "probes",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000029",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-00000000002b",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-074",
+      "relation": "refutes",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-00000000002f",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-00000000002a",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-075",
+      "relation": "refutes",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-00000000002f",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-00000000002b",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-076",
+      "relation": "observes",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-00000000002f",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000026",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-077",
+      "relation": "uses",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-00000000002d",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-00000000002c",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-078",
+      "relation": "uses",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-00000000002c",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-00000000002d",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-079",
+      "relation": "instance_of",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-00000000002e",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-00000000002d",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-080",
+      "relation": "derived_from",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000023",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000022",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-081",
+      "relation": "part_of",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000022",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000001",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-082",
+      "relation": "part_of",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000027",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000001",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-083",
+      "relation": "part_of",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-00000000002f",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000001",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-084",
+      "relation": "part_of",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000028",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000002",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-085",
+      "relation": "part_of",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-00000000002a",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000002",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-086",
+      "relation": "part_of",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-00000000002b",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000002",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-087",
+      "relation": "part_of",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-00000000002c",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000002",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-088",
+      "relation": "part_of",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000029",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000003",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-089",
+      "relation": "part_of",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-00000000002d",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000003",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-090",
+      "relation": "part_of",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-00000000002e",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000003",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-091",
+      "relation": "part_of",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000023",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000004",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-092",
+      "relation": "part_of",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000030",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000004",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-093",
+      "relation": "part_of",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000031",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000004",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-094",
+      "relation": "part_of",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000032",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000004",
+        "version": 1
+      }
+    },
+    {
+      "id": "edge-095",
+      "relation": "part_of",
+      "from": {
+        "id": "mred:00000000-0000-4000-8000-000000000033",
+        "version": 1
+      },
+      "to": {
+        "id": "mred:00000000-0000-4000-8000-000000000004",
+        "version": 1
+      }
+    }
+  ],
+  "presentations": [
+    {
+      "id": "synthetic-multiplication-neutral",
+      "subject": {
+        "id": "mred:00000000-0000-4000-8000-00000000000e",
+        "version": 1
+      },
+      "semanticCoreHash": "cad1ac15d445b5f4977a9fba8aaa9b9affc59ef38ec1eacf43d5ffb2e5df1037",
+      "renderMode": "exact-core",
+      "tone": "neutral",
+      "language": "ko"
+    },
+    {
+      "id": "synthetic-multiplication-teacher-warm",
+      "subject": {
+        "id": "mred:00000000-0000-4000-8000-00000000000e",
+        "version": 1
+      },
+      "semanticCoreHash": "cad1ac15d445b5f4977a9fba8aaa9b9affc59ef38ec1eacf43d5ffb2e5df1037",
+      "renderMode": "exact-core",
+      "tone": "teacher-warm",
+      "language": "ko"
+    },
+    {
+      "id": "synthetic-multiplication-teacher-concise",
+      "subject": {
+        "id": "mred:00000000-0000-4000-8000-00000000000e",
+        "version": 1
+      },
+      "semanticCoreHash": "cad1ac15d445b5f4977a9fba8aaa9b9affc59ef38ec1eacf43d5ffb2e5df1037",
+      "renderMode": "exact-core",
+      "tone": "teacher-concise",
+      "language": "ko"
+    },
+    {
+      "id": "synthetic-division-neutral",
+      "subject": {
+        "id": "mred:00000000-0000-4000-8000-00000000001c",
+        "version": 1
+      },
+      "semanticCoreHash": "8767bb3418eab673fdec89338c29bd554b7cb8a13e9622df538e4f21a9e3ef41",
+      "renderMode": "exact-core",
+      "tone": "neutral",
+      "language": "ko"
+    },
+    {
+      "id": "synthetic-division-teacher-warm",
+      "subject": {
+        "id": "mred:00000000-0000-4000-8000-00000000001c",
+        "version": 1
+      },
+      "semanticCoreHash": "8767bb3418eab673fdec89338c29bd554b7cb8a13e9622df538e4f21a9e3ef41",
+      "renderMode": "exact-core",
+      "tone": "teacher-warm",
+      "language": "ko"
+    },
+    {
+      "id": "synthetic-division-teacher-concise",
+      "subject": {
+        "id": "mred:00000000-0000-4000-8000-00000000001c",
+        "version": 1
+      },
+      "semanticCoreHash": "8767bb3418eab673fdec89338c29bd554b7cb8a13e9622df538e4f21a9e3ef41",
+      "renderMode": "exact-core",
+      "tone": "teacher-concise",
+      "language": "ko"
+    },
+    {
+      "id": "synthetic-circle-neutral",
+      "subject": {
+        "id": "mred:00000000-0000-4000-8000-00000000002a",
+        "version": 1
+      },
+      "semanticCoreHash": "c6d2b9a27f6855819c94b62268dff4e4bb5dd3927c6226e6402dd76f7a03fe17",
+      "renderMode": "exact-core",
+      "tone": "neutral",
+      "language": "ko"
+    },
+    {
+      "id": "synthetic-circle-teacher-warm",
+      "subject": {
+        "id": "mred:00000000-0000-4000-8000-00000000002a",
+        "version": 1
+      },
+      "semanticCoreHash": "c6d2b9a27f6855819c94b62268dff4e4bb5dd3927c6226e6402dd76f7a03fe17",
+      "renderMode": "exact-core",
+      "tone": "teacher-warm",
+      "language": "ko"
+    },
+    {
+      "id": "synthetic-circle-teacher-concise",
+      "subject": {
+        "id": "mred:00000000-0000-4000-8000-00000000002a",
+        "version": 1
+      },
+      "semanticCoreHash": "c6d2b9a27f6855819c94b62268dff4e4bb5dd3927c6226e6402dd76f7a03fe17",
+      "renderMode": "exact-core",
+      "tone": "teacher-concise",
+      "language": "ko"
+    }
+  ],
+  "harnessRecords": [
+    {
+      "id": "math-research-module:project:manifest",
+      "projectId": "math-research-module",
+      "kind": "project",
+      "sourcePath": "../../harness/records.json",
+      "sourceSha256": "122647ec428d04174c89b4a125992f14359cb87a6dd7d33e4da809149e9a8ee2"
+    },
+    {
+      "id": "math-research-module:task:standalone-harness-adoption-20261013",
+      "projectId": "math-research-module",
+      "kind": "task",
+      "sourcePath": "../../harness/records.json",
+      "sourceSha256": "122647ec428d04174c89b4a125992f14359cb87a6dd7d33e4da809149e9a8ee2"
+    },
+    {
+      "id": "math-research-module:run:standalone-harness-adoption-20261013-01",
+      "projectId": "math-research-module",
+      "kind": "run",
+      "sourcePath": "../../harness/records.json",
+      "sourceSha256": "122647ec428d04174c89b4a125992f14359cb87a6dd7d33e4da809149e9a8ee2"
+    },
+    {
+      "id": "math-research-module:evidence:input-transfer-20261013",
+      "projectId": "math-research-module",
+      "kind": "evidence",
+      "sourcePath": "../../harness/records.json",
+      "sourceSha256": "122647ec428d04174c89b4a125992f14359cb87a6dd7d33e4da809149e9a8ee2"
+    },
+    {
+      "id": "math-research-module:verification:standalone-harness-adoption-20261013",
+      "projectId": "math-research-module",
+      "kind": "verification",
+      "sourcePath": "../../harness/records.json",
+      "sourceSha256": "122647ec428d04174c89b4a125992f14359cb87a6dd7d33e4da809149e9a8ee2"
+    },
+    {
+      "id": "math-research-module:proposal:standalone-and-identity-pilot-v1",
+      "projectId": "math-research-module",
+      "kind": "proposal",
+      "sourcePath": "../../harness/records.json",
+      "sourceSha256": "122647ec428d04174c89b4a125992f14359cb87a6dd7d33e4da809149e9a8ee2"
+    },
+    {
+      "id": "math-research-module:evidence:local-validation-20261013",
+      "projectId": "math-research-module",
+      "kind": "evidence",
+      "sourcePath": "../../harness/records.json",
+      "sourceSha256": "122647ec428d04174c89b4a125992f14359cb87a6dd7d33e4da809149e9a8ee2"
+    }
+  ],
+  "workContexts": [
+    {
+      "projectId": "math-research-module",
+      "workId": "standalone-harness-adoption-20261013",
+      "sourcePath": "../../harness/work-context.json",
+      "sourceSha256": "bd2e9a3a54ed1f84f5c92fb7869027e5058fb8d31084d495e789d67ebb3e8c00"
+    }
+  ],
+  "crosswalk": [
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000001",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000001",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000002",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000002",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000003",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000003",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000004",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000004",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000005",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000005",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000006",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000006",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000007",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000007",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000008",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000008",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000009",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000009",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-00000000000a",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-00000000000a",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-00000000000b",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-00000000000b",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-00000000000c",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-00000000000c",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-00000000000d",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-00000000000d",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-00000000000e",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-00000000000e",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-00000000000f",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-00000000000f",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000010",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000010",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000011",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000011",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000012",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000012",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000013",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000013",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000014",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000014",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000015",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000015",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000016",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000016",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000017",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000017",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000018",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000018",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000019",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000019",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-00000000001a",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-00000000001a",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-00000000001b",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-00000000001b",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-00000000001c",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-00000000001c",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-00000000001d",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-00000000001d",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-00000000001e",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-00000000001e",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-00000000001f",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-00000000001f",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000020",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000020",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000021",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000021",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000022",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000022",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000023",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000023",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000024",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000024",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000025",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000025",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000026",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000026",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000027",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000027",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000028",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000028",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000029",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000029",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-00000000002a",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-00000000002a",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-00000000002b",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-00000000002b",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-00000000002c",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-00000000002c",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-00000000002d",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-00000000002d",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-00000000002e",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-00000000002e",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-00000000002f",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-00000000002f",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000030",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000030",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000031",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000031",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000032",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000032",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    },
+    {
+      "relation": "createdBy",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000033",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:task:standalone-harness-adoption-20261013"
+    },
+    {
+      "relation": "uses",
+      "research": {
+        "id": "mred:00000000-0000-4000-8000-000000000033",
+        "version": 1
+      },
+      "harnessArtifactId": "math-research-module:run:standalone-harness-adoption-20261013-01"
+    }
+  ]
+}

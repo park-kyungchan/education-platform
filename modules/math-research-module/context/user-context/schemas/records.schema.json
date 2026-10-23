@@ -1,0 +1,296 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Typed context records; verification is separate",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "const": "module-user-context.records/1.0.0"
+    },
+    "recordKeys": {
+      "type": "string"
+    },
+    "authority": {
+      "const": "none"
+    },
+    "nativePermissionGranted": {
+      "const": false
+    },
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "intent",
+              "decision",
+              "proposal",
+              "evidence",
+              "acceptance"
+            ]
+          },
+          "modules": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "enum": [
+                "academy",
+                "math"
+              ]
+            }
+          },
+          "summary": {
+            "type": "string"
+          },
+          "basis": {
+            "enum": [
+              "explicit_user_message",
+              "assistant_interpretation",
+              "user_hypothesis",
+              "assistant_report",
+              "observed_source_snapshot"
+            ]
+          },
+          "status": {
+            "enum": [
+              "active",
+              "proposed",
+              "rejected",
+              "superseded",
+              "future",
+              "open_to_revision",
+              "reported",
+              "observed",
+              "accepted_scoped"
+            ]
+          },
+          "sourceKeys": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            }
+          },
+          "links": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "relation": {
+                  "enum": [
+                    "rejects",
+                    "rejected_by",
+                    "restricts",
+                    "extends",
+                    "interprets",
+                    "responds_to",
+                    "qualifies",
+                    "corrected_by",
+                    "clarified_by",
+                    "corrects",
+                    "clarifies",
+                    "implements_intent",
+                    "narrows",
+                    "superseded_by",
+                    "supersedes",
+                    "accepts_scope"
+                  ]
+                },
+                "targetKey": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "relation",
+                "targetKey"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "limitations": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "acceptance": {
+            "type": "object",
+            "properties": {
+              "outcome": {
+                "const": "accepted"
+              },
+              "targetKey": {
+                "type": "string"
+              },
+              "scope": {
+                "type": "string",
+                "minLength": 1
+              },
+              "excluded": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": [
+              "outcome",
+              "targetKey",
+              "scope",
+              "excluded"
+            ],
+            "additionalProperties": false
+          },
+          "derivedValues": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "field": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": [
+                    "string",
+                    "number"
+                  ]
+                },
+                "method": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "field",
+                "value",
+                "method"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "assessmentFacts": {
+            "type": "object",
+            "required": [
+              "questionCount",
+              "scoreBands",
+              "totalPoints",
+              "selectionStatus"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "questionCount": {
+                "type": "integer"
+              },
+              "scoreBands": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "count",
+                    "points"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              },
+              "totalPoints": {
+                "type": "integer"
+              },
+              "selectionStatus": {
+                "const": "not_selected"
+              }
+            }
+          },
+          "timingFacts": {
+            "type": "object",
+            "required": [
+              "startLocal",
+              "durationMinutes",
+              "sessionEndLocal",
+              "date",
+              "timeZone"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "startLocal": {
+                "type": "string"
+              },
+              "durationMinutes": {
+                "type": "integer"
+              },
+              "sessionEndLocal": {
+                "type": "string"
+              },
+              "date": {
+                "type": "null"
+              },
+              "timeZone": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        "required": [
+          "key",
+          "kind",
+          "modules",
+          "summary",
+          "basis",
+          "status",
+          "sourceKeys",
+          "links",
+          "limitations"
+        ],
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "acceptance"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "acceptance"
+              ],
+              "properties": {
+                "status": {
+                  "const": "accepted_scoped"
+                }
+              }
+            },
+            "else": {
+              "not": {
+                "required": [
+                  "acceptance"
+                ]
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "recordKeys",
+    "authority",
+    "nativePermissionGranted",
+    "records"
+  ],
+  "additionalProperties": false
+}

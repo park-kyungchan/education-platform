@@ -1,0 +1,402 @@
+{
+  "$schema": "academy-development-0.1.schema.json",
+  "kind": "environment_manifest",
+  "schemaVersion": "0.1.0",
+  "revision": 5,
+  "projectId": "project:academy-practical",
+  "canonicalParentId": "development:academy-owned-app",
+  "updatedAt": "2026-10-06T11:58:32.221Z",
+  "id": "environment:academy-dev:v1",
+  "computerName": "강아PC",
+  "taskId": "01a11084-8e3c-77ac-bcf4-7ba1a15c003d",
+  "taskCreationState": "created_reported",
+  "environmentInspectionState": "completed_reported",
+  "sourceReference": "https://github.com/park-kyungchan/dc-gang-a/commit/308b621d2ba4ab9369237a2e152512b211c64040",
+  "observedAt": null,
+  "operatingSystem": null,
+  "workspacePath": "task-5/academy-workbench",
+  "repositoryPath": null,
+  "toolVersions": [
+    {
+      "name": "Node",
+      "version": "24.19",
+      "evidenceRef": "task:01a11084-8e3c-77ac-bcf4-7ba1a15c003d"
+    },
+    {
+      "name": "npm",
+      "version": "11.17",
+      "evidenceRef": "task:01a11084-8e3c-77ac-bcf4-7ba1a15c003d"
+    },
+    {
+      "name": "Bun",
+      "version": "1.4.2",
+      "evidenceRef": "task:01a11084-8e3c-77ac-bcf4-7ba1a15c003d"
+    },
+    {
+      "name": "TypeScript",
+      "version": "7.0.2",
+      "evidenceRef": "task:01a11084-8e3c-77ac-bcf4-7ba1a15c003d/turn:01a11091-0d50-7641-82f6-5890871fa092"
+    },
+    {
+      "name": "@types/bun",
+      "version": "1.4.2",
+      "evidenceRef": "task:01a11084-8e3c-77ac-bcf4-7ba1a15c003d/turn:01a11091-0d50-7641-82f6-5890871fa092"
+    }
+  ],
+  "capabilities": [
+    {
+      "name": "shell",
+      "status": "available",
+      "evidenceRef": "task:01a11064-c620-72ba-afbd-c7db0545f008"
+    },
+    {
+      "name": "filesystem",
+      "status": "available",
+      "evidenceRef": "task:01a11064-c620-72ba-afbd-c7db0545f008"
+    },
+    {
+      "name": "runtime",
+      "status": "available",
+      "evidenceRef": "task:01a11064-c620-72ba-afbd-c7db0545f008"
+    },
+    {
+      "name": "package_manager",
+      "status": "available",
+      "evidenceRef": "task:01a11084-8e3c-77ac-bcf4-7ba1a15c003d"
+    },
+    {
+      "name": "test_runner",
+      "status": "available",
+      "evidenceRef": "task:01a11064-c620-72ba-afbd-c7db0545f008"
+    },
+    {
+      "name": "local_preview",
+      "status": "not_verified",
+      "evidenceRef": null
+    },
+    {
+      "name": "webmcp_client",
+      "status": "not_verified",
+      "evidenceRef": null
+    }
+  ],
+  "installationsPerformed": [
+    "typescript@7.0.2: project-local pinned development dependency from official npm",
+    "@types/bun@1.4.2: project-local pinned development dependency from official npm"
+  ],
+  "credentialsConfigured": false,
+  "publicServerStarted": false,
+  "runtimeEnforcementVerified": false,
+  "readyState": "synthetic_ui_and_sync_validated_repository_transfer_unverified",
+  "limitations": [
+    "87개 테스트와 400개 단언은 보존된 합성 소스와 이전 검증 시점의 결과다. 새 gang-a 저장소의 검증 완료로 승격하지 않는다.",
+    "잘못 사용한 dc-gang-a의 PR 25·26은 PR 27로 원복했고 이전 Git tree와 정확히 같다. 이전 저장소 링크는 검증 이력이다.",
+    "private park-kyungchan/gang-a는 사용자 지정 대상이다. 생성·코드 이전 완료는 아직 확인하지 못했고 연결 도구의 404는 부재 증거가 아니다.",
+    "실제 DOM 연결, crash-safe 영구 저장, 프로세스 간 잠금과 실제 WebMCP 등록은 미완료 또는 미검증이다.",
+    "31→26 조회와 42→37 추출은 합성 벤치마크이며 실제 학원 사이트 성능이 아니다.",
+    "새 사용자 업로드 학생 자료의 구조화는 별도 작업이다. 이 리비전에서 실제 학생 자료를 앱·Space에 새로 반입하지 않았다.",
+    "설치와 타입 검사 차단은 해결된 이력이며 현재 미완료 항목으로 표시하지 않는다."
+  ],
+  "futureUpdateRule": "실제 명령 결과와 시각이 전달되면 새 리비전으로 추가한다. 제안된 설치를 실제 설치 완료로 기록하지 않는다.",
+  "reportedChecks": {
+    "executedChecks": 87,
+    "passed": 87,
+    "failed": 0,
+    "fixtures": "r2_ten_semantic_cases_passed",
+    "queryDemo": "passed_reported",
+    "staticTypeCheck": "passed_source_and_tests",
+    "specificCommands": "Archived CI runs bun run check; README documents focused sync tests and benchmark.",
+    "executionTimeWindow": null,
+    "testCaseMappingToPublishedPlan": "16_synthetic_evidence_covered_all_full_scenarios_partial",
+    "assertions": 400,
+    "scenarioCoverage": {
+      "total": 16,
+      "fullyPassed": 0,
+      "partial": 16,
+      "notRun": 0,
+      "failed": 0
+    },
+    "syntheticCoverage": {
+      "total": 16,
+      "withEvidence": 16,
+      "sourceReference": "task:01a11084-8e3c-77ac-bcf4-7ba1a15c003d/turn:01a11091-0d50-7641-82f6-5890871fa092"
+    },
+    "typecheckScope": "source_and_tests",
+    "build": "passed",
+    "verificationScope": "Preserved local source and archived 308b621 commit, not the unverified new repository."
+  },
+  "scaffoldComponents": [
+    "schemas",
+    "action contracts",
+    "permission-checked application service scaffold",
+    "shared UI and agent ports",
+    "synthetic fixtures"
+  ],
+  "localDocuments": [
+    "ENVIRONMENT.md",
+    "DEV-RUNBOOK.md",
+    "NEXT-STEPS.md"
+  ],
+  "pendingInstall": {
+    "package": "TypeScript",
+    "scope": "project_only",
+    "source": "official npm registry",
+    "state": "resolved_project_local_install_verified",
+    "questionReference": "Sentinel_15c6c0fa797c8191a3e46f6c6f3194a5"
+  },
+  "applicationState": {
+    "appBuilt": true,
+    "serverStarted": null,
+    "realStudentDataImported": false,
+    "existingRepositoryModified": false,
+    "browserChanged": false,
+    "existingRepositoryChangesWereReverted": true,
+    "publicDeploymentPerformed": false,
+    "liveAcademyAccessPerformed": false,
+    "actualWebMcpRegistrationVerified": false
+  },
+  "taskHistory": [
+    {
+      "taskId": "01a11064-c620-72ba-afbd-c7db0545f008",
+      "workspacePath": "task-4/academy-workbench",
+      "role": "prior_scaffold",
+      "reportedPassed": 14,
+      "reportedFailed": 0
+    },
+    {
+      "taskId": "01a11084-8e3c-77ac-bcf4-7ba1a15c003d",
+      "workspacePath": "task-5/academy-workbench",
+      "role": "default_model_recovery_scaffold",
+      "reportedPassed": 28,
+      "reportedFailed": 0
+    }
+  ],
+  "modelRecovery": {
+    "requestedModel": "default",
+    "actualModel": null,
+    "reason": "unsupported_model_recovery",
+    "dataRestrictionBypass": false
+  },
+  "dependencyInstallResult": {
+    "package": "TypeScript",
+    "source": "official npm registry",
+    "scope": "project_only",
+    "status": "succeeded",
+    "failureCode": null,
+    "installed": true,
+    "installedVersion": "7.0.2",
+    "versionPinFinished": true,
+    "lockfileFinished": true,
+    "typecheckRun": true,
+    "retryBypassPerformed": false,
+    "sourceReference": "task:01a11084-8e3c-77ac-bcf4-7ba1a15c003d/turn:01a11091-0d50-7641-82f6-5890871fa092",
+    "attemptedPackages": [
+      "typescript",
+      "@types/bun"
+    ],
+    "failureStage": null,
+    "observedRequests": [],
+    "blockingActor": "prior_failure_actor_not_established",
+    "cacheDirectoryFailureEstablished": false,
+    "installedPackages": [
+      {
+        "name": "typescript",
+        "version": "7.0.2"
+      },
+      {
+        "name": "@types/bun",
+        "version": "1.4.2"
+      }
+    ],
+    "lockfileName": "package-lock.json",
+    "reproducibleInstallCommand": "npm ci",
+    "reproducibleInstallPassed": true,
+    "approvalPath": "official_approval_path_reported",
+    "globalInstallPerformed": false,
+    "securitySettingsChanged": false,
+    "alternateRegistryUsed": false
+  },
+  "foundationVersion": null,
+  "dependencyInstallHistory": [
+    {
+      "package": "TypeScript",
+      "source": "official npm registry",
+      "scope": "project_only",
+      "status": "failed",
+      "failureCode": "EACCES",
+      "installed": false,
+      "installedVersion": null,
+      "versionPinFinished": false,
+      "lockfileFinished": false,
+      "typecheckRun": false,
+      "retryBypassPerformed": false,
+      "sourceReference": "task:01a11084-8e3c-77ac-bcf4-7ba1a15c003d/turn:01a1108b-d486-7062-9595-1625ddeb9d7b",
+      "attemptedPackages": [
+        "typescript",
+        "@types/bun"
+      ],
+      "failureStage": "official_registry_http_get_socket",
+      "observedRequests": [
+        "https://registry.npmjs.org/typescript",
+        "https://registry.npmjs.org/@types%2fbun"
+      ],
+      "blockingActor": "unknown",
+      "cacheDirectoryFailureEstablished": false
+    }
+  ],
+  "resolutionEvidence": {
+    "taskCompletedConfirmed": true,
+    "sourceReference": "task:01a11084-8e3c-77ac-bcf4-7ba1a15c003d/turn:01a11091-0d50-7641-82f6-5890871fa092",
+    "verificationMethod": "parent confirmed completed turn through official cloud_threads.read",
+    "exactExecutionTimestamp": null,
+    "reportImported": false
+  },
+  "reportedArtifacts": [
+    {
+      "fileName": "RESOLUTION-REPORT.md",
+      "reportedRelativePath": "docs/RESOLUTION-REPORT.md",
+      "contentsImported": false
+    },
+    {
+      "fileName": "TEST-MATRIX.md",
+      "reportedRelativePath": null,
+      "contentsImported": false
+    },
+    {
+      "fileName": "validation-results.json",
+      "reportedRelativePath": null,
+      "contentsImported": false
+    }
+  ],
+  "contractImport": {
+    "schemaVersion": "1.0.0",
+    "revision": 2,
+    "payloadHashes": [
+      {
+        "name": "book-flow.types.r2.ts",
+        "bytes": 9342,
+        "sha256": "8b2f5c66244e7d68090f1bf00c76ed878bffcdf3d8c1604e098fac3d6edd1be7",
+        "matchesOriginal": true
+      },
+      {
+        "name": "academy-book-flow-contract.r2.json",
+        "bytes": 23823,
+        "sha256": "c06539e8a912888922aef24d235212249abc68245ffebfbf07a31cb966adc585",
+        "matchesOriginal": true
+      },
+      {
+        "name": "book-flow.semantic-fixtures.json",
+        "bytes": 9785,
+        "sha256": "1a0e359b0a2dfaa66184b78741589ae60d06198fa362c0804ba48068991c9adb",
+        "matchesOriginal": true
+      },
+      {
+        "name": "academy-book-flow-1.0.schema.json",
+        "bytes": 51554,
+        "sha256": "294564fa89076f5f097648bb8579e30fcf3635fc762459e31ee7f95d8df5ba2e",
+        "matchesOriginal": true
+      }
+    ],
+    "allFourPayloadHashesMatched": true,
+    "originalFiveFilesPreservedLocally": true,
+    "deliveryReadmeInGit": false,
+    "semanticCases": 10,
+    "semanticCasesPassed": 10,
+    "spaceSpecificationRevision": 3,
+    "spaceR3FullRuntimeAlignmentVerified": false
+  },
+  "syntheticSync": {
+    "implemented": true,
+    "scopeValidation": true,
+    "pageClosureValidation": true,
+    "catalogCache": true,
+    "contentHashDeduplication": true,
+    "partialFailureResume": true,
+    "boundedTransientReadRetries": true,
+    "teacherNotePreservation": true,
+    "realDomAdapter": "interface_only",
+    "durableStorage": false,
+    "crossProcessLock": false
+  },
+  "syntheticBenchmark": {
+    "scenario": "three fabricated students, two windows, duplicates and one transient read failure, two cycles",
+    "queryCalls": {
+      "before": 31,
+      "after": 26
+    },
+    "extractedRows": {
+      "before": 42,
+      "after": 37
+    },
+    "virtualReadLatencyMs": {
+      "before": 310,
+      "after": 260
+    },
+    "retriesPerVariant": 1,
+    "backoffMsPerVariant": 10,
+    "historyEventsPerVariant": 12,
+    "warmPassChanges": 0,
+    "actualServerPerformanceMeasured": false
+  },
+  "repositoryDisposition": {
+    "previousTarget": "park-kyungchan/dc-gang-a",
+    "previousTargetWasIncorrect": true,
+    "revertedPullRequests": [
+      25,
+      26
+    ],
+    "rollbackPullRequest": "https://github.com/park-kyungchan/dc-gang-a/pull/27",
+    "rollbackMerged": true,
+    "restoredMergeCommit": "2cd65bed1261c627e75b978ca02b7261b6280ed6",
+    "preTaskCommit": "7a08a152c0443f938d66134747f19b1dcadcde98",
+    "restoredTree": "74eb9ba8661460a2979acd04338bbf905d09e739",
+    "preTaskTree": "74eb9ba8661460a2979acd04338bbf905d09e739",
+    "exactTreeMatchVerified": true,
+    "rollbackMainCi": {
+      "id": 37456717079,
+      "state": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/park-kyungchan/dc-gang-a/actions/runs/37456717079"
+    },
+    "intendedRepository": "park-kyungchan/gang-a",
+    "intendedVisibility": "private",
+    "newRepositoryState": "creation_and_source_transfer_reported_in_progress_not_verified",
+    "newRepositoryUrl": null,
+    "connectorVerification": "404_Not_Found_does_not_establish_absence",
+    "localSourcePreserved": true,
+    "archivedRepositoryIsCurrentProject": false
+  },
+  "ciEvidence": {
+    "archivedSnapshot": "https://github.com/park-kyungchan/dc-gang-a/commit/308b621d2ba4ab9369237a2e152512b211c64040",
+    "linux": "success",
+    "windows": "success",
+    "workbenchRun": "https://github.com/park-kyungchan/dc-gang-a/actions/runs/37455967293",
+    "existingRepositoryRun": "https://github.com/park-kyungchan/dc-gang-a/actions/runs/37455967260",
+    "currentGangARepositoryCiVerified": false
+  },
+  "sources": [
+    {
+      "role": "archived_validation",
+      "url": "https://github.com/park-kyungchan/dc-gang-a/commit/308b621d2ba4ab9369237a2e152512b211c64040"
+    },
+    {
+      "role": "archived_contract_hashes",
+      "url": "https://github.com/park-kyungchan/dc-gang-a/blob/308b621d2ba4ab9369237a2e152512b211c64040/packages/academy-workbench/docs/r2-import-manifest.json"
+    },
+    {
+      "role": "archived_readme_not_current_runbook",
+      "url": "https://github.com/park-kyungchan/dc-gang-a/blob/308b621d2ba4ab9369237a2e152512b211c64040/packages/academy-workbench/README.md"
+    },
+    {
+      "role": "rollback",
+      "url": "https://github.com/park-kyungchan/dc-gang-a/pull/27"
+    },
+    {
+      "role": "rollback_main_ci",
+      "url": "https://github.com/park-kyungchan/dc-gang-a/actions/runs/37456717079"
+    }
+  ],
+  "validatedSourceSnapshotCommit": "308b621d2ba4ab9369237a2e152512b211c64040",
+  "latestValidatedLocalArchivePath": null,
+  "localSourceNote": "Original task-5 source remains; the latest workbench source was separately archived before rollback, exact archive path not supplied."
+}

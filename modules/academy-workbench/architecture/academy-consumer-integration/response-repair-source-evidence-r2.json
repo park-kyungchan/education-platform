@@ -1,0 +1,232 @@
+{
+  "schema": "academy.consumer-response-repair-source-evidence.v2",
+  "createdAt": "2026-10-21T10:56:49.168Z",
+  "taskId": "academy-workbench:task:academy-consumer-integration-20261021-con-response-contract-repair",
+  "logical": {
+    "domainId": "academy-operations",
+    "projectId": "academy-workbench",
+    "workId": "academy-consumer-integration-20261021",
+    "issueId": "CON-ISSUE-20261021",
+    "specId": "CON-SPEC",
+    "specRevision": 1,
+    "planId": "CON-PLAN",
+    "planRevision": 3,
+    "taskId": "academy-workbench:task:academy-consumer-integration-20261021-con-response-contract-repair"
+  },
+  "sourceHead": "1d72361428ec6e0356fb80d840959926819135c4",
+  "nativeThreadId": "01a15dd0-03ed-71a0-8372-936776e22669",
+  "review": {
+    "repositoryRoot": "/home/palantirkc/worktrees/academy-architecture-orchestration-20261021",
+    "repositoryId": "park-kyungchan/academy-workbench",
+    "commit": "ba037610bdbdff799971aa62f27658c62cf51830",
+    "path": "architecture/academy-reorganization/reviews/AAR-REVIEW-007/AAR-REVIEW-007.json",
+    "sha256": "6cc24fb09a3fee36d169d26264546be18fa45503009c74aea6c50ce164568053",
+    "reviewedCommit": "1d9096225969ac249aaa018663896e7bfb69243b",
+    "reviewedTree": "e9597cbd81f8643f7fdd59e0160d7bd0b9bc00ce"
+  },
+  "findingRepairs": [
+    {
+      "id": "AAR-REVIEW-007-F1",
+      "source": "tools/academy-mcp/src/teacher-schema.ts",
+      "repair": "Public fromJsonSchema adapter advertises the original z.toJSONSchema input bytes and runs original safeParse/defaults. Only its failure message is fixed before SDK automatic createToolError. No SDK-private method, dependency upgrade or independent wire validator.",
+      "authorEvidence": "Actual Client/InMemoryTransport and installed serialize/deserializeMessage exercised both registered tools with550000-character unknown keys, nested invalid selectors and multiple unknown fields. Fixed error result below1024B; zero source callbacks; strict advertised schema equals original; valid omitted defaults still work."
+    },
+    {
+      "id": "AAR-REVIEW-007-F2",
+      "source": "tools/academy-mcp/src/teacher-report.ts",
+      "repair": "Presentation follows exact catalog id/parent links, emits sibling groups and separate ancestor paths, and retains missing/disconnected parents explicitly. No guessed containment or canonical hierarchy change.",
+      "authorEvidence": "Unmodified canonical sibling fixture plus schema-validated separate-branch fixture through TeacherApplication and canonical reader. Focused corrected F2 case passed10assertions."
+    },
+    {
+      "id": "AAR-REVIEW-007-F3",
+      "source": "tools/academy-mcp/src/teacher-report.ts",
+      "repair": "Issuance-only caveat replaces contradictory blanket unknown. Canonical printed/distributed observations are displayed separately with source issuance, observation time and evidence; current attempt/issuance binding is labeled explicitly, foreign observations are not propagated.",
+      "authorEvidence": "Canonical validated teacher review/read-store seam covers print-known/distribution-unknown, reverse, both-unknown, not_done/done and mismatched issuance. No domain state reduction or print/distribution effect."
+    },
+    {
+      "id": "AAR-REVIEW-007-F4",
+      "source": "tools/academy-mcp/src/teacher-report.ts",
+      "repair": "Teacher payload.reportedAt is labeled separately from sourceObservedAt/lastVerifiedAt/recordedAt. Current and retained item completion evidence also carries its own teacher clock; query retrieval remains separate provenance.",
+      "authorEvidence": "Actual SDK report from canonical teacher review crossing Asia/Seoul business-date boundary retains reported2090-01-01T14:59:59Z versus stored2090-01-02T00:00:00Z, stage observation time and distinct query retrieval clocks."
+    }
+  ],
+  "productionPaths": [
+    "tools/academy-mcp/src/teacher-schema.ts",
+    "tools/academy-mcp/src/teacher-query-tools.ts",
+    "tools/academy-mcp/src/teacher-report.ts"
+  ],
+  "testPaths": [
+    "tools/academy-mcp/tests/teacher-memory.ts",
+    "tools/academy-mcp/tests/teacher-repair-fixture.ts",
+    "tools/academy-mcp/tests/teacher-response-contract.test.ts",
+    "tools/academy-mcp/tests/teacher-report.test.ts"
+  ],
+  "sourceFiles": [
+    {
+      "path": "tools/academy-mcp/src/teacher-source-binding.ts",
+      "sha256": "ea4cf411ee8ba332b56bc0d152d64ddf3b6f92be0aabc502ccdf514d66562460",
+      "byteLength": 3597
+    },
+    {
+      "path": "tools/academy-mcp/src/teacher-retained.ts",
+      "sha256": "c26c81ac203fec158792e79316cdd4d24980361caeda319da78227ea34459963",
+      "byteLength": 7532
+    },
+    {
+      "path": "tools/academy-mcp/src/teacher-report.ts",
+      "sha256": "67c7f5e210fd0082d6d8ea3e794fba145cb2a3074ce8f409088b931aefa314ae",
+      "byteLength": 16157
+    },
+    {
+      "path": "tools/academy-mcp/src/teacher-query-tools.ts",
+      "sha256": "436fb85e8d8e8038aa0d8f046d492dc6b51dba56639d25032dfb0bed053c679d",
+      "byteLength": 1829
+    },
+    {
+      "path": "tools/academy-mcp/src/teacher-server.ts",
+      "sha256": "6366f3772c5626ada8cf6ec5a051edc8c5469b3ac82329e039ca23aaaae321ef",
+      "byteLength": 1307
+    },
+    {
+      "path": "tools/academy-mcp/src/teacher-schema.ts",
+      "sha256": "17a3b9a310de67a50b6518cd3bd93334217ed99138d44cfe355de6bd819985e0",
+      "byteLength": 1140
+    },
+    {
+      "path": "tools/academy-mcp/tests/teacher-fixture.ts",
+      "sha256": "fcdbb1292b412377d8792aac0f50743d2b36bcdc6d754853850010b91ce2d84e",
+      "byteLength": 930
+    },
+    {
+      "path": "tools/academy-mcp/tests/teacher-report.test.ts",
+      "sha256": "63054e49f42b71ffe8d6630d4bcf88b8d34a94197a9effb605d457f9da725496",
+      "byteLength": 8081
+    },
+    {
+      "path": "tools/academy-mcp/tests/teacher-tools-mcp.test.ts",
+      "sha256": "d9fa67ac29b111043f08c47e3a163d0875ed98dc218940f029accfacf4f865ba",
+      "byteLength": 4909
+    },
+    {
+      "path": "tools/academy-mcp/tests/teacher-transport-fixture.ts",
+      "sha256": "d268bed3366e4f488e38b6aa7eee437fae46557726836db5e867ae3cbf429a58",
+      "byteLength": 855
+    },
+    {
+      "path": "tools/academy-mcp/tests/teacher-memory.ts",
+      "sha256": "4c722342f6db48e019ce14afcf9762ad5e2ebb7e588f3b2764874fadafb86208",
+      "byteLength": 1511
+    },
+    {
+      "path": "tools/academy-mcp/tests/teacher-repair-fixture.ts",
+      "sha256": "d30b84e49aa60881f9d16af9da531516c2a61e3bc5124b256e5b4d0be7285c57",
+      "byteLength": 4744
+    },
+    {
+      "path": "tools/academy-mcp/tests/teacher-response-contract.test.ts",
+      "sha256": "fddd4013282171dd706a07577b20639e547cf2f8362e30169bfecb7f83a1614d",
+      "byteLength": 13229
+    }
+  ],
+  "checks": {
+    "authorHistory": {
+      "initialAuthorRun": {
+        "path": "architecture/academy-consumer-integration/observations/CON-RESPONSE-REPAIR-CHECKS-R1.json",
+        "sha256": "6a3be686ca6ca7457160a33a6bb3c0868fd14077f2a21154b390f0d673f60b2f",
+        "typecheck": "failed: JSON Schema TypeScript declaration interop",
+        "testsPassed": 12,
+        "testsFailed": 1,
+        "assertions": 336,
+        "failedCase": "F2 invented fixture shared arrays produced duplicate_work_catalog; canonical validator correctly refused"
+      },
+      "focusedAfterCorrections": {
+        "path": "architecture/academy-consumer-integration/observations/CON-RESPONSE-REPAIR-FOCUSED-R2.json",
+        "sha256": "1b2474ab81a9657a81db4016c252a947d623330d5472732e7059e64c17382a71",
+        "typecheck": "passed",
+        "testsPassed": 1,
+        "testsFailed": 0,
+        "assertions": 10,
+        "scope": "previously failed F2 only"
+      },
+      "currentCoverage": "All13 unique author cases covered across original run and focused correction. No current-source full-suite rerun claimed; post-run changes were type-only schema declaration bridging and fixture/expectation typing/isolation.",
+      "rootChangedSourceSdk": {
+        "status": "not_run",
+        "receipt": null,
+        "required": true
+      },
+      "knownNativeStdioStartupRetries": 0,
+      "networkDenyRetained": true,
+      "nearCapMeasurement": {
+        "measurement": "teacher-near-cap-result-and-frame",
+        "resultBytes": 524286,
+        "frameBytes": 524321,
+        "frameOverheadBytes": 35,
+        "frameAccepted": true,
+        "universalFrameCapClaim": false
+      }
+    },
+    "focusedCompiler": "passed at preserved CON-RESPONSE-REPAIR-FOCUSED-R2",
+    "rootChangedSourceSdk": {
+      "inputId": "CON-RESPONSE-REPAIR-ROOT-SDK-R1",
+      "inputSha256": "5061a488e8cc71564bfcc38b03732127239c0a268c4ad5a5669df54a389d4565",
+      "receiptPath": "architecture/academy-consumer-integration/observations/CON-RESPONSE-REPAIR-ROOT-SDK-R1.json",
+      "receiptSha256": "47bc436d7d652c4064652f510e03e02336193dde75485b4b2b15891af70f4504",
+      "checkedCommit": "1d72361428ec6e0356fb80d840959926819135c4",
+      "checkedTree": "78047897b870626123108fb57ebf269335e75dba",
+      "command": [
+        "/usr/local/bin/bun",
+        "test",
+        "--preload",
+        "./tests/network-deny.ts",
+        "tests/teacher-report.test.ts",
+        "tests/teacher-tools-mcp.test.ts",
+        "tests/teacher-response-contract.test.ts"
+      ],
+      "runtime": "Bun1.4.3 Root authorized tools path",
+      "pass": 16,
+      "fail": 0,
+      "assertions": 523,
+      "elapsedSeconds": 11.028091469022911,
+      "attribution": "Root changed-source SDK/control result. Author/reviewer prior native stdio failures and initial repair type/fixture failure remain historical; no native-runtime cause or success inferred.",
+      "scope": "Existing and repaired canonical report/source guards plus actualSDKproduction registration/stdioserver and in-processSDK/wirecodec boundary regressions; invented fixtures only.",
+      "nearCapMeasurement": {
+        "callToolResultBytes": 524286,
+        "jsonRpcFrameBytes": 524321,
+        "overheadBytes": 35,
+        "frameAccepted": true,
+        "universal512KiBFrameCapClaimed": false
+      }
+    },
+    "currentSourceQualification": "passed within exact source-only synthetic scope using separately attributed Root control",
+    "testsRerun": 0
+  },
+  "knownGaps": [
+    "Independent review008 follows this source checkpoint; no independent repair-review pass or whole-Work acceptance is inferred.",
+    "Original author/reviewer native stdio startup CONNECTION_CLOSED divergence remains unknown. Root-attributed actual stdio/InMemory SDK success is not native author environment success or installed/live authentication.",
+    "Real/private data parity, DB/native/WSL/device authentication, activation/adoption, latency and teacher acceptance remain unverified; no source acquisition/print/send/publication/config/common effects.",
+    "Caller-configured exact local canonical source root and source-owned authenticated callback remain the composition boundary; no published packaging, native installation or credential selection is established.",
+    "Saved facets/dated lesson observations and canonical retained projections remain partial and separate; class rows are not a complete current roster or all-history claim.",
+    "CON03 still requires repaired source delivery, VER02 receiving gate and explicit Root admission. Shared audit delivery/formal Work completion remain pending."
+  ],
+  "byteBoundary": {
+    "callToolResultLimitBytes": 524288,
+    "measuredResultBytes": 524286,
+    "measuredFrameBytes": 524321,
+    "installedSdkAccepted": true,
+    "universalFrameCapClaim": false,
+    "capRaised": false
+  },
+  "canonicalSourceOwnerUnchanged": true,
+  "baseline23Unchanged": true,
+  "originalCompletedTasksInputsEvidencePlan1Plan2Unchanged": true,
+  "commonPinChanged": false,
+  "operationalEffects": false,
+  "sourceTree": "78047897b870626123108fb57ebf269335e75dba",
+  "recordHead": "228cb41726f1c7857df0f73022405d7c407343c5",
+  "rootReceiptConsumed": true,
+  "independentReview008": "pending Root",
+  "nativeAuthorEnvironmentCause": "unknown",
+  "nativeActivation": false,
+  "teacherAcceptance": false,
+  "formalAcceptance": false
+}

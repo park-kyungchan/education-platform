@@ -1,0 +1,501 @@
+{
+  "schema": "academy.bounded-source-review/1",
+  "reviewId": "AAR-REVIEW-006",
+  "createdAt": "2026-10-21T09:31:49Z",
+  "status": "scoped_source_re_review_passed",
+  "statusMeaning": "Independent review of the exact successor and its changed consumer/transport paths. Both AAR-REVIEW-005 findings are closed within this scope; no new actionable finding was identified. This receipt grants no deployment, native activation, shared delivery, formal acceptance, or whole-Work completion.",
+  "rootWork": {
+    "projectId": "academy-workbench",
+    "workId": "academy-architecture-orchestration-20261021",
+    "task": "T08"
+  },
+  "reviewer": {
+    "nativeThreadId": "01a15da6-5c63-71a2-a73d-8e881564e94c",
+    "nativeThreadIdSource": "Observed CODEX_THREAD_ID in this reviewer process; not independent authentication of native authorship.",
+    "model": null,
+    "effort": null,
+    "modelEffortSelfExposed": false,
+    "rootReportedNativeAssignment": {
+      "model": "gpt-6-astra",
+      "effort": "xhigh",
+      "source": "Root reported actual launch UI observation and reaffirmed the same native assignment for this re-review; not independently introspected."
+    },
+    "checkout": "/home/palantirkc/worktrees/academy-architecture-review-20261021",
+    "location": {
+      "tab": "wA:t1",
+      "pane": "wA:p7",
+      "source": "Root delegation"
+    },
+    "registration": "Local bounded review receipt only; no new native/global registration.",
+    "extraAgents": 0,
+    "extraPanes": 0,
+    "goalCreated": false,
+    "heavyCheckInvocations": 1
+  },
+  "priorReview": {
+    "id": "AAR-REVIEW-005",
+    "path": ".local/reviews/AAR-REVIEW-005.json",
+    "sha256": "95f03cd5391fcc1e32ae42bf7c82327c464eca3619aeaa11eaf1cbf070fba9db",
+    "hashMatchedBeforeAndAfterReview": true,
+    "bytesModified": false,
+    "reviewedCommit": "959920b0cf90201f878e719c284fea417da8289e",
+    "preservedAsHistoricalEvidence": true
+  },
+  "source": {
+    "checkout": "/home/palantirkc/worktrees/academy-query-integration-20261021",
+    "commit": "8f8c9bd61bd5e55445780b5569ecc40effcecef6",
+    "tree": "ccb0fc6302f664abe069086881961cec99cf2d85",
+    "reviewBaseline": "959920b0cf90201f878e719c284fea417da8289e",
+    "originalImplementationBase": "29510c7ee9a5f8e6fc68bb6dbe5cf320bb66fc95",
+    "changedFilesFromReviewBaseline": 26,
+    "sourceManifest": "architecture/academy-query-integration/qry02-source-evidence.json",
+    "sourceManifestSha256": "0de03286ab84efedca70e37da9f16cf87cf376d638717ff200584a99a9502183",
+    "sourceManifestFilesMatched": 17,
+    "verificationInputHashesMatched": 31,
+    "exactHeadTreeAndCleanBeforePhysicalChecks": true,
+    "exactHeadTreeAndCleanAfterPhysicalChecks": true,
+    "driftObserved": false,
+    "finalSourceCheckAt": "2026-10-21T09:29:30.208405+00:00",
+    "guardMethod": "Read-only Git HEAD/tree/status checks before and after each physical probe group; manifest hashes also checked before the typecheck and at final qualification. These observations are not an atomic filesystem lock.",
+    "entrypoint": "architecture/academy-query-integration/qry02-entrypoint.json",
+    "authorState": {
+      "rootReported": "QRY-02 source complete/passed/local-result-durable; writer finished and parked; formal/shared/native state pending.",
+      "sourceRecords": "Final result/Verification Inputs and Evidence are present in the successor. Precommit observedHead and pending-root-checkpoint strings are retained historical preparation observations, not proof that this successor is uncommitted.",
+      "independentlyChecked": "Exact successor identity, source hashes, 31 Verification input hashes, changed code/callers and focused physical checks.",
+      "rootCanonicalQualification": "Root reports independently passing canonical snapshot, semantic transition and actual task/result Evidence/hash binding. This review does not repeat or reissue that canonical qualification."
+    }
+  },
+  "scope": {
+    "reviewedChanges": [
+      "Browser-safe retainedQueryValidation reply/refusal union and its producer-egress/client-ingress integration.",
+      "sameTeacherScope use in actual activity/parent reconciliation and stable workspaceDraftKey tuple with legacy-key normalization.",
+      "Teacher, exam and operating workspace callers of the shared draft-key path.",
+      "Retained HTTP malformed body handling and bounded non-echo response.",
+      "New/changed focused tests, measurement scripts and source evidence metadata; scripts that write implementation-owned receipts were inspected but not executed.",
+      "Regression preservation of digest, replay, caller/selector/snapshot cursor isolation, UTF-8 lossless reassembly and actual JSON page/refusal bounds."
+    ],
+    "reusedWithoutBroadRerun": [
+      "Unchanged qualified architecture and neutral-boundary work.",
+      "Unchanged DOM-02 domain suite beyond the retained-query scenarios exercised in the changed focused suite.",
+      "Unchanged month-end hierarchy/label 50-record page helpers and Application/SourcePort traversal qualified by review005; manifest bytes checked.",
+      "Root's canonical Work snapshot/transition and native ownership qualification."
+    ],
+    "excluded": [
+      "Real DB sockets, native CLI/source acquisition, credential/runtime configuration and private originals.",
+      "Real browser executables/devices, servers, WSL/native integration or production latency.",
+      "CON downstream duplicated MCP CallToolResult 512 KiB packaging, shared delivery, final integration and formal acceptance.",
+      "Unrelated architecture/domain behavior or unchanged broad repository suites."
+    ],
+    "effects": {
+      "implementationWrites": 0,
+      "workRecordWrites": 0,
+      "configWrites": 0,
+      "permissionChanges": 0,
+      "credentialReads": 0,
+      "privateOriginalReads": 0,
+      "realDatabaseConnections": 0,
+      "serversLaunched": 0,
+      "browserExecutablesLaunched": 0,
+      "nativeAcquisitions": 0,
+      "realBusinessWrites": 0,
+      "printSendPublishMergeDeployActions": 0,
+      "thirdSessionMessages": 0,
+      "soleWrittenArtifact": ".local/reviews/AAR-REVIEW-006.json",
+      "syntheticDom": "In-process JSDOM and invented callbacks only. Mock write callbacks exercised request state without persisting academy data.",
+      "priorReviewsModified": false
+    }
+  },
+  "priorFindingDispositions": [
+    {
+      "findingId": "AAR-REVIEW-005-F1",
+      "disposition": "resolved_in_exact_successor_scoped_source_checks",
+      "severityAtPriorReview": "medium",
+      "locations": [
+        {
+          "path": "apps/academy/dc-gang-a/src/academy/web/teacherWorkspaceView.ts",
+          "line": 1
+        },
+        {
+          "path": "apps/academy/dc-gang-a/src/academy/web/teacherWorkspaceView.ts",
+          "line": 12
+        },
+        {
+          "path": "apps/academy/dc-gang-a/src/academy/web/teacherWorkspaceView.ts",
+          "line": 30
+        },
+        {
+          "path": "apps/academy/dc-gang-a/src/academy/web/teacherWorkspaceView.ts",
+          "line": 34
+        },
+        {
+          "path": "apps/academy/dc-gang-a/src/academy/web/teacherWorkspaceView.ts",
+          "line": 42
+        },
+        {
+          "path": "apps/academy/dc-gang-a/src/academy/web/workspaceEditor.ts",
+          "line": 9
+        },
+        {
+          "path": "apps/academy/dc-gang-a/src/academy/web/workspaceEditor.ts",
+          "line": 15
+        },
+        {
+          "path": "apps/academy/dc-gang-a/src/academy/web/examWorkspaceView.ts",
+          "line": 16
+        },
+        {
+          "path": "apps/academy/dc-gang-a/src/academy/web/operatingWorkspaceView.ts",
+          "line": 20
+        }
+      ],
+      "repairObserved": "Scope equality now compares ownerId/actorId values using sameTeacherScope. Shared draft keys use [ownerId,actorId,studentId,identity]; former object-scope keys normalize to the same tuple. Existing draft/pending records are reused rather than copied or reset.",
+      "evidence": [
+        "C03: both actual activity and parent views reconcile retained-to-legacy field-order changes and retain edited text.",
+        "C03: uncertain mock-save requests retain the identical pending request object and input content across both scene formats; save remains disabled rather than issuing a new request.",
+        "C03: actual activity views reject changed ownerId and actorId and keep draft scopes separate.",
+        "C04: independent actual exam and operating views retain edited text and the same injected pending object across scope-key order changes; distinct owners/actors use different draft state.",
+        "C04: independent actual parent reconciliation rejects changed ownerId and actorId."
+      ],
+      "limits": "Synthetic view and memory-state verification only. No real teacher write, browser-device action or PostgreSQL recovery was executed."
+    },
+    {
+      "findingId": "AAR-REVIEW-005-F2",
+      "disposition": "resolved_in_exact_successor_scoped_source_checks",
+      "severityAtPriorReview": "medium",
+      "locations": [
+        {
+          "path": "apps/academy/dc-gang-a/src/academy/retainedQueryValidation.ts",
+          "line": 3
+        },
+        {
+          "path": "apps/academy/dc-gang-a/src/academy/retainedQueryValidation.ts",
+          "line": 22
+        },
+        {
+          "path": "apps/academy/dc-gang-a/src/academy/retainedQueryValidation.ts",
+          "line": 26
+        },
+        {
+          "path": "apps/academy/dc-gang-a/src/academy/retainedQueryValidation.ts",
+          "line": 38
+        },
+        {
+          "path": "apps/academy/dc-gang-a/src/academy/retainedQueryClient.ts",
+          "line": 10
+        },
+        {
+          "path": "apps/academy/dc-gang-a/src/academy/retainedQuery.ts",
+          "line": 91
+        }
+      ],
+      "repairObserved": "A browser-safe runtime validator checks the complete page/refusal union before client accumulation and at producer page egress. It enforces required exact fields, binding/hash shape, selector shape, clock/date validation, coverage constants, false effect flags, safe counters, strict boolean exhaustion, cursor consistency, fragment shape/JSON depth, and actual serialized byte count.",
+      "evidence": [
+        "C03: 26 malformed-page variants with recomputed byte counts and unchanged document hashes are rejected; malformed refusal variants are rejected without echo, and a genuine refusal retains its bounded code.",
+        "C05: independent deletion of 34 required envelope/nested fields is rejected; oversized/extra-field refusal variants fail closed.",
+        "C05: accessor-bearing envelope is rejected without invoking the getter; an atomic value nested beyond the declared depth is rejected.",
+        "C05-C06: genuine multibyte nested documents reconstruct losslessly; repeated pages/cursors, changed snapshot/binding, duplicate paths and altered document contents are rejected.",
+        "C08: browser-target memory build includes the new validator without adding a native server dependency to that module."
+      ],
+      "limits": "This validates query-page transport semantics. It does not authenticate a native source by itself or qualify the separate CON MCP result envelope."
+    }
+  ],
+  "findings": [],
+  "findingCounts": {
+    "new": 0,
+    "openPrior": 0,
+    "resolvedPrior": 2,
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "checks": [
+    {
+      "id": "C01",
+      "name": "Source identity and prior receipt preservation",
+      "status": "passed",
+      "details": "Exact requested HEAD/tree and clean source observed initially, around physical check groups, and at final qualification. All 17 source-manifest hashes and all 31 Verification input hashes matched. Review005 retains its required SHA256."
+    },
+    {
+      "id": "C02",
+      "name": "Focused no-emit typecheck",
+      "status": "passed",
+      "cwd": "/home/palantirkc/worktrees/academy-query-integration-20261021",
+      "command": "bun node_modules/typescript/bin/tsc --noEmit -p architecture/academy-query-integration/qry02-tsconfig.json",
+      "exitCode": 0,
+      "typescript": "7.0.2",
+      "heavyCheckInvocations": 1,
+      "sourceGuardsBeforeAfter": true,
+      "limit": "Focused configuration/import closure only; Root's separate full DC typecheck is not claimed as this review's execution."
+    },
+    {
+      "id": "C03",
+      "name": "Changed retained query and shared workspace suites",
+      "status": "passed",
+      "cwd": "/home/palantirkc/worktrees/academy-query-integration-20261021/apps/academy/dc-gang-a",
+      "command": "bun test tests/academy/retainedQueryReviewFixes.test.ts tests/academy/retainedQuery.test.ts tests/academy/teacherWorkspaceEditor.test.ts",
+      "exitCode": 0,
+      "bun": "1.4.3",
+      "testsPassed": 72,
+      "testsFailed": 0,
+      "testsSkipped": 0,
+      "expectCalls": 663,
+      "durationSeconds": 4.04,
+      "sourceGuardsBeforeAfter": true,
+      "details": "Focused producer/client/HTTP guards, original DOM-02 transport preservation, actual activity/parent recovery and pending identity, complete reply/refusal validation, and shared workspace state regressions."
+    },
+    {
+      "id": "C04",
+      "name": "Independent actual exam/operating/parent view paths",
+      "status": "passed",
+      "execution": "Bun stdin with in-process JSDOM; no probe file or browser process",
+      "sourceGuardsBeforeAfter": true,
+      "details": {
+        "exam": {
+          "editedTextPreserved": true,
+          "pendingObjectPreserved": true,
+          "ownerActorSeparated": true
+        },
+        "operating": {
+          "editedTextPreserved": true,
+          "pendingObjectPreserved": true,
+          "ownerActorSeparated": true
+        },
+        "parentReconcile": {
+          "changedOwnerRejected": true,
+          "changedActorRejected": true
+        },
+        "writeCallbacksInvoked": 0
+      },
+      "limit": "Exam/operating pending object was injected into invented in-memory state to test identity through real render paths; actual uncertain save creation was exercised for activity/parent by C03."
+    },
+    {
+      "id": "C05",
+      "name": "Independent wire-boundary negative and round-trip cases",
+      "status": "passed_with_probe_correction",
+      "execution": "Bun stdin; invented responses only",
+      "sourceGuardsBeforeAfter": true,
+      "details": {
+        "requiredFieldDeletionCases": 34,
+        "additionalMalformedRefusals": 3,
+        "accessorsInvoked": 0,
+        "deepAtomicValueRejected": true,
+        "utf8RoundTripPages": 3,
+        "specialKeysPreserved": [
+          "__proto__",
+          "constructor",
+          "numeric-looking keys"
+        ],
+        "prototypePollutionObserved": false,
+        "negativeControls": {
+          "replayedPage": "retained_page_contract_conflict",
+          "changedSnapshot": "retained_page_snapshot_conflict",
+          "repeatedCursor": "retained_page_continuation_conflict",
+          "changedBinding": "retained_page_snapshot_conflict",
+          "duplicatePath": "retained_fragment_duplicate"
+        }
+      },
+      "probeCorrection": "The first diagnostic digest variant selected a nonexistent top-level string fragment and hit its own fixture assertion. That result is excluded from product evidence; C06 independently reran a valid tampered-content case and verified the exact digest rejection."
+    },
+    {
+      "id": "C06",
+      "name": "Corrected independent digest test and HTTP malformed intake",
+      "status": "passed",
+      "execution": "Bun stdin through actual shared reader and in-process Teacher HTTP handler",
+      "sourceGuardsBeforeAfter": true,
+      "details": {
+        "changedDocumentWithValidByteCount": "retained_document_digest_conflict",
+        "httpCases": [
+          "malformed JSON",
+          "invalid UTF-8",
+          "body over 20000-byte intake cap",
+          "wrong Content-Type",
+          "JSON array instead of request object"
+        ],
+        "allHttpStatuses": 400,
+        "allResponseJsonBytes": 40,
+        "exactResponse": {
+          "error": "retained_query_input_invalid"
+        },
+        "sourceSnapshots": 0,
+        "sourceWrites": 0
+      },
+      "location": {
+        "path": "apps/academy/dc-gang-a/src/academy/server.ts",
+        "line": 180
+      }
+    },
+    {
+      "id": "C07",
+      "name": "Independent successor HTTP page and facade-load measurements",
+      "status": "passed",
+      "execution": "Bun stdin; actual TeacherApplication and HTTP handler over invented fixture",
+      "sourceGuardsBeforeAfter": true,
+      "details": "All reconstructed documents equal the canonical single-facade result; one facade snapshot per emitted page, no append. Observed maximum page 65526 bytes. See loadMeasurements."
+    },
+    {
+      "id": "C08",
+      "name": "Changed browser paths memory build",
+      "status": "passed",
+      "execution": "Bun.build target browser, format esm, write false",
+      "entrypoints": [
+        "apps/academy/dc-gang-a/src/academy/web/client.ts",
+        "apps/academy/dc-gang-a/src/academy/retainedQueryValidation.ts"
+      ],
+      "outputBytes": 1184142,
+      "filesWritten": false,
+      "sourceGuardsBeforeAfter": true,
+      "limit": "Compilation/import compatibility only; no real browser/WebMCP execution."
+    },
+    {
+      "id": "C09",
+      "name": "Root-reported canonical snapshot and semantic transition",
+      "status": "not_rerun",
+      "details": "Root independently reports pass for exact successor canonical snapshot, semantic transition, actual task/result Evidence and hash binding. Reviewer independently rechecked the 31 declared Verification input hashes, but did not reissue canonical Work verification."
+    },
+    {
+      "id": "C10",
+      "name": "Unchanged broad architecture/domain/month-end suites",
+      "status": "not_run",
+      "details": "No reason to repeat unchanged architecture or full domain suites. Existing DOM-02/source-family/edition/currentness semantics remain owner-controlled; changed retained suite verifies selected preservation paths."
+    },
+    {
+      "id": "C11",
+      "name": "Database, native/browser integration and final MCP boundary",
+      "status": "not_run",
+      "details": "No DB socket, browser executable, native CLI/source acquisition or final MCP packaging invoked. Root's reported 6 DB skips and retained earlier 47 DB skips are coverage observations, not summed into a new count or converted to passes."
+    }
+  ],
+  "loadMeasurements": {
+    "semantics": "Actual UTF-8 JSON query-page bytes include metadata, fragments, signed continuation and serializedBytes. They are distinct from the downstream duplicated MCP CallToolResult 512 KiB envelope.",
+    "fixtures": "Invented synthetic students and notes only; student/cohort/class each uses an equivalent direct and paged read.",
+    "measurements": [
+      {
+        "selector": "student",
+        "students": 1,
+        "notes": 120,
+        "single": {
+          "jsonBytes": 243015,
+          "facadeSnapshots": 1,
+          "students": 1,
+          "current": 1,
+          "catalog": 1,
+          "preparationRevisions": 1,
+          "pinnedCatalog": 1,
+          "studentWorkspaces": 1
+        },
+        "paged": {
+          "facadeSnapshots": 5,
+          "students": 5,
+          "current": 5,
+          "catalog": 5,
+          "preparationRevisions": 5,
+          "pinnedCatalog": 5,
+          "studentWorkspaces": 5,
+          "append": 0,
+          "pageBytes": [
+            64395,
+            64632,
+            64673,
+            65526,
+            5221
+          ],
+          "recordCounts": [
+            43,
+            37,
+            37,
+            85,
+            12
+          ],
+          "totalJsonBytes": 264447,
+          "maxJsonPageBytes": 65526
+        }
+      },
+      {
+        "selector": "cohort",
+        "students": 700,
+        "notes": 120,
+        "single": {
+          "jsonBytes": 75991,
+          "facadeSnapshots": 1,
+          "students": 1,
+          "current": 700
+        },
+        "paged": {
+          "facadeSnapshots": 3,
+          "students": 3,
+          "current": 2100,
+          "append": 0,
+          "pageBytes": [
+            42784,
+            44072,
+            37253
+          ],
+          "recordCounts": [
+            250,
+            250,
+            212
+          ],
+          "totalJsonBytes": 124109,
+          "maxJsonPageBytes": 44072
+        }
+      },
+      {
+        "selector": "class_preparation",
+        "students": 1,
+        "notes": 120,
+        "single": {
+          "jsonBytes": 2235,
+          "facadeSnapshots": 1,
+          "students": 1,
+          "current": 1,
+          "preparationRevisions": 1
+        },
+        "paged": {
+          "facadeSnapshots": 1,
+          "students": 1,
+          "current": 1,
+          "preparationRevisions": 1,
+          "append": 0,
+          "pageBytes": [
+            3342
+          ],
+          "recordCounts": [
+            1
+          ],
+          "totalJsonBytes": 3342,
+          "maxJsonPageBytes": 3342
+        }
+      }
+    ],
+    "interpretation": "Transport paging still reloads the full canonical facade once per page; this is not source/database pagination or a native latency reduction. Digest/snapshot checks refuse changed snapshots instead of combining them. Counts and bytes match the scoped producer measurement evidence."
+  },
+  "sourceAndAcceptanceLimits": [
+    "QRY-02 source state is complete/passed/local-result-durable as qualified by Root; shared/formal/native state remains pending. This review does not reopen the historical incomplete005 state or erase its effects.",
+    "Primary web/CLI reads use retained pages, while some legacy GET reconciliation paths remain unbounded compatibility endpoints. Their value-scope and draft identity compatibility is now covered; the endpoints are not newly declared byte-bounded.",
+    "The client reconstructs an entire bounded document; CLI stdout and browser modelContext outputs remain aggregate boundaries.",
+    "CON has not integrated or qualified the actual duplicated CallToolResult production packager at 512 KiB. Passing 65536-byte query pages is not proof of that downstream property.",
+    "Authoritative source currentness, complete roster/schedule/history and missing native source-family coverage remain unknown.",
+    "Real DB isolation/recovery, actual browser/device/WebMCP and native CLI behavior are unverified here. No native source or production latency was measured.",
+    "Root-reserved provenance/import integration, existing catalog/SDK declaration limitations and final source integration remain separate.",
+    "Root-provided canonical Work and previous broader check results are attributed to Root/producer; only C01-C08 physical and metadata checks are independent reviewer observations."
+  ],
+  "disposition": {
+    "scopedSourceReview": "passed",
+    "prior005F1": "closed_for_this_exact_successor",
+    "prior005F2": "closed_for_this_exact_successor",
+    "newFindings": 0,
+    "sourceReviewEvidenceConsumableByRoot": true,
+    "automaticDownstreamActivation": false,
+    "sharedDeliveryApproved": false,
+    "nativeActivationApproved": false,
+    "formalAcceptanceGranted": false,
+    "wholeWorkCompletionClaim": false,
+    "nextAction": "Root may consume this exact source-review receipt for its existing source gates and separately checkpoint/integrate downstream work. Reviewer stops and waits. No source changes, service effects, replay, or further test work is performed after final handoff."
+  },
+  "receiptPolicy": {
+    "finalizedForHandoff": true,
+    "amendAfterFinalHandoff": false,
+    "laterClarification": "Use a new supplement ID/path; preserve this receipt and all prior receipt bytes."
+  }
+}

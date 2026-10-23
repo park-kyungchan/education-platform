@@ -1,0 +1,11 @@
+# Research context for assessment reads
+
+Month-end purpose is owned by `park-kyungchan/math-research-module@07edb2dea2e5997aea4318f0fa2efa21dde633df`, including the reviewed PR3 monthly context. Consume its requirements/history/chronology and research/identity ownership before implementation. Education's `apps/academy/month-end-workbench/docs/source-context.md` is the current consumer entrypoint. The historical eight-example label prototype is not the current user-intent model.
+
+The original three label tools preserve their meanings. Optional `assessmentBinding` carries exact research source revision/file pins, current studied research scope, desired structure/reasoning/representation/conditions/errors/transfer axes and native observation context. Responses echo and digest this binding; it is caller context, not authenticated source truth, learning acceptance or effect authority. Research types, native type pat_no and question lecture_key are distinct namespaces even if numeric values equal.
+
+Teacher-declared edition/unit and observed source metadata remain separate. Unknown native values stay null, permit provisional readonly comparison and produce limitations; only known differing comparable literals hold. Literal equality itself never proves semantic identity. Lexical overlap cannot establish mathematical-axis evidence. User study completion is not inferred from hashes, tests or a query string. Explicit engineering protocol inspection may omit study/intent but cannot bypass exact native scope binding.
+
+The adjacent Education source port uses only the fixed three read tools through an operator-selected byte-pinned Bun executable, compiled transitive MCP bundle and source configuration. Stable immutable source observations retain handles across pages; actual changes get new handles. Native category coordinates/capabilities are preserved, and invalid-level queries are refused locally. No arbitrary tool/URL/credentials forwarding, save/send route, global registration or private runtime configuration is introduced.
+
+Existing DailyRecord/CISM tools and their separate canonical policy/owner boundaries remain intact. Their completed business effects are not replayed by assessment source work. Default DailyRecord/CISM live adapters remain unavailable; research context does not authorize operational integration.

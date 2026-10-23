@@ -1,0 +1,100 @@
+{
+  "schemaVersion": "academy.operations-mcp-release-verification/1",
+  "observedAt": "2026-10-14T15:32:52.131Z",
+  "scope": "publication_of_isolated_first_stage_package",
+  "checks": {
+    "typeScript": "passed",
+    "unitTests": {
+      "passed": 22,
+      "failed": 0,
+      "assertions": 1195
+    },
+    "freshIsolatedFrozenInstall": {
+      "status": "passed",
+      "path": ".local/release/install-check",
+      "lifecycleScriptsEnabled": false,
+      "cacheScope": "repository_local"
+    },
+    "actualMcp": {
+      "schemaVersion": 1,
+      "observedAt": "2026-10-14T15:31:50.222Z",
+      "status": "passed",
+      "transport": "official_sdk_stdio_client_to_actual_academy_mcp_server",
+      "toolCount": 3,
+      "workflowCount": 8,
+      "sourceOperationCount": 95,
+      "preservedStudentCount": 5,
+      "completeTeacherRosterVerified": false,
+      "queriedFacets": [
+        "books",
+        "sections",
+        "attempts",
+        "assignments",
+        "videos",
+        "daily_tests",
+        "daily_records",
+        "teacher_events",
+        "daily_record_drafts"
+      ],
+      "cases": [
+        "exact_three_read_only_tools_discovered",
+        "eight_workflows_and_all_95_source_operations_preserved_without_execution",
+        "mutating_get_only_inspectable_as_metadata_and_rules_keep_their_classification",
+        "reported_visibility_window_is_separate_from_deletion_and_local_retention",
+        "preserved_roster_summary_all_nine_facets_and_dated_lesson_read_through_mcp",
+        "unknown_subject_unknown_operation_mutation_tool_live_mode_and_arbitrary_url_rejected",
+        "pinned_original_inputs_unchanged_and_no_network_attempt_under_denied_transport"
+      ],
+      "outboundHttpAndTcpDeniedDuringVerification": true,
+      "academyNetworkAttemptsObserved": 0,
+      "academyWrites": 0,
+      "parentSends": 0,
+      "originalInputHashesUnchanged": true,
+      "nativeCodexRegistrationChanged": false,
+      "parentRuntime": "Node.js 22.22.1",
+      "childRuntime": "Bun 1.3.14",
+      "command": "bun run --cwd tools/academy-mcp verify:academy-mcp:node"
+    },
+    "releaseContentReview": {
+      "status": "passed_after_packaging_corrections",
+      "privateStudentNamesEmbedded": 0,
+      "privateStudentIdsEmbedded": 0,
+      "binaryOrCompressedNewPayloads": 0,
+      "originalTrackedSourcesModified": false
+    },
+    "independentNodeParentDiagnostic": {
+      "status": "passed",
+      "reviewerTask": "/root/find_existing_lms_api",
+      "receiptScope": "repository_local_sanitized_diagnostic",
+      "studentFacetsQueried": 45,
+      "preservedStudentsQueried": 5,
+      "originalInputHashesUnchanged": true,
+      "academyNetworkAttemptsObserved": 0,
+      "sourceAndFallbackReview": "passed"
+    }
+  },
+  "failedAttempts": [
+    {
+      "check": "bun_parent_sdk_stdio_recheck_in_restricted_sandbox",
+      "status": "failed",
+      "error": "REQUEST_TIMEOUT",
+      "timeoutMs": 60000,
+      "resolution": "Same official SDK and Bun server passed with Node parent; the runtime-dependent pipe issue is separately documented and the maintained verifier exposes a Node-parent fallback."
+    }
+  ],
+  "notRun": [
+    {
+      "check": "legacy_root_common_harness_checks",
+      "reason": "Common Harness integration remains explicitly deferred; root application and existing harness sources are unchanged."
+    },
+    {
+      "check": "live_academy_integration",
+      "reason": "No academy network transport exists or is authorized."
+    },
+    {
+      "check": "native_registration_or_deployment",
+      "reason": "Not part of this clone-scoped publication."
+    }
+  ],
+  "acceptance": "not_inferred"
+}

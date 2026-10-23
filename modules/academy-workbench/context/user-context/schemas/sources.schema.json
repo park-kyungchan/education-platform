@@ -1,0 +1,185 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Selected verbatim source messages and Page blocks",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "const": "module-user-context.sources/1.0.0"
+    },
+    "scope": {
+      "type": "string"
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "sourceKey": {
+            "type": "string"
+          },
+          "sourceType": {
+            "enum": [
+              "conversation_message",
+              "space_block"
+            ]
+          },
+          "author": {
+            "enum": [
+              "user",
+              "assistant",
+              "unknown"
+            ]
+          },
+          "alias": {
+            "type": "string"
+          },
+          "messageId": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "channel": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "sentAt": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "url": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "urlStatus": {
+            "enum": [
+              "not_returned_by_message_tool",
+              "verified_page_url"
+            ]
+          },
+          "locator": {
+            "type": "object",
+            "properties": {
+              "method": {
+                "const": "read_messages"
+              },
+              "messageId": {
+                "type": "string"
+              },
+              "pageId": {
+                "type": "string"
+              },
+              "blockId": {
+                "type": "string"
+              },
+              "upstreamBlockHash": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            },
+            "required": [],
+            "additionalProperties": false
+          },
+          "retrieval": {
+            "enum": [
+              "read_or_search_visible_room",
+              "chatgpt_space.read_page"
+            ]
+          },
+          "originalText": {
+            "type": "string",
+            "minLength": 1
+          },
+          "textSha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "textCompleteness": {
+            "enum": [
+              "complete_returned_message",
+              "complete_returned_block"
+            ]
+          },
+          "omissions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "replyTo": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "replyRoot": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "pageSnapshot": {
+            "type": "object",
+            "properties": {
+              "updatedAt": {
+                "type": "string"
+              },
+              "currentSequence": {
+                "type": "integer"
+              },
+              "title": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "updatedAt",
+              "currentSequence",
+              "title"
+            ],
+            "additionalProperties": false
+          },
+          "authority": {
+            "const": "none"
+          },
+          "nativePermissionGranted": {
+            "const": false
+          }
+        },
+        "required": [
+          "sourceKey",
+          "sourceType",
+          "author",
+          "alias",
+          "messageId",
+          "channel",
+          "sentAt",
+          "url",
+          "urlStatus",
+          "locator",
+          "retrieval",
+          "originalText",
+          "textSha256",
+          "textCompleteness",
+          "omissions",
+          "replyTo",
+          "replyRoot",
+          "authority",
+          "nativePermissionGranted"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "scope",
+    "sources"
+  ],
+  "additionalProperties": false
+}

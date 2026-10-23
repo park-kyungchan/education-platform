@@ -1,0 +1,11 @@
+import {DurableLedger,type D1,type AuthorizedScope,type Append} from './durable-ledger.ts';
+/** Injection MUST reuse the existing owner + managed-student/full-contract gate. Never derive authority from body fields. */
+export function durableApi(deps:{origin:string;authorize:(request:Request,studentId:string)=>Promise<AuthorizedScope>;authorizeWrite:(request:Request,scope:AuthorizedScope,input:Append)=>Promise<boolean>}){
+ return async(request:Request,env:{DB?:D1})=>{const url=new URL(request.url);if(!url.pathname.startsWith('/api/ledger/'))return null;
+ const json=(v:unknown,status=200)=>Response.json(v,{status,headers:{'Cache-Control':'private, no-store','Vary':'Cookie, Authorization'}});
+ try{if(url.origin!==deps.origin) return json({error:'wrong_origin'},403);const studentId=url.searchParams.get('studentId');if(!studentId)return json({error:'student_required'},400);const scope=await deps.authorize(request,studentId);if(scope.studentId!==studentId)return json({error:'authorized_student_mismatch'},403);if(!env.DB)return json({error:'D1_NOT_BOUND',sourceMode:'unavailable',durableReadVerified:false},503);const ledger=new DurableLedger(env.DB);
+ if(request.method==='GET'&&url.pathname==='/api/ledger/events')return json(await ledger.read(scope));
+ if(request.method==='POST'&&url.pathname==='/api/ledger/append'){if(request.headers.get('Origin')!==deps.origin||request.headers.get('Content-Type')?.split(';')[0]!=='application/json')return json({error:'same_origin_json_required'},403);const body=await request.text();if(body.length>1000000)return json({error:'payload_too_large'},413);const input:Append=JSON.parse(body);if(!await deps.authorizeWrite(request,scope,input))return json({error:'write_not_authorized'},403);return json(await ledger.append(scope,input));}
+ return json({error:'method_or_route_not_allowed'},405);
+ }catch(e){const message=e instanceof Error?e.message:'';const allowed=['revision_conflict','idempotency_content_conflict','invalid_append','event_not_admitted_or_wrong_student','source_hash_mismatch','verified_owner_and_managed_student_required'];const error=allowed.includes(message)?message:'ledger_operation_failed';return json({error},error==='revision_conflict'||error==='idempotency_content_conflict'?409:400);}}
+}

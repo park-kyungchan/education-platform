@@ -1,0 +1,108 @@
+{
+  "schemaVersion": "academy.synthetic-report-load-profile/1",
+  "observedAt": "2026-10-21T10:58:42.560Z",
+  "implementationCommit": "1d72361428ec6e0356fb80d840959926819135c4",
+  "recordHead": "228cb41726f1c7857df0f73022405d7c407343c5",
+  "canonicalQueryCommit": "8f8c9bd61bd5e55445780b5569ecc40effcecef6",
+  "fixture": {
+    "kind": "invented canonical retained fixture",
+    "students": 1,
+    "noteCount": 160
+  },
+  "request": {
+    "maxBytes": 65536,
+    "limit": 100
+  },
+  "reportPages": 8,
+  "sourceFetchPageCalls": 48,
+  "elapsedMilliseconds": 2245.919137,
+  "pages": [
+    {
+      "offset": 0,
+      "returnedLines": 29,
+      "canonicalPagesConsumed": 6,
+      "callToolResultBytes": 64468,
+      "fetchCallsSoFar": 6
+    },
+    {
+      "offset": 29,
+      "returnedLines": 22,
+      "canonicalPagesConsumed": 6,
+      "callToolResultBytes": 63535,
+      "fetchCallsSoFar": 12
+    },
+    {
+      "offset": 51,
+      "returnedLines": 22,
+      "canonicalPagesConsumed": 6,
+      "callToolResultBytes": 63535,
+      "fetchCallsSoFar": 18
+    },
+    {
+      "offset": 73,
+      "returnedLines": 22,
+      "canonicalPagesConsumed": 6,
+      "callToolResultBytes": 63535,
+      "fetchCallsSoFar": 24
+    },
+    {
+      "offset": 95,
+      "returnedLines": 22,
+      "canonicalPagesConsumed": 6,
+      "callToolResultBytes": 63579,
+      "fetchCallsSoFar": 30
+    },
+    {
+      "offset": 117,
+      "returnedLines": 22,
+      "canonicalPagesConsumed": 6,
+      "callToolResultBytes": 63631,
+      "fetchCallsSoFar": 36
+    },
+    {
+      "offset": 139,
+      "returnedLines": 22,
+      "canonicalPagesConsumed": 6,
+      "callToolResultBytes": 63631,
+      "fetchCallsSoFar": 42
+    },
+    {
+      "offset": 161,
+      "returnedLines": 47,
+      "canonicalPagesConsumed": 6,
+      "callToolResultBytes": 33470,
+      "fetchCallsSoFar": 48
+    }
+  ],
+  "outputDigest": "d28e028fb145c636598fe41b10b2ffc376580d86235a0a0ea2e51daeeb9a7eab",
+  "sourcePins": [
+    {
+      "path": "tools/academy-mcp/src/teacher-source-binding.ts",
+      "sha256": "ea4cf411ee8ba332b56bc0d152d64ddf3b6f92be0aabc502ccdf514d66562460"
+    },
+    {
+      "path": "tools/academy-mcp/src/teacher-retained.ts",
+      "sha256": "c26c81ac203fec158792e79316cdd4d24980361caeda319da78227ea34459963"
+    },
+    {
+      "path": "tools/academy-mcp/src/teacher-report.ts",
+      "sha256": "67c7f5e210fd0082d6d8ea3e794fba145cb2a3074ce8f409088b931aefa314ae"
+    },
+    {
+      "path": "tools/academy-mcp/src/teacher-query-tools.ts",
+      "sha256": "436fb85e8d8e8038aa0d8f046d492dc6b51dba56639d25032dfb0bed053c679d"
+    },
+    {
+      "path": "tools/academy-mcp/src/teacher-server.ts",
+      "sha256": "6366f3772c5626ada8cf6ec5a051edc8c5469b3ac82329e039ca23aaaae321ef"
+    },
+    {
+      "path": "tools/academy-mcp/src/teacher-schema.ts",
+      "sha256": "17a3b9a310de67a50b6518cd3bd93334217ed99138d44cfe355de6bd819985e0"
+    }
+  ],
+  "sourcePinsStillExact": true,
+  "interpretation": "Every report continuation reconstructs every canonical source page again. This measures synthetic source call amplification only; native/DB/network latency, complete currentness and real student throughput remain unverified.",
+  "nativeActivation": false,
+  "privateOriginalsRead": false
+}

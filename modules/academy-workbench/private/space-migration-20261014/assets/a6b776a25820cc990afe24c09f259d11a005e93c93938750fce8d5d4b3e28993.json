@@ -1,0 +1,353 @@
+{
+  "$schema": "academy-development-0.1.schema.json",
+  "kind": "development_requirements",
+  "schemaVersion": "0.1.0",
+  "revision": 1,
+  "projectId": "project:academy-practical",
+  "canonicalParentId": "development:academy-owned-app",
+  "updatedAt": "2026-10-06T08:51:55.196664+00:00",
+  "id": "requirements:academy-owned-app:v1",
+  "userGoal": "강사가 직접 쓰는 자체 실무 앱과 에이전트 작업 환경을 학원 업무부터 구축한다.",
+  "implementationState": "requirements_and_preparation_only",
+  "architecture": {
+    "canonicalData": "기존 Student, Enrollment, Assignment와 근거·판단·이력 엔터티를 재사용한다.",
+    "applicationService": "사람 화면과 의미 있는 도구가 같은 권한·검증·동시성 규칙을 사용한다.",
+    "humanClient": "수업일별 개요와 학생 상세를 같은 정본에서 파생한다.",
+    "agentClient": "목적, 전제, 결과, 부작용, 권한이 명시된 좁은 작업을 호출한다.",
+    "transport": "WebMCP는 자체 앱의 선택 가능한 후속 연결 방식이며 현재 등록하거나 설치하지 않았다."
+  },
+  "firstScreenDecision": {
+    "state": "user_confirmed",
+    "recommendation": "today_overview_then_student_detail",
+    "alternatives": [
+      "today_overview_then_student_detail",
+      "student_detail_first"
+    ],
+    "selected": "today_overview_then_student_detail",
+    "questionOwner": "main_conversation",
+    "confirmationSource": "Sentinel_9b57a9c99ab0819198d5176e55bb0f21"
+  },
+  "requirements": [
+    {
+      "id": "REQ-identity",
+      "text": "동명이인은 내부 학생 ID로 분리하고 새 관리 학생은 사용자 확인 후 추가한다.",
+      "status": "user_confirmed",
+      "sourceIds": [
+        "Sentinel_92558c321eac819185de171ac99ec1c2"
+      ]
+    },
+    {
+      "id": "REQ-enrollment",
+      "text": "등록 기간과 교재 버전을 이력으로 보존하며 동시 과정을 합치지 않는다.",
+      "status": "user_confirmed",
+      "sourceIds": [
+        "Sentinel_92558c321eac819185de171ac99ec1c2"
+      ]
+    },
+    {
+      "id": "REQ-requirements",
+      "text": "예습 영상과 문제풀이 섹션은 같은 과제의 서로 다른 요구 항목이다.",
+      "status": "user_confirmed",
+      "sourceIds": [
+        "Sentinel_7686485ded948191a38c6e19fb79efcc"
+      ]
+    },
+    {
+      "id": "REQ-evidence",
+      "text": "근거의 실제 조회 시각, 날짜 범위, 필터 검증과 부분 관측 상태를 보존한다.",
+      "status": "user_confirmed",
+      "sourceIds": [
+        "Sentinel_ebaa6c04bd708191bfeb691439e91b5b"
+      ]
+    },
+    {
+      "id": "REQ-teacher",
+      "text": "강사의 완료 판단과 종이 확인은 사이트 점수 및 상태와 독립적이다.",
+      "status": "user_confirmed",
+      "sourceIds": [
+        "Sentinel_2c07ae3d1754819186787cfbdcd86843"
+      ]
+    },
+    {
+      "id": "REQ-no-inference",
+      "text": "과거 원점수, 영상 OK, 사이트 미학습으로 새 과제 완료 또는 미완료를 단정하지 않는다.",
+      "status": "user_confirmed",
+      "sourceIds": [
+        "academy-practical-context-r3-r4"
+      ]
+    },
+    {
+      "id": "REQ-history",
+      "text": "교재 전체 목록과 실제 배정 과제의 분모를 구분하고 제한된 조회로 전체 진도율을 만들지 않는다.",
+      "status": "user_confirmed",
+      "sourceIds": [
+        "academy-practical-context-r3-r4"
+      ]
+    },
+    {
+      "id": "REQ-ui",
+      "text": "오늘 수업의 학생별 준비 개요에서 필요한 학생 상세로 이동한다.",
+      "status": "user_confirmed",
+      "sourceIds": [
+        "Sentinel_9b57a9c99ab0819198d5176e55bb0f21"
+      ]
+    }
+  ],
+  "semanticToolProposals": [
+    {
+      "id": "get_session_overview",
+      "version": "0.1.0",
+      "status": "design_only",
+      "goal": "해당 수업에서 강사가 확인할 일을 찾는다.",
+      "preconditions": [
+        "허용된 강사와 관리 학생 범위",
+        "정확한 수업일과 Enrollment 연결"
+      ],
+      "inputFields": [
+        "sessionId",
+        "studentIds?",
+        "asOf?"
+      ],
+      "outputFields": [
+        "stable IDs",
+        "assignment requirements",
+        "separate video and problem statuses",
+        "source freshness",
+        "coverage gaps",
+        "teacher assertions"
+      ],
+      "effects": "none",
+      "permission": "scoped_read_with_authorized_disclosure",
+      "stage": "first_slice",
+      "contextualBasisIds": [
+        "contract:student-query:v1",
+        "contract:next-class:read"
+      ],
+      "executionImplemented": false
+    },
+    {
+      "id": "get_assignment_evidence",
+      "version": "0.1.0",
+      "status": "design_only",
+      "goal": "과제의 각 상태가 어떤 근거에서 나왔는지 확인한다.",
+      "preconditions": [
+        "studentId와 assignmentId 대응 검증",
+        "조회 대상 버전과 요구 범위 확인"
+      ],
+      "inputFields": [
+        "studentId",
+        "assignmentId",
+        "requirementIds?"
+      ],
+      "outputFields": [
+        "source refs",
+        "observation windows",
+        "requirement coverage",
+        "conflicts",
+        "ambiguous mappings"
+      ],
+      "effects": "none",
+      "permission": "scoped_read_minimal_output",
+      "stage": "first_slice",
+      "contextualBasisIds": [
+        "contract:student-query:v1",
+        "PreviewVideoRequirement",
+        "ProblemSectionRequirement"
+      ],
+      "executionImplemented": false
+    },
+    {
+      "id": "preview_session_plan",
+      "version": "0.1.0",
+      "status": "design_only",
+      "goal": "저장하기 전에 수업 준비 계획을 검토한다.",
+      "preconditions": [
+        "선택된 과제",
+        "명시된 강사 목표",
+        "현재 입력 리비전"
+      ],
+      "inputFields": [
+        "sessionId",
+        "assignmentIds",
+        "intendedTasks"
+      ],
+      "outputFields": [
+        "proposed Task records",
+        "unresolved dependencies",
+        "input revision",
+        "previewId"
+      ],
+      "effects": "no_operational_change",
+      "permission": "read_and_preview_only",
+      "stage": "first_slice",
+      "contextualBasisIds": [
+        "ClassSession",
+        "Task"
+      ],
+      "executionImplemented": false
+    },
+    {
+      "id": "save_session_plan",
+      "version": "0.1.0",
+      "status": "design_only",
+      "goal": "검토한 준비 계획을 사용자 소유 앱에 저장한다.",
+      "preconditions": [
+        "승인된 previewId",
+        "입력 리비전 불변 확인",
+        "중복 방지 요청 ID"
+      ],
+      "inputFields": [
+        "previewId",
+        "expectedRevision",
+        "requestId"
+      ],
+      "outputFields": [
+        "saved Task IDs",
+        "new revision",
+        "committed action receipt"
+      ],
+      "effects": "private_app_write",
+      "permission": "explicit_authority_for_this_private_write",
+      "stage": "after_preview_and_write_controls",
+      "contextualBasisIds": [
+        "ClassSession",
+        "Task"
+      ],
+      "executionImplemented": false
+    },
+    {
+      "id": "record_teacher_assertion",
+      "version": "0.1.0",
+      "status": "design_only",
+      "goal": "강사가 직접 내린 특정 과제·항목의 판단을 보존한다.",
+      "preconditions": [
+        "정확한 학생·등록·과제·항목",
+        "강사의 명시적인 판단과 출처",
+        "현재 리비전"
+      ],
+      "inputFields": [
+        "studentId",
+        "assignmentId",
+        "requirementId",
+        "teacherJudgment",
+        "sourceReference",
+        "expectedRevision",
+        "supersedesAssertionId?"
+      ],
+      "outputFields": [
+        "attributed assertion",
+        "new revision",
+        "action receipt"
+      ],
+      "effects": "append_or_explicitly_supersede_private_assertion",
+      "permission": "teacher_authorized_write_never_inferred_from_site_flag",
+      "stage": "after_preview_and_write_controls",
+      "contextualBasisIds": [
+        "TeacherCompletionAssertion",
+        "practical:academy-teaching-routine"
+      ],
+      "executionImplemented": false
+    },
+    {
+      "id": "prepare_practice_packet",
+      "version": "0.1.0",
+      "status": "design_only",
+      "goal": "허용된 문제 자료로 검토 가능한 출력 묶음을 준비한다.",
+      "preconditions": [
+        "과제·교재 버전·섹션·시도 범위 확정",
+        "원래 오답과 유사 문항 대응 실제 검증",
+        "자료 사용 범위와 목적지 허용",
+        "생성과 재시도 권한 및 기존 결과 확인"
+      ],
+      "inputFields": [
+        "planId",
+        "materialRefs",
+        "sourceAttemptRefs",
+        "wrongItemSetRefs",
+        "similarMappings?",
+        "countPerOriginal?",
+        "destination",
+        "requestId"
+      ],
+      "outputFields": [
+        "artifact preview",
+        "material manifest",
+        "header verification state",
+        "missing-content warnings",
+        "generation receipt"
+      ],
+      "effects": "private_artifact_generation_no_print",
+      "permission": "separate_generation_authority_and_destination_check",
+      "stage": "later_gated_capability",
+      "contextualBasisIds": [
+        "clinic_material_inspection",
+        "PrintArtifact"
+      ],
+      "executionImplemented": false
+    },
+    {
+      "id": "get_action_result",
+      "version": "0.1.0",
+      "status": "design_only",
+      "goal": "앞선 시도가 실제로 반영됐는지 확인한다.",
+      "preconditions": [
+        "작업 ID와 해당 학생·수업에 대한 접근 권한"
+      ],
+      "inputFields": [
+        "actionAttemptId_or_requestId"
+      ],
+      "outputFields": [
+        "committed_or_pending_or_failed_or_unknown",
+        "verified revision",
+        "resulting references",
+        "verification evidence"
+      ],
+      "effects": "none",
+      "permission": "scoped_action_read",
+      "stage": "first_slice",
+      "contextualBasisIds": [
+        "ActionAttempt",
+        "Observation"
+      ],
+      "executionImplemented": false
+    }
+  ],
+  "existingCanonicalPages": [
+    {
+      "role": "cartography",
+      "pageId": "page_f2fa45252bd08191b6c46d871bdb8da3"
+    },
+    {
+      "role": "typed_operational_sources",
+      "pageId": "page_41a5a8a055208191bea51145d7976c9a"
+    }
+  ],
+  "interviewQueue": [
+    {
+      "id": "question:first-screen",
+      "state": "answered_user_confirmed",
+      "question": "첫 화면을 오늘 수업 개요에서 시작할지 학생 상세에서 시작할지",
+      "impact": "초기 화면의 정보 순서",
+      "doNotRepeat": true
+    }
+  ],
+  "dataPolicy": "개발 준비 파일에는 실제 학생 이름, 성적, 로그인 정보와 원천 학생 상세 자료를 넣지 않는다. 초기 실행 검증은 합성 사례를 사용한다.",
+  "sources": [
+    {
+      "url": "https://developer.chrome.com/docs/ai/webmcp",
+      "checkedAt": "2026-10-06",
+      "lastUpdated": "2026-10-01",
+      "support": "WebMCP는 페이지가 구조화된 도구를 제공하는 제안 표준이며 Chrome 149부터 origin trial, 로컬 개발 플래그, 명령형 및 선언형 API가 안내돼 있다. 실제 사용은 지원 브라우저·클라이언트와 해당 페이지 방문에 의존한다."
+    },
+    {
+      "url": "https://developer.chrome.com/docs/ai/webmcp/imperative",
+      "checkedAt": "2026-10-06",
+      "support": "명령형 등록은 document.modelContext.registerTool의 이름·설명·입력 스키마·실행 함수로 표현된다. 기존 앱이 소유한 작업을 연결할 후보 방식이다."
+    },
+    {
+      "url": "https://developer.chrome.com/docs/ai/webmcp/secure-tools",
+      "checkedAt": "2026-10-06",
+      "support": "읽기 전용 도구도 사적 자료를 노출할 수 있으며, 신뢰된 출처와 권한 경계가 중요하다. 힌트가 안전을 보장하지 않는다."
+    }
+  ]
+}

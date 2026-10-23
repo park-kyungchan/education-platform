@@ -1,0 +1,304 @@
+{
+  "schemaVersion": "academy.independent-source-review/1",
+  "id": "ACX-REVIEW-MCP-002",
+  "reviewedAtUtc": "2026-10-21T04:11:24.592291Z",
+  "supersedesReviewConclusionForSuccessorOnly": {
+    "reviewId": "ACX-REVIEW-MCP-001",
+    "path": "context/academy-context/reviews/mcp-2d348f2-review.json",
+    "sha256": "cc70f67700893bba7db7d20f4bd7d451c8c682ff0b062ab05e4d6b68043292aa",
+    "previousArtifactModified": false
+  },
+  "reviewer": {
+    "role": "independent-delegated-source-reviewer",
+    "nativeAuthorshipIndependentlyAuthenticated": false,
+    "peerBytesModified": false
+  },
+  "target": {
+    "repositoryId": "park-kyungchan/academy-workbench",
+    "localRoot": "/home/palantirkc/worktrees/academy-class-prep-20261021/work/class-prep-20261021/repositories/academy-workbench",
+    "baseCommit": "1479a086ef2bcf26fbc9a94a8e9c79dc63bb0abe",
+    "baseTree": "2b3d176890460af75bee49bd59dba87a1b7dad91",
+    "previousReviewedCommit": "110db117d84a4ab694555ff96e7081630c168e51",
+    "headCommit": "5d6966177497d8c0dc8c0e6cb3e7c7692a23d1f4",
+    "headTree": "a288cdb72f9f59fe1259a14d7da35a22022d139b",
+    "reviewedChangedPaths": [
+      "tools/academy-mcp/README.md",
+      "tools/academy-mcp/schemas/contracts.json",
+      "tools/academy-mcp/src/contracts.ts",
+      "tools/academy-mcp/src/export-contracts.ts",
+      "tools/academy-mcp/src/pagination.ts",
+      "tools/academy-mcp/src/query-tool.ts",
+      "tools/academy-mcp/src/saved-context.ts",
+      "tools/academy-mcp/src/server.ts",
+      "tools/academy-mcp/src/tool-result.ts",
+      "tools/academy-mcp/tests/history-pagination.test.ts",
+      "tools/academy-mcp/tests/history-transport-fixture.ts",
+      "tools/academy-mcp/tests/history-transport.test.ts",
+      "tools/academy-mcp/tests/saved-context.test.ts",
+      "work/academy-workbench/academy-preparation-restructure-20261021/evidence/MCP-QUERY-VERIFICATION.json",
+      "work/academy-workbench/academy-preparation-restructure-20261021/evidence/academy-workbench%3Aevidence%3Aacademy-preparation-restructure-20261021%3Aquery-observation.json",
+      "work/academy-workbench/academy-preparation-restructure-20261021/inputs/ACADEMY-PREP-IMPROVEMENT-CONTRACT.json",
+      "work/academy-workbench/academy-preparation-restructure-20261021/inputs/ACADEMY-PREP-USER-REQUEST.json",
+      "work/academy-workbench/academy-preparation-restructure-20261021/inputs/MCP-INDEPENDENT-REVIEW-REPAIR.json",
+      "work/academy-workbench/academy-preparation-restructure-20261021/inputs/MCP-QUERY-RESULT.json",
+      "work/academy-workbench/academy-preparation-restructure-20261021/inputs/MCP-WORK-VALIDATION-REPAIR.json",
+      "work/academy-workbench/academy-preparation-restructure-20261021/plans/ACADEMY-PREP-PLAN@1.json",
+      "work/academy-workbench/academy-preparation-restructure-20261021/specs/ACADEMY-PREP-SPEC@1.json",
+      "work/academy-workbench/academy-preparation-restructure-20261021/tasks/MCP-T01.json",
+      "work/academy-workbench/academy-preparation-restructure-20261021/tasks/MCP-T02.json",
+      "work/academy-workbench/academy-preparation-restructure-20261021/tasks/MCP-T03.json",
+      "work/academy-workbench/academy-preparation-restructure-20261021/work.json"
+    ],
+    "repairChangedPaths": [
+      "tools/academy-mcp/README.md",
+      "tools/academy-mcp/schemas/contracts.json",
+      "tools/academy-mcp/src/contracts.ts",
+      "tools/academy-mcp/src/export-contracts.ts",
+      "tools/academy-mcp/src/pagination.ts",
+      "tools/academy-mcp/src/query-tool.ts",
+      "tools/academy-mcp/src/saved-context.ts",
+      "tools/academy-mcp/src/server.ts",
+      "tools/academy-mcp/src/tool-result.ts",
+      "tools/academy-mcp/tests/history-pagination.test.ts",
+      "tools/academy-mcp/tests/history-transport-fixture.ts",
+      "tools/academy-mcp/tests/history-transport.test.ts",
+      "work/academy-workbench/academy-preparation-restructure-20261021/evidence/MCP-QUERY-VERIFICATION.json",
+      "work/academy-workbench/academy-preparation-restructure-20261021/evidence/academy-workbench%3Aevidence%3Aacademy-preparation-restructure-20261021%3Aquery-observation.json",
+      "work/academy-workbench/academy-preparation-restructure-20261021/inputs/MCP-INDEPENDENT-REVIEW-REPAIR.json",
+      "work/academy-workbench/academy-preparation-restructure-20261021/inputs/MCP-QUERY-RESULT.json"
+    ]
+  },
+  "status": "repair-required",
+  "scope": {
+    "ordinaryCorrectnessReview": true,
+    "privateBodiesRead": false,
+    "privatePreparationHtmlRead": false,
+    "real511RecordParityRerun": false,
+    "nativeLatencyMeasured": false,
+    "publicationMergeDeploymentPerformed": false
+  },
+  "checks": [
+    {
+      "id": "ACX-MCP-R2-CHECK-001",
+      "command": "bun test tests/history-pagination.test.ts tests/saved-context.test.ts tests/history-transport.test.ts",
+      "cwd": "tools/academy-mcp",
+      "status": "passed",
+      "testCount": 17,
+      "assertionCount": 171,
+      "failedTests": 0,
+      "runtime": "Bun 1.4.3",
+      "inputClass": "synthetic-only",
+      "includesActualSdkStdioRoundtrip": true
+    },
+    {
+      "id": "ACX-MCP-R2-CHECK-002",
+      "command": "bun run check",
+      "effectiveCommand": "tsc --noEmit",
+      "status": "passed"
+    },
+    {
+      "id": "ACX-MCP-R2-CHECK-003",
+      "method": "External canonical openGitWork + validateGitWorkRecords at exact head",
+      "status": "passed",
+      "valid": true,
+      "findings": [],
+      "nativePermissionGranted": false,
+      "semanticAcceptanceEstablished": false
+    },
+    {
+      "id": "ACX-MCP-R2-CHECK-004",
+      "method": "External canonical validateGitWorkTransition from exact previous reviewed110db11 to exact5d69661",
+      "status": "failed",
+      "valid": false,
+      "findings": [
+        "IMMUTABLE_ORIGINAL_OR_EFFECT_CHANGED:input:MCP-QUERY-RESULT"
+      ]
+    },
+    {
+      "id": "ACX-MCP-R2-CHECK-005",
+      "method": "Independent synthetic official SDK InMemoryTransport roundtrips through production registerSavedQuery, changing page limits and replaying actual returned cursors",
+      "status": "passed",
+      "maxBytes": 524288,
+      "cases": [
+        {
+          "name": "original-unicode",
+          "records": 37,
+          "pages": 13,
+          "maxCallToolResultBytes": 436546,
+          "maxJsonRpcResponseBytes": 436581,
+          "changedStudentCursorRefused": true,
+          "lossOrDuplication": false
+        },
+        {
+          "name": "escaped-controls-and-surrogates",
+          "records": 19,
+          "pages": 12,
+          "maxCallToolResultBytes": 400286,
+          "maxJsonRpcResponseBytes": 400321,
+          "changedStudentCursorRefused": true,
+          "lossOrDuplication": false
+        },
+        {
+          "name": "large-nested-optional-record-metadata",
+          "records": 16,
+          "pages": 3,
+          "maxCallToolResultBytes": 497728,
+          "maxJsonRpcResponseBytes": 497762,
+          "changedStudentCursorRefused": true,
+          "lossOrDuplication": false
+        }
+      ],
+      "oversizedFirstRecord": {
+        "code": "single_record_exceeds_response_budget",
+        "returned": 0,
+        "exhausted": false
+      }
+    },
+    {
+      "id": "ACX-MCP-R2-CHECK-006",
+      "method": "Compare committed academy_query.input with z.toJSONSchema(queryInputSchema,{io:input}) and rerun actual SDK tools/list assertions",
+      "status": "passed",
+      "exactStaticGeneratedEquality": true,
+      "omittedFacetsAccepted": true,
+      "uniqueItemsAdvertised": true,
+      "duplicateFacetsRefused": true
+    },
+    {
+      "id": "ACX-MCP-R2-CHECK-007",
+      "method": "Independent official SDK production registration with a synthetic source clock containing270000 valid ISO fractional-second digits",
+      "status": "failed-refusal-envelope-bound",
+      "sourceClockChars": 270021,
+      "outputSchemaAccepts": true,
+      "resultStatus": "unavailable",
+      "resultCode": "invalid_byte_budget",
+      "toolIsError": false,
+      "callToolResultBytes": 541860,
+      "jsonRpcEnvelopeBytes": 541894,
+      "maxBytes": 524288,
+      "recordsReturned": 0
+    }
+  ],
+  "priorFindingDispositions": [
+    {
+      "findingId": "ACX-MCP-001",
+      "status": "resolved-for-normal-record-pages-at-this-head",
+      "evidence": [
+        "ACX-MCP-R2-CHECK-001",
+        "ACX-MCP-R2-CHECK-005"
+      ],
+      "details": "Production and SDK tests share registerSavedQuery/toolResult; dual text/structuredContent and escaping costs are included in record pagination. A separate new fixed-metadata/refusal edge is recorded as ACX-MCP-005."
+    },
+    {
+      "findingId": "ACX-MCP-002",
+      "status": "resolved-at-this-head",
+      "evidence": [
+        "ACX-MCP-R2-CHECK-001",
+        "ACX-MCP-R2-CHECK-006"
+      ],
+      "details": "Committed input contract now uses input-mode JSON Schema; optional facets and uniqueItems agree with runtime and actual SDK advertisement."
+    },
+    {
+      "findingId": "ACX-MCP-003",
+      "status": "remains-resolved-at-snapshot-level",
+      "evidence": [
+        "ACX-MCP-R2-CHECK-003"
+      ],
+      "details": "Current source has a canonical Verification Artifact and Task target. This does not clear the separate immutable-Input transition finding."
+    },
+    {
+      "findingId": "ACX-MCP-A01",
+      "status": "coverage-disclosure-added",
+      "details": "README, tool description and student_history unknowns explicitly require separate dated lesson_context observations."
+    }
+  ],
+  "findings": [
+    {
+      "id": "ACX-MCP-004",
+      "priority": "P2",
+      "status": "open-at-frozen-head",
+      "title": "Repair overwrites an immutable original Input instead of adding a successor",
+      "file": "work/academy-workbench/academy-preparation-restructure-20261021/inputs/MCP-QUERY-RESULT.json",
+      "line": 20,
+      "relatedLocations": [
+        {
+          "file": "work/academy-workbench/academy-preparation-restructure-20261021/evidence/MCP-QUERY-VERIFICATION.json",
+          "line": 13
+        }
+      ],
+      "scenario": "Continue the same published logical Work from the independently reviewed110db11 snapshot to5d69661. The same MCP-QUERY-RESULT identity changes timestamps, criteria, source hashes and measured results.",
+      "observed": "Exact canonical snapshot validation passes, but validateGitWorkTransition rejects IMMUTABLE_ORIGINAL_OR_EFFECT_CHANGED:input:MCP-QUERY-RESULT.",
+      "impact": "The declared common Work continuation cannot pass its semantic integration gate, and pinned original result meaning is replaced under the same identity.",
+      "recommendation": "Preserve the prior Input bytes and evidence; add a new revision-qualified Input/Verification/Evidence identity, point the active task to its successor, retain historical verification references and validate the exact before/after transition.",
+      "independentRecheckRequired": true
+    },
+    {
+      "id": "ACX-MCP-005",
+      "priority": "P2",
+      "status": "open-at-frozen-head",
+      "title": "Oversized fixed source metadata escapes the response bound through the refusal branch",
+      "file": "tools/academy-mcp/src/saved-context.ts",
+      "line": 115,
+      "relatedLocations": [
+        {
+          "file": "tools/academy-mcp/src/saved-context.ts",
+          "line": 97
+        },
+        {
+          "file": "tools/academy-mcp/src/saved-context.ts",
+          "line": 107
+        },
+        {
+          "file": "tools/academy-mcp/src/tool-result.ts",
+          "line": 2
+        },
+        {
+          "file": "app/student-audit-viewer/model.ts",
+          "line": 8
+        }
+      ],
+      "scenario": "A synthetic audit collectedAt clock has270000 fractional-second digits. It satisfies the current source clock string admission and the ISO output schema. Its required metadata already exceeds the envelope budget before any records are added.",
+      "observed": "recordBudget becomes invalid, then the QueryRefusal catch returns the unchanged large base without measuring the refusal result. Actual production-registration SDK CallToolResult is541860 bytes; JSON-RPC response541894 bytes; declared maximum524288. Zero records returned, tool isError=false.",
+      "impact": "The universal serialized-response bound still fails for schema-valid oversized source metadata; bounding record pages alone cannot enforce the whole-response guarantee. This was a synthetic pathological case, not an observed real source record.",
+      "recommendation": "Bound required source metadata at source admission or provide a bounded refusal path that does not echo unbounded fields. Apply the same complete-envelope constraint to success and refusal results, and test through production SDK registration.",
+      "independentRecheckRequired": true
+    }
+  ],
+  "ownerReportedImprovement": {
+    "recordsCompared": 511,
+    "baselineCompleteAcquisitionCalls": 48,
+    "candidateCompleteAcquisitionCalls": 11,
+    "baselineFacetCalls": 42,
+    "candidateFacetCalls": 5,
+    "prior48To4Claim": "superseded and scope-corrected by owner",
+    "fullSuiteTests": 107,
+    "fullSuiteAssertions": 1845,
+    "privateParityIndependentlyReproduced": false,
+    "runtimeLatency": "unmeasured",
+    "classification": "source-owner-reported"
+  },
+  "concurrentSuccessorObservation": {
+    "observedHeadAtReviewEnd": "ec9a0ed0a61791a512989a726216e581e1499d98",
+    "observedTreeAtReviewEnd": "4acd5e584b0e6965bc36b1f7fdc30c27475713c3",
+    "changesSinceFrozenHead": [
+      "work/academy-workbench/academy-preparation-restructure-20261021/evidence/MCP-QUERY-VERIFICATION-R2.json",
+      "work/academy-workbench/academy-preparation-restructure-20261021/evidence/MCP-QUERY-VERIFICATION.json",
+      "work/academy-workbench/academy-preparation-restructure-20261021/evidence/academy-workbench%3Aevidence%3Aacademy-preparation-restructure-20261021%3Aquery-observation-r2.json",
+      "work/academy-workbench/academy-preparation-restructure-20261021/evidence/academy-workbench%3Aevidence%3Aacademy-preparation-restructure-20261021%3Aquery-observation.json",
+      "work/academy-workbench/academy-preparation-restructure-20261021/inputs/MCP-QUERY-RESULT-R2.json",
+      "work/academy-workbench/academy-preparation-restructure-20261021/inputs/MCP-QUERY-RESULT.json",
+      "work/academy-workbench/academy-preparation-restructure-20261021/relations/MCP-RESULT-R2-SUPERSEDES-R1.json",
+      "work/academy-workbench/academy-preparation-restructure-20261021/relations/MCP-VERIFICATION-R2-SUPERSEDES-R1.json",
+      "work/academy-workbench/academy-preparation-restructure-20261021/tasks/MCP-T02.json"
+    ],
+    "toolsCodeAndTestsChangedSinceFrozenHead": false,
+    "reviewConsequence": "This report remains bound to requested5d69661. A later Work-only repair was observed but is not silently admitted by this review."
+  },
+  "limitations": [
+    "No private student/body data or preparation-v3.html was read; only source and synthetic inputs were used.",
+    "The focused suite was rerun; the owner full-suite totals and511-record private parity remain attributed observations.",
+    "The fixed-metadata failure uses an unusual but admitted synthetic ISO clock; no actual retained source clock was inspected.",
+    "No runtime activation, native authentication, hosted connector maximum, merge, publication or deployment is inferred.",
+    "Zero unresolved findings is not established for the frozen head."
+  ],
+  "nextDecision": "Have the source owner repair open findings on its own branch; independently validate an exact successor before any integration or activation."
+}

@@ -1,0 +1,264 @@
+[
+  {
+    "schemaVersion": "1.0.0",
+    "kind": "project",
+    "id": "math-research-module:project:manifest",
+    "projectId": "math-research-module",
+    "domainId": "mathematics-education",
+    "createdAt": "2026-10-13T23:11:00Z",
+    "references": [],
+    "payload": {
+      "name": "수학교육 연구 모듈",
+      "status": "active",
+      "scope": "원문을 보존하는 standalone 연구 앱 및 module-owned identity/harness 파일럿. 실제 학생 DB·진단·운영 조치는 제외.",
+      "ontologyPackage": {
+        "name": "@palantirkc/ontology",
+        "version": "0.2.0"
+      },
+      "commands": {
+        "check": "bun run check",
+        "start": "bun start",
+        "check:harness": "bun run check:harness"
+      },
+      "details": {
+        "canonicalSourceOwner": "park-kyungchan/agent-platform",
+        "canonicalCommit": "ffba2462a08b9f8c83c6f87b1043403e5cb748d7",
+        "semanticOwner": "math-research-module: domain meaning; ontology-foundation: Upper Ontology",
+        "nativeOwner": "Codex/Hermes respective native runtimes; no runtime mutation",
+        "authoritativeDataOwner": "this module research originals and reviewed successor records only",
+        "actualUserAdoptionInferred": false,
+        "contextNativePermissionsGranted": false,
+        "authorityGrantedByManifest": false,
+        "acceptanceDecisionObserved": false,
+        "priorEffectsStatus": "unverified"
+      }
+    }
+  },
+  {
+    "schemaVersion": "1.0.0",
+    "kind": "task",
+    "id": "math-research-module:task:standalone-harness-adoption-20261013",
+    "projectId": "math-research-module",
+    "domainId": "mathematics-education",
+    "createdAt": "2026-10-13T23:11:00Z",
+    "references": [],
+    "payload": {
+      "title": "수학교육 독립 연구 모듈 및 공통 하네스 적용",
+      "objective": "원문 무손실, 독립 실행, 공통 작업 추적과 연구객체 정체성 분리, private 게시",
+      "status": "running",
+      "acceptanceCriteria": [
+        "source-integrity",
+        "standalone-build",
+        "domain-structure",
+        "common-harness",
+        "identity-pilot",
+        "secret-scan",
+        "dom-regressions",
+        "private-publication"
+      ],
+      "verificationRefs": [
+        "math-research-module:verification:standalone-harness-adoption-20261013"
+      ],
+      "details": {
+        "workId": "standalone-harness-adoption-20261013",
+        "scope": "local implementation and review; remote publication pending exact repository authorization",
+        "userAcceptanceStatus": "unverified",
+        "fullExampleAudit": "unverified",
+        "learningEffectValidation": "unverified"
+      }
+    }
+  },
+  {
+    "schemaVersion": "1.0.0",
+    "kind": "run",
+    "id": "math-research-module:run:standalone-harness-adoption-20261013-01",
+    "projectId": "math-research-module",
+    "domainId": "mathematics-education",
+    "createdAt": "2026-10-13T23:11:00Z",
+    "references": [
+      {
+        "artifactId": "math-research-module:task:standalone-harness-adoption-20261013",
+        "relation": "attemptOf"
+      }
+    ],
+    "payload": {
+      "taskRef": "math-research-module:task:standalone-harness-adoption-20261013",
+      "state": "running",
+      "startedAt": "2026-10-13T23:08:26Z",
+      "finishedAt": null,
+      "inputHashes": [
+        {
+          "path": "source/archive/FILES.sha256.json",
+          "sha256": "e0876a29f1abf49261a654dd92c83bb094488794c09b9ec77905abafda780d05"
+        }
+      ],
+      "runtime": {
+        "name": "Bun in dot cloud",
+        "version": "1.4.2"
+      },
+      "evidenceRefs": [
+        "math-research-module:evidence:input-transfer-20261013"
+      ],
+      "verificationRefs": [
+        "math-research-module:verification:standalone-harness-adoption-20261013"
+      ],
+      "details": {
+        "workId": "standalone-harness-adoption-20261013",
+        "authority": "none",
+        "nativePermissionGranted": false
+      }
+    }
+  },
+  {
+    "schemaVersion": "1.0.0",
+    "kind": "evidence",
+    "id": "math-research-module:evidence:input-transfer-20261013",
+    "projectId": "math-research-module",
+    "domainId": "mathematics-education",
+    "createdAt": "2026-10-13T23:11:00Z",
+    "references": [],
+    "payload": {
+      "claim": "Library source transfer bytes match the parent-confirmed digest; preserved archive has 109 files.",
+      "method": "Supported Library materialization, sha256sum, ZIP inventory and per-file SHA-256 comparison",
+      "sourceUrl": "urn:library:libfile_a083b2403c8c8191b887363577167076",
+      "fetchedAt": "2026-10-13T23:08:48Z",
+      "upstreamRevision": "MagicPath revision 460722308961701888",
+      "result": {
+        "outcome": "success",
+        "processExitCode": 0,
+        "contentMatched": true,
+        "details": {
+          "zipBytes": 6083502,
+          "zipSha256": "a16195f4d474edd011cf663ddaf1b3c1e36e294573e3b1eb2b49416d3489e9b6",
+          "archiveFiles": 109,
+          "manifestEntries": 108
+        }
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "outcome": "success"
+        }
+      ],
+      "limitations": [
+        "This proves source bytes, not mathematical correctness, empirical learning effect or user acceptance."
+      ],
+      "details": {
+        "observedIn": "dot cloud workspace",
+        "priorRemoteEffects": "unverified"
+      }
+    }
+  },
+  {
+    "schemaVersion": "1.0.0",
+    "kind": "verification",
+    "id": "math-research-module:verification:standalone-harness-adoption-20261013",
+    "projectId": "math-research-module",
+    "domainId": "mathematics-education",
+    "createdAt": "2026-10-13T23:11:00Z",
+    "references": [],
+    "payload": {
+      "targetRefs": [
+        "math-research-module:task:standalone-harness-adoption-20261013"
+      ],
+      "criteria": [
+        {
+          "id": "source-integrity",
+          "status": "pass",
+          "message": "109 preserved source files; 108 manifest entries match",
+          "evidenceRefs": [
+            "math-research-module:evidence:input-transfer-20261013"
+          ]
+        },
+        {
+          "id": "standalone-build",
+          "status": "unverified",
+          "message": "Not yet observed in this implementation run",
+          "evidenceRefs": []
+        },
+        {
+          "id": "domain-structure",
+          "status": "unverified",
+          "message": "Not yet observed in this implementation run",
+          "evidenceRefs": []
+        },
+        {
+          "id": "common-harness",
+          "status": "unverified",
+          "message": "Not yet observed in this implementation run",
+          "evidenceRefs": []
+        },
+        {
+          "id": "identity-pilot",
+          "status": "unverified",
+          "message": "Not yet observed in this implementation run",
+          "evidenceRefs": []
+        },
+        {
+          "id": "secret-scan",
+          "status": "unverified",
+          "message": "Not yet observed in this implementation run",
+          "evidenceRefs": []
+        },
+        {
+          "id": "dom-regressions",
+          "status": "unverified",
+          "message": "Not yet observed in this implementation run",
+          "evidenceRefs": []
+        },
+        {
+          "id": "private-publication",
+          "status": "unverified",
+          "message": "Not yet observed in this implementation run",
+          "evidenceRefs": []
+        }
+      ],
+      "inputHashes": [
+        {
+          "path": "source/archive/FILES.sha256.json",
+          "sha256": "e0876a29f1abf49261a654dd92c83bb094488794c09b9ec77905abafda780d05"
+        }
+      ],
+      "runtime": {
+        "name": "Bun in dot cloud",
+        "version": "1.4.2"
+      },
+      "details": {
+        "acceptanceDecisionObserved": false,
+        "priorEffectsStatus": "unverified",
+        "fullExampleAuditStatus": "unverified",
+        "realBrowserStatus": "unverified",
+        "targetMachineExecution": {
+          "wsl2Codex": "unverified",
+          "hermes-agent-2q3y": "unverified"
+        }
+      }
+    }
+  },
+  {
+    "schemaVersion": "1.0.0",
+    "kind": "proposal",
+    "id": "math-research-module:proposal:standalone-and-identity-pilot-v1",
+    "projectId": "math-research-module",
+    "domainId": "mathematics-education",
+    "createdAt": "2026-10-13T23:11:00Z",
+    "references": [],
+    "payload": {
+      "title": "독립 앱·연구 객체 ID 파일럿",
+      "status": "proposed",
+      "recommendation": "공통 Artifact ID는 작업추적에만 사용하고 연구 객체 정체성·버전·분류와 별도 연결한다. 원문을 보존하고 교정은 versioned proposal로 남긴다.",
+      "alternatives": [
+        "현 호스트 의존 snapshot 유지",
+        "교정안을 원문에 덮어쓰기하지 않고 successor로 관리"
+      ],
+      "evidenceRefs": [
+        "math-research-module:evidence:input-transfer-20261013"
+      ],
+      "details": {
+        "acceptanceDecisionObserved": false,
+        "semanticOwner": "math-research-module",
+        "centralRegistryCreated": false
+      }
+    }
+  }
+]

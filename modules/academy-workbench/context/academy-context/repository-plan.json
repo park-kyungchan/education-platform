@@ -1,0 +1,164 @@
+{
+  "schemaVersion": "academy-context.repository-plan/1.0.0",
+  "id": "ACX-REPOSITORY-PLAN/r1",
+  "work": {
+    "projectId": "academy-workbench",
+    "workId": "academy-context-consolidation-20261021",
+    "specificationRef": "ACX-SPEC/r1",
+    "planRef": "ACX-PLAN/r1",
+    "taskRef": "ACX-T04",
+    "registration": "local-design-record-not-native-or-global-registration"
+  },
+  "status": "accepted-direction_design-not-activated",
+  "decisionBasis": {
+    "source": "current-user-interview-as-relayed-by-parent-orchestrator-20261021",
+    "acceptedDirection": "Preserve current repository, code, semantic, data and native owners. Unify the common context entrypoint and execution contract first; do not perform an education monorepo migration.",
+    "defaultNavigation": ["today-business-date", "class-or-cohort", "student-preparation-and-pending"],
+    "includedInternalWork": ["class-preparation", "lesson-delivery", "progress-audit", "homework-followup", "assessment-preparation", "wrong-answer-clinic", "attendance-internal-journal"],
+    "excludedTopics": ["academy.counseling", "academy.parent-communication"],
+    "dailyRecordBoundary": "Retain internal attendance, progress, homework, assessments and journal intake. Parent-facing drafting and transmission are excluded.",
+    "scopeOfAcceptance": "Architecture direction and planning artifacts only. This acceptance is not activation, operational completion, mathematical acceptance or authorization for a specific source effect."
+  },
+  "runtimeBoundary": {
+    "activationPerformed": false,
+    "genericExecutorCreated": false,
+    "sourceDataCopied": false,
+    "repositoryMigrationPerformed": false,
+    "nativeConfigurationChanged": false,
+    "commonHarnessOwner": "agent-platform",
+    "commonHarnessRole": "Consume existing pinned Work/Memory/context identity and verification references. Do not fork canonical validators, add Work as an Artifact kind or create a second execution loop.",
+    "effectOwner": "Existing domain/native owner selected for an exact current authorized operation.",
+    "uncertainOutcomeRule": "Do not retry an ambiguous effect. Reconcile exact authoritative target state, receipts and preserved completed/uncertain effects first.",
+    "teacherEvidenceRule": "Original teacher evidence remains independently owned and preserved; source/server receipt, execution authorization, verification and teacher acceptance are different records."
+  },
+  "repositories": [
+    {
+      "id": "academy-workbench",
+      "observedRole": "Academy context and private continuity consumer; synthetic standalone/offline surfaces and dedicated Academy MCP source owner.",
+      "phaseOneRole": "Own the shared academy-context entrypoint and seven workflow design packets; reference external source owners without copying real student payloads or assuming operational custody.",
+      "evidence": [{"path": "harness/module.json", "line": 1}, {"path": "docs/harness/README.ko.md", "line": 40}, {"repository": "education-platform", "path": "apps/academy/month-end-workbench/docs/source-context.md", "line": 17}],
+      "ownershipChangeProposed": false
+    },
+    {
+      "id": "education-platform",
+      "observedLocalHead": "cb7e571",
+      "observedRole": "Maintained mathematical, curriculum and academy source integration; existing dc-gang-a/gang-a and month-end backend/frontend owners remain module-local.",
+      "phaseOneRole": "Expose accurate module/capability verification and source-ownership references to context packets; retain its current application owners.",
+      "evidence": [{"path": "README.md", "line": 21}, {"path": "architecture/source-map.json", "line": 188}, {"path": "apps/academy/month-end-workbench/docs/source-context.md", "line": 35}],
+      "ownershipChangeProposed": false
+    },
+    {
+      "id": "math-research-module",
+      "observedLocalHead": "7b58fe3",
+      "observedRole": "Independent research source, mathematical education semantics, research object identities, provenance, historical context and correction proposals.",
+      "phaseOneRole": "Supply selected source-backed research and dated decisions through revision-qualified references. Preserve independent repo and immutable originals.",
+      "evidence": [{"path": "docs/ownership-and-identity.md", "line": 5}, {"path": "context/user-context/README.md", "line": 23}, {"path": "research/identity-pilot/src/model.ts", "line": 38}],
+      "ownershipChangeProposed": false
+    },
+    {
+      "id": "math-education",
+      "observedLocalHead": "4a666ef",
+      "observedRole": "Preserved curriculum export/runtime source; maintained integrated curriculum module resides in education-platform/packages/curriculum.",
+      "phaseOneRole": "Retain predecessor/provenance custody; expose missing-original inventory and scope-qualified curriculum references. UI envelopes cannot substitute for canonical originals.",
+      "evidence": [{"path": "README.md", "line": 3}, {"path": "canonical/README.md", "line": 3}, {"repository": "education-platform", "path": "architecture/source-map.json", "line": 35}],
+      "ownershipChangeProposed": false
+    },
+    {
+      "id": "gang-a",
+      "observedLocalHead": "c447551",
+      "observedRole": "Retained code/spec compatibility repository. Maintained implementation is education-platform/apps/academy/gang-a; historical native reference differs from the imported upstream baseline.",
+      "phaseOneRole": "Preserve frozen source, historical contract and policy lineage. Consume the maintained owner when implementing; do not create a parallel implementation or retire the predecessor.",
+      "evidence": [{"path": "README.md", "line": 7}, {"repository": "education-platform", "path": "architecture/source-map.json", "line": 188}],
+      "ownershipChangeProposed": false
+    },
+    {
+      "id": "agent-platform",
+      "observedRole": "Existing pinned canonical shared contract/validator owner; native Codex/Hermes remains the runtime owner.",
+      "phaseOneRole": "Reference canonical Work/Memory/context and verification identities; preserve existing dependency pins and do not invent another executor or memory store.",
+      "evidence": [{"repository": "academy-workbench", "path": "docs/harness/README.ko.md", "line": 3}, {"repository": "math-research-module", "path": "docs/ownership-and-identity.md", "line": 5}],
+      "ownershipChangeProposed": false
+    }
+  ],
+  "findings": [
+    {
+      "id": "ACX-VERIFY-001",
+      "status": "observed_source_gap",
+      "topicIds": ["foundation.verification", "foundation.harness"],
+      "finding": "Education root checks traverse the registered module graph; the academy check route invokes only gang-a and dc-gang-a. Month-end-workbench/web and external research projection dependencies have separate checks but are absent from this aggregate route.",
+      "evidence": [{"repository": "education-platform", "path": "scripts/check.ts", "line": 7}, {"repository": "education-platform", "path": "apps/academy/run.ts", "line": 4}, {"repository": "education-platform", "path": "apps/academy/tsconfig.json", "line": 14}],
+      "impact": "A root aggregate pass must not be reported as complete verification of teacher research, candidate inspection and assessment preparation.",
+      "nextImprovement": "Inventory existing module-local verification entrypoints, then propose explicit capability nodes and exact task-to-check coverage in the owning repository.",
+      "acceptanceEvidenceNeeded": "Owner-reviewed graph/coverage update plus source/synthetic checks that exercise the intended workflow packages and explicitly retain native, physical, teacher and pedagogical limits."
+    },
+    {
+      "id": "ACX-CURRICULUM-001",
+      "status": "observed_missing_originals",
+      "topicIds": ["foundation.curriculum", "foundation.provenance"],
+      "finding": "Four full canonical domain workpacks and curriculum-boundary original bytes are absent from the export; the declared boundary pin/hash-method discrepancy remains unresolved.",
+      "evidence": [{"repository": "math-education", "path": "canonical/README.md", "line": 3}, {"repository": "math-education", "path": "docs/EXPORT_NOTES.md", "line": 7}, {"repository": "education-platform", "path": "packages/curriculum/integration.ts", "line": 3}],
+      "impact": "UI/source-envelope preservation cannot establish complete curriculum semantics, prerequisites or whole-curriculum audit coverage.",
+      "nextImprovement": "Keep source inventory and explicit unknowns visible; identify the original supported acquisition owner and exact revisions before any separately scoped import proposal. Do not ask for a duplicate upload solely because canonical/ is empty.",
+      "acceptanceEvidenceNeeded": "Verified original identity, byte length, declared serialization/hash method, revision and bindings; explicit updated inventory and bounded semantic audit."
+    },
+    {
+      "id": "ACX-DECISION-001",
+      "status": "observed_cross_repository_dated_decisions",
+      "topicIds": ["foundation.currentness", "foundation.provenance", "academy.assessment-preparation"],
+      "finding": "Older research history retains proposed 9/9/6 allocation and unselected questions; later Education Work records confirmed 8/8/8 preparation, then a later exact teacher selection and explicit two-questions-under-one-type exception. General 100-minute policy and specific 80-minute assessment have different scopes.",
+      "evidence": [{"repository": "math-research-module", "path": "docs/next-work.md", "line": 10}, {"repository": "education-platform", "path": "apps/academy/month-end-workbench/docs/source-context.md", "line": 15}, {"repository": "education-platform", "path": "apps/academy/month-end-workbench/docs/source-context.md", "line": 19}, {"repository": "education-platform", "path": "apps/academy/month-end-workbench/docs/source-context.md", "line": 29}],
+      "impact": "Reading a short retained exam specification or choosing the newest entire document can reintroduce superseded uncertainty or falsely accept an earlier ranking.",
+      "nextImprovement": "Resolve current claims by assessment identity, field, source revision and explicit corrects/supersedes relation; retain every historical proposal and its scope.",
+      "acceptanceEvidenceNeeded": "A context packet shows current decisions and excluded history together, preserves the explicit selection exception, and never infers exam date, edition, timezone, mathematical acceptance or native activation."
+    },
+    {
+      "id": "ACX-IDENTITY-001",
+      "status": "observed_multiple_identity_dimensions",
+      "topicIds": ["foundation.identity", "foundation.research", "foundation.harness"],
+      "finding": "Containment, is-a, prerequisite, evidence support, workflow order, source supersession and repository verification dependencies already have different meanings and cycle rules. Domain object IDs, classification paths, native IDs and Work/Task/Run IDs are separate.",
+      "evidence": [{"repository": "math-research-module", "path": "research/identity-pilot/src/model.ts", "line": 38}, {"repository": "math-research-module", "path": "docs/ownership-and-identity.md", "line": 27}, {"repository": "education-platform", "path": "architecture/source-map.json", "line": 5}, {"repository": "gang-a", "path": "packages/domain/operational-context.ts", "line": 47}],
+      "impact": "A single parent tree or shared string ID would collapse source meaning, workflow sequencing, identity and evidence into unjustified equivalences.",
+      "nextImprovement": "Use a topic hierarchy for navigation, explicit typed edges for cross-topic relations and revision-qualified crosswalks for source identity. Keep local/native identity joins evidence-backed and preserve unknown/conflicting states.",
+      "acceptanceEvidenceNeeded": "Contract checks reject label-only joins, invalid relation endpoints, unintended containment/dependency cycles and Work/domain identity substitution without imposing acyclicity on all relatedness."
+    }
+  ],
+  "stages": [
+    {
+      "id": "ACX-RP-01",
+      "state": "current_design_only",
+      "outcome": "One context entrypoint with source coverage, current user scope, topic hierarchy, typed graph links and the seven non-activated workflow contracts.",
+      "owner": "academy-workbench context owner",
+      "closure": "Review metadata references, types, exclusions, source/current/history distinctions and user interview answers. This closes a planning artifact, not an operational workflow."
+    },
+    {
+      "id": "ACX-RP-02",
+      "state": "proposed_not_started",
+      "outcome": "A source-only class-preparation packet following business date -> class/cohort -> student preparation/pending, with missing inputs explicit.",
+      "owner": "academy-workbench context owner with existing domain source owners",
+      "closure": "Use synthetic inputs first. A subsequent real packet requires separately scoped exact student/class/date/source-read authorization; do not copy payloads into Git."
+    },
+    {
+      "id": "ACX-RP-03",
+      "state": "proposed_not_started",
+      "outcome": "Repair task-to-verification coverage and scoped current-decision resolution at their current owners.",
+      "owner": "education-platform and math-research-module owners",
+      "findingRefs": ["ACX-VERIFY-001", "ACX-DECISION-001", "ACX-IDENTITY-001"],
+      "closure": "Review exact source patches and meaningful synthetic checks; retain existing native-launch and semantic acceptance holds."
+    },
+    {
+      "id": "ACX-RP-04",
+      "state": "proposed_not_started",
+      "outcome": "Resolve source gaps only in admitted owner-specific units, then add minimal native/domain handoffs where a real operation needs them.",
+      "owner": "Original source acquisition and native/domain execution owners",
+      "findingRefs": ["ACX-CURRICULUM-001"],
+      "closure": "Exact scope, current authorization, immutable source identity, supported execution mechanism, authoritative readback and separate teacher review. No repository/data migration follows automatically."
+    }
+  ],
+  "sourceDeclaredVerificationEntrypoints": [
+    {"repository": "academy-workbench", "workingDirectory": ".", "command": "bun run check", "source": "package.json scripts.check", "observation": "Script inspected; not executed by ACX-T04."},
+    {"repository": "academy-workbench", "workingDirectory": ".", "command": "bun run check:ci", "source": "package.json scripts.check:ci", "observation": "Script inspected; not executed by ACX-T04."},
+    {"repository": "education-platform", "workingDirectory": ".", "command": "bun run check", "source": "package.json scripts.check", "observation": "Script inspected; known aggregate coverage is bounded by ACX-VERIFY-001; not executed by ACX-T04."},
+    {"repository": "education-platform", "workingDirectory": "apps/academy/month-end-workbench", "command": "bun run check", "source": "apps/academy/month-end-workbench/README.md:9", "observation": "Documented package-local source/synthetic check; intended sibling source ownership must be selected; not executed by ACX-T04."},
+    {"repository": "math-research-module", "workingDirectory": ".", "command": "bun run verify", "source": "AGENTS.md:3 and docs/CONTINUE.ko.md:63", "observation": "Source-declared portable verification route; not executed by ACX-T04."}
+  ],
+  "validationBoundary": "Only the new design artifact's syntax/type/reference checks may be reported for ACX-T04. Existing historical test receipts do not verify these changed artifacts, and no live request, actual student read, native invocation, print, send or operational completion is implied."
+}

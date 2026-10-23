@@ -1,0 +1,66 @@
+/* Load after rails.css. All additions are separate from C2's score/clinic axes. */
+.c2 .teacher-overlay-summary {
+  margin: 0 0 14px;
+  padding: 8px 0 10px;
+  border-top: 1px solid var(--rule, #d8d5cb);
+  border-bottom: 1px solid var(--rule, #d8d5cb);
+  color: var(--muted, #676b61);
+  font-size: 14px;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+.c2 .teacher-overlay-row {
+  display: block;
+  margin-top: 5px;
+  padding-left: 7px;
+  border-left: 2px solid var(--accent, #925735);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.65;
+  color: var(--ink, #222b25);
+}
+.c2 .teacher-overlay-row-entry {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 5px;
+}
+.c2 .teacher-overlay-number {
+  color: var(--muted, #676b61);
+  font-size: 12px;
+}
+.c2 .teacher-overlay-detail {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--rule, #d8d5cb);
+}
+.c2 .teacher-overlay-detail-title {
+  margin: 0 0 7px;
+  color: var(--accent, #925735);
+  font-size: 16px;
+  font-weight: 500;
+}
+.c2 .teacher-overlay-separation {
+  margin: 0 0 10px;
+  color: var(--muted, #676b61);
+  font-size: 12px;
+  line-height: 1.8;
+}
+.c2 .teacher-overlay-candidate + .teacher-overlay-candidate {
+  margin-top: 13px;
+  padding-top: 10px;
+  border-top: 1px solid var(--rule, #d8d5cb);
+}
+.c2 .teacher-overlay-detail-state { margin: 0 0 9px; font-size: 14px; }
+.c2 .teacher-overlay-fields { grid-template-columns: 155px minmax(0, 1fr); font-size: 14px; }
+.c2 .teacher-overlay-provenance { margin-top: 9px; font-size: 12px; }
+.c2 .teacher-overlay-provenance > summary { color: var(--muted, #676b61); }
+.c2 .teacher-overlay-provenance > dl { margin-top: 8px; font-size: 12px; }
+@media (max-width: 720px) {
+  .c2 .teacher-overlay-summary { margin-bottom: 10px; font-size: 14px; }
+  .c2 .teacher-overlay-row { font-size: 14px; padding-left: 5px; }
+  .c2 .teacher-overlay-number { font-size: 12px; }
+  .c2 .teacher-overlay-fields { grid-template-columns: 95px minmax(0, 1fr); font-size: 14px; }
+  .c2 .teacher-overlay-provenance > dl { font-size: 12px; }
+  .c2 .teacher-overlay-detail-state { font-size: 14px; }
+}
+@media print { .c2 .teacher-overlay-detail { break-inside: avoid; } }

@@ -1,0 +1,50 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "academy-operations",
+  "projectId": "academy-workbench",
+  "workId": "academy-architecture-orchestration-20261021",
+  "kind": "input",
+  "id": "AAR-T04-DELIVERY-VERIFICATION-R2",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "root-academy-orchestrator",
+    "locator": "reviewed-architecture-source-dispatch:verification-r2",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "note": "Separate immutable result and Verification Inputs avoid a self-hash. R1 result/verification remains preserved.",
+    "verification": {
+      "schemaVersion": "1.0.0",
+      "kind": "verification",
+      "id": "academy-workbench:verification:aar-t04-delivery-r2",
+      "projectId": "academy-workbench",
+      "domainId": "academy-operations",
+      "createdAt": "2026-10-21T05:47:35.860742+00:00",
+      "payload": {
+        "targetRefs": [
+          "common-harness:task:d29a5fc5319ae76b57bb110426bcb93eb67fe31a36a8c42b958f1ddf8072e6b4"
+        ],
+        "criteria": [
+          {
+            "id": "exact-reviewed-source-delivery",
+            "status": "pass",
+            "message": "The named metadata source delivery is bound to exact reviewed architecture and retained effect holds. Prior whole Work completion/native adoption are not inferred.",
+            "evidenceRefs": [
+              "academy-workbench:evidence:aar-t04-delivery-observation-r2"
+            ]
+          }
+        ],
+        "inputHashes": [
+          {
+            "path": "work/academy-workbench/academy-architecture-orchestration-20261021/inputs/AAR-T04-DELIVERY-R2.json",
+            "sha256": "455e1f884e94997ab48c5f7c77809554da9927b69a9b10086d90f53603f56add"
+          }
+        ],
+        "runtime": {
+          "name": "Bun canonical source reader and root qualification",
+          "version": "1.4.3"
+        }
+      }
+    }
+  }
+}

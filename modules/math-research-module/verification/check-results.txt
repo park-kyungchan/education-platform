@@ -1,0 +1,137 @@
+$ bun run check && bun run check:identity && bun run check:context && bun run check:harness
+$ bun run check:source && bun run typecheck && bun run check:research && bun run check:secrets && bun run test && bun run build && bun run test:server
+$ bun scripts/verify-source.ts
+PASS source integrity: {"archiveFiles":109,"manifestEntries":108,"admittedFiles":4}
+$ tsc --noEmit
+$ bun scripts/validate-research.ts
+PASS domain structure {"types":151,"core":105,"connected":46,"originalExamples":170,"microActions":1216,"capabilityCandidates":28,"mappings":105}
+$ bun scripts/scan-secrets.ts
+PASS scoped secret/nonportable-code scan: 224 text files. Heuristic scan, not a security certification.
+$ bun test tests/*.test.ts && bun scripts/test-dom.ts
+bun test v1.4.2 (744846f84)
+
+tests/source-integrity.test.ts:
+(pass) source plus its inner manifest cannot be silently rewritten [44.10ms]
+(pass) capability mapping bytes are included in fixed source admission [37.03ms]
+
+tests/structure.test.ts:
+(pass) research structure, distinct from mathematical validation > 151/105/46 types, 170 originals, 1216 actions, 28 candidates [1.72ms]
+(pass) research structure, distinct from mathematical validation > rejects a broken design link [2.09ms]
+(pass) research structure, distinct from mathematical validation > rejects an invented capability [2.84ms]
+(pass) research structure, distinct from mathematical validation > rejects conflating task analysis with student observation [1.09ms]
+
+ 6 pass
+ 0 fail
+ 6 expect() calls
+Ran 6 tests across 2 files. [184.00ms]
+PASS persistent ancestors, all siblings, five levels, sibling navigation, stale descendant cleanup, related origin retention and return, upper answer.
+PASS action UI: 16 persistent selectable steps, all detailed fields, source links, disclosure reset and end controls.
+PASS 151 research records and 1216 action steps rendered with exact prompts/answers, source links, disclosure defaults, persistent step selection, and upper-grade warning.
+$ bun scripts/build.ts
+Built 2 bundled assets; no host SDK or external font requests required.
+$ bun scripts/test-server.ts
+PASS HTTP smoke: Korean HTML, JS/CSS/font, security headers, 404 private source, traversal/method guards, HEAD. Browser rendering remains a separate check.
+$ node --test research/identity-pilot/tests/*.test.ts && node research/identity-pilot/scripts/check-sources.ts
+✔ positive: complete synthetic fixture obeys structural and semantic contract (11.89455ms)
+✔ positive: generated JSON Schema equals the module source (0.619166ms)
+✔ positive: 3 fixtures do not claim any real learner diagnosis or all 105 types (0.159586ms)
+✔ positive: random issuer produces 2,000 module-local unique opaque identities (3.269626ms)
+✔ positive: issuer detects collision before retrying (0.195259ms)
+✔ negative: issuer rejects malformed and semantic path IDs (0.249248ms)
+✔ negative: repeated collision has a finite failure and does not allocate (0.318962ms)
+✔ positive: research and common artifact ID domains are disjoint (0.217031ms)
+✔ negative: duplicate identity/version pair (10.15996ms)
+✔ negative: dangling semantic edge (8.276163ms)
+✔ negative: dangling evidence revision (7.123087ms)
+✔ negative: wrong DATA/LOGIC type layer (6.4152ms)
+✔ negative: supports edge domain/range cannot treat policy as observed evidence (12.296565ms)
+✔ negative: cross-layer strict parent edge is not admitted (9.988776ms)
+✔ negative: strict-parent is_a/part_of cycle (11.689882ms)
+✔ negative: prerequisite cycle (7.768872ms)
+✔ positive: cycles in uses relations remain valid in the full graph (5.062008ms)
+✔ positive: reclassification preserves identity and semantic meaning; adds immutable revision (10.979562ms)
+✔ negative: existing revision replacement remains forbidden even with new valid hash (22.698678ms)
+✔ negative: deleting a published revision is forbidden (15.489523ms)
+✔ negative: revision history cannot skip a version (6.973035ms)
+✔ negative: semantic core mutations invalidate hashes (7.423862ms)
+✔ positive: evidence and core changes produce a new version without erasing the prior claim (8.917992ms)
+✔ positive: teacher tone is dynamic while statement/evidence/status remain byte-equivalent (0.382355ms)
+✔ negative: presentation cannot override statement (3.450925ms)
+✔ negative: presentation cannot point to a mismatched core hash (28.9194ms)
+✔ negative: evidence claim without observation is not admitted (10.814388ms)
+✔ negative: hypotheses require an explicit probe/refutation route (8.000275ms)
+✔ negative: learner cognitive state cannot be declared established in structured data (10.093581ms)
+✔ negative: authorization policy is not native authority (15.742818ms)
+✔ negative: top-level native permission cannot be enabled by semantic schema (4.990482ms)
+✔ negative: acceptance record cannot be inferred from passing tests (11.10001ms)
+✔ negative: action event requires a separate action definition (6.803344ms)
+✔ negative: teacher/system actor identities cannot be conflated (6.818957ms)
+✔ positive: generic event and system event use separate IDs from action definitions (3.73142ms)
+✔ negative: malformed untrusted structures return issues rather than throwing (1.978536ms)
+✔ negative: duplicate relation IDs and triples (7.204918ms)
+✔ negative: duplicate harness IDs (6.64532ms)
+✔ negative: common Artifact ID prefix must agree with project and kind (6.250827ms)
+✔ negative: missing work artifact cannot be replaced with a research ID (5.857065ms)
+✔ negative: verification cannot serve as an acceptance decision (12.05295ms)
+✔ negative: independent decision is required for acceptedBy, even if kind is decision (7.822691ms)
+✔ negative: self-declared acceptance mirrors cannot manufacture actual acceptance (1.951768ms)
+✔ positive: work context IDs remain separate from common Artifact and research identities (0.171544ms)
+✔ positive: real source pins and original legacy pointers resolve without rewriting source (16.087668ms)
+✔ positive: hash is independent of object key insertion order, not semantic identity (0.300705ms)
+✔ negative: past typed-edge endpoints cannot silently change under the same edge ID (17.729978ms)
+✔ positive: classification topology change uses a new revision and edge while retaining old history (10.26862ms)
+✔ negative: observed event is an instance, not a subtype in is_a hierarchy (6.81449ms)
+✔ positive: source pins match bytes, actual artifact kinds, work IDs and original pointers (18.094777ms)
+✔ negative: changed harness source bytes invalidate the crosswalk (15.419966ms)
+✔ negative: a self-declared harness record absent from actual pinned bytes is rejected (16.706254ms)
+✔ negative: current Work pair must match its pinned context document (16.472427ms)
+✔ negative: legacy locator must resolve the recorded original ID (15.936325ms)
+✔ negative: source read errors are reported instead of inventing provenance (0.43233ms)
+✔ negative: Task-target Verification cannot imply research-revision verification without target/hash/criteria admission (7.179421ms)
+ℹ tests 56
+ℹ suites 0
+ℹ pass 56
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 620.806981
+PASS pinned source bytes, actual Artifact IDs/kinds, Work pair, legacy locators. Canonical common contract validation remains math-research-module check:harness; no actual acceptance admitted.
+$ bun scripts/check-context.ts
+{
+  "testsPassed": 21,
+  "coverage": "positive fixture, 19 adversarial data mutations, and byte-identical read-only CLI; no semantic validity claim"
+}
+PASS selected user context: 77 preserved sources, 52 typed records, 12 checks; complete historical reconciliation is not claimed.
+$ bun scripts/check-harness.ts && bun test tests/harness
+PASS canonical Artifact validation (7), closed references and 1 canonical crosswalk snapshots, module-owned Work checkpoint/request and two authority-negative probes; provider ffba2462a08b9f8c83c6f87b1043403e5cb748d7 (pinned-snapshot).
+bun test v1.4.2 (744846f84)
+
+tests/harness/continuity.test.ts:
+(pass) read-only verification does not create a checkpoint [314.83ms]
+(pass) completed effects survive repeat context checks byte for byte [38.87ms]
+(pass) one-byte user-answer drift fails without re-pinning [15.14ms]
+(pass) an empty existing checkpoint fails without overwriting [24.96ms]
+(pass) forged accepted answer with unchanged source pin is rejected [21.42ms]
+(pass) a source labelled verification must contain a valid Verification Artifact [33.49ms]
+(pass) fresh request follows existing checkpoint hash without mutating it [21.03ms]
+(pass) foreign project selection is rejected before checkpoint creation [10.42ms]
+(pass) selection cannot grant authority or unknown capabilities [12.89ms]
+(pass) initialization rejects a symlinked output directory before any external write [24.72ms]
+
+tests/harness/import-resolution.test.ts:
+(pass) Bun relative import shadow protection > reject or ignore unpinned shadow packages/ontology/src/schema.js [5.46ms]
+(pass) Bun relative import shadow protection > reject or ignore unpinned shadow packages/work-continuity/src/context/source [5.83ms]
+(pass) Bun relative import shadow protection > reject or ignore unpinned shadow packages/work-continuity/src/context/source.json [12.50ms]
+
+tests/harness/crosswalk-source.test.ts:
+(pass) matching source hash and Artifact ID do not admit malformed canonical payload [2.04ms]
+(pass) two references to one snapshot must agree on its exact source hash [1.30ms]
+
+ 15 pass
+ 0 fail
+ 21 expect() calls
+Ran 15 tests across 3 files. [568.00ms]
+$ python3 scripts/check-json-schemas.py
+PASS 3 user-context JSON Schemas and their instances
+JSON Schema Draft 2020-12: schema, positive fixture, and 4 negative cases passed

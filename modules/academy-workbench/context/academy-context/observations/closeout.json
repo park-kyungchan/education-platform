@@ -1,0 +1,94 @@
+{
+  "schemaVersion": "academy.local-closeout/1",
+  "status": "local-source-complete_waiting-for-user",
+  "currentEntrypoint": "context/academy-context/README.md",
+  "catalog": "context/academy-context/catalog.json",
+  "readingPlanCommand": "bun run context:academy reading-plan --topic academy.class-preparation",
+  "sourceFreeze": {
+    "commit": "964ca5637550ef8600a90d3726cc03a45ff74359",
+    "tree": "767d8077e63157aab5f33adb062030a948cf51c7",
+    "branch": "work/academy-context-consolidation-20261021",
+    "canonicalGitWorkValidation": {
+      "valid": true,
+      "findings": []
+    }
+  },
+  "scope": {
+    "owners": "preserved",
+    "defaultNavigation": [
+      "date",
+      "class",
+      "student"
+    ],
+    "excluded": [
+      "counseling",
+      "parent-communication"
+    ],
+    "repositories": 9,
+    "sources": 48,
+    "workflows": 7,
+    "findings": 16,
+    "wholeHistoryCoverage": "unknown-denominator_partial-known-source-index"
+  },
+  "improvements": {
+    "typedTopologies": "containment/dependency/revision/provenance/semantic/workflow-cycle remain distinct",
+    "sourceQualification": "45nonprivate pins match;3private locators unread",
+    "contextSelection": "UTF8-bounded, explicit cursor, decisions/issues first, scope-safe reference expansion",
+    "classPreparationReadPlan": {
+      "requiredReferences": 8,
+      "discoveryReferences": 39,
+      "automaticSourceBodyReads": false
+    },
+    "executionContract": "7workflow designs; existing domain/native executors retain ownership; no new executor"
+  },
+  "verification": {
+    "newTests": 28,
+    "newAssertions": 262,
+    "typescript": "7.0.2",
+    "bun": "1.4.3",
+    "independentSourceReviews": "passed within declared exact file/source scope",
+    "wholePrivateDataAudit": "not-run_by-current-user-data-boundary",
+    "liveNativeOrPedagogicalAcceptance": "not-established"
+  },
+  "peer": {
+    "head": "df8b9f776e22841919e69b9ff9ba25084e13f558",
+    "tree": "4307227ab5a9a58c32a6ab4f7a7d313ebf9b8ae9",
+    "independentReview": "context/academy-context/reviews/mcp-df8b9f7-review.json",
+    "unresolvedWithinDeclaredReviewScope": 0,
+    "equivalentCalls": {
+      "baseline": 48,
+      "candidate": 11,
+      "claimClass": "source-owner-reported-private-parity_not-independently-read"
+    },
+    "nativeLatency": "unmeasured",
+    "currentContextReadback": {
+      "messageId": "ACX-COORD-015",
+      "classification": "peer-native-session-report_not-recreated-authentication",
+      "sourceCommit": "964ca5637550ef8600a90d3726cc03a45ff74359",
+      "catalogFileSha256": "3beb4adba25512867a1823cf9ac69dae7ffe52a013cba7fb5f01b5cdeaab1d3d",
+      "catalogCanonicalSha256": "c670f865f7ff37cf0832eb491cffb00f5a562c285aedac24991a8702c9d3c458",
+      "pagesConsumed": 2,
+      "itemsConsumed": 88,
+      "requiredReferenceIds": 8,
+      "discoveryReferenceIds": 39,
+      "commonGitWorkValidation": {
+        "valid": true,
+        "findings": []
+      },
+      "actualPrivateParityReproducedByThisLead": false
+    }
+  },
+  "thirdSession": {
+    "id": "01a15c16-4285-78e2-8971-621eca83dc03",
+    "earlierNotice": "delivered-before-latest-revocation",
+    "furtherDelivery": "not-performed"
+  },
+  "publication": {
+    "pushed": false,
+    "pullRequest": false,
+    "merged": false,
+    "deployed": false,
+    "nativeActivated": false
+  },
+  "nextAction": "Wait for user instruction. Do not publish, deploy, migrate sources, replay effects or send further third-session notices."
+}

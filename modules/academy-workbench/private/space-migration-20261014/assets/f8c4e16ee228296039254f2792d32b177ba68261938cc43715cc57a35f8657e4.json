@@ -1,0 +1,343 @@
+{
+  "$schema": "academy-cartography-0.3.schema.json",
+  "kind": "evidence_package",
+  "id": "academy:evidence:r3",
+  "schemaVersion": "0.3.0",
+  "revision": 3,
+  "projectId": "project:academy-practical",
+  "canonicalParentId": "project:academy-practical",
+  "updatedAt": "2026-10-06T07:09:19.665Z",
+  "sourceIds": [],
+  "authorityGrantedByDocument": false,
+  "sources": [
+    {
+      "id": "source:site-observation-initial",
+      "classification": "reported_observation",
+      "sourceReference": null,
+      "reportedAt": "2026-10-06T05:39:28.149Z",
+      "observationWindow": null,
+      "claim": "기존 실제 사이트 탐색에서 수업일정관리, 학생별 출결조회, DayRecord와 등록 시작일 및 요일, 실제 출결과 지각 표시 및 메모를 확인했다.",
+      "scope": "초기 관찰 범위",
+      "limitations": [
+        "정확한 관찰 시각, 전체 메뉴 경로, URL, 화면 선택자는 이 초기 자료에 전달되지 않았다.",
+        "원시 화면 증거의 직접 재검증을 대신하지 않는다.",
+        "학교 필드 위치와 최신 10월 DayRecord 내용은 아직 확인되지 않았다."
+      ]
+    },
+    {
+      "id": "source:user-cartography-request",
+      "classification": "user_instruction",
+      "sourceReference": null,
+      "reportedAt": "2026-10-06T05:39:28.149Z",
+      "observationWindow": null,
+      "claim": "사용자가 사이트에서 학교를 찾아 출석부 B열과 연결하고, 다른 에이전트가 빠르게 조회할 수 있는 Cartography와 요청 라우팅을 구축하며 박경찬 Space에 학원 실무 공간을 만들도록 요청했다.",
+      "scope": "초기 관찰 범위",
+      "limitations": [
+        "요청은 학교 필드의 실제 위치나 매핑 완료를 입증하지 않는다.",
+        "원문 메시지의 영구 참조는 아직 연결하지 않았다."
+      ]
+    },
+    {
+      "id": "source:space-page-read",
+      "classification": "direct_read",
+      "sourceReference": "https://chatgpt.com/space/page_f18c68ae5c808191b723b4eb693016fa",
+      "reportedAt": "2026-10-06T05:39:28.149Z",
+      "observationWindow": null,
+      "claim": "교육 아래 학원 실무 프로젝트와 수업 준비와 기록, 출결과 보강, 사이트 길찾기 Cartography, 구조화 원본과 검증의 4개 하위 Page를 생성하고 각각 내용을 재읽었다.",
+      "scope": "초기 관찰 범위",
+      "limitations": [
+        "실제 사이트 기능의 확인 근거가 아니다.",
+        "Page의 시각적 렌더링은 별도 검증하지 않았다."
+      ]
+    },
+    {
+      "id": "source:sharing-read",
+      "classification": "direct_read",
+      "sourceReference": "https://chatgpt.com/space/page_f18c68ae5c808191b723b4eb693016fa",
+      "reportedAt": "2026-10-06T05:39:28.149Z",
+      "observationWindow": null,
+      "claim": "교육과 학원 실무 프로젝트 및 4개 하위 Page에서 공유목록이 비어 있고 inherited_access.complete=true인 소유자 전용 상태를 읽었다.",
+      "scope": "초기 관찰 범위",
+      "limitations": [
+        "현재 관찰 시점의 접근 상태이며 이후 공유 변경을 막는 보장이 아니다.",
+        "개별 파일은 업로드와 재읽기로 접근을 추가 확인한다."
+      ]
+    },
+    {
+      "id": "source:site-observation-20261006-0540",
+      "classification": "reported_observation",
+      "sourceReference": "task:01a10fb5-7835-7589-8a54-c84ad351d02a",
+      "reportedAt": "2026-10-06T05:44:12.101Z",
+      "observationWindow": null,
+      "claim": "실제 사이트 재탐색에서 DayRecord, 학습진도, 예습 검사, DT 결과, 학생조회와 교재 자료의 URL 및 주요 조회 컨트롤을 확인했다. DayRecord 일부 입력은 blur 시 자동 저장 위험이 있다. 확인한 학생 상세에서는 학교 필드를 찾지 못했다.",
+      "scope": "초기 관찰 범위",
+      "limitations": [
+        "2026년 10월 6일 약 05:40 UTC에 전달된 실제 탐색 보고이며 이 파일 작성 과정에서 브라우저를 중복 조작하지 않았다.",
+        "학생 정보 상세에서 학교 필드를 못 찾은 결과를 사이트 전체의 학교 정보 부재로 일반화하지 않는다.",
+        "교재 버튼 표시는 확인했지만 실제 다운로드는 검증하지 않았다."
+      ]
+    },
+    {
+      "id": "source:school-search-all-five-20261006",
+      "classification": "reported_observation",
+      "sourceReference": "task:01a10fb5-7835-7589-8a54-c84ad351d02a",
+      "reportedAt": "2026-10-06T05:50:12.471Z",
+      "observationWindow": null,
+      "claim": "대상 학생 5명 모두 학생 조회에서 상세 정보를 열었으나 학교 필드나 값은 확인하지 못했다. 검색 상세에는 학반, 사용 상태, 로그인 허용 필터가 보였고 학교 필터는 보이지 않았다. StudentApproval과 ClassAssignment의 초기 화면에서도 학교 또는 내보내기를 확인하지 못했다.",
+      "scope": "대상 5명, 조회 상세와 실제로 열어본 검색 및 승인 및 반배정 초기 화면",
+      "limitations": [
+        "학교 정보가 사이트 또는 데이터베이스 전체에 없다는 뜻은 아니다.",
+        "생년월일 등 불필요한 학생 개인정보는 수집하지 않았다.",
+        "출석부 B4:B8은 변경되지 않았다.",
+        "상담 화면의 제한된 추가 탐색은 진행 중이다."
+      ]
+    },
+    {
+      "id": "source:learning-results-20261006-0628",
+      "classification": "reported_observation",
+      "sourceReference": "task:01a10fb5-7835-7589-8a54-c84ad351d02a",
+      "reportedAt": "2026-10-06T06:28:20Z",
+      "observationWindow": null,
+      "claim": "학습관리의 강아학습결과에서 학생 이름으로 검색한 실제 결과를 읽었다. 필수예제와 유형다지기 점수 및 각 클리닉 상태가 별개였고 점수가 있는 항목의 클리닉이 미학습인 반례를 확인했다.",
+      "scope": "강아학습결과의 검색 결과와 점수 및 클리닉 상태",
+      "limitations": [
+        "채, 오, 클, 분, 재응시 및 일괄재응시의 효과는 실행 검증하지 않았다."
+      ]
+    },
+    {
+      "id": "source:pending-inventory-20261006-0628",
+      "classification": "reported_observation",
+      "sourceReference": "task:01a10fb5-7835-7589-8a54-c84ad351d02a",
+      "reportedAt": "2026-10-06T06:28:20Z",
+      "observationWindow": null,
+      "claim": "예습완료조회와 영상현황, DT와 ZT 목록, 오답 상세, 진도 관련 화면, 출력자료, 교재리포트, 날짜별일지, 평가결과 하위 화면, 스마트북, 교재요청 및 제작이력, 상담과 안내 및 보고 제출 연결이 추가 탐색 대상으로 전달되었다.",
+      "scope": "보고된 추가 탐색 대상 명칭",
+      "limitations": [
+        "17항목과 10메뉴의 전체 원문 목록과 일대일 대응은 아직 확정되지 않았다.",
+        "의미상 묶은 coverage 행 수를 실제 메뉴 수로 사용하지 않는다."
+      ]
+    },
+    {
+      "id": "source:school-closed-page-20261006",
+      "classification": "direct_read",
+      "sourceReference": "https://chatgpt.com/space/page_41a5a8a055208191bea51145d7976c9a",
+      "reportedAt": "2026-10-06T06:27:45Z",
+      "observationWindow": null,
+      "claim": "현재 작업 상태에서 학교 조회 종료와 출석부 B열 빈칸 유지를 재읽었다.",
+      "scope": "학교 조회와 Excel 종료",
+      "limitations": [
+        "학원 사이트 전반의 별도 읽기 탐색 재개와 구분한다."
+      ]
+    },
+    {
+      "id": "Sentinel_d67bfc14a07481918e2b471c86b4476b",
+      "classification": "user_instruction",
+      "sourceReference": "Sentinel_d67bfc14a07481918e2b471c86b4476b",
+      "reportedAt": "2026-10-06T06:33:18Z",
+      "observationWindow": null,
+      "claim": "사용자가 학원 요일 패턴과 부별 운영 시간, 가우스 소단원별 예습과 개념 빈칸 테스트, 예습 답의 앱 자동 채점 및 오답과 유사문제 클리닉 생성, 강사의 출력과 배부 및 채점과 오답 정리, 소단원별 DT 두 회와 보조 교재를 설명했다.",
+      "scope": "사용자가 설명한 학원 운영과 실제 강사 업무 흐름",
+      "limitations": [
+        "설명한 모든 반이 사용자에게 배정되었다는 뜻은 아니다.",
+        "개별 학생의 현재 진행 또는 완료를 확인한 설명이 아니다.",
+        "개념 빈칸 테스트 통과 기준과 클리닉 완료 기준은 질문 중이다."
+      ]
+    },
+    {
+      "id": "source:site-observation-20261006-0637",
+      "classification": "reported_observation",
+      "sourceReference": "task:01a10fb5-7835-7589-8a54-c84ad351d02a",
+      "reportedAt": "2026-10-06T06:37:51Z",
+      "observationWindow": null,
+      "claim": "동일한 가우스 제목에 1MH0 버전1과 1N82 버전2가 구분되어 있었다. 날짜별 수업일지의 과거 날짜 결과는 편집 입력 없는 표로 읽을 수 있었다. 영상현황의 AI 점수와 별점 및 리포트는 교사 검사 완료와 별도였다. 교재 학습 완료율과 오답 정리 완료도 별도이다. 스마트북 첫 검색에서 이름 필터가 사라져 범위가 넓어지는 현상을 확인했다.",
+      "scope": "과정 식별, 과거 일지 읽기, 영상 및 교재 상태 해석, 스마트북 필터",
+      "limitations": [
+        "새 화면의 정확한 URL과 컨트롤 locator는 추가 전달 전이다.",
+        "보고서 존재나 완료율만으로 검사 또는 오답 정리 완료를 판단하지 않는다.",
+        "스마트북 검색에서 관련 없는 학생 정보를 계속 수집하지 않는다."
+      ]
+    },
+    {
+      "id": "source:attendance-desktop-complete-20261006",
+      "classification": "reported_observation",
+      "sourceReference": null,
+      "reportedAt": "2026-10-06T06:37:51Z",
+      "observationWindow": null,
+      "claim": "9월 출결의 Desktop 정리가 완료되었고 Excel 업무는 종료되었다. 이후 출결 관련 남은 일은 10월 17일 보강과 10월 12일 안내이다.",
+      "scope": "완료된 9월 출결과 남은 보강 및 안내",
+      "limitations": [
+        "초기 작업 스냅샷의 진행 중 상태를 다시 실행하라는 근거로 사용하지 않는다."
+      ]
+    },
+    {
+      "id": "Sentinel_2c07ae3d1754819186787cfbdcd86843",
+      "classification": "user_instruction",
+      "sourceReference": "Sentinel_2c07ae3d1754819186787cfbdcd86843",
+      "reportedAt": "2026-10-06T06:38:54Z",
+      "observationWindow": null,
+      "claim": "사용자는 개념 빈칸 테스트에서 학생이 칠판 또는 자리에서 설명하거나 가우스 소단원 빈칸 테스트를 쓰게 하고 교사가 완료를 판단한다고 설명했다. 클리닉은 자동 채점된 오답과 유사문제 출력 목록에서 자료를 찾아 출력한다. 학생의 가우스 오답 수정을 교사가 확인하고, 클리닉 오답은 원래 틀린 문제를 다시 출력해 재풀이를 확인하며 수업 중 채점하고 필요할 때 설명을 묻는다. 별도 사이트 완료 처리를 하지 않고 교사가 출력물을 보관한다. 보조 역할은 출력 목록 항목 식별과 사용자 완료 판단 기록이며 심화 평가 기준 질문은 지금 불필요하다.",
+      "scope": "강사의 실제 완료 판단, 클리닉 출력과 종이 자료 보관, 보조 역할 경계",
+      "limitations": [
+        "사이트 미학습 표시를 실제 미완료로 해석하지 않는다.",
+        "학습 점수나 출력 목록만으로 강사의 완료 판단을 대신하지 않는다.",
+        "개별 학생 또는 특정 출력물의 완료를 선언한 설명은 아니다."
+      ]
+    },
+    {
+      "id": "Sentinel_673a2eca1710819180311b348e4d0e76",
+      "classification": "user_instruction",
+      "sourceReference": "Sentinel_673a2eca1710819180311b348e4d0e76",
+      "reportedAt": "2026-10-06T06:40:47Z",
+      "observationWindow": null,
+      "claim": "사용자는 에이전트가 실제 사이트에서 맥락을 이해하고 클릭해 출력하는 실행 측면과 강사의 상세 실무 맥락을 별도로 구분했다.",
+      "scope": "실무 맥락과 사이트 실행 계약의 두 계층",
+      "limitations": [
+        "향후 직접 클릭 및 출력 기능 목표이지 지금 임의의 인쇄를 수행하라는 승인이 아니다.",
+        "같은 학원 실무 분야 안에서 분리하며 일반 교육학 프로젝트로 확장하지 않는다."
+      ]
+    },
+    {
+      "id": "source:site-observation-window-20261006-063349-064420",
+      "classification": "reported_observation",
+      "sourceReference": "task:01a10fb5-7835-7589-8a54-c84ad351d02a",
+      "reportedAt": "2026-10-06T06:48:00Z",
+      "observationWindow": [
+        "2026-10-06T06:33:49Z",
+        "2026-10-06T06:44:20Z"
+      ],
+      "claim": "06:33:49–06:44:20 UTC 관찰 구간에서 예습 및 영상, DT와 ZT 목록, 진도와 과정, 교재 보고, 스마트북, 교재 요청 및 제작 이력, 날짜별 일지와 평가 결과의 안전한 조회 경로와 화면을 확인했다.",
+      "scope": "전달된 실제 URL과 조회 컨트롤 및 제한된 조회 결과",
+      "limitations": [
+        "개별 클릭 시각을 뜻하지 않는다.",
+        "메뉴 및 목록 또는 초기 구조 관찰을 전체 기능 성공으로 간주하지 않는다.",
+        "인쇄, 재응시, 초기화, 삭제, 평가 상태 변경, 보고서 생성은 실행하지 않았다.",
+        "요청대상 외 학생의 광범위한 집계 조회는 수행하지 않았다.",
+        "일부 출력 제어는 기능 설명이 없는 SPAN이며 미리보기와 즉시 출력 중 어느 동작인지 불명확해 실행하지 않았다."
+      ]
+    },
+    {
+      "id": "Sentinel_2ec1ed2d632c8191b5035fd35fd0239c",
+      "classification": "user_instruction",
+      "sourceReference": "Sentinel_2ec1ed2d632c8191b5035fd35fd0239c",
+      "reportedAt": "2026-10-06T06:50:39Z",
+      "observationWindow": null,
+      "claim": "사용자는 오 버튼이 학생의 가우스 또는 보조교재 앱 답 채점에서 선택한 범위의 원래 오답 문항을 출력하며 출력물 헤더로 범위를 확인한다고 설명했다. 클 버튼은 각 원래 오답에 대응하는 유사문항이며 개수는 보통 1–2로 조절하고 현재는 원래 오답당 1개라고 설명했다. 동작 단위의 의미 맥락과 감사 추적 및 피드백으로 계속 확장할 수 있는 구조를 요청했다.",
+      "scope": "오와 클의 의미, 문항 대응과 현재 유사문항 수, 의미 계약 및 감사 설계",
+      "limitations": [
+        "버튼 클릭이 미리보기인지 즉시 물리 출력인지 아직 답변 대기이다.",
+        "현재 실제 인쇄 승인과 출력 목적지 및 매수는 없다.",
+        "현재 화면의 유사문항 수와 원래 오답 및 유사문항 식별키는 아직 읽지 않았다."
+      ]
+    },
+    {
+      "id": "Sentinel_77fc316efb90819184454f4f50f469d3",
+      "classification": "user_instruction",
+      "sourceReference": "Sentinel_77fc316efb90819184454f4f50f469d3",
+      "reportedAt": "2026-10-06T06:56:07Z",
+      "observationWindow": null,
+      "claim": "사용자는 상단 빨간 오 및 클 버튼에서 일괄 선택하고 각 출력 헤더의 체크박스를 선택한 뒤 상단 일괄생성을 실행하면 선택한 헤더가 순서대로 묶인 PDF가 만들어지며 이를 한 번 출력하는 흐름을 설명했다. 지속 사용을 위한 클라우드 의존성 설치도 요청했다.",
+      "scope": "일괄 선택과 PDF 생성 및 물리 출력의 구분",
+      "limitations": [
+        "상단 일괄 제어와 행별 제어의 실제 UI 구분 및 locator는 현장에서 확인해야 한다.",
+        "선택한 학생과 헤더, 순서 및 PDF의 실제 내용을 아직 확인하지 않았다.",
+        "현재 특정 자료의 PDF 생성 또는 물리 출력 승인을 뜻하지 않는다.",
+        "의존성이 설치됐거나 지속 실행 준비가 끝났다는 근거는 아직 없다."
+      ]
+    },
+    {
+      "id": "Sentinel_7f7305abaf20819187572ec1cb1e0c07",
+      "classification": "user_instruction",
+      "sourceReference": "Sentinel_7f7305abaf20819187572ec1cb1e0c07",
+      "reportedAt": "2026-10-06T06:57:21Z",
+      "observationWindow": null,
+      "claim": "사용자는 설명한 맥락을 바탕으로 실제 측정을 지금 진행하도록 요청했다. 한 명의 알려진 학생과 최근 한 행의 오 자료를 일괄 PDF로 생성하고 헤더와 문항 및 페이지를 확인하는 제한된 시험이 허용되었다.",
+      "scope": "wrong_original 자료의 제한된 PDF 생성 시험",
+      "limitations": [
+        "물리 인쇄, 채점, 재응시, 상태 변경, 파일 업로드는 이 시험 범위에 포함되지 않는다.",
+        "유사문항 클의 PDF 생성까지 포괄 승인한 것으로 확장하지 않는다.",
+        "생성 성공이나 검증 완료를 아직 관찰하지 않았다."
+      ]
+    },
+    {
+      "id": "source:clinic-measured-attempt-20261006-0700",
+      "classification": "reported_observation",
+      "sourceReference": "task:01a10fb5-7835-7589-8a54-c84ad351d02a",
+      "reportedAt": "2026-10-06T07:00:46Z",
+      "observationWindow": null,
+      "claim": "행을 선택하면 행의 오와 클이 모두 빨갛게 표시되었다. 행별 클은 선택 토글이 아니라 개별 클리닉지 생성 모달을 열었고 유사문제 클리닉지와 오답 유형 배수 1 및 stepper 1이 보였다. 해당 모달의 실제 생성은 누르지 않았다. 상단 클은 설정과 선택 색상 변화를 함께 만들었고 상단 일괄 클 설정은 기본값 2로 개별 설정 1과 달랐다. 설정을 적용하거나 클 자료를 생성하지 않았다. 이후 한 알려진 최근 행에서 오만 켜고 클을 끈 상태로 일괄생성을 한 번 실행했으며 오에 새 초록 체크가 생겼다. PDF 탭이나 설치 모달은 보이지 않았고 다운로드 페이지는 보안 프로토콜 제한으로 읽지 못했다.",
+      "scope": "제한된 오 자료 일괄 생성 시험과 상단 및 행별 클 제어 실측",
+      "limitations": [
+        "정확한 클릭 시각과 당시 적용 계약 버전은 보고에 없다.",
+        "초록 체크의 정확한 의미와 PDF 생성 성공 또는 물리 출력 완료는 확인되지 않았다.",
+        "chrome://downloads 접근 차단을 다른 경로로 우회하지 않았다.",
+        "생성은 반복하지 않았다.",
+        "이 기록은 관찰 보고에서 재구성한 추적이며 자동 계측 로그가 아니다."
+      ]
+    },
+    {
+      "id": "Sentinel_6983cd6e29a0819192ded6289fc89080",
+      "classification": "user_instruction",
+      "sourceReference": "Sentinel_6983cd6e29a0819192ded6289fc89080",
+      "reportedAt": null,
+      "observationWindow": null,
+      "claim": "사용자가 Cartography를 에이전트가 실제 강사의 목적과 버튼을 누르는 맥락을 이해할 수 있는 환경으로 만들고 시행착오와 최소 질문으로 보완하도록 요청했다.",
+      "scope": "초기 의미 지도와 맥락 인터뷰 방향",
+      "limitations": [
+        "실제 WebMCP 런타임 설치나 임의 상태 변경의 승인을 뜻하지 않는다."
+      ]
+    },
+    {
+      "id": "Sentinel_d575bf6839e08191b9e8d73a5fe93316",
+      "classification": "user_instruction",
+      "sourceReference": "Sentinel_d575bf6839e08191b9e8d73a5fe93316",
+      "reportedAt": "2026-10-06T07:03:58Z",
+      "observationWindow": null,
+      "claim": "사용자가 강아PC에서 PDF 뷰어가 열렸음을 확인했다.",
+      "scope": "외부 PDF 뷰어 열림에 대한 사용자 확인",
+      "limitations": [
+        "에이전트가 PDF 내용과 헤더, 페이지 또는 인쇄 설정을 읽은 것은 아니다.",
+        "물리 인쇄 완료나 학습 완료의 근거가 아니다."
+      ]
+    },
+    {
+      "id": "source:pdf-viewer-capability-20261006-0704",
+      "classification": "reported_observation",
+      "sourceReference": "task:01a10fb5-7835-7589-8a54-c84ad351d02a",
+      "reportedAt": "2026-10-06T07:04:51Z",
+      "observationWindow": null,
+      "claim": "현지 실행기의 현재 앱 조회는 apps=[]였고 접근 가능한 것은 Chrome 확장 탭이었다. 네이티브 앱 및 화면 캡처 실행 경로가 없어 열린 외부 PDF 뷰어와 인쇄 설정을 검사하지 못했다.",
+      "scope": "이번 실행 환경에서 외부 PDF 뷰어를 확인할 수 있는 현재 능력",
+      "limitations": [
+        "모든 환경에서 인쇄가 불가능하다는 뜻은 아니다.",
+        "다른 경로로 보안 제한을 우회하지 않았다.",
+        "PDF 내용과 페이지 및 프린터 설정은 미검증이며 실제 인쇄는 하지 않았다."
+      ]
+    },
+    {
+      "id": "source:academy-environment-user-20261006-0705",
+      "classification": "user_instruction",
+      "sourceReference": null,
+      "reportedAt": "2026-10-06T07:07:16Z",
+      "observationWindow": null,
+      "claim": "사용자가 학원 사이트 실행을 강아PC로 한정하고 이 업무의 클라우드 로그인과 설치를 취소했다. 담당 작업은 인증 요청, 자격증명 사용 또는 저장, 설치가 수행되지 않았다고 확인했다.",
+      "scope": "학원 업무의 실행 환경",
+      "limitations": [
+        "다른 프로젝트의 환경 지시에 일반화하지 않는다.",
+        "강아PC의 현재 외부 PDF 앱 및 인쇄 설정 접근 제한은 별도로 유지한다."
+      ]
+    },
+    {
+      "id": "source:local-audit-handoff-cancelled-20261006",
+      "classification": "reported_observation",
+      "sourceReference": "task:01a10fb5-7835-7589-8a54-c84ad351d02a",
+      "reportedAt": "2026-10-06T07:07:16Z",
+      "observationWindow": null,
+      "claim": "실제 9개 이벤트가 담겼다고 보고된 현지 감사 파일의 전달 읽기는 사용자가 취소했다. 원문 이벤트를 가져오거나 검증하지 않았다.",
+      "scope": "현지 감사 파일 전달의 접근 상태",
+      "limitations": [
+        "취소된 읽기는 재시도하지 않는다.",
+        "현재 정리한 1개 실행 요약과 관찰 기록은 부모가 전달한 실제 동작 보고에서 재구성한 것이며 현지 9개 원문 이벤트가 아니다."
+      ]
+    }
+  ]
+}

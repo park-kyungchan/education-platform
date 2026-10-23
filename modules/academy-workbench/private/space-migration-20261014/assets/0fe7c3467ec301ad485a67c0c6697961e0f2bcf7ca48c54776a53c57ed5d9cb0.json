@@ -1,0 +1,1075 @@
+{
+  "$schema": "academy-cartography-0.4.schema.json",
+  "kind": "homework_verification_package",
+  "id": "academy:homework-verification:r4",
+  "schemaVersion": "0.4.0",
+  "revision": 4,
+  "projectId": "project:academy-practical",
+  "canonicalParentId": "project:academy-practical",
+  "updatedAt": "2026-10-06T07:44:42.035Z",
+  "sourceIds": [
+    "source:homework-read-20261006-0723-0727",
+    "source:homework-catalog-20261006-073138-073205",
+    "Sentinel_1413a0a8e7588191b4bdc9489b59c321",
+    "Sentinel_ebaa6c04bd708191bfeb691439e91b5b",
+    "Sentinel_7686485ded948191a38c6e19fb79efcc",
+    "source:verified-section-catalog-20261006-0735-0737"
+  ],
+  "authorityGrantedByDocument": false,
+  "purpose": "학생과 날짜별 기존 과제의 교재 섹션 및 범위를 실제 영상, 입력, 채점 근거와 대조하고 사용자 판단 및 이후 오답과 유사문항 자료의 근거로 연결한다.",
+  "baseRecordPolicy": [
+    "기존 Assignment가 학생과 날짜 및 과제 원문을 한 번만 보유한다. AssignmentScopeItem은 그 과제를 참조하며 교재와 섹션 및 범위를 소유한다.",
+    "Observation과 PreviewInspection 및 AssessmentResult의 원본을 복제하지 않고 evidenceMatch에서 참조한다.",
+    "TeacherCompletionAssertion은 사용자가 제공한 판단이다. 앱 채점이나 영상 기록으로 대신 생성하지 않는다.",
+    "사이트 결과 시각과 조회 시각을 구분하고 사이트 시계의 시간대가 미확인일 때 임의로 KST나 UTC로 바꾸지 않는다.",
+    "PreviewVideoRequirement와 ProblemSectionRequirement는 같은 Assignment를 독립적으로 참조한다. BookSectionRegistry에는 문제풀이 섹션만 둔다.",
+    "목록 시험 코드는 네이티브 응시 ID가 아니다. 로컬 A→S→G→W→C 추적 ID는 현지 연결용이며 사이트 식별자로 사칭하지 않는다.",
+    "실전유형(n회차)라는 결과 원문과 유형다지기라는 목록 원문은 출처별로 보존하고 강제 정규화하지 않는다.",
+    "강아워크북평가는 일반 교재 문제 섹션과 별도 평가 종류로 취급한다.",
+    "100점만으로 읽지 않은 실제 오답 문항 배열을 []로 만들지 않는다."
+  ],
+  "sectionRegistry": [
+    {
+      "id": "section:1N82:v2:필수예제",
+      "label": "필수예제",
+      "role": "problem_section",
+      "bookCode": "1N82",
+      "bookVersion": "2",
+      "verificationState": "site_label_observed",
+      "exactHeaderLabel": null,
+      "headerEvidenceIds": [],
+      "sourceIds": [
+        "source:verified-section-catalog-20261006-0735-0737"
+      ],
+      "universalAcrossBooks": false,
+      "labelForm": "literal"
+    },
+    {
+      "id": "section:1N82:v2:유형다지기",
+      "label": "유형다지기",
+      "role": "problem_section",
+      "bookCode": "1N82",
+      "bookVersion": "2",
+      "verificationState": "site_label_observed",
+      "exactHeaderLabel": null,
+      "headerEvidenceIds": [],
+      "sourceIds": [
+        "source:verified-section-catalog-20261006-0735-0737"
+      ],
+      "universalAcrossBooks": false,
+      "labelForm": "literal"
+    },
+    {
+      "id": "section:1N87:v1:필수예제",
+      "label": "필수예제",
+      "role": "problem_section",
+      "bookCode": "1N87",
+      "bookVersion": "1",
+      "verificationState": "site_label_observed",
+      "exactHeaderLabel": null,
+      "headerEvidenceIds": [],
+      "sourceIds": [
+        "source:verified-section-catalog-20261006-0735-0737"
+      ],
+      "universalAcrossBooks": false,
+      "labelForm": "literal"
+    },
+    {
+      "id": "section:1N87:v1:유형다지기",
+      "label": "유형다지기",
+      "role": "problem_section",
+      "bookCode": "1N87",
+      "bookVersion": "1",
+      "verificationState": "site_label_observed",
+      "exactHeaderLabel": null,
+      "headerEvidenceIds": [],
+      "sourceIds": [
+        "source:verified-section-catalog-20261006-0735-0737"
+      ],
+      "universalAcrossBooks": false,
+      "labelForm": "literal"
+    },
+    {
+      "id": "section:1SJ2:v1:필수예제",
+      "label": "필수예제",
+      "role": "problem_section",
+      "bookCode": "1SJ2",
+      "bookVersion": "1",
+      "verificationState": "site_label_observed",
+      "exactHeaderLabel": null,
+      "headerEvidenceIds": [],
+      "sourceIds": [
+        "source:verified-section-catalog-20261006-0735-0737"
+      ],
+      "universalAcrossBooks": false,
+      "labelForm": "literal"
+    },
+    {
+      "id": "section:1SJ2:v1:실력다지기",
+      "label": "실력다지기",
+      "role": "problem_section",
+      "bookCode": "1SJ2",
+      "bookVersion": "1",
+      "verificationState": "site_label_observed",
+      "exactHeaderLabel": null,
+      "headerEvidenceIds": [],
+      "sourceIds": [
+        "source:verified-section-catalog-20261006-0735-0737"
+      ],
+      "universalAcrossBooks": false,
+      "labelForm": "literal"
+    },
+    {
+      "id": "section:1SJ2:v1:실력올리기",
+      "label": "실력올리기",
+      "role": "problem_section",
+      "bookCode": "1SJ2",
+      "bookVersion": "1",
+      "verificationState": "site_label_observed",
+      "exactHeaderLabel": null,
+      "headerEvidenceIds": [],
+      "sourceIds": [
+        "source:verified-section-catalog-20261006-0735-0737"
+      ],
+      "universalAcrossBooks": false,
+      "labelForm": "literal"
+    },
+    {
+      "id": "section:1SJ2:v1:생각근육키우기",
+      "label": "생각근육키우기",
+      "role": "problem_section",
+      "bookCode": "1SJ2",
+      "bookVersion": "1",
+      "verificationState": "site_label_observed",
+      "exactHeaderLabel": null,
+      "headerEvidenceIds": [],
+      "sourceIds": [
+        "source:verified-section-catalog-20261006-0735-0737"
+      ],
+      "universalAcrossBooks": false,
+      "labelForm": "literal"
+    },
+    {
+      "id": "section:1U0U:v1:필수예제",
+      "label": "필수예제",
+      "role": "problem_section",
+      "bookCode": "1U0U",
+      "bookVersion": "1",
+      "verificationState": "site_label_observed",
+      "exactHeaderLabel": null,
+      "headerEvidenceIds": [],
+      "sourceIds": [
+        "source:verified-section-catalog-20261006-0735-0737"
+      ],
+      "universalAcrossBooks": false,
+      "labelForm": "literal"
+    },
+    {
+      "id": "section:1U0U:v1:유형다지기",
+      "label": "유형다지기",
+      "role": "problem_section",
+      "bookCode": "1U0U",
+      "bookVersion": "1",
+      "verificationState": "site_label_observed",
+      "exactHeaderLabel": null,
+      "headerEvidenceIds": [],
+      "sourceIds": [
+        "source:verified-section-catalog-20261006-0735-0737"
+      ],
+      "universalAcrossBooks": false,
+      "labelForm": "literal"
+    },
+    {
+      "id": "section:1U0U:v1:실력쌓기",
+      "label": "실력쌓기",
+      "role": "problem_section",
+      "bookCode": "1U0U",
+      "bookVersion": "1",
+      "verificationState": "site_label_observed",
+      "exactHeaderLabel": null,
+      "headerEvidenceIds": [],
+      "sourceIds": [
+        "source:verified-section-catalog-20261006-0735-0737"
+      ],
+      "universalAcrossBooks": false,
+      "labelForm": "literal"
+    },
+    {
+      "id": "section:1U0T:v1:필수예제",
+      "label": "필수예제",
+      "role": "problem_section",
+      "bookCode": "1U0T",
+      "bookVersion": "1",
+      "verificationState": "site_label_observed",
+      "exactHeaderLabel": null,
+      "headerEvidenceIds": [],
+      "sourceIds": [
+        "source:verified-section-catalog-20261006-0735-0737"
+      ],
+      "universalAcrossBooks": false,
+      "labelForm": "literal"
+    },
+    {
+      "id": "section:1U0T:v1:유형다지기",
+      "label": "유형다지기",
+      "role": "problem_section",
+      "bookCode": "1U0T",
+      "bookVersion": "1",
+      "verificationState": "site_label_observed",
+      "exactHeaderLabel": null,
+      "headerEvidenceIds": [],
+      "sourceIds": [
+        "source:verified-section-catalog-20261006-0735-0737"
+      ],
+      "universalAcrossBooks": false,
+      "labelForm": "literal"
+    },
+    {
+      "id": "section:1U0T:v1:실력쌓기",
+      "label": "실력쌓기",
+      "role": "problem_section",
+      "bookCode": "1U0T",
+      "bookVersion": "1",
+      "verificationState": "site_label_observed",
+      "exactHeaderLabel": null,
+      "headerEvidenceIds": [],
+      "sourceIds": [
+        "source:verified-section-catalog-20261006-0735-0737"
+      ],
+      "universalAcrossBooks": false,
+      "labelForm": "literal"
+    },
+    {
+      "id": "section:1MHL:v1:유형다지기",
+      "label": "유형다지기",
+      "role": "problem_section",
+      "bookCode": "1MHL",
+      "bookVersion": "1",
+      "verificationState": "site_label_observed",
+      "exactHeaderLabel": null,
+      "headerEvidenceIds": [],
+      "sourceIds": [
+        "source:verified-section-catalog-20261006-0735-0737"
+      ],
+      "universalAcrossBooks": false,
+      "labelForm": "literal"
+    },
+    {
+      "id": "section:1MHL:v1:실전유형(n회차)",
+      "label": "실전유형(n회차)",
+      "role": "problem_section",
+      "bookCode": "1MHL",
+      "bookVersion": "1",
+      "verificationState": "site_label_observed",
+      "exactHeaderLabel": null,
+      "headerEvidenceIds": [],
+      "sourceIds": [
+        "source:verified-section-catalog-20261006-0735-0737"
+      ],
+      "universalAcrossBooks": false,
+      "labelForm": "pattern"
+    }
+  ],
+  "assignmentScopeItems": [],
+  "gradingBindings": [],
+  "homeworkChecks": [],
+  "verificationContracts": [
+    {
+      "id": "homework_evidence_verification",
+      "version": "1.0.0",
+      "status": "read_path_observed_limited_scope",
+      "routeIds": [
+        "route:days-dayrecord",
+        "route:student-courses",
+        "route:prestudy-summary",
+        "route:preview-inspection",
+        "route:prestudy-completed",
+        "route:learning-results",
+        "route:course-catalog",
+        "route:course-exam-list"
+      ],
+      "stages": [
+        {
+          "id": "assignment",
+          "action": "DaysMain에서 대상 학생의 날짜별 최신 배정 과제와 원문 범위를 읽는다.",
+          "guard": "과제 날짜와 학생 및 과정이 맞는지 확인하고 이전 과제를 현재 과제로 바꾸지 않는다."
+        },
+        {
+          "id": "course-and-section",
+          "action": "StudyCourse와 실제 교재 또는 헤더 근거로 교재 버전 및 섹션과 범위를 연결한다.",
+          "guard": "같은 교재의 복수 버전과 동시 등록 과정을 구분한다. 문제 섹션만 등록하고 영상은 별도 경로로 둔다."
+        },
+        {
+          "id": "requirements",
+          "action": "같은 Assignment 아래 예습 영상 요구와 문제 섹션별 풀이·입력·채점 요구를 별개로 만든다.",
+          "guard": "종이 전용 예외가 명시된 과제만 앱 입력과 집 채점 요구를 제외한다. 일반 오답 정리에는 자동 적용하지 않는다."
+        },
+        {
+          "id": "video-evidence",
+          "action": "TeacherPrestudySummary와 WebUnPreStudy 및 WebCtPreStudy에서 대상 범위의 영상과 관련 표시를 읽는다.",
+          "guard": "영상의 단원과 버전은 영상 경로에서 확인하며 교재 버전과 임의로 일치시키지 않는다. 영상 OK와 교사 검사 표시 및 QR 도움 가능성을 구분한다."
+        },
+        {
+          "id": "grading-evidence",
+          "action": "TestPageList의 StudentNameSearch에서 같은 과제의 과정, 섹션, 범위와 시도 및 채점 기록을 읽는다.",
+          "guard": "검색창만 보지 않고 결과 행의 학생을 확인한다. 비동기 이전 학생 표와 적용되지 않은 필터는 증거에서 버린다."
+        },
+        {
+          "id": "scope-match",
+          "action": "각 AssignmentScopeItem에 채점 시도와 관찰을 연결하고 범위 전체, 일부, 불일치 및 미확인을 나눈다.",
+          "guard": "이전 점수와 일부 단원 채점을 새 숙제 전체 완료로 사용하지 않는다. 페이지나 문항 대응이 불명확하면 ambiguous_mapping으로 둔다."
+        },
+        {
+          "id": "teacher-judgment",
+          "action": "확인한 사실과 예외 및 아직 확인하지 못한 항목을 보고하고 사용자 판단이 제공되면 별도 연결한다.",
+          "guard": "앱 기록만으로 종이 풀이를 확정하거나 마감 전 미관찰을 실패로 선언하지 않는다."
+        },
+        {
+          "id": "pdf-basis",
+          "action": "향후 허용된 오답 및 유사문항 생성에 해당 범위와 채점 시도 및 원래 오답 문항의 근거를 제공한다.",
+          "guard": "원래 문항과 유사문항의 출처 시도를 보존한다. 출처 선택이 모호하면 생성하지 않으며 현재 지속 자동 생성과 인쇄는 승인되지 않았다."
+        }
+      ],
+      "queryWindow": {
+        "observedAtWindowUtc": [
+          "2026-10-06T07:23:00Z",
+          "2026-10-06T07:27:00Z"
+        ],
+        "videoDateLabels": [
+          "2026-09-30",
+          "2026-10-06"
+        ],
+        "appWindowLabel": "최근 3주 및 전체 과정",
+        "siteClockTimezone": null
+      },
+      "generationAuthority": {
+        "ongoingAutoGenerationAuthorized": false,
+        "ongoingAutoPrintingAuthorized": false,
+        "ambiguousSourceBlocksGeneration": true
+      },
+      "sourceIds": [
+        "source:homework-read-20261006-0723-0727",
+        "source:homework-catalog-20261006-073138-073205",
+        "Sentinel_1413a0a8e7588191b4bdc9489b59c321",
+        "Sentinel_ebaa6c04bd708191bfeb691439e91b5b",
+        "Sentinel_7686485ded948191a38c6e19fb79efcc",
+        "source:verified-section-catalog-20261006-0735-0737"
+      ]
+    }
+  ],
+  "conditionalRules": [
+    {
+      "id": "paper-only-in-class-review",
+      "appliesWhen": "해당 과제가 종이로 풀어 오고 채점과 검토를 수업 중 강사가 하는 과제로 확인됨",
+      "effects": [
+        "수업 전 종이 풀이는 요구 항목이다.",
+        "집에서 앱 입력과 채점 기록은 요구하지 않는다.",
+        "수업 중 강사 채점 및 검토는 수업 전 단계에서 아직 시점이 오지 않은 항목이다.",
+        "클리닉 QR 도움 영상은 선택적인 도움이며 과제 완료 근거가 아니다."
+      ],
+      "doesNotApplyTo": [
+        "가우스 정규 예습 과제 전체",
+        "앱 입력 또는 재입력이 명시된 별도 과제",
+        "종류가 불명확한 일반 오답 정리"
+      ],
+      "sourceIds": [
+        "Sentinel_1413a0a8e7588191b4bdc9489b59c321"
+      ]
+    }
+  ],
+  "observedPatterns": [
+    {
+      "id": "new-scope-not-observed",
+      "observation": "새 배정 단원의 영상 또는 앱 기록이 이번 조회 구간에서 관찰되지 않은 경우가 있었다.",
+      "interpretationLimit": "관찰한 조회 범위에서 부재한 것이며 과제 실패나 사이트 전체 기록 부재로 확대하지 않는다.",
+      "sourceIds": [
+        "source:homework-read-20261006-0723-0727"
+      ]
+    },
+    {
+      "id": "partial-unit-after-assignment",
+      "observation": "배정 후 일부 단원의 앱 채점을 확인했지만 전체 지정 페이지와 특정 오답 문항 대응은 남아 있었다.",
+      "interpretationLimit": "일부 근거를 전체 과제 완료로 바꾸지 않는다.",
+      "sourceIds": [
+        "source:homework-read-20261006-0723-0727",
+        "source:homework-catalog-20261006-073138-073205"
+      ]
+    },
+    {
+      "id": "paper-exception",
+      "observation": "종이 전용 과제에서는 앱 입력과 집 채점이 요구되지 않으며 실제 종이 및 수업 중 검토는 미확인이다.",
+      "interpretationLimit": "앱 기록 부재로 미완료를 판정하지 않는다.",
+      "sourceIds": [
+        "source:homework-read-20261006-0723-0727",
+        "Sentinel_1413a0a8e7588191b4bdc9489b59c321"
+      ]
+    },
+    {
+      "id": "old-attempt-excluded",
+      "observation": "이전 점수가 새 오답 정리 또는 이후 날짜의 클리닉 과제에 해당하는 근거에서 제외됐다.",
+      "interpretationLimit": "단원이나 학생이 같아도 과제와 시도가 다른 경우 새 완료 근거가 아니다.",
+      "sourceIds": [
+        "source:homework-read-20261006-0723-0727"
+      ]
+    },
+    {
+      "id": "async-stale-table",
+      "observation": "연속 검색 중 이전 학생의 결과 표가 남은 세 캡처를 버리고 대상 행이 맞을 때까지 다시 확인했다. 필터 변경 한 번이 적용되지 않은 경우도 확인했다.",
+      "interpretationLimit": "검색 입력값과 결과 표를 동일시하지 않는다. 버린 캡처를 다른 학생의 근거로 사용하지 않는다.",
+      "sourceIds": [
+        "source:homework-read-20261006-0723-0727"
+      ]
+    },
+    {
+      "id": "independent-video-problem-routes",
+      "observation": "예습 영상은 TeacherPrestudySummary 및 WebUnPreStudy 등에서, 문제 섹션의 입력 및 채점은 TestPageList에서 별도로 확인했다.",
+      "interpretationLimit": "영상 시청과 문제 섹션 채점을 서로 대체하거나 하나의 완료 판단으로 합치지 않는다.",
+      "sourceIds": [
+        "Sentinel_7686485ded948191a38c6e19fb79efcc",
+        "source:verified-section-catalog-20261006-0735-0737"
+      ]
+    }
+  ],
+  "catalogBindings": [
+    {
+      "bookCode": "1N87",
+      "bookVersion": "1",
+      "label": "중1-2 가우스 3권",
+      "unitOrLessonLabel": "5 기본도형 총괄",
+      "testCodes": [
+        "1N870E"
+      ],
+      "verifiedRelation": "교재와 버전 및 단원과 시험 코드의 정적 목록 대응",
+      "unverifiedRelations": [
+        "과제 페이지 176–180과의 대응",
+        "특정 오답 문항 1273201의 개별 대응"
+      ],
+      "sourceIds": [
+        "source:homework-catalog-20261006-073138-073205"
+      ]
+    },
+    {
+      "bookCode": "1N87",
+      "bookVersion": "1",
+      "label": "중1-2 가우스 3권",
+      "unitOrLessonLabel": "6 평면도형 총괄",
+      "testCodes": [
+        "1N870P"
+      ],
+      "verifiedRelation": "교재와 버전 및 단원과 시험 코드의 정적 목록 대응",
+      "unverifiedRelations": [
+        "과제 페이지 176–180이 이 시험 코드라는 결론",
+        "특정 오답 문항 1273201의 개별 대응"
+      ],
+      "sourceIds": [
+        "source:homework-catalog-20261006-073138-073205"
+      ]
+    },
+    {
+      "bookCode": "1MHL",
+      "bookVersion": "1",
+      "label": "중1-1 다빈치",
+      "unitOrLessonLabel": "2-2 유리수 계산 1–6차시",
+      "testCodes": [
+        "1MHL0D",
+        "1MHL0E",
+        "1MHL0F",
+        "1MHL0G",
+        "1MHL0H",
+        "1MHL0I"
+      ],
+      "verifiedRelation": "보고된 차시별 시험 코드의 범위",
+      "unverifiedRelations": [
+        "페이지 72–83과 1–6차시의 대응"
+      ],
+      "sourceIds": [
+        "source:homework-catalog-20261006-073138-073205"
+      ]
+    },
+    {
+      "bookCode": "1N82",
+      "bookVersion": "2",
+      "label": "가우스",
+      "unitOrLessonLabel": "1-3 필수예제",
+      "testCodes": [
+        "1N8204"
+      ],
+      "verifiedRelation": "교재 버전과 소단원 및 실제 UI 문제 섹션과 목록 시험 코드 대응",
+      "unverifiedRelations": [
+        "외부 PDF 헤더",
+        "학생 네이티브 시도 ID와의 연결",
+        "문항별 실제 오답 및 유사문항 ID"
+      ],
+      "sourceIds": [
+        "source:verified-section-catalog-20261006-0735-0737"
+      ]
+    },
+    {
+      "bookCode": "1N82",
+      "bookVersion": "2",
+      "label": "가우스",
+      "unitOrLessonLabel": "1-3 유형다지기",
+      "testCodes": [
+        "1N8205"
+      ],
+      "verifiedRelation": "교재 버전과 소단원 및 실제 UI 문제 섹션과 목록 시험 코드 대응",
+      "unverifiedRelations": [
+        "외부 PDF 헤더",
+        "학생 네이티브 시도 ID와의 연결",
+        "문항별 실제 오답 및 유사문항 ID"
+      ],
+      "sourceIds": [
+        "source:verified-section-catalog-20261006-0735-0737"
+      ]
+    },
+    {
+      "bookCode": "1N82",
+      "bookVersion": "2",
+      "label": "가우스",
+      "unitOrLessonLabel": "1-4 필수예제",
+      "testCodes": [
+        "1N8206"
+      ],
+      "verifiedRelation": "교재 버전과 소단원 및 실제 UI 문제 섹션과 목록 시험 코드 대응",
+      "unverifiedRelations": [
+        "외부 PDF 헤더",
+        "학생 네이티브 시도 ID와의 연결",
+        "문항별 실제 오답 및 유사문항 ID"
+      ],
+      "sourceIds": [
+        "source:verified-section-catalog-20261006-0735-0737"
+      ]
+    },
+    {
+      "bookCode": "1N82",
+      "bookVersion": "2",
+      "label": "가우스",
+      "unitOrLessonLabel": "1-4 유형다지기",
+      "testCodes": [
+        "1N8207"
+      ],
+      "verifiedRelation": "교재 버전과 소단원 및 실제 UI 문제 섹션과 목록 시험 코드 대응",
+      "unverifiedRelations": [
+        "외부 PDF 헤더",
+        "학생 네이티브 시도 ID와의 연결",
+        "문항별 실제 오답 및 유사문항 ID"
+      ],
+      "sourceIds": [
+        "source:verified-section-catalog-20261006-0735-0737"
+      ]
+    },
+    {
+      "bookCode": "1N87",
+      "bookVersion": "1",
+      "label": "중1-2 가우스 3권",
+      "unitOrLessonLabel": "6-4 필수예제",
+      "testCodes": [
+        "1N870L"
+      ],
+      "verifiedRelation": "교재 버전과 소단원 및 실제 UI 문제 섹션과 목록 시험 코드 대응",
+      "unverifiedRelations": [
+        "외부 PDF 헤더",
+        "학생 네이티브 시도 ID와의 연결",
+        "문항별 실제 오답 및 유사문항 ID"
+      ],
+      "sourceIds": [
+        "source:verified-section-catalog-20261006-0735-0737"
+      ]
+    },
+    {
+      "bookCode": "1N87",
+      "bookVersion": "1",
+      "label": "중1-2 가우스 3권",
+      "unitOrLessonLabel": "6-4 유형다지기",
+      "testCodes": [
+        "1N870M"
+      ],
+      "verifiedRelation": "교재 버전과 소단원 및 실제 UI 문제 섹션과 목록 시험 코드 대응",
+      "unverifiedRelations": [
+        "외부 PDF 헤더",
+        "학생 네이티브 시도 ID와의 연결",
+        "문항별 실제 오답 및 유사문항 ID"
+      ],
+      "sourceIds": [
+        "source:verified-section-catalog-20261006-0735-0737"
+      ]
+    },
+    {
+      "bookCode": "1N87",
+      "bookVersion": "1",
+      "label": "중1-2 가우스 3권",
+      "unitOrLessonLabel": "6-5 필수예제",
+      "testCodes": [
+        "1N870N"
+      ],
+      "verifiedRelation": "교재 버전과 소단원 및 실제 UI 문제 섹션과 목록 시험 코드 대응",
+      "unverifiedRelations": [
+        "외부 PDF 헤더",
+        "학생 네이티브 시도 ID와의 연결",
+        "문항별 실제 오답 및 유사문항 ID"
+      ],
+      "sourceIds": [
+        "source:verified-section-catalog-20261006-0735-0737"
+      ]
+    },
+    {
+      "bookCode": "1N87",
+      "bookVersion": "1",
+      "label": "중1-2 가우스 3권",
+      "unitOrLessonLabel": "6-5 유형다지기",
+      "testCodes": [
+        "1N870O"
+      ],
+      "verifiedRelation": "교재 버전과 소단원 및 실제 UI 문제 섹션과 목록 시험 코드 대응",
+      "unverifiedRelations": [
+        "외부 PDF 헤더",
+        "학생 네이티브 시도 ID와의 연결",
+        "문항별 실제 오답 및 유사문항 ID"
+      ],
+      "sourceIds": [
+        "source:verified-section-catalog-20261006-0735-0737"
+      ]
+    },
+    {
+      "bookCode": "1SJ2",
+      "bookVersion": "1",
+      "label": "초5-1 다빈치",
+      "unitOrLessonLabel": "1-1 필수예제",
+      "testCodes": [
+        "1SJ200"
+      ],
+      "verifiedRelation": "교재 버전과 소단원 및 실제 UI 문제 섹션과 목록 시험 코드 대응",
+      "unverifiedRelations": [
+        "외부 PDF 헤더",
+        "학생 네이티브 시도 ID와의 연결",
+        "문항별 실제 오답 및 유사문항 ID"
+      ],
+      "sourceIds": [
+        "source:verified-section-catalog-20261006-0735-0737"
+      ]
+    },
+    {
+      "bookCode": "1SJ2",
+      "bookVersion": "1",
+      "label": "초5-1 다빈치",
+      "unitOrLessonLabel": "1-1 실력다지기",
+      "testCodes": [
+        "1SJ201"
+      ],
+      "verifiedRelation": "교재 버전과 소단원 및 실제 UI 문제 섹션과 목록 시험 코드 대응",
+      "unverifiedRelations": [
+        "외부 PDF 헤더",
+        "학생 네이티브 시도 ID와의 연결",
+        "문항별 실제 오답 및 유사문항 ID"
+      ],
+      "sourceIds": [
+        "source:verified-section-catalog-20261006-0735-0737"
+      ]
+    },
+    {
+      "bookCode": "1SJ2",
+      "bookVersion": "1",
+      "label": "초5-1 다빈치",
+      "unitOrLessonLabel": "1-1 실력올리기",
+      "testCodes": [
+        "1SJ202"
+      ],
+      "verifiedRelation": "교재 버전과 소단원 및 실제 UI 문제 섹션과 목록 시험 코드 대응",
+      "unverifiedRelations": [
+        "외부 PDF 헤더",
+        "학생 네이티브 시도 ID와의 연결",
+        "문항별 실제 오답 및 유사문항 ID"
+      ],
+      "sourceIds": [
+        "source:verified-section-catalog-20261006-0735-0737"
+      ]
+    },
+    {
+      "bookCode": "1SJ2",
+      "bookVersion": "1",
+      "label": "초5-1 다빈치",
+      "unitOrLessonLabel": "1-2 필수예제",
+      "testCodes": [
+        "1SJ203"
+      ],
+      "verifiedRelation": "교재 버전과 소단원 및 실제 UI 문제 섹션과 목록 시험 코드 대응",
+      "unverifiedRelations": [
+        "외부 PDF 헤더",
+        "학생 네이티브 시도 ID와의 연결",
+        "문항별 실제 오답 및 유사문항 ID"
+      ],
+      "sourceIds": [
+        "source:verified-section-catalog-20261006-0735-0737"
+      ]
+    },
+    {
+      "bookCode": "1SJ2",
+      "bookVersion": "1",
+      "label": "초5-1 다빈치",
+      "unitOrLessonLabel": "1-2 실력다지기",
+      "testCodes": [
+        "1SJ204"
+      ],
+      "verifiedRelation": "교재 버전과 소단원 및 실제 UI 문제 섹션과 목록 시험 코드 대응",
+      "unverifiedRelations": [
+        "외부 PDF 헤더",
+        "학생 네이티브 시도 ID와의 연결",
+        "문항별 실제 오답 및 유사문항 ID"
+      ],
+      "sourceIds": [
+        "source:verified-section-catalog-20261006-0735-0737"
+      ]
+    },
+    {
+      "bookCode": "1SJ2",
+      "bookVersion": "1",
+      "label": "초5-1 다빈치",
+      "unitOrLessonLabel": "1-2 실력올리기",
+      "testCodes": [
+        "1SJ205"
+      ],
+      "verifiedRelation": "교재 버전과 소단원 및 실제 UI 문제 섹션과 목록 시험 코드 대응",
+      "unverifiedRelations": [
+        "외부 PDF 헤더",
+        "학생 네이티브 시도 ID와의 연결",
+        "문항별 실제 오답 및 유사문항 ID"
+      ],
+      "sourceIds": [
+        "source:verified-section-catalog-20261006-0735-0737"
+      ]
+    },
+    {
+      "bookCode": "1SJ2",
+      "bookVersion": "1",
+      "label": "초5-1 다빈치",
+      "unitOrLessonLabel": "1-2 생각근육키우기",
+      "testCodes": [
+        "1SJ206"
+      ],
+      "verifiedRelation": "교재 버전과 소단원 및 실제 UI 문제 섹션과 목록 시험 코드 대응",
+      "unverifiedRelations": [
+        "외부 PDF 헤더",
+        "학생 네이티브 시도 ID와의 연결",
+        "문항별 실제 오답 및 유사문항 ID"
+      ],
+      "sourceIds": [
+        "source:verified-section-catalog-20261006-0735-0737"
+      ]
+    },
+    {
+      "bookCode": "1U0U",
+      "bookVersion": "1",
+      "label": "초5-2 가우스 2권",
+      "unitOrLessonLabel": "4-2 필수예제",
+      "testCodes": [
+        "1U0U02"
+      ],
+      "verifiedRelation": "교재 버전과 소단원 및 실제 UI 문제 섹션과 목록 시험 코드 대응",
+      "unverifiedRelations": [
+        "외부 PDF 헤더",
+        "학생 네이티브 시도 ID와의 연결",
+        "문항별 실제 오답 및 유사문항 ID"
+      ],
+      "sourceIds": [
+        "source:verified-section-catalog-20261006-0735-0737"
+      ]
+    },
+    {
+      "bookCode": "1U0U",
+      "bookVersion": "1",
+      "label": "초5-2 가우스 2권",
+      "unitOrLessonLabel": "4-2 유형다지기",
+      "testCodes": [
+        "1U0U03"
+      ],
+      "verifiedRelation": "교재 버전과 소단원 및 실제 UI 문제 섹션과 목록 시험 코드 대응",
+      "unverifiedRelations": [
+        "외부 PDF 헤더",
+        "학생 네이티브 시도 ID와의 연결",
+        "문항별 실제 오답 및 유사문항 ID"
+      ],
+      "sourceIds": [
+        "source:verified-section-catalog-20261006-0735-0737"
+      ]
+    },
+    {
+      "bookCode": "1U0U",
+      "bookVersion": "1",
+      "label": "초5-2 가우스 2권",
+      "unitOrLessonLabel": "4-5 필수예제",
+      "testCodes": [
+        "1U0U09"
+      ],
+      "verifiedRelation": "교재 버전과 소단원 및 실제 UI 문제 섹션과 목록 시험 코드 대응",
+      "unverifiedRelations": [
+        "외부 PDF 헤더",
+        "학생 네이티브 시도 ID와의 연결",
+        "문항별 실제 오답 및 유사문항 ID"
+      ],
+      "sourceIds": [
+        "source:verified-section-catalog-20261006-0735-0737"
+      ]
+    },
+    {
+      "bookCode": "1U0U",
+      "bookVersion": "1",
+      "label": "초5-2 가우스 2권",
+      "unitOrLessonLabel": "4-5 유형다지기",
+      "testCodes": [
+        "1U0U0A"
+      ],
+      "verifiedRelation": "교재 버전과 소단원 및 실제 UI 문제 섹션과 목록 시험 코드 대응",
+      "unverifiedRelations": [
+        "외부 PDF 헤더",
+        "학생 네이티브 시도 ID와의 연결",
+        "문항별 실제 오답 및 유사문항 ID"
+      ],
+      "sourceIds": [
+        "source:verified-section-catalog-20261006-0735-0737"
+      ]
+    },
+    {
+      "bookCode": "1U0U",
+      "bookVersion": "1",
+      "label": "초5-2 가우스 2권",
+      "unitOrLessonLabel": "4-7 필수예제",
+      "testCodes": [
+        "1U0U0D"
+      ],
+      "verifiedRelation": "교재 버전과 소단원 및 실제 UI 문제 섹션과 목록 시험 코드 대응",
+      "unverifiedRelations": [
+        "외부 PDF 헤더",
+        "학생 네이티브 시도 ID와의 연결",
+        "문항별 실제 오답 및 유사문항 ID"
+      ],
+      "sourceIds": [
+        "source:verified-section-catalog-20261006-0735-0737"
+      ]
+    },
+    {
+      "bookCode": "1U0U",
+      "bookVersion": "1",
+      "label": "초5-2 가우스 2권",
+      "unitOrLessonLabel": "4-7 유형다지기",
+      "testCodes": [
+        "1U0U0E"
+      ],
+      "verifiedRelation": "교재 버전과 소단원 및 실제 UI 문제 섹션과 목록 시험 코드 대응",
+      "unverifiedRelations": [
+        "외부 PDF 헤더",
+        "학생 네이티브 시도 ID와의 연결",
+        "문항별 실제 오답 및 유사문항 ID"
+      ],
+      "sourceIds": [
+        "source:verified-section-catalog-20261006-0735-0737"
+      ]
+    },
+    {
+      "bookCode": "1U0U",
+      "bookVersion": "1",
+      "label": "초5-2 가우스 2권",
+      "unitOrLessonLabel": "4-7 실력쌓기",
+      "testCodes": [
+        "1U0U0F"
+      ],
+      "verifiedRelation": "교재 버전과 소단원 및 실제 UI 문제 섹션과 목록 시험 코드 대응",
+      "unverifiedRelations": [
+        "외부 PDF 헤더",
+        "학생 네이티브 시도 ID와의 연결",
+        "문항별 실제 오답 및 유사문항 ID"
+      ],
+      "sourceIds": [
+        "source:verified-section-catalog-20261006-0735-0737"
+      ]
+    },
+    {
+      "bookCode": "1U0T",
+      "bookVersion": "1",
+      "label": "초5-2 가우스 1권",
+      "unitOrLessonLabel": "1-6 필수예제",
+      "testCodes": [
+        "1U0T0B"
+      ],
+      "verifiedRelation": "교재 버전과 소단원 및 실제 UI 문제 섹션과 목록 시험 코드 대응",
+      "unverifiedRelations": [
+        "외부 PDF 헤더",
+        "학생 네이티브 시도 ID와의 연결",
+        "문항별 실제 오답 및 유사문항 ID"
+      ],
+      "sourceIds": [
+        "source:verified-section-catalog-20261006-0735-0737"
+      ]
+    },
+    {
+      "bookCode": "1U0T",
+      "bookVersion": "1",
+      "label": "초5-2 가우스 1권",
+      "unitOrLessonLabel": "1-6 유형다지기",
+      "testCodes": [
+        "1U0T0C"
+      ],
+      "verifiedRelation": "교재 버전과 소단원 및 실제 UI 문제 섹션과 목록 시험 코드 대응",
+      "unverifiedRelations": [
+        "외부 PDF 헤더",
+        "학생 네이티브 시도 ID와의 연결",
+        "문항별 실제 오답 및 유사문항 ID"
+      ],
+      "sourceIds": [
+        "source:verified-section-catalog-20261006-0735-0737"
+      ]
+    },
+    {
+      "bookCode": "1U0T",
+      "bookVersion": "1",
+      "label": "초5-2 가우스 1권",
+      "unitOrLessonLabel": "1-6 실력쌓기",
+      "testCodes": [
+        "1U0T0D"
+      ],
+      "verifiedRelation": "교재 버전과 소단원 및 실제 UI 문제 섹션과 목록 시험 코드 대응",
+      "unverifiedRelations": [
+        "외부 PDF 헤더",
+        "학생 네이티브 시도 ID와의 연결",
+        "문항별 실제 오답 및 유사문항 ID"
+      ],
+      "sourceIds": [
+        "source:verified-section-catalog-20261006-0735-0737"
+      ]
+    },
+    {
+      "bookCode": "1U0T",
+      "bookVersion": "1",
+      "label": "초5-2 가우스 1권",
+      "unitOrLessonLabel": "2 총괄",
+      "testCodes": [
+        "1U0T0P"
+      ],
+      "verifiedRelation": "교재 버전과 소단원 및 실제 UI 문제 섹션과 목록 시험 코드 대응",
+      "unverifiedRelations": [
+        "외부 PDF 헤더",
+        "학생 네이티브 시도 ID와의 연결",
+        "문항별 실제 오답 및 유사문항 ID"
+      ],
+      "sourceIds": [
+        "source:verified-section-catalog-20261006-0735-0737"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "source:homework-read-20261006-0723-0727",
+      "classification": "reported_observation",
+      "sourceReference": "task:01a11017-3022-70a4-9576-c0ad5ac36027",
+      "turnReference": "01a11017-3ccf-7244-b5c0-954a51548466",
+      "observationWindowUtc": [
+        "2026-10-06T07:23:00Z",
+        "2026-10-06T07:27:00Z"
+      ],
+      "claim": "새 숙제 조회 작업에서 최신 배정과 과정 버전, 영상 및 앱 채점 근거를 순서대로 읽고 학생별 대상과 과제 범위를 대조했다.",
+      "limitations": [
+        "학생을 식별하는 원문 결과를 이 공용 조회 파일에 복제하지 않았다.",
+        "이전 작업 01a10fb5의 숙제 제안은 이번 실제 조회의 근거가 아니다.",
+        "사이트 시계의 시간대는 미확인이다.",
+        "저장, 출력, 생성, 채점, 검사 완료 처리는 하지 않았다."
+      ]
+    },
+    {
+      "id": "source:homework-catalog-20261006-073138-073205",
+      "classification": "reported_observation",
+      "sourceReference": "task:01a11017-3022-70a4-9576-c0ad5ac36027",
+      "turnReference": "01a1101e-49ae-77a2-a4c2-c82d8c36d21d",
+      "observationWindowUtc": [
+        "2026-10-06T07:31:38Z",
+        "2026-10-06T07:32:05Z"
+      ],
+      "claim": "CourseStudyManager에서 학년과 학기 및 교재와 사용 조건을 거쳐 TestListView 팝업과 목록 탭의 교재, 단원 및 시험 코드 대응을 확인했다.",
+      "limitations": [
+        "페이지 범위와 실제 문항 및 인쇄 헤더는 확인하지 못했다.",
+        "정답, 출력, 생성은 실행하지 않았다."
+      ]
+    },
+    {
+      "id": "Sentinel_1413a0a8e7588191b4bdc9489b59c321",
+      "classification": "user_instruction",
+      "sourceReference": "Sentinel_1413a0a8e7588191b4bdc9489b59c321",
+      "turnReference": null,
+      "observationWindowUtc": null,
+      "claim": "해당 종이 과제는 집에서 앱 입력과 채점을 하지 않고 수업 중 강사가 직접 채점 및 검토한다. 클리닉 QR 도움 영상은 볼 수 있지만 완료를 뜻하지 않는다.",
+      "limitations": [
+        "일반 가우스 정규 예습 과제 전체에 적용하지 않는다."
+      ]
+    },
+    {
+      "id": "Sentinel_ebaa6c04bd708191bfeb691439e91b5b",
+      "classification": "user_instruction",
+      "sourceReference": "Sentinel_ebaa6c04bd708191bfeb691439e91b5b",
+      "turnReference": null,
+      "observationWindowUtc": null,
+      "claim": "학생과 날짜별 과제에서 영상과 교재의 실제 섹션 및 지정 범위를 채점 시도 근거와 연결하고 오답 및 유사문항 PDF의 출처로 이어지는 감사 추적을 요청했다.",
+      "limitations": [
+        "모든 책의 섹션을 고정하지 않는다.",
+        "지속 자동 PDF 생성이나 인쇄를 승인한 것은 아니다."
+      ]
+    },
+    {
+      "id": "Sentinel_7686485ded948191a38c6e19fb79efcc",
+      "classification": "user_instruction",
+      "sourceReference": "Sentinel_7686485ded948191a38c6e19fb79efcc",
+      "turnReference": null,
+      "observationWindowUtc": null,
+      "claim": "필수예제와 유형다지기 및 실력다지기와 실력올리기 등은 문제풀이 섹션이며 예습 영상은 별도 사이트 페이지의 독립된 요구 항목이다. 같은 학생과 날짜의 과제가 두 독립 경로를 연결한다.",
+      "limitations": [
+        "영상을 BookSectionRegistry 항목으로 넣지 않는다.",
+        "영상과 문제 요구를 하나의 완료 상태로 합치지 않는다."
+      ]
+    },
+    {
+      "id": "source:verified-section-catalog-20261006-0735-0737",
+      "classification": "reported_observation",
+      "sourceReference": "task:01a11017-3022-70a4-9576-c0ad5ac36027",
+      "turnReference": null,
+      "observationWindowUtc": [
+        "2026-10-06T07:35:00Z",
+        "2026-10-06T07:37:00Z"
+      ],
+      "claim": "교재 버전과 소단원별 실제 문제 섹션 및 시험 코드 목록을 추가 확인했다. 목록의 시험 코드는 학생의 네이티브 응시 ID가 아니며 차시 및 장 사이의 유형 번호도 유일키가 아니다.",
+      "limitations": [
+        "외부 PDF 헤더는 여전히 확인하지 못했다.",
+        "시험 코드와 학생의 실제 네이티브 시도 ID, 원래 오답 및 유사문항 ID를 자동 연결하지 않는다.",
+        "비공개 채점 상세 전송은 거부되어 가져오지 않았다. 우회하거나 재요청하지 않는다.",
+        "100점 표시만으로 실제 오답 문항 배열이 비었다고 기록하지 않는다."
+      ]
+    }
+  ],
+  "notVerified": [
+    "외부 PDF 헤더와 페이지 및 문항의 실제 내용",
+    "페이지 176–180의 단원 총괄 코드 대응",
+    "다빈치 페이지 72–83의 차시 대응",
+    "문항 1273201의 개별 시험 및 범위 대응",
+    "영상 버전과 교재 버전의 대응",
+    "특정 학생의 실제 종이 풀이와 교사 완료 판단",
+    "일반 오답 정리와 클리닉 과제 종류의 애매한 경우",
+    "목록 시험 코드와 네이티브 응시 ID의 연결",
+    "실제 원래 오답 문항과 유사문항 ID",
+    "비공개 채점 상세 원문은 거부되어 미수입",
+    "현재 범위의 안전한 추가 읽기는 마쳤으며 다음 진전에는 허용된 페이지/문항 대응 자료나 사용자 맥락 및 수업 중 종이 확인이 필요함"
+  ],
+  "runtimeImplemented": false,
+  "readPassState": "completed_with_evidence_gaps",
+  "labelCorrespondences": [
+    {
+      "bookCode": "1MHL",
+      "bookVersion": "1",
+      "sourceResultLabel": "실전유형(n회차)",
+      "catalogLabel": "유형다지기",
+      "sectionRegistryRefs": [
+        "section:1MHL:v1:실전유형(n회차)",
+        "section:1MHL:v1:유형다지기"
+      ],
+      "equivalenceState": "unverified_preserve_both",
+      "sourceIds": [
+        "source:verified-section-catalog-20261006-0735-0737"
+      ]
+    }
+  ]
+}

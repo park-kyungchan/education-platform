@@ -1,0 +1,83 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> academy-workbench@0.3.0 typecheck
+> tsc -p tsconfig.json
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> academy-workbench@0.3.0 test
+> node --test tests/*.test.ts
+
+✔ five invented students have valid separate renderer/evidence contracts (7.661373ms)
+✔ default config is uncredentialed loopback preview (0.165132ms)
+✔ external binds fail closed (0.509247ms)
+✔ owner mode requires separately configured secret and DB path (0.181537ms)
+✔ synthetic in-memory auth values validate Basic and Bearer, never platform claims (0.739014ms)
+✔ SQLite survives real close/reopen with restricted file mode (18.597893ms)
+✔ same import id is idempotent and immutable (31.809021ms)
+✔ conflict rolls back all newly inserted student data (21.373887ms)
+✔ identity change requires reconciliation (19.838233ms)
+✔ all storage reads are owner scoped (14.428154ms)
+✔ private import requires approval flag and rejects mode mixing (22.546338ms)
+✔ preview refuses private-mode DB containing only synthetic test values (14.0439ms)
+✔ schema rejects owner mismatches, unexpected keys and unsafe JSON (16.509347ms)
+✔ cycles and malformed book counts are rejected (12.990865ms)
+✔ projection source records cannot cross students (3.861096ms)
+✔ teacher review requires exact original attempt join (2.909029ms)
+✔ artifact paths and signed URL metadata are rejected (3.47557ms)
+✔ namespace collisions in a batch and wrong student identity evidence are rejected (5.672525ms)
+✔ cross-import source namespace rebinding is rejected (13.851387ms)
+✔ cross-student historical correction relations are rejected (3.010699ms)
+✔ a SQLite file cannot mix owners or modes across owners (22.391982ms)
+✔ arbitrary data cannot grant itself unauthenticated preview access (16.074169ms)
+✔ preview pin is rechecked on every protected request (40.5041ms)
+✔ real HTTP server returns protected status/students/projection/panels (44.389894ms)
+✔ record pagination is explicit and never proves source completeness (31.232354ms)
+✔ bad student/domain/query cannot widen owner scope (44.357656ms)
+✔ all writes and archived/static traversal are unavailable (43.536691ms)
+✔ Host/Origin/proxy boundary rejects DNS rebinding and cross-site requests (20.365998ms)
+✔ platform headers never authenticate owner mode (15.367392ms)
+✔ static responses prohibit cross-origin connections and caching (44.188974ms)
+✔ malformed absolute request target does not terminate server (23.046772ms)
+✔ workflow policy browsing and date/session membership retain uncertainty (15.995533ms)
+✔ workflow rejects stale revisions, invalid dates and unknown policies (19.7817ms)
+✔ unknown historical membership never creates a past class (14.265485ms)
+✔ new panels are scoped and do not assert actual source/auth proof (17.488696ms)
+✔ Today and workflow endpoints are independent GET reads (38.406963ms)
+✔ grading observation inherited/reserved names cannot address projection records (46.537996ms)
+✔ withdrawn/superseded/conflicted completion never becomes current checked completion (52.286441ms)
+✔ withdrawn assignment is retained historically and excluded from current assignments (16.317927ms)
+✔ unsupported session request is rejected rather than returning an empty class (14.311302ms)
+✔ large event history has explicit bounded summaries and raw records remain available (29.527051ms)
+✔ withdrawn superseded or conflicted membership cannot create a cohort (48.501242ms)
+✔ withdrawn superseded or conflicted policy is history rather than active reference (40.151533ms)
+ℹ tests 43
+ℹ suites 0
+ℹ pass 43
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1048.77668
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> academy-workbench@0.3.0 test:ui
+> node --test tests-ui/*.test.ts
+
+✔ all restored views mount on actual built app with real HTTP and external fetch denied (670.832972ms)
+✔ date/session policy hierarchy and Today summary are real independent read flows (232.960576ms)
+✔ malformed selected-student renderer input cannot leave previous student records (180.648741ms)
+✔ malicious count is escaped by pure renderer even when validator is bypassed (28.000111ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1541.45688
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+npm notice To update run: npm install -g npm@12.2.0
+npm notice

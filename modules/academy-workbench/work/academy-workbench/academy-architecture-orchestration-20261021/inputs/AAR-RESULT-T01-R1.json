@@ -1,0 +1,70 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "academy-operations",
+  "projectId": "academy-workbench",
+  "workId": "academy-architecture-orchestration-20261021",
+  "kind": "input",
+  "id": "AAR-RESULT-T01-R1",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "root-academy-orchestrator",
+    "locator": "local-preparation-verification:t01:r1",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "summary": "Scoped host/container/repository/runtime metadata and source pins captured; private record bodies and credentials not read.",
+    "sourceCommit": "e34489a7919029c79f86bd419e30e7cc1491e9f9",
+    "sourcePins": [
+      {
+        "path": "architecture/academy-reorganization/measurement.json",
+        "sha256": "dcbd331fca90884b46ccfd2bfed928f67e36a9918ece3f4eeb2e6d68848e6b9f"
+      },
+      {
+        "path": "architecture/academy-reorganization/topology.json",
+        "sha256": "525fe3e9e949ca4bafc2f8815f2599a44e6e39c0c3ce3da135938eb26b9381e8"
+      }
+    ],
+    "verification": {
+      "schemaVersion": "1.0.0",
+      "kind": "verification",
+      "id": "academy-workbench:verification:aar-t01-r1",
+      "projectId": "academy-workbench",
+      "domainId": "academy-operations",
+      "createdAt": "2026-10-21T05:08:00.536308+00:00",
+      "payload": {
+        "targetRefs": [
+          "common-harness:task:15b6964bb7de018a21b14a289606f5ba00a885e0b27b919484fd8d0474942606"
+        ],
+        "criteria": [
+          {
+            "id": "bounded-source-outcome",
+            "status": "pass",
+            "message": "Scoped host/container/repository/runtime metadata and source pins captured; private record bodies and credentials not read.",
+            "evidenceRefs": [
+              "academy-workbench:evidence:aar-t01-observation-r1"
+            ]
+          }
+        ],
+        "inputHashes": [
+          {
+            "path": "architecture/academy-reorganization/measurement.json",
+            "sha256": "dcbd331fca90884b46ccfd2bfed928f67e36a9918ece3f4eeb2e6d68848e6b9f"
+          },
+          {
+            "path": "architecture/academy-reorganization/topology.json",
+            "sha256": "525fe3e9e949ca4bafc2f8815f2599a44e6e39c0c3ce3da135938eb26b9381e8"
+          }
+        ],
+        "runtime": {
+          "name": "Bun source-only auditor",
+          "version": "1.4.3"
+        },
+        "details": {
+          "independentReview": false,
+          "operationalActivation": false,
+          "scope": "local metadata/design preparation only"
+        }
+      }
+    }
+  }
+}

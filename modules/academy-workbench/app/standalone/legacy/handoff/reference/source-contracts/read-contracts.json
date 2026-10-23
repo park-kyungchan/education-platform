@@ -1,0 +1,195 @@
+{
+  "schemaVersion": 1,
+  "status": "source-and-bounded-ui-contract-catalog-not-live-api",
+  "operations": [
+    {
+      "directApiAdapterActivated": false,
+      "mobileParityMeasured": false,
+      "id": "textbook.progress",
+      "path": "/servlet/controller.coursemanage.TextBookManageServlet",
+      "selector": {
+        "key": "reqCmd",
+        "literal": "getTextBookProgress"
+      },
+      "sourceMethod": "form-method-unavailable",
+      "effect": "read-view",
+      "effectBasis": "current-ui-observation",
+      "fields": [
+        "student_name"
+      ],
+      "provenance": [
+        {
+          "file": "input-js/textbook-main-current.js",
+          "lines": [
+            3,
+            18
+          ],
+          "grade": "current-source"
+        },
+        {
+          "file": "../clinic-read-research-20261013/source-evidence-map.json",
+          "pointer": "/verifiedScope/normalUiSearch",
+          "grade": "current-ui-read"
+        }
+      ]
+    },
+    {
+      "directApiAdapterActivated": false,
+      "mobileParityMeasured": false,
+      "id": "assessment.detail.na",
+      "path": "/servlet/controller.tutor.na.TestPageListServlet",
+      "selector": {
+        "key": "p_process",
+        "literal": "PupilSearch"
+      },
+      "sourceMethod": "GET",
+      "effect": "read-view",
+      "effectBasis": "current-ui-observation",
+      "fields": [
+        "testing_no",
+        "p_no",
+        "apply_flg",
+        "no_apply_flg",
+        "o_questions",
+        "s_questions",
+        "d_questions",
+        "paper_type",
+        "testing_name",
+        "grade_name",
+        "subject_name",
+        "dummy",
+        "hang_date",
+        "use_term",
+        "test_no",
+        "title_option"
+      ],
+      "provenance": [
+        {
+          "file": "input-js/official-result-detail-route.js",
+          "lines": [
+            1,
+            35
+          ],
+          "grade": "current-source"
+        },
+        {
+          "file": "../clinic-read-research-20261013/source-evidence-map.json",
+          "pointer": "/verifiedRead",
+          "grade": "current-ui-read"
+        }
+      ]
+    },
+    {
+      "directApiAdapterActivated": false,
+      "mobileParityMeasured": false,
+      "id": "assessment.ordered-items",
+      "path": "/servlet/controller.tutor.base.TestPageListServlet",
+      "selector": {
+        "key": "p_process",
+        "literal": "ViewAnswerList"
+      },
+      "sourceMethod": "GET",
+      "effect": "read-view",
+      "effectBasis": "current-ui-observation",
+      "fields": [
+        "p_no",
+        "testing_no"
+      ],
+      "provenance": [
+        {
+          "file": "../clinic-read-research-20261013/source-evidence-map.json",
+          "pointer": "/verifiedRead/labelJoin",
+          "grade": "current-ui-read"
+        },
+        {
+          "file": "../clinic-read-research-20261013/private-fixture-omitted.json",
+          "pointer": "/answer/url",
+          "grade": "current-ui-read"
+        }
+      ]
+    },
+    {
+      "directApiAdapterActivated": false,
+      "mobileParityMeasured": false,
+      "id": "prestudy.waiting-shell",
+      "path": "/servlet/controller.coursemanage.CourseManageServlet",
+      "selector": {
+        "key": "reqCmd",
+        "literal": "WebUnPreStudy"
+      },
+      "sourceMethod": "GET",
+      "effect": "read-view",
+      "effectBasis": "current-ui-observation",
+      "fields": [],
+      "provenance": [
+        {
+          "file": "prestudy-read-contract-source.json",
+          "grade": "current-ui-read",
+          "observedAt": "2026-10-13T02:31:03.556Z"
+        },
+        {
+          "file": "../dc-gang-a/research/backend-map/app-live.md",
+          "grade": "dated-source",
+          "observedAt": "2026-09-27"
+        }
+      ]
+    },
+    {
+      "directApiAdapterActivated": false,
+      "mobileParityMeasured": false,
+      "id": "prestudy.completed-shell",
+      "path": "/servlet/controller.coursemanage.CourseManageServlet",
+      "selector": {
+        "key": "reqCmd",
+        "literal": "WebCtPreStudy"
+      },
+      "sourceMethod": "GET",
+      "effect": "read-view",
+      "effectBasis": "historical-review",
+      "fields": [],
+      "provenance": [
+        {
+          "file": "../dc-gang-a/research/backend-map/app-live.md",
+          "grade": "dated-source",
+          "observedAt": "2026-09-27"
+        }
+      ]
+    },
+    {
+      "directApiAdapterActivated": false,
+      "mobileParityMeasured": false,
+      "id": "prestudy.summary-shell",
+      "path": "/servlet/controller.coursemanage.CourseManageServlet",
+      "selector": {
+        "key": "reqCmd",
+        "literal": "TeacherPrestudySummary"
+      },
+      "sourceMethod": "GET",
+      "effect": "read-view",
+      "effectBasis": "historical-review",
+      "fields": [],
+      "provenance": [
+        {
+          "file": "../dc-gang-a/research/backend-map/app-live.md",
+          "grade": "dated-source",
+          "observedAt": "2026-09-27"
+        }
+      ]
+    }
+  ],
+  "noUniversalHttpReplay": true,
+  "executionPrerequisites": [
+    "Supported existing authenticated UI/read transport",
+    "Current instructor and task-scoped source-key identity",
+    "Exact operation/method/payload/effect validation",
+    "Ambiguity/pagination/date/revision handling",
+    "No whole-handler replay with unreviewed tag/native effects"
+  ],
+  "unknownSemanticsFailClosed": true,
+  "exportProvenance": {
+    "locatorClassification": "historical_nonportable_locator",
+    "meaning": "Source file/line/pointer references identify original observations. Referenced private captures are intentionally absent and these strings are not resolvable repository links.",
+    "mappingDocument": "validation/provenance-path-map.json",
+    "runtimeAuthority": false
+  }
+}

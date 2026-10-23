@@ -1,0 +1,24 @@
+{
+  "index": 70,
+  "reference": "library-file:fde1_bGliZmlsZV9IdTZiclNIdWFnUk40RXF2a21QRDBn_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+  "metadata_available": true,
+  "mime_type": "application/json",
+  "byte_size": 2786,
+  "pages": [
+    "page_7aef4f4523048191833f31ccb7c0bdad"
+  ],
+  "retrievedAt": "2026-10-16T10:23:44.373Z",
+  "result": {
+    "page_id": "page_7aef4f4523048191833f31ccb7c0bdad",
+    "reference": "library-file:fde1_bGliZmlsZV9IdTZiclNIdWFnUk40RXF2a21QRDBn_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+    "mime_type": "application/json",
+    "byte_size": 2786,
+    "sha256": "bbd82c7da3febdf261f72df3a247e487b1485262133bffc0c6bf77874b1a1b79",
+    "text": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"kind\": {\n      \"type\": \"string\",\n      \"const\": \"academy_output_contract\"\n    },\n    \"schemaVersion\": {\n      \"type\": \"string\",\n      \"const\": \"1.0.0\"\n    },\n    \"contractId\": {\n      \"type\": \"string\",\n      \"const\": \"academy.progress-output\"\n    },\n    \"version\": {\n      \"type\": \"string\",\n      \"enum\": [\n        \"1.0.0\",\n        \"1.1.0\"\n      ]\n    },\n    \"revision\": {\n      \"type\": \"integer\",\n      \"exclusiveMinimum\": 0,\n      \"maximum\": 9007199254740991\n    },\n    \"sourceIds\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    },\n    \"scope\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"student\": {\n          \"type\": \"string\",\n          \"const\": \"runtime_selected_private_student\"\n        },\n        \"bookEditions\": {\n          \"type\": \"string\",\n          \"const\": \"runtime_selected_verified_editions\"\n        },\n        \"defaultSourceMode\": {\n          \"type\": \"string\",\n          \"const\": \"saved_snapshot\"\n        },\n        \"actualStudentData\": {\n          \"type\": \"boolean\",\n          \"const\": false\n        }\n      },\n      \"required\": [\n        \"student\",\n        \"bookEditions\",\n        \"defaultSourceMode\",\n        \"actualStudentData\"\n      ],\n      \"additionalProperties\": false\n    },\n    \"rowKinds\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\",\n        \"enum\": [\n          \"observed_section\",\n          \"verification_slot\"\n        ]\n      }\n    },\n    \"stateDefinitions\": {\n      \"type\": \"object\",\n      \"propertyNames\": {\n        \"type\": \"string\"\n      },\n      \"additionalProperties\": {\n        \"type\": \"string\"\n      }\n    },\n    \"independentAxes\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    },\n    \"requiredRecordFields\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    },\n    \"topologyRules\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    },\n    \"coverageRules\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    },\n    \"labelRules\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    },\n    \"privacyRules\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    },\n    \"authorityGranted\": {\n      \"type\": \"boolean\",\n      \"const\": false\n    }\n  },\n  \"required\": [\n    \"kind\",\n    \"schemaVersion\",\n    \"contractId\",\n    \"version\",\n    \"revision\",\n    \"sourceIds\",\n    \"scope\",\n    \"rowKinds\",\n    \"stateDefinitions\",\n    \"independentAxes\",\n    \"requiredRecordFields\",\n    \"topologyRules\",\n    \"coverageRules\",\n    \"labelRules\",\n    \"privacyRules\",\n    \"authorityGranted\"\n  ],\n  \"additionalProperties\": false\n}\n",
+    "text_representation": "source",
+    "text_byte_size": 2786,
+    "kind": "text"
+  },
+  "status": "source_text_saved",
+  "localFile": "attachments/ref-70.json"
+}

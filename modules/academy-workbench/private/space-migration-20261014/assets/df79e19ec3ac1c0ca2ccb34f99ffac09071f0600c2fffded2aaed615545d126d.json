@@ -1,0 +1,104 @@
+{
+  "$schema": "academy-operations.schema.json",
+  "kind": "academy_validation",
+  "id": "academy:validation:2026-10-06:r1",
+  "schemaVersion": "0.1.0",
+  "revision": 1,
+  "profileId": "kyungchan",
+  "projectId": "project:academy-practical",
+  "updatedAt": "2026-10-06T05:52:44.794Z",
+  "sourceIds": [
+    "source:space-page-read",
+    "source:sharing-read"
+  ],
+  "scope": "학원 실무 프로젝트 5개 Page와 초기 구조화 원본 7개 파일. 이 검증 기록의 업로드 후 해시는 별도 재읽기로 확인한다.",
+  "checks": [
+    {
+      "name": "JSON Schema",
+      "status": "passed",
+      "detail": "업무 원본 Schema와 동작 계약 Schema 자체 및 각 대상 JSON을 Draft 2020-12와 format 검사로 검증했다."
+    },
+    {
+      "name": "ID 및 자료 관계",
+      "status": "passed",
+      "detail": "ID 중복, 경로와 화면, 출처, 작업과 경로, 계약과 경로 및 질문, 계약의 근거 참조를 검사했다."
+    },
+    {
+      "name": "Page 부모 및 탐색 링크",
+      "status": "passed",
+      "detail": "교육 아래 프로젝트와 4개 하위 Page의 실제 부모를 확인하고 프로젝트의 4개 탐색 링크를 재읽었다."
+    },
+    {
+      "name": "정본 부모 순환",
+      "status": "passed",
+      "detail": "자료 목록의 정본 부모가 domain:education에 연결되고 순환하지 않음을 확인했다."
+    },
+    {
+      "name": "개인정보와 접근 범위",
+      "status": "passed",
+      "detail": "새 Page 5개는 공유목록이 비고 상속 관찰이 완전한 소유자 전용 상태였다. 초기 자료에 학생 이름과 학교 및 상세 학습 실데이터를 넣지 않았다. 공유 권한은 변경하지 않았다."
+    },
+    {
+      "name": "파일 게시와 재읽기",
+      "status": "passed",
+      "detail": "원본 7개 파일의 업로드 접근 확인과 재읽기 SHA-256 일치를 확인했다."
+    },
+    {
+      "name": "원본 파일 링크",
+      "status": "passed",
+      "detail": "원본 자료 Page에서 7개 파일의 실제 library-file 참조를 재읽었다."
+    },
+    {
+      "name": "강사 의도와 위험 경계",
+      "status": "passed",
+      "detail": "Cartography의 목적과 동작 계약 및 DayRecord 자동저장 경고와 영상 OK 및 검사 완료 분리를 재읽었다."
+    },
+    {
+      "name": "시각적 렌더링",
+      "status": "pending",
+      "detail": "저장된 Page 내용과 탐색 구조는 확인했지만 브라우저 렌더링은 직접 검증하지 않았다."
+    },
+    {
+      "name": "실제 강사 사용 방식",
+      "status": "pending",
+      "detail": "업무 목적 가설과 관찰된 사이트 기능을 분리했다. 실제 사용 의도와 완료 기준은 관련 판단이 필요할 때 질문한다."
+    }
+  ],
+  "fileHashes": [
+    {
+      "fileName": "academy-operations.schema.json",
+      "sha256": "1c3aeb83b6aac875deee6f4ef32d66b3cac9b97d17b91e03e77ef8d07da868b2"
+    },
+    {
+      "fileName": "academy-evidence.json",
+      "sha256": "fbb7ad48bb564953d8a555f59a8476602f617ea07afd531cf4762d9167de739e"
+    },
+    {
+      "fileName": "academy-routes.json",
+      "sha256": "0c04bf478e94866ac3a7b3aa49a919c6092e8d9911971091b9e51116564c1afd"
+    },
+    {
+      "fileName": "academy-operations.json",
+      "sha256": "f442f2d20cf0078eaec72bd80901d5895a52989c401866117d8b2d7ce2543182"
+    },
+    {
+      "fileName": "academy-catalog.json",
+      "sha256": "20d412b0238d6a9a6687864f7d6a9b87c514b46681aa00ac5b622a60e5e21bc9"
+    },
+    {
+      "fileName": "academy-action-contracts.schema.json",
+      "sha256": "285b8fd5c5db18d752f36000c726fd2191792ec0206ddc0a5efbf2056e364f95"
+    },
+    {
+      "fileName": "academy-action-contracts.json",
+      "sha256": "322806143fc2e244fdc2d9f626e7007b445e8bd3d5c89b5435dd51047f91bdec"
+    }
+  ],
+  "excludedClaims": [
+    "학교 정보가 사이트 전체에 없다는 결론",
+    "학교 B열 매핑 완료",
+    "사이트 기록 수정 또는 학부모 발송 완료",
+    "실제 WebMCP 서버나 자동 실행의 설치 및 활성화",
+    "기존 Workspace의 12 Page 및 50 자료 스냅샷 전체 갱신"
+  ]
+}

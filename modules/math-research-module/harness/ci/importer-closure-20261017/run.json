@@ -1,0 +1,60 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectId": "math-research-module",
+  "domainId": "mathematics-education",
+  "createdAt": "2026-10-16T22:53:51.707057+00:00",
+  "kind": "run",
+  "id": "math-research-module:run:importer-closure-20261017-01",
+  "references": [
+    {
+      "artifactId": "math-research-module:task:importer-closure-20261017",
+      "relation": "attemptOf"
+    }
+  ],
+  "payload": {
+    "taskRef": "math-research-module:task:importer-closure-20261017",
+    "state": "completed",
+    "startedAt": "2026-10-16T22:53:51.707057+00:00",
+    "inputHashes": [
+      {
+        "path": "scripts/canonical-projection.ts",
+        "sha256": "a45dd7e51b4a4c8dac74d121cdd8eeb95402c72ade4cfb13474d5163aaca53c5"
+      },
+      {
+        "path": "ci/generated/canonical-api.manifest.json",
+        "sha256": "7d13282f8bc0be0cca891571b52e5b8df3ed2906ce61fa205ff0a762464743fc"
+      },
+      {
+        "path": "ci/generated/native-review.manifest.json",
+        "sha256": "b855713ed27171e654a1effa250337371d9153d28d3098b589536abc910b1c1d"
+      },
+      {
+        "path": "ci/importer-closure.test.ts",
+        "sha256": "9b8cec74712dcc5715afd965eaa6bb913a8a98f43b78cf9ed7cd964ffe6185f6"
+      }
+    ],
+    "runtime": {
+      "name": "local-source-engineering-and-synthetic-QA",
+      "version": "Bun1.4.2/Node24.19.0; projection compilerBun1.4.3"
+    },
+    "evidenceRefs": [],
+    "verificationRefs": [],
+    "details": {
+      "workId": "portable-source-ci-successor-20261017",
+      "scope": "Bounded importer closure repair and affected synthetic QA complete. Later read-only checks never resume this Run. Root independent exact-source review/publication and user acceptance remain separate.",
+      "authority": "none",
+      "nativePermissionGranted": false,
+      "sourceAuthorTask": "/root/review_codex_successor",
+      "predecessorHead": "9bace5b2d3ac06525912b9d866301bb0d902d636",
+      "predecessorFinding": "MATH-PR2-P1-COMPILED-IMPORTER-CLOSURE",
+      "checks": {
+        "fullCompiledVerify": "pass",
+        "ciTests": 38,
+        "ciAssertions": 252,
+        "focusedImporterTests": 6,
+        "focusedImporterAssertions": 26
+      }
+    },
+    "finishedAt": "2026-10-16T22:55:33.021774+00:00"
+  }
+}

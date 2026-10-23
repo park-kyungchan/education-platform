@@ -1,0 +1,2129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "academy-development-0.1.schema.json",
+  "title": "Academy development preparation documents",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/development_requirements"
+    },
+    {
+      "$ref": "#/$defs/environment_manifest"
+    },
+    {
+      "$ref": "#/$defs/development_task_contract"
+    },
+    {
+      "$ref": "#/$defs/development_test_plan"
+    }
+  ],
+  "$defs": {
+    "development_requirements": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "$schema": {
+          "type": "string"
+        },
+        "kind": {
+          "const": "development_requirements"
+        },
+        "schemaVersion": {
+          "const": "0.1.0"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "projectId": {
+          "type": "string"
+        },
+        "canonicalParentId": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "id": {
+          "type": "string"
+        },
+        "userGoal": {
+          "type": "string"
+        },
+        "implementationState": {
+          "type": "string"
+        },
+        "architecture": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "canonicalData": {
+              "type": "string"
+            },
+            "applicationService": {
+              "type": "string"
+            },
+            "humanClient": {
+              "type": "string"
+            },
+            "agentClient": {
+              "type": "string"
+            },
+            "transport": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "canonicalData",
+            "applicationService",
+            "humanClient",
+            "agentClient",
+            "transport"
+          ]
+        },
+        "firstScreenDecision": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "state": {
+              "enum": [
+                "awaiting_user",
+                "user_confirmed",
+                "revised"
+              ]
+            },
+            "recommendation": {
+              "type": "string"
+            },
+            "alternatives": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "selected": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "questionOwner": {
+              "type": "string"
+            },
+            "confirmationSource": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "state",
+            "recommendation",
+            "alternatives",
+            "selected",
+            "questionOwner",
+            "confirmationSource"
+          ]
+        },
+        "requirements": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "text": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              },
+              "sourceIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": [
+              "id",
+              "text",
+              "status",
+              "sourceIds"
+            ]
+          }
+        },
+        "semanticToolProposals": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "version": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              },
+              "goal": {
+                "type": "string"
+              },
+              "preconditions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "inputFields": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "outputFields": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "effects": {
+                "type": "string"
+              },
+              "permission": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "contextualBasisIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "executionImplemented": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "id",
+              "version",
+              "status",
+              "goal",
+              "preconditions",
+              "inputFields",
+              "outputFields",
+              "effects",
+              "permission",
+              "stage",
+              "contextualBasisIds",
+              "executionImplemented"
+            ]
+          }
+        },
+        "existingCanonicalPages": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "role": {
+                "type": "string"
+              },
+              "pageId": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "role",
+              "pageId"
+            ]
+          }
+        },
+        "interviewQueue": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "state": {
+                "type": "string"
+              },
+              "question": {
+                "type": "string"
+              },
+              "impact": {
+                "type": "string"
+              },
+              "doNotRepeat": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "id",
+              "state",
+              "question",
+              "impact",
+              "doNotRepeat"
+            ]
+          }
+        },
+        "dataPolicy": {
+          "type": "string"
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "url": {
+                    "type": "string"
+                  },
+                  "checkedAt": {
+                    "type": "string"
+                  },
+                  "lastUpdated": {
+                    "type": "string"
+                  },
+                  "support": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "url",
+                  "checkedAt",
+                  "lastUpdated",
+                  "support"
+                ]
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "url": {
+                    "type": "string"
+                  },
+                  "checkedAt": {
+                    "type": "string"
+                  },
+                  "support": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "url",
+                  "checkedAt",
+                  "support"
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "required": [
+        "$schema",
+        "kind",
+        "schemaVersion",
+        "revision",
+        "projectId",
+        "canonicalParentId",
+        "updatedAt",
+        "id",
+        "userGoal",
+        "implementationState",
+        "architecture",
+        "firstScreenDecision",
+        "requirements",
+        "semanticToolProposals",
+        "existingCanonicalPages",
+        "interviewQueue",
+        "dataPolicy",
+        "sources"
+      ]
+    },
+    "environment_manifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "$schema": {
+          "type": "string"
+        },
+        "kind": {
+          "const": "environment_manifest"
+        },
+        "schemaVersion": {
+          "const": "0.1.0"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "projectId": {
+          "type": "string"
+        },
+        "canonicalParentId": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "id": {
+          "type": "string"
+        },
+        "computerName": {
+          "type": "string"
+        },
+        "taskId": {
+          "type": "string"
+        },
+        "taskCreationState": {
+          "type": "string"
+        },
+        "environmentInspectionState": {
+          "type": "string"
+        },
+        "sourceReference": {
+          "type": "string"
+        },
+        "observedAt": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "operatingSystem": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "workspacePath": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "repositoryPath": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "toolVersions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "version": {
+                "type": "string"
+              },
+              "evidenceRef": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "version",
+              "evidenceRef"
+            ]
+          }
+        },
+        "capabilities": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "status": {
+                "enum": [
+                  "not_verified",
+                  "available",
+                  "unavailable",
+                  "blocked"
+                ]
+              },
+              "evidenceRef": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "name",
+              "status",
+              "evidenceRef"
+            ]
+          }
+        },
+        "installationsPerformed": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "credentialsConfigured": {
+          "type": "boolean"
+        },
+        "publicServerStarted": {
+          "type": "boolean"
+        },
+        "runtimeEnforcementVerified": {
+          "type": "boolean"
+        },
+        "readyState": {
+          "type": "string"
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "futureUpdateRule": {
+          "type": "string"
+        },
+        "reportedChecks": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "executedChecks": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "passed": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "failed": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "fixtures": {
+              "type": "string"
+            },
+            "queryDemo": {
+              "type": "string"
+            },
+            "staticTypeCheck": {
+              "type": "string"
+            },
+            "specificCommands": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "executionTimeWindow": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "testCaseMappingToPublishedPlan": {
+              "type": "string"
+            },
+            "assertions": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "scenarioCoverage": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "total": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "fullyPassed": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "partial": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "notRun": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "failed": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              },
+              "required": [
+                "total",
+                "fullyPassed",
+                "partial",
+                "notRun",
+                "failed"
+              ]
+            },
+            "syntheticCoverage": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "total": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "withEvidence": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "sourceReference": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "total",
+                "withEvidence",
+                "sourceReference"
+              ]
+            },
+            "typecheckScope": {
+              "type": "string"
+            },
+            "build": {
+              "type": "string"
+            },
+            "verificationScope": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "executedChecks",
+            "passed",
+            "failed",
+            "fixtures",
+            "queryDemo",
+            "staticTypeCheck",
+            "specificCommands",
+            "executionTimeWindow",
+            "testCaseMappingToPublishedPlan"
+          ]
+        },
+        "scaffoldComponents": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "localDocuments": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "pendingInstall": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "package": {
+              "type": "string"
+            },
+            "scope": {
+              "type": "string"
+            },
+            "source": {
+              "type": "string"
+            },
+            "state": {
+              "type": "string"
+            },
+            "questionReference": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "package",
+            "scope",
+            "source",
+            "state",
+            "questionReference"
+          ]
+        },
+        "applicationState": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "appBuilt": {
+              "type": "boolean"
+            },
+            "serverStarted": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "realStudentDataImported": {
+              "type": "boolean"
+            },
+            "existingRepositoryModified": {
+              "type": "boolean"
+            },
+            "browserChanged": {
+              "type": "boolean"
+            },
+            "existingRepositoryChangesWereReverted": {
+              "type": "boolean"
+            },
+            "publicDeploymentPerformed": {
+              "type": "boolean"
+            },
+            "liveAcademyAccessPerformed": {
+              "type": "boolean"
+            },
+            "actualWebMcpRegistrationVerified": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "appBuilt",
+            "serverStarted",
+            "realStudentDataImported",
+            "existingRepositoryModified",
+            "browserChanged"
+          ]
+        },
+        "taskHistory": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "taskId": {
+                "type": "string"
+              },
+              "workspacePath": {
+                "type": "string"
+              },
+              "role": {
+                "type": "string"
+              },
+              "reportedPassed": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "reportedFailed": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "taskId",
+              "workspacePath",
+              "role",
+              "reportedPassed",
+              "reportedFailed"
+            ]
+          }
+        },
+        "modelRecovery": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "requestedModel": {
+              "type": "string"
+            },
+            "actualModel": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "reason": {
+              "type": "string"
+            },
+            "dataRestrictionBypass": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "requestedModel",
+            "actualModel",
+            "reason",
+            "dataRestrictionBypass"
+          ]
+        },
+        "dependencyInstallResult": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "package": {
+              "type": "string"
+            },
+            "source": {
+              "type": "string"
+            },
+            "scope": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            },
+            "failureCode": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "installed": {
+              "type": "boolean"
+            },
+            "installedVersion": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "versionPinFinished": {
+              "type": "boolean"
+            },
+            "lockfileFinished": {
+              "type": "boolean"
+            },
+            "typecheckRun": {
+              "type": "boolean"
+            },
+            "retryBypassPerformed": {
+              "type": "boolean"
+            },
+            "sourceReference": {
+              "type": "string"
+            },
+            "attemptedPackages": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "failureStage": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "observedRequests": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "blockingActor": {
+              "type": "string"
+            },
+            "cacheDirectoryFailureEstablished": {
+              "type": "boolean"
+            },
+            "installedPackages": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "version": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "version"
+                ]
+              }
+            },
+            "lockfileName": {
+              "type": "string"
+            },
+            "reproducibleInstallCommand": {
+              "type": "string"
+            },
+            "reproducibleInstallPassed": {
+              "type": "boolean"
+            },
+            "approvalPath": {
+              "type": "string"
+            },
+            "globalInstallPerformed": {
+              "type": "boolean"
+            },
+            "securitySettingsChanged": {
+              "type": "boolean"
+            },
+            "alternateRegistryUsed": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "package",
+            "source",
+            "scope",
+            "status",
+            "failureCode",
+            "installed",
+            "installedVersion",
+            "versionPinFinished",
+            "lockfileFinished",
+            "typecheckRun",
+            "retryBypassPerformed",
+            "sourceReference",
+            "attemptedPackages",
+            "failureStage",
+            "observedRequests",
+            "blockingActor",
+            "cacheDirectoryFailureEstablished"
+          ]
+        },
+        "foundationVersion": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "dependencyInstallHistory": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "package": {
+                "type": "string"
+              },
+              "source": {
+                "type": "string"
+              },
+              "scope": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              },
+              "failureCode": {
+                "type": "string"
+              },
+              "installed": {
+                "type": "boolean"
+              },
+              "installedVersion": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "versionPinFinished": {
+                "type": "boolean"
+              },
+              "lockfileFinished": {
+                "type": "boolean"
+              },
+              "typecheckRun": {
+                "type": "boolean"
+              },
+              "retryBypassPerformed": {
+                "type": "boolean"
+              },
+              "sourceReference": {
+                "type": "string"
+              },
+              "attemptedPackages": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "failureStage": {
+                "type": "string"
+              },
+              "observedRequests": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "blockingActor": {
+                "type": "string"
+              },
+              "cacheDirectoryFailureEstablished": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "package",
+              "source",
+              "scope",
+              "status",
+              "failureCode",
+              "installed",
+              "installedVersion",
+              "versionPinFinished",
+              "lockfileFinished",
+              "typecheckRun",
+              "retryBypassPerformed",
+              "sourceReference",
+              "attemptedPackages",
+              "failureStage",
+              "observedRequests",
+              "blockingActor",
+              "cacheDirectoryFailureEstablished"
+            ]
+          }
+        },
+        "resolutionEvidence": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "taskCompletedConfirmed": {
+              "type": "boolean"
+            },
+            "sourceReference": {
+              "type": "string"
+            },
+            "verificationMethod": {
+              "type": "string"
+            },
+            "exactExecutionTimestamp": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "reportImported": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "taskCompletedConfirmed",
+            "sourceReference",
+            "verificationMethod",
+            "exactExecutionTimestamp",
+            "reportImported"
+          ]
+        },
+        "reportedArtifacts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "fileName": {
+                "type": "string"
+              },
+              "reportedRelativePath": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "contentsImported": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "fileName",
+              "reportedRelativePath",
+              "contentsImported"
+            ]
+          }
+        },
+        "contractImport": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "schemaVersion": {
+              "type": "string"
+            },
+            "revision": {
+              "type": "integer"
+            },
+            "payloadHashes": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "bytes": {
+                    "type": "integer"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  },
+                  "matchesOriginal": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "name",
+                  "bytes",
+                  "sha256",
+                  "matchesOriginal"
+                ]
+              }
+            },
+            "allFourPayloadHashesMatched": {
+              "type": "boolean"
+            },
+            "originalFiveFilesPreservedLocally": {
+              "type": "boolean"
+            },
+            "deliveryReadmeInGit": {
+              "type": "boolean"
+            },
+            "semanticCases": {
+              "type": "integer"
+            },
+            "semanticCasesPassed": {
+              "type": "integer"
+            },
+            "spaceSpecificationRevision": {
+              "type": "integer"
+            },
+            "spaceR3FullRuntimeAlignmentVerified": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "revision",
+            "payloadHashes",
+            "allFourPayloadHashesMatched",
+            "originalFiveFilesPreservedLocally",
+            "deliveryReadmeInGit",
+            "semanticCases",
+            "semanticCasesPassed",
+            "spaceSpecificationRevision",
+            "spaceR3FullRuntimeAlignmentVerified"
+          ]
+        },
+        "syntheticSync": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "implemented": {
+              "type": "boolean"
+            },
+            "scopeValidation": {
+              "type": "boolean"
+            },
+            "pageClosureValidation": {
+              "type": "boolean"
+            },
+            "catalogCache": {
+              "type": "boolean"
+            },
+            "contentHashDeduplication": {
+              "type": "boolean"
+            },
+            "partialFailureResume": {
+              "type": "boolean"
+            },
+            "boundedTransientReadRetries": {
+              "type": "boolean"
+            },
+            "teacherNotePreservation": {
+              "type": "boolean"
+            },
+            "realDomAdapter": {
+              "type": "string"
+            },
+            "durableStorage": {
+              "type": "boolean"
+            },
+            "crossProcessLock": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "implemented",
+            "scopeValidation",
+            "pageClosureValidation",
+            "catalogCache",
+            "contentHashDeduplication",
+            "partialFailureResume",
+            "boundedTransientReadRetries",
+            "teacherNotePreservation",
+            "realDomAdapter",
+            "durableStorage",
+            "crossProcessLock"
+          ]
+        },
+        "syntheticBenchmark": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "scenario": {
+              "type": "string"
+            },
+            "queryCalls": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "before": {
+                  "type": "integer"
+                },
+                "after": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "before",
+                "after"
+              ]
+            },
+            "extractedRows": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "before": {
+                  "type": "integer"
+                },
+                "after": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "before",
+                "after"
+              ]
+            },
+            "virtualReadLatencyMs": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "before": {
+                  "type": "integer"
+                },
+                "after": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "before",
+                "after"
+              ]
+            },
+            "retriesPerVariant": {
+              "type": "integer"
+            },
+            "backoffMsPerVariant": {
+              "type": "integer"
+            },
+            "historyEventsPerVariant": {
+              "type": "integer"
+            },
+            "warmPassChanges": {
+              "type": "integer"
+            },
+            "actualServerPerformanceMeasured": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "scenario",
+            "queryCalls",
+            "extractedRows",
+            "virtualReadLatencyMs",
+            "retriesPerVariant",
+            "backoffMsPerVariant",
+            "historyEventsPerVariant",
+            "warmPassChanges",
+            "actualServerPerformanceMeasured"
+          ]
+        },
+        "repositoryDisposition": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "previousTarget": {
+              "type": "string"
+            },
+            "previousTargetWasIncorrect": {
+              "type": "boolean"
+            },
+            "revertedPullRequests": {
+              "type": "array",
+              "items": {
+                "type": "integer"
+              }
+            },
+            "rollbackPullRequest": {
+              "type": "string"
+            },
+            "rollbackMerged": {
+              "type": "boolean"
+            },
+            "restoredMergeCommit": {
+              "type": "string"
+            },
+            "preTaskCommit": {
+              "type": "string"
+            },
+            "restoredTree": {
+              "type": "string"
+            },
+            "preTaskTree": {
+              "type": "string"
+            },
+            "exactTreeMatchVerified": {
+              "type": "boolean"
+            },
+            "rollbackMainCi": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "state": {
+                  "type": "string"
+                },
+                "conclusion": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "state",
+                "conclusion",
+                "url"
+              ]
+            },
+            "intendedRepository": {
+              "type": "string"
+            },
+            "intendedVisibility": {
+              "type": "string"
+            },
+            "newRepositoryState": {
+              "type": "string"
+            },
+            "newRepositoryUrl": {
+              "type": "null"
+            },
+            "connectorVerification": {
+              "type": "string"
+            },
+            "localSourcePreserved": {
+              "type": "boolean"
+            },
+            "archivedRepositoryIsCurrentProject": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "previousTarget",
+            "previousTargetWasIncorrect",
+            "revertedPullRequests",
+            "rollbackPullRequest",
+            "rollbackMerged",
+            "restoredMergeCommit",
+            "preTaskCommit",
+            "restoredTree",
+            "preTaskTree",
+            "exactTreeMatchVerified",
+            "rollbackMainCi",
+            "intendedRepository",
+            "intendedVisibility",
+            "newRepositoryState",
+            "newRepositoryUrl",
+            "connectorVerification",
+            "localSourcePreserved",
+            "archivedRepositoryIsCurrentProject"
+          ]
+        },
+        "ciEvidence": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "archivedSnapshot": {
+              "type": "string"
+            },
+            "linux": {
+              "type": "string"
+            },
+            "windows": {
+              "type": "string"
+            },
+            "workbenchRun": {
+              "type": "string"
+            },
+            "existingRepositoryRun": {
+              "type": "string"
+            },
+            "currentGangARepositoryCiVerified": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "archivedSnapshot",
+            "linux",
+            "windows",
+            "workbenchRun",
+            "existingRepositoryRun",
+            "currentGangARepositoryCiVerified"
+          ]
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "role": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "role",
+              "url"
+            ]
+          }
+        },
+        "validatedSourceSnapshotCommit": {
+          "type": "string"
+        },
+        "latestValidatedLocalArchivePath": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "localSourceNote": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "$schema",
+        "kind",
+        "schemaVersion",
+        "revision",
+        "projectId",
+        "canonicalParentId",
+        "updatedAt",
+        "id",
+        "computerName",
+        "taskId",
+        "taskCreationState",
+        "environmentInspectionState",
+        "sourceReference",
+        "observedAt",
+        "operatingSystem",
+        "workspacePath",
+        "repositoryPath",
+        "toolVersions",
+        "capabilities",
+        "installationsPerformed",
+        "credentialsConfigured",
+        "publicServerStarted",
+        "runtimeEnforcementVerified",
+        "readyState",
+        "limitations",
+        "futureUpdateRule"
+      ]
+    },
+    "development_task_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "$schema": {
+          "type": "string"
+        },
+        "kind": {
+          "const": "development_task_contract"
+        },
+        "schemaVersion": {
+          "const": "0.1.0"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "projectId": {
+          "type": "string"
+        },
+        "canonicalParentId": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "id": {
+          "type": "string"
+        },
+        "taskId": {
+          "type": "string"
+        },
+        "authoritySource": {
+          "type": "string"
+        },
+        "goal": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "allowedActions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "excludedActions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "preconditions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "expectedDeliverables": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "successCriteria": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "failureRecovery": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "externalEffectsAuthorized": {
+          "type": "boolean"
+        },
+        "runtimeGuardrailsImplemented": {
+          "type": "boolean"
+        },
+        "actionEvents": {
+          "type": "array",
+          "items": {
+            "type": [
+              "object",
+              "string"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "action": {
+                "type": "string"
+              },
+              "outcome": {
+                "enum": [
+                  "observed_success",
+                  "failure",
+                  "unknown"
+                ]
+              },
+              "evidenceRef": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "action",
+              "outcome",
+              "evidenceRef"
+            ]
+          }
+        },
+        "reportedOutcome": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "scaffoldPath": {
+              "type": "string"
+            },
+            "checksPassed": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "checksFailed": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "staticTypeCheck": {
+              "type": "string"
+            },
+            "appBuilt": {
+              "type": "boolean"
+            },
+            "serverStarted": {
+              "type": "boolean"
+            },
+            "sourceReference": {
+              "type": "string"
+            },
+            "assertionsPassed": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "scenarioFullyPassed": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "scenarioPartial": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "scenarioNotRun": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "foundationVersion": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "syntheticScenariosWithEvidence": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "validatedSourceSnapshotCommit": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "scaffoldPath",
+            "checksPassed",
+            "checksFailed",
+            "staticTypeCheck",
+            "appBuilt",
+            "serverStarted",
+            "sourceReference"
+          ]
+        },
+        "executionHistory": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "taskId": {
+                "type": "string"
+              },
+              "workspacePath": {
+                "type": "string"
+              },
+              "role": {
+                "type": "string"
+              },
+              "reportedPassed": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "reportedFailed": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "taskId",
+              "workspacePath",
+              "role",
+              "reportedPassed",
+              "reportedFailed"
+            ]
+          }
+        },
+        "installScope": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "package": {
+              "type": "string"
+            },
+            "registry": {
+              "type": "string"
+            },
+            "projectOnly": {
+              "type": "boolean"
+            },
+            "result": {
+              "type": "string"
+            },
+            "bypassAllowed": {
+              "type": "boolean"
+            },
+            "attemptedPackages": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "blockingActor": {
+              "type": "string"
+            },
+            "installedVersions": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "typescript": {
+                  "type": "string"
+                },
+                "@types/bun": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "typescript",
+                "@types/bun"
+              ]
+            },
+            "lockfile": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "package",
+            "registry",
+            "projectOnly",
+            "result",
+            "bypassAllowed",
+            "attemptedPackages",
+            "blockingActor"
+          ]
+        },
+        "remainingScope": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "repositoryDisposition": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "previousTarget": {
+              "type": "string"
+            },
+            "previousTargetWasIncorrect": {
+              "type": "boolean"
+            },
+            "revertedPullRequests": {
+              "type": "array",
+              "items": {
+                "type": "integer"
+              }
+            },
+            "rollbackPullRequest": {
+              "type": "string"
+            },
+            "rollbackMerged": {
+              "type": "boolean"
+            },
+            "restoredMergeCommit": {
+              "type": "string"
+            },
+            "preTaskCommit": {
+              "type": "string"
+            },
+            "restoredTree": {
+              "type": "string"
+            },
+            "preTaskTree": {
+              "type": "string"
+            },
+            "exactTreeMatchVerified": {
+              "type": "boolean"
+            },
+            "rollbackMainCi": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "state": {
+                  "type": "string"
+                },
+                "conclusion": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "state",
+                "conclusion",
+                "url"
+              ]
+            },
+            "intendedRepository": {
+              "type": "string"
+            },
+            "intendedVisibility": {
+              "type": "string"
+            },
+            "newRepositoryState": {
+              "type": "string"
+            },
+            "newRepositoryUrl": {
+              "type": "null"
+            },
+            "connectorVerification": {
+              "type": "string"
+            },
+            "localSourcePreserved": {
+              "type": "boolean"
+            },
+            "archivedRepositoryIsCurrentProject": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "previousTarget",
+            "previousTargetWasIncorrect",
+            "revertedPullRequests",
+            "rollbackPullRequest",
+            "rollbackMerged",
+            "restoredMergeCommit",
+            "preTaskCommit",
+            "restoredTree",
+            "preTaskTree",
+            "exactTreeMatchVerified",
+            "rollbackMainCi",
+            "intendedRepository",
+            "intendedVisibility",
+            "newRepositoryState",
+            "newRepositoryUrl",
+            "connectorVerification",
+            "localSourcePreserved",
+            "archivedRepositoryIsCurrentProject"
+          ]
+        }
+      },
+      "required": [
+        "$schema",
+        "kind",
+        "schemaVersion",
+        "revision",
+        "projectId",
+        "canonicalParentId",
+        "updatedAt",
+        "id",
+        "taskId",
+        "authoritySource",
+        "goal",
+        "status",
+        "allowedActions",
+        "excludedActions",
+        "preconditions",
+        "expectedDeliverables",
+        "successCriteria",
+        "failureRecovery",
+        "externalEffectsAuthorized",
+        "runtimeGuardrailsImplemented",
+        "actionEvents"
+      ]
+    },
+    "development_test_plan": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "$schema": {
+          "type": "string"
+        },
+        "kind": {
+          "const": "development_test_plan"
+        },
+        "schemaVersion": {
+          "const": "0.1.0"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "projectId": {
+          "type": "string"
+        },
+        "canonicalParentId": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "id": {
+          "type": "string"
+        },
+        "taskId": {
+          "type": "string"
+        },
+        "testDataClass": {
+          "type": "string"
+        },
+        "executionState": {
+          "type": "string"
+        },
+        "cases": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "subject": {
+                "type": "string"
+              },
+              "fixture": {
+                "type": "string"
+              },
+              "expected": {
+                "type": "string"
+              },
+              "status": {
+                "enum": [
+                  "not_run",
+                  "passed",
+                  "failed",
+                  "blocked",
+                  "partial"
+                ]
+              },
+              "actual": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "evidenceRef": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "syntheticEvidenceState": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "subject",
+              "fixture",
+              "expected",
+              "status",
+              "actual",
+              "evidenceRef"
+            ]
+          }
+        },
+        "separateArtifactValidation": {
+          "type": "string"
+        },
+        "completionRule": {
+          "type": "string"
+        },
+        "notClaimed": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "observedCheckGroups": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "sourceReference": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "passed": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "failed": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "caseIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "caseMappingVerified": {
+                "type": "boolean"
+              },
+              "fixtures": {
+                "type": "string"
+              },
+              "queryDemo": {
+                "type": "string"
+              },
+              "staticTypeCheck": {
+                "type": "string"
+              },
+              "assertions": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "caseMappingScope": {
+                "type": "string"
+              },
+              "runCommand": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "observedRunAtUtc": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "sourceReference",
+              "description",
+              "passed",
+              "failed",
+              "caseIds",
+              "caseMappingVerified",
+              "fixtures",
+              "queryDemo",
+              "staticTypeCheck"
+            ]
+          }
+        },
+        "scenarioSummary": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "total": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "passed": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "partial": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "notRun": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "failed": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "total",
+            "passed",
+            "partial",
+            "notRun",
+            "failed"
+          ]
+        },
+        "syntheticEvidenceSummary": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "total": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "covered": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "missing": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "sourceReference": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "total",
+            "covered",
+            "missing",
+            "sourceReference"
+          ]
+        },
+        "additionalVerifiedChecks": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "$schema",
+        "kind",
+        "schemaVersion",
+        "revision",
+        "projectId",
+        "canonicalParentId",
+        "updatedAt",
+        "id",
+        "taskId",
+        "testDataClass",
+        "executionState",
+        "cases",
+        "separateArtifactValidation",
+        "completionRule",
+        "notClaimed"
+      ]
+    }
+  }
+}

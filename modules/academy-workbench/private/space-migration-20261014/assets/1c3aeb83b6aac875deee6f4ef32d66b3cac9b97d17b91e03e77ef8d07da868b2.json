@@ -1,0 +1,3184 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "강의하는아이들 학원 실무 타입 0.1.0",
+  "description": "업무 원본과 Cartography의 초기 별도 스키마. 기존 Workspace 스냅샷을 변경하지 않습니다.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/Catalog"
+    },
+    {
+      "$ref": "#/$defs/RouteMap"
+    },
+    {
+      "$ref": "#/$defs/EvidenceSet"
+    },
+    {
+      "$ref": "#/$defs/OperationalDataset"
+    },
+    {
+      "$ref": "#/$defs/ValidationReceipt"
+    }
+  ],
+  "$defs": {
+    "FieldResolution": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "fieldPath": {
+          "type": "string",
+          "minLength": 1
+        },
+        "selectedValue": {},
+        "selectedSourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "verificationState": {
+          "enum": [
+            "observed_site",
+            "user_confirmed",
+            "derived",
+            "unknown",
+            "conflict"
+          ]
+        },
+        "reason": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "externalWriteState": {
+          "enum": [
+            "not_requested",
+            "not_attempted",
+            "pending",
+            "verified",
+            "unknown"
+          ]
+        }
+      },
+      "required": [
+        "fieldPath",
+        "selectedValue",
+        "selectedSourceIds",
+        "verificationState",
+        "reason",
+        "externalWriteState"
+      ]
+    },
+    "Student": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "const": "student"
+        },
+        "schemaVersion": {
+          "const": "0.1.0"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "profileId": {
+          "const": "kyungchan"
+        },
+        "canonicalParentId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "relatedProjectIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "sourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "observedAt": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "externalStudentId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "school": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "status": {
+          "enum": [
+            "active",
+            "inactive",
+            "unknown"
+          ]
+        },
+        "resolutions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/FieldResolution"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "schemaVersion",
+        "revision",
+        "profileId",
+        "canonicalParentId",
+        "relatedProjectIds",
+        "sourceIds",
+        "observedAt",
+        "updatedAt",
+        "displayName",
+        "externalStudentId",
+        "school",
+        "status",
+        "resolutions"
+      ]
+    },
+    "Enrollment": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "const": "enrollment"
+        },
+        "schemaVersion": {
+          "const": "0.1.0"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "profileId": {
+          "const": "kyungchan"
+        },
+        "canonicalParentId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "relatedProjectIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "sourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "observedAt": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "studentId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "externalEnrollmentId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "course": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "group": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "period": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "weekdays": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "MO",
+              "TU",
+              "WE",
+              "TH",
+              "FR",
+              "SA",
+              "SU"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "validFrom": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "validTo": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scheduleExceptions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "date": {
+                "type": "string",
+                "format": "date"
+              },
+              "kind": {
+                "enum": [
+                  "added",
+                  "cancelled",
+                  "changed",
+                  "unknown"
+                ]
+              },
+              "note": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "date",
+              "kind",
+              "note"
+            ]
+          }
+        },
+        "resolutions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/FieldResolution"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "schemaVersion",
+        "revision",
+        "profileId",
+        "canonicalParentId",
+        "relatedProjectIds",
+        "sourceIds",
+        "observedAt",
+        "updatedAt",
+        "studentId",
+        "externalEnrollmentId",
+        "course",
+        "group",
+        "period",
+        "weekdays",
+        "validFrom",
+        "validTo",
+        "scheduleExceptions",
+        "resolutions"
+      ]
+    },
+    "ClassSession": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "const": "class_session"
+        },
+        "schemaVersion": {
+          "const": "0.1.0"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "profileId": {
+          "const": "kyungchan"
+        },
+        "canonicalParentId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "relatedProjectIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "sourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "observedAt": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "localDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "timezone": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "scheduledStart": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "scheduledEnd": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "participantEnrollmentIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "occurrenceStatus": {
+          "enum": [
+            "scheduled",
+            "occurred",
+            "cancelled",
+            "unknown"
+          ]
+        },
+        "actualStart": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "actualEnd": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "resolutions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/FieldResolution"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "schemaVersion",
+        "revision",
+        "profileId",
+        "canonicalParentId",
+        "relatedProjectIds",
+        "sourceIds",
+        "observedAt",
+        "updatedAt",
+        "localDate",
+        "timezone",
+        "scheduledStart",
+        "scheduledEnd",
+        "participantEnrollmentIds",
+        "occurrenceStatus",
+        "actualStart",
+        "actualEnd",
+        "resolutions"
+      ]
+    },
+    "Attendance": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "const": "attendance"
+        },
+        "schemaVersion": {
+          "const": "0.1.0"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "profileId": {
+          "const": "kyungchan"
+        },
+        "canonicalParentId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "relatedProjectIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "sourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "observedAt": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "studentId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sessionId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "presence": {
+          "enum": [
+            "present",
+            "absent",
+            "unknown"
+          ]
+        },
+        "late": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "rawMark": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sourceNote": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "externalRecordState": {
+          "enum": [
+            "observed",
+            "missing",
+            "not_checked"
+          ]
+        },
+        "resolutions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/FieldResolution"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "schemaVersion",
+        "revision",
+        "profileId",
+        "canonicalParentId",
+        "relatedProjectIds",
+        "sourceIds",
+        "observedAt",
+        "updatedAt",
+        "studentId",
+        "sessionId",
+        "presence",
+        "late",
+        "rawMark",
+        "sourceNote",
+        "externalRecordState",
+        "resolutions"
+      ]
+    },
+    "Absence": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "const": "absence"
+        },
+        "schemaVersion": {
+          "const": "0.1.0"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "profileId": {
+          "const": "kyungchan"
+        },
+        "canonicalParentId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "relatedProjectIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "sourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "observedAt": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "attendanceId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "studentId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sessionId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "makeupRequirement": {
+          "enum": [
+            "required",
+            "not_required",
+            "unknown"
+          ]
+        },
+        "linkedMakeupIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "resolutionStatus": {
+          "enum": [
+            "open",
+            "partly_resolved",
+            "resolved",
+            "unknown"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "schemaVersion",
+        "revision",
+        "profileId",
+        "canonicalParentId",
+        "relatedProjectIds",
+        "sourceIds",
+        "observedAt",
+        "updatedAt",
+        "attendanceId",
+        "studentId",
+        "sessionId",
+        "makeupRequirement",
+        "linkedMakeupIds",
+        "resolutionStatus"
+      ]
+    },
+    "Makeup": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "const": "makeup"
+        },
+        "schemaVersion": {
+          "const": "0.1.0"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "profileId": {
+          "const": "kyungchan"
+        },
+        "canonicalParentId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "relatedProjectIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "sourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "observedAt": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "studentId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "targetAbsenceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "sessionId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "plannedFor": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "occurrenceStatus": {
+          "enum": [
+            "scheduled",
+            "occurred",
+            "cancelled",
+            "unknown"
+          ]
+        },
+        "coverageStatus": {
+          "enum": [
+            "unverified",
+            "partial",
+            "fulfilled",
+            "not_applicable"
+          ]
+        },
+        "coverageUnit": {
+          "enum": [
+            "session",
+            "minutes",
+            "unknown"
+          ]
+        },
+        "coverageAmount": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "completionEvidenceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "schemaVersion",
+        "revision",
+        "profileId",
+        "canonicalParentId",
+        "relatedProjectIds",
+        "sourceIds",
+        "observedAt",
+        "updatedAt",
+        "studentId",
+        "targetAbsenceIds",
+        "sessionId",
+        "plannedFor",
+        "occurrenceStatus",
+        "coverageStatus",
+        "coverageUnit",
+        "coverageAmount",
+        "completionEvidenceIds"
+      ]
+    },
+    "LessonRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "const": "lesson_record"
+        },
+        "schemaVersion": {
+          "const": "0.1.0"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "profileId": {
+          "const": "kyungchan"
+        },
+        "canonicalParentId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "relatedProjectIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "sourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "observedAt": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "studentId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sessionId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "externalDayRecordReference": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "externalRecordState": {
+          "enum": [
+            "observed",
+            "missing",
+            "not_checked"
+          ]
+        },
+        "coveredContent": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "nextStep": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "resolutions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/FieldResolution"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "schemaVersion",
+        "revision",
+        "profileId",
+        "canonicalParentId",
+        "relatedProjectIds",
+        "sourceIds",
+        "observedAt",
+        "updatedAt",
+        "studentId",
+        "sessionId",
+        "externalDayRecordReference",
+        "externalRecordState",
+        "coveredContent",
+        "nextStep",
+        "resolutions"
+      ]
+    },
+    "Assignment": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "const": "assignment"
+        },
+        "schemaVersion": {
+          "const": "0.1.0"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "profileId": {
+          "const": "kyungchan"
+        },
+        "canonicalParentId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "relatedProjectIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "sourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "observedAt": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "studentId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sessionId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "instructions": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "dueAt": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "status": {
+          "enum": [
+            "assigned",
+            "submitted",
+            "reviewed",
+            "cancelled",
+            "unknown"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "schemaVersion",
+        "revision",
+        "profileId",
+        "canonicalParentId",
+        "relatedProjectIds",
+        "sourceIds",
+        "observedAt",
+        "updatedAt",
+        "studentId",
+        "sessionId",
+        "instructions",
+        "dueAt",
+        "status"
+      ]
+    },
+    "ParentNotice": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "const": "parent_notice"
+        },
+        "schemaVersion": {
+          "const": "0.1.0"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "profileId": {
+          "const": "kyungchan"
+        },
+        "canonicalParentId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "relatedProjectIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "sourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "observedAt": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "purpose": {
+          "type": "string",
+          "minLength": 1
+        },
+        "relatedRecordIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "recipientReference": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "body": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "preparationStatus": {
+          "enum": [
+            "not_started",
+            "draft",
+            "approved",
+            "cancelled"
+          ]
+        },
+        "deliveryStatus": {
+          "enum": [
+            "not_sent",
+            "attempted",
+            "sent",
+            "delivery_verified",
+            "unknown"
+          ]
+        },
+        "sentAt": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "deliveryEvidenceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "schemaVersion",
+        "revision",
+        "profileId",
+        "canonicalParentId",
+        "relatedProjectIds",
+        "sourceIds",
+        "observedAt",
+        "updatedAt",
+        "purpose",
+        "relatedRecordIds",
+        "recipientReference",
+        "body",
+        "preparationStatus",
+        "deliveryStatus",
+        "sentAt",
+        "deliveryEvidenceIds"
+      ]
+    },
+    "Submission": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "const": "submission"
+        },
+        "schemaVersion": {
+          "const": "0.1.0"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "profileId": {
+          "const": "kyungchan"
+        },
+        "canonicalParentId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "relatedProjectIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "sourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "observedAt": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "relatedRecordIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "destinationReference": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "artifactReference": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "status": {
+          "enum": [
+            "not_started",
+            "prepared",
+            "submitted",
+            "receipt_verified",
+            "unknown"
+          ]
+        },
+        "submittedAt": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "receiptEvidenceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "schemaVersion",
+        "revision",
+        "profileId",
+        "canonicalParentId",
+        "relatedProjectIds",
+        "sourceIds",
+        "observedAt",
+        "updatedAt",
+        "relatedRecordIds",
+        "destinationReference",
+        "artifactReference",
+        "status",
+        "submittedAt",
+        "receiptEvidenceIds"
+      ]
+    },
+    "Task": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "const": "task"
+        },
+        "schemaVersion": {
+          "const": "0.1.0"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "profileId": {
+          "const": "kyungchan"
+        },
+        "canonicalParentId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "relatedProjectIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "sourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "observedAt": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "dueAt": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "relatedRecordIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "routeIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "status": {
+          "enum": [
+            "open",
+            "in_progress",
+            "blocked",
+            "done",
+            "cancelled"
+          ]
+        },
+        "blockingQuestion": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "completionEvidenceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "schemaVersion",
+        "revision",
+        "profileId",
+        "canonicalParentId",
+        "relatedProjectIds",
+        "sourceIds",
+        "observedAt",
+        "updatedAt",
+        "title",
+        "dueAt",
+        "relatedRecordIds",
+        "routeIds",
+        "status",
+        "blockingQuestion",
+        "completionEvidenceIds"
+      ]
+    },
+    "SourceEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "const": "source_evidence"
+        },
+        "schemaVersion": {
+          "const": "0.1.0"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "profileId": {
+          "const": "kyungchan"
+        },
+        "canonicalParentId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "relatedProjectIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "sourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "observedAt": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "sourceKind": {
+          "enum": [
+            "user_request",
+            "site_observation_summary",
+            "site_screen",
+            "page_read",
+            "sharing_read",
+            "file_read",
+            "derived"
+          ]
+        },
+        "sourceReference": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "claim": {
+          "type": "string",
+          "minLength": 1
+        },
+        "verificationState": {
+          "enum": [
+            "directly_read",
+            "reported_observation",
+            "unknown"
+          ]
+        },
+        "sourceObservedAt": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "containsStudentPersonalData": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "schemaVersion",
+        "revision",
+        "profileId",
+        "canonicalParentId",
+        "relatedProjectIds",
+        "sourceIds",
+        "observedAt",
+        "updatedAt",
+        "sourceKind",
+        "sourceReference",
+        "claim",
+        "verificationState",
+        "sourceObservedAt",
+        "limitations",
+        "containsStudentPersonalData"
+      ]
+    },
+    "SiteScreen": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "const": "site_screen"
+        },
+        "schemaVersion": {
+          "const": "0.1.0"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "profileId": {
+          "const": "kyungchan"
+        },
+        "canonicalParentId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "relatedProjectIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "sourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "observedAt": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "exactUrl": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "menuPath": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "locator": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "verificationState": {
+          "enum": [
+            "label_observed",
+            "path_verified",
+            "unverified"
+          ]
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "exactLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "locator": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "status": {
+                "enum": [
+                  "reported_observed",
+                  "verified",
+                  "unknown"
+                ]
+              }
+            },
+            "required": [
+              "name",
+              "exactLabel",
+              "locator",
+              "status"
+            ]
+          }
+        },
+        "readOnlyHazards": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "trigger": {
+                "type": "string",
+                "minLength": 1
+              },
+              "selectors": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "avoidance": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "trigger",
+              "selectors",
+              "avoidance"
+            ]
+          }
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "schemaVersion",
+        "revision",
+        "profileId",
+        "canonicalParentId",
+        "relatedProjectIds",
+        "sourceIds",
+        "observedAt",
+        "updatedAt",
+        "label",
+        "exactUrl",
+        "menuPath",
+        "locator",
+        "verificationState",
+        "fields",
+        "readOnlyHazards"
+      ]
+    },
+    "Route": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "const": "route"
+        },
+        "schemaVersion": {
+          "const": "0.1.0"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "profileId": {
+          "const": "kyungchan"
+        },
+        "canonicalParentId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "relatedProjectIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "sourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "observedAt": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "intent": {
+          "type": "string",
+          "minLength": 1
+        },
+        "exampleRequests": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "entityTypes": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "Student",
+              "Enrollment",
+              "ClassSession",
+              "Attendance",
+              "Absence",
+              "Makeup",
+              "LessonRecord",
+              "Assignment",
+              "ParentNotice",
+              "Submission",
+              "Task",
+              "CourseProgress",
+              "PreviewInspection",
+              "AssessmentResult",
+              "TeachingMaterial"
+            ]
+          }
+        },
+        "screenIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "inputRequirements": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "readSteps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "order": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "action": {
+                "type": "string",
+                "minLength": 1
+              },
+              "screenId": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "verificationState": {
+                "enum": [
+                  "reported_observed",
+                  "proposed",
+                  "unknown"
+                ]
+              }
+            },
+            "required": [
+              "order",
+              "action",
+              "screenId",
+              "verificationState"
+            ]
+          }
+        },
+        "evidenceValidation": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "completionCriteria": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "writeBoundary": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "routeMode": {
+              "enum": [
+                "read_only",
+                "prepare_only",
+                "mixed_requires_scope_check"
+              ]
+            },
+            "allowedWithoutAdditionalApproval": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "requiresCurrentAuthorization": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "authorityGrantedByThisFile": {
+              "const": false
+            }
+          },
+          "required": [
+            "routeMode",
+            "allowedWithoutAdditionalApproval",
+            "requiresCurrentAuthorization",
+            "authorityGrantedByThisFile"
+          ]
+        },
+        "status": {
+          "enum": [
+            "partial_verified",
+            "verified",
+            "discovery_required"
+          ]
+        },
+        "unknowns": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "schemaVersion",
+        "revision",
+        "profileId",
+        "canonicalParentId",
+        "relatedProjectIds",
+        "sourceIds",
+        "observedAt",
+        "updatedAt",
+        "intent",
+        "exampleRequests",
+        "entityTypes",
+        "screenIds",
+        "inputRequirements",
+        "readSteps",
+        "evidenceValidation",
+        "completionCriteria",
+        "writeBoundary",
+        "status",
+        "unknowns"
+      ]
+    },
+    "Catalog": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "$schema": {
+          "const": "academy-operations.schema.json"
+        },
+        "kind": {
+          "const": "academy_catalog"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schemaVersion": {
+          "const": "0.1.0"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "profileId": {
+          "const": "kyungchan"
+        },
+        "projectId": {
+          "const": "project:academy-practical"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "sourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "scope": {
+          "type": "string",
+          "minLength": 1
+        },
+        "coverage": {
+          "enum": [
+            "academy_pages_only"
+          ]
+        },
+        "previousCatalogUnchanged": {
+          "const": true
+        },
+        "nodes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "kind": {
+                "const": "page_node"
+              },
+              "schemaVersion": {
+                "const": "0.1.0"
+              },
+              "revision": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "profileId": {
+                "const": "kyungchan"
+              },
+              "canonicalParentId": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "relatedProjectIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "sourceIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "observedAt": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "pageId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "pageUrl": {
+                "type": "string",
+                "format": "uri"
+              },
+              "parentPageId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "role": {
+                "enum": [
+                  "project",
+                  "workflow",
+                  "reference"
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "kind",
+              "schemaVersion",
+              "revision",
+              "profileId",
+              "canonicalParentId",
+              "relatedProjectIds",
+              "sourceIds",
+              "observedAt",
+              "updatedAt",
+              "title",
+              "pageId",
+              "pageUrl",
+              "parentPageId",
+              "role"
+            ]
+          }
+        },
+        "files": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "fileName": {
+                "type": "string",
+                "minLength": 1
+              },
+              "kind": {
+                "enum": [
+                  "schema",
+                  "catalog",
+                  "routes",
+                  "evidence",
+                  "operations",
+                  "validation"
+                ]
+              },
+              "reference": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "sha256": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "title",
+              "fileName",
+              "kind",
+              "reference",
+              "sha256"
+            ]
+          }
+        },
+        "privacy": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "studentPersonalDataIncluded": {
+              "const": false
+            },
+            "sharingObservedAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "ownerOnlyObserved": {
+              "const": true
+            },
+            "permissionChangesMade": {
+              "const": false
+            }
+          },
+          "required": [
+            "studentPersonalDataIncluded",
+            "sharingObservedAt",
+            "ownerOnlyObserved",
+            "permissionChangesMade"
+          ]
+        }
+      },
+      "required": [
+        "$schema",
+        "kind",
+        "id",
+        "schemaVersion",
+        "revision",
+        "profileId",
+        "projectId",
+        "updatedAt",
+        "sourceIds",
+        "scope",
+        "coverage",
+        "previousCatalogUnchanged",
+        "nodes",
+        "files",
+        "privacy"
+      ]
+    },
+    "RouteMap": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "$schema": {
+          "const": "academy-operations.schema.json"
+        },
+        "kind": {
+          "const": "academy_route_map"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schemaVersion": {
+          "const": "0.1.0"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "profileId": {
+          "const": "kyungchan"
+        },
+        "projectId": {
+          "const": "project:academy-practical"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "sourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "siteBaseUrl": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "screens": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SiteScreen"
+          }
+        },
+        "routes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Route"
+          }
+        },
+        "routingMethod": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "$schema",
+        "kind",
+        "id",
+        "schemaVersion",
+        "revision",
+        "profileId",
+        "projectId",
+        "updatedAt",
+        "sourceIds",
+        "siteBaseUrl",
+        "screens",
+        "routes",
+        "routingMethod"
+      ]
+    },
+    "EvidenceSet": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "$schema": {
+          "const": "academy-operations.schema.json"
+        },
+        "kind": {
+          "const": "academy_evidence"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schemaVersion": {
+          "const": "0.1.0"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "profileId": {
+          "const": "kyungchan"
+        },
+        "projectId": {
+          "const": "project:academy-practical"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "sourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SourceEvidence"
+          }
+        }
+      },
+      "required": [
+        "$schema",
+        "kind",
+        "id",
+        "schemaVersion",
+        "revision",
+        "profileId",
+        "projectId",
+        "updatedAt",
+        "sourceIds",
+        "sources"
+      ]
+    },
+    "OperationalDataset": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "$schema": {
+          "const": "academy-operations.schema.json"
+        },
+        "kind": {
+          "const": "academy_operations"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schemaVersion": {
+          "const": "0.1.0"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "profileId": {
+          "const": "kyungchan"
+        },
+        "projectId": {
+          "const": "project:academy-practical"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "sourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "scope": {
+          "type": "string",
+          "minLength": 1
+        },
+        "records": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/Student"
+              },
+              {
+                "$ref": "#/$defs/Enrollment"
+              },
+              {
+                "$ref": "#/$defs/ClassSession"
+              },
+              {
+                "$ref": "#/$defs/Attendance"
+              },
+              {
+                "$ref": "#/$defs/Absence"
+              },
+              {
+                "$ref": "#/$defs/Makeup"
+              },
+              {
+                "$ref": "#/$defs/LessonRecord"
+              },
+              {
+                "$ref": "#/$defs/Assignment"
+              },
+              {
+                "$ref": "#/$defs/ParentNotice"
+              },
+              {
+                "$ref": "#/$defs/Submission"
+              },
+              {
+                "$ref": "#/$defs/Task"
+              },
+              {
+                "$ref": "#/$defs/CourseProgress"
+              },
+              {
+                "$ref": "#/$defs/PreviewInspection"
+              },
+              {
+                "$ref": "#/$defs/AssessmentResult"
+              },
+              {
+                "$ref": "#/$defs/TeachingMaterial"
+              }
+            ]
+          }
+        },
+        "studentRecordCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "dataLimitations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "$schema",
+        "kind",
+        "id",
+        "schemaVersion",
+        "revision",
+        "profileId",
+        "projectId",
+        "updatedAt",
+        "sourceIds",
+        "scope",
+        "records",
+        "studentRecordCount",
+        "dataLimitations"
+      ]
+    },
+    "ValidationReceipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "$schema": {
+          "const": "academy-operations.schema.json"
+        },
+        "kind": {
+          "const": "academy_validation"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schemaVersion": {
+          "const": "0.1.0"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "profileId": {
+          "const": "kyungchan"
+        },
+        "projectId": {
+          "const": "project:academy-practical"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "sourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "scope": {
+          "type": "string",
+          "minLength": 1
+        },
+        "checks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "status": {
+                "enum": [
+                  "passed",
+                  "not_applicable",
+                  "pending",
+                  "failed"
+                ]
+              },
+              "detail": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "name",
+              "status",
+              "detail"
+            ]
+          }
+        },
+        "fileHashes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "fileName": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sha256": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "fileName",
+              "sha256"
+            ]
+          }
+        },
+        "excludedClaims": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "$schema",
+        "kind",
+        "id",
+        "schemaVersion",
+        "revision",
+        "profileId",
+        "projectId",
+        "updatedAt",
+        "sourceIds",
+        "scope",
+        "checks",
+        "fileHashes",
+        "excludedClaims"
+      ]
+    },
+    "CourseProgress": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "const": "course_progress"
+        },
+        "schemaVersion": {
+          "const": "0.1.0"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "profileId": {
+          "const": "kyungchan"
+        },
+        "canonicalParentId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "relatedProjectIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "sourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "observedAt": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "studentId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "enrollmentId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "course": {
+          "type": "string",
+          "minLength": 1
+        },
+        "unitLabel": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rawStatus": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "status": {
+          "enum": [
+            "completed",
+            "in_progress",
+            "unknown"
+          ]
+        },
+        "resolutions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/FieldResolution"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "schemaVersion",
+        "revision",
+        "profileId",
+        "canonicalParentId",
+        "relatedProjectIds",
+        "sourceIds",
+        "observedAt",
+        "updatedAt",
+        "studentId",
+        "enrollmentId",
+        "course",
+        "unitLabel",
+        "rawStatus",
+        "status",
+        "resolutions"
+      ]
+    },
+    "PreviewInspection": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "const": "preview_inspection"
+        },
+        "schemaVersion": {
+          "const": "0.1.0"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "profileId": {
+          "const": "kyungchan"
+        },
+        "canonicalParentId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "relatedProjectIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "sourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "observedAt": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "studentId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "course": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "unitLabel": {
+          "type": "string",
+          "minLength": 1
+        },
+        "videoStatus": {
+          "enum": [
+            "ok",
+            "not_ok",
+            "unknown"
+          ]
+        },
+        "inspectionStatus": {
+          "enum": [
+            "waiting",
+            "completed",
+            "unknown"
+          ]
+        },
+        "recordedAt": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "resolutions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/FieldResolution"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "schemaVersion",
+        "revision",
+        "profileId",
+        "canonicalParentId",
+        "relatedProjectIds",
+        "sourceIds",
+        "observedAt",
+        "updatedAt",
+        "studentId",
+        "course",
+        "unitLabel",
+        "videoStatus",
+        "inspectionStatus",
+        "recordedAt",
+        "resolutions"
+      ]
+    },
+    "AssessmentResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "const": "assessment_result"
+        },
+        "schemaVersion": {
+          "const": "0.1.0"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "profileId": {
+          "const": "kyungchan"
+        },
+        "canonicalParentId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "relatedProjectIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "sourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "observedAt": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "studentId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "testLabel": {
+          "type": "string",
+          "minLength": 1
+        },
+        "takenAt": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "score": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "maxScore": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "questionCount": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "resolutions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/FieldResolution"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "schemaVersion",
+        "revision",
+        "profileId",
+        "canonicalParentId",
+        "relatedProjectIds",
+        "sourceIds",
+        "observedAt",
+        "updatedAt",
+        "studentId",
+        "testLabel",
+        "takenAt",
+        "score",
+        "maxScore",
+        "questionCount",
+        "resolutions"
+      ]
+    },
+    "TeachingMaterial": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "const": "teaching_material"
+        },
+        "schemaVersion": {
+          "const": "0.1.0"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "profileId": {
+          "const": "kyungchan"
+        },
+        "canonicalParentId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "relatedProjectIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "sourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "observedAt": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "grade": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "level": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "term": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "volume": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "materialLabel": {
+          "type": "string",
+          "minLength": 1
+        },
+        "buttonLabel": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "downloadStatus": {
+          "enum": [
+            "not_attempted",
+            "attempted",
+            "verified",
+            "unknown"
+          ]
+        },
+        "artifactReference": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "schemaVersion",
+        "revision",
+        "profileId",
+        "canonicalParentId",
+        "relatedProjectIds",
+        "sourceIds",
+        "observedAt",
+        "updatedAt",
+        "grade",
+        "level",
+        "term",
+        "volume",
+        "materialLabel",
+        "buttonLabel",
+        "downloadStatus",
+        "artifactReference"
+      ]
+    }
+  }
+}

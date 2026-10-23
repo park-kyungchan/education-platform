@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Verification scoped to the context package",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "const": "module-user-context.verification/1.0.0"
+    },
+    "kind": {
+      "const": "verification"
+    },
+    "status": {
+      "enum": [
+        "passed",
+        "failed"
+      ]
+    },
+    "verifiedAt": {
+      "type": "string"
+    },
+    "implementation": {
+      "const": "scripts/validate.mjs"
+    },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "status": {
+            "const": "passed"
+          }
+        },
+        "required": [
+          "name",
+          "status"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "sourceFingerprint": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "scope": {
+      "type": "string"
+    },
+    "doesNotEstablish": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "acceptanceDecision": {
+      "const": "not_made"
+    },
+    "executionEffects": {
+      "const": "none"
+    },
+    "authority": {
+      "const": "none"
+    },
+    "nativePermissionGranted": {
+      "const": false
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "kind",
+    "status",
+    "verifiedAt",
+    "implementation",
+    "checks",
+    "errors",
+    "sourceFingerprint",
+    "scope",
+    "doesNotEstablish",
+    "acceptanceDecision",
+    "executionEffects",
+    "authority",
+    "nativePermissionGranted"
+  ],
+  "additionalProperties": false
+}

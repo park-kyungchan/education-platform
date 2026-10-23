@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "academy.operations-mcp-source-review/1",
+  "recordClass": "parent_recorded_native_subagent_review",
+  "recordedAt": "2026-10-14T14:09:32.121Z",
+  "reviewerTask": "/root/find_existing_lms_api",
+  "reviewMethod": "read_only_source_inspection",
+  "conclusion": "no_material_issues",
+  "materialFindingCount": 0,
+  "reviewedArtifactHashes": {
+    "src/server.ts": "5003e1ee7625d9f2de3742806340fbc109b33d90284f9e33ffb3bd0223649c72",
+    "src/service.ts": "58c13fe776c45bb4a4594735fcad473be9ce9bb8daffc0c83bb1a9074f267d84",
+    "src/saved-context.ts": "6fa7b90fc984f8400e2913004627ef7bca0803c1c0d5b01280345d35ec26c8d4",
+    "src/pagination.ts": "a8c8569faf1a0f8288ec0a48f06cfac1fc1cb8ee826d2d07fe007b33cc0ae081",
+    "src/contracts.ts": "af39a49a90bf277f0ead849fd295e88cc1a9aaee4dc6f311367a10d3337b7f43",
+    "src/paths.ts": "99eb256d5ea746afe6461c1d01128f59b91a086ed2650dc211c8005ffeecdd0e",
+    "architecture/intent.json": "13f27f1388983d208441cd9bb7ec434cf10443fb7f468c3e69783cb67d937bc9",
+    "architecture/source-pins.json": "a9cf09c7ab09f10b060ac5e54578ebb353d6c0b52c42f5adebf05f183c378d06"
+  },
+  "observedBoundaries": [
+    "MCP calls have fixed local-read and stdio paths only",
+    "REA and verification writes are separate CLI operations",
+    "Exact preserved student scope and separate teacher/context/source/draft classifications",
+    "Snapshot-bound cursor and source hash provenance",
+    "Five preserved students are not a complete teacher roster",
+    "Reported website hiding is not deletion or local expiry",
+    "No native registration, authentication, live transport or common harness mutation path"
+  ],
+  "limitations": [
+    "Source review only; reviewer did not rerun tests or make runtime calls",
+    "Runtime verification is recorded separately"
+  ]
+}

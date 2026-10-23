@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0",
+  "checked_at": "2026-10-16T10:25:46.029031+00:00",
+  "scope": "exported Page JSON, attachment wrapper/source text, and derived structured content",
+  "rules": [
+    "credential-token and private-key signatures",
+    "credential-like nonempty sensitive fields",
+    "standalone Korean mobile number",
+    "national identity number pattern"
+  ],
+  "redactions": [],
+  "false_positives_reviewed": [
+    {
+      "files": [
+        "attachments/ref-016.json",
+        "attachments/ref-018.json"
+      ],
+      "category": "mobile_number_substring",
+      "resolution": "hexadecimal internal section ID; not a phone number; preserved"
+    }
+  ],
+  "findings": "No matching actual secret, government identifier, or parent contact number found. Pattern review is not a guarantee that every possible sensitive format is detectable.",
+  "binary_items": "none; all90 attachment responses were source text",
+  "access_policy": "private authorized academy records only; do not publish publicly"
+}

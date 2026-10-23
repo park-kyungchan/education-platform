@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "academy.review-check/2",
+  "id": "AAR-REVIEW-002-C07",
+  "observedAtUtc": "2026-10-21T05:30:54.036917+00:00",
+  "cwd": "/home/palantirkc/worktrees/academy-architecture-review-binding-20261021",
+  "commit": "1a3f9e3ed977560e29ea91209ba6bdb7249b8be4",
+  "scope": "Final successor authored topology and real Git-backed root Work snapshot/transitions. Does not validate helper fixture readers or close semantic graph findings.",
+  "results": [
+    {
+      "command": [
+        "bun",
+        "architecture/academy-reorganization/validate-successor.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"valid\":true,\"assertions\":189,\"modules\":13,\"outcomeNodes\":20,\"crossWorkQualifications\":16,\"workflowCoverage\":7,\"scope\":\"repair-successor design only; no native dispatch or operational acceptance inferred\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bun",
+        "--eval",
+        "import {openGitWork,validateGitWorkRecords,validateGitWorkTransition} from \"/home/palantirkc/projects/agent-platform/packages/work-continuity/src/git-work/index.ts\";\nconst selection={repositoryRoot:process.cwd(),repositoryId:\"park-kyungchan/academy-workbench\",projectId:\"academy-workbench\",workId:\"academy-architecture-orchestration-20261021\"};\nconst current=await openGitWork({...selection,commit:\"1a3f9e3ed977560e29ea91209ba6bdb7249b8be4\"});\nconst snapshot=await validateGitWorkRecords(current);const transitions=[];\nfor(const commit of [\"9db3043992d31110622337daa20cf8ca64f35a1e\",\"5d679a8be9a808865e8f00803869dffa03be0b10\",\"cb41685437d0f3fabf9f32ae00667e3b88fec4c4\"]){transitions.push({from:commit,result:await validateGitWorkTransition(await openGitWork({...selection,commit}),current)});}\nconsole.log(JSON.stringify({snapshot,transitions,scope:\"Exact root Work records only; not child readiness or runtime adoption\"}));\nif(!snapshot.valid||transitions.some(x=>!x.result.valid))process.exitCode=1;"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"snapshot\":{\"valid\":true,\"findings\":[],\"authority\":\"none\",\"nativePermissionGranted\":false,\"semanticAcceptanceEstablished\":false},\"transitions\":[{\"from\":\"9db3043992d31110622337daa20cf8ca64f35a1e\",\"result\":{\"valid\":true,\"findings\":[],\"authority\":\"none\",\"nativePermissionGranted\":false,\"semanticAcceptanceEstablished\":false}},{\"from\":\"5d679a8be9a808865e8f00803869dffa03be0b10\",\"result\":{\"valid\":true,\"findings\":[],\"authority\":\"none\",\"nativePermissionGranted\":false,\"semanticAcceptanceEstablished\":false}},{\"from\":\"cb41685437d0f3fabf9f32ae00667e3b88fec4c4\",\"result\":{\"valid\":true,\"findings\":[],\"authority\":\"none\",\"nativePermissionGranted\":false,\"semanticAcceptanceEstablished\":false}}],\"scope\":\"Exact root Work records only; not child readiness or runtime adoption\"}\n",
+      "stderr": ""
+    }
+  ]
+}

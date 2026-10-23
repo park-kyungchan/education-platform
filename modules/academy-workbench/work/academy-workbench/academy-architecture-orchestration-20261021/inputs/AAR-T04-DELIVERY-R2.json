@@ -1,0 +1,45 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "academy-operations",
+  "projectId": "academy-workbench",
+  "workId": "academy-architecture-orchestration-20261021",
+  "kind": "input",
+  "id": "AAR-T04-DELIVERY-R2",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "root-academy-orchestrator",
+    "locator": "reviewed-architecture-source-dispatch:delivery-r2",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "scope": "Reviewed owner-preserving source architecture and prior-source baseline qualification, not whole prior Work completion or native activation.",
+    "reviewedArchitectureCommit": "5e5017e6dff174343dcb6e95685837fd0f6093a6",
+    "currentArchitecture": "architecture/academy-reorganization/architecture-r3.json",
+    "currentExecution": "architecture/academy-reorganization/execution-plan-r3.json",
+    "currentWorkflowInventory": "architecture/academy-reorganization/workflow-capabilities-r2.json",
+    "currentCrossWorkProtocol": "architecture/academy-reorganization/cross-work-protocol-r3.json",
+    "independentReview": "architecture/academy-reorganization/reviews/AAR-REVIEW-004/AAR-REVIEW-004.json",
+    "independentUnresolvedCount": 0,
+    "implementationGate": "DOM-01 freezes existing producer/consumer contracts; QRY-BOUNDARY qualifies current source coupling before DOM-02/QRY-02.",
+    "preservedPriorSources": [
+      {
+        "commit": "ad42d0760df24df273cabf202b75fba5bbe8c68e",
+        "scope": "context/catalog/source-only workflow designs"
+      },
+      {
+        "commit": "df8b9f776e22841919e69b9ff9ba25084e13f558",
+        "scope": "independently reviewed MCP source candidate only; no claim every original Work Task has complete execution"
+      }
+    ],
+    "effectHolds": [
+      "publication",
+      "merge",
+      "deployment",
+      "native activation",
+      "private source write",
+      "print",
+      "send",
+      "common-contract/permission/unrelated-Work changes"
+    ]
+  }
+}

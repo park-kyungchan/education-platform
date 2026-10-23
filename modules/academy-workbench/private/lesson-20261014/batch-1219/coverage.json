@@ -1,0 +1,155 @@
+{
+  "schemaVersion": "academy.lesson-batch-coverage/1",
+  "cutoff": "2026-10-14T12:19:00+00:00",
+  "scope": "two students same-day context; historical audit remains pinned separately",
+  "students": [
+    {
+      "studentKey": "hyun",
+      "eventCount": 13,
+      "sourceIds": [
+        "Sentinel_00c1001837408191bcddb15f6579ff55",
+        "Sentinel_13994ea5afc081918f4e0ed1fc4374b0",
+        "Sentinel_f667ea21afc081918421b8ecc8ba969e",
+        "Sentinel_e71e70417a2c8191912b6edd0b4892b6",
+        "Sentinel_0602c0aeda548191bd7f7665b6ff38bb",
+        "Sentinel_84799165b9048191b758e46fae24b285",
+        "Sentinel_887f3db0d4ec819189a7d003a05a94c2",
+        "Sentinel_209f2c4d32908191bc3483bdca7fe188",
+        "Sentinel_53c6dce6ebd48191a10fee4589bdd0ac",
+        "Sentinel_ce18ada8077081918d21f03872d4524b",
+        "Sentinel_1268049ba2d48191a8ec06e0159adf57",
+        "Sentinel_a5f10b6f85748191823455c9dd48dc04",
+        "Sentinel_b8542964d2ac8191a53eed0d702df567"
+      ],
+      "factKinds": [
+        "assessment_guided_solving",
+        "attendance_arrival",
+        "clinic_plan",
+        "clinic_plan_result",
+        "conditional_lesson_extension",
+        "course_duration_estimate",
+        "course_duration_goal",
+        "daily_test_attainment_target",
+        "daily_test_plan",
+        "director_message_status",
+        "draft_plan_scope_closed",
+        "evening_homework_counseling_plan",
+        "homework_performance",
+        "instruction_direction_adopted",
+        "instruction_support_plan",
+        "lesson_plan_capacity",
+        "lesson_plan_replacement",
+        "lesson_workload_estimate",
+        "next_student_analysis_requested",
+        "pacing_analysis_request",
+        "parent_effort_observation",
+        "parent_message_draft_request",
+        "parent_understanding_report",
+        "planning_holiday_correction",
+        "print_completion_report",
+        "student_eval_rubric_storage_requirement",
+        "weekly_pacing_proposal"
+      ],
+      "postCutoffExcludedIds": []
+    },
+    {
+      "studentKey": "ruhan",
+      "eventCount": 9,
+      "sourceIds": [
+        "Sentinel_d6b9de358ab08191ac61a6854e27a580",
+        "Sentinel_0df9e448348c81918510bc69f4607fe2",
+        "Sentinel_ea418295f1cc819197959c901a3a863a",
+        "Sentinel_d55bf2d581d08191a7d2a15e5f318a7a",
+        "Sentinel_5d672af8688c8191859ff1644dd04cf6",
+        "Sentinel_e71e70417a2c8191912b6edd0b4892b6",
+        "Sentinel_44847124d2588191b2955d96b575bd9e",
+        "Sentinel_bb66b2b52f948191bdecf8293aa83d38",
+        "Sentinel_b8542964d2ac8191a53eed0d702df567"
+      ],
+      "factKinds": [
+        "assigned_homework_judgment",
+        "attendance_arrival",
+        "book_scope_confirmation",
+        "concept_blank_teacher_final",
+        "concept_blank_test",
+        "daily_homework_scheduling_requirement",
+        "daily_test_answer_entry",
+        "daily_test_teacher_completion",
+        "evening_homework_counseling_plan",
+        "homework_page_progress",
+        "homework_reassigned",
+        "paper_assessment_plan",
+        "remaining_course_forecast_request",
+        "scheduled_lesson_start",
+        "solution_explanation",
+        "teacher_final_judgment"
+      ],
+      "postCutoffExcludedIds": []
+    }
+  ],
+  "runtimeDatabaseImplemented": false,
+  "externalWritePerformedByThisBatch": false,
+  "dailyRecordState": "local draft; server read blocked502 per reported source; no write confirmed",
+  "missingFullSourceIds": [],
+  "sourceCompletenessClaim": "Listed source IDs and mother attachment transcription reconciled; not exhaustive room or lifetime learning history",
+  "graph": {
+    "layers": [
+      "sourceEvidence",
+      "student",
+      "bookEdition",
+      "activityScope",
+      "teacherEvent",
+      "serverObservation",
+      "rubric",
+      "plan",
+      "communication",
+      "pendingAction"
+    ],
+    "edges": [
+      "derived_from",
+      "scoped_to",
+      "supersedes_current_projection_not_history",
+      "observed_separately_from",
+      "blocked_by"
+    ]
+  },
+  "sourceMessageCount": 21,
+  "remainingGaps": [
+    "Exact clinic print kinds/physical sheet count still unverified",
+    "DailyRecord server save blocked; no write confirmation",
+    "Rubric semester arithmetic measurement undefined; runtime DB not implemented",
+    "Future daily lesson assignments not approved",
+    "Historical remaining unit judgments not inferred from isolated stage completions"
+  ],
+  "professionalContextPaths": [
+    "private/pending-context-20261014/director-dm-writing-preference.json",
+    "private/pending-context-20261014/hyun-director-draft-feedback.json",
+    "private/pending-context-20261014/hyun-director-inquiry-final-feedback.json"
+  ],
+  "sourceFiles": [
+    "dailyrecord-draft.json",
+    "dailyrecord-memo-provenance.json",
+    "hyun-book-units.json",
+    "hyun-director-guidance-source.json",
+    "hyun-rubric-v1.json",
+    "lesson-b854-excerpts.json",
+    "ruhan-dt64-65.json",
+    "ruhan-historical-pace.json",
+    "ruhan-pace-proposal.json",
+    "ruhan-parent-context.json",
+    "ruhan-parent-verified-transcription.json",
+    "ruhan-remaining-units.json",
+    "source-inventory.json",
+    "source-messages.json",
+    "topology.json"
+  ],
+  "targetedInventoryCount": 32,
+  "sourceInventoryCaution": "Targeted exact source IDs and today name searches, not exhaustive room transcript. See source-inventory.json.",
+  "originalMotherImageVerification": {
+    "state": "verified_text_transcription",
+    "verifiedAt": "2026-10-14T12:26:18Z",
+    "sourcePath": "ruhan-parent-verified-transcription.json",
+    "imageUploaded": false,
+    "postCutoffSourceClarificationNotNewLessonEvent": true
+  }
+}

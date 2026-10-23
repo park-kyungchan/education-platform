@@ -1,0 +1,54 @@
+{
+  "synthetic": true,
+  "realLearnerRecords": false,
+  "cases": [
+    {
+      "caseId": "synthetic-multiplication",
+      "item": "24×3을 (20+4)×3으로 나누어 설명하시오.",
+      "observation": "가상의 학습자가 20×3+4×3=72를 쓰고 두 부분 모두 세 배라고 말했다.",
+      "claim": "이 한 장면에서는 분해된 각 부분에 같은 배수를 적용한 설명이 관찰되었다.",
+      "hypothesis": "부분 전체 관계를 보존하며 분배할 수 있을 가능성이 있다.",
+      "strategy": "20과 4로 분해한 뒤 각각 세 배하는 전략을 사용했을 가능성이 있다.",
+      "concept": "분배와 전체 양 보존",
+      "probe": "24×3에서 20×3+4는 왜 다르며 34×3에서도 같은 설명이 되는지 확인한다.",
+      "counter": "가상의 반례 응답: 34×3을 30×3+4로 적었다.",
+      "limitation": "한 문항의 가상 발화이며 절차 모방·힌트 의존을 배제하지 못한다.",
+      "legacyId": "HM11-d3-T02",
+      "file": "multiplication_designs.json",
+      "pointer": "/HM11-d3-T02",
+      "adapted": true
+    },
+    {
+      "caseId": "synthetic-division",
+      "item": "84÷2에서 십 8개를 먼저 둘로 나누면 무엇을 얻는가?",
+      "observation": "가상의 학습자가 십 4개라고 말하고 40을 적은 뒤 일 2개를 합쳐 42를 적었다.",
+      "claim": "이 한 장면에서는 몫의 숫자와 십 단위를 함께 표현했다.",
+      "hypothesis": "같은 단위를 유지한 채 등분하는 능력이 작동했을 가능성이 있다.",
+      "strategy": "십과 일을 분리하여 등분한 뒤 다시 합치는 전략 가설이다.",
+      "concept": "등분과 단위 보존",
+      "probe": "86÷2와 84÷3에서 단위 보존과 남은 십의 교환을 따로 확인한다.",
+      "counter": "가상의 반례 응답: 남은 십을 일 1개로 처리했다.",
+      "limitation": "나누어떨어지는 사례 하나로 교환이 필요한 나눗셈까지 일반화하지 않는다.",
+      "legacyId": "HD11-d1-T01",
+      "file": "division_designs.json",
+      "pointer": "/designs/0",
+      "adapted": true
+    },
+    {
+      "caseId": "synthetic-circle",
+      "item": "침을 K에 고정하고 벌림 3cm를 유지해 그린 원의 중심을 설명하시오.",
+      "observation": "가상의 학습자가 K를 고르고 종이를 옮겨도 고정점 역할은 같다고 말했다.",
+      "claim": "이 한 장면에서는 종이의 위치보다 고정된 기준점의 역할을 사용했다.",
+      "hypothesis": "원의 중심을 일정한 거리의 기준점으로 파악할 가능성이 있다.",
+      "strategy": "움직이지 않는 침과 움직이는 연필 끝을 대비하는 전략 가설이다.",
+      "concept": "원의 중심과 등거리",
+      "probe": "글자와 종이 방향을 바꾸고, 기준점이 움직이는 경우도 구별하게 한다.",
+      "counter": "가상의 반례 응답: 기준점이 움직여도 벌림만 같으면 K 중심의 원이라고 말했다.",
+      "limitation": "발화 하나로 등거리 정의의 일반적 이해나 실제 작도 능력을 확정하지 않는다.",
+      "legacyId": "HC11-d1-T01",
+      "file": "circle_designs.json",
+      "pointer": "/designs/0",
+      "adapted": true
+    }
+  ]
+}

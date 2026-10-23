@@ -1,0 +1,13 @@
+import { readFile } from 'node:fs/promises';
+import { loadPlatform, moduleRoot } from '../../scripts/agent-platform.ts';
+import { resolve } from 'node:path';
+import { validateTopology, type InstructionTopology } from './instruction-topology.ts';
+const read = async (path: string) => JSON.parse(await readFile(resolve(moduleRoot, path), 'utf8'));
+const base = 'context/student-audit-20261014';
+const [identity, project, task, run, topology] = await Promise.all(['work/identity.json', '/project.json', 'work/task.json', 'work/run.json', 'instruction-topology.json'].map(p => read(p.startsWith('/') ? p.slice(1) : `${base}/${p}`)));
+const api = await loadPlatform();
+const validation = api.validateReferences([project, task, run]);
+if (!validation.valid) throw Error(JSON.stringify(validation.issues));
+if (identity.projectId !== project.projectId || identity.domainId !== project.domainId || identity.taskId !== task.id || identity.runId !== run.id || run.payload.taskRef !== task.id || task.payload.details.workId !== identity.workId || run.payload.details.workId !== identity.workId || identity.registration !== 'local-module-record' || identity.globallyRegistered !== false || identity.authority !== 'none' || identity.nativePermissionGranted !== false) throw Error('audit_work_identity_mismatch');
+validateTopology(topology as InstructionTopology);
+console.log(JSON.stringify({ canonicalArtifactValidation: 'pass', workId: identity.workId, sourceCommit: api.source.commit, dependencyMode: api.source.mode, nativeGlobalRegistration: false, executionAuthority: 'none', instructionTopology: 'pass', sourceTruthVerified: false }));

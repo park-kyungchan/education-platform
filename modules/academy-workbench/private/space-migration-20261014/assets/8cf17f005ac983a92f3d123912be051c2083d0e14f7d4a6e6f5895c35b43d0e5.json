@@ -1,0 +1,89 @@
+{
+  "kind": "academy_output_contract",
+  "schemaVersion": "1.0.0",
+  "contractId": "academy.progress-output",
+  "version": "1.0.0",
+  "revision": 1,
+  "sourceIds": [
+    "Sentinel_8f111332acf48191b03fa70f8fd15397",
+    "source:reviewed-output-pattern-v1"
+  ],
+  "scope": {
+    "student": "runtime_selected_private_student",
+    "bookEditions": "runtime_selected_verified_editions",
+    "defaultSourceMode": "saved_snapshot",
+    "actualStudentData": false
+  },
+  "rowKinds": [
+    "observed_section",
+    "verification_slot"
+  ],
+  "stateDefinitions": {
+    "observed": "정해진 범위의 수행 또는 채점 근거를 관찰",
+    "observed_absent": "조회한 해당 소스 범위에 결과행이 없음; 미수행 확정 아님",
+    "app_not_recorded": "사용자가 앱에 기록하지 않는다고 확인한 정확한 원문 라벨; 실제 수행 확인불가",
+    "mapping_unknown": "단원·섹션·페이지·문항 또는 근거의 대응이 검증되지 않음",
+    "toc_unverified": "단원별 섹션의 존재·적용 또는 교재 전체 목차 완전성 미검증"
+  },
+  "independentAxes": [
+    "catalogPresence",
+    "tocState",
+    "evidenceState",
+    "mappingState",
+    "teacherVerdict",
+    "paperEvidence",
+    "progressDecision"
+  ],
+  "requiredRecordFields": [
+    "bookDisplayName",
+    "bookCode",
+    "edition",
+    "majorGroupingLabel",
+    "parentRelationState",
+    "unitLabel",
+    "unitTitle",
+    "sectionSourceLabel",
+    "sectionDisplayLabel",
+    "catalogCode",
+    "lessonIndex",
+    "catalogPresence",
+    "tocState",
+    "evidenceState",
+    "mappingState",
+    "attemptEvidence",
+    "diaryAssertions",
+    "teacherVerdict",
+    "paperEvidence",
+    "progressDecision",
+    "absenceReason",
+    "sourceUrls",
+    "rowKind",
+    "sourceAsOf",
+    "sourceScope",
+    "contractVersion"
+  ],
+  "topologyRules": [
+    "상위 그룹은 단원 번호 접두사로 배열하되 실제 부모 관계를 확정하지 않는다.",
+    "학교급별 사용자 확인 vocabulary는 존재 미검증 확인칸으로 표시할 수 있다. 이를 실제 섹션 엔티티나 배정 과제로 생성하지 않는다.",
+    "총괄은 관찰된 목록 범위에 한 번 기록하고 각 소단원에 코드와 수행을 복제하지 않는다.",
+    "다빈치는 해당 판본의 실제 목록 섹션과 차시만 사용한다."
+  ],
+  "coverageRules": [
+    "목차 coverage와 수행 coverage를 분리한다.",
+    "현재 catalog 파싱은 자료 내 전수이며 종이 목차와 교재 전체의 완전성 검증이 아니다.",
+    "빈칸과 빈 evidence 배열을 생략하지 않고 사유를 기록한다.",
+    "점수는 관찰된 채점 수치이며 섹션·소단원·교재 전체 완료를 뜻하지 않는다."
+  ],
+  "labelRules": [
+    "기본예제는 기본 문제 또는 개념 예제와 임의로 합치지 않는다.",
+    "다빈치 결과 실전 유형과 목록 유형다지기 대응은 잠정 연결로 보존한다.",
+    "DT와 Daily Restudy 동일성은 미검증이다.",
+    "시험·목록 코드와 사이트 고유 응시 ID를 구분한다."
+  ],
+  "privacyRules": [
+    "학생 이름·개별 점수·수행 기록은 공통 계약에 넣지 않는다.",
+    "사례 보고서와 학생 범위 계약의 실제 파일 참조를 공통 자동 로드 목록에 넣지 않는다.",
+    "보고서 생성, 사이트 PDF 생성과 물리 인쇄는 서로 다른 intent와 권한 확인을 사용한다."
+  ],
+  "authorityGranted": false
+}

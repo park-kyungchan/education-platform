@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.academy-workbench.local/work-identity/1",
+  "title": "Local academy module work identity",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "domainId",
+    "projectId",
+    "projectArtifactId",
+    "workId",
+    "taskId",
+    "runId",
+    "registration",
+    "globallyRegistered",
+    "centralIssuer",
+    "workContract",
+    "authority",
+    "nativePermissionGranted"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "academy.work-identity/1",
+      "type": "string"
+    },
+    "domainId": {
+      "const": "academy-operations",
+      "type": "string"
+    },
+    "projectId": {
+      "const": "academy-workbench",
+      "type": "string"
+    },
+    "projectArtifactId": {
+      "const": "academy-workbench:project:manifest",
+      "type": "string"
+    },
+    "workId": {
+      "const": "harness-consumer-upgrade-20261013",
+      "type": "string"
+    },
+    "taskId": {
+      "const": "academy-workbench:task:harness-consumer-upgrade-20261013",
+      "type": "string"
+    },
+    "runId": {
+      "const": "academy-workbench:run:harness-consumer-upgrade-20261013-01",
+      "type": "string"
+    },
+    "registration": {
+      "const": "local-module-record",
+      "type": "string"
+    },
+    "globallyRegistered": {
+      "const": false,
+      "type": "boolean"
+    },
+    "centralIssuer": {
+      "const": "not-established",
+      "type": "string"
+    },
+    "workContract": {
+      "const": "codex.continuity.checkpoint.v1 projectId/workId pair; Work is not a shared Artifact kind",
+      "type": "string"
+    },
+    "authority": {
+      "const": "none",
+      "type": "string"
+    },
+    "nativePermissionGranted": {
+      "const": false,
+      "type": "boolean"
+    }
+  }
+}

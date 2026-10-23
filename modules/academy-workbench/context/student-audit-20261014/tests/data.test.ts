@@ -1,0 +1,12 @@
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { validateData } from '../validate-data.ts';
+const fixture = (): any => ({ schemaVersion: 'academy.audit.normalized/1.0.0', collectedAt: '2026-10-14T00:00:00Z', coverage: { fullCurrentHistoryVerified: false, historicalAttempts: 5, historicalVideos: 5, sectionRowsIncludingPlaceholders: 5 }, students: Array.from({length:5}, (_,n) => ({ studentId: `fiction-${n}`, name: `Fiction ${n}`, fullCurrentHistoryVerified: false, sections: [{rowKind:'catalog_section',attemptIds:[`attempt-${n}`]}],attempts:[{id:`attempt-${n}`,score:80}],prepVideosHistorical:[{id:`video-${n}`,state:'waiting'}] })) });
+test('real-data structural validator accepts bounded synthetic shape', () => assert.equal(validateData(fixture()).students.length,5));
+test('cross-student attempt references rejected', () => { const x=fixture();x.students[0].sections[0].attemptIds=['attempt-1'];assert.throws(()=>validateData(x),/same_student/); });
+test('duplicate students rejected',()=>{const x=fixture();x.students[1].studentId=x.students[0].studentId;assert.throws(()=>validateData(x),/student_identity/);});
+test('duplicate attempts rejected',()=>{const x=fixture();x.students[0].attempts.push(x.students[0].attempts[0]);assert.throws(()=>validateData(x),/attempt_identity/);});
+test('unsupported full-history claim rejected',()=>{const x=fixture();x.coverage.fullCurrentHistoryVerified=true;assert.throws(()=>validateData(x),/complete_history/);});
+test('fabricated coverage count rejected',()=>{const x=fixture();x.coverage.historicalVideos=50;assert.throws(()=>validateData(x),/coverage_count/);});
+test('placeholder not removed or treated as assignment',()=>{const x=fixture();x.students[0].sections[0]={rowKind:'unmapped_placeholder',attemptIds:[]};assert.equal(validateData(x).students[0]!.sections[0]!.rowKind,'unmapped_placeholder');});
+test('credential fields and signed links rejected',()=>{for(const value of [{password:'synthetic'},{url:'https://example.test/path?access_token=synthetic'}]){const x=fixture();x.extra=value;assert.throws(()=>validateData(x),/credential|signed_private/);}});

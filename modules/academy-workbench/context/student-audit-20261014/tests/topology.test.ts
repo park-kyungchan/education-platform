@@ -1,0 +1,38 @@
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { planRead, removalReadiness, validateTopology, type InstructionTopology, type PlannerInput, type RemovalEvidence } from '../instruction-topology.ts';
+const topology = (): InstructionTopology => JSON.parse(readFileSync(new URL('../instruction-topology.json', import.meta.url), 'utf8'));
+const input = (): PlannerInput => ({ environment: 'dot_cloud', cloudAvailable: true, sessionPresent: true, scopeAuthorized: true, securityWarning: false, extensionNotice: false, studentId: 'fiction-a', purpose: 'assessment', observations: [] });
+const success = () => ({ routeId: 'assessment-name-enter', state: 'succeeded' as const, studentId: 'fiction-a', observedAt: '2026-10-14T16:44:00+09:00', filterVerified: true, rowCount: 11, resultKind: 'StudentNameSearch' });
+test('typed graph validates without granting execution authority', () => { assert.equal(validateTopology(topology()).executionAuthority, 'none'); });
+test('explicit cloud environment overrides an online user computer', () => { assert.equal(planRead(topology(), { ...input(), environment: 'user_computer' }).status, 'explicit_environment_unavailable'); });
+test('unavailable cloud never silently selects WSL/VPS or computer', () => { assert.equal(planRead(topology(), { ...input(), cloudAvailable: false }).routeId, null); });
+test('extension notice alone still recommends known Enter route', () => { const r = planRead(topology(), { ...input(), extensionNotice: true }); assert.equal(r.routeId, 'assessment-name-enter'); assert.equal(r.executionEnabled, false); });
+test('failed Enter chooses official menu fallback', () => { assert.equal(planRead(topology(), { ...input(), observations: [{ ...success(), state: 'failed' }] }).routeId, 'assessment-official-menu'); });
+test('ordinary Enter success is available despite notice', () => { assert.equal(planRead(topology(), { ...input(), extensionNotice: true, observations: [success()] }).status, 'scoped_read_available'); });
+test('denial never tries a fallback', () => { assert.equal(planRead(topology(), { ...input(), observations: [{ ...success(), state: 'denied' }] }).status, 'stop_access_denied'); });
+test('security warning never tries a fallback', () => { assert.equal(planRead(topology(), { ...input(), securityWarning: true }).routeId, null); });
+test('scope authority comes from host not serialized instruction', () => { assert.equal(planRead(topology(), { ...input(), scopeAuthorized: false }).status, 'stop_host_authority_or_security'); });
+test('uncertain effects require observation, not retry', () => { assert.equal(planRead(topology(), { ...input(), observations: [{ ...success(), state: 'outcome_uncertain' }] }).status, 'inspect_uncertain_outcome'); });
+test('no session emits secure login need only', () => { assert.equal(planRead(topology(), { ...input(), sessionPresent: false }).status, 'secure_login_needed'); });
+for (const bad of [{ studentId: 'fiction-b' }, { filterVerified: false }, { rowCount: null }, { observedAt: 'unknown' }, { resultKind: 'unrelated' }]) {
+  test(`unverified successful result rejected ${JSON.stringify(bad)}`, () => { assert.equal(planRead(topology(), { ...input(), observations: [{ ...success(), ...bad }] }).status, 'scoped_result_not_verified'); });
+}
+test('exhausted tested routes is coverage gap, not global unavailability', () => { const r = planRead(topology(), { ...input(), observations: [{ ...success(), state: 'failed' }, { ...success(), routeId: 'assessment-official-menu', state: 'failed' }] }); assert.equal(r.status, 'coverage_gap_in_tested_routes'); assert.equal(r.globalServiceFailureInferred, false); });
+test('DT does not reuse assessment as evidence', () => { const r = planRead(topology(), { ...input(), purpose: 'daily_test', observations: [success()] }); assert.equal(r.routeId, 'daily-test-filter-enter'); });
+test('duplicate graph ids rejected', () => { const t = topology(); t.routes.push(t.routes[0]!); assert.throws(() => validateTopology(t), /duplicate/); });
+test('dangling fallback rejected', () => { const t = topology(); t.routes[0]!.fallbacks = ['missing']; assert.throws(() => validateTopology(t), /dangling/); });
+test('cyclic fallback rejected', () => { const t = topology(); t.routes[1]!.fallbacks = [t.routes[0]!.id]; assert.throws(() => validateTopology(t), /cycle/); });
+test('cross-purpose fallback rejected', () => { const t = topology(); t.routes[0]!.fallbacks = ['daily-test-filter-enter']; assert.throws(() => validateTopology(t), /cross_scope/); });
+test('supersession cycles rejected', () => { const t = topology(); t.directives[0]!.supersedes = [t.directives[1]!.id]; t.directives[1]!.supersedes = [t.directives[0]!.id]; assert.throws(() => validateTopology(t), /cycle/); });
+test('print operation cannot masquerade as read fallback', () => { const t = topology(); (t.routes[1] as any).operation = 'print'; assert.throws(() => validateTopology(t), /effect_boundary/); });
+test('stored authority claim rejected', () => { const t = topology(); (t as any).executionEnabled = true; assert.throws(() => validateTopology(t), /non_authorizing/); });
+const removal = (): RemovalEvidence => ({ scopeExactIds: ['fiction-page'], inventoryComplete: true, hashesVerified: true, semanticVerification: true, localRecoveryVerified: true, unresolvedReferences: [], mergedSha: 'a'.repeat(40), remoteVerifiedSha: 'a'.repeat(40), deletionKind: 'recoverable', scopeConfirmed: true, userRequestRef: 'synthetic-request', actionTimeConfirmationRef: null, outcome: 'not_started' });
+for (const flag of ['inventoryComplete','hashesVerified','semanticVerification','localRecoveryVerified'] as const) test(`migration blocks missing ${flag}`, () => { assert.equal(removalReadiness({ ...removal(), [flag]: false }).state, 'preservation_or_recovery_incomplete'); });
+test('unresolved links prevent removal', () => { assert.equal(removalReadiness({ ...removal(), unresolvedReferences: ['fiction-link'] }).state, 'preservation_or_recovery_incomplete'); });
+test('local commit or mismatched remote merge not enough', () => { assert.equal(removalReadiness({ ...removal(), mergedSha: null }).state, 'verified_merge_needed'); assert.equal(removalReadiness({ ...removal(), remoteVerifiedSha: 'b'.repeat(40) }).state, 'verified_merge_needed'); });
+test('irreversible deletion needs action-time confirmation', () => { assert.equal(removalReadiness({ ...removal(), deletionKind: 'irreversible' }).state, 'action_time_confirmation_needed'); });
+test('unknown deletion semantics blocks', () => { assert.equal(removalReadiness({ ...removal(), deletionKind: 'unknown' }).state, 'deletion_semantics_unknown'); });
+test('uncertain deletion never repeats', () => { assert.equal(removalReadiness({ ...removal(), outcome: 'uncertain' }).state, 'inspect_uncertain_outcome'); assert.equal(removalReadiness({ ...removal(), outcome: 'completed' }).state, 'do_not_repeat'); });
+test('all preservation checks still do not execute or authorize deletion', () => { assert.deepEqual(removalReadiness(removal()), { state: 'candidate_for_host_authorization_check', executionAuthority: 'none', automaticDeletion: false }); });

@@ -1,0 +1,75 @@
+{
+  "schemaVersion": "academy.report-continuation-design/1",
+  "status": "owner-local-source-proposal-not-implemented",
+  "createdAt": "2026-10-21T11:25:56.324030+00:00",
+  "owner": {
+    "domainId": "academy-operations",
+    "projectId": "academy-workbench",
+    "workId": "academy-consumer-integration-20261021",
+    "component": "TeacherRetainedService report rendering/transport only",
+    "proposedTaskId": "academy-workbench:task:academy-consumer-integration-20261021-con-report-continuation-reuse",
+    "taskAllocated": false
+  },
+  "acceptedArchitectureBasis": "architecture-r3 performance criteria: measure equivalent coverage, source calls/bytes, exact revision invalidation before choosing caching/indexes. Existing code/data/native owners remain unchanged.",
+  "measuredBaseline": {
+    "artifact": "consumer-report-load-profile-r1.json",
+    "implementationCommit": "1d72361428ec6e0356fb80d840959926819135c4",
+    "canonicalQueryCommit": "8f8c9bd61bd5e55445780b5569ecc40effcecef6",
+    "case": "one invented student with160notes; maxBytes65536/limit100",
+    "reportServiceRequests": 8,
+    "canonicalFetchPageCalls": 48,
+    "canonicalPagesPerReportRequest": 6,
+    "sourcePinsUnchanged": true,
+    "scope": "Synthetic production service measurement, not native/DB/network latency or the older private saved-MCP48->11 comparison."
+  },
+  "proposedTreatment": {
+    "kind": "Bounded process-local reuse of an immutable fully reconstructed/rendered report basis; optional source-owner composition setting, disabled by default.",
+    "storageOwner": "Existing Workbench report-service instance; no shared harness/context store, source originals, repository data files, DB writes or native session mirror.",
+    "sourceOwner": "Canonical Education query/strict reader/validator remains unchanged; authenticated fetchPage remains source-owner supplied and must run on each report request.",
+    "initialRequest": "Use canonical reader to exhaust/verify every source page and final document digest; render complete immutable lines with original clocks/provenance. Retain only bounded report basis if enabled and policy allows.",
+    "continuationRequest": "Qualify source module identity and obtain an authenticated canonical first-page read under the exact selector. Use the canonical strict wire validator and source-backed identity/budget rules. Reuse only if source snapshot, caller binding, selector/format/report identity and applicable metadata still match the verified basis.",
+    "authorization": "A cursor or cache hit never authenticates the caller. Authenticate/qualify through owner callback before returning cached content; caller/snapshot changes or source refusal stop without cached disclosure.",
+    "integrity": "Preserve original full-reader digest basis; verify fresh first-page identity/content/coverage as appropriate without replacing canonical wire validation. Source currentness stays unknown; hash equality of retained state is not LMS refresh or native authentication proof.",
+    "clocks": "Keep teacher-reported/source-observed/verified/recorded/original-retrieved clocks unchanged. Label any latest retained-snapshot qualification clock separately.",
+    "unavailability": "Expired/evicted/missing basis or drift produces a bounded explicit refusal, no silent skipped rows, invented completion, automatic effect retry or authority escalation. Preserve source-only stateless behavior when option disabled; any capacity fallback must be explicit and coverage-preserving.",
+    "dataBounds": "Owner-controlled bounded entry count, TTL and serialized retained-report byte budget, enforced per instance; no RSS/secure-erasure claim. No real private data is accessed in this source task.",
+    "outputBounds": "Same complete CallToolResult<=512KiB and requested report page budget, full continuation and Unicode/no-loss; JSONRPC frames separately measured, no universal512KiBframecap."
+  },
+  "expectedMetric": {
+    "status": "prediction-not-observed",
+    "formula": "N canonical pages for initial full read + one authenticated retained-source qualification per remaining report page",
+    "baselineN": 6,
+    "baselineM": 8,
+    "predictedCallsIfPageCountUnchanged": 13,
+    "baselineCalls": 48,
+    "meaning": "Must compare equivalent exact report lines/identities/clocks/stages and actual page counts; no native latency claim."
+  },
+  "predeclaredValidation": {
+    "methodOwner": "Existing common constrained-improvement v1 scalar-efficiency helpers, pinned source; no new evaluator/store/native runner.",
+    "protocol": "Before candidate, create owning Work Input with target, useful goal, independent mandatory quality gates, allowed paths, bounded attempts/time and next decision; run canonical preflight.",
+    "qualityGates": [
+      "All four007repairs plus existing16selectedSDK/report regressions remain satisfied",
+      "Normalized full report lines/reportHash and teacher/source metadata match stateless control under same fixture/source/environment",
+      "Fresh owner/source checks occur for every reused continuation; revoked/changed actor, wrong selector, snapshot/decision/cancellation/issuance revision, malformed/refused source and source-module drift disclose no cached output",
+      "Expired/evicted/over-budget basis, restart/new instance, Unicode/escaped data, small page budgets and forged/replayed selectors/cursors remain bounded with explicit continuation/refusal",
+      "No source/domain reducer, common schema, credential, global/native config, private file or source-original change"
+    ],
+    "efficiencyCriterion": "Predeclare an absolute reduction goal in canonical source fetch calls on paired cases; only compare after required quality gates pass. Preserve full per-case counts/output pins and distinguish optional unmeasured time/cost.",
+    "independentReview": "Astra/xhigh design advisory before code; exact candidate re-review and source/semantic-transition validation before downstream CON03.",
+    "limits": {
+      "candidateAttempts": 2,
+      "sourcePhaseMinutes": 60,
+      "ownedActiveWorkerTurns": 1,
+      "heavyChecks": 1,
+      "stop": "Any custody/permission/history/quality regression, unsupported native/auth assumption or absence of comparable complete evidence -> repair/defer/stop; no raising limits to manufacture success."
+    }
+  },
+  "approvalBoundary": {
+    "sourceImplementation": "Within approved owner-local consumer/performance scope after qualified design and current repair review; no new owner/common/native effect.",
+    "activation": "Held. Default disabled; native/source owner must separately qualify actual authentication/freshness and choose retention policy before enabling with real data.",
+    "commonContractsPinsPermissions": "Unchanged and separately gated.",
+    "privateData": "Source tests invented only; no student originals copied or read.",
+    "acceptance": "An efficiency accept proposal is not formal AcceptanceDecision, merge, deployment, native activation or teacher acceptance."
+  },
+  "nextDecision": "Independent reviewer assesses whether the bounded optional design preserves current custody/authentication and exact report meaning; Root then admits a distinct source Task or retains the measured gap/proposal without claiming improvement."
+}

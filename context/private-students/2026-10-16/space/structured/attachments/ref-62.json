@@ -1,0 +1,769 @@
+{
+  "source_reference": "library-file:fde1_bGliZmlsZV9CNlJkM3Y4N2Y4MWpfUU11QnpmaUV3_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+  "source_sha256": "91d4bcc0a0556d6efc8f5269d36a34576a635eaf77e63cadbc2b62464fbd9ab5",
+  "data": {
+    "asOfPolicy": "Module sourceAsOf is null when not supplied. Preserve dated recent summaries independently; ingestion is not a source-observation clock.",
+    "canonicalParentPageId": "page_d9818d5817f08191835ba0a0e85936bc",
+    "catalog": {
+      "byte_size": 117063,
+      "file_access_confirmed": true,
+      "file_name": "academy-history-catalog.r1-06b0fd2cc98142a4b8f85032e23209a4.json",
+      "inserted": false,
+      "is_image": false,
+      "markdown": "[제공 파일 기준 교재 목록 r1](library-file:fde1_bGliZmlsZV8zd1VlVjc4OTNDMEZ1LWlGQzFYeDlR_FileDrive_73e3d24e44d881918a9b9622fd5a4193)",
+      "mime_type": "application/json",
+      "next_step": "Read the Page and use edit_page with its fresh guards to insert markdown.",
+      "page_id": "page_d9818d5817f08191835ba0a0e85936bc",
+      "reference": "library-file:fde1_bGliZmlsZV8zd1VlVjc4OTNDMEZ1LWlGQzFYeDlR_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+      "role": "catalog",
+      "sha256": "4731eee033cb0d82abb5f6ea41ce2941649c4a38e4fb87938ece68d0d4c76421"
+    },
+    "contracts": [
+      {
+        "fileName": "academy-student-history-1.0.schema-44fa9af7e29845338d7fd40cfa4d593e.json",
+        "pageId": "page_d9818d5817f08191835ba0a0e85936bc",
+        "reference": "library-file:fde1_bGliZmlsZV9YZm94QkdRclVmQ2FSZlFqcnVKUTVB_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+        "role": "schema",
+        "sha256": "d45c59b84e481fae4c7bc2b47dba28bffe68102d57550f552e32429aabf4c399"
+      },
+      {
+        "fileName": "projection.types-3242642cbba047f0a5b0eb2e1277c1e0.ts",
+        "pageId": "page_d9818d5817f08191835ba0a0e85936bc",
+        "reference": "library-file:fde1_bGliZmlsZV9TeVhjTkdqM3BKOVFqLVpBdlZEeTJR_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+        "role": "projectionTypes",
+        "sha256": "f9acd18c5febf9c86d7119aa95e9da974571838db4e9d25e653b73889b0682cf"
+      },
+      {
+        "fileName": "history-source.types-4c17991766f448979efbbb73dff82c8d.ts",
+        "pageId": "page_d9818d5817f08191835ba0a0e85936bc",
+        "reference": "library-file:fde1_bGliZmlsZV9QM0pwYUMxV09fZU5mb2ZVV3JkeUZR_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+        "role": "sourceTypes",
+        "sha256": "553e130541d5a134dc6b95b0cb7fba24bacb802533eb6220ba12f0db6219bd17"
+      },
+      {
+        "fileName": "identity-binding.types-72d48575f1ec4d5bbe376580368750d7.ts",
+        "pageId": "page_d9818d5817f08191835ba0a0e85936bc",
+        "reference": "library-file:fde1_bGliZmlsZV8tNVNxTklSVk5pWGd1MWRCcEE4N3h3_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+        "role": "identityTypes",
+        "sha256": "7f7692c52fff0d9d2e23a2d02d00ebfdd784207c6eed13e95c95fa4762e1b694"
+      }
+    ],
+    "coverage": [
+      {
+        "availability": "supplied",
+        "completeness": "bounded_only",
+        "count": 19,
+        "missingInputs": [],
+        "presence": "observed_present",
+        "proof": null,
+        "reason": "Observation checks only; absence of app records never proves absence of physical work",
+        "scope": "assignment_observations",
+        "status": "observed_bounded",
+        "verification": "independently_reconciled"
+      },
+      {
+        "availability": "supplied",
+        "completeness": "bounded_only",
+        "count": 208,
+        "missingInputs": [],
+        "presence": "observed_present",
+        "proof": null,
+        "reason": "Six UI month filters; raw year/timezone omitted; no native attempt IDs",
+        "scope": "attempt_summaries",
+        "status": "observed_bounded",
+        "verification": "independently_reconciled"
+      },
+      {
+        "availability": "supplied",
+        "completeness": "bounded_only",
+        "count": 43,
+        "missingInputs": [],
+        "presence": "observed_present",
+        "proof": null,
+        "reason": "2026-07 through 2026-10 UI coverage; unlisted dates are unknown, never inferred absent",
+        "scope": "attendance",
+        "status": "observed_bounded",
+        "verification": "independently_reconciled"
+      },
+      {
+        "availability": "supplied",
+        "completeness": "bounded_only",
+        "count": 256,
+        "missingInputs": [
+          "workbook edition and full catalog",
+          "explicit unsupported section aliases"
+        ],
+        "presence": "observed_present",
+        "proof": null,
+        "reason": "8 observed textbook editions; catalog establishes available sections, never assignments or completion",
+        "scope": "book_catalog",
+        "status": "observed_bounded",
+        "verification": "independently_reconciled"
+      },
+      {
+        "availability": "not_supplied",
+        "completeness": "unknown",
+        "count": null,
+        "missingInputs": [
+          "authoritative student ID crosswalk verified by user/source",
+          "book-edition ID crosswalk with provenance"
+        ],
+        "presence": "unknown",
+        "proof": null,
+        "reason": "No cross-snapshot/Space identity mapping attempted",
+        "scope": "canonical_identity_binding",
+        "status": "not_checked",
+        "verification": "not_checked"
+      },
+      {
+        "availability": "not_supplied",
+        "completeness": "unknown",
+        "count": null,
+        "missingInputs": [
+          "authoritative stable student IDs and identity binding",
+          "population and first-enrollment-to-cutoff bounds",
+          "every enrollment episode and native episode ID",
+          "dated admissions, transfers, pauses, withdrawals, returns and status changes",
+          "historical book assignments with edition and effective dates",
+          "authoritative coverage reconciliation and omitted periods"
+        ],
+        "presence": "unknown",
+        "proof": null,
+        "reason": "Not contained in supplied package; availability at source has not been checked",
+        "scope": "complete_enrollment_history",
+        "status": "not_checked",
+        "verification": "not_checked"
+      },
+      {
+        "availability": "supplied",
+        "completeness": "bounded_only",
+        "count": 5,
+        "missingInputs": [],
+        "presence": "observed_present",
+        "proof": null,
+        "reason": "Current source snapshot only; no verified historical episodes",
+        "scope": "current_enrollment",
+        "status": "observed_bounded",
+        "verification": "independently_reconciled"
+      },
+      {
+        "availability": "supplied",
+        "completeness": "bounded_only",
+        "count": 9,
+        "missingInputs": [],
+        "presence": "observed_present",
+        "proof": null,
+        "reason": "Current source rows; date-column meaning unverified",
+        "scope": "current_registered_books",
+        "status": "observed_bounded",
+        "verification": "independently_reconciled"
+      },
+      {
+        "availability": "supplied",
+        "completeness": "bounded_only",
+        "count": 43,
+        "missingInputs": [],
+        "presence": "observed_present",
+        "proof": null,
+        "reason": "2026-07 through 2026-10 UI coverage; source rows were summarized",
+        "scope": "diary_summaries",
+        "status": "observed_bounded",
+        "verification": "independently_reconciled"
+      },
+      {
+        "availability": "not_supplied",
+        "completeness": "unknown",
+        "count": null,
+        "missingInputs": [
+          "original paper scans or source electronic submission",
+          "artifact hash and page/question location",
+          "assignment/attempt/student linkage and observer provenance"
+        ],
+        "presence": "unknown",
+        "proof": null,
+        "reason": "Physical work was not inspected",
+        "scope": "paper_evidence",
+        "status": "not_checked",
+        "verification": "not_checked"
+      },
+      {
+        "availability": "not_supplied",
+        "completeness": "unknown",
+        "count": null,
+        "missingInputs": [
+          "native attempt and student IDs",
+          "versioned question IDs, ordering, paper/session and authoritative question references",
+          "original responses distinguishing blank, skipped, unavailable and answered",
+          "submission, correction, resubmission, grading and regrading events with event IDs and actors",
+          "rubric/version, answer key, points and decision authority",
+          "answer-sheet artifact hashes and page/item coordinates or original electronic submissions",
+          "authoritative years/timezones or explicit interpretation rules"
+        ],
+        "presence": "unknown",
+        "proof": null,
+        "reason": "No question-level answer export in supplied package",
+        "scope": "question_answers_and_events",
+        "status": "not_checked",
+        "verification": "not_checked"
+      },
+      {
+        "availability": "not_supplied",
+        "completeness": "unknown",
+        "count": null,
+        "missingInputs": [
+          "teacher identity and decision authority",
+          "dated final decisions, scope and rubric version",
+          "revision/supersession history"
+        ],
+        "presence": "unknown",
+        "proof": null,
+        "reason": "Final teacher decisions are not supplied or inferred from scores",
+        "scope": "teacher_final_verdicts",
+        "status": "not_checked",
+        "verification": "not_checked"
+      },
+      {
+        "availability": "supplied",
+        "completeness": "bounded_only",
+        "count": 47,
+        "missingInputs": [],
+        "presence": "observed_present",
+        "proof": null,
+        "reason": "Visible waiting/reviewed rows only; retention horizon unverified; video version is not textbook edition",
+        "scope": "video_observations",
+        "status": "observed_bounded",
+        "verification": "independently_reconciled"
+      }
+    ],
+    "existingRegistry": {
+      "pageId": "page_d9818d5817f08191835ba0a0e85936bc",
+      "reference": "library-file:fde1_bGliZmlsZV9nRTRZZHcxU2l2djI3VVdDQTVJb0FB_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+      "sha256": "8742888dcf7aee347d6e298646227c89523c8abf97d18d573a56f2849adabaf8"
+    },
+    "historyPolicy": {
+      "detailedNetNewEventCount": null,
+      "fullHistoryComplete": false,
+      "overallProgressPercentage": null,
+      "paperEvidence": "not_supplied",
+      "previousSourceIdsPreserved": true,
+      "questionAnswers": "not_supplied",
+      "summaryAndDetailCombined": false,
+      "teacherFinalVerdicts": "not_supplied"
+    },
+    "id": "history-index:aa06064b3ab6a402dc1f7ca6a08943b8050135e8b2338d236a5b0fe893519eb9",
+    "identityPolicy": "Composite evidence local bindings scoped to exact input hashes and user-designated managed population; native identity not verified.",
+    "kind": "academy_bounded_history_index",
+    "maintenancePolicy": {
+      "asOfPerSourceRequired": true,
+      "emptyQueryIsNotMissedWork": true,
+      "managedBlockHashGuardsRequired": true,
+      "readReferencedFileThroughOriginalUploadPage": true,
+      "replaceHumanNotes": false,
+      "replaceTeacherVerdicts": false,
+      "spaceIsReviewProjection": true
+    },
+    "revision": 1,
+    "schemaVersion": "1.0.0",
+    "sourceArchive": {
+      "canonicalFileBytesSha256": "a9ca89417b8635aafe5a6f5230d4bac97526d03e49194d0becffbc992309dece",
+      "libraryFileId": "libfile_a31e26f615a481919b05fb9238a76280",
+      "sha256": "aa06064b3ab6a402dc1f7ca6a08943b8050135e8b2338d236a5b0fe893519eb9"
+    },
+    "studentProjections": [
+      {
+        "canonicalStudentId": "stu_847fb7409d46466eb7193ba9e1b3a217",
+        "identityResolutionId": "binding_811a5594b741212026f9b620",
+        "identityStatus": "composite_supported",
+        "managedHistoryBlocks": [
+          {
+            "blockId": "a341fe57-0de9-4a73-a929-7683387142e0",
+            "lastPublishedHash": "1298342cc39cf11c12181dd9ae4152b3c9f23874ee5c69327f45af1aab382750"
+          },
+          {
+            "blockId": "f9f834d9-dbd2-4da1-ae94-46613efa17b0",
+            "lastPublishedHash": "a201fb21adf019119e8c479fab4ca7fb298660f8937d29aeabb811f28449c633"
+          },
+          {
+            "blockId": "c6a17d9f-4ae3-47f6-8e54-416002eef9cb",
+            "lastPublishedHash": "37051d76e8be183c465de525c85980808baec89f19bcc4e577fd8d6c6dd34ea8"
+          },
+          {
+            "blockId": "eee9d5b3-e92a-4e7c-bece-95f285a85daf",
+            "lastPublishedHash": "76ca81bc796f6bdf3e6846d150df89eef21b483e39a7ff999093349df753ee23"
+          },
+          {
+            "blockId": "f99c537a-afe9-448c-99b9-3fce8b168e7d",
+            "lastPublishedHash": "89359d29044b7024fb6a6f3071e664175157e751d33247d9cc971c74b1d52513"
+          },
+          {
+            "blockId": "f153f3a1-c660-400a-9eaf-581daf4577fd",
+            "lastPublishedHash": "eade82f521cb9a4f8d9fdb9ae64a7ae959319cbcf0a9675bce6dadf8ed4805a4"
+          },
+          {
+            "blockId": "4956fb39-50ce-498a-a85a-4bd8c970534a",
+            "lastPublishedHash": "9436688ea1a58bec3e106b53548a764d4cf44e91223ce81d28093f7af030a3c1"
+          },
+          {
+            "blockId": "fab8ed11-2bd2-42c7-bbf0-201b2575ab01",
+            "lastPublishedHash": "76081df61f6fbb254d4b6cb0a65fe812b3c3b8a3f7f3f4fb0fb8701cc420875b"
+          },
+          {
+            "blockId": "caeb919a-e97d-4803-9f9f-dc2fe89d281b",
+            "lastPublishedHash": "7420b9b137c97e23774626e6867598e3173f67a85e3c0010769fd74bc1887390"
+          },
+          {
+            "blockId": "8ca4964c-3720-4f6a-8d94-43c82d1a87a2",
+            "lastPublishedHash": "8e23449bb2f3ad4d659fa17daf408fa5a73c2fe4a99bad6a88d0666624eaf380"
+          },
+          {
+            "blockId": "e3ead055-eeb2-4e33-a390-35a6bf0f67e6",
+            "lastPublishedHash": "e2b90de46753f2b738fe8bb258b3328fc3f18b97f8b958428aaff1d27bf54043"
+          },
+          {
+            "blockId": "b72a68c2-0654-4176-8685-8ad8c3ad2d9a",
+            "lastPublishedHash": "8c21654cec2c13e3f775655f7be0efe7bb7bc475f037f5fead60ff9906841fb3"
+          },
+          {
+            "blockId": "d4ac5207-0732-4a60-b82c-c8fba6b0ea4a",
+            "lastPublishedHash": "7eb6aa9008ae00f79324e24bac0d527d1dae5a59bfa9dbe54b1fed11bce34ca0"
+          },
+          {
+            "blockId": "1dfdf860-f783-4297-9e31-20eab707531e",
+            "lastPublishedHash": "c2b933c025e502c60a9537e9161176f1ab91d30aa43283a5ae0f507890f12f2f"
+          },
+          {
+            "blockId": "758168f1-ba4a-485d-a520-fe0baa9efeee",
+            "lastPublishedHash": "ab892e454af3202b1895863d20c7fb71a4c7545ded07b941015c578717a3ef35"
+          },
+          {
+            "blockId": "e7be2ed8-1c09-4518-b84f-730da38986b6",
+            "lastPublishedHash": "32f3b1a0ad7c8d46927c731337893246187b7c411e4ef6349cbf0f37142a1562"
+          },
+          {
+            "blockId": "dc398256-0939-4de7-9791-4ba04e327feb",
+            "lastPublishedHash": "65e4e8cee508487d6f8f90d230f275ec7dcb01adfb1f654783b44959277a56f8"
+          }
+        ],
+        "mappingCounts": {
+          "attempts": 33,
+          "inferredCatalogMatches": 33,
+          "unresolved": 0
+        },
+        "moduleCounts": {
+          "assignmentChecks": 3,
+          "assignments": 1,
+          "attempts": 33,
+          "attendance": 9,
+          "diarySummaries": 9,
+          "enrollments": 1,
+          "registeredBooks": 2,
+          "videos": 13
+        },
+        "pageId": "page_9414471a66c481918894dcd1a7811568",
+        "reference": "library-file:fde1_bGliZmlsZV9qOE1rZTY2Zk5Lb0lXR1NucHYxeVJn_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+        "sha256": "639a0ad5a6cd58ff9cf1c374db6d6dea15759a2b6172608d0efa88b5f9e101d0",
+        "sourceSnapshotStudentId": "student_0f7495af3c465338a26af01b"
+      },
+      {
+        "canonicalStudentId": "stu_d7aad9a0d42049c2a8faa9e7bcd0c378",
+        "identityResolutionId": "binding_934ad14de671b029d116f213",
+        "identityStatus": "composite_supported",
+        "managedHistoryBlocks": [
+          {
+            "blockId": "1ad096cb-f76d-4ce1-9ae7-f82681cdc6a7",
+            "lastPublishedHash": "48994e0eeb1ef035f782715ec49d2b05c0a288f32a1dcf0665c95bd04133e6a0"
+          },
+          {
+            "blockId": "8265a94a-5450-4c19-8ebc-66d3b0f16517",
+            "lastPublishedHash": "a201fb21adf019119e8c479fab4ca7fb298660f8937d29aeabb811f28449c633"
+          },
+          {
+            "blockId": "245c3821-aa8b-41da-903d-c0018b167126",
+            "lastPublishedHash": "5d0be630b3cc50570dcfca1bb600357516e8781b09472f36bf2e410eb5590e74"
+          },
+          {
+            "blockId": "db22cf4e-d321-4e59-bc17-f0a0c78611e7",
+            "lastPublishedHash": "76ca81bc796f6bdf3e6846d150df89eef21b483e39a7ff999093349df753ee23"
+          },
+          {
+            "blockId": "ea09624b-bb24-409a-891a-74f567ff86da",
+            "lastPublishedHash": "51e3591479e260ece5c10859792baea93fe14bd088b42c988bf15fc789a84376"
+          },
+          {
+            "blockId": "64d89ef3-0ab4-4cb1-bbcd-ed8e322ab067",
+            "lastPublishedHash": "a3055d75230f361db37c8267af339f87fbec01c2672ebc8bac183f47d8d77ecc"
+          },
+          {
+            "blockId": "1896c9b6-1864-4ac3-80f6-f532e88a04d8",
+            "lastPublishedHash": "9436688ea1a58bec3e106b53548a764d4cf44e91223ce81d28093f7af030a3c1"
+          },
+          {
+            "blockId": "0b148787-00ec-4da0-9ec7-0d4a082a8169",
+            "lastPublishedHash": "dec7780aff62ab4da66195bba0580d5d11bee4b838c8c99789383a583eb5c182"
+          },
+          {
+            "blockId": "784eb240-1efb-4210-8066-07d232ccb88b",
+            "lastPublishedHash": "7420b9b137c97e23774626e6867598e3173f67a85e3c0010769fd74bc1887390"
+          },
+          {
+            "blockId": "c42ec1aa-6916-45f0-8357-d0d37e037e46",
+            "lastPublishedHash": "e9d70a8f06ffef4af6c928cbec88bdb0d25e42782a24e9593d5f74401cfc813a"
+          },
+          {
+            "blockId": "9300d9ca-421b-4052-bb6c-a2415efaa7ef",
+            "lastPublishedHash": "04acd318c9d5b501968287a51dbd08b4f49aa01c8a493d070192f1859384b99b"
+          },
+          {
+            "blockId": "0b5cd84f-d1d7-4b8d-87c8-d0cfafcccb66",
+            "lastPublishedHash": "8c21654cec2c13e3f775655f7be0efe7bb7bc475f037f5fead60ff9906841fb3"
+          },
+          {
+            "blockId": "099cbcb1-4dbd-46eb-91e8-e1bd075870c6",
+            "lastPublishedHash": "7eb6aa9008ae00f79324e24bac0d527d1dae5a59bfa9dbe54b1fed11bce34ca0"
+          },
+          {
+            "blockId": "626f6638-122e-45d5-8482-639099464f62",
+            "lastPublishedHash": "c2b933c025e502c60a9537e9161176f1ab91d30aa43283a5ae0f507890f12f2f"
+          },
+          {
+            "blockId": "8330f956-b690-4f54-a6c4-cfc59959fe86",
+            "lastPublishedHash": "ab892e454af3202b1895863d20c7fb71a4c7545ded07b941015c578717a3ef35"
+          },
+          {
+            "blockId": "222ee1ba-c458-4c5c-b069-5985eaac374c",
+            "lastPublishedHash": "c4e3f67766113eaef34e9fc55f2449d286b55497d8530599827fe0950b8a091a"
+          },
+          {
+            "blockId": "00a50aad-d87f-4aa8-855e-e8fd2c981192",
+            "lastPublishedHash": "65e4e8cee508487d6f8f90d230f275ec7dcb01adfb1f654783b44959277a56f8"
+          }
+        ],
+        "mappingCounts": {
+          "attempts": 44,
+          "inferredCatalogMatches": 44,
+          "unresolved": 0
+        },
+        "moduleCounts": {
+          "assignmentChecks": 7,
+          "assignments": 1,
+          "attempts": 44,
+          "attendance": 8,
+          "diarySummaries": 8,
+          "enrollments": 1,
+          "registeredBooks": 2,
+          "videos": 11
+        },
+        "pageId": "page_616985ffbfb88191a294cf9f5d528058",
+        "reference": "library-file:fde1_bGliZmlsZV9ZOHdyT0I3RWlNOEVndjFSdlloeWZB_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+        "sha256": "c3551c2af85e05831619eb1b80bbc9050598c3eb2623cd89a669e9a67b75b4b1",
+        "sourceSnapshotStudentId": "student_700f4a05dcab5762d6ab37f8"
+      },
+      {
+        "canonicalStudentId": "stu_c7c07d590b374817a8169633d2b625e7",
+        "identityResolutionId": "binding_5531d0962d329dbf4c7709bf",
+        "identityStatus": "composite_supported",
+        "managedHistoryBlocks": [
+          {
+            "blockId": "374e5821-569e-4409-91aa-67aec245e265",
+            "lastPublishedHash": "dc63bb797337705c204d67431f3065650c57dc80d55096c2bdfc46dc1a21ff78"
+          },
+          {
+            "blockId": "e1b79b39-cfef-436a-aa37-19aaf2def88b",
+            "lastPublishedHash": "a201fb21adf019119e8c479fab4ca7fb298660f8937d29aeabb811f28449c633"
+          },
+          {
+            "blockId": "e8fc6470-4886-44b8-8672-f2c52917a858",
+            "lastPublishedHash": "beb11802d0453e5a6e8693d6d807c87abde3e9ce4be29d06074123c9ac4b39a4"
+          },
+          {
+            "blockId": "1633fb64-ecf6-4291-9855-ddbdc33e7a48",
+            "lastPublishedHash": "76ca81bc796f6bdf3e6846d150df89eef21b483e39a7ff999093349df753ee23"
+          },
+          {
+            "blockId": "37a886e3-0a4b-4f87-9eb6-85b63c358107",
+            "lastPublishedHash": "31fe9155074a3132e8fed1c1f555b7da0dc107888bb764662cf1ea7194e4ffd1"
+          },
+          {
+            "blockId": "88a48808-6ab3-49e6-8a1f-5af35e1b8d13",
+            "lastPublishedHash": "a5f6e4bd3840dd7aaf9dc59bbdacae2b0312503e76967b7e5e6b005b5783ae11"
+          },
+          {
+            "blockId": "b2552c9a-15a7-4eb3-b5dc-e3bf73d0d89d",
+            "lastPublishedHash": "9436688ea1a58bec3e106b53548a764d4cf44e91223ce81d28093f7af030a3c1"
+          },
+          {
+            "blockId": "b3bc16ce-5c54-431c-b541-4fe5e0fefe0e",
+            "lastPublishedHash": "3f4e85276d98f616720f972a4e37488b51732f83f1ecc7b9a7e4c1f71b8314b5"
+          },
+          {
+            "blockId": "ccca3b8e-d86b-43f9-a422-09c09a5808b7",
+            "lastPublishedHash": "7420b9b137c97e23774626e6867598e3173f67a85e3c0010769fd74bc1887390"
+          },
+          {
+            "blockId": "e4da6231-6057-48cc-ac50-0a7d4c04063b",
+            "lastPublishedHash": "1c4286a3eaa8b701a608e1daac713f85e7ce87cd8fb7caad2c9c0ba6a77f7d90"
+          },
+          {
+            "blockId": "ebc6030d-ff1d-4b29-bc4e-88853fb6d8e1",
+            "lastPublishedHash": "d054166e9fc04bc2b0b60a579c063f4d42ec8f3cf4c1cdbefa551eed4d0dbbad"
+          },
+          {
+            "blockId": "9ec4e98e-fe9c-4bda-b907-c8788ea6b6c1",
+            "lastPublishedHash": "8c21654cec2c13e3f775655f7be0efe7bb7bc475f037f5fead60ff9906841fb3"
+          },
+          {
+            "blockId": "86704ae2-262f-41e3-ac49-978b76996d9f",
+            "lastPublishedHash": "7eb6aa9008ae00f79324e24bac0d527d1dae5a59bfa9dbe54b1fed11bce34ca0"
+          },
+          {
+            "blockId": "74980fca-1327-4be9-9de1-ca93c609e540",
+            "lastPublishedHash": "c2b933c025e502c60a9537e9161176f1ab91d30aa43283a5ae0f507890f12f2f"
+          },
+          {
+            "blockId": "9d333ab9-dd26-4444-b5fe-4e9e16e21476",
+            "lastPublishedHash": "ab892e454af3202b1895863d20c7fb71a4c7545ded07b941015c578717a3ef35"
+          },
+          {
+            "blockId": "a81aef4c-30a9-4014-981a-a9d133aab00f",
+            "lastPublishedHash": "e0f0b5cb9e44f519dfcb58e4620fa30c0c85ffed0c14956cea1555fd009006e3"
+          },
+          {
+            "blockId": "d2da09b0-73dc-4dfd-a58f-5084c411a0c5",
+            "lastPublishedHash": "65e4e8cee508487d6f8f90d230f275ec7dcb01adfb1f654783b44959277a56f8"
+          }
+        ],
+        "mappingCounts": {
+          "attempts": 42,
+          "inferredCatalogMatches": 41,
+          "unresolved": 1
+        },
+        "moduleCounts": {
+          "assignmentChecks": 3,
+          "assignments": 1,
+          "attempts": 42,
+          "attendance": 10,
+          "diarySummaries": 10,
+          "enrollments": 1,
+          "registeredBooks": 2,
+          "videos": 11
+        },
+        "pageId": "page_f41ed87331708191866fdde4a23d3733",
+        "reference": "library-file:fde1_bGliZmlsZV9yQzYzTzhhTnJzdDg5M0lncTM4SXBB_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+        "sha256": "58f98f4e26772af6cde77d35b2f2fda8cac0b1d2fa4aed11f7487c99e55f25d8",
+        "sourceSnapshotStudentId": "student_880c409bddb86db9e06cd60c"
+      },
+      {
+        "canonicalStudentId": "stu_e656cff00f3b420c98c002588c6f58a6",
+        "identityResolutionId": "binding_642d5e23c94f0bef26200ad1",
+        "identityStatus": "composite_supported",
+        "managedHistoryBlocks": [
+          {
+            "blockId": "6b70cf54-5df1-41bd-bd14-192ee8187090",
+            "lastPublishedHash": "1f4a8e028889c187b40c3da390b0c40f403c27d6631e1c0e5aa6f5d12c6cfbed"
+          },
+          {
+            "blockId": "e28fd502-cd83-4127-ab10-dd23113148bf",
+            "lastPublishedHash": "a201fb21adf019119e8c479fab4ca7fb298660f8937d29aeabb811f28449c633"
+          },
+          {
+            "blockId": "ddb9a29f-ffc1-449f-9de2-597e7e1bbfaf",
+            "lastPublishedHash": "dfd9587991d3db2c9701691d2fac3c9a6d9a3efb74e9e259ec95036ecdd003b3"
+          },
+          {
+            "blockId": "4ee29e50-3c97-496f-8913-59db5765a913",
+            "lastPublishedHash": "76ca81bc796f6bdf3e6846d150df89eef21b483e39a7ff999093349df753ee23"
+          },
+          {
+            "blockId": "29bdfbbd-0603-40fc-b456-70e8da538657",
+            "lastPublishedHash": "ebfbbc4855bed430dc350508dd68796d63b47aa24b29db8f95ca094ac93c815e"
+          },
+          {
+            "blockId": "be124abb-f911-47d7-bcad-6c833aa12f8b",
+            "lastPublishedHash": "23dbd1d7131497e9fd83ccd995180fee159a3521342dd33721bce38843cdb429"
+          },
+          {
+            "blockId": "aea6c863-6042-45ff-98f8-cb53b6d4b3d0",
+            "lastPublishedHash": "9436688ea1a58bec3e106b53548a764d4cf44e91223ce81d28093f7af030a3c1"
+          },
+          {
+            "blockId": "4f48b234-9c2b-4404-86e9-d9392cf49573",
+            "lastPublishedHash": "b7ad1891ac84a60634d654e4e811ae5aa2fe87872bac5b05394e41daf777fcb6"
+          },
+          {
+            "blockId": "fe975f17-7628-4a38-8ac1-8c3fe4059cbc",
+            "lastPublishedHash": "7420b9b137c97e23774626e6867598e3173f67a85e3c0010769fd74bc1887390"
+          },
+          {
+            "blockId": "cfe1f13a-7d02-42be-9efc-1ec3bf4803cd",
+            "lastPublishedHash": "97b602ec08d55931bbd39c45103a1956889b5d346d40f5a769d4ea531623499b"
+          },
+          {
+            "blockId": "eb0ea311-ea95-4dc6-9e84-63db8df79e2a",
+            "lastPublishedHash": "ab9ed2628842c0141921656426d466b8d4632f919e41c419870fc7975dd6cb63"
+          },
+          {
+            "blockId": "99eb8328-45f3-4e17-b609-529ccc768bd0",
+            "lastPublishedHash": "8c21654cec2c13e3f775655f7be0efe7bb7bc475f037f5fead60ff9906841fb3"
+          },
+          {
+            "blockId": "8e274cc8-8775-47ac-b53b-ca9b8ddcb05f",
+            "lastPublishedHash": "7eb6aa9008ae00f79324e24bac0d527d1dae5a59bfa9dbe54b1fed11bce34ca0"
+          },
+          {
+            "blockId": "0dd56010-efe1-49b5-972c-bf22342b8b61",
+            "lastPublishedHash": "c2b933c025e502c60a9537e9161176f1ab91d30aa43283a5ae0f507890f12f2f"
+          },
+          {
+            "blockId": "f3e7f68f-0ff2-4086-ba7a-ba16d2c9417f",
+            "lastPublishedHash": "ab892e454af3202b1895863d20c7fb71a4c7545ded07b941015c578717a3ef35"
+          },
+          {
+            "blockId": "5a829144-a6bb-406f-bbd4-d598f769e37e",
+            "lastPublishedHash": "a77e28d3520ae27edb6905fd33172c8feaff82eb508cacc695f161163245aed5"
+          },
+          {
+            "blockId": "df98d5f1-bac3-4147-a9df-0972c70b27a2",
+            "lastPublishedHash": "65e4e8cee508487d6f8f90d230f275ec7dcb01adfb1f654783b44959277a56f8"
+          }
+        ],
+        "mappingCounts": {
+          "attempts": 7,
+          "inferredCatalogMatches": 7,
+          "unresolved": 0
+        },
+        "moduleCounts": {
+          "assignmentChecks": 4,
+          "assignments": 1,
+          "attempts": 7,
+          "attendance": 3,
+          "diarySummaries": 3,
+          "enrollments": 1,
+          "registeredBooks": 2,
+          "videos": 4
+        },
+        "pageId": "page_dccfec028f408191bc190cda949b552a",
+        "reference": "library-file:fde1_bGliZmlsZV82UXNzQmtGTmFNU1l3ODMwVkYtbHV3_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+        "sha256": "31f112a6a8f4cb0c932e2526a229fced68173dc1c964d28f2271f0396677e534",
+        "sourceSnapshotStudentId": "student_b10c3abf1618d5dab538737a"
+      },
+      {
+        "canonicalStudentId": "stu_832b0e4fa9b845059fd28662d90dbf28",
+        "identityResolutionId": "binding_4c2285698a7b7b70788d0712",
+        "identityStatus": "composite_supported",
+        "managedHistoryBlocks": [
+          {
+            "blockId": "2f800bca-2347-4ac7-961d-47f24389f8ba",
+            "lastPublishedHash": "ff4bb87b24c57e287f13bba5fad540b4efa7b76df619baa81cf7aba2aecbe7a8"
+          },
+          {
+            "blockId": "ee98f512-1b8a-402f-bbed-632cb0bc184e",
+            "lastPublishedHash": "a201fb21adf019119e8c479fab4ca7fb298660f8937d29aeabb811f28449c633"
+          },
+          {
+            "blockId": "cc873ec1-b583-49e1-a108-c6b7d455fe35",
+            "lastPublishedHash": "db875c9fcf635715532bbe3e7098830738b67ea1543cc528b954c6b0a5e25069"
+          },
+          {
+            "blockId": "93946ebb-1a9a-4d70-8aeb-821a7b19f997",
+            "lastPublishedHash": "76ca81bc796f6bdf3e6846d150df89eef21b483e39a7ff999093349df753ee23"
+          },
+          {
+            "blockId": "6bc3e0d4-1087-467e-9f66-15e7251b8930",
+            "lastPublishedHash": "b5d3726463506319eca4340df89aece632ecc406892c46c46c9237e9fbba5d03"
+          },
+          {
+            "blockId": "783cc45e-95bb-4274-b59b-c735f6b720aa",
+            "lastPublishedHash": "581eb14003057cae9d55ba877baeba7da0fc4f1f4793ea533a4c45422e24e7f6"
+          },
+          {
+            "blockId": "d2b104fb-64f7-492a-b71c-7ec38c412ebd",
+            "lastPublishedHash": "9436688ea1a58bec3e106b53548a764d4cf44e91223ce81d28093f7af030a3c1"
+          },
+          {
+            "blockId": "065d0db6-b6cd-4403-93cf-5d7b74a30203",
+            "lastPublishedHash": "0da49a4b8d5e9fd2c5eb6ed68be532449c3d9f72dc6382595486d5f5190235bb"
+          },
+          {
+            "blockId": "7f81388d-af2b-477d-b6e1-083226815bec",
+            "lastPublishedHash": "7420b9b137c97e23774626e6867598e3173f67a85e3c0010769fd74bc1887390"
+          },
+          {
+            "blockId": "7bf1d7a3-ed61-48bb-865f-f274331e7fb6",
+            "lastPublishedHash": "4bd922c7902852f9e518e867c1760d48a7dd9d94a04b986cbbda62c75e5f9f0d"
+          },
+          {
+            "blockId": "dc34adaa-864f-4b46-ba14-2f83227346f4",
+            "lastPublishedHash": "e13936903dd86e72fb6dc666af72cc10a295ed48085013dd0e7e480983aa3efe"
+          },
+          {
+            "blockId": "b9db0aab-3944-4c75-8c55-2d3e7d82faa7",
+            "lastPublishedHash": "8c21654cec2c13e3f775655f7be0efe7bb7bc475f037f5fead60ff9906841fb3"
+          },
+          {
+            "blockId": "2fc61f52-a3a3-4b3f-88a0-a4061eaee2f7",
+            "lastPublishedHash": "7eb6aa9008ae00f79324e24bac0d527d1dae5a59bfa9dbe54b1fed11bce34ca0"
+          },
+          {
+            "blockId": "27dd3931-46cc-433f-92b3-0efa318e3a8e",
+            "lastPublishedHash": "c2b933c025e502c60a9537e9161176f1ab91d30aa43283a5ae0f507890f12f2f"
+          },
+          {
+            "blockId": "6dea0345-0518-4c41-a0c9-53a6a555494e",
+            "lastPublishedHash": "ab892e454af3202b1895863d20c7fb71a4c7545ded07b941015c578717a3ef35"
+          },
+          {
+            "blockId": "adc9f272-85cb-4970-91c4-e77495a9aed2",
+            "lastPublishedHash": "05d26c985b9f8f9769d34c32aba06f0a34e482bd2012b90844de66bdcc523854"
+          },
+          {
+            "blockId": "2343efce-589d-4bac-9dc7-357234ce0f16",
+            "lastPublishedHash": "65e4e8cee508487d6f8f90d230f275ec7dcb01adfb1f654783b44959277a56f8"
+          },
+          {
+            "blockId": "92367eaf-2086-41d2-807a-9684f1fc1538",
+            "lastPublishedHash": "ae2a0a15b91a3ea6924894f456aa004f24f51646c9dfe7108d1e4e54ac77ff9b"
+          },
+          {
+            "blockId": "e404bc37-3cb3-46cd-af3e-b9e994a935f4",
+            "lastPublishedHash": "11b210d89bd3bc2c38e1316bc239747bd891e00290073be21e4c2e520ab20293"
+          },
+          {
+            "blockId": "6b13ffad-94e9-4830-a95d-73d42de45fc2",
+            "lastPublishedHash": "dcf20b20fef13c41e663432689e04f46ff9859b04e9740c18a537178ef3f9ec2"
+          }
+        ],
+        "mappingCounts": {
+          "attempts": 82,
+          "inferredCatalogMatches": 27,
+          "unresolved": 55
+        },
+        "moduleCounts": {
+          "assignmentChecks": 2,
+          "assignments": 1,
+          "attempts": 82,
+          "attendance": 13,
+          "diarySummaries": 13,
+          "enrollments": 1,
+          "registeredBooks": 1,
+          "videos": 8
+        },
+        "pageId": "page_2191a8c3bb808191a41ba2b40b2d813c",
+        "reference": "library-file:fde1_bGliZmlsZV9WUVFWbHRaZGtoY3NaU2JvYk9fblB3_FileDrive_73e3d24e44d881918a9b9622fd5a4193",
+        "sha256": "1613fd807efd5e0c6881eb185547c4951b994b373875cd79fd63726f33bf1ef3",
+        "sourceSnapshotStudentId": "student_e00b2044fa180a6985e78d7d"
+      }
+    ],
+    "totals": {
+      "assignmentChecks": 19,
+      "assignments": 5,
+      "attempts": 208,
+      "attendance": 43,
+      "diaries": 43,
+      "enrollments": 5,
+      "inferred": 152,
+      "registeredBooks": 9,
+      "unresolved": 56,
+      "videos": 47
+    }
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "academy-operations",
+  "projectId": "academy-workbench",
+  "workId": "academy-architecture-orchestration-20261021",
+  "kind": "input",
+  "id": "AAR-RESULT-T02-R1",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "root-academy-orchestrator",
+    "locator": "local-preparation-verification:t02:r1",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "summary": "Architecture structure validated with245checks; TypeScript and canonical snapshot/transition checks passed. User architecture approval recorded separately; independent review is still pending.",
+    "sourceCommit": "e34489a7919029c79f86bd419e30e7cc1491e9f9",
+    "sourcePins": [
+      {
+        "path": "architecture/academy-reorganization/architecture.json",
+        "sha256": "65c0a4dfffdeb15f45e16055087c3feb62ca15279e83df0226427c4a5e07576f"
+      },
+      {
+        "path": "architecture/academy-reorganization/identity-plan.json",
+        "sha256": "c64c14ce9b947f4be22b943c929aa644ea41928103243f41ae33b282fa464c99"
+      },
+      {
+        "path": "architecture/academy-reorganization/execution-plan.json",
+        "sha256": "dacbe6c9b2e93bd9afc19a237dffab5afe90206b1643d4f41b4f06a23d521cc4"
+      },
+      {
+        "path": "architecture/academy-reorganization/capability-matrix.json",
+        "sha256": "3d046c591a419f975e3429650d5bb0eb14aa27f1eba4bf18b5ec094ddd25d60d"
+      },
+      {
+        "path": "architecture/academy-reorganization/verification-plan.json",
+        "sha256": "376eab6cea608c54a270ff7a9138da961a03d98b3a6c8f6ba972831b0a73df34"
+      }
+    ],
+    "verification": {
+      "schemaVersion": "1.0.0",
+      "kind": "verification",
+      "id": "academy-workbench:verification:aar-t02-r1",
+      "projectId": "academy-workbench",
+      "domainId": "academy-operations",
+      "createdAt": "2026-10-21T05:08:00.536308+00:00",
+      "payload": {
+        "targetRefs": [
+          "common-harness:task:174b858b6659b84698a20889ceb668ceb8dd39f5e9185166d01532268570109a"
+        ],
+        "criteria": [
+          {
+            "id": "bounded-source-outcome",
+            "status": "pass",
+            "message": "Architecture structure validated with245checks; TypeScript and canonical snapshot/transition checks passed. User architecture approval recorded separately; independent review is still pending.",
+            "evidenceRefs": [
+              "academy-workbench:evidence:aar-t02-observation-r1"
+            ]
+          }
+        ],
+        "inputHashes": [
+          {
+            "path": "architecture/academy-reorganization/architecture.json",
+            "sha256": "65c0a4dfffdeb15f45e16055087c3feb62ca15279e83df0226427c4a5e07576f"
+          },
+          {
+            "path": "architecture/academy-reorganization/identity-plan.json",
+            "sha256": "c64c14ce9b947f4be22b943c929aa644ea41928103243f41ae33b282fa464c99"
+          },
+          {
+            "path": "architecture/academy-reorganization/execution-plan.json",
+            "sha256": "dacbe6c9b2e93bd9afc19a237dffab5afe90206b1643d4f41b4f06a23d521cc4"
+          },
+          {
+            "path": "architecture/academy-reorganization/capability-matrix.json",
+            "sha256": "3d046c591a419f975e3429650d5bb0eb14aa27f1eba4bf18b5ec094ddd25d60d"
+          },
+          {
+            "path": "architecture/academy-reorganization/verification-plan.json",
+            "sha256": "376eab6cea608c54a270ff7a9138da961a03d98b3a6c8f6ba972831b0a73df34"
+          }
+        ],
+        "runtime": {
+          "name": "Bun source-only auditor",
+          "version": "1.4.3"
+        },
+        "details": {
+          "independentReview": false,
+          "operationalActivation": false,
+          "scope": "local metadata/design preparation only"
+        }
+      }
+    }
+  }
+}

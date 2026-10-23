@@ -1,0 +1,921 @@
+{
+  "$schema": "academy-book-flow-1.0.schema.json",
+  "kind": "book_flow_contract",
+  "contractId": "contract:book-flow:v1",
+  "schemaVersion": "1.0.0",
+  "revision": 3,
+  "createdAt": "2026-10-06T10:10:32.899186+00:00",
+  "dataClass": "non_sensitive_contract",
+  "implementationState": "contract_only_app_implementation_separate",
+  "userSourceIds": [
+    "Sentinel_2bee652448d48191ac5d3d7bd84e2969",
+    "Sentinel_9269891da524819196116d635a03a0d0"
+  ],
+  "reusesEntities": [
+    "Student",
+    "Enrollment",
+    "Assignment",
+    "PreviewVideoRequirement",
+    "ProblemSectionRequirement",
+    "TeacherCompletionAssertion",
+    "Observation",
+    "CoverageLedger",
+    "ActionAttempt",
+    "PrintArtifact"
+  ],
+  "naming": {
+    "ruleId": "book-display:series-grade-semester-volume:v1",
+    "template": "{series} {grade}-{semester}-{volume}",
+    "unknownToken": "?",
+    "schoolLevelBadges": {
+      "elementary": "초등",
+      "middle": "중등",
+      "high": "고등",
+      "unknown": "학교급 미확인"
+    },
+    "bookIdentityIsDisplayName": false,
+    "editionIdentityFields": [
+      "schoolLevel",
+      "series",
+      "grade",
+      "semester",
+      "volume",
+      "nativeBookCode",
+      "version"
+    ],
+    "preserve": [
+      "originalLabel",
+      "nativeBookCode",
+      "version",
+      "sourceIds",
+      "fieldEvidence"
+    ],
+    "normalizationRules": [
+      "표시명은 확인된 학년·학기·권만 사용한다. 모르는 숫자를 1로 채우지 않는다.",
+      "학교급과 판본은 별도 배지로 항상 구분할 수 있게 한다.",
+      "동일 표시명과 다른 학교급·교재 코드·판본을 병합하지 않는다.",
+      "제목·별칭은 조회 키일 뿐 안정된 bookEditionId를 대체하지 않는다.",
+      "워크북과 가우스 플러스를 일반 가우스와 합치지 않는다.",
+      "문자열 끝의 숫자가 권인지 판본인지 근거 없이 해석하지 않는다."
+    ],
+    "examples": [
+      {
+        "series": "가우스",
+        "schoolLevel": "elementary",
+        "grade": 5,
+        "semester": 2,
+        "volume": 2,
+        "displayName": "가우스 5-2-2",
+        "badge": "초등"
+      },
+      {
+        "series": "가우스",
+        "schoolLevel": "unknown",
+        "grade": null,
+        "semester": null,
+        "volume": 2,
+        "displayName": "가우스 ?-?-2",
+        "badge": "학교급 미확인"
+      }
+    ]
+  },
+  "sectionProfiles": [
+    {
+      "id": "section-profile:gauss:elementary",
+      "series": "가우스",
+      "schoolLevel": "elementary",
+      "verification": "user_confirmed_vocabulary",
+      "sourceId": "Sentinel_2bee652448d48191ac5d3d7bd84e2969",
+      "createsUnitInstances": false,
+      "impliesAssignment": false,
+      "impliesCompletionRoute": false,
+      "definitions": [
+        {
+          "id": "section-def:gauss:elementary:01",
+          "label": "개념 이해하기",
+          "displayOrder": 1,
+          "role": "learning_section",
+          "parentLevelHint": null,
+          "activityKind": "unmapped",
+          "verification": "user_confirmed",
+          "sourceIds": [
+            "Sentinel_2bee652448d48191ac5d3d7bd84e2969"
+          ]
+        },
+        {
+          "id": "section-def:gauss:elementary:02",
+          "label": "개념정복",
+          "displayOrder": 2,
+          "role": "learning_section",
+          "parentLevelHint": null,
+          "activityKind": "unmapped",
+          "verification": "user_confirmed",
+          "sourceIds": [
+            "Sentinel_2bee652448d48191ac5d3d7bd84e2969"
+          ]
+        },
+        {
+          "id": "section-def:gauss:elementary:03",
+          "label": "필수예제",
+          "displayOrder": 3,
+          "role": "learning_section",
+          "parentLevelHint": null,
+          "activityKind": "unmapped",
+          "verification": "user_confirmed",
+          "sourceIds": [
+            "Sentinel_2bee652448d48191ac5d3d7bd84e2969"
+          ]
+        },
+        {
+          "id": "section-def:gauss:elementary:04",
+          "label": "유형다지기",
+          "displayOrder": 4,
+          "role": "learning_section",
+          "parentLevelHint": null,
+          "activityKind": "unmapped",
+          "verification": "user_confirmed",
+          "sourceIds": [
+            "Sentinel_2bee652448d48191ac5d3d7bd84e2969"
+          ]
+        },
+        {
+          "id": "section-def:gauss:elementary:05",
+          "label": "실력쌓기",
+          "displayOrder": 5,
+          "role": "learning_section",
+          "parentLevelHint": null,
+          "activityKind": "unmapped",
+          "verification": "user_confirmed",
+          "sourceIds": [
+            "Sentinel_2bee652448d48191ac5d3d7bd84e2969"
+          ]
+        },
+        {
+          "id": "section-def:gauss:elementary:06",
+          "label": "개념복습",
+          "displayOrder": 6,
+          "role": "learning_section",
+          "parentLevelHint": null,
+          "activityKind": "unmapped",
+          "verification": "user_confirmed",
+          "sourceIds": [
+            "Sentinel_2bee652448d48191ac5d3d7bd84e2969"
+          ]
+        },
+        {
+          "id": "section-def:gauss:elementary:07",
+          "label": "4M 듣기와 쓰기",
+          "displayOrder": 7,
+          "role": "learning_section",
+          "parentLevelHint": null,
+          "activityKind": "unmapped",
+          "verification": "user_confirmed",
+          "sourceIds": [
+            "Sentinel_2bee652448d48191ac5d3d7bd84e2969"
+          ]
+        },
+        {
+          "id": "section-def:gauss:elementary:08",
+          "label": "4M 읽기와 쓰기",
+          "displayOrder": 8,
+          "role": "learning_section",
+          "parentLevelHint": null,
+          "activityKind": "unmapped",
+          "verification": "user_confirmed",
+          "sourceIds": [
+            "Sentinel_2bee652448d48191ac5d3d7bd84e2969"
+          ]
+        },
+        {
+          "id": "section-def:gauss:elementary:09",
+          "label": "대단원 총괄평가",
+          "displayOrder": 9,
+          "role": "major_unit_assessment",
+          "parentLevelHint": "major_unit",
+          "activityKind": "unmapped",
+          "verification": "user_confirmed",
+          "sourceIds": [
+            "Sentinel_2bee652448d48191ac5d3d7bd84e2969"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-profile:gauss:middle",
+      "series": "가우스",
+      "schoolLevel": "middle",
+      "verification": "user_confirmed_vocabulary",
+      "sourceId": "Sentinel_9269891da524819196116d635a03a0d0",
+      "createsUnitInstances": false,
+      "impliesAssignment": false,
+      "impliesCompletionRoute": false,
+      "definitions": [
+        {
+          "id": "section-def:gauss:middle:01",
+          "label": "개념 백지 테스트",
+          "displayOrder": 1,
+          "role": "learning_section",
+          "parentLevelHint": null,
+          "activityKind": "unmapped",
+          "verification": "user_confirmed",
+          "sourceIds": [
+            "Sentinel_9269891da524819196116d635a03a0d0"
+          ]
+        },
+        {
+          "id": "section-def:gauss:middle:02",
+          "label": "개념 예제",
+          "displayOrder": 2,
+          "role": "learning_section",
+          "parentLevelHint": null,
+          "activityKind": "unmapped",
+          "verification": "user_confirmed",
+          "sourceIds": [
+            "Sentinel_9269891da524819196116d635a03a0d0"
+          ]
+        },
+        {
+          "id": "section-def:gauss:middle:03",
+          "label": "개념 쏙 생각 쑥",
+          "displayOrder": 3,
+          "role": "learning_section",
+          "parentLevelHint": null,
+          "activityKind": "unmapped",
+          "verification": "user_confirmed",
+          "sourceIds": [
+            "Sentinel_9269891da524819196116d635a03a0d0"
+          ]
+        },
+        {
+          "id": "section-def:gauss:middle:04",
+          "label": "기본 문제",
+          "displayOrder": 4,
+          "role": "learning_section",
+          "parentLevelHint": null,
+          "activityKind": "unmapped",
+          "verification": "user_confirmed",
+          "sourceIds": [
+            "Sentinel_9269891da524819196116d635a03a0d0"
+          ]
+        },
+        {
+          "id": "section-def:gauss:middle:05",
+          "label": "필수 예제",
+          "displayOrder": 5,
+          "role": "learning_section",
+          "parentLevelHint": null,
+          "activityKind": "unmapped",
+          "verification": "user_confirmed",
+          "sourceIds": [
+            "Sentinel_9269891da524819196116d635a03a0d0"
+          ]
+        },
+        {
+          "id": "section-def:gauss:middle:06",
+          "label": "유형 다지기",
+          "displayOrder": 6,
+          "role": "learning_section",
+          "parentLevelHint": null,
+          "activityKind": "unmapped",
+          "verification": "user_confirmed",
+          "sourceIds": [
+            "Sentinel_9269891da524819196116d635a03a0d0"
+          ]
+        },
+        {
+          "id": "section-def:gauss:middle:07",
+          "label": "Daily Restudy",
+          "displayOrder": 7,
+          "role": "learning_section",
+          "parentLevelHint": null,
+          "activityKind": "unmapped",
+          "verification": "user_confirmed",
+          "sourceIds": [
+            "Sentinel_9269891da524819196116d635a03a0d0"
+          ]
+        },
+        {
+          "id": "section-def:gauss:middle:08",
+          "label": "대단원 총괄평가",
+          "displayOrder": 8,
+          "role": "major_unit_assessment",
+          "parentLevelHint": "major_unit",
+          "activityKind": "unmapped",
+          "verification": "user_confirmed",
+          "sourceIds": [
+            "Sentinel_9269891da524819196116d635a03a0d0"
+          ]
+        }
+      ]
+    }
+  ],
+  "hierarchy": {
+    "levels": [
+      "book",
+      "major_unit",
+      "middle_unit",
+      "subunit",
+      "section",
+      "unknown"
+    ],
+    "missingLevelStates": [
+      "not_identified",
+      "source_confirms_not_present",
+      "not_applicable"
+    ],
+    "parentRelations": [
+      "source_confirmed",
+      "unresolved"
+    ],
+    "rules": [
+      "확인된 parentId와 level만 저장한다. 단계가 미확인이면 null 또는 unknown으로 남긴다.",
+      "UI의 상위 구조 미확인 그룹은 표시용 그룹이며 실제 교재 단원으로 저장하지 않는다.",
+      "사용자 확인 섹션 목록은 vocabulary다. 모든 소단원에 9개 또는 8개 인스턴스를 생성하지 않는다.",
+      "대단원 총괄평가는 확인된 대단원에 한 번 연결한다. 소단원마다 복제하지 않는다.",
+      "실제 단원별 섹션 존재와 부모 관계는 해당 판본의 관찰 또는 사용자 확인 근거로 결정한다.",
+      "개념 섹션명이나 4M 명칭만으로 영상 또는 문제풀이 실행 경로를 정하지 않는다.",
+      "예습 영상은 독립 요구 타입으로 유지하며 교재 섹션으로 등록하지 않는다.",
+      "사용자 목록 순서는 표시 순서다. 검증된 선수 관계 없이 수행 순서를 강제하지 않는다.",
+      "교재 대응이 안 된 문항·과제 범위는 학생의 연결 미확인 목록에 두며 임의의 교재 아래로 옮기지 않는다."
+    ],
+    "nativeAliasPolicy": "원문 띄어쓰기와 source_label을 보존한다. 정확히 검증된 대응만 alias로 연결하며 공백 제거·이름 유사성만으로 완료 근거를 합치지 않는다."
+  },
+  "axes": {
+    "applicability": [
+      "applicable",
+      "not_applicable",
+      "unknown"
+    ],
+    "assignment": [
+      "assigned",
+      "explicitly_unassigned",
+      "unknown"
+    ],
+    "requiredness": [
+      "required",
+      "optional",
+      "unknown"
+    ],
+    "completion": [
+      "confirmed_complete",
+      "confirmed_incomplete",
+      "unknown",
+      "disputed"
+    ],
+    "effort": [
+      "not_started_confirmed",
+      "started_confirmed",
+      "unknown"
+    ],
+    "mapping": [
+      "exact",
+      "partial",
+      "ambiguous",
+      "unresolved"
+    ],
+    "coverage": [
+      "complete",
+      "partial",
+      "not_queried",
+      "blocked",
+      "unsupported"
+    ],
+    "deadline": [
+      "not_due",
+      "due_now",
+      "past_due",
+      "unknown"
+    ],
+    "evidencePresence": [
+      "present",
+      "absent_in_verified_query",
+      "partial",
+      "unknown",
+      "conflicting"
+    ]
+  },
+  "derivation": {
+    "ruleVersion": "book-flow-attention/1.0.0",
+    "headlineIsStoredFact": false,
+    "sequence": [
+      "resolve_identity_and_assignment_instance",
+      "resolve_applicability_assignment_requiredness",
+      "admit_exact_relevant_evidence",
+      "reconcile_effective_time_and_explicit_supersession",
+      "derive_completion_independently",
+      "derive_attention_badges_and_gap_queue"
+    ],
+    "rules": [
+      {
+        "id": "R01",
+        "rule": "같은 학생·판본·단원·활동·과제 인스턴스·완료 기준에 대응되는 근거만 상태를 입증한다."
+      },
+      {
+        "id": "R02",
+        "rule": "과거 점수나 플랫폼 미학습은 새 과제의 수행 여부 또는 강사 완료 판단을 대체하지 않는다."
+      },
+      {
+        "id": "R03",
+        "rule": "기록이 없거나 완전 조회에서 결과가 없어도 학생이 아무것도 하지 않았다는 사실로 바꾸지 않는다."
+      },
+      {
+        "id": "R04",
+        "rule": "배정·필수·해당 적용이 모두 확인되고 명시적 미완료 판단이 있으면 확정 미완료다. 시작하지 않음과 일부 수행 후 미완료를 구분한다."
+      },
+      {
+        "id": "R05",
+        "rule": "완료 미확인인 채 알려진 기한만 지나면 기한 경과·완료 미확인이다. 확정 미수행으로 표시하지 않는다."
+      },
+      {
+        "id": "R06",
+        "rule": "미배정·선택·해당없음은 필수 누락 집계에서 제외하되 관찰된 자발적 수행은 보존한다."
+      },
+      {
+        "id": "R07",
+        "rule": "미조회·조회 일부·조회 제한·매핑 불명·기한 불명은 동시에 보존하며 대표 배지 하나로 다른 이유를 없애지 않는다."
+      },
+      {
+        "id": "R08",
+        "rule": "집 앱 입력이 면제된 종이 과제에 앱 기록 부재 경고를 만들지 않는다. 종이 확인과 수업 중 검토는 따로 확인한다."
+      },
+      {
+        "id": "R09",
+        "rule": "관찰을 가져온 시각은 실제 수행 시각이 아니다. 늦게 가져온 과거 기록으로 최근 상태를 덮어쓰지 않는다."
+      },
+      {
+        "id": "R10",
+        "rule": "서로 모순되는 완료 근거는 명시적 정정·대체 또는 범위 해소 전까지 disputed다."
+      },
+      {
+        "id": "R11",
+        "rule": "배정 범위가 닫히지 않거나 교재 구조가 불완전하면 전체 완료율을 계산하지 않는다. 확정된 필수 항목의 범위 제한 집계만 표시한다."
+      },
+      {
+        "id": "R12",
+        "rule": "차단된 전체 이력은 조회·전송하지 않는다. 현재 승인된 근거의 coverage를 그대로 표시한다."
+      }
+    ],
+    "confirmedMissingWorkPredicate": "applicability=applicable AND assignment=assigned AND requiredness=required AND completion=confirmed_incomplete AND relevantAssertionIsExact=true AND unresolvedConflict=false",
+    "confirmedNeverStartedPredicate": "confirmedMissingWorkPredicate AND effort=not_started_confirmed",
+    "deadlinePolicy": "타임스탬프 또는 확인된 날짜 마감 정책과 시간대가 있을 때만 기한 경과를 판정한다. 날짜만 있고 마감 정책이 없으면 정확한 연체 시각을 만들지 않는다.",
+    "auditFields": [
+      "factIds",
+      "acceptedEvidenceIds",
+      "excludedEvidenceWithReasons",
+      "scopeIdentity",
+      "ruleVersion",
+      "derivedAt",
+      "asOf",
+      "coverageIds",
+      "conflictIds"
+    ]
+  },
+  "presentation": {
+    "entry": "today_classes_then_student_detail",
+    "studentDetail": "student → book edition → confirmed unit tree → section/activity requirements",
+    "unknownStructureLabel": "상위 구조 미확인",
+    "unmappedSectionLabel": "섹션 대응 미확인",
+    "badges": {
+      "confirmed_missing": "확정 미완료",
+      "never_started_confirmed": "미수행 확인",
+      "overdue_unknown": "기한 경과 · 완료 미확인",
+      "not_queried": "미조회",
+      "blocked": "조회 제한",
+      "unknown": "수행 여부 미확인",
+      "explicitly_unassigned": "미배정",
+      "not_applicable": "해당 없음",
+      "ambiguous": "매핑 확인 필요",
+      "partial": "부분 근거",
+      "confirmed_complete": "완료 확인",
+      "disputed": "판정 확인 필요"
+    },
+    "doNotRelyOnColorAlone": true,
+    "redQueueRequiresConfirmedMissing": true,
+    "showExcludedEvidenceReason": true,
+    "overallPercentageRequiresClosedAssignedDenominator": true,
+    "catalogCountEqualsRequiredCount": false,
+    "emptyAssignmentRefsMeaning": "이번 스냅샷에서 연결된 과제가 없다는 뜻이며 명시적 미배정이 아니다."
+  },
+  "queryContract": {
+    "name": "get_student_book_flow",
+    "requiredInputs": [
+      "studentId",
+      "bookEditionId"
+    ],
+    "optionalInputs": [
+      "assignmentDate",
+      "asOf",
+      "attentionFilters"
+    ],
+    "outputs": [
+      "book display and identity badges",
+      "confirmed outline and placement gaps",
+      "separate requirements and due information",
+      "source observations and teacher assertions",
+      "coverage limitations",
+      "derived badges with trace"
+    ],
+    "readOnly": true,
+    "doesNotAuthorizeLmsWrites": true
+  },
+  "migration": {
+    "additive": true,
+    "doNotRekeyExistingStudentEnrollmentAssignment": true,
+    "preserveOriginalObservationsAndTeacherNotes": true,
+    "legacyProblemSectionRegistryRemainsValidSubset": true
+  },
+  "limitations": [
+    "현재 실제 학생 전체 이력의 전송은 제한돼 있다.",
+    "섹션 정의의 사용자 확인과 단원별 실제 존재·사이트 경로 확인은 다른 수준의 근거다.",
+    "이 파일은 비민감 계약이며 실제 학생 식별자나 성적을 담지 않는다."
+  ],
+  "storageAdapter": {
+    "contract": "BookFlowStore",
+    "typescriptFile": "book-flow.types.ts",
+    "spaceRole": "human_review_and_feedback_projection_with_replaceable_adapter",
+    "relationalDatabaseClaim": false,
+    "multiRecordAtomicity": "not_assumed",
+    "rules": [
+      "정본 ID와 도메인 타입은 Space Page ID·파일 참조와 독립적으로 유지한다.",
+      "문서 변경은 낙관적 hash/revision 검증과 읽기 확인을 거친다.",
+      "다중 파일·Page의 원자적 커밋을 가정하지 않으며 partial·unknown 결과를 보존한다.",
+      "Git 또는 다른 저장소로 옮겨도 ID·원문·출처·coverage·수정 이력을 유지한다."
+    ],
+    "canonicalAuthority": "Stable domain IDs, TypeScript contracts and versioned records/schema; never Page layout or display strings."
+  },
+  "history": {
+    "contract": "HistoryEvent",
+    "timestampFields": [
+      "occurredAt",
+      "effectiveAt",
+      "observedAt",
+      "recordedAt"
+    ],
+    "rules": [
+      "학생별 타임라인은 교재·판본·단원·과제 인스턴스로 필터링한다.",
+      "예정 수업과 실제 수업, 과제와 실제 수행, 관찰과 강사 판단은 다른 사건 종류다.",
+      "사건 시각을 모르면 null로 보존하며 수집 시각을 사건 시각으로 대체하지 않는다.",
+      "수정은 supersedesEventIds와 사유로 추가하며 과거를 삭제하지 않는다.",
+      "기존 승인된 관찰을 참조하고 차단된 전체 이력으로 빈 구간을 채우지 않는다."
+    ],
+    "queryTool": "get_student_book_history"
+  },
+  "implementationLanguage": {
+    "projectLanguage": "TypeScript",
+    "runtime": "Bun",
+    "newOtherLanguageRuntimeAllowed": false,
+    "initialJsonValidation": "Python validation occurred before the user's TypeScript/Bun-only instruction; new TS/Bun validation is pending in the designated Gang-a development task.",
+    "typescriptFile": "book-flow.types.r2.ts"
+  },
+  "dataLogicAction": {
+    "status": "design_contract_not_runtime_registration",
+    "executionPath": "owned_app_webmcp_tool -> permission_checked_application_service -> storage_adapter",
+    "data": {
+      "purpose": "교재 흐름과 학생별 이력을 근거 범위 안에서 읽는다.",
+      "requiredFields": [
+        "practicalContextIds",
+        "recordRefs",
+        "provenance",
+        "scope",
+        "asOf",
+        "coverageIds",
+        "limitations"
+      ]
+    },
+    "logic": {
+      "ruleSet": "book-flow-attention/1.0.0",
+      "requiredFields": [
+        "ruleId",
+        "version",
+        "practicalContextIds",
+        "rationale",
+        "inputDataContextIds",
+        "inputSchemaRef",
+        "outputSchemaRef",
+        "uncertaintyPolicy",
+        "sourceIds"
+      ]
+    },
+    "action": {
+      "requiredFields": [
+        "intent",
+        "practicalContextIds",
+        "dataContextIds",
+        "logicRuleIds",
+        "targetSchemaRef",
+        "preconditions",
+        "sideEffects",
+        "authorization",
+        "idempotency",
+        "verification",
+        "auditEventType"
+      ]
+    },
+    "webMcp": {
+      "intended": true,
+      "actualRegistration": "not_verified",
+      "runtimeExecutionImplemented": false,
+      "notAnLmsBackendApi": true,
+      "notAuthorityToBypassStudentTransferLimits": true
+    },
+    "audit": {
+      "type": "ActionAttempt",
+      "actualEvents": [],
+      "domainHistoryType": "HistoryEvent",
+      "rules": [
+        "계획과 실제 실행, 결과 확인을 별도 상태로 보존한다.",
+        "query 로그를 학생의 실제 수행 사건으로 바꾸지 않는다.",
+        "대상·권한·규칙 버전·검증 근거를 기록한다.",
+        "과거 실행을 새 감사 이벤트로 소급 작성하지 않는다."
+      ]
+    },
+    "operations": [
+      {
+        "id": "op:book-flow:read",
+        "intent": "학생의 교재별 흐름과 누락 확인",
+        "dataRefs": [
+          "StudentBookBinding",
+          "WorkScope",
+          "OutlineNode",
+          "Observation",
+          "CoverageLedger"
+        ],
+        "logicRefs": [
+          "book-flow-attention/1.0.0"
+        ],
+        "actionTool": "get_student_book_flow",
+        "sideEffects": [],
+        "authorization": "runtime managed student read scope",
+        "verification": [
+          "학생·판본·과제 범위 일치",
+          "coverage와 상태 근거 반환"
+        ]
+      },
+      {
+        "id": "op:student-history:read",
+        "intent": "날짜별 흐름에서 비어 있는 구간과 수정 이력 확인",
+        "dataRefs": [
+          "HistoryEvent",
+          "Observation",
+          "TeacherCompletionAssertion"
+        ],
+        "logicRefs": [
+          "effective-time-order/v1",
+          "book-flow-attention/1.0.0"
+        ],
+        "actionTool": "get_student_book_history",
+        "sideEffects": [],
+        "authorization": "runtime managed student read scope",
+        "verification": [
+          "사건시각과관찰시각분리",
+          "미전송이력을완료로표시하지않음"
+        ]
+      },
+      {
+        "id": "op:teacher-assertion:append",
+        "intent": "강사가 직접 확인한 완료·미완료 판단 기록",
+        "dataRefs": [
+          "WorkScope",
+          "TeacherCompletionAssertion"
+        ],
+        "logicRefs": [
+          "exact-scope-evidence/v1"
+        ],
+        "actionTool": "record_teacher_assertion",
+        "sideEffects": [
+          "append authorized app record and history event"
+        ],
+        "authorization": "explicit teacher judgment and authorized app write",
+        "verification": [
+          "출처·대상·리비전확인",
+          "읽기검증",
+          "기존판단보존"
+        ]
+      }
+    ]
+  },
+  "practicalContexts": [
+    {
+      "id": "practical:book-flow-review",
+      "teacherGoal": "학생별 교재·단원·활동의 흐름과 확정 미완료를 근거와 함께 확인한다.",
+      "whyUse": "빈 기록과 실제 미수행을 구분해 다음 수업에서 확인할 일을 정한다.",
+      "sourceIds": [
+        "Sentinel_2bee652448d48191ac5d3d7bd84e2969",
+        "Sentinel_47726cec92e881918dbbcab7d806bac5"
+      ]
+    }
+  ],
+  "dataContexts": [
+    {
+      "id": "data:student-book-flow",
+      "practicalContextIds": [
+        "practical:book-flow-review"
+      ],
+      "purpose": "현재 허용된 학생·교재·과제 범위를 확인",
+      "entityTypes": [
+        "StudentBookBinding",
+        "WorkScope",
+        "OutlineNode",
+        "Observation",
+        "TeacherCompletionAssertion",
+        "CoverageLedger"
+      ],
+      "scopeRequired": [
+        "managedStudentId",
+        "bookEditionId",
+        "assignmentInstanceId_when_applicable"
+      ],
+      "asOfRequired": true,
+      "provenanceRequired": true,
+      "coverageRequired": true
+    },
+    {
+      "id": "data:student-book-history",
+      "practicalContextIds": [
+        "practical:book-flow-review"
+      ],
+      "purpose": "날짜별 관찰·과제·판단과 정정 이력을 확인",
+      "entityTypes": [
+        "HistoryEvent"
+      ],
+      "scopeRequired": [
+        "managedStudentId",
+        "dateWindow",
+        "bookEditionId_optional"
+      ],
+      "asOfRequired": true,
+      "provenanceRequired": true,
+      "coverageRequired": true
+    }
+  ],
+  "logicContracts": [
+    {
+      "ruleId": "book-flow-attention",
+      "version": "1.0.0",
+      "practicalContextIds": [
+        "practical:book-flow-review"
+      ],
+      "rationale": "교사의 확인과 실제 관찰 범위를 분리해 누락을 잘못 단정하지 않는다.",
+      "inputDataContextIds": [
+        "data:student-book-flow"
+      ],
+      "inputSchemaRef": "#/$defs/RequirementFacts",
+      "outputSchemaRef": "book-flow.types.r2.ts#DerivedAttention",
+      "uncertaintyPolicy": [
+        "조회 부재는 학생 미수행이 아니다.",
+        "동시에 존재하는 매핑·기한·coverage 문제를 보존한다."
+      ],
+      "sourceIds": [
+        "Sentinel_2bee652448d48191ac5d3d7bd84e2969",
+        "Sentinel_9269891da524819196116d635a03a0d0"
+      ]
+    },
+    {
+      "ruleId": "effective-time-order",
+      "version": "1.0.0",
+      "practicalContextIds": [
+        "practical:book-flow-review"
+      ],
+      "rationale": "늦게 가져온 과거 기록이 현재 상태를 덮어쓰지 않도록 한다.",
+      "inputDataContextIds": [
+        "data:student-book-history"
+      ],
+      "inputSchemaRef": "#/$defs/HistoryEvent",
+      "outputSchemaRef": "HistoryEvent[] ordered with unknown-time bucket",
+      "uncertaintyPolicy": [
+        "occurredAt/effectiveAt를 모르면 null을 보존한다.",
+        "모순은 명시적인 정정이나 판단 전까지 disputed다."
+      ],
+      "sourceIds": [
+        "Sentinel_47726cec92e881918dbbcab7d806bac5"
+      ]
+    }
+  ],
+  "actionContracts": [
+    {
+      "id": "op:book-flow:read",
+      "version": "1.0.0",
+      "practicalContextIds": [
+        "practical:book-flow-review"
+      ],
+      "intent": "학생의 교재별 흐름과 누락 확인",
+      "dataContextIds": [
+        "data:student-book-flow"
+      ],
+      "logicRuleIds": [
+        "book-flow-attention"
+      ],
+      "targetSchemaRef": "#/$defs/WorkScope",
+      "preconditions": [
+        "현재 사용자와 관리 학생 범위를 검증한다.",
+        "학생·판본·과제 인스턴스의 정확한 대응을 확인한다."
+      ],
+      "sideEffects": [],
+      "authorization": {
+        "evaluatedAtRuntime": true,
+        "allowedScopeRequired": true,
+        "explicitAuthorityForEffects": false,
+        "documentGrantsPermission": false
+      },
+      "idempotency": {
+        "strategy": "read-only request correlation; no mutation",
+        "uncertainOutcomePolicy": "unknown 결과는 성공으로 바꾸지 않고 기존 결과를 조회한다."
+      },
+      "verification": [
+        "학생·판본·과제 범위 일치",
+        "coverage와 상태 근거 반환"
+      ],
+      "auditEventType": "ActionAttempt",
+      "webMcp": {
+        "toolName": "get_student_book_flow",
+        "registrationState": "not_verified",
+        "executionImplemented": false
+      }
+    },
+    {
+      "id": "op:student-history:read",
+      "version": "1.0.0",
+      "practicalContextIds": [
+        "practical:book-flow-review"
+      ],
+      "intent": "날짜별 흐름에서 비어 있는 구간과 수정 이력 확인",
+      "dataContextIds": [
+        "data:student-book-history"
+      ],
+      "logicRuleIds": [
+        "effective-time-order",
+        "book-flow-attention"
+      ],
+      "targetSchemaRef": "#/$defs/HistoryEvent",
+      "preconditions": [
+        "현재 사용자와 관리 학생 범위를 검증한다.",
+        "학생·판본·과제 인스턴스의 정확한 대응을 확인한다."
+      ],
+      "sideEffects": [],
+      "authorization": {
+        "evaluatedAtRuntime": true,
+        "allowedScopeRequired": true,
+        "explicitAuthorityForEffects": false,
+        "documentGrantsPermission": false
+      },
+      "idempotency": {
+        "strategy": "read-only request correlation; no mutation",
+        "uncertainOutcomePolicy": "unknown 결과는 성공으로 바꾸지 않고 기존 결과를 조회한다."
+      },
+      "verification": [
+        "사건시각과관찰시각분리",
+        "미전송이력을완료로표시하지않음"
+      ],
+      "auditEventType": "ActionAttempt",
+      "webMcp": {
+        "toolName": "get_student_book_history",
+        "registrationState": "not_verified",
+        "executionImplemented": false
+      }
+    },
+    {
+      "id": "op:teacher-assertion:append",
+      "version": "1.0.0",
+      "practicalContextIds": [
+        "practical:book-flow-review"
+      ],
+      "intent": "강사가 직접 확인한 완료·미완료 판단 기록",
+      "dataContextIds": [
+        "data:student-book-flow"
+      ],
+      "logicRuleIds": [
+        "book-flow-attention"
+      ],
+      "targetSchemaRef": "#/$defs/WorkScope",
+      "preconditions": [
+        "현재 사용자와 관리 학생 범위를 검증한다.",
+        "학생·판본·과제 인스턴스의 정확한 대응을 확인한다.",
+        "강사의 명시적 판단과 현재 리비전 및 저장 권한이 필요하다."
+      ],
+      "sideEffects": [
+        "append authorized app record and history event"
+      ],
+      "authorization": {
+        "evaluatedAtRuntime": true,
+        "allowedScopeRequired": true,
+        "explicitAuthorityForEffects": true,
+        "documentGrantsPermission": false
+      },
+      "idempotency": {
+        "strategy": "requestId + target ID + expected revision",
+        "uncertainOutcomePolicy": "unknown 결과는 성공으로 바꾸지 않고 기존 결과를 조회한다."
+      },
+      "verification": [
+        "출처·대상·리비전확인",
+        "읽기검증",
+        "기존판단보존"
+      ],
+      "auditEventType": "ActionAttempt",
+      "webMcp": {
+        "toolName": "record_teacher_assertion",
+        "registrationState": "not_verified",
+        "executionImplemented": false
+      }
+    }
+  ]
+}

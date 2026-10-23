@@ -43,6 +43,9 @@ export function moduleCheckExecution(module:EducationModule,script:string,invoke
  const bins=[dirname(invoker.executable),resolve(runtimeRoot,'node-26.7.0/bin')];
  if(module.runtime==='node-npm')bins.reverse();
  const env={...process.env,PATH:[...bins,invoker.path??''].join(delimiter)};
+ if(module.id==='academy-workbench'||module.id==='math-research'){
+  Object.assign(env,{AGENT_PLATFORM_ROOT:resolve(projectRoot,'modules/academy-workbench/.harness-deps/agent-platform'),AGENT_PLATFORM_SOURCE_MODE:'pinned-snapshot'});
+ }
  return {command,env};
 }
 export async function runModuleCheck(module:EducationModule,script:string):Promise<number>{

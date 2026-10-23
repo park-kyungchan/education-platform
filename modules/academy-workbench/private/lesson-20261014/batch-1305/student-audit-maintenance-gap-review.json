@@ -1,0 +1,79 @@
+{
+  "schemaVersion": "academy.student-audit-gap-review/1",
+  "reviewedAt": "2026-10-14T12:46:56.145612+00:00",
+  "sourceMessageId": "Sentinel_b2d5d1bcbb008191821bb1997eb4cf97",
+  "scope": "local repository inspection; no runtime database or live server validation",
+  "workIdentity": {
+    "projectId": "academy-workbench",
+    "workId": "student-audit-maintenance-gap-20261014",
+    "taskId": "inspect-student-event-persistence",
+    "runId": "cloud-local-01",
+    "registration": "local_record_only",
+    "authority": "none"
+  },
+  "implemented": [
+    {
+      "path": "harness/agent-platform.lock.json",
+      "claim": "Pinned agent-platform ffba2462a08b9f8c83c6f87b1043403e5cb748d7 selected validator closure; not all provider/native integration"
+    },
+    {
+      "path": "harness/module.json",
+      "claim": "Explicit disabled source mutation/print/send/deploy; local consumer registration"
+    },
+    {
+      "path": "architecture/logical-model-v2.ts",
+      "claim": "Separate student/assignment/testing/judgment_revision/teacher_review/dayrecord entities and scoped evidence"
+    },
+    {
+      "path": "app/student-audit-viewer/rubric.ts",
+      "claim": "Student/book-scoped versioned JSON rubric; runtimeDatabaseImplemented false; no automatic completion"
+    },
+    {
+      "path": "app/student-audit-viewer/lesson.ts",
+      "claim": "Hash-pinned read-only overlay; teacher reports distinct from saved observations; no live persistence pipeline"
+    },
+    {
+      "path": "context/student-audit-20261014/lesson-batch.ts",
+      "claim": "Provenance topology references; cross-student edge rejection"
+    }
+  ],
+  "gaps": [
+    "No runtime student database, migrations, transactional append, backup/restore or tested cross-environment persistence.",
+    "TeacherEvent facts use generic Row arrays; future schedule, observation, persistence receipt and reminder outcomes need discriminated validated event schemas.",
+    "No verified LMS save receipt or read-after-write evidence; local draft is not saved.",
+    "Reminder creation is separate service evidence, not submission checking or delivery confirmation.",
+    "No executable joined workflow, scheduler ingestion or demonstrated WSL2/VPS/Dots runtime parity."
+  ],
+  "minimumNextBatchWork": [
+    {
+      "step": 1,
+      "action": "Define student-scoped event envelope and discriminated payloads, source ID/version, occurredAt versus recordedAt, book/section scope and supersedes links using the pinned common contracts without cloning them."
+    },
+    {
+      "step": 2,
+      "action": "Choose and implement a local persistent event store adapter with migrations, student isolation, source idempotency and append-only correction history; retain JSON import/export and immutable sources."
+    },
+    {
+      "step": 3,
+      "action": "Project schedules, actual answer-entry observations, teacher judgments, server-save receipts and reminder lifecycle separately; never infer one from another."
+    },
+    {
+      "step": 4,
+      "action": "Add replay/idempotency/cross-student isolation/unknown-time/failed-save/reminder-not-delivered tests and backup-restore verification before calling database support complete."
+    }
+  ],
+  "currentEvidenceMapping": {
+    "schedule": "Sentinel_b41410a8970c8191812b53adf7f01785; Oct15 23:00 and Oct16 before18:00; no execution proof",
+    "studentEntry": "await actual observed answer records; teacher report and observed timestamp must remain different",
+    "teacherFinal": "existing explicit teacher events only, not inferred from score or submission",
+    "serverSave": "dailyrecord-draft-20261014.json saved=false at current draft; separate actual receipt required",
+    "notification": "automation scheduled per root; execution/delivery not yet observed"
+  },
+  "notChanged": [
+    "repository files",
+    "LMS/server",
+    "reminder automation",
+    "DailyRecord draft",
+    "student academic judgments"
+  ]
+}

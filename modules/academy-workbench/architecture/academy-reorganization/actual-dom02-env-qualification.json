@@ -1,0 +1,97 @@
+{
+  "binding": {
+    "producer": {
+      "selection": {
+        "repositoryRoot": "/home/palantirkc/worktrees/academy-state-model-20261021",
+        "repositoryId": "park-kyungchan/education-platform",
+        "projectId": "education-platform",
+        "workId": "academy-state-model-20261021",
+        "commit": "e52d008e0272f58a5a880f00696624361184aa22"
+      },
+      "tree": "3cca8c1aeee097570b1f64f81127b5d51f3ab123",
+      "logical": {
+        "domainId": "education",
+        "projectId": "education-platform",
+        "workId": "academy-state-model-20261021",
+        "issueId": "DOM-ISSUE-20261021",
+        "specId": "DOM-SPEC",
+        "specRevision": 1,
+        "planId": "DOM-PLAN",
+        "planRevision": 1,
+        "taskId": "education-platform:task:academy-state-model-20261021-dom-02"
+      },
+      "resultEvidenceId": "education-platform:evidence:dom-02-result-observation-r1",
+      "verificationEvidenceId": "education-platform:evidence:dom-02-root-verification-r1",
+      "milestone": "execution-and-verification"
+    },
+    "consumer": {
+      "selection": {
+        "repositoryRoot": "/home/palantirkc/worktrees/academy-environment-qualification-20261021",
+        "repositoryId": "park-kyungchan/academy-workbench",
+        "projectId": "academy-workbench",
+        "workId": "academy-environment-qualification-20261021",
+        "commit": "c1c237ae13cda444e8c29257d1b988b6be8c1f31"
+      },
+      "logical": {
+        "domainId": "academy-operations",
+        "projectId": "academy-workbench",
+        "workId": "academy-environment-qualification-20261021",
+        "issueId": "ENV-ISSUE-20261021",
+        "specId": "ENV-SPEC",
+        "specRevision": 1,
+        "planId": "ENV-PLAN",
+        "planRevision": 1,
+        "taskId": "academy-workbench:task:academy-environment-qualification-20261021-env-02"
+      },
+      "qualificationTaskId": "academy-workbench:task:academy-environment-qualification-20261021-env-02-qualify-dom-02"
+    },
+    "receiverSource": {
+      "kind": "snapshot",
+      "path": "work/academy-workbench/academy-environment-qualification-20261021/inputs/ENV-DOM02-QUALIFICATION-R1.json",
+      "sha256": "bb509a1c010fd099939dae6449720c5a4739659444d2ec9f03099f3aba7e7e88",
+      "fragment": "#/content"
+    }
+  },
+  "snapshot": {
+    "valid": true,
+    "findings": [],
+    "authority": "none",
+    "nativePermissionGranted": false,
+    "semanticAcceptanceEstablished": false
+  },
+  "transition": {
+    "valid": true,
+    "findings": [],
+    "authority": "none",
+    "nativePermissionGranted": false,
+    "semanticAcceptanceEstablished": false
+  },
+  "result": {
+    "qualified": true,
+    "scope": "source-only-execution-and-verification",
+    "producer": {
+      "domainId": "education",
+      "projectId": "education-platform",
+      "workId": "academy-state-model-20261021",
+      "taskId": "education-platform:task:academy-state-model-20261021-dom-02"
+    },
+    "consumer": {
+      "domainId": "academy-operations",
+      "projectId": "academy-workbench",
+      "workId": "academy-environment-qualification-20261021",
+      "taskId": "academy-workbench:task:academy-environment-qualification-20261021-env-02"
+    },
+    "qualificationTaskId": "academy-workbench:task:academy-environment-qualification-20261021-env-02-qualify-dom-02",
+    "producerCommit": "e52d008e0272f58a5a880f00696624361184aa22",
+    "producerTree": "3cca8c1aeee097570b1f64f81127b5d51f3ab123",
+    "receiverSource": {
+      "kind": "snapshot",
+      "path": "work/academy-workbench/academy-environment-qualification-20261021/inputs/ENV-DOM02-QUALIFICATION-R1.json",
+      "sha256": "bb509a1c010fd099939dae6449720c5a4739659444d2ec9f03099f3aba7e7e88",
+      "fragment": "#/content"
+    },
+    "nativeReceiverAuthenticated": false,
+    "sharedDeliveryEstablished": false,
+    "activationAuthorized": false
+  }
+}

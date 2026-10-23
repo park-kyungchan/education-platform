@@ -1,0 +1,708 @@
+{
+  "schemaVersion": "1.0.0",
+  "checkedAt": "2026-10-13T03:21:20.243535+00:00",
+  "status": "passed",
+  "checksPassed": 163,
+  "limits": 38,
+  "statusCounts": {
+    "failed": 1,
+    "resolved": 9,
+    "blocked": 14,
+    "unverified": 14
+  },
+  "evidenceSources": 23,
+  "originalSourceHashesChecked": 20,
+  "sourceHashCheckMode": "verified_against_original_workspace",
+  "jsonPointersChecked": 16,
+  "knownPrivateValueChecks": 72,
+  "staticPrivacyPatternChecks": 6,
+  "strictTypeScript": "passed",
+  "noToolsInstalled": true,
+  "liveSourceRequests": 0,
+  "applicationTestsRun": 0,
+  "deploymentChanges": 0,
+  "checks": [
+    {
+      "name": "json_schema_meta_validation",
+      "passed": true
+    },
+    {
+      "name": "current_registry_schema",
+      "passed": true
+    },
+    {
+      "name": "synthetic_example_schema",
+      "passed": true
+    },
+    {
+      "name": "evidence_source_ids_unique",
+      "passed": true
+    },
+    {
+      "name": "all_five_status_alternatives_demonstrated",
+      "passed": true
+    },
+    {
+      "name": "registry_unique_limit_ids",
+      "passed": true
+    },
+    {
+      "name": "registry_unique_acceptance_ids",
+      "passed": true
+    },
+    {
+      "name": "registry_domain_paths",
+      "passed": true
+    },
+    {
+      "name": "registry_goal_references",
+      "passed": true
+    },
+    {
+      "name": "registry_dependency_references",
+      "passed": true
+    },
+    {
+      "name": "registry_dependency_graph_matches_limits",
+      "passed": true
+    },
+    {
+      "name": "registry_prerequisite_graph_is_dag",
+      "passed": true
+    },
+    {
+      "name": "registry_evidence_references",
+      "passed": true
+    },
+    {
+      "name": "registry_attempt_evidence_references",
+      "passed": true
+    },
+    {
+      "name": "registry_workflow_cycles_separate",
+      "passed": true
+    },
+    {
+      "name": "registry_authority_is_false",
+      "passed": true
+    },
+    {
+      "name": "registry_actual_device_not_new_gate",
+      "passed": true
+    },
+    {
+      "name": "example_unique_limit_ids",
+      "passed": true
+    },
+    {
+      "name": "example_unique_acceptance_ids",
+      "passed": true
+    },
+    {
+      "name": "example_domain_paths",
+      "passed": true
+    },
+    {
+      "name": "example_goal_references",
+      "passed": true
+    },
+    {
+      "name": "example_dependency_references",
+      "passed": true
+    },
+    {
+      "name": "example_dependency_graph_matches_limits",
+      "passed": true
+    },
+    {
+      "name": "example_prerequisite_graph_is_dag",
+      "passed": true
+    },
+    {
+      "name": "example_evidence_references",
+      "passed": true
+    },
+    {
+      "name": "example_attempt_evidence_references",
+      "passed": true
+    },
+    {
+      "name": "example_workflow_cycles_separate",
+      "passed": true
+    },
+    {
+      "name": "example_authority_is_false",
+      "passed": true
+    },
+    {
+      "name": "example_actual_device_not_new_gate",
+      "passed": true
+    },
+    {
+      "name": "recorded_v21_commit",
+      "passed": true
+    },
+    {
+      "name": "production_19_candidate_21_undeployed",
+      "passed": true
+    },
+    {
+      "name": "separate_ui_and_api_coverage",
+      "passed": true
+    },
+    {
+      "name": "owner_only_private_scope",
+      "passed": true
+    },
+    {
+      "name": "reject_missing_failure",
+      "passed": true
+    },
+    {
+      "name": "reject_extra_field_failed",
+      "passed": true
+    },
+    {
+      "name": "reject_missing_blocker",
+      "passed": true
+    },
+    {
+      "name": "reject_extra_field_blocked",
+      "passed": true
+    },
+    {
+      "name": "reject_missing_verification",
+      "passed": true
+    },
+    {
+      "name": "reject_extra_field_unverified",
+      "passed": true
+    },
+    {
+      "name": "reject_missing_approval",
+      "passed": true
+    },
+    {
+      "name": "reject_extra_field_approval_pending",
+      "passed": true
+    },
+    {
+      "name": "reject_missing_resolution",
+      "passed": true
+    },
+    {
+      "name": "reject_extra_field_resolved",
+      "passed": true
+    },
+    {
+      "name": "source_path_within_root_E.PRODUCTION.REVIEW",
+      "passed": true
+    },
+    {
+      "name": "source_digest_E.PRODUCTION.REVIEW",
+      "passed": true
+    },
+    {
+      "name": "source_path_within_root_E.PRODUCTION.MANIFEST",
+      "passed": true
+    },
+    {
+      "name": "source_digest_E.PRODUCTION.MANIFEST",
+      "passed": true
+    },
+    {
+      "name": "source_path_within_root_E.QA.V21",
+      "passed": true
+    },
+    {
+      "name": "source_digest_E.QA.V21",
+      "passed": true
+    },
+    {
+      "name": "source_path_within_root_E.QA.SOURCE",
+      "passed": true
+    },
+    {
+      "name": "source_digest_E.QA.SOURCE",
+      "passed": true
+    },
+    {
+      "name": "source_path_within_root_E.CLINIC.LIVE_REPLAY",
+      "passed": true
+    },
+    {
+      "name": "source_digest_E.CLINIC.LIVE_REPLAY",
+      "passed": true
+    },
+    {
+      "name": "source_path_within_root_E.CLINIC.CHECKS",
+      "passed": true
+    },
+    {
+      "name": "source_digest_E.CLINIC.CHECKS",
+      "passed": true
+    },
+    {
+      "name": "source_path_within_root_E.CLINIC.BASELINE",
+      "passed": true
+    },
+    {
+      "name": "source_digest_E.CLINIC.BASELINE",
+      "passed": true
+    },
+    {
+      "name": "source_path_within_root_E.COVERAGE.POINTER",
+      "passed": true
+    },
+    {
+      "name": "source_digest_E.COVERAGE.POINTER",
+      "passed": true
+    },
+    {
+      "name": "source_path_within_root_E.COVERAGE.MANIFEST",
+      "passed": true
+    },
+    {
+      "name": "source_digest_E.COVERAGE.MANIFEST",
+      "passed": true
+    },
+    {
+      "name": "source_path_within_root_E.COVERAGE.LEDGER",
+      "passed": true
+    },
+    {
+      "name": "source_digest_E.COVERAGE.LEDGER",
+      "passed": true
+    },
+    {
+      "name": "source_path_within_root_E.COVERAGE.CHECKS",
+      "passed": true
+    },
+    {
+      "name": "source_digest_E.COVERAGE.CHECKS",
+      "passed": true
+    },
+    {
+      "name": "source_path_within_root_E.CONTRACTS",
+      "passed": true
+    },
+    {
+      "name": "source_digest_E.CONTRACTS",
+      "passed": true
+    },
+    {
+      "name": "source_path_within_root_E.PRESTUDY.BOUNDARY",
+      "passed": true
+    },
+    {
+      "name": "source_digest_E.PRESTUDY.BOUNDARY",
+      "passed": true
+    },
+    {
+      "name": "source_path_within_root_E.ANDROID",
+      "passed": true
+    },
+    {
+      "name": "source_digest_E.ANDROID",
+      "passed": true
+    },
+    {
+      "name": "source_path_within_root_E.OVERLAY",
+      "passed": true
+    },
+    {
+      "name": "source_digest_E.OVERLAY",
+      "passed": true
+    },
+    {
+      "name": "source_path_within_root_E.CODE.AUTH",
+      "passed": true
+    },
+    {
+      "name": "source_digest_E.CODE.AUTH",
+      "passed": true
+    },
+    {
+      "name": "source_path_within_root_E.CODE.APP",
+      "passed": true
+    },
+    {
+      "name": "source_digest_E.CODE.APP",
+      "passed": true
+    },
+    {
+      "name": "source_path_within_root_E.CODE.WORKER",
+      "passed": true
+    },
+    {
+      "name": "source_digest_E.CODE.WORKER",
+      "passed": true
+    },
+    {
+      "name": "source_path_within_root_E.CODE.LEDGER",
+      "passed": true
+    },
+    {
+      "name": "source_digest_E.CODE.LEDGER",
+      "passed": true
+    },
+    {
+      "name": "source_path_within_root_E.CODE.BUILD",
+      "passed": true
+    },
+    {
+      "name": "source_digest_E.CODE.BUILD",
+      "passed": true
+    },
+    {
+      "name": "all_cited_json_pointers_exist",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_0",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_1",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_2",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_3",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_4",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_5",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_6",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_7",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_8",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_9",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_10",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_11",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_12",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_13",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_14",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_15",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_16",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_17",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_18",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_19",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_20",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_21",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_22",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_23",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_24",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_25",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_26",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_27",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_28",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_29",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_30",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_31",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_32",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_33",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_34",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_35",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_36",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_37",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_38",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_39",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_40",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_41",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_42",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_43",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_44",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_45",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_46",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_47",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_48",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_49",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_50",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_51",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_52",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_53",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_54",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_55",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_56",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_57",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_58",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_59",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_60",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_61",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_62",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_63",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_64",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_65",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_66",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_67",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_68",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_69",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_70",
+      "passed": true
+    },
+    {
+      "name": "private_value_excluded_71",
+      "passed": true
+    },
+    {
+      "name": "no_email_value",
+      "passed": true
+    },
+    {
+      "name": "no_private_key_material",
+      "passed": true
+    },
+    {
+      "name": "no_github_token",
+      "passed": true
+    },
+    {
+      "name": "no_openai_key",
+      "passed": true
+    },
+    {
+      "name": "no_session_cookie_value",
+      "passed": true
+    },
+    {
+      "name": "no_bearer_value",
+      "passed": true
+    },
+    {
+      "name": "strict_typescript_literal_assignability",
+      "passed": true
+    }
+  ],
+  "documentDigests": [
+    {
+      "file": "README.md",
+      "sha256": "3f27fde94e3eb76cb76fb5415d0b82d04be1477a2e883ff23a1e7024ac2ebb34"
+    },
+    {
+      "file": "evidence-manifest.json",
+      "sha256": "748d8c34172ab70e26529d1c73ed0a8cfd042a8abd2c383651c32b437b127011"
+    },
+    {
+      "file": "hardlimits.example.json",
+      "sha256": "b7cfef5105beb26c708384d466fef58cb947789a1884f10e9784c27ce84b0587"
+    },
+    {
+      "file": "hardlimits.json",
+      "sha256": "1bf292c846d108f1ce4342d8fd7b87040b5e51c0e1ffafb8ee234fefc034789e"
+    },
+    {
+      "file": "hardlimits.schema.json",
+      "sha256": "abf1cdbd3c550f66b4a6ee92ab6df6caee3717fe838e1bda982b4a4fb62a5541"
+    },
+    {
+      "file": "hardlimits.types.ts",
+      "sha256": "f420c4cc756352aca506fdc6de9ac7529e650ad0c0b5e0e7d50cf204a1584417"
+    },
+    {
+      "file": "validate.py",
+      "sha256": "9e8586e5c91c8df95b91bdcf5c82f5a316b2b19dbeb081b51c5ff0f934c1dc3e"
+    }
+  ]
+}

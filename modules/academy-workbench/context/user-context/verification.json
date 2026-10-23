@@ -1,0 +1,74 @@
+{
+  "schemaVersion": "module-user-context.verification/1.0.0",
+  "kind": "verification",
+  "status": "passed",
+  "verifiedAt": "2026-10-13T23:28:57.707Z",
+  "implementation": "scripts/validate.mjs",
+  "checks": [
+    {
+      "name": "bundled-source-and-record-schema",
+      "status": "passed"
+    },
+    {
+      "name": "source-text-sha256",
+      "status": "passed"
+    },
+    {
+      "name": "source-identity-time-locator",
+      "status": "passed"
+    },
+    {
+      "name": "no-authority-escalation",
+      "status": "passed"
+    },
+    {
+      "name": "selected-secret-pattern-scan",
+      "status": "passed"
+    },
+    {
+      "name": "typed-kinds-status-basis",
+      "status": "passed"
+    },
+    {
+      "name": "source-and-relation-referential-integrity",
+      "status": "passed"
+    },
+    {
+      "name": "explicit-user-versus-assistant-distinction",
+      "status": "passed"
+    },
+    {
+      "name": "scoped-acceptance",
+      "status": "passed"
+    },
+    {
+      "name": "correction-and-resumption-chain",
+      "status": "passed"
+    },
+    {
+      "name": "exam-context-arithmetic",
+      "status": "passed"
+    },
+    {
+      "name": "coverage-counts-and-incomplete-claims",
+      "status": "passed"
+    }
+  ],
+  "errors": [],
+  "sourceFingerprint": "592c8bd54fc6ab067a33489e6dca6775e90c744834ca997fe35c97fdeedbacff",
+  "scope": "Selected source bytes, local typed records, reference integrity, correction links and explicitly bounded acceptance only.",
+  "doesNotEstablish": [
+    "complete conversation/Space migration",
+    "truth of every historical assistant report",
+    "mathematical or psychological validity",
+    "student ability or learning outcomes",
+    "actual exam question selection",
+    "WSL2/VPS runtime success",
+    "remote publication",
+    "user acceptance of the new implementation"
+  ],
+  "acceptanceDecision": "not_made",
+  "executionEffects": "none",
+  "authority": "none",
+  "nativePermissionGranted": false
+}

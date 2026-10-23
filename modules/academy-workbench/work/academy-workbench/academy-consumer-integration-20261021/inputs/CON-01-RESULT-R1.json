@@ -1,0 +1,142 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "academy-operations",
+  "projectId": "academy-workbench",
+  "workId": "academy-consumer-integration-20261021",
+  "kind": "input",
+  "id": "CON-01-RESULT-R1",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "accountable-consumer-subLead",
+    "locator": "native-thread:01a15dd0-03ed-71a0-8372-936776e22669:CON-01-RESULT-R1",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "schema": "academy.consumer-selection-result.v1",
+    "taskId": "academy-workbench:task:academy-consumer-integration-20261021-con-01",
+    "nativeThreadId": "01a15dd0-03ed-71a0-8372-936776e22669",
+    "runId": "academy-workbench:run:academy-consumer-integration-20261021-con-01-r1",
+    "registration": "local authored check occurrence; no global/native Run registration",
+    "sourceHead": "37f3f1e8c1313cd41721f7d1ee15cef67da12883",
+    "disposition": "READY_FOR_ROOT_SOURCE_CHECKPOINT",
+    "outcome": "Bounded current-versus-selected consumer contract selection complete with explicit SDK adoption gap; no production adapter implemented.",
+    "sources": {
+      "query": "8f8c9bd61bd5e55445780b5569ecc40effcecef6",
+      "savedMcp": "df8b9f776e22841919e69b9ff9ba25084e13f558",
+      "context": "ad42d0760df24df273cabf202b75fba5bbe8c68e",
+      "installedSkillSha256": "2d08b8d5b6b1feed55cf4489ab991034acdf12ed26d7c3894133050ec134c287"
+    },
+    "artifacts": [
+      {
+        "path": "architecture/academy-consumer-integration/adoption-plan.json",
+        "sha256": "4f4caa2c823823fdd1ea648578d8b53b4b0c82d9111f7c246d35484736c9e141",
+        "byteLength": 4286
+      },
+      {
+        "path": "architecture/academy-consumer-integration/check-selection.ts",
+        "sha256": "2cd328ee588595547e33d97107682560c77a5e29a68b8eed8d2630f826ff282d",
+        "byteLength": 10691
+      },
+      {
+        "path": "architecture/academy-consumer-integration/entrypoint.json",
+        "sha256": "258ec693303123df8efcfde06f5c0174e8b2afff01b090f01e28695ebc0c7b3c",
+        "byteLength": 1413
+      },
+      {
+        "path": "architecture/academy-consumer-integration/finalize-selection.ts",
+        "sha256": "91526d250cf8d0b599b9cf41792a245a14f71ede3d759304a9430b76973713a5",
+        "byteLength": 13100
+      },
+      {
+        "path": "architecture/academy-consumer-integration/observations/CON-01-CHECK-CONTINUATION-R1.json",
+        "sha256": "d4295a52fa8d36ea5c0f1ca773f1cdb8b1cf9a5b454974e5d80e02b1308fc08e",
+        "byteLength": 1473
+      },
+      {
+        "path": "architecture/academy-consumer-integration/observations/CON-01-CHECKS-R1.json",
+        "sha256": "56d15ede7a1b6fb258d6e8bf0238edc208279827dd24bff3d91ca1af84701c59",
+        "byteLength": 1239
+      },
+      {
+        "path": "architecture/academy-consumer-integration/observations/CON-01-CONTEXT-PAGES-R1.json",
+        "sha256": "978a566cfa3699f8635a6a38cee4d24869d3e0631420eff065f680844d159542",
+        "byteLength": 87881
+      },
+      {
+        "path": "architecture/academy-consumer-integration/observations/CON-01-REPORT-TYPECHECK-R1.json",
+        "sha256": "18250244d2dc3fa154a427aed7c75ec915d15a5360e836964166301cee0a8e60",
+        "byteLength": 395
+      },
+      {
+        "path": "architecture/academy-consumer-integration/observations/CON-01-SAVED-TRANSPORT-R1.json",
+        "sha256": "c292dfdddc3cd530560efe61d57e9c09b88c338f33742498832514dbdd6a6c0f",
+        "byteLength": 4699
+      },
+      {
+        "path": "architecture/academy-consumer-integration/observations/CON-01-STDIO-DIAGNOSTIC-R1.json",
+        "sha256": "b86e01a270afae98f5d67b34cb3eb7812d06d95cf9d99c09aeeca2c6151e9b56",
+        "byteLength": 743
+      },
+      {
+        "path": "architecture/academy-consumer-integration/report-contract.ts",
+        "sha256": "f7b271abe84782e2bd9b2af48ffde3346ed00e8bac51a32921ca7f70df6dafc0",
+        "byteLength": 4039
+      },
+      {
+        "path": "architecture/academy-consumer-integration/source-selection.json",
+        "sha256": "1bb6a997745937fe9baf83953806a21936925605ec0c2f318ae7df72581ddc17",
+        "byteLength": 23937
+      },
+      {
+        "path": "work/academy-workbench/academy-consumer-integration-20261021/inputs/CON-01-EXECUTION-R1.json",
+        "sha256": "983d91df09dca14fc4146ab0a4b7f3c141b4784893ff838e1932045e4705b3a0",
+        "byteLength": 1448
+      }
+    ],
+    "selectedEntrypoint": "architecture/academy-consumer-integration/entrypoint.json",
+    "sourceSelection": "architecture/academy-consumer-integration/source-selection.json",
+    "adoptionPlan": "architecture/academy-consumer-integration/adoption-plan.json",
+    "resultEvidenceId": "academy-workbench:evidence:con-01-result-observation-r1",
+    "verificationEvidenceId": "academy-workbench:evidence:con-01-verification-r1",
+    "checks": {
+      "passed": [
+        "40 exact selected/support source files and predecessor/skill hashes",
+        "14 context selections, 98 pages exhausted with exact byte counts and required references",
+        "7 selected saved MCP tests",
+        "report design typecheck",
+        "canonical existing Work snapshot and local record/artifact hash bindings"
+      ],
+      "failed": [
+        "2 selected SDK stdio tests: CONNECTION_CLOSED, cause unresolved"
+      ],
+      "notRun": [
+        "broad legacy check/test scripts: load private audit/student originals",
+        "production MCP server/CLI startup: loads pinned private bodies",
+        "QRY full graph/suites: exact source receiver qualification already received",
+        "post-commit canonical snapshot/transition: Root exact commit required",
+        "WSL/native/VPS production integration, teacher acceptance and original daily report"
+      ]
+    },
+    "remainingGaps": [
+      "Current Bun1.4.3 SDK stdio observation: selected df8b9f7 tests 7 passed / 2 failed with CONNECTION_CLOSED and no child stderr; fixture EOF startup exited0. Root must resolve before claiming successful SDK adoption; cause not established.",
+      "Root exact CON-01 source commit/canonical snapshot and transition check",
+      "CON-02 Root admission despite complete QRY receiver gate",
+      "Exact finite saved MCP/context adoption; no old Work state promotion",
+      "Authenticated source-owner callback and common strict reader source resolution",
+      "Report field/identity mapping with scoped teacher corrections and explicit unknown/pending",
+      "All required lesson overlays beyond saved Oct14 remain private-owner reads; Oct19 facts not copied",
+      "CON-03 workflow routing holds on VER-02",
+      "Native/WSL/VPS integration, actual teacher acceptance and original daily report are unverified/outstanding"
+    ],
+    "currentTeacherContext": "Oct19 applicability metadata only; facts remain with private owner/conversation",
+    "originalDailyReport": "outstanding; older report never represented as current",
+    "next": "WAIT for Root exact source checkpoint and explicit CON-02 admission; CON-03 holds on VER-02",
+    "sharedDelivery": false,
+    "nativeAdoption": false,
+    "teacherAcceptance": false,
+    "formalAcceptance": false,
+    "ownersUnchanged": true,
+    "commonConsumerPinChanged": false,
+    "productionEffects": false
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "academy-operations",
+  "projectId": "academy-workbench",
+  "workId": "academy-consumer-integration-20261021",
+  "kind": "task",
+  "id": "academy-workbench:task:academy-consumer-integration-20261021-con-02",
+  "logical": {
+    "domainId": "academy-operations",
+    "projectId": "academy-workbench",
+    "workId": "academy-consumer-integration-20261021",
+    "issueId": "CON-ISSUE-20261021",
+    "specId": "CON-SPEC",
+    "specRevision": 1,
+    "planId": "CON-PLAN",
+    "planRevision": 1,
+    "taskId": "academy-workbench:task:academy-consumer-integration-20261021-con-02"
+  },
+  "title": "Connect preparation and correction consumer reporting",
+  "state": {
+    "execution": "complete",
+    "verification": "failed",
+    "localAudit": "result-durable",
+    "sharedAudit": "pending",
+    "formalCompletion": "pending"
+  },
+  "executionClass": "source-only",
+  "dependsOn": [
+    {
+      "taskId": "academy-workbench:task:academy-consumer-integration-20261021-con-01",
+      "milestone": "execution-and-verification"
+    },
+    {
+      "taskId": "academy-workbench:task:academy-consumer-integration-20261021-con-02-qualify-qry-02",
+      "milestone": "execution-and-verification"
+    }
+  ],
+  "decisionIds": [],
+  "effectIds": [],
+  "verificationEvidenceIds": [
+    "academy-workbench:evidence:con-02-verification-r1"
+  ],
+  "nextAction": "ROOT_SDK_CHECK_NEEDED; READY_FOR_ROOT_SOURCE_CHECKPOINT. WAIT writer idle for Root exact same-source SDK receipt; missing transport scope not passed. No heavy retry, source activation or CON-03 admission. Shared/formal acceptance remains pending."
+}

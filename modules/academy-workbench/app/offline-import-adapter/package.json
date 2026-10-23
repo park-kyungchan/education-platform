@@ -1,0 +1,14 @@
+{
+  "name": "academy-offline-import-adapter",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "test": "node --test tests/*.test.ts",
+    "dry-run": "node src/cli.ts",
+    "verify:output": "node src/verify-output.ts"
+  }
+}

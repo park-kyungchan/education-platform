@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "academy.review-check/1",
+  "id": "AAR-REVIEW-CHECK-001",
+  "command": [
+    "bun",
+    "architecture/academy-reorganization/validate.ts",
+    "--canonical",
+    "--commit",
+    "6cf0a518d68e21b3d7a7624d0fba2f9c4d31dde6",
+    "--from",
+    "cb41685437d0f3fabf9f32ae00667e3b88fec4c4"
+  ],
+  "observedAtUtc": "2026-10-21T05:07:30.664632+00:00",
+  "elapsedSeconds": 0.699,
+  "exitCode": 0,
+  "stdout": "{\"valid\":true,\"assertions\":245,\"works\":6,\"outcomeNodes\":18,\"environments\":6,\"reviewerDispatched\":false}\n{\"canonicalAuditorCommit\":\"712f90deac0676e662dc5d75d88d89f7b6773bfe\",\"candidateCommit\":\"6cf0a518d68e21b3d7a7624d0fba2f9c4d31dde6\",\"snapshot\":{\"valid\":true,\"findings\":[],\"authority\":\"none\",\"nativePermissionGranted\":false,\"semanticAcceptanceEstablished\":false},\"transition\":{\"valid\":true,\"findings\":[],\"authority\":\"none\",\"nativePermissionGranted\":false,\"semanticAcceptanceEstablished\":false},\"scope\":\"canonical Work records; not native adoption, operational activation or user acceptance\"}\n",
+  "stderr": "",
+  "scope": "Architecture topology and source pin checks; exact HEAD common GitWork snapshot and approval transition only; not runtime adoption or acceptance."
+}

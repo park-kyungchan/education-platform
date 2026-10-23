@@ -1,0 +1,220 @@
+{
+  "semanticOwner": "math-research-module",
+  "rules": {
+    "is_a": {
+      "domain": [
+        "concept_family",
+        "reasoning_family",
+        "action_family",
+        "governance_family",
+        "atomic_concept",
+        "contextual_unit",
+        "action_definition",
+        "probe_definition",
+        "capability_hypothesis",
+        "strategy_hypothesis",
+        "diagnostic_rule",
+        "authorization_policy"
+      ],
+      "range": [
+        "concept_family",
+        "reasoning_family",
+        "action_family",
+        "governance_family"
+      ],
+      "sameLayer": true,
+      "dag": "strict-parent"
+    },
+    "part_of": {
+      "domain": [
+        "concept_family",
+        "atomic_concept",
+        "contextual_unit",
+        "source_document",
+        "item",
+        "observation",
+        "reasoning_family",
+        "evidence_claim",
+        "capability_hypothesis",
+        "strategy_hypothesis",
+        "diagnostic_rule",
+        "action_family",
+        "action_definition",
+        "probe_definition",
+        "action_event",
+        "teacher_action",
+        "system_action",
+        "governance_family",
+        "source_claim",
+        "provenance_record",
+        "review_record",
+        "acceptance_record",
+        "authorization_policy"
+      ],
+      "range": [
+        "concept_family",
+        "reasoning_family",
+        "action_family",
+        "governance_family",
+        "contextual_unit"
+      ],
+      "sameLayer": true,
+      "dag": "strict-parent"
+    },
+    "prerequisite": {
+      "domain": [
+        "atomic_concept",
+        "contextual_unit",
+        "action_definition",
+        "probe_definition",
+        "capability_hypothesis",
+        "strategy_hypothesis"
+      ],
+      "range": [
+        "atomic_concept",
+        "contextual_unit",
+        "action_definition",
+        "probe_definition",
+        "capability_hypothesis",
+        "strategy_hypothesis"
+      ],
+      "sameLayer": false,
+      "dag": "prerequisite"
+    },
+    "uses": {
+      "domain": [
+        "concept_family",
+        "atomic_concept",
+        "contextual_unit",
+        "source_document",
+        "item",
+        "observation",
+        "reasoning_family",
+        "evidence_claim",
+        "capability_hypothesis",
+        "strategy_hypothesis",
+        "diagnostic_rule",
+        "action_family",
+        "action_definition",
+        "probe_definition",
+        "action_event",
+        "teacher_action",
+        "system_action",
+        "governance_family",
+        "source_claim",
+        "provenance_record",
+        "review_record",
+        "acceptance_record",
+        "authorization_policy"
+      ],
+      "range": [
+        "concept_family",
+        "atomic_concept",
+        "contextual_unit",
+        "source_document",
+        "item",
+        "observation",
+        "reasoning_family",
+        "evidence_claim",
+        "capability_hypothesis",
+        "strategy_hypothesis",
+        "diagnostic_rule",
+        "action_family",
+        "action_definition",
+        "probe_definition",
+        "action_event",
+        "teacher_action",
+        "system_action",
+        "governance_family",
+        "source_claim",
+        "provenance_record",
+        "review_record",
+        "acceptance_record",
+        "authorization_policy"
+      ],
+      "sameLayer": false,
+      "dag": null
+    },
+    "observes": {
+      "domain": [
+        "observation"
+      ],
+      "range": [
+        "item",
+        "action_event",
+        "teacher_action",
+        "system_action"
+      ],
+      "sameLayer": false,
+      "dag": null
+    },
+    "supports": {
+      "domain": [
+        "observation",
+        "evidence_claim",
+        "source_claim"
+      ],
+      "range": [
+        "evidence_claim",
+        "capability_hypothesis",
+        "strategy_hypothesis",
+        "source_claim"
+      ],
+      "sameLayer": false,
+      "dag": null
+    },
+    "refutes": {
+      "domain": [
+        "observation",
+        "evidence_claim",
+        "source_claim"
+      ],
+      "range": [
+        "evidence_claim",
+        "capability_hypothesis",
+        "strategy_hypothesis",
+        "source_claim"
+      ],
+      "sameLayer": false,
+      "dag": null
+    },
+    "probes": {
+      "domain": [
+        "probe_definition"
+      ],
+      "range": [
+        "capability_hypothesis",
+        "strategy_hypothesis"
+      ],
+      "sameLayer": false,
+      "dag": null
+    },
+    "instance_of": {
+      "domain": [
+        "action_event",
+        "teacher_action",
+        "system_action"
+      ],
+      "range": [
+        "action_definition",
+        "probe_definition"
+      ],
+      "sameLayer": false,
+      "dag": null
+    },
+    "derived_from": {
+      "domain": [
+        "source_claim",
+        "provenance_record",
+        "evidence_claim"
+      ],
+      "range": [
+        "source_document",
+        "observation",
+        "source_claim"
+      ],
+      "sameLayer": false,
+      "dag": null
+    }
+  }
+}

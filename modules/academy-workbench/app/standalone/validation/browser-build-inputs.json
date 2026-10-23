@@ -1,0 +1,380 @@
+{
+  "inputs": {
+    "src/client/app.css": {
+      "bytes": 1605,
+      "imports": []
+    },
+    "src/client/rails.css": {
+      "bytes": 14299,
+      "imports": []
+    },
+    "src/client/teacher-overlay.css": {
+      "bytes": 2168,
+      "imports": []
+    },
+    "src/client/grading-projection.css": {
+      "bytes": 188,
+      "imports": []
+    },
+    "src/client/desktop-stepper.css": {
+      "bytes": 17908,
+      "imports": []
+    },
+    "src/client/editorial-fieldbook.css": {
+      "bytes": 8143,
+      "imports": []
+    },
+    "src/client/standalone.css": {
+      "bytes": 1348,
+      "imports": []
+    },
+    "src/client/student-event-view.css": {
+      "bytes": 708,
+      "imports": []
+    },
+    "src/client/today-view.css": {
+      "bytes": 826,
+      "imports": []
+    },
+    "src/client/workflow-view.css": {
+      "bytes": 5528,
+      "imports": []
+    },
+    "src/client/assessment-view.css": {
+      "bytes": 525,
+      "imports": []
+    },
+    "src/client/evidence-view.css": {
+      "bytes": 1084,
+      "imports": []
+    },
+    "src/client/refresh-readiness.css": {
+      "bytes": 375,
+      "imports": []
+    },
+    "src/client/renderers/rails.ts": {
+      "bytes": 19785,
+      "imports": [],
+      "format": "esm"
+    },
+    "src/client/renderers/teacher-overlay.ts": {
+      "bytes": 17556,
+      "imports": [],
+      "format": "esm"
+    },
+    "src/client/renderers/included-contents.ts": {
+      "bytes": 1392,
+      "imports": [],
+      "format": "esm"
+    },
+    "src/client/renderers/desktop-stepper.ts": {
+      "bytes": 18223,
+      "imports": [],
+      "format": "esm"
+    },
+    "src/client/renderers/student-event-view.ts": {
+      "bytes": 10479,
+      "imports": [],
+      "format": "esm"
+    },
+    "src/shared/date.ts": {
+      "bytes": 405,
+      "imports": [],
+      "format": "esm"
+    },
+    "src/client/renderers/today-view.ts": {
+      "bytes": 9390,
+      "imports": [
+        {
+          "path": "src/client/renderers/student-event-view.ts",
+          "kind": "import-statement",
+          "original": "./student-event-view.ts"
+        },
+        {
+          "path": "src/shared/date.ts",
+          "kind": "import-statement",
+          "original": "../../shared/date.ts"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/client/renderers/workflow-view.ts": {
+      "bytes": 28308,
+      "imports": [
+        {
+          "path": "src/shared/date.ts",
+          "kind": "import-statement",
+          "original": "../../shared/date.ts"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/client/renderers/evidence-view.ts": {
+      "bytes": 9867,
+      "imports": [],
+      "format": "esm"
+    },
+    "src/client/renderers/assessment-view.ts": {
+      "bytes": 3955,
+      "imports": [],
+      "format": "esm"
+    },
+    "src/client/renderers/refresh-readiness.ts": {
+      "bytes": 3519,
+      "imports": [],
+      "format": "esm"
+    },
+    "src/client/app.ts": {
+      "bytes": 9015,
+      "imports": [
+        {
+          "path": "src/client/app.css",
+          "kind": "import-statement",
+          "original": "./app.css"
+        },
+        {
+          "path": "src/client/rails.css",
+          "kind": "import-statement",
+          "original": "./rails.css"
+        },
+        {
+          "path": "src/client/teacher-overlay.css",
+          "kind": "import-statement",
+          "original": "./teacher-overlay.css"
+        },
+        {
+          "path": "src/client/grading-projection.css",
+          "kind": "import-statement",
+          "original": "./grading-projection.css"
+        },
+        {
+          "path": "src/client/desktop-stepper.css",
+          "kind": "import-statement",
+          "original": "./desktop-stepper.css"
+        },
+        {
+          "path": "src/client/editorial-fieldbook.css",
+          "kind": "import-statement",
+          "original": "./editorial-fieldbook.css"
+        },
+        {
+          "path": "src/client/standalone.css",
+          "kind": "import-statement",
+          "original": "./standalone.css"
+        },
+        {
+          "path": "src/client/student-event-view.css",
+          "kind": "import-statement",
+          "original": "./student-event-view.css"
+        },
+        {
+          "path": "src/client/today-view.css",
+          "kind": "import-statement",
+          "original": "./today-view.css"
+        },
+        {
+          "path": "src/client/workflow-view.css",
+          "kind": "import-statement",
+          "original": "./workflow-view.css"
+        },
+        {
+          "path": "src/client/assessment-view.css",
+          "kind": "import-statement",
+          "original": "./assessment-view.css"
+        },
+        {
+          "path": "src/client/evidence-view.css",
+          "kind": "import-statement",
+          "original": "./evidence-view.css"
+        },
+        {
+          "path": "src/client/refresh-readiness.css",
+          "kind": "import-statement",
+          "original": "./refresh-readiness.css"
+        },
+        {
+          "path": "src/client/renderers/rails.ts",
+          "kind": "import-statement",
+          "original": "./renderers/rails.ts"
+        },
+        {
+          "path": "src/client/renderers/teacher-overlay.ts",
+          "kind": "import-statement",
+          "original": "./renderers/teacher-overlay.ts"
+        },
+        {
+          "path": "src/client/renderers/included-contents.ts",
+          "kind": "import-statement",
+          "original": "./renderers/included-contents.ts"
+        },
+        {
+          "path": "src/client/renderers/desktop-stepper.ts",
+          "kind": "import-statement",
+          "original": "./renderers/desktop-stepper.ts"
+        },
+        {
+          "path": "src/client/renderers/student-event-view.ts",
+          "kind": "import-statement",
+          "original": "./renderers/student-event-view.ts"
+        },
+        {
+          "path": "src/client/renderers/today-view.ts",
+          "kind": "import-statement",
+          "original": "./renderers/today-view.ts"
+        },
+        {
+          "path": "src/client/renderers/workflow-view.ts",
+          "kind": "import-statement",
+          "original": "./renderers/workflow-view.ts"
+        },
+        {
+          "path": "src/client/renderers/evidence-view.ts",
+          "kind": "import-statement",
+          "original": "./renderers/evidence-view.ts"
+        },
+        {
+          "path": "src/client/renderers/assessment-view.ts",
+          "kind": "import-statement",
+          "original": "./renderers/assessment-view.ts"
+        },
+        {
+          "path": "src/client/renderers/refresh-readiness.ts",
+          "kind": "import-statement",
+          "original": "./renderers/refresh-readiness.ts"
+        }
+      ],
+      "format": "esm"
+    }
+  },
+  "outputs": {
+    "public/app.js": {
+      "imports": [],
+      "exports": [],
+      "entryPoint": "src/client/app.ts",
+      "cssBundle": "public/app.css",
+      "inputs": {
+        "src/client/app.css": {
+          "bytesInOutput": 0
+        },
+        "src/client/rails.css": {
+          "bytesInOutput": 0
+        },
+        "src/client/teacher-overlay.css": {
+          "bytesInOutput": 0
+        },
+        "src/client/grading-projection.css": {
+          "bytesInOutput": 0
+        },
+        "src/client/desktop-stepper.css": {
+          "bytesInOutput": 0
+        },
+        "src/client/editorial-fieldbook.css": {
+          "bytesInOutput": 0
+        },
+        "src/client/standalone.css": {
+          "bytesInOutput": 0
+        },
+        "src/client/student-event-view.css": {
+          "bytesInOutput": 0
+        },
+        "src/client/today-view.css": {
+          "bytesInOutput": 0
+        },
+        "src/client/workflow-view.css": {
+          "bytesInOutput": 0
+        },
+        "src/client/assessment-view.css": {
+          "bytesInOutput": 0
+        },
+        "src/client/evidence-view.css": {
+          "bytesInOutput": 0
+        },
+        "src/client/refresh-readiness.css": {
+          "bytesInOutput": 0
+        },
+        "src/client/renderers/rails.ts": {
+          "bytesInOutput": 25186
+        },
+        "src/client/renderers/teacher-overlay.ts": {
+          "bytesInOutput": 15596
+        },
+        "src/client/renderers/included-contents.ts": {
+          "bytesInOutput": 1699
+        },
+        "src/client/renderers/desktop-stepper.ts": {
+          "bytesInOutput": 22966
+        },
+        "src/client/renderers/student-event-view.ts": {
+          "bytesInOutput": 13510
+        },
+        "src/shared/date.ts": {
+          "bytesInOutput": 199
+        },
+        "src/client/renderers/today-view.ts": {
+          "bytesInOutput": 11717
+        },
+        "src/client/renderers/workflow-view.ts": {
+          "bytesInOutput": 34517
+        },
+        "src/client/renderers/evidence-view.ts": {
+          "bytesInOutput": 12871
+        },
+        "src/client/renderers/assessment-view.ts": {
+          "bytesInOutput": 5400
+        },
+        "src/client/renderers/refresh-readiness.ts": {
+          "bytesInOutput": 2220
+        },
+        "src/client/app.ts": {
+          "bytesInOutput": 10531
+        }
+      },
+      "bytes": 156937
+    },
+    "public/app.css": {
+      "imports": [],
+      "inputs": {
+        "src/client/app.css": {
+          "bytesInOutput": 2011
+        },
+        "src/client/rails.css": {
+          "bytesInOutput": 18197
+        },
+        "src/client/teacher-overlay.css": {
+          "bytesInOutput": 2158
+        },
+        "src/client/grading-projection.css": {
+          "bytesInOutput": 217
+        },
+        "src/client/desktop-stepper.css": {
+          "bytesInOutput": 22796
+        },
+        "src/client/editorial-fieldbook.css": {
+          "bytesInOutput": 9753
+        },
+        "src/client/standalone.css": {
+          "bytesInOutput": 1642
+        },
+        "src/client/student-event-view.css": {
+          "bytesInOutput": 835
+        },
+        "src/client/today-view.css": {
+          "bytesInOutput": 1023
+        },
+        "src/client/workflow-view.css": {
+          "bytesInOutput": 6797
+        },
+        "src/client/assessment-view.css": {
+          "bytesInOutput": 620
+        },
+        "src/client/evidence-view.css": {
+          "bytesInOutput": 1273
+        },
+        "src/client/refresh-readiness.css": {
+          "bytesInOutput": 454
+        }
+      },
+      "bytes": 68393
+    }
+  }
+}

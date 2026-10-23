@@ -1,0 +1,101 @@
+{
+  "schemaVersion": "academy.operations-mcp-verification/1",
+  "recordedAt": "2026-10-14T14:09:32.124Z",
+  "scope": "agreed_first_stage_typed_preserved_context_mcp",
+  "implementationStatus": "complete",
+  "checks": {
+    "frozenProjectLocalInstall": "passed",
+    "typescript": "passed",
+    "unitTests": {
+      "status": "passed",
+      "passed": 22,
+      "failed": 0,
+      "assertions": 1195
+    },
+    "actualMcp": {
+      "schemaVersion": 1,
+      "observedAt": "2026-10-14T13:53:53.858Z",
+      "status": "passed",
+      "transport": "official_sdk_stdio_client_to_actual_academy_mcp_server",
+      "toolCount": 3,
+      "workflowCount": 8,
+      "sourceOperationCount": 95,
+      "preservedStudentCount": 5,
+      "completeTeacherRosterVerified": false,
+      "queriedFacets": [
+        "books",
+        "sections",
+        "attempts",
+        "assignments",
+        "videos",
+        "daily_tests",
+        "daily_records",
+        "teacher_events",
+        "daily_record_drafts"
+      ],
+      "cases": [
+        "exact_three_read_only_tools_discovered",
+        "eight_workflows_and_all_95_source_operations_preserved_without_execution",
+        "mutating_get_only_inspectable_as_metadata_and_rules_keep_their_classification",
+        "reported_visibility_window_is_separate_from_deletion_and_local_retention",
+        "preserved_roster_summary_all_nine_facets_and_dated_lesson_read_through_mcp",
+        "unknown_subject_unknown_operation_mutation_tool_live_mode_and_arbitrary_url_rejected",
+        "pinned_original_inputs_unchanged_and_no_network_attempt_under_denied_transport"
+      ],
+      "outboundHttpAndTcpDeniedDuringVerification": true,
+      "academyNetworkAttemptsObserved": 0,
+      "academyWrites": 0,
+      "parentSends": 0,
+      "originalInputHashesUnchanged": true,
+      "nativeCodexRegistrationChanged": false
+    },
+    "independentSourceReview": {
+      "status": "passed",
+      "path": "verification/source-review.json",
+      "runtimeClaims": false
+    },
+    "reaMcp": {
+      "status": "passed",
+      "installedVersion": "6.5.0",
+      "toolCount": 207,
+      "sameToolsAcrossProfiles": true,
+      "compactCatalogByteReduction": 0.9304351233438861,
+      "measurement": "serialized catalog bytes, not model tokens or stable latency"
+    },
+    "reaArtifactAnalysis": {
+      "status": "passed_with_explicit_partial_graph_coverage",
+      "target": {
+        "path": "preview/v21/app.js",
+        "sha256": "931f82c404d8ea54fe2ae81de468ac52c39329e1476a3706aca4960e6b54717d",
+        "artifactKind": "synthetic_prebuilt_frontend"
+      },
+      "evidenceBundlePath": ".local/rea-api/preview-evidence-1791984707803.json",
+      "sourceExecuted": false,
+      "liveAcademyEquivalenceClaim": false
+    }
+  },
+  "failedChecksOutstanding": [],
+  "resolvedImplementationFailures": [
+    "Required TypeScript platform dependency and Bun type configuration were corrected before final successful typecheck",
+    "Source-operation pagination was corrected to pass only its exact catalog query fields before successful actual MCP verification"
+  ],
+  "notRun": [
+    {
+      "check": "legacy_root_common_harness_checks",
+      "reason": "Common harness adoption is explicitly deferred; this new package has its own isolated checks and does not change the existing application or harness"
+    },
+    {
+      "check": "live_academy_integration",
+      "reason": "First-stage saved-context scope and reported direct-access permission limitation; no academy network transport exists"
+    },
+    {
+      "check": "native_codex_registration",
+      "reason": "No global/native configuration changes in the clone-only scope"
+    }
+  ],
+  "acceptance": {
+    "userAcceptance": "not_inferred",
+    "completeTeacherRoster": "not_established",
+    "completeAcademicHistory": "not_established"
+  }
+}

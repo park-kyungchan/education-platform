@@ -1,0 +1,67 @@
+{
+  "schema": "academy.consumer-adoption-plan.v1",
+  "status": "selected-source-plan-not-implemented",
+  "taskId": "academy-workbench:task:academy-consumer-integration-20261021-con-01",
+  "steps": [
+    {
+      "id": "A1",
+      "gate": "Root CON-01 exact source checkpoint then explicit CON-02 admission",
+      "action": "Root applies only the 12 exact savedMcp files enumerated in source-selection.json; preserve source owners and original Work records; no broad cherry-pick or README copy",
+      "entrypoint": "server.ts imports toolResult and registerSavedQuery; AcademyService remains saved-only",
+      "verification": "Selected synthetic pagination + real SDK transport tests; regenerate schema only from exact selected source, compare bytes",
+      "remainingAdoptionBlocker": "Two selected SDK stdio tests failed CONNECTION_CLOSED under current Bun1.4.3; 7 others passed. Do not call production transport verified or rerun full suite unchanged. Root owns next diagnosis/admission."
+    },
+    {
+      "id": "A2",
+      "gate": "Root shared routing + CON-02 admission",
+      "action": "Adopt the 11 exact context files enumerated in source-selection.json; Root owns package script integration; no metadata source bodies loaded",
+      "entrypoint": "context/academy-context/cli.ts inspect/select/reading-plan",
+      "verification": "All pages for each of seven workflows; same catalog/query binding and exact UTF-8 page bytes; required reference IDs present"
+    },
+    {
+      "id": "A3",
+      "gate": "qualified QRY source + Root cross-repository resolution and CON-02 admission",
+      "action": "Add Workbench-local teacher-retained service/tools and separate teacher-server.ts entrypoint. Inject source-owned authenticated fetchPage; import exact QRY readRetainedDocument/validateRetainedQueryReply through Root-selected source bridge. Do not change legacy saved-only startup or invent native login",
+      "plannedPaths": [
+        "tools/academy-mcp/src/teacher-retained.ts",
+        "tools/academy-mcp/src/teacher-query-tools.ts",
+        "tools/academy-mcp/src/teacher-server.ts"
+      ],
+      "entrypoint": "academy_teacher_query forwards one canonical retained page; report service calls existing readRetainedDocument for full reconstruction before bounded selected rendering",
+      "verification": "Mismatch/refusal/snapshot/auth changes stop continuation without automatic retry. JSON-page budget and actual MCP wrapper budget checked independently"
+    },
+    {
+      "id": "A4",
+      "gate": "A3 + exact edition/section/occurrence joins + teacher facts supplied within private custody",
+      "action": "Add teacher-report.ts presentation mapping from canonical returned judgment/preparation fields. Apply selectedReportContract and installed skill hierarchy; no score-based domain reducer, no global skill edit",
+      "plannedPaths": [
+        "tools/academy-mcp/src/teacher-report.ts"
+      ],
+      "entrypoint": "owner-local report service or caller selected bounded report page; never emit full reconstructed document without byte accounting",
+      "verification": "Invented fixtures: unknown vs pending, older score vs scoped completion, distinct later attempt, cancelled/replaced assignments, explicit assignment vs default100 eligibility, print/distribution separation, current correction and lesson-only observation. Preserve missing join as unknown"
+    },
+    {
+      "id": "A5",
+      "gate": "VER-02 source-qualified and Root CON-03 admission",
+      "action": "Reconcile all seven internal workflows and actual caller coverage. Keep month-end source/web, DailyRecord internal journal and unavailable native routes explicit; do not claim untouched callers complete",
+      "verification": "Named remaining workflow paths and owner-run acceptance; no publication/native activation"
+    }
+  ],
+  "acceptanceSeparation": [
+    "source tests",
+    "canonical source checkpoint",
+    "shared audit",
+    "native adoption",
+    "teacher acceptance",
+    "formal Work completion"
+  ],
+  "heldEffects": [
+    "production adapter until checkpoint/admission",
+    "private reads/writes",
+    "print/send",
+    "publication/merge/deploy",
+    "native configuration/authentication",
+    "global skill edits",
+    "common consumer pins/contracts"
+  ]
+}

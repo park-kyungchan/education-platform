@@ -1,0 +1,57 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "academy-operations",
+  "projectId": "academy-workbench",
+  "workId": "academy-consumer-integration-20261021",
+  "kind": "input",
+  "id": "CON-01-ADMISSION-R1",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "root-academy-orchestrator",
+    "locator": "root-admission:consumer-contract-selection-after-reviewed-QRY02",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "admittedTaskId": "academy-workbench:task:academy-consumer-integration-20261021-con-01",
+    "sourceBase": "60f2edccfb90a134b477ca8d0f5b6257c012ab52",
+    "sourceOnly": true,
+    "qualifiedSources": {
+      "query": {
+        "repositoryRoot": "/home/palantirkc/worktrees/academy-query-integration-20261021",
+        "commit": "8f8c9bd61bd5e55445780b5569ecc40effcecef6",
+        "tree": "ccb0fc6302f664abe069086881961cec99cf2d85",
+        "entrypoint": "architecture/academy-query-integration/qry02-entrypoint.json",
+        "review": "AAR-REVIEW-006 scoped pass; Root consumed SHA3e422049d0de4fcda74667e7350b38df7a1d1582dc84a6ea50b54f7b6fe9f389",
+        "receiverInput": "CON-QRY02-QUALIFICATION-R1"
+      },
+      "savedMcp": {
+        "repositoryRoot": "/home/palantirkc/worktrees/academy-class-prep-20261021/work/class-prep-20261021/repositories/academy-workbench",
+        "commit": "df8b9f776e22841919e69b9ff9ba25084e13f558",
+        "tree": "4307227ab5a9a58c32a6ab4f7a7d313ebf9b8ae9",
+        "sharedGitObjectsAvailable": true
+      },
+      "context": {
+        "repositoryRoot": "/home/palantirkc/worktrees/academy-context-consolidation-20261021",
+        "commit": "ad42d0760df24df273cabf202b75fba5bbe8c68e",
+        "meaning": "Metadata catalog/selector/read-plan and designs, not all data/current native authority. Consume all pages; no automatic source-body ingestion."
+      },
+      "installedSkill": {
+        "path": "/root/.codex/skills/academy-student-context/SKILL.md",
+        "meaning": "Existing source owner/global installed format; metadata/hash readback only, no native/global skill edits."
+      }
+    },
+    "outcome": "Qualify current versus selected preserved MCP/context/report contracts and actual consumers, then propose exact owner-local adaptation for canonical query/report integration without duplicating domain logic.",
+    "initialWrites": [
+      "architecture/academy-consumer-integration/**",
+      "Own canonical Work records only"
+    ],
+    "restrictions": [
+      "No real student originals or real audit data fixture reads; no broad checks that load private data just because repository scripts list them. Use invented fixtures and code/policy metadata.",
+      "No Markdown/global skill edits, common contract/pin changes, native config/credential/session changes, private writes, print/send/publication/merge/deployment or third-session messages.",
+      "No production adapter implementation until own CON-01 source checkpoint; CON-02 needs root admission even though QRY02 receiver gate is complete. CON-03 holds on VER-02."
+    ],
+    "operators": "Root handles Git staging/commits and frozen dependency setup; root and tools/academy-mcp dependencies already restored unchanged. One owned worker plus root, one heavy check; no extra agents/panes/Goal initially.",
+    "recordLayout": "Raw checks in owned architecture/observations; canonical Work directory accepts recognized record layout only. Original Inputs immutable; distinct result/Verification Inputs with actual target and exact result bytes.",
+    "continuity": "Current source and known holds in Root architecture checkpoint; old source Work states and candidate identity crosswalks remain historical/partial, never promoted by code reuse."
+  }
+}

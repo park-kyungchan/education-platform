@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "academy.review-check/1",
+  "id": "AAR-REVIEW-CHECK-002",
+  "command": [
+    "bun",
+    "/home/palantirkc/projects/agent-platform/node_modules/typescript/bin/tsc",
+    "--noEmit",
+    "--skipLibCheck",
+    "--strict",
+    "--target",
+    "ESNext",
+    "--module",
+    "Preserve",
+    "--moduleResolution",
+    "Bundler",
+    "--allowImportingTsExtensions",
+    "architecture/academy-reorganization/contracts.ts",
+    "architecture/academy-reorganization/validate.ts",
+    "/home/palantirkc/projects/agent-platform/node_modules/bun-types/index.d.ts"
+  ],
+  "observedAtUtc": "2026-10-21T05:07:43.239777+00:00",
+  "elapsedSeconds": 1.016,
+  "exitCode": 2,
+  "stdout": "architecture/academy-reorganization/validate.ts(1,26): error TS2307: Cannot find module 'node:crypto' or its corresponding type declarations.\narchitecture/academy-reorganization/validate.ts(2,53): error TS2307: Cannot find module 'node:fs' or its corresponding type declarations.\narchitecture/academy-reorganization/validate.ts(3,29): error TS2307: Cannot find module 'node:path' or its corresponding type declarations.\narchitecture/academy-reorganization/validate.ts(4,20): error TS2307: Cannot find module 'node:assert/strict' or its corresponding type declarations.\narchitecture/academy-reorganization/validate.ts(76,59): error TS2580: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node`.\n",
+  "stderr": "",
+  "scope": "No-emit architecture-local TypeScript compilation with installed owner compiler and declarations; JSON loader uses any, so this is not runtime schema validation."
+}

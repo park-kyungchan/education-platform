@@ -1,0 +1,13 @@
+{
+  "name": "module-user-context",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Selected original user context and typed decisions for academy and math modules; no runtime authority.",
+  "scripts": {
+    "check": "bun scripts/validate.mjs && bun scripts/test.mjs",
+    "check:node": "node scripts/validate.mjs && node scripts/test.mjs",
+    "refresh:receipt": "bun scripts/validate.mjs --write-receipt",
+    "refresh:receipt:node": "node scripts/validate.mjs --write-receipt"
+  }
+}

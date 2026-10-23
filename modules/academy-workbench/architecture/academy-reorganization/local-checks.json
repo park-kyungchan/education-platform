@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "academy.architecture-local-checks/1",
+  "observedAtUtc": "2026-10-21T04:59:10.152154+00:00",
+  "checks": [
+    {
+      "id": "domain-topology-validation",
+      "result": "pass",
+      "assertions": 245,
+      "coverage": [
+        "unique identities",
+        "dependency and infrastructure DAGs",
+        "one owner-qualified Project domain per proposed Work",
+        "unlaunched reviewer identity",
+        "per-environment capability limits",
+        "source hash currentness",
+        "retained holds",
+        "preserved prior Work metadata"
+      ]
+    },
+    {
+      "id": "typescript",
+      "result": "pass",
+      "compiler": "Installed TypeScript 7.0.2 via existing common dependency; no install or lock change",
+      "typeInputs": "Existing bun-types and Node declarations; canonical LogicalIdentity and TaskOperationalState imported as external source-audit types"
+    },
+    {
+      "id": "typescript-initial-attempt",
+      "result": "failed",
+      "reason": "Requested @types/bun name absent in installed dependency layout",
+      "resolution": "Use installed bun-types/index.d.ts and existing Node declarations; no dependency mutation"
+    },
+    {
+      "id": "native-reviewer",
+      "result": "not-run",
+      "reason": "Actual user architecture approval required first"
+    },
+    {
+      "id": "live-academy-or-environment-model-turn",
+      "result": "not-run",
+      "reason": "This phase measures source/runtime metadata only"
+    }
+  ],
+  "notEstablished": [
+    "runtime activation",
+    "actual source freshness for students",
+    "production behavior",
+    "user architecture approval",
+    "reviewer account access",
+    "source integration acceptance"
+  ]
+}

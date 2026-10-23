@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "academy.review-check/1",
+  "id": "AAR-REVIEW-CHECK-003",
+  "command": [
+    "bun",
+    "/home/palantirkc/projects/agent-platform/node_modules/typescript/bin/tsc",
+    "--noEmit",
+    "--skipLibCheck",
+    "--strict",
+    "--target",
+    "ESNext",
+    "--module",
+    "Preserve",
+    "--moduleResolution",
+    "Bundler",
+    "--allowImportingTsExtensions",
+    "architecture/academy-reorganization/contracts.ts",
+    "architecture/academy-reorganization/validate.ts",
+    "/home/palantirkc/projects/agent-platform/node_modules/bun-types/index.d.ts",
+    "/home/palantirkc/projects/agent-platform/node_modules/.bun/@types+node@26.6.5/node_modules/@types/node/index.d.ts"
+  ],
+  "observedAtUtc": "2026-10-21T05:08:20.977762+00:00",
+  "elapsedSeconds": 1.307,
+  "exitCode": 0,
+  "stdout": "",
+  "stderr": "",
+  "scope": "No-emit architecture-local TypeScript compilation with installed owner compiler and declarations; JSON loader uses any, so this is not runtime schema validation.",
+  "previousAttemptRetained": "AAR-REVIEW-001-check-types.json",
+  "change": "Add the installed Node declaration entrypoint explicitly; no files or dependencies changed."
+}

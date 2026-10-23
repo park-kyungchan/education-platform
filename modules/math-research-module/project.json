@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "project",
+  "id": "math-research-module:project:manifest",
+  "projectId": "math-research-module",
+  "domainId": "mathematics-education",
+  "createdAt": "2026-10-13T23:11:00Z",
+  "references": [],
+  "payload": {
+    "name": "수학교육 연구 모듈",
+    "status": "active",
+    "scope": "원문을 보존하는 standalone 연구 앱 및 module-owned identity/harness 파일럿. 실제 학생 DB·진단·운영 조치는 제외.",
+    "ontologyPackage": {
+      "name": "@palantirkc/ontology",
+      "version": "0.2.0"
+    },
+    "commands": {
+      "check": "bun run check",
+      "start": "bun start",
+      "check:harness": "bun run check:harness"
+    },
+    "details": {
+      "canonicalSourceOwner": "park-kyungchan/agent-platform",
+      "canonicalCommit": "ffba2462a08b9f8c83c6f87b1043403e5cb748d7",
+      "semanticOwner": "math-research-module: domain meaning; ontology-foundation: Upper Ontology",
+      "nativeOwner": "Codex/Hermes respective native runtimes; no runtime mutation",
+      "authoritativeDataOwner": "this module research originals and reviewed successor records only",
+      "actualUserAdoptionInferred": false,
+      "contextNativePermissionsGranted": false,
+      "authorityGrantedByManifest": false,
+      "acceptanceDecisionObserved": false,
+      "priorEffectsStatus": "unverified"
+    }
+  }
+}
