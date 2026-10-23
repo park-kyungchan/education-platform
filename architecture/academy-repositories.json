@@ -1,0 +1,466 @@
+{
+  "schema": "education.academy-repositories.v1",
+  "priority": [
+    "common-workflow",
+    "repository-ownership"
+  ],
+  "featureImplementation": "external-pr",
+  "provider": {
+    "repository": "agent-platform",
+    "commit": "ff8e5d56612fab5ce41d4ed9e8b4947987943d4a",
+    "entrypoint": "scripts/harness.ts"
+  },
+  "repositories": [
+    {
+      "repository": "education-platform",
+      "role": "maintained",
+      "sourceCommit": "8611a84705f1fe796d6d9a1a3efe8fc1d26a1c9e",
+      "sourceEvidence": [
+        "AGENTS.md",
+        "project.json",
+        "README.md"
+      ],
+      "routes": [
+        {
+          "scope": "Integration, imported academy modules and retained Gang implementation",
+          "repository": "education-platform",
+          "path": ".",
+          "relationship": "maintained"
+        }
+      ],
+      "check": {
+        "runtime": "Bun 1.4.3",
+        "commands": [
+          "bun run status",
+          "bun run check"
+        ],
+        "mode": "owner-only"
+      },
+      "work": {
+        "domainId": "education",
+        "projectId": "education-platform",
+        "workId": "academy-repository-restructure-20261019"
+      }
+    },
+    {
+      "repository": "academy-workbench",
+      "role": "maintained",
+      "sourceCommit": "1aa414537434054104a50e41bf193e2fefe1227c",
+      "sourceEvidence": [
+        "AGENTS.md",
+        "project.json",
+        "README.md"
+      ],
+      "routes": [
+        {
+          "scope": "Portable workbench and Academy MCP source; MCP feature changes are external PR scope",
+          "repository": "academy-workbench",
+          "path": ".",
+          "relationship": "maintained"
+        }
+      ],
+      "check": {
+        "runtime": "Bun 1.4.2; Node >=24 for standalone/offline packages",
+        "commands": [
+          "bun run check",
+          "bun run check:ci",
+          "bun run test",
+          "bun run test:synthetic-runtime",
+          "bun run test:offline-adapter"
+        ],
+        "mode": "owner-only"
+      },
+      "work": {
+        "domainId": "academy-operations",
+        "projectId": "academy-workbench",
+        "workId": "academy-repository-restructure-20261019"
+      }
+    },
+    {
+      "repository": "math-research-module",
+      "role": "maintained",
+      "sourceCommit": "9cbef9432e418efde453cfdda1c79b6ea12bd882",
+      "sourceEvidence": [
+        "AGENTS.md",
+        "project.json",
+        "README.md"
+      ],
+      "routes": [
+        {
+          "scope": "Mathematical research and evidence; semantic acceptance remains with domain owner",
+          "repository": "math-research-module",
+          "path": ".",
+          "relationship": "maintained"
+        }
+      ],
+      "check": {
+        "runtime": "Bun 1.4.2",
+        "commands": [
+          "bun run verify"
+        ],
+        "mode": "owner-only"
+      },
+      "work": {
+        "domainId": "mathematics-education",
+        "projectId": "math-research-module",
+        "workId": "academy-repository-restructure-20261019"
+      }
+    },
+    {
+      "repository": "dc-gang-a",
+      "role": "native-source",
+      "sourceCommit": "2d8855b4728c652313b3e1840c53f780c60eac2d",
+      "sourceEvidence": [
+        "AGENTS.md",
+        "README.md",
+        "package.json"
+      ],
+      "routes": [
+        {
+          "scope": "Native operational source and current typed product policy",
+          "repository": "dc-gang-a",
+          "path": ".",
+          "relationship": "source-reference"
+        },
+        {
+          "scope": "Imported integration source; no native parity or cutover inferred",
+          "repository": "education-platform",
+          "path": "apps/academy/dc-gang-a",
+          "relationship": "source-reference"
+        }
+      ],
+      "check": {
+        "runtime": "Bun 1.4.2",
+        "commands": [
+          "bun run workflow:context",
+          "bun run typecheck",
+          "bun run test:synthetic"
+        ],
+        "mode": "owner-only"
+      },
+      "work": null
+    },
+    {
+      "repository": "gang-a",
+      "role": "retained",
+      "sourceCommit": "c4475511b347e9fdc83a7ebbc4b5a1779fa1be6e",
+      "sourceEvidence": [
+        "README.md",
+        "package.json"
+      ],
+      "routes": [
+        {
+          "scope": "Implementation maintenance",
+          "repository": "education-platform",
+          "path": "apps/academy/gang-a",
+          "relationship": "maintained"
+        },
+        {
+          "scope": "Frozen standalone compatibility source",
+          "repository": "gang-a",
+          "path": ".",
+          "relationship": "source-reference"
+        }
+      ],
+      "check": {
+        "runtime": "Bun 1.4.2 retained; Bun 1.4.3 integrated",
+        "commands": [
+          "bun run validate"
+        ],
+        "mode": "reference-only"
+      },
+      "work": null
+    },
+    {
+      "repository": "math-education",
+      "role": "retained",
+      "sourceCommit": "4a666ef6ff568f15495ff8219db583bf6dfbfe2a",
+      "sourceEvidence": [
+        "README.md",
+        "package.json"
+      ],
+      "routes": [
+        {
+          "scope": "Imported curriculum integration; missing canonical inputs remain unknown",
+          "repository": "education-platform",
+          "path": "packages/curriculum",
+          "relationship": "source-reference"
+        },
+        {
+          "scope": "Preserved export/runtime provenance",
+          "repository": "math-education",
+          "path": ".",
+          "relationship": "source-reference"
+        }
+      ],
+      "check": {
+        "runtime": "Bun 1.4.2 retained; Bun 1.4.3 integrated",
+        "commands": [
+          "bun run validate"
+        ],
+        "mode": "reference-only"
+      },
+      "work": null
+    },
+    {
+      "repository": "hermes-profile-dc-gang-a-dev",
+      "role": "retained",
+      "sourceCommit": "3d45dc0bceff9df9a84a9fde2d0ffcf8f362a512",
+      "sourceEvidence": [
+        "README.md",
+        "package.json"
+      ],
+      "routes": [
+        {
+          "scope": "Clinic workbench source successor, not a runtime profile change",
+          "repository": "education-platform",
+          "path": "examples/clinic-workbench",
+          "relationship": "contract-successor"
+        }
+      ],
+      "check": {
+        "runtime": "Bun 1.4.2 retained; Bun 1.4.3 integrated",
+        "commands": [
+          "bun run check"
+        ],
+        "mode": "reference-only"
+      },
+      "work": null
+    },
+    {
+      "repository": "palantirkc",
+      "role": "governance",
+      "sourceCommit": "f1845231c2c36d4d059e0cfd60e90a706491d05a",
+      "sourceEvidence": [
+        "AGENTS.md",
+        "README.md",
+        "package.json"
+      ],
+      "routes": [
+        {
+          "scope": "Related shared governance source; its engineering and bootstrap owners remain unchanged",
+          "repository": "palantirkc",
+          "path": ".",
+          "relationship": "source-reference"
+        }
+      ],
+      "check": {
+        "runtime": "Repository-owned runtime; no bootstrap invoked here",
+        "commands": [],
+        "mode": "reference-only"
+      },
+      "work": null
+    },
+    {
+      "repository": "hermes-profile-default",
+      "role": "retained",
+      "sourceCommit": "929f2ec058846fd45be4b6ba479966264be4e5e9",
+      "sourceEvidence": [
+        "README.md",
+        "package.json"
+      ],
+      "routes": [
+        {
+          "scope": "Mathcrew source successor, not a runtime profile change",
+          "repository": "education-platform",
+          "path": "apps/mathcrew",
+          "relationship": "contract-successor"
+        }
+      ],
+      "check": {
+        "runtime": "Module-owned Bun runtime; preserve original reference pin",
+        "commands": [
+          "bun run test",
+          "bun run check"
+        ],
+        "mode": "reference-only"
+      },
+      "work": null
+    },
+    {
+      "repository": "park-kyungchan.github.io",
+      "role": "retained",
+      "sourceCommit": "3a381c3b3b0159662990f97758fbebfeeca22977",
+      "sourceEvidence": [
+        "README.md"
+      ],
+      "routes": [
+        {
+          "scope": "Historical education website source; production ownership/cutover is unverified",
+          "repository": "park-kyungchan.github.io",
+          "path": ".",
+          "relationship": "source-reference"
+        }
+      ],
+      "check": {
+        "runtime": "Historical source; no executable runtime selected",
+        "commands": [],
+        "mode": "reference-only"
+      },
+      "work": null
+    },
+    {
+      "repository": "hermes-profile-dc-context",
+      "role": "archived-contract",
+      "sourceCommit": "3cb238d352b3ace3f94e653e3f4e1590b194a323",
+      "sourceEvidence": [
+        "README.md",
+        "package.json"
+      ],
+      "routes": [
+        {
+          "scope": "Preserved contract history and shared source successor",
+          "repository": "agent-platform",
+          "path": "history/public-contracts",
+          "relationship": "contract-successor"
+        }
+      ],
+      "check": {
+        "runtime": "Bun 1.4.1 historical reference",
+        "commands": [
+          "bun run check"
+        ],
+        "mode": "reference-only"
+      },
+      "work": null
+    },
+    {
+      "repository": "hermes-profile-dc-contract-audit",
+      "role": "archived-contract",
+      "sourceCommit": "3ab5d8d8e4876b2d74b60e39879cec98d810f0a4",
+      "sourceEvidence": [
+        "README.md",
+        "package.json"
+      ],
+      "routes": [
+        {
+          "scope": "Preserved contract history and shared source successor",
+          "repository": "agent-platform",
+          "path": "history/public-contracts",
+          "relationship": "contract-successor"
+        }
+      ],
+      "check": {
+        "runtime": "Bun 1.4.1 historical reference",
+        "commands": [
+          "bun run check"
+        ],
+        "mode": "reference-only"
+      },
+      "work": null
+    },
+    {
+      "repository": "hermes-profile-dc-review",
+      "role": "archived-contract",
+      "sourceCommit": "69ed6d9a0266066c83789c322c4b4521810333ec",
+      "sourceEvidence": [
+        "README.md",
+        "package.json"
+      ],
+      "routes": [
+        {
+          "scope": "Preserved contract history and shared source successor",
+          "repository": "agent-platform",
+          "path": "history/public-contracts",
+          "relationship": "contract-successor"
+        }
+      ],
+      "check": {
+        "runtime": "Bun 1.4.1 historical reference",
+        "commands": [
+          "bun run check"
+        ],
+        "mode": "reference-only"
+      },
+      "work": null
+    },
+    {
+      "repository": "hermes-profile-ontology-platform",
+      "role": "archived-contract",
+      "sourceCommit": "796cd709f356344210aa73f02ca2c8407103cc28",
+      "sourceEvidence": [
+        "README.md",
+        "package.json"
+      ],
+      "routes": [
+        {
+          "scope": "Preserved contract history and shared source successor",
+          "repository": "agent-platform",
+          "path": "history/public-contracts",
+          "relationship": "contract-successor"
+        }
+      ],
+      "check": {
+        "runtime": "Bun 1.4.1 historical reference",
+        "commands": [
+          "bun run check"
+        ],
+        "mode": "reference-only"
+      },
+      "work": null
+    },
+    {
+      "repository": "agent-platform",
+      "role": "provider",
+      "sourceCommit": "ff8e5d56612fab5ce41d4ed9e8b4947987943d4a",
+      "sourceEvidence": [
+        "AGENTS.md",
+        "project.json",
+        "README.md"
+      ],
+      "routes": [
+        {
+          "scope": "Single maintained common Git Work reader, validation and context implementation",
+          "repository": "agent-platform",
+          "path": "packages/work-continuity/src/git-work",
+          "relationship": "maintained"
+        }
+      ],
+      "check": {
+        "runtime": "Bun with frozen dependency lock",
+        "commands": [
+          "bun run check:common-work"
+        ],
+        "mode": "owner-only"
+      },
+      "work": null
+    }
+  ],
+  "dependencies": [
+    {
+      "consumer": "education-platform",
+      "provider": "agent-platform",
+      "kind": "common-work-reader",
+      "evidence": "education-platform/work/education-platform/academy-repository-restructure-20261019/inputs/AR-WORKFLOW-ROUTE.json",
+      "consumption": "selected-source-workflow"
+    },
+    {
+      "consumer": "academy-workbench",
+      "provider": "agent-platform",
+      "kind": "common-work-reader",
+      "evidence": "academy-workbench/work/academy-workbench/academy-repository-restructure-20261019/inputs/AR-WORKFLOW-ROUTE.json",
+      "consumption": "selected-source-workflow"
+    },
+    {
+      "consumer": "math-research-module",
+      "provider": "agent-platform",
+      "kind": "common-work-reader",
+      "evidence": "math-research-module/work/math-research-module/academy-repository-restructure-20261019/inputs/AR-WORKFLOW-ROUTE.json",
+      "consumption": "selected-source-workflow"
+    },
+    {
+      "consumer": "education-platform",
+      "provider": "math-research-module",
+      "kind": "research-context",
+      "evidence": "education-platform/apps/academy/month-end-workbench/docs/source-context.md",
+      "consumption": "source-declared-only"
+    },
+    {
+      "consumer": "education-platform",
+      "provider": "academy-workbench",
+      "kind": "mcp-source-contract",
+      "evidence": "education-platform/apps/academy/month-end-workbench/docs/source-context.md",
+      "consumption": "source-declared-only"
+    }
+  ]
+}

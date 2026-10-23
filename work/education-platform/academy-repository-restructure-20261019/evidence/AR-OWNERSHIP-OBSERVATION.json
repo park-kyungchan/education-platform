@@ -1,0 +1,63 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "academy-repository-restructure-20261019",
+  "kind": "evidence",
+  "id": "AR-OWNERSHIP-OBSERVATION",
+  "evidenceKind": "observation",
+  "source": {
+    "kind": "snapshot",
+    "path": "work/education-platform/academy-repository-restructure-20261019/inputs/AR-OWNERSHIP-CHECKS.json",
+    "fragment": "#/content/observation"
+  },
+  "artifact": {
+    "schemaVersion": "1.0.0",
+    "kind": "evidence",
+    "id": "education-platform:evidence:academy-restructure:ownership-checks",
+    "projectId": "education-platform",
+    "domainId": "education",
+    "createdAt": "2026-10-19T06:00:21.496Z",
+    "payload": {
+      "claim": "The explicit academy repository/check plan routes15 prepared source repositories while preserving retained source and excluded feature owners.",
+      "method": "Read-only Git source/path/ancestry/cleanliness checks, nonexecuting CLI plan and selected/missing-repository routing checks.",
+      "sourceUrl": "urn:git:sha1:bd90de758a176ddce674c451a34c0a6f3bdab35b",
+      "fetchedAt": "2026-10-19T05:59:35.735591+00:00",
+      "upstreamRevision": "bd90de758a176ddce674c451a34c0a6f3bdab35b",
+      "result": {
+        "outcome": "success",
+        "processExitCode": 0,
+        "contentMatched": true
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "outcome": "success"
+        }
+      ],
+      "limitations": [
+        "Source routing and local checks only; no physical repository retirement, native/data cutover, production read, independent review or shared publication.",
+        "Node26.7.0 module integration runtime is absent; broader module checks were not completed."
+      ],
+      "details": {
+        "coordinationSourceCommit": "bd90de758a176ddce674c451a34c0a6f3bdab35b",
+        "receiptSha256": "fd6b4517015af2a44010e51ad49ccb3a71f9c40753aeea9467da043d48a64f97",
+        "repositoryCount": 15,
+        "unchangedSourceRepositories": 12,
+        "changedSourceRepositories": [
+          "education-platform",
+          "academy-workbench",
+          "math-research-module"
+        ],
+        "protectedFeatureAndHistoricalSourceUnchanged": true,
+        "checks": [
+          "15 exact isolated Git worktrees exist and are clean; fetched base is an ancestor.",
+          "Pinned source-evidence files and declared owner route targets exist.",
+          "Plan is nonexecuting and selected-repository routes narrow correctly; missing repository is refused.",
+          "Only three maintained repositories changed; native/retained/archived/provider source stays identical.",
+          "External MCP/month-end feature paths, existing dependency/research/intent locks and original/context archives are unchanged."
+        ]
+      }
+    }
+  }
+}
