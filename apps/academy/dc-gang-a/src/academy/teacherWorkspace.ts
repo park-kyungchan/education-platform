@@ -1,6 +1,12 @@
-import {assertDate,assertExactKeys,assertInstant,assertRefs,canonicalJson,requireText} from '../learning/model';
+import {parentInternalLanguage} from '../contracts/parentInternalLanguage';
+import {assertDate,assertExactKeys,assertInstant,assertKnowledge,assertRefs,canonicalJson,digest,requireText,unknown,type Knowledge} from '../learning/model';
 import {validateSourceKey,type SourceKey} from './domain';
 import type {LearningWorkAssignment} from './learningWork';
+import type {RecordVersion} from './contracts/storageRecords';
+export interface ActivityAttemptBinding {attemptEntityId:string;attemptRevisionId:string}
+/** Attributed observation only; this record does not execute or attest a native print/distribution action. */
+export interface PaperStageObservation {issuanceKey:SourceKey;state:'done'|'not_done';observedAt:string}
+export interface PaperStageEvidence {printed:Knowledge<PaperStageObservation>;distributed:Knowledge<PaperStageObservation>}
 
 export class TeacherWorkspaceRefusal extends Error {readonly rejectedBeforeCommit=true;constructor(code:string,readonly phase:'intake'|'transaction'){super(/^[a-z][a-z0-9_]{0,100}$/.test(code)?code:'workspace_request_refused');}}
 interface WorkspaceBase {studentBinding:{studentId:string;sourceStudent:SourceKey};sourceStudent:SourceKey;reportedAt:string;evidenceRevisionIds:string[]}
@@ -9,10 +15,11 @@ export interface TeacherActivityReview extends WorkspaceBase {
  kind:'teacher_activity_review';assignmentRevisionId:string;selectedItemIds:string[];coverage:'known_subset'|'unknown_subset'|'whole_assigned_items';
  originalScore:number|null;originalWrong:'unknown'|'potentially_applicable'|'not_applicable';similarPrinted:'unknown'|'not_printed'|'printed';similar:'unknown'|'applicable'|'not_applicable';
  appEntry:'unknown'|'not_entered'|'entered'|'graded';
- paper:{issuance:LearningWorkAssignment['paper'];corrections:{assignedItemId:string;state:'unknown'|'needs_correction'|'corrected'|'teacher_reviewed'}[]};
+ paper:{issuance:LearningWorkAssignment['paper'];corrections:{assignedItemId:string;state:'unknown'|'needs_correction'|'corrected'|'teacher_reviewed'}[];stages?:PaperStageEvidence};
  video:{upload:'unknown'|'not_uploaded'|'uploaded';reference:string;review:'not_reviewed'|'supplement_requested'|'reviewed';note:string};
  mindmap:{state:'not_requested'|'requested'|'prepared'|'reviewed';note:string;explanation:{assignmentRevisionId:string;eventRef:string;mode:'board'|'oral'}|null};
  final:{decision:'pending'|'accepted'|'reopen';checkedSolutionAndUnderstanding:boolean;note:string};
+ attemptBinding?:Knowledge<ActivityAttemptBinding>;
 }
 export interface ParentDraftLine {text:string;evidenceRevisionIds:string[]}
 /** This local parent projection never overwrites an official document or records a transmission. */
@@ -36,25 +43,27 @@ const boundedText=(value:unknown,max=16000)=>{if(typeof value!=='string'||value.
 const member=(value:unknown,choices:readonly string[])=>{if(typeof value!=='string'||!choices.includes(value))throw Error('invalid_workspace_state');};
 const refs=(value:unknown,minimum=1)=>{if(!Array.isArray(value)||value.length<minimum||value.length>500||new Set(value).size!==value.length)throw Error('invalid_workspace_references');if(value.length)assertRefs(value);for(const id of value)if(id.length>200)throw Error('invalid_workspace_references');};
 /** This explicit exclusion list is a safeguard for a reviewed draft, never a language model or a completeness claim. */
-export const parentInternalLanguage=/강사\s*확인|교사\s*확인|교사\s*검토|교사\s*(?:최종\s*)?완료\s*판정|채점|미실시|미완료|시간\s*부족|확인\s*전|검사.{0,8}미완료|풀이와\s*채점|teacher\s*(?:inspection|review)|ungraded|not\s*completed|insufficient\s*time/i;
+export {parentInternalLanguage} from '../contracts/parentInternalLanguage';
 /** Permanent parent-field line grammar; old records remain immutable style evidence. */
 export const parentDailyRecordLines=/^- [^\r\n]+(?:\n- [^\r\n]+)*$/;
 export function parentDraftText(draft:Pick<TeacherParentDraft,'progress'|'homework'|'memo'>){return {progress:draft.progress.map(line=>'- '+line.text).join('\n'),homework:draft.homework.map(line=>'- '+line.text).join('\n'),memo:draft.memo.map(line=>'- '+line.text).join('\n')};}
 export const originalWrongApplicability=(score:number|null)=>score===100?'not_applicable' as const:score===null?'unknown' as const:'potentially_applicable' as const;
-export function teacherActivitySummary(review:TeacherActivityReview){return {learning:review.final.decision==='accepted'?(review.coverage==='whole_assigned_items'?'teacher_finalized_assigned_items':'teacher_finalized_partial'):review.final.decision==='reopen'?'reopened':'unknown',originalWrong:originalWrongApplicability(review.originalScore),similarAssignment:review.similar,similarPrint:review.similarPrinted,appRecord:review.appEntry,mindmapCompletionClaimAllowed:review.mindmap.state==='reviewed'&&!!review.mindmap.explanation&&review.final.decision==='accepted',wholeBookComplete:false as const};}
+export function teacherActivitySummary(review:TeacherActivityReview){return {learning:review.final.decision==='accepted'?(review.coverage==='whole_assigned_items'?'teacher_finalized_assigned_items':'teacher_finalized_partial'):review.final.decision==='reopen'?'reopened':'unknown',attemptBinding:review.attemptBinding??unknown<ActivityAttemptBinding>('legacy_assignment_level_review_attempt_not_observed'),paperStages:review.paper.stages??{printed:unknown<PaperStageObservation>('printing_not_observed'),distributed:unknown<PaperStageObservation>('distribution_not_observed')},originalWrong:originalWrongApplicability(review.originalScore),similarAssignment:review.similar,similarPrint:review.similarPrinted,appRecord:review.appEntry,mindmapCompletionClaimAllowed:review.mindmap.state==='reviewed'&&!!review.mindmap.explanation&&review.final.decision==='accepted',wholeBookComplete:false as const};}
 export function workspaceEntityId(payload:TeacherWorkspaceRecord|TeacherOperationalCase):string {
- if(payload.kind==='teacher_activity_review')return 'teacher-activity-review-'+payload.assignmentRevisionId;
+ if(payload.kind==='teacher_activity_review')return 'teacher-activity-review-'+payload.assignmentRevisionId+(payload.attemptBinding?.state==='known'?':attempt:'+digest(payload.attemptBinding.value):'');
  if(payload.kind==='teacher_parent_draft')return 'teacher-parent-draft-'+payload.date+':'+payload.sourceStudent.namespace+':'+payload.sourceStudent.literalKey;
  return 'teacher-operational-case-'+payload.caseId;
 }
 export function validateTeacherWorkspace(payload:TeacherWorkspaceRecord|TeacherOperationalCase){
  canonicalJson(payload);if(payload.kind==='teacher_operational_case'){if(payload.studentBinding!==null){assertExactKeys(payload.studentBinding,['studentId','sourceStudent']);requireText(payload.studentBinding.studentId,'student binding');validateSourceKey(payload.studentBinding.sourceStudent);if(payload.studentBinding.sourceStudent.namespace!=='academy_student')throw Error('source_namespace_conflict');}refs(payload.evidenceRevisionIds,0);}else{assertExactKeys(payload.studentBinding,['studentId','sourceStudent']);requireText(payload.studentBinding.studentId,'student binding');if(payload.studentBinding.studentId.length>200||canonicalJson(payload.studentBinding.sourceStudent)!==canonicalJson(payload.sourceStudent))throw Error('workspace_student_binding_conflict');validateSourceKey(payload.sourceStudent);if(payload.sourceStudent.namespace!=='academy_student')throw Error('source_namespace_conflict');refs(payload.evidenceRevisionIds);}assertInstant(payload.reportedAt);
  if(payload.kind==='teacher_activity_review'){
-  assertExactKeys(payload,['kind','studentBinding','sourceStudent','reportedAt','evidenceRevisionIds','assignmentRevisionId','selectedItemIds','coverage','originalScore','originalWrong','similarPrinted','similar','appEntry','paper','video','mindmap','final']);
+  assertExactKeys(payload,['kind','studentBinding','sourceStudent','reportedAt','evidenceRevisionIds','assignmentRevisionId','selectedItemIds','coverage','originalScore','originalWrong','similarPrinted','similar','appEntry','paper','video','mindmap','final',...(Object.hasOwn(payload,'attemptBinding')?['attemptBinding']:[])]);
+  if(payload.attemptBinding!==undefined)assertKnowledge(payload.attemptBinding,binding=>{assertExactKeys(binding,['attemptEntityId','attemptRevisionId']);for(const id of [binding.attemptEntityId,binding.attemptRevisionId]){requireText(id,'attempt binding');if(id.length>200)throw Error('invalid_workspace_attempt_binding');}if(!payload.evidenceRevisionIds.includes(binding.attemptRevisionId))throw Error('workspace_attempt_evidence_required');});
   requireText(payload.assignmentRevisionId,'assignment revision');member(payload.coverage,['known_subset','unknown_subset','whole_assigned_items']);refs(payload.selectedItemIds,payload.coverage==='unknown_subset'?0:1);if(payload.coverage==='unknown_subset'&&payload.selectedItemIds.length)throw Error('invalid_unknown_subset');
   if(payload.originalScore!==null&&(!Number.isFinite(payload.originalScore)||payload.originalScore<0||payload.originalScore>100))throw Error('invalid_activity_score');
   if(payload.originalWrong!==originalWrongApplicability(payload.originalScore))throw Error('original_wrong_applicability_conflict');member(payload.similarPrinted,['unknown','not_printed','printed']);member(payload.similar,['unknown','applicable','not_applicable']);member(payload.appEntry,['unknown','not_entered','entered','graded']);
-  assertExactKeys(payload.paper,['issuance','corrections']);if(!Array.isArray(payload.paper.corrections)||payload.paper.corrections.length>500||new Set(payload.paper.corrections.map(item=>item.assignedItemId)).size!==payload.paper.corrections.length)throw Error('invalid_paper_scope');
+  assertExactKeys(payload.paper,['issuance','corrections',...(Object.hasOwn(payload.paper,'stages')?['stages']:[])]);if(!Array.isArray(payload.paper.corrections)||payload.paper.corrections.length>500||new Set(payload.paper.corrections.map(item=>item.assignedItemId)).size!==payload.paper.corrections.length)throw Error('invalid_paper_scope');
+  if(payload.paper.stages!==undefined){assertExactKeys(payload.paper.stages,['printed','distributed']);for(const stage of [payload.paper.stages.printed,payload.paper.stages.distributed])assertKnowledge(stage,observation=>{assertExactKeys(observation,['issuanceKey','state','observedAt']);validateSourceKey(observation.issuanceKey);member(observation.state,['done','not_done']);assertInstant(observation.observedAt);if(payload.paper.issuance.state!=='known'||canonicalJson(observation.issuanceKey)!==canonicalJson(payload.paper.issuance.value.issuanceKey)||Date.parse(observation.observedAt)>Date.parse(payload.reportedAt))throw Error('workspace_paper_stage_binding_conflict');});}
   for(const item of payload.paper.corrections){assertExactKeys(item,['assignedItemId','state']);if(!payload.selectedItemIds.includes(item.assignedItemId))throw Error('invalid_paper_scope');member(item.state,['unknown','needs_correction','corrected','teacher_reviewed']);}
   assertExactKeys(payload.video,['upload','reference','review','note']);member(payload.video.upload,['unknown','not_uploaded','uploaded']);member(payload.video.review,['not_reviewed','supplement_requested','reviewed']);boundedText(payload.video.reference,1000);boundedText(payload.video.note);
   if(payload.video.upload!=='uploaded'&&(payload.video.review!=='not_reviewed'||payload.video.reference!==''))throw Error('video_upload_review_conflict');
@@ -81,4 +90,14 @@ export function validateTeacherWorkspace(payload:TeacherWorkspaceRecord|TeacherO
   if(typeof payload.actualAssignmentConfirmed!=='boolean'||typeof payload.roleBoundaryAcknowledged!=='boolean'||!payload.roleBoundaryAcknowledged||payload.state==='locally_closed'&&!payload.completionNote.trim()||payload.executed!==false||payload.transmitted!==false||payload.received!==false||payload.officialSaved!==false)throw Error('invalid_operational_boundary');return;
  }
  throw Error('unsupported_teacher_workspace');
+}
+
+/** Called under the existing owner ledger lock; historical/foreign attempts cannot receive a new final. */
+export function assertActivityReviewAttemptBinding(review:TeacherActivityReview,assignment:Pick<RecordVersion,'ownerId'|'studentId'|'revisionId'|'payload'>,attempt:Pick<RecordVersion,'ownerId'|'studentId'|'entityId'|'revisionId'|'payload'>|null):void {
+ const binding=review.attemptBinding;if(binding?.state!=='known')return;
+ const assignedItems=assignment.payload.kind==='learning_work_assignment'?assignment.payload.items:[];
+ if(assignment.payload.kind!=='learning_work_assignment'||assignment.revisionId!==review.assignmentRevisionId||assignment.studentId!==review.studentBinding.studentId||canonicalJson(assignment.payload.sourceStudent)!==canonicalJson(review.sourceStudent)
+   ||!attempt||attempt.payload.kind!=='learning_work_attempt'||attempt.ownerId!==assignment.ownerId||attempt.studentId!==assignment.studentId||attempt.entityId!==binding.value.attemptEntityId||attempt.revisionId!==binding.value.attemptRevisionId||attempt.payload.assignmentRevisionId!==assignment.revisionId||canonicalJson(attempt.payload.sourceStudent)!==canonicalJson(review.sourceStudent)
+   ||canonicalJson(attempt.payload.paperIssuanceKey)!==canonicalJson(assignment.payload.paper.state==='known'?assignment.payload.paper.value.issuanceKey:null)
+   ||review.selectedItemIds.some(id=>!assignedItems.some(item=>item.assignedItemId===id)))throw Error('workspace_attempt_binding_conflict');
 }

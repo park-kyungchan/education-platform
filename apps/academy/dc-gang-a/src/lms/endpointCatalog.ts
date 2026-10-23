@@ -3,7 +3,7 @@ import { getAllRoutes, type LmsRouteDefinition } from './lmsRouteRegistry';
 import { sourceEndpointCandidates, type SourceEndpointCandidate } from './endpointCandidates';
 import { loadBackendSourceEvidence, type BackendSourceStructure } from './backendSourceEvidence';
 import {scopedReadFamilies} from './academyReadProtocol';
-import {operationalContractShape,OPERATIONAL_CONTRACT_PATH} from '../academy/operationalContract';
+import {operationalContractShape,OPERATIONAL_CONTRACT_PATH} from '../contracts/operationalContractShape';
 
 export type EndpointOrigin = 'canonical' | 'source_candidate';
 export type RequestGate = 'blocked_effect' | 'unreviewed_candidate' | 'reviewed_adapter_and_scope_required';

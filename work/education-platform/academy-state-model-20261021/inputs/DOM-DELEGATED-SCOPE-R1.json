@@ -1,0 +1,42 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "academy-state-model-20261021",
+  "kind": "input",
+  "id": "DOM-DELEGATED-SCOPE-R1",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "root-academy-orchestrator",
+    "locator": "approved-architecture-root-delegation:DOM-work-r1",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "authorityReference": {
+      "kind": "git",
+      "repositoryId": "park-kyungchan/academy-workbench",
+      "commit": "d79237566a86dfce9e633d5270e8b409d0d4a025",
+      "path": "work/academy-workbench/academy-architecture-orchestration-20261021/inputs/AAR-USER-APPROVAL-001.json",
+      "fragment": "#/content/originalText"
+    },
+    "meaning": "Root delegated source scope under actual approved architecture; this record is not an actual direct user answer or a native/global registration.",
+    "initialTask": "education-platform:task:academy-state-model-20261021-dom-01",
+    "allowedWrites": [
+      "work/education-platform/academy-state-model-20261021/**",
+      "architecture/academy-state-model/**",
+      "Later DOM-02 only after qualified boundary and root scope delivery: leaf contracts/projections/tests under apps/academy/dc-gang-a"
+    ],
+    "reservedFiles": [
+      "package.json",
+      "bun.lock",
+      "architecture/source-map.json",
+      "apps/academy/run.ts",
+      "all shared CI/check routing",
+      "existing completed Work/Inputs",
+      "native config/services/data"
+    ],
+    "rootArchitectureCheckout": "/home/palantirkc/worktrees/academy-architecture-orchestration-20261021",
+    "architectureEntry": "architecture/academy-reorganization/entrypoint.json",
+    "resultRule": "Separate result Input and Verification Input; bind result observation ID and exact result bytes in Verification. Preserve all originals and pending effects."
+  }
+}

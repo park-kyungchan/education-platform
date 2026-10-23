@@ -1,0 +1,17 @@
+{
+  "schema": "academy.dom01-rejected-candidate.v1",
+  "candidate": {
+    "commit": "1ccae7f3222380ad1c2bf337d7d8856ad990d5c7",
+    "tree": "435a169e9c54724d3a7a86dcf8a907691870bf44"
+  },
+  "auditorCommit": "712f90deac0676e662dc5d75d88d89f7b6773bfe",
+  "attemptedApi": "validateGitWorkRecords(openGitWork(exact candidate))",
+  "exitCode": 1,
+  "observedException": "UNRECOGNIZED_WORK_RECORD_PATH",
+  "observedSource": "packages/work-continuity/src/git-work/source.ts:421 listRecords",
+  "cause": "Raw check files were placed in noncanonical Work checks/ directory. Canonical Work permits only its record layout.",
+  "disposition": "Rejected historical intermediate candidate; not an admitted snapshot or a valid semantic transition endpoint.",
+  "resultR1Sha256": "c9e4db697cacc1de7ce54711f56a471411c5e7845c9db7251b8eed395cd0f6f2",
+  "repair": "Move raw metadata receipts to owned architecture/academy-state-model/observations. Preserve RESULT-R1/VERIFICATION-R1 bytes. Append R2 Inputs/Evidence and qualify successor directly from last valid4bdef2c77cb9a537cecf806ba16054646147dbc5.",
+  "transitionThroughRejectedCandidateClaimed": false
+}

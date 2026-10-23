@@ -1,0 +1,34 @@
+{
+  "schema": "academy.dom01-checks.v4",
+  "scope": "Final bounded import-inventory coverage clarification only",
+  "createdAt": "2026-10-21T06:44:39.267Z",
+  "rows": [
+    {
+      "id": "dynamic-inventory-typecheck",
+      "args": [
+        "bun",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "-p",
+        "architecture/academy-state-model/tsconfig.json"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "id": "exact-static-and-dynamic-metadata",
+      "args": [
+        "bun",
+        "architecture/academy-state-model/inspect-source.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"sources\":241,\"staticDeclarations\":600,\"dynamicDependencies\":[{\"from\":\"apps/academy/dc-gang-a/src/academy/main.ts\",\"line\":40,\"argumentKind\":\"literal\",\"specifier\":\"./sourceRuntime\",\"to\":\"apps/academy/dc-gang-a/src/academy/sourceRuntime.ts\",\"resolution\":\"source-locator-only-not-executed\",\"expression\":null},{\"from\":\"apps/academy/dc-gang-a/src/academy/product-control/product-domain-controller.ts\",\"line\":51,\"argumentKind\":\"computed\",\"specifier\":null,\"to\":null,\"resolution\":\"unknown-runtime-target\",\"expression\":\"directory+'/apps/academy/dc-gang-a/src/learning/model.ts'\"},{\"from\":\"apps/academy/dc-gang-a/src/academy/product-control/running-p1-bootstrap.ts\",\"line\":22,\"argumentKind\":\"computed\",\"specifier\":null,\"to\":null,\"resolution\":\"unknown-runtime-target\",\"expression\":\"'data:text/javascript;base64,'+Buffer.from(code).toString('base64')\"},{\"from\":\"apps/academy/month-end-workbench/src/main.ts\",\"line\":13,\"argumentKind\":\"literal\",\"specifier\":\"./integrations/mcp-source-port.ts\",\"to\":\"apps/academy/month-end-workbench/src/integrations/mcp-source-port.ts\",\"resolution\":\"source-locator-only-not-executed\",\"expression\":null}],\"completeRuntimeImportClosure\":false,\"crossLayerEdges\":96,\"readInputImports\":17,\"lmsBackImports\":[{\"from\":\"apps/academy/dc-gang-a/src/lms/academyHttpClient.ts\",\"to\":\"apps/academy/dc-gang-a/src/academy/nativeBookSource.ts\",\"specifier\":\"../academy/nativeBookSource\",\"line\":5,\"symbols\":[{\"name\":\"SourceDiscoveryRequest\",\"typeOnly\":true}],\"typeOnly\":true},{\"from\":\"apps/academy/dc-gang-a/src/lms/endpointCatalog.ts\",\"to\":\"apps/academy/dc-gang-a/src/academy/operationalContract.ts\",\"specifier\":\"../academy/operationalContract\",\"line\":6,\"symbols\":[{\"name\":\"operationalContractShape\",\"typeOnly\":false},{\"name\":\"OPERATIONAL_CONTRACT_PATH\",\"typeOnly\":false}],\"typeOnly\":false},{\"from\":\"apps/academy/dc-gang-a/src/lms/lessonJournalTemplates.ts\",\"to\":\"apps/academy/dc-gang-a/src/academy/teacherWorkspace.ts\",\"specifier\":\"../academy/teacherWorkspace\",\"line\":2,\"symbols\":[{\"name\":\"parentInternalLanguage\",\"typeOnly\":false}],\"typeOnly\":false}],\"dcGangImports\":[{\"from\":\"apps/academy/dc-gang-a/src/academy/bookCertificationEvidence.ts\",\"to\":\"apps/academy/gang-a/packages/application/project-book-certification.ts\",\"specifier\":\"../../../gang-a/packages/application/project-book-certification\",\"line\":2,\"symbols\":[{\"name\":\"projectBookCertification\",\"typeOnly\":false}],\"typeOnly\":false},{\"from\":\"apps/academy/dc-gang-a/src/academy/bookCertificationEvidence.ts\",\"to\":\"apps/academy/gang-a/packages/domain/book-certification.ts\",\"specifier\":\"../../../gang-a/packages/domain/book-certification\",\"line\":3,\"symbols\":[{\"name\":\"CertificationQuery\",\"typeOnly\":false}],\"typeOnly\":false},{\"from\":\"apps/academy/dc-gang-a/src/academy/bookCertificationEvidence.ts\",\"to\":\"apps/academy/gang-a/packages/domain/evidence.ts\",\"specifier\":\"../../../gang-a/packages/domain/evidence\",\"line\":4,\"symbols\":[{\"name\":\"Evidence\",\"typeOnly\":false},{\"name\":\"Evidence\",\"typeOnly\":true}],\"typeOnly\":false},{\"from\":\"apps/academy/dc-gang-a/src/academy/operatingWorkspace.ts\",\"to\":\"apps/academy/gang-a/packages/adapters/repository-operating-context.ts\",\"specifier\":\"../../../gang-a/packages/adapters/repository-operating-context\",\"line\":1,\"symbols\":[{\"name\":\"loadRepositoryOperatingContext\",\"typeOnly\":false}],\"typeOnly\":false},{\"from\":\"apps/academy/dc-gang-a/src/academy/operatingWorkspace.ts\",\"to\":\"apps/academy/gang-a/packages/application/select-operational-context.ts\",\"specifier\":\"../../../gang-a/packages/application/select-operational-context\",\"line\":2,\"symbols\":[{\"name\":\"selectOperationalContext\",\"typeOnly\":false}],\"typeOnly\":false},{\"from\":\"apps/academy/dc-gang-a/src/academy/operatingWorkspace.ts\",\"to\":\"apps/academy/gang-a/packages/domain/operational-context.ts\",\"specifier\":\"../../../gang-a/packages/domain/operational-context\",\"line\":3,\"symbols\":[{\"name\":\"OperationalId\",\"typeOnly\":true}],\"typeOnly\":true}],\"mode\":\"verify\"}\n",
+      "stderr": ""
+    }
+  ],
+  "newBusinessTests": 0,
+  "runtimeImportExecution": false,
+  "completeRuntimeImportClosure": false,
+  "previousResultsPreserved": true
+}

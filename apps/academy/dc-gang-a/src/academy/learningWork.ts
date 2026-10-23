@@ -3,7 +3,7 @@ import {sourceId,validateSourceKey,type SourceKey} from './domain';
 import {clinicDecisionKinds,requirementsForSeries,type ClinicDecision,type CycleActivity} from './classroomCyclePolicy';
 
 /** Proven transaction refusals; transport/commit uncertainty must never enter this set. */
-export const clinicTerminalRefusals:readonly string[]=['stale_base','work_assignment_basis_conflict','work_attempt_basis_conflict','work_item_binding_conflict','clinic_target_identity_conflict','invalid_revision_transition','idempotency_reuse','stale_clinic_policy'];
+export const clinicTerminalRefusals:readonly string[]=['stale_base','work_assignment_basis_conflict','work_assignment_replaced','work_attempt_basis_conflict','work_item_binding_conflict','clinic_target_identity_conflict','invalid_revision_transition','idempotency_reuse','stale_clinic_policy'];
 export const clinicReconciliationRefusals:readonly string[]=[...clinicTerminalRefusals,'unresolved_clinic_request'];
 export class ClinicCommandRefusal extends Error {constructor(code:string,readonly originalRetained:boolean){super(code);}}
 
@@ -12,6 +12,9 @@ export interface PaperIssuance {
   paperKey:SourceKey;versionLiteral:string;issuanceKey:SourceKey;reissueOf:SourceKey|null;
   orderedItems:readonly {assignedItemId:string;printedOrdinal:string}[];
 }
+/** Explicit source crosswalk. Literal keys keep their textbook-source namespace and full scope. */
+export interface TextbookAssessmentBasis {sourceAuditRevisionId:string;paperKey:string;attemptKey:string}
+export interface AssignmentReplacement {assignmentRevisionId:string}
 /** Actual bounded assignment, not a catalog template or inferred obligation. */
 export interface LearningWorkAssignment {
   kind:'learning_work_assignment';sourceStudent:SourceKey;sourceCourse:SourceKey;sourceBook:SourceKey;assignmentKey:SourceKey;
@@ -19,12 +22,14 @@ export interface LearningWorkAssignment {
   activity:CycleActivity;origin:'teacher_report'|'qualified_source';effectiveDate:string;dueDate:Knowledge<string>;status:'assigned'|'withdrawn';
   catalogRefs:readonly {nodeId:string;revisionId:string}[];sectionNodeIds:readonly string[];items:readonly WorkItem[];
   paper:Knowledge<PaperIssuance>;evidenceRefs:readonly string[];
+  replaces?:Knowledge<AssignmentReplacement>;
 }
 export interface LearningWorkAttempt {
   kind:'learning_work_attempt';sourceStudent:SourceKey;attemptKey:SourceKey;assignmentRevisionId:string;
   paperIssuanceKey:SourceKey|null;previousAttemptRevisionId:string|null;occurredAt:Knowledge<string>;
   state:'unknown'|'not_started'|'solving'|'submitted'|'graded';
   itemResults:readonly {assignedItemId:string;grade:Knowledge<'correct'|'incorrect'|'ungraded'>}[];evidenceRefs:readonly string[];
+  assessmentBasis?:Knowledge<TextbookAssessmentBasis>;
 }
 export interface TeacherClinicRevision {
   kind:'teacher_clinic_revision';sourceStudent:SourceKey;assignmentRevisionId:string;attemptEntityId:string;attemptRevisionId:string;assignedItemId:string;
@@ -61,23 +66,29 @@ export function workToken(value:string):void{requireText(value,'work identity');
 function list<T>(value:readonly T[],max:number):void{if(!Array.isArray(value)||value.length<1||value.length>max)throw Error('invalid_work_list');}
 function keyNamespace(key:SourceKey,namespace:string){validateSourceKey(key);if(key.namespace!==namespace)throw Error('source_namespace_conflict');}
 export function validateLearningAttempt(value:LearningWorkAttempt):void{
-  canonicalJson(value);assertExactKeys(value,['kind','sourceStudent','attemptKey','assignmentRevisionId','paperIssuanceKey','previousAttemptRevisionId','occurredAt','state','itemResults','evidenceRefs']);
+  canonicalJson(value);assertExactKeys(value,['kind','sourceStudent','attemptKey','assignmentRevisionId','paperIssuanceKey','previousAttemptRevisionId','occurredAt','state','itemResults','evidenceRefs',...(Object.hasOwn(value,'assessmentBasis')?['assessmentBasis']:[])]);
   if(value.kind!=='learning_work_attempt'||!['unknown','not_started','solving','submitted','graded'].includes(value.state))throw Error('invalid_work_attempt');
   keyNamespace(value.sourceStudent,'academy_student');validateSourceKey(value.attemptKey);workToken(value.assignmentRevisionId);
   if(value.paperIssuanceKey!==null)validateSourceKey(value.paperIssuanceKey);
   if(value.previousAttemptRevisionId!==null)workToken(value.previousAttemptRevisionId);
   assertKnowledge(value.occurredAt,assertInstant);assertRefs(value.evidenceRefs);
+  if(value.assessmentBasis!==undefined)assertKnowledge(value.assessmentBasis,basis=>{
+    assertExactKeys(basis,['sourceAuditRevisionId','paperKey','attemptKey']);workToken(basis.sourceAuditRevisionId);
+    for(const key of [basis.paperKey,basis.attemptKey])if(typeof key!=='string'||!/^\d+$/.test(key)||key.length>200)throw Error('invalid_assessment_source_key');
+    if(value.attemptKey.namespace!=='academy_textbook_attempt'||value.attemptKey.literalKey!==basis.attemptKey||!value.evidenceRefs.includes(basis.sourceAuditRevisionId))throw Error('assessment_attempt_binding_conflict');
+  });
   if(!Array.isArray(value.itemResults)||value.itemResults.length>256)throw Error('invalid_work_list');
   const ids=new Set<string>();
   for(const item of value.itemResults){assertExactKeys(item,['assignedItemId','grade']);workToken(item.assignedItemId);if(ids.has(item.assignedItemId))throw Error('duplicate_work_item');ids.add(item.assignedItemId);assertKnowledge<string>(item.grade,grade=>{if(!['correct','incorrect','ungraded'].includes(grade))throw Error('invalid_work_grade');});}
 }
 export function validateLearningAssignment(value:LearningWorkAssignment):void{
-  canonicalJson(value);assertExactKeys(value,['kind','sourceStudent','sourceCourse','sourceUserCourse','registrationRevisionId','sourceBook','assignmentKey','activity','origin','effectiveDate','dueDate','status','catalogRefs','sectionNodeIds','items','paper','evidenceRefs']);
+  canonicalJson(value);assertExactKeys(value,['kind','sourceStudent','sourceCourse','sourceUserCourse','registrationRevisionId','sourceBook','assignmentKey','activity','origin','effectiveDate','dueDate','status','catalogRefs','sectionNodeIds','items','paper','evidenceRefs',...(Object.hasOwn(value,'replaces')?['replaces']:[])]);
   if(value.kind!=='learning_work_assignment')throw Error('invalid_work_kind');
   keyNamespace(value.sourceStudent,'academy_student');keyNamespace(value.sourceCourse,'academy_course');keyNamespace(value.sourceBook,'academy_book');validateSourceKey(value.assignmentKey);
   keyNamespace(value.sourceUserCourse,'academy_user_course');workToken(value.registrationRevisionId);
   if(!requirementsForSeries('gauss').some(row=>row.activity===value.activity)||!['teacher_report','qualified_source'].includes(value.origin)||!['assigned','withdrawn'].includes(value.status))throw Error('invalid_work_assignment');
   assertDate(value.effectiveDate);assertKnowledge(value.dueDate,assertDate);assertRefs(value.evidenceRefs);
+  if(value.replaces!==undefined)assertKnowledge(value.replaces,link=>{assertExactKeys(link,['assignmentRevisionId']);workToken(link.assignmentRevisionId);if(!value.evidenceRefs.includes(link.assignmentRevisionId))throw Error('replacement_evidence_required');});
   list(value.catalogRefs,512);const nodes=new Set<string>(),revisions=new Set<string>();
   for(const ref of value.catalogRefs){assertExactKeys(ref,['nodeId','revisionId']);workToken(ref.nodeId);workToken(ref.revisionId);if(nodes.has(ref.nodeId)||revisions.has(ref.revisionId))throw Error('duplicate_work_catalog');nodes.add(ref.nodeId);revisions.add(ref.revisionId);}
   list(value.sectionNodeIds,64);if(new Set(value.sectionNodeIds).size!==value.sectionNodeIds.length)throw Error('duplicate_work_section');

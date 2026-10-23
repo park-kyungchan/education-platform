@@ -1,4 +1,6 @@
-export interface SourceDiscoveryRequest { teacherLabel:string;teacherKey:string;collegeKey:string;studentNames:readonly string[] }
+import type {SourceDiscoveryRequest} from '../contracts/sourceDiscovery';
+export type {SourceDiscoveryRequest} from '../contracts/sourceDiscovery';
+
 /** Execute only on the authorized native academy document. No source mutation handler is invoked. */
 export async function collectNativeBookDiscovery(input:SourceDiscoveryRequest){
   if(typeof location==='undefined'||location.origin!=='https://dc.gang-a.kr'||!document.body?.innerText.includes(input.teacherLabel+'- [로그아웃]')||document.querySelector('input[type=password]'))throw Error('authentication_required');

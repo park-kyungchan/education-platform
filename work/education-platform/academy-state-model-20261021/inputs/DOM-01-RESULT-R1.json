@@ -1,0 +1,339 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "academy-state-model-20261021",
+  "kind": "input",
+  "id": "DOM-01-RESULT-R1",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "education-platform-dom-sublead",
+    "locator": "codex-thread:01a15d19-e804-7a12-87c2-07c0b82d9807/DOM-01/result",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "schema": "academy.dom01-result.v1",
+    "disposition": "bounded-source-contract-selection-complete",
+    "logical": {
+      "domainId": "education",
+      "projectId": "education-platform",
+      "workId": "academy-state-model-20261021",
+      "issueId": "DOM-ISSUE-20261021",
+      "specId": "DOM-SPEC",
+      "specRevision": 1,
+      "planId": "DOM-PLAN",
+      "planRevision": 1,
+      "taskId": "education-platform:task:academy-state-model-20261021-dom-01"
+    },
+    "source": {
+      "repositoryId": "park-kyungchan/education-platform",
+      "commit": "4bdef2c77cb9a537cecf806ba16054646147dbc5",
+      "meaning": "Exact unchanged maintained implementation source; result-containing commit is reported by external canonical audit receipt to avoid self-reference."
+    },
+    "nativeIdentity": {
+      "actualCodexThreadId": "01a15d19-e804-7a12-87c2-07c0b82d9807",
+      "observation": "CODEX_THREAD_ID environment, not inferred from logical IDs",
+      "userDeclaredLocation": {
+        "tab": "wA:t2",
+        "pane": "wA:p4"
+      },
+      "herdrLivenessIndependentlyObserved": false,
+      "nativeRegistrationClaimed": false
+    },
+    "architectureAuthority": {
+      "reviewedSource": "5e5017e6dff174343dcb6e95685837fd0f6093a6",
+      "review": "AAR-REVIEW-004 passed, as supplied by user",
+      "alreadyQualifiedRootSource": "d79237566a86dfce9e633d5270e8b409d0d4a025",
+      "meaning": "Source qualification only; no native registration or operational activation."
+    },
+    "selection": {
+      "canonicalPath": "TeacherApplication -> snapshot-scoped TeacherQueries -> existing projectLearningWork/buildStudentPreparation/buildTeacherWorkContext",
+      "workflowIds": [
+        "class-preparation",
+        "lesson-delivery",
+        "progress-audit",
+        "homework-followup",
+        "assessment-preparation",
+        "wrong-answer-clinic",
+        "attendance-internal-journal"
+      ],
+      "secondReducer": false,
+      "contracts": "architecture/academy-state-model/contracts.ts",
+      "evidence": "architecture/academy-state-model/source-evidence.json",
+      "queryBoundaryProposal": "architecture/academy-state-model/query-boundary.ts"
+    },
+    "importInventory": {
+      "sourceFiles": 241,
+      "topLevelStaticImportExportDeclarations": 600,
+      "dynamicDependencies": [
+        {
+          "from": "apps/academy/dc-gang-a/src/academy/main.ts",
+          "line": 40,
+          "argumentKind": "literal",
+          "specifier": "./sourceRuntime",
+          "to": "apps/academy/dc-gang-a/src/academy/sourceRuntime.ts",
+          "resolution": "source-locator-only-not-executed",
+          "expression": null
+        },
+        {
+          "from": "apps/academy/dc-gang-a/src/academy/product-control/product-domain-controller.ts",
+          "line": 51,
+          "argumentKind": "computed",
+          "specifier": null,
+          "to": null,
+          "resolution": "unknown-runtime-target",
+          "expression": "directory+'/apps/academy/dc-gang-a/src/learning/model.ts'"
+        },
+        {
+          "from": "apps/academy/dc-gang-a/src/academy/product-control/running-p1-bootstrap.ts",
+          "line": 22,
+          "argumentKind": "computed",
+          "specifier": null,
+          "to": null,
+          "resolution": "unknown-runtime-target",
+          "expression": "'data:text/javascript;base64,'+Buffer.from(code).toString('base64')"
+        },
+        {
+          "from": "apps/academy/month-end-workbench/src/main.ts",
+          "line": 13,
+          "argumentKind": "literal",
+          "specifier": "./integrations/mcp-source-port.ts",
+          "to": "apps/academy/month-end-workbench/src/integrations/mcp-source-port.ts",
+          "resolution": "source-locator-only-not-executed",
+          "expression": null
+        }
+      ],
+      "completeRuntimeImportClosure": false,
+      "applicationLmsCoupling": "Actual bidirectional imports retained; proposed target graph is separate.",
+      "readInputRecordAffectedImports": 17,
+      "lmsToApplicationImports": 3,
+      "dcToGangAImports": 6
+    },
+    "ownership": {
+      "domainId": "education",
+      "projectId": "education-platform",
+      "qryWorkId": "academy-query-integration-20261021",
+      "qryInitialLocalSource": "b2bb0bf0886f8069a723cbb900b98ea53fbf22cf",
+      "sequence": [
+        "DOM-01 result",
+        "Education QRY qualifies DOM-01 and implements owner-local QRY-BOUNDARY",
+        "Root supplies exact qualified QRY-BOUNDARY",
+        "DOM-02 receiver qualification then implementation",
+        "Later Education QRY-02 result",
+        "Academy Workbench CON consumer adaptation"
+      ],
+      "workbenchProducerPrerequisite": false
+    },
+    "verifiedChecks": {
+      "dom01FinalSynthetic": {
+        "pass": 10,
+        "fail": 0,
+        "expectations": 351
+      },
+      "maintainedTeacherState": {
+        "pass": 37,
+        "skip": 39,
+        "fail": 0,
+        "scope": "Ten selected maintained files, no DB socket"
+      },
+      "monthEndApplicationHttpLaunchSafety": {
+        "pass": 33,
+        "fail": 0
+      },
+      "monthEndWebModel": {
+        "pass": 2,
+        "fail": 0
+      },
+      "typechecks": [
+        "Root TypeScript7.0.2",
+        "DC TypeScript7.0.2",
+        "DOM-01 TypeScript7.0.2",
+        "month-end backend package typecheck (part of check before failing external owner test)",
+        "month-end web TypeScript7.0.2"
+      ],
+      "other": [
+        "Pinned curated research projection verification passed",
+        "Root verify:imports passed",
+        "month-end web browser bundle built in memory; no dist writes"
+      ]
+    },
+    "retainedFailures": [
+      {
+        "id": "initial-root-check",
+        "reason": "Missing @palantirkc/ontology before user-authorized frozen ignore-scripts setup; retained in R1"
+      },
+      {
+        "id": "initial-nine-file-tests",
+        "reason": "29pass/6import failures before zod/jsdom setup; retained in R1"
+      },
+      {
+        "id": "initial-gang-setup",
+        "reason": "Sandbox EROFS, exact authorized escalated frozen retry passed; no lock/pin change"
+      },
+      {
+        "id": "root-integration-tests",
+        "reason": "32pass/1fail: examples/clinic-workbench lacks zod dependency; unrelated package not altered"
+      },
+      {
+        "id": "dc-endpointCatalog",
+        "reason": "Six tests passed and13failed in broader11-file run; missing research/backend-map/route-registry.json confirmed by isolated reproduction"
+      },
+      {
+        "id": "month-end-package-check",
+        "reason": "49pass/1fail: external academy-workbench/tools/academy-mcp/src/item-labels.ts absent; no substituted foreign code"
+      },
+      {
+        "id": "dom01-initial-typecheck",
+        "reason": "Owned test/BuildConfig typing fixed; aligned own compiler indexed-access option with existing module configs. R1 original failure retained; final checks pass."
+      }
+    ],
+    "remainingBoundaryDecisions": [
+      "Root supplies the exact qualified Education QRY-BOUNDARY producer result before DOM-02 receiving qualification; QRY first qualifies DOM-01",
+      "Root/owner agrees neutral leaf paths and serialization version; these paths are proposed, not created",
+      "DC owner decides reviewed attempt-binding and stage refinements in DOM-02 scope",
+      "Education QRY owns query/currentness and pagination boundaries; Workbench CON adapts the later QRY-02 result without taking domain ownership",
+      "Teacher retains final acceptance/item selection; operations/printing/distribution require separate actual authority"
+    ],
+    "demonstratedRefinements": [
+      {
+        "id": "G-100",
+        "owner": "DC query/projection owner after qualified boundary",
+        "basis": "teacherWorkspace.ts originalWrongApplicability and tests retain similar unknown; teacherWorkContext lacks assessment eligibility",
+        "proposal": "Expose exact verified assessment score basis and exclude both default wrong/similar targets only for the same student/book/assessment attempt with verified score exactly100. Preserve source score, explicit assignments and teacher final separately; unknown/mismatched attempt remains unknown."
+      },
+      {
+        "id": "G-ATTEMPT",
+        "owner": "DC workspace owner after qualified boundary",
+        "basis": "TeacherActivityReview binds assignmentRevisionId/selectedItemIds but not attemptRevisionId",
+        "proposal": "Add explicit known/unknown assessment-attempt binding in a reviewed successor; until then never promote an assignment-level activity final to all attempt finals."
+      },
+      {
+        "id": "G-REPLACEMENT",
+        "owner": "DC assignment owner after qualified boundary",
+        "basis": "LearningWorkAssignment status assigned/withdrawn and archived revisions exist, no explicit replacement-of link",
+        "proposal": "Retain withdrawal and add qualified replacement relation only when evidence identifies predecessor/successor; current pending projection must exclude withdrawn/superseded work without inventing missing obligations."
+      },
+      {
+        "id": "G-STAGES",
+        "owner": "DC source/stage owner after qualified boundary",
+        "basis": "TeacherWorkContext.paperIssuance indicates identity availability; PaperIssuance contains ordering and reissueOf, no distribution observation",
+        "proposal": "Expose explicit observed stage evidence for print and distribution; retain unknown independently from issuance identity, solving, grading, corrections and teacher final."
+      }
+    ],
+    "holds": [
+      "education-platform:task:academy-state-model-20261021-dom-02",
+      "education-platform:task:academy-state-model-20261021-dom-02-qualify-qry-boundary"
+    ],
+    "preservedSemantics": [
+      "Namespaced source identity and exact book edition/registration",
+      "Assessment attempt and lesson occurrence remain distinct",
+      "Teacher final exact target and retained prior-attempt completion",
+      "Cancellation/withdrawal/replacement lineage; no fabricated active count",
+      "Raw source scores independent from teacher review/final",
+      "Printing/issuance/distribution and app entry independent stage evidence",
+      "Unknown authoritative currentness never promoted from view time",
+      "Verified exact assessment100 excludes default wrong/similar targets; current similar filter gap is proposed, not implemented; explicit later assignments preserved"
+    ],
+    "artifactPins": [
+      {
+        "path": "architecture/academy-state-model/canonical-audit.ts",
+        "sha256": "31ec8614ea9f630210ab226db72470513fad1c256a1e1de3ca0608f4abbc8f40",
+        "bytes": 3508
+      },
+      {
+        "path": "architecture/academy-state-model/context-evidence.json",
+        "sha256": "54efbc02cef32e8bcd3188bd87700c008d34e788cf516a4567770ab68d57dc9f",
+        "bytes": 6048
+      },
+      {
+        "path": "architecture/academy-state-model/contracts.ts",
+        "sha256": "165f84303a3312a5349cf6841cb9995c9f2d99c82b58b01031530025f3246b75",
+        "bytes": 3167
+      },
+      {
+        "path": "architecture/academy-state-model/entrypoint.json",
+        "sha256": "89df071208a6d8888ea194abde61717f8d1f9b4aac3d38e7fb4bd6e66f09053d",
+        "bytes": 1512
+      },
+      {
+        "path": "architecture/academy-state-model/inspect-source.ts",
+        "sha256": "b473d3f30c542160964766eb8bed1658c87e881bf84e7b876a0798988f389027",
+        "bytes": 6335
+      },
+      {
+        "path": "architecture/academy-state-model/query-boundary.ts",
+        "sha256": "41275822e8d5323c5e325b5e3e92edb1c2b701e65b2f7bc280a3b99d7df8ba14",
+        "bytes": 10814
+      },
+      {
+        "path": "architecture/academy-state-model/refine-checks.ts",
+        "sha256": "d77c040b13801cbc3661b13f924b406e30394b4ef5eb3edb650e17aa47201168",
+        "bytes": 3518
+      },
+      {
+        "path": "architecture/academy-state-model/selection.test.ts",
+        "sha256": "1aec84fbdb547fd72d41da295b497e87e0fb5335972359686d525923e074c77e",
+        "bytes": 11125
+      },
+      {
+        "path": "architecture/academy-state-model/selection.ts",
+        "sha256": "176a2f1892fd46d7084f29e67665ee9b8efdb11717c5dc1922b2fec39028be84",
+        "bytes": 10846
+      },
+      {
+        "path": "architecture/academy-state-model/source-evidence.json",
+        "sha256": "9aa7db2cbcf74bd9f092c30569bb2a87646b877dd894e32167bbd4af526e03ee",
+        "bytes": 428896
+      },
+      {
+        "path": "architecture/academy-state-model/tsconfig.json",
+        "sha256": "ba744c7d58ffc90fc142b864e6a5374a0f6259fa5f0f684264a6003f3baa556f",
+        "bytes": 334
+      },
+      {
+        "path": "architecture/academy-state-model/verify.ts",
+        "sha256": "f9d58332aedb140a3db76b45c7fd881eed499823154ce0d85667f8db65987aeb",
+        "bytes": 5763
+      },
+      {
+        "path": "work/education-platform/academy-state-model-20261021/checks/DOM-01-CHECKS-R1.json",
+        "sha256": "445038c4564c8bb0850c4e2feacad9e3d01adfdabbfbf59e1eba4435a7e9b590",
+        "bytes": 37809
+      },
+      {
+        "path": "work/education-platform/academy-state-model-20261021/checks/DOM-01-CHECKS-R2.json",
+        "sha256": "f028a1c2039435b5ad9c6b135fa364957f1dc4a2de80a62c3039bcaa9372fbfd",
+        "bytes": 28724
+      },
+      {
+        "path": "work/education-platform/academy-state-model-20261021/checks/DOM-01-CHECKS-R3.json",
+        "sha256": "0e14a975ae8864cd9bce988c4ac94bdc8806877766a69dedca59ceb38665bc59",
+        "bytes": 6936
+      },
+      {
+        "path": "work/education-platform/academy-state-model-20261021/checks/DOM-01-CHECKS-R4.json",
+        "sha256": "22143073f56d7db3645275d71f5aca72f7f9b9957c6bdfe13b7c047636a34b71",
+        "bytes": 5074
+      }
+    ],
+    "canonicalVerification": {
+      "auditorCommit": "712f90deac0676e662dc5d75d88d89f7b6773bfe",
+      "actualTaskVerificationTarget": "common-harness:task:1452c45f6168179d1ba1106bf74b817e53b91a1d1952d2ed5760afa0b9c8ab2a",
+      "requiredAfterCommit": "canonical-audit.ts EXACT_COMMIT [new owned receipt path] validates exact snapshot and semantic transition from initial source; receipts retain actual outcomes."
+    },
+    "effects": {
+      "native": 0,
+      "businessWrites": 0,
+      "privateOriginalsRead": 0,
+      "printing": 0,
+      "parentSends": 0,
+      "publication": 0,
+      "merge": 0,
+      "deployment": 0
+    },
+    "wholeWorkComplete": false,
+    "sharedAuditDelivered": false,
+    "teacherAcceptance": false,
+    "nativeAdoption": false
+  }
+}

@@ -1,5 +1,6 @@
 import { createAcademySourceAudit } from '../lms/academySourceAudit';
-import { readInputRecord, readLiteralKey, readLiteralName } from '../lms/academyReadProtocol';
+import { readLiteralKey, readLiteralName } from '../lms/academyReadProtocol';
+import {readInputRecord} from '../contracts/readInputRecord';
 import { stableId, requireText } from '../learning/model';
 import { validateAcademyRecord, type SourceAuditRecord, type SourceBookRegistration } from './records';
 import type { StoredStudent } from './contracts/storageRecords';

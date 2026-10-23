@@ -1,0 +1,56 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "academy-state-model-20261021",
+  "kind": "input",
+  "id": "DOM-ROOT-QUALIFICATION-R1",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "root-academy-orchestrator",
+    "locator": "actual-canonical-producer-source-read:root-t04-to-dom01",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "schema": "academy.external-source-qualification/1",
+    "disposition": "qualified-source-only",
+    "producer": {
+      "logical": {
+        "domainId": "academy-operations",
+        "projectId": "academy-workbench",
+        "workId": "academy-architecture-orchestration-20261021",
+        "issueId": "AAR-ISSUE-20261021",
+        "specId": "AAR-SPEC",
+        "specRevision": 1,
+        "planId": "AAR-PLAN",
+        "planRevision": 2,
+        "taskId": "academy-workbench:task:academy-architecture-orchestration-20261021-t04"
+      },
+      "repositoryId": "park-kyungchan/academy-workbench",
+      "commit": "d79237566a86dfce9e633d5270e8b409d0d4a025",
+      "tree": "05e8f3567c29524b2f83bb7959e3a15c908d0310",
+      "resultEvidenceId": "academy-workbench:evidence:aar-t04-delivery-observation-r2",
+      "verificationEvidenceId": "academy-workbench:evidence:aar-t04-delivery-verification-r2",
+      "resultSha256": "455e1f884e94997ab48c5f7c77809554da9927b69a9b10086d90f53603f56add",
+      "verificationSha256": "6ec16f33c571df0c739aae842ff77799d224fab061a190e3353b36b4b0c64f09"
+    },
+    "consumer": {
+      "logical": {
+        "domainId": "education",
+        "projectId": "education-platform",
+        "workId": "academy-state-model-20261021",
+        "issueId": "DOM-ISSUE-20261021",
+        "specId": "DOM-SPEC",
+        "specRevision": 1,
+        "planId": "DOM-PLAN",
+        "planRevision": 1,
+        "taskId": "education-platform:task:academy-state-model-20261021-dom-01"
+      },
+      "qualificationTaskId": "education-platform:task:academy-state-model-20261021-dom-01-qualify-aar-05"
+    },
+    "sourceReadMethod": "Actual canonical openGitWork/readRecord/readSource, producer record validation and exact result/Verification binding; no source bodies outside metadata read.",
+    "nativeReceiverAuthentication": false,
+    "sharedAuditDelivery": false,
+    "operationalActivation": false
+  }
+}

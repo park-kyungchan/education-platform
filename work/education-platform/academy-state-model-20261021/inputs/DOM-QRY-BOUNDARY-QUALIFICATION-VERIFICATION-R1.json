@@ -1,0 +1,49 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "academy-state-model-20261021",
+  "kind": "input",
+  "id": "DOM-QRY-BOUNDARY-QUALIFICATION-VERIFICATION-R1",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "root-academy-orchestrator",
+    "locator": "exact-source-receiving-verification:DOM-QRY-BOUNDARY-QUALIFICATION-R1",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "verification": {
+      "schemaVersion": "1.0.0",
+      "kind": "verification",
+      "id": "education-platform:verification:dom-qry-boundary-qualification-r1",
+      "domainId": "education",
+      "projectId": "education-platform",
+      "createdAt": "2026-10-21T07:34:24.488Z",
+      "payload": {
+        "targetRefs": [
+          "common-harness:task:d35f0b3fd3a0d5272831db98acf97002987b3094b687061aa6641ce2884b842a"
+        ],
+        "criteria": [
+          {
+            "id": "exact-source-receiving-qualified",
+            "status": "pass",
+            "message": "Canonical producer snapshot, completed source Task and result-bound Verification consumed at exact revision; receiver scope and local Task gate preserved.",
+            "evidenceRefs": [
+              "education-platform:evidence:dom-qry-boundary-qualification-r1-observation"
+            ]
+          }
+        ],
+        "inputHashes": [
+          {
+            "path": "work/education-platform/academy-state-model-20261021/inputs/DOM-QRY-BOUNDARY-QUALIFICATION-R1.json",
+            "sha256": "802b2c17738aed53831bff8999865f013b4894174068edb6dfac5f21e15ca58d"
+          }
+        ],
+        "runtime": {
+          "name": "Bun canonical source reader",
+          "version": "1.4.3"
+        }
+      }
+    }
+  }
+}
