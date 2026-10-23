@@ -1,0 +1,66 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "verification",
+  "id": "education-platform:verification:native-source-review-2c1601d1e4df",
+  "projectId": "education-platform",
+  "domainId": "education",
+  "createdAt": "2026-10-23T09:44:18.217Z",
+  "payload": {
+    "targetRefs": [
+      "education-platform:evidence:native-source-review-2c1601d1e4df"
+    ],
+    "criteria": [
+      {
+        "id": "independent-native-source-review",
+        "status": "pass",
+        "message": "Actual independent reviewer completed the exact source review with no unresolved findings",
+        "evidenceRefs": [
+          "education-platform:evidence:native-source-review-2c1601d1e4df"
+        ]
+      }
+    ],
+    "inputHashes": [
+      {
+        "path": "native-review-results/2c1601d1e4dfcf86bd7851ffd4de1f1116bfd05a.json",
+        "sha256": "777d47e57a210caaf9c63ff50d53b1b48ccd61589690f265ed90ea33e640329f"
+      },
+      {
+        "path": "native-review-evidence/2c1601d1e4dfcf86bd7851ffd4de1f1116bfd05a.json",
+        "sha256": "9def2adc44619faf061b776465ac2c972d829118309c4c8626dbb67e2bed48ac"
+      },
+      {
+        "path": "native-review-raw/2c1601d1e4dfcf86bd7851ffd4de1f1116bfd05a.json",
+        "sha256": "04f1fb52d24b8e3e6a3a04a7210b769bda45b11e96dfc17569e20f15d3d9e5b2"
+      }
+    ],
+    "runtime": {
+      "name": "native-codex",
+      "version": "0.163.0"
+    },
+    "details": {
+      "semanticOwner": "education-platform",
+      "review": {
+        "binding": {
+          "repository": "park-kyungchan/education-platform",
+          "projectId": "education-platform",
+          "domainId": "education",
+          "semanticOwner": "education-platform",
+          "scope": "month-end-source-redesign"
+        },
+        "headSha": "2c1601d1e4dfcf86bd7851ffd4de1f1116bfd05a",
+        "reviewedTreeSha": "75e88390baa2eca5ec8dca6b1a178315d4453f7d",
+        "reviewedSourceManifestSha256": "5bf977e17449838b369b967c15864a29ff8e501301cf22b84f1db87be901ba7c",
+        "reviewer": {
+          "runtime": "native-codex",
+          "taskId": "01a167cc-fb4d-7a30-b197-7f84f81186ec"
+        },
+        "author": {
+          "runtime": "native-codex",
+          "taskId": "01a16729-5b62-7c02-aa7b-db5767901815"
+        },
+        "conclusion": "pass",
+        "unresolvedFindings": 0
+      }
+    }
+  }
+}
