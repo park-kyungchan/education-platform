@@ -1,0 +1,67 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "evidence",
+  "id": "education-platform:evidence:native-source-review-3cd90a5b9f12",
+  "projectId": "education-platform",
+  "domainId": "education",
+  "createdAt": "2026-10-23T14:24:34.868Z",
+  "payload": {
+    "claim": "Observed actual independent native review of the exact integrated source",
+    "method": "native-codex-independent-source-review",
+    "sourceUrl": "https://github.com/park-kyungchan/education-platform/blob/2496934f03c45921d65ac872745c62039718ead1/native-review-raw/3cd90a5b9f1289997aa5ce159179a41aba3f4c04.json",
+    "fetchedAt": "2026-10-23T14:24:34.868Z",
+    "upstreamRevision": "3cd90a5b9f1289997aa5ce159179a41aba3f4c04",
+    "result": {
+      "outcome": "success",
+      "processExitCode": 0,
+      "contentMatched": true
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "outcome": "success"
+      }
+    ],
+    "limitations": [
+      "Git source custody authenticates its publisher, not the native process.",
+      "Initial findings and failed verification attempts remain in private task custody. Source checks do not establish teacher/native acceptance or runtime activation."
+    ],
+    "details": {
+      "semanticOwner": "education-platform",
+      "review": {
+        "binding": {
+          "repository": "park-kyungchan/education-platform",
+          "projectId": "education-platform",
+          "domainId": "education",
+          "semanticOwner": "education-platform",
+          "scope": "month-end-source-redesign"
+        },
+        "headSha": "3cd90a5b9f1289997aa5ce159179a41aba3f4c04",
+        "reviewedTreeSha": "bea7feb1ca68c5dd99e8336483472a3ed94aafd8",
+        "reviewedSourceManifestSha256": "817ad9002d5c2b2ebe998303451c1bd22c90606390d636aaff96dcfbfb6b42a4",
+        "reviewer": {
+          "runtime": "native-codex",
+          "taskId": "01a16907-d8cd-7a13-b9bc-bab20ce80d88",
+          "threadId": "01a16907-d8cd-7a13-b9bc-bab20ce80d88",
+          "nativeTaskId": null,
+          "nativeRunId": null,
+          "paneId": "wF:p9",
+          "role": "independent exact-H source reviewer only",
+          "implementationWriter": false,
+          "actualModelAsShownInUi": null,
+          "actualEffortAsShownInUi": null,
+          "requestedEffort": "xhigh"
+        },
+        "author": {
+          "runtime": "native-codex",
+          "taskId": "01a168b8-471f-74c0-84c2-3bcf9dcddfb6",
+          "threadId": "01a168b8-471f-74c0-84c2-3bcf9dcddfb6",
+          "nativeTaskId": null,
+          "nativeRunId": null
+        },
+        "conclusion": "pass",
+        "unresolvedFindings": 0
+      }
+    }
+  }
+}
