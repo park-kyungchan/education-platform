@@ -1,0 +1,35 @@
+{
+  "schema": "common.git-work.v1",
+  "domainId": "education",
+  "projectId": "education-platform",
+  "workId": "month-end-jev114-selection24-20261019",
+  "kind": "input",
+  "id": "LEAD-PURPOSE",
+  "inputKind": "source-owner-record",
+  "origin": {
+    "ownerId": "education-platform",
+    "locator": "academy-orchestrator:worklead-handoff",
+    "kind": "source-owner-capture"
+  },
+  "content": {
+    "purpose": {
+      "objective": "Use actual Jev-1.14 judgments to compare source-backed grade-3 multiplication, division and circle questions against detailed research analyses, then propose exactly24 unique eligible questions with native difficulty middle/high/highest and transparent similarity evidence.",
+      "successCriteria": [
+        "Actual question content, explanation/diagram evidence and original identities are available, not labels alone.",
+        "Exact model typesafe-ai/jev-1.14.0 is used and the returned model, input revisions, judgments, abstentions and cost are retained.",
+        "Difficulty raw codes are owner-qualified as 중/상/최상; below-middle and unknown are excluded rather than relabelled.",
+        "A deterministic selection has24 unique actual source questions, reports subject/difficulty distribution and distinguishes points from difficulty.",
+        "Unresolved subject/difficulty quotas and duplicate/near-duplicate policy are interviewed by the WorkLead, not silently defaulted."
+      ],
+      "inScope": [
+        "Source-grounded WorkLead handoff, owned implementation planning and verification for this assigned Work.",
+        "Native owners retain tools/runtime/credentials; roots: apps/academy/month-end-workbench"
+      ],
+      "outOfScope": [
+        "Root orchestrator performing the domain implementation instead of the WorkLead.",
+        "Student records/DB mutation, SQL, official save, generation, print, send or production deployment.",
+        "Reusing completed runs/effects or prior ODI Jev budget/ledger."
+      ]
+    }
+  }
+}
