@@ -1,4 +1,4 @@
-import { assertExactKeys, assertInstant, assertKnowledge, assertRefs, canonicalJson, requireText, type Knowledge } from '../learning/model';
+import { assertDate, assertExactKeys, assertInstant, assertKnowledge, assertRefs, canonicalJson, requireText, type Knowledge } from '../learning/model';
 import { createAcademySourceAudit } from '../lms/academySourceAudit';
 import { validateSourceKey, type SourceKey } from './domain';
 import {validateCourseInventory,validatePrestudySnapshot,validatePreparationScope,type SourceCourseInventory,type SourcePrestudySnapshot,type TeacherBookPreparationScope} from './bookPreparation';
@@ -16,6 +16,15 @@ export interface SourceBookRegistration {
 }
 export interface SourceAuditRecord { readonly kind: 'source_audit'; readonly acquisition: Parameters<typeof createAcademySourceAudit>[0]; readonly contractRef: string }
 export interface TeacherReportedNote { readonly kind: 'teacher_reported_note'; readonly text: string; readonly directiveRef: string }
+/** Teacher planning only; occurrence binds the target lesson, never the origin lesson.
+ * Unknown identity/date links remain explicit nulls, even when another link is known. */
+export interface TeacherLessonCarryover {
+  readonly kind:'teacher_lesson_carryover'; readonly sourceStudent:SourceKey;
+  readonly sourceCourse:SourceKey|null; readonly sourceBook:SourceKey|null; readonly sourceMinorUnit:SourceKey|null;
+  readonly activity:CycleActivity; readonly status:'reminder';
+  readonly originDate:string|null; readonly targetDate:string|null; readonly occurrence:ObservationOccurrence|null;
+  readonly text:string; readonly directiveRef:string; readonly evidenceRefs:readonly string[];
+}
 export interface ObservationOccurrence { date:string; groupId:string; courseKey:string; recordKey:string; membershipKey:string }
 /** An attributable original/correction, never an inspection approval, official save or delivery receipt. */
 export interface TeacherObservation {
@@ -38,9 +47,29 @@ export interface TeacherActivityRevision {
 export interface TeacherPreparationAssignment extends Omit<TeacherBookPreparationScope,'kind'> {
   kind:'teacher_preparation_assignment';sourceStudent:SourceKey;effectiveDate:string;
 }
-export type AcademyRecord = SourceBookRegistration | SourceAuditRecord | TeacherReportedNote | TeacherObservation | TeacherObservationRequest | SourceCourseInventory | SourcePrestudySnapshot | TeacherActivityRevision | TeacherPreparationAssignment | LearningWorkAssignment | LearningWorkAttempt | TeacherClinicRevision | TeacherClinicRequest;
+export type AcademyRecord = SourceBookRegistration | SourceAuditRecord | TeacherReportedNote | TeacherLessonCarryover | TeacherObservation | TeacherObservationRequest | SourceCourseInventory | SourcePrestudySnapshot | TeacherActivityRevision | TeacherPreparationAssignment | LearningWorkAssignment | LearningWorkAttempt | TeacherClinicRevision | TeacherClinicRequest;
 export function validateAcademyRecord(payload: AcademyRecord): void {
   canonicalJson(payload);
+  if(payload.kind==='teacher_lesson_carryover'){
+    assertExactKeys(payload,['kind','sourceStudent','sourceCourse','sourceBook','sourceMinorUnit','activity','status','originDate','targetDate','occurrence','text','directiveRef','evidenceRefs']);
+    validateSourceKey(payload.sourceStudent);
+    if(payload.sourceStudent.namespace!=='academy_student')throw Error('source_namespace_conflict');
+    for(const [key,namespace] of [[payload.sourceCourse,'academy_course'],[payload.sourceBook,'academy_book'],[payload.sourceMinorUnit,'academy_minor_unit']] as const){
+      if(key!==null){validateSourceKey(key);if(key.namespace!==namespace)throw Error('source_namespace_conflict');}
+    }
+    if(payload.status!=='reminder'||!requirementsForSeries('gauss').some(row=>row.activity===payload.activity))throw Error('invalid_lesson_carryover');
+    for(const date of [payload.originDate,payload.targetDate])if(date!==null)assertDate(date);
+    if(payload.occurrence!==null){
+      assertExactKeys(payload.occurrence,['date','groupId','courseKey','recordKey','membershipKey']);assertDate(payload.occurrence.date);
+      if(payload.targetDate!==null&&payload.targetDate!==payload.occurrence.date)throw Error('carryover_target_occurrence_conflict');
+      if(payload.sourceCourse!==null&&payload.sourceCourse.literalKey!==payload.occurrence.courseKey)throw Error('carryover_course_occurrence_conflict');
+      for(const field of ['groupId','courseKey','recordKey','membershipKey'] as const){
+        const key=payload.occurrence[field];if(typeof key!=='string'||!/^[1-9][0-9]*$/.test(key)||!Number.isSafeInteger(Number(key)))throw Error('invalid_observation_occurrence');
+      }
+    }
+    requireText(payload.text,'teacher carryover');requireText(payload.directiveRef,'teacher directive');assertRefs(payload.evidenceRefs);
+    if(payload.text.length>16000)throw Error('teacher_note_too_large');return;
+  }
   if(payload.kind==='learning_work_assignment'){validateLearningAssignment(payload);return;}
   if(payload.kind==='learning_work_attempt'){validateLearningAttempt(payload);return;}
   if(payload.kind==='teacher_clinic_revision'){validateTeacherClinic(payload);return;}

@@ -10,6 +10,8 @@ import {applyJournalHttpAction,validateJournalHttpAction,assertJournalWireQualif
 import {parseItemMetadata} from './itemMetadataRead';
 import {selectSourceFunction} from './sourceFunctionText';
 import {inspectAssessmentSearchMetadata} from './assessmentReadProtocol';
+import {qualifyStudentPaperSearchPeriod,type StudentPaperSearchPeriod} from './studentPaperSearchPeriod';
+import {decodePaperCode} from './printedPaperCode';
 import {inspectTestPoolDocument,readTestPoolDocument,testPoolSelectorDefaults} from './testPoolInspection';
 import {testPoolQuestionPreviewReferences,testPoolPreviewSourcePins} from './testPoolQuestionPreview';
 import {inspectTestPoolPresentationProtocol as inspectPoolPresentationProtocol} from './testPoolPresentationProtocol';
@@ -517,8 +519,102 @@ export class AcademyHttpClient {
     }
     return {sourceOperation:'UserByMain' as const,requestedStudent:input,forms,functions:[...new Set(functions)],fieldAssignments,searchFunctions,studentRowsRetained:0 as const,filteredStudentReadQualified:false as const,handlersInvoked:false as const};
   }
-  async searchStudentPaperMetadata(input:{teacherLabel:string;studentName:string;studentKey:string}){
+  /** One explicit student/period/page; exact code match is not complete-history coverage. */
+  async lookupPrintedPaperMetadata(input:{teacherLabel:string;studentName:string;studentKey:string;paperCode:string;period:StudentPaperSearchPeriod}){
+    assertExactKeys(input,['teacherLabel','studentName','studentKey','paperCode','period']);
+    const paperKey=decodePaperCode(input.paperCode);
+    const {paperCode,...searchInput}=input;
+    const result=await this.searchStudentPaperMetadata(searchInput);
+    let matches=result.rows.filter(row=>row.paperKey===paperKey);
+    const searchedSources:{family:string;operation:string;page:number;sourcePeriod:unknown;requestedPeriodApplied:boolean;coverage:string;observedAt:string}[]=[{
+      family:'student_assessment',operation:result.operation,page:result.page,sourcePeriod:result.sourcePeriod,requestedPeriodApplied:true,coverage:result.coverage,observedAt:result.observedAt,
+    }];
+    let matchedSourceFamily=matches.length?'student_assessment':null;
+    // An explicit miss in one read family is not proof that the paper is absent.
+    // This is a separate qualified read, never a retry of a failed occurrence.
+    if(!matches.length){
+      const daily=await this.searchDailyTestMetadata({teacherLabel:input.teacherLabel,studentName:input.studentName,studentKey:input.studentKey});
+      searchedSources.push({family:'daily_zero',operation:daily.operation,page:daily.page,sourcePeriod:null,requestedPeriodApplied:false,coverage:daily.coverage,observedAt:daily.observedAt});
+      matches=daily.rows.filter(row=>row.paperKey===paperKey);if(matches.length)matchedSourceFamily='daily_zero';
+    }
+    return {paperCode,paperKey,status:matches.length?'observed' as const:'not_found_in_scope' as const,
+      rows:matches,sourcePeriod:matchedSourceFamily==='daily_zero'?null:result.sourcePeriod,page:result.page,observedAt:searchedSources.at(-1)!.observedAt,
+      coverage:'observed_source_pages_not_complete_history' as const,searchedSources,matchedSourceFamily,generatedMembership:'unqualified' as const,
+      academyWrites:0 as const,parentSends:0 as const};
+  }
+  /** Reuse the same fixed, read-qualified DT/ZT search used by exact score reads. */
+  async searchDailyTestMetadata(input:{teacherLabel:string;studentName:string;studentKey:string}){
     assertExactKeys(input,['teacherLabel','studentName','studentKey']);readLiteralName(input.studentName);readLiteralKey(input.studentKey);
+    if(input.teacherLabel!==this.#principal.teacherLabel)throw Error('daily_search_principal_conflict');
+    if(!this.#authenticated)throw Error('authentication_required');
+    const response=await this.#request('/servlet/controller.dailyzerotest.DailyZeroTestServlet?reqCmd=DtResultSearch',{
+      method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8','X-Requested-With':'XMLHttpRequest'},
+      body:new URLSearchParams({sort_date:'1',stu_name:input.studentName}).toString(),
+    });
+    const html=await response.text();if(html.length>2000000)throw Error('daily_search_response_rejected');
+    if(/webUserPass|세션이 만료/.test(html)||/<input\b[^>]*\btype\s*=\s*["']password["']/i.test(html)){this.close();throw Error('authentication_required');}
+    return {...inspectAssessmentSearchMetadata(html,input),operation:'DtResultSearch' as const,page:1,
+      sourcePeriod:null,fixedSourceFilter:{sort_date:'1'},observedAt:new Date().toISOString()};
+  }
+  /** Discover exact-student rows and inert filter/page contracts in the same qualified read. */
+  async inspectDailyTestInventory(input:{teacherLabel:string;studentName:string;studentKey:string}){
+    return this.#dailyTestInventory(input,'1');
+  }
+  /** Explicit observed month selectors, not guessed calendar arithmetic or an automatic retry. */
+  async readDailyTestHistory(input:{teacherLabel:string;studentName:string;studentKey:string;periods:string[]}){
+    assertExactKeys(input,['teacherLabel','studentName','studentKey','periods']);
+    if(!Array.isArray(input.periods)||input.periods.length<1||input.periods.length>6||new Set(input.periods).size!==input.periods.length||input.periods.some(p=>!['11','12','13','14','15','16'].includes(p)))throw Error('daily_history_period_rejected');
+    const {periods,...target}=input;
+    const current=await this.inspectDailyTestInventory(target);
+    const selectors=current.filterContracts.controls.filter(c=>c.name==='sort_date');
+    if(selectors.length!==1||periods.some(p=>!selectors[0]!.options?.some(o=>o.value===p)))throw Error('daily_history_selector_drift');
+    const observations=[];
+    for(const selector of periods){
+      const observation=await this.#dailyTestInventory(target,selector);
+      observations.push({selector,label:selectors[0]!.options!.find(o=>o.value===selector)!.label,...observation});
+    }
+    return {status:'observed' as const,studentKey:target.studentKey,studentName:target.studentName,currentFilterQualification:{observedAt:current.observedAt,selector:'1',rows:current.rows},observations,
+      calendarBounds:'source_relative_labels_only_not_exact_calendar_bounds' as const,
+      expectedPaperDefinitions:'not_observed' as const,coverage:'all_parsed_embedded_rows_on_each_observed_response_not_complete_history' as const,academyWrites:0 as const,parentSends:0 as const};
+  }
+  async #dailyTestInventory(input:{teacherLabel:string;studentName:string;studentKey:string},sortDate:string){
+    assertExactKeys(input,['teacherLabel','studentName','studentKey']);readLiteralName(input.studentName);readLiteralKey(input.studentKey);
+    if(input.teacherLabel!==this.#principal.teacherLabel)throw Error('daily_search_principal_conflict');
+    if(!this.#authenticated)throw Error('authentication_required');
+    const response=await this.#request('/servlet/controller.dailyzerotest.DailyZeroTestServlet?reqCmd=DtResultSearch',{
+      method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8','X-Requested-With':'XMLHttpRequest'},
+      body:new URLSearchParams({sort_date:sortDate,stu_name:input.studentName}).toString(),
+    });
+    const html=await response.text();if(html.length>2000000)throw Error('daily_search_response_rejected');
+    if(/webUserPass|세션이 만료/.test(html)||/<input\b[^>]*\btype\s*=\s*["']password["']/i.test(html)){this.close();throw Error('authentication_required');}
+    const metadata=inspectAssessmentSearchMetadata(html,input),doc=sourceDomParser.parseFromString(html,'text/html');
+    const functions:Record<string,string>={};
+    for(const script of doc.querySelectorAll('script:not([src])')){
+      const code=script.textContent??'';
+      for(const match of code.matchAll(/function\s+((?:onSearch|goPage|onPage|onDate|setDate|onResult|search|selectDate)\w*)\s*\(/g)){
+        if(Object.keys(functions).length>=64)throw Error('daily_inventory_contract_limit');
+        const selected=selectSourceFunction(code,match[1]!);if(selected){if(functions[match[1]!])throw Error('daily_inventory_contract_ambiguous');functions[match[1]!]=selected;}
+      }
+    }
+    const controls=[...doc.querySelectorAll<HTMLInputElement|HTMLSelectElement>('input[name],select[name]')]
+      .filter(node=>/sort_date|date|page/i.test(node.name))
+      .map(node=>({name:node.name,type:node.getAttribute('type'),value:node.value,options:node.tagName==='SELECT'?[...(node as HTMLSelectElement).options].map(o=>({value:o.value,label:o.text})):undefined}));
+    const scriptSources=[...doc.querySelectorAll<HTMLScriptElement>('script[src]')].map(node=>node.getAttribute('src'));
+    const forms=[...doc.querySelectorAll('form')].map(form=>({name:form.getAttribute('name'),action:form.getAttribute('action'),method:form.getAttribute('method'),fieldNames:[...new Set([...form.querySelectorAll('[name]')].map(n=>n.getAttribute('name')))]}));
+    const displayRows=metadata.rows.flatMap(row=>{
+      const node=row.sourceRowId?doc.getElementById(row.sourceRowId):null;
+      if(node?.tagName!=='TR')return [];
+      return [{paperKey:row.paperKey,attemptKey:row.attemptKey,sourceRowId:row.sourceRowId,cells:[...node.querySelectorAll(':scope > td')].map(n=>(n.textContent??'').replace(/\s+/g,' ').trim())}];
+    });
+    const navigation=[...doc.querySelectorAll('a[href],a[onclick]')].filter(n=>/DailyZeroTestServlet|ass_no=1180|DailyTest|데일리테스트|DT\/ZT/.test((n.getAttribute('href')??'')+' '+(n.getAttribute('onclick')??'')+' '+(n.textContent??''))).map(n=>({label:(n.textContent??'').trim().slice(0,200),href:n.getAttribute('href'),handler:n.getAttribute('onclick')}));
+    return {...metadata,operation:'DtResultSearch' as const,page:1,sourcePeriod:null,fixedSourceFilter:{sort_date:sortDate},observedAt:new Date().toISOString(),
+      filterContracts:{functions,controls,scriptSources,forms,navigation},displayRows,gradingPresence:'source_score_alone_not_teacher_review' as const,
+      expectedPaperDefinitions:'not_observed' as const,handlersInvoked:false as const,academyWrites:0 as const,parentSends:0 as const};
+  }
+  async searchStudentPaperMetadata(input:{teacherLabel:string;studentName:string;studentKey:string;period?:StudentPaperSearchPeriod}){
+    const hasPeriod=Object.hasOwn(input,'period');
+    assertExactKeys(input,['teacherLabel','studentName','studentKey',...(hasPeriod?['period']:[])]);readLiteralName(input.studentName);readLiteralKey(input.studentKey);
+    const period=hasPeriod?qualifyStudentPaperSearchPeriod(input.period):undefined;
     if(input.teacherLabel!==this.#principal.teacherLabel)throw Error('student_paper_principal_conflict');if(!this.#authenticated)throw Error('authentication_required');
     const path='/servlet/controller.tutor.base.TestPageListServlet';
     const initial=await (await this.#request(path+'?p_process=UserByMain&ass_no=1001',{method:'GET'})).text();
@@ -534,6 +630,7 @@ export class AcademyHttpClient {
     }
     if(body.get('clg_no')!==this.#principal.collegeKey||input.studentName.length<2)throw Error('student_paper_college_scope_conflict');
     body.set('stu_name',input.studentName);body.set('p_pageno','1');body.set('cls_no',body.get('chioce_cls')!);
+    if(period){body.set('sort_date1',period.from);body.set('sort_date2',period.through);}
     const response=await this.#request(path+'?p_process=UserBySearchTestResult&ass_no=1001',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'},body:body.toString()});
     const html=await response.text();if(html.length>2000000)throw Error('student_paper_response_too_large');const selected=sourceDomParser.parseFromString(html,'text/html');
     if(selected.querySelector('form[name=userForm] [name=pri_no]')?.getAttribute('value')!==this.#principal.teacherKey)throw Error('student_paper_owner_drift');

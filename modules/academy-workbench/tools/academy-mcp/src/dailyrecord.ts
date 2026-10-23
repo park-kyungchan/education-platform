@@ -2,6 +2,7 @@ import {randomUUID,createHash} from 'node:crypto';
 import {z} from 'zod';
 import {dailyRecordContextSchema,dailyRecordDateSchema,dailyRecordFieldSchema,dailyRecordFields,dailyRecordIdSchema,dailyRecordScopeSchema,dailyRecordWorkflowContext,type DailyRecordContext,type DailyRecordField,type DailyRecordScope} from './dailyrecord-context.ts';
 import {freezeLabelData} from './item-label-context.ts';
+import {toolResultBytes} from './tool-result.ts';
 
 const hash=z.string().regex(/^[a-f0-9]{64}$/),instant=z.iso.datetime({offset:true});
 const knownValueSchema=z.discriminatedUnion('state',[
@@ -34,9 +35,25 @@ export const cismObservationSchema=z.object({scope:dailyRecordScopeSchema,select
 export type CismObservation=z.infer<typeof cismObservationSchema>;
 type Proposal=z.infer<typeof proposalSchema>;
 type ReadResult<T>={status:'observed';observation:T}|{status:'unavailable';reasonCode:string};
+const metadataPeriod=z.object({from:dailyRecordDateSchema,through:dailyRecordDateSchema}).strict().refine(v=>v.from<=v.through,'ordered_metadata_period_required');
+export const studentMetadataQuerySchema=z.discriminatedUnion('kind',[
+  z.object({kind:z.literal('student_papers'),period:metadataPeriod}).strict(),
+  z.object({kind:z.literal('daily_metadata')}).strict(),
+  z.object({kind:z.literal('daily_inventory')}).strict(),
+  z.object({kind:z.literal('daily_history'),periods:z.array(z.enum(['11','12','13','14','15','16'])).min(1).max(6).refine(v=>new Set(v).size===v.length,'unique_metadata_selectors_required')}).strict(),
+  z.object({kind:z.literal('printed_paper_metadata'),paperCode:z.string().regex(/^#[3456789ABCDEFGHJKLMNPQRSTUVWXYZ][23456789ABCDEFGHJKLMNPQRSTUVWXYZ]{0,10}$/),period:metadataPeriod}).strict(),
+]);
+/** Separate read-only query transport: never a DailyRecord field, fact, approval or credential input. */
+export const studentMetadataBatchSchema=z.object({purpose:dailyRecordIdSchema,currentRequestRef:dailyRecordIdSchema,
+  scope:dailyRecordScopeSchema.extend({sourceNamespace:z.literal('academy.lms.metadata')}).strict(),
+  queries:z.array(studentMetadataQuerySchema).min(1).max(8),
+}).strict();
+export type StudentMetadataBatch=z.infer<typeof studentMetadataBatchSchema>;
+export type StudentMetadataObservation={scope:StudentMetadataBatch['scope'];results:{query:StudentMetadataBatch['queries'][number];observation:unknown}[]};
 /** Implemented by the native/source owner, never by MCP arguments. All methods are read-only. */
 export interface DailyRecordReadBackend {
   readDailyRecord(scope:Readonly<DailyRecordScope>):Promise<ReadResult<DailyRecordObservation>>;
+  readStudentMetadata?(input:Readonly<StudentMetadataBatch>):Promise<StudentMetadataObservation>;
   readCismSection?(scope:Readonly<DailyRecordScope>,selection:Readonly<z.infer<typeof cismSelectionSchema>>):Promise<ReadResult<CismObservation>>;
 }
 /** Inject the canonical Education safeguard, together with its verified policy/source identity. */
@@ -102,10 +119,30 @@ export class DailyRecordService {
   }
   async #read(scope:DailyRecordScope){
     if(!this.backend)return {status:'unavailable' as const,reasonCode:'dailyrecord_read_backend_not_configured'};
-    try{const read=await this.#serial(()=>this.backend!.readDailyRecord(freezeLabelData(structuredClone(scope))));
+    try{return await this.#serial(async()=>{
+      const read=await this.backend!.readDailyRecord(freezeLabelData(structuredClone(scope)));
       if(read.status==='unavailable'){this.#readRefused=true;return {status:'unavailable' as const,reasonCode:safeReason(read.reasonCode)};}
       return {status:'observed' as const,observation:qualifiedObservation(read.observation,scope)};
+    });
     }catch{this.#readRefused=true;return {status:'unavailable' as const,reasonCode:'dailyrecord_source_unqualified_no_automatic_retry'};}
+  }
+  async metadata(value:unknown){
+    const input=studentMetadataBatchSchema.parse(value);
+    const base={scope:input.scope,purpose:input.purpose,currentRequestRef:input.currentRequestRef,
+      academyWrites:0,parentSends:0,automaticRetryAllowed:false,sourceContentIsUntrustedData:true,execution:'read_only' as const};
+    if(!this.backend?.readStudentMetadata)return {...base,status:'unavailable' as const,reasonCode:'student_metadata_backend_not_configured'};
+    try{
+      // The same queue/latch protects metadata, DailyRecord and CISM reads on this service/client.
+      return await this.#serial(async()=>{
+        const observation=await this.backend!.readStudentMetadata!(freezeLabelData(structuredClone(input)));
+        if(!same(observation.scope,input.scope)||observation.results.length!==input.queries.length
+          ||observation.results.some((row,i)=>!same(row.query,input.queries[i])))throw Error('metadata_scope_or_query_conflict');
+        const result={...base,status:'observed' as const,results:observation.results};
+        // Measure the actual dual MCP representation, not just its structuredContent half.
+        if(toolResultBytes(result)>512*1024)throw Error('metadata_result_too_large');
+        return freezeLabelData(result);
+      });
+    }catch{return {...base,status:'unavailable' as const,reasonCode:'student_metadata_unqualified_no_automatic_retry'};}
   }
   async intake(value:unknown){
     const input=dailyRecordIntakeSchema.parse(value),context=input.context;
@@ -201,7 +238,8 @@ export class DailyRecordService {
   async cism(value:unknown){
     const input=cismSectionSchema.parse(value),context=input.context;
     if(!this.backend?.readCismSection)return {...this.#base(context),status:'unavailable',reasonCode:'exact_cism_read_backend_not_configured',observationHandle:null,execution:'not_supported'};
-    try{const read=await this.#serial(()=>this.backend!.readCismSection!(freezeLabelData(structuredClone(context.scope)),freezeLabelData(structuredClone(input.selection))));
+    try{return await this.#serial(async()=>{
+      const read=await this.backend!.readCismSection!(freezeLabelData(structuredClone(context.scope)),freezeLabelData(structuredClone(input.selection)));
       if(read.status==='unavailable'){this.#readRefused=true;return {...this.#base(context),status:'unavailable',reasonCode:safeReason(read.reasonCode),observationHandle:null,execution:'not_supported'};}
       const observation=cismObservationSchema.parse(read.observation);
       if(!same(observation.scope,context.scope)||!same(observation.selection,input.selection)||this.#age(observation.observedAt)
@@ -209,6 +247,7 @@ export class DailyRecordService {
       if(this.#cismHandles.size>=128)this.#cismHandles.delete(this.#cismHandles.keys().next().value!);
       const observationHandle='cism-observation:'+randomUUID();this.#cismHandles.set(observationHandle,freezeLabelData(observation));
       return {...this.#base(context),status:'observed',observationHandle,observation:freezeLabelData(observation),parentRewording:'not_performed',execution:'not_supported'};
+    });
     }catch{this.#readRefused=true;return {...this.#base(context),status:'unavailable',reasonCode:'exact_cism_source_unqualified_no_automatic_retry',observationHandle:null,execution:'not_supported'};}
   }
 }
