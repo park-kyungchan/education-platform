@@ -2,6 +2,7 @@ import {randomUUID,createHash} from 'node:crypto';
 import {z} from 'zod';
 import {dailyRecordContextSchema,dailyRecordDateSchema,dailyRecordFieldSchema,dailyRecordFields,dailyRecordIdSchema,dailyRecordScopeSchema,dailyRecordWorkflowContext,type DailyRecordContext,type DailyRecordField,type DailyRecordScope} from './dailyrecord-context.ts';
 import {freezeLabelData} from './item-label-context.ts';
+import {resolveStudentByName,studentResolveInputSchema} from './student-resolver.ts';
 import {toolResultBytes} from './tool-result.ts';
 
 const hash=z.string().regex(/^[a-f0-9]{64}$/),instant=z.iso.datetime({offset:true});
@@ -55,6 +56,7 @@ export interface DailyRecordReadBackend {
   readDailyRecord(scope:Readonly<DailyRecordScope>):Promise<ReadResult<DailyRecordObservation>>;
   readStudentMetadata?(input:Readonly<StudentMetadataBatch>):Promise<StudentMetadataObservation>;
   readCismSection?(scope:Readonly<DailyRecordScope>,selection:Readonly<z.infer<typeof cismSelectionSchema>>):Promise<ReadResult<CismObservation>>;
+  searchStudentsByName?(exactName:Readonly<string>):Promise<unknown>;
 }
 /** Inject the canonical Education safeguard, together with its verified policy/source identity. */
 export interface DailyRecordParentSafeguard {readonly policySha256:string;readonly safeguardSourceSha256:string;readonly sourceRef:string;check(text:string):boolean;checkLines(text:string):boolean}
@@ -146,6 +148,19 @@ export class DailyRecordService {
         return freezeLabelData(result);
       });
     }catch{return {...base,status:'unavailable' as const,reasonCode:'student_metadata_unqualified_no_automatic_retry'};}
+  }
+  async resolveStudent(value:unknown){
+    const input=studentResolveInputSchema.parse(value);
+    const base={purpose:input.purpose,currentRequestRef:input.currentRequestRef,displayName:input.displayName,
+      academyWrites:0,parentSends:0,automaticRetryAllowed:false,sourceContentIsUntrustedData:true,execution:'read_only' as const};
+    if(!this.backend?.searchStudentsByName)return {...base,status:'unavailable' as const,reasonCode:'student_resolve_backend_not_configured'};
+    try{
+      return await this.#serial(async()=>{
+        const result=await resolveStudentByName(input.displayName,{searchByName:name=>this.backend!.searchStudentsByName!(name)});
+        if(result.status==='unavailable')return {...base,...result};
+        return freezeLabelData({...base,...result});
+      });
+    }catch{return {...base,status:'unavailable' as const,reasonCode:'student_resolve_unqualified_no_automatic_retry'};}
   }
   async intake(value:unknown){
     const input=dailyRecordIntakeSchema.parse(value),context=input.context;

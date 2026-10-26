@@ -1,6 +1,7 @@
 import type {McpServer} from '@modelcontextprotocol/server';
 import {readOnlyAnnotations} from './contracts.ts';
 import {DailyRecordService,dailyRecordIntakeSchema,dailyRecordReviewSchema,cismSectionSchema,studentMetadataBatchSchema,type DailyRecordParentSafeguard} from './dailyrecord.ts';
+import {studentResolveInputSchema} from './student-resolver.ts';
 import {readPinnedLocalBytes} from './item-label-store.ts';
 
 export function registerDailyRecordTools(server:McpServer,service=new DailyRecordService()){
@@ -12,6 +13,11 @@ export function registerDailyRecordTools(server:McpServer,service=new DailyRecor
     description:'Exact source namespace academy.lms.metadata, admitted teacher/student/date and explicit queries required. Student names and teacher labels come only from the owner admission. Uses the same client/authentication lifecycle and serialized failure fence as DailyRecord reads. Paper queries require an explicit period; DT relative selectors have no inferred calendar bounds. Exports only owner-matched metadata rows, known period/selectors, observedAt and coverage/unknowns, including history; never page functions, forms, controls, navigation, script sources or TR cells. No content/definition reads, paging traversal, DailyRecord fields, writes, printing, sending or automatic retry. Older-paper positive wire qualification remains unavailable without the exact approved source function bytes.',
     inputSchema:studentMetadataBatchSchema,annotations,
   },async input=>result(await service.metadata(input)));
+  server.registerTool('academy_student_resolve',{
+    title:'Resolve one exact student display name to its native student key',
+    description:'Exact display-name match only; the owner admission supplies no names. Zero rows or multi-key collisions resolve to unavailable with a named blocker. Uses the same client/authentication lifecycle and serialized failure fence as metadata reads. Read-only, no writes, no guessing, no automatic retry.',
+    inputSchema:studentResolveInputSchema,annotations,
+  },async input=>result(await service.resolveStudent(input)));
   server.registerTool('academy_dailyrecord_intake',{
     title:'Prepare scoped DailyRecord intake and missing-only interview',
     description:'Requires current user purpose, request reference, exact teacher/student/date/namespace, selected fields, today\'s memo answer and user facts/references. Preserves qualified existing values. No inference of attendance or assessment codes. Live source is unavailable unless the source owner injects a qualified read backend. Caller context is not authority. No Academy writes or parent sending.',

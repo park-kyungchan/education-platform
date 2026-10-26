@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "academy.saved-to-native-mapping/1",
+  "status": "partially_proven",
+  "note": "G2 resolver approach (owner-decisions-20261026). One live-proven binding below; all other students stay empty until resolver-confirmed. Unmapped scope is unavailable, never guessed. This file never carries credential material.",
+  "admittedScope": {
+    "sourceNamespace": null,
+    "teacherId": null,
+    "allowedLessonDates": [],
+    "status": "owner_pending_scope_expansion_G1"
+  },
+  "bindings": [
+    {
+      "savedStudentId": "stu_c7c07d590b374817a8169633d2b625e7",
+      "nativeStudentId": "1293067",
+      "displayName": "박세은",
+      "evidence": {
+        "source": "live DT inventory observation",
+        "observedAt": "2026-10-26T12:40:00Z",
+        "session": "Meta",
+        "detail": "academy_daily_test_inventory(studentId=1293067) returned a row whose studentName matched the saved roster name"
+      }
+    },
+    {
+      "savedStudentId": "stu_e656cff00f3b420c98c002588c6f58a6",
+      "nativeStudentId": "1294575",
+      "displayName": "이현승",
+      "evidence": {
+        "source": "live DT inventory observation",
+        "observedAt": "2026-10-26T13:00:36Z",
+        "session": "owner override A, fresh bridge probe",
+        "detail": "academy_daily_test_inventory(studentId=1294575) returned 3 rows, every row studentKey 1294575 studentName 이현승; owner admission extended under user override"
+      }
+    }
+  ],
+  "rules": [
+    "savedStudentId matches ^stu_[0-9a-f]+$; nativeStudentId matches ^[1-9][0-9]{0,15}$.",
+    "Two live-proven bindings; every other row stays empty until resolver-confirmed.",
+    "Out-of-admission lessonDate is denied with a named blocker, not retried."
+  ]
+}
