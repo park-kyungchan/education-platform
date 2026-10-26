@@ -106,25 +106,28 @@ export class DailyRecordService {
   readonly #handles=new Map<string,{observation:DailyRecordObservation;scope:DailyRecordScope;requestRef:string}>();
   readonly #cismHandles=new Map<string,CismObservation>();
   #tail:Promise<unknown>=Promise.resolve();
-  #readRefused=false;
   constructor(readonly backend:DailyRecordReadBackend|null=null,readonly parentSafeguard:DailyRecordParentSafeguard|null=null,readonly now:()=>number=Date.now,readonly learningPolicy:DailyRecordLearningPolicy|null=null){
     if(learningPolicy)for(const pin of [learningPolicy.bundleSha256,learningPolicy.configSha256,learningPolicy.catalogSha256])hash.parse(pin);
     if(parentSafeguard){hash.parse(parentSafeguard.policySha256);hash.parse(parentSafeguard.safeguardSourceSha256);dailyRecordIdSchema.parse(parentSafeguard.sourceRef);}
   }
   #base(context:DailyRecordContext){return {workflowContext:dailyRecordWorkflowContext,userContext:context,academyWrites:0,parentSends:0,automaticRetryAllowed:false,sourceContentIsUntrustedData:true};}
   #age(observedAt:string){const age=this.now()-Date.parse(observedAt);return age<0||age>300000;}
+  // P4: serialization keeps the account-lock order, but failures close per
+  // request. No session-wide latch: the next request gets a fresh judgement,
+  // still with no automatic retry inside a request. Uncertain source state
+  // is resolved only by a later readback, never by replaying the failure.
   async #serial<T>(run:()=>Promise<T>):Promise<T>{
-    const result=this.#tail.then(async()=>{if(this.#readRefused)throw Error('source_read_requires_owner_resolution');try{return await run();}catch{this.#readRefused=true;throw Error('source_read_requires_owner_resolution');}});
+    const result=this.#tail.then(async()=>{try{return await run();}catch{throw Error('source_read_failed_per_request');}});
     this.#tail=result.catch(()=>{});return result;
   }
   async #read(scope:DailyRecordScope){
     if(!this.backend)return {status:'unavailable' as const,reasonCode:'dailyrecord_read_backend_not_configured'};
     try{return await this.#serial(async()=>{
       const read=await this.backend!.readDailyRecord(freezeLabelData(structuredClone(scope)));
-      if(read.status==='unavailable'){this.#readRefused=true;return {status:'unavailable' as const,reasonCode:safeReason(read.reasonCode)};}
+      if(read.status==='unavailable')return {status:'unavailable' as const,reasonCode:safeReason(read.reasonCode)};
       return {status:'observed' as const,observation:qualifiedObservation(read.observation,scope)};
     });
-    }catch{this.#readRefused=true;return {status:'unavailable' as const,reasonCode:'dailyrecord_source_unqualified_no_automatic_retry'};}
+    }catch{return {status:'unavailable' as const,reasonCode:'dailyrecord_source_unqualified_no_automatic_retry'};}
   }
   async metadata(value:unknown){
     const input=studentMetadataBatchSchema.parse(value);
@@ -240,7 +243,7 @@ export class DailyRecordService {
     if(!this.backend?.readCismSection)return {...this.#base(context),status:'unavailable',reasonCode:'exact_cism_read_backend_not_configured',observationHandle:null,execution:'not_supported'};
     try{return await this.#serial(async()=>{
       const read=await this.backend!.readCismSection!(freezeLabelData(structuredClone(context.scope)),freezeLabelData(structuredClone(input.selection)));
-      if(read.status==='unavailable'){this.#readRefused=true;return {...this.#base(context),status:'unavailable',reasonCode:safeReason(read.reasonCode),observationHandle:null,execution:'not_supported'};}
+      if(read.status==='unavailable')return {...this.#base(context),status:'unavailable',reasonCode:safeReason(read.reasonCode),observationHandle:null,execution:'not_supported'};
       const observation=cismObservationSchema.parse(read.observation);
       if(!same(observation.scope,context.scope)||!same(observation.selection,input.selection)||this.#age(observation.observedAt)
         ||observation.sourceReferenceDate<input.selection.periodStart||observation.sourceReferenceDate>input.selection.periodEnd)throw Error('cism_scope_or_freshness_conflict');
@@ -248,6 +251,6 @@ export class DailyRecordService {
       const observationHandle='cism-observation:'+randomUUID();this.#cismHandles.set(observationHandle,freezeLabelData(observation));
       return {...this.#base(context),status:'observed',observationHandle,observation:freezeLabelData(observation),parentRewording:'not_performed',execution:'not_supported'};
     });
-    }catch{this.#readRefused=true;return {...this.#base(context),status:'unavailable',reasonCode:'exact_cism_source_unqualified_no_automatic_retry',observationHandle:null,execution:'not_supported'};}
+    }catch{return {...this.#base(context),status:'unavailable',reasonCode:'exact_cism_source_unqualified_no_automatic_retry',observationHandle:null,execution:'not_supported'};}
   }
 }
