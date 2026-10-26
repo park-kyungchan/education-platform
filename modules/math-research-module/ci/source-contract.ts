@@ -5,7 +5,7 @@ export const mathSourceCi = {
     projectId: 'math-research-module',
     domainId: 'mathematics-education',
   },
-  sharedAction: 'park-kyungchan/agent-platform/.github/actions/bun-source@8a91a8837d3b6454d7bba5e90d25651cb898f69b',
+  sharedAction: 'park-kyungchan/agent-platform/.github/actions/bun-source@f6649663fb78261de2499f0920306c32f5e22f1f',
   sourceAuthorMetadata: '.github/source-author.json',
   sourceSha: '${{ github.event.pull_request.head.sha || github.sha }}',
   runtime: { bun: '1.4.2', node: '24.19.0' },

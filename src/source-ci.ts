@@ -8,7 +8,7 @@ export const educationSourceCi = {
  setup: {bootstrapBun:'1.4.2',script:'setup'},
  source: {
   jobId: 'source',
-  action: 'park-kyungchan/agent-platform/.github/actions/bun-source@8a91a8837d3b6454d7bba5e90d25651cb898f69b',
+  action: 'park-kyungchan/agent-platform/.github/actions/bun-source@f6649663fb78261de2499f0920306c32f5e22f1f',
   fetchDepth: 0,
   bun: bunToolchain.version,
   installDependencies: 'false',
