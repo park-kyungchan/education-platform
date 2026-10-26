@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "academy.runtime-exposure/1",
+  "note": "Canonical academy MCP tool exposure. One declaration for all runtimes (P2). Reads open first; writes stay closed until attribution fixtures pass and a separate user instruction opens them (P5).",
+  "tools": [
+    {"name": "academy_capabilities", "class": "read", "exposure": "open"},
+    {"name": "academy_source_status", "class": "read", "exposure": "open"},
+    {"name": "academy_query", "class": "read", "exposure": "open"},
+    {"name": "academy_teacher_query", "class": "read", "exposure": "open"},
+    {"name": "academy_teacher_report", "class": "read", "exposure": "open"},
+    {"name": "academy_student_metadata", "class": "read", "exposure": "open"},
+    {"name": "academy_dailyrecord_intake", "class": "read", "exposure": "open"},
+    {"name": "academy_dailyrecord_review", "class": "read", "exposure": "open"},
+    {"name": "academy_cism_section", "class": "read", "exposure": "open"},
+    {"name": "academy_item_label_scope", "class": "read", "exposure": "open"},
+    {"name": "academy_find_item_labels", "class": "read", "exposure": "open"},
+    {"name": "academy_review_type_questions", "class": "read", "exposure": "open"},
+    {"name": "academy_pool_source_contract", "class": "read", "exposure": "open"},
+    {"name": "academy_pool_question_content", "class": "read", "exposure": "open"},
+    {"name": "academy_review_candidate_set", "class": "read", "exposure": "open"},
+    {"name": "academy_prepare_paper_plan", "class": "read", "exposure": "open"},
+    {"name": "academy_verify_paper_preparation", "class": "read", "exposure": "open"},
+    {"name": "academy_verify_paper_output", "class": "read", "exposure": "open"}
+  ],
+  "closedUntilAttribution": [],
+  "rules": [
+    "Every runtime registers the same server; exposure differences live only in this manifest, never in per-runtime bridge filters.",
+    "A read tool with no injected backend returns unavailable. It never falls back to writes or guesses.",
+    "Failures close per request. No endpoint-wide latch; uncertain effects resolve only by readback (P4)."
+  ]
+}
