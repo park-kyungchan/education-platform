@@ -23,7 +23,7 @@ const configuration=await dailyRecordToolConfiguration(learning.remainingArgs);
 // native triple belongs to the DailyRecord backend only; the label loader
 // accepts only its own four arguments.
 const hasNativeTriple=configuration.remainingArgs[0]==='--dailyrecord-native';
-const native=await nativeDailyRecordConfiguration(hasNativeTriple?configuration.remainingArgs.slice(0,3):[]);
+const native=await nativeDailyRecordConfiguration(hasNativeTriple?configuration.remainingArgs.slice(0,3):[],configuration.ownerAdmission);
 const labelArgs=hasNativeTriple?configuration.remainingArgs.slice(3):configuration.remainingArgs;
 registerItemLabelTools(server,await loadItemLabelIndex(labelArgs));
 registerDailyRecordTools(server,new DailyRecordService(native?.backend??null,configuration.parentSafeguard,Date.now,learning.learningPolicy));
@@ -36,8 +36,8 @@ server.registerTool('academy_capabilities', {
 }, input => result(service.capabilities(input)));
 registerSavedQuery(server,input=>service.query(input));
 server.registerTool('academy_source_status', {
-  title: 'Source availability, visibility and preservation limits',
-  description: 'Read saved-source coverage and the user-reported two-week website visibility limit and direct-access permission restriction. No live probe, refresh or authentication.',
+  title: 'Historical saved-context coverage and preservation limits',
+  description: 'Saved-context coverage ONLY. Historical user-reported website/access limits do not describe the configured live DailyRecord backend. For today/current DailyRecord use academy_dailyrecord_get or academy_student_resolve then academy_dailyrecord_intake; only that call establishes live availability. This tool performs no live probe, refresh or authentication.',
   inputSchema: sourceStatusInputSchema,
   annotations: readOnlyAnnotations,
 }, input => result(service.sourceStatus(input)));

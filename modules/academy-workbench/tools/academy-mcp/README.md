@@ -16,6 +16,8 @@ Three additional tools carry the user's study purpose, retained requirements, ex
 
 ## DailyRecord intake and review
 
+For live lookups by name, start with `academy_dailyrecord_get`. It resolves the exact name and invokes qualified intake using launch-owned namespace/teacher/date admission. `lessonDate` defaults to `today` in `Asia/Seoul`. A read can succeed while later authoring still requires a memo/assessment interview. The saved-context tools do not probe live availability. See [the natural-request route and neutral installation](docs/dailyrecord-live-routing.md).
+
 The existing MCP entrypoints also register `academy_dailyrecord_intake`, `academy_dailyrecord_review` and `academy_cism_section`. Every call requires current user purpose, exact teacher/student/date scope, selected fields, today's memo answer and attributed facts. Intake preserves existing assessments/attendance and interviews only missing values. Review checks parent text and proposed field differences; exact source-before checks require backend-issued handles. Default source backends remain unconfigured; the dedicated entrypoint optionally connects the explicitly pinned private native DailyRecord read adapter. CISM remains unconfigured and no save/send tool is registered. Read [the context, canonical wording safeguard, adapter path and limits](docs/dailyrecord-workflow.md). `start:dailyrecord` starts only these three nonwriting tools, without loading preserved student data.
 
 ## Install and run

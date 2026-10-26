@@ -1,0 +1,159 @@
+{
+ "schema": "academy.mcp-e2e-work/1",
+ "at": "2026-10-26T15:10:26.027680+00:00",
+ "status": "verified-publication-pending",
+ "identity": {
+  "projectId": "education-platform",
+  "workId": "academy-mcp-e2e-20261026",
+  "taskId": "strict-live-dailyrecord-routing",
+  "registration": "local-record",
+  "nativeTaskId": null,
+  "nativeRunId": null
+ },
+ "author": {
+  "runtime": "codex",
+  "threadId": "01a178b0-53b9-7832-8b03-10518c5203c6",
+  "observedVia": "herdr.agent_session"
+ },
+ "scope": {
+  "source": "modules/academy-workbench/tools/academy-mcp",
+  "installation": "/root/.local/share/academy-mcp",
+  "academyWrites": 0,
+  "parentSends": 0,
+  "privateStoreReads": 0,
+  "independentReviewerOwner": "Meta",
+  "mergeBypassAllowed": false
+ },
+ "diagnosis": {
+  "intent": {
+   "evidenceClass": "USER_REPORTED",
+   "finding": "Original Muse selected a snapshot for a current read (user report). Intent alone is not proven causal; private transcripts were not inspected."
+  },
+  "surface": {
+   "files": [
+    "src/query-tool.ts",
+    "src/server.ts",
+    "src/service.ts",
+    "src/dailyrecord-tools.ts",
+    "src/dailyrecord-context.ts"
+   ],
+   "finding": "Saved-status labels obscured live scope; intake required authoring context and interview_required did not mean read unavailable."
+  },
+  "code": {
+   "files": [
+    "src/student-resolver.ts",
+    "src/native-dailyrecord-backend.ts",
+    "src/owner-admission.ts"
+   ],
+   "finding": "No name-to-intake composition or owner scope discovery. Range admission was not injected into the single-date native loader."
+  }
+ },
+ "changes": [
+  "Strict read-only name/today route with exact resolve then qualified intake; Asia/Seoul date default.",
+  "Existing intake/review schemas retained; read success separated from authoring interviews.",
+  "Launch-only pinned teacher/date admission, preserving exact-date fallback and admitted students.",
+  "Maintained neutral source, one upstream lifetime/account lock and metadata-only phase receipts.",
+  "Saved-source status explicitly excludes live backend health."
+ ],
+ "observations": [
+  {
+   "name": "fresh-natural-request-oct26",
+   "path": "/root/.local/share/academy-mcp/e2e-20261026/fresh-oct26.json",
+   "sha256": "ea433de5f9d3a0db693153ffaed4d90d4ea237230e87d6b55a2264490dd15b59",
+   "bytes": 1239,
+   "session": "01a178b7-7e6d-7841-a3cc-8ac5e79006f0",
+   "sourceAvailability": [
+    "observed",
+    "observed"
+   ],
+   "userPrompts": 1,
+   "exactSingleSentence": true,
+   "tools": [
+    "mcp__academy_operations__academy_dailyrecord_get"
+   ],
+   "status": "finished"
+  },
+  {
+   "name": "fresh-final-natural-request-oct27",
+   "path": "/root/.local/share/academy-mcp/e2e-20261026/fresh-oct27.json",
+   "sha256": "0ff2753440b32478afc57ea8d5509952d77ff055ea52b589df0b3bb9b3d0bcee",
+   "bytes": 1245,
+   "session": "01a178bf-685b-7773-b2bb-13f912f8ff4a",
+   "sourceAvailability": [
+    "unavailable",
+    "unavailable"
+   ],
+   "userPrompts": 1,
+   "exactSingleSentence": true,
+   "tools": [
+    "mcp__academy_operations__academy_dailyrecord_get"
+   ],
+   "status": "finished"
+  },
+  {
+   "name": "final-install-explicit-oct26",
+   "path": "/root/.local/share/academy-mcp/e2e-20261026/installed-oct26.json",
+   "sha256": "d32a9c2d036abb9287d85f1712d45e73c3c13d4b6b70a167acf817035ba6084f",
+   "bytes": 295,
+   "sourceAvailability": "observed",
+   "tools": [
+    "academy_student_resolve",
+    "academy_dailyrecord_intake"
+   ],
+   "status": "observed"
+  }
+ ],
+ "checks": {
+  "mcpTests": {
+   "status": "pass",
+   "passed": 209,
+   "failed": 0
+  },
+  "mcpTypecheck": "pass",
+  "rootCheck": "pass",
+  "sourceProjection": "pass",
+  "moduleChecks": "All source-map checks passed through root runner; Node/npm mathematics reference preserved.",
+  "initialFailures": [
+   "Discovery expectations and provenance pins updated after initial failures; final checks passed.",
+   "Direct module check without pinned-snapshot env failed; canonical root runner used the required environment and passed."
+  ]
+ },
+ "remaining": [
+  "Commit and push branch",
+  "Open PR; Meta owns independent review"
+ ],
+ "unresolvedEffects": [],
+ "limits": [
+  "No claim that an unobserved next-day source record is blank or absent.",
+  "Original source-observed fresh natural request occurred before the Asia/Seoul date boundary.",
+  "No native registration, school record mutation, parent send or acceptance inferred from source tests."
+ ],
+ "installedPins": [
+  {
+   "path": "server.ts",
+   "sha256": "9b8dc63707ef87920af8edc5393c8d5dc491a89116925a18e3be6275081600fd",
+   "bytes": 8432
+  },
+  {
+   "path": "server.mjs",
+   "sha256": "28077a6a550ac8abef72d526f31c51958e0a58978c5543fdba3d6338fdcf6457",
+   "bytes": 1271727
+  },
+  {
+   "path": "endpoints.json",
+   "sha256": "e7375624483d91b6353fad7ed0a2becf7a4fc6f6a96c799ad199851a88f6dc71",
+   "bytes": 6937
+  },
+  {
+   "path": "registry.json",
+   "sha256": "d43ddff70b8701c071c65233ac1994f69f2f063b4983054d7a0a49dd3aa6f63d",
+   "bytes": 79436
+  },
+  {
+   "path": "routing.json",
+   "sha256": "0437b82170277eb14087bab59b531f4a4013afa01d305fee422cf9dfa89045a6",
+   "bytes": 246
+  }
+ ],
+ "evidenceRoot": "/root/.local/share/academy-mcp/e2e-20261026"
+}

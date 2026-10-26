@@ -4,6 +4,53 @@
   "transport": "stdio",
   "sourceMode": "saved_context",
   "tools": {
+    "academy_dailyrecord_get": {
+      "input": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "displayName": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200,
+            "description": "Exact student display name from the current user request; never guess a native key."
+          },
+          "purpose": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "description": "The current user request or its purpose. Reading does not authorize authoring or saving."
+          },
+          "currentRequestRef": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "description": "Reference to this current user request; not an approval or credential."
+          },
+          "lessonDate": {
+            "default": "today",
+            "description": "Omit for today in Asia/Seoul. An explicit date must fall inside the owner-admitted range.",
+            "anyOf": [
+              {
+                "type": "string",
+                "const": "today"
+              },
+              {
+                "type": "string",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+              }
+            ]
+          }
+        },
+        "required": [
+          "displayName",
+          "purpose",
+          "currentRequestRef"
+        ],
+        "additionalProperties": false
+      },
+      "runtimeRefinements": "Read-only name -> exact native resolution -> qualified intake. Today uses Asia/Seoul. Owner scope is never caller input; unavailable/ambiguous/out-of-admission requests stop without retry. Authoring interviews do not block an observed read."
+    },
     "academy_capabilities": {
       "input": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -1838,6 +1885,66 @@
                     "requestRef"
                   ],
                   "additionalProperties": false
+                },
+                "learningEntries": {
+                  "maxItems": 64,
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "bookRef": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                      },
+                      "unitRef": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                      },
+                      "scope": {
+                        "type": "string",
+                        "enum": [
+                          "unit",
+                          "sections"
+                        ]
+                      },
+                      "sectionRefs": {
+                        "maxItems": 64,
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 256
+                        }
+                      },
+                      "activity": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 400
+                      },
+                      "deadline": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "bookRef",
+                      "unitRef",
+                      "scope",
+                      "sectionRefs",
+                      "activity",
+                      "deadline"
+                    ],
+                    "additionalProperties": false
+                  }
                 }
               },
               "required": [
@@ -2218,6 +2325,66 @@
                     "requestRef"
                   ],
                   "additionalProperties": false
+                },
+                "learningEntries": {
+                  "maxItems": 64,
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "bookRef": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                      },
+                      "unitRef": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                      },
+                      "scope": {
+                        "type": "string",
+                        "enum": [
+                          "unit",
+                          "sections"
+                        ]
+                      },
+                      "sectionRefs": {
+                        "maxItems": 64,
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 256
+                        }
+                      },
+                      "activity": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 400
+                      },
+                      "deadline": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "bookRef",
+                      "unitRef",
+                      "scope",
+                      "sectionRefs",
+                      "activity",
+                      "deadline"
+                    ],
+                    "additionalProperties": false
+                  }
                 }
               },
               "required": [

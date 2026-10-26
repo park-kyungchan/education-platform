@@ -3,6 +3,7 @@ import {z} from 'zod';
 import {dailyRecordContextSchema,dailyRecordDateSchema,dailyRecordFieldSchema,dailyRecordFields,dailyRecordIdSchema,dailyRecordScopeSchema,dailyRecordWorkflowContext,type DailyRecordContext,type DailyRecordField,type DailyRecordScope} from './dailyrecord-context.ts';
 import {freezeLabelData} from './item-label-context.ts';
 import {resolveStudentByName,studentResolveInputSchema} from './student-resolver.ts';
+import {readDailyRecordByName,type DailyRecordReadAdmission} from './dailyrecord-read.ts';
 import {toolResultBytes} from './tool-result.ts';
 
 const hash=z.string().regex(/^[a-f0-9]{64}$/),instant=z.iso.datetime({offset:true});
@@ -53,6 +54,7 @@ export type StudentMetadataBatch=z.infer<typeof studentMetadataBatchSchema>;
 export type StudentMetadataObservation={scope:StudentMetadataBatch['scope'];results:{query:StudentMetadataBatch['queries'][number];observation:unknown}[]};
 /** Implemented by the native/source owner, never by MCP arguments. All methods are read-only. */
 export interface DailyRecordReadBackend {
+  readRoutingAdmission?():DailyRecordReadAdmission;
   readDailyRecord(scope:Readonly<DailyRecordScope>):Promise<ReadResult<DailyRecordObservation>>;
   readStudentMetadata?(input:Readonly<StudentMetadataBatch>):Promise<StudentMetadataObservation>;
   readCismSection?(scope:Readonly<DailyRecordScope>,selection:Readonly<z.infer<typeof cismSelectionSchema>>):Promise<ReadResult<CismObservation>>;
@@ -148,6 +150,9 @@ export class DailyRecordService {
         return freezeLabelData(result);
       });
     }catch{return {...base,status:'unavailable' as const,reasonCode:'student_metadata_unqualified_no_automatic_retry'};}
+  }
+  async get(value:unknown){
+    return readDailyRecordByName(value,this,this.backend?.readRoutingAdmission?.()??null,this.now);
   }
   async resolveStudent(value:unknown){
     const input=studentResolveInputSchema.parse(value);

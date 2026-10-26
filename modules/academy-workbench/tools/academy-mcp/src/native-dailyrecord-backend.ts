@@ -6,6 +6,7 @@ import {z} from 'zod';
 import {readPinnedLocalBytes} from './item-label-store.ts';
 import {dailyRecordObservationSchema,studentMetadataBatchSchema,type DailyRecordReadBackend,type DailyRecordObservation,type StudentMetadataBatch,type StudentMetadataObservation} from './dailyrecord.ts';
 import type {DailyRecordScope} from './dailyrecord-context.ts';
+import {ownerAdmissionSchema,isDateAdmitted,type OwnerAdmission} from './owner-admission.ts';
 
 const home='/opt/data/profiles/dc-gang-a-dev';
 const key=z.string().regex(/^[1-9][0-9]{0,15}$/),hash=z.string().regex(/^[a-f0-9]{64}$/);
@@ -117,7 +118,17 @@ function projectStudentMetadata(query:StudentMetadataBatch['queries'][number],va
  * source/wire qualification and independent occurrence binding. This port never writes. */
 export class NativeDailyRecordBackend implements DailyRecordReadBackend {
   #ready:Promise<unknown>|undefined;
-  constructor(readonly client:SourcePort,readonly admission:Admission,readonly credential:()=>{username:string;password:string}){}
+  constructor(readonly client:SourcePort,readonly admission:Admission,readonly credential:()=>{username:string;password:string},readonly ownerAdmission:OwnerAdmission|null=null){
+    if(ownerAdmission){
+      ownerAdmissionSchema.parse(ownerAdmission);
+      if(ownerAdmission.teacherId!==admission.teacherId||!isDateAdmitted(admission.date,ownerAdmission))throw Error('native_dailyrecord_owner_admission_mismatch');
+    }
+  }
+  readRoutingAdmission(){
+    // Discovery reflects only this exact owner launch. It does not widen its date or student scope.
+    return {sourceNamespace:'academy.lms.dayrecord' as const,teacherId:this.admission.teacherId,
+      allowedFrom:this.ownerAdmission?.allowedFrom??this.admission.date,allowedThrough:this.ownerAdmission?.allowedThrough??this.admission.date};
+  }
   #authenticate(){
     // One retained promise for every read family, including synchronous credential/auth failures.
     return this.#ready??=Promise.resolve().then(()=>this.client.authenticate(this.credential()));
@@ -168,7 +179,7 @@ export class NativeDailyRecordBackend implements DailyRecordReadBackend {
   async readDailyRecord(scope:Readonly<DailyRecordScope>){
     const student=this.admission.students.find(s=>s.studentId===scope.studentId);
     if(scope.sourceNamespace!=='academy.lms.dayrecord'||scope.teacherId!==this.admission.teacherId
-      ||scope.lessonDate!==this.admission.date||!student)throw Error('native_dailyrecord_scope_refused');
+      ||!(this.ownerAdmission?isDateAdmitted(scope.lessonDate,this.ownerAdmission):scope.lessonDate===this.admission.date)||!student)throw Error('native_dailyrecord_scope_refused');
     // Keep a failed authentication promise: subsequent calls must not retry login.
     await this.#authenticate();
     const selector=await this.client.discoverDayRecordGroups({teacherLabel:this.admission.teacherLabel,date:scope.lessonDate});
@@ -199,7 +210,7 @@ export class NativeDailyRecordBackend implements DailyRecordReadBackend {
   }
 }
 
-export async function nativeDailyRecordConfiguration(args:readonly string[]){
+export async function nativeDailyRecordConfiguration(args:readonly string[],ownerAdmission:OwnerAdmission|null=null){
   if(!args.length)return null;
   if(args.length!==3||args[0]!=='--dailyrecord-native')throw Error('dailyrecord_native_arguments_invalid');
   if(process.getuid?.()!==10000||process.env.HERMES_HOME!==home)throw Error('native_dailyrecord_owner_required');
@@ -223,6 +234,6 @@ export async function nativeDailyRecordConfiguration(args:readonly string[]){
   if(!password)throw Error('native_http_secret_required');
   const client=new module.AcademyHttpClient({teacherLabel:owner.teacherLabel,teacherKey:owner.teacherSourceKey,collegeKey:owner.collegeSourceKey}) as SourcePort;
   const backend=new NativeDailyRecordBackend(client,{teacherId:owner.teacherSourceKey,teacherLabel:owner.teacherLabel,
-    date:config.date,students:config.students,sourceBundleSha256:config.sourceBundleSha256},()=>({username:owner.sourceUsername,password}));
+    date:config.date,students:config.students,sourceBundleSha256:config.sourceBundleSha256},()=>({username:owner.sourceUsername,password}),ownerAdmission);
   return {backend,close:()=>client.close()};
 }

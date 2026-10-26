@@ -3,11 +3,17 @@ import {readOnlyAnnotations} from './contracts.ts';
 import {DailyRecordService,dailyRecordIntakeSchema,dailyRecordReviewSchema,cismSectionSchema,studentMetadataBatchSchema,type DailyRecordParentSafeguard} from './dailyrecord.ts';
 import {studentResolveInputSchema} from './student-resolver.ts';
 import {readPinnedLocalBytes} from './item-label-store.ts';
+import {dailyRecordGetSchema,dailyRecordGetDescription} from './dailyrecord-read.ts';
+import {ownerAdmissionSchema,type OwnerAdmission} from './owner-admission.ts';
 
 export function registerDailyRecordTools(server:McpServer,service=new DailyRecordService()){
   const annotations={...readOnlyAnnotations,openWorldHint:service.backend!==null,idempotentHint:service.backend===null};
   const result=(value:unknown)=>{const structuredContent=JSON.parse(JSON.stringify(value)) as Record<string,unknown>;
     return {content:[{type:'text' as const,text:JSON.stringify(structuredContent)}],structuredContent};};
+  server.registerTool('academy_dailyrecord_get',{
+    title:'Read live DailyRecord by student name (today by default)',
+    description:dailyRecordGetDescription,inputSchema:dailyRecordGetSchema,annotations,
+  },async input=>result(await service.get(input)));
   server.registerTool('academy_student_metadata',{
     title:'Read a bounded selected-student metadata batch',
     description:'Exact source namespace academy.lms.metadata, admitted teacher/student/date and explicit queries required. Student names and teacher labels come only from the owner admission. Uses the same client/authentication lifecycle and serialized failure fence as DailyRecord reads. Paper queries require an explicit period; DT relative selectors have no inferred calendar bounds. Exports only owner-matched metadata rows, known period/selectors, observedAt and coverage/unknowns, including history; never page functions, forms, controls, navigation, script sources or TR cells. No content/definition reads, paging traversal, DailyRecord fields, writes, printing, sending or automatic retry. Older-paper positive wire qualification remains unavailable without the exact approved source function bytes.',
@@ -15,12 +21,12 @@ export function registerDailyRecordTools(server:McpServer,service=new DailyRecor
   },async input=>result(await service.metadata(input)));
   server.registerTool('academy_student_resolve',{
     title:'Resolve one exact student display name to its native student key',
-    description:'Exact display-name match only; the owner admission supplies no names. Zero rows or multi-key collisions resolve to unavailable with a named blocker. Uses the same client/authentication lifecycle and serialized failure fence as metadata reads. Read-only, no writes, no guessing, no automatic retry.',
+    description:'Resolve an exact display name to its native key for live tools. For a DailyRecord lookup prefer academy_dailyrecord_get, which resolves and runs intake using owner-supplied scope. Zero rows or multi-key collisions stop with a named blocker. Uses the same native read lifecycle. No writes, guessing or automatic retry.',
     inputSchema:studentResolveInputSchema,annotations,
   },async input=>result(await service.resolveStudent(input)));
   server.registerTool('academy_dailyrecord_intake',{
     title:'Prepare scoped DailyRecord intake and missing-only interview',
-    description:'Requires current user purpose, request reference, exact teacher/student/date/namespace, selected fields, today\'s memo answer and user facts/references. Preserves qualified existing values. No inference of attendance or assessment codes. Live source is unavailable unless the source owner injects a qualified read backend. Caller context is not authority. No Academy writes or parent sending.',
+    description:'Read qualified live DailyRecord before-state and prepare missing-only authoring interview. For name/today lookups prefer academy_dailyrecord_get; for explicit scope first resolve the name with academy_student_resolve. Requires current purpose/request, exact native teacher/student/date/namespace, selected fields, memo answer and facts. Use not_supplied and empty facts when none were supplied; never invent a memo answer or source codes. Configured owner backends are called live; sourceAvailability=observed proves the read even if status=interview_required for later authoring. Saved academy_source_status does not describe this backend. Caller context is not authority. No writes or sending.',
     inputSchema:dailyRecordIntakeSchema,annotations,
   },async input=>result(await service.intake(input)));
   server.registerTool('academy_dailyrecord_review',{
@@ -36,9 +42,14 @@ export function registerDailyRecordTools(server:McpServer,service=new DailyRecor
 }
 
 /** Launch-time owner-selected definition bytes; never accept policy paths or code in a tool call. */
-export async function dailyRecordToolConfiguration(args:readonly string[]):Promise<{remainingArgs:string[];parentSafeguard:DailyRecordParentSafeguard|null}>{
-  const remainingArgs:string[]=[];let parentSafeguard:DailyRecordParentSafeguard|null=null;
+export async function dailyRecordToolConfiguration(args:readonly string[]):Promise<{remainingArgs:string[];parentSafeguard:DailyRecordParentSafeguard|null;ownerAdmission:OwnerAdmission|null}>{
+  const remainingArgs:string[]=[];let parentSafeguard:DailyRecordParentSafeguard|null=null,ownerAdmission:OwnerAdmission|null=null;
   for(let i=0;i<args.length;i++){
+    if(args[i]==='--dailyrecord-admission'){
+      if(ownerAdmission||i+2>=args.length)throw Error('dailyrecord_admission_arguments_invalid');
+      const pinned=await readPinnedLocalBytes(args[i+1],args[i+2]);
+      ownerAdmission=ownerAdmissionSchema.parse(JSON.parse(pinned.bytes.toString('utf8')));i+=2;continue;
+    }
     if(args[i]!=='--dailyrecord-policy'){remainingArgs.push(args[i]);continue;}
     if(parentSafeguard||i+4>=args.length)throw Error('dailyrecord_policy_arguments_invalid');
     const [policyPath,policySha256,safeguardPath,safeguardSourceSha256]=args.slice(i+1,i+5);
@@ -53,5 +64,5 @@ export async function dailyRecordToolConfiguration(args:readonly string[]):Promi
     parentSafeguard={policySha256,safeguardSourceSha256,sourceRef:'Education:DailyRecord:parentInternalLanguage',check:text=>regex.test(text),checkLines:text=>lines.test(text)};
     i+=4;
   }
-  return {remainingArgs,parentSafeguard};
+  return {remainingArgs,parentSafeguard,ownerAdmission};
 }
