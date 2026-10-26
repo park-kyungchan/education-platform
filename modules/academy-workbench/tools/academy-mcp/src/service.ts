@@ -54,6 +54,8 @@ export class AcademyService {
     sourceStatusInputSchema.parse(value);
     return {
       schemaVersion: 1, sourceMode: 'saved_context', teacherScope: this.saved.scope,
+      statusScope:'preserved_snapshot_only_not_live_backend_health',
+      liveDailyRecord:{preferredTool:'academy_dailyrecord_get',explicitScopeRoute:['academy_student_resolve','academy_dailyrecord_intake'],availability:'not_probed_by_this_tool',historicalAccessReportIsCurrentBlocker:false},
       snapshotHash: this.saved.snapshotHash,
       acquisition: { academyNetworkTransport: 'absent', directServerAccess: 'unavailable_by_user_report', newAcademyReadsPerformed: false, automaticRefresh: false },
       visibilityKnowledge: this.intent.userReportedSourceConstraints,

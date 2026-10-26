@@ -1,5 +1,6 @@
 import {expect,test} from 'bun:test';
 import {NativeDailyRecordBackend,nativeDailyRecordConfigSchema,nativeDailyRecordConfiguration} from '../src/native-dailyrecord-backend.ts';
+import type {OwnerAdmission} from '../src/owner-admission.ts';
 
 const scope={sourceNamespace:'academy.lms.dayrecord',teacherId:'99001',studentId:'77001',lessonDate:'2040-01-04'};
 const admission={teacherId:scope.teacherId,teacherLabel:'Invented Teacher',date:scope.lessonDate,
@@ -14,6 +15,24 @@ function fixture(){
   journalState:async()=>({target,fields:{...row.fields,dailyTestAssessment:'0',previousHomeworkAssessment:'3'},previousRecordKey:'12',previousDate:prior.date,wireDigest:'a'.repeat(64)}),close:()=>{}};
  return {calls,port,backend:new NativeDailyRecordBackend(port,admission,()=>({username:'fictional',password:'fictional'}))};
 }
+const range:OwnerAdmission={schemaVersion:'academy.owner-admission/1',decider:'user',decidedAt:'2040-01-04',sourceNamespace:'academy.lms.dayrecord',teacherId:'99001',
+ allowedFrom:'2040-01-03',allowedThrough:'2040-01-05',failClosedDefault:'2026-10-23'};
+test('owner-pinned range is discoverable and admitted dates reach the source without widening teacher or student',async()=>{
+ const f=fixture(),backend=new NativeDailyRecordBackend(f.port,admission,()=>({username:'fictional',password:'fictional'}),range);
+ expect(backend.readRoutingAdmission()).toEqual({sourceNamespace:range.sourceNamespace,teacherId:range.teacherId,allowedFrom:range.allowedFrom,allowedThrough:range.allowedThrough});
+ // Exact requested date reaches the source; a foreign returned date still fails identity qualification.
+ await expect(backend.readDailyRecord({...scope,lessonDate:'2040-01-05'})).rejects.toThrow('native_dailyrecord_identity_conflict');
+ expect(f.calls.auth).toBe(1);expect(f.calls.requests[0].date).toBe('2040-01-05');
+ for(const changed of [{teacherId:'99002'},{studentId:'77002'},{lessonDate:'2040-01-06'}]){
+  const fresh=fixture(),held=new NativeDailyRecordBackend(fresh.port,admission,()=>({username:'fictional',password:'fictional'}),range);
+  await expect(held.readDailyRecord({...scope,...changed})).rejects.toThrow('native_dailyrecord_scope_refused');expect(fresh.calls.auth).toBe(0);
+ }
+});
+test('missing range retains the exact launch date and foreign or incompatible owner admission is refused',()=>{
+ const f=fixture();expect(f.backend.readRoutingAdmission()).toMatchObject({allowedFrom:scope.lessonDate,allowedThrough:scope.lessonDate});
+ for(const changed of [{teacherId:'99002'},{allowedFrom:'2040-01-05'}])
+  expect(()=>new NativeDailyRecordBackend(f.port,admission,()=>({username:'fictional',password:'fictional'}),{...range,...changed})).toThrow('native_dailyrecord_owner_admission_mismatch');
+});
 test('the native source port rereads current/prior occurrences, exports only six selected fields and keeps source revision independent of read time',async()=>{
  const {backend,calls}=fixture();const a=await backend.readDailyRecord(scope),b=await backend.readDailyRecord(scope);
  expect(calls.auth).toBe(1);expect(calls.requests).toHaveLength(4);
