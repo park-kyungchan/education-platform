@@ -3,16 +3,16 @@
   "codeOwner": "agent-platform",
   "source": {
     "repository": "https://github.com/park-kyungchan/agent-platform.git",
-    "commit": "7eabcdb20e358955c771e5aa0dc500448fa84534",
-    "tree": "82aad84ada5d2d67df1f609c1084811752d7c6b9",
+    "commit": "d754776b2d513d30ccf8fb4772ee67a4afb7b500",
+    "tree": "13e90dee21d39aa8b03402839e4f0bb9c9dfe58e",
     "inputs": [
       {
         "path": "ci/quality/receipt-validation-gate.ts",
-        "sha256": "a32d9653cc14fd0015464c895cd84194549dc076a4e94852782801a42eb3dcad"
+        "sha256": "1c0ce467315438c97a535b72b1e1f35fb7d4de50ecf9baef6f0255b80c9f183f"
       },
       {
         "path": "ci/quality/receipt-validator.ts",
-        "sha256": "d9b4492a08e3e801107fd17ba8a8ee3cc39cf875767e5b111635de18b394a725"
+        "sha256": "ac0e84e1742e3870f799fe3b2016abcc0d8ee48e8a347881fa7ed66a68563879"
       }
     ]
   },
@@ -94,7 +94,7 @@
   },
   "ontology": {
     "repository": "https://github.com/park-kyungchan/agent-platform.git",
-    "sourceCommit": "7eabcdb20e358955c771e5aa0dc500448fa84534",
+    "sourceCommit": "d754776b2d513d30ccf8fb4772ee67a4afb7b500",
     "archivePath": "releases/palantirkc-ontology-0.2.0.tgz",
     "archiveSha256": "3f9995d0b91d2ad39dfc7cedbb6e35b1cb9d29c2e57223ca0c076d2030319406",
     "version": "0.2.0",
@@ -2547,7 +2547,7 @@
   "generationInputs": [
     {
       "path": "scripts/generate-ci.ts",
-      "sha256": "7fbc5e7a70b076283be3b0a84a5d479c329770a0d0f45b04ca2f41a0a1f12c63"
+      "sha256": "a8613cff9e426d27ce0a586db95f3c2f027c15fb8c514187f09a74080867c3af"
     },
     {
       "path": "ci/native-review.entry.ts",
@@ -2555,7 +2555,7 @@
     },
     {
       "path": "ci/verify-projection.ts",
-      "sha256": "2dae77c63588a5cea28a0289cfcb37ee45e0b52585e48ea41e8d8dbecf0351e0"
+      "sha256": "b21195504ff4e7b1cc5fbc76e0121a6dd0e3af29586690c39107d64e3dbad52b"
     },
     {
       "path": "ci/require-v2-receipt.ts",
@@ -4729,8 +4729,8 @@
     },
     {
       "path": "immutable:review/ci/quality/receipt-validation-gate.ts",
-      "sha256": "a32d9653cc14fd0015464c895cd84194549dc076a4e94852782801a42eb3dcad",
-      "bytes": 15124,
+      "sha256": "1c0ce467315438c97a535b72b1e1f35fb7d4de50ecf9baef6f0255b80c9f183f",
+      "bytes": 19627,
       "imports": [
         {
           "path": "immutable:review/ci/quality/receipt-validator.ts",
@@ -4747,14 +4747,20 @@
           "kind": "dynamic-import",
           "original": "node:crypto",
           "external": true
+        },
+        {
+          "path": "crypto",
+          "kind": "dynamic-import",
+          "original": "node:crypto",
+          "external": true
         }
       ],
       "format": "esm"
     },
     {
       "path": "immutable:review/ci/quality/receipt-validator.ts",
-      "sha256": "d9b4492a08e3e801107fd17ba8a8ee3cc39cf875767e5b111635de18b394a725",
-      "bytes": 15120,
+      "sha256": "ac0e84e1742e3870f799fe3b2016abcc0d8ee48e8a347881fa7ed66a68563879",
+      "bytes": 15875,
       "imports": [
         {
           "path": "crypto",
@@ -4769,7 +4775,7 @@
   "generated": [
     {
       "path": "ci/generated/native-review-gate.js",
-      "sha256": "9e718cba253a2724af903baf677948b6a4a11d8aff7f8dbe5884cc5e1126fbe1"
+      "sha256": "04b4d14d4e818ea289104a6f14cddb97cf95b04f604784ae823bf5db3d74fde0"
     },
     {
       "path": "ci/THIRD-PARTY-LICENSES.txt",
@@ -4782,8 +4788,8 @@
   ],
   "qualification": "bundled immutable owner review API, Ontology0.2.0 and integrity-verified locked public dependencies; no native authentication/activation or domain acceptance inferred",
   "dependenciesLock": {
-    "sourceCommit": "7eabcdb20e358955c771e5aa0dc500448fa84534",
+    "sourceCommit": "d754776b2d513d30ccf8fb4772ee67a4afb7b500",
     "path": "bun.lock",
-    "sha256": "f5723aae95044787653d1eb76c932c0c1c4ddf734966a782989e7399b7f69ffb"
+    "sha256": "d7806f9e70a67ed59aa1121763e7ad766a3487222f7ff48c047676c1409f1a42"
   }
 }
