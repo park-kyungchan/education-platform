@@ -9841,6 +9841,8 @@ var init_dist = __esm(() => {
 
 // immutable:review/ci/quality/receipt-validator.ts
 import { createHash } from "crypto";
+var REVIEW_RUNTIME_DESCRIPTOR = /^[a-z0-9][a-z0-9-]{0,63}$/;
+var isReviewRuntime = (value) => typeof value === "string" && REVIEW_RUNTIME_DESCRIPTOR.test(value);
 var hash = (value) => createHash("sha256").update(value).digest("hex");
 var object = (value) => typeof value === "object" && value !== null && !Array.isArray(value) ? value : {};
 var fullSha = (value) => typeof value === "string" && /^[a-f0-9]{40}$/.test(value);
@@ -9894,7 +9896,7 @@ function decodeBoundedReviewFile(content, path, maximumBytes) {
 }
 function validateExactNativeReview(value, head, tree, manifestSha256) {
   const reviewer = object(value.reviewer), author = object(value.author);
-  if (!fullSha(head) || !fullSha(tree) || !digest(manifestSha256) || value.headSha !== head || value.reviewedTreeSha !== tree || value.reviewedSourceManifestSha256 !== manifestSha256 || reviewer.runtime !== "native-codex" || author.runtime !== "native-codex" || !taskId(reviewer.taskId) || !taskId(author.taskId) || reviewer.taskId === author.taskId || value.conclusion !== "pass" || value.unresolvedFindings !== 0)
+  if (!fullSha(head) || !fullSha(tree) || !digest(manifestSha256) || value.headSha !== head || value.reviewedTreeSha !== tree || value.reviewedSourceManifestSha256 !== manifestSha256 || !isReviewRuntime(reviewer.runtime) || !isReviewRuntime(author.runtime) || !taskId(reviewer.taskId) || !taskId(author.taskId) || reviewer.taskId === author.taskId || value.conclusion !== "pass" || value.unresolvedFindings !== 0)
     throw new Error("Review does not prove exact source and independent native identities");
 }
 function validateOwnerReviewPolicy(policy) {
@@ -9907,7 +9909,7 @@ function validateOwnerReviewProof(value, policy, head, tree, manifest, identitie
   if (Object.keys(binding).sort().join("|") !== [...keys].sort().join("|") || keys.some((key) => binding[key] !== policy[key]))
     throw new Error("Owner review binding differs from fixed owner policy");
   validateExactNativeReview(proof, head, tree, manifest);
-  if (identities && (object(proof.reviewer).taskId !== identities.reviewer.taskId || object(proof.author).taskId !== identities.author.taskId))
+  if (identities && (object(proof.reviewer).taskId !== identities.reviewer.taskId || object(proof.reviewer).runtime !== identities.reviewer.runtime || object(proof.author).taskId !== identities.author.taskId || object(proof.author).runtime !== identities.author.runtime))
     throw new Error("Owner review native identities differ across immutable evidence");
 }
 function immutableOwnerReviewTarget(value, policy, head, role) {
@@ -10043,7 +10045,8 @@ async function validateOwnerScopedReviewWithEvidence(policy, request, reader) {
     validateOwnerReviewProof(artifact.payload.details?.review, policy, head, tree, manifest.sha256, receipt);
   }
   const rawUrl = `https://github.com/${repository}/blob/${refs.rawNativeResult.commit}/${refs.rawNativeResult.path}`;
-  if (evidence.payload.method !== "native-codex-independent-source-review" || evidence.payload.sourceUrl !== rawUrl || evidence.payload.upstreamRevision !== head || evidence.payload.result.outcome !== "success" || evidence.payload.result.contentMatched !== true)
+  const reviewerRuntime = record(record(receipt).reviewer).runtime;
+  if (evidence.payload.method !== `${reviewerRuntime}-independent-source-review` || evidence.payload.sourceUrl !== rawUrl || evidence.payload.upstreamRevision !== head || evidence.payload.result.outcome !== "success" || evidence.payload.result.contentMatched !== true)
     throw new Error("Owner review evidence does not describe successful exact raw native observation");
   if (verification.payload.targetRefs.length !== 1 || verification.payload.targetRefs[0] !== evidence.id || !verification.payload.criteria.some((criterion) => criterion.id === "independent-native-source-review") || verification.payload.criteria.some((criterion) => criterion.status !== "pass" || criterion.evidenceRefs.length !== 1 || criterion.evidenceRefs[0] !== evidence.id))
     throw new Error("Owner review verification requires observed passing independent-review criterion");

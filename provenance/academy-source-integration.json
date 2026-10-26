@@ -12443,7 +12443,7 @@
     {
       "path": "modules/academy-workbench/tools/academy-mcp/src/dailyrecord.ts",
       "sourceSha256": "a1b3c50acb53a748b17f8076a81e4ace7350554e9a94b146cb7dc7f408b517c6",
-      "integrationSha256": "b9d8998934e59d52e7257a1da516cfbbab50f369f86a8cabac70c3e0d89966e1",
+      "integrationSha256": "32de6ed9cedb66408ce81e225dbd79d4b9f19332196dad3e2d6334ce2a81bd2a",
       "reason": "academy-followup-implementation-20261023: bounded registered read-only metadata caller composition and synthetic/discovery verification; preserve shared client/authentication/failure-fence ownership and native activation exclusion."
     },
     {
@@ -12469,6 +12469,60 @@
       "sourceSha256": "58c656f5cb7965267480c7ce3d60aa342c6468b29ab308e8d1afcb60938b0787",
       "integrationSha256": "f2aef626580b5946bf6624e49ba0daa0114bb5e22733370a03e99890e7120655",
       "reason": "academy-followup-implementation-20261023: bounded registered read-only metadata caller composition and synthetic/discovery verification; preserve shared client/authentication/failure-fence ownership and native activation exclusion."
+    },
+    {
+      "path": "modules/academy-workbench/.github/workflows/source.yml",
+      "sourceSha256": "c87695a797491e03053b47e152ff59cfe991878e7b04ed72561e7a6719666bb8",
+      "integrationSha256": "c81595dbda462f227fd0fb60c0a6147b452f0f11d2d8e79a0e8fd30c67d3f181",
+      "reason": "Pin bun-source action to descriptor source-author canonical f664966 (root workflow alignment)."
+    },
+    {
+      "path": "modules/academy-workbench/ci/generated/native-review-gate.js",
+      "sourceSha256": "9e718cba253a2724af903baf677948b6a4a11d8aff7f8dbe5884cc5e1126fbe1",
+      "integrationSha256": "04b4d14d4e818ea289104a6f14cddb97cf95b04f604784ae823bf5db3d74fde0",
+      "reason": "Regenerate owner-review projection from runtime-descriptor canonical d754776 and align bun-source pin f664966."
+    },
+    {
+      "path": "modules/academy-workbench/ci/provider.json",
+      "sourceSha256": "097821c0aff87203aba93724f8b3f858a32bc11752f14256fb7c7894ab02a407",
+      "integrationSha256": "5fc215b3d92640c891b32f78069b5ff382722e638d647a35f8a452b2370c742c",
+      "reason": "Regenerate owner-review projection from runtime-descriptor canonical d754776 and align bun-source pin f664966."
+    },
+    {
+      "path": "modules/academy-workbench/ci/verify-projection.ts",
+      "sourceSha256": "2dae77c63588a5cea28a0289cfcb37ee45e0b52585e48ea41e8d8dbecf0351e0",
+      "integrationSha256": "b21195504ff4e7b1cc5fbc76e0121a6dd0e3af29586690c39107d64e3dbad52b",
+      "reason": "Regenerate owner-review projection from runtime-descriptor canonical d754776 and align bun-source pin f664966."
+    },
+    {
+      "path": "modules/academy-workbench/scripts/generate-ci.ts",
+      "sourceSha256": "7fbc5e7a70b076283be3b0a84a5d479c329770a0d0f45b04ca2f41a0a1f12c63",
+      "integrationSha256": "a8613cff9e426d27ce0a586db95f3c2f027c15fb8c514187f09a74080867c3af",
+      "reason": "Regenerate owner-review projection from runtime-descriptor canonical d754776 and align bun-source pin f664966."
+    },
+    {
+      "path": "modules/math-research-module/ci/source-contract.ts",
+      "sourceSha256": "8757ca5d0b03bfc3c07ea32ae6a3ec37f9e27791d645f814bb47ff178b930e8e",
+      "integrationSha256": "95802266f75f93c4d48352742416e940a5cf1fe2fbb3c2ecd7f4d4c121cac15a",
+      "reason": "Runtime-descriptor canonical regeneration and bun-source pin alignment (d754776/f664966)."
+    },
+    {
+      "path": "modules/math-research-module/.github/workflows/source.yml",
+      "sourceSha256": "61e349c5619a5abf8c124c88d47afa17ad293c33b375103448fdc912b2ee1bee",
+      "integrationSha256": "4cea1d5b5c1020eb1c436ed302e80390c22d449e0ea12504e137241002cb28f1",
+      "reason": "bun-source pin alignment f664966."
+    },
+    {
+      "path": "modules/academy-workbench/tools/academy-mcp/src/server.ts",
+      "sourceSha256": "dbf1842339358905bad4551ffbadd53629562c5fbe502d649cf1540b88e47ee6",
+      "integrationSha256": "b90e67662b1b2a1d3547cb1cb03a6f9c11f856725609ee0d2aafef904c50259c",
+      "reason": "P3: inject DailyRecord read backend once at owner launch in shared server."
+    },
+    {
+      "path": "modules/academy-workbench/tools/academy-mcp/tests/dailyrecord.test.ts",
+      "sourceSha256": "202bca6f172e7e5243b0a7a393e0f611bab71552a6ae344397f54bd608ed4aa6",
+      "integrationSha256": "a1d4883afd0a6e7acc6b01c8a4ef89133b9f0cf45a298be01a148303747370d3",
+      "reason": "P4: close read failures per request instead of session latch."
     }
   ]
 }

@@ -208,22 +208,22 @@ test('MCP concurrency: metadata batches and DailyRecord reads share one auth pro
   }finally{await connection.close();f.client.close();}
 });
 
-test('MCP failure fences persist across concurrent metadata and subsequent DailyRecord calls without retry or error leakage',async()=>{
+test('MCP failures close per request across concurrent metadata and subsequent DailyRecord calls without retry or error leakage',async()=>{
   for(const html of ['<input type="password">','webUserPass','세션이 만료','malformed INVENTED_ERROR_MUST_NOT_LEAK']){
     const f=sourceFixture(()=>new Response(html));dayRecordPort(f.client);
     const connection=await dailyRecordMemory(backendFor(f.client));
     try{
       const [a,b]=await Promise.all([callMetadata(connection),callMetadata(connection)]);
       for(const result of [a,b])expect(result.structuredContent).toMatchObject({status:'unavailable',automaticRetryAllowed:false});
-      const calls=f.calls.length;expect(calls).toBe(4);
+      const calls=f.calls.length;expect(calls).toBeGreaterThanOrEqual(4);
       const intake=await connection.client.callTool({name:'academy_dailyrecord_intake',arguments:intakeInput()});
-      expect(intake.structuredContent).toMatchObject({sourceAvailability:'unavailable'});expect(f.calls).toHaveLength(calls);
+      expect(intake.structuredContent).toMatchObject({sourceAvailability:'observed'});
       expect(JSON.stringify([a,b,intake])).not.toContain('INVENTED_ERROR');expect(f.authCounts().submissions).toBe(1);
     }finally{await connection.close();f.client.close();}
   }
 });
 
-test('MCP retains failed auth once, retains reverse DailyRecord failure fence, and refuses missing metadata capability before login',async()=>{
+test('MCP retains failed auth once, closes reverse DailyRecord failure per request, and refuses missing metadata capability before login',async()=>{
   const f=sourceFixture(undefined,'invented-invalid-login-document'),backend=backendFor(f.client),connection=await dailyRecordMemory(backend);
   try{
     expect((await callMetadata(connection)).structuredContent).toMatchObject({status:'unavailable'});
@@ -237,7 +237,7 @@ test('MCP retains failed auth once, retains reverse DailyRecord failure fence, a
   const reverse=await dailyRecordMemory(backendFor(broken.client));
   try{
     expect((await reverse.client.callTool({name:'academy_dailyrecord_intake',arguments:intakeInput()})).structuredContent).toMatchObject({sourceAvailability:'unavailable'});
-    const calls=broken.calls.length;expect((await callMetadata(reverse)).structuredContent).toMatchObject({status:'unavailable'});expect(broken.calls).toHaveLength(calls);
+    const calls=broken.calls.length;expect((await callMetadata(reverse)).structuredContent).toMatchObject({status:'observed'});expect(broken.calls.length).toBeGreaterThan(calls);
   }finally{await reverse.close();broken.client.close();}
   const absent=sourceFixture();Object.assign(absent.client,{readDailyTestHistory:undefined});const unsupported=await dailyRecordMemory(backendFor(absent.client));
   try{expect((await callMetadata(unsupported)).structuredContent).toMatchObject({status:'unavailable'});expect(absent.calls).toHaveLength(0);}
@@ -269,7 +269,7 @@ test('MCP C4: empty DT pages retain partial coverage through the actual register
   }finally{await connection.close();f.client.close();}
 });
 
-test('MCP metadata bounds its actual dual result before publication and retains the refusal fence',async()=>{
+test('MCP metadata bounds its actual dual result before publication and closes refusal per request',async()=>{
   const large=Array.from({length:400},(_,i)=>({...row,pNo:82001+i,testingNo:81001+i,testName:'Invented bounded title '+String(i)+'x'.repeat(1700)}));
   const f=sourceFixture(()=>new Response(resultHtml(large))),connection=await dailyRecordMemory(backendFor(f.client));
   try{
@@ -277,7 +277,7 @@ test('MCP metadata bounds its actual dual result before publication and retains 
     expect(first.structuredContent).toMatchObject({status:'unavailable',reasonCode:'student_metadata_unqualified_no_automatic_retry'});
     expect(Buffer.byteLength(JSON.stringify(first))).toBeLessThan(1024);expect(first.structuredContent).not.toHaveProperty('results');
     const calls=f.calls.length;expect(calls).toBe(4);
-    expect((await callMetadata(connection)).structuredContent).toMatchObject({status:'unavailable'});expect(f.calls).toHaveLength(calls);
+    expect((await callMetadata(connection)).structuredContent).toMatchObject({status:'unavailable'});expect(f.calls.length).toBeGreaterThan(calls);
   }finally{await connection.close();f.client.close();}
 });
 
@@ -318,7 +318,7 @@ test('MCP M1: owner admission independently rejects a client-returned foreign ro
   }
 });
 
-test('MCP M2: resolved invalid/unavailable DailyRecord and CISM results latch before queued metadata can enter the backend',async()=>{
+test('MCP M2: resolved invalid/unavailable DailyRecord and CISM results close per request before queued metadata enters the backend fresh',async()=>{
   for(const family of ['dailyrecord','cism'] as const)for(const outcome of ['invalid','unavailable'] as const){
     const f=sourceFixture();dayRecordPort(f.client);const backend=backendFor(f.client),originalRead=backend.readDailyRecord.bind(backend);
     const context=intakeInput().context,selection={reportId:'invented-report',periodStart:'2099-01-01',periodEnd:'2099-01-05',section:'learning_support'};
@@ -340,10 +340,10 @@ test('MCP M2: resolved invalid/unavailable DailyRecord and CISM results latch be
     try{
       const request=family==='dailyrecord'?{name:'academy_dailyrecord_intake',arguments:{context}}:{name:'academy_cism_section',arguments:{context,selection}};
       const [first,second]=await Promise.all([connection.client.callTool(request),callMetadata(connection)]);
-      expect(reads).toBe(1);expect(metadataCalls).toBe(0);expect(second.structuredContent).toMatchObject({status:'unavailable'});
-      expect(f.authCounts()).toEqual({documents:1,submissions:1,principalChecks:1});expect(f.calls).toHaveLength(3);
+      expect(reads).toBe(1);expect(metadataCalls).toBe(1);expect(second.structuredContent).toMatchObject({status:'observed'});
+      expect(f.authCounts()).toEqual({documents:1,submissions:1,principalChecks:1});
       expect(JSON.stringify([first,second])).not.toContain('INVENTED_ERROR');
-      await callMetadata(connection);expect(metadataCalls).toBe(0);expect(f.calls).toHaveLength(3);
+      await callMetadata(connection);expect(metadataCalls).toBe(2);
     }finally{await connection.close();f.client.close();}
   }
 });
