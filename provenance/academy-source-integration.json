@@ -12443,7 +12443,7 @@
     {
       "path": "modules/academy-workbench/tools/academy-mcp/src/dailyrecord.ts",
       "sourceSha256": "a1b3c50acb53a748b17f8076a81e4ace7350554e9a94b146cb7dc7f408b517c6",
-      "integrationSha256": "b9d8998934e59d52e7257a1da516cfbbab50f369f86a8cabac70c3e0d89966e1",
+      "integrationSha256": "32de6ed9cedb66408ce81e225dbd79d4b9f19332196dad3e2d6334ce2a81bd2a",
       "reason": "academy-followup-implementation-20261023: bounded registered read-only metadata caller composition and synthetic/discovery verification; preserve shared client/authentication/failure-fence ownership and native activation exclusion."
     },
     {
@@ -12517,6 +12517,12 @@
       "sourceSha256": "dbf1842339358905bad4551ffbadd53629562c5fbe502d649cf1540b88e47ee6",
       "integrationSha256": "b90e67662b1b2a1d3547cb1cb03a6f9c11f856725609ee0d2aafef904c50259c",
       "reason": "P3: inject DailyRecord read backend once at owner launch in shared server."
+    },
+    {
+      "path": "modules/academy-workbench/tools/academy-mcp/tests/dailyrecord.test.ts",
+      "sourceSha256": "202bca6f172e7e5243b0a7a393e0f611bab71552a6ae344397f54bd608ed4aa6",
+      "integrationSha256": "a1d4883afd0a6e7acc6b01c8a4ef89133b9f0cf45a298be01a148303747370d3",
+      "reason": "P4: close read failures per request instead of session latch."
     }
   ]
 }
