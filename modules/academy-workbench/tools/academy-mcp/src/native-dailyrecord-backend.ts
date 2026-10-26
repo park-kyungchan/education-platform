@@ -29,6 +29,11 @@ interface SourcePort {
   inspectDailyTestInventory?(input:{teacherLabel:string;studentName:string;studentKey:string}):Promise<unknown>;
   readDailyTestHistory?(input:{teacherLabel:string;studentName:string;studentKey:string;periods:string[]}):Promise<unknown>;
   lookupPrintedPaperMetadata?(input:{teacherLabel:string;studentName:string;studentKey:string;paperCode:string;period:{from:string;through:string}}):Promise<unknown>;
+  /** Name-only student search (REA contract 2026-10-26). The DT result servlet is keyed
+   * on the wire by `{sort_date, stu_name}` alone; implementations must neither require nor
+   * send a student key. Key/name equality is verified by the projection layer, never as
+   * request input. No sequential key probing, before or after. */
+  searchStudentsByName?(input:{teacherLabel:string;studentName:string}):Promise<unknown>;
 }
 type Admission={teacherId:string;teacherLabel:string;date:string;students:{studentId:string;displayName:string}[];sourceBundleSha256:string};
 const fields=['progress','homework','lessonMemo','attendance','dailyTestAssessment','previousHomeworkAssessment'] as const;
@@ -45,6 +50,11 @@ const metadataRow=z.object({studentKey:key,studentName:z.string().min(1).max(200
     testName:sourceTitle,testingName:sourceTitle,printTestingName:sourceTitle,testTypeName:sourceTitle,applyDate:sourceTitle}),
 });
 const metadataRows=z.array(metadataRow).max(2000);
+// Name-search result pairs. The wire (DtResultSearch rows) and the owner admission table
+// both project to exactly this shape; every unlisted key is stripped before the
+// exact-name rules run. Extra keys, missing keys and non-string pairs are unqualified.
+const nameSearchPair=z.object({studentKey:key,studentName:z.string().min(1).max(200)}).strict();
+const nameSearchPairs=z.array(nameSearchPair).max(200);
 const metadataPage=z.object({rows:metadataRows,operation:z.enum(['UserBySearchTestResult','DtResultSearch']),page:z.literal(1),
   sourcePeriod:sourcePeriod.nullable(),observedAt:sourceInstant,coverage:z.literal('one_observed_student_search_page_not_complete_history'),
   generatedMembership:z.literal('unqualified'),fixedSourceFilter:z.object({sort_date:z.enum(['1','11','12','13','14','15','16'])}).optional(),
@@ -134,6 +144,26 @@ export class NativeDailyRecordBackend implements DailyRecordReadBackend {
       results.push({query,observation:projectStudentMetadata(query,observation,student)});
     }
     return {scope,results};
+  }
+  /** Name-only search feeding the service-layer resolver. Returns projected
+   * `{studentKey, studentName}` pairs; exact-name rules (zero/multi/mismatch
+   * unavailable, never a guess, no sequential probing) run in the service.
+   * Live wire first via the owner bundle port when present (name-only input,
+   * no key upfront); otherwise the owner-issued admission table in this
+   * process. No network and no secret use on the admission path; the later
+   * intake still verifies key+name against the live wire. */
+  async searchStudentsByName(exactName: string): Promise<unknown>{
+    if(typeof this.client.searchStudentsByName==='function'){
+      const raw=await this.client.searchStudentsByName({teacherLabel:this.admission.teacherLabel,studentName:exactName});
+      if(!Array.isArray(raw))throw Error('native_name_search_unqualified_no_automatic_retry');
+      return nameSearchPairs.parse(raw.map((row)=>{
+        if(typeof row!=='object'||row===null)throw Error('native_name_search_unqualified_no_automatic_retry');
+        const pair=row as Record<string,unknown>;
+        return {studentKey:pair.studentKey,studentName:pair.studentName};
+      }));
+    }
+    return this.admission.students.filter((s)=>s.displayName===exactName)
+      .map((s)=>({studentKey:s.studentId,studentName:s.displayName}));
   }
   async readDailyRecord(scope:Readonly<DailyRecordScope>){
     const student=this.admission.students.find(s=>s.studentId===scope.studentId);
