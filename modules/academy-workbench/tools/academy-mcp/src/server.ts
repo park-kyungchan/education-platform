@@ -10,13 +10,24 @@ import {loadItemLabelIndex} from './item-label-store.ts';
 import {registerItemLabelTools} from './item-label-tools.ts';
 import {dailyRecordToolConfiguration,registerDailyRecordTools} from './dailyrecord-tools.ts';
 import {DailyRecordService} from './dailyrecord.ts';
+import {nativeDailyRecordConfiguration} from './native-dailyrecord-backend.ts';
 
 const service = await loadService(repoRoot);
 const server = new McpServer({ name: 'academy-operations', version: '0.1.0' });
 const learning=await dailyRecordLearningConfiguration(process.argv.slice(2));
 const configuration=await dailyRecordToolConfiguration(learning.remainingArgs);
-registerItemLabelTools(server,await loadItemLabelIndex(configuration.remainingArgs));
-registerDailyRecordTools(server,new DailyRecordService(null,configuration.parentSafeguard,Date.now,learning.learningPolicy));
+// P3: read backend is injected once by the owner launch configuration, the
+// same path as dailyrecord-server.ts. Without owner args the backend stays
+// null and read tools return unavailable; runtimes only connect.
+// Partition arguments per backend before invoking either loader: the
+// native triple belongs to the DailyRecord backend only; the label loader
+// accepts only its own four arguments.
+const hasNativeTriple=configuration.remainingArgs[0]==='--dailyrecord-native';
+const native=await nativeDailyRecordConfiguration(hasNativeTriple?configuration.remainingArgs.slice(0,3):[]);
+const labelArgs=hasNativeTriple?configuration.remainingArgs.slice(3):configuration.remainingArgs;
+registerItemLabelTools(server,await loadItemLabelIndex(labelArgs));
+registerDailyRecordTools(server,new DailyRecordService(native?.backend??null,configuration.parentSafeguard,Date.now,learning.learningPolicy));
+if(native)process.once('exit',native.close);
 server.registerTool('academy_capabilities', {
   title: 'Academy operational hierarchy and source contracts',
   description: 'Discover hierarchical academy workflows, page the complete pinned source inventory, or inspect one exact source contract. Source metadata is not an executable operation. No source requests.',
