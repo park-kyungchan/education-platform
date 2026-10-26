@@ -9,10 +9,10 @@
 | runtime | 노출 확인 | 빠진 것 | 근거 |
 | --- | --- | --- | --- |
 | Muse | 17개 (dailyrecord 2, paper1 6, class2 paper 6, saved 3) | academy_cism_section, academy_student_metadata, teacher_query/report, item-label, pool 계열 | Muse bridge registry.json 실측. bridge server.ts가 saved의 dailyrecord/cism/item-label 도구와 dailyrecord의 cism_section을 등록 단계에서 제외 |
-| Codex | 미확인 | 전체 대조 미실시 | Codex MCP 등록 설정을 이번 단계에서 읽지 않았다. 다음 단계에서 설정 파일 기준으로 대조한다 |
-| Hermes | 미확인 | 전체 대조 미실시 | Hermes 프로필 도구 목록을 이번 단계에서 읽지 않았다. P6 대조와 함께 실시한다 |
+| Codex | academy MCP 미등록 확인 | 상류 도구 전부 | 전역 `/root/.codex/config.toml`과 프로젝트 `.codex/config.toml`에서 mcp_servers 섹션 자체가 없다 (이름·존재만 확인, credential 값은 읽지 않았다). Codex는 지금까지 MCP가 아닌 날짜 고정 실행분(control/worker)으로 저장 경로를 썼다 |
+| Hermes | academy MCP 미등록 확인 | 상류 도구 전부 (MCP 기준) | dc-gang-a-dev 프로필 config.yaml의 mcp_servers는 cloudflare·vercel·github 3개뿐이다. academy 접근은 MCP가 아니라 프로필 native 경로(소유자 설정과 직접 client 실행)로 이뤄진다. 프로필 기본 도구 목록 단위의 대조는 미확인으로 남긴다 |
 
-미확인 항목을 노출된 것으로 단정하지 않는다.
+미확인 항목을 노출된 것으로 단정하지 않는다. 남은 미확인: Hermes 프로필 기본 도구 이름 목록과 academy 도구 이름의 겹침 여부.
 
 ## (b) backend 주입 지점
 
