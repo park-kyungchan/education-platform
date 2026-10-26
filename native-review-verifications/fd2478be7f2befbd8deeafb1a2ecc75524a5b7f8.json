@@ -1,0 +1,74 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "verification",
+  "id": "education-platform:verification:academy-review-fd2478be7f2befbd8deeafb1a2ecc75524a5b7f8",
+  "projectId": "education-platform",
+  "domainId": "education",
+  "createdAt": "2026-10-26T10:00:00.000Z",
+  "payload": {
+    "targetRefs": [
+      "education-platform:evidence:academy-review-fd2478be7f2befbd8deeafb1a2ecc75524a5b7f8"
+    ],
+    "criteria": [
+      {
+        "id": "independent-native-source-review",
+        "status": "pass",
+        "message": "Independent Muse review binds exact head/tree/manifest with distinct author/reviewer and zero findings.",
+        "evidenceRefs": [
+          "education-platform:evidence:academy-review-fd2478be7f2befbd8deeafb1a2ecc75524a5b7f8"
+        ]
+      }
+    ],
+    "inputHashes": [
+      {
+        "path": "native-review-results/fd2478be7f2befbd8deeafb1a2ecc75524a5b7f8.json",
+        "sha256": "5895621c5bef4c5755a2bcbace43082f93707f26d2ebe346e699f652a233969b"
+      },
+      {
+        "path": "native-review-evidence/fd2478be7f2befbd8deeafb1a2ecc75524a5b7f8.json",
+        "sha256": "8f23d82576c3a1a0564c048537eac83392f1f11645f7458e2de3b8f8dd93a129"
+      },
+      {
+        "path": "native-review-raw/fd2478be7f2befbd8deeafb1a2ecc75524a5b7f8.json",
+        "sha256": "9c798d38032f62720df76a4b465608a33a1e08cb35548ae1e6cb0cbcdd460e6d"
+      }
+    ],
+    "runtime": {
+      "name": "muse",
+      "version": "observed-session-not-cryptographic-authentication"
+    },
+    "details": {
+      "semanticOwner": "education-platform",
+      "review": {
+        "binding": {
+          "repository": "park-kyungchan/education-platform",
+          "projectId": "education-platform",
+          "domainId": "education",
+          "semanticOwner": "education-platform",
+          "scope": "month-end-source-redesign"
+        },
+        "headSha": "fd2478be7f2befbd8deeafb1a2ecc75524a5b7f8",
+        "reviewedTreeSha": "beb0d9df84a6bbdda50e9872d79fd2e402e80abd",
+        "reviewedSourceManifestSha256": "4ae750ee2bb565741c303460bfb7213dbc65604408052a9429c7695ebdd72e33",
+        "reviewer": {
+          "runtime": "muse",
+          "taskId": "01a1755f-14e6-7b11-8c90-353615bf6777",
+          "threadId": "01a1755f-14e6-7b11-8c90-353615bf6777",
+          "nativeTaskId": null,
+          "nativeRunId": null,
+          "role": "Independent platform-redesign Meta-Controller reviewer",
+          "implementationWriter": false
+        },
+        "author": {
+          "runtime": "muse",
+          "taskId": "01a176ff-2520-7ec3-87ba-767f09b64308",
+          "threadId": "01a176ff-2520-7ec3-87ba-767f09b64308",
+          "nativeTaskId": null,
+          "nativeRunId": null
+        },
+        "conclusion": "pass",
+        "unresolvedFindings": 0
+      }
+    }
+  }
+}
