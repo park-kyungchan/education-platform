@@ -68,7 +68,7 @@ test('exact handles reject foreign task/student before source reads; before drif
 });
 test('foreign current/prior/tone target, invalid date, and unbound previous value are unqualified',async()=>{
   for(const mutate of [(o:ReturnType<typeof observation>)=>{o.target.teacherId='foreign';},(o:ReturnType<typeof observation>)=>{o.previousTarget!.recordId=o.target.recordId;},(o:ReturnType<typeof observation>)=>{o.toneSamples[0].target.studentId='foreign';},(o:ReturnType<typeof observation>)=>{o.previousTarget=null;}]){
-    const o=observation();mutate(o);let calls=0;const service=new DailyRecordService(backend(()=>{calls++;return o;}),safeguard,()=>clock,learningPolicy);const result=await service.intake({context:context()});expect(result.sourceAvailability).toBe('unavailable');expect(result.observationHandle).toBeNull();await service.intake({context:context()});expect(calls).toBe(1);
+    const o=observation();mutate(o);let calls=0;const service=new DailyRecordService(backend(()=>{calls++;return o;}),safeguard,()=>clock,learningPolicy);const result=await service.intake({context:context()});expect(result.sourceAvailability).toBe('unavailable');expect(result.observationHandle).toBeNull();const again=await service.intake({context:context()});expect(again.sourceAvailability).toBe('unavailable');expect(calls).toBe(2);
   }
   await expect(new DailyRecordService().intake({context:{...context(),scope:{...context().scope,lessonDate:'2040-02-30'}}})).rejects.toThrow();
 });
@@ -110,9 +110,9 @@ test('new read evidence refs preserve value comparisons and transmission state r
   const c=context(),intake=await service.intake({context:c});
   const result=await service.review({context:c,observationHandle:intake.observationHandle,proposals:[proposal('progress','지정 문제 12문항 풀이 진행.')]});expect(result.status).toBe('prepared');expect(result.transmissionState).toBe('already_sent');expect(result.parentSends).toBe(0);
 });
-test('read failures latch and serialize; no automatic retry or leaked backend error',async()=>{
+test('read failures close per request and serialize; no automatic retry or leaked backend error',async()=>{
   let calls=0,active=0,max=0;const service=new DailyRecordService({async readDailyRecord(){calls++;active++;max=Math.max(max,active);await new Promise(r=>setTimeout(r,5));active--;throw Error('SECRET_MUST_NOT_LEAK');}},safeguard,()=>clock,learningPolicy);
-  const results=await Promise.all([service.intake({context:context()}),service.intake({context:context()})]);expect(calls).toBe(1);expect(max).toBe(1);expect(JSON.stringify(results)).not.toContain('SECRET');
+  const results=await Promise.all([service.intake({context:context()}),service.intake({context:context()})]);expect(calls).toBe(2);expect(max).toBe(1);expect(JSON.stringify(results)).not.toContain('SECRET');
 });
 test('CISM is unavailable by default; exact period/student/section and bound source handles are required',async()=>{
   const c=context(),selection={reportId:'report-synthetic',periodStart:'2040-01-08',periodEnd:'2040-01-14',section:'learning_support' as const};
@@ -129,10 +129,10 @@ test('CISM is unavailable by default; exact period/student/section and bound sou
   port.readCismSection=async()=>({status:'observed',observation:{...cism,selection:{...selection,periodStart:'2040-01-01'}}});expect(await service.cism({context:c,selection})).toMatchObject({status:'unavailable'});
   await expect(service.cism({context:c,selection:{...selection,section:'other'}})).rejects.toThrow();
 });
-test('CISM rejects an outside-period source reference date and latches qualification failures',async()=>{
+test('CISM rejects an outside-period source reference date per request without latching',async()=>{
   const c=context(),selection={reportId:'report-synthetic',periodStart:'2040-01-08',periodEnd:'2040-01-14',section:'learning_support' as const};let calls=0;
   const service=new DailyRecordService({...backend(),async readCismSection(){calls++;return {status:'observed',observation:{scope:c.scope,selection,observedAt:new Date(clock).toISOString(),sourceRevision:'5'.repeat(64),sourceReferenceDate:'2040-01-16',sectionLabel:'학습부진아 지도',text:'합성 내용',evidenceRefs:['synthetic']}};}},safeguard,()=>clock,learningPolicy);
-  expect(await service.cism({context:c,selection})).toMatchObject({status:'unavailable'});expect(await service.cism({context:c,selection})).toMatchObject({status:'unavailable'});expect(calls).toBe(1);
+  expect(await service.cism({context:c,selection})).toMatchObject({status:'unavailable'});expect(await service.cism({context:c,selection})).toMatchObject({status:'unavailable'});expect(calls).toBe(2);
 });
 test('launch configuration reuses hash-pinned canonical regex bytes without importing source',async()=>{
   const dir=await mkdtemp(resolve(tmpdir(),'synthetic-dailyrecord-policy-'));
