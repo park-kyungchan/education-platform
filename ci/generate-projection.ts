@@ -11,7 +11,7 @@ const json=(value:unknown)=>JSON.stringify(value,null,2)+'\n';
 const packages=['ajv','ajv-formats','fast-deep-equal','fast-uri','json-schema-traverse','require-from-string'];
 const builtin=['node:crypto','node:fs/promises','node:path'];
 const sourcePaths=['ci/quality/receipt-validation-gate.ts','ci/quality/receipt-validator.ts'];
-const commit='7eabcdb20e358955c771e5aa0dc500448fa84534';
+const commit='d754776b2d513d30ccf8fb4772ee67a4afb7b500';
 const ontologyHash='3f9995d0b91d2ad39dfc7cedbb6e35b1cb9d29c2e57223ca0c076d2030319406';
 const compilerHash='7ce7d6b654eddeec20afddf2396317fba6dc19ab52788a27e894e1806bf8f24b';
 const [commonRoot,archiveRoot,mode,...extra]=Bun.argv.slice(2);
