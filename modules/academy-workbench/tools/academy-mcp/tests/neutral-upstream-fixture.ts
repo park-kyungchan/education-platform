@@ -2,6 +2,7 @@ import './network-deny.ts';
 import {appendFileSync} from 'node:fs';
 import {McpServer} from '@modelcontextprotocol/server';
 import {StdioServerTransport} from '@modelcontextprotocol/server/stdio';
+import {z} from 'zod';
 import {DailyRecordService} from '../src/dailyrecord.ts';
 import {registerDailyRecordTools} from '../src/dailyrecord-tools.ts';
 import {observation} from './dailyrecord-fixture.ts';
@@ -18,4 +19,9 @@ const service=new DailyRecordService({
 });
 const server=new McpServer({name:'fictional-neutral-upstream',version:'1.0.0'});
 registerDailyRecordTools(server,service);
+server.registerTool('academy_source_status',{inputSchema:z.object({}).strict()},input=>{
+  appendFileSync(events,'source_status:'+JSON.stringify(input)+'\n');
+  const data={sourceMode:'saved_context',synthetic:true,receivedArguments:input};
+  return {content:[{type:'text',text:JSON.stringify(data)}],structuredContent:data};
+});
 await server.connect(new StdioServerTransport());

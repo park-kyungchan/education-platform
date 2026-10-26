@@ -12,6 +12,7 @@ import {dailyRecordGetSchema,dailyRecordGetDescription,readDailyRecordByName} fr
 import {ownerAdmissionSchema} from './owner-admission.ts';
 import {readPinnedLocalBytes} from './item-label-store.ts';
 import {readOnlyAnnotations} from './contracts.ts';
+import {dailyRecordScopeSchema,type DailyRecordScope} from './dailyrecord-context.ts';
 const base=process.env.ACADEMY_MCP_INSTALL_DIR??'/root/.local/share/academy-mcp';
 // Launch-owned pinned scope only; no caller may provide or widen admission.
 const routing=JSON.parse(readFileSync(base+'/routing.json','utf8'));
@@ -50,16 +51,16 @@ if(process.argv.includes('--discover')){
  process.exit(0);
 }
 const registry=JSON.parse(readFileSync(base+'/registry.json','utf8'));
-const handles=new Map<string,{original:string;intake:any;scope:any;request:string;at:number}>();
+const handles=new Map<string,{original:string;intake:any;scope:DailyRecordScope;request:string;at:number}>();
 const signature=(x:any)=>JSON.stringify({fields:x.fields?.map((f:any)=>({field:f.field,before:f.before?.state==='known'?{state:'known',value:f.before.value}:{state:'unknown',reasonCode:f.before?.reasonCode},target:f.target})),revision:x.source?.sourceRevision,wire:x.source?.wireDigest});
 async function call(req:any){
  const entry=registry.find((r:any)=>r.tool.name===req.name);if(!entry)throw Error('unknown_tool');
+ const args=structuredClone(req.arguments??{});
  const occurrence=randomUUID();
  const steps:{tool:string;status:unknown;sourceAvailability:unknown}[]=[];
- writeFileSync(log+'/'+occurrence+'-dispatch.json',JSON.stringify({issuedAt:new Date().toISOString(),tool:req.name,argumentsSha256:sha(req.arguments),automaticRetryAllowed:false,academyWrites:0,parentSends:0})+'\n',{mode:0o600,flag:'wx'});
+ writeFileSync(log+'/'+occurrence+'-dispatch.json',JSON.stringify({issuedAt:new Date().toISOString(),tool:req.name,argumentsSha256:sha(args),automaticRetryAllowed:false,academyWrites:0,parentSends:0})+'\n',{mode:0o600,flag:'wx'});
  try{
   const result:any=await upstream(entry.endpoint,async client=>{
-   const args=structuredClone(req.arguments??{});
    if(entry.upstreamName==='academy_dailyrecord_get'){
     const invoke=async(name:string,input:unknown)=>{
      const response=await client.callTool({name,arguments:input as Record<string,unknown>});
@@ -73,7 +74,8 @@ async function call(req:any){
    }
    if(entry.upstreamName==='academy_dailyrecord_review'&&args.observationHandle){
     const ticket=handles.get(args.observationHandle);
-    if(!ticket||Date.now()-ticket.at>300000||JSON.stringify(ticket.scope)!==JSON.stringify(args.context.scope)||ticket.request!==args.context.currentRequestRef)throw Error('observation_ticket_expired_or_foreign');
+    const scope=dailyRecordScopeSchema.parse(args.context.scope);
+    if(!ticket||Date.now()-ticket.at>300000||JSON.stringify(ticket.scope)!==JSON.stringify(scope)||ticket.request!==args.context.currentRequestRef)throw Error('observation_ticket_expired_or_foreign');
     const fresh:any=await client.callTool({name:'academy_dailyrecord_intake',arguments:{context:args.context}});
     if(fresh.isError||!fresh.structuredContent||signature(fresh.structuredContent)!==signature(ticket.intake))throw Error('fresh_before_state_changed_reconcile');
     args.observationHandle=fresh.structuredContent.observationHandle;
@@ -83,7 +85,7 @@ async function call(req:any){
   });
   if(entry.upstreamName==='academy_dailyrecord_intake'&&result.structuredContent?.observationHandle){
    const data=result.structuredContent,original=data.observationHandle,ticket='muse-academy-observation:'+randomUUID();
-   handles.set(ticket,{original,intake:structuredClone(data),scope:req.arguments.context.scope,request:req.arguments.context.currentRequestRef,at:Date.now()});
+   handles.set(ticket,{original,intake:structuredClone(data),scope:dailyRecordScopeSchema.parse(args.context.scope),request:args.context.currentRequestRef,at:Date.now()});
    if(handles.size>64)handles.delete(handles.keys().next().value!);
    data.observationHandle=ticket;result.content=[{type:'text',text:JSON.stringify(data)}];
   }
