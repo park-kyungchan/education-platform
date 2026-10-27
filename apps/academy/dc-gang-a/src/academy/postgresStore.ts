@@ -1,9 +1,13 @@
+import {lockApprovalDependencies,lockSharedOutputGate,validateReadAdmission,computeReadHorizon,normalizeReadHorizon,NativePrerequisiteStore,migrateNativePrerequisites,assertNativePrerequisitesReady,guardReservedAppend} from './nativePrerequisiteStore';
+import type {TeacherPrerequisiteStore,TeacherPrerequisiteReadStore,CurrentCatalogPin,ReadOutputDecision,ReadOutputRefusalSelector,CommittedReadOutput} from './ports/teacherStore';
+import type {ReadAdmission} from './contracts/prerequisiteRecords';
 import {migrateConceptWorkspace,assertConceptWorkspaceReady,appendConceptDefinition,appendStudentConceptLink,readStudentConceptGraph,conceptResult,conceptHistory} from './conceptWorkspaceStore';
 import type {ConceptCommandContext,ConceptDefinitionInput,ConceptLinkInput} from './conceptWorkspace';
 import type {ConceptEvidenceRead} from './conceptEvidenceAdapter';
 import {ownerWorkspaceVersionFrom,asStudentWorkspace} from './ownerWorkspaceStore';
 import {migrateOwnerWorkspaces,assertOwnerWorkspacesReady,appendOwnerWorkspace,ownerWorkspaces,ownerWorkspaceHistory,ownerWorkspaceResult,studentWorkspaces,type OwnerWorkspaceCommand} from './ownerWorkspaceStore';
 import type { SQL } from 'bun';
+import type {NativeQualificationHooks} from './nativeTypedRead';
 import { assertExactKeys, assertInstant, assertRefs, canonicalJson, digest, requireText, stableId } from '../learning/model';
 import { traceHierarchy, validateHierarchy, validateSourceKey, type CatalogNode, type SourceKey } from './domain';
 import { createAcademySourceAudit } from '../lms/academySourceAudit';
@@ -38,16 +42,41 @@ function versionFrom(row: VersionRow): RecordVersion {
   return value;
 }
 /** Trusted provider adapter; caller authentication and operation grants belong to application ingress. */
-export class PostgresAcademyStore implements TeacherStore,SourceRefreshStore {
-  constructor(readonly db: SQL,private readonly transactionScope?:typeof sourceTransaction) {}
+export class PostgresAcademyStore implements TeacherPrerequisiteStore,SourceRefreshStore {
+  constructor(readonly db: SQL,private readonly transactionScope?:typeof sourceTransaction,private readonly qualification?:NativeQualificationHooks,private readonly writerHook?:import('./nativePrerequisiteStore').DependencyWriterHook) {}
   /** A whole teacher scene observes one PostgreSQL revision horizon and cannot write. */
-  async readSnapshot<T>(read:(store:TeacherReadStore)=>Promise<T>):Promise<T>{
+  async readSnapshot<T>(read:(store:TeacherPrerequisiteReadStore)=>Promise<T>):Promise<T>{
     if(this.transactionScope)throw Error('nested_teacher_read_snapshot');
     return this.db.begin(async tx=>{
       await tx`SET TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY`;
       const scoped=new PostgresAcademyStore(tx as unknown as SQL,sourceTransaction);let active=true;
       const query=<R>(operation:()=>Promise<R>):Promise<R>=>active?operation():Promise.reject(Error('read_snapshot_closed'));
-      const view:TeacherReadStore={
+      try{return await read(this.frozenReadView(scoped,query));}finally{active=false;}
+    }) as Promise<T>;
+  }
+  /** Exactly the 31 frozen reads; no writer, driver or output committer. */
+  private frozenReadView(scoped:PostgresAcademyStore,query:<R>(operation:()=>Promise<R>)=>Promise<R>):TeacherPrerequisiteReadStore{
+    const view:TeacherPrerequisiteReadStore={
+        currentCatalogPins:(...args)=>query(()=>scoped.currentCatalogPins(...args)),
+        ownerRevision:(...args)=>query(()=>scoped.ownerRevision(...args)),
+        ownerHistory:(...args)=>query(()=>scoped.ownerHistory(...args)),
+        scoreEvidenceCurrent:(...args)=>query(()=>scoped.scoreEvidenceCurrent(...args)),
+        scoreEvidenceForAttempt:(...args)=>query(()=>scoped.scoreEvidenceForAttempt(...args)),
+        approvalClosurePreview:(...args)=>query(()=>scoped.approvalClosurePreview(...args)),
+        teachers:(...args)=>query(()=>scoped.teachers(...args)),
+        teacherCurrent:(...args)=>query(()=>scoped.teacherCurrent(...args)),
+        teacherBindingByActor:(...args)=>query(()=>scoped.teacherBindingByActor(...args)),
+        classGroups:(...args)=>query(()=>scoped.classGroups(...args)),
+        classCurrent:(...args)=>query(()=>scoped.classCurrent(...args)),
+        lessons:(...args)=>query(()=>scoped.lessons(...args)),
+        lessonCurrent:(...args)=>query(()=>scoped.lessonCurrent(...args)),
+        temporalBindings:(...args)=>query(()=>scoped.temporalBindings(...args)),
+        activityScopes:(...args)=>query(()=>scoped.activityScopes(...args)),
+        studentRevisionCurrent:(...args)=>query(()=>scoped.studentRevisionCurrent(...args)),
+        studentRevisionHistory:(...args)=>query(()=>scoped.studentRevisionHistory(...args)),
+        approvalCurrent:(...args)=>query(()=>scoped.approvalCurrent(...args)),
+        commandOutcomeLookup:(...args)=>query(()=>scoped.commandOutcomeLookup(...args)),
+        readOccurrenceLookup:(...args)=>query(()=>scoped.readOccurrenceLookup(...args)),
         studentWorkspaces:(...args)=>query(()=>scoped.studentWorkspaces(...args)),
         students:(...args)=>query(()=>scoped.students(...args)),
         current:(...args)=>query(()=>scoped.current(...args)),
@@ -59,11 +88,48 @@ export class PostgresAcademyStore implements TeacherStore,SourceRefreshStore {
         observationResult:(...args)=>query(()=>scoped.observationResult(...args)),
         clinicRequest:(...args)=>query(()=>scoped.clinicRequest(...args)),
         clinicResult:(...args)=>query(()=>scoped.clinicResult(...args)),
-      };
-      try{return await read(Object.freeze(view));}finally{active=false;}
-    }) as Promise<T>;
+    };
+    return Object.freeze(view);
   }
-  private transact<T>(operation:(tx:SQL)=>Promise<T>):Promise<T>{return this.transactionScope===sourceTransaction?operation(this.db):this.db.begin(operation) as Promise<T>;}
+  private prerequisite(){return new NativePrerequisiteStore(this.db,this.writerHook??this.qualification?.afterDependencyWrite);}
+  ownerRevision:TeacherPrerequisiteStore['ownerRevision']=(...args)=>this.prerequisite().ownerRevision(...args);
+  ownerHistory:TeacherPrerequisiteStore['ownerHistory']=(...args)=>this.prerequisite().ownerHistory(...args);
+  scoreEvidenceCurrent:TeacherPrerequisiteStore['scoreEvidenceCurrent']=(...args)=>this.prerequisite().scoreEvidenceCurrent(...args);
+  scoreEvidenceForAttempt:TeacherPrerequisiteStore['scoreEvidenceForAttempt']=(...args)=>this.prerequisite().scoreEvidenceForAttempt(...args);
+  approvalClosurePreview:TeacherPrerequisiteStore['approvalClosurePreview']=(...args)=>this.prerequisite().approvalClosurePreview(...args);
+  teachers:TeacherPrerequisiteStore['teachers']=(...args)=>this.prerequisite().teachers(...args);
+  teacherCurrent:TeacherPrerequisiteStore['teacherCurrent']=(...args)=>this.prerequisite().teacherCurrent(...args);
+  teacherBindingByActor:TeacherPrerequisiteStore['teacherBindingByActor']=(...args)=>this.prerequisite().teacherBindingByActor(...args);
+  classGroups:TeacherPrerequisiteStore['classGroups']=(...args)=>this.prerequisite().classGroups(...args);
+  classCurrent:TeacherPrerequisiteStore['classCurrent']=(...args)=>this.prerequisite().classCurrent(...args);
+  lessons:TeacherPrerequisiteStore['lessons']=(...args)=>this.prerequisite().lessons(...args);
+  lessonCurrent:TeacherPrerequisiteStore['lessonCurrent']=(...args)=>this.prerequisite().lessonCurrent(...args);
+  temporalBindings:TeacherPrerequisiteStore['temporalBindings']=(...args)=>this.prerequisite().temporalBindings(...args);
+  activityScopes:TeacherPrerequisiteStore['activityScopes']=(...args)=>this.prerequisite().activityScopes(...args);
+  studentRevisionCurrent:TeacherPrerequisiteStore['studentRevisionCurrent']=(...args)=>this.prerequisite().studentRevisionCurrent(...args);
+  studentRevisionHistory:TeacherPrerequisiteStore['studentRevisionHistory']=(...args)=>this.prerequisite().studentRevisionHistory(...args);
+  approvalCurrent:TeacherPrerequisiteStore['approvalCurrent']=(...args)=>this.prerequisite().approvalCurrent(...args);
+  commandOutcomeLookup:TeacherPrerequisiteStore['commandOutcomeLookup']=(...args)=>this.prerequisite().commandOutcomeLookup(...args);
+  readOccurrenceLookup:TeacherPrerequisiteStore['readOccurrenceLookup']=(...args)=>this.prerequisite().readOccurrenceLookup(...args);
+  appendScoreEvidence:TeacherPrerequisiteStore['appendScoreEvidence']=(...args)=>{if(this.transactionScope)throw Error('write_in_snapshot');return this.prerequisite().appendScoreEvidence(...args);};
+  appendTeacher:TeacherPrerequisiteStore['appendTeacher']=(...args)=>{if(this.transactionScope)throw Error('write_in_snapshot');return this.prerequisite().appendTeacher(...args);};
+  appendClassGroup:TeacherPrerequisiteStore['appendClassGroup']=(...args)=>{if(this.transactionScope)throw Error('write_in_snapshot');return this.prerequisite().appendClassGroup(...args);};
+  appendLesson:TeacherPrerequisiteStore['appendLesson']=(...args)=>{if(this.transactionScope)throw Error('write_in_snapshot');return this.prerequisite().appendLesson(...args);};
+  appendTemporalBinding:TeacherPrerequisiteStore['appendTemporalBinding']=(...args)=>{if(this.transactionScope)throw Error('write_in_snapshot');return this.prerequisite().appendTemporalBinding(...args);};
+  appendActivityScope:TeacherPrerequisiteStore['appendActivityScope']=(...args)=>{if(this.transactionScope)throw Error('write_in_snapshot');return this.prerequisite().appendActivityScope(...args);};
+  appendStudentRevision:TeacherPrerequisiteStore['appendStudentRevision']=(...args)=>{if(this.transactionScope)throw Error('write_in_snapshot');return this.prerequisite().appendStudentRevision(...args);};
+  createAssessment:TeacherPrerequisiteStore['createAssessment']=(...args)=>{if(this.transactionScope)throw Error('write_in_snapshot');return this.prerequisite().createAssessment(...args);};
+  createDraft:TeacherPrerequisiteStore['createDraft']=(...args)=>{if(this.transactionScope)throw Error('write_in_snapshot');return this.prerequisite().createDraft(...args);};
+  createProgress:TeacherPrerequisiteStore['createProgress']=(...args)=>{if(this.transactionScope)throw Error('write_in_snapshot');return this.prerequisite().createProgress(...args);};
+  correctPrerequisiteRecord:TeacherPrerequisiteStore['correctPrerequisiteRecord']=(...args)=>{if(this.transactionScope)throw Error('write_in_snapshot');return this.prerequisite().correctPrerequisiteRecord(...args);};
+  issueApproval:TeacherPrerequisiteStore['issueApproval']=(...args)=>{if(this.transactionScope)throw Error('write_in_snapshot');return this.prerequisite().issueApproval(...args);};
+  consumeApprovalAndApproveDraft:TeacherPrerequisiteStore['consumeApprovalAndApproveDraft']=(...args)=>{if(this.transactionScope)throw Error('write_in_snapshot');return this.prerequisite().consumeApprovalAndApproveDraft(...args);};
+  revokeApproval:TeacherPrerequisiteStore['revokeApproval']=(...args)=>{if(this.transactionScope)throw Error('write_in_snapshot');return this.prerequisite().revokeApproval(...args);};
+  admitCommand:TeacherPrerequisiteStore['admitCommand']=(...args)=>{if(this.transactionScope)throw Error('write_in_snapshot');return this.prerequisite().admitCommand(...args);};
+  fenceCommand:TeacherPrerequisiteStore['fenceCommand']=(...args)=>{if(this.transactionScope)throw Error('write_in_snapshot');return this.prerequisite().fenceCommand(...args);};
+  admitReadOccurrence:TeacherPrerequisiteStore['admitReadOccurrence']=(...args)=>{if(this.transactionScope)throw Error('write_in_snapshot');return this.prerequisite().admitReadOccurrence(...args);};
+  finalizeReadOccurrence:TeacherPrerequisiteStore['finalizeReadOccurrence']=(...args)=>{if(this.transactionScope)throw Error('write_in_snapshot');return this.prerequisite().finalizeReadOccurrence(...args);};
+  private transact<T>(operation:(tx:SQL)=>Promise<T>):Promise<T>{return this.transactionScope===sourceTransaction?operation(this.db):this.db.begin(async tx=>{await tx`SET TRANSACTION ISOLATION LEVEL READ COMMITTED`;return operation(tx as unknown as SQL);}) as Promise<T>;}
   /** Startup qualification only; never repairs or migrates a production store. */
   async assertRuntimeReady():Promise<void> {
     const [row]=await this.db`
@@ -84,8 +150,10 @@ export class PostgresAcademyStore implements TeacherStore,SourceRefreshStore {
             AND ((c.relname='record_versions' AND t.tgname='immutable_history')
               OR (c.relname='catalog_versions' AND t.tgname='immutable_catalog'))) AS history_triggers`;
     if(row?.tables_ready!==true||row.history_triggers!==2)throw Error('existing_academy_schema_required');
+    await assertNativePrerequisitesReady(this.db);
   }
   async migrate(): Promise<void> {
+    if(this.transactionScope)throw Error('migration_in_snapshot');
     await this.db.unsafe(`
       CREATE SCHEMA IF NOT EXISTS academy;
       CREATE TABLE IF NOT EXISTS academy.students (
@@ -141,6 +209,7 @@ export class PostgresAcademyStore implements TeacherStore,SourceRefreshStore {
       REVOKE ALL ON SCHEMA academy FROM PUBLIC;
       REVOKE ALL ON ALL TABLES IN SCHEMA academy FROM PUBLIC;
     `);
+    await migrateNativePrerequisites(this.db);
   }
   async migrateTeacherWorkspaces(){if(this.transactionScope)throw Error('migration_in_snapshot');await migrateOwnerWorkspaces(this.db);await assertOwnerWorkspacesReady(this.db);}
   assertTeacherWorkspacesReady(){return assertOwnerWorkspacesReady(this.db);}
@@ -184,12 +253,15 @@ export class PostgresAcademyStore implements TeacherStore,SourceRefreshStore {
     for (const field of [input.ownerId, input.id, input.displayName]) requireText(field, 'student registration');
     if (input.displayName.length > 200 || input.sourceKey.namespace !== 'academy_student') throw Error('student_binding_contract');
     await this.db.begin(async tx => {
+      await tx`SET TRANSACTION ISOLATION LEVEL READ COMMITTED`;
+      await lockApprovalDependencies(tx,input.ownerId);
       await tx`SELECT pg_advisory_xact_lock(hashtextextended(${canonicalJson([input.ownerId,input.id])},0))`;
       await tx`INSERT INTO academy.students(owner_id,id,display_name,source_namespace,source_key,proof_refs)
         VALUES(${input.ownerId},${input.id},${input.displayName},${input.sourceKey.namespace},${input.sourceKey.literalKey},${canonicalJson(input.proofRefs)}::text::jsonb)
         ON CONFLICT(owner_id,id) DO NOTHING`;
       const [row] = await tx`SELECT display_name,source_namespace,source_key FROM academy.students WHERE owner_id=${input.ownerId} AND id=${input.id}`;
       if (!row || row.display_name !== input.displayName || row.source_namespace !== input.sourceKey.namespace || row.source_key !== input.sourceKey.literalKey) throw Error('student_rebinding_requires_revision');
+      await (this.writerHook??this.qualification?.afterDependencyWrite)?.('registerStudent',input.ownerId,input.id,tx as unknown as SQL);
     });
   }
   async students(ownerId: string): Promise<StoredStudent[]> {
@@ -202,6 +274,7 @@ export class PostgresAcademyStore implements TeacherStore,SourceRefreshStore {
   async append(command: AppendCommand, recordedAt = new Date().toISOString()): Promise<WriteAcknowledgement> {
     assertExactKeys(command,['ownerId','studentId','entityId','actorId','idempotencyKey','expectedRevisionId','sourceObservedAt','payload']);
     canonicalJson(command); validateAcademyRecord(command.payload);
+    if(command.payload.kind==='daily_progress'||command.payload.kind==='daily_record_draft'||command.payload.kind==='previous_homework_assessment')throw Error('native_prerequisite_command_required');
     for(const value of [command.ownerId,command.studentId,command.entityId,command.actorId,command.idempotencyKey])requireText(value,'append identity');
     if(command.expectedRevisionId!==null)requireText(command.expectedRevisionId,'expected revision');
     assertInstant(command.sourceObservedAt);assertInstant(recordedAt);
@@ -209,9 +282,11 @@ export class PostgresAcademyStore implements TeacherStore,SourceRefreshStore {
     const commandDigest=digest(command);
     const contentDigest=command.payload.kind==='source_audit'?createAcademySourceAudit(command.payload.acquisition).contentDigest:digest(command.payload);
     const acknowledgement=await this.transact(async tx=>{
+      await lockApprovalDependencies(tx,command.ownerId);
       // Serialize source replacement and source-bound teacher intake in the same student partition.
       await tx`SELECT pg_advisory_xact_lock(hashtextextended(${canonicalJson(['student-records',command.ownerId,command.studentId])},0))`;
       await tx`SELECT pg_advisory_xact_lock(hashtextextended(${canonicalJson([command.ownerId,command.actorId,command.idempotencyKey])},0))`;
+      await guardReservedAppend(tx,command.ownerId,command.actorId,command.idempotencyKey);
       const [retry]=await tx`SELECT command_digest,acknowledgement FROM academy.command_outcomes WHERE owner_id=${command.ownerId} AND actor_id=${command.actorId} AND idempotency_key=${command.idempotencyKey}`;
       if(retry){if(retry.command_digest!==commandDigest)throw Error('idempotency_reuse');return {...retry.acknowledgement,status:'replay'} as WriteAcknowledgement;}
       const [student]=await tx`SELECT source_key FROM academy.students WHERE owner_id=${command.ownerId} AND id=${command.studentId}`;
@@ -411,6 +486,7 @@ export class PostgresAcademyStore implements TeacherStore,SourceRefreshStore {
         result={status:'saved',revisionId:body.revisionId,sequence:body.sequence,recordedAt:body.recordedAt,contentDigest,officialSaved:false,parentSent:false};
       }
       await tx`INSERT INTO academy.command_outcomes(owner_id,actor_id,idempotency_key,command_digest,acknowledgement) VALUES(${command.ownerId},${command.actorId},${command.idempotencyKey},${commandDigest},${canonicalJson(result)}::text::jsonb)`;
+      await (this.writerHook??this.qualification?.afterDependencyWrite)?.('append',command.ownerId,command.idempotencyKey,tx);
       return result;
     });
     const [committed]=await this.db`SELECT * FROM academy.record_versions WHERE owner_id=${command.ownerId} AND student_id=${command.studentId} AND revision_id=${acknowledgement.revisionId}`;
@@ -474,6 +550,8 @@ export class PostgresAcademyStore implements TeacherStore,SourceRefreshStore {
     canonicalJson(cohort);requireText(actorId,'source actor');
     const key=sourceRequestId(requestId);let callbackFailed=false;
     try{await this.db.begin(async tx=>{try{
+      await tx`SET TRANSACTION ISOLATION LEVEL READ COMMITTED`;
+      await lockApprovalDependencies(tx,cohort.ownerId);
       await tx`SELECT pg_advisory_xact_lock(hashtextextended(${canonicalJson([cohort.ownerId,actorId,'source-request'])},0))`;
       const [row]=await tx`SELECT acknowledgement FROM academy.command_outcomes WHERE owner_id=${cohort.ownerId} AND actor_id=${actorId} AND idempotency_key=${key}`;
       const intent=row?.acknowledgement as SourceRequestReceipt|undefined;
@@ -572,6 +650,8 @@ export class PostgresAcademyStore implements TeacherStore,SourceRefreshStore {
     const key=sourceRequestId(requestId);let callbackFailed=false;
     try{
       await this.db.begin(async tx=>{try{
+        await tx`SET TRANSACTION ISOLATION LEVEL READ COMMITTED`;
+        await lockApprovalDependencies(tx,ownerId);
         await tx`SELECT pg_advisory_xact_lock(hashtextextended(${canonicalJson([ownerId,actorId,'source-request'])},0))`;
         const [row]=await tx`SELECT acknowledgement FROM academy.command_outcomes WHERE owner_id=${ownerId} AND actor_id=${actorId} AND idempotency_key=${key}`;
         const receipt=row?.acknowledgement as SourceRequestReceipt|undefined,area=receipt?.areas?.find(task=>task.id===taskId);
@@ -624,6 +704,7 @@ export class PostgresAcademyStore implements TeacherStore,SourceRefreshStore {
   async saveCatalog(ownerId:string,node:CatalogNode):Promise<{revisionId:string;sequence:number;contentDigest:string}> {
     requireText(ownerId,'catalog owner');canonicalJson(node);
     return this.transact(async tx=>{
+      await lockApprovalDependencies(tx,ownerId);
       await tx`SELECT pg_advisory_xact_lock(hashtextextended(${canonicalJson([ownerId,'catalog-write'])},0))`;
       const rows=await tx`SELECT DISTINCT ON(node_id) node_id,payload,sequence,revision_id,content_digest FROM academy.catalog_versions WHERE owner_id=${ownerId} ORDER BY node_id,sequence DESC`;
       const nodes=rows.map((row:{payload:CatalogNode})=>row.payload).filter((existing:CatalogNode)=>existing.id!==node.id);
@@ -636,6 +717,7 @@ export class PostgresAcademyStore implements TeacherStore,SourceRefreshStore {
       const sequence=Number(prior?.sequence??0)+1;
       const revisionId=stableId('catalog_revision','academy-v1',ownerId,node.id,String(sequence),contentDigest);
       await tx`INSERT INTO academy.catalog_versions(owner_id,node_id,sequence,revision_id,payload,content_digest) VALUES(${ownerId},${node.id},${sequence},${revisionId},${canonicalJson(node)}::text::jsonb,${contentDigest})`;
+      await (this.writerHook??this.qualification?.afterDependencyWrite)?.('saveCatalog',ownerId,node.id,tx);
       return {revisionId,sequence,contentDigest};
     });
   }
@@ -643,5 +725,111 @@ export class PostgresAcademyStore implements TeacherStore,SourceRefreshStore {
     const rows=await this.db`SELECT DISTINCT ON(node_id) payload,content_digest FROM academy.catalog_versions WHERE owner_id=${ownerId} ORDER BY node_id,sequence DESC`;
     const nodes=rows.map((row:{payload:CatalogNode;content_digest:string})=>{if(digest(row.payload)!==row.content_digest)throw Error('catalog_integrity');return row.payload;});
     validateHierarchy(nodes);return nodes;
+  }
+  /** Current head pin per catalog node, digest verified, node-id order.
+   * No partial pins: any integrity failure refuses the whole result. */
+  async currentCatalogPins(ownerId:string):Promise<CurrentCatalogPin[]>{
+    requireText(ownerId,'owner');
+    const rows=await this.db`SELECT DISTINCT ON(node_id) node_id,sequence,revision_id,payload,content_digest FROM academy.catalog_versions WHERE owner_id=${ownerId} ORDER BY node_id,sequence DESC`;
+    const latest=new Map<string,{sequence:number;revisionId:string;node:CatalogNode;contentDigest:string}>();
+    for(const row of rows as {node_id:string;sequence:number|string;revision_id:string;payload:CatalogNode;content_digest:string}[]){
+      const prior=latest.get(row.node_id);
+      if(!prior||Number(row.sequence)>prior.sequence)latest.set(row.node_id,{sequence:Number(row.sequence),revisionId:row.revision_id,node:row.payload,contentDigest:row.content_digest});
+    }
+    return [...latest.entries()].sort(([a],[b])=>a<b?-1:a>b?1:0).map(([,pin])=>{if(digest(pin.node)!==pin.contentDigest)throw Error('catalog_integrity');return {node:pin.node,revisionId:pin.revisionId,contentDigest:pin.contentDigest};});
+  }
+  /** Write-side output gate (never in the frozen read view). The shared
+   * owner gate and then the exact read key are held across preparation and
+   * the terminal audit write in one READ COMMITTED transaction, so the
+   * prepared value is only handed back after a known COMMIT. A duplicate
+   * admission refuses lookup-only; an ambiguous COMMIT is never replayed. */
+  async commitReadOutput<T>(request:ReadAdmission,prepare:(view:TeacherPrerequisiteReadStore)=>Promise<ReadOutputDecision<T>>,selectRefusal?:ReadOutputRefusalSelector):Promise<CommittedReadOutput<T>>{
+    if(this.transactionScope)throw Error('write_in_snapshot');
+    validateReadAdmission(request);
+    if(typeof prepare!=='function')throw Error('output_prepare_required');
+    const base={requestId:request.requestId,outputAdmissionId:request.requestId,emissionDisposition:'NOT_ATTEMPTED' as const};
+    const finalRefusal=async(view:TeacherPrerequisiteReadStore,code:string)=>{
+      const selected=selectRefusal?await selectRefusal(view,code):{kind:'OUTPUT_REFUSED' as const,code};
+      if(!selected||selected.kind!=='OUTPUT_REFUSED')throw Error('invalid_output_refusal');
+      requireText(selected.code,'read refusal');return selected.code;
+    };
+    let terminalWritten=false;
+    try{
+      const result=await this.db.begin(async (tx):Promise<CommittedReadOutput<T>>=>{
+        await tx`SET TRANSACTION ISOLATION LEVEL READ COMMITTED`;
+        await lockSharedOutputGate(tx as unknown as SQL,request.ownerId);
+        const q=this.qualification;
+        const backend=q?Number((await tx`SELECT pg_backend_pid() AS pid`)[0]!.pid):0;
+        if(q)await q.gate(request.requestId,'SHARED_OWNER',backend);
+        await tx`SELECT pg_advisory_xact_lock(hashtextextended(${canonicalJson([request.ownerId,request.actorId,'read:'+request.requestId])},0))`;
+        if(q)await q.gate(request.requestId,'READ_KEY',backend);
+        const gate=new NativePrerequisiteStore(tx as unknown as SQL);
+        if((await gate.readOccurrenceLookup(request)).status!=='PENDING')throw Error('read_already_terminal_or_unadmitted');
+        const scoped=new PostgresAcademyStore(tx as unknown as SQL,sourceTransaction);let active=true;
+        const query=<R>(operation:()=>Promise<R>):Promise<R>=>active?operation():Promise.reject(Error('read_snapshot_closed'));
+        const gateView=this.frozenReadView(scoped,query);
+        let decision:ReadOutputDecision<T>;
+        try{decision=await prepare(gateView);
+        if(q)await q.gate(request.requestId,'PREPARED',backend);
+        if(!decision||typeof decision!=='object'||decision.kind!=='OUTPUT_READY'&&decision.kind!=='OUTPUT_REFUSED')throw Error('invalid_output_decision');
+        if(decision.kind==='OUTPUT_REFUSED'){
+          const refusalCode=await finalRefusal(gateView,decision.code);
+          await gate.finalizeOutputInGate({request,status:'REFUSED',snapshotDigest:null,refusalCode});terminalWritten=true;
+          return {...base,value:null,terminalStatus:'REFUSED' as const};}
+        /* SC4: recompute the complete horizon from current state under the
+         * shared gate before any output is authorized. Asserted preparatory
+         * pins alone never suffice; missing inputs fail closed. */
+        let refusalCode:string|null=null;
+        try{
+          const supplied=normalizeReadHorizon(decision.horizon);
+          const binding=await gateView.teacherBindingByActor(request.ownerId,request.actorId);
+          if(!binding||binding.payload.state!=='ACTIVE'||binding.payload.assignmentState.state!=='known'||binding.payload.assignmentState.value!=='ACTIVE'||supplied.businessDate<binding.payload.validFrom||binding.payload.validTo!==null&&supplied.businessDate>=binding.payload.validTo)refusalCode='output_rights_refused';
+          else{
+            const current=await computeReadHorizon(gateView,request.ownerId,request.actorId,supplied.businessDate,supplied.scoreHeads.map(row=>row.attemptRef),supplied.plan);
+            if(canonicalJson(current)!==canonicalJson(supplied))refusalCode='horizon_drift';
+          }
+        }catch(error){refusalCode=error instanceof Error&&error.message==='horizon_evidence_required'?'horizon_evidence_required':'horizon_drift';}
+        if(refusalCode!==null){
+          refusalCode=await finalRefusal(gateView,refusalCode);
+          await gate.finalizeOutputInGate({request,status:'REFUSED',snapshotDigest:null,refusalCode});terminalWritten=true;
+          return {...base,value:null,terminalStatus:'REFUSED' as const};}
+        }finally{active=false;}
+        const prepared=decision.value as {snapshot?:unknown;sourceSnapshot?:unknown}|null;const sourceSnapshot=prepared&&typeof prepared==='object'?(prepared.snapshot??prepared.sourceSnapshot):undefined;const snapshotDigest=sourceSnapshot!==undefined?digest(sourceSnapshot):digest({outputAdmissionId:request.requestId,value:decision.value??null});
+        await gate.finalizeOutputInGate({request,status:'COMPLETED',snapshotDigest,refusalCode:null});terminalWritten=true;
+        if(q)await q.gate(request.requestId,'TERMINAL',backend);
+        return {...base,value:decision.value,terminalStatus:'COMPLETED' as const};
+      });
+      // Actual driver COMMIT is known here. Owner-facing acknowledgement
+      // suppression is not evidence of driver/kernel COMMIT uncertainty.
+      this.qualification?.knownCommit(request.requestId,result.terminalStatus);
+      if(this.qualification?.suppressAcknowledgement(request.requestId))return {...base,value:null,terminalStatus:'UNKNOWN' as const};
+      return result;
+    }catch(error){
+      if(error instanceof Error&&error.message==='read_already_terminal_or_unadmitted')throw error;
+      if(terminalWritten){
+        // A failed COMMIT acknowledgement cannot authorize any prepared
+        // response, even if a later lookup observes REFUSED or COMPLETED.
+        return {...base,value:null,terminalStatus:'UNKNOWN' as const};
+      }
+      try{
+        return await this.db.begin(async(tx):Promise<CommittedReadOutput<T>>=>{
+          await tx`SET TRANSACTION ISOLATION LEVEL READ COMMITTED`;
+          await lockSharedOutputGate(tx as unknown as SQL,request.ownerId);
+          await tx`SELECT pg_advisory_xact_lock(hashtextextended(${canonicalJson([request.ownerId,request.actorId,'read:'+request.requestId])},0))`;
+          const gate=new NativePrerequisiteStore(tx as unknown as SQL);
+          if((await gate.readOccurrenceLookup(request)).status!=='PENDING')return {...base,value:null,terminalStatus:'UNKNOWN' as const};
+          // The failed gate view is closed. Rights and wire bytes must be
+          // selected under this cleanup transaction's newly acquired gate.
+          const scoped=new PostgresAcademyStore(tx as unknown as SQL,sourceTransaction);let active=true;
+          const query=<R>(operation:()=>Promise<R>):Promise<R>=>active?operation():Promise.reject(Error('read_snapshot_closed'));
+          const view=this.frozenReadView(scoped,query);
+          try{
+            const refusalCode=await finalRefusal(view,'output_prepare_failed');
+            await gate.finalizeOutputInGate({request,status:'REFUSED',snapshotDigest:null,refusalCode});
+            return {...base,value:null,terminalStatus:'REFUSED' as const};
+          }finally{active=false;}
+        });
+      }catch{return {...base,value:null,terminalStatus:'UNKNOWN' as const};}
+    }
   }
 }

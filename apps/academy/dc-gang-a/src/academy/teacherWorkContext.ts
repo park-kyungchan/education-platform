@@ -3,7 +3,7 @@ import {catalogDisplayName, validateHierarchy, validateSourceKey, type CatalogNo
 import {classroomCyclePolicy} from './classroomCyclePolicy';
 import {assertPreparationDate, type StudentPreparationHistory} from './preparationHistory';
 import type {RecordVersion} from './contracts/storageRecords';
-import {academyConnectionStatus,type AcademySourceConnection} from './nativeConnector';
+import {academyConnectionStatus,type AcademySourceConnection} from './academyConnectionStatus';
 import {projectLearningWork,type LearningWorkProjection} from './learningWorkProjection';
 import {createAcademySourceAudit} from '../lms/academySourceAudit';
 import {type StoredSourceRecord} from '../lms/academyReadProtocol';
