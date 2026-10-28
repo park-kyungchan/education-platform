@@ -34,7 +34,7 @@ interface SourcePort {
   /** Owner client write port (Education AcademyHttpClient.applyJournalAction).
    * Optional: read-only bundles omit it and saves stay fail-closed. */
   applyJournalAction?(action:{attemptId:string;target:Target;field:string;effectRecordKey:string;before:string;after:string;wireDigest:string},
-    admission:{consumeApproval:(action:Readonly<{target:Target;field:string;effectRecordKey:string;after:string}>)=>Promise<{status:'verified';actionDigest:string}|{status:'rejected'}>})
+    admission:{consumeApproval:(action:Readonly<{attemptId:string;target:Target;field:string;effectRecordKey:string;before:string;after:string;wireDigest:string}>)=>Promise<{status:'verified';actionDigest:string}|{status:'rejected'}>})
     :Promise<{status:DailyRecordSaveFieldStatus;transport:'returned'|'uncertain'|'not_invoked'}>;
   close():void;
   searchStudentPaperMetadata?(input:{teacherLabel:string;studentName:string;studentKey:string;period:{from:string;through:string}}):Promise<unknown>;
