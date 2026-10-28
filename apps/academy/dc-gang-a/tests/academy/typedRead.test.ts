@@ -617,6 +617,26 @@ test('OR2-02 Get verifies its own lesson participant without manufacturing a gap
   }
 });
 
+// Student history is needed to authorize historical source joins, while an
+// unresolved optional relation remains an explicit gap for metadata results.
+for(const target of [lessonRef,classRef,teacherRef])for(const history of ['ABSENT','THROWS','MALFORMED'] as const)
+ test('STUDENT-HISTORY metadata gap survives unresolved original endpoint '+target.identity.objectType+' '+history,async()=>{
+  const {store,service}=fixture(),peer=objectRef('Student','student-b','rev-student-b');
+  mapFixtureViews(store,view=>({...view,
+   lessons:async owner=>(await view.lessons(owner)).map(v=>({...v,payload:{...v.payload,participantRefs:knownK([studentRef,peer])}})),
+   students:async owner=>{const rows=await view.students(owner);return [...rows,{...rows[0]!,id:'student-b'}];},
+   studentRevisionCurrent:async(owner,id)=>id==='student-b'?version(id,peer.revision,{kind:'student_record',displayName:knownK('Invented peer'),enrollmentState:knownK('ACTIVE' as const)}):{...(await view.studentRevisionCurrent(owner,id))!,revisionId:'rev-student-advanced'},
+   ownerRevision:async()=>{if(history==='THROWS')throw Error('optional_history_unavailable');return history==='ABSENT'?null:version('foreign-student','foreign-revision',{kind:'student_record',displayName:knownK('Unrelated'),enrollmentState:knownK('ACTIVE' as const)});},
+   current:async(owner,id)=>{if(id==='student-b')throw Error('Get must not expand the peer source partition');return view.current(owner,id);},
+  }));
+  const result=await service.typedRead(ctx,request({selector:{kind:'EXACT_OBJECT',objectRef:target},expectedRevisions:[],temporalSelection:testTemporal({studentRef:{...studentRef,revision:'rev-student-advanced'}})}));
+  expect(result.items.some(i=>i.kind==='OBJECT'&&i.record.identity.objectType===target.identity.objectType&&i.record.identity.nativeKey===target.identity.nativeKey)).toBe(true);
+  expect(result.enumeration).toBe('UNKNOWN');
+  expect(result.gaps).toContainEqual(expect.objectContaining({subject:lessonRef,path:'links.lessonHasStudent',reason:'UNVERIFIED'}));
+  expect(result.items.some(i=>i.kind==='LINK'&&i.link.linkType==='lessonHasStudent')).toBe(false);
+  expect(JSON.stringify(result.gaps)).not.toContain('student-b');
+ });
+
 test('OR2-01 List keeps unknown participant mapping explicit instead of reporting an empty complete closure',async()=>{
   const {store,service}=fixture();
   mapFixtureViews(store,view=>({...view,lessons:async owner=>(await view.lessons(owner)).map(v=>({...v,payload:{...v.payload,participantRefs:unknownK<ObjectRef<'Student'>[]>()}}))}));

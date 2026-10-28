@@ -9,7 +9,11 @@ import {assertFixedRunner,loadFixedRunnerInvocation,writeExclusivePrivateJson,va
 import {TeacherAuthStore,type CoordinatedIdentityCustody} from '../src/academy/teacherAuthStore';
 import type {PostgresAcademyStore} from '../src/academy/postgresStore';
 import type {LoginIdentity} from '../src/academy/server';
-import {validateEvidence,validateRequest,type EvidenceRef,type ObjectRef,type RequestBinding} from '../src/academy/contracts/prerequisiteRecords';
+import {readCookie,verifyTeacherSession} from '../src/academy/auth';
+import {PrerequisiteApplication} from '../src/academy/prerequisiteApplication';
+import type {TrustedTeacherContext} from '../src/academy/application';
+import type {TeacherPrerequisiteStore} from '../src/academy/ports/teacherStore';
+import {approvalRefusalPrecedence,commandBinding,validateEvidence,validateRequest,type AdmissionCommand,type EvidenceRef,type ObjectRef,type RequestBinding} from '../src/academy/contracts/prerequisiteRecords';
 import {nativeProposalTexts,type ProposalSources} from '../src/academy/nativeCompleteness';
 
 export type NativeMemory=Record<string,unknown>;
@@ -90,8 +94,10 @@ export function writeNativeMemory(fd:number,memory:NativeMemory):void {const fac
  if(raw.length>16777216){const sizes=new Map<string,number>();for(const [k,v] of Object.entries(factored)){const f=k.split('.').slice(0,2).join('.');sizes.set(f,(sizes.get(f)??0)+Buffer.byteLength(JSON.stringify(v)??''));}
   console.error(JSON.stringify({status:'PRIVATE_PIPE_OVER_CAP',bytes:raw.length,topFamilies:[...sizes].sort((a,b)=>b[1]-a[1]).slice(0,8)}));throw Error('private_pipe_bound');}
  writeFileSync(fd,raw);}
-interface NativeHttpOccurrence {readonly id:string;readonly path:string;readonly command:{idempotencyKey:string;occurrenceId:string;processEpoch:string}|null;settled:boolean}
+interface NativeHttpOccurrence {readonly id:string;readonly path:string;readonly command:{idempotencyKey:string;occurrenceId:string;processEpoch:string}|null;readonly submittedRequest?:RootSubmittedRequest|null;settled:boolean}
 const nativeHttpOccurrences=new WeakMap<FixedRunnerInvocation,NativeHttpOccurrence[]>();
+const rootSubmissionSelections=new WeakMap<FixedRunnerInvocation,ReadonlyMap<string,{template:unknown;selection:RootSubmissionFenceSelection}>>();
+const rootSubmissionReaders=new WeakMap<FixedRunnerInvocation,Pick<TeacherPrerequisiteStore,'teacherBindingByActor'>>();
 export async function nativePost(i:FixedRunnerInvocation,path:string,body:unknown,cookie:string|null):Promise<{status:number;body:Record<string,unknown>;cookie:string|null;digest:string}> {
  if(i.config.kind!=='FIXTURE'&&i.config.kind!=='MEASURE')throw Error('verified_fixed_runner_required');assertFixedRunner(i,i.config.kind);
  if(!['/api/setup-session','/api/setup-user','/api/login','/api/native-prerequisite','/api/native-read-snapshot','/api/typed-read','/api/native-prereq/teachers/update'].includes(path))throw Error('fixed_native_http_path_required');
@@ -99,7 +105,21 @@ export async function nativePost(i:FixedRunnerInvocation,path:string,body:unknow
  const c=i.config.base,value=wire&&typeof wire==='object'?wire as Record<string,unknown>:{},input=value.input&&typeof value.input==='object'?value.input as Record<string,unknown>:value;
  const command=input.command&&typeof input.command==='object'?input.command as Record<string,unknown>:null;
  const binding=value.operation!=='previewApprovalClosure'&&command&&['idempotencyKey','occurrenceId','processEpoch'].every(k=>typeof command[k]==='string')?{idempotencyKey:String(command.idempotencyKey),occurrenceId:String(command.occurrenceId),processEpoch:String(command.processEpoch)}:null;
- const occurrence:NativeHttpOccurrence={id:crypto.randomUUID(),path,command:binding,settled:false};
+ let submittedRequest:RootSubmittedRequest|null=null;
+ const selected=command&&rootSubmissionSelections.get(i)?.get(String(command.idempotencyKey));
+ if(binding&&selected){
+  const live=liveCommandFacts(i,currentAuthenticationRevision(i));
+  const expected=compileIngressCommand(selected.template,binding.idempotencyKey,live,rootScopeByInvocation.get(i));
+  if(canonicalJson(expected)!==canonicalJson(command))throw Error('root_selected_submission_required');
+  const auth=new TeacherAuthStore(c.authFile).readExistingIdentity();
+  const raw=cookie?readCookie(cookie,'dc_teacher'):null,session=raw?verifyTeacherSession(auth.sessionKey,raw):null;
+  const reader=rootSubmissionReaders.get(i);
+  if(session&&auth.identity&&session.ownerId===c.ownerId&&session.actorId===auth.identity.actorId&&reader){
+   const operation=path==='/api/native-prereq/teachers/update'?((input.payload as {state?:unknown})?.state==='RETIRED'?'retireTeacher':'updateTeacher'):String(value.operation);
+   submittedRequest=await captureRootSubmittedRequest(selected.selection,selected.template,operation,input,{ownerId:session.ownerId,actorId:session.actorId,role:'teacher'},reader);
+  }
+ }
+ const occurrence:NativeHttpOccurrence={id:crypto.randomUUID(),path,command:binding,submittedRequest,settled:false};
  const ledger=nativeHttpOccurrences.get(i)??[];if(ledger.length>=10000)throw Error('native_http_occurrence_budget');ledger.push(occurrence);nativeHttpOccurrences.set(i,ledger);
  const metadata={schema:'fixed-native-http-occurrence.v1',id:occurrence.id,path,requestId:typeof value.requestId==='string'?value.requestId:null,command:binding,stage:i.config.stage,runId:c.runId,ownerId:c.ownerId,occurrenceId:c.occurrenceId,pid:process.pid,startTicks:c.executor.startTicks,sourceSetSha256:c.sourceSet.sha256,automaticRetry:false};
  i.assertCurrent();writeExclusivePrivateJson(join(c.metadataDirectory,'http-'+occurrence.id+'-started.json'),{...metadata,status:'DISPATCH_NEXT_NOT_OUTCOME_PROOF'});
@@ -153,7 +173,7 @@ export interface CatalogueEntry {readonly slot:string;readonly kind:string;reado
 /* B3: pinned Root definitions/slots; digests recomputed, no fallback. */
 const ROOT_CALLER_EVIDENCE_ROOT='/home/palantirkc/operations/platform-redesign-20261023T1807Z';
 export const ROOT_CALLER_DEFINITIONS_PIN=Object.freeze({path:'reports/p4-p5-execution/lead-workflow-improvement-20261025/e10-root-private-caller-definitions.v2.json',sha256:'a19e7892b1bfd5c98db35d0d438e58321077487f5e95e8c488eb293a9eb1ad71',bytes:26942});
-export const ROOT_CALLER_SLOTS_PIN=Object.freeze({path:'reports/p4-p5-execution/claude-takeover-20261027/gen89/candidate/bindings/root-private-caller-slots.v2.json',sha256:'6dfd0240eff494677ec498c725333559e299fcb6bb185ec1ef92845ed64a7d49',bytes:34142});
+export const ROOT_CALLER_SLOTS_PIN=Object.freeze({path:'reports/p4-p5-execution/claude-takeover-20261027/gen98/candidate/bindings/root-private-caller-slots.v2.json',sha256:'4a8a317f54cd32ccdef67614db05c3dd7b6ebec9464f1bd58ba35d9274f0aa52',bytes:34142});
 export interface RootCallerActionDefinition {readonly name:string;readonly version:string;readonly definitionSha256:string}
 export interface RootCallerRegistry {readonly actionsByOperation:ReadonlyMap<string,RootCallerActionDefinition>;readonly planDefinitionSha256:string;readonly intentDomain:string;readonly slots:readonly (readonly [string,string,string])[]}
 let rootCallerRegistryCache:RootCallerRegistry|null=null;
@@ -216,6 +236,32 @@ function buildCatalogue():ReadonlyMap<string,CatalogueEntry> {
 }
 let catalogueCache:ReadonlyMap<string,CatalogueEntry>|null=null;
 export function commandCatalogue():ReadonlyMap<string,CatalogueEntry> {if(!catalogueCache)catalogueCache=buildCatalogue();return catalogueCache;}
+export interface RootFiniteBindingFacts {readonly occurrenceId:string;readonly admissionId:string;readonly namespace:string;readonly scopeRef:unknown;readonly sourceObservedAt:string}
+/** Shared GO producer. Neither source replay nor the external native assembler
+ * keeps a second copy of command bindings, fence selections or partitions. */
+export function buildRootFiniteBindings(facts:RootFiniteBindingFacts):NativeMemory {
+ const ref=facts.scopeRef as {basis?:{recordRevision?:{value?:{value?:unknown}};source?:{publicLocator?:unknown}}};
+ const sourceRevision=ref?.basis?.recordRevision?.value?.value,locator=ref?.basis?.source?.publicLocator;
+ if(typeof sourceRevision!=='string'||typeof locator!=='string')throw Error('root_scope_evidence_required');
+ const out:NativeMemory={'root.scopeRef':facts.scopeRef,'root.externalScopedRef':structuredClone(facts.scopeRef),'evidence.fixture':{sourceRef:structuredClone(facts.scopeRef),sourceRevision,locator,observedAt:facts.sourceObservedAt},'clock.observedSourceAt':facts.sourceObservedAt};
+ for(const entry of commandCatalogue().values()){
+  if(entry.kind==='HTTP')out['ingress.'+entry.slot]={idempotencyKey:entry.slot,occurrenceId:facts.occurrenceId,admissionId:facts.admissionId,processEpoch:{$lateBind:'processEpoch'},sourceObservedAt:facts.sourceObservedAt,authenticationRevision:{$lateBind:'authenticationRevision'},namespace:facts.namespace,scopeRef:{$scopeRef:'root.scopeRef'},nativeOwnerBinding:{$lateBind:'nativeOwnerBinding'},nativeInterfaceBinding:{$lateBind:'nativeInterfaceBinding'},action:entry.action,requestIntentDigest:entry.intent};
+  else if(entry.kind==='DIRECT')out['root.storeKeys.'+entry.slot]=entry.slot;
+ }
+ return out;
+}
+export const rootBindingPartitionSteps=Object.freeze(['AUTH_INIT:A0','START:A0','FIXTURE:A0']);
+export function selectRootGoBindings(all:NativeMemory,occurrencePrefix:string,fencePrefix:string):{bindings:NativeMemory;stepBindings:Record<string,NativeMemory>} {
+ const selected:NativeMemory={};
+ for(const [key,value] of Object.entries(all)){
+  if(key.startsWith('ingress.')){const slot=key.slice(8),occurrenceId=occurrencePrefix+'-'+slot;selected[key]={...(value as Record<string,unknown>),occurrenceId};selected['ingress.fenceTemplate-'+occurrenceId]=buildRootSubmissionFenceSelection(selected[key],fencePrefix+'-'+slot,all['root.scopeRef']);}
+  else selected[key]=value;
+ }
+ const partitions:NativeMemory[]=[{}];let used=0;
+ for(const [key,value] of Object.entries(selected)){const bytes=Buffer.byteLength(JSON.stringify({[key]:value}));if(used&&used+bytes>120000){partitions.push({});used=0;}partitions.at(-1)![key]=value;used+=bytes;}
+ if(partitions.length>4)throw Error('partition_limit');
+ return {bindings:partitions[0]!,stepBindings:Object.fromEntries(partitions.slice(1).map((v,n)=>[rootBindingPartitionSteps[n]!,v]))};
+}
 export function catalogueEntry(id:string):CatalogueEntry {const found=commandCatalogue().get(id);if(!found)throw Error('unselected_command_input');return found;}
 export function isFiniteSelectedCommandId(id:string):boolean {return commandCatalogue().has(id);}
 export function compileIngressCommand(template:unknown,id:string,live:LiveCommandFacts,rootScopeRef?:unknown):Record<string,unknown> {
@@ -272,6 +318,7 @@ export function validateFenceBindingValue(key:string,value:unknown):void {
  if(!suffix||!value||typeof value!=='object'||Array.isArray(value))throw Error('unresolved_command_input');
  const v=value as Record<string,unknown>;
  if(key.startsWith('ingress.fenceTemplate-')){
+  if(v.schema==='root-exact-submission-fence.v1'){validateRootSubmissionFenceSelection(value);return;}
   if(v.schema!=='root-exact-command-fence-admission-template.v1'||v.status!=='ROOT_DECISION_REQUIRED'||typeof v.fenceOccurrenceId!=='string'||!v.fenceOccurrenceId)throw Error('unresolved_command_input');
   const keys=Object.keys(v).sort().join(',');
   if(keys==='fenceOccurrenceId,schema,status')return;
@@ -291,7 +338,61 @@ export function validateRootBindingMemory(i:FixedRunnerInvocation,memory:NativeM
    if(!isFiniteSelectedCommandId(id)||typeof value!=='string'||value!==id)throw Error('unresolved_command_input');
   }
  }
+ const selections=new Map<string,{template:unknown;selection:RootSubmissionFenceSelection}>();
+ for(const [key,value] of Object.entries(memory))if(key.startsWith('ingress.')&&!key.startsWith('ingress.fence')){
+  const template=value as Record<string,unknown>,selected=memory['ingress.fenceTemplate-'+template.occurrenceId];
+  if(selected&&typeof selected==='object'&&(selected as {schema?:unknown}).schema==='root-exact-submission-fence.v1'){
+   const selection=validateRootSubmissionFenceSelection(selected);
+   if(selection.commandTemplateSha256!==sha256(canonicalJson(template))||selection.fenceOccurrenceId===template.occurrenceId)throw Error('root_selected_submission_required');
+   selections.set(key.slice('ingress.'.length),{template:structuredClone(template),selection:Object.freeze({...selection})});
+  }
+ }
+ rootSubmissionSelections.set(i,selections);
  if(privateMemoryBytes(memory)>16777216)throw Error('private_pipe_bound');
+}
+
+export interface RootSubmissionFenceSelection {
+ readonly schema:'root-exact-submission-fence.v1';readonly status:'ROOT_SELECTED_ABORT_ON_KNOWN_PENDING';
+ readonly commandTemplateSha256:string;readonly fenceOccurrenceId:string;readonly reason:'ABORT';
+ readonly unknownReplay:false;readonly automaticRetry:false;
+}
+function validateRootSubmissionFenceSelection(value:unknown):RootSubmissionFenceSelection {
+ const v=value as RootSubmissionFenceSelection;
+ if(!v||typeof v!=='object'||Array.isArray(v)||Object.keys(v).sort().join(',')!=='automaticRetry,commandTemplateSha256,fenceOccurrenceId,reason,schema,status,unknownReplay'||v.schema!=='root-exact-submission-fence.v1'||v.status!=='ROOT_SELECTED_ABORT_ON_KNOWN_PENDING'||!SHA256_TEXT.test(v.commandTemplateSha256)||typeof v.fenceOccurrenceId!=='string'||!v.fenceOccurrenceId||v.reason!=='ABORT'||v.unknownReplay!==false||v.automaticRetry!==false)throw Error('root_selected_submission_required');
+ return v;
+}
+/** Root GO selects a conditional disposition before any original submission.
+ * This differs from ROOT_DECISION_REQUIRED, which remains data without authority. */
+export function buildRootSubmissionFenceSelection(template:unknown,fenceOccurrenceId:string,rootScopeRef?:unknown):RootSubmissionFenceSelection {
+ const command=template as {occurrenceId?:unknown;scopeRef?:unknown};
+ if(!command||typeof command!=='object'||Array.isArray(command)||typeof command.occurrenceId!=='string'||!command.occurrenceId||!fenceOccurrenceId||fenceOccurrenceId===command.occurrenceId)throw Error('root_selected_submission_required');
+ if(isRootScopeRefMarker(command.scopeRef)){
+  if(!rootScopeRef||typeof rootScopeRef!=='object'||isRootScopeRefMarker(rootScopeRef))throw Error('root_selected_submission_required');
+  template={...command,scopeRef:rootScopeRef};
+ }
+ return Object.freeze({schema:'root-exact-submission-fence.v1',status:'ROOT_SELECTED_ABORT_ON_KNOWN_PENDING',commandTemplateSha256:sha256(canonicalJson(template)),fenceOccurrenceId,reason:'ABORT',unknownReplay:false,automaticRetry:false});
+}
+export interface RootSubmittedRequest {readonly request:Readonly<RequestBinding>;readonly commandTemplateSha256:string}
+const capturedRootSubmissions=new WeakSet<object>();
+/** Reuse the owner facade's normalization, intercepting admission before every
+ * effect. Only its teacher-binding read is available; every writer is denied. */
+export async function captureRootSubmittedRequest(selection:RootSubmissionFenceSelection,template:unknown,operation:string,input:unknown,context:TrustedTeacherContext,reader:Pick<TeacherPrerequisiteStore,'teacherBindingByActor'>):Promise<RootSubmittedRequest|null> {
+ validateRootSubmissionFenceSelection(selection);
+ if(selection.commandTemplateSha256!==sha256(canonicalJson(template)))throw Error('root_selected_submission_required');
+ const captured=Symbol('captured-root-submission');let request:RequestBinding|null=null;
+ const guarded=new Proxy({}, {get:(_target,name)=>{
+  if(name==='teacherBindingByActor')return reader.teacherBindingByActor.bind(reader);
+  if(name==='admitCommand')return async(admission:AdmissionCommand)=>{request=structuredClone(commandBinding(admission.context,admission.requestDigest));throw captured;};
+  return ()=>{throw Error('root_submission_capture_write_forbidden');};
+ }}) as TeacherPrerequisiteStore;
+ const facade=new PrerequisiteApplication(guarded,context.ownerId);
+ const method=Object.getOwnPropertyDescriptor(PrerequisiteApplication.prototype,operation)?.value;
+ if(operation==='constructor'||typeof method!=='function')throw Error('root_selected_submission_required');
+ try{await method.call(facade,structuredClone(context),structuredClone(input));}
+ catch(error){if(error!==captured){if(error instanceof Error&&error.message==='root_submission_capture_write_forbidden')throw error;return null;}}
+ if(!request)return null;
+ const proof=Object.freeze({request:Object.freeze(request),commandTemplateSha256:selection.commandTemplateSha256});
+ capturedRootSubmissions.add(proof);return proof;
 }
 /** Data only for a later Root decision; binds the actual looked-up request
  * hash and never fabricates the original request, actor or digest. */
@@ -301,11 +402,16 @@ export function buildRootFenceAdmissionTemplate(request:RequestBinding,fenceOccu
  return {schema:'root-exact-command-fence-admission-template.v1',status:'ROOT_DECISION_REQUIRED',requestBindingSha256:sha256(canonicalJson(request)),fenceOccurrenceId,reason:'ABORT',unknownReplay:false,automaticRetry:false};
 }
 
-export function resolveCommandFence(memory:NativeMemory,request:RequestBinding):{request:RequestBinding;fenceOccurrenceId:string;reason:'ABORT'} {
+export function resolveCommandFence(memory:NativeMemory,request:RequestBinding,submitted?:RootSubmittedRequest|null):{request:RequestBinding;fenceOccurrenceId:string;reason:'ABORT'} {
  const exactKey='ingress.fence-'+request.occurrenceId,templateKey='ingress.fenceTemplate-'+request.occurrenceId;
  if(Object.hasOwn(memory,exactKey))return validateRootCommandFence(memory[exactKey],request);
  if(Object.hasOwn(memory,templateKey)){
   const template=memory[templateKey] as Record<string,unknown>;
+  if(template?.schema==='root-exact-submission-fence.v1'){
+   const selection=validateRootSubmissionFenceSelection(template);
+   if(!submitted||!capturedRootSubmissions.has(submitted)||selection.commandTemplateSha256!==submitted.commandTemplateSha256)throw Error('separate_root_fence_occurrence_required');
+   return validateRootCommandFence({schema:'root-exact-command-fence.v1',requestBindingSha256:sha256(canonicalJson(submitted.request)),fenceOccurrenceId:selection.fenceOccurrenceId,reason:selection.reason},request);
+  }
   if(!template||typeof template!=='object'||template.schema!=='root-exact-command-fence-admission-template.v1'||template.status!=='ROOT_DECISION_REQUIRED'||typeof template.fenceOccurrenceId!=='string')throw Error('separate_root_fence_occurrence_required');
   // A lookup descriptor is not an authorization. Preserve the Root-recorded
   // request hash and reason; the common exact-fence reader rejects absent or mismatched bindings.
@@ -317,19 +423,21 @@ export function resolveCommandFence(memory:NativeMemory,request:RequestBinding):
 async function settleNativeCommands(i:FixedRunnerInvocation,memory:NativeMemory,db:SQL,store:PostgresAcademyStore):Promise<Record<string,unknown>[]> {
  const ledger=nativeHttpOccurrences.get(i)??[];
  if(ledger.some(o=>!o.settled))throw Error('native_http_pending_reconcile_no_replay');
- const commands=new Map(ledger.filter(o=>o.command).map(o=>[canonicalJson(o.command),o.command!]));
+ const commands=new Map(ledger.filter(o=>o.command).map(o=>[canonicalJson(o.command),o]));
  const receipts:Record<string,unknown>[]=[];
- for(const command of commands.values()){
+ for(const occurrence of commands.values()){
+  const command=occurrence.command!;
   i.assertCurrent();
   const rows=await db`SELECT request FROM academy.effect_fences WHERE owner_id=${i.config.base.ownerId} AND idempotency_key=${command.idempotencyKey} AND request->>'occurrenceId'=${command.occurrenceId} AND request->>'processEpoch'=${command.processEpoch}`;
   if(rows.length===0)throw Error('original_command_absence_unqualified_reconcile_no_replay');
   if(rows.length!==1)throw Error('exact_command_binding_required');
   const request=rows[0]!.request as import('../src/academy/contracts/prerequisiteRecords').RequestBinding;
   if(request.ownerId!==i.config.base.ownerId||request.occurrenceId!==command.occurrenceId||request.idempotencyKey!==command.idempotencyKey||request.processEpoch!==command.processEpoch)throw Error('exact_command_binding_required');
+  if(occurrence.submittedRequest&&canonicalJson(request)!==canonicalJson(occurrence.submittedRequest.request))throw Error('exact_command_binding_required');
   let outcome=await store.commandOutcomeLookup(request);const before=outcome.status;
   if(outcome.status==='UNKNOWN')throw Error('original_command_unknown_reconcile_no_replay');
   if(outcome.status==='PENDING'){
-   const fence=resolveCommandFence(memory,request);
+   const fence=resolveCommandFence(memory,request,occurrence.submittedRequest);
    const who=request.actorId===memory['native.actorA']?'A':request.actorId===memory['native.actorB']?'B':null;
    if(!who)throw Error('actual_original_actor_required');
    const cookie=String(memoryGet(memory,who==='B'&&memory['memory.cookie.BOnA']?'memory.cookie.BOnA':'memory.cookie.'+who));
@@ -409,7 +517,7 @@ export const expectedFixtureRefusals=Object.freeze({
  'refuse-inverted':{status:400,code:'invalid_interval'},
  'refuse-cross-family':{status:409,code:'work_attempt_predecessor_conflict'},
  'refuse-duplicate-draft':{status:409,code:'duplicate_current_draft'},
- 'negative-approval-consume':{status:409,code:'approval_closure_mismatch'},
+ 'negative-approval-consume':approvalRefusalPrecedence.SOURCE_REVISION,
  'issuer-expired':{status:409,code:'approval_expired'},
  'issuer-revoked':{status:409,code:'approval_revoked'},
 } as const);
@@ -1009,12 +1117,12 @@ async function runProbe(i:FixedRunnerInvocation,memory:NativeMemory,store:Postgr
 }
 export async function produceNativeFixtures(i:FixedRunnerInvocation):Promise<void> {
  assertFixedRunner(i,'FIXTURE');const memory=await readNativeMemory(i),c=i.config.base;
- if(memoryGet(memory,'root.ownerId')!==c.ownerId||memoryGet(memory,'root.namespace')!=='p4-qualification-e2e-p4-native-20261027-57')throw Error('root_selected_fixture_scope_required');
+ if(memoryGet(memory,'root.ownerId')!==c.ownerId||memoryGet(memory,'root.namespace')!=='p4-qualification-e2e-p4-native-20261027-66')throw Error('root_selected_fixture_scope_required');
  validateRootBindingMemory(i,memory);
  const [{SQL},{PostgresAcademyStore}]=await Promise.all([import('bun'),import('../src/academy/postgresStore')]);i.claim();
  const db=new SQL({adapter:'postgres',path:c.provider.socket,username:c.provider.username,database:c.provider.database,max:5});
  try{
-  const store=new PostgresAcademyStore(db);await store.assertRuntimeReady();const receipts:Record<string,unknown>[]=[];
+  const store=new PostgresAcademyStore(db);await store.assertRuntimeReady();rootSubmissionReaders.set(i,store);const receipts:Record<string,unknown>[]=[];
   if(i.config.stage==='A1-DETACH'){const identity=new TeacherAuthStore(c.authFile).readExistingIdentity().identity!;const login=await nativePost(i,'/api/login',{username:identity.username,password:memoryGet(memory,'memory.generatedPassword.A')},null);if(login.status!==200||!login.cookie)throw Error('genuine_a_login_outside_read_windows_required');memory['memory.cookie.A']=login.cookie;}
 
   if(i.config.stage==='A1-SETUP')await runDependencyWriterSchedule(i,memory,db,store,receipts);

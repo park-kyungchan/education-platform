@@ -142,7 +142,7 @@ describe('authentication at emission',()=>{
     let reads=0;
     const f=fixture({currentAuthentication:()=>{if(++reads===occurrence)throw Error('synthetic-private-error-detail');return {identity:identity(),sessionKey};}});
     const response=await f.send();expect(response.status).toBe(503);
-    expect(await response.json()).toEqual({error:'native_read_descriptor_unavailable'});
+    expect(await response.json()).toEqual({error:'native_dependency_failed',automaticRetry:false,...(occurrence===2?{readResolution:'UNRESOLVED_READ'}:{})});
   });
 });
 

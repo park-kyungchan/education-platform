@@ -346,9 +346,9 @@ export function createTeacherServerHandler(options:TeacherServerOptions){
         const chunk=await reader.read();if(chunk.done)break;
         bytes+=chunk.value.byteLength;
         if(bytes>limit){await reader.cancel();throw Error('input_too_large');}
-        try{text+=decoder.decode(chunk.value,{stream:true});}catch{throw new TeacherHttpInputRefusal('invalid_http_input');}
+        text+=decoder.decode(chunk.value,{stream:true});
       }
-      try{text+=decoder.decode();}catch{throw new TeacherHttpInputRefusal('invalid_http_input');}
+      text+=decoder.decode();
     }finally{reader.releaseLock();}
     const data:unknown=JSON.parse(text);if(!data||typeof data!=='object'||Array.isArray(data))throw Error('invalid_input');return data as Record<string,unknown>;
   };

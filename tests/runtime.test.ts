@@ -108,8 +108,11 @@ test('root source CI guards owner setup inside the shared action and preserves r
  expect(shared).toHaveLength(1);
  const sharedIndex=source.steps.indexOf(shared[0]);
  expect(source.steps.slice(0,sharedIndex).map((step:any)=>step.uses)).toEqual([checkout.uses,bootstrap.uses]);
- expect(sharedIndex).toBe(source.steps.length-1);
- expect(source.steps.filter((step:any)=>step.run)).toEqual([]);
+ // Owner setup stays in the shared action. Only this closed disposable
+ // source-plan suffix may follow; missing replay/cleanup or extra shell fails.
+ expect(sharedIndex).toBe(2);
+ expect(source.steps.slice(sharedIndex+1)).toEqual(contract.source.nativePlanReplaySteps);
+ expect(source.steps.filter((step:any)=>step.run)).toEqual(contract.source.nativePlanReplaySteps);
  expect(shared[0].with).toEqual({
   'project-id':contract.owner.projectId,repository:contract.owner.repository,
   'source-sha':contract.sourceSha,'bun-version':contract.source.bun,

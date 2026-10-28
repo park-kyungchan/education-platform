@@ -12,6 +12,9 @@ import {foundation,admitted,type FictionalSql} from './nativePrerequisiteStore.t
 import {exactWorkFixture,exactAttemptFixture} from './learningWorkFixtures';
 import {createNativeTypedRead,createSnapshotGrantVerifier,fullFieldMask} from '../../src/academy/nativeTypedRead';
 import {ctx,nativeRef,request,testTemporal,testFunctionRequest,TEST_REGISTRY_SHA256} from './typedRead.test';
+import {requireFixtureRefusal} from '../../harness/native_foundations_fixture';
+import {prerequisiteRefusalStatus} from '../../src/academy/server';
+import {approvalRefusalPrecedence} from '../../src/academy/contracts/prerequisiteRecords';
 
 /** Real owner and native metadata store over the existing fictional driver.
  * The driver models a recoverable read error or an aborted transaction, never SQL effects. */
@@ -127,6 +130,78 @@ test('native issuer -> revoke/refuse -> new issuer -> atomic consume returns ful
 });
 test('link-only revision changes preserve object pins yet invalidate a real store-issued proof without moving draft/approval heads',async()=>{const f=await scene();const target=context('consume-link-change'),closure=await f.store.readSnapshot(view=>view.approvalClosurePreview(target,f.draftRef));const issue={context:context('issue-before-link-change'),draftRef:f.draftRef,closure,validForSeconds:900};await f.store.admitCommand({context:issue.context,requestDigest:requestDigest('issueApproval',issue)});const proof=await f.store.issueApproval(issue);const binding=(await f.store.temporalBindings(target.ownerId)).find(x=>x.payload.bindingKind==='TEACHING_ASSIGNMENT')!;const {bindingKey,ownerId,...payload}=binding.payload;const change:OwnerAppendCommand<TemporalBinding>={context:context('change-link-only'),entityKey:binding.entityKey,expectedRevisionId:binding.revisionId,payload:{...payload,sourceLiteral:'synthetic-corrected-link-evidence'}};await admitted(f.store,'append:binding',change,()=>f.store.appendTemporalBinding(change));const beforeDraft=await f.store.history(target.ownerId,'student-a',f.draftRef.identity.nativeKey),beforeApproval=await f.store.approvalCurrent(target.ownerId,proof.approvalId);const consume={context:target,draftRef:f.draftRef,approvalProofHandle:proof.proofHandle};await f.store.admitCommand({context:target,requestDigest:requestDigest('consumeApprovalAndApproveDraft',consume)});await expect(f.store.consumeApprovalAndApproveDraft(consume)).rejects.toThrow('approval_closure_mismatch');expect(await f.store.history(target.ownerId,'student-a',f.draftRef.identity.nativeKey)).toEqual(beforeDraft);expect(await f.store.approvalCurrent(target.ownerId,proof.approvalId)).toEqual(beforeApproval);});
 
+test('REFUSAL-ORACLE actual cited progress correction has the exact native negative-consume refusal',async()=>{
+ const f=await scene(),target=context('oracle-consume-progress-change');
+ const closure=await f.store.approvalClosurePreview(target,f.draftRef);
+ const issue={context:context('oracle-issue-progress-change'),draftRef:f.draftRef,closure,validForSeconds:900};
+ await f.store.admitCommand({context:issue.context,requestDigest:requestDigest('issueApproval',issue)});
+ const proof=await f.store.issueApproval(issue);
+ const change={context:context('oracle-correct-cited-progress'),studentId:'student-a',entityId:f.progressResult.identity.nativeKey,expectedRevisionId:f.progressResult.revisionId,payload:{...f.pc.payload,note:known('Invented correction after explicit approval')}};
+ await admitted(f.store,'correctPrerequisiteRecord',change,()=>f.store.correctPrerequisiteRecord(change));
+ const beforeDraft=await f.store.history(target.ownerId,'student-a',f.draftRef.identity.nativeKey),beforeApproval=await f.store.approvalCurrent(target.ownerId,proof.approvalId);
+ const consume={context:target,draftRef:f.draftRef,approvalProofHandle:proof.proofHandle};let code:string|null=null;
+ try{await admitted(f.store,'consumeApprovalAndApproveDraft',consume,()=>f.store.consumeApprovalAndApproveDraft(consume));}catch(error){code=error instanceof Error?error.message:null;}
+ // Independent normative expectation: selected prerequisite contract v5,
+ // referenceRules.objectRef:304 and DailyRecordDraft invariant:631.
+ expect(code).toBe('stale_source_revision');
+ expect(approvalRefusalPrecedence.SOURCE_REVISION.priority).toBeLessThan(approvalRefusalPrecedence.CLOSURE_EQUALITY.priority);
+ expect(code).toBe(approvalRefusalPrecedence.SOURCE_REVISION.code);
+ expect(prerequisiteRefusalStatus(code!)).toBe(approvalRefusalPrecedence.SOURCE_REVISION.status);
+ for(const row of Object.values(approvalRefusalPrecedence))expect(prerequisiteRefusalStatus(row.code)).toBe(row.status);
+ expect(()=>requireFixtureRefusal('negative-approval-consume',prerequisiteRefusalStatus(code!),code)).not.toThrow();
+ expect(await f.store.history(target.ownerId,'student-a',f.draftRef.identity.nativeKey)).toEqual(beforeDraft);
+ expect(await f.store.approvalCurrent(target.ownerId,proof.approvalId)).toEqual(beforeApproval);
+});
+
+for(const selector of ['EXACT','REGISTERED'] as const)for(const missingHistory of [false,true])test('STUDENT-HISTORY full source closure '+selector+' '+(missingHistory?'denies missing original':'preserves original endpoints after a new head'),async()=>{
+ const f=await scene(),owner=context().ownerId;
+ expect((await f.store.current(owner,'student-a')).some(row=>row.payload.kind==='learning_work_assignment')).toBe(true);
+ expect((await f.store.current(owner,'student-a')).some(row=>row.payload.kind==='learning_work_attempt')).toBe(true);
+ const original=await f.store.studentRevisionCurrent(owner,'student-a');expect(original).not.toBeNull();
+ const change={context:context('whole-plan-student-head'),studentId:'student-a',expectedRevisionId:original!.revisionId,payload:{...original!.payload,displayName:known('Invented current Student revision')}};
+ const updated=await admitted(f.store,'append:student',change,()=>f.store.appendStudentRevision(change));
+ const oldScope=structuredClone((await f.store.activityScopes(owner,{}))[0]!.payload.recordScope);
+ if(missingHistory){const rows=f.sql.rows('student_record_versions'),index=rows.findIndex(row=>row.revision_id===original!.revisionId);expect(index).toBeGreaterThanOrEqual(0);rows.splice(index,1);}
+ const temporal=testTemporal({studentRef:f.ref('Student',updated),classGroupRef:f.recordScope.classGroupRef,occurrence:{mode:'EXACT',lessonRef:f.recordScope.lessonRef}});
+ const intent=testFunctionRequest(temporal,1,[temporal.studentRef!,temporal.classGroupRef,...(temporal.occurrence.mode==='EXACT'?[temporal.occurrence.lessonRef]:[])]);
+ const service=createNativeTypedRead(f.store,owner,{processEpoch:'whole-plan-student',registrySha256:TEST_REGISTRY_SHA256,snapshotGrantSecret:'fictional-whole-plan-student-secret',now:()=>Date.parse(f.sql.now)});
+ const acquired=await service.acquireSnapshot(ctx,{schema:'native-read-acquire.v2',consumerProfile:'CURRENT_1_1',requestId:'whole-plan-student-acquire',scopeRef:nativeRef(),consistency:'FAIL_ON_CHANGE',time:{mode:'CURRENT'},functionIntent:intent});
+ const input=request({...(selector==='EXACT'?{selector:{kind:'EXACT_OBJECT' as const,objectRef:temporal.studentRef!}}:{}),fieldMask:fullFieldMask(['Student']),linkMask:[],pageSize:1,temporalSelection:temporal,expectedRevisions:intent.expectedRevisions,snapshot:acquired.snapshot,asOf:acquired.snapshot.asOf,snapshotAdmission:acquired.snapshotAdmission});
+ if(missingHistory)await expect(service.typedRead(ctx,input)).rejects.toMatchObject({code:'PERMISSION_DENIED',httpStatus:403});
+ else{const result=await service.typedRead(ctx,input);expect(result.items).toHaveLength(1);expect(result.items[0]).toMatchObject({kind:'OBJECT',record:{identity:{objectType:'Student'},revision:updated.revisionId}});}
+ expect((await f.store.activityScopes(owner,{}))[0]!.payload.recordScope).toEqual(oldScope);
+ expect(oldScope.studentRef.revision).toBe(original!.revisionId);
+});
+
+
+// Native-read v5: current denial wins, otherwise an old grant/reference is
+// stale409. Authority must use current store evidence, not the old caller ref.
+for(const selector of ['EXACT','REGISTERED'] as const)for(const authority of ['CURRENT','RETIRED_TEACHER','CLOSED_MEMBERSHIP','CLOSED_PARTICIPATION'] as const)
+ test('STUDENT-HISTORY old grant current-rights precedence '+selector+' '+authority,async()=>{
+  const f=await scene(),owner=context().ownerId,original=(await f.store.studentRevisionCurrent(owner,'student-a'))!;
+  const temporal=testTemporal({studentRef:{identity:{scopeRef:original.scopeRef,namespace:original.namespace,objectType:'Student',nativeKey:original.entityKey},revision:original.revisionId},classGroupRef:f.recordScope.classGroupRef,occurrence:{mode:'EXACT',lessonRef:f.recordScope.lessonRef}});
+  const intent=testFunctionRequest(temporal,1,[temporal.studentRef!,temporal.classGroupRef,...(temporal.occurrence.mode==='EXACT'?[temporal.occurrence.lessonRef]:[])]);
+  const service=createNativeTypedRead(f.store,owner,{processEpoch:'history-old-grant',registrySha256:TEST_REGISTRY_SHA256,snapshotGrantSecret:'fictional-history-old-grant-secret',now:()=>Date.parse(f.sql.now)});
+  const acquired=await service.acquireSnapshot(ctx,{schema:'native-read-acquire.v2',consumerProfile:'CURRENT_1_1',requestId:'history-old-grant-acquire',scopeRef:nativeRef(),consistency:'FAIL_ON_CHANGE',time:{mode:'CURRENT'},functionIntent:intent});
+  const change={context:context('history-old-grant-new-head'),studentId:'student-a',expectedRevisionId:original.revisionId,payload:{...original.payload,displayName:known('Invented new Student head')}};
+  const updated=await admitted(f.store,'append:student',change,()=>f.store.appendStudentRevision(change));
+  if(authority==='RETIRED_TEACHER'){
+   const current=(await f.store.teacherBindingByActor(owner,ctx.actorId))!;
+   const change={...f.bind,context:context('history-old-grant-retire-teacher'),entityKey:current.entityKey,expectedRevisionId:current.revisionId,payload:{...f.bind.payload,state:'RETIRED' as const}};
+   await admitted(f.store,'append:teacher',change,()=>f.store.appendTeacher(change));
+  }else if(authority!=='CURRENT'){
+   const kind=authority==='CLOSED_MEMBERSHIP'?'CLASS_MEMBERSHIP':'LESSON_PARTICIPATION';
+   const current=(await f.store.temporalBindings(owner)).find(v=>v.payload.bindingKind===kind)!;
+   const {ownerId:_owner,bindingKey:_key,...payload}=current.payload;
+   const change={context:context('history-old-grant-close-'+kind),entityKey:current.entityKey,expectedRevisionId:current.revisionId,payload:{...payload,...(kind==='CLASS_MEMBERSHIP'?{subjectRef:f.ref('Student',updated)}:{targetRef:f.ref('Student',updated)}),validFrom:'2026-01-01',validTo:f.recordScope.businessDate}};
+   await admitted(f.store,'append:binding',change,()=>f.store.appendTemporalBinding(change));
+  }
+  const input=request({...(selector==='EXACT'?{selector:{kind:'EXACT_OBJECT' as const,objectRef:temporal.studentRef!}}:{}),fieldMask:fullFieldMask(['Student']),linkMask:[],pageSize:1,temporalSelection:temporal,expectedRevisions:intent.expectedRevisions,snapshot:acquired.snapshot,asOf:acquired.snapshot.asOf,snapshotAdmission:acquired.snapshotAdmission});
+  const output=await service.typedReadBuffered(ctx,input,()=>true),body=JSON.parse(new TextDecoder().decode(output.body!));
+  expect(output.status).toBe(authority==='CURRENT'?409:403);
+  expect(authority==='CURRENT'?['REVISION_STALE','OBJECTSET_CURSOR_STALE']:['PERMISSION_DENIED']).toContain(body.error.code);
+  for(const field of ['items','nextCursor','gaps'])expect(Object.hasOwn(body,field)).toBe(false);
+ });
 
 test('AUTH-T4 a real owner refuses a fresh grant after dated teaching closes',async()=>{
  const f=await scene(),temporal=testTemporal({classGroupRef:f.recordScope.classGroupRef,studentRef:f.recordScope.studentRef,occurrence:{mode:'EXACT',lessonRef:f.recordScope.lessonRef}});

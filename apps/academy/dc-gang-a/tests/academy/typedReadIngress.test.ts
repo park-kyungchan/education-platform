@@ -1,4 +1,5 @@
-import {readFileSync} from 'node:fs';
+import {existsSync,readFileSync} from 'node:fs';
+import {createHash} from 'node:crypto';
 import {foundation,admitted} from './nativePrerequisiteStore.test';
 import {context as commandFixture,progress,draft,assessment,closure} from './nativePrerequisiteContracts.test';
 import {describe,expect,test} from 'bun:test';
@@ -366,7 +367,8 @@ describe('authenticated prerequisite wrapper (IG3-REV-09)',()=>{
   });
   test('RC7: every refusal code the prerequisite store, application and contract validators throw has a deliberate HTTP class',()=>{
     const unclassified:string[]=[];
-    // The prerequisite path and every validator module it imports; fixed messages in either quote style.
+    // Domain validators reached by prerequisite calls. Authentication dependencies
+    // have a separate real-handler sweep below; legacy-only imports are not inputs.
     for(const file of ['academy/nativePrerequisiteStore.ts','academy/prerequisiteApplication.ts','academy/contracts/prerequisiteRecords.ts','academy/contracts/storageRecords.ts','academy/contracts/teacherOperations.ts','academy/domain.ts','academy/records.ts','academy/nativeCompleteness.ts','academy/usecases/requestRecovery.ts','learning/model.ts']){
       for(const [,,code] of readFileSync(new URL('../../src/'+file,import.meta.url),'utf8').matchAll(/Error\((['"])([^'"`$]{3,100})\1\)/g))if(prerequisiteRefusalStatus(code!)===null)unclassified.push(file+':'+code);
     }
@@ -684,6 +686,19 @@ test('HTTP-TABLE native dispatch and handler custody share one bounded route tab
  expect(Object.isFrozen(routes)).toBe(true);
 });
 
+test('HTTP-LEGACY native extraction preserves existing initialization and legacy handler bytes',()=>{
+ const source=readFileSync(new URL('../../src/academy/server.ts',import.meta.url),'utf8');
+ const start=source.indexOf('export function createTeacherServerHandler(options:TeacherServerOptions){');
+ const end=source.indexOf('  // This router owns only R07',start);
+ expect(start>=0&&end>start).toBe(true);
+ const legacy=source.split('/* BEGIN PRESERVED LEGACY ROUTER */\n')[1]?.split('/* END PRESERVED LEGACY ROUTER */')[0];
+ expect(legacy).toBeDefined();
+ const sha=(text:string)=>createHash('sha256').update(text).digest('hex');
+ // Independently reconstructed from gen89 after removing only its four native branches.
+ expect(sha(source.slice(start,end).trimEnd())).toBe('166821ead822b971c5741243e4ba3222907d4e6ce4d094c7093423edcaf6e723');
+ expect(sha(legacy!)).toBe('94dc84464f961bdf359b78c1aca1f3ed555578a5c4ab47a8367aebbc25b3c90c');
+});
+
 function httpSchemaValue(rule:TeacherHttpField,name:string):unknown{
  if(rule.values)return rule.values[0];
  if(rule.format==='nativeRef')return nativeRef();
@@ -703,6 +718,42 @@ function httpSchemaValue(rule:TeacherHttpField,name:string):unknown{
 }
 function httpSchemaInput(fields:TeacherHttpFields):Record<string,unknown>{return Object.fromEntries(Object.entries(fields).map(([name,rule])=>[name,httpSchemaValue(rule,name)]));}
 function httpSchemaParameters(fields:TeacherHttpFields,prefix:string[]=[]):{path:string[];rule:TeacherHttpField}[]{return Object.entries(fields).flatMap(([name,rule])=>[{path:[...prefix,name],rule},...(rule.fields?httpSchemaParameters(rule.fields,[...prefix,name]):[])]);}
+/** Negative cases come from schema kinds and bounds, never from the parser under test. */
+function httpInvalidValues(rule:TeacherHttpField,name:string):unknown[]{
+ const values:unknown[]=rule.nullable||rule.kind==='null'?[]:[null];
+ switch(rule.kind){
+  case 'text':
+   values.push(7,false,{},[],'x'.repeat((rule.max??4096)+1));
+   if((rule.min??1)>0)values.push('');
+   if(rule.values)values.push('SYNTHETIC_UNDECLARED_ENUM');
+   if(rule.format)values.push('SYNTHETIC_INVALID_FORMAT');
+   break;
+  case 'integer':values.push('1',1.5,Number.MAX_SAFE_INTEGER+1,false,{},[],(rule.min??0)-1);if(rule.max!==undefined&&rule.max<Number.MAX_SAFE_INTEGER)values.push(rule.max+1);break;
+  case 'boolean':values.push(7,'true',{},[]);break;
+  case 'object':values.push(7,'',false,[]);if(rule.fields)values.push({SYNTHETIC_UNDECLARED_FIELD:true});if(rule.format)values.push({});break;
+  case 'array':values.push(7,'',false,{},Array.from({length:(rule.max??100)+1},()=>httpSchemaValue(rule.item!,name)));if((rule.min??0)>0)values.push([]);break;
+  case 'null':values.push(7,'',false,{},[]);break;
+ }
+ return values;
+}
+/** Read source only, never authentication state or other runtime/private files. */
+function sourceErrorClosure(entries:readonly string[]):Map<string,readonly string[]>{
+ const sourceRoot=new URL('../../src/',import.meta.url),seen=new Map<string,readonly string[]>();
+ const visit=(url:URL)=>{
+  if(seen.has(url.href))return;
+  expect(url.href.startsWith(sourceRoot.href)).toBe(true);
+  const text=readFileSync(url,'utf8');
+  seen.set(url.href,[...text.matchAll(/\b(?:new\s+)?(?:Error|TypeError|RangeError)\((['"])([^'"`$]{3,100})\1\)/g)].map(match=>match[2]!));
+  for(const match of text.matchAll(/^import\s+(?!type\s)[^;]*?\sfrom\s*['"](\.[^'"]+)['"]/gm)){
+   const dependency=new URL(match[1]!,url);
+   const candidates=[new URL(dependency.href+'.ts'),new URL(dependency.href+'/index.ts')];
+   const resolved=candidates.find(candidate=>existsSync(candidate));
+   expect(resolved).toBeDefined();if(resolved)visit(resolved);
+  }
+ };
+ for(const entry of entries)visit(new URL(entry,sourceRoot));
+ return seen;
+}
 test('HTTP-INPUT imported route table enumerates every body/query/path parameter through the real stack',async()=>{
  const f=await foundation(),handler=prerequisiteHandler(f.store),failures:string[]=[];let cases=0;
  const routes:readonly TeacherHttpRoute[]=handler.nativeRoutes;
@@ -714,9 +765,7 @@ test('HTTP-INPUT imported route table enumerates every body/query/path parameter
    const envelope=(value:Record<string,unknown>)=>route.body?.nativeOperation==='GENERIC'?{operation,input:value}:value;
    const send=(body:unknown,path=route.path)=>handler(new Request(ORIGIN+path,{method:route.method,headers:{Origin:ORIGIN,'Content-Type':'application/json',Cookie:cookie(),...(route.headers?{'X-Native-Metadata-Operation-Id':crypto.randomUUID()}:{})},...(route.body?{body:JSON.stringify(body)}:{})}));
    for(const {path,rule} of httpSchemaParameters(fields)){
-    const bad:unknown[]=[null,7,'',false,{},[],'x'.repeat(4097),...(rule.kind==='integer'?['1',1.5,Number.MAX_SAFE_INTEGER+1]:[])];
-    for(const value of bad){
-     try{parseTeacherHttpFields({value},{value:rule});continue;}catch{}
+    for(const value of httpInvalidValues(rule,path.at(-1)!)){
      const malformed=structuredClone(input);let target=malformed;
      for(const part of path.slice(0,-1))target=target[part] as Record<string,unknown>;
      target[path.at(-1)!]=value;
@@ -746,9 +795,14 @@ test('HTTP-LOG rejected envelope and input keys never enter diagnostics',async()
  expect(logs.length).toBeGreaterThan(0);expect(logs.some(line=>line.includes(canary))).toBe(false);
 });
 
-test('HTTP-DEPENDENCY auth exceptions are infrastructure failures in every native phase',async()=>{
+const nativeDependencyCodes=[...new Set([...sourceErrorClosure(['academy/teacherAuthStore.ts','academy/auth.ts']).values()].flat())];
+test('RC7 dependency corpus includes errors from the actual authentication source closure',()=>{
+ expect(nativeDependencyCodes.length).toBeGreaterThan(10);
+});
+const nativeDependencyFailures=[...nativeDependencyCodes.map(code=>({label:code,failure:Error(code)})),{label:'unknown',failure:Error('SYNTHETIC_AUTH_FAILURE')},{label:'type',failure:TypeError('SYNTHETIC_AUTH_FAILURE')},{label:'range',failure:RangeError('SYNTHETIC_AUTH_FAILURE')},{label:'null',failure:null},{label:'number',failure:7}];
+for(const {label,failure} of nativeDependencyFailures)test('HTTP-DEPENDENCY '+label+' is infrastructure failure in every native phase',async()=>{
  const failures:string[]=[];
- for(const failure of [Error('SYNTHETIC_AUTH_FAILURE'),Error('invalid_input'),TypeError('SYNTHETIC_AUTH_FAILURE'),RangeError('SYNTHETIC_AUTH_FAILURE'),null,7])for(const failAt of [1,2,3]){
+ for(const failAt of [1,2,3]){
   const f=await foundation();let reads=0;
   const handler=createTeacherServerHandler({app:new TeacherApplication(f.store as never,OWNER,undefined,undefined,f.store),origin:ORIGIN,sessionKey:SESSION_KEY,identity,invitationDigest:null,currentAuthentication:()=>{if(++reads===failAt)throw failure;return {identity,sessionKey:SESSION_KEY};},saveIdentity:async()=>{throw Error('no auth writes');},curatedConceptCandidates:{read:()=>{throw Error('unused');}} as never});
   const before=f.sql.rows('class_versions').length;
@@ -758,7 +812,7 @@ test('HTTP-DEPENDENCY auth exceptions are infrastructure failures in every nativ
   expect(f.sql.rows('class_versions').length-before).toBe(failAt===3?1:0);
  }
  for(const path of ['/api/typed-read','/api/native-read-snapshot','/api/native-read-descriptor']){
-  let reads=0;const {handler}=makeHandler({currentAuthentication:()=>{if(++reads===2)throw Error('SYNTHETIC_AUTH_FAILURE');return {identity,sessionKey:SESSION_KEY};}});
+  let reads=0;const {handler}=makeHandler({currentAuthentication:()=>{if(++reads===2)throw failure;return {identity,sessionKey:SESSION_KEY};}});
   const payload=path==='/api/native-read-snapshot'?{schema:'native-read-acquire.v2',consumerProfile:'CURRENT_1_1',requestId:'dependency-snapshot',scopeRef:nativeRef(),consistency:'SNAPSHOT',time:{mode:'CURRENT'},functionIntent:testFunctionRequest(testTemporal())}:request();
   const response=path==='/api/native-read-descriptor'?await handler(new Request(ORIGIN+path,{headers:{Cookie:cookie(),'X-Native-Metadata-Operation-Id':crypto.randomUUID()}})):await handler(post(payload,{path}));
   if(response.status!==503)failures.push(path+':'+response.status);

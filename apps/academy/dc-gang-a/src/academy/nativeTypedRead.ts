@@ -1007,24 +1007,6 @@ export class NativeTypedReadService implements NativeTypedRead{
     // reports the case with neither, so it never contradicts an emitted payload participant link.
     const lessonPayload=lesson===null?null:(await view.lessons(context.ownerId)).find(v=>v.entityKey===lesson.identity.nativeKey)?.payload;
     const named=!!lessonPayload&&lessonPayload.participantRefs.state==='known'&&lessonPayload.participantRefs.value.some(ref=>identityEqual(ref.identity,student.identity));
-    // A newer Student head never relabels an older relation endpoint. When
-    // selected evidence cites an earlier revision, prove that original row.
-    const refs:ObjectRef[]=[];
-    for(const edge of edges){
-      if(edge.bindingKind==='CLASS_MEMBERSHIP'&&identityEqual(edge.targetRef.identity,selection.classGroupRef.identity))refs.push(edge.subjectRef);
-      if(lesson&&edge.bindingKind==='LESSON_PARTICIPATION'&&identityEqual(edge.subjectRef.identity,lesson.identity))refs.push(edge.targetRef);
-    }
-    if(lessonPayload?.participantRefs.state==='known')refs.push(...lessonPayload.participantRefs.value);
-    for(const row of await view.activityScopes(context.ownerId,{})){
-      const scope=row.payload.recordScope;
-      if(scope.businessDate===selection.businessDate&&identityEqual(scope.classGroupRef.identity,selection.classGroupRef.identity)&&(!lesson||identityEqual(scope.lessonRef.identity,lesson.identity)))refs.push(scope.studentRef);
-    }
-    const exactStudent=request.selector.kind==='EXACT_OBJECT'&&request.selector.objectRef.identity.objectType==='Student';
-    for(const ref of refs.filter(ref=>exactStudent&&identityEqual(ref.identity,student.identity)&&ref.revision!==student.revision)){
-      const original=await view.ownerRevision(context.ownerId,'student',ref.identity.nativeKey,ref.revision);
-      if(!original||original.payload.kind!=='student_record'||original.ownerId!==context.ownerId||original.revisionId!==ref.revision||original.entityKey!==ref.identity.nativeKey||original.namespace!==ref.identity.namespace||canonicalJson(original.scopeRef)!==canonicalJson(ref.identity.scopeRef))throw denied();
-    }
-
     const participates=lesson===null||named||edges.some(p=>p.bindingKind==='LESSON_PARTICIPATION'&&identityEqual(p.subjectRef.identity,lesson.identity)&&identityEqual(p.targetRef.identity,student.identity));
     return [...(member?[]:[{subject:student,path:'Student.links.studentMemberOfClass',reason:'UNVERIFIED' as const,requiredEvidence:['NATIVE_RELATION_MAPPING'],evidence:[]}]),
       ...(participates||lesson===null?[]:[{subject:lesson,path:'LessonSession.links.lessonHasStudent',reason:'UNVERIFIED' as const,requiredEvidence:['NATIVE_RELATION_MAPPING'],evidence:[]}])] as TypedGap[];
@@ -1172,26 +1154,58 @@ export class NativeTypedReadService implements NativeTypedRead{
     const currentBinding=await view.teacherBindingByActor(context.ownerId,context.actorId);
     const withheldRevisions=new Map<string,string>();
     const scopeVersions=await view.activityScopes(context.ownerId,{});
+    // A current Student head and an immutable relation's original endpoint are
+    // different revisions of the same identity. Prove each original endpoint
+    // from owner history for the entire selected Function plan, before source
+    // projection/rights checks. Never relabel stored payloads or waive explicit
+    // expected/selector revisions (projectPage still checks those independently).
+    const studentRecords=records.filter(record=>record.identity.objectType==='Student'&&selectedStudentKeys.has(canonicalJson(record.identity)));
+    const provenStudentEndpoints=new Set(studentRecords.map(record=>canonicalJson(refOf(record))));
+    const storedStudentRefs=new Map<string,ObjectRef>();
+    const retainStudent=(ref:ObjectRef)=>{if(ref.identity.objectType==='Student')storedStudentRefs.set(canonicalJson(ref),ref);};
+    for(const version of temporalVersions){retainStudent(version.payload.subjectRef);retainStudent(version.payload.targetRef);}
+    for(const version of lessonVersions)if(version.payload.participantRefs.state==='known')version.payload.participantRefs.value.forEach(retainStudent);
+    for(const version of scopeVersions)retainStudent(version.payload.recordScope.studentRef);
+    const historicalStudentProofs=new Map<string,boolean>();
+    const sameStoredStudent=async(stored:ObjectRef,current:ObjectRef):Promise<boolean>=>{
+      if(!identityEqual(stored.identity,current.identity)||!provenStudentEndpoints.has(canonicalJson(current)))return false;
+      const key=canonicalJson(stored);if(provenStudentEndpoints.has(key))return true;
+      if(historicalStudentProofs.has(key))return historicalStudentProofs.get(key)!;
+      // Prove history only when a source join or Student projection needs it.
+      // Other records retain an unresolved optional relation as a gap without this read.
+      // A required dependency read failure propagates; it is not a missing row.
+      const original=await view.ownerRevision(context.ownerId,'student',stored.identity.nativeKey,stored.revision);
+      const valid=!!original&&original.payload.kind==='student_record'&&original.ownerId===context.ownerId&&original.revisionId===stored.revision&&original.entityKey===stored.identity.nativeKey&&original.namespace===stored.identity.namespace&&canonicalJson(original.scopeRef)===canonicalJson(stored.identity.scopeRef);
+      historicalStudentProofs.set(key,valid);return valid;
+    };
+    const sameStoredEndpoint=async(stored:ObjectRef,current:ObjectRef)=>stored.identity.objectType==='Student'&&current.identity.objectType==='Student'?sameStoredStudent(stored,current):canonicalJson(stored)===canonicalJson(current);
+    const studentProjection=request.selector.kind==='EXACT_OBJECT'?request.selector.objectRef.identity.objectType==='Student':request.selector.query.baseType.symbol==='Student';
+    if(studentProjection)for(const ref of storedStudentRefs.values()){
+      const current=studentRecords.find(record=>identityEqual(record.identity,ref.identity));
+      if(current&&!(await sameStoredStudent(ref,refOf(current))))throw denied();
+    }
     const sourceStudents=await view.students(context.ownerId);
     const sourceRows=new Map<string,CurrentRecord[]>();
     for(const student of sourceStudents)sourceRows.set(student.id,await view.current(context.ownerId,student.id));
     // The compiler owns sourceClosure field/row access. It is not a caller capability.
     const sourceClosureAllowed=request.functionRequest.functionName==='GetStudentDailyContext'&&request.temporalSelection.studentRef!==null&&request.temporalSelection.occurrence.mode==='EXACT';
-    const assertSourceRights=(student:typeof sourceStudents[number],row:CurrentRecord,activityScope?:RecordScope)=>{
+    const assertSourceRights=async(student:typeof sourceStudents[number],row:CurrentRecord,activityScope?:RecordScope)=>{
       if(row.ownerId!==context.ownerId||row.studentId!==student.id||!('sourceStudent' in row.payload)||canonicalJson(row.payload.sourceStudent)!==canonicalJson(student.sourceKey))throw denied();
       const studentRecord=records.find(record=>record.identity.objectType==='Student'&&record.identity.nativeKey===student.id);
-      const studentRef=request.temporalSelection.studentRef??(studentRecord?refOf(studentRecord):null);
+      // Current authority is resolved from store state. A caller's older Student
+      // pin is diagnosed by assertTemporalJoins after these rights checks.
+      const studentRef=studentRecord?refOf(studentRecord):null;
       if(!studentRef||studentRef.identity.nativeKey!==student.id||!selectedStudentKeys.has(canonicalJson(studentRef.identity)))throw denied();
-      if(activityScope&&canonicalJson(activityScope.studentRef)!==canonicalJson(studentRef))throw denied();
+      if(activityScope&&!(await sameStoredStudent(activityScope.studentRef,studentRef)))throw denied();
       const ownTeacher=records.find(r=>r.identity.objectType==='Teacher'&&r.identity.nativeKey===currentBinding?.entityKey);
       if(!ownTeacher)throw denied();
       const date=request.temporalSelection.businessDate,group=request.temporalSelection.classGroupRef;
-      const has=(kind:string,from:ObjectRef,to:ObjectRef)=>temporalVersions.some(v=>v.payload.bindingKind===kind&&canonicalJson(v.payload.subjectRef)===canonicalJson(from)&&canonicalJson(v.payload.targetRef)===canonicalJson(to)&&v.payload.validFrom<=date&&(v.payload.validTo===null||date<v.payload.validTo));
+      const has=async(kind:string,from:ObjectRef,to:ObjectRef)=>{for(const {payload:p} of temporalVersions)if(p.bindingKind===kind&&p.validFrom<=date&&(p.validTo===null||date<p.validTo)&&await sameStoredEndpoint(p.subjectRef,from)&&await sameStoredEndpoint(p.targetRef,to))return true;return false;};
       const lessonRef=activityScope?.lessonRef??(request.temporalSelection.occurrence.mode==='EXACT'?request.temporalSelection.occurrence.lessonRef:null);
-      if(!lessonRef||studentTuples.get(canonicalJson(lessonRef.identity))?.has(canonicalJson(studentRef.identity))!==true||!has('TEACHING_ASSIGNMENT',group,refOf(ownTeacher))||!has('CLASS_MEMBERSHIP',studentRef,group)||!has('LESSON_PARTICIPATION',lessonRef,studentRef))throw denied();
+      if(!lessonRef||studentTuples.get(canonicalJson(lessonRef.identity))?.has(canonicalJson(studentRef.identity))!==true||!(await has('TEACHING_ASSIGNMENT',group,refOf(ownTeacher)))||!(await has('CLASS_MEMBERSHIP',studentRef,group))||!(await has('LESSON_PARTICIPATION',lessonRef,studentRef)))throw denied();
     };
-    const carrier=(kind:SourceScopeUnknown['kind'],student:typeof sourceStudents[number],row:CurrentRecord,terminal?:typeof scopeVersions[number]):TypedGap=>{
-      assertSourceRights(student,row);
+    const carrier=async(kind:SourceScopeUnknown['kind'],student:typeof sourceStudents[number],row:CurrentRecord,terminal?:typeof scopeVersions[number]):Promise<TypedGap>=>{
+      await assertSourceRights(student,row);
       if(!sourceClosureAllowed||this.consumerProfile!=='CURRENT_1_1')throw unverifiable();
       if(row.sourceObservedAt>row.recordedAt||row.recordedAt>request.asOf)throw unverifiable();
       const sourceStudentRef=request.temporalSelection.studentRef!;
@@ -1228,7 +1242,7 @@ export class NativeTypedReadService implements NativeTypedRead{
       for(const current of await view.current(context.ownerId,student.id)){
         const payload=current.payload;
         if(payload.kind==='teacher_lesson_carryover'){
-          if(sourceClosureAllowed&&this.consumerProfile==='CURRENT_1_1'){validateAcademyRecord(payload);gaps.push(carrier('FACET_ONLY_CARRYOVER',student,current));}continue;
+          if(sourceClosureAllowed&&this.consumerProfile==='CURRENT_1_1'){validateAcademyRecord(payload);gaps.push(await carrier('FACET_ONLY_CARRYOVER',student,current));}continue;
         }
         if(payload.kind==='learning_work_assignment'||payload.kind==='learning_work_attempt'){
           const objectType=payload.kind==='learning_work_assignment'?'HomeworkAssignment':'DailyTestAttempt';
@@ -1237,13 +1251,13 @@ export class NativeTypedReadService implements NativeTypedRead{
           const terminal=scopes.find(v=>activityScopeState(v.payload)==='DETACHED');
           if(terminal){
             if(terminal.payload.activityRef.revision!==current.revisionId)throw staleRevision();
-            if(sourceClosureAllowed&&this.consumerProfile==='CURRENT_1_1'){gaps.push(carrier('DETACHED_ACTIVITY',student,current,terminal));}continue;
+            if(sourceClosureAllowed&&this.consumerProfile==='CURRENT_1_1'){gaps.push(await carrier('DETACHED_ACTIVITY',student,current,terminal));}continue;
           }
           const active=scopes.filter(v=>activityScopeState(v.payload)==='ACTIVE'&&v.payload.activityRef.revision===current.revisionId);
           if(active.length!==1)continue;
           const scope=active[0]!.payload.recordScope;
-          assertSourceRights(student,current,scope);
-          if(request.temporalSelection.studentRef!==null&&canonicalJson(scope.studentRef)!==canonicalJson(request.temporalSelection.studentRef)||canonicalJson(scope.classGroupRef)!==canonicalJson(request.temporalSelection.classGroupRef)||request.temporalSelection.occurrence.mode==='EXACT'&&canonicalJson(scope.lessonRef)!==canonicalJson(request.temporalSelection.occurrence.lessonRef)||scope.businessDate!==request.temporalSelection.businessDate)throw denied();
+          await assertSourceRights(student,current,scope);
+          if(request.temporalSelection.studentRef!==null&&!identityEqual(scope.studentRef.identity,request.temporalSelection.studentRef.identity)||canonicalJson(scope.classGroupRef)!==canonicalJson(request.temporalSelection.classGroupRef)||request.temporalSelection.occurrence.mode==='EXACT'&&canonicalJson(scope.lessonRef)!==canonicalJson(request.temporalSelection.occurrence.lessonRef)||scope.businessDate!==request.temporalSelection.businessDate)throw denied();
           try{
             if(current.sourceObservedAt>current.recordedAt||current.recordedAt>request.asOf)throw Error('source_snapshot');
             const rows=sourceRows.get(student.id)!;
