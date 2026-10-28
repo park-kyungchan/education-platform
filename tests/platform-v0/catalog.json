@@ -1,0 +1,202 @@
+{
+  "source": "reports/v3/verification-catalog.v1.json",
+  "sourceSha256": "9ae58eea18c7d57388cf3737875b6f52caa43c1e7aee878ed406c42bba7b09a9",
+  "cases": [
+    {
+      "caseId": "V0-01",
+      "title": "Exact governed read and mutation sensitivity",
+      "subcases": [
+        "01.allowed",
+        "01.changed",
+        "01.scope-projection",
+        "01.two-dates-membership-teaching",
+        "01.interval-inclusive-from",
+        "01.interval-inclusive-through",
+        "01.interval-outside-through",
+        "01.interval-open-end",
+        "01.interval-unknown-end"
+      ]
+    },
+    {
+      "caseId": "V0-02",
+      "title": "Homework and previous assessment remain distinct",
+      "subcases": [
+        "02.distinct",
+        "02.missing-assessment"
+      ]
+    },
+    {
+      "caseId": "V0-03",
+      "title": "Occurrence, attempt, edition and namespace collisions",
+      "subcases": [
+        "03.lessons",
+        "03.attempts",
+        "03.editions",
+        "03.namespaces"
+      ]
+    },
+    {
+      "caseId": "V0-04",
+      "title": "Missing, unknown and scoped corrections",
+      "subcases": [
+        "04.unknown",
+        "04.inapplicable",
+        "04.correction"
+      ]
+    },
+    {
+      "caseId": "V0-05",
+      "title": "Object, field, link, predicate, order and cursor denial",
+      "subcases": [
+        "05.object",
+        "05.field",
+        "05.link",
+        "05.order",
+        "05.cursor",
+        "05.denied-validThrough-interval-evidence",
+        "05.denied-relation-endpoint"
+      ]
+    },
+    {
+      "caseId": "V0-06",
+      "title": "Snapshot, stale continuation, total order and source change",
+      "subcases": [
+        "06.snapshot",
+        "06.fail-change",
+        "06.ties",
+        "06.token-change",
+        "06.revoked",
+        "06.composite",
+        "06.query-changed-date",
+        "06.query-changed-occurrence",
+        "06.native-changed-date",
+        "06.native-changed-occurrence",
+        "06.function-changed-date",
+        "06.function-changed-occurrence"
+      ]
+    },
+    {
+      "caseId": "V0-07",
+      "title": "Known draft mismatch versus unknown evidence",
+      "subcases": [
+        "07.mismatch",
+        "07.unknown",
+        "07.complete",
+        "07.incomplete-interval-enumeration"
+      ]
+    },
+    {
+      "caseId": "V0-08",
+      "title": "Approval binding failures",
+      "subcases": [
+        "08.missing",
+        "08.forged",
+        "08.teacher",
+        "08.target",
+        "08.action",
+        "08.principal"
+      ]
+    },
+    {
+      "caseId": "V0-09",
+      "title": "Pin drift before import/use",
+      "subcases": [
+        "09.tamper",
+        "09.registration"
+      ]
+    },
+    {
+      "caseId": "V0-10",
+      "title": "Replay, concurrency and mode separation in simulation",
+      "subcases": [
+        "10.same",
+        "10.concurrent",
+        "10.changed",
+        "10.modes",
+        "10.ack"
+      ]
+    },
+    {
+      "caseId": "V0-11",
+      "title": "Expiry, digest/revision change, revocation and CAS",
+      "subcases": [
+        "11.expiry",
+        "11.digest",
+        "11.revoke",
+        "11.cas"
+      ]
+    },
+    {
+      "caseId": "V0-12",
+      "title": "Every Function capability and alternate effect path",
+      "subcases": [
+        "12.read-compute",
+        "12.STORE_MUTATION",
+        "12.ACTION_DISPATCH",
+        "12.NATIVE_WRITE",
+        "12.FILESYSTEM_WRITE",
+        "12.RAW_NETWORK",
+        "12.PROCESS_SPAWN",
+        "12.BACKGROUND_JOB",
+        "12.SCHEDULER_CHANGE",
+        "12.PAYLOAD_LOG",
+        "12.RESULT_PERSISTENCE",
+        "12.UNADMITTED_READ",
+        "12.four-policy-bindings",
+        "12.work-allowed",
+        "12.work-invalid-edge",
+        "12.work-wrong-acceptance-subject",
+        "12.work-unknown-evidence",
+        "12.work-missing-policy",
+        "12.work-expired-grant",
+        "12.work-escape-unknown",
+        "12.work-stale-work",
+        "12.work-stale-graph",
+        "12.work-stale-evidence",
+        "12.work-stale-acceptance",
+        "12.work-alternate-filesystem",
+        "12.work-alternate-network",
+        "12.work-alternate-native",
+        "12.work-alternate-process",
+        "12.error-1-GetStudentDailyContext",
+        "12.error-1-ListClassDailyStatus",
+        "12.error-1-CheckDailyRecordCompleteness",
+        "12.error-2-GetStudentDailyContext",
+        "12.error-2-ListClassDailyStatus",
+        "12.error-2-CheckDailyRecordCompleteness",
+        "12.error-3-GetStudentDailyContext",
+        "12.error-3-ListClassDailyStatus",
+        "12.error-3-CheckDailyRecordCompleteness",
+        "12.error-4-GetStudentDailyContext",
+        "12.error-4-ListClassDailyStatus",
+        "12.error-4-CheckDailyRecordCompleteness",
+        "12.error-5-GetStudentDailyContext",
+        "12.error-5-ListClassDailyStatus",
+        "12.error-5-CheckDailyRecordCompleteness",
+        "12.error-6-GetStudentDailyContext",
+        "12.error-6-ListClassDailyStatus",
+        "12.error-6-CheckDailyRecordCompleteness",
+        "12.error-7-GetStudentDailyContext",
+        "12.error-7-ListClassDailyStatus",
+        "12.error-7-CheckDailyRecordCompleteness",
+        "12.error-8-GetStudentDailyContext",
+        "12.error-8-ListClassDailyStatus",
+        "12.error-8-CheckDailyRecordCompleteness",
+        "12.error-9-GetStudentDailyContext",
+        "12.error-9-ListClassDailyStatus",
+        "12.error-9-CheckDailyRecordCompleteness",
+        "12.error-10-GetStudentDailyContext",
+        "12.error-10-ListClassDailyStatus",
+        "12.error-10-CheckDailyRecordCompleteness",
+        "12.error-hidden-name",
+        "12.error-read-timeout-zero",
+        "12.error-read-timeout-ambiguous",
+        "12.error-timeout-escaped",
+        "12.error-revoked-error-precedence",
+        "12.error-timeout-zero-GetStudentDailyContext",
+        "12.error-timeout-zero-ListClassDailyStatus",
+        "12.error-timeout-zero-CheckDailyRecordCompleteness"
+      ]
+    }
+  ]
+}
