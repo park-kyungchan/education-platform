@@ -6,7 +6,7 @@ import {createHash} from 'node:crypto';
 import {Client} from '@modelcontextprotocol/client';
 import {StdioClientTransport} from '@modelcontextprotocol/client/stdio';
 import {context,fact} from './dailyrecord-fixture.ts';
-async function withNeutralClient(run:(fixture:{base:string;events:string;client:Client})=>Promise<void>,includeSaved=false){
+async function withNeutralClient(run:(fixture:{base:string;events:string;client:Client})=>Promise<void>,includeSaved=false,includeNativePool=false){
   const base=await mkdtemp(resolve(tmpdir(),'academy-neutral-synthetic-'));
   const entry=process.env.ACADEMY_NEUTRAL_TEST_BUNDLE??resolve(import.meta.dir,'../src/neutral-server.ts');
   const deny=resolve(import.meta.dir,'network-deny.ts'),events=resolve(base,'events.txt');
@@ -19,6 +19,7 @@ async function withNeutralClient(run:(fixture:{base:string;events:string;client:
     await writeFile(admissionPath,bytes);await writeFile(resolve(base,'routing.json'),JSON.stringify({admissionPath,admissionSha256:createHash('sha256').update(bytes).digest('hex')}));
     const endpoints:any={dailyrecord:{command:process.execPath,args:['--preload',deny,resolve(import.meta.dir,'neutral-upstream-fixture.ts'),events]}};
     if(includeSaved)endpoints.saved={command:process.execPath,args:['--preload',deny,resolve(import.meta.dir,'neutral-saved-fixture.ts')]};
+    if(includeNativePool)endpoints.paper1={command:process.execPath,args:['--preload',deny,resolve(import.meta.dir,'../src/pool-server.ts')]};
     await writeFile(resolve(base,'endpoints.json'),JSON.stringify(endpoints));
     const discovery=Bun.spawn([process.execPath,'--preload',deny,entry,'--discover'],{env,stdout:'pipe',stderr:'pipe'});
     expect(await discovery.exited).toBe(0);expect((await readFile(events,'utf8')).trim().split('\n')).toEqual(['start']);
@@ -63,6 +64,21 @@ test('neutral discovery retains available read tools and suppresses duplicate na
     expect(result.structuredContent).toMatchObject({status:'unavailable'});
   },true);
 },20000);
+test('saved/native label discovery preserves both sources under unique names in a pinned release',async()=>{
+ await withNeutralClient(async({base,client})=>{
+  const registry=JSON.parse(await readFile(resolve(base,'registry.json'),'utf8'));
+  for(const name of ['academy_item_label_scope','academy_find_item_labels','academy_review_type_questions']){
+   expect(registry.find((entry:any)=>entry.tool.name===name)?.endpoint).toBe('paper1');
+   expect(registry.find((entry:any)=>entry.tool.name==='saved_'+name)).toMatchObject({endpoint:'saved',upstreamName:name});
+  }
+  const pin=async(path:string)=>({path,sha256:createHash('sha256').update(await readFile(path)).digest('hex')});
+  await writeFile(resolve(base,'release.json'),JSON.stringify({schemaVersion:'academy.mcp-release/1',generation:'native-saved-labels',routing:await pin(resolve(base,'routing.json')),endpoints:await pin(resolve(base,'endpoints.json')),registry:await pin(resolve(base,'registry.json'))}),{mode:0o600,flag:'wx'});
+  const names=(await client.listTools()).tools.map(tool=>tool.name);expect(new Set(names).size).toBe(names.length);
+  for(const name of ['academy_item_label_scope','saved_academy_item_label_scope']){
+   const result=await client.callTool({name,arguments:{}});expect(result.isError).not.toBe(true);expect(result.structuredContent).toMatchObject({status:'unavailable'});
+  }
+ },true,true);
+},30000);
 test('an existing session atomically switches pinned release generations and never falls back after removal',async()=>{
   await withNeutralClient(async({base,events,client})=>{
     const hash=(value:string)=>createHash('sha256').update(value).digest('hex');

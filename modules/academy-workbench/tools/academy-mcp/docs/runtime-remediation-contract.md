@@ -28,6 +28,11 @@ hashes and endpoint identities. A v1/legacy graph is explicitly incomplete.
 Reading identity does not prove source freshness, actual live source access,
 reload of other clients or native endpoint qualification.
 
+Discovery retains a native tool's public name when a saved endpoint advertises
+the same name. The saved route remains callable as `saved_<original-name>`;
+endpoint order never silently chooses the source. Any remaining duplicate or
+invalid name rejects discovery before a registry is written.
+
 `prepare-runtime-release.ts PLAN.json` verifies an explicit pinned plan and
 writes a fresh `/tmp/academy-release-draft-*` proposal. It launches no endpoint,
 changes no installed pointer/registration and consumes no approval. Endpoint

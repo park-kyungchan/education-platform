@@ -50,6 +50,14 @@ if(process.argv.includes('--discover')){
  registry.push({endpoint:'dailyrecord',upstreamName:'academy_dailyrecord_get',tool:{name:'academy_dailyrecord_get',
   title:'Read live DailyRecord by student name (today by default)',description:dailyRecordGetDescription,
   inputSchema:z.toJSONSchema(dailyRecordGetSchema,{io:'input'}),annotations:{...readOnlyAnnotations,openWorldHint:true,idempotentHint:false}}});
+ // Preserve the native public route regardless of endpoint iteration order.
+ // A saved snapshot remains explicitly callable under a source-qualified alias.
+ const nativeNames=new Set(registry.filter(r=>r.endpoint!=='saved').map(r=>r.tool.name));
+ for(const entry of registry)if(entry.endpoint==='saved'&&nativeNames.has(entry.tool.name)){
+  entry.tool={...entry.tool,name:'saved_'+entry.tool.name,description:'Saved-source alias. '+entry.tool.description};
+ }
+ const names=registry.map(r=>r.tool.name);
+ if(names.length>256||new Set(names).size!==names.length||names.some(name=>!/^[a-z][a-z0-9_]{0,127}$/.test(name)))throw Error('discovery_tool_name_collision');
  writeFileSync(base+'/registry.json',JSON.stringify(registry,null,2)+'\n',{mode:0o600,flag:'wx'});
  console.log(JSON.stringify({endpoints:Object.keys(endpoints),tools:registry.map(r=>r.tool.name)}));
  process.exit(0);
