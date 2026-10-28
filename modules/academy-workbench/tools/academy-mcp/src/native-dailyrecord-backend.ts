@@ -1,10 +1,12 @@
 import {createHash,randomUUID} from 'node:crypto';
-import {readFileSync,lstatSync,realpathSync} from 'node:fs';
+import {readFileSync,lstatSync,realpathSync,closeSync,fsyncSync,mkdirSync,openSync,writeSync} from 'node:fs';
 import {dirname,resolve} from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {z} from 'zod';
 import {readPinnedLocalBytes} from './item-label-store.ts';
-import {dailyRecordObservationSchema,studentMetadataBatchSchema,type DailyRecordReadBackend,type DailyRecordObservation,type StudentMetadataBatch,type StudentMetadataObservation,studentMetadataGetSchema,type StudentMetadataGet} from './dailyrecord.ts';
+import {dailyRecordObservationSchema,studentMetadataBatchSchema,type DailyRecordReadBackend,type DailyRecordWriteBackend,type DailyRecordObservation,type StudentMetadataBatch,type StudentMetadataObservation,studentMetadataGetSchema,type StudentMetadataGet,type DailyRecordSaveFieldStatus} from './dailyrecord.ts';
+import {createDailyRecordSaveAdmission,liveSaveRequestEvidence,type DailyRecordSaveAdmission,type DailyRecordSaveApproval} from './dailyrecord-save-admission.ts';
+import type {DailyRecordField} from './dailyrecord-context.ts';
 import type {DailyRecordScope} from './dailyrecord-context.ts';
 import {ownerAdmissionSchema,isDateAdmitted,type OwnerAdmission} from './owner-admission.ts';
 import {metadataAdmissionSchema,metadataDateAdmitted,type MetadataAdmission} from './metadata-admission.ts';
@@ -29,6 +31,11 @@ interface SourcePort {
   discoverDayRecordGroups(input:{teacherLabel:string;date:string}):Promise<{groups:{groupId:string}[]}>;
   execute(input:unknown):Promise<{dayRecords:Row[]}>;
   journalState(target:Target):Promise<{target:Target;fields:Record<string,string>;previousRecordKey:string;previousDate:string;wireDigest:string}>;
+  /** Owner client write port (Education AcademyHttpClient.applyJournalAction).
+   * Optional: read-only bundles omit it and saves stay fail-closed. */
+  applyJournalAction?(action:{attemptId:string;target:Target;field:string;effectRecordKey:string;before:string;after:string;wireDigest:string},
+    admission:{consumeApproval:(action:Readonly<{attemptId:string;target:Target;field:string;effectRecordKey:string;before:string;after:string;wireDigest:string}>)=>Promise<{status:'verified';actionDigest:string}|{status:'rejected'}>})
+    :Promise<{status:DailyRecordSaveFieldStatus;transport:'returned'|'uncertain'|'not_invoked'}>;
   close():void;
   searchStudentPaperMetadata?(input:{teacherLabel:string;studentName:string;studentKey:string;period:{from:string;through:string}}):Promise<unknown>;
   searchDailyTestMetadata?(input:{teacherLabel:string;studentName:string;studentKey:string}):Promise<unknown>;
@@ -121,16 +128,64 @@ function projectStudentMetadata(query:StudentMetadataBatch['queries'][number],va
 
 /** Consumer transport glue. The existing Education client owns authentication, parsing,
  * source/wire qualification and independent occurrence binding. This port never writes. */
-export class NativeDailyRecordBackend implements DailyRecordReadBackend {
+export class NativeDailyRecordBackend implements DailyRecordReadBackend,DailyRecordWriteBackend {
   #ready:Promise<unknown>|undefined;
   #sourceResolved=new Map<string,{studentId:string;displayName:string;lessonDate?:string;at:number}>();
   constructor(readonly client:SourcePort,readonly admission:Admission,readonly credential:()=>{username:string;password:string},readonly ownerAdmission:OwnerAdmission|null=null,
-    readonly managedNames:ReadonlySet<string>=new Set(admission.students.map(s=>s.displayName)),readonly metadataAdmission:MetadataAdmission|null=null){
+    readonly managedNames:ReadonlySet<string>=new Set(admission.students.map(s=>s.displayName)),readonly metadataAdmission:MetadataAdmission|null=null,
+    readonly saveApproval:DailyRecordSaveApproval|null=null){
     if(metadataAdmission){this.metadataAdmission=metadataAdmissionSchema.parse(metadataAdmission);if(metadataAdmission.teacherId!==admission.teacherId)throw Error('native_metadata_scope_refused');}
     if(ownerAdmission){
       ownerAdmissionSchema.parse(ownerAdmission);
       if(ownerAdmission.teacherId!==admission.teacherId||!isDateAdmitted(admission.date,ownerAdmission))throw Error('native_dailyrecord_owner_admission_mismatch');
     }
+  }
+  saveConfigured():boolean{return this.saveApproval!==null&&typeof this.client.applyJournalAction==='function';}
+  /** One serialized write batch on the already-authenticated owner client.
+   * The client re-reads the exact before-state, consumes the launch-pinned
+   * admission once per field, writes once and reads back; the first
+   * non-settled field stops the batch with the rest not attempted. */
+  async saveDailyRecord(scope:Readonly<DailyRecordScope>,patches:readonly {field:DailyRecordField;value:string;before:string;wireDigest:string}[]){
+    if(!this.saveConfigured())throw Error('dailyrecord_save_backend_not_configured');
+    const student=this.admission.students.find(s=>s.studentId===scope.studentId);
+    if(scope.sourceNamespace!=='academy.lms.dayrecord'||scope.teacherId!==this.admission.teacherId
+      ||!(this.ownerAdmission?isDateAdmitted(scope.lessonDate,this.ownerAdmission):scope.lessonDate===this.admission.date)||!student)throw Error('native_dailyrecord_scope_refused');
+    await this.#authenticate();
+    const selector=await this.client.discoverDayRecordGroups({teacherLabel:this.admission.teacherLabel,date:scope.lessonDate});
+    const result=await this.client.execute({family:'day_record',teacherLabel:this.admission.teacherLabel,date:scope.lessonDate,
+      groupIds:selector.groups.map(g=>g.groupId),studentNames:[student.displayName]});
+    if(result.dayRecords.length!==1)throw Error('native_dailyrecord_occurrence_unverified');
+    const row=result.dayRecords[0]!;
+    if(row.studentKey!==scope.studentId||row.studentName!==student.displayName||row.teacherKey!==scope.teacherId||row.date!==scope.lessonDate)
+      throw Error('native_dailyrecord_identity_conflict');
+    const state=await this.client.journalState(targetOf(row));
+    if(JSON.stringify(targetOf(state.target))!==JSON.stringify(targetOf(row)))throw Error('native_dailyrecord_state_conflict');
+    // Bind dispatch to the reviewed before-state: any drift refuses the
+    // whole batch before a single write or admission consumption.
+    if(patches.some(p=>p.wireDigest!==state.wireDigest||state.fields[p.field]!==p.before))
+      return patches.map(p=>({field:p.field,status:'before_drift' as const,dispatched:false}));
+    const fields:{field:DailyRecordField;status:DailyRecordSaveFieldStatus;dispatched:boolean}[]=[];
+    for(let i=0;i<patches.length;i++){
+      const patch=patches[i]!;
+      const action={attemptId:randomUUID(),target:targetOf(row),field:patch.field,
+        effectRecordKey:patch.field==='previousHomeworkAssessment'?state.previousRecordKey:row.recordKey,
+        before:patch.before,after:patch.value,wireDigest:state.wireDigest};
+      let settled:{status:DailyRecordSaveFieldStatus;dispatched:boolean};
+      try{
+        const result=await this.client.applyJournalAction!(action,this.saveApproval!);
+        settled={status:result.status,dispatched:result.transport!=='not_invoked'};
+      }catch{
+        // The client may have dispatched before throwing; report the field
+        // as unresolved instead of denying a possible write upstream.
+        settled={status:'unresolved',dispatched:true};
+      }
+      fields.push({field:patch.field,...settled});
+      if(settled.status!=='persisted'&&settled.status!=='noop'){
+        for(let j=i+1;j<patches.length;j++)fields.push({field:patches[j]!.field,status:'not_attempted',dispatched:false});
+        break;
+      }
+    }
+    return fields;
   }
   readRoutingAdmission():DailyRecordReadAdmission{
     // Discovery reflects only this exact owner launch. It does not widen its date or student scope.
@@ -297,7 +352,18 @@ export class NativeDailyRecordBackend implements DailyRecordReadBackend {
   }
 }
 
-export async function nativeDailyRecordConfiguration(args:readonly string[],ownerAdmission:OwnerAdmission|null=null,metadataAdmission:MetadataAdmission|null=null){
+/** Durable one-time consumption for save admissions: exclusive create + fsync
+ * inside an owner-private directory; an existing record means already used. */
+export function durableSaveConsumeOnce(storeDir:string){
+  return async (key:string,record:Readonly<Record<string,unknown>>):Promise<boolean>=>{
+    mkdirSync(storeDir,{recursive:true,mode:0o700});
+    let fd:number;
+    try{fd=openSync(resolve(storeDir,key+'.json'),'wx',0o600);}catch{return false;}
+    try{writeSync(fd,JSON.stringify(record)+'\n');fsyncSync(fd);}finally{closeSync(fd);}
+    return true;
+  };
+}
+export async function nativeDailyRecordConfiguration(args:readonly string[],ownerAdmission:OwnerAdmission|null=null,metadataAdmission:MetadataAdmission|null=null,saveAdmission:DailyRecordSaveAdmission|null=null,saveStoreDir:string|null=null,saveRequestPath:string|null=null){
   if(!args.length)return null;
   if(args.length!==3||args[0]!=='--dailyrecord-native')throw Error('dailyrecord_native_arguments_invalid');
   if(process.getuid?.()!==10000||process.env.HERMES_HOME!==home)throw Error('native_dailyrecord_owner_required');
@@ -320,7 +386,17 @@ export async function nativeDailyRecordConfiguration(args:readonly string[],owne
   const password=process.env.DC_ACADEMY_HTTP_PASSWORD;delete process.env.DC_ACADEMY_HTTP_PASSWORD;
   if(!password)throw Error('native_http_secret_required');
   const client=new module.AcademyHttpClient({teacherLabel:owner.teacherLabel,teacherKey:owner.teacherSourceKey,collegeKey:owner.collegeSourceKey}) as SourcePort;
+  // Save stays fail-closed unless the launch pinned both an exact save
+  // admission and its durable consumption store inside the owner home.
+  let saveApproval:DailyRecordSaveApproval|null=null;
+  if(saveAdmission||saveStoreDir||saveRequestPath){
+    if(!saveAdmission||!saveStoreDir||!saveRequestPath||!saveStoreDir.startsWith(home+'/artifacts/')||!saveRequestPath.startsWith(home+'/artifacts/'))throw Error('dailyrecord_save_launch_incomplete');
+    saveApproval=createDailyRecordSaveAdmission(saveAdmission,{
+      readCurrentRequest:liveSaveRequestEvidence(saveRequestPath),
+      consumeOnce:durableSaveConsumeOnce(saveStoreDir),
+    });
+  }
   const backend=new NativeDailyRecordBackend(client,{teacherId:owner.teacherSourceKey,teacherLabel:owner.teacherLabel,
-    date:config.date,students:config.students,sourceBundleSha256:config.sourceBundleSha256},()=>({username:owner.sourceUsername,password}),ownerAdmission,new Set(owner.expectedStudentNames),metadataAdmission);
+    date:config.date,students:config.students,sourceBundleSha256:config.sourceBundleSha256},()=>({username:owner.sourceUsername,password}),ownerAdmission,new Set(owner.expectedStudentNames),metadataAdmission,saveApproval);
   return {backend,close:()=>client.close()};
 }

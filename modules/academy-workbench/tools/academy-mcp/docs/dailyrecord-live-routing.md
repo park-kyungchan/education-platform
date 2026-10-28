@@ -32,6 +32,24 @@ Their local retrieval time and historical access report neither refresh
 the source nor establish current live availability. The status result now
 states this scope and points to the live route.
 
+## DailyRecord save (gated write)
+
+`academy_dailyrecord_save` is the only write tool. It saves nothing unless
+the upstream process was launched with both `--dailyrecord-save-admission
+<path> <sha256>` (an `academy.dailyrecord-save-admission/1` file the runtime
+owner issues from the actual current user save instruction, admitting exact
+student/date/field/effect-record/after tuples) and `--dailyrecord-save-store
+<owner-artifacts-dir>` (durable one-time consumption records). The caller
+must present the `reviewDigest` of an `academy_dailyrecord_review` prepared
+in the same process; the service recomputes that review against a fresh
+before-state and holds without writing on any mismatch or drift. The native
+backend then runs the owner client's `applyJournalAction` per field: fresh
+before-state, one consumed admission, one write, authoritative readback,
+no automatic retry. Without that launch configuration the tool returns
+`dailyrecord_save_backend_not_configured` with `academyWrites: 0`. Exposing
+the tool is not save authority; each save still needs its own issued
+admission. No parent sending, printing or paper generation is included.
+
 ## Owner admission
 
 The native entrypoints accept a launch-only flag:

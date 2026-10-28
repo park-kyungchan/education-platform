@@ -45,6 +45,22 @@ test('neutral MCP runs resolve and intake in one upstream lifetime and logs meta
     expect((await readFile(events,'utf8')).match(/intake/g)).toHaveLength(1);
   });
 },20000);
+test('neutral save composes intake, review and save in one upstream lifetime',async()=>{
+  await withNeutralClient(async({events,client})=>{
+    const c=context();
+    const intake:any=await client.callTool({name:'academy_dailyrecord_intake',arguments:{context:c}});
+    expect(intake.structuredContent?.observationHandle).toContain('muse-academy-observation:');
+    const startsBefore=((await readFile(events,'utf8')).match(/start/g)??[]).length;
+    const saved:any=await client.callTool({name:'academy_dailyrecord_save',arguments:{context:c,observationHandle:intake.structuredContent.observationHandle,
+      reviewDigest:'9'.repeat(64),proposals:[{field:'progress',value:'- 지정 문제 12문항 풀이 진행.',factRefs:['user-fact:progress'],decision:{kind:'replace',requestRef:c.currentRequestRef}}]}});
+    // The fixture upstream has no write backend: reaching its fail-closed
+    // save response (instead of a process-local handle error) proves the
+    // bridge recomposed intake/review/save inside one upstream process.
+    expect(saved.structuredContent).toMatchObject({reasonCode:'dailyrecord_save_backend_not_configured',academyWrites:0});
+    const startsAfter=((await readFile(events,'utf8')).match(/start/g)??[]).length;
+    expect(startsAfter-startsBefore).toBe(1);
+  });
+},20000);
 test('neutral MCP exposes exact item-answer reads and does not write answer literals to receipts',async()=>{
   await withNeutralClient(async({base,events,client})=>{
     expect((await client.listTools()).tools.filter(t=>t.name==='academy_item_answer_lookup')).toHaveLength(1);

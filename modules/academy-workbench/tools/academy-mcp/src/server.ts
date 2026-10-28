@@ -26,11 +26,11 @@ const configuration=await dailyRecordToolConfiguration(learning.remainingArgs);
 // native triple belongs to the DailyRecord backend only; the label loader
 // accepts only its own four arguments.
 const hasNativeTriple=configuration.remainingArgs[0]==='--dailyrecord-native';
-const native=await nativeDailyRecordConfiguration(hasNativeTriple?configuration.remainingArgs.slice(0,3):[],configuration.ownerAdmission,configuration.metadataAdmission);
+const native=await nativeDailyRecordConfiguration(hasNativeTriple?configuration.remainingArgs.slice(0,3):[],configuration.ownerAdmission,configuration.metadataAdmission,configuration.saveAdmission,configuration.saveStoreDir,configuration.saveRequestPath);
 const labelArgs=hasNativeTriple?configuration.remainingArgs.slice(3):configuration.remainingArgs;
 registerItemLabelTools(server,await loadItemLabelIndex(labelArgs));
 registerRuntimeIdentity(server,runtimeIdentity.identity);
-registerDailyRecordTools(server,new DailyRecordService(native?.backend??null,configuration.parentSafeguard,Date.now,learning.learningPolicy));
+registerDailyRecordTools(server,new DailyRecordService(native?.backend??null,configuration.parentSafeguard,Date.now,learning.learningPolicy,native?.backend??null));
 if(native)process.once('exit',native.close);
 server.registerTool('academy_capabilities', {
   title: 'Academy operational hierarchy and source contracts',
