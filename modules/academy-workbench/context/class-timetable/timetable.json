@@ -1,0 +1,64 @@
+{
+  "schema": "academy.class-timetable/1",
+  "authority": "none",
+  "preparedAt": "2026-10-27T06:10:00+09:00",
+  "nativePermissionGranted": false,
+  "meaning": "Which weekday sessions each student attends, so agents query DailyRecord only on class days and never read a non-class-day absence as missing data. A timetable row is not attendance, assignment or completion.",
+  "students": [
+    {
+      "name": "이루한",
+      "classDays": ["Wed", "Fri"],
+      "session": "2부",
+      "courseId": 6,
+      "provenance": { "kind": "user_confirmed", "date": "2026-10-27", "detail": "수금2부" }
+    },
+    {
+      "name": "이현승",
+      "classDays": ["Mon", "Wed", "Fri"],
+      "session": "2부",
+      "courseId": 5,
+      "provenance": { "kind": "user_confirmed", "date": "2026-10-27", "detail": "월수금2부; dated records 10-12/10-14/10-23/10-26 agree" }
+    },
+    {
+      "name": "박세은",
+      "classDays": ["Mon", "Fri"],
+      "session": "1부",
+      "courseId": null,
+      "provenance": { "kind": "user_confirmed", "date": "2026-10-27", "detail": "월금1부" }
+    },
+    {
+      "name": "유지연",
+      "classDays": ["Mon", "Fri"],
+      "session": "1부",
+      "courseId": null,
+      "provenance": { "kind": "user_confirmed", "date": "2026-10-27", "detail": "월금1부" }
+    },
+    {
+      "name": "신지우",
+      "classDays": ["Mon", "Wed"],
+      "session": "1부",
+      "courseId": null,
+      "provenance": { "kind": "user_confirmed", "date": "2026-10-27", "detail": "월수1부" }
+    }
+  ],
+  "sessionTimes": [
+    {
+      "session": "2부",
+      "startTime": "18:00",
+      "basis": "teacher report 2026-10-14",
+      "scope": "observed once; not a fixed scheduler"
+    }
+  ],
+  "notices": [
+    {
+      "id": "month-end-20261028",
+      "text": "10월 28일(수) 18:30부터 월말평가 100분, 이후 하브루타 오답풀이",
+      "sources": ["DailyRecord lessonMemo 2026-10-23 (이루한·이현승)", "DailyRecord lessonMemo 2026-10-26 (이현승, 6학년 명시)"],
+      "assessmentScope": "unresolved; teacher selection required"
+    }
+  ],
+  "admission": {
+    "dailyRecordRange": "2026-10-23..2026-10-27",
+    "note": "Owner-issued window. After expiry, live reads fail closed; suspect expiry before reporting source failure. Re-issue requires the owner; agents cannot widen it."
+  }
+}
