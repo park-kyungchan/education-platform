@@ -1,0 +1,74 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "verification",
+  "id": "education-platform:verification:academy-review-7559c4bd0a3f1912e58dd632254d34edd99334f4",
+  "projectId": "education-platform",
+  "domainId": "education",
+  "createdAt": "2026-10-28T06:25:16.372Z",
+  "payload": {
+    "targetRefs": [
+      "education-platform:evidence:academy-review-7559c4bd0a3f1912e58dd632254d34edd99334f4"
+    ],
+    "criteria": [
+      {
+        "id": "independent-native-source-review",
+        "status": "pass",
+        "message": "Independent codex review binds exact head/tree/manifest with distinct author/reviewer and zero findings.",
+        "evidenceRefs": [
+          "education-platform:evidence:academy-review-7559c4bd0a3f1912e58dd632254d34edd99334f4"
+        ]
+      }
+    ],
+    "inputHashes": [
+      {
+        "path": "native-review-results/7559c4bd0a3f1912e58dd632254d34edd99334f4.json",
+        "sha256": "ad6f098de9d9b547ad48e17a4bf137a2d509d6a8cf1e6662d1b0c235db11022b"
+      },
+      {
+        "path": "native-review-evidence/7559c4bd0a3f1912e58dd632254d34edd99334f4.json",
+        "sha256": "6f75d00463683a91e19ddf5264c1ddb84d73a1d185af13eae22b2e08b2d38a19"
+      },
+      {
+        "path": "native-review-raw/7559c4bd0a3f1912e58dd632254d34edd99334f4.json",
+        "sha256": "7f2d968bde3813bbbe42bbb1fc0737f3a4f6482233d5c41c1c3287049b0449c1"
+      }
+    ],
+    "runtime": {
+      "name": "codex",
+      "version": "observed-session-not-cryptographic-authentication"
+    },
+    "details": {
+      "semanticOwner": "education-platform",
+      "review": {
+        "binding": {
+          "repository": "park-kyungchan/education-platform",
+          "projectId": "education-platform",
+          "domainId": "education",
+          "semanticOwner": "education-platform",
+          "scope": "month-end-source-redesign"
+        },
+        "headSha": "7559c4bd0a3f1912e58dd632254d34edd99334f4",
+        "reviewedTreeSha": "3f4776b85a3ae1d8a466c9b9699427cfa672657c",
+        "reviewedSourceManifestSha256": "11fd5eec6e4de5aa0c9ca7a94ff6788e7f22eabc4e807631bed9c8ebd66b155f",
+        "reviewer": {
+          "runtime": "codex",
+          "taskId": "01a1812a-9c2e-76e0-b44e-4894ce9b2b99",
+          "threadId": "01a1812a-9c2e-76e0-b44e-4894ce9b2b99",
+          "nativeTaskId": null,
+          "nativeRunId": null,
+          "role": "Independent owner-scoped source reviewer (gpt-6.1-sol/high; explicit temporary user override)",
+          "implementationWriter": false
+        },
+        "author": {
+          "runtime": "codex",
+          "taskId": "01a180d9-12ee-78e0-9d77-fa644052874d",
+          "threadId": null,
+          "nativeTaskId": null,
+          "nativeRunId": null
+        },
+        "conclusion": "pass",
+        "unresolvedFindings": 0
+      }
+    }
+  }
+}
