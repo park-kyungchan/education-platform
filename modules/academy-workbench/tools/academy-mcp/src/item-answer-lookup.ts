@@ -1,4 +1,5 @@
 import {z} from 'zod';
+import {publicReadFailure} from './read-failure.ts';
 
 const label=z.string().regex(/^[1-9][0-9]{0,15}$/).refine(v=>BigInt(v)<=BigInt(Number.MAX_SAFE_INTEGER),'safe_item_label_required');
 export const itemAnswerLookupSchema=z.object({
@@ -41,6 +42,7 @@ export function projectItemAnswerRead(raw:unknown,labels:string[]){
     ||(value.status==='partial'&&(value.itemAnswers.length===0||value.itemAnswers.length===labels.length||value.answerBlockedReason===null))
     ||(value.status==='blocked'&&(value.itemAnswers.length!==0||value.answerBlockedReason===null)))throw Error('item_answer_source_scope_conflict');
   if(Buffer.byteLength(JSON.stringify(value.itemAnswers),'utf8')>480*1024)throw Error('item_answer_result_too_large');
-  return {status:value.status,answers:value.itemAnswers.map(row=>({...row,...decodeItemAnswerLiteral(row.answerLiteral)})),pendingLabels:value.pendingAnswerLabels,reasonCode:value.answerBlockedReason,
+  const failure=value.answerBlockedReason===null?null:publicReadFailure(Error(value.answerBlockedReason),'item_answer_source_unqualified_no_automatic_retry');
+  return {status:value.status,answers:value.itemAnswers.map(row=>({...row,...decodeItemAnswerLiteral(row.answerLiteral)})),pendingLabels:value.pendingAnswerLabels,reasonCode:failure?.code??null,...(failure?{failure}:{}),
     observedAt:value.observedAt,coverage:value.coverage,academyWrites:0,parentSends:0,nativePrintInvoked:false,automaticRetryAllowed:false};
 }

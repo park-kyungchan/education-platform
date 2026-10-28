@@ -27,13 +27,13 @@ const cases: string[] = [];
 try {
   await client.connect(transport);
   const listing = await client.listTools();
-  assert.deepEqual(listing.tools.map(tool => tool.name).sort(), ['academy_capabilities','academy_cism_section','academy_dailyrecord_get','academy_dailyrecord_intake','academy_dailyrecord_review', 'academy_find_item_labels', 'academy_item_answer_lookup', 'academy_item_label_scope', 'academy_query', 'academy_review_type_questions', 'academy_runtime_read_admission', 'academy_source_status', 'academy_student_metadata', 'academy_student_resolve'].sort());
+  assert.deepEqual(listing.tools.map(tool => tool.name).sort(), ['academy_capabilities','academy_cism_section','academy_dailyrecord_get','academy_dailyrecord_intake','academy_dailyrecord_review','academy_endpoint_identity', 'academy_find_item_labels', 'academy_item_answer_lookup', 'academy_item_label_scope', 'academy_query', 'academy_review_type_questions', 'academy_runtime_read_admission', 'academy_source_status', 'academy_student_metadata','academy_student_metadata_get', 'academy_student_resolve'].sort());
   for (const tool of listing.tools) {
     assert.equal(tool.annotations?.readOnlyHint, true);
     assert.equal(tool.annotations?.destructiveHint, false);
     assert.equal(tool.annotations?.openWorldHint, false);
   }
-  cases.push('exact_twelve_read_only_tools_discovered');
+  cases.push('exact_sixteen_read_only_tools_discovered');
   const call = async (name: string, args: Record<string, unknown>) => {
     const result = await client.callTool({ name, arguments: args });
     assert.notEqual(result.isError, true, name + '_returned_error');

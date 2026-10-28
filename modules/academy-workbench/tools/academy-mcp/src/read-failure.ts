@@ -9,6 +9,9 @@ const catalog={
   daily_search_principal_conflict:['policy_denial','source-owner:daily-search-principal'],
   result_list_missing_or_ambiguous:['malformed_response','source-owner:assessment-result-list'],
   daily_search_response_rejected:['malformed_response','source-owner:daily-search-response'],
+  item_transport_failed:['upstream_unavailable','source-owner:item-answer-read'],
+  item_answer_missing_or_schema_drift:['contract_drift','source-owner:item-answer-read'],
+  item_answer_read_failed:['upstream_unavailable','source-owner:item-answer-read'],
   native_name_search_unqualified_no_automatic_retry:['malformed_response','src/native-dailyrecord-backend.ts:searchStudentsByName'],
 
   source_authentication_failed:['authentication','src/native-dailyrecord-backend.ts:#authenticate'],

@@ -1,5 +1,5 @@
 import {expect,test} from 'bun:test';
-import {writeFile,readFile,rename} from 'node:fs/promises';
+import {writeFile,readFile,rename,readdir} from 'node:fs/promises';
 import {resolve} from 'node:path';
 import {createHash} from 'node:crypto';
 import {createPackagedFixture as fixture} from './release-graph-fixture.ts';
@@ -58,5 +58,27 @@ test.skipIf(!Bun.which('node'))('Node bridge reads through the exact packaged Bu
  const f=await fixture(Bun.which('node')!);try{
   expect((await f.client.callTool({name:'academy_runtime_identity',arguments:{}})).structuredContent).toMatchObject({graphQualification:'artifact_pinned',loadedBridgeSha256:f.bridge.sha256});
   expect((await f.client.callTool({name:'academy_student_metadata_get',arguments:request})).structuredContent).toMatchObject({status:'observed',scope:{studentId:'77002'}});
+ }finally{await f.client.close();await f.transport.close();}
+},60000);
+
+test('discovery sanitizes a missing protected graph path and recovers on a new valid graph',async()=>{
+ const f=await fixture();try{
+  const canary=resolve(f.base,'PRIVATE_PROTECTED_PATH_CANARY','routing.json');
+  const next=await f.pin('pointer-missing-routing.json',{...f.release,routing:{path:canary,sha256:'0'.repeat(64)}});await rename(next.path,resolve(f.base,'release.json'));
+  let message='';try{await f.client.listTools();}catch(error){message=(error as Error).message;}
+  expect(message).toContain('release_discovery_unavailable');expect(message).not.toContain(canary);
+  const restored=await f.pin('pointer-restored.json',f.release);await rename(restored.path,resolve(f.base,'release.json'));
+  expect((await f.client.listTools()).tools.some(t=>t.name==='academy_runtime_identity')).toBe(true);
+ }finally{await f.client.close();await f.transport.close();}
+},60000);
+
+test('hot release aliases retain their active tool names in dispatch and result receipts',async()=>{
+ const f=await fixture();try{
+  const registry=JSON.parse(await readFile(f.release.registry.path,'utf8')),original=registry.find((r:any)=>r.tool.name==='academy_student_metadata_get');
+  const name='academy_synthetic_metadata_alias';registry.push({...original,tool:{...original.tool,name}});
+  const pin=await f.pin('registry-hot-alias.json',registry),next=await f.pin('pointer-hot-alias.json',{...f.release,generation:'hot-alias',registry:pin});await rename(next.path,resolve(f.base,'release.json'));
+  expect((await f.client.listTools()).tools.some(t=>t.name===name)).toBe(true);
+  expect((await f.client.callTool({name,arguments:request})).structuredContent).toMatchObject({status:'observed'});
+  for(const file of await readdir(resolve(f.base,'receipts'))){const receipt=JSON.parse(await readFile(resolve(f.base,'receipts',file),'utf8'));expect(receipt.tool).toBe(name);}
  }finally{await f.client.close();await f.transport.close();}
 },60000);

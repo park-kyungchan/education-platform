@@ -70,11 +70,14 @@ const signature=(x:any)=>JSON.stringify({fields:x.fields?.map((f:any)=>({field:f
 async function call(req:any){
  const args=structuredClone(req.arguments??{});
  const occurrence=randomUUID();
- const receiptTool=req.name==='academy_runtime_identity'||registry.some((entry:any)=>entry.tool.name===req.name)?req.name:'unrecognized_tool';
+ let receiptTool=req.name==='academy_runtime_identity'?req.name:'unrecognized_tool';
+ let dispatchIssued=false;
  const steps:{tool:string;status:unknown;sourceAvailability:unknown}[]=[];
- writeFileSync(log+'/'+occurrence+'-dispatch.json',JSON.stringify({issuedAt:new Date().toISOString(),tool:receiptTool,argumentsSha256:sha(args),automaticRetryAllowed:false,academyWrites:0,parentSends:0})+'\n',{mode:0o600,flag:'wx'});
+ const dispatch=()=>{if(dispatchIssued)return;dispatchIssued=true;writeFileSync(log+'/'+occurrence+'-dispatch.json',JSON.stringify({issuedAt:new Date().toISOString(),tool:receiptTool,argumentsSha256:sha(args),automaticRetryAllowed:false,academyWrites:0,parentSends:0})+'\n',{mode:0o600,flag:'wx'});};
  try{
   const active=await activeRelease();
+  if(active.registry.some((entry:any)=>entry.tool.name===req.name))receiptTool=req.name;
+  dispatch();
   if(req.name==='academy_runtime_identity'){
    z.object({}).strict().parse(args);
    const data={...active.identity,processStartedAt,loadedBridgeSha256,qualification:'release_artifacts_only_live_source_and_existing_clients_unverified'};
@@ -128,6 +131,7 @@ async function call(req:any){
   writeFileSync(log+'/'+occurrence+'-result.json',JSON.stringify({completedAt:new Date().toISOString(),tool:receiptTool,isError:!!result.isError,status:result.structuredContent?.status??null,sourceAvailability:result.structuredContent?.sourceAvailability??null,steps,resultSha256:sha(result),academyWrites:0,parentSends:0,automaticRetryAllowed:false})+'\n',{mode:0o600,flag:'wx'});
   return result;
  }catch(error){
+  dispatch();
   const failure=publicReadFailure(error,'upstream_failure_reconcile_dispatch'),code=failure.code;
   writeFileSync(log+'/'+occurrence+'-failure.json',JSON.stringify({code,failure,observedAt:new Date().toISOString(),tool:receiptTool,automaticRetryAllowed:false,academyWrites:0,parentSends:0})+'\n',{mode:0o600,flag:'wx'});
   const data={status:'blocked',code,failure,occurrence,automaticRetryAllowed:false,academyWrites:0,parentSends:0};
@@ -136,10 +140,12 @@ async function call(req:any){
 }
 const server=new Server({name:'muse-academy-runtime',version:'1.0.0'},{capabilities:{tools:{}}});
 server.setRequestHandler('tools/list',async()=>{
+ try{
  const active=await activeRelease();
  const hint=`DailyRecord owner-admitted dates: ${active.readAdmission.allowedFrom??'unbounded'} through ${active.readAdmission.allowedThrough??'unbounded'}.`;
  const identityTool={name:'academy_runtime_identity',description:'Inspect the active release graph and loaded bridge digest. Legacy graphs are explicitly incomplete. No source reads or namespace authorization.',inputSchema:z.toJSONSchema(z.object({}).strict()),annotations:readOnlyAnnotations};
  return {tools:[identityTool,...active.registry.map((r:any)=>r.endpoint==='dailyrecord'?{...r.tool,description:r.tool.description?.replace(/DailyRecord owner-admitted dates: [^.]+\./,hint)}:r.tool)]};
+ }catch(error){throw Error(publicReadFailure(error,'release_discovery_unavailable').code);}
 });
 server.setRequestHandler('tools/call',async req=>{const pending=tail.then(()=>call(req.params));tail=pending.catch(()=>{});return pending;});
 installStdioDiagnostics(server);

@@ -44,6 +44,9 @@ configured/source-verified subject rule, allowed operations and explicitly
 allowed relative selectors. There is no default broad policy. Explicit paper
 period endpoints must lie within policy bounds. Relative DT selectors require
 separate admission because exact calendar bounds remain unknown.
+Admission covers implicit reads as well: history qualifies selector `1` before
+its requested periods, and printed-paper lookup may fall back to DT selector
+`1`. Those operations require that selector before authentication or source reads.
 
 `academy_student_metadata_get` accepts only exact display name, lesson date,
 purpose/request and selected queries. In one serialized owner batch it authorizes
@@ -66,6 +69,10 @@ upstream messages are replaced with a fixed unavailable code. Authentication
 failure stays in the owner process's retained promise, preventing automatic
 login replay. Calls are serialized and evaluated individually; no retry/fallback
 is introduced. SDK error results are sanitized at the bridge.
+Structured item-answer blocked/partial reasons use the same finite public
+catalog. Tool discovery sanitizes release validation errors; hot-release receipts
+attribute operations using the active qualified registry. Metadata failures keep
+request correlation and effects without echoing scope/purpose in both MCP forms.
 
 SDK 2.3.1 silently discards JSON SyntaxError frames. The module's bounded 1 MiB
 stdio framing adapter emits a fixed stderr diagnostic (maximum 16 per diagnostic emitter),
@@ -80,5 +87,7 @@ R3/R4 source research used exact code-only source hashes and REA static analysis
 The available DailyTest client reads page 1 and relative selectors, exports no
 expected-assignment definition, and does not qualify submission/grading stages.
 Original-error and similar-clinic read contracts and the official answer renderer
-are unavailable. No new clinic, paging, completion or confirmed-answer behavior
+are not qualified by this source change. Separate private app-source research
+may provide additional contracts, subject to source and semantic review.
+No new clinic, paging, completion or confirmed-answer behavior
 is fabricated. Literal answers and delimiter candidates remain unqualified.

@@ -38,3 +38,14 @@ test('dated collisions, foreign rows and missing occurrences do not reach metada
 test('DailyRecord proof and caller keys do not create metadata permission; keyed API never consumes dynamic proof',async()=>{
  const f=fixture(null);await expect(f.backend.readStudentMetadata({purpose:request.purpose,currentRequestRef:request.currentRequestRef,scope:{sourceNamespace:'academy.lms.metadata',teacherId:'99001',studentId:'77002',lessonDate:request.lessonDate},queries:request.queries})).rejects.toThrow('native_metadata_scope_refused');expect(f.events).toEqual([]);
 });
+test('history qualification and printed lookup cannot read implicit selector 1 without owner admission',async()=>{
+ for(const queries of [[{kind:'daily_history' as const,periods:['11' as const]}],[{kind:'printed_paper_metadata' as const,paperCode:'#ABC2',period:{from:'2026-10-01',through:'2026-10-28'}}]]){
+  const policy={...metadataPolicy,operations:[queries[0]!.kind],relativeSelectors:['11']};
+  for(const route of ['named','keyed']){
+   const f=fixture(policy);
+   const result=route==='named'?await f.service.metadataByName({...request,queries}):await f.service.metadata({purpose:request.purpose,currentRequestRef:request.currentRequestRef,scope:{sourceNamespace:'academy.lms.metadata',teacherId:'99001',studentId:'77001',lessonDate:request.lessonDate},queries});
+   expect(result).toMatchObject({status:'unavailable',reasonCode:'metadata_namespace_not_admitted',failure:{category:'policy_denial'}});
+   expect(f.events).toEqual([]);
+  }
+ }
+});

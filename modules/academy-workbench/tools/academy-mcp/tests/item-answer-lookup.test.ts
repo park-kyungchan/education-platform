@@ -64,3 +64,14 @@ test('unconfigured, invalid, partial and conflicting sources remain explicit wit
     await expect(service(source([])).itemAnswers({...request,labels})).rejects.toThrow();
   expect(reads).toBe(before);
 });
+test('structured blocked and partial answer failures never publish unknown source exception text',async()=>{
+ for(const partial of [false,true]){
+  let reads=0;
+  const raw={...source(request.labels,partial?'partial':'blocked'),itemAnswers:partial?[item('12345')]:[],pendingAnswerLabels:partial?['12346']:request.labels,answerBlockedReason:'private_secret_snake_case'};
+  const service=new DailyRecordService({readDailyRecord:async()=>({status:'unavailable',reasonCode:'not_configured'}),readItemAnswers:async()=>{reads++;return raw;}});
+  const result=await service.itemAnswers(request);
+  expect(result).toMatchObject({status:partial?'partial':'blocked',reasonCode:'item_answer_source_unqualified_no_automatic_retry',failure:{category:'upstream_unavailable'}});
+  expect(JSON.stringify(result)).not.toContain('private_secret_snake_case');expect(reads).toBe(1);
+  if(partial)expect((result as any).answers[0].answerLiteral).toBe('1|_|invented answer');
+ }
+});

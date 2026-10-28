@@ -159,9 +159,12 @@ export class NativeDailyRecordBackend implements DailyRecordReadBackend {
   }
   #authorizeMetadata(input:StudentMetadataBatch){
     const policy=this.metadataAdmission;
+    // History always qualifies selector 1 before its requested periods; printed
+    // lookup may fall back to that same DT selector. Admit every possible read.
+    const selectors=(q:StudentMetadataBatch['queries'][number])=>q.kind==='daily_history'?['1',...q.periods]:q.kind==='student_papers'?[]:['1'];
     if(!policy||input.scope.teacherId!==policy.teacherId||!metadataDateAdmitted(input.scope.lessonDate,policy)
-      ||input.queries.some(q=>!policy.operations.includes(q.kind)||('period' in q?(!metadataDateAdmitted(q.period.from,policy)||!metadataDateAdmitted(q.period.through,policy)):
-        (q.kind==='daily_history'?q.periods:['1']).some(selector=>!policy.relativeSelectors.includes(selector as MetadataAdmission['relativeSelectors'][number])))))
+      ||input.queries.some(q=>!policy.operations.includes(q.kind)||('period' in q&&(!metadataDateAdmitted(q.period.from,policy)||!metadataDateAdmitted(q.period.through,policy)))
+        ||selectors(q).some(selector=>!policy.relativeSelectors.includes(selector as MetadataAdmission['relativeSelectors'][number]))))
       throw Error('metadata_namespace_not_admitted');
   }
   async readStudentMetadataByName(value:Readonly<StudentMetadataGet>):Promise<StudentMetadataObservation>{
