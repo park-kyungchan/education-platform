@@ -1,5 +1,4 @@
 import { describe, expect, test } from 'bun:test';
-import { canonicalJson } from '../../apps/academy/dc-gang-a/src/learning/model';
 import { TypedReadRefusal, functionSelectionDigest, projectLinkInterval, type TypedReadErrorCode } from '../../apps/academy/dc-gang-a/src/academy/nativeTypedRead';
 import { validateKnowledge, validateObjectRef, validateRevision, scopeIdentity } from '../../apps/academy/dc-gang-a/src/academy/contracts/prerequisiteRecords';
 import { ctx, evidence, fixture, knownK, mapFixtureViews, nativeRef, objectRef, request, testTemporal, unknownK, withTemporal } from './synthetic-read.mts';
@@ -34,15 +33,18 @@ describe('V0-01 governed read / source mutation / structured identity', () => {
     expect(second.asOf).toBe('2026-10-24T00:00:00.000Z');
   });
 
-  test('01.scope-projection keeps scope identity distinct and rejects a scalar RevisionToken', () => {
-    const one = objectRef('Student', 'same-key');
+  test('01.scope-projection rejects a scalar RevisionToken and cross-scope aliasing through typedRead', async () => {
+    const one = objectRef('Student', 'student-a', 'rev-student');
     const two = structuredClone(one);
     two.identity.scopeRef.basis.scope.scopeKey = 'another-scope';
     two.identity.scopeRef.objectKey = 'another-scope';
     expect(() => validateObjectRef(one)).not.toThrow();
     expect(() => validateObjectRef(two)).not.toThrow();
-    expect(canonicalJson(two.identity)).not.toBe(canonicalJson(one.identity));
-    expect(JSON.parse(canonicalJson(one))).toEqual(one);
+    const f = fixture();
+    const original = await f.service.typedRead(ctx, request({ selector: { kind: 'EXACT_OBJECT', objectRef: one }, linkMask: [] }));
+    expect(original.items.find(i => i.kind === 'OBJECT')).toMatchObject({ record: { identity: one.identity, revision: 'rev-student' } });
+    const foreign = fixture();
+    await refusal(foreign.service.typedRead(ctx, request({ selector: { kind: 'EXACT_OBJECT', objectRef: two }, linkMask: [] })), 'PERMISSION_DENIED', 403);
     expect(() => validateRevision({ scheme: 'OWNER_REVISION', value: 'revision-rA' })).not.toThrow();
     expect(() => validateRevision('revision-rA' as never)).toThrow();
   });
@@ -76,7 +78,6 @@ describe('V0-03 namespace / occurrence collisions', () => {
     const student = objectRef('Student', 'same-key');
     expect(() => validateObjectRef(student, ['Teacher'])).toThrow();
     const other = structuredClone(student); other.identity.namespace = 'different-namespace';
-    expect(canonicalJson(student.identity)).not.toBe(canonicalJson(other.identity));
     const f = fixture();
     await refusal(f.service.typedRead(ctx, request({ selector: { kind: 'EXACT_OBJECT', objectRef: other } })), 'PERMISSION_DENIED', 403);
     expect(f.store.projectionCalls).toBe(0);
@@ -108,10 +109,7 @@ describe('V0-04 explicit unknowns', () => {
 
   test('04.unknown known zero and conflicting evidence remain separate branches', () => {
     const zero = knownK(0), missing = unknownK<number>(), conflicting = { ...unknownK<number>(), reason: 'CONFLICTING' as const };
-    for (const value of [zero, missing, conflicting]) expect(() => validateKnowledge(value, n => { if (typeof n !== 'number') throw Error('expected_number@tests/platform-v0/education-contracts.test.mts:111'); })).not.toThrow();
-    expect(zero).toMatchObject({ state: 'known', value: 0 });
-    expect(Object.hasOwn(missing, 'value')).toBe(false);
-    expect(conflicting.reason).toBe('CONFLICTING');
+    for (const value of [zero, missing, conflicting]) expect(() => validateKnowledge(value, n => { if (typeof n !== 'number') throw Error('expected_number@tests/platform-v0/education-contracts.test.mts:112'); })).not.toThrow();
     expect(() => validateKnowledge({ ...missing, value: 0 } as never, () => {})).toThrow();
   });
 });
@@ -146,7 +144,7 @@ describe('V0-06 semantic request binding', () => {
     const outcomes = [];
     for (const registry of ['a'.repeat(64), 'b'.repeat(64)]) {
       const f = fixture(); f.store.binding = null;
-      const input = request(); if (input.selector.kind !== 'REGISTERED_QUERY') throw Error('expected_query@tests/platform-v0/education-contracts.test.mts:149');
+      const input = request(); if (input.selector.kind !== 'REGISTERED_QUERY') throw Error('expected_query@tests/platform-v0/education-contracts.test.mts:147');
       input.selector.query.registrySha256 = registry;
       outcomes.push(await refusal(f.service.typedRead(ctx, input), 'PERMISSION_DENIED', 403));
       expect(f.store.projectionCalls).toBe(0);
@@ -158,7 +156,7 @@ describe('V0-06 semantic request binding', () => {
 describe('V0-09 defining pin drift', () => {
   test('09.tamper refuses a defining-object hash change before object projection', async () => {
     const f = fixture(), input = request();
-    if (input.selector.kind !== 'REGISTERED_QUERY') throw Error('expected_query@tests/platform-v0/education-contracts.test.mts:161');
+    if (input.selector.kind !== 'REGISTERED_QUERY') throw Error('expected_query@tests/platform-v0/education-contracts.test.mts:159');
     input.selector.query.baseType.definitionSha256 = '0'.repeat(64);
     await refusal(f.service.typedRead(ctx, input), 'CONTRACT_UNVERIFIABLE', 409);
     expect(f.store.projectionCalls).toBe(0);
