@@ -9,7 +9,7 @@ import {canonicalJson,digest,assertExactKeys,assertDate} from '../learning/model
 import {applyJournalHttpAction,validateJournalHttpAction,assertJournalWireQualified,assertJournalAssessmentOptions,journalWireDigest,JOURNAL_HTTP_SOURCE_CONTRACT,type JournalHttpTarget,type JournalHttpState,type JournalHttpAction,type JournalHttpAdmission} from './lessonJournalHttp';
 import {parseItemMetadata} from './itemMetadataRead';
 import {selectSourceFunction} from './sourceFunctionText';
-import {inspectAssessmentSearchMetadata} from './assessmentReadProtocol';
+import {inspectAssessmentSearchMetadata,inspectStudentNameSearch} from './assessmentReadProtocol';
 import {qualifyStudentPaperSearchPeriod,type StudentPaperSearchPeriod} from './studentPaperSearchPeriod';
 import {decodePaperCode} from './printedPaperCode';
 import {inspectTestPoolDocument,readTestPoolDocument,testPoolSelectorDefaults} from './testPoolInspection';
@@ -541,6 +541,19 @@ export class AcademyHttpClient {
       rows:matches,sourcePeriod:matchedSourceFamily==='daily_zero'?null:result.sourcePeriod,page:result.page,observedAt:searchedSources.at(-1)!.observedAt,
       coverage:'observed_source_pages_not_complete_history' as const,searchedSources,matchedSourceFamily,generatedMembership:'unqualified' as const,
       academyWrites:0 as const,parentSends:0 as const};
+  }
+  /** Project only exact-name identities from the read-qualified DT/ZT page. */
+  async searchStudentsByName(input:{teacherLabel:string;studentName:string}){
+    assertExactKeys(input,['teacherLabel','studentName']);readLiteralName(input.studentName);
+    if(input.teacherLabel!==this.#principal.teacherLabel)throw Error('daily_search_principal_conflict');
+    if(!this.#authenticated)throw Error('authentication_required');
+    const response=await this.#request('/servlet/controller.dailyzerotest.DailyZeroTestServlet?reqCmd=DtResultSearch',{
+      method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8','X-Requested-With':'XMLHttpRequest'},
+      body:new URLSearchParams({sort_date:'1',stu_name:input.studentName}).toString(),
+    });
+    const html=await response.text();if(html.length>2000000)throw Error('daily_search_response_rejected');
+    if(/webUserPass|세션이 만료/.test(html)||/<input\b[^>]*\btype\s*=\s*["']password["']/i.test(html)){this.close();throw Error('authentication_required');}
+    return inspectStudentNameSearch(html,input.studentName);
   }
   /** Reuse the same fixed, read-qualified DT/ZT search used by exact score reads. */
   async searchDailyTestMetadata(input:{teacherLabel:string;studentName:string;studentKey:string}){

@@ -61,3 +61,37 @@ The fictional neutral SDK test runs with outbound networking denied and
 proves a single upstream lifetime, strict caller schema and content-free
 receipts. Fresh native E2E evidence is separate from source/synthetic tests;
 the work record cites session/receipt metadata without student originals.
+
+## Versioned read releases
+
+An owner-issued `academy.owner-admission/2` record may explicitly use `null`
+for either date bound. `studentScope` defaults to configured students; the
+explicit `source_verified` option additionally permits an exact unique live
+name/key match for the same request, with a five-minute in-process binding.
+The DailyRecord row and previous occurrence still require exact principal,
+student, course and membership qualification. This does not widen the
+separate metadata namespace or authorize saves or sends.
+
+An upgraded bridge optionally recognizes an owner-controlled `release.json`
+under its existing install directory. The pointer references immutable,
+SHA-256-pinned `routing`, `endpoints`, and `registry` files and is replaced
+atomically only after those files and the routing-selected owner admission are
+ready. It is read for every request, so already-running upgraded bridge clients
+can converge on the new release without being restarted. The bridge compares
+the selected admission digest with the spawned DailyRecord backend before any
+source lookup. Invalid or mismatched releases, and removal of an adopted
+pointer, fail closed. Existing pre-upgrade bridge processes cannot acquire this
+behavior without a separately authorized upgrade. The release schema is
+`academy.mcp-release/1`; see `src/runtime-release.ts` and synthetic release
+tests for exact fields and checks. Do not mutate or overwrite pinned releases.
+
+## Item answers
+
+`academy_item_answer_lookup` reads a bounded set of exact numeric item labels
+through the authenticated owner client. It returns the source's official
+answer literal and explicit rendering/printed-paper limitations. It does not
+interpret an unqualified literal as a rendered answer, infer a student
+response, grade, save, print, or send. The existing source endpoint may return
+an external solution reference instead of a literal answer. Production
+exposure requires the owner bundle and neutral registry to be published as a
+consistent verified release; local tests do not prove live availability.

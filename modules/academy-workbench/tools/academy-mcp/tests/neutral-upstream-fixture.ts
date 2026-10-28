@@ -9,6 +9,14 @@ import {observation} from './dailyrecord-fixture.ts';
 const events=process.argv[2]!;
 appendFileSync(events,'start\n');
 const service=new DailyRecordService({
+  readRoutingAdmission:()=>({sourceNamespace:'academy.lms.dayrecord',teacherId:'99001',allowedFrom:'2040-01-15',allowedThrough:process.argv[3]??'2040-01-17',
+    ...(process.argv[4]?{studentScope:process.argv[4] as 'configured'|'source_verified'}:{})}),
+  readItemAnswers:async labels=>{appendFileSync(events,'answer\n');return {family:'item_answer',status:'observed',
+    requestedAnswerLabels:[...labels],pendingAnswerLabels:[],answerBlockedReason:null,
+    itemAnswers:labels.map(lectureKey=>({identity:{sourceNamespace:'academy_item',lectureKey,outerLectureKey:'100',sourceId:lectureKey},
+      answerLiteral:'invented answer',answerAvailability:'literal_payload_not_rendered',answerMeaning:'source_official_item_answer_not_student_response',
+      rendering:'not_qualified',paperMembership:'unqualified'})),observedAt:new Date().toISOString(),
+    coverage:'exact_requested_shared_answers_not_printed_versions',nativePrintInvoked:false,automaticRetryAllowed:false};},
   searchStudentsByName:async name=>{appendFileSync(events,'resolve\n');return name==='Invented Student'?[{studentKey:'77001',studentName:name}]:[];},
   readDailyRecord:async scope=>{
     appendFileSync(events,'intake\n');

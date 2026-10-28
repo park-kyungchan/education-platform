@@ -5,11 +5,27 @@ import {studentResolveInputSchema} from './student-resolver.ts';
 import {readPinnedLocalBytes} from './item-label-store.ts';
 import {dailyRecordGetSchema,dailyRecordGetDescription} from './dailyrecord-read.ts';
 import {ownerAdmissionSchema,type OwnerAdmission} from './owner-admission.ts';
+import {createHash} from 'node:crypto';
+import {z} from 'zod';
+import {itemAnswerLookupSchema} from './item-answer-lookup.ts';
 
 export function registerDailyRecordTools(server:McpServer,service=new DailyRecordService()){
   const annotations={...readOnlyAnnotations,openWorldHint:service.backend!==null,idempotentHint:service.backend===null};
   const result=(value:unknown)=>{const structuredContent=JSON.parse(JSON.stringify(value)) as Record<string,unknown>;
     return {content:[{type:'text' as const,text:JSON.stringify(structuredContent)}],structuredContent};};
+  server.registerTool('academy_runtime_read_admission',{
+    title:'Compare the owner read admission without exposing its contents',
+    description:'Return a digest of the configured DailyRecord read admission for bridge consistency checks. No source request or credentials.',
+    inputSchema:z.object({}).strict(),annotations:readOnlyAnnotations,
+  },async()=>{
+    const admission=service.backend?.readRoutingAdmission?.()??null;
+    return result({status:admission?'configured':'unavailable',admissionSha256:admission?createHash('sha256').update(JSON.stringify(admission)).digest('hex'):null});
+  });
+  server.registerTool('academy_item_answer_lookup',{
+    title:'Read official answer literals by exact item labels',
+    description:'Read source-provided official answer literals for the exact requested numeric item labels. This does not read a student response or establish a printed paper version, and literal rendering may be unqualified or refer to an external solution. Bounded to 32 labels. No grading, saving, printing, sending or automatic retry.',
+    inputSchema:itemAnswerLookupSchema,annotations,
+  },async input=>result(await service.itemAnswers(input)));
   server.registerTool('academy_dailyrecord_get',{
     title:'Read live DailyRecord by student name (today by default)',
     description:dailyRecordGetDescription,inputSchema:dailyRecordGetSchema,annotations,
@@ -21,7 +37,7 @@ export function registerDailyRecordTools(server:McpServer,service=new DailyRecor
   },async input=>result(await service.metadata(input)));
   server.registerTool('academy_student_resolve',{
     title:'Resolve one exact student display name to its native student key',
-    description:'Resolve an exact display name to its native key for live tools. For a DailyRecord lookup prefer academy_dailyrecord_get, which resolves and runs intake using owner-supplied scope. Zero rows or multi-key collisions stop with a named blocker. Uses the same native read lifecycle. No writes, guessing or automatic retry.',
+    description:'Resolve an exact display name to its native key for live tools. For a DailyRecord lookup prefer academy_dailyrecord_get, which resolves and runs intake using owner-supplied scope. Zero rows or multi-key collisions stop with a named blocker; zero rows cover only the observed source page and never prove the student is absent. Missing configured admission is reported separately. Uses the same native read lifecycle. No writes, guessing or automatic retry.',
     inputSchema:studentResolveInputSchema,annotations,
   },async input=>result(await service.resolveStudent(input)));
   server.registerTool('academy_dailyrecord_intake',{

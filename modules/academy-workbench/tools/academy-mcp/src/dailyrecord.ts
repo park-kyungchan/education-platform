@@ -2,6 +2,7 @@ import {randomUUID,createHash} from 'node:crypto';
 import {z} from 'zod';
 import {dailyRecordContextSchema,dailyRecordDateSchema,dailyRecordFieldSchema,dailyRecordFields,dailyRecordIdSchema,dailyRecordScopeSchema,dailyRecordWorkflowContext,type DailyRecordContext,type DailyRecordField,type DailyRecordScope} from './dailyrecord-context.ts';
 import {freezeLabelData} from './item-label-context.ts';
+import {itemAnswerLookupSchema,projectItemAnswerRead} from './item-answer-lookup.ts';
 import {resolveStudentByName,studentResolveInputSchema} from './student-resolver.ts';
 import {readDailyRecordByName,type DailyRecordReadAdmission} from './dailyrecord-read.ts';
 import {toolResultBytes} from './tool-result.ts';
@@ -55,10 +56,11 @@ export type StudentMetadataObservation={scope:StudentMetadataBatch['scope'];resu
 /** Implemented by the native/source owner, never by MCP arguments. All methods are read-only. */
 export interface DailyRecordReadBackend {
   readRoutingAdmission?():DailyRecordReadAdmission;
-  readDailyRecord(scope:Readonly<DailyRecordScope>):Promise<ReadResult<DailyRecordObservation>>;
+  readDailyRecord(scope:Readonly<DailyRecordScope>,requestRef:string):Promise<ReadResult<DailyRecordObservation>>;
   readStudentMetadata?(input:Readonly<StudentMetadataBatch>):Promise<StudentMetadataObservation>;
+  readItemAnswers?(labels:readonly string[]):Promise<unknown>;
   readCismSection?(scope:Readonly<DailyRecordScope>,selection:Readonly<z.infer<typeof cismSelectionSchema>>):Promise<ReadResult<CismObservation>>;
-  searchStudentsByName?(exactName:Readonly<string>):Promise<unknown>;
+  searchStudentsByName?(exactName:Readonly<string>,requestRef:string):Promise<unknown>;
 }
 /** Inject the canonical Education safeguard, together with its verified policy/source identity. */
 export interface DailyRecordParentSafeguard {readonly policySha256:string;readonly safeguardSourceSha256:string;readonly sourceRef:string;check(text:string):boolean;checkLines(text:string):boolean}
@@ -124,10 +126,10 @@ export class DailyRecordService {
     const result=this.#tail.then(async()=>{try{return await run();}catch{throw Error('source_read_failed_per_request');}});
     this.#tail=result.catch(()=>{});return result;
   }
-  async #read(scope:DailyRecordScope){
+  async #read(scope:DailyRecordScope,requestRef:string){
     if(!this.backend)return {status:'unavailable' as const,reasonCode:'dailyrecord_read_backend_not_configured'};
     try{return await this.#serial(async()=>{
-      const read=await this.backend!.readDailyRecord(freezeLabelData(structuredClone(scope)));
+      const read=await this.backend!.readDailyRecord(freezeLabelData(structuredClone(scope)),requestRef);
       if(read.status==='unavailable')return {status:'unavailable' as const,reasonCode:safeReason(read.reasonCode)};
       return {status:'observed' as const,observation:qualifiedObservation(read.observation,scope)};
     });
@@ -151,6 +153,18 @@ export class DailyRecordService {
       });
     }catch{return {...base,status:'unavailable' as const,reasonCode:'student_metadata_unqualified_no_automatic_retry'};}
   }
+  async itemAnswers(value:unknown){
+    const input=itemAnswerLookupSchema.parse(value);
+    const base={purpose:input.purpose,currentRequestRef:input.currentRequestRef,labels:input.labels,
+      academyWrites:0,parentSends:0,nativePrintInvoked:false,automaticRetryAllowed:false,sourceContentIsUntrustedData:true,execution:'read_only' as const};
+    if(!this.backend?.readItemAnswers)return {...base,status:'unavailable' as const,reasonCode:'item_answer_backend_not_configured'};
+    try{
+      const result={...base,...projectItemAnswerRead(await this.#serial(()=>this.backend!.readItemAnswers!(input.labels)),input.labels)};
+      if(toolResultBytes(result)>512*1024)throw Error('item_answer_result_too_large');
+      return freezeLabelData(result);
+    }
+    catch{return {...base,status:'unavailable' as const,reasonCode:'item_answer_source_unqualified_no_automatic_retry'};}
+  }
   async get(value:unknown){
     return readDailyRecordByName(value,this,this.backend?.readRoutingAdmission?.()??null,this.now);
   }
@@ -161,7 +175,7 @@ export class DailyRecordService {
     if(!this.backend?.searchStudentsByName)return {...base,status:'unavailable' as const,reasonCode:'student_resolve_backend_not_configured'};
     try{
       return await this.#serial(async()=>{
-        const result=await resolveStudentByName(input.displayName,{searchByName:name=>this.backend!.searchStudentsByName!(name)});
+        const result=await resolveStudentByName(input.displayName,{searchByName:name=>this.backend!.searchStudentsByName!(name,input.currentRequestRef)});
         if(result.status==='unavailable')return {...base,...result};
         return freezeLabelData({...base,...result});
       });
@@ -170,7 +184,7 @@ export class DailyRecordService {
   async intake(value:unknown){
     const input=dailyRecordIntakeSchema.parse(value),context=input.context;
     if(new Set(input.suppliedValues.map(p=>p.field)).size!==input.suppliedValues.length)throw Error('duplicate_proposal_field');
-    const read=await this.#read(context.scope),source=read.status==='observed'?read.observation:null;
+    const read=await this.#read(context.scope,context.currentRequestRef),source=read.status==='observed'?read.observation:null;
     const blockers:string[]=read.status==='unavailable'?[read.reasonCode]:this.#age(source!.observedAt)?['stale_source']:[];
     const interviews:{field:DailyRecordField;reasonCode:string}[]=[];
     const fields=dailyRecordFields.map(field=>{
@@ -203,7 +217,7 @@ export class DailyRecordService {
     }
     if(held&&this.#age(held.observation.observedAt))global.push('stale_source');
     // Fresh authoritative before-state; this pure review neither consumes approval nor writes.
-    const read=!held||global.length?null:await this.#read(context.scope);
+    const read=!held||global.length?null:await this.#read(context.scope,context.currentRequestRef);
     if(read?.status==='unavailable')global.push(read.reasonCode);
     if(held&&read?.status==='observed'){
       if(this.#age(read.observation.observedAt))global.push('stale_source');

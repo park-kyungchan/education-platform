@@ -58,7 +58,30 @@ describe('name-only search port (REA contract, synthetic names only)', () => {
     expect(await service.resolveStudent(resolveInput('Invented Student')))
       .toMatchObject({status: 'resolved', studentKey: '77001', academyWrites: 0, parentSends: 0});
     expect(await service.resolveStudent(resolveInput('Nobody Here')))
-      .toMatchObject({status: 'unavailable', reasonCode: 'student_name_not_found'});
+      .toMatchObject({status: 'unavailable', reasonCode: 'student_name_not_admitted'});
+  });
+
+  test('wire search authenticates once before querying; the admission-only fallback does not authenticate', async () => {
+    const events: string[] = [];
+    const port = {...clientBase, authenticate: async () => { events.push('authenticate'); },
+      searchStudentsByName: async () => { events.push('search'); return [{studentKey: '77001', studentName: 'Invented Student'}]; }};
+    const backend = new NativeDailyRecordBackend(port, admission, credential);
+    await backend.searchStudentsByName('Invented Student');
+    await backend.searchStudentsByName('Invented Student');
+    expect(events).toEqual(['authenticate', 'search', 'search']);
+    const fallback = new NativeDailyRecordBackend({...clientBase, authenticate: async () => { events.push('unexpected'); }}, admission, credential);
+    await fallback.searchStudentsByName('Invented Student');
+    expect(events).not.toContain('unexpected');
+  });
+
+  test('a failed search authentication is retained and never triggers a source search', async () => {
+    let auth = 0, searches = 0;
+    const port = {...clientBase, authenticate: async () => { auth++; throw Error('synthetic_login_failure'); },
+      searchStudentsByName: async () => { searches++; return []; }};
+    const backend = new NativeDailyRecordBackend(port, admission, credential);
+    for (let i = 0; i < 2; i++) await expect(backend.searchStudentsByName('Invented Student')).rejects.toThrow('synthetic_login_failure');
+    expect(auth).toBe(1);
+    expect(searches).toBe(0);
   });
 
   test('malformed wire rows and throwing ports are unqualified per request, without latching', async () => {

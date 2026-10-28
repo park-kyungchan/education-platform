@@ -23,6 +23,10 @@ export interface StudentNameSearchPort {
   searchByName(exactName: string): Promise<unknown>;
 }
 
+/** The owner did not configure this name and no live search port exists.
+ * This is not evidence that the source system lacks the student. */
+export class StudentNameNotAdmitted extends Error {}
+
 export type StudentResolveResult =
   | {status: 'resolved'; studentKey: string; displayName: string}
   | {status: 'unavailable'; reasonCode: string};
@@ -42,7 +46,8 @@ export async function resolveStudentByName(
   let rows: StudentSearchRow[];
   try {
     rows = z.array(studentSearchRowSchema).max(MAX_ROWS + 1).parse(await port.searchByName(name));
-  } catch {
+  } catch (error) {
+    if (error instanceof StudentNameNotAdmitted) return unavailable('student_name_not_admitted');
     return unavailable('student_resolve_search_unqualified_no_automatic_retry');
   }
   if (rows.length > MAX_ROWS) return unavailable('student_resolve_search_unqualified_no_automatic_retry');
