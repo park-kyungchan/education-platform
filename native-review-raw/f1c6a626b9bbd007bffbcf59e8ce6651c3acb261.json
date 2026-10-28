@@ -1,0 +1,43 @@
+{
+  "schema": "owner-scoped-native-review-output.v1",
+  "reviewStatus": "complete",
+  "binding": {
+    "repository": "park-kyungchan/education-platform",
+    "projectId": "education-platform",
+    "domainId": "education",
+    "semanticOwner": "education-platform",
+    "scope": "month-end-source-redesign"
+  },
+  "headSha": "f1c6a626b9bbd007bffbcf59e8ce6651c3acb261",
+  "reviewedTreeSha": "792951ac6b12be25e22d5d416efef45a2cb2c92a",
+  "reviewedSourceManifestSha256": "4cddbcc460a4e377de1a7deee3d86ac7501a37914b2e4afe4adf47116f8b337d",
+  "reviewer": {
+    "runtime": "muse-subagent",
+    "taskId": "01a18297-7276-7311-9884-900bb80df122",
+    "threadId": "01a18297-7276-7311-9884-900bb80df122",
+    "nativeTaskId": null,
+    "nativeRunId": null,
+    "implementationWriter": false
+  },
+  "author": {
+    "runtime": "muse-code",
+    "taskId": "01a18277-3835-76a3-9a05-fa7f36617fee",
+    "threadId": "01a18277-3835-76a3-9a05-fa7f36617fee",
+    "nativeTaskId": null,
+    "nativeRunId": null
+  },
+  "conclusion": "pass",
+  "unresolvedFindings": 0,
+  "recordedAtUtc": "2026-10-28T13:07:38Z",
+  "assignmentId": "academy-dailyrecord-save-review-02",
+  "reviewHead": "f1c6a626b9bbd007bffbcf59e8ce6651c3acb261",
+  "reviewedSourceManifest": {
+    "schema": "agent-platform.reviewed-source-manifest.v1",
+    "reviewedTreeSha": "792951ac6b12be25e22d5d416efef45a2cb2c92a",
+    "entryCount": 3890,
+    "blobCount": 3362,
+    "sha256": "4cddbcc460a4e377de1a7deee3d86ac7501a37914b2e4afe4adf47116f8b337d"
+  },
+  "findings": [],
+  "sourceReviewDecision": "Pass. The round-2 code independently fixes F1, F2, and F3: current-request authority is re-read from the owner evidence file rather than echoed from the admission, write dispatch is bound to the reviewed before-state and wire digest before consumption or writing, and uncertain client dispatches are reported as dispatched unresolved work instead of zero writes. The remaining original invariants also hold at the reviewed boundaries: strict tool input carries no save authority, drifted or foreign reviewed patches are held with zero writes, each admitted tuple is durably consumed once, writes are single sequential owner-backend calls with no automatic retry or parent/print/generation effect, missing backend configuration fails closed, and existing read behavior remains covered by the passing DailyRecord and native-backend suites. Independent checks: tsc clean; 41 targeted tests pass; root academy integration verification pass; provenance hashes and source-author base verified against the exact head."
+}
