@@ -4,7 +4,7 @@ import {dirname,resolve} from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {z} from 'zod';
 import {readPinnedLocalBytes} from './item-label-store.ts';
-import {dailyRecordObservationSchema,studentMetadataBatchSchema,type DailyRecordReadBackend,type DailyRecordWriteBackend,type DailyRecordObservation,type StudentMetadataBatch,type StudentMetadataObservation,studentMetadataGetSchema,type StudentMetadataGet,type DailyRecordSaveFieldStatus} from './dailyrecord.ts';
+import {dailyRecordObservationSchema,studentMetadataBatchSchema,type DailyRecordReadBackend,type DailyRecordWriteBackend,type DailyRecordObservation,type StudentMetadataBatch,type StudentMetadataObservation,studentMetadataGetSchema,type StudentMetadataGet,type DailyRecordSaveFieldStatus,type TextbookSectionResults,type TextbookSectionObservation} from './dailyrecord.ts';
 import {createDailyRecordSaveAdmission,liveSaveRequestEvidence,type DailyRecordSaveAdmission,type DailyRecordSaveApproval} from './dailyrecord-save-admission.ts';
 import type {DailyRecordField} from './dailyrecord-context.ts';
 import type {DailyRecordScope} from './dailyrecord-context.ts';
@@ -139,6 +139,30 @@ export class NativeDailyRecordBackend implements DailyRecordReadBackend,DailyRec
       ownerAdmissionSchema.parse(ownerAdmission);
       if(ownerAdmission.teacherId!==admission.teacherId||!isDateAdmitted(admission.date,ownerAdmission))throw Error('native_dailyrecord_owner_admission_mismatch');
     }
+  }
+  /** Exact textbook section grading through the owner client's textbook
+   * family. Only configured admission students; titles are the source's
+   * own names and every returned record is re-bound to the request. */
+  async readTextbookSections(input:Readonly<TextbookSectionResults>):Promise<TextbookSectionObservation>{
+    const student=this.admission.students.find(s=>s.displayName===input.displayName);
+    if(!student||!this.managedNames.has(input.displayName))throw Error('textbook_student_not_admitted');
+    await this.#authenticate();
+    const raw=await this.client.execute({family:'textbook',teacherLabel:this.admission.teacherLabel,studentKey:student.studentId,
+      studentName:student.displayName,courseKey:input.courseKey,bookNo:input.bookNo,sourceTitles:[...input.sourceTitles],gradeViewAdmission:true}) as unknown as {
+        family:string;status:string;records:{sourceTitle:string;studentKey:string;studentName:string;courseKey:string;bookNo:string;
+          score:number;items:{originalOrdinal:string;scoring:string}[];sourceDate:{literal:string|null;precision:string;meaning:string}}[];observedAt:string;coverage:string};
+    if(raw.family!=='textbook'||raw.status!=='observed'||!Array.isArray(raw.records)||raw.records.length!==input.sourceTitles.length)
+      throw Error('textbook_section_result_unqualified');
+    const records=raw.records.map(r=>{
+      if(r.studentKey!==student.studentId||r.studentName!==student.displayName||r.courseKey!==input.courseKey||r.bookNo!==input.bookNo
+        ||!input.sourceTitles.includes(r.sourceTitle)||typeof r.score!=='number'||!Array.isArray(r.items)
+        ||r.items.some(i=>i.scoring!=='O'&&i.scoring!=='X'))throw Error('textbook_section_result_unqualified');
+      const items=r.items.map(i=>({ordinal:String(i.originalOrdinal),scoring:i.scoring as 'O'|'X'}));
+      return {sourceTitle:r.sourceTitle,score:r.score,correctCount:items.filter(i=>i.scoring==='O').length,itemCount:items.length,items,
+        sourceDate:{literal:r.sourceDate?.literal??null,precision:String(r.sourceDate?.precision??'unknown'),meaning:String(r.sourceDate?.meaning??'source_apply_date_not_exact_grade_time')}};
+    });
+    return {student:{studentId:student.studentId,displayName:student.displayName},courseKey:input.courseKey,bookNo:input.bookNo,
+      records,observedAt:raw.observedAt,coverage:'exact_selected_existing_records_not_whole_book'};
   }
   saveConfigured():boolean{return this.saveApproval!==null&&typeof this.client.applyJournalAction==='function';}
   /** One serialized write batch on the already-authenticated owner client.

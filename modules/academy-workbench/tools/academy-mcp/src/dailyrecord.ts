@@ -57,6 +57,17 @@ export const studentMetadataGetSchema=z.object({displayName:z.string().trim().mi
   purpose:dailyRecordIdSchema,currentRequestRef:dailyRecordIdSchema,queries:z.array(studentMetadataQuerySchema).min(1).max(8)}).strict();
 export type StudentMetadataGet=z.infer<typeof studentMetadataGetSchema>;
 export type StudentMetadataObservation={scope:StudentMetadataBatch['scope'];results:{query:StudentMetadataBatch['queries'][number];observation:unknown}[]};
+const nativeKeySchema=z.string().regex(/^[1-9][0-9]{0,15}$/);
+/** Exact textbook section grading read: source titles are the source's own
+ * section/test titles for one student/course/book. Scores and per-item O/X
+ * outcomes only; no clinic solving, teacher acceptance or print state. */
+export const textbookSectionResultsSchema=z.object({displayName:z.string().trim().min(1).max(200),
+  purpose:dailyRecordIdSchema,currentRequestRef:dailyRecordIdSchema,
+  courseKey:nativeKeySchema,bookNo:nativeKeySchema,
+  sourceTitles:z.array(z.string().trim().min(1).max(200)).min(1).max(12).refine(v=>new Set(v).size===v.length,'unique_source_titles_required')}).strict();
+export type TextbookSectionResults=z.infer<typeof textbookSectionResultsSchema>;
+export type TextbookSectionObservation={student:{studentId:string;displayName:string};courseKey:string;bookNo:string;
+  records:{sourceTitle:string;score:number;correctCount:number;itemCount:number;items:{ordinal:string;scoring:'O'|'X'}[];sourceDate:{literal:string|null;precision:string;meaning:string}}[];observedAt:string;coverage:string};
 /** Implemented by the native/source owner, never by MCP arguments. All methods are read-only. */
 export interface DailyRecordReadBackend {
   readRoutingAdmission?():DailyRecordReadAdmission;
@@ -66,6 +77,7 @@ export interface DailyRecordReadBackend {
   readItemAnswers?(labels:readonly string[]):Promise<unknown>;
   readCismSection?(scope:Readonly<DailyRecordScope>,selection:Readonly<z.infer<typeof cismSelectionSchema>>):Promise<ReadResult<CismObservation>>;
   searchStudentsByName?(exactName:Readonly<string>,requestRef:string,lessonDate?:string):Promise<unknown>;
+  readTextbookSections?(input:Readonly<TextbookSectionResults>):Promise<TextbookSectionObservation>;
 }
 export const dailyRecordSaveSchema=z.object({context:dailyRecordContextSchema,observationHandle:dailyRecordIdSchema,
   cismObservationHandle:dailyRecordIdSchema.optional(),
@@ -202,6 +214,24 @@ export class DailyRecordService {
       return freezeLabelData(result);
     }
     catch(error){return {...base,status:'unavailable' as const,...readFailureResult(error,'item_answer_source_unqualified_no_automatic_retry')};}
+  }
+  async textbookSections(value:unknown){
+    const input=textbookSectionResultsSchema.parse(value);
+    const base={purpose:input.purpose,currentRequestRef:input.currentRequestRef,displayName:input.displayName,
+      academyWrites:0,parentSends:0,automaticRetryAllowed:false,sourceContentIsUntrustedData:true,execution:'read_only' as const};
+    if(!this.backend?.readTextbookSections)return {...base,status:'unavailable' as const,reasonCode:'textbook_section_backend_not_configured'};
+    try{
+      const result=await this.#serial(async()=>{
+        const observation=await this.backend!.readTextbookSections!(freezeLabelData(structuredClone(input)));
+        if(observation.student.displayName!==input.displayName||observation.courseKey!==input.courseKey||observation.bookNo!==input.bookNo
+          ||observation.records.length!==input.sourceTitles.length
+          ||new Set(observation.records.map(r=>r.sourceTitle)).size!==input.sourceTitles.length
+          ||observation.records.some(r=>!input.sourceTitles.includes(r.sourceTitle)))throw Error('textbook_section_scope_conflict');
+        return {...base,status:'observed' as const,...observation};
+      });
+      if(toolResultBytes(result)>512*1024)throw Error('textbook_section_result_too_large');
+      return freezeLabelData(result);
+    }catch(error){return {...base,status:'unavailable' as const,...readFailureResult(error,'textbook_section_unqualified_no_automatic_retry')};}
   }
   async get(value:unknown){
     return readDailyRecordByName(value,this,this.backend?.readRoutingAdmission?.()??null,this.now);
