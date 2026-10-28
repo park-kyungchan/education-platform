@@ -1086,7 +1086,9 @@ export class NativeTypedReadService implements NativeTypedRead{
         if(records.some(candidate=>candidate.identity.objectType===target.identity.objectType&&candidate.identity.nativeKey===target.identity.nativeKey))throw denied();
         const withheld=withheldCatalog.has(target.identity.objectType+':'+target.identity.nativeKey)
           ||(target.identity.objectType==='HomeworkAssignment'&&observedHomework.has(target.identity.nativeKey))
-          ||(target.identity.objectType==='DailyTestAttempt'&&observedAttempts.has(target.identity.nativeKey));
+          ||(target.identity.objectType==='DailyTestAttempt'&&observedAttempts.has(target.identity.nativeKey))
+          // A progress/assessment withheld for an unresolved scope mapping answers with that explicit gap, not NOT_FOUND.
+          ||((target.identity.objectType==='DailyProgress'||target.identity.objectType==='PreviousHomeworkAssessment')&&gaps.some(gap=>gap.path===target.identity.objectType+'.recordScope'&&!!gap.subject&&identityEqual(gap.subject.identity,target.identity)));
         if(withheld){
           if(target.identity.objectType==='Section'){const pins=await view.currentCatalogPins(context.ownerId);const pin=pins.find(pin=>pin.node.id===target.identity.nativeKey);if(!pin||pin.revisionId!==target.revision)throw staleRevision();}
           const exactGaps=gaps.filter(gap=>(gap.path===target.identity.objectType+'.record'||gap.path===target.identity.objectType+'.recordScope'||gap.path==='Section.unitRef'||gap.path==='DailyTestAttempt.links.attemptFollows')&&(!gap.subject||identityEqual(gap.subject.identity,target.identity)));

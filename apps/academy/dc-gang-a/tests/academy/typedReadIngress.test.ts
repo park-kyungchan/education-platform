@@ -380,8 +380,9 @@ describe('authenticated prerequisite wrapper (IG3-REV-09)',()=>{
   });
   test('RC7: every refusal code the prerequisite store, application and contract validators throw has a deliberate HTTP class',()=>{
     const unclassified:string[]=[];
-    for(const file of ['nativePrerequisiteStore.ts','prerequisiteApplication.ts','contracts/prerequisiteRecords.ts']){
-      for(const [,code] of readFileSync(new URL('../../src/academy/'+file,import.meta.url),'utf8').matchAll(/Error\('([a-z][a-z0-9_]{2,80})'\)/g))if(prerequisiteRefusalStatus(code!)===null)unclassified.push(file+':'+code);
+    // The prerequisite path and every validator module it imports; fixed messages in either quote style.
+    for(const file of ['academy/nativePrerequisiteStore.ts','academy/prerequisiteApplication.ts','academy/contracts/prerequisiteRecords.ts','academy/contracts/storageRecords.ts','academy/contracts/teacherOperations.ts','academy/domain.ts','academy/records.ts','academy/nativeCompleteness.ts','academy/usecases/requestRecovery.ts','learning/model.ts']){
+      for(const [,,code] of readFileSync(new URL('../../src/'+file,import.meta.url),'utf8').matchAll(/Error\((['"])([^'"`$]{3,100})\1\)/g))if(prerequisiteRefusalStatus(code!)===null)unclassified.push(file+':'+code);
     }
     expect([...new Set(unclassified)]).toEqual([]);
   });
@@ -390,6 +391,8 @@ describe('authenticated prerequisite wrapper (IG3-REV-09)',()=>{
       return (await handler(new Request(ORIGIN+'/api/native-prereq/progress',{method:'POST',headers:{Origin:ORIGIN,'Content-Type':'application/json',Cookie:cookie()},body:JSON.stringify(sampleInput('createProgress'))}))).status;};
     for(const code of ['teacher_identity_changed','lesson_identity_changed','binding_identity_changed','progress_identity_changed','assessment_identity_changed'])expect([code,await status(code)]).toEqual([code,409]);
     expect(await status('invalid_business_timezone')).toBe(400);
+    expect(await status('invalid timestamp with timezone')).toBe(400);
+    expect(await status('invalid calendar date')).toBe(400);
     expect(await status('stored_revision_integrity')).toBe(503);
   });
   test('closed teachers/update alias dispatches update and retire by payload state',async()=>{

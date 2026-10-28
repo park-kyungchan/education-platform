@@ -692,3 +692,13 @@ test('SC-REV a scoped progress whose scope pins another revision is withheld wit
   expect(res.gaps.map(g=>g.path)).toContain('DailyProgress.recordScope');
   expect(res.enumeration).not.toBe('COMPLETE');
 });
+
+test('SC-REV-EXACT an exact read of a progress with an unresolved scope mapping returns that gap, not NOT_FOUND',async()=>{
+  const {store,service}=fixture();
+  const stale=version('scope-progress','rev-scope-stale',{schemaVersion:'2.0.0' as const,state:'ACTIVE' as const,kind:'activity_scope' as const,activityKind:'DAILY_PROGRESS' as const,activityRef:{...progressRef,revision:'rev-progress-previous'} as ObjectRef<'DailyProgress'>,recordScope:recScope,sourceLiteral:'synthetic-scope',synthetic:true});
+  mapFixtureViews(store,view=>({...view,activityScopes:async()=>[stale]}));
+  const res=await service.typedRead(ctx,request({selector:{kind:'EXACT_OBJECT',objectRef:progressRef},linkMask:[]}));
+  expect(res.items).toEqual([]);
+  expect(res.enumeration).toBe('UNKNOWN');
+  expect(res.gaps.map(g=>g.path)).toContain('DailyProgress.recordScope');
+});
