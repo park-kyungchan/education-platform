@@ -164,6 +164,7 @@ export class PrerequisiteApplication {
     return this.execute('createProgress',command,cmd=>this.store.createProgress(cmd));
   }
   async correctProgress(context:TrustedTeacherContext,input:CorrectProgressInput):Promise<NativeWriteResult>{
+    if(input?.payload?.kind!=='daily_progress')throw Error('invalid_student_payload_kind');
     const ctx=this.commandContext(context,input?.command);
     await this.requireActiveTeacher(context,input?.payload?.recordScope?.businessDate);
     const command={context:ctx,studentId:input.studentId,entityId:input.entityId,expectedRevisionId:input.expectedRevisionId,payload:input.payload};
@@ -178,6 +179,7 @@ export class PrerequisiteApplication {
     return this.execute('createAssessment',command,cmd=>this.store.createAssessment(cmd));
   }
   async correctAssessment(context:TrustedTeacherContext,input:CorrectAssessmentInput):Promise<NativeWriteResult>{
+    if(input?.payload?.kind!=='previous_homework_assessment')throw Error('invalid_student_payload_kind');
     const ctx=this.commandContext(context,input?.command);
     const bound=await this.requireActiveTeacher(context,input?.payload?.assessmentScope?.businessDate);
     if(input?.payload?.assessedBy?.state==='known')this.assertSelfTeacher(bound,input.payload.assessedBy.value);
@@ -193,6 +195,7 @@ export class PrerequisiteApplication {
     return this.execute('createDraft',command,cmd=>this.store.createDraft(cmd));
   }
   async updateDraft(context:TrustedTeacherContext,input:UpdateDraftInput):Promise<NativeWriteResult>{
+    if(input?.payload?.kind!=='daily_record_draft')throw Error('invalid_student_payload_kind');
     const ctx=this.commandContext(context,input?.command);
     const bound=await this.requireActiveTeacher(context,input?.payload?.recordScope?.businessDate);
     if(input?.payload?.responsibleTeacherRef?.state==='known')this.assertSelfTeacher(bound,input.payload.responsibleTeacherRef.value);

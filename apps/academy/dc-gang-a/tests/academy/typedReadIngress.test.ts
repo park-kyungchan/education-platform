@@ -1,6 +1,7 @@
+import {readFileSync} from 'node:fs';
 import {describe,expect,test} from 'bun:test';
 import {signTeacherSession} from '../../src/academy/auth';
-import {createTeacherServerHandler,declaredRefusalStatus,inputRefusals,nativePrerequisiteOperations,nativePrereqRouteAliases,type LoginIdentity} from '../../src/academy/server';
+import {createTeacherServerHandler,declaredRefusalStatus,inputRefusals,prerequisiteRefusalStatus,nativePrerequisiteOperations,nativePrereqRouteAliases,type LoginIdentity} from '../../src/academy/server';
 import type {TeacherApplication} from '../../src/academy/application';
 import {ctx,FakePrerequisiteStore,fictionalGrantVerifier,knownK,mapFixtureViews,nativeRef,objectRef,withOutputLabel,registeredRequest,request,testFunctionRequest,TEST_REGISTRY_SHA256,testTemporal,version} from './typedRead.test';
 import {TypedReadRefusal,createSnapshotGrantVerifier} from '../../src/academy/nativeTypedRead';
@@ -376,6 +377,20 @@ describe('authenticated prerequisite wrapper (IG3-REV-09)',()=>{
       expect([code,res.status]).toEqual([code,status]);
       expect((await res.json()).error).toBe(code);
     }
+  });
+  test('RC7: every refusal code the prerequisite store, application and contract validators throw has a deliberate HTTP class',()=>{
+    const unclassified:string[]=[];
+    for(const file of ['nativePrerequisiteStore.ts','prerequisiteApplication.ts','contracts/prerequisiteRecords.ts']){
+      for(const [,code] of readFileSync(new URL('../../src/academy/'+file,import.meta.url),'utf8').matchAll(/Error\('([a-z][a-z0-9_]{2,80})'\)/g))if(prerequisiteRefusalStatus(code!)===null)unclassified.push(file+':'+code);
+    }
+    expect([...new Set(unclassified)]).toEqual([]);
+  });
+  test('RC8: identity changes are 409, invalid timezones 400, internal integrity failures stay 503',async()=>{
+    const status=async(code:string)=>{const calls:Call[]=[];const handler=prerequisiteHandler(calls,{createProgress:()=>{throw Error(code);}});
+      return (await handler(new Request(ORIGIN+'/api/native-prereq/progress',{method:'POST',headers:{Origin:ORIGIN,'Content-Type':'application/json',Cookie:cookie()},body:JSON.stringify(sampleInput('createProgress'))}))).status;};
+    for(const code of ['teacher_identity_changed','lesson_identity_changed','binding_identity_changed','progress_identity_changed','assessment_identity_changed'])expect([code,await status(code)]).toEqual([code,409]);
+    expect(await status('invalid_business_timezone')).toBe(400);
+    expect(await status('stored_revision_integrity')).toBe(503);
   });
   test('closed teachers/update alias dispatches update and retire by payload state',async()=>{
     const calls:Call[]=[];const handler=prerequisiteHandler(calls);

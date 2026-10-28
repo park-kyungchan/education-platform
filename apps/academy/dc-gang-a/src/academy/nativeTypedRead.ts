@@ -1282,7 +1282,9 @@ export class NativeTypedReadService implements NativeTypedRead{
             continue;
           }
           const active=scopes.filter(v=>activityScopeState(v.payload)==='ACTIVE'&&v.payload.activityRef.revision===current.revisionId);
-          if(active.length>1)continue;
+          // Once a scope exists, only an ACTIVE scope pinning this exact revision says where the record belongs;
+          // otherwise the mapping is unresolved (explicit gap), never the embedded original scope.
+          if(scopes.length&&active.length!==1){gaps.push({subject:{identity:{scopeRef:payloadScope.studentRef.identity.scopeRef,namespace:payloadScope.studentRef.identity.namespace,objectType,nativeKey:current.entityId},revision:current.revisionId},path:objectType+'.recordScope',reason:'UNVERIFIED',requiredEvidence:['NATIVE_RELATION_MAPPING'],evidence:[]});continue;}
           if(active.length===1)payloadScope=active[0]!.payload.recordScope;
         }
         const versionLike={scopeRef:payloadScope.studentRef.identity.scopeRef,namespace:payloadScope.studentRef.identity.namespace,entityKey:current.entityId,revisionId:current.revisionId,recordedAt:current.recordedAt};

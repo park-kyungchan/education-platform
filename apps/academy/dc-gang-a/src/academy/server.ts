@@ -17,8 +17,26 @@ import {createNativeTypedRead,typedReadContractVersion,TypedReadRefusal,type Nat
 import {fixedConsumerProfile,scopeActionDefinitions,type ConsumerProfileId} from './contracts/prerequisiteRecords';
 /** Refusal statuses the action contracts declare per code ("409, ..."), so the HTTP mapping follows the
  * contract instead of a hand-kept list. */
-/** Closed input-validation refusals thrown by the prerequisite contract validators: caller errors (400). */
-export const inputRefusals:ReadonlySet<string>=new Set(['prerequisite_collection_bounds','duplicate_prerequisite_value','reference_depth','action_version','registry_version','score_scale_unsupported','synthetic_boolean','delegation_unsupported','calendar_underflow']);
+/** Every refusal code the prerequisite store, application and contract validators throw has one deliberate
+ * HTTP class. tests/academy/typedReadIngress.test.ts (RC7) fails when a thrown code is left unclassified. */
+const refusalClasses={
+  403:['teacher_binding_required','teacher_binding_inactive','teacher_attribution_conflict','owner_scope_conflict','student_scope_conflict'],
+  400:['prerequisite_collection_bounds','duplicate_prerequisite_value','reference_depth','action_version','registry_version','read_registry_version','score_scale_unsupported','synthetic_boolean','delegation_unsupported','calendar_underflow','command_family_mismatch','reference_kind_mismatch','draft_snapshot_consistency','future_source_observation','identity_minting_forbidden','reserved_native_admission_use_supported_command','activity_filter'],
+  404:['unknown_student','unknown_native_record','unknown_original_admission'],
+  409:['stale_base','revision_conflict','idempotency_reuse','identity_collision','teacher_binding_exists','invalid_transition','temporal_overlap','record_kind_changed','legacy_key_already_used','original_occurrence_fenced','read_occurrence_already_admitted','read_already_terminal_or_unadmitted','business_calendar_unknown','scope_membership_unknown','prior_homework_unverified','source_snapshot_unverified'],
+  503:['prerequisite_store_required','committed_outcome_uncertain','link_kind','empty_link_effect','native_identity_ambiguous','receipt_contract','receipt_effect_bounds','stored_family_binding','stored_receipt_binding','stored_result_missing','stored_revision_integrity','stored_revision_lineage','stored_scope_history','teacher_index_integrity','consumer_profile_definition_mismatch'],
+} as const;
+const refusalByCode=new Map<string,number>(Object.entries(refusalClasses).flatMap(([status,codes])=>codes.map(code=>[code,Number(status)] as const)));
+/** Closed input-validation refusals (kept as a named export for callers and tests). */
+export const inputRefusals:ReadonlySet<string>=new Set(refusalClasses[400]);
+/** HTTP status for a prerequisite refusal code, or null when the code is unclassified (an unexpected failure). */
+export function prerequisiteRefusalStatus(code:string):number|null{
+  const listed=refusalByCode.get(code);if(listed)return listed;
+  const declared=declaredRefusalStatus.get(code);if(declared)return declared;
+  if(code.endsWith('_identity_changed')||code.includes('conflict')||/^(approval_|duplicate_|completeness_|stale_)/.test(code))return 409;
+  if(code.startsWith('invalid_')||code.endsWith('_required')||code==='unexpected or missing domain fields'||code==='sha256_required'||code.includes('must be nonempty'))return 400;
+  return null;
+}
 export const declaredRefusalStatus:ReadonlyMap<string,number>=new Map(Object.values(scopeActionDefinitions).flatMap(definition=>{
   const errors=(definition as {errors?:unknown}).errors;
   return errors&&typeof errors==='object'?Object.entries(errors as Record<string,unknown>).flatMap(([code,text])=>{const status=/^(4\d\d)\b/.exec(String(text));return status?[[code,Number(status[1])] as const]:[];}):[];
@@ -416,13 +434,9 @@ export function createTeacherServerHandler(options:TeacherServerOptions){
             const code=error instanceof Error?error.message:'';
             if(code==='prerequisite_store_required')return json({error:'native_prerequisite_unavailable'},503);
             if(code==='committed_outcome_uncertain')return json({error:code,automaticRetry:false,readOriginalRequestBeforeNewIntent:true},503);
-            if(['teacher_binding_required','teacher_binding_inactive','teacher_attribution_conflict','owner_scope_conflict','student_scope_conflict'].includes(code))return json({error:code},403);
-            if(inputRefusals.has(code))return json({error:code},400);
-            const declared=declaredRefusalStatus.get(code);
-            if(declared)return json(declared===409?{error:code,automaticRetry:false}:{error:code},declared);
-            // Designed domain refusals are conflicts, not internal failures.
-            if(code.includes('conflict')||/^(approval_|duplicate_|completeness_|stale_)/.test(code)||['stale_base','revision_conflict','idempotency_reuse','identity_collision','teacher_binding_exists','invalid_transition','temporal_overlap'].includes(code))return json({error:code,automaticRetry:false},409);
-            if(code.startsWith('invalid_')||code.endsWith('_required')||code==='unexpected or missing domain fields'||code==='sha256_required'||code.includes('must be nonempty'))return json({error:code},400);
+            // Designed refusals keep their code and class; only unclassified or internal failures become 503.
+            const status=prerequisiteRefusalStatus(code);
+            if(status!==null&&status<500)return json(status===409?{error:code,automaticRetry:false}:{error:code},status);
             // Unexpected failure: log only a closed code or class plus throw-site frames (no payloads) so it is diagnosable.
             const at=error instanceof Error?[...(error.stack??'').matchAll(/\/([A-Za-z_]+\.ts):(\d+):\d+/g)].slice(0,4).map(x=>x[1]+':'+x[2]).join('<'):'';
             console.error(JSON.stringify({status:'NATIVE_PREREQUISITE_FAILED',code:(/^[a-z0-9_]{1,100}$/.test(code)?code:(error instanceof Error?error.constructor.name:'UNKNOWN'))+(at?'@'+at:''),automaticRetry:false}));

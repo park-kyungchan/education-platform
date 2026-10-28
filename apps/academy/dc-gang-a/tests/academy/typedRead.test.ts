@@ -682,3 +682,13 @@ test('SC-OCC a student occurrence without dated class membership is never declar
   expect(res.enumeration).not.toBe('COMPLETE');
   expect(res.gaps.map(g=>g.path)).toContain('Student.links.studentMemberOfClass');
 });
+
+test('SC-REV a scoped progress whose scope pins another revision is withheld with an explicit unresolved mapping',async()=>{
+  const {store,service}=fixture();
+  const stale=version('scope-progress','rev-scope-stale',{schemaVersion:'2.0.0' as const,state:'ACTIVE' as const,kind:'activity_scope' as const,activityKind:'DAILY_PROGRESS' as const,activityRef:{...progressRef,revision:'rev-progress-previous'} as ObjectRef<'DailyProgress'>,recordScope:recScope,sourceLiteral:'synthetic-scope',synthetic:true});
+  mapFixtureViews(store,view=>({...view,activityScopes:async()=>[stale]}));
+  const res=await service.typedRead(ctx,registeredRequest('DailyProgress'));
+  expect(res.items.some(i=>i.kind==='OBJECT'&&i.record.identity.nativeKey==='progress-a')).toBe(false);
+  expect(res.gaps.map(g=>g.path)).toContain('DailyProgress.recordScope');
+  expect(res.enumeration).not.toBe('COMPLETE');
+});

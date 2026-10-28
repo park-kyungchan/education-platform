@@ -172,3 +172,14 @@ test('NF-09 each named student-record operation stores only its own payload kind
  const c={context:context('nf-kind'),studentId:String(row.student_id),payload:structuredClone(row.payload) as never};
  await expect(admitted(f.store,'createAssessment',c,()=>f.store.createAssessment(c))).rejects.toThrow('invalid_student_payload_kind');
 });
+test('NF-10 named correction operations accept only their own payload kind',async()=>{
+ const f=await foundation(),ctx={ownerId:context().ownerId,actorId:context().actorId,role:'teacher' as const},app=new PrerequisiteApplication(f.store,ctx.ownerId);
+ await expect(app.correctProgress(ctx,{payload:{kind:'daily_record_draft'}} as never)).rejects.toThrow('invalid_student_payload_kind');
+ await expect(app.correctAssessment(ctx,{payload:{kind:'daily_progress'}} as never)).rejects.toThrow('invalid_student_payload_kind');
+ await expect(app.updateDraft(ctx,{payload:{kind:'previous_homework_assessment'}} as never)).rejects.toThrow('invalid_student_payload_kind');
+});
+test('NF-11 an unknown business timezone is a closed input refusal',async()=>{
+ const f=await scene(),body=f.sql.rows('class_versions')[0]!.body,payload=structuredClone((typeof body==='string'?JSON.parse(body):body).payload);
+ payload.businessTimezone={...payload.businessTimezone,value:'Mars/Olympus'};
+ expect(()=>validateOwnerPayload(payload)).toThrow('invalid_business_timezone');
+});
