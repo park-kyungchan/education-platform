@@ -695,7 +695,7 @@ export class NativeTypedReadService implements NativeTypedRead{
     // A malformed plan grants no read. When its class/date are identifiable,
     // current authority still takes precedence over its decode diagnostics.
     if(!isRecord(selection))return;
-    try{assertDate(date);validateObjectRef(selection.classGroupRef,['ClassGroup']);}catch{return;}
+    try{assertDate(date);validateObjectRef(selection.classGroupRef as ObjectRef,['ClassGroup']);}catch{return;}
     await this.assertTeachingAuthority(view,context,{businessDate:date,classGroupRef:selection.classGroupRef as ObjectRef<'ClassGroup'>});
   }
   private async assertTeachingAuthority(view:TeacherPrerequisiteReadStore,context:TrustedTeacherContext,selection:Pick<TypedTemporalSelection,'businessDate'|'classGroupRef'>):Promise<void>{

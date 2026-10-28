@@ -223,7 +223,7 @@ export function request(over:Partial<TypedReadRequest>={}):TypedReadRequest{
   const built={contractVersion:'3.0.0',consumerProfile:'CURRENT_1_1',requestId:'req-'+(++seq),scopeRef:nativeRef(),...over,selector,snapshot:snap,functionRequest:over.functionRequest??complete,snapshotAdmission:over.snapshotAdmission??testGrant(),asOf:over.asOf??ASOF,expectedRevisions:over.expectedRevisions??[],fieldMask:over.fieldMask??fullFieldMask([...educationTypes]),linkMask:over.linkMask??[...linkTypes],pageSize,cursor,temporalSelection:temporal} as TypedReadRequest;
   return sealRequest(built);
 }
-export function fixture(){const store=new FakePrerequisiteStore();return {store,service:createNativeTypedRead(store.asStore(),OWNER,{processEpoch:'epoch-1',registrySha256:TEST_REGISTRY_SHA256,snapshotGrantVerifier:fictionalGrantVerifier})};}
+export function fixture(){const store=new FakePrerequisiteStore();return {store,service:createNativeTypedRead(store.asStore(),OWNER,{processEpoch:'epoch-1',registrySha256:TEST_REGISTRY_SHA256,snapshotGrantVerifier:fictionalGrantVerifier,now:()=>Date.parse(ASOF)})};}
 /** Apply the same fictional read model in preparation and the output gate. */
 export function mapFixtureViews(store:FakePrerequisiteStore,transform:(view:TeacherPrerequisiteReadStore)=>TeacherPrerequisiteReadStore):void{
   const read=store.readSnapshot.bind(store),commit=store.commitReadOutput.bind(store);
@@ -807,4 +807,10 @@ test('AUTH-T5 current teaching denial precedes invalid acquisition and expired c
  const issuer=createNativeTypedRead(f.store.asStore(),OWNER,{processEpoch:'auth-invalid',registrySha256:TEST_REGISTRY_SHA256,snapshotGrantSecret:'invented-auth-invalid-secret',now:()=>Date.parse(ASOF)});
  await refusal(issuer.acquireSnapshot(ctx,{schema:'native-read-acquire.v2',consumerProfile:'CURRENT_1_1',requestId:'auth-invalid-acquire',scopeRef:nativeRef(),consistency:'SNAPSHOT',time:{mode:'CURRENT'},functionIntent:{...testFunctionRequest(testTemporal()),pageSize:0}}),'PERMISSION_DENIED',403);
  expect(f.store.projectionCalls).toBe(0);expect(f.store.admissions.size).toBe(0);
+});
+
+
+test('CLOCK-COMMON the shared fictional fixture survives future host time with its synthetic clock',async()=>{
+ const previous=Date.now;Date.now=()=>Date.parse('2035-01-01T00:00:00.000Z');
+ try{const f=fixture();expect((await f.service.typedRead(ctx,request())).kind).toBe('OK');}finally{Date.now=previous;}
 });

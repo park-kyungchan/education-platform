@@ -82,7 +82,7 @@ function makeHandler(opts:{store?:FakePrerequisiteStore;typedRead?:boolean;curre
     saveIdentity:async()=>{throw Error('auth writer must not run');},
     curatedConceptCandidates:{read:()=>{throw Error('unused in typed-read tests');}} as never,
     ...(opts.currentAuthentication?{currentAuthentication:opts.currentAuthentication}:{}),
-    ...(opts.typedRead===false?{}:{typedRead:{store:store.asStore(),processEpoch:'epoch-1',registrySha256:TEST_REGISTRY_SHA256,...(opts.verifier==='real'?{}:{snapshotGrantVerifier:fictionalGrantVerifier}),...(lease?{outputLease:lease}:{})}}),
+    ...(opts.typedRead===false?{}:{typedRead:{store:store.asStore(),processEpoch:'epoch-1',registrySha256:TEST_REGISTRY_SHA256,...(opts.verifier==='real'?{}:{snapshotGrantVerifier:fictionalGrantVerifier,now:()=>Date.parse('2026-10-24T00:00:00.000Z')}),...(lease?{outputLease:lease}:{})}}),
   });
   return {handler,store};
 }
@@ -668,4 +668,13 @@ describe('RC9 shape sweep through the real application and store',()=>{
     expect(cases).toBeGreaterThan(150);
     expect(escaped).toEqual([]);
   });
+});
+
+
+test('CLOCK-HTTP the fictional cookie route retains its synthetic read clock under future host time',async()=>{
+ const previous=Date.now;Date.now=()=>Date.parse('2035-01-01T00:00:00.000Z');
+ try{
+  const {handler,store}=makeHandler(),response=await handler(post(request()));
+  expect(response.status).toBe(200);expect(store.finalizations.map(row=>row.status)).toEqual(['COMPLETED']);
+ }finally{Date.now=previous;}
 });
