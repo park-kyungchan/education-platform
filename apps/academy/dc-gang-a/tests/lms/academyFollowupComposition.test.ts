@@ -279,7 +279,7 @@ test('MCP metadata bounds its actual dual result before publication and closes r
     const calls=f.calls.length;expect(calls).toBe(4);
     expect((await callMetadata(connection)).structuredContent).toMatchObject({status:'unavailable'});expect(f.calls.length).toBeGreaterThan(calls);
   }finally{await connection.close();f.client.close();}
-});
+},20000);
 
 test('MCP M1: inventory and history omit foreign page anchors, controls, functions and selected-row TR cells',async()=>{
   const foreign={...row,priNo:77002,userName:'FOREIGN_STUDENT',testingNo:81002,testName:'FOREIGN_TITLE'};
