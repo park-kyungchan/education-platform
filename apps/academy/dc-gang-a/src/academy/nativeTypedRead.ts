@@ -1,3 +1,5 @@
+import {nativeProtocolBounds} from './contracts/teacherOperations';
+import {NATIVE_CURSOR_MAX_BYTES} from './teacherAuthStore';
 import {createHmac,timingSafeEqual} from 'node:crypto';
 import {parseCalendarDate,type CalendarDate,assertDate,assertExactKeys,assertInstant,canonicalJson,digest,requireText} from '../learning/model';
 import {assertTeacherScope} from './usecases/requestRecovery';
@@ -22,6 +24,7 @@ import type {NativeOwnerCursorLease,NativeOwnerCursorBinding} from './teacherAut
  * only): continuation, multi-page enumeration and unsupported registered
  * plans fail closed instead of inventing proofs. Handler/source only. */
 export const typedReadContractVersion='3.0.0';
+export const NATIVE_SNAPSHOT_GRANT_MAX_BYTES=8192;
 export const acquisitionContractVersion='2.0.0';
 export const snapshotAcquireSchema='native-read-acquire.v2';
 export const snapshotAcquireResultSchema='native-read-acquire-result.v2';
@@ -267,10 +270,12 @@ export function nativeRequestDigest(request:TypedReadRequest):string{
 interface SnapshotGrantPayload{grantId:string;snapshot:ReadSnapshot;planBinding:string;ownerId:string;actorId:string;scopeRef:NativeObjectRef;registrySha256:string|null;processEpoch:string|null;expiresAt:string;profileBinding:ReturnType<typeof profileBinding>}
 function sealSnapshotGrant(secret:string,payload:SnapshotGrantPayload):string{
   const body=Buffer.from(canonicalJson(payload),'utf8').toString('base64url');
-  return body+'.'+createHmac('sha256',secret).update(body).digest('base64url');
+  const proof=body+'.'+createHmac('sha256',secret).update(body).digest('base64url');
+  if(Buffer.byteLength(proof,'utf8')>NATIVE_SNAPSHOT_GRANT_MAX_BYTES)throw unverifiable();
+  return proof;
 }
 function openSnapshotGrant(secret:string,proof:string):SnapshotGrantPayload|null{
-  if(typeof proof!=='string'||proof.length>8192||!/^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/.test(proof))return null;
+  if(typeof proof!=='string'||Buffer.byteLength(proof,'utf8')>NATIVE_SNAPSHOT_GRANT_MAX_BYTES||!/^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/.test(proof))return null;
   const [body,signature]=proof.split('.');
   const expected=createHmac('sha256',secret).update(body!).digest();
   let given:Buffer;
@@ -641,7 +646,7 @@ export class NativeTypedReadService implements NativeTypedRead{
     }
     if(intent.functionName!=='CheckDailyRecordCompleteness'){
       const pageSize=(intent as {pageSize:number}).pageSize;
-      if(!Number.isSafeInteger(pageSize)||pageSize<1||pageSize>100)throw invalid();
+      if(!Number.isSafeInteger(pageSize)||pageSize<nativeProtocolBounds.pageSize.min||pageSize>nativeProtocolBounds.pageSize.max)throw invalid();
     }else if((intent as {profile:string}).profile!=='DAILY_RECORD_OCCURRENCE_V1')throw invalid();
     if(!isRecord(intent.occurrence))throw invalid();
     if(intent.occurrence.mode==='EXACT'){
@@ -741,9 +746,9 @@ export class NativeTypedReadService implements NativeTypedRead{
     validateSnapshot(request.snapshot,this.fixedProfile.definition.registry.version);
     if(request.snapshot.registryVersion!==this.fixedProfile.definition.registry.version)throw unverifiable();
     assertInstant(request.asOf);if(request.asOf!==request.snapshot.asOf)throw invalid();
-    if(!Number.isSafeInteger(request.pageSize)||request.pageSize<1||request.pageSize>100)throw invalid();
+    if(!Number.isSafeInteger(request.pageSize)||request.pageSize<nativeProtocolBounds.pageSize.min||request.pageSize>nativeProtocolBounds.pageSize.max)throw invalid();
     if(request.cursor!==null&&typeof request.cursor!=='string')throw invalid();
-    if(typeof request.cursor==='string'&&Buffer.byteLength(request.cursor,'utf8')>8192)throw invalid();
+    if(typeof request.cursor==='string'&&Buffer.byteLength(request.cursor,'utf8')>NATIVE_CURSOR_MAX_BYTES)throw invalid();
     this.validateTemporalSelection(request.temporalSelection,request,context);
     this.validateFunctionRequest(request,context);
     if(!Array.isArray(request.expectedRevisions))throw invalid();
@@ -966,7 +971,7 @@ export class NativeTypedReadService implements NativeTypedRead{
     if(!isRecord(query.page))throw invalid();
     if(Object.keys(query.page).some(key=>!['size','cursor'].includes(key))||!Object.hasOwn(query.page,'cursor'))throw invalid();
     const pageSize=query.page.size===undefined?50:query.page.size;
-    if(!Number.isSafeInteger(pageSize)||(pageSize as number)<1||(pageSize as number)>100||pageSize!==request.pageSize)throw invalid();
+    if(!Number.isSafeInteger(pageSize)||(pageSize as number)<nativeProtocolBounds.pageSize.min||(pageSize as number)>nativeProtocolBounds.pageSize.max||pageSize!==request.pageSize)throw invalid();
     if(query.page.cursor!==request.cursor)throw invalid();
     if(query.temporalSelection===null)throw invalid();
     if(canonicalJson(query.temporalSelection)!==canonicalJson(request.temporalSelection))throw invalid();

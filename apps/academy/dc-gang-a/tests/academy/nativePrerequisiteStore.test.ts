@@ -342,3 +342,74 @@ test('W17-PRIORITY snapshot validity has one shared refusal row between cited re
  expect(row).toBeDefined();expect(row!.code).toBe('source_snapshot_unverified');expect(row!.status).toBe(409);
  expect(approvalRefusalPrecedence.SOURCE_REVISION.priority).toBeLessThan(row!.priority);expect(row!.priority).toBeLessThan(approvalRefusalPrecedence.CLOSURE_EQUALITY.priority);
 });
+
+// W18: every ordinary facade query must use the same owner snapshot as its gate.
+const facadeSource=await Bun.file(new URL('../../src/academy/prerequisiteApplication.ts',import.meta.url)).text();
+const {PrerequisiteApplication:FacadeUnderTest}=await import('../../src/academy/prerequisiteApplication');
+const facadePublicSignatures=new Map([...facadeSource.matchAll(/^  async (\w+)\(([^\n]*)/gm)].map(m=>[m[1]!,m[2]!]));
+function facadeParameters(signature:string){return signature.split(')')[0]!.split(',').map(p=>{
+ const m=/^\s*(\w+)\??(?::([^=]+))?(?:=(.*))?$/.exec(p);if(!m)throw Error('facade_parameter_fixture_required@nativePrerequisiteStore.test.ts:350');
+ return {name:m[1]!,type:m[2]?.trim(),initial:m[3]?.trim()};
+});}
+const facadeReadMethods=Object.getOwnPropertyNames(FacadeUnderTest.prototype).filter(name=>facadePublicSignatures.has(name)&&Reflect.get(FacadeUnderTest.prototype,name).toString().includes('this.gatedRead('));
+for(const method of facadeReadMethods){
+ test(`W18-READ-ALIAS ${method} retains authorized owner and object inputs across the binding await`,async()=>{
+  const f=await foundation(),teacher=await f.store.teacherCurrent(context().ownerId,f.teacher.identity.nativeKey);
+  const implementation=Reflect.get(FacadeUnderTest.prototype,method).toString(),query=/view\.(\w+)\(/.exec(implementation)?.[1];expect(query).toBeDefined();
+  const command=context('w18-preview'),{ownerId:_owner,actorId:_actor,verifiedSession,...ingress}=command;
+  const args=facadeParameters(facadePublicSignatures.get(method)!).slice(1).map(p=>{
+   if(p.type==='string')return p.name==='studentId'?'student-a':'synthetic-key';
+   if(p.type==='OwnerFamily')return 'class';
+   if(p.type==='number'||p.initial&&/^[0-9]+$/.test(p.initial))return p.initial&&/^[0-9]+$/.test(p.initial)?Number(p.initial):p.name==='limit'?200:0;
+   if(p.type==='ActivityScopeFilter')return {lessonKey:'synthetic-original-lesson'};
+   if(p.type?.startsWith('ObjectRef<'))return objectRef('DailyTestAttempt','synthetic-original-attempt');
+   if(p.type==='PreviewApprovalClosureInput')return {command:{...ingress,authenticationRevision:verifiedSession.authenticationRevision},draftRef:objectRef('DailyRecordDraft','synthetic-draft')};
+   throw Error('facade_input_fixture_required@nativePrerequisiteStore.test.ts:365');
+  });const expected=structuredClone(args);
+  let enter:()=>void=()=>{},release:()=>void=()=>{};const entered=new Promise<void>(r=>enter=r),paused=new Promise<void>(r=>release=r);let authorized:unknown[]=[],queried:unknown[]=[];
+  const view={teacherBindingByActor:async(...args:unknown[])=>{authorized=structuredClone(args);enter();await paused;return teacher;},[query!]:async(...args:unknown[])=>{queried=structuredClone(args);return [];}};
+  const port={...view,readSnapshot:async(read:(v:unknown)=>Promise<unknown>)=>read(Object.freeze(view))};
+  const app=new FacadeUnderTest(port as unknown as TeacherPrerequisiteStore,context().ownerId,()=>instant),caller={ownerId:context().ownerId,actorId:context().actorId,role:'teacher' as const};
+  const result=Reflect.apply(Reflect.get(app,method),app,[caller,...args]);await entered;caller.ownerId='synthetic-unrelated-owner';
+  const mutate=(v:unknown):boolean=>{if(!v||typeof v!=='object')return false;for(const [k,x] of Object.entries(v)){if(typeof x==='string'){Reflect.set(v,k,'synthetic-mutated');return true;}if(mutate(x))return true;}return false;};args.forEach(mutate);
+  release();await result;
+  expect(authorized).toEqual([context().ownerId,context().actorId]);
+  const owner=typeof queried[0]==='string'?queried[0]:queried[0]&&typeof queried[0]==='object'?Reflect.get(queried[0],'ownerId'):null;
+  expect(owner).toBe(context().ownerId);
+  expect(queried.slice(1)).toEqual(query==='approvalClosurePreview'?[(expected[0] as {draftRef:unknown}).draftRef]:expected);expect(Object.isFrozen(caller)).toBe(false);
+ });
+}
+test('W18-READ-ALIAS every public facade method snapshots its context and every object argument before work',async()=>{
+ const {PrerequisiteApplication}=await import('../../src/academy/prerequisiteApplication');
+ const source=await Bun.file('src/academy/prerequisiteApplication.ts').text(),js=new Bun.Transpiler({loader:'ts'}).transformSync(source);
+ const publicMethods=[...source.matchAll(/^  async (\w+)\(([^\n]*)/gm)].map(m=>({name:m[1]!,signature:m[2]!}));
+ const privateMethods=[...source.matchAll(/^  private (?:async )?(\w+)(?:<[^\n]*?>)?\(/gm)].map(m=>m[1]!);
+ expect(Object.getOwnPropertyNames(PrerequisiteApplication.prototype).filter(n=>n!=='constructor'&&!privateMethods.includes(n)).sort()).toEqual(publicMethods.map(m=>m.name).sort());
+ for(const {name,signature} of publicMethods){
+  const args=signature.split(')')[0]!.split(',').map(p=>{
+   const parameter=/^\s*(\w+)\??(?::([^=]+))?(?:=(.*))?$/.exec(p);expect(parameter).not.toBeNull();
+   const [,name,type,initial]=parameter!,scalar=type?['string','number','boolean','OwnerFamily'].includes(type.trim()):initial!==undefined&&/^(?:[0-9]+|true|false)$/.test(initial.trim());
+   return scalar?null:name!;
+  }).filter((name):name is string=>name!==null);
+
+  const body=new RegExp('^[ \\t]*(?:async\\s+)?'+name+'\\([\\s\\S]*?\\)\\s*\\{([^}]{0,500})','m').exec(js);expect(body).not.toBeNull();
+  const statements=body![1]!.replace(/\s/g,'').split(';');args.forEach((arg,i)=>expect(statements[i]).toBe(`${arg}=immutableCopy(${arg})`));
+ }
+});
+
+for(const baseline of [{tables_ready:true,history_triggers:2,accept:true},{tables_ready:false,history_triggers:2,accept:false},{tables_ready:true,history_triggers:1,accept:false}]){
+ test(`W18-STARTUP legacy readiness tables=${baseline.tables_ready} triggers=${baseline.history_triggers} without native schema`,async()=>{
+  const queries:string[]=[];const db=(async(parts:TemplateStringsArray)=>{const sql=parts.join('?');queries.push(sql);return sql.includes('AS tables_ready')?[{tables_ready:baseline.tables_ready,history_triggers:baseline.history_triggers}]:[{ready:false,count:0}];}) as unknown as SQL;
+  const store=new PostgresAcademyStore(db);
+  if(baseline.accept)await expect(store.assertRuntimeReady()).resolves.toBeUndefined();else await expect(store.assertRuntimeReady()).rejects.toThrow('existing_academy_schema_required');
+  expect(queries).toHaveLength(1);expect(queries[0]).not.toMatch(/\b(?:CREATE|ALTER|DROP|INSERT|UPDATE|DELETE|REVOKE|GRANT)\b/i);
+ });
+}
+test('W18-STARTUP native composition independently demands all native readiness after compatible base readiness',async()=>{
+ const source=await Bun.file('harness/native_foundations_qualification.ts').text();
+ const composition=source.slice(source.indexOf('const store=new PostgresAcademyStore(ownerDb'),source.indexOf('const probed=new Set',source.indexOf('const store=new PostgresAcademyStore(ownerDb')));
+ expect(composition).toMatch(/await store\.assertRuntimeReady\(\);\s*await assertNativePrerequisitesReady\(ownerDb\);/);
+ const {assertNativePrerequisitesReady}=await import('../../src/academy/nativePrerequisiteStore');
+ const missing=(async()=>[{ready:false}]) as unknown as SQL;
+ await expect(assertNativePrerequisitesReady(missing)).rejects.toThrow('prerequisite_schema_required');
+});

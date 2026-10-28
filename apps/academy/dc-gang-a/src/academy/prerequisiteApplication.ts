@@ -1,3 +1,4 @@
+import {nativeProtocolBounds} from './contracts/teacherOperations';
 import type {TeacherPrerequisiteReadStore,TeacherPrerequisiteStore} from './ports/teacherStore';
 import {assertTeacherScope} from './usecases/requestRecovery';
 import {canonicalJson,immutableCopy,parseCalendarDate} from '../learning/model';
@@ -61,7 +62,7 @@ export class PrerequisiteApplication {
   /** Ordinary business reads resolve the current actor binding inside the
    * same bounded read snapshot and refuse before any payload is returned.
    * Exact-principal recovery/status lookups stay outside this gate. */
-  private async gatedRead<T>(context:TrustedTeacherContext,read:(view:TeacherPrerequisiteReadStore)=>Promise<T>):Promise<T>{
+  private async gatedRead<T>(context:TrustedTeacherContext,read:(view:TeacherPrerequisiteReadStore)=>Promise<T>):Promise<T>{context=immutableCopy(context);
     assertTeacherScope(this.ownerId,context);
     return this.store.readSnapshot(async view=>{
       const bound=await view.teacherBindingByActor(context.ownerId,context.actorId);
@@ -277,7 +278,7 @@ export class PrerequisiteApplication {
     if((input as {status?:unknown}).status==='COMPLETED')throw Error('read_completion_owner_witness_required');
     return this.store.finalizeReadOccurrence({request:input.request,status:input.status,snapshotDigest:input.snapshotDigest,refusalCode:input.refusalCode});
   }
-  async readOccurrence(context:TrustedTeacherContext,request:ReadAdmission){
+  async readOccurrence(context:TrustedTeacherContext,request:ReadAdmission){context=immutableCopy(context);request=immutableCopy(request);
     assertTeacherScope(this.ownerId,context);
     if(!request||request.ownerId!==context.ownerId||request.actorId!==context.actorId)throw Error('teacher_attribution_conflict');
     return this.store.readOccurrenceLookup(request);
@@ -288,20 +289,20 @@ export class PrerequisiteApplication {
   // above stay ungated so retirement state and recovery remain observable;
   // a historical ACTIVE revision never authorizes a retired caller because
   // the gate always reads the current actor-index head.
-  async teachers(context:TrustedTeacherContext){return this.gatedRead(context,view=>view.teachers(context.ownerId));}
-  async teacher(context:TrustedTeacherContext,teacherKey:string){return this.gatedRead(context,view=>view.teacherCurrent(context.ownerId,teacherKey));}
-  async ownTeacherBinding(context:TrustedTeacherContext){assertTeacherScope(this.ownerId,context);return this.store.teacherBindingByActor(context.ownerId,context.actorId);}
-  async classGroups(context:TrustedTeacherContext){return this.gatedRead(context,view=>view.classGroups(context.ownerId));}
-  async classGroup(context:TrustedTeacherContext,classKey:string){return this.gatedRead(context,view=>view.classCurrent(context.ownerId,classKey));}
-  async lessons(context:TrustedTeacherContext){return this.gatedRead(context,view=>view.lessons(context.ownerId));}
-  async lesson(context:TrustedTeacherContext,lessonKey:string){return this.gatedRead(context,view=>view.lessonCurrent(context.ownerId,lessonKey));}
-  async temporalBindings(context:TrustedTeacherContext){return this.gatedRead(context,view=>view.temporalBindings(context.ownerId));}
-  async activityScopes(context:TrustedTeacherContext,filter:ActivityScopeFilter={}){return this.gatedRead(context,view=>view.activityScopes(context.ownerId,filter));}
-  async studentRevision(context:TrustedTeacherContext,studentId:string){return this.gatedRead(context,view=>view.studentRevisionCurrent(context.ownerId,studentId));}
-  async studentRevisionHistory(context:TrustedTeacherContext,studentId:string,afterSequence=0,limit=200){return this.gatedRead(context,view=>view.studentRevisionHistory(context.ownerId,studentId,afterSequence,limit));}
-  async approval(context:TrustedTeacherContext,approvalId:string){return this.gatedRead(context,view=>view.approvalCurrent(context.ownerId,approvalId));}
-  async ownerRevision(context:TrustedTeacherContext,family:OwnerFamily,entityKey:string,revisionId:string){return this.gatedRead(context,view=>view.ownerRevision(context.ownerId,family,entityKey,revisionId));}
-  async ownerHistory(context:TrustedTeacherContext,family:OwnerFamily,entityKey:string,afterSequence=0,limit=200){return this.gatedRead(context,view=>view.ownerHistory(context.ownerId,family,entityKey,afterSequence,limit));}
-  async scoreEvidence(context:TrustedTeacherContext,entityKey:string){return this.gatedRead(context,view=>view.scoreEvidenceCurrent(context.ownerId,entityKey));}
-  async scoreEvidenceForAttempt(context:TrustedTeacherContext,attemptRef:ObjectRef<'DailyTestAttempt'>){return this.gatedRead(context,view=>view.scoreEvidenceForAttempt(context.ownerId,attemptRef));}
+  async teachers(context:TrustedTeacherContext){context=immutableCopy(context);return this.gatedRead(context,view=>view.teachers(context.ownerId));}
+  async teacher(context:TrustedTeacherContext,teacherKey:string){context=immutableCopy(context);return this.gatedRead(context,view=>view.teacherCurrent(context.ownerId,teacherKey));}
+  async ownTeacherBinding(context:TrustedTeacherContext){context=immutableCopy(context);assertTeacherScope(this.ownerId,context);return this.store.teacherBindingByActor(context.ownerId,context.actorId);}
+  async classGroups(context:TrustedTeacherContext){context=immutableCopy(context);return this.gatedRead(context,view=>view.classGroups(context.ownerId));}
+  async classGroup(context:TrustedTeacherContext,classKey:string){context=immutableCopy(context);return this.gatedRead(context,view=>view.classCurrent(context.ownerId,classKey));}
+  async lessons(context:TrustedTeacherContext){context=immutableCopy(context);return this.gatedRead(context,view=>view.lessons(context.ownerId));}
+  async lesson(context:TrustedTeacherContext,lessonKey:string){context=immutableCopy(context);return this.gatedRead(context,view=>view.lessonCurrent(context.ownerId,lessonKey));}
+  async temporalBindings(context:TrustedTeacherContext){context=immutableCopy(context);return this.gatedRead(context,view=>view.temporalBindings(context.ownerId));}
+  async activityScopes(context:TrustedTeacherContext,filter:ActivityScopeFilter={}){context=immutableCopy(context);filter=immutableCopy(filter);return this.gatedRead(context,view=>view.activityScopes(context.ownerId,filter));}
+  async studentRevision(context:TrustedTeacherContext,studentId:string){context=immutableCopy(context);return this.gatedRead(context,view=>view.studentRevisionCurrent(context.ownerId,studentId));}
+  async studentRevisionHistory(context:TrustedTeacherContext,studentId:string,afterSequence:number=nativeProtocolBounds.historyAfter.default,limit:number=nativeProtocolBounds.historyLimit.default){context=immutableCopy(context);return this.gatedRead(context,view=>view.studentRevisionHistory(context.ownerId,studentId,afterSequence,limit));}
+  async approval(context:TrustedTeacherContext,approvalId:string){context=immutableCopy(context);return this.gatedRead(context,view=>view.approvalCurrent(context.ownerId,approvalId));}
+  async ownerRevision(context:TrustedTeacherContext,family:OwnerFamily,entityKey:string,revisionId:string){context=immutableCopy(context);return this.gatedRead(context,view=>view.ownerRevision(context.ownerId,family,entityKey,revisionId));}
+  async ownerHistory(context:TrustedTeacherContext,family:OwnerFamily,entityKey:string,afterSequence:number=nativeProtocolBounds.historyAfter.default,limit:number=nativeProtocolBounds.historyLimit.default){context=immutableCopy(context);return this.gatedRead(context,view=>view.ownerHistory(context.ownerId,family,entityKey,afterSequence,limit));}
+  async scoreEvidence(context:TrustedTeacherContext,entityKey:string){context=immutableCopy(context);return this.gatedRead(context,view=>view.scoreEvidenceCurrent(context.ownerId,entityKey));}
+  async scoreEvidenceForAttempt(context:TrustedTeacherContext,attemptRef:ObjectRef<'DailyTestAttempt'>){context=immutableCopy(context);attemptRef=immutableCopy(attemptRef);return this.gatedRead(context,view=>view.scoreEvidenceForAttempt(context.ownerId,attemptRef));}
 }

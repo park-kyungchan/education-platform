@@ -150,7 +150,6 @@ export class PostgresAcademyStore implements TeacherPrerequisiteStore,SourceRefr
             AND ((c.relname='record_versions' AND t.tgname='immutable_history')
               OR (c.relname='catalog_versions' AND t.tgname='immutable_catalog'))) AS history_triggers`;
     if(row?.tables_ready!==true||row.history_triggers!==2)throw Error('existing_academy_schema_required');
-    await assertNativePrerequisitesReady(this.db);
   }
   async migrate(): Promise<void> {
     if(this.transactionScope)throw Error('migration_in_snapshot');

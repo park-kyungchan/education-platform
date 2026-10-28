@@ -1,3 +1,4 @@
+import {NATIVE_CURSOR_MAX_BYTES} from '../src/academy/teacherAuthStore';
 import {isDirectPhaseMetadataDirectory} from './native_foundations_qualification';
 /** Real native HTTP/SQL witnesses. Import is inert. No native verdict exists
  * until this fixed runner receives a separately sealed Root occurrence. */
@@ -80,7 +81,7 @@ export async function completeSnapshotRead(i:FixedRunnerInvocation,memory:Native
 /** Preserve the original grant/semantic request while linking a fresh page.
  * All three cursor transport locations must agree; none grants authority. */
 export function continueNativeRead(first:TypedReadRequest,cursor:string):TypedReadRequest {
- check(typeof cursor==='string'&&cursor.length>0&&Buffer.byteLength(cursor,'utf8')<=8192,'bounded_issued_continuation_required');
+ check(typeof cursor==='string'&&cursor.length>0&&Buffer.byteLength(cursor,'utf8')<=NATIVE_CURSOR_MAX_BYTES,'bounded_issued_continuation_required');
  const request=structuredClone(first);request.requestId=crypto.randomUUID();request.cursor=cursor;
  request.functionRequest.requestId=crypto.randomUUID();
  if(request.functionRequest.functionName!=='CheckDailyRecordCompleteness')request.functionRequest.cursor=cursor;

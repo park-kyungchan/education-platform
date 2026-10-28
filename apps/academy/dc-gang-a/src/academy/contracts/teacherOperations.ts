@@ -8,6 +8,13 @@ import type {TeacherWorkContext} from '../teacherWorkContext';
 import type {AcademySourceConnection} from '../nativeConnector';
 import type {operationalContractShape} from '../operationalContract';
 import type {DayRecordSourceRow} from '../../lms/dayRecordReadProtocol';
+/** Numeric protocol constraints shared by HTTP intake and owner consumers. */
+export const nativeProtocolBounds=Object.freeze({
+ pageSize:Object.freeze({min:1,max:100}),
+ historyAfter:Object.freeze({min:0,max:Number.MAX_SAFE_INTEGER,default:0}),
+ historyLimit:Object.freeze({min:1,max:1000,default:200}),
+ approvalSeconds:Object.freeze({min:1,max:900}),
+});
 /** Shared human/agent contracts; authentication is issued by ingress, never by this type. */
 export interface TrustedTeacherContext {readonly ownerId:string;readonly actorId:string;readonly role:'teacher'}
 export interface ObservationInput {studentId:string;occurrence:TeacherObservation['occurrence'];basisRevisionId:string;expectedRevisionId:string|null;idempotencyKey:string;reportedAt:string;text:string}

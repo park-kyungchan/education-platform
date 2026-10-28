@@ -1,3 +1,4 @@
+import {assertNativePrerequisitesReady} from '../src/academy/nativePrerequisiteStore';
 /** W4 isolated composition. Importing this module performs no filesystem,
  * authentication, database, listener, provider, or process operation.
  * HELD candidates are deliberately not executable admissions. */
@@ -14,17 +15,17 @@ import type {TeacherPrerequisiteStore} from '../src/academy/ports/teacherStore';
 import type {TeacherAuthStore, ProductAuthState} from '../src/academy/teacherAuthStore';
 
 export const isolatedTarget = Object.freeze({
-  runId:'e2e-p4-native-20261027-68', directory:'/var/tmp/e2e-p4-native-20261024-01/runs/e11-sealed-frame-68',
-  worktree:'/var/tmp/e2e-p4-native-20261024-01/runs/e11-sealed-frame-68/source/education-native-foundations',
+  runId:'e2e-p4-native-20261027-69', directory:'/var/tmp/e2e-p4-native-20261024-01/runs/e11-sealed-frame-69',
+  worktree:'/var/tmp/e2e-p4-native-20261024-01/runs/e11-sealed-frame-69/source/education-native-foundations',
   evidenceRoot:'/home/palantirkc/operations/platform-redesign-20261023T1807Z',
   hostname:'127.0.0.1', port:38743, runtime:'/usr/local/bin/bun', runtimeVersion:'1.4.3',
   runtimeSha256:'7ce7d6b654eddeec20afddf2396317fba6dc19ab52788a27e894e1806bf8f24b',
   image:'docker.io/library/postgres@sha256:ec4dfc6571f04fe0731ce948c1500d676af49a7224392dcc6995cc1ee33a94bb',
   providerSocket:'/var/tmp/e2e-p4-native-20261024-01/socket',
-  database:'e2e_p4_e11_frame68', username:'e2e_qualification',
+  database:'e2e_p4_e11_frame69', username:'e2e_qualification',
   registry:'reports/p6-execution/native-foundations/reconciliation/education-registry.v4.json',
   registrySha256:'914c8d555a27e19e35f7048e125b7f0cfce1fc41a309a8e1d1f71bf7a5988c2a',
-  environment:'reports/p4-p5-execution/claude-takeover-20261027/gen100/environment-direction.v1.json',
+  environment:'reports/p4-p5-execution/claude-takeover-20261027/gen101/environment-direction.v1.json',
 });
 export function isDirectPhaseMetadataDirectory(value:unknown):value is string {
   return typeof value==='string'&&dirname(value)===isolatedTarget.directory+'/phases'&&resolve(value)===value;
@@ -273,11 +274,11 @@ export function validateFixedRunner(value:unknown):FixedRunnerConfiguration {
  if(!Number.isSafeInteger(x.inputByteLength)||Number(x.inputByteLength)<1||Number(x.inputByteLength)>16777216)failure('sealed_input_length_required');
  if(x.schema!=='fixed-native-runner.v2'||x.status!=='SEALED'||!['MIGRATE','FIXTURE','MEASURE'].includes(String(x.kind))||!fixedStageOrder.includes(x.stage as FixedStage)||x.windowState!=='CLOSED')failure('fixed_runner_config_required');
  const kind=x.kind as FixedRunner,stage=x.stage as FixedStage,base=validateConfiguration(x.base,kind==='MIGRATE'?'MIGRATE':'HELPER');
- if(base.operation!=='START'||base.ownerId!=='synthetic-p4-e2e-p4-native-20261027-68'||(kind==='MIGRATE')!==(stage==='MIGRATE')||kind==='FIXTURE'&&!['A0','B0','A1-SETUP','A1-DETACH','P-SNAPSHOT','P-ACTOR','RESTORE-A','P-RETIRE-A'].includes(stage)||kind==='MEASURE'&&!['A1-BASE','A1-AFTER','A-OLD-SECTION','A2-CURRENT','P-SNAPSHOT','P-ACTOR','RESTORE-A','P-RESTART'].includes(stage))failure('fixed_runner_config_required');
+ if(base.operation!=='START'||base.ownerId!=='synthetic-p4-e2e-p4-native-20261027-69'||(kind==='MIGRATE')!==(stage==='MIGRATE')||kind==='FIXTURE'&&!['A0','B0','A1-SETUP','A1-DETACH','P-SNAPSHOT','P-ACTOR','RESTORE-A','P-RETIRE-A'].includes(stage)||kind==='MEASURE'&&!['A1-BASE','A1-AFTER','A-OLD-SECTION','A2-CURRENT','P-SNAPSHOT','P-ACTOR','RESTORE-A','P-RESTART'].includes(stage))failure('fixed_runner_config_required');
  if((stage==='A-OLD-SECTION')!==(base.consumerProfile==='OLD_SECTION_1_0')||stage==='A-OLD-SECTION'&&base.phase!=='OLD-SECTION'||stage==='A2-CURRENT'&&base.phase!=='CURRENT-RESTORED'||stage==='P-RESTART'&&base.phase!=='P-RESTART')failure('fixed_runner_profile_stage_required');
  const rp=(v:unknown):RunnerPipe=>{const p=object(v);keys(p,['readFd','writeFd','device','inode']);for(const z of Object.values(p))positive(z);if(Number(p.readFd)<=2||Number(p.writeFd)<=2)failure();return p as unknown as RunnerPipe;};
  const resourceSelection=pin(x.resourceSelection),bootstrapSelection=pin(x.bootstrapSelection);
- if(resourceSelection.path!=='reports/p4-p5-execution/claude-takeover-20261027/gen100/candidate/bindings/resource-names.v1.json'||resourceSelection.sha256!=='9534ac64390a02b2bb934cd88c076eb286f8bdaff5bd9bddbb9a830fa771020b'||resourceSelection.bytes!==6820||bootstrapSelection.path!=='reports/p4-p5-execution/claude-takeover-20261027/gen100/candidate/bindings/bootstrap-selection.v1.json'||bootstrapSelection.sha256!=='374b9579e9f84d458f2f240e9cfe9d5dfdf74cd5c438f5360833c52a18b2c393'||bootstrapSelection.bytes!==3984)failure('exact_resource_selection_required');
+ if(resourceSelection.path!=='reports/p4-p5-execution/claude-takeover-20261027/gen101/candidate/bindings/resource-names.v1.json'||resourceSelection.sha256!=='4ff1efe8b0832b4921997ae95e6ad89a03d129dbdcfe11b3397febd778ba0b41'||resourceSelection.bytes!==6820||bootstrapSelection.path!=='reports/p4-p5-execution/claude-takeover-20261027/gen101/candidate/bindings/bootstrap-selection.v1.json'||bootstrapSelection.sha256!=='3f4ee1b6705aaa214ef644199460b6594190a0bdc5df5fda304b74ae828ea805'||bootstrapSelection.bytes!==3984)failure('exact_resource_selection_required');
  const liveHelper=x.liveHelper===null?null:processBinding(x.liveHelper),helperStartReceipt=x.helperStartReceipt===null?null:pin(x.helperStartReceipt),previousStageReceipt=x.previousStageReceipt===null?null:pin(x.previousStageReceipt);
  if(kind==='MIGRATE'&&(liveHelper!==null||helperStartReceipt!==null)||kind!=='MIGRATE'&&(!liveHelper||!helperStartReceipt)||stage!=='MIGRATE'&&!previousStageReceipt)failure('fixed_runner_config_required');
  return deepFreeze({schema:'fixed-native-runner.v2',status:'SEALED',kind,stage,base,input:rp(x.input),output:rp(x.output),inputSha256:x.inputSha256,inputByteLength:Number(x.inputByteLength),resourceSelection,bootstrapSelection,liveHelper,helperStartReceipt,previousStageReceipt,windowState:'CLOSED'});
@@ -804,7 +805,7 @@ export async function startIsolatedHelper(i:VerifiedInvocation) {
   const cursorRuntime=cursorRuntimeFor(i,processNonce,auth.identity?.actorId);
   if(c.qualification?.cases.some(q=>q.mode==='DRIVER_ACK_LOSS')){assertCursorOwnerRootSeal(i);relay=await createCommitAckRelay(i);ownerDb=new SQL({adapter:'postgres',path:relay.socket,username:c.provider.username,database:c.provider.database,max:5,tls:false});}
   const qualification=c.qualification?createQualificationHooks(i,db,relay):undefined;
-  const store=new PostgresAcademyStore(ownerDb,undefined,qualification);await store.assertRuntimeReady();
+  const store=new PostgresAcademyStore(ownerDb,undefined,qualification);await store.assertRuntimeReady();await assertNativePrerequisitesReady(ownerDb);
   const probed=new Set<string>();
   const authLeaseProbe=c.phase==='A0'?async(operation:'consumeInvitation'|'registerIdentity',contender:()=>void)=>{
     assertVerified(i);if(probed.has(operation))failure('auth_probe_occurrence_consumed');probed.add(operation);

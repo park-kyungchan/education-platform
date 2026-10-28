@@ -1,3 +1,4 @@
+import {nativeProtocolBounds} from './contracts/teacherOperations';
 import {TeacherWorkspaceRefusal} from './teacherWorkspace';
 import type { TeacherApplication, TrustedTeacherContext } from './application';
 import { readCookie, secretDigest, signTeacherSession, verifyTeacherSession } from './auth';
@@ -46,7 +47,7 @@ export const declaredRefusalStatus:ReadonlyMap<string,number>=new Map(Object.val
   return errors&&typeof errors==='object'?Object.entries(errors as Record<string,unknown>).flatMap(([code,text])=>{const status=/^(4\d\d)\b/.exec(String(text));return status?[[code,Number(status[1])] as const]:[];}):[];
 }));
 import type {TeacherPrerequisiteStore} from './ports/teacherStore';
-import {ownerCursorLeaseFor,type NativeOwnerCursorLease} from './teacherAuthStore';
+import {NATIVE_CURSOR_MAX_BYTES,ownerCursorLeaseFor,type NativeOwnerCursorLease} from './teacherAuthStore';
 import type {NativeTypedReadOptions} from './nativeTypedRead';
 
 export interface NativeCursorRuntime {
@@ -119,7 +120,7 @@ export const nativePrereqRouteAliases=Object.freeze({
 export type TeacherHttpField = Readonly<{
   kind:'text'|'integer'|'boolean'|'object'|'array'|'null';
   optional?:boolean; nullable?:boolean; default?:unknown;
-  min?:number; max?:number; values?:readonly string[];
+  min?:number; max?:number; maxBytes?:number; values?:readonly string[];
   fields?:TeacherHttpFields; item?:TeacherHttpField; repeat?:boolean;maxItems?:number;
   format?:'date'|'instant'|'sha256'|'uuid'|'nativeRef'|'objectRef'|'action'|'closure';
 }>;
@@ -160,12 +161,14 @@ export function isNativeTeacherHttpPath(path:string):boolean{
 class TeacherHttpInputRefusal extends Error {
   constructor(readonly code:string='invalid_http_input'){super(code);}
 }
-const httpText:TeacherHttpField={kind:'text',min:1,max:4096};
+export const nativeHttpTransportBounds=Object.freeze({textChars:4096,arrayItems:1000,readBodyBytes:65536,commandBodyBytes:524288,uuidChars:36});
+const httpText:TeacherHttpField={kind:'text',min:1,max:nativeHttpTransportBounds.textChars};
 const httpOptionalText:TeacherHttpField={...httpText,optional:true};
 const httpNullableText:TeacherHttpField={...httpText,nullable:true};
+const httpCursor:TeacherHttpField={...httpNullableText,max:NATIVE_CURSOR_MAX_BYTES,maxBytes:NATIVE_CURSOR_MAX_BYTES};
 const httpObject:TeacherHttpField={kind:'object'};
-const httpAfter:TeacherHttpField={kind:'integer',min:0,max:Number.MAX_SAFE_INTEGER,optional:true,default:0};
-const httpLimit:TeacherHttpField={kind:'integer',min:1,max:1000,optional:true,default:200};
+const httpAfter:TeacherHttpField={kind:'integer',...nativeProtocolBounds.historyAfter,optional:true};
+const httpLimit:TeacherHttpField={kind:'integer',...nativeProtocolBounds.historyLimit,optional:true};
 const httpDate:TeacherHttpField={...httpText,format:'date'};
 const httpRequestBinding:TeacherHttpFields={ownerId:httpText,actorId:httpText,idempotencyKey:httpText,requestDigest:{...httpText,format:'sha256'},occurrenceId:httpText,admissionId:httpText,processEpoch:httpText};
 const httpReadAdmission:TeacherHttpFields={ownerId:httpText,actorId:httpText,requestId:httpText,runId:httpText,requestDigest:{...httpText,format:'sha256'},selectorDigest:{...httpText,format:'sha256'},processEpoch:httpText,registryContractVersion:{...httpText,values:['1.1.0','1.0.0']},consumerProfile:{...httpText,values:['CURRENT_1_1','OLD_SECTION_1_0']},consumerProfileDigest:{...httpText,format:'sha256'}};
@@ -178,7 +181,7 @@ function parseTeacherHttpField(value:unknown,rule:TeacherHttpField):unknown{
   if(value===null){if(rule.nullable||rule.kind==='null')return null;throw new TeacherHttpInputRefusal();}
   switch(rule.kind){
     case 'text':
-      if(typeof value!=='string'||value.length<(rule.min??1)||value.length>(rule.max??4096)||!(rule.min===0)&&!value.trim()||rule.values&&!rule.values.includes(value))throw new TeacherHttpInputRefusal();
+      if(typeof value!=='string'||value.length<(rule.min??1)||value.length>(rule.max??nativeHttpTransportBounds.textChars)||rule.maxBytes!==undefined&&Buffer.byteLength(value,'utf8')>rule.maxBytes||!(rule.min===0)&&!value.trim()||rule.values&&!rule.values.includes(value))throw new TeacherHttpInputRefusal();
       break;
     case 'integer':
       if(typeof value!=='number'||!Number.isSafeInteger(value)||value<(rule.min??0)||value>(rule.max??Number.MAX_SAFE_INTEGER))throw new TeacherHttpInputRefusal();
@@ -271,7 +274,7 @@ export const nativePrerequisiteHttpInputs=freezeTeacherHttpContract({
   updateDraft:{command:{kind:'object',fields:httpIngress},studentId:httpText,entityId:httpText,expectedRevisionId:httpText,payload:httpObject},
   recordScoreEvidence:{command:{kind:'object',fields:httpIngress},entityKey:httpNullableText,expectedRevisionId:httpNullableText,payload:httpObject},
   previewApprovalClosure:{command:{kind:'object',fields:httpIngress},draftRef:{kind:'object',format:'objectRef'}},
-  issueApproval:{command:{kind:'object',fields:httpIngress},draftRef:{kind:'object',format:'objectRef'},closure:{kind:'object',format:'closure'},validForSeconds:{kind:'integer',min:1,max:900}},
+  issueApproval:{command:{kind:'object',fields:httpIngress},draftRef:{kind:'object',format:'objectRef'},closure:{kind:'object',format:'closure'},validForSeconds:{kind:'integer',...nativeProtocolBounds.approvalSeconds}},
   approveDraft:{command:{kind:'object',fields:httpIngress},draftRef:{kind:'object',format:'objectRef'},approvalProofHandle:httpText},
   revokeApproval:{command:{kind:'object',fields:httpIngress},approvalId:httpText,expectedRevisionId:httpText},
   commandOutcome:{request:{kind:'object',fields:httpRequestBinding}},
@@ -603,12 +606,12 @@ return json(result===undefined?null:result);
     },
   } satisfies Record<string,TeacherHttpHandler>);
   const nativeRoutes:readonly TeacherHttpRoute[]=freezeTeacherHttpContract<TeacherHttpRoute[]>([
-    {method:'GET',path:"/api/native-read-descriptor",query:{},body:null,auth:'teacher',handler:nativeHandlers.nativeReadDescriptor,oldProfile:true,headers:{'X-Native-Metadata-Operation-Id':{...httpText,min:36,max:36,format:'uuid'}},bodyRefusal:'native_metadata_body_forbidden'},
-    {method:'POST',path:"/api/native-read-snapshot",query:{},body:{maxBytes:65536,fields:{schema:httpText,consumerProfile:httpText,requestId:httpText,scopeRef:{kind:'object',format:'nativeRef'},consistency:httpText,time:httpObject,functionIntent:httpObject}},auth:'teacher',handler:nativeHandlers.nativeReadSnapshot,oldProfile:true},
-    {method:'POST',path:"/api/typed-read",query:{},body:{maxBytes:65536,fields:{contractVersion:httpText,consumerProfile:httpText,requestId:httpText,scopeRef:{kind:'object',format:'nativeRef'},selector:httpObject,snapshot:httpObject,functionRequest:httpObject,snapshotAdmission:httpObject,asOf:{...httpText,format:'instant'},expectedRevisions:{kind:'array',max:1000,item:{kind:'object',format:'objectRef'}},fieldMask:{kind:'array',max:1000,min:1,item:httpObject},linkMask:{kind:'array',max:1000,item:httpText},pageSize:{kind:'integer',min:1,max:100},cursor:httpNullableText,temporalSelection:httpObject}},auth:'teacher',handler:nativeHandlers.typedRead,oldProfile:true},
-    {method:'POST',path:"/api/native-prerequisite",query:{},body:{maxBytes:524288,fields:{operation:{...httpText,values:nativePrerequisiteOperations},input:httpObject},nativeOperation:'GENERIC',operations:nativePrerequisiteHttpInputs},auth:'teacher',handler:nativeHandlers.nativePrerequisite},
-    {method:'POST',path:"/api/native-prereq/teachers/update",query:{},body:{maxBytes:524288,fields:nativePrerequisiteHttpInputs.updateTeacher,nativeOperation:'TEACHER_UPDATE',operations:nativePrerequisiteHttpInputs},auth:'teacher',handler:nativeHandlers.nativePrerequisite},
-    ...Object.entries(nativePrereqRouteAliases).map(([path,operation])=>({method:'POST' as const,path,query:{},body:{maxBytes:524288,fields:nativePrerequisiteHttpInputs[operation],nativeOperation:operation,operations:nativePrerequisiteHttpInputs},auth:'teacher' as const,handler:nativeHandlers.nativePrerequisite})),
+    {method:'GET',path:"/api/native-read-descriptor",query:{},body:null,auth:'teacher',handler:nativeHandlers.nativeReadDescriptor,oldProfile:true,headers:{'X-Native-Metadata-Operation-Id':{...httpText,min:nativeHttpTransportBounds.uuidChars,max:nativeHttpTransportBounds.uuidChars,format:'uuid'}},bodyRefusal:'native_metadata_body_forbidden'},
+    {method:'POST',path:"/api/native-read-snapshot",query:{},body:{maxBytes:nativeHttpTransportBounds.readBodyBytes,fields:{schema:httpText,consumerProfile:httpText,requestId:httpText,scopeRef:{kind:'object',format:'nativeRef'},consistency:httpText,time:httpObject,functionIntent:httpObject}},auth:'teacher',handler:nativeHandlers.nativeReadSnapshot,oldProfile:true},
+    {method:'POST',path:"/api/typed-read",query:{},body:{maxBytes:nativeHttpTransportBounds.readBodyBytes,fields:{contractVersion:httpText,consumerProfile:httpText,requestId:httpText,scopeRef:{kind:'object',format:'nativeRef'},selector:httpObject,snapshot:httpObject,functionRequest:httpObject,snapshotAdmission:httpObject,asOf:{...httpText,format:'instant'},expectedRevisions:{kind:'array',max:nativeHttpTransportBounds.arrayItems,item:{kind:'object',format:'objectRef'}},fieldMask:{kind:'array',max:nativeHttpTransportBounds.arrayItems,min:1,item:httpObject},linkMask:{kind:'array',max:nativeHttpTransportBounds.arrayItems,item:httpText},pageSize:{kind:'integer',...nativeProtocolBounds.pageSize},cursor:httpCursor,temporalSelection:httpObject}},auth:'teacher',handler:nativeHandlers.typedRead,oldProfile:true},
+    {method:'POST',path:"/api/native-prerequisite",query:{},body:{maxBytes:nativeHttpTransportBounds.commandBodyBytes,fields:{operation:{...httpText,values:nativePrerequisiteOperations},input:httpObject},nativeOperation:'GENERIC',operations:nativePrerequisiteHttpInputs},auth:'teacher',handler:nativeHandlers.nativePrerequisite},
+    {method:'POST',path:"/api/native-prereq/teachers/update",query:{},body:{maxBytes:nativeHttpTransportBounds.commandBodyBytes,fields:nativePrerequisiteHttpInputs.updateTeacher,nativeOperation:'TEACHER_UPDATE',operations:nativePrerequisiteHttpInputs},auth:'teacher',handler:nativeHandlers.nativePrerequisite},
+    ...Object.entries(nativePrereqRouteAliases).map(([path,operation])=>({method:'POST' as const,path,query:{},body:{maxBytes:nativeHttpTransportBounds.commandBodyBytes,fields:nativePrerequisiteHttpInputs[operation],nativeOperation:operation,operations:nativePrerequisiteHttpInputs},auth:'teacher' as const,handler:nativeHandlers.nativePrerequisite})),
   ] satisfies TeacherHttpRoute[]);
 
 /* BEGIN PRESERVED LEGACY ROUTER */

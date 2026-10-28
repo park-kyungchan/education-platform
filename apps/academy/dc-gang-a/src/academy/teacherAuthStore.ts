@@ -1,3 +1,4 @@
+import {nativeProtocolBounds} from './contracts/teacherOperations';
 import { closeSync, constants, fstatSync, fsyncSync, lstatSync, openSync, readFileSync, renameSync, unlinkSync, writeFileSync } from 'node:fs';
 import { dirname } from 'node:path';
 import { createHash, createHmac, createCipheriv, createDecipheriv, randomBytes, randomUUID, timingSafeEqual } from 'node:crypto';
@@ -5,6 +6,8 @@ import {canonicalJson,assertInstant} from '../learning/model';
 import type { LoginIdentity } from './server';
 import { createAuthSecrets, secretDigest } from './auth';
 
+/** Complete encoded owner cursor, in bytes (native-read entry v5 bindingRules). */
+export const NATIVE_CURSOR_MAX_BYTES=8192;
 export interface PasswordRecoveryGrant {
   readonly id:string; readonly digest:string; readonly expiresAt:number;
   readonly identityDigest:string; readonly state:'available'|'claimed';
@@ -40,7 +43,7 @@ export function ownerCursorLeaseFor(state:Readonly<{sessionKey:string;identity:L
   for(const k of cursorKeys)if(k!=='pageSize'&&(typeof x[k]!=='string'||!(x[k] as string).length))return fail();
   for(const k of ['requestDigest','scopeBinding','principalBinding','registrySha256','interfaceBinding','recipientBinding','consumerProfileDigest'])if(!/^[a-f0-9]{64}$/.test(x[k] as string))return fail();
   if(x.domain!==domain||x.integrityProofHandle!==codec||x.registrySha256!==context.registrySha256||x.interfaceBinding!==context.interfaceBinding||x.consumerProfile!==context.consumerProfile||x.consumerProfileDigest!==context.consumerProfileDigest)return fail();
-  if(!Number.isSafeInteger(x.pageSize)||Number(x.pageSize)<1||Number(x.pageSize)>100||! /^(0|[1-9][0-9]*)$/.test(x.sealedPosition as string)||!Number.isSafeInteger(Number(x.sealedPosition)))return fail();
+  if(!Number.isSafeInteger(x.pageSize)||Number(x.pageSize)<nativeProtocolBounds.pageSize.min||Number(x.pageSize)>nativeProtocolBounds.pageSize.max||! /^(0|[1-9][0-9]*)$/.test(x.sealedPosition as string)||!Number.isSafeInteger(Number(x.sealedPosition)))return fail();
   if(x.readAdmissionId!==x.outputAdmissionId)return fail();
   try{assertInstant(x.asOf as string);assertInstant(x.expiresAt as string);}catch{return fail();}
   return x as unknown as NativeOwnerCursorBinding;
@@ -51,9 +54,9 @@ export function ownerCursorLeaseFor(state:Readonly<{sessionKey:string;identity:L
  };
  return Object.freeze({assertCurrent,
   seal(value:NativeOwnerCursorBinding){assertCurrent();const x=binding(value),nonce=randomBytes(12),k=key();
-   try{const cipher=createCipheriv('aes-256-gcm',k,nonce,{authTagLength:16});cipher.setAAD(aad);const encrypted=Buffer.concat([cipher.update(Buffer.from(canonicalJson(x))),cipher.final()]);const token=['nrc3',nonce.toString('base64url'),encrypted.toString('base64url'),cipher.getAuthTag().toString('base64url')].join('.');if(Buffer.byteLength(token)>8192)return fail();assertCurrent();return token;}finally{k.fill(0);}
+   try{const cipher=createCipheriv('aes-256-gcm',k,nonce,{authTagLength:16});cipher.setAAD(aad);const encrypted=Buffer.concat([cipher.update(Buffer.from(canonicalJson(x))),cipher.final()]);const token=['nrc3',nonce.toString('base64url'),encrypted.toString('base64url'),cipher.getAuthTag().toString('base64url')].join('.');if(Buffer.byteLength(token)>NATIVE_CURSOR_MAX_BYTES)return fail();assertCurrent();return token;}finally{k.fill(0);}
   },
-  open(token:string){assertCurrent();if(typeof token!=='string'||Buffer.byteLength(token,'utf8')>8192)return fail();const parts=token.split('.');if(parts.length!==4||parts[0]!=='nrc3'||parts[1]!.length!==16||parts[3]!.length!==22)return fail();
+  open(token:string){assertCurrent();if(typeof token!=='string'||Buffer.byteLength(token,'utf8')>NATIVE_CURSOR_MAX_BYTES)return fail();const parts=token.split('.');if(parts.length!==4||parts[0]!=='nrc3'||parts[1]!.length!==16||parts[3]!.length!==22)return fail();
    const nonce=decode(parts[1]!,12),encrypted=decode(parts[2]!),tag=decode(parts[3]!,16),k=key();let plain:Buffer|undefined;
    try{const decipher=createDecipheriv('aes-256-gcm',k,nonce,{authTagLength:16});decipher.setAAD(aad);decipher.setAuthTag(tag);const unauthenticated=decipher.update(encrypted);try{plain=Buffer.concat([unauthenticated,decipher.final()]);}finally{unauthenticated.fill(0);}
     const text=new TextDecoder('utf-8',{fatal:true}).decode(plain),x=binding(JSON.parse(text));if(canonicalJson(x)!==text)return fail();assertCurrent();return x;
