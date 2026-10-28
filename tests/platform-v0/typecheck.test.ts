@@ -10,6 +10,6 @@ test('platform V0 contracts typecheck with the owning academy module settings', 
     stdout: 'pipe', stderr: 'pipe', env: { ...process.env, BUN_ENV: 'test' },
   });
   const [exit, stdout, stderr] = await Promise.all([child.exited, new Response(child.stdout).text(), new Response(child.stderr).text()]);
-  if (exit !== 0) throw Error(`platform_v0_typecheck_failed@tests/platform-v0/typecheck.test.ts:11\n${stdout}${stderr}`);
+  if (exit !== 0) throw Error(`platform_v0_typecheck_failed@tests/platform-v0/typecheck.test.ts:13\n${stdout}${stderr}`);
   expect(exit).toBe(0);
 }, 30_000);

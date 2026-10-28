@@ -46,7 +46,7 @@ describe('V0-07 evidence consistency before an approved transition', () => {
     sources.progress[0]!.ref.revision = 'progress-rB';
     expect(() => assertProposalTexts(p, sources, native)).toThrow('completeness_unverified_prose:TEXT_EVIDENCE');
     const extra = proposal();
-    if (extra.p.progressText.state !== 'known') throw Error('expected_known_text');
+    if (extra.p.progressText.state !== 'known') throw Error('expected_known_text@tests/platform-v0/approval-contracts.test.mts:49');
     extra.p.progressText.evidence.push({ sourceRef: nativeRef('unlisted'), sourceRevision: 'unlisted-r1', locator: 'synthetic-only', observedAt: instant });
     expect(() => assertProposalTexts(extra.p, extra.sources, native)).toThrow('completeness_source_conflict:TEXT_EVIDENCE');
   });

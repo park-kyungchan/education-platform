@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'bun:test';
 import { canonicalJson } from '../../apps/academy/dc-gang-a/src/learning/model';
-import { TypedReadRefusal, fullFieldMask, projectLinkInterval, type TypedReadErrorCode } from '../../apps/academy/dc-gang-a/src/academy/nativeTypedRead';
+import { TypedReadRefusal, functionSelectionDigest, projectLinkInterval, type TypedReadErrorCode } from '../../apps/academy/dc-gang-a/src/academy/nativeTypedRead';
 import { validateKnowledge, validateObjectRef, validateRevision, scopeIdentity } from '../../apps/academy/dc-gang-a/src/academy/contracts/prerequisiteRecords';
 import { ctx, evidence, fixture, knownK, mapFixtureViews, nativeRef, objectRef, request, testTemporal, unknownK, withTemporal } from './synthetic-read.mts';
 
@@ -47,13 +47,9 @@ describe('V0-01 governed read / source mutation / structured identity', () => {
     expect(() => validateRevision('revision-rA' as never)).toThrow();
   });
 
-  test('01.interval-inclusive-from/through and outside-through retain inclusive query dates', () => {
+  test('01.interval-inclusive-from/through project the exact finite owner interval', () => {
     const interval = projectLinkInterval('2026-10-01', '2026-10-11', [evidence()]);
     expect(interval).toMatchObject({ validFrom: '2026-10-01', validThrough: { state: 'known', value: '2026-10-10' } });
-    // Fixed expected dates are independent of the product projection algorithm.
-    const through = interval.validThrough;
-    if (through.state !== 'known') throw Error('expected_known_interval@tests/platform-v0/education-contracts.test.ts:58');
-    expect(['2026-10-01', '2026-10-10', '2026-10-11'].map(date => date >= interval.validFrom && date <= through.value)).toEqual([true, true, false]);
   });
 
   test('01.interval-open-end/unknown-end preserve the scoped evidence distinction', () => {
@@ -112,7 +108,7 @@ describe('V0-04 explicit unknowns', () => {
 
   test('04.unknown known zero and conflicting evidence remain separate branches', () => {
     const zero = knownK(0), missing = unknownK<number>(), conflicting = { ...unknownK<number>(), reason: 'CONFLICTING' as const };
-    for (const value of [zero, missing, conflicting]) expect(() => validateKnowledge(value, n => { if (typeof n !== 'number') throw Error('expected_number'); })).not.toThrow();
+    for (const value of [zero, missing, conflicting]) expect(() => validateKnowledge(value, n => { if (typeof n !== 'number') throw Error('expected_number@tests/platform-v0/education-contracts.test.mts:111'); })).not.toThrow();
     expect(zero).toMatchObject({ state: 'known', value: 0 });
     expect(Object.hasOwn(missing, 'value')).toBe(false);
     expect(conflicting.reason).toBe('CONFLICTING');
@@ -138,16 +134,19 @@ describe('V0-06 semantic request binding', () => {
     const original = request();
     const changedDate = withTemporal(structuredClone(original), testTemporal({ businessDate: '2026-10-23' }));
     const changedOccurrence = withTemporal(structuredClone(original), testTemporal({ occurrence: { mode: 'EXACT', lessonRef: objectRef('LessonSession', 'lesson-b') } }));
-    expect(changedDate.temporalSelection.functionRequestDigest).not.toBe(original.temporalSelection.functionRequestDigest);
-    expect(changedOccurrence.temporalSelection.functionRequestDigest).not.toBe(original.temporalSelection.functionRequestDigest);
-    expect(changedDate.temporalSelection.functionRequestDigest).not.toBe(changedOccurrence.temporalSelection.functionRequestDigest);
+    const originalDigest = functionSelectionDigest(original);
+    const changedDateDigest = functionSelectionDigest(changedDate);
+    const changedOccurrenceDigest = functionSelectionDigest(changedOccurrence);
+    expect(changedDateDigest).not.toBe(originalDigest);
+    expect(changedOccurrenceDigest).not.toBe(originalDigest);
+    expect(changedDateDigest).not.toBe(changedOccurrenceDigest);
   });
 
   test('06.revoked current teacher rights precede privileged query diagnostics', async () => {
     const outcomes = [];
     for (const registry of ['a'.repeat(64), 'b'.repeat(64)]) {
       const f = fixture(); f.store.binding = null;
-      const input = request(); if (input.selector.kind !== 'REGISTERED_QUERY') throw Error('expected_query');
+      const input = request(); if (input.selector.kind !== 'REGISTERED_QUERY') throw Error('expected_query@tests/platform-v0/education-contracts.test.mts:149');
       input.selector.query.registrySha256 = registry;
       outcomes.push(await refusal(f.service.typedRead(ctx, input), 'PERMISSION_DENIED', 403));
       expect(f.store.projectionCalls).toBe(0);
@@ -159,7 +158,7 @@ describe('V0-06 semantic request binding', () => {
 describe('V0-09 defining pin drift', () => {
   test('09.tamper refuses a defining-object hash change before object projection', async () => {
     const f = fixture(), input = request();
-    if (input.selector.kind !== 'REGISTERED_QUERY') throw Error('expected_query');
+    if (input.selector.kind !== 'REGISTERED_QUERY') throw Error('expected_query@tests/platform-v0/education-contracts.test.mts:161');
     input.selector.query.baseType.definitionSha256 = '0'.repeat(64);
     await refusal(f.service.typedRead(ctx, input), 'CONTRACT_UNVERIFIABLE', 409);
     expect(f.store.projectionCalls).toBe(0);

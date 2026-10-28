@@ -21,7 +21,7 @@ V1 qualification, native write qualification, runtime smoke or P8 Acceptance.
 
 | Original case | Executable subset | Remaining contract behavior |
 | --- | --- | --- |
-| V0-01 | `01.changed`, `01.scope-projection`, interval projection for `01.interval-inclusive-from`, `01.interval-inclusive-through`, `01.interval-outside-through`, `01.interval-open-end`, `01.interval-unknown-end` | Full authorized closure and temporal membership/teaching query outcomes, whole-history exhaustion, generic query identity projection |
+| V0-01 | `01.changed`, `01.scope-projection`, interval projection for `01.interval-inclusive-from`, `01.interval-inclusive-through`, `01.interval-open-end`, `01.interval-unknown-end` | Full authorized closure and temporal membership/teaching query outcomes, whole-history exhaustion, generic query identity projection |
 | V0-02 | `02.distinct`: exact assessment identity and homework ref retained, unresolved relation explicit | Full current-versus-prior homework Function result; `02.missing-assessment` |
 | V0-03 | `03.namespaces` native denial and reference type validation; `03.lessons` scope identity distinction | Public day enumeration/ambiguous draft refusal, exact attempt/score chain and edition collision query |
 | V0-04 | `04.unknown` source-field unknown retention/malformed field refusal, known zero and CONFLICTING branches | Complete empty collection/applicability proof; scoped correction lineage/conflicting correction query |
