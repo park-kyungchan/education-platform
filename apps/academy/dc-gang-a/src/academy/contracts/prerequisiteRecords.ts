@@ -35,11 +35,12 @@ export interface ApprovalClosure {teacherRef:NativeObjectRef;executorPrincipalBi
  * DailyRecordDraft.invariants[1] (line631) require stale_source_revision for
  * stale cited pins. approvalIssuer_REQ05.issuer (line670) checks references
  * before comparing the derived closure; consume (line672) rederives it.
- * Closure equality is evaluated only after source revision validation succeeds.
+ * Source revisions precede completed-snapshot validity; both precede closure equality.
  * This is the single store/oracle refusal and precedence table, not a new release. */
 export const approvalRefusalPrecedence=freezeProtocolValue({
  SOURCE_REVISION:{priority:1,status:409,code:'stale_source_revision',contractRef:'reports/p4-p5-execution/contracts/candidate/correction1/native-prerequisite-contract.v5.json#/referenceRules/objectRef',contractLine:304},
- CLOSURE_EQUALITY:{priority:2,status:409,code:'approval_closure_mismatch',contractRef:'reports/p4-p5-execution/contracts/candidate/correction1/native-prerequisite-contract.v5.json#/approvalIssuer_REQ05/issuer',contractLine:670},
+ SOURCE_SNAPSHOT:{priority:2,status:409,code:'source_snapshot_unverified',contractRef:'reports/p4-p5-execution/contracts/candidate/correction1/native-prerequisite-contract.v5.json#/approvalIssuer_REQ05/completenessImplementation/SOURCE_REVISIONS',contractLine:678},
+ CLOSURE_EQUALITY:{priority:3,status:409,code:'approval_closure_mismatch',contractRef:'reports/p4-p5-execution/contracts/candidate/correction1/native-prerequisite-contract.v5.json#/approvalIssuer_REQ05/issuer',contractLine:670},
 } as const);
 export interface ApprovalVersionPayload extends ApprovalClosure {kind:'teacher_approval';approvalId:string;issuerInterfaceBinding:string;delegationEvidenceId:null;issuedAt:string;expiresAt:string;proofHandle:string;state:'ISSUED'|'CONSUMED'|'REVOKED';consumedByDraftRevision:string|null;synthetic:boolean}
 /** Native owner measurement; never derived from retained item grades or rating codes. Internal evidence, not a thirteenth registry object. */

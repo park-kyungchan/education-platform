@@ -8,7 +8,7 @@ import {ownerWorkspaceVersionFrom,asStudentWorkspace} from './ownerWorkspaceStor
 import {migrateOwnerWorkspaces,assertOwnerWorkspacesReady,appendOwnerWorkspace,ownerWorkspaces,ownerWorkspaceHistory,ownerWorkspaceResult,studentWorkspaces,type OwnerWorkspaceCommand} from './ownerWorkspaceStore';
 import type { SQL } from 'bun';
 import type {NativeQualificationHooks} from './nativeTypedRead';
-import { assertExactKeys, assertInstant, assertRefs, canonicalJson, digest, requireText, stableId } from '../learning/model';
+import {immutableCopy, assertExactKeys, assertInstant, assertRefs, canonicalJson, digest, requireText, stableId } from '../learning/model';
 import { traceHierarchy, validateHierarchy, validateSourceKey, type CatalogNode, type SourceKey } from './domain';
 import { createAcademySourceAudit } from '../lms/academySourceAudit';
 import {readInputRecord} from '../contracts/readInputRecord';
@@ -247,7 +247,7 @@ export class PostgresAcademyStore implements TeacherPrerequisiteStore,SourceRefr
     const assignmentRefs=[...legacy.values()].flatMap(row=>row.payload.kind==='learning_work_attempt'?[row.payload.assignmentRevisionId]:[]).concat([...local.values()].flatMap(row=>row.payload.kind==='teacher_activity_review'?[row.payload.assignmentRevisionId]:[]));await load(assignmentRefs);
     return {student,legacy:[...legacy.values()],workspaces:[...local.values()],currentRevisionIds:[...current,...workspaces].map(row=>row.revisionId)};
   }
-  async registerStudent(input: StudentRegistration): Promise<void> {
+  async registerStudent(input: StudentRegistration): Promise<void> {input=immutableCopy(input);
     assertExactKeys(input, ['ownerId', 'id', 'displayName', 'sourceKey', 'proofRefs']);
     canonicalJson(input); validateSourceKey(input.sourceKey); assertRefs(input.proofRefs);
     for (const field of [input.ownerId, input.id, input.displayName]) requireText(field, 'student registration');
@@ -271,7 +271,7 @@ export class PostgresAcademyStore implements TeacherPrerequisiteStore,SourceRefr
       sourceKey: { namespace: row.source_namespace, literalKey: row.source_key }, proofRefs: row.proof_refs,
       registeredAt: new Date(row.registered_at).toISOString() }));
   }
-  async append(command: AppendCommand, recordedAt = new Date().toISOString()): Promise<WriteAcknowledgement> {
+  async append(command: AppendCommand, recordedAt = new Date().toISOString()): Promise<WriteAcknowledgement> {command=immutableCopy(command);
     assertExactKeys(command,['ownerId','studentId','entityId','actorId','idempotencyKey','expectedRevisionId','sourceObservedAt','payload']);
     canonicalJson(command); validateAcademyRecord(command.payload);
     if(command.payload.kind==='daily_progress'||command.payload.kind==='daily_record_draft'||command.payload.kind==='previous_homework_assessment')throw Error('native_prerequisite_command_required');
@@ -546,7 +546,7 @@ export class PostgresAcademyStore implements TeacherPrerequisiteStore,SourceRefr
     return selected.map(ref=>{const row=rows.find((row:{node_id:string;revision_id:string})=>row.node_id===ref.nodeId&&row.revision_id===ref.revisionId);if(!row||digest(row.payload)!==row.content_digest)throw Error('work_catalog_binding_conflict');return {node:row.payload as CatalogNode,revisionId:row.revision_id as string};});
   }
   /** Commit the exact validated acquisition as one unit; never leave a partially replaced source. */
-  async applySourceRefresh(cohort:NormalizedCohort,actorId:string,requestId:string){
+  async applySourceRefresh(cohort:NormalizedCohort,actorId:string,requestId:string){cohort=immutableCopy(cohort);
     canonicalJson(cohort);requireText(actorId,'source actor');
     const key=sourceRequestId(requestId);let callbackFailed=false;
     try{await this.db.begin(async tx=>{try{
@@ -646,7 +646,7 @@ export class PostgresAcademyStore implements TeacherPrerequisiteStore,SourceRefr
     return {...receipt,cacheRetained:true,academyEffect:'read_only',officialSaved:false,parentSent:false,replacementAcquisitionAllowed:receipt.status!=='pending'};
   }
   /** An area's evidence and acknowledgement commit together; other areas and teacher records are untouched. */
-  async applySourceArea(ownerId:string,actorId:string,requestId:string,taskId:string,outcome:{status:'observed';data:unknown}|{status:'blocked'|'failed';reason:string}){
+  async applySourceArea(ownerId:string,actorId:string,requestId:string,taskId:string,outcome:{status:'observed';data:unknown}|{status:'blocked'|'failed';reason:string}){outcome=immutableCopy(outcome);
     const key=sourceRequestId(requestId);let callbackFailed=false;
     try{
       await this.db.begin(async tx=>{try{
@@ -701,7 +701,7 @@ export class PostgresAcademyStore implements TeacherPrerequisiteStore,SourceRefr
     });
     return this.sourceRequestResult(ownerId,actorId,requestId);
   }
-  async saveCatalog(ownerId:string,node:CatalogNode):Promise<{revisionId:string;sequence:number;contentDigest:string}> {
+  async saveCatalog(ownerId:string,node:CatalogNode):Promise<{revisionId:string;sequence:number;contentDigest:string}> {node=immutableCopy(node);
     requireText(ownerId,'catalog owner');canonicalJson(node);
     return this.transact(async tx=>{
       await lockApprovalDependencies(tx,ownerId);
@@ -743,7 +743,7 @@ export class PostgresAcademyStore implements TeacherPrerequisiteStore,SourceRefr
    * the terminal audit write in one READ COMMITTED transaction, so the
    * prepared value is only handed back after a known COMMIT. A duplicate
    * admission refuses lookup-only; an ambiguous COMMIT is never replayed. */
-  async commitReadOutput<T>(request:ReadAdmission,prepare:(view:TeacherPrerequisiteReadStore)=>Promise<ReadOutputDecision<T>>,selectRefusal?:ReadOutputRefusalSelector):Promise<CommittedReadOutput<T>>{
+  async commitReadOutput<T>(request:ReadAdmission,prepare:(view:TeacherPrerequisiteReadStore)=>Promise<ReadOutputDecision<T>>,selectRefusal?:ReadOutputRefusalSelector):Promise<CommittedReadOutput<T>>{request=immutableCopy(request);
     if(this.transactionScope)throw Error('write_in_snapshot');
     validateReadAdmission(request);
     if(typeof prepare!=='function')throw Error('output_prepare_required');
