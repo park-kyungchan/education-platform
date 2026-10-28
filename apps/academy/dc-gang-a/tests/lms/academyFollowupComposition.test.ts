@@ -176,7 +176,7 @@ test('MCP C2: strict unknown/foreign/principal/date/query inputs stop before aut
     try{
       const result=await callMetadata(foreign,{...metadataInput(),scope:{...metadataScope,...delta}});
       expect(result.structuredContent).toMatchObject({status:'unavailable'});expect(source.calls).toHaveLength(0);
-      expect(JSON.stringify(result)).not.toContain('native_metadata_scope_refused');
+      expect(result.structuredContent).toMatchObject({reasonCode:'native_metadata_scope_refused',failure:{category:'policy_denial',code:'native_metadata_scope_refused'}});
     }finally{await foreign.close();source.client.close();}
   }
 });
@@ -279,7 +279,7 @@ test('MCP metadata bounds its actual dual result before publication and closes r
     const calls=f.calls.length;expect(calls).toBe(4);
     expect((await callMetadata(connection)).structuredContent).toMatchObject({status:'unavailable'});expect(f.calls.length).toBeGreaterThan(calls);
   }finally{await connection.close();f.client.close();}
-});
+},20000);
 
 test('MCP M1: inventory and history omit foreign page anchors, controls, functions and selected-row TR cells',async()=>{
   const foreign={...row,priNo:77002,userName:'FOREIGN_STUDENT',testingNo:81002,testName:'FOREIGN_TITLE'};

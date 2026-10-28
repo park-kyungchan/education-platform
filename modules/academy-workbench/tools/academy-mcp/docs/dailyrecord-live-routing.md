@@ -14,6 +14,13 @@ without automatic retry. Native current/prior record identity checks remain
 in the existing intake/backend. The source fields and transmission state
 remain observations. This lookup returns no review handle or patch.
 
+With the explicit `source_verified` owner policy, the composed route passes
+the lesson date to the resolver. The owner client discovers the source's dated
+groups and projects the exact principal-qualified DailyRecord occurrence into
+a name/key pair. A missing or ambiguous dated row stays unavailable; it does
+not fall back to a recent test page or prove student absence. The later intake
+independently verifies the dated current and previous occurrences.
+
 `status: observed` and `sourceAvailability: observed` mean the read succeeded.
 `preparation.interviews` records questions needed only if the user later asks
 to author/review. No memo answer, attendance, assessment, fact or completion
@@ -24,6 +31,24 @@ their complete current-context requirements and explicit source-option rules.
 Their local retrieval time and historical access report neither refresh
 the source nor establish current live availability. The status result now
 states this scope and points to the live route.
+
+## DailyRecord save (gated write)
+
+`academy_dailyrecord_save` is the only write tool. It saves nothing unless
+the upstream process was launched with both `--dailyrecord-save-admission
+<path> <sha256>` (an `academy.dailyrecord-save-admission/1` file the runtime
+owner issues from the actual current user save instruction, admitting exact
+student/date/field/effect-record/after tuples) and `--dailyrecord-save-store
+<owner-artifacts-dir>` (durable one-time consumption records). The caller
+must present the `reviewDigest` of an `academy_dailyrecord_review` prepared
+in the same process; the service recomputes that review against a fresh
+before-state and holds without writing on any mismatch or drift. The native
+backend then runs the owner client's `applyJournalAction` per field: fresh
+before-state, one consumed admission, one write, authoritative readback,
+no automatic retry. Without that launch configuration the tool returns
+`dailyrecord_save_backend_not_configured` with `academyWrites: 0`. Exposing
+the tool is not save authority; each save still needs its own issued
+admission. No parent sending, printing or paper generation is included.
 
 ## Owner admission
 
@@ -61,3 +86,40 @@ The fictional neutral SDK test runs with outbound networking denied and
 proves a single upstream lifetime, strict caller schema and content-free
 receipts. Fresh native E2E evidence is separate from source/synthetic tests;
 the work record cites session/receipt metadata without student originals.
+
+## Versioned read releases
+
+An owner-issued `academy.owner-admission/2` record may explicitly use `null`
+for either date bound. `studentScope` defaults to configured students; the
+explicit `source_verified` option additionally permits an exact unique live
+name/key match for the same request, with a five-minute in-process binding.
+The DailyRecord row and previous occurrence still require exact principal,
+student, course and membership qualification. This does not widen the
+separate metadata namespace or authorize saves or sends.
+
+An upgraded bridge optionally recognizes an owner-controlled `release.json`
+under its existing install directory. The pointer references immutable,
+SHA-256-pinned `routing`, `endpoints`, and `registry` files and is replaced
+atomically only after those files and the routing-selected owner admission are
+ready. It is read for every request, so already-running upgraded bridge clients
+can converge on the new release without being restarted. The bridge compares
+the selected admission digest with the spawned DailyRecord backend before any
+source lookup. Invalid or mismatched releases, and removal of an adopted
+pointer, fail closed. Existing pre-upgrade bridge processes cannot acquire this
+behavior without a separately authorized upgrade. The release schema is
+`academy.mcp-release/1`; see `src/runtime-release.ts` and synthetic release
+tests for exact fields and checks. Do not mutate or overwrite pinned releases.
+
+## Item answers
+
+`academy_item_answer_lookup` reads a bounded set of exact numeric item labels
+through the authenticated owner client. It returns the source's official
+answer literal and explicit rendering/printed-paper limitations. For observed delimiter patterns, each answer also carries
+`answerPrefixCandidate` and `answerPayloadCandidate`. These are syntactic
+parts only; their rendering meaning is unqualified. Escape pipes when placing
+the original literal in a Markdown table. It does not
+interpret an unqualified literal as a rendered answer, infer a student
+response, grade, save, print, or send. The existing source endpoint may return
+an external solution reference instead of a literal answer. Production
+exposure requires the owner bundle and neutral registry to be published as a
+consistent verified release; local tests do not prove live availability.

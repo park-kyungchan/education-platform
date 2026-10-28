@@ -30,8 +30,13 @@ describe('runtime exposure manifest (P2)', () => {
     const declared = manifest.tools.map((t: { name: string }) => t.name).sort();
     expect(declared).toEqual(registeredTools());
   });
-  test('all declared tools are read class and open', () => {
+  test('reads are open and the single write stays gated behind save admission', () => {
     for (const t of manifest.tools) {
+      if (t.name === 'academy_dailyrecord_save') {
+        expect(t.class).toBe('write');
+        expect(t.exposure).toBe('gated_save_admission');
+        continue;
+      }
       expect(t.class).toBe('read');
       expect(t.exposure).toBe('open');
     }

@@ -13,8 +13,10 @@ test('existing label MCP discovers context-required DailyRecord tools while pres
   const {client,transport}=await connect('label-server.ts');
   try{
     const tools=(await client.listTools()).tools;
-    expect(tools.map(t=>t.name).sort()).toEqual(['academy_cism_section','academy_dailyrecord_get','academy_dailyrecord_intake','academy_dailyrecord_review','academy_find_item_labels','academy_item_label_scope','academy_review_type_questions','academy_student_metadata','academy_student_resolve']);
-    expect(tools.some(t=>/save|send|approve/.test(t.name))).toBe(false);
+    expect(tools.map(t=>t.name).sort()).toEqual(['academy_endpoint_identity','academy_student_metadata_get','academy_cism_section','academy_dailyrecord_get','academy_dailyrecord_intake','academy_dailyrecord_review','academy_dailyrecord_save','academy_find_item_labels','academy_item_answer_lookup','academy_item_label_scope','academy_review_type_questions','academy_runtime_read_admission','academy_student_metadata','academy_student_resolve'].sort());
+    const saveTool=tools.find(t=>t.name==='academy_dailyrecord_save')!;expect(saveTool.annotations?.readOnlyHint).toBe(false);expect(saveTool.annotations?.destructiveHint).toBe(true);
+    const saveRefused=await client.callTool({name:'academy_dailyrecord_save',arguments:{context:context(),observationHandle:'dailyrecord-observation:synthetic',reviewDigest:'9'.repeat(64),proposals:[{field:'progress',value:'- 지정 문제 12문항 풀이 진행.',factRefs:['user-fact:progress'],decision:{kind:'replace',requestRef:context().currentRequestRef}}]}});
+    expect(saveRefused.structuredContent).toMatchObject({status:'unavailable',reasonCode:'dailyrecord_save_backend_not_configured',academyWrites:0});
     for(const name of ['academy_dailyrecord_intake','academy_dailyrecord_review','academy_cism_section']){
       const tool=tools.find(t=>t.name===name)!;expect(tool.annotations?.readOnlyHint).toBe(true);expect(tool.annotations?.destructiveHint).toBe(false);
       expect(tool.inputSchema.required).toContain('context');const refused=await client.callTool({name,arguments:{}});expect(refused.isError).toBe(true);
@@ -29,11 +31,11 @@ test('existing label MCP discovers context-required DailyRecord tools while pres
     expect(cism.structuredContent).toMatchObject({status:'unavailable',reasonCode:'exact_cism_read_backend_not_configured',parentSends:0});
   }finally{await client.close();await transport.close();}
 },20000);
-test('dedicated entrypoint discovers six read-only DailyRecord/metadata/resolver tools with network denied',async()=>{
+test('dedicated entrypoint discovers the read-only DailyRecord/metadata/resolver and identity tools with network denied',async()=>{
   const {client,transport}=await connect('dailyrecord-server.ts');
   try{
     const tools=(await client.listTools()).tools;
-    expect(tools.map(t=>t.name).sort()).toEqual(['academy_cism_section','academy_dailyrecord_get','academy_dailyrecord_intake','academy_dailyrecord_review','academy_student_metadata','academy_student_resolve']);
+    expect(tools.map(t=>t.name).sort()).toEqual(['academy_endpoint_identity','academy_student_metadata_get','academy_cism_section','academy_dailyrecord_get','academy_dailyrecord_intake','academy_dailyrecord_review','academy_dailyrecord_save','academy_item_answer_lookup','academy_runtime_read_admission','academy_student_metadata','academy_student_resolve'].sort());
     expect(tools.find(t=>t.name==='academy_student_metadata')?.annotations?.readOnlyHint).toBe(true);
     const metadata=await client.callTool({name:'academy_student_metadata',arguments:{purpose:'Invented read',currentRequestRef:'invented-request',
       scope:{sourceNamespace:'academy.lms.metadata',teacherId:'99001',studentId:'77001',lessonDate:'2040-01-04'},queries:[{kind:'daily_metadata'}]}});

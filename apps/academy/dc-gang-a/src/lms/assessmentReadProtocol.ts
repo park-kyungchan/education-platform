@@ -206,6 +206,24 @@ export function parseAssessmentSearch(html: string): AssessmentSearchRow[] {
   });
 }
 
+/** Project exact name/key pairs from one DT result page without requiring a
+ * previously known key. A zero-row result is only this page's observation. */
+export function inspectStudentNameSearch(html:string,requestedName:string){
+  const exactName=name(requestedName);
+  if(html.length>2000000||/<input\b[^>]*\btype\s*=\s*["']password["']/i.test(html))throw Error('student_search_source_rejected');
+  const matches=[...html.matchAll(/\btestResultList\s*:\s*JSON\.parse\(\s*'((?:\\.|[^'\\])*)'\s*\)/g)];
+  if(matches.length!==1)throw Error('result_list_missing_or_ambiguous');
+  const raw:unknown=JSON.parse(decodeSingleQuotedString(matches[0]![1]!));
+  if(!Array.isArray(raw)||raw.length>2000)throw Error('student_search_list_rejected');
+  const keys=new Set<string>();
+  for(const value of raw){
+    const row=object(value);
+    if(name(row.userName)===exactName)keys.add(sourceKey(row.priNo));
+  }
+  if(keys.size>200)throw Error('student_search_list_rejected');
+  return [...keys].map(studentKey=>({studentKey,studentName:exactName}));
+}
+
 /** One observed search page, exact source subject only; metadata is not generated-clinic membership. */
 export function inspectAssessmentSearchMetadata(html:string,target:{studentKey:string;studentName:string}){
   renderKey(target.studentKey);name(target.studentName);

@@ -5,6 +5,50 @@ const login='<form id="loginForm" name="loginForm" method="post"><input name="p_
 // Construct explicitly invented cookie pairs at runtime; no captured session literal is stored.
 const anonymousCookie=['JSESSIONID','synthetic-anonymous'].join('=');
 const authenticatedCookie=['JSESSIONID','synthetic-authenticated'].join('=');
+test('name-only source search authenticates and returns distinct exact identities without neighboring records',async()=>{
+ const {AcademyHttpClient}=await import('../../src/lms/academyHttpClient');let calls=0;
+ const rows=[{priNo:9101,userName:'Invented Student',title:'private title'},
+  {priNo:9101,userName:'Invented Student'}, {priNo:9102,userName:'Invented Student'},
+  {priNo:9103,userName:'Other Student',title:'withheld'}];
+ const html="<script>const x={testResultList:JSON.parse('"+JSON.stringify(rows)+"')};</script>";
+ const client=new AcademyHttpClient({teacherLabel:'Invented Teacher',teacherKey:'99001',collegeKey:'88001'},async(url,init)=>{
+  calls++;if(calls<=3)return new Response(calls===1?login:principal);
+  expect(url).toContain('DailyZeroTestServlet?reqCmd=DtResultSearch');
+  expect(Object.fromEntries(new URLSearchParams(init.body as string))).toEqual({sort_date:'1',stu_name:'Invented Student'});
+  return new Response(html);
+ });
+ const input={teacherLabel:'Invented Teacher',studentName:'Invented Student'};
+ await expect(client.searchStudentsByName(input)).rejects.toThrow('authentication_required');expect(calls).toBe(0);
+ await client.authenticate({username:'inventedUser',password:'inventedPassword'});
+ const result=await client.searchStudentsByName(input);
+ expect(result).toEqual([{studentKey:'9101',studentName:'Invented Student'},{studentKey:'9102',studentName:'Invented Student'}]);
+ expect(JSON.stringify(result)).not.toContain('private title');expect(JSON.stringify(result)).not.toContain('Other Student');
+ await expect(client.searchStudentsByName({...input,teacherLabel:'Other Teacher'})).rejects.toThrow('daily_search_principal_conflict');
+ expect(calls).toBe(4);client.close();
+});
+test('name-only source projection holds malformed and ambiguous pages without inferring absence',async()=>{
+ const {inspectStudentNameSearch}=await import('../../src/lms/assessmentReadProtocol');
+ expect(inspectStudentNameSearch("<script>x={testResultList:JSON.parse('[]')}</script>",'Invented Student')).toEqual([]);
+ expect(()=>inspectStudentNameSearch('<input type="password">','Invented Student')).toThrow('student_search_source_rejected');
+ expect(()=>inspectStudentNameSearch('<script>x={}</script>','Invented Student')).toThrow('result_list_missing_or_ambiguous');
+ const bad="<script>x={testResultList:JSON.parse('[{\"priNo\":\"bad\",\"userName\":\"Invented Student\"}]')}</script>";
+ expect(()=>inspectStudentNameSearch(bad,'Invented Student')).toThrow();
+});
+test('source item-answer read requests only the exact selected label and preserves the official literal',async()=>{
+ const {AcademyHttpClient}=await import('../../src/lms/academyHttpClient');let calls=0;
+ const client=new AcademyHttpClient({teacherLabel:'Invented Teacher',teacherKey:'99001',collegeKey:'88001'},async(url,init)=>{
+  calls++;if(calls<=3)return new Response(calls===1?login:principal);
+  const parsed=new URL(url);expect(parsed.pathname).toBe('/servlet/controller.common.TestPageShowExServlet');
+  expect(parsed.searchParams.get('p_process')).toBe('GetLectureList');expect(parsed.searchParams.get('lecture_list')).toBe('12345');
+  expect(init.method).toBe('GET');
+  return new Response(JSON.stringify({result:'OK',rows:[{id:12345,lecture_key:12345,outer_lecture_key:200,
+    unit_name:'Invented unit',pat_name:'Invented pattern',play_seconds:90,difficulty:2,answer:'1|_|invented answer'}]}));
+ });
+ await client.authenticate({username:'inventedUser',password:'inventedPassword'});
+ const result=await client.execute({family:'item_answer',teacherLabel:'Invented Teacher',teacherKey:'99001',lectureKeys:['12345'],answerReadAdmission:true});
+ expect(result).toMatchObject({status:'observed',itemAnswers:[{identity:{lectureKey:'12345'},answerLiteral:'1|_|invented answer',rendering:'not_qualified'}],nativePrintInvoked:false});
+ expect(calls).toBe(4);client.close();
+});
 test('inventory discovers exact-student attempts and period contracts without assigning completion or expected missing papers',async()=>{
  const {AcademyHttpClient}=await import('../../src/lms/academyHttpClient');let calls=0;
  const rows=[{pNo:7101,score:0,testingNo:8101,priNo:9101,userName:'Invented Student',testName:'Invented basic test',applyDate:'2099-01-01'},{pNo:7102,score:100,testingNo:8102,priNo:9102,userName:'Other Student',testName:'Excluded neighboring test'}];

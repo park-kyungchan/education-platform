@@ -11,8 +11,9 @@ export const dailyRecordGetSchema=z.object({
 // Trusted launch/backend configuration only. This is deliberately not part of tool input.
 export const dailyRecordReadAdmissionSchema=z.object({
   sourceNamespace:z.literal('academy.lms.dayrecord'),teacherId:z.string().regex(/^[1-9][0-9]{0,15}$/),
-  allowedFrom:dailyRecordDateSchema,allowedThrough:dailyRecordDateSchema,
-}).strict().refine(v=>v.allowedFrom<=v.allowedThrough,'ordered_admitted_range_required');
+  allowedFrom:dailyRecordDateSchema.nullable(),allowedThrough:dailyRecordDateSchema.nullable(),
+  studentScope:z.enum(['configured','source_verified']).optional(),
+}).strict().refine(v=>v.allowedFrom===null||v.allowedThrough===null||v.allowedFrom<=v.allowedThrough,'ordered_admitted_range_required');
 export type DailyRecordReadAdmission=z.infer<typeof dailyRecordReadAdmissionSchema>;
 export interface DailyRecordReadRoutePort {
   resolveStudent(input:unknown):Promise<unknown>;
@@ -53,9 +54,9 @@ export async function readDailyRecordByName(value:unknown,port:DailyRecordReadRo
   const qualified=dailyRecordReadAdmissionSchema.safeParse(admission);
   if(!qualified.success)return held('dailyrecord_owner_read_admission_not_configured');
   const owner=qualified.data;
-  if(lessonDate<owner.allowedFrom||lessonDate>owner.allowedThrough)return held('lesson_date_out_of_admitted_scope');
+  if((owner.allowedFrom!==null&&lessonDate<owner.allowedFrom)||(owner.allowedThrough!==null&&lessonDate>owner.allowedThrough))return held('lesson_date_out_of_admitted_scope');
   let resolved:z.infer<typeof resolutionSchema>;
-  try{resolved=resolutionSchema.parse(await port.resolveStudent({displayName:input.displayName,purpose:input.purpose,currentRequestRef:input.currentRequestRef}));}
+  try{resolved=resolutionSchema.parse(await port.resolveStudent({displayName:input.displayName,purpose:input.purpose,currentRequestRef:input.currentRequestRef,lessonDate}));}
   catch{return held('student_resolve_unqualified_no_automatic_retry');}
   if(resolved.status==='unavailable')return held(resolved.reasonCode);
   if(resolved.displayName!==input.displayName)return held('student_name_scope_conflict');

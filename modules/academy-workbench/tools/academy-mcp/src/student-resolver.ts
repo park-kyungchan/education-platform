@@ -1,4 +1,6 @@
+import {readFailureResult} from './read-failure.ts';
 import {z} from 'zod';
+import {dailyRecordDateSchema} from './dailyrecord-context.ts';
 
 /** Name → native student-key resolver (G2). Exact display-name match only.
  * Implemented by the native/source owner through the search port; this
@@ -8,6 +10,7 @@ export const studentResolveInputSchema = z.object({
   purpose: z.string().min(1).max(256),
   currentRequestRef: z.string().min(1).max(256),
   displayName: z.string().min(1).max(200),
+  lessonDate: dailyRecordDateSchema.optional(),
 }).strict();
 
 export type StudentResolveInput = z.infer<typeof studentResolveInputSchema>;
@@ -22,6 +25,10 @@ export type StudentSearchRow = z.infer<typeof studentSearchRowSchema>;
 export interface StudentNameSearchPort {
   searchByName(exactName: string): Promise<unknown>;
 }
+
+/** The owner did not configure this name and no live search port exists.
+ * This is not evidence that the source system lacks the student. */
+export class StudentNameNotAdmitted extends Error {}
 
 export type StudentResolveResult =
   | {status: 'resolved'; studentKey: string; displayName: string}
@@ -42,8 +49,9 @@ export async function resolveStudentByName(
   let rows: StudentSearchRow[];
   try {
     rows = z.array(studentSearchRowSchema).max(MAX_ROWS + 1).parse(await port.searchByName(name));
-  } catch {
-    return unavailable('student_resolve_search_unqualified_no_automatic_retry');
+  } catch (error) {
+    if (error instanceof StudentNameNotAdmitted) return unavailable('student_name_not_admitted');
+    return {...unavailable('student_resolve_search_unqualified_no_automatic_retry'),...readFailureResult(error,'student_resolve_search_unqualified_no_automatic_retry')};
   }
   if (rows.length > MAX_ROWS) return unavailable('student_resolve_search_unqualified_no_automatic_retry');
   if (rows.some(row => row.studentName !== name)) return unavailable('student_name_scope_conflict');
