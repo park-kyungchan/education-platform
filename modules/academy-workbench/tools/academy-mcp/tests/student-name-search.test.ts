@@ -1,5 +1,5 @@
-import './network-deny.ts';
 import {describe, expect, test} from 'bun:test';
+import {fileURLToPath} from 'node:url';
 import {DailyRecordService} from '../src/dailyrecord.ts';
 import {NativeDailyRecordBackend} from '../src/native-dailyrecord-backend.ts';
 import {backend as injectedBackend, clock, learningPolicy, safeguard} from './dailyrecord-fixture.ts';
@@ -19,6 +19,9 @@ const clientBase = {
 };
 const resolveInput = (displayName: string) =>
   ({purpose: 'Invented read', currentRequestRef: 'invented-request', displayName});
+
+if (process.env.ACADEMY_NAME_SEARCH_CASES === 'isolated') {
+  await import('./network-deny.ts');
 
 describe('name-only search port (REA contract, synthetic names only)', () => {
   test('the wire port receives a name-only input, never a key', async () => {
@@ -87,3 +90,15 @@ describe('name-only search port (REA contract, synthetic names only)', () => {
     expect(JSON.stringify(result)).not.toContain('fictional');
   });
 });
+
+} else {
+  test('name-only scenarios preserve strict network denial in an isolated process', async () => {
+    const child = Bun.spawn([process.execPath, 'test', '--preload='+fileURLToPath(new URL('./network-deny.ts', import.meta.url)),
+      fileURLToPath(import.meta.url)], {
+      env: {PATH: process.env.PATH, AGENT_PLATFORM_ROOT: process.env.AGENT_PLATFORM_ROOT,
+        AGENT_PLATFORM_SOURCE_MODE: process.env.AGENT_PLATFORM_SOURCE_MODE, ACADEMY_NAME_SEARCH_CASES: 'isolated'},
+      stdout: 'inherit', stderr: 'inherit',
+    });
+    expect(await child.exited).toBe(0);
+  }, 30000);
+}
