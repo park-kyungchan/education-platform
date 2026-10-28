@@ -1,7 +1,7 @@
 import {academyRoutingDescription} from './routing-context.ts';
 import type {McpServer} from '@modelcontextprotocol/server';
 import {readOnlyAnnotations} from './contracts.ts';
-import {DailyRecordService,dailyRecordIntakeSchema,dailyRecordReviewSchema,dailyRecordSaveSchema,cismSectionSchema,studentMetadataBatchSchema,studentMetadataGetSchema,type DailyRecordParentSafeguard} from './dailyrecord.ts';
+import {DailyRecordService,dailyRecordIntakeSchema,dailyRecordReviewSchema,dailyRecordSaveSchema,textbookSectionResultsSchema,cismSectionSchema,studentMetadataBatchSchema,studentMetadataGetSchema,type DailyRecordParentSafeguard} from './dailyrecord.ts';
 import {dailyRecordSaveAdmissionSchema,type DailyRecordSaveAdmission} from './dailyrecord-save-admission.ts';
 import {studentResolveInputSchema} from './student-resolver.ts';
 import {readPinnedLocalBytes} from './item-label-store.ts';
@@ -58,6 +58,11 @@ export function registerDailyRecordTools(server:McpServer,service=new DailyRecor
     description:academyRoutingDescription('academy_dailyrecord_review','Requires current user context. Reviews supplied parent text even without source, reporting unavailable before-state and no executable patch. A backend-issued observation handle additionally permits exact fresh before-state checks. Preserves existing entries, distinguishes no additional memo from deletion, checks supplied fact fragments, permanent hyphen lines and owner-bound edition/unit/section mappings. Changed progress/homework require learningEntries and an owner-configured catalog; ambiguous mappings require a teacher interview. Semantic equivalence needs teacher review. No rewrite, save, send, approval consumption or automatic retry.'),
     inputSchema:dailyRecordReviewSchema,annotations,
   },async input=>result(await service.review(input)));
+  server.registerTool('academy_textbook_section_results',{
+    title:'Read exact textbook section grading by source titles',
+    description:academyRoutingDescription('academy_textbook_section_results','Read exact existing textbook section grading for one admitted student, course and book by the source titles (for example a unit required-examples or type-drill title). Returns each title score with per-item O/X outcomes and correct/item counts. Titles must be the source exact titles; missing or ambiguous titles stop without guessing. This establishes observed section attempt scores only, not clinic solving, teacher acceptance, printing or whole-book completion. No writes, grading actions, printing, sending or automatic retry.'),
+    inputSchema:textbookSectionResultsSchema,annotations,
+  },async input=>result(await service.textbookSections(input)));
   server.registerTool('academy_dailyrecord_save',{
     title:'Save reviewed DailyRecord fields through the owner write backend',
     description:academyRoutingDescription('academy_dailyrecord_save','Save only the exact patch a prior academy_dailyrecord_review prepared in this process: the supplied reviewDigest must match a recomputed review against a fresh before-state, or the save is held without writing. Writing runs only through the native owner backend under a launch-pinned save admission issued from the actual current user instruction; approval flags, request evidence and credentials are never tool input. Each field is consumed once, written once and read back authoritatively; uncertain results are held for reconciliation and never retried automatically. Without a configured owner write backend this returns dailyrecord_save_backend_not_configured and writes nothing. No parent sending, printing or paper generation.'),
