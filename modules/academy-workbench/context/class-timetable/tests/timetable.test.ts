@@ -1,10 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtemp, rm, symlink, writeFile } from 'node:fs/promises';
+import { mkdir, mkdtemp, rm, symlink, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { isClassDay, validateRouting, validateTimetable } from '../validate.ts';
 import { checkRouting } from '../check-routing.ts';
+import { checkAdmission } from '../check-admission.ts';
 
 const fictionalStudent = () => ({
   name: 'fiction-a',
@@ -57,6 +59,20 @@ test('routing rejects missing targets instead of promising sources', () => {
   assert.throws(() =>
     validateRouting({ schema: 'academy.class-timetable-routing/1', routes: [{ question: 'q', target: 'no/such/file.ts' }] }, '/'),
   );
+});
+test('private admission rejects changed bytes without emitting them', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'class-admission-test-'));
+  try {
+    const path = 'modules/academy-workbench/context/class-timetable/timetable.json';
+    await mkdir(join(root, 'modules/academy-workbench/context/class-timetable'), { recursive: true });
+    await mkdir(join(root, 'provenance'), { recursive: true });
+    const content = 'fictional bytes';
+    await writeFile(join(root, path), content);
+    await writeFile(join(root, 'provenance/class-timetable-admission-20261028.json'), JSON.stringify({ schema: 'education.class-timetable-private-admission.v1', repository: 'park-kyungchan/education-platform', visibility: 'private', file: path, sha256: createHash('sha256').update(content).digest('hex') }));
+    await checkAdmission(root);
+    await writeFile(join(root, path), 'changed fictional bytes');
+    await assert.rejects(checkAdmission(root), /class_timetable_admission_hash_mismatch/);
+  } finally { await rm(root, { recursive: true, force: true }); }
 });
 test('route-only check reads routing metadata and fails when an actual target disappears', async () => {
   const root = await mkdtemp(join(tmpdir(), 'class-routing-test-'));

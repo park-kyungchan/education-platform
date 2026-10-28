@@ -2,6 +2,7 @@ import { readFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { platformRoot, validateRouting } from './validate.ts';
+import { checkAdmission } from './check-admission.ts';
 
 const routingPath = resolve(dirname(fileURLToPath(import.meta.url)), 'routing.json');
 
@@ -13,5 +14,6 @@ export async function checkRouting(path: string = routingPath, root: string = pl
 
 if (import.meta.main) {
   if (process.argv.length !== 2) throw Error('routing_check_arguments_not_allowed');
+  await checkAdmission();
   console.log(JSON.stringify({ status: 'pass', routes: await checkRouting() }));
 }
