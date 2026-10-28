@@ -176,34 +176,48 @@ export class NativeDailyRecordBackend implements DailyRecordReadBackend {
    * no key upfront); otherwise the owner-issued admission table in this
    * process. No network and no secret use on the admission path; the later
    * intake still verifies key+name against the live wire. */
-  async searchStudentsByName(exactName: string,requestRef?:string): Promise<unknown>{
+  async searchStudentsByName(exactName: string,requestRef?:string,lessonDate?:string): Promise<unknown>{
     if(requestRef)this.#sourceResolved.delete(requestRef);
     if(this.ownerAdmission?.schemaVersion==='academy.owner-admission/2'&&this.ownerAdmission.studentScope==='source_verified'
       &&!this.managedNames.has(exactName))throw new StudentNameNotAdmitted();
+    if(lessonDate && this.ownerAdmission?.schemaVersion==='academy.owner-admission/2'&&this.ownerAdmission.studentScope==='source_verified'){
+      if(!isDateAdmitted(lessonDate,this.ownerAdmission))throw Error('native_dailyrecord_scope_refused');
+      await this.#authenticate();
+      const selector=await this.client.discoverDayRecordGroups({teacherLabel:this.admission.teacherLabel,date:lessonDate});
+      const found=await this.client.execute({family:'day_record',teacherLabel:this.admission.teacherLabel,date:lessonDate,
+        groupIds:selector.groups.map(g=>g.groupId),studentNames:[exactName]});
+      if(!Array.isArray(found.dayRecords)||found.dayRecords.length>1||found.dayRecords.some(row=>row.studentName!==exactName||row.date!==lessonDate||row.teacherKey!==this.admission.teacherId))
+        throw Error('native_dated_name_scope_conflict');
+      return this.#rememberResolved(found.dayRecords.map(row=>({studentKey:row.studentKey,studentName:row.studentName})),exactName,requestRef);
+    }
     if(typeof this.client.searchStudentsByName==='function'){
       // Name lookup uses the same owner session as subsequent source reads.
       // Retain an authentication failure rather than replaying a login.
       await this.#authenticate();
       const raw=await this.client.searchStudentsByName({teacherLabel:this.admission.teacherLabel,studentName:exactName});
       if(!Array.isArray(raw))throw Error('native_name_search_unqualified_no_automatic_retry');
-      const pairs=nameSearchPairs.parse(raw.map((row)=>{
+      const pairs=raw.map((row)=>{
         if(typeof row!=='object'||row===null)throw Error('native_name_search_unqualified_no_automatic_retry');
         const pair=row as Record<string,unknown>;
         return {studentKey:pair.studentKey,studentName:pair.studentName};
-      }));
-      const unique=new Map(pairs.filter(row=>row.studentName===exactName).map(row=>[row.studentKey,row]));
-      if(this.ownerAdmission?.schemaVersion==='academy.owner-admission/2' && this.ownerAdmission.studentScope==='source_verified'
-        && requestRef && pairs.every(row=>row.studentName===exactName) && unique.size===1){
-        const row=[...unique.values()][0]!;
-        this.#sourceResolved.set(requestRef,{studentId:row.studentKey,displayName:row.studentName,at:Date.now()});
-        if(this.#sourceResolved.size>32)this.#sourceResolved.delete(this.#sourceResolved.keys().next().value!);
-      }
-      return pairs;
+      });
+      return this.#rememberResolved(pairs,exactName,requestRef);
     }
     const admitted = this.admission.students.filter((s)=>s.displayName===exactName)
       .map((s)=>({studentKey:s.studentId,studentName:s.displayName}));
     if(!admitted.length)throw new StudentNameNotAdmitted();
     return admitted;
+  }
+  #rememberResolved(raw:unknown,exactName:string,requestRef?:string){
+    const pairs=nameSearchPairs.parse(raw);
+    const unique=new Map(pairs.filter(row=>row.studentName===exactName).map(row=>[row.studentKey,row]));
+    if(this.ownerAdmission?.schemaVersion==='academy.owner-admission/2' && this.ownerAdmission.studentScope==='source_verified'
+      && requestRef && pairs.every(row=>row.studentName===exactName) && unique.size===1){
+      const row=[...unique.values()][0]!;
+      this.#sourceResolved.set(requestRef,{studentId:row.studentKey,displayName:row.studentName,at:Date.now()});
+      if(this.#sourceResolved.size>32)this.#sourceResolved.delete(this.#sourceResolved.keys().next().value!);
+    }
+    return pairs;
   }
   async readDailyRecord(scope:Readonly<DailyRecordScope>,requestRef?:string){
     const resolved=requestRef?this.#sourceResolved.get(requestRef):undefined;

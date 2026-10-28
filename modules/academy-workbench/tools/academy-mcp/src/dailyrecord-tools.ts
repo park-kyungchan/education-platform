@@ -37,7 +37,7 @@ export function registerDailyRecordTools(server:McpServer,service=new DailyRecor
   },async input=>result(await service.metadata(input)));
   server.registerTool('academy_student_resolve',{
     title:'Resolve one exact student display name to its native student key',
-    description:'Resolve an exact display name to its native key for live tools. For a DailyRecord lookup prefer academy_dailyrecord_get, which resolves and runs intake using owner-supplied scope. Zero rows or multi-key collisions stop with a named blocker; zero rows cover only the observed source page and never prove the student is absent. Missing configured admission is reported separately. Uses the same native read lifecycle. No writes, guessing or automatic retry.',
+    description:'Resolve an exact display name to its native key for live tools. For a DailyRecord lookup prefer academy_dailyrecord_get, which resolves and runs intake using owner-supplied scope. When supported by owner policy, lessonDate selects the exact qualified DailyRecord occurrence rather than a recent-test page. Zero rows or multi-key collisions stop with a named blocker and never prove the student is absent. Missing configured admission is reported separately. Uses the same native read lifecycle. No writes, guessing or automatic retry.',
     inputSchema:studentResolveInputSchema,annotations,
   },async input=>result(await service.resolveStudent(input)));
   server.registerTool('academy_dailyrecord_intake',{

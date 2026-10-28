@@ -1,4 +1,5 @@
 import {z} from 'zod';
+import {dailyRecordDateSchema} from './dailyrecord-context.ts';
 
 /** Name → native student-key resolver (G2). Exact display-name match only.
  * Implemented by the native/source owner through the search port; this
@@ -8,6 +9,7 @@ export const studentResolveInputSchema = z.object({
   purpose: z.string().min(1).max(256),
   currentRequestRef: z.string().min(1).max(256),
   displayName: z.string().min(1).max(200),
+  lessonDate: dailyRecordDateSchema.optional(),
 }).strict();
 
 export type StudentResolveInput = z.infer<typeof studentResolveInputSchema>;

@@ -56,7 +56,7 @@ export async function readDailyRecordByName(value:unknown,port:DailyRecordReadRo
   const owner=qualified.data;
   if((owner.allowedFrom!==null&&lessonDate<owner.allowedFrom)||(owner.allowedThrough!==null&&lessonDate>owner.allowedThrough))return held('lesson_date_out_of_admitted_scope');
   let resolved:z.infer<typeof resolutionSchema>;
-  try{resolved=resolutionSchema.parse(await port.resolveStudent({displayName:input.displayName,purpose:input.purpose,currentRequestRef:input.currentRequestRef}));}
+  try{resolved=resolutionSchema.parse(await port.resolveStudent({displayName:input.displayName,purpose:input.purpose,currentRequestRef:input.currentRequestRef,lessonDate}));}
   catch{return held('student_resolve_unqualified_no_automatic_retry');}
   if(resolved.status==='unavailable')return held(resolved.reasonCode);
   if(resolved.displayName!==input.displayName)return held('student_name_scope_conflict');

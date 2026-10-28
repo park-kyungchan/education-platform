@@ -14,6 +14,13 @@ without automatic retry. Native current/prior record identity checks remain
 in the existing intake/backend. The source fields and transmission state
 remain observations. This lookup returns no review handle or patch.
 
+With the explicit `source_verified` owner policy, the composed route passes
+the lesson date to the resolver. The owner client discovers the source's dated
+groups and projects the exact principal-qualified DailyRecord occurrence into
+a name/key pair. A missing or ambiguous dated row stays unavailable; it does
+not fall back to a recent test page or prove student absence. The later intake
+independently verifies the dated current and previous occurrences.
+
 `status: observed` and `sourceAvailability: observed` mean the read succeeded.
 `preparation.interviews` records questions needed only if the user later asks
 to author/review. No memo answer, attendance, assessment, fact or completion

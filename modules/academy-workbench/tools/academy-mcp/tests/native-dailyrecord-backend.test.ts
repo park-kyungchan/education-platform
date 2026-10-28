@@ -86,6 +86,27 @@ test('source-verified student scope needs explicit owner policy, exact name and 
  await ambiguous.searchStudentsByName(newTarget.studentName,'same-request');
  await expect(ambiguous.readDailyRecord(newScope,'same-request')).rejects.toThrow('native_dailyrecord_scope_refused');
 });
+test('date-qualified lookup uses the exact dated lesson row instead of a recent-test search',async()=>{
+ const f=fixture(),events:string[]=[];
+ const port={...f.port,searchStudentsByName:async()=>{events.push('recent-test');return [];},
+  discoverDayRecordGroups:async(input:any)=>{events.push('groups:'+input.date);return {groups:[{groupId:'3'}]};},
+  execute:async(input:any)=>{events.push('day:'+input.date);return {dayRecords:[input.date===target.date?row:prior]};}};
+ const open={...range,schemaVersion:'academy.owner-admission/2' as const,allowedFrom:null,allowedThrough:null,studentScope:'source_verified' as const};
+ const service=new DailyRecordService(new NativeDailyRecordBackend(port,admission,()=>({username:'fictional',password:'fictional'}),open));
+ const result=await service.get({displayName:'Invented Student',lessonDate:scope.lessonDate,purpose:'Synthetic dated read',currentRequestRef:'dated-request'});
+ expect(result).toMatchObject({status:'observed',sourceAvailability:'observed'});
+ expect(events).toEqual(['groups:2040-01-04','day:2040-01-04','groups:2040-01-04','day:2040-01-04','day:2040-01-02']);
+ expect(events).not.toContain('recent-test');
+});
+test('date-qualified lookup never substitutes a foreign source row or falls back after a miss',async()=>{
+ for(const rows of [[],[{...row,teacherKey:'99002'}],[row,{...row,recordKey:'14'}]]){
+  let recent=0;const f=fixture(),port={...f.port,searchStudentsByName:async()=>{recent++;return [];},execute:async()=>({dayRecords:rows})};
+  const open={...range,schemaVersion:'academy.owner-admission/2' as const,allowedFrom:null,allowedThrough:null,studentScope:'source_verified' as const};
+  const service=new DailyRecordService(new NativeDailyRecordBackend(port,admission,()=>({username:'fictional',password:'fictional'}),open));
+  const result=await service.get({displayName:'Invented Student',lessonDate:scope.lessonDate,purpose:'Synthetic dated read',currentRequestRef:'dated-request'});
+  expect(result.status).toBe('unavailable');expect(recent).toBe(0);
+ }
+});
 test('a foreign previous occurrence cannot supply homework assessment or a tone sample',async()=>{
  const f=fixture();f.port.execute=async(input:any)=>({dayRecords:[input.date===target.date?row:{...prior,recordKey:'11'}]});
  await expect(f.backend.readDailyRecord(scope)).rejects.toThrow('native_dailyrecord_previous_conflict');

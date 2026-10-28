@@ -60,7 +60,7 @@ export interface DailyRecordReadBackend {
   readStudentMetadata?(input:Readonly<StudentMetadataBatch>):Promise<StudentMetadataObservation>;
   readItemAnswers?(labels:readonly string[]):Promise<unknown>;
   readCismSection?(scope:Readonly<DailyRecordScope>,selection:Readonly<z.infer<typeof cismSelectionSchema>>):Promise<ReadResult<CismObservation>>;
-  searchStudentsByName?(exactName:Readonly<string>,requestRef:string):Promise<unknown>;
+  searchStudentsByName?(exactName:Readonly<string>,requestRef:string,lessonDate?:string):Promise<unknown>;
 }
 /** Inject the canonical Education safeguard, together with its verified policy/source identity. */
 export interface DailyRecordParentSafeguard {readonly policySha256:string;readonly safeguardSourceSha256:string;readonly sourceRef:string;check(text:string):boolean;checkLines(text:string):boolean}
@@ -175,7 +175,7 @@ export class DailyRecordService {
     if(!this.backend?.searchStudentsByName)return {...base,status:'unavailable' as const,reasonCode:'student_resolve_backend_not_configured'};
     try{
       return await this.#serial(async()=>{
-        const result=await resolveStudentByName(input.displayName,{searchByName:name=>this.backend!.searchStudentsByName!(name,input.currentRequestRef)});
+        const result=await resolveStudentByName(input.displayName,{searchByName:name=>this.backend!.searchStudentsByName!(name,input.currentRequestRef,input.lessonDate)});
         if(result.status==='unavailable')return {...base,...result};
         return freezeLabelData({...base,...result});
       });
