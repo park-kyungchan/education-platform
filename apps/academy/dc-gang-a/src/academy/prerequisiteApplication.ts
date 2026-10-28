@@ -1,6 +1,6 @@
 import type {TeacherPrerequisiteReadStore,TeacherPrerequisiteStore} from './ports/teacherStore';
 import {assertTeacherScope} from './usecases/requestRecovery';
-import {canonicalJson} from '../learning/model';
+import {canonicalJson,parseCalendarDate} from '../learning/model';
 import {assertTeacherDate,nativeBusinessDate} from './nativePrerequisiteStore';
 import type {TrustedTeacherContext,NativeCommandIngress,BindTeacherInput,UpdateTeacherInput,RetireTeacherInput,CreateClassGroupInput,UpdateClassGroupInput,CreateLessonSessionInput,UpdateLessonSessionInput,UpsertTemporalBindingInput,AttachStudentRevisionInput,UpdateStudentRevisionInput,AttachActivityScopeInput,CorrectActivityScopeInput,CreateProgressInput,CorrectProgressInput,CreateAssessmentInput,CorrectAssessmentInput,CreateDraftInput,UpdateDraftInput,RecordScoreEvidenceInput,PreviewApprovalClosureInput,IssueApprovalInput,ApproveDraftInput,RevokeApprovalInput,CommandOutcomeInput,FenceCommandInput,FinalizeReadOccurrenceInput,ActivityScopeFilter} from './contracts/teacherOperations';
 import {assertStudentOperationKind,validateScopeMutation,requestDigest,validateContext,type ApprovalClosure,type CommandContext,type NativeObjectRef,type NativeWriteResult,type ObjectRef,type OwnerAppendCommand,type OwnerFamily,type OwnerVersion,type ReadAdmission,type TeacherBinding} from './contracts/prerequisiteRecords';
@@ -29,12 +29,18 @@ export class PrerequisiteApplication {
   }
 
   /** Ordinary operations require a current ACTIVE binding for this actor. */
-  private async requireActiveTeacher(context:TrustedTeacherContext,businessDate?:string){
+  private async requireActiveTeacher(context:TrustedTeacherContext){
     const bound=await this.boundTeacher(context);
     if(!bound)throw Error('teacher_binding_required');
     const payload=bound.payload;
     if(payload.state!=='ACTIVE'||payload.assignmentState.state!=='known'||payload.assignmentState.value!=='ACTIVE')throw Error('teacher_binding_inactive');
-    if(businessDate!==undefined&&(businessDate<payload.validFrom||payload.validTo!==null&&businessDate>=payload.validTo))throw Error('teacher_binding_inactive');
+    return bound;
+  }
+
+  /** Binding refusal precedes diagnostics; only a parsed date selects an interval. */
+  private async requireDatedTeacher(context:TrustedTeacherContext,businessDate:unknown){
+    const bound=await this.requireActiveTeacher(context);
+    assertTeacherDate(bound.payload,parseCalendarDate(businessDate));
     return bound;
   }
 
@@ -110,13 +116,13 @@ export class PrerequisiteApplication {
 
   async createLessonSession(context:TrustedTeacherContext,input:CreateLessonSessionInput):Promise<NativeWriteResult>{
     const ctx=this.commandContext(context,input?.command);
-    await this.requireActiveTeacher(context,input?.payload?.businessDate);
+    await this.requireDatedTeacher(context,input?.payload?.businessDate);
     const command={context:ctx,entityKey:null,expectedRevisionId:null,payload:input.payload} as Parameters<TeacherPrerequisiteStore['appendLesson']>[0];
     return this.execute('append:lesson',command,cmd=>this.store.appendLesson(cmd));
   }
   async updateLessonSession(context:TrustedTeacherContext,input:UpdateLessonSessionInput):Promise<NativeWriteResult>{
     const ctx=this.commandContext(context,input?.command);
-    await this.requireActiveTeacher(context,input?.payload?.businessDate);
+    await this.requireDatedTeacher(context,input?.payload?.businessDate);
     const command={context:ctx,entityKey:input.lessonKey,expectedRevisionId:input.expectedRevisionId,payload:input.payload} as Parameters<TeacherPrerequisiteStore['appendLesson']>[0];
     return this.execute('append:lesson',command,cmd=>this.store.appendLesson(cmd));
   }
@@ -143,14 +149,14 @@ export class PrerequisiteApplication {
 
   async attachActivityScope(context:TrustedTeacherContext,input:AttachActivityScopeInput):Promise<NativeWriteResult>{
     const ctx=this.commandContext(context,input?.command);
-    await this.requireActiveTeacher(context,input?.payload?.recordScope?.businessDate);
+    await this.requireDatedTeacher(context,input?.payload?.recordScope?.businessDate);
     validateScopeMutation(input.payload,ctx.action,false);
     const command={context:ctx,entityKey:null,expectedRevisionId:null,payload:input.payload} as Parameters<TeacherPrerequisiteStore['appendActivityScope']>[0];
     return this.execute('append:scope',command,cmd=>this.store.appendActivityScope(cmd));
   }
   async correctActivityScope(context:TrustedTeacherContext,input:CorrectActivityScopeInput):Promise<NativeWriteResult>{
     const ctx=this.commandContext(context,input?.command);
-    await this.requireActiveTeacher(context,input?.payload?.recordScope?.businessDate);
+    await this.requireDatedTeacher(context,input?.payload?.recordScope?.businessDate);
     validateScopeMutation(input.payload,ctx.action,true);
     if(typeof input.scopeKey!=='string'||!input.scopeKey||typeof input.expectedRevisionId!=='string'||!input.expectedRevisionId)throw Error('invalid_activity_scope');
     const command={context:ctx,entityKey:input.scopeKey,expectedRevisionId:input.expectedRevisionId,payload:input.payload} as Parameters<TeacherPrerequisiteStore['appendActivityScope']>[0];
@@ -159,21 +165,21 @@ export class PrerequisiteApplication {
 
   async createProgress(context:TrustedTeacherContext,input:CreateProgressInput):Promise<NativeWriteResult>{
     const ctx=this.commandContext(context,input?.command);
-    await this.requireActiveTeacher(context,input?.payload?.recordScope?.businessDate);
+    await this.requireDatedTeacher(context,input?.payload?.recordScope?.businessDate);
     const command={context:ctx,studentId:input.studentId,payload:input.payload};
     return this.execute('createProgress',command,cmd=>this.store.createProgress(cmd));
   }
   async correctProgress(context:TrustedTeacherContext,input:CorrectProgressInput):Promise<NativeWriteResult>{
     assertStudentOperationKind('correctProgress',input?.payload);
     const ctx=this.commandContext(context,input?.command);
-    await this.requireActiveTeacher(context,input?.payload?.recordScope?.businessDate);
+    await this.requireDatedTeacher(context,input?.payload?.recordScope?.businessDate);
     const command={context:ctx,studentId:input.studentId,entityId:input.entityId,expectedRevisionId:input.expectedRevisionId,payload:input.payload};
     return this.execute('correctPrerequisiteRecord',command,cmd=>this.store.correctPrerequisiteRecord(cmd));
   }
 
   async createAssessment(context:TrustedTeacherContext,input:CreateAssessmentInput):Promise<NativeWriteResult>{
     const ctx=this.commandContext(context,input?.command);
-    const bound=await this.requireActiveTeacher(context,input?.payload?.assessmentScope?.businessDate);
+    const bound=await this.requireDatedTeacher(context,input?.payload?.assessmentScope?.businessDate);
     if(input?.payload?.assessedBy?.state==='known')this.assertSelfTeacher(bound,input.payload.assessedBy.value);
     const command={context:ctx,studentId:input.studentId,payload:input.payload};
     return this.execute('createAssessment',command,cmd=>this.store.createAssessment(cmd));
@@ -181,7 +187,7 @@ export class PrerequisiteApplication {
   async correctAssessment(context:TrustedTeacherContext,input:CorrectAssessmentInput):Promise<NativeWriteResult>{
     assertStudentOperationKind('correctAssessment',input?.payload);
     const ctx=this.commandContext(context,input?.command);
-    const bound=await this.requireActiveTeacher(context,input?.payload?.assessmentScope?.businessDate);
+    const bound=await this.requireDatedTeacher(context,input?.payload?.assessmentScope?.businessDate);
     if(input?.payload?.assessedBy?.state==='known')this.assertSelfTeacher(bound,input.payload.assessedBy.value);
     const command={context:ctx,studentId:input.studentId,entityId:input.entityId,expectedRevisionId:input.expectedRevisionId,payload:input.payload};
     return this.execute('correctPrerequisiteRecord',command,cmd=>this.store.correctPrerequisiteRecord(cmd));
@@ -189,7 +195,7 @@ export class PrerequisiteApplication {
 
   async createDraft(context:TrustedTeacherContext,input:CreateDraftInput):Promise<NativeWriteResult>{
     const ctx=this.commandContext(context,input?.command);
-    const bound=await this.requireActiveTeacher(context,input?.payload?.recordScope?.businessDate);
+    const bound=await this.requireDatedTeacher(context,input?.payload?.recordScope?.businessDate);
     if(input?.payload?.responsibleTeacherRef?.state==='known')this.assertSelfTeacher(bound,input.payload.responsibleTeacherRef.value);
     const command={context:ctx,studentId:input.studentId,payload:input.payload};
     return this.execute('createDraft',command,cmd=>this.store.createDraft(cmd));
@@ -197,7 +203,7 @@ export class PrerequisiteApplication {
   async updateDraft(context:TrustedTeacherContext,input:UpdateDraftInput):Promise<NativeWriteResult>{
     assertStudentOperationKind('updateDraft',input?.payload);
     const ctx=this.commandContext(context,input?.command);
-    const bound=await this.requireActiveTeacher(context,input?.payload?.recordScope?.businessDate);
+    const bound=await this.requireDatedTeacher(context,input?.payload?.recordScope?.businessDate);
     if(input?.payload?.responsibleTeacherRef?.state==='known')this.assertSelfTeacher(bound,input.payload.responsibleTeacherRef.value);
     const command={context:ctx,studentId:input.studentId,entityId:input.entityId,expectedRevisionId:input.expectedRevisionId,payload:input.payload};
     return this.execute('correctPrerequisiteRecord',command,cmd=>this.store.correctPrerequisiteRecord(cmd));
@@ -205,7 +211,7 @@ export class PrerequisiteApplication {
 
   async recordScoreEvidence(context:TrustedTeacherContext,input:RecordScoreEvidenceInput):Promise<NativeWriteResult>{
     const ctx=this.commandContext(context,input?.command);
-    const bound=await this.requireActiveTeacher(context,input?.payload?.recordScope?.businessDate);
+    const bound=await this.requireDatedTeacher(context,input?.payload?.recordScope?.businessDate);
     if(input?.payload)this.assertSelfTeacher(bound,input.payload.recordedBy);
     const command={context:ctx,entityKey:input.entityKey,expectedRevisionId:input.expectedRevisionId,payload:input.payload};
     return this.execute('appendScoreEvidence',command,cmd=>this.store.appendScoreEvidence(cmd));

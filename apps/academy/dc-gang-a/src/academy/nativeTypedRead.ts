@@ -1,5 +1,5 @@
 import {createHmac,timingSafeEqual} from 'node:crypto';
-import {assertDate,assertExactKeys,assertInstant,canonicalJson,digest,requireText} from '../learning/model';
+import {parseCalendarDate,type CalendarDate,assertDate,assertExactKeys,assertInstant,canonicalJson,digest,requireText} from '../learning/model';
 import {assertTeacherScope} from './usecases/requestRecovery';
 import type {TrustedTeacherContext} from './contracts/teacherOperations';
 import type {ReadHorizonExpectation,ReadHorizonPlan,ReadOutputRefusalSelector,TeacherPrerequisiteReadStore,TeacherPrerequisiteStore} from './ports/teacherStore';
@@ -683,7 +683,7 @@ export class NativeTypedReadService implements NativeTypedRead{
     const policyRevision='policy:'+digest({domain:'native-read-policy/v3',planBinding,processEpoch:this.processEpoch??null,bindingRevision:horizon.bindingRevision,...profileBinding(this.consumerProfile,this.sourceSetSha256)});
     if(request.snapshot.readRevision!==readRevision||request.snapshot.policyRevision!==policyRevision)throw staleGrant();
   }
-  private async assertCurrentBinding(view:TeacherPrerequisiteReadStore,context:TrustedTeacherContext,businessDate?:string){
+  private async assertCurrentBinding(view:TeacherPrerequisiteReadStore,context:TrustedTeacherContext,businessDate?:CalendarDate){
     const bound=await view.teacherBindingByActor(context.ownerId,context.actorId);
     if(!bound)throw denied();
     if(bound.payload.state!=='ACTIVE'||bound.payload.assignmentState.state!=='known'||bound.payload.assignmentState.value!=='ACTIVE')throw denied();
@@ -694,8 +694,8 @@ export class NativeTypedReadService implements NativeTypedRead{
     if(canonicalJson(scopeRef)!==canonicalJson(bound.scopeRef)||scopeRef.basis.namespace!==bound.namespace)throw denied();
   }
   private async assertInputAuthority(view:TeacherPrerequisiteReadStore,context:TrustedTeacherContext,selection:unknown,scopeRef:unknown):Promise<void>{
-    let date:string|undefined;
-    if(isRecord(selection)&&typeof selection.businessDate==='string')try{assertDate(selection.businessDate);date=selection.businessDate;}catch{}
+    let date:CalendarDate|undefined;
+    if(isRecord(selection)&&typeof selection.businessDate==='string')try{date=parseCalendarDate(selection.businessDate);}catch{}
     // Invalid dates convey no dated authority. Current actor state still
     // precedes diagnostics; a valid date additionally selects its interval.
     const bound=await this.assertCurrentBinding(view,context,date);
@@ -707,7 +707,7 @@ export class NativeTypedReadService implements NativeTypedRead{
     await this.assertTeachingAuthority(view,context,{businessDate:date,classGroupRef:selection.classGroupRef as ObjectRef<'ClassGroup'>},scope);
   }
   private async assertTeachingAuthority(view:TeacherPrerequisiteReadStore,context:TrustedTeacherContext,selection:Pick<TypedTemporalSelection,'businessDate'|'classGroupRef'>,scopeRef:NativeObjectRef):Promise<void>{
-    const bound=await this.assertCurrentBinding(view,context,selection.businessDate);
+    const bound=await this.assertCurrentBinding(view,context,parseCalendarDate(selection.businessDate));
     this.assertActorScope(bound,scopeRef);
     if(canonicalJson(selection.classGroupRef.identity.scopeRef)!==canonicalJson(scopeRef)||selection.classGroupRef.identity.namespace!==bound.namespace)throw denied();
     const teacherRef:ObjectRef={identity:{scopeRef:bound.scopeRef,namespace:bound.namespace,objectType:'Teacher',nativeKey:bound.entityKey},revision:bound.revisionId};

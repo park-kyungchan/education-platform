@@ -1,6 +1,6 @@
 import {readFileSync} from 'node:fs';
-import {foundation} from './nativePrerequisiteStore.test';
-import {context as commandFixture} from './nativePrerequisiteContracts.test';
+import {foundation,admitted} from './nativePrerequisiteStore.test';
+import {context as commandFixture,progress,draft,assessment} from './nativePrerequisiteContracts.test';
 import {describe,expect,test} from 'bun:test';
 import {signTeacherSession} from '../../src/academy/auth';
 import {createTeacherServerHandler,declaredRefusalStatus,inputRefusals,prerequisiteRefusalStatus,nativePrerequisiteOperations,nativePrereqRouteAliases,type LoginIdentity} from '../../src/academy/server';
@@ -677,4 +677,62 @@ test('CLOCK-HTTP the fictional cookie route retains its synthetic read clock und
   const {handler,store}=makeHandler(),response=await handler(post(request()));
   expect(response.status).toBe(200);expect(store.finalizations.map(row=>row.status)).toEqual(['COMPLETED']);
  }finally{Date.now=previous;}
+});
+
+const regressionIngress=(label:string)=>{
+ const c=commandFixture(label),{ownerId:_owner,actorId:_actor,verifiedSession,...rest}=c;
+ return {...rest,authenticationRevision:verifiedSession.authenticationRevision};
+};
+function prerequisiteHandler(store:Awaited<ReturnType<typeof foundation>>['store']){
+ return createTeacherServerHandler({app:new TeacherApplication(store as never,OWNER,undefined,undefined,store),origin:ORIGIN,sessionKey:SESSION_KEY,identity,invitationDigest:null,
+  saveIdentity:async()=>{throw Error('auth writer must not run');},curatedConceptCandidates:{read:()=>{throw Error('unused');}} as never});
+}
+
+test('RC10 every dated authority route rejects invalid calendars before interval selection',async()=>{
+ const dated={createLessonSession:'businessDate',updateLessonSession:'businessDate',attachActivityScope:'recordScope',correctActivityScope:'recordScope',createProgress:'recordScope',correctProgress:'recordScope',createAssessment:'assessmentScope',correctAssessment:'assessmentScope',createDraft:'recordScope',updateDraft:'recordScope',recordScoreEvidence:'recordScope'} as const;
+ const facade=readFileSync(new URL('../../src/academy/prerequisiteApplication.ts',import.meta.url),'utf8');
+ const observed=[...facade.matchAll(/async (\w+)\([^]*?(?=\n  async |\n  \/\/|$)/g)].filter(m=>/requireDatedTeacher\(context,input\?\.payload\?\./.test(m[0]!)).map(m=>m[1]!).sort();
+ expect(observed).toEqual(Object.keys(dated).sort());
+ const malformed:unknown[]=[null,7,{},[],'','not-a-date','2026-00-01','2026-02-30','2026-10-24T00:00:00Z'];
+ const failures:string[]=[];let cases=0;
+ for(const retired of [false,true]){
+  const f=await foundation({validFrom:'2026-01-01',validTo:'2027-01-01'}),handler=prerequisiteHandler(f.store);
+  if(retired){const command={...f.bind,context:commandFixture('rc10-retire'),entityKey:f.teacher.identity.nativeKey,expectedRevisionId:f.teacher.revisionId,payload:{...f.bind.payload,state:'RETIRED' as const}};await admitted(f.store,'append:teacher',command,()=>f.store.appendTeacher(command));}
+  const before=f.sql.state();
+  for(const [operation,field] of Object.entries(dated))for(const bad of malformed){
+   const sample=operation.includes('Assessment')?assessment():operation.includes('Draft')?draft():operation.includes('Progress')?progress():{kind:operation.includes('Lesson')?'lesson_session':operation==='recordScoreEvidence'?'native_score_evidence':'activity_scope'};
+   const payload={...sample,[field]:field==='businessDate'?bad:{...f.recordScope,businessDate:bad}};
+   const input={command:regressionIngress('rc10-'+cases),payload,studentId:'student-a',entityId:'entity-a',expectedRevisionId:'revision-a',lessonKey:f.lesson.identity.nativeKey,scopeKey:'scope-a',entityKey:'evidence-a'};
+   const paths=[['/api/native-prerequisite',false] as const,...Object.entries(nativePrereqRouteAliases).filter(([,op])=>op===operation).map(([path])=>[path,true] as const)];
+   for(const [path,named] of paths){
+    const keys=operation==='createLessonSession'?['command','payload']:operation==='updateLessonSession'?['command','lessonKey','expectedRevisionId','payload']:operation==='attachActivityScope'?['command','payload']:operation==='correctActivityScope'?['command','scopeKey','expectedRevisionId','payload']:operation==='recordScoreEvidence'?['command','entityKey','expectedRevisionId','payload']:operation.startsWith('create')?['command','studentId','payload']:['command','studentId','entityId','expectedRevisionId','payload'];
+    const closed=Object.fromEntries(keys.map(k=>[k,input[k as keyof typeof input]]));
+    const response=await handler(post(named?closed:{operation,input:closed},{path})),body=await response.json();cases++;
+    if(response.status!==(retired?403:400)||body.error!==(retired?'teacher_binding_inactive':'invalid calendar date'))failures.push(operation+':'+path+':'+typeof bad+':'+response.status+':'+body.error);
+   }
+  }
+  if(f.sql.state()!==before)failures.push('unexpected_admission_or_business_write:'+retired);
+ }
+ for(const retired of [false,true])for(const bad of malformed){
+  const {handler,store}=makeHandler();if(retired)store.binding=version('teacher-a','rev-retired',{...store.binding!.payload,state:'RETIRED',assignmentState:knownK('INACTIVE' as const)});
+  for(const acquire of [false,true]){
+   const temporal={...testTemporal(),businessDate:bad},value=acquire?{schema:'native-read-acquire.v2',consumerProfile:'CURRENT_1_1',requestId:'rc10-acquire',scopeRef:nativeRef(),consistency:'SNAPSHOT',time:{mode:'CURRENT'},functionIntent:{...testFunctionRequest(testTemporal()),businessDate:bad}}:{...request(),temporalSelection:temporal};
+   const response=await handler(post(value,{path:acquire?'/api/native-read-snapshot':'/api/typed-read'}));cases++;
+   if(response.status!==(retired?403:400))failures.push((acquire?'acquire':'read')+':'+typeof bad+':'+response.status);
+  }
+ }
+ expect(cases).toBeGreaterThan(350);expect(failures).toEqual([]);
+});
+
+test('RC9 recursive hash refusals stay classified across generic and named ingress',async()=>{
+ const f=await foundation({validFrom:'2026-01-01',validTo:'2027-01-01'}),handler=prerequisiteHandler(f.store),before=f.sql.state();
+ for(const [operation,path,named] of [['createLessonSession','/api/native-prerequisite',false],['createLessonSession','/api/native-prereq/lessons',true],['createClassGroup','/api/native-prerequisite',false],['createClassGroup','/api/native-prereq/classes',true]] as const)for(const array of [false,true]){
+  const input={command:regressionIngress('rc9-depth-'+operation+array+named),payload:{kind:operation==='createLessonSession'?'lesson_session':'class_group',...(operation==='createLessonSession'?{businessDate:'2026-10-24'}:{}),nested:null}};
+  const nested=(array?'[':'{"x":').repeat(40000)+'null'+(array?']':'}').repeat(40000);
+  const raw=JSON.stringify(named?input:{operation,input}).replace('"nested":null','"nested":'+nested);
+  expect(new TextEncoder().encode(raw).byteLength).toBeLessThan(524288);
+  const response=await handler(post(null,{path,rawBody:raw}));expect(response.status).toBe(400);
+  const body=await response.json();expect(prerequisiteRefusalStatus(body.error)).toBe(400);expect(body.error).toBe('invalid_json_depth');
+ }
+ expect(f.sql.state()).toBe(before);
 });
