@@ -122,7 +122,7 @@ export function createTeacherServerHandler(options:TeacherServerOptions){
     // Native prerequisite records inline full NativeObjectRef scope bases in every evidence ref (~1.1 KB each),
     // so a real B-lane draft exceeds 128000 B; 512 KiB until refs are compacted (tracked contract change).
     const intakePath=new URL(req.url).pathname;
-    const limit=intakePath==='/api/owner-workspace'?4_194_304:['/api/exam-candidate','/api/concept-definition'].includes(intakePath)?262_144:['/api/native-prerequisite','/api/native-prereq/teachers/update'].includes(intakePath)?524_288:['/api/teacher-observation','/api/teacher-clinic','/api/teacher-workspace','/api/owner-workspace','/api/record'].includes(intakePath)?128000:['/api/typed-read','/api/native-read-snapshot'].includes(intakePath)?65536:20000;
+    const limit=intakePath==='/api/owner-workspace'?4_194_304:['/api/exam-candidate','/api/concept-definition'].includes(intakePath)?262_144:intakePath==='/api/native-prerequisite'||intakePath.startsWith('/api/native-prereq/')?524_288:['/api/teacher-observation','/api/teacher-clinic','/api/teacher-workspace','/api/owner-workspace','/api/record'].includes(intakePath)?128000:['/api/typed-read','/api/native-read-snapshot'].includes(intakePath)?65536:20000;
     const length=req.headers.get('Content-Length');
     if(length!==null&&(!/^\d+$/.test(length)||Number(length)>limit))throw Error('input_too_large');
     const reader=req.body?.getReader();if(!reader)throw Error('invalid_input');
@@ -410,7 +410,7 @@ export function createTeacherServerHandler(options:TeacherServerOptions){
             if(code==='committed_outcome_uncertain')return json({error:code,automaticRetry:false,readOriginalRequestBeforeNewIntent:true},503);
             if(['teacher_binding_required','teacher_binding_inactive','teacher_attribution_conflict','owner_scope_conflict','student_scope_conflict'].includes(code))return json({error:code},403);
             // Designed domain refusals are conflicts, not internal failures.
-            if(code.includes('conflict')||/^(approval_|duplicate_|completeness_)/.test(code)||['stale_base','revision_conflict','idempotency_reuse','identity_collision','teacher_binding_exists','invalid_transition','temporal_overlap'].includes(code))return json({error:code,automaticRetry:false},409);
+            if(code.includes('conflict')||/^(approval_|duplicate_|completeness_|stale_)/.test(code)||['stale_base','revision_conflict','idempotency_reuse','identity_collision','teacher_binding_exists','invalid_transition','temporal_overlap'].includes(code))return json({error:code,automaticRetry:false},409);
             if(code.startsWith('invalid_')||code.endsWith('_required')||code==='unexpected or missing domain fields'||code==='sha256_required'||code.includes('must be nonempty'))return json({error:code},400);
             // Unexpected failure: log only a closed code or class plus throw-site frames (no payloads) so it is diagnosable.
             const at=error instanceof Error?[...(error.stack??'').matchAll(/\/([A-Za-z_]+\.ts):(\d+):\d+/g)].slice(0,4).map(x=>x[1]+':'+x[2]).join('<'):'';

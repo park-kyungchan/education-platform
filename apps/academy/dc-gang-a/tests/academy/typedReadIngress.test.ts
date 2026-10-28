@@ -351,6 +351,23 @@ describe('authenticated prerequisite wrapper (IG3-REV-09)',()=>{
     expect(unknown.status).toBe(404);
     expect(calls).toHaveLength(17);
   });
+  test('RC5: named aliases share the generic 512 KiB body limit; stale source revisions are 409 conflicts',async()=>{
+    const path='/api/native-prereq/progress';
+    expect(nativePrereqRouteAliases[path]).toBe('createProgress');
+    const post=(body:string)=>new Request(ORIGIN+path,{method:'POST',headers:{Origin:ORIGIN,'Content-Type':'application/json',Cookie:cookie()},body});
+    const calls:Call[]=[];const handler=prerequisiteHandler(calls,{createProgress:()=>{throw Error('stale_source_revision');}});
+    const stale=await handler(post(JSON.stringify(sampleInput('createProgress'))));
+    expect(stale.status).toBe(409);
+    expect((await stale.json()).error).toBe('stale_source_revision');
+    // Body rejections share one public error; the closed rejection code says which limit applied.
+    const rejected=async(bytes:number):Promise<{status:number;codes:string[]}>=>{
+      const codes:string[]=[],original=console.error;
+      console.error=(line:unknown)=>{try{const v=JSON.parse(String(line));if(v.status==='NATIVE_PREREQUISITE_INPUT_REJECTED')codes.push(v.code);}catch{}};
+      try{return {status:(await handler(post(JSON.stringify({pad:'x'.repeat(bytes)})))).status,codes};}finally{console.error=original;}
+    };
+    expect((await rejected(30_000)).codes).not.toContain('body:input_too_large');
+    expect(await rejected(530_000)).toEqual({status:400,codes:['body:input_too_large']});
+  });
   test('closed teachers/update alias dispatches update and retire by payload state',async()=>{
     const calls:Call[]=[];const handler=prerequisiteHandler(calls);
     const update=await handler(new Request(ORIGIN+'/api/native-prereq/teachers/update',{method:'POST',headers:{Origin:ORIGIN,'Content-Type':'application/json',Cookie:cookie()},body:JSON.stringify({command:{idempotencyKey:'k-u'},teacherKey:'teacher-a',payload:{state:'ACTIVE'}})}));

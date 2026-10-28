@@ -13,8 +13,8 @@ import signal
 import select
 import time
 
-WORKTREE = '/var/tmp/e2e-p4-native-20261024-01/runs/e11-sealed-frame-44/source/education-native-foundations'
-TASK = '/var/tmp/e2e-p4-native-20261024-01/runs/e11-sealed-frame-44'
+WORKTREE = '/var/tmp/e2e-p4-native-20261024-01/runs/e11-sealed-frame-45/source/education-native-foundations'
+TASK = '/var/tmp/e2e-p4-native-20261024-01/runs/e11-sealed-frame-45'
 BUN = '/usr/local/bin/bun'
 ACADEMY = WORKTREE + '/apps/academy/dc-gang-a/harness/'
 SCRIPTS = {'HELPER': ACADEMY + 'native_foundations_qualification.ts',
@@ -109,8 +109,8 @@ def verify_python_material(admission):
 
 
 def verify_controller_source(admission):
-    require(admission['runId'] == 'e2e-p4-native-20261027-44'
-            and admission['ownerId'] == 'synthetic-p4-e2e-p4-native-20261027-44'
+    require(admission['runId'] == 'e2e-p4-native-20261027-45'
+            and admission['ownerId'] == 'synthetic-p4-e2e-p4-native-20261027-45'
             and admission['sourceReadyReview'] == 'ROOT_ACCEPTED_EXACT_WHOLE_ENVELOPE_U_V2',
             'final_root_source_review_required')
     for key in ['reviewSha256', 'environmentSha256', 'dependencySetSha256']:
@@ -345,8 +345,8 @@ class Controller:
             os.close(directory_fd)
         self.admission = admission
         self.control_read, self.control_write = control_read, control_write
-        self.memory = {'root.ownerId': 'synthetic-p4-e2e-p4-native-20261027-44',
-                       'root.namespace': 'p4-qualification-e2e-p4-native-20261027-44',
+        self.memory = {'root.ownerId': 'synthetic-p4-e2e-p4-native-20261027-45',
+                       'root.namespace': 'p4-qualification-e2e-p4-native-20261027-45',
                        'memory.generatedPassword.A': os.urandom(32).hex(),
                        'memory.generatedPassword.B': os.urandom(32).hex()}
         self.helper = None
@@ -363,8 +363,8 @@ class Controller:
         admission = json.loads(private_pin(release['admission']))
         require(base['executor']['pid'] == child and base['executor']['startTicks'] == start_ticks(child)
                 and base['controller'] == {'pid': os.getpid(), 'startTicks': start_ticks(os.getpid())}
-                and base['ownerId'] == 'synthetic-p4-e2e-p4-native-20261027-44'
-                and base['runId'] == 'e2e-p4-native-20261027-44'
+                and base['ownerId'] == 'synthetic-p4-e2e-p4-native-20261027-45'
+                and base['runId'] == 'e2e-p4-native-20261027-45'
                 and base['sourceSet']['sha256'] == self.admission['sourceSet']['sha256']
                 and base['dependencySet']['sha256'] == self.admission['dependencySetSha256']
                 and base['environmentSha256'] == self.admission['environmentSha256'], 'actual_child_binding_required')

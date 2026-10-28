@@ -154,3 +154,10 @@ test('G4 terminal same-key CAS preserves source/history, emits one ABSENT relati
  expect((await f.store.ownerHistory(owner,'scope',active.entityKey))).toHaveLength(2);
 });
 
+test('NF-07 a Student revision refuses other owner payload families and leaves the Student head untouched',async()=>{
+ const f=await scene(),before=canonicalJson(f.sql.rows('record_heads'));
+ const body=f.sql.rows('class_versions')[0]!.body,classPayload=structuredClone((typeof body==='string'?JSON.parse(body):body).payload);
+ const c={context:context('nf-wrong-family'),studentId:'student-a',expectedRevisionId:f.student.revisionId,payload:classPayload};
+ await expect(admitted(f.store,'append:student',c,()=>f.store.appendStudentRevision(c))).rejects.toThrow('invalid_student_payload_kind');
+ expect(canonicalJson(f.sql.rows('record_heads'))).toBe(before);
+});

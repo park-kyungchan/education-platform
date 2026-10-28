@@ -650,3 +650,14 @@ describe('F2 trusted UTF8 output budget',()=>{
     expect(f.store.admissions.size).toBe(0);
   });
 });
+
+test('DP-OCC a DailyProgress daily-context query returns only the selected occurrence; cited other-occurrence progress stays a dependency',async()=>{
+  const {store,service}=fixture();
+  const other={...recScope,businessDate:'2026-10-23',lessonRef:objectRef('LessonSession','prior-lesson','rev-prior-lesson')};
+  mapFixtureViews(store,view=>({...view,current:async(owner,student)=>{
+    const rows=await view.current(owner,student),progress=rows.find(r=>r.payload.kind==='daily_progress')!;
+    return [...rows,{...progress,entityId:'progress-prior',revisionId:'rev-progress-prior',payload:{...progress.payload,recordScope:other} as typeof progress.payload}];
+  }}));
+  const res=await service.typedRead(ctx,registeredRequest('DailyProgress',{snapshot:snapshot('FAIL_ON_CHANGE'),expectedRevisions:[objectRef('DailyProgress','progress-prior','rev-progress-prior')]}));
+  expect(res.items.flatMap(i=>i.kind==='OBJECT'?[i.record.identity.nativeKey]:[])).toEqual(['progress-a']);
+});

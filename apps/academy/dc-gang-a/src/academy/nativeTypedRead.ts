@@ -1087,10 +1087,15 @@ export class NativeTypedReadService implements NativeTypedRead{
       const baseType=request.selector.query.baseType.symbol as EducationType;
       const selection=request.temporalSelection;
       const bound=selection.functionName==='GetStudentDailyContext'?selection.studentRef:selection.functionName==='ListClassDailyStatus'?selection.classGroupRef:selection.draftRef;
-      // A DailyProgress object set in a student's daily context is that student's progress in the horizon;
-      // every other supported base selects the bound object itself.
+      // A DailyProgress object set in a student's daily context is that student's progress in the selected
+      // occurrence (class, business date and, when exact, lesson); records cited from other occurrences stay
+      // dependencies, never results. Every other supported base selects the bound object itself.
+      type Scope={studentRef:ObjectRef;classGroupRef:ObjectRef;businessDate:string;lessonRef:ObjectRef};
+      const inOccurrence=(scope:Scope|undefined):boolean=>!!scope&&bound!==null&&identityEqual(scope.studentRef.identity,bound.identity)
+        &&identityEqual(scope.classGroupRef.identity,selection.classGroupRef.identity)&&scope.businessDate===selection.businessDate
+        &&(selection.occurrence.mode!=='EXACT'||identityEqual(scope.lessonRef.identity,selection.occurrence.lessonRef.identity));
       const selected=baseType==='DailyProgress'&&selection.functionName==='GetStudentDailyContext'
-        ?records.filter(record=>record.identity.objectType==='DailyProgress'&&bound!==null&&identityEqual(((record.recordScope as {studentRef?:ObjectRef}|undefined)?.studentRef??{identity:null} as unknown as ObjectRef).identity,bound.identity))
+        ?records.filter(record=>record.identity.objectType==='DailyProgress'&&inOccurrence(record.recordScope as Scope|undefined))
         :records.filter(record=>record.identity.objectType===baseType&&bound!==null&&identityEqual(record.identity,bound.identity));
       const selectedKeys=new Set(selected.map(record=>identityKey(record.identity)));
       const selectedLinks=links.filter(link=>request.linkMask.includes(link.linkType)&&selectedKeys.has(identityKey(link.fromRef.identity)));
