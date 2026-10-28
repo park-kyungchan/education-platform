@@ -1,7 +1,7 @@
 import {TeacherWorkspaceRefusal} from './teacherWorkspace';
 import type { TeacherApplication, TrustedTeacherContext } from './application';
 import { readCookie, secretDigest, signTeacherSession, verifyTeacherSession } from './auth';
-import { assertExactKeys } from '../learning/model';
+import { canonicalJson,parseCalendarDate,assertInstant,assertExactKeys } from '../learning/model';
 import { validateWebMcpTrialToken } from './originTrial';
 import {ClinicCommandRefusal} from './learningWork';
 import {matchesTeacherActionHeaders} from './teacherActionScope';
@@ -14,21 +14,21 @@ import type {PreservedSelection} from './contracts/preservedHistory';
 import {createCuratedConceptCandidateAccess} from './curatedConceptCandidates';
 import {nativeMetadataOperationIdPattern,nativeReadDescriptorMaxBytes,snapshotNativeReadBuildDescriptor,type NativeReadBuildDescriptor} from './nativeReadDescriptor';
 import {createNativeTypedRead,typedReadContractVersion,TypedReadRefusal,type NativeQualificationHooks,type BufferedTypedReadOutput,type NativeSnapshotAcquireRequest,type SnapshotAdmissionGrant,type TypedReadRequest} from './nativeTypedRead';
-import {fixedConsumerProfile,scopeActionDefinitions,type ConsumerProfileId} from './contracts/prerequisiteRecords';
+import {ownerFamilies,validateNativeRef,validateObjectRef,validateAction,validateClosure,fixedConsumerProfile,scopeActionDefinitions,type ConsumerProfileId} from './contracts/prerequisiteRecords';
 /** Refusal statuses the action contracts declare per code ("409, ..."), so the HTTP mapping follows the
  * contract instead of a hand-kept list. */
 /** Every refusal code the prerequisite store, application and contract validators throw has one deliberate
  * HTTP class. tests/academy/typedReadIngress.test.ts (RC7) fails when a thrown code is left unclassified. */
 const refusalClasses={
   403:['teacher_binding_required','teacher_binding_inactive','teacher_attribution_conflict','owner_scope_conflict','student_scope_conflict','teacher_activity_authority'],
-  400:['prerequisite_collection_bounds','duplicate_prerequisite_value','reference_depth','action_version','registry_version','read_registry_version','score_scale_unsupported','synthetic_boolean','delegation_unsupported','calendar_underflow','command_family_mismatch','reference_kind_mismatch','draft_snapshot_consistency','future_source_observation','identity_minting_forbidden','reserved_native_admission_use_supported_command','activity_filter',
+  400:['prerequisite_collection_bounds','duplicate_prerequisite_value','reference_depth','action_version','registry_version','read_registry_version','score_scale_unsupported','synthetic_boolean','delegation_unsupported','calendar_underflow','command_family_mismatch','reference_kind_mismatch','draft_snapshot_consistency','future_source_observation','identity_minting_forbidden','reserved_native_admission_use_supported_command','activity_filter','input_too_large',
     // Shared domain/record validators reached by prerequisite payloads.
     'book_identity_requires_edition','catalog_root_parent','catalog_parent_missing','catalog_parent_level','teacher_note_too_large','observation_too_large','source_field_too_large','unsupported_academy_record',
     // learning/model.ts validators throw fixed English messages (no payload content).
 'identity needs a verified key','duplicate catalog id','unknown catalog edition','major unit cannot have a parent','invalid unit level','unit parent must be the preceding level of the same edition','invalid page unit','invalid problem page','unknown problem','scope needs an array of opaque ids','duplicate scope id','unknown scope edition','scope catalog mismatch','scope mixes editions','problem lies outside the declared page scope','page lies outside the declared unit scope','assignment ends before it begins','plan basis needs revision ids','duplicate basis revision','unknown learning record kind','source timestamp is later than observation','invalid source digest','source binding does not match exact student and lesson','invalid correction check','teacher inspection requires an explicit teacher observation','invalid time zone','invalid calendar date','invalid local lesson time','invalid timestamp with timezone','known data needs evidence references','duplicate evidence reference','missing knowledge state','invalid knowledge state','invalid domain enum','only finite JSON data is allowed','symbol fields are not JSON data','accessors are not JSON data','cyclic JSON is not allowed','sparse or decorated arrays are not allowed','plain JSON objects required'],
   404:['unknown_student','unknown_native_record','unknown_original_admission','unknown_catalog_node'],
   409:['stale_base','revision_conflict','idempotency_reuse','identity_collision','teacher_binding_exists','invalid_transition','temporal_overlap','record_kind_changed','legacy_key_already_used','original_occurrence_fenced','read_occurrence_already_admitted','read_already_terminal_or_unadmitted','business_calendar_unknown','scope_membership_unknown','prior_homework_unverified','source_snapshot_unverified'],
-  503:['prerequisite_store_required','committed_outcome_uncertain','link_kind','empty_link_effect','native_identity_ambiguous','receipt_contract','receipt_effect_bounds','stored_family_binding','stored_receipt_binding','stored_result_missing','stored_revision_integrity','stored_revision_lineage','stored_scope_history','teacher_index_integrity','consumer_profile_definition_mismatch'],
+  503:['prerequisite_store_required','committed_outcome_uncertain','link_kind','empty_link_effect','native_identity_ambiguous','receipt_contract','receipt_effect_bounds','stored_family_binding','stored_receipt_binding','stored_result_missing','stored_revision_integrity','stored_revision_lineage','stored_scope_history','teacher_index_integrity','consumer_profile_definition_mismatch','http_parser_required','authentication_store_unavailable','native_dependency_failed','native_route_duplicate','native_route_scope_conflict'],
 } as const;
 const refusalByCode=new Map<string,number>(Object.entries(refusalClasses).flatMap(([status,codes])=>codes.map(code=>[code,Number(status)] as const)));
 /** Closed input-validation refusals (kept as a named export for callers and tests). */
@@ -113,6 +113,190 @@ export const nativePrereqRouteAliases=Object.freeze({
   '/api/native-prereq/drafts/update':'updateDraft',
   '/api/native-prereq/drafts/approve':'approveDraft',
 } as const);
+
+/** HTTP transport contracts. Domain payload semantics remain with their owning
+ * port validators; every transport envelope, selector and parameter is closed. */
+export type TeacherHttpField = Readonly<{
+  kind:'text'|'integer'|'boolean'|'object'|'array'|'null';
+  optional?:boolean; nullable?:boolean; default?:unknown;
+  min?:number; max?:number; values?:readonly string[];
+  fields?:TeacherHttpFields; item?:TeacherHttpField; repeat?:boolean;maxItems?:number;
+  format?:'date'|'instant'|'sha256'|'uuid'|'nativeRef'|'objectRef'|'action'|'closure';
+}>;
+export type TeacherHttpFields=Readonly<Record<string,TeacherHttpField>>;
+export interface TeacherHttpBody {
+  readonly maxBytes:number;
+  readonly fields:TeacherHttpFields;
+  readonly nativeOperation?:string;
+  readonly operations?:Readonly<Record<string,TeacherHttpFields>>;
+}
+declare const parsedTeacherHttpScope:unique symbol;
+export interface ParsedTeacherHttpScope {
+  readonly [parsedTeacherHttpScope]:true;
+  readonly req:Request;readonly url:URL;readonly path:string;
+  readonly actor:TrustedTeacherContext|null;
+  readonly body:Record<string,unknown>|null;
+  readonly nativeOperation?:string;readonly nativeInput?:Record<string,unknown>;
+  readonly preDispatchRefusal:(error:string,status:number)=>Response;
+  readonly execution:{dispatched:boolean;write:boolean};
+}
+export type TeacherHttpHandler=(scope:ParsedTeacherHttpScope)=>Promise<Response>;
+export type TeacherHttpAuthorization=(scope:Pick<ParsedTeacherHttpScope,'req'|'url'|'path'|'actor'|'preDispatchRefusal'|'execution'>)=>Promise<Response|null>;
+export interface TeacherHttpRoute {
+  readonly method:'GET'|'POST';readonly path:string;
+  readonly query:TeacherHttpFields;readonly body:TeacherHttpBody|null;
+  readonly auth:'public'|'teacher';readonly actorHeaders?:boolean;
+  readonly oldProfile?:boolean;
+  readonly handler:TeacherHttpHandler;
+  readonly authorize?:TeacherHttpAuthorization;
+  readonly headers?:TeacherHttpFields;
+  readonly bodyRefusal?:string;
+}
+/** R07 ownership boundary, including malformed suffixes within its namespaces.
+ * A native request is never delegated to the preserved legacy handler. */
+export function isNativeTeacherHttpPath(path:string):boolean{
+  return ['/api/native-prereq','/api/native-prerequisite','/api/typed-read','/api/native-read-snapshot','/api/native-read-descriptor'].some(prefix=>path===prefix||path.startsWith(prefix+'/'));
+}
+class TeacherHttpInputRefusal extends Error {
+  constructor(readonly code:string='invalid_http_input'){super(code);}
+}
+const httpText:TeacherHttpField={kind:'text',min:1,max:4096};
+const httpOptionalText:TeacherHttpField={...httpText,optional:true};
+const httpNullableText:TeacherHttpField={...httpText,nullable:true};
+const httpObject:TeacherHttpField={kind:'object'};
+const httpAfter:TeacherHttpField={kind:'integer',min:0,max:Number.MAX_SAFE_INTEGER,optional:true,default:0};
+const httpLimit:TeacherHttpField={kind:'integer',min:1,max:1000,optional:true,default:200};
+const httpDate:TeacherHttpField={...httpText,format:'date'};
+const httpRequestBinding:TeacherHttpFields={ownerId:httpText,actorId:httpText,idempotencyKey:httpText,requestDigest:{...httpText,format:'sha256'},occurrenceId:httpText,admissionId:httpText,processEpoch:httpText};
+const httpReadAdmission:TeacherHttpFields={ownerId:httpText,actorId:httpText,requestId:httpText,runId:httpText,requestDigest:{...httpText,format:'sha256'},selectorDigest:{...httpText,format:'sha256'},processEpoch:httpText,registryContractVersion:{...httpText,values:['1.1.0','1.0.0']},consumerProfile:{...httpText,values:['CURRENT_1_1','OLD_SECTION_1_0']},consumerProfileDigest:{...httpText,format:'sha256'}};
+const httpIngress:TeacherHttpFields={idempotencyKey:httpText,occurrenceId:httpText,admissionId:httpText,processEpoch:httpText,sourceObservedAt:{...httpText,format:'instant'},authenticationRevision:httpText,namespace:httpText,scopeRef:{kind:'object',format:'nativeRef'},nativeOwnerBinding:{...httpText,format:'sha256'},nativeInterfaceBinding:{...httpText,format:'sha256'},action:{kind:'object',format:'action'},requestIntentDigest:{...httpText,format:'sha256'}};
+
+function httpObjectRecord(value:unknown):asserts value is Record<string,unknown>{
+  if(!value||typeof value!=='object'||Array.isArray(value)||![Object.prototype,null].includes(Object.getPrototypeOf(value)))throw new TeacherHttpInputRefusal();
+}
+function parseTeacherHttpField(value:unknown,rule:TeacherHttpField):unknown{
+  if(value===null){if(rule.nullable||rule.kind==='null')return null;throw new TeacherHttpInputRefusal();}
+  switch(rule.kind){
+    case 'text':
+      if(typeof value!=='string'||value.length<(rule.min??1)||value.length>(rule.max??4096)||!(rule.min===0)&&!value.trim()||rule.values&&!rule.values.includes(value))throw new TeacherHttpInputRefusal();
+      break;
+    case 'integer':
+      if(typeof value!=='number'||!Number.isSafeInteger(value)||value<(rule.min??0)||value>(rule.max??Number.MAX_SAFE_INTEGER))throw new TeacherHttpInputRefusal();
+      break;
+    case 'boolean':if(typeof value!=='boolean')throw new TeacherHttpInputRefusal();break;
+    case 'object':httpObjectRecord(value);if(rule.fields)value=parseTeacherHttpFields(value,rule.fields);break;
+    case 'array':
+      if(!Array.isArray(value)||value.length<(rule.min??0)||value.length>(rule.max??100)||!rule.item)throw new TeacherHttpInputRefusal();
+      value=value.map(item=>parseTeacherHttpField(item,rule.item!));break;
+    case 'null':throw new TeacherHttpInputRefusal();
+  }
+  if(rule.format==='date')parseCalendarDate(value);
+  if(rule.format==='instant')assertInstant(value as string);
+  if(rule.format==='sha256'&&(typeof value!=='string'||!/^[a-f0-9]{64}$/.test(value)))throw new TeacherHttpInputRefusal();
+  if(rule.format==='uuid'&&(typeof value!=='string'||!nativeMetadataOperationIdPattern.test(value)))throw new TeacherHttpInputRefusal();
+  if(rule.format==='nativeRef')validateNativeRef(value as never);
+  if(rule.format==='objectRef')validateObjectRef(value as never);
+  if(rule.format==='action')validateAction(value as never);
+  if(rule.format==='closure')validateClosure(value as never);
+  return value;
+}
+export function parseTeacherHttpFields(input:unknown,fields:TeacherHttpFields):Record<string,unknown>{
+  httpObjectRecord(input);
+  if(Object.keys(input).some(key=>!Object.hasOwn(fields,key)))throw new TeacherHttpInputRefusal();
+  const parsed:Record<string,unknown>={};
+  for(const [name,rule] of Object.entries(fields)){
+    if(!Object.hasOwn(input,name)){
+      if(!rule.optional)throw new TeacherHttpInputRefusal();
+      if(Object.hasOwn(rule,'default'))parsed[name]=rule.default;
+    }else parsed[name]=parseTeacherHttpField(input[name],rule);
+  }
+  return parsed;
+}
+function parseTeacherHttpQuery(url:URL,route:TeacherHttpRoute):void{
+  const fields=route.query,query:Record<string,unknown>={};
+  if(!Object.keys(fields).length&&url.href.includes('?'))throw new TeacherHttpInputRefusal('unexpected_query_scope');
+  for(const key of new Set(url.searchParams.keys())){
+    if(!Object.hasOwn(fields,key))throw new TeacherHttpInputRefusal('unexpected_query_scope');const rule=fields[key]!;
+    const values=url.searchParams.getAll(key);
+    if(!rule.repeat&&values.length!==1||rule.repeat&&values.length>(rule.maxItems??100))throw new TeacherHttpInputRefusal('unexpected_query_scope');
+    const decode=(text:string)=>rule.kind==='integer'?/^(0|[1-9][0-9]*)$/.test(text)?Number(text):NaN:text;
+    query[key]=rule.repeat?values.map(decode):decode(values[0]!);
+  }
+  const schema=Object.fromEntries(Object.entries(fields).map(([name,rule])=>[name,rule.repeat?{kind:'array' as const,min:0,max:rule.maxItems??100,optional:rule.optional,item:{...rule,repeat:false}}:rule]));
+  parseTeacherHttpFields(query,schema);
+
+}
+function parseTeacherHttpBody(input:unknown,schema:TeacherHttpBody):{body:Record<string,unknown>;nativeOperation?:string;nativeInput?:Record<string,unknown>}{
+  if(!schema.nativeOperation)return {body:parseTeacherHttpFields(input,schema.fields)};
+  httpObjectRecord(input);let operation=schema.nativeOperation,nativeInput=input;
+  if(operation==='GENERIC'){
+    const envelope=parseTeacherHttpFields(input,schema.fields);
+    operation=envelope.operation as string;httpObjectRecord(envelope.input);nativeInput=envelope.input;
+  }else if(operation==='TEACHER_UPDATE'){
+    const payload=input.payload;operation=payload&&typeof payload==='object'&&(payload as {state?:unknown}).state==='RETIRED'?'retireTeacher':'updateTeacher';
+  }
+  if(!schema.operations||!Object.hasOwn(schema.operations,operation))throw new TeacherHttpInputRefusal('invalid_operation');
+  const parsed=parseTeacherHttpFields(nativeInput,schema.operations[operation]!);
+  return {body:schema.nativeOperation==='GENERIC'?{operation,input:parsed}:parsed,nativeOperation:operation,nativeInput:parsed};
+}
+function freezeTeacherHttpContract<T>(value:T,seen=new Set<object>()):T{
+  if(value&&typeof value==='object'&&!seen.has(value)){seen.add(value);Object.values(value).forEach(v=>freezeTeacherHttpContract(v,seen));Object.freeze(value);}return value;
+}
+function httpErrorCode(error:unknown):string{
+  try{return error instanceof Error&&typeof error.message==='string'?error.message:'unknown_http_dependency';}catch{return 'unknown_http_dependency';}
+}
+function nativeHttpDiagnostic(status:'NATIVE_PREREQUISITE_INPUT_REJECTED'|'NATIVE_PREREQUISITE_FAILED',code:string,count=1):void{
+  const closed=refusalByCode.has(code)||declaredRefusalStatus.has(code)?code:status==='NATIVE_PREREQUISITE_INPUT_REJECTED'?'invalid_http_input':'native_dependency_failed';
+  console.error(JSON.stringify({status,code:closed,count,automaticRetry:false}));
+}
+
+export const nativePrerequisiteHttpInputs=freezeTeacherHttpContract({
+  bindTeacher:{command:{kind:'object',fields:httpIngress},payload:httpObject},
+  updateTeacher:{command:{kind:'object',fields:httpIngress},teacherKey:httpText,expectedRevisionId:httpText,payload:httpObject},
+  retireTeacher:{command:{kind:'object',fields:httpIngress},teacherKey:httpText,expectedRevisionId:httpText,payload:httpObject},
+  createClassGroup:{command:{kind:'object',fields:httpIngress},payload:httpObject},
+  updateClassGroup:{command:{kind:'object',fields:httpIngress},classKey:httpText,expectedRevisionId:httpNullableText,payload:httpObject},
+  createLessonSession:{command:{kind:'object',fields:httpIngress},payload:httpObject},
+  updateLessonSession:{command:{kind:'object',fields:httpIngress},lessonKey:httpText,expectedRevisionId:httpText,payload:httpObject},
+  upsertTemporalBinding:{command:{kind:'object',fields:httpIngress},bindingKey:httpNullableText,expectedRevisionId:httpNullableText,payload:httpObject},
+  attachStudentRevision:{command:{kind:'object',fields:httpIngress},studentId:httpText,expectedRevisionId:{...{kind:'null'},optional:true},payload:httpObject},
+  updateStudentRevision:{command:{kind:'object',fields:httpIngress},studentId:httpText,expectedRevisionId:httpText,payload:httpObject},
+  attachActivityScope:{command:{kind:'object',fields:httpIngress},payload:httpObject},
+  correctActivityScope:{command:{kind:'object',fields:httpIngress},scopeKey:httpText,expectedRevisionId:httpText,payload:httpObject},
+  createProgress:{command:{kind:'object',fields:httpIngress},studentId:httpText,payload:httpObject},
+  correctProgress:{command:{kind:'object',fields:httpIngress},studentId:httpText,entityId:httpText,expectedRevisionId:httpText,payload:httpObject},
+  createAssessment:{command:{kind:'object',fields:httpIngress},studentId:httpText,payload:httpObject},
+  correctAssessment:{command:{kind:'object',fields:httpIngress},studentId:httpText,entityId:httpText,expectedRevisionId:httpText,payload:httpObject},
+  createDraft:{command:{kind:'object',fields:httpIngress},studentId:httpText,payload:httpObject},
+  updateDraft:{command:{kind:'object',fields:httpIngress},studentId:httpText,entityId:httpText,expectedRevisionId:httpText,payload:httpObject},
+  recordScoreEvidence:{command:{kind:'object',fields:httpIngress},entityKey:httpNullableText,expectedRevisionId:httpNullableText,payload:httpObject},
+  previewApprovalClosure:{command:{kind:'object',fields:httpIngress},draftRef:{kind:'object',format:'objectRef'}},
+  issueApproval:{command:{kind:'object',fields:httpIngress},draftRef:{kind:'object',format:'objectRef'},closure:{kind:'object',format:'closure'},validForSeconds:{kind:'integer',min:1,max:900}},
+  approveDraft:{command:{kind:'object',fields:httpIngress},draftRef:{kind:'object',format:'objectRef'},approvalProofHandle:httpText},
+  revokeApproval:{command:{kind:'object',fields:httpIngress},approvalId:httpText,expectedRevisionId:httpText},
+  commandOutcome:{request:{kind:'object',fields:httpRequestBinding}},
+  fenceCommand:{request:{kind:'object',fields:httpRequestBinding},fenceOccurrenceId:httpText,reason:{...httpText,values:['ABORT','RESTART','CANCEL']}},
+  admitReadOccurrence:{ownerId:httpText,actorId:httpText,requestId:httpText,runId:httpText,requestDigest:httpText,selectorDigest:httpText,processEpoch:httpText,registryContractVersion:{...httpText,values:['1.1.0','1.0.0']},consumerProfile:{...httpText,values:['CURRENT_1_1','OLD_SECTION_1_0']},consumerProfileDigest:httpText},
+  finalizeReadOccurrence:{request:{kind:'object',fields:httpReadAdmission},status:{...httpText,values:['REFUSED','UNKNOWN','COMPLETED']},snapshotDigest:httpNullableText,refusalCode:httpNullableText},
+  readOccurrence:{ownerId:httpText,actorId:httpText,requestId:httpText,runId:httpText,requestDigest:httpText,selectorDigest:httpText,processEpoch:httpText,registryContractVersion:{...httpText,values:['1.1.0','1.0.0']},consumerProfile:{...httpText,values:['CURRENT_1_1','OLD_SECTION_1_0']},consumerProfileDigest:httpText},
+  prerequisiteTeachers:{},
+  prerequisiteTeacher:{teacherKey:httpText},
+  ownTeacherBinding:{},
+  prerequisiteClassGroups:{},
+  prerequisiteClassGroup:{classKey:httpText},
+  prerequisiteLessons:{},
+  prerequisiteLesson:{lessonKey:httpText},
+  prerequisiteTemporalBindings:{},
+  prerequisiteActivityScopes:{activityKind:{...{...httpText,values:['HOMEWORK_ASSIGNMENT','DAILY_TEST_ATTEMPT','DAILY_PROGRESS','PREVIOUS_HOMEWORK_ASSESSMENT']},optional:true},activityEntityId:{...httpText,optional:true},lessonKey:{...httpText,optional:true}},
+  prerequisiteStudentRevision:{studentId:httpText},
+  prerequisiteStudentRevisionHistory:{studentId:httpText,afterSequence:httpAfter,limit:httpLimit},
+  prerequisiteApproval:{approvalId:httpText},
+  prerequisiteOwnerRevision:{family:{...httpText,values:ownerFamilies},entityKey:httpText,revisionId:httpText},
+  prerequisiteOwnerHistory:{family:{...httpText,values:ownerFamilies},entityKey:httpText,afterSequence:httpAfter,limit:httpLimit},
+  prerequisiteScoreEvidence:{entityKey:httpText},
+  prerequisiteScoreEvidenceForAttempt:{attemptRef:{kind:'object',format:'objectRef'}},
+} satisfies Record<(typeof nativePrerequisiteOperations)[number],TeacherHttpFields>);
+
 export function createTeacherServerHandler(options:TeacherServerOptions){
   // Per-request service so the real grant verifier/issuer always seals with
   // the current server session key; an injected verifier still wins in tests.
@@ -162,13 +346,273 @@ export function createTeacherServerHandler(options:TeacherServerOptions){
         const chunk=await reader.read();if(chunk.done)break;
         bytes+=chunk.value.byteLength;
         if(bytes>limit){await reader.cancel();throw Error('input_too_large');}
-        text+=decoder.decode(chunk.value,{stream:true});
+        try{text+=decoder.decode(chunk.value,{stream:true});}catch{throw new TeacherHttpInputRefusal('invalid_http_input');}
       }
-      text+=decoder.decode();
+      try{text+=decoder.decode();}catch{throw new TeacherHttpInputRefusal('invalid_http_input');}
     }finally{reader.releaseLock();}
     const data:unknown=JSON.parse(text);if(!data||typeof data!=='object'||Array.isArray(data))throw Error('invalid_input');return data as Record<string,unknown>;
   };
-  return async(req:Request):Promise<Response>=>{
+
+  // This router owns only R07 native namespaces. Legacy web/API behavior is
+  // preserved below and will move to a separate table in a later PR.
+  const parsedNativeScopes=new WeakSet<object>();
+  const guardNativeHandlers=<T extends Record<string,TeacherHttpHandler>>(handlers:T):T=>Object.fromEntries(Object.entries(handlers).map(([name,handler])=>[name,async(scope:ParsedTeacherHttpScope)=>{
+    if(!parsedNativeScopes.has(scope))throw Error('http_parser_required');
+    return handler(scope);
+  }])) as T;
+  const readNativeAuthentication=()=>{
+    try{
+      const lookup=options.currentAuthentication;
+      const current=lookup?lookup.call(options):{identity,sessionKey};
+      if(!current||typeof current.sessionKey!=='string'||current.identity!==null&&(!current.identity||typeof current.identity!=='object'))throw Error('authentication_store_unavailable');
+      return current;
+    }catch{throw Error('authentication_store_unavailable');}
+  };
+  const refreshNativeAuthentication=()=>{const current=readNativeAuthentication();identity=current.identity;sessionKey=current.sessionKey;};
+  const nativeRouteFailure=(error:unknown,execution:{dispatched:boolean;write:boolean}):Response=>{
+    const code=httpErrorCode(error);
+    if(error instanceof TeacherHttpInputRefusal)return json({error:code},400);
+    if(code==='teacher_authentication_required')return json({error:code,automaticRetry:false,...(execution.dispatched&&execution.write?{readOriginalRequestBeforeNewIntent:true}:{})},401);
+    const status=prerequisiteRefusalStatus(code);
+    if(status!==null&&status<500)return json({error:code,...(status===409?{automaticRetry:false}:{})},status);
+    nativeHttpDiagnostic('NATIVE_PREREQUISITE_FAILED',code);
+    if(execution.dispatched&&execution.write)return json({error:'committed_outcome_uncertain',automaticRetry:false,readOriginalRequestBeforeNewIntent:true},503);
+    return json({error:'native_dependency_failed',automaticRetry:false,...(execution.dispatched?{readResolution:'UNRESOLVED_READ'}:{})},503);
+  };
+  const readNativeBody=async(req:Request,limit:number):Promise<Record<string,unknown>>=>{
+    if(req.headers.get('Content-Type')?.split(';')[0]!=='application/json')throw new TeacherHttpInputRefusal('json_required');
+    const length=req.headers.get('Content-Length');if(length!==null&&(!/^\d+$/.test(length)||Number(length)>limit))throw new TeacherHttpInputRefusal('input_too_large');
+    const reader=req.body?.getReader();if(!reader)throw new TeacherHttpInputRefusal('invalid_http_input');
+    const decoder=new TextDecoder('utf-8',{fatal:true});let bytes=0,text='';
+    try{
+      while(true){const chunk=await reader.read();if(chunk.done)break;bytes+=chunk.value.byteLength;if(bytes>limit){await reader.cancel();throw new TeacherHttpInputRefusal('input_too_large');}try{text+=decoder.decode(chunk.value,{stream:true});}catch{throw new TeacherHttpInputRefusal('invalid_http_input');}}
+      try{text+=decoder.decode();}catch{throw new TeacherHttpInputRefusal('invalid_http_input');}
+    }finally{reader.releaseLock();}
+    let data:unknown;try{data=JSON.parse(text);}catch{throw new TeacherHttpInputRefusal('invalid_json');}
+    canonicalJson(data);httpObjectRecord(data);return data;
+  };
+
+  const nativeHandlers=guardNativeHandlers({
+    nativeReadDescriptor:async(scope)=>{const {req,url,path,preDispatchRefusal}=scope;const actor=scope.actor!;
+
+
+// Never consume even an empty supplied stream or trust a framing header over its presence.
+
+const operationId=req.headers.get('X-Native-Metadata-Operation-Id')!;
+if(req.signal.aborted)return json({error:'request_aborted'},499);
+const admittedKey=sessionKey,admittedUsername=identity!.username,admittedPasswordHash=identity!.passwordHash;
+const descriptor={schema:'academy.native-read-descriptor/1',operationId,observedAtUtc:new Date().toISOString(),
+  sourceSetSha256:buildDescriptor.sourceSetSha256,serviceInstanceRef:buildDescriptor.serviceInstanceRef,
+  principal:{authenticated:true,role:'teacher',ownerBindingMatched:true},
+  nativeReadInterface:null,syntheticTestAdmission:null,retentionQualification:'UNVERIFIED'};
+// No awaited work or application dispatch: refresh the same principal at output linearization.
+refreshNativeAuthentication();
+const after=context(req);
+if(sessionKey!==admittedKey||identity?.username!==admittedUsername||identity.passwordHash!==admittedPasswordHash||!after||after.ownerId!==actor.ownerId||after.actorId!==actor.actorId)return json({error:'teacher_authentication_required'},401);
+if(req.signal.aborted)return json({error:'request_aborted'},499);
+if(Buffer.byteLength(JSON.stringify(descriptor),'utf8')>nativeReadDescriptorMaxBytes)return json({error:'native_read_descriptor_unavailable'},503);
+return json(descriptor);
+
+    },
+    nativeReadSnapshot:async(scope)=>{const {req,url,path,preDispatchRefusal}=scope;const actor=scope.actor!;
+
+
+
+if(!options.typedRead)return json({error:'typed_read_unavailable'},503);
+const input=scope.body!;
+
+const currentActor=context(req);if(!currentActor||currentActor.ownerId!==actor.ownerId||currentActor.actorId!==actor.actorId)return json({error:'teacher_authentication_required'},401);
+const requestId=input.requestId as string;
+const rawSession=readCookie(req.headers.get('Cookie'),'dc_teacher'),verifiedSession=rawSession?verifyTeacherSession(sessionKey,rawSession):null;
+if(!verifiedSession)return json({error:'teacher_authentication_required'},401);
+const service=typedReadServiceFor(sessionKey,verifiedSession.expiresAt*1000);if(!service)return json({error:'typed_read_unavailable'},503);
+try{
+  const runtime=options.typedRead.cursorRuntime;
+  if(runtime){if(currentActor.actorId!==runtime.actorId)throw new TypedReadRefusal('PERMISSION_DENIED',403);runtime.assertCurrent();}
+  const result=await service.acquireSnapshot(currentActor,input as unknown as NativeSnapshotAcquireRequest);
+  refreshNativeAuthentication();
+  const after=context(req);return after?.ownerId===actor.ownerId&&after.actorId===actor.actorId?json(result):json({error:'teacher_authentication_required'},401);
+}catch(error){
+  refreshNativeAuthentication();
+  const after=context(req);if(!after||after.ownerId!==actor.ownerId||after.actorId!==actor.actorId)return json({error:'teacher_authentication_required'},401);
+  if(error instanceof TypedReadRefusal)return json({kind:'ERROR',contractVersion:typedReadContractVersion,consumerProfile:options.typedRead?.consumerProfile??'CURRENT_1_1',requestId,correlationId:requestId,error:{code:error.code,retryable:false,correlationId:requestId,requiredEvidence:error.requiredEvidence,readResolution:error.code==='READ_UNRESOLVED'?'UNRESOLVED_READ':'NOT_APPLICABLE'}},error.httpStatus);
+  return json({error:'typed_read_unavailable'},503);
+}
+
+    },
+    typedRead:async(scope)=>{const {req,url,path,preDispatchRefusal}=scope;const actor=scope.actor!;
+
+// Authenticated typed read: principal comes only from the existing
+// dc_teacher session cookie; header/body teacher claims are ignored
+// here and refused by the closed typed-read request validator.
+
+
+if(!options.typedRead)return json({error:'typed_read_unavailable'},503);
+const input=scope.body!;
+
+const currentActor=context(req);if(!currentActor||currentActor.ownerId!==actor.ownerId||currentActor.actorId!==actor.actorId)return authenticationRequiredOutput();
+const requestId=input.requestId as string;
+const qualification=options.typedRead.qualification;
+if(qualification){const token=readCookie(req.headers.get('Cookie'),'dc_teacher');const session=token?verifyTeacherSession(sessionKey,token):null;if(session)qualification.session(requestId,session.expiresAt);}
+const outputLease=options.typedRead?.outputLease;
+if(!outputLease){
+  // W3-E2: the mandatory output lease is part of the qualification;
+  // refuse at ingress with no commit or page when it is absent.
+  return json({kind:'ERROR',contractVersion:typedReadContractVersion,consumerProfile:options.typedRead?.consumerProfile??'CURRENT_1_1',requestId,correlationId:requestId,error:{code:'OUTPUT_ADMISSION_BLOCKED',retryable:false,correlationId:requestId,requiredEvidence:['OWNER_INTERFACE_RATIFICATION'],readResolution:'NOT_APPLICABLE'}},409);
+}
+try{
+  if(input.cursor!==null&&options.typedRead.cursorRuntime){
+    // S2 short current-owner lease ends before preparatory business
+    // evaluation. S6 uses a new capability and reopens from scratch.
+    await outputLease(async leased=>{
+      const currentAuthorization=()=>{const state=readNativeAuthentication();identity=state.identity;sessionKey=state.sessionKey;const after=context(req);return leased.sessionKey===sessionKey&&after?.ownerId===currentActor.ownerId&&after.actorId===currentActor.actorId;};
+      if(!currentAuthorization())throw Error('teacher_authentication_required');
+      const raw=readCookie(req.headers.get('Cookie'),'dc_teacher'),session=raw?verifyTeacherSession(leased.sessionKey,raw):null;
+      if(!session)throw Error('teacher_authentication_required');
+      await typedReadServiceFor(leased.sessionKey,session.expiresAt*1000,cursorOwnerFor(leased,currentAuthorization))!.verifyContinuation(currentActor,input as unknown as TypedReadRequest);
+    });
+  }
+  // W3-E3: expiry/session recheck and buffered Response preparation
+  // run inside the lease callback, after the committed read and
+  // with no await before the handoff.
+  return await outputLease(async leased=>{
+    if(leased.sessionKey!==sessionKey||leased.identity?.actorId!==currentActor.actorId)return authenticationRequiredOutput();
+    const currentAuthorization=()=>{
+      refreshNativeAuthentication();
+      const after=context(req);
+      return sessionKey===leased.sessionKey&&after?.ownerId===actor.ownerId&&after.actorId===actor.actorId;
+    };
+    const rawSession=readCookie(req.headers.get('Cookie'),'dc_teacher'),verifiedSession=rawSession?verifyTeacherSession(leased.sessionKey,rawSession):null;
+    if(!verifiedSession)return authenticationRequiredOutput();
+    const cursorOwner=cursorOwnerFor(leased,currentAuthorization);
+    const service=typedReadServiceFor(leased.sessionKey,verifiedSession.expiresAt*1000,cursorOwner)!;
+    let reply:BufferedTypedReadOutput;
+    try{
+      const pairedId=qualification?.pairedRequestId(requestId);
+      if(pairedId){
+        // Two genuine service preparations under the same actual auth
+        // lease. Each independently admits and locks its own read key.
+        const second=structuredClone(input) as unknown as TypedReadRequest;
+        second.requestId=pairedId;second.functionRequest.requestId=pairedId;
+        const both=await Promise.all([service.typedReadBuffered(currentActor,input as unknown as TypedReadRequest,currentAuthorization),service.typedReadBuffered(currentActor,second,currentAuthorization)]);
+        reply=both[0];
+        if(both[1].status!==200)throw new TypedReadRefusal('READ_UNRESOLVED',503);
+      }else reply=await service.typedReadBuffered(currentActor,input as unknown as TypedReadRequest,currentAuthorization);
+    }
+    catch(error){
+      refreshNativeAuthentication();
+      const failedAfter=context(req);if(!failedAfter||failedAfter.ownerId!==actor.ownerId||failedAfter.actorId!==actor.actorId)return authenticationRequiredOutput();
+      if(error instanceof TypedReadRefusal)return json({kind:'ERROR',contractVersion:typedReadContractVersion,consumerProfile:options.typedRead?.consumerProfile??'CURRENT_1_1',requestId,correlationId:requestId,error:{code:error.code,retryable:false,correlationId:requestId,requiredEvidence:error.requiredEvidence,readResolution:error.code==='READ_UNRESOLVED'?'UNRESOLVED_READ':'NOT_APPLICABLE'}},error.httpStatus);
+      throw error;
+    }
+    const authorized=currentAuthorization();
+    // A qualification expiry uses the actual verified session deadline.
+    // No await or business reserialization follows the known COMMIT.
+    if(!authorized){qualification?.handoff(requestId,401,0,false);return authenticationRequiredOutput();}
+    if(qualification?.handoff(requestId,reply.status,reply.body?.byteLength??0,true)==='SUPPRESS')return new Response(null,{status:503,headers:securityHeaders});
+    // Exact gate-prepared bytes, known COMMIT, same auth lease;
+    // no JSON serialization or await before the Response handoff.
+    return new Response(reply.body,{status:reply.status,headers:{...securityHeaders,'Content-Type':'application/json; charset=utf-8'}});
+  });
+}catch(error){
+  refreshNativeAuthentication();
+  const after=context(req);if(!after||after.ownerId!==actor.ownerId||after.actorId!==actor.actorId)return authenticationRequiredOutput();
+  if(error instanceof Error&&error.message==='teacher_authentication_required')return authenticationRequiredOutput();
+  if(error instanceof Error&&error.message==='private_auth_lock_required')return json({error:'READ_UNRESOLVED',readResolution:'UNRESOLVED_READ',automaticRetry:false},503);
+  if(error instanceof TypedReadRefusal)return json({kind:'ERROR',contractVersion:typedReadContractVersion,consumerProfile:options.typedRead?.consumerProfile??'CURRENT_1_1',requestId,correlationId:requestId,error:{code:error.code,retryable:false,correlationId:requestId,requiredEvidence:error.requiredEvidence,readResolution:error.code==='READ_UNRESOLVED'?'UNRESOLVED_READ':'NOT_APPLICABLE'}},error.httpStatus);
+  return json({error:'typed_read_unavailable'},503);
+}
+
+    },
+    nativePrerequisite:async(scope)=>{const {req,url,path,preDispatchRefusal}=scope;const actor=scope.actor!;
+
+// Authenticated prerequisite wrapper: principal only from the
+// dc_teacher cookie above; Origin/body gates already applied.
+// No body/header principal authority is read. The facade keeps
+// first-self-BindTeacher, refusal and no-replay semantics.
+
+
+const currentActor=actor;
+const operation=scope.nativeOperation!,input=scope.nativeInput!;
+const stringField=(field:string):string=>input[field] as string;
+const stillAuthorized=():boolean=>{
+  refreshNativeAuthentication();
+  const after=context(req);return !!after&&after.ownerId===actor.ownerId&&after.actorId===actor.actorId;
+};
+// W12-F1 fence: ordinary teacher transport must never mark a
+// read COMPLETED. Only the internal owner-witness commit path
+// (commitReadOutput) may do so; REFUSED/UNKNOWN cleanup and all
+// other operations keep their existing dispatch.
+if(operation==='finalizeReadOccurrence'&&(input as {status?:unknown}).status==='COMPLETED')return json({error:'read_completion_owner_witness_required',automaticRetry:false},403);
+let result:unknown;
+try{
+  switch(operation){
+    case 'bindTeacher': result=await options.app.bindTeacher(currentActor,input as never); break;
+    case 'updateTeacher': result=await options.app.updateTeacher(currentActor,input as never); break;
+    case 'retireTeacher': result=await options.app.retireTeacher(currentActor,input as never); break;
+    case 'createClassGroup': result=await options.app.createClassGroup(currentActor,input as never); break;
+    case 'updateClassGroup': result=await options.app.updateClassGroup(currentActor,input as never); break;
+    case 'createLessonSession': result=await options.app.createLessonSession(currentActor,input as never); break;
+    case 'updateLessonSession': result=await options.app.updateLessonSession(currentActor,input as never); break;
+    case 'upsertTemporalBinding': result=await options.app.upsertTemporalBinding(currentActor,input as never); break;
+    case 'attachStudentRevision': result=await options.app.attachStudentRevision(currentActor,input as never); break;
+    case 'updateStudentRevision': result=await options.app.updateStudentRevision(currentActor,input as never); break;
+    case 'attachActivityScope': result=await options.app.attachActivityScope(currentActor,input as never); break;
+    case 'correctActivityScope': result=await options.app.correctActivityScope(currentActor,input as never); break;
+    case 'createProgress': result=await options.app.createProgress(currentActor,input as never); break;
+    case 'correctProgress': result=await options.app.correctProgress(currentActor,input as never); break;
+    case 'createAssessment': result=await options.app.createAssessment(currentActor,input as never); break;
+    case 'correctAssessment': result=await options.app.correctAssessment(currentActor,input as never); break;
+    case 'createDraft': result=await options.app.createDraft(currentActor,input as never); break;
+    case 'updateDraft': result=await options.app.updateDraft(currentActor,input as never); break;
+    case 'recordScoreEvidence': result=await options.app.recordScoreEvidence(currentActor,input as never); break;
+    case 'previewApprovalClosure': result=await options.app.previewApprovalClosure(currentActor,input as never); break;
+    case 'issueApproval': result=await options.app.issueApproval(currentActor,input as never); break;
+    case 'approveDraft': result=await options.app.approveDraft(currentActor,input as never); break;
+    case 'revokeApproval': result=await options.app.revokeApproval(currentActor,input as never); break;
+    case 'commandOutcome': result=await options.app.commandOutcome(currentActor,input as never); break;
+    case 'fenceCommand': result=await options.app.fenceCommand(currentActor,input as never); break;
+    case 'admitReadOccurrence': result=await options.app.admitReadOccurrence(currentActor,input as never); break;
+    case 'finalizeReadOccurrence': result=await options.app.finalizeReadOccurrence(currentActor,input as never); break;
+    case 'readOccurrence': result=await options.app.readOccurrence(currentActor,input as never); break;
+    case 'prerequisiteTeachers':  result=await options.app.prerequisiteTeachers(currentActor); break;
+    case 'prerequisiteTeacher': {  result=await options.app.prerequisiteTeacher(currentActor,stringField('teacherKey')!); break; }
+    case 'ownTeacherBinding':  result=await options.app.ownTeacherBinding(currentActor); break;
+    case 'prerequisiteClassGroups':  result=await options.app.prerequisiteClassGroups(currentActor); break;
+    case 'prerequisiteClassGroup': {  result=await options.app.prerequisiteClassGroup(currentActor,stringField('classKey')!); break; }
+    case 'prerequisiteLessons':  result=await options.app.prerequisiteLessons(currentActor); break;
+    case 'prerequisiteLesson': {  result=await options.app.prerequisiteLesson(currentActor,stringField('lessonKey')!); break; }
+    case 'prerequisiteTemporalBindings':  result=await options.app.prerequisiteTemporalBindings(currentActor); break;
+    case 'prerequisiteActivityScopes': {  result=await options.app.prerequisiteActivityScopes(currentActor,input as never); break; }
+    case 'prerequisiteStudentRevision': {  result=await options.app.prerequisiteStudentRevision(currentActor,stringField('studentId')!); break; }
+    case 'prerequisiteStudentRevisionHistory': {  result=await options.app.prerequisiteStudentRevisionHistory(currentActor,stringField('studentId')!,input.afterSequence as number,input.limit as number); break; }
+    case 'prerequisiteApproval': {  result=await options.app.prerequisiteApproval(currentActor,stringField('approvalId')!); break; }
+    case 'prerequisiteOwnerRevision': {  result=await options.app.prerequisiteOwnerRevision(currentActor,stringField('family') as never,stringField('entityKey')!,stringField('revisionId')!); break; }
+    case 'prerequisiteOwnerHistory': {  result=await options.app.prerequisiteOwnerHistory(currentActor,stringField('family') as never,stringField('entityKey')!,input.afterSequence as number,input.limit as number); break; }
+    case 'prerequisiteScoreEvidence': {  result=await options.app.prerequisiteScoreEvidence(currentActor,stringField('entityKey')!); break; }
+    case 'prerequisiteScoreEvidenceForAttempt': {  result=await options.app.prerequisiteScoreEvidenceForAttempt(currentActor,input.attemptRef as never); break; }
+    default: return json({error:'invalid_operation'},400);
+  }
+}catch(error){
+  if(!stillAuthorized())return json({error:'teacher_authentication_required'},401);
+  return nativeRouteFailure(error,scope.execution);
+}
+if(!stillAuthorized())return json({error:'teacher_authentication_required'},401);
+return json(result===undefined?null:result);
+
+    },
+  } satisfies Record<string,TeacherHttpHandler>);
+  const nativeRoutes:readonly TeacherHttpRoute[]=freezeTeacherHttpContract<TeacherHttpRoute[]>([
+    {method:'GET',path:"/api/native-read-descriptor",query:{},body:null,auth:'teacher',handler:nativeHandlers.nativeReadDescriptor,oldProfile:true,headers:{'X-Native-Metadata-Operation-Id':{...httpText,min:36,max:36,format:'uuid'}},bodyRefusal:'native_metadata_body_forbidden'},
+    {method:'POST',path:"/api/native-read-snapshot",query:{},body:{maxBytes:65536,fields:{schema:httpText,consumerProfile:httpText,requestId:httpText,scopeRef:{kind:'object',format:'nativeRef'},consistency:httpText,time:httpObject,functionIntent:httpObject}},auth:'teacher',handler:nativeHandlers.nativeReadSnapshot,oldProfile:true},
+    {method:'POST',path:"/api/typed-read",query:{},body:{maxBytes:65536,fields:{contractVersion:httpText,consumerProfile:httpText,requestId:httpText,scopeRef:{kind:'object',format:'nativeRef'},selector:httpObject,snapshot:httpObject,functionRequest:httpObject,snapshotAdmission:httpObject,asOf:{...httpText,format:'instant'},expectedRevisions:{kind:'array',max:1000,item:{kind:'object',format:'objectRef'}},fieldMask:{kind:'array',max:1000,min:1,item:httpObject},linkMask:{kind:'array',max:1000,item:httpText},pageSize:{kind:'integer',min:1,max:100},cursor:httpNullableText,temporalSelection:httpObject}},auth:'teacher',handler:nativeHandlers.typedRead,oldProfile:true},
+    {method:'POST',path:"/api/native-prerequisite",query:{},body:{maxBytes:524288,fields:{operation:{...httpText,values:nativePrerequisiteOperations},input:httpObject},nativeOperation:'GENERIC',operations:nativePrerequisiteHttpInputs},auth:'teacher',handler:nativeHandlers.nativePrerequisite},
+    {method:'POST',path:"/api/native-prereq/teachers/update",query:{},body:{maxBytes:524288,fields:nativePrerequisiteHttpInputs.updateTeacher,nativeOperation:'TEACHER_UPDATE',operations:nativePrerequisiteHttpInputs},auth:'teacher',handler:nativeHandlers.nativePrerequisite},
+    ...Object.entries(nativePrereqRouteAliases).map(([path,operation])=>({method:'POST' as const,path,query:{},body:{maxBytes:524288,fields:nativePrerequisiteHttpInputs[operation],nativeOperation:operation,operations:nativePrerequisiteHttpInputs},auth:'teacher' as const,handler:nativeHandlers.nativePrerequisite})),
+  ] satisfies TeacherHttpRoute[]);
+
+/* BEGIN PRESERVED LEGACY ROUTER */
+  const legacyHandler=async(req:Request):Promise<Response>=>{
     const url=new URL(req.url),path=url.pathname;
     const conceptWrite=req.method==='POST'&&['/api/concept-definition','/api/concept-link'].includes(path);
     // Origin and authentication gates return before application dispatch; status alone never proves a write outcome.
@@ -267,246 +711,10 @@ export function createTeacherServerHandler(options:TeacherServerOptions){
       }
       if(path.startsWith('/api/')){
         const actor=context(req);if(!actor)return preDispatchRefusal('teacher_authentication_required',401);
-        if(path==='/api/native-read-descriptor'){
-          if(req.method!=='GET')return json({error:'method_not_allowed'},405);
-          if(url.href.includes('?'))return json({error:'unexpected_query_scope'},400);
-          // Never consume even an empty supplied stream or trust a framing header over its presence.
-          const length=req.headers.get('Content-Length');
-          if(req.body!==null||req.bodyUsed||req.headers.has('Transfer-Encoding')||length!==null&&length!=='0')return json({error:'native_metadata_body_forbidden'},400);
-          const operationId=req.headers.get('X-Native-Metadata-Operation-Id');
-          if(!operationId||operationId.length!==36||!nativeMetadataOperationIdPattern.test(operationId))return json({error:'native_metadata_operation_id_required'},400);
-          if(req.signal.aborted)return json({error:'request_aborted'},499);
-          const admittedKey=sessionKey,admittedUsername=identity!.username,admittedPasswordHash=identity!.passwordHash;
-          const descriptor={schema:'academy.native-read-descriptor/1',operationId,observedAtUtc:new Date().toISOString(),
-            sourceSetSha256:buildDescriptor.sourceSetSha256,serviceInstanceRef:buildDescriptor.serviceInstanceRef,
-            principal:{authenticated:true,role:'teacher',ownerBindingMatched:true},
-            nativeReadInterface:null,syntheticTestAdmission:null,retentionQualification:'UNVERIFIED'};
-          // No awaited work or application dispatch: refresh the same principal at output linearization.
-          if(options.currentAuthentication){const current=options.currentAuthentication();identity=current.identity;sessionKey=current.sessionKey;}
-          const after=context(req);
-          if(sessionKey!==admittedKey||identity?.username!==admittedUsername||identity.passwordHash!==admittedPasswordHash||!after||after.ownerId!==actor.ownerId||after.actorId!==actor.actorId)return json({error:'teacher_authentication_required'},401);
-          if(req.signal.aborted)return json({error:'request_aborted'},499);
-          if(Buffer.byteLength(JSON.stringify(descriptor),'utf8')>nativeReadDescriptorMaxBytes)return json({error:'native_read_descriptor_unavailable'},503);
-          return json(descriptor);
-        }
-        if(path==='/api/native-read-snapshot'){
-          if(req.method!=='POST')return json({error:'method_not_allowed'},405);
-          if(url.search)return json({error:'unexpected_query_scope'},400);
-          if(!options.typedRead)return json({error:'typed_read_unavailable'},503);
-          let input:Record<string,unknown>;try{input=await body(req);}catch{return json({error:'INVALID_REQUEST'},400);}
-          if(options.currentAuthentication){const current=options.currentAuthentication();identity=current.identity;sessionKey=current.sessionKey;}
-          const currentActor=context(req);if(!currentActor||currentActor.ownerId!==actor.ownerId||currentActor.actorId!==actor.actorId)return json({error:'teacher_authentication_required'},401);
-          const requestId=typeof input.requestId==='string'&&input.requestId?input.requestId:'unknown';
-          const rawSession=readCookie(req.headers.get('Cookie'),'dc_teacher'),verifiedSession=rawSession?verifyTeacherSession(sessionKey,rawSession):null;
-          if(!verifiedSession)return json({error:'teacher_authentication_required'},401);
-          const service=typedReadServiceFor(sessionKey,verifiedSession.expiresAt*1000);if(!service)return json({error:'typed_read_unavailable'},503);
-          try{
-            const runtime=options.typedRead.cursorRuntime;
-            if(runtime){if(currentActor.actorId!==runtime.actorId)throw new TypedReadRefusal('PERMISSION_DENIED',403);runtime.assertCurrent();}
-            const result=await service.acquireSnapshot(currentActor,input as unknown as NativeSnapshotAcquireRequest);
-            if(options.currentAuthentication){const current=options.currentAuthentication();identity=current.identity;sessionKey=current.sessionKey;}
-            const after=context(req);return after?.ownerId===actor.ownerId&&after.actorId===actor.actorId?json(result):json({error:'teacher_authentication_required'},401);
-          }catch(error){
-            if(options.currentAuthentication){const current=options.currentAuthentication();identity=current.identity;sessionKey=current.sessionKey;}
-            const after=context(req);if(!after||after.ownerId!==actor.ownerId||after.actorId!==actor.actorId)return json({error:'teacher_authentication_required'},401);
-            if(error instanceof TypedReadRefusal)return json({kind:'ERROR',contractVersion:typedReadContractVersion,consumerProfile:options.typedRead?.consumerProfile??'CURRENT_1_1',requestId,correlationId:requestId,error:{code:error.code,retryable:false,correlationId:requestId,requiredEvidence:error.requiredEvidence,readResolution:error.code==='READ_UNRESOLVED'?'UNRESOLVED_READ':'NOT_APPLICABLE'}},error.httpStatus);
-            return json({error:'typed_read_unavailable'},503);
-          }
-        }
-        if(path==='/api/typed-read'){
-          // Authenticated typed read: principal comes only from the existing
-          // dc_teacher session cookie; header/body teacher claims are ignored
-          // here and refused by the closed typed-read request validator.
-          if(req.method!=='POST')return json({error:'method_not_allowed'},405);
-          if(url.search)return json({error:'unexpected_query_scope'},400);
-          if(!options.typedRead)return json({error:'typed_read_unavailable'},503);
-          let input:Record<string,unknown>;try{input=await body(req);}catch{return json({error:'INVALID_REQUEST'},400);}
-          if(options.currentAuthentication){const current=options.currentAuthentication();identity=current.identity;sessionKey=current.sessionKey;}
-          const currentActor=context(req);if(!currentActor||currentActor.ownerId!==actor.ownerId||currentActor.actorId!==actor.actorId)return authenticationRequiredOutput();
-          const requestId=typeof input.requestId==='string'&&input.requestId?input.requestId:'unknown';
-          const qualification=options.typedRead.qualification;
-          if(qualification){const token=readCookie(req.headers.get('Cookie'),'dc_teacher');const session=token?verifyTeacherSession(sessionKey,token):null;if(session)qualification.session(requestId,session.expiresAt);}
-          const outputLease=options.typedRead?.outputLease;
-          if(!outputLease){
-            // W3-E2: the mandatory output lease is part of the qualification;
-            // refuse at ingress with no commit or page when it is absent.
-            return json({kind:'ERROR',contractVersion:typedReadContractVersion,consumerProfile:options.typedRead?.consumerProfile??'CURRENT_1_1',requestId,correlationId:requestId,error:{code:'OUTPUT_ADMISSION_BLOCKED',retryable:false,correlationId:requestId,requiredEvidence:['OWNER_INTERFACE_RATIFICATION'],readResolution:'NOT_APPLICABLE'}},409);
-          }
-          try{
-            if(input.cursor!==null&&options.typedRead.cursorRuntime){
-              // S2 short current-owner lease ends before preparatory business
-              // evaluation. S6 uses a new capability and reopens from scratch.
-              await outputLease(async leased=>{
-                const currentAuthorization=()=>{const state=options.currentAuthentication?.()??{identity,sessionKey};identity=state.identity;sessionKey=state.sessionKey;const after=context(req);return leased.sessionKey===sessionKey&&after?.ownerId===currentActor.ownerId&&after.actorId===currentActor.actorId;};
-                if(!currentAuthorization())throw Error('teacher_authentication_required');
-                const raw=readCookie(req.headers.get('Cookie'),'dc_teacher'),session=raw?verifyTeacherSession(leased.sessionKey,raw):null;
-                if(!session)throw Error('teacher_authentication_required');
-                await typedReadServiceFor(leased.sessionKey,session.expiresAt*1000,cursorOwnerFor(leased,currentAuthorization))!.verifyContinuation(currentActor,input as unknown as TypedReadRequest);
-              });
-            }
-            // W3-E3: expiry/session recheck and buffered Response preparation
-            // run inside the lease callback, after the committed read and
-            // with no await before the handoff.
-            return await outputLease(async leased=>{
-              if(leased.sessionKey!==sessionKey||leased.identity?.actorId!==currentActor.actorId)return authenticationRequiredOutput();
-              const currentAuthorization=()=>{
-                if(options.currentAuthentication){const current=options.currentAuthentication();identity=current.identity;sessionKey=current.sessionKey;}
-                const after=context(req);
-                return sessionKey===leased.sessionKey&&after?.ownerId===actor.ownerId&&after.actorId===actor.actorId;
-              };
-              const rawSession=readCookie(req.headers.get('Cookie'),'dc_teacher'),verifiedSession=rawSession?verifyTeacherSession(leased.sessionKey,rawSession):null;
-              if(!verifiedSession)return authenticationRequiredOutput();
-              const cursorOwner=cursorOwnerFor(leased,currentAuthorization);
-              const service=typedReadServiceFor(leased.sessionKey,verifiedSession.expiresAt*1000,cursorOwner)!;
-              let reply:BufferedTypedReadOutput;
-              try{
-                const pairedId=qualification?.pairedRequestId(requestId);
-                if(pairedId){
-                  // Two genuine service preparations under the same actual auth
-                  // lease. Each independently admits and locks its own read key.
-                  const second=structuredClone(input) as unknown as TypedReadRequest;
-                  second.requestId=pairedId;second.functionRequest.requestId=pairedId;
-                  const both=await Promise.all([service.typedReadBuffered(currentActor,input as unknown as TypedReadRequest,currentAuthorization),service.typedReadBuffered(currentActor,second,currentAuthorization)]);
-                  reply=both[0];
-                  if(both[1].status!==200)throw new TypedReadRefusal('READ_UNRESOLVED',503);
-                }else reply=await service.typedReadBuffered(currentActor,input as unknown as TypedReadRequest,currentAuthorization);
-              }
-              catch(error){
-                if(options.currentAuthentication){const current=options.currentAuthentication();identity=current.identity;sessionKey=current.sessionKey;}
-                const failedAfter=context(req);if(!failedAfter||failedAfter.ownerId!==actor.ownerId||failedAfter.actorId!==actor.actorId)return authenticationRequiredOutput();
-                if(error instanceof TypedReadRefusal)return json({kind:'ERROR',contractVersion:typedReadContractVersion,consumerProfile:options.typedRead?.consumerProfile??'CURRENT_1_1',requestId,correlationId:requestId,error:{code:error.code,retryable:false,correlationId:requestId,requiredEvidence:error.requiredEvidence,readResolution:error.code==='READ_UNRESOLVED'?'UNRESOLVED_READ':'NOT_APPLICABLE'}},error.httpStatus);
-                throw error;
-              }
-              const authorized=currentAuthorization();
-              // A qualification expiry uses the actual verified session deadline.
-              // No await or business reserialization follows the known COMMIT.
-              if(!authorized){qualification?.handoff(requestId,401,0,false);return authenticationRequiredOutput();}
-              if(qualification?.handoff(requestId,reply.status,reply.body?.byteLength??0,true)==='SUPPRESS')return new Response(null,{status:503,headers:securityHeaders});
-              // Exact gate-prepared bytes, known COMMIT, same auth lease;
-              // no JSON serialization or await before the Response handoff.
-              return new Response(reply.body,{status:reply.status,headers:{...securityHeaders,'Content-Type':'application/json; charset=utf-8'}});
-            });
-          }catch(error){
-            if(options.currentAuthentication){const current=options.currentAuthentication();identity=current.identity;sessionKey=current.sessionKey;}
-            const after=context(req);if(!after||after.ownerId!==actor.ownerId||after.actorId!==actor.actorId)return authenticationRequiredOutput();
-            if(error instanceof Error&&error.message==='teacher_authentication_required')return authenticationRequiredOutput();
-            if(error instanceof Error&&error.message==='private_auth_lock_required')return json({error:'READ_UNRESOLVED',readResolution:'UNRESOLVED_READ',automaticRetry:false},503);
-            if(error instanceof TypedReadRefusal)return json({kind:'ERROR',contractVersion:typedReadContractVersion,consumerProfile:options.typedRead?.consumerProfile??'CURRENT_1_1',requestId,correlationId:requestId,error:{code:error.code,retryable:false,correlationId:requestId,requiredEvidence:error.requiredEvidence,readResolution:error.code==='READ_UNRESOLVED'?'UNRESOLVED_READ':'NOT_APPLICABLE'}},error.httpStatus);
-            return json({error:'typed_read_unavailable'},503);
-          }
-        }
-        if(path==='/api/native-prerequisite'||path==='/api/native-prereq/teachers/update'||Object.hasOwn(nativePrereqRouteAliases,path)){
-          // Authenticated prerequisite wrapper: principal only from the
-          // dc_teacher cookie above; Origin/body gates already applied.
-          // No body/header principal authority is read. The facade keeps
-          // first-self-BindTeacher, refusal and no-replay semantics.
-          if(req.method!=='POST')return json({error:'method_not_allowed'},405);
-          if(url.search)return json({error:'unexpected_query_scope'},400);
-          let data:Record<string,unknown>;
-          try{data=await body(req);}catch(e){console.error(JSON.stringify({status:'NATIVE_PREREQUISITE_INPUT_REJECTED',code:'body:'+(e instanceof Error&&/^[A-Za-z0-9_]{1,60}$/.test(e.message)?e.message:'unparsable'),automaticRetry:false}));return json({error:'invalid_native_prerequisite_input'},400);}
-          if(options.currentAuthentication){const current=options.currentAuthentication();identity=current.identity;sessionKey=current.sessionKey;}
-          const currentActor=context(req);if(!currentActor||currentActor.ownerId!==actor.ownerId||currentActor.actorId!==actor.actorId)return json({error:'teacher_authentication_required'},401);
-          let operation:string;let input:Record<string,unknown>;
-          if(path==='/api/native-prereq/teachers/update'){
-            // Closed compatibility alias for the qualification probe URL:
-            // direct UpdateTeacherInput; RETIRED payload state retires.
-            input=data;
-            const payload=(data as {payload?:unknown}).payload;
-            operation=payload&&typeof payload==='object'&&(payload as {state?:unknown}).state==='RETIRED'?'retireTeacher':'updateTeacher';
-          }else if(Object.hasOwn(nativePrereqRouteAliases,path)){
-            // Adopted RC4 named alias: direct operation input, same facade.
-            operation=nativePrereqRouteAliases[path as keyof typeof nativePrereqRouteAliases];
-            input=data;
-          }else{
-            try{assertExactKeys(data,['operation','input']);}catch{console.error(JSON.stringify({status:'NATIVE_PREREQUISITE_INPUT_REJECTED',code:'envelope_keys:'+Object.keys(data).sort().join(',').slice(0,80),automaticRetry:false}));return json({error:'invalid_native_prerequisite_input'},400);}
-            if(typeof data.operation!=='string'||!(nativePrerequisiteOperations as readonly string[]).includes(data.operation))return json({error:'invalid_operation'},400);
-            operation=data.operation;
-            if(!data.input||typeof data.input!=='object'||Array.isArray(data.input))return json({error:'invalid_native_prerequisite_input'},400);
-            input=data.input as Record<string,unknown>;
-          }
-          const invalidInput=()=>{console.error(JSON.stringify({status:'NATIVE_PREREQUISITE_INPUT_REJECTED',code:'input_keys:'+String(operation)+':'+Object.keys(input).sort().join(',').slice(0,120),automaticRetry:false}));return json({error:'invalid_native_prerequisite_input'},400);};
-          const exactInputKeys=(expected:readonly string[]):boolean=>{
-            const keys=Object.keys(input);
-            return keys.every(key=>expected.includes(key))&&expected.filter(key=>!['afterSequence','limit'].includes(key)).every(key=>keys.includes(key));
-          };
-          const stringField=(field:string):string|null=>typeof input[field]==='string'&&(input[field] as string).length>0?input[field] as string:null;
-          const stillAuthorized=():boolean=>{
-            if(options.currentAuthentication){const current=options.currentAuthentication();identity=current.identity;sessionKey=current.sessionKey;}
-            const after=context(req);return !!after&&after.ownerId===actor.ownerId&&after.actorId===actor.actorId;
-          };
-          const prerequisiteError=(error:unknown):Response=>{
-            const code=error instanceof Error?error.message:'';
-            if(code==='prerequisite_store_required')return json({error:'native_prerequisite_unavailable'},503);
-            if(code==='committed_outcome_uncertain')return json({error:code,automaticRetry:false,readOriginalRequestBeforeNewIntent:true},503);
-            // Designed refusals keep their code and class; only unclassified or internal failures become 503.
-            const status=prerequisiteRefusalStatus(code);
-            if(status!==null&&status<500)return json(status===409?{error:code,automaticRetry:false}:{error:code},status);
-            // Unexpected failure: log only a closed code or class plus throw-site frames (no payloads) so it is diagnosable.
-            const at=error instanceof Error?[...(error.stack??'').matchAll(/\/([A-Za-z_]+\.ts):(\d+):\d+/g)].slice(0,4).map(x=>x[1]+':'+x[2]).join('<'):'';
-            console.error(JSON.stringify({status:'NATIVE_PREREQUISITE_FAILED',code:(/^[A-Za-z0-9_]{1,100}$/.test(code)?code:(error instanceof Error?error.constructor.name:'UNKNOWN'))+(at?'@'+at:''),automaticRetry:false}));
-            return json({error:'native_prerequisite_failed',automaticRetry:false},503);
-          };
-          // W12-F1 fence: ordinary teacher transport must never mark a
-          // read COMPLETED. Only the internal owner-witness commit path
-          // (commitReadOutput) may do so; REFUSED/UNKNOWN cleanup and all
-          // other operations keep their existing dispatch.
-          if(operation==='finalizeReadOccurrence'&&(input as {status?:unknown}).status==='COMPLETED')return json({error:'read_completion_owner_witness_required',automaticRetry:false},403);
-          let result:unknown;
-          try{
-            switch(operation){
-              case 'bindTeacher': result=await options.app.bindTeacher(currentActor,input as never); break;
-              case 'updateTeacher': result=await options.app.updateTeacher(currentActor,input as never); break;
-              case 'retireTeacher': result=await options.app.retireTeacher(currentActor,input as never); break;
-              case 'createClassGroup': result=await options.app.createClassGroup(currentActor,input as never); break;
-              case 'updateClassGroup': result=await options.app.updateClassGroup(currentActor,input as never); break;
-              case 'createLessonSession': result=await options.app.createLessonSession(currentActor,input as never); break;
-              case 'updateLessonSession': result=await options.app.updateLessonSession(currentActor,input as never); break;
-              case 'upsertTemporalBinding': result=await options.app.upsertTemporalBinding(currentActor,input as never); break;
-              case 'attachStudentRevision': result=await options.app.attachStudentRevision(currentActor,input as never); break;
-              case 'updateStudentRevision': result=await options.app.updateStudentRevision(currentActor,input as never); break;
-              case 'attachActivityScope': result=await options.app.attachActivityScope(currentActor,input as never); break;
-              case 'correctActivityScope': result=await options.app.correctActivityScope(currentActor,input as never); break;
-              case 'createProgress': result=await options.app.createProgress(currentActor,input as never); break;
-              case 'correctProgress': result=await options.app.correctProgress(currentActor,input as never); break;
-              case 'createAssessment': result=await options.app.createAssessment(currentActor,input as never); break;
-              case 'correctAssessment': result=await options.app.correctAssessment(currentActor,input as never); break;
-              case 'createDraft': result=await options.app.createDraft(currentActor,input as never); break;
-              case 'updateDraft': result=await options.app.updateDraft(currentActor,input as never); break;
-              case 'recordScoreEvidence': result=await options.app.recordScoreEvidence(currentActor,input as never); break;
-              case 'previewApprovalClosure': result=await options.app.previewApprovalClosure(currentActor,input as never); break;
-              case 'issueApproval': result=await options.app.issueApproval(currentActor,input as never); break;
-              case 'approveDraft': result=await options.app.approveDraft(currentActor,input as never); break;
-              case 'revokeApproval': result=await options.app.revokeApproval(currentActor,input as never); break;
-              case 'commandOutcome': result=await options.app.commandOutcome(currentActor,input as never); break;
-              case 'fenceCommand': result=await options.app.fenceCommand(currentActor,input as never); break;
-              case 'admitReadOccurrence': result=await options.app.admitReadOccurrence(currentActor,input as never); break;
-              case 'finalizeReadOccurrence': result=await options.app.finalizeReadOccurrence(currentActor,input as never); break;
-              case 'readOccurrence': result=await options.app.readOccurrence(currentActor,input as never); break;
-              case 'prerequisiteTeachers': if(!exactInputKeys([]))return invalidInput(); result=await options.app.prerequisiteTeachers(currentActor); break;
-              case 'prerequisiteTeacher': { if(!exactInputKeys(['teacherKey'])||!stringField('teacherKey'))return invalidInput(); result=await options.app.prerequisiteTeacher(currentActor,stringField('teacherKey')!); break; }
-              case 'ownTeacherBinding': if(!exactInputKeys([]))return invalidInput(); result=await options.app.ownTeacherBinding(currentActor); break;
-              case 'prerequisiteClassGroups': if(!exactInputKeys([]))return invalidInput(); result=await options.app.prerequisiteClassGroups(currentActor); break;
-              case 'prerequisiteClassGroup': { if(!exactInputKeys(['classKey'])||!stringField('classKey'))return invalidInput(); result=await options.app.prerequisiteClassGroup(currentActor,stringField('classKey')!); break; }
-              case 'prerequisiteLessons': if(!exactInputKeys([]))return invalidInput(); result=await options.app.prerequisiteLessons(currentActor); break;
-              case 'prerequisiteLesson': { if(!exactInputKeys(['lessonKey'])||!stringField('lessonKey'))return invalidInput(); result=await options.app.prerequisiteLesson(currentActor,stringField('lessonKey')!); break; }
-              case 'prerequisiteTemporalBindings': if(!exactInputKeys([]))return invalidInput(); result=await options.app.prerequisiteTemporalBindings(currentActor); break;
-              case 'prerequisiteActivityScopes': { if(!Object.keys(input).every(key=>['activityKind','activityEntityId','lessonKey'].includes(key)))return invalidInput(); result=await options.app.prerequisiteActivityScopes(currentActor,input as never); break; }
-              case 'prerequisiteStudentRevision': { if(!exactInputKeys(['studentId'])||!stringField('studentId'))return invalidInput(); result=await options.app.prerequisiteStudentRevision(currentActor,stringField('studentId')!); break; }
-              case 'prerequisiteStudentRevisionHistory': { if(!exactInputKeys(['studentId','afterSequence','limit'])||!stringField('studentId'))return invalidInput(); result=await options.app.prerequisiteStudentRevisionHistory(currentActor,stringField('studentId')!,typeof input.afterSequence==='number'?input.afterSequence:0,typeof input.limit==='number'?input.limit:200); break; }
-              case 'prerequisiteApproval': { if(!exactInputKeys(['approvalId'])||!stringField('approvalId'))return invalidInput(); result=await options.app.prerequisiteApproval(currentActor,stringField('approvalId')!); break; }
-              case 'prerequisiteOwnerRevision': { if(!exactInputKeys(['family','entityKey','revisionId'])||!stringField('family')||!stringField('entityKey')||!stringField('revisionId'))return invalidInput(); result=await options.app.prerequisiteOwnerRevision(currentActor,stringField('family') as never,stringField('entityKey')!,stringField('revisionId')!); break; }
-              case 'prerequisiteOwnerHistory': { if(!exactInputKeys(['family','entityKey','afterSequence','limit'])||!stringField('family')||!stringField('entityKey'))return invalidInput(); result=await options.app.prerequisiteOwnerHistory(currentActor,stringField('family') as never,stringField('entityKey')!,typeof input.afterSequence==='number'?input.afterSequence:0,typeof input.limit==='number'?input.limit:200); break; }
-              case 'prerequisiteScoreEvidence': { if(!exactInputKeys(['entityKey'])||!stringField('entityKey'))return invalidInput(); result=await options.app.prerequisiteScoreEvidence(currentActor,stringField('entityKey')!); break; }
-              case 'prerequisiteScoreEvidenceForAttempt': { if(!exactInputKeys(['attemptRef'])||!input.attemptRef||typeof input.attemptRef!=='object')return invalidInput(); result=await options.app.prerequisiteScoreEvidenceForAttempt(currentActor,input.attemptRef as never); break; }
-              default: return json({error:'invalid_operation'},400);
-            }
-          }catch(error){
-            if(!stillAuthorized())return json({error:'teacher_authentication_required'},401);
-            return prerequisiteError(error);
-          }
-          if(!stillAuthorized())return json({error:'teacher_authentication_required'},401);
-          return json(result===undefined?null:result);
-        }
+        
+        
+        
+        
         if(path==='/api/retained-query'){
           if(req.method!=='POST'||url.search)return json({error:'unexpected_query_scope'},400);
           let input:Record<string,unknown>;try{input=await body(req);}catch{return json({error:'retained_query_input_invalid'},400);}
@@ -676,4 +884,54 @@ export function createTeacherServerHandler(options:TeacherServerOptions){
       return json({error:safe},safe.includes('scope_conflict')||safe==='password_recovery_denied'?403:400);
     }
   };
+/* END PRESERVED LEGACY ROUTER */
+
+  const nativeRouteKeys=new Set<string>();
+  for(const route of nativeRoutes){
+    if(!isNativeTeacherHttpPath(route.path))throw Error('native_route_scope_conflict');
+    const key=route.method+' '+route.path;if(nativeRouteKeys.has(key))throw Error('native_route_duplicate');nativeRouteKeys.add(key);
+  }
+  const dispatchNative=async(req:Request):Promise<Response>=>{
+    const url=new URL(req.url),path=url.pathname,execution={dispatched:false,write:false};
+    const preDispatchRefusal=(error:string,status:number)=>json({error},status);
+    try{
+      if(!['GET','POST'].includes(req.method))return json({error:'method_not_allowed'},405);
+      if(req.method==='POST'&&req.headers.get('Origin')!==options.origin)return json({error:'origin_denied'},403);
+      refreshNativeAuthentication();const actor=context(req);if(!actor)return authenticationRequiredOutput();
+      const route=nativeRoutes.find(r=>r.path===path&&r.method===req.method);
+      if(!route){if(nativeRoutes.some(r=>r.path===path))return json({error:'method_not_allowed'},405);throw new TeacherHttpInputRefusal('invalid_http_path');}
+      if(options.typedRead?.consumerProfile==='OLD_SECTION_1_0'&&!route.oldProfile)return json({error:'PERMISSION_DENIED'},403);
+      if((path==='/api/typed-read'||path==='/api/native-read-snapshot')&&options.typedRead?.cursorRuntime&&actor.actorId!==options.typedRead.cursorRuntime.actorId){
+        return json({kind:'ERROR',contractVersion:typedReadContractVersion,consumerProfile:options.typedRead.consumerProfile??'CURRENT_1_1',requestId:'unparsed',correlationId:'unparsed',error:{code:'PERMISSION_DENIED',retryable:false,correlationId:'unparsed',requiredEvidence:[],readResolution:'NOT_APPLICABLE'}},403);
+      }
+
+      parseTeacherHttpQuery(url,route);
+      if(route.headers){
+        const values=Object.fromEntries(Object.keys(route.headers).map(name=>[name,req.headers.get(name)]));
+        try{parseTeacherHttpFields(values,route.headers);}catch{throw new TeacherHttpInputRefusal('native_metadata_operation_id_required');}
+      }
+      let parsed:{body:Record<string,unknown>|null;nativeOperation?:string;nativeInput?:Record<string,unknown>}={body:null};
+      if(route.body){
+        try{parsed=parseTeacherHttpBody(await readNativeBody(req,route.body.maxBytes),route.body);}catch(error){
+          const code=httpErrorCode(error);if(!(error instanceof TeacherHttpInputRefusal)&&!(prerequisiteRefusalStatus(code)!==null&&prerequisiteRefusalStatus(code)!<500))throw error;nativeHttpDiagnostic('NATIVE_PREREQUISITE_INPUT_REJECTED',code);
+          if(path==='/api/typed-read'||path==='/api/native-read-snapshot'){
+            if(path==='/api/typed-read'&&code==='invalid_http_input')return json({kind:'ERROR',contractVersion:typedReadContractVersion,consumerProfile:options.typedRead?.consumerProfile??'CURRENT_1_1',requestId:'unparsed',correlationId:'unparsed',error:{code:'INVALID_REQUEST',retryable:false,correlationId:'unparsed',requiredEvidence:[],readResolution:'NOT_APPLICABLE'}},400);
+            return json({error:'INVALID_REQUEST'},400);
+          }
+          return json({error:code==='invalid_json_depth'?code:code==='invalid_operation'?code:'invalid_native_prerequisite_input'},400);
+        }
+        refreshNativeAuthentication();const current=context(req);if(!current||current.ownerId!==actor.ownerId||current.actorId!==actor.actorId)return authenticationRequiredOutput();
+      }else{
+        const length=req.headers.get('Content-Length');
+        if(req.body!==null||req.bodyUsed||req.headers.has('Transfer-Encoding')||length!==null&&length!=='0')throw new TeacherHttpInputRefusal(route.bodyRefusal??'http_body_forbidden');
+      }
+      const operation=parsed.nativeOperation;
+      execution.write=!!operation&&!operation.startsWith('prerequisite')&&!['ownTeacherBinding','commandOutcome','readOccurrence','previewApprovalClosure'].includes(operation);
+      const scope={req,url,path,actor,...parsed,preDispatchRefusal,execution} as ParsedTeacherHttpScope;
+      parsedNativeScopes.add(scope);execution.dispatched=true;
+      return await route.handler(scope);
+    }catch(error){return nativeRouteFailure(error,execution);}
+  };
+  const handle=(req:Request):Promise<Response>=>isNativeTeacherHttpPath(new URL(req.url).pathname)?dispatchNative(req):legacyHandler(req);
+  return Object.assign(handle,{nativeRoutes});
 }

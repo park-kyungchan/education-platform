@@ -1,9 +1,9 @@
 import {readFileSync} from 'node:fs';
 import {foundation,admitted} from './nativePrerequisiteStore.test';
-import {context as commandFixture,progress,draft,assessment} from './nativePrerequisiteContracts.test';
+import {context as commandFixture,progress,draft,assessment,closure} from './nativePrerequisiteContracts.test';
 import {describe,expect,test} from 'bun:test';
 import {signTeacherSession} from '../../src/academy/auth';
-import {createTeacherServerHandler,declaredRefusalStatus,inputRefusals,prerequisiteRefusalStatus,nativePrerequisiteOperations,nativePrereqRouteAliases,type LoginIdentity} from '../../src/academy/server';
+import {createTeacherServerHandler,nativePrerequisiteHttpInputs,parseTeacherHttpFields,type TeacherHttpField,type TeacherHttpFields,type TeacherHttpRoute,declaredRefusalStatus,inputRefusals,prerequisiteRefusalStatus,nativePrerequisiteOperations,nativePrereqRouteAliases,type LoginIdentity} from '../../src/academy/server';
 import {TeacherApplication} from '../../src/academy/application';
 import {ctx,FakePrerequisiteStore,fictionalGrantVerifier,knownK,mapFixtureViews,nativeRef,objectRef,withOutputLabel,registeredRequest,request,testFunctionRequest,TEST_REGISTRY_SHA256,testTemporal,version} from './typedRead.test';
 import {TypedReadRefusal,createSnapshotGrantVerifier} from '../../src/academy/nativeTypedRead';
@@ -269,23 +269,7 @@ describe('authenticated prerequisite wrapper (IG3-REV-09)',()=>{
     if(c!==null)headers.set('Cookie',c);
     return new Request(ORIGIN+(opts.path??'/api/native-prerequisite'),{method:'POST',headers,body:JSON.stringify({operation,input})});
   }
-  const sampleInput=(operation:string):unknown=>{
-    switch(operation){
-      case 'prerequisiteTeachers': case 'ownTeacherBinding': case 'prerequisiteClassGroups': case 'prerequisiteLessons': case 'prerequisiteTemporalBindings': return {};
-      case 'prerequisiteTeacher': return {teacherKey:'teacher-a'};
-      case 'prerequisiteClassGroup': return {classKey:'class-a'};
-      case 'prerequisiteLesson': return {lessonKey:'lesson-a'};
-      case 'prerequisiteStudentRevision': case 'prerequisiteStudentRevisionHistory': return {studentId:'student-a'};
-      case 'prerequisiteApproval': return {approvalId:'approval-a'};
-      case 'prerequisiteOwnerRevision': return {family:'teacher',entityKey:'teacher-a',revisionId:'rev-teacher'};
-      case 'prerequisiteOwnerHistory': return {family:'teacher',entityKey:'teacher-a'};
-      case 'prerequisiteScoreEvidence': return {entityKey:'evidence-a'};
-      case 'prerequisiteScoreEvidenceForAttempt': return {attemptRef:{identity:{},revision:'rev-attempt'}};
-      case 'prerequisiteActivityScopes': return {};
-      case 'admitReadOccurrence': case 'readOccurrence': return {ownerId:OWNER,actorId:ACTOR,requestId:'req-1'};
-      default: return {command:{idempotencyKey:'k-'+operation},payload:{probe:operation}};
-    }
-  };
+  const sampleInput=(operation:string):unknown=>httpSchemaInput(nativePrerequisiteHttpInputs[operation as keyof typeof nativePrerequisiteHttpInputs]);
   test('all 44 closed operations dispatch to the facade with the cookie principal only',async()=>{
     expect(nativePrerequisiteOperations).toHaveLength(44);
     const calls:Call[]=[];const handler=prerequisiteHandler(calls);
@@ -319,12 +303,12 @@ describe('authenticated prerequisite wrapper (IG3-REV-09)',()=>{
     const handler=prerequisiteHandler(calls,{
       prerequisiteTeachers:async()=>{throw Error('teacher_binding_required');},
     });
-    const bound=await handler(prereq('bindTeacher',{command:{idempotencyKey:'k-bind'},payload:{actorId:ACTOR}}));
+    const bound=await handler(prereq('bindTeacher',{...sampleInput('bindTeacher') as object,payload:{actorId:ACTOR}}));
     expect(bound.status).toBe(200);expect(calls.map(c=>c.method)).toEqual(['bindTeacher']);
     const gated=await handler(prereq('prerequisiteTeachers',{}));
     expect(gated.status).toBe(403);expect((await gated.json()).error).toBe('teacher_binding_required');
     const uncertain=prerequisiteHandler([],{updateTeacher:async()=>{throw Error('committed_outcome_uncertain');}});
-    const res=await uncertain(prereq('updateTeacher',{command:{},payload:{}}));
+    const res=await uncertain(prereq('updateTeacher',sampleInput('updateTeacher')));
     expect(res.status).toBe(503);const body=await res.json();
     expect(body.automaticRetry).toBe(false);expect(body.readOriginalRequestBeforeNewIntent).toBe(true);
   });
@@ -351,7 +335,7 @@ describe('authenticated prerequisite wrapper (IG3-REV-09)',()=>{
     expect(calls.map(c=>c.method)).toEqual(entries.map(([,operation])=>operation));
     expect(calls.every(c=>c.actor===ACTOR)).toBe(true);
     const unknown=await handler(new Request(ORIGIN+'/api/native-prereq/bogus-alias',{method:'POST',headers:{Origin:ORIGIN,'Content-Type':'application/json',Cookie:cookie()},body:JSON.stringify({})}));
-    expect(unknown.status).toBe(404);
+    expect(unknown.status).toBe(400);
     expect(calls).toHaveLength(17);
   });
   test('RC5: named aliases share the generic 512 KiB body limit; stale source revisions are 409 conflicts',async()=>{
@@ -368,8 +352,8 @@ describe('authenticated prerequisite wrapper (IG3-REV-09)',()=>{
       console.error=(line:unknown)=>{try{const v=JSON.parse(String(line));if(v.status==='NATIVE_PREREQUISITE_INPUT_REJECTED')codes.push(v.code);}catch{}};
       try{return {status:(await handler(post(JSON.stringify({pad:'x'.repeat(bytes)})))).status,codes};}finally{console.error=original;}
     };
-    expect((await rejected(30_000)).codes).not.toContain('body:input_too_large');
-    expect(await rejected(530_000)).toEqual({status:400,codes:['body:input_too_large']});
+    expect((await rejected(30_000)).codes).not.toContain('input_too_large');
+    expect(await rejected(530_000)).toEqual({status:400,codes:['input_too_large']});
   });
   test('RC6: refusal statuses declared by the activity-scope action contract reach HTTP unchanged',async()=>{
     expect(Object.fromEntries(declaredRefusalStatus)).toMatchObject({activity_scope_terminal:409,activity_scope_terminal_payload_changed:409,activity_scope_action_version:409,stale_base:409,invalid_activity_scope:400});
@@ -399,9 +383,9 @@ describe('authenticated prerequisite wrapper (IG3-REV-09)',()=>{
   });
   test('closed teachers/update alias dispatches update and retire by payload state',async()=>{
     const calls:Call[]=[];const handler=prerequisiteHandler(calls);
-    const update=await handler(new Request(ORIGIN+'/api/native-prereq/teachers/update',{method:'POST',headers:{Origin:ORIGIN,'Content-Type':'application/json',Cookie:cookie()},body:JSON.stringify({command:{idempotencyKey:'k-u'},teacherKey:'teacher-a',payload:{state:'ACTIVE'}})}));
+    const update=await handler(new Request(ORIGIN+'/api/native-prereq/teachers/update',{method:'POST',headers:{Origin:ORIGIN,'Content-Type':'application/json',Cookie:cookie()},body:JSON.stringify({...sampleInput('updateTeacher') as object,payload:{state:'ACTIVE'}})}));
     expect(update.status).toBe(200);
-    const retire=await handler(new Request(ORIGIN+'/api/native-prereq/teachers/update',{method:'POST',headers:{Origin:ORIGIN,'Content-Type':'application/json',Cookie:cookie()},body:JSON.stringify({command:{idempotencyKey:'k-r'},teacherKey:'teacher-a',payload:{state:'RETIRED'}})}));
+    const retire=await handler(new Request(ORIGIN+'/api/native-prereq/teachers/update',{method:'POST',headers:{Origin:ORIGIN,'Content-Type':'application/json',Cookie:cookie()},body:JSON.stringify({...sampleInput('retireTeacher') as object,payload:{state:'RETIRED'}})}));
     expect(retire.status).toBe(200);
     expect(calls.map(c=>c.method)).toEqual(['updateTeacher','retireTeacher']);
     expect((await handler(new Request(ORIGIN+'/api/native-prereq/teachers/update',{method:'POST',headers:{Origin:ORIGIN,'Content-Type':'application/json'},body:JSON.stringify({})}))).status).toBe(401);
@@ -683,6 +667,104 @@ const regressionIngress=(label:string)=>{
  const c=commandFixture(label),{ownerId:_owner,actorId:_actor,verifiedSession,...rest}=c;
  return {...rest,authenticationRevision:verifiedSession.authenticationRevision};
 };
+
+/** Derive the transport population from the actual router and its actual
+ * application signatures, including referenced DTOs. No second route/field list. */
+test('HTTP-TABLE native dispatch and handler custody share one bounded route table',async()=>{
+ const {handler}=makeHandler();
+ const routes=(handler as unknown as {nativeRoutes?:readonly {method:string;path:string;handler:(scope:unknown)=>Promise<Response>}[]}).nativeRoutes;
+ expect(Array.isArray(routes)).toBe(true);
+ const prefixes=['/api/native-prereq','/api/native-prerequisite','/api/typed-read','/api/native-read-snapshot','/api/native-read-descriptor'];
+ for(const route of routes!){
+  expect(prefixes.some(p=>route.path===p||route.path.startsWith(p+'/'))).toBe(true);
+  await expect(route.handler({req:post({}),actor:ctx})).rejects.toThrow('http_parser_required');
+  for(const suffix of ['/unregistered','/null','/7','/'+ 'x'.repeat(4097)])expect((await handler(new Request(ORIGIN+route.path+suffix,{headers:{Cookie:cookie()}}))).status).toBe(400);
+ }
+ expect(routes!.some(r=>r.path==='/design-lab')).toBe(false);
+ expect(Object.isFrozen(routes)).toBe(true);
+});
+
+function httpSchemaValue(rule:TeacherHttpField,name:string):unknown{
+ if(rule.values)return rule.values[0];
+ if(rule.format==='nativeRef')return nativeRef();
+ if(rule.format==='objectRef')return objectRef('Student','student-a','rev-student');
+ if(rule.format==='action')return regressionIngress('http-action').action;
+ if(rule.format==='closure')return closure();
+ if(rule.format==='sha256')return 'a'.repeat(64);
+ if(rule.format==='instant')return '2026-10-24T00:00:00Z';
+ if(rule.format==='date')return '2026-10-24';
+ if(rule.format==='uuid')return crypto.randomUUID();
+ if(rule.kind==='null')return null;
+ if(rule.kind==='integer')return rule.min??1;
+ if(rule.kind==='boolean')return true;
+ if(rule.kind==='array')return Array.from({length:rule.min??0},()=>httpSchemaValue(rule.item!,name));
+ if(rule.kind==='object')return rule.fields?httpSchemaInput(rule.fields):{};
+ return name==='consumerProfile'?'CURRENT_1_1':name==='contractVersion'?'2.0.0':'synthetic-'+name;
+}
+function httpSchemaInput(fields:TeacherHttpFields):Record<string,unknown>{return Object.fromEntries(Object.entries(fields).map(([name,rule])=>[name,httpSchemaValue(rule,name)]));}
+function httpSchemaParameters(fields:TeacherHttpFields,prefix:string[]=[]):{path:string[];rule:TeacherHttpField}[]{return Object.entries(fields).flatMap(([name,rule])=>[{path:[...prefix,name],rule},...(rule.fields?httpSchemaParameters(rule.fields,[...prefix,name]):[])]);}
+test('HTTP-INPUT imported route table enumerates every body/query/path parameter through the real stack',async()=>{
+ const f=await foundation(),handler=prerequisiteHandler(f.store),failures:string[]=[];let cases=0;
+ const routes:readonly TeacherHttpRoute[]=handler.nativeRoutes;
+ const log=console.error;console.error=()=>{};
+ try{for(const route of routes){
+  const variants=route.body?.operations?Object.entries(route.body.operations).filter(([op])=>route.body!.nativeOperation==='GENERIC'||route.body!.nativeOperation==='TEACHER_UPDATE'?route.body!.nativeOperation==='GENERIC'||['updateTeacher','retireTeacher'].includes(op):op===route.body!.nativeOperation):[[null,route.body?.fields??{}] as const];
+  for(const [operation,fields] of variants){
+   const input=httpSchemaInput(fields);expect(()=>parseTeacherHttpFields(input,fields)).not.toThrow();
+   const envelope=(value:Record<string,unknown>)=>route.body?.nativeOperation==='GENERIC'?{operation,input:value}:value;
+   const send=(body:unknown,path=route.path)=>handler(new Request(ORIGIN+path,{method:route.method,headers:{Origin:ORIGIN,'Content-Type':'application/json',Cookie:cookie(),...(route.headers?{'X-Native-Metadata-Operation-Id':crypto.randomUUID()}:{})},...(route.body?{body:JSON.stringify(body)}:{})}));
+   for(const {path,rule} of httpSchemaParameters(fields)){
+    const bad:unknown[]=[null,7,'',false,{},[],'x'.repeat(4097),...(rule.kind==='integer'?['1',1.5,Number.MAX_SAFE_INTEGER+1]:[])];
+    for(const value of bad){
+     try{parseTeacherHttpFields({value},{value:rule});continue;}catch{}
+     const malformed=structuredClone(input);let target=malformed;
+     for(const part of path.slice(0,-1))target=target[part] as Record<string,unknown>;
+     target[path.at(-1)!]=value;
+     const response=await send(envelope(malformed));cases++;
+     if(response.status!==400)failures.push(route.path+':'+String(operation)+':'+path.join('.')+':'+typeof value+':'+response.status);
+    }
+   }
+   for(const value of ['null','7','','x'.repeat(4097)]){
+    // Each declared query parameter plus an unknown key. Native routes
+    // currently declare none; future additions join this enumeration.
+    for(const key of [...Object.keys(route.query),'SYNTHETIC_UNKNOWN_QUERY']){
+     const response=await send(envelope(input),route.path+'?'+new URLSearchParams({[key]:value}));cases++;
+     if(response.status!==400)failures.push(route.path+':query:'+response.status);
+    }
+   }
+  }
+ }}finally{console.error=log;}
+ expect(cases).toBeGreaterThan(500);expect(failures.slice(0,60)).toEqual([]);
+});
+
+test('HTTP-LOG rejected envelope and input keys never enter diagnostics',async()=>{
+ const f=await foundation(),handler=prerequisiteHandler(f.store),logs:string[]=[],original=console.error,canary='SYNTHETIC_PRIVATE_CANARY_KEY';
+ console.error=(...args:unknown[])=>{logs.push(args.map(String).join(' '));};
+ try{
+  for(const payload of [{operation:'prerequisiteTeachers',input:{},[canary]:true},{operation:'prerequisiteTeachers',input:{[canary]:true}}])expect((await handler(post(payload,{path:'/api/native-prerequisite'}))).status).toBe(400);
+ }finally{console.error=original;}
+ expect(logs.length).toBeGreaterThan(0);expect(logs.some(line=>line.includes(canary))).toBe(false);
+});
+
+test('HTTP-DEPENDENCY auth exceptions are infrastructure failures in every native phase',async()=>{
+ const failures:string[]=[];
+ for(const failure of [Error('SYNTHETIC_AUTH_FAILURE'),Error('invalid_input'),TypeError('SYNTHETIC_AUTH_FAILURE'),RangeError('SYNTHETIC_AUTH_FAILURE'),null,7])for(const failAt of [1,2,3]){
+  const f=await foundation();let reads=0;
+  const handler=createTeacherServerHandler({app:new TeacherApplication(f.store as never,OWNER,undefined,undefined,f.store),origin:ORIGIN,sessionKey:SESSION_KEY,identity,invitationDigest:null,currentAuthentication:()=>{if(++reads===failAt)throw failure;return {identity,sessionKey:SESSION_KEY};},saveIdentity:async()=>{throw Error('no auth writes');},curatedConceptCandidates:{read:()=>{throw Error('unused');}} as never});
+  const before=f.sql.rows('class_versions').length;
+  const response=await handler(post({operation:'createClassGroup',input:{command:regressionIngress('dependency-'+failAt),payload:{kind:'class_group',displayName:knownK('Invented Class'),businessTimezone:knownK('Asia/Seoul'),classState:knownK('ACTIVE'),synthetic:true}}},{path:'/api/native-prerequisite'}));
+  const body=await response.json();
+  if(response.status!==503||body.automaticRetry!==false||failAt===3&&body.readOriginalRequestBeforeNewIntent!==true)failures.push(failAt+':'+response.status+':'+String(body.error));
+  expect(f.sql.rows('class_versions').length-before).toBe(failAt===3?1:0);
+ }
+ for(const path of ['/api/typed-read','/api/native-read-snapshot','/api/native-read-descriptor']){
+  let reads=0;const {handler}=makeHandler({currentAuthentication:()=>{if(++reads===2)throw Error('SYNTHETIC_AUTH_FAILURE');return {identity,sessionKey:SESSION_KEY};}});
+  const payload=path==='/api/native-read-snapshot'?{schema:'native-read-acquire.v2',consumerProfile:'CURRENT_1_1',requestId:'dependency-snapshot',scopeRef:nativeRef(),consistency:'SNAPSHOT',time:{mode:'CURRENT'},functionIntent:testFunctionRequest(testTemporal())}:request();
+  const response=path==='/api/native-read-descriptor'?await handler(new Request(ORIGIN+path,{headers:{Cookie:cookie(),'X-Native-Metadata-Operation-Id':crypto.randomUUID()}})):await handler(post(payload,{path}));
+  if(response.status!==503)failures.push(path+':'+response.status);
+ }
+ expect(failures).toEqual([]);
+});
 function prerequisiteHandler(store:Awaited<ReturnType<typeof foundation>>['store']){
  return createTeacherServerHandler({app:new TeacherApplication(store as never,OWNER,undefined,undefined,store),origin:ORIGIN,sessionKey:SESSION_KEY,identity,invitationDigest:null,
   saveIdentity:async()=>{throw Error('auth writer must not run');},curatedConceptCandidates:{read:()=>{throw Error('unused');}} as never});

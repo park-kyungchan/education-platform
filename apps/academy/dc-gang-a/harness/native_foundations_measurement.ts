@@ -5,7 +5,7 @@ import {readFileSync,readdirSync} from 'node:fs';
 import {join} from 'node:path';
 import type {SQL} from 'bun';
 import {assertFixedRunner,loadFixedRunnerInvocation,readPinnedFile,writeExclusivePrivateJson,type QualificationCase,type FixedRunnerInvocation} from './native_foundations_qualification';
-import {bindTemplate,memoryGet,nativePost,readNativeMemory,sha256,writeNativeMemory,type NativeMemory} from './native_foundations_fixture';
+import {expectedFixtureRefusals,requireFixtureRefusal,bindTemplate,memoryGet,nativePost,readNativeMemory,sha256,writeNativeMemory,type NativeMemory} from './native_foundations_fixture';
 import {fixedConsumerProfile,educationTypes,type EducationType,type ObjectRef,type ReadAdmission} from '../src/academy/contracts/prerequisiteRecords';
 import {fullFieldMask,functionSelectionDigest,type NativeSnapshotAcquireResult,type TypedFunctionRequest,type TypedReadRequest,type TypedReadOk,type TypedItem,type TypedGap} from '../src/academy/nativeTypedRead';
 import {canonicalJson} from '../src/learning/model';
@@ -467,8 +467,9 @@ async function identityAndScopeChecks(i:FixedRunnerInvocation,memory:NativeMemor
 
 async function baselineChecks(i:FixedRunnerInvocation,memory:NativeMemory,store:PostgresAcademyStore,db:SQL,windows:WindowResult[],witnesses:Record<string,unknown>[]){
  const setup=memoryGet(memory,'native.setupReceipts') as Record<string,unknown>[];
- for(const id of ['B-never-bound','refuse-overlap','refuse-empty','refuse-inverted','refuse-cross-family','refuse-duplicate-draft','negative-approval-consume','issuer-expired','issuer-revoked']){
-  const actual=setup.filter(r=>r.id===id);check(actual.length===1&&Number(actual[0]!.status)>=400&&typeof actual[0]!.resultSha256==='string'&&actual[0]!.headUnchanged===true,'exact_genuine_setup_refusal_required:'+id);
+ for(const id of Object.keys(expectedFixtureRefusals)){
+  const actual=setup.filter(r=>r.id===id);check(actual.length===1&&typeof actual[0]!.resultSha256==='string'&&actual[0]!.headUnchanged===true,'exact_genuine_setup_refusal_required');
+  try{requireFixtureRefusal(id,actual[0]!.status,actual[0]!.refusalCode);}catch{throw Error('exact_genuine_setup_refusal_required');}
   witnesses.push({oracle:id.startsWith('issuer-')||id==='negative-approval-consume'?'V-ISSUER':id==='refuse-duplicate-draft'?'V-DRAFT-ASSESSMENT':id==='refuse-cross-family'?'V-ATTEMPTS':id==='B-never-bound'?'V-AUTH':'V-TEMPORAL',caseId:id,...actual[0]});
  }
  const writers=memoryGet(memory,'native.dependencyWriterReceipts') as Record<string,unknown>[];

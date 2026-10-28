@@ -995,7 +995,7 @@ export class NativeTypedReadService implements NativeTypedRead{
     return null;
   }
   /** A student occurrence is complete only with the student's dated class membership and, for an exact
-   * occurrence, dated lesson participation (the evidence projectStudentOnly requires). Missing evidence is an
+   * occurrence, native lesson participation. Missing evidence is an
    * explicit UNVERIFIED gap, so the page can never claim COMPLETE without it. */
   private async studentOccurrenceGaps(view:TeacherPrerequisiteReadStore,context:TrustedTeacherContext,request:TypedReadRequest):Promise<TypedGap[]>{
     const selection=request.temporalSelection,student=selection.studentRef;
@@ -1007,6 +1007,24 @@ export class NativeTypedReadService implements NativeTypedRead{
     // reports the case with neither, so it never contradicts an emitted payload participant link.
     const lessonPayload=lesson===null?null:(await view.lessons(context.ownerId)).find(v=>v.entityKey===lesson.identity.nativeKey)?.payload;
     const named=!!lessonPayload&&lessonPayload.participantRefs.state==='known'&&lessonPayload.participantRefs.value.some(ref=>identityEqual(ref.identity,student.identity));
+    // A newer Student head never relabels an older relation endpoint. When
+    // selected evidence cites an earlier revision, prove that original row.
+    const refs:ObjectRef[]=[];
+    for(const edge of edges){
+      if(edge.bindingKind==='CLASS_MEMBERSHIP'&&identityEqual(edge.targetRef.identity,selection.classGroupRef.identity))refs.push(edge.subjectRef);
+      if(lesson&&edge.bindingKind==='LESSON_PARTICIPATION'&&identityEqual(edge.subjectRef.identity,lesson.identity))refs.push(edge.targetRef);
+    }
+    if(lessonPayload?.participantRefs.state==='known')refs.push(...lessonPayload.participantRefs.value);
+    for(const row of await view.activityScopes(context.ownerId,{})){
+      const scope=row.payload.recordScope;
+      if(scope.businessDate===selection.businessDate&&identityEqual(scope.classGroupRef.identity,selection.classGroupRef.identity)&&(!lesson||identityEqual(scope.lessonRef.identity,lesson.identity)))refs.push(scope.studentRef);
+    }
+    const exactStudent=request.selector.kind==='EXACT_OBJECT'&&request.selector.objectRef.identity.objectType==='Student';
+    for(const ref of refs.filter(ref=>exactStudent&&identityEqual(ref.identity,student.identity)&&ref.revision!==student.revision)){
+      const original=await view.ownerRevision(context.ownerId,'student',ref.identity.nativeKey,ref.revision);
+      if(!original||original.payload.kind!=='student_record'||original.ownerId!==context.ownerId||original.revisionId!==ref.revision||original.entityKey!==ref.identity.nativeKey||original.namespace!==ref.identity.namespace||canonicalJson(original.scopeRef)!==canonicalJson(ref.identity.scopeRef))throw denied();
+    }
+
     const participates=lesson===null||named||edges.some(p=>p.bindingKind==='LESSON_PARTICIPATION'&&identityEqual(p.subjectRef.identity,lesson.identity)&&identityEqual(p.targetRef.identity,student.identity));
     return [...(member?[]:[{subject:student,path:'Student.links.studentMemberOfClass',reason:'UNVERIFIED' as const,requiredEvidence:['NATIVE_RELATION_MAPPING'],evidence:[]}]),
       ...(participates||lesson===null?[]:[{subject:lesson,path:'LessonSession.links.lessonHasStudent',reason:'UNVERIFIED' as const,requiredEvidence:['NATIVE_RELATION_MAPPING'],evidence:[]}])] as TypedGap[];
@@ -1042,60 +1060,12 @@ export class NativeTypedReadService implements NativeTypedRead{
     }
   }
 
-  /** Root-selected P-SNAPSHOT conformance: exact Student and no links only.
-   * Immutable dated endpoints are verified at their ORIGINAL native revisions;
-   * they are never rewritten to the current Student head or emitted as links.
-   * The caller's unchanged whole-plan horizon is still recomputed by both gates. */
-  private async projectStudentOnly(view:TeacherPrerequisiteReadStore,context:TrustedTeacherContext,request:TypedReadRequest):Promise<TypedReadOk>{
-    if(request.selector.kind!=='EXACT_OBJECT'||request.selector.objectRef.identity.objectType!=='Student'||request.cursor!==null||request.temporalSelection.occurrence.mode!=='EXACT')throw staleGrant();
-    const target=request.selector.objectRef,selection=request.temporalSelection;
-    if(selection.occurrence.mode!=='EXACT')throw invalid();
-    if(selection.studentRef===null||canonicalJson(target)!==canonicalJson(selection.studentRef))throw denied();
-    const student=(await view.students(context.ownerId)).find(s=>s.id===target.identity.nativeKey);
-    const version=student?await view.studentRevisionCurrent(context.ownerId,student.id):null;
-    if(!student||!version)throw new TypedReadRefusal('NOT_FOUND',404);
-    const record=this.baseRecord(request,version,'Student');
-    if(!identityEqual(record.identity,target.identity))throw denied();
-    if(record.revision!==target.revision)throw staleRevision();
-    record.displayName=version.payload.displayName;record.enrollmentState=version.payload.enrollmentState;
-    const binding=await view.teacherBindingByActor(context.ownerId,context.actorId);
-    if(!binding)throw denied();
-    const teacher=this.baseRecord(request,binding,'Teacher'),group=(await view.classGroups(context.ownerId)).find(v=>canonicalJson({identity:{scopeRef:v.scopeRef,namespace:v.namespace,objectType:'ClassGroup',nativeKey:v.entityKey},revision:v.revisionId})===canonicalJson(selection.classGroupRef));
-    const lessonRef=selection.occurrence.lessonRef,lesson=(await view.lessons(context.ownerId)).find(v=>canonicalJson({identity:{scopeRef:v.scopeRef,namespace:v.namespace,objectType:'LessonSession',nativeKey:v.entityKey},revision:v.revisionId})===canonicalJson(lessonRef));
-    if(!group||!lesson||lesson.payload.businessDate!==selection.businessDate||canonicalJson(lesson.payload.classGroupRef)!==canonicalJson(selection.classGroupRef))throw denied();
-    const groupRecord=this.baseRecord(request,group,'ClassGroup'),lessonRecord=this.baseRecord(request,lesson,'LessonSession');
-    lessonRecord.classGroupRef=lesson.payload.classGroupRef;lessonRecord.businessDate=lesson.payload.businessDate;
-    const originalStudent=async(ref:ObjectRef):Promise<boolean>=>{
-      if(!identityEqual(ref.identity,target.identity))return false;
-      const original=await view.ownerRevision(context.ownerId,'student',ref.identity.nativeKey,ref.revision);
-      return !!original&&original.payload.kind==='student_record'&&original.revisionId===ref.revision&&canonicalJson(original.scopeRef)===canonicalJson(ref.identity.scopeRef)&&original.namespace===ref.identity.namespace&&original.entityKey===ref.identity.nativeKey;
-    };
-    const edges=(await view.temporalBindings(context.ownerId)).filter(v=>v.payload.validFrom<=selection.businessDate&&(v.payload.validTo===null||selection.businessDate<v.payload.validTo));
-    let membership=false,participation=false,teaching=false;
-    for(const edge of edges){
-      const p=edge.payload;
-      if(p.bindingKind==='TEACHING_ASSIGNMENT'&&canonicalJson(p.subjectRef)===canonicalJson(selection.classGroupRef)&&canonicalJson(p.targetRef)===canonicalJson(refOf(teacher)))teaching=true;
-      if(p.bindingKind==='CLASS_MEMBERSHIP'&&canonicalJson(p.targetRef)===canonicalJson(selection.classGroupRef)&&await originalStudent(p.subjectRef))membership=true;
-      if(p.bindingKind==='LESSON_PARTICIPATION'&&canonicalJson(p.subjectRef)===canonicalJson(lessonRef)&&await originalStudent(p.targetRef))participation=true;
-    }
-    if(!teaching||!membership||!participation||lesson.payload.participantRefs.state!=='known')throw denied();
-    let participant=false;for(const ref of lesson.payload.participantRefs.value)if(await originalStudent(ref))participant=true;
-    if(!participant)throw denied();
-    for(const scope of await view.activityScopes(context.ownerId,{})){
-      const p=scope.payload.recordScope;
-      if(identityEqual(p.studentRef.identity,target.identity)&&canonicalJson(p.classGroupRef)===canonicalJson(selection.classGroupRef)&&canonicalJson(p.lessonRef)===canonicalJson(lessonRef)&&p.businessDate===selection.businessDate&&!await originalStudent(p.studentRef))throw denied();
-    }
-    const records=[record,teacher,groupRecord,lessonRecord];this.assertTemporalJoins(request,records);
-    for(const expected of request.expectedRevisions){const found=this.findExact(records,expected);if(!found||found.revision!==expected.revision)throw staleRevision();}
-    const value:TypedReadOk={kind:'OK',contractVersion:typedReadContractVersion,consumerProfile:this.consumerProfile,requestId:request.requestId,correlationId:request.requestId,asOf:request.asOf,snapshot:request.snapshot,items:[{kind:'OBJECT',record}],nextCursor:null,enumeration:'COMPLETE',gaps:[]};
-    this.pages.set(value,{end:1,total:1});return value;
-  }
-
+  /** Cursor custody cannot alter selected Function semantics. Every page uses
+   * the same dependency revision lookup, source gaps and occurrence resolution. */
   private async projectPage(view:TeacherPrerequisiteReadStore,context:TrustedTeacherContext,request:TypedReadRequest,cursor?:NativeOwnerCursorBinding):Promise<TypedReadOk>{
     await this.assertTeachingAuthority(view,context,request.temporalSelection,request.scopeRef);
     this.assertSupportedPlan(request);
     view=await selectReadPlan(view,context.ownerId,request.temporalSelection.businessDate,horizonPlan(request.functionRequest,this.consumerProfile));
-    if(this.consumerProfile==='CURRENT_1_1'&&this.cursorOptions.cursorOwner&&request.functionRequest.functionName==='GetStudentDailyContext'&&request.selector.kind==='EXACT_OBJECT'&&request.selector.objectRef.identity.objectType==='Student'&&request.linkMask.length===0&&request.fieldMask.every(f=>f.objectType==='Student'))return this.projectStudentOnly(view,context,request);
     const {records,links,gaps,withheldCatalog,observedHomework,observedAttempts,withheldRevisions}=await this.projectAll(view,context,request);
     this.assertTemporalJoins(request,records);
     gaps.push(...await this.studentOccurrenceGaps(view,context,request));

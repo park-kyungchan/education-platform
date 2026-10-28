@@ -1,13 +1,44 @@
 import {describe,expect,test} from 'bun:test';
 import {canonicalJson,digest} from '../../src/learning/model';
-import {createNativeTypedRead,TypedReadRefusal,type TypedReadErrorCode} from '../../src/academy/nativeTypedRead';
-import {ctx,fixture,mapFixtureViews,nativeRef,objectRef,request,registeredRequest,testFunctionRequest,testTemporal,TEST_REGISTRY_SHA256,version,knownK} from './typedRead.test';
+import {createNativeTypedRead,fullFieldMask,TypedReadRefusal,type TypedReadErrorCode} from '../../src/academy/nativeTypedRead';
+import {ctx,fixture,FakePrerequisiteStore,fictionalGrantVerifier,mapFixtureViews,nativeRef,objectRef,request,registeredRequest,testFunctionRequest,testTemporal,TEST_REGISTRY_SHA256,version,knownK} from './typedRead.test';
 import {exactWorkFixture} from './learningWorkFixtures';
 import {computeReadHorizon} from '../../src/academy/nativePrerequisiteStore';
 import type {ReadHorizonPlan,TeacherPrerequisiteReadStore} from '../../src/academy/ports/teacherStore';
 import {r6OwnerFixture,scene,retained} from './nativePrerequisitePort.test';
 import {admitted} from './nativePrerequisiteStore.test';
 import {context,known} from './nativePrerequisiteContracts.test';
+
+// A trusted cursor capability changes custody, never Function selection,
+// dependency revision meaning, source unknowns or occurrence participation.
+for(const scenario of ['dependency-pin','facet-gap','payload-participation'] as const)test('CURSOR-SEMANTICS '+scenario+' equals the general selected Function',async()=>{
+ const run=async(cursorOwner:boolean)=>{
+  const store=new FakePrerequisiteStore();
+  if(scenario==='payload-participation')store.temporals=store.temporals.filter(v=>v.payload.bindingKind!=='LESSON_PARTICIPATION');
+  mapFixtureViews(store,view=>({...view,
+   ownerRevision:async(owner,family,key,revision)=>{const v=family==='student'?await view.studentRevisionCurrent(owner,key):null;return v?.revisionId===revision?v:null;},
+   current:async(owner,id)=>{
+    const rows=await view.current(owner,id);
+    if(scenario==='dependency-pin')return rows.filter(v=>v.payload.kind==='daily_progress');
+    if(scenario==='payload-participation')return [];
+    const base=rows[0]!;
+    return [{...base,entityId:'synthetic-facet-only',revisionId:'synthetic-facet-r1',payload:{kind:'teacher_lesson_carryover',sourceStudent:{namespace:'academy_student',literalKey:'synthetic-student-a'},sourceCourse:null,sourceBook:null,sourceMinorUnit:null,activity:'daily_test',status:'reminder',originDate:null,targetDate:'2026-10-24',occurrence:{date:'2026-10-24',groupId:'1',courseKey:'2',recordKey:'3',membershipKey:'4'},text:'Invented reminder',directiveRef:'invented directive',evidenceRefs:['invented evidence']}}] as typeof rows;
+   },
+  }));
+  const service=createNativeTypedRead(store.asStore(),ctx.ownerId,{processEpoch:'epoch-1',registrySha256:TEST_REGISTRY_SHA256,snapshotGrantVerifier:fictionalGrantVerifier,now:()=>Date.parse('2026-10-24T00:00:00.000Z'),...(cursorOwner?{cursorOwner:{seal:()=>{throw Error('one exact object needs no cursor');},open:()=>{throw Error('no continuation');},assertCurrent:()=>{}}}:{})});
+  const input=request({requestId:'cursor-semantics-'+scenario,selector:{kind:'EXACT_OBJECT',objectRef:objectRef('Student','student-a','rev-student')},fieldMask:fullFieldMask(['Student']),linkMask:[],expectedRevisions:scenario==='dependency-pin'?[objectRef('DailyProgress','progress-a','rev-progress')]:[]});
+  try{return await service.typedRead(ctx,input);}catch(error){if(error instanceof TypedReadRefusal)return {kind:'ERROR',code:error.code,httpStatus:error.httpStatus};throw error;}
+ };
+ const general=await run(false);
+ expect(general.kind).toBe('OK');
+ if(general.kind!=='OK')throw Error('general control must exercise the selected Function');
+ if(scenario!=='dependency-pin')expect(general.enumeration).toBe(scenario==='facet-gap'?'UNKNOWN':'COMPLETE');
+ if(scenario==='facet-gap')expect(general.gaps.filter(g=>g.sourceUnknown?.kind==='FACET_ONLY_CARRYOVER')).toHaveLength(1);
+ const optimized=await run(true);
+ const shape=(v:typeof general|typeof optimized)=>({kind:v.kind,...(v.kind==='OK'?{enumeration:v.enumeration,gapCount:v.gaps.length}:{code:v.code,httpStatus:v.httpStatus})});
+ expect(shape(optimized)).toEqual(shape(general));
+ expect(digest(optimized)).toBe(digest(general));
+});
 
 async function fourGapScene(){
  const f=await scene(),temporal=testTemporal({classGroupRef:f.recordScope.classGroupRef,studentRef:f.recordScope.studentRef,occurrence:{mode:'EXACT',lessonRef:f.recordScope.lessonRef}});

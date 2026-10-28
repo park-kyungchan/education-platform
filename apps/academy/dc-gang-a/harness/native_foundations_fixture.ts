@@ -307,8 +307,9 @@ export function resolveCommandFence(memory:NativeMemory,request:RequestBinding):
  if(Object.hasOwn(memory,templateKey)){
   const template=memory[templateKey] as Record<string,unknown>;
   if(!template||typeof template!=='object'||template.schema!=='root-exact-command-fence-admission-template.v1'||template.status!=='ROOT_DECISION_REQUIRED'||typeof template.fenceOccurrenceId!=='string')throw Error('separate_root_fence_occurrence_required');
-  const built=buildRootFenceAdmissionTemplate(request,template.fenceOccurrenceId);
-  return validateRootCommandFence({schema:'root-exact-command-fence.v1',requestBindingSha256:built.requestBindingSha256,fenceOccurrenceId:built.fenceOccurrenceId,reason:'ABORT'},request);
+  // A lookup descriptor is not an authorization. Preserve the Root-recorded
+  // request hash and reason; the common exact-fence reader rejects absent or mismatched bindings.
+  return validateRootCommandFence({schema:'root-exact-command-fence.v1',requestBindingSha256:template.requestBindingSha256,fenceOccurrenceId:template.fenceOccurrenceId,reason:template.reason},request);
  }
  throw Error('actual_native_binding_required');
 }
@@ -399,6 +400,23 @@ async function directOperation(i:FixedRunnerInvocation,op:OperationTemplate,memo
   default:throw Error('fixed_native_store_api_required');
  }
 }
+/** Closed negative-fixture contract, shared by production and measurement.
+ * A dependency/server failure is never evidence of the intended refusal. */
+export const expectedFixtureRefusals=Object.freeze({
+ 'B-never-bound':{status:403,code:'teacher_binding_required'},
+ 'refuse-overlap':{status:409,code:'temporal_overlap'},
+ 'refuse-empty':{status:400,code:'invalid_interval'},
+ 'refuse-inverted':{status:400,code:'invalid_interval'},
+ 'refuse-cross-family':{status:409,code:'work_attempt_predecessor_conflict'},
+ 'refuse-duplicate-draft':{status:409,code:'duplicate_current_draft'},
+ 'negative-approval-consume':{status:409,code:'approval_closure_mismatch'},
+ 'issuer-expired':{status:409,code:'approval_expired'},
+ 'issuer-revoked':{status:409,code:'approval_revoked'},
+} as const);
+export function requireFixtureRefusal(id:string,status:unknown,code:unknown):void {
+ const expected=(expectedFixtureRefusals as Readonly<Record<string,{status:number;code:string}>>)[id];
+ if(!Object.hasOwn(expectedFixtureRefusals,id)||!expected||status!==expected.status||code!==expected.code)throw Error('fixture_exact_refusal_required');
+}
 async function runBaseline(i:FixedRunnerInvocation,memory:NativeMemory,store:PostgresAcademyStore,receipts:Record<string,unknown>[],selected?:readonly OperationTemplate[]):Promise<void> {
  const stage=i.config.stage,phase=stage==='A1-SETUP'?'A1':stage;
  const negativeIds=['draft-B-negative-successor','negative-approval-preview','negative-approval-issue','negative-progress-correct','negative-approval-consume','assessment-unknown-postapproval','scope-assessment-unknown-postapproval'];
@@ -444,9 +462,9 @@ async function runBaseline(i:FixedRunnerInvocation,memory:NativeMemory,store:Pos
    catch(error){if(op.id!=='refuse-cross-family'||!(error instanceof Error)||error.message!=='work_attempt_predecessor_conflict')throw error;result={error:error.message};status=409;}
    digest=sha256(JSON.stringify(result));
   }
-  if(refusal?status<400:status!==200)throw Error('fixture_outcome_requires_reconciliation');
+  if(refusal)requireFixtureRefusal(op.id,status,result.error);else if(status!==200)throw Error('fixture_outcome_requires_reconciliation');
   if(refusal&&await heads()!==beforeRefusal)throw Error('fixture_refusal_changed_business_heads');
-  receipts.push({id:op.id,status,resultSha256:digest,automaticRetry:false,...(refusal?{headUnchanged:true,beforeHeads:beforeRefusal,afterHeads:beforeRefusal}:{})});
+  receipts.push({id:op.id,status,resultSha256:digest,automaticRetry:false,...(refusal?{refusalCode:result.error,headUnchanged:true,beforeHeads:beforeRefusal,afterHeads:beforeRefusal}:{})});
   if(!refusal){await captureNative(op.id,result,memory,store,i.config.base.ownerId);if(op.id==='assessment-unknown-postapproval')memory['refs.assessment-unknown']=nativeResultRef(result);}
  }
  if(stage==='A1-SETUP'&&!selected){
@@ -498,8 +516,9 @@ async function exerciseIssuerRefusals(i:FixedRunnerInvocation,memory:NativeMemor
    if(revoke.status!==200)throw Error('native_revocation_required');
   }
   const refused=await nativePost(i,'/api/native-prerequisite',{operation:'approveDraft',input:{command:target,draftRef:draft,approvalProofHandle:issue.body.proofHandle}},cookie);
-  if(refused.status<400||await head()!==before)throw Error('issuer_refusal_must_preserve_draft_head');
-  receipts.push({id:'issuer-'+kind,status:refused.status,resultSha256:refused.digest,headUnchanged:true,proofSource:'GENUINE_NATIVE_ISSUANCE',automaticRetry:false});
+  requireFixtureRefusal('issuer-'+kind,refused.status,refused.body.error);
+  if(await head()!==before)throw Error('issuer_refusal_must_preserve_draft_head');
+  receipts.push({id:'issuer-'+kind,status:refused.status,refusalCode:refused.body.error,resultSha256:refused.digest,headUnchanged:true,proofSource:'GENUINE_NATIVE_ISSUANCE',automaticRetry:false});
  }
 }
 /* Full EvidenceRef from the actual captured native ObjectRef only: tag and

@@ -5,7 +5,7 @@ import {join} from 'node:path';
 import {createHash} from 'node:crypto';
 import {authPhasePolicy,composeIsolatedHandler,dependencyTargets,fixedRunnerPaths,isolatedTarget,loadVerifiedInvocation,readPinnedFile,requiredSourcePaths,requiredZodPins,sourceSetDigest,validateAdmission,validateConfiguration,validateFixedRunner,validateQualificationPlan,validateCursorOwnerBinding,validateSealedEnvironment,PG17CommitAckFilter,BoundedRelayQueue,fixedStageOrder,writeExclusivePrivateJson,type QualificationConfiguration} from '../../harness/native_foundations_qualification';
 import {migrateNativeFoundations} from '../../harness/native_foundations_migrate';
-import {bindTemplate,produceNativeFixtures,validateRootCommandFence,sha256,c07PublishedNoteLowerBound,c07FixturePolicy,orderedDependencyWriterCases} from '../../harness/native_foundations_fixture';
+import {bindTemplate,produceNativeFixtures,validateRootCommandFence,buildRootFenceAdmissionTemplate,resolveCommandFence,sha256,c07PublishedNoteLowerBound,c07FixturePolicy,orderedDependencyWriterCases} from '../../harness/native_foundations_fixture';
 import {dependencyWriterOperations,dependencyWriterCaseId,validateDependencyWriterSchedule,dependencyStoreOperation} from '../../harness/native_foundations_qualification';
 import {measureNativeFoundations,reconcileSources,continueNativeRead,baselineOracleIds,fourGOracleIds} from '../../harness/native_foundations_measurement';
 import {academyConnectionStatus,type AcademySourceConnection} from '../../src/academy/academyConnectionStatus';
@@ -15,7 +15,61 @@ import {fixedConsumerProfile,selectedProtocolClosure,type ReadAdmission} from '.
 import type {TeacherPrerequisiteReadStore} from '../../src/academy/ports/teacherStore';
 import {createNativeTypedRead,nativeRequestDigest,fullFieldMask,type NativeSnapshotAcquireResult,type TypedReadRequest} from '../../src/academy/nativeTypedRead';
 import {canonicalJson} from '../../src/learning/model';
+import * as fixtureImplementation from '../../harness/native_foundations_fixture';
 import {FakePrerequisiteStore,mapFixtureViews,ctx,nativeRef,request,testFunctionRequest,testTemporal,TEST_REGISTRY_SHA256,objectRef,fictionalGrantVerifier} from './typedRead.test';
+
+test('FENCE-BINDING a Root template cannot authorize any changed request component',()=>{
+ const request={ownerId:'synthetic-owner',actorId:'synthetic-actor',idempotencyKey:'synthetic-key',requestDigest:'a'.repeat(64),occurrenceId:'synthetic-occurrence',admissionId:'synthetic-admission',processEpoch:'synthetic-epoch'};
+ const template=buildRootFenceAdmissionTemplate(request,'synthetic-separate-fence');
+ const memory={['ingress.fenceTemplate-'+request.occurrenceId]:template};
+ expect(resolveCommandFence(memory,request).request).toEqual(request);
+ for(const field of Object.keys(request) as (keyof typeof request)[]){
+  const changed={...request,[field]:field==='requestDigest'?'b'.repeat(64):request[field]+'-changed'};
+  const supplied={['ingress.fenceTemplate-'+changed.occurrenceId]:template};
+  expect(()=>resolveCommandFence(supplied,changed)).toThrow('separate_root_fence_occurrence_required');
+ }
+});
+
+// Exercise the actual private runner/oracle bodies with synthetic transports.
+// Extraction preserves production control flow; it never starts a native phase.
+function refusalOracleFunction(file:string,start:string,end:string,dependencies:Record<string,unknown>){
+ const source=readFileSync(new URL('../../harness/'+file,import.meta.url),'utf8');
+ const js=new Bun.Transpiler({loader:'ts',target:'bun'}).transformSync(source);
+ const from=js.indexOf('async function '+start+'('),to=js.indexOf(end,from);
+ if(from<0||to<0)throw Error('refusal_oracle_source_boundary');
+ const implementation=fixtureImplementation as unknown as Record<string,unknown>;
+ const scope={sha256,canonicalJson,bindTemplate:(v:unknown)=>structuredClone(v),memoryGet:(m:Record<string,unknown>,k:string)=>m[k],requireFixtureRefusal:implementation.requireFixtureRefusal,expectedFixtureRefusals:implementation.expectedFixtureRefusals,...dependencies};
+ return new Function(...Object.keys(scope),js.slice(from,to)+(start==='baselineChecks'?'}':'')+';return '+start)(...Object.values(scope));
+}
+test('REFUSAL-ORACLE baseline producer requires the exact expected refusal, not server failure',async()=>{
+ for(const status of [500,503,400]){
+  const run=refusalOracleFunction('native_foundations_fixture.ts','runBaseline','async function restorePositiveDraft(',{nativePost:async()=>({status,body:{error:'SYNTHETIC_WRONG_REFUSAL'},digest:'a'.repeat(64)})});
+  const empty=async()=>[],store={current:empty,temporalBindings:empty,activityScopes:empty},receipts:unknown[]=[];
+  await expect(run({config:{stage:'A0',base:{ownerId:'synthetic-owner'}},assertCurrent(){}},{'memory.cookie.A':'synthetic-cookie'},store,receipts,[{id:'refuse-empty',phase:'A0',transport:'HTTP',body:{operation:'prerequisiteTeachers',input:{}}}])).rejects.toThrow('fixture_exact_refusal_required');
+  expect(receipts).toHaveLength(0);
+ }
+});
+test('REFUSAL-ORACLE issuer producer requires expired/revoked codes, not server failure',async()=>{
+ for(const status of [500,503,400]){
+  const run=refusalOracleFunction('native_foundations_fixture.ts','exerciseIssuerRefusals','export function nativeRecordEvidence(',{nativePost:async(_i:unknown,_path:string,body:{operation:string})=>body.operation==='approveDraft'?{status,body:{error:'SYNTHETIC_WRONG_REFUSAL'},digest:'a'.repeat(64)}:{status:200,body:{proofHandle:'synthetic-proof'},digest:'b'.repeat(64)}});
+  const memory={'refs.draft-B':{identity:{nativeKey:'synthetic-draft'}},'memory.cookie.A':'synthetic-cookie','ingress.issuer-expired-target':{},'ingress.issuer-expired-issue':{}},receipts:unknown[]=[];
+  const store={current:async()=>[{entityId:'synthetic-draft',revisionId:'synthetic-revision'}],approvalCurrent:async()=>({payload:{expiresAt:'2000-01-01T00:00:00Z'}})};
+  await expect(run({config:{base:{ownerId:'synthetic-owner'}},assertCurrent(){}},memory,store,receipts)).rejects.toThrow('fixture_exact_refusal_required');
+  expect(receipts).toHaveLength(0);
+ }
+});
+test('REFUSAL-ORACLE measurement rechecks every exact refusal code and status',async()=>{
+ const source=readFileSync(new URL('../../harness/native_foundations_measurement.ts',import.meta.url),'utf8');
+ const legacy=source.match(/for\(const id of (\[[^\n]+?\])\)\{/);
+ const table=(fixtureImplementation as unknown as {expectedFixtureRefusals?:Record<string,unknown>}).expectedFixtureRefusals;
+ const ids=table?Object.keys(table):JSON.parse(legacy![1]!.replaceAll("'",'"')) as string[];
+ expect(ids.length).toBeGreaterThan(5);
+ const run=refusalOracleFunction('native_foundations_measurement.ts','baselineChecks','  const writers',{check:(ok:unknown,code:string)=>{if(!ok)throw Error(code);}});
+ for(const status of [500,503,400]){
+  const receipts=ids.map(id=>({id,status,refusalCode:'SYNTHETIC_WRONG_REFUSAL',resultSha256:'a'.repeat(64),headUnchanged:true}));
+  await expect(run({}, {'native.setupReceipts':receipts},{},{},[],[])).rejects.toThrow('exact_genuine_setup_refusal_required');
+ }
+});
 
 describe('epoch10 fixed writer and byte-budget source contracts (no native execution)',()=>{
  const schedule=()=>({schema:'root-dependency-writer-schedule.v1',sqlCases:Object.entries(dependencyWriterOperations).flatMap(([family,ops])=>ops.flatMap(operation=>(['COMMIT','ROLLBACK'] as const).map(disposition=>{const id=dependencyWriterCaseId(family,operation,disposition);return {id,family,operation,disposition,ingress:'STORE_API',targetFixtureKey:id,expectedBefore:'ABSENT',expectedAfter:disposition==='COMMIT'?'NEW_RECEIPT':'UNCHANGED',readerRequestId:'W-R-'+id,barrier:'SHARED_OWNER'};}))),authLeaseCases:['consumeInvitation','registerIdentity'],exclusions:['F5:EXCLUDED_EXISTING','F7_RECOVERY4:EXCLUDED_EXISTING','F8:LATE_ROOT_OWNED']});
