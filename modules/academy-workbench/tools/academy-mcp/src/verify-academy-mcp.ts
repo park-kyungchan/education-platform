@@ -27,7 +27,7 @@ const cases: string[] = [];
 try {
   await client.connect(transport);
   const listing = await client.listTools();
-  assert.deepEqual(listing.tools.map(tool => tool.name).sort(), ['academy_capabilities','academy_cism_section','academy_dailyrecord_get','academy_dailyrecord_intake','academy_dailyrecord_review','academy_dailyrecord_save','academy_endpoint_identity', 'academy_find_item_labels', 'academy_item_answer_lookup', 'academy_item_label_scope', 'academy_query', 'academy_review_type_questions', 'academy_runtime_read_admission', 'academy_source_status', 'academy_student_metadata','academy_student_metadata_get', 'academy_student_resolve'].sort());
+  assert.deepEqual(listing.tools.map(tool => tool.name).sort(), ['academy_capabilities','academy_cism_section','academy_dailyrecord_get','academy_dailyrecord_intake','academy_dailyrecord_review','academy_dailyrecord_save','academy_endpoint_identity', 'academy_find_item_labels', 'academy_item_answer_lookup', 'academy_item_label_scope', 'academy_query', 'academy_review_type_questions', 'academy_runtime_read_admission', 'academy_source_status', 'academy_student_metadata','academy_student_metadata_get', 'academy_student_resolve','academy_textbook_section_results'].sort());
   for (const tool of listing.tools) {
     if (tool.name === 'academy_dailyrecord_save') {
       assert.equal(tool.annotations?.readOnlyHint, false);
@@ -38,7 +38,7 @@ try {
     assert.equal(tool.annotations?.destructiveHint, false);
     assert.equal(tool.annotations?.openWorldHint, false);
   }
-  cases.push('exact_seventeen_tools_discovered_with_one_gated_write_tool');
+  cases.push('exact_eighteen_tools_discovered_with_one_gated_write_tool');
   const call = async (name: string, args: Record<string, unknown>) => {
     const result = await client.callTool({ name, arguments: args });
     assert.notEqual(result.isError, true, name + '_returned_error');
