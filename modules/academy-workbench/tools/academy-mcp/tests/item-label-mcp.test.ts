@@ -21,7 +21,7 @@ test('actual stdio tool discovery and scoped label retrieval preserve task conte
   try{
     const path=resolve(directory,'labels.json'),bytes=JSON.stringify(labelFixture());await writeFile(path,bytes);
     const sha=createHash('sha256').update(bytes).digest('hex');connection=await connect(['--label-snapshot',path,'--label-sha256',sha]);
-    const tools=await connection.client.listTools();expect(tools.tools.map(tool=>tool.name).sort()).toEqual(['academy_cism_section','academy_dailyrecord_get','academy_dailyrecord_intake','academy_dailyrecord_review','academy_find_item_labels','academy_item_answer_lookup','academy_item_label_scope','academy_review_type_questions','academy_runtime_read_admission','academy_student_metadata','academy_student_resolve'].sort());
+    const tools=await connection.client.listTools();expect(tools.tools.map(tool=>tool.name).sort()).toEqual(['academy_endpoint_identity','academy_student_metadata_get','academy_cism_section','academy_dailyrecord_get','academy_dailyrecord_intake','academy_dailyrecord_review','academy_find_item_labels','academy_item_answer_lookup','academy_item_label_scope','academy_review_type_questions','academy_runtime_read_admission','academy_student_metadata','academy_student_resolve'].sort());
     for(const tool of tools.tools){expect(tool.annotations?.readOnlyHint).toBe(true);expect(tool.annotations?.destructiveHint).toBe(false);}
     const result=await connection.client.callTool({name:'academy_find_item_labels',arguments:labelQuery});
     expect(result.isError).not.toBe(true);const value=result.structuredContent as any;

@@ -79,7 +79,7 @@ describe('name-only search port (REA contract, synthetic names only)', () => {
     const port = {...clientBase, authenticate: async () => { auth++; throw Error('synthetic_login_failure'); },
       searchStudentsByName: async () => { searches++; return []; }};
     const backend = new NativeDailyRecordBackend(port, admission, credential);
-    for (let i = 0; i < 2; i++) await expect(backend.searchStudentsByName('Invented Student')).rejects.toThrow('synthetic_login_failure');
+    for (let i = 0; i < 2; i++) await expect(backend.searchStudentsByName('Invented Student')).rejects.toThrow('source_authentication_failed');
     expect(auth).toBe(1);
     expect(searches).toBe(0);
   });
@@ -97,7 +97,7 @@ describe('name-only search port (REA contract, synthetic names only)', () => {
       {...clientBase, searchStudentsByName: async () => [{studentKey: 'nope'}]}, admission, credential),
       safeguard, () => clock, learningPolicy);
     expect(await malformed.resolveStudent(resolveInput('Invented Student')))
-      .toMatchObject({status: 'unavailable', reasonCode: 'student_resolve_search_unqualified_no_automatic_retry'});
+      .toMatchObject({status:'unavailable',reasonCode:'source_response_malformed',failure:{category:'malformed_response'}});
   });
 
   test('backend-injection parity: null backend stays not_configured with zero writes', async () => {

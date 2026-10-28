@@ -5,6 +5,7 @@ import {freezeLabelData} from './item-label-context.ts';
 import {itemAnswerLookupSchema,projectItemAnswerRead} from './item-answer-lookup.ts';
 import {resolveStudentByName,studentResolveInputSchema} from './student-resolver.ts';
 import {readDailyRecordByName,type DailyRecordReadAdmission} from './dailyrecord-read.ts';
+import {readFailureResult} from './read-failure.ts';
 import {toolResultBytes} from './tool-result.ts';
 
 const hash=z.string().regex(/^[a-f0-9]{64}$/),instant=z.iso.datetime({offset:true});
@@ -52,11 +53,15 @@ export const studentMetadataBatchSchema=z.object({purpose:dailyRecordIdSchema,cu
   queries:z.array(studentMetadataQuerySchema).min(1).max(8),
 }).strict();
 export type StudentMetadataBatch=z.infer<typeof studentMetadataBatchSchema>;
+export const studentMetadataGetSchema=z.object({displayName:z.string().trim().min(1).max(200),lessonDate:dailyRecordDateSchema,
+  purpose:dailyRecordIdSchema,currentRequestRef:dailyRecordIdSchema,queries:z.array(studentMetadataQuerySchema).min(1).max(8)}).strict();
+export type StudentMetadataGet=z.infer<typeof studentMetadataGetSchema>;
 export type StudentMetadataObservation={scope:StudentMetadataBatch['scope'];results:{query:StudentMetadataBatch['queries'][number];observation:unknown}[]};
 /** Implemented by the native/source owner, never by MCP arguments. All methods are read-only. */
 export interface DailyRecordReadBackend {
   readRoutingAdmission?():DailyRecordReadAdmission;
   readDailyRecord(scope:Readonly<DailyRecordScope>,requestRef:string):Promise<ReadResult<DailyRecordObservation>>;
+  readStudentMetadataByName?(input:Readonly<StudentMetadataGet>):Promise<StudentMetadataObservation>;
   readStudentMetadata?(input:Readonly<StudentMetadataBatch>):Promise<StudentMetadataObservation>;
   readItemAnswers?(labels:readonly string[]):Promise<unknown>;
   readCismSection?(scope:Readonly<DailyRecordScope>,selection:Readonly<z.infer<typeof cismSelectionSchema>>):Promise<ReadResult<CismObservation>>;
@@ -70,7 +75,7 @@ const same=(a:unknown,b:unknown)=>JSON.stringify(a)===JSON.stringify(b);
 const digest=(value:unknown)=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 const fieldValues=(observation:DailyRecordObservation)=>Object.fromEntries(dailyRecordFields.map(field=>{const value=observation.fields[field];return [field,value.state==='known'?{state:value.state,value:value.value}:{state:value.state,reasonCode:value.reasonCode}];}));
 const scopeOf=(target:z.infer<typeof currentTargetSchema>):DailyRecordScope=>({sourceNamespace:target.sourceNamespace,teacherId:target.teacherId,studentId:target.studentId,lessonDate:target.lessonDate});
-const safeReason=(value:string)=>/^[a-z][a-z0-9_]{0,100}$/.test(value)?value:'source_read_unavailable';
+const safeReason=(value:string)=>readFailureResult(Error(value),'source_read_unavailable').reasonCode;
 function validValue(field:DailyRecordField,value:string){
   if(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/.test(value))return false;
   if(field==='attendance')return ['Y','N','L',' ',''].includes(value);
@@ -123,7 +128,7 @@ export class DailyRecordService {
   // still with no automatic retry inside a request. Uncertain source state
   // is resolved only by a later readback, never by replaying the failure.
   async #serial<T>(run:()=>Promise<T>):Promise<T>{
-    const result=this.#tail.then(async()=>{try{return await run();}catch{throw Error('source_read_failed_per_request');}});
+    const result=this.#tail.then(run);
     this.#tail=result.catch(()=>{});return result;
   }
   async #read(scope:DailyRecordScope,requestRef:string){
@@ -133,7 +138,7 @@ export class DailyRecordService {
       if(read.status==='unavailable')return {status:'unavailable' as const,reasonCode:safeReason(read.reasonCode)};
       return {status:'observed' as const,observation:qualifiedObservation(read.observation,scope)};
     });
-    }catch{return {status:'unavailable' as const,reasonCode:'dailyrecord_source_unqualified_no_automatic_retry'};}
+    }catch(error){return {status:'unavailable' as const,...readFailureResult(error,'dailyrecord_source_unqualified_no_automatic_retry')};}
   }
   async metadata(value:unknown){
     const input=studentMetadataBatchSchema.parse(value);
@@ -151,7 +156,20 @@ export class DailyRecordService {
         if(toolResultBytes(result)>512*1024)throw Error('metadata_result_too_large');
         return freezeLabelData(result);
       });
-    }catch{return {...base,status:'unavailable' as const,reasonCode:'student_metadata_unqualified_no_automatic_retry'};}
+    }catch(error){return {...base,status:'unavailable' as const,...readFailureResult(error,'student_metadata_unqualified_no_automatic_retry')};}
+  }
+  async metadataByName(value:unknown){
+    const input=studentMetadataGetSchema.parse(value);
+    const base={purpose:input.purpose,currentRequestRef:input.currentRequestRef,academyWrites:0,parentSends:0,automaticRetryAllowed:false,execution:'read_only' as const};
+    if(!this.backend?.readStudentMetadataByName)return {...base,status:'unavailable' as const,reasonCode:'student_metadata_backend_not_configured'};
+    try{return await this.#serial(async()=>{
+      const observation=await this.backend!.readStudentMetadataByName!(freezeLabelData(structuredClone(input)));
+      const scope=studentMetadataBatchSchema.shape.scope.parse(observation.scope);
+      if(scope.lessonDate!==input.lessonDate||observation.results.length!==input.queries.length||observation.results.some((r,i)=>!same(r.query,input.queries[i])))throw Error('native_metadata_row_identity_conflict');
+      const result={...base,status:'observed' as const,scope,results:observation.results};
+      if(toolResultBytes(result)>512*1024)throw Error('metadata_result_too_large');
+      return freezeLabelData(result);
+    });}catch(error){return {...base,status:'unavailable' as const,...readFailureResult(error,'student_metadata_unqualified_no_automatic_retry')};}
   }
   async itemAnswers(value:unknown){
     const input=itemAnswerLookupSchema.parse(value);
@@ -163,7 +181,7 @@ export class DailyRecordService {
       if(toolResultBytes(result)>512*1024)throw Error('item_answer_result_too_large');
       return freezeLabelData(result);
     }
-    catch{return {...base,status:'unavailable' as const,reasonCode:'item_answer_source_unqualified_no_automatic_retry'};}
+    catch(error){return {...base,status:'unavailable' as const,...readFailureResult(error,'item_answer_source_unqualified_no_automatic_retry')};}
   }
   async get(value:unknown){
     return readDailyRecordByName(value,this,this.backend?.readRoutingAdmission?.()??null,this.now);
@@ -179,7 +197,7 @@ export class DailyRecordService {
         if(result.status==='unavailable')return {...base,...result};
         return freezeLabelData({...base,...result});
       });
-    }catch{return {...base,status:'unavailable' as const,reasonCode:'student_resolve_unqualified_no_automatic_retry'};}
+    }catch(error){return {...base,status:'unavailable' as const,...readFailureResult(error,'student_resolve_unqualified_no_automatic_retry')};}
   }
   async intake(value:unknown){
     const input=dailyRecordIntakeSchema.parse(value),context=input.context;
@@ -203,7 +221,7 @@ export class DailyRecordService {
     if(source&&!blockers.length){if(this.#handles.size>=128)this.#handles.delete(this.#handles.keys().next().value!);observationHandle='dailyrecord-observation:'+randomUUID();this.#handles.set(observationHandle,{observation:source,scope:freezeLabelData(structuredClone(context.scope)),requestRef:context.currentRequestRef});}
     return {...this.#base(context),status:blockers.length?'held':interviews.length?'interview_required':'ready_for_review',observationHandle,fields,interviews,blockers,
       source:source?{observedAt:source.observedAt,sourceRevision:source.sourceRevision,wireDigest:source.wireDigest,transmissionState:source.transmissionState}:null,
-      toneSamples:source?.toneSamples.filter(s=>this.parentSafeguard?.checkLines(s.text))??[],toneSelection:'hyphen_lines_only_other_formats_ignored',sourceAvailability:read.status,execution:'not_supported'};
+      toneSamples:source?.toneSamples.filter(s=>this.parentSafeguard?.checkLines(s.text))??[],toneSelection:'hyphen_lines_only_other_formats_ignored',sourceAvailability:read.status,failure:'failure' in read?read.failure:null,execution:'not_supported'};
   }
   async review(value:unknown){
     const input=dailyRecordReviewSchema.parse(value),context=input.context,held=input.observationHandle?this.#handles.get(input.observationHandle):undefined;
@@ -285,6 +303,6 @@ export class DailyRecordService {
       const observationHandle='cism-observation:'+randomUUID();this.#cismHandles.set(observationHandle,freezeLabelData(observation));
       return {...this.#base(context),status:'observed',observationHandle,observation:freezeLabelData(observation),parentRewording:'not_performed',execution:'not_supported'};
     });
-    }catch{return {...this.#base(context),status:'unavailable',reasonCode:'exact_cism_source_unqualified_no_automatic_retry',observationHandle:null,execution:'not_supported'};}
+    }catch(error){return {...this.#base(context),status:'unavailable',...readFailureResult(error,'exact_cism_source_unqualified_no_automatic_retry'),observationHandle:null,execution:'not_supported'};}
   }
 }

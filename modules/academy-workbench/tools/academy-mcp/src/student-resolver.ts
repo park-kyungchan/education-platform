@@ -1,3 +1,4 @@
+import {readFailureResult} from './read-failure.ts';
 import {z} from 'zod';
 import {dailyRecordDateSchema} from './dailyrecord-context.ts';
 
@@ -50,7 +51,7 @@ export async function resolveStudentByName(
     rows = z.array(studentSearchRowSchema).max(MAX_ROWS + 1).parse(await port.searchByName(name));
   } catch (error) {
     if (error instanceof StudentNameNotAdmitted) return unavailable('student_name_not_admitted');
-    return unavailable('student_resolve_search_unqualified_no_automatic_retry');
+    return {...unavailable('student_resolve_search_unqualified_no_automatic_retry'),...readFailureResult(error,'student_resolve_search_unqualified_no_automatic_retry')};
   }
   if (rows.length > MAX_ROWS) return unavailable('student_resolve_search_unqualified_no_automatic_retry');
   if (rows.some(row => row.studentName !== name)) return unavailable('student_name_scope_conflict');

@@ -1,9 +1,10 @@
 import type {McpServer} from '@modelcontextprotocol/server';
 import {readOnlyAnnotations} from './contracts.ts';
-import {DailyRecordService,dailyRecordIntakeSchema,dailyRecordReviewSchema,cismSectionSchema,studentMetadataBatchSchema,type DailyRecordParentSafeguard} from './dailyrecord.ts';
+import {DailyRecordService,dailyRecordIntakeSchema,dailyRecordReviewSchema,cismSectionSchema,studentMetadataBatchSchema,studentMetadataGetSchema,type DailyRecordParentSafeguard} from './dailyrecord.ts';
 import {studentResolveInputSchema} from './student-resolver.ts';
 import {readPinnedLocalBytes} from './item-label-store.ts';
 import {dailyRecordGetSchema,dailyRecordGetDescription} from './dailyrecord-read.ts';
+import {metadataAdmissionSchema,type MetadataAdmission} from './metadata-admission.ts';
 import {ownerAdmissionSchema,type OwnerAdmission} from './owner-admission.ts';
 import {createHash} from 'node:crypto';
 import {z} from 'zod';
@@ -30,6 +31,11 @@ export function registerDailyRecordTools(server:McpServer,service=new DailyRecor
     title:'Read live DailyRecord by student name (today by default)',
     description:dailyRecordGetDescription,inputSchema:dailyRecordGetSchema,annotations,
   },async input=>result(await service.get(input)));
+  server.registerTool('academy_student_metadata_get',{
+    title:'Read metadata by exact dated identity under its own owner policy',
+    description:'Resolve the exact owner-managed student on the requested lesson date, authorize academy.lms.metadata independently, then read explicit queries in one backend lifetime. Requires a separate owner-issued metadata admission; DailyRecord identity is not permission. Existing page and stage limitations remain. No writes, printing, grading, generation, sending or automatic retry.',
+    inputSchema:studentMetadataGetSchema,annotations,
+  },async input=>result(await service.metadataByName(input)));
   server.registerTool('academy_student_metadata',{
     title:'Read a bounded selected-student metadata batch',
     description:'Exact source namespace academy.lms.metadata, admitted teacher/student/date and explicit queries required. Student names and teacher labels come only from the owner admission. Uses the same client/authentication lifecycle and serialized failure fence as DailyRecord reads. Paper queries require an explicit period; DT relative selectors have no inferred calendar bounds. Exports only owner-matched metadata rows, known period/selectors, observedAt and coverage/unknowns, including history; never page functions, forms, controls, navigation, script sources or TR cells. No content/definition reads, paging traversal, DailyRecord fields, writes, printing, sending or automatic retry. Older-paper positive wire qualification remains unavailable without the exact approved source function bytes.',
@@ -58,9 +64,14 @@ export function registerDailyRecordTools(server:McpServer,service=new DailyRecor
 }
 
 /** Launch-time owner-selected definition bytes; never accept policy paths or code in a tool call. */
-export async function dailyRecordToolConfiguration(args:readonly string[]):Promise<{remainingArgs:string[];parentSafeguard:DailyRecordParentSafeguard|null;ownerAdmission:OwnerAdmission|null}>{
-  const remainingArgs:string[]=[];let parentSafeguard:DailyRecordParentSafeguard|null=null,ownerAdmission:OwnerAdmission|null=null;
+export async function dailyRecordToolConfiguration(args:readonly string[]):Promise<{remainingArgs:string[];parentSafeguard:DailyRecordParentSafeguard|null;ownerAdmission:OwnerAdmission|null;metadataAdmission:MetadataAdmission|null}>{
+  const remainingArgs:string[]=[];let parentSafeguard:DailyRecordParentSafeguard|null=null,ownerAdmission:OwnerAdmission|null=null,metadataAdmission:MetadataAdmission|null=null;
   for(let i=0;i<args.length;i++){
+    if(args[i]==='--metadata-admission'){
+      if(metadataAdmission||i+2>=args.length)throw Error('metadata_admission_arguments_invalid');
+      const pinned=await readPinnedLocalBytes(args[i+1],args[i+2]);
+      metadataAdmission=metadataAdmissionSchema.parse(JSON.parse(pinned.bytes.toString('utf8')));i+=2;continue;
+    }
     if(args[i]==='--dailyrecord-admission'){
       if(ownerAdmission||i+2>=args.length)throw Error('dailyrecord_admission_arguments_invalid');
       const pinned=await readPinnedLocalBytes(args[i+1],args[i+2]);
@@ -80,5 +91,5 @@ export async function dailyRecordToolConfiguration(args:readonly string[]):Promi
     parentSafeguard={policySha256,safeguardSourceSha256,sourceRef:'Education:DailyRecord:parentInternalLanguage',check:text=>regex.test(text),checkLines:text=>lines.test(text)};
     i+=4;
   }
-  return {remainingArgs,parentSafeguard,ownerAdmission};
+  return {remainingArgs,parentSafeguard,ownerAdmission,metadataAdmission};
 }

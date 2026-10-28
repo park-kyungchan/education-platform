@@ -113,8 +113,8 @@ test('a foreign previous occurrence cannot supply homework assessment or a tone 
 });
 test('authentication failure is retained, without automatically issuing another login',async()=>{
  const f=fixture();f.port.authenticate=async()=>{f.calls.auth++;throw Error('source_login_challenge');};
- await expect(f.backend.readDailyRecord(scope)).rejects.toThrow('source_login_challenge');
- await expect(f.backend.readDailyRecord(scope)).rejects.toThrow('source_login_challenge');expect(f.calls.auth).toBe(1);
+ await expect(f.backend.readDailyRecord(scope)).rejects.toThrow('source_authentication_failed');
+ await expect(f.backend.readDailyRecord(scope)).rejects.toThrow('source_authentication_failed');expect(f.calls.auth).toBe(1);
 });
 test('native configuration rejects caller authority fields, duplicates and non-native launch',async()=>{
  const v={schemaVersion:'academy.native-dailyrecord-read/1',sourceBundlePath:'/explicit/bundle.mjs',sourceBundleSha256:'b'.repeat(64),date:scope.lessonDate,students:admission.students};
@@ -122,4 +122,15 @@ test('native configuration rejects caller authority fields, duplicates and non-n
  expect(()=>nativeDailyRecordConfigSchema.parse({...v,approved:true})).toThrow();
  expect(()=>nativeDailyRecordConfigSchema.parse({...v,students:[...v.students,...v.students]})).toThrow();
  await expect(nativeDailyRecordConfiguration(['--dailyrecord-native','/missing/config.json','b'.repeat(64)])).rejects.toThrow('native_dailyrecord_owner_required');
+});
+
+test('a dated source proof is request/date bound and expires before a dynamic student read',async()=>{
+ const f=fixture(),newRow={...row,studentName:'Second Invented Student',studentKey:'77002'};
+ const open={...range,schemaVersion:'academy.owner-admission/2' as const,allowedFrom:null,allowedThrough:null,studentScope:'source_verified' as const};
+ const backend=new NativeDailyRecordBackend({...f.port,execute:async()=>({dayRecords:[newRow]})},admission,()=>({username:'fictional',password:'fictional'}),open,new Set(['Second Invented Student']));
+ await backend.searchStudentsByName(newRow.studentName,'dated-proof',scope.lessonDate);
+ await expect(backend.readDailyRecord({...scope,studentId:'77002',lessonDate:'2040-01-05'},'dated-proof')).rejects.toThrow('native_dailyrecord_scope_refused');
+ const realNow=Date.now;try{const later=realNow()+300001;Date.now=()=>later;
+  await expect(backend.readDailyRecord({...scope,studentId:'77002'},'dated-proof')).rejects.toThrow('native_dailyrecord_scope_refused');
+ }finally{Date.now=realNow;}
 });
