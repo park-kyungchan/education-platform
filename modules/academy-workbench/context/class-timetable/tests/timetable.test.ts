@@ -55,3 +55,12 @@ test('isClassDay rejects invalid and non-canonical dates', () => {
   }
   assert.equal(isClassDay(s, '2024-02-29'), false);
 });
+test('unconfirmed provenance remains unknown on matching and non-matching weekdays', () => {
+  for (const kind of ['unknown', 'inferred'] as const) {
+    const student = { ...fictionalStudent(), provenance: { kind, date: '2026-10-27', detail: 'fiction' } };
+    const validated = validateTimetable({ schema: 'academy.class-timetable/1', students: [student] }).students[0]!;
+    assert.equal(isClassDay(validated, '2026-10-28'), null);
+    assert.equal(isClassDay(validated, '2026-10-27'), null);
+    assert.throws(() => isClassDay(validated, '2026-02-31'), /lesson_date_invalid/);
+  }
+});

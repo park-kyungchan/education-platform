@@ -81,11 +81,12 @@ export function validateRouting(value: unknown, root: string = platformRoot): Ro
   return x;
 }
 
-/** True when lessonDate falls on one of the student's class days. */
-export function isClassDay(student: TimetableStudent, lessonDate: string): boolean {
+/** Confirmed weekday match, or null when provenance is not user-confirmed. Not attendance. */
+export function isClassDay(student: TimetableStudent, lessonDate: string): boolean | null {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(lessonDate)) fail('lesson_date_invalid');
   const date = new Date(`${lessonDate}T00:00:00Z`);
   if (!Number.isFinite(date.getTime()) || date.toISOString().slice(0, 10) !== lessonDate) fail('lesson_date_invalid');
+  if (student.provenance?.kind !== 'user_confirmed') return null;
   const day = date.getUTCDay();
   return student.classDays.includes(WEEKDAYS[(day + 6) % 7] as Weekday);
 }

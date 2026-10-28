@@ -8,6 +8,8 @@
 2. `routing.json`: 질문→원천 파일 지도. 평과 숫자 의미·수업 사이클·DailyRecord 문구는 원천 파일을 직접 읽을 것.
 3. 수업 없는 날의 DailyRecord 부재는 정상이다. 미기록으로 보고하지 말 것.
 
+`isClassDay`는 유효한 날짜에 대해 사용자 확정 편성만 `true` 또는 `false`로 반환한다. `inferred`와 `unknown` 출처는 요일과 무관하게 `null`(미확인)이다. 이 결과는 출석이나 날짜별 편성 변경을 확정하지 않는다.
+
 ## 소유 경계
 
 - 편성 변경(요일·부·신규 학생)은 사용자 확정 후에만 이 파일에 반영한다. 에이전트가 추론으로 추가하지 않는다.
@@ -19,3 +21,4 @@
 
 - `bun context/class-timetable/validate.ts` (workbench 루트에서 실행)
 - `bun test context/class-timetable/tests/`
+- `bun run check:class-timetable`와 `bun run test:class-timetable`은 타입 검사와 가상 데이터 테스트만 실행한다.
