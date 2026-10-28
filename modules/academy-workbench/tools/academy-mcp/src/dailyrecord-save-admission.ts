@@ -1,4 +1,5 @@
 import {createHash} from 'node:crypto';
+import {readFileSync} from 'node:fs';
 import {z} from 'zod';
 import {dailyRecordFieldSchema} from './dailyrecord-context.ts';
 
@@ -30,11 +31,25 @@ export const dailyRecordSaveAdmissionSchema = z.object({
 }).strict();
 export type DailyRecordSaveAdmission = z.infer<typeof dailyRecordSaveAdmissionSchema>;
 
-export interface DailyRecordSaveRequestEvidence {
-  runtime: string;
-  requestRef: string;
-  requestTextSha256: string;
-  currentUserEventRef: string;
+export const dailyRecordSaveRequestEvidenceSchema = z.object({
+  runtime: id,
+  requestRef: id,
+  requestTextSha256: hash,
+  currentUserEventRef: id,
+}).strict();
+export type DailyRecordSaveRequestEvidence = z.infer<typeof dailyRecordSaveRequestEvidenceSchema>;
+
+/** Live owner evidence source: re-read the runtime owner's current-request
+ * file on every consumption, so a stale, foreign or missing current user
+ * event rejects instead of the admission attesting to itself. The launch
+ * supplies only the path; the owner rewrites the file per instruction. */
+export function liveSaveRequestEvidence(path: string) {
+  return async (): Promise<DailyRecordSaveRequestEvidence> => {
+    let bytes: Buffer;
+    try { bytes = readFileSync(path); } catch { throw Error('dailyrecord_save_current_request_unavailable'); }
+    if (bytes.length > 16384) throw Error('dailyrecord_save_current_request_unavailable');
+    return dailyRecordSaveRequestEvidenceSchema.parse(JSON.parse(bytes.toString('utf8')));
+  };
 }
 
 export interface DailyRecordSaveConsumeOwner {

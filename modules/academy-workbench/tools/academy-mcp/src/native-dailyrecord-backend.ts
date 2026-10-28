@@ -5,7 +5,7 @@ import {pathToFileURL} from 'node:url';
 import {z} from 'zod';
 import {readPinnedLocalBytes} from './item-label-store.ts';
 import {dailyRecordObservationSchema,studentMetadataBatchSchema,type DailyRecordReadBackend,type DailyRecordWriteBackend,type DailyRecordObservation,type StudentMetadataBatch,type StudentMetadataObservation,studentMetadataGetSchema,type StudentMetadataGet,type DailyRecordSaveFieldStatus} from './dailyrecord.ts';
-import {createDailyRecordSaveAdmission,type DailyRecordSaveAdmission,type DailyRecordSaveApproval} from './dailyrecord-save-admission.ts';
+import {createDailyRecordSaveAdmission,liveSaveRequestEvidence,type DailyRecordSaveAdmission,type DailyRecordSaveApproval} from './dailyrecord-save-admission.ts';
 import type {DailyRecordField} from './dailyrecord-context.ts';
 import type {DailyRecordScope} from './dailyrecord-context.ts';
 import {ownerAdmissionSchema,isDateAdmitted,type OwnerAdmission} from './owner-admission.ts';
@@ -145,7 +145,7 @@ export class NativeDailyRecordBackend implements DailyRecordReadBackend,DailyRec
    * The client re-reads the exact before-state, consumes the launch-pinned
    * admission once per field, writes once and reads back; the first
    * non-settled field stops the batch with the rest not attempted. */
-  async saveDailyRecord(scope:Readonly<DailyRecordScope>,patches:readonly {field:DailyRecordField;value:string}[]){
+  async saveDailyRecord(scope:Readonly<DailyRecordScope>,patches:readonly {field:DailyRecordField;value:string;before:string;wireDigest:string}[]){
     if(!this.saveConfigured())throw Error('dailyrecord_save_backend_not_configured');
     const student=this.admission.students.find(s=>s.studentId===scope.studentId);
     if(scope.sourceNamespace!=='academy.lms.dayrecord'||scope.teacherId!==this.admission.teacherId
@@ -160,15 +160,26 @@ export class NativeDailyRecordBackend implements DailyRecordReadBackend,DailyRec
       throw Error('native_dailyrecord_identity_conflict');
     const state=await this.client.journalState(targetOf(row));
     if(JSON.stringify(targetOf(state.target))!==JSON.stringify(targetOf(row)))throw Error('native_dailyrecord_state_conflict');
+    // Bind dispatch to the reviewed before-state: any drift refuses the
+    // whole batch before a single write or admission consumption.
+    if(patches.some(p=>p.wireDigest!==state.wireDigest||state.fields[p.field]!==p.before))
+      return patches.map(p=>({field:p.field,status:'before_drift' as const,dispatched:false}));
     const fields:{field:DailyRecordField;status:DailyRecordSaveFieldStatus;dispatched:boolean}[]=[];
     for(let i=0;i<patches.length;i++){
       const patch=patches[i]!;
       const action={attemptId:randomUUID(),target:targetOf(row),field:patch.field,
         effectRecordKey:patch.field==='previousHomeworkAssessment'?state.previousRecordKey:row.recordKey,
-        before:state.fields[patch.field]??'',after:patch.value,wireDigest:state.wireDigest};
-      if(typeof action.before!=='string')throw Error('native_dailyrecord_state_conflict');
-      const settled=await this.client.applyJournalAction!(action,this.saveApproval!);
-      fields.push({field:patch.field,status:settled.status,dispatched:settled.transport!=='not_invoked'});
+        before:patch.before,after:patch.value,wireDigest:state.wireDigest};
+      let settled:{status:DailyRecordSaveFieldStatus;dispatched:boolean};
+      try{
+        const result=await this.client.applyJournalAction!(action,this.saveApproval!);
+        settled={status:result.status,dispatched:result.transport!=='not_invoked'};
+      }catch{
+        // The client may have dispatched before throwing; report the field
+        // as unresolved instead of denying a possible write upstream.
+        settled={status:'unresolved',dispatched:true};
+      }
+      fields.push({field:patch.field,...settled});
       if(settled.status!=='persisted'&&settled.status!=='noop'){
         for(let j=i+1;j<patches.length;j++)fields.push({field:patches[j]!.field,status:'not_attempted',dispatched:false});
         break;
@@ -352,7 +363,7 @@ export function durableSaveConsumeOnce(storeDir:string){
     return true;
   };
 }
-export async function nativeDailyRecordConfiguration(args:readonly string[],ownerAdmission:OwnerAdmission|null=null,metadataAdmission:MetadataAdmission|null=null,saveAdmission:DailyRecordSaveAdmission|null=null,saveStoreDir:string|null=null){
+export async function nativeDailyRecordConfiguration(args:readonly string[],ownerAdmission:OwnerAdmission|null=null,metadataAdmission:MetadataAdmission|null=null,saveAdmission:DailyRecordSaveAdmission|null=null,saveStoreDir:string|null=null,saveRequestPath:string|null=null){
   if(!args.length)return null;
   if(args.length!==3||args[0]!=='--dailyrecord-native')throw Error('dailyrecord_native_arguments_invalid');
   if(process.getuid?.()!==10000||process.env.HERMES_HOME!==home)throw Error('native_dailyrecord_owner_required');
@@ -378,11 +389,10 @@ export async function nativeDailyRecordConfiguration(args:readonly string[],owne
   // Save stays fail-closed unless the launch pinned both an exact save
   // admission and its durable consumption store inside the owner home.
   let saveApproval:DailyRecordSaveApproval|null=null;
-  if(saveAdmission||saveStoreDir){
-    if(!saveAdmission||!saveStoreDir||!saveStoreDir.startsWith(home+'/artifacts/'))throw Error('dailyrecord_save_launch_incomplete');
+  if(saveAdmission||saveStoreDir||saveRequestPath){
+    if(!saveAdmission||!saveStoreDir||!saveRequestPath||!saveStoreDir.startsWith(home+'/artifacts/')||!saveRequestPath.startsWith(home+'/artifacts/'))throw Error('dailyrecord_save_launch_incomplete');
     saveApproval=createDailyRecordSaveAdmission(saveAdmission,{
-      readCurrentRequest:async()=>({runtime:saveAdmission.runtime,requestRef:saveAdmission.requestRef,
-        requestTextSha256:saveAdmission.requestTextSha256,currentUserEventRef:saveAdmission.currentUserEventRef}),
+      readCurrentRequest:liveSaveRequestEvidence(saveRequestPath),
       consumeOnce:durableSaveConsumeOnce(saveStoreDir),
     });
   }

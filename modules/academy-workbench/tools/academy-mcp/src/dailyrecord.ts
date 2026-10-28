@@ -70,15 +70,18 @@ export interface DailyRecordReadBackend {
 export const dailyRecordSaveSchema=z.object({context:dailyRecordContextSchema,observationHandle:dailyRecordIdSchema,
   reviewDigest:hash,proposals:z.array(proposalSchema).min(1).max(6)}).strict();
 export type DailyRecordSave=z.infer<typeof dailyRecordSaveSchema>;
-export type DailyRecordSaveFieldStatus='persisted'|'noop'|'not_persisted'|'conflict'|'unresolved'|'not_attempted';
+export type DailyRecordSaveFieldStatus='persisted'|'noop'|'not_persisted'|'conflict'|'unresolved'|'not_attempted'|'before_drift';
 /** Implemented by the native/source owner only, never from MCP arguments.
- * Each patch must run through a fresh before-state read, the launch-pinned
- * save admission's one-time consumption, a single write and an authoritative
- * readback inside the owner client. Uncertain dispatches resolve by later
- * readback, never by retrying inside this call. */
+ * Each patch carries the reviewed before-value and wire digest; the backend
+ * must refuse the whole batch before any write when its fresh before-state
+ * differs. It then runs the launch-pinned save admission's one-time
+ * consumption, a single write and an authoritative readback inside the
+ * owner client. Uncertain dispatches resolve by later readback, never by
+ * retrying inside this call, and are reported, never thrown past the point
+ * of possible dispatch. */
 export interface DailyRecordWriteBackend {
   saveConfigured():boolean;
-  saveDailyRecord(scope:Readonly<DailyRecordScope>,patches:readonly {field:DailyRecordField;value:string}[]):Promise<{field:DailyRecordField;status:DailyRecordSaveFieldStatus;dispatched:boolean}[]>;
+  saveDailyRecord(scope:Readonly<DailyRecordScope>,patches:readonly {field:DailyRecordField;value:string;before:string;wireDigest:string}[]):Promise<{field:DailyRecordField;status:DailyRecordSaveFieldStatus;dispatched:boolean}[]>;
 }
 /** Inject the canonical Education safeguard, together with its verified policy/source identity. */
 export interface DailyRecordParentSafeguard {readonly policySha256:string;readonly safeguardSourceSha256:string;readonly sourceRef:string;check(text:string):boolean;checkLines(text:string):boolean}
@@ -317,7 +320,7 @@ export class DailyRecordService {
     if(reviewed.status!=='prepared'||reviewed.reviewDigest!==input.reviewDigest||reviewed.execution!=='not_supported')
       return {...base,status:'held' as const,reasonCode:'reviewed_patch_required',academyWrites:0,execution:'not_supported' as const,
         fields:reviewed.rows.map(r=>({field:r.field,status:'not_attempted' as const,dispatched:false}))};
-    const patch=(reviewed.patch as {field:DailyRecordField;after:string}[]).map(p=>({field:p.field,value:p.after}));
+    const patch=(reviewed.patch as {field:DailyRecordField;before:string|null;after:string}[]).map(p=>({field:p.field,value:p.after,before:p.before??'',wireDigest:reviewed.wireDigest??''}));
     if(!patch.length)return {...base,status:'saved' as const,academyWrites:0,execution:'owner_write_backend' as const,
       fields:input.proposals.map(p=>({field:p.field,status:'noop' as const,dispatched:false}))};
     try{

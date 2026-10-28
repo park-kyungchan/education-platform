@@ -71,9 +71,13 @@ export function registerDailyRecordTools(server:McpServer,service=new DailyRecor
 }
 
 /** Launch-time owner-selected definition bytes; never accept policy paths or code in a tool call. */
-export async function dailyRecordToolConfiguration(args:readonly string[]):Promise<{remainingArgs:string[];parentSafeguard:DailyRecordParentSafeguard|null;ownerAdmission:OwnerAdmission|null;metadataAdmission:MetadataAdmission|null;saveAdmission:DailyRecordSaveAdmission|null;saveStoreDir:string|null}>{
-  const remainingArgs:string[]=[];let parentSafeguard:DailyRecordParentSafeguard|null=null,ownerAdmission:OwnerAdmission|null=null,metadataAdmission:MetadataAdmission|null=null,saveAdmission:DailyRecordSaveAdmission|null=null,saveStoreDir:string|null=null;
+export async function dailyRecordToolConfiguration(args:readonly string[]):Promise<{remainingArgs:string[];parentSafeguard:DailyRecordParentSafeguard|null;ownerAdmission:OwnerAdmission|null;metadataAdmission:MetadataAdmission|null;saveAdmission:DailyRecordSaveAdmission|null;saveStoreDir:string|null;saveRequestPath:string|null}>{
+  const remainingArgs:string[]=[];let parentSafeguard:DailyRecordParentSafeguard|null=null,ownerAdmission:OwnerAdmission|null=null,metadataAdmission:MetadataAdmission|null=null,saveAdmission:DailyRecordSaveAdmission|null=null,saveStoreDir:string|null=null,saveRequestPath:string|null=null;
   for(let i=0;i<args.length;i++){
+    if(args[i]==='--dailyrecord-save-request'){
+      if(saveRequestPath||i+1>=args.length||!args[i+1]!.startsWith('/'))throw Error('dailyrecord_save_request_arguments_invalid');
+      saveRequestPath=args[i+1]!;i+=1;continue;
+    }
     if(args[i]==='--dailyrecord-save-store'){
       if(saveStoreDir||i+1>=args.length||!args[i+1]!.startsWith('/'))throw Error('dailyrecord_save_store_arguments_invalid');
       saveStoreDir=args[i+1]!;i+=1;continue;
@@ -107,5 +111,5 @@ export async function dailyRecordToolConfiguration(args:readonly string[]):Promi
     parentSafeguard={policySha256,safeguardSourceSha256,sourceRef:'Education:DailyRecord:parentInternalLanguage',check:text=>regex.test(text),checkLines:text=>lines.test(text)};
     i+=4;
   }
-  return {remainingArgs,parentSafeguard,ownerAdmission,metadataAdmission,saveAdmission,saveStoreDir};
+  return {remainingArgs,parentSafeguard,ownerAdmission,metadataAdmission,saveAdmission,saveStoreDir,saveRequestPath};
 }

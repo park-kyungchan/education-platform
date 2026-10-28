@@ -9,7 +9,7 @@ import {nativeDailyRecordConfiguration} from './native-dailyrecord-backend.ts';
 const runtimeIdentity=await runtimeIdentityConfiguration(process.argv.slice(2));
 const learning=await dailyRecordLearningConfiguration(runtimeIdentity.remainingArgs);
 const config=await dailyRecordToolConfiguration(learning.remainingArgs);
-const native=await nativeDailyRecordConfiguration(config.remainingArgs,config.ownerAdmission,config.metadataAdmission,config.saveAdmission,config.saveStoreDir);
+const native=await nativeDailyRecordConfiguration(config.remainingArgs,config.ownerAdmission,config.metadataAdmission,config.saveAdmission,config.saveStoreDir,config.saveRequestPath);
 const server=new McpServer({name:'academy-dailyrecord-review',version:'0.1.0'});
 registerRuntimeIdentity(server,runtimeIdentity.identity);
 registerDailyRecordTools(server,new DailyRecordService(native?.backend??null,config.parentSafeguard,Date.now,learning.learningPolicy,native?.backend??null));
