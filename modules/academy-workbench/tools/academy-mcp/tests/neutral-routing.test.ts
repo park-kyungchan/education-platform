@@ -113,6 +113,8 @@ test('an existing session atomically switches pinned release generations and nev
     const malformed=await client.callTool({name:'academy_dailyrecord_get',arguments:request});
     expect(malformed.isError).toBe(true);
     expect(JSON.parse((malformed.content as any)[0].text).code).toBe('release_payload_unqualified');
+    await publish('v6','2040-01-17','2040-01-17',false,'source_verified','source_verified');
+    expect((await client.callTool({name:'academy_dailyrecord_get',arguments:request})).structuredContent).toMatchObject({status:'observed'});
     await unlink(resolve(base,'release.json'));
     const held=await client.callTool({name:'academy_dailyrecord_get',arguments:request});
     expect(held.isError).toBe(true);
