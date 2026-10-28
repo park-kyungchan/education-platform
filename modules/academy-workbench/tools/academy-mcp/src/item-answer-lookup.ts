@@ -17,6 +17,16 @@ export const itemAnswerObservationSchema=z.object({
   rendering:z.literal('not_qualified'),paperMembership:z.literal('unqualified'),
 }).strip();
 
+/** Split an observed delimiter pattern without asserting source rendering semantics.
+ * Preserve the entire literal: synthetic examples alone cannot qualify a renderer. */
+export function decodeItemAnswerLiteral(answerLiteral:string):{answerPrefixCandidate:string|null;answerPayloadCandidate:string}{
+  const at=answerLiteral.indexOf('|_|');
+  if(at<0)return {answerPrefixCandidate:null,answerPayloadCandidate:answerLiteral};
+  const code=answerLiteral.slice(0,at),text=answerLiteral.slice(at+3);
+  if(!/^[0-9]{1,2}$/.test(code)||!text)return {answerPrefixCandidate:null,answerPayloadCandidate:answerLiteral};
+  return {answerPrefixCandidate:code,answerPayloadCandidate:text};
+}
+
 export function projectItemAnswerRead(raw:unknown,labels:string[]){
   const value=z.object({family:z.literal('item_answer'),status:z.enum(['observed','partial','blocked']),
     requestedAnswerLabels:z.array(label),pendingAnswerLabels:z.array(label),
@@ -31,6 +41,6 @@ export function projectItemAnswerRead(raw:unknown,labels:string[]){
     ||(value.status==='partial'&&(value.itemAnswers.length===0||value.itemAnswers.length===labels.length||value.answerBlockedReason===null))
     ||(value.status==='blocked'&&(value.itemAnswers.length!==0||value.answerBlockedReason===null)))throw Error('item_answer_source_scope_conflict');
   if(Buffer.byteLength(JSON.stringify(value.itemAnswers),'utf8')>480*1024)throw Error('item_answer_result_too_large');
-  return {status:value.status,answers:value.itemAnswers,pendingLabels:value.pendingAnswerLabels,reasonCode:value.answerBlockedReason,
+  return {status:value.status,answers:value.itemAnswers.map(row=>({...row,...decodeItemAnswerLiteral(row.answerLiteral)})),pendingLabels:value.pendingAnswerLabels,reasonCode:value.answerBlockedReason,
     observedAt:value.observedAt,coverage:value.coverage,academyWrites:0,parentSends:0,nativePrintInvoked:false,automaticRetryAllowed:false};
 }

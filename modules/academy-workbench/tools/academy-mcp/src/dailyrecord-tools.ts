@@ -23,7 +23,7 @@ export function registerDailyRecordTools(server:McpServer,service=new DailyRecor
   });
   server.registerTool('academy_item_answer_lookup',{
     title:'Read official answer literals by exact item labels',
-    description:'Read source-provided official answer literals for the exact requested numeric item labels. This does not read a student response or establish a printed paper version, and literal rendering may be unqualified or refer to an external solution. Bounded to 32 labels. No grading, saving, printing, sending or automatic retry.',
+    description:'Read source-provided official answer literals for the exact requested numeric item labels. Each answer may include delimiter-based answerPrefixCandidate and answerPayloadCandidate; their rendering meaning is not qualified. Escape pipes when presenting answerLiteral in a Markdown table. This does not read a student response or establish a printed paper version, and literal rendering may be unqualified or refer to an external solution. Bounded to 32 labels. No grading, saving, printing, sending or automatic retry.',
     inputSchema:itemAnswerLookupSchema,annotations,
   },async input=>result(await service.itemAnswers(input)));
   server.registerTool('academy_dailyrecord_get',{

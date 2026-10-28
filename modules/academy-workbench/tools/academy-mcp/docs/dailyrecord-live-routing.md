@@ -96,7 +96,10 @@ tests for exact fields and checks. Do not mutate or overwrite pinned releases.
 
 `academy_item_answer_lookup` reads a bounded set of exact numeric item labels
 through the authenticated owner client. It returns the source's official
-answer literal and explicit rendering/printed-paper limitations. It does not
+answer literal and explicit rendering/printed-paper limitations. For observed delimiter patterns, each answer also carries
+`answerPrefixCandidate` and `answerPayloadCandidate`. These are syntactic
+parts only; their rendering meaning is unqualified. Escape pipes when placing
+the original literal in a Markdown table. It does not
 interpret an unqualified literal as a rendered answer, infer a student
 response, grade, save, print, or send. The existing source endpoint may return
 an external solution reference instead of a literal answer. Production

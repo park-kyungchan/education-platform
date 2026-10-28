@@ -28,6 +28,28 @@ test('exact labels use authenticated owner read and project official literals wi
   expect(JSON.stringify(result)).not.toContain('fictional\"password');
 });
 
+test('delimiter candidates preserve the full literal without asserting rendered meaning',async()=>{
+  const literals:Record<string,string>={'111':'1|_|3','222':'1|_|4','333':'2|_|{`list`:[{`h`:`(1)`,`v`:`42`,`t`:`cm`}]}',
+    '444':'3|_|서술형 문제의 답안은 정답,해설파일을 참조','555':'plain payload','666':'x|_|3','777':'1|_|a|_|b','888':'1|_|'};
+  const keys=Object.keys(literals);
+  const service=new DailyRecordService({readDailyRecord:async()=>({status:'unavailable',reasonCode:'not_configured'}),
+    readItemAnswers:async()=>({family:'item_answer',status:'observed',requestedAnswerLabels:keys,pendingAnswerLabels:[],answerBlockedReason:null,
+      itemAnswers:keys.map(k=>({identity:{sourceNamespace:'academy_item',lectureKey:k,outerLectureKey:'100',sourceId:k},answerLiteral:literals[k],
+        answerAvailability:k==='444'?'external_solution_reference':'literal_payload_not_rendered',
+        answerMeaning:'source_official_item_answer_not_student_response',rendering:'not_qualified',paperMembership:'unqualified'})),
+      observedAt:'2040-01-01T00:00:00Z',coverage:'exact_requested_shared_answers_not_printed_versions',nativePrintInvoked:false,automaticRetryAllowed:false})});
+  const result:any=await service.itemAnswers({labels:keys,purpose:'Fictional format read',currentRequestRef:'fictional-format'});
+  const byKey=Object.fromEntries(result.answers.map((a:any)=>[a.identity.lectureKey,a]));
+  expect(byKey['111']).toMatchObject({answerLiteral:'1|_|3',answerPrefixCandidate:'1',answerPayloadCandidate:'3'});
+  expect(byKey['222']).toMatchObject({answerPrefixCandidate:'1',answerPayloadCandidate:'4'});
+  expect(byKey['333'].answerPayloadCandidate).toContain('42');
+  expect(byKey['444']).toMatchObject({answerPrefixCandidate:'3',answerAvailability:'external_solution_reference'});
+  expect(byKey['555']).toMatchObject({answerPrefixCandidate:null,answerPayloadCandidate:'plain payload'});
+  expect(byKey['666']).toMatchObject({answerPrefixCandidate:null,answerPayloadCandidate:'x|_|3'});
+  expect(byKey['777']).toMatchObject({answerPrefixCandidate:'1',answerPayloadCandidate:'a|_|b'});
+  expect(byKey['888']).toMatchObject({answerPrefixCandidate:null,answerPayloadCandidate:'1|_|'});
+});
+
 test('unconfigured, invalid, partial and conflicting sources remain explicit without automatic retry',async()=>{
   expect(await new DailyRecordService().itemAnswers(request)).toMatchObject({status:'unavailable',reasonCode:'item_answer_backend_not_configured'});
   let reads=0;
