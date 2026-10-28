@@ -170,7 +170,7 @@ export function request(over:Partial<TypedReadRequest>={}):TypedReadRequest{
   const built={contractVersion:'3.0.0',consumerProfile:'CURRENT_1_1',requestId:'req-'+(++seq),scopeRef:nativeRef(),...over,selector,snapshot:snap,functionRequest:over.functionRequest??complete,snapshotAdmission:over.snapshotAdmission??testGrant(),asOf:over.asOf??ASOF,expectedRevisions:over.expectedRevisions??[],fieldMask:over.fieldMask??fullFieldMask([...educationTypes]),linkMask:over.linkMask??[...linkTypes],pageSize,cursor,temporalSelection:temporal} as TypedReadRequest;
   return sealRequest(built);
 }
-export function fixture(){const store=new FakePrerequisiteStore();return {store,service:createNativeTypedRead(store.asStore(),OWNER,{processEpoch:'epoch-1',registrySha256:TEST_REGISTRY_SHA256,snapshotGrantVerifier:fictionalGrantVerifier})};}
+export function fixture(){const store=new FakePrerequisiteStore();return {store,service:createNativeTypedRead(store.asStore(),OWNER,{processEpoch:'epoch-1',registrySha256:TEST_REGISTRY_SHA256,snapshotGrantVerifier:fictionalGrantVerifier,now:()=>Date.parse(ASOF)})};}
 /** Apply the same fictional read model in preparation and the output gate. */
 export function mapFixtureViews(store:FakePrerequisiteStore,transform:(view:TeacherPrerequisiteReadStore)=>TeacherPrerequisiteReadStore):void{
   const read=store.readSnapshot.bind(store),commit=store.commitReadOutput.bind(store);

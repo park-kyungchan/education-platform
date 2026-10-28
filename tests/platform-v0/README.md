@@ -11,6 +11,7 @@ index, not a verdict or an executable substitute for that catalog.
 The executable tests call the existing education product APIs with synthetic DTOs and
 an in-memory prerequisite read port. Read fixtures are adapted from the owning module's
 source tests; they do not implement a query evaluator, Function runner or Action executor.
+The read service uses the fixed synthetic snapshot clock; a separate child verifies that advancing the wall clock beyond the grant expiry does not expire these fixtures.
 Assertions use fixed synthetic expected values and closed refusals. Approval DTO tests
 never issue, dispatch or consume a teacher approval. No test is skipped to conceal a gap.
 
