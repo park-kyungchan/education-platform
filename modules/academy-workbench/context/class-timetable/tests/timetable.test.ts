@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtemp, rm, writeFile } from 'node:fs/promises';
+import { mkdtemp, rm, symlink, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { isClassDay, validateRouting, validateTimetable } from '../validate.ts';
@@ -39,13 +39,19 @@ test('duplicate names, unknown sessions and missing provenance fail closed', () 
       students: [{ ...fictionalStudent(), provenance: { kind: 'guessed', date: '', detail: '' } }],
     }),
   );
+  assert.throws(() => validateTimetable({ schema: 'academy.class-timetable/1', students: [{ ...fictionalStudent(), provenance: { kind: 'user_confirmed', date: '2026-02-31', detail: 'fiction' } }] }), /provenance_required/);
 });
 test('isClassDay matches calendar weekdays without inventing membership', () => {
   const s = fictionalStudent() as Parameters<typeof isClassDay>[0];
-  assert.equal(isClassDay(s, '2026-10-28'), true);
-  assert.equal(isClassDay(s, '2026-10-30'), true);
-  assert.equal(isClassDay(s, '2026-10-26'), false);
-  assert.equal(isClassDay(s, '2026-10-27'), false);
+  const window = {from: '2026-10-27', to: '2026-10-31'};
+  assert.equal(isClassDay(s, '2026-10-28', window), true);
+  assert.equal(isClassDay(s, '2026-10-30', window), true);
+  assert.equal(isClassDay(s, '2026-10-27', window), false);
+  assert.equal(isClassDay(s, '2026-10-26', window), null);
+  assert.equal(isClassDay(s, '2026-10-26', {from: '2026-10-01', to: '2026-10-31'}), null);
+  assert.equal(isClassDay(s, '2026-11-01', window), null);
+  assert.equal(isClassDay(s, '2026-10-28'), null);
+  assert.throws(() => isClassDay(s, '2026-10-28', {from: '2026-10-31', to: '2026-10-27'}), /timetable_window_invalid/);
 });
 test('routing rejects missing targets instead of promising sources', () => {
   assert.throws(() =>
@@ -59,6 +65,11 @@ test('route-only check reads routing metadata and fails when an actual target di
     const target = join(root, 'source.ts');
     await writeFile(routing, JSON.stringify({ schema: 'academy.class-timetable-routing/1', routes: [{ question: 'fiction', target: 'source.ts' }] }));
     await writeFile(target, 'fictional source');
+    const route = (target: string) => ({ schema: 'academy.class-timetable-routing/1', routes: [{ question: 'fiction', target }] });
+    assert.throws(() => validateRouting(route('/etc/passwd'), root), /route_target_invalid/);
+    assert.throws(() => validateRouting(route('../outside'), root), /route_target_invalid/);
+    await symlink(target, join(root, 'link'));
+    assert.throws(() => validateRouting(route('link'), root), /route_target_symlink/);
     // No timetable.json exists in this isolated root.
     assert.equal(await checkRouting(routing, root), 1);
     await rm(target);
@@ -74,7 +85,7 @@ test('isClassDay rejects invalid and non-canonical dates', () => {
   for (const date of ['2026-02-31', '2026-02-29', '2026-13-01', '2026-00-01', '2026-1-01', '2026-10-28T00:00:00Z', '']) {
     assert.throws(() => isClassDay(s, date), /lesson_date_invalid/);
   }
-  assert.equal(isClassDay(s, '2024-02-29'), false);
+  assert.equal(isClassDay(s, '2024-02-29'), null);
 });
 test('unconfirmed provenance remains unknown on matching and non-matching weekdays', () => {
   for (const kind of ['unknown', 'inferred'] as const) {

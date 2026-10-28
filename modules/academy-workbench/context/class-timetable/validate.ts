@@ -1,6 +1,6 @@
 import { readFile } from 'node:fs/promises';
-import { existsSync } from 'node:fs';
-import { dirname, resolve } from 'node:path';
+import { existsSync, lstatSync } from 'node:fs';
+import { dirname, isAbsolute, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const dir = dirname(fileURLToPath(import.meta.url));
@@ -60,7 +60,7 @@ export function validateTimetable(value: unknown): Timetable {
     requireValue((SESSIONS as readonly string[]).includes(s.session), 'session_enum');
     requireValue(s.courseId === null || Number.isInteger(s.courseId), 'course_id_or_null');
     requireValue(
-      s.provenance && (PROVENANCE_KINDS as readonly string[]).includes(s.provenance.kind) && !!s.provenance.date && !!s.provenance.detail,
+      s.provenance && (PROVENANCE_KINDS as readonly string[]).includes(s.provenance.kind) && validDate(s.provenance.date) && !!s.provenance.detail,
       'provenance_required',
     );
   }
@@ -76,17 +76,31 @@ export function validateRouting(value: unknown, root: string = platformRoot): Ro
   for (const r of x.routes) {
     requireValue(typeof r.question === 'string' && !!r.question, 'route_question_required');
     requireValue(typeof r.target === 'string' && !!r.target, 'route_target_required');
-    if (!existsSync(resolve(root, r.target))) fail(`route_target_missing:${r.target}`);
+    const parts = r.target.split('/');
+    if (isAbsolute(r.target) || r.target.includes('\\') || parts.some(p => !p || p === '.' || p === '..')) fail('route_target_invalid');
+    let target = resolve(root);
+    for (const part of parts) {
+      target = resolve(target, part);
+      if (!existsSync(target)) fail(`route_target_missing:${r.target}`);
+      if (lstatSync(target).isSymbolicLink()) fail('route_target_symlink');
+    }
+    if (!lstatSync(target).isFile()) fail('route_target_not_file');
   }
   return x;
 }
 
-/** Confirmed weekday match, or null when provenance is not user-confirmed. Not attendance. */
-export function isClassDay(student: TimetableStudent, lessonDate: string): boolean | null {
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(lessonDate)) fail('lesson_date_invalid');
+function validDate(value: unknown): value is string {
+  if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+  const date = new Date(`${value}T00:00:00Z`);
+  return Number.isFinite(date.getTime()) && date.toISOString().slice(0, 10) === value;
+}
+
+/** A separately supplied confirmed timetable window is required; DailyRecord admission is not a timetable validity window. */
+export function isClassDay(student: TimetableStudent, lessonDate: string, window?: {from: string; to: string}): boolean | null {
+  if (!validDate(lessonDate)) fail('lesson_date_invalid');
+  if (window && (!validDate(window.from) || !validDate(window.to) || window.from > window.to)) fail('timetable_window_invalid');
+  if (!window || student.provenance?.kind !== 'user_confirmed' || !validDate(student.provenance.date) || lessonDate < student.provenance.date || lessonDate < window.from || lessonDate > window.to) return null;
   const date = new Date(`${lessonDate}T00:00:00Z`);
-  if (!Number.isFinite(date.getTime()) || date.toISOString().slice(0, 10) !== lessonDate) fail('lesson_date_invalid');
-  if (student.provenance?.kind !== 'user_confirmed') return null;
   const day = date.getUTCDay();
   return student.classDays.includes(WEEKDAYS[(day + 6) % 7] as Weekday);
 }
