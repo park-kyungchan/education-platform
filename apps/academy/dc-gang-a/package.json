@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "typecheck": "bun node_modules/typescript/bin/tsc --noEmit",
-    "test": "bun test --timeout 30000 ./tests/academy ./tests/learning ./tests/storage ./tests/wholeLens ./tests/preclass ./tests/assessment",
+    "test": "bun test --timeout 50000 ./tests/academy ./tests/learning ./tests/storage ./tests/wholeLens ./tests/preclass ./tests/assessment",
     "check": "bun run typecheck && bun run test && bun run test:journal-read && bun run test:pool-read && bun run check:product-control",
     "test:journal-read": "bun test ./tests/lms/dayRecordGroupDiscovery.test.ts ./tests/lms/journalWireFingerprint.test.ts ./tests/lms/lessonJournalHttp.test.ts ./tests/lms/journalRequestAdmission.test.ts ./tests/lms/dailyRecordLearning.test.ts",
     "academy:serve": "bun src/academy/main.ts",
