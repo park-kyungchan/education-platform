@@ -1,0 +1,74 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "verification",
+  "id": "education-platform:verification:academy-review-3242d4c2df865d71c1d9882e3e34c5b503f7fab4",
+  "projectId": "education-platform",
+  "domainId": "education",
+  "createdAt": "2026-10-28T05:43:23.909Z",
+  "payload": {
+    "targetRefs": [
+      "education-platform:evidence:academy-review-3242d4c2df865d71c1d9882e3e34c5b503f7fab4"
+    ],
+    "criteria": [
+      {
+        "id": "independent-native-source-review",
+        "status": "pass",
+        "message": "Independent muse review binds exact head/tree/manifest with distinct author/reviewer and zero findings.",
+        "evidenceRefs": [
+          "education-platform:evidence:academy-review-3242d4c2df865d71c1d9882e3e34c5b503f7fab4"
+        ]
+      }
+    ],
+    "inputHashes": [
+      {
+        "path": "native-review-results/3242d4c2df865d71c1d9882e3e34c5b503f7fab4.json",
+        "sha256": "5e18a0bc526d51ee1a77b618267969f05a7335a747643a300ec1de4ef15b858f"
+      },
+      {
+        "path": "native-review-evidence/3242d4c2df865d71c1d9882e3e34c5b503f7fab4.json",
+        "sha256": "c368826259577919f06521b480108e43b379f0c8d6604924886f4a188d48e53b"
+      },
+      {
+        "path": "native-review-raw/3242d4c2df865d71c1d9882e3e34c5b503f7fab4.json",
+        "sha256": "7246a08f9b6ecac0481b96dd04bab27e2ea74024afd5d73a21c0c7298faf1ba3"
+      }
+    ],
+    "runtime": {
+      "name": "muse",
+      "version": "observed-session-not-cryptographic-authentication"
+    },
+    "details": {
+      "semanticOwner": "education-platform",
+      "review": {
+        "binding": {
+          "repository": "park-kyungchan/education-platform",
+          "projectId": "education-platform",
+          "domainId": "education",
+          "semanticOwner": "education-platform",
+          "scope": "month-end-source-redesign"
+        },
+        "headSha": "3242d4c2df865d71c1d9882e3e34c5b503f7fab4",
+        "reviewedTreeSha": "f08aea354dcb416464df4d9f2b85378f70c75ed0",
+        "reviewedSourceManifestSha256": "7e9c543772341b9efd70f3ddf6607ab4fb3bc1530f5a1103ee7f7249147ebb21",
+        "reviewer": {
+          "runtime": "muse",
+          "taskId": "85f959c2-f859-4228-9e5e-2c6ef7c828",
+          "threadId": null,
+          "nativeTaskId": null,
+          "nativeRunId": null,
+          "role": "Independent owner-scoped source reviewer (muse)",
+          "implementationWriter": false
+        },
+        "author": {
+          "runtime": "codex",
+          "taskId": "01a180d1-dc77-7191-a4f8-2313d7779727",
+          "threadId": null,
+          "nativeTaskId": null,
+          "nativeRunId": null
+        },
+        "conclusion": "pass",
+        "unresolvedFindings": 0
+      }
+    }
+  }
+}
