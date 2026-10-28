@@ -10,7 +10,7 @@ import {validateReceipt,computeReadHorizon} from '../../src/academy/nativePrereq
 import {context,known,unknown,objectRef,progress,draft,assessment,instant,hash} from './nativePrerequisiteContracts.test';
 import {foundation,admitted,type FictionalSql} from './nativePrerequisiteStore.test';
 import {exactWorkFixture,exactAttemptFixture} from './learningWorkFixtures';
-import {createNativeTypedRead} from '../../src/academy/nativeTypedRead';
+import {createNativeTypedRead,createSnapshotGrantVerifier,fullFieldMask} from '../../src/academy/nativeTypedRead';
 import {ctx,nativeRef,request,testTemporal,testFunctionRequest,TEST_REGISTRY_SHA256} from './typedRead.test';
 
 /** Real owner and native metadata store over the existing fictional driver.
@@ -156,4 +156,76 @@ test('DRAFT-REV same teacher revision refresh preserves draft identity and curre
  const old={...correction,context:context('draft-rev-old'),expectedRevisionId:corrected.revisionId,payload};
  await expect(admitted(f.store,'correctPrerequisiteRecord',old,()=>f.store.correctPrerequisiteRecord(old))).rejects.toThrow('teacher_attribution_conflict');
  expect(await f.store.history(ctx.ownerId,'student-a',saved.identity.nativeKey)).toHaveLength(2);
+});
+
+
+test('REALM-ACQUIRE the actual owner refuses caller outer scope while native class refs remain genuine',async()=>{
+ const f=await scene(),scope=structuredClone(nativeRef());scope.basis.scope.scopeKey='invented-unowned-scope';
+ const temporal=testTemporal({classGroupRef:f.recordScope.classGroupRef,studentRef:f.recordScope.studentRef,occurrence:{mode:'EXACT',lessonRef:f.recordScope.lessonRef}});
+ const service=createNativeTypedRead(f.store,ctx.ownerId,{processEpoch:'realm-input',registrySha256:TEST_REGISTRY_SHA256,snapshotGrantSecret:'invented-realm-secret',now:()=>Date.parse(instant)});
+ const good={schema:'native-read-acquire.v2' as const,consumerProfile:'CURRENT_1_1' as const,requestId:'realm-good',scopeRef:nativeRef(),consistency:'SNAPSHOT' as const,time:{mode:'CURRENT' as const},functionIntent:testFunctionRequest(temporal)};
+ expect((await service.acquireSnapshot(ctx,good)).snapshotAdmission.grantId).toBeTruthy();
+ await expect(service.acquireSnapshot(ctx,{...good,requestId:'realm-bad',scopeRef:scope,functionIntent:{...good.functionIntent,scopeRef:scope}})).rejects.toMatchObject({code:'PERMISSION_DENIED',httpStatus:403});
+});
+for(const mismatch of ['project','owner'] as const)test('DRAFT-TEACHER-SCOPE rejects a same-key/revision Teacher from another '+mismatch,async()=>{
+ const f=await foundation(),ref=structuredClone(f.ref('Teacher',f.teacher));
+ if(mismatch==='project')ref.identity.scopeRef.basis.scope.projectKey='invented-other-project';
+ else{ref.identity.scopeRef.basis.scope.ownerNamespace='invented-other-owner';ref.identity.scopeRef.basis.source.ownerNamespace='invented-other-owner';}
+ const payload={...draft(),recordScope:f.recordScope,responsibleTeacherRef:known(ref),progressRefs:unknown<ObjectRef[]>(),homeworkRefs:unknown<ObjectRef[]>(),attemptRefs:unknown<ObjectRef[]>(),previousAssessmentRefs:unknown<ObjectRef[]>()};
+ const c={context:context('draft-teacher-'+mismatch),studentId:'student-a',payload},before=f.sql.rows('record_versions').length;
+ await expect(admitted(f.store,'createDraft',c,()=>f.store.createDraft(c))).rejects.toThrow('scope_conflict');expect(f.sql.rows('record_versions')).toHaveLength(before);
+});
+test('RETARGET-SUCCESSOR actual owner accepts attachment-governed scope with score and complete draft',async()=>{
+ const f=await scene(),owner=context().ownerId;
+ expect((await f.store.approvalClosurePreview(context('retarget-before'),f.draftRef)).targets).toHaveLength(1);
+ const lessonRow=(await f.store.lessons(owner)).find(v=>v.entityKey===f.recordScope.lessonRef.identity.nativeKey)!;
+ const {ownerId:_owner,lessonKey:_key,...prior}=lessonRow.payload;
+ const lc={context:context('retarget-new-lesson'),entityKey:null,expectedRevisionId:null,payload:{...prior,occurrenceOrdinal:known(2),startsAt:known('2026-10-24T01:00:00.000Z'),endsAt:known('2026-10-24T02:00:00.000Z')}};
+ const lesson=await admitted(f.store,'append:lesson',lc,()=>f.store.appendLesson(lc));
+ const scope={...f.recordScope,lessonRef:f.ref('LessonSession',lesson)};
+ const pc={context:context('retarget-participation'),entityKey:null,expectedRevisionId:null,payload:{kind:'temporal_binding' as const,bindingKind:'LESSON_PARTICIPATION' as const,subjectRef:scope.lessonRef,targetRef:scope.studentRef,validFrom:'2026-01-01',validTo:null,sourceLiteral:'Invented explicit retarget participation',synthetic:true}};
+ await admitted(f.store,'append:binding',pc,()=>f.store.appendTemporalBinding(pc));
+ const links=(await f.store.activityScopes(owner,{})).filter(v=>v.payload.recordScope.lessonRef.identity.nativeKey===f.recordScope.lessonRef.identity.nativeKey);
+ expect(links).toHaveLength(4);
+ for(const link of links){
+  const {ownerId:_owner,scopeKey:_key,...payload}=link.payload;
+  const fix={context:context('retarget-'+link.entityKey),entityKey:link.entityKey,expectedRevisionId:link.revisionId,payload:{...payload,recordScope:scope}};
+  await admitted(f.store,'append:scope',fix,()=>f.store.appendActivityScope(fix));
+ }
+ const score={...f.scoreCommand,context:context('retarget-score'),entityKey:f.scoreResult.identity.nativeKey,expectedRevisionId:f.scoreResult.revisionId,payload:{...f.scoreCommand.payload,recordScope:scope}};
+ const scoreResult=await admitted(f.store,'appendScoreEvidence',score,()=>f.store.appendScoreEvidence(score));
+ const sources={...f.proposalSources,attempts:f.proposalSources.attempts.map(row=>({...row,payload:{...row.payload,scoreEvidence:{revision:scoreResult.revisionId,payload:score.payload}}}))};
+ const texts=nativeProposalTexts(sources);
+ const create={...f.dc,context:context('retarget-draft'),payload:{...f.dc.payload,recordScope:scope,progressText:{...f.dc.payload.progressText,value:texts.progressText},homeworkText:{...f.dc.payload.homeworkText,value:texts.homeworkText},noteText:{...f.dc.payload.noteText,value:texts.noteText}}};
+ const saved=await admitted(f.store,'createDraft',create,()=>f.store.createDraft(create));
+ const ref=f.ref('DailyRecordDraft',saved);
+ const oldFix={context:context('retarget-old-lesson-metadata'),entityKey:lessonRow.entityKey,expectedRevisionId:lessonRow.revisionId,payload:{...prior,occurrenceOrdinal:known(3)}};
+ await admitted(f.store,'append:lesson',oldFix,()=>f.store.appendLesson(oldFix));
+ const temporal=testTemporal({classGroupRef:scope.classGroupRef,studentRef:scope.studentRef,occurrence:{mode:'EXACT',lessonRef:scope.lessonRef}});
+ const reader=createNativeTypedRead(f.store,owner,{processEpoch:'retarget-current',registrySha256:TEST_REGISTRY_SHA256,snapshotGrantSecret:'invented-retarget-read-secret',now:()=>Date.parse(instant)});
+ const acquired=await reader.acquireSnapshot(ctx,{schema:'native-read-acquire.v2',consumerProfile:'CURRENT_1_1',requestId:'retarget-current-acquire',scopeRef:nativeRef(),consistency:'FAIL_ON_CHANGE',time:{mode:'CURRENT'},functionIntent:testFunctionRequest(temporal)});
+ const page=await reader.typedRead(ctx,request({temporalSelection:temporal,snapshot:acquired.snapshot,asOf:acquired.snapshot.asOf,snapshotAdmission:acquired.snapshotAdmission,selector:{kind:'EXACT_OBJECT',objectRef:f.ref('DailyProgress',f.progressResult)},fieldMask:fullFieldMask(['DailyProgress']),linkMask:[]}));
+ expect(page.items.filter(item=>item.kind==='OBJECT')).toHaveLength(1);
+ const closure=await f.store.approvalClosurePreview(context('retarget-after'),ref);
+ expect(closure.targets).toHaveLength(1);expect(closure.targets[0]!.expected.value).toBe(ref.revision);
+ const progress=(await f.store.history(owner,'student-a',f.progressResult.identity.nativeKey))[0]!;
+ expect(progress.payload.kind).toBe('daily_progress');
+ if(progress.payload.kind==='daily_progress')expect(progress.payload.recordScope.lessonRef).toEqual(f.recordScope.lessonRef);
+ expect(closure.dependencies.some(v=>v.ref.objectKey===scope.lessonRef.identity.nativeKey)).toBe(true);
+ const cited=(await f.store.lessons(owner)).find(row=>row.entityKey===f.previous.identity.nativeKey)!;
+ const {ownerId:_citedOwner,lessonKey:_citedKey,...citedPayload}=cited.payload;
+ const citedFix={context:context('retarget-cited-lesson-metadata'),entityKey:cited.entityKey,expectedRevisionId:cited.revisionId,payload:{...citedPayload,occurrenceOrdinal:known(4)}};
+ await admitted(f.store,'append:lesson',citedFix,()=>f.store.appendLesson(citedFix));
+ await expect(f.store.approvalClosurePreview(context('retarget-cited-after'),ref)).rejects.toThrow('stale_source_revision');
+});
+
+
+test('REALM-ALIAS acquisition seals the validated intent before awaiting the native owner',async()=>{
+ const f=await scene(),temporal=testTemporal({classGroupRef:f.recordScope.classGroupRef,studentRef:f.recordScope.studentRef,occurrence:{mode:'EXACT',lessonRef:f.recordScope.lessonRef}}),secret='invented-realm-alias-secret';
+ const service=createNativeTypedRead(f.store,ctx.ownerId,{processEpoch:'realm-alias',registrySha256:TEST_REGISTRY_SHA256,snapshotGrantSecret:secret,now:()=>Date.parse(instant)});
+ const input={schema:'native-read-acquire.v2' as const,consumerProfile:'CURRENT_1_1' as const,requestId:'realm-alias-acquire',scopeRef:nativeRef(),consistency:'SNAPSHOT' as const,time:{mode:'CURRENT' as const},functionIntent:testFunctionRequest(temporal)},read=f.store.readSnapshot.bind(f.store);
+ f.store.readSnapshot=async callback=>{input.scopeRef.basis.scope.scopeKey='invented-late-scope';input.functionIntent.scopeRef.basis.scope.scopeKey='invented-late-scope';return read(callback);};
+ const acquired=await service.acquireSnapshot(ctx,input);
+ const original=request({scopeRef:nativeRef(),temporalSelection:temporal,snapshot:acquired.snapshot,asOf:acquired.snapshot.asOf,snapshotAdmission:acquired.snapshotAdmission});
+ expect(createSnapshotGrantVerifier(secret,{ownerId:ctx.ownerId,processEpoch:'realm-alias',registrySha256:TEST_REGISTRY_SHA256})(acquired.snapshotAdmission,original,ctx)).toBe(true);
 });

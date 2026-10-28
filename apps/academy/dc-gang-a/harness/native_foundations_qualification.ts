@@ -14,17 +14,17 @@ import type {TeacherPrerequisiteStore} from '../src/academy/ports/teacherStore';
 import type {TeacherAuthStore, ProductAuthState} from '../src/academy/teacherAuthStore';
 
 export const isolatedTarget = Object.freeze({
-  runId:'e2e-p4-native-20261027-54', directory:'/var/tmp/e2e-p4-native-20261024-01/runs/e11-sealed-frame-54',
-  worktree:'/var/tmp/e2e-p4-native-20261024-01/runs/e11-sealed-frame-54/source/education-native-foundations',
+  runId:'e2e-p4-native-20261027-55', directory:'/var/tmp/e2e-p4-native-20261024-01/runs/e11-sealed-frame-55',
+  worktree:'/var/tmp/e2e-p4-native-20261024-01/runs/e11-sealed-frame-55/source/education-native-foundations',
   evidenceRoot:'/home/palantirkc/operations/platform-redesign-20261023T1807Z',
   hostname:'127.0.0.1', port:38743, runtime:'/usr/local/bin/bun', runtimeVersion:'1.4.3',
   runtimeSha256:'7ce7d6b654eddeec20afddf2396317fba6dc19ab52788a27e894e1806bf8f24b',
   image:'docker.io/library/postgres@sha256:ec4dfc6571f04fe0731ce948c1500d676af49a7224392dcc6995cc1ee33a94bb',
   providerSocket:'/var/tmp/e2e-p4-native-20261024-01/socket',
-  database:'e2e_p4_e11_frame54', username:'e2e_qualification',
+  database:'e2e_p4_e11_frame55', username:'e2e_qualification',
   registry:'reports/p6-execution/native-foundations/reconciliation/education-registry.v4.json',
   registrySha256:'914c8d555a27e19e35f7048e125b7f0cfce1fc41a309a8e1d1f71bf7a5988c2a',
-  environment:'reports/p4-p5-execution/claude-takeover-20261027/gen86/environment-direction.v1.json',
+  environment:'reports/p4-p5-execution/claude-takeover-20261027/gen87/environment-direction.v1.json',
 });
 export function isDirectPhaseMetadataDirectory(value:unknown):value is string {
   return typeof value==='string'&&dirname(value)===isolatedTarget.directory+'/phases'&&resolve(value)===value;
@@ -261,11 +261,11 @@ export function validateFixedRunner(value:unknown):FixedRunnerConfiguration {
  if(!Number.isSafeInteger(x.inputByteLength)||Number(x.inputByteLength)<1||Number(x.inputByteLength)>16777216)failure('sealed_input_length_required');
  if(x.schema!=='fixed-native-runner.v2'||x.status!=='SEALED'||!['MIGRATE','FIXTURE','MEASURE'].includes(String(x.kind))||!fixedStageOrder.includes(x.stage as FixedStage)||x.windowState!=='CLOSED')failure('fixed_runner_config_required');
  const kind=x.kind as FixedRunner,stage=x.stage as FixedStage,base=validateConfiguration(x.base,kind==='MIGRATE'?'MIGRATE':'HELPER');
- if(base.operation!=='START'||base.ownerId!=='synthetic-p4-e2e-p4-native-20261027-54'||(kind==='MIGRATE')!==(stage==='MIGRATE')||kind==='FIXTURE'&&!['A0','B0','A1-SETUP','A1-DETACH','P-SNAPSHOT','P-ACTOR','RESTORE-A','P-RETIRE-A'].includes(stage)||kind==='MEASURE'&&!['A1-BASE','A1-AFTER','A-OLD-SECTION','A2-CURRENT','P-SNAPSHOT','P-ACTOR','RESTORE-A','P-RESTART'].includes(stage))failure('fixed_runner_config_required');
+ if(base.operation!=='START'||base.ownerId!=='synthetic-p4-e2e-p4-native-20261027-55'||(kind==='MIGRATE')!==(stage==='MIGRATE')||kind==='FIXTURE'&&!['A0','B0','A1-SETUP','A1-DETACH','P-SNAPSHOT','P-ACTOR','RESTORE-A','P-RETIRE-A'].includes(stage)||kind==='MEASURE'&&!['A1-BASE','A1-AFTER','A-OLD-SECTION','A2-CURRENT','P-SNAPSHOT','P-ACTOR','RESTORE-A','P-RESTART'].includes(stage))failure('fixed_runner_config_required');
  if((stage==='A-OLD-SECTION')!==(base.consumerProfile==='OLD_SECTION_1_0')||stage==='A-OLD-SECTION'&&base.phase!=='OLD-SECTION'||stage==='A2-CURRENT'&&base.phase!=='CURRENT-RESTORED'||stage==='P-RESTART'&&base.phase!=='P-RESTART')failure('fixed_runner_profile_stage_required');
  const rp=(v:unknown):RunnerPipe=>{const p=object(v);keys(p,['readFd','writeFd','device','inode']);for(const z of Object.values(p))positive(z);if(Number(p.readFd)<=2||Number(p.writeFd)<=2)failure();return p as unknown as RunnerPipe;};
  const resourceSelection=pin(x.resourceSelection),bootstrapSelection=pin(x.bootstrapSelection);
- if(resourceSelection.path!=='reports/p4-p5-execution/claude-takeover-20261027/gen86/candidate/bindings/resource-names.v1.json'||resourceSelection.sha256!=='0301571a16f39473c3a65f3f2159465b44d4c4c4c692c20b34cc9771689483b5'||resourceSelection.bytes!==6820||bootstrapSelection.path!=='reports/p4-p5-execution/claude-takeover-20261027/gen86/candidate/bindings/bootstrap-selection.v1.json'||bootstrapSelection.sha256!=='89146f2b165f958964b1346c89594ec5b479c7abfe1ee0047310a594b710b616'||bootstrapSelection.bytes!==3983)failure('exact_resource_selection_required');
+ if(resourceSelection.path!=='reports/p4-p5-execution/claude-takeover-20261027/gen87/candidate/bindings/resource-names.v1.json'||resourceSelection.sha256!=='1f0f18a21440750a444b1d9b14f8ae861f9cecd007ee0bacd4b5d5fa9ae62b89'||resourceSelection.bytes!==6820||bootstrapSelection.path!=='reports/p4-p5-execution/claude-takeover-20261027/gen87/candidate/bindings/bootstrap-selection.v1.json'||bootstrapSelection.sha256!=='cd288afaa6a3cc8082d1a8ff9c3b2ee806f95ef223085aefc76fd19edaa97921'||bootstrapSelection.bytes!==3983)failure('exact_resource_selection_required');
  const liveHelper=x.liveHelper===null?null:processBinding(x.liveHelper),helperStartReceipt=x.helperStartReceipt===null?null:pin(x.helperStartReceipt),previousStageReceipt=x.previousStageReceipt===null?null:pin(x.previousStageReceipt);
  if(kind==='MIGRATE'&&(liveHelper!==null||helperStartReceipt!==null)||kind!=='MIGRATE'&&(!liveHelper||!helperStartReceipt)||stage!=='MIGRATE'&&!previousStageReceipt)failure('fixed_runner_config_required');
  return deepFreeze({schema:'fixed-native-runner.v2',status:'SEALED',kind,stage,base,input:rp(x.input),output:rp(x.output),inputSha256:x.inputSha256,inputByteLength:Number(x.inputByteLength),resourceSelection,bootstrapSelection,liveHelper,helperStartReceipt,previousStageReceipt,windowState:'CLOSED'});

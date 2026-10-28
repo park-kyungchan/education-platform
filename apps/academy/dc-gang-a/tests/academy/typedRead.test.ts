@@ -814,3 +814,25 @@ test('CLOCK-COMMON the shared fictional fixture survives future host time with i
  const previous=Date.now;Date.now=()=>Date.parse('2035-01-01T00:00:00.000Z');
  try{const f=fixture();expect((await f.service.typedRead(ctx,request())).kind).toBe('OK');}finally{Date.now=previous;}
 });
+
+
+test('REALM-INPUT typed reads reject an invented outer scope before any projection',async()=>{
+ const f=fixture(),r=request({selector:{kind:'EXACT_OBJECT',objectRef:studentRef},fieldMask:fullFieldMask(['Student']),linkMask:[]});
+ const invented=structuredClone(r.scopeRef);invented.basis.scope.scopeKey='invented-unowned-scope';r.scopeRef=invented;r.functionRequest.scopeRef=invented;sealRequest(r);
+ await refusal(f.service.typedRead(ctx,r),'PERMISSION_DENIED',403);expect(f.store.projectionCalls).toBe(0);
+});
+for(const date of [null,7,'not-a-date'])for(const active of [true,false])test('INPUT-DATE malformed '+String(date)+' preserves '+(active?'input':'actor')+' precedence',async()=>{
+ const f=fixture(),r=request();r.temporalSelection.businessDate=date as never;r.functionRequest.businessDate=date as never;
+ if(!active)f.store.binding!.payload.state='RETIRED';
+ await refusal(f.service.typedRead(ctx,r),active?'INVALID_REQUEST':'PERMISSION_DENIED',active?400:403);
+ await refusal(f.service.verifyContinuation(ctx,r),active?'INVALID_REQUEST':'PERMISSION_DENIED',active?400:403);
+ expect(f.store.projectionCalls).toBe(0);
+});
+
+
+test('REALM-ALIAS admitted typed-read intent is isolated from caller mutation at the read boundary',async()=>{
+ const f=fixture(),r=request({selector:{kind:'EXACT_OBJECT',objectRef:structuredClone(studentRef)},fieldMask:fullFieldMask(['Student']),linkMask:[]}),read=f.store.readSnapshot.bind(f.store);
+ f.store.readSnapshot=async callback=>{r.selector={kind:'EXACT_OBJECT',objectRef:objectRef('Student','invented-absent','rev-absent')};return read(callback);};
+ const page=await f.service.typedRead(ctx,r);expect(page.items.filter(item=>item.kind==='OBJECT')).toHaveLength(1);
+ expect(page.items.find(item=>item.kind==='OBJECT')?.kind).toBe('OBJECT');
+});

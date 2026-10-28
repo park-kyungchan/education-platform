@@ -371,7 +371,7 @@ export class NativeTypedReadService implements NativeTypedRead{
   }
   private async openCursor(view:TeacherPrerequisiteReadStore,context:TrustedTeacherContext,request:TypedReadRequest):Promise<NativeOwnerCursorBinding|undefined>{
     if(request.cursor===null)return undefined;
-    await this.assertTeachingAuthority(view,context,request.temporalSelection);
+    await this.assertTeachingAuthority(view,context,request.temporalSelection,request.scopeRef);
     const owner=this.cursorOptions.cursorOwner;if(!owner||!this.cursorOptions.cursorInterfaceBinding)throw unverifiable();
     let token:NativeOwnerCursorBinding;try{token=owner.open(request.cursor);}catch{throw staleGrant();}
     const bounds=this.cursorBindings(context,request);
@@ -407,8 +407,8 @@ export class NativeTypedReadService implements NativeTypedRead{
   async verifyContinuation(context:TrustedTeacherContext,request:TypedReadRequest):Promise<void>{
     try{assertTeacherScope(this.ownerId,context);}catch{throw denied();}
     await this.store.readSnapshot(async view=>{
-      await this.assertInputAuthority(view,context,request?.temporalSelection);
-      const validated=this.validateRequest(request,context);await this.assertTeachingAuthority(view,context,validated.temporalSelection);await this.openCursor(view,context,validated);
+      await this.assertInputAuthority(view,context,request?.temporalSelection,request?.scopeRef);
+      const validated=this.validateRequest(request,context);await this.assertTeachingAuthority(view,context,validated.temporalSelection,validated.scopeRef);await this.openCursor(view,context,validated);
     });
   }
   async typedReadBuffered(context:TrustedTeacherContext,request:TypedReadRequest,currentAuthorization:()=>boolean):Promise<BufferedTypedReadOutput>{
@@ -420,7 +420,7 @@ export class NativeTypedReadService implements NativeTypedRead{
     let validated:TypedReadRequest;
     try{validated=this.validateRequest(request,context);}catch(error){
       // Decode failures confer no data access. Current rights still select the emitted refusal.
-      await this.store.readSnapshot(view=>this.assertInputAuthority(view,context,request?.temporalSelection));throw error;
+      await this.store.readSnapshot(view=>this.assertInputAuthority(view,context,request?.temporalSelection,request?.scopeRef));throw error;
     }
     if(!this.bindingsQualified)throw unverifiable(['OWNER_INTERFACE_RATIFICATION']);
     const initialCursor=validated.cursor===null?undefined:await this.store.readSnapshot(view=>this.openCursor(view,context,validated));
@@ -473,7 +473,7 @@ export class NativeTypedReadService implements NativeTypedRead{
           if(currentAuthorization&&!currentAuthorization())return refuse(new TypedReadRefusal('PERMISSION_DENIED',401));
           // Final gate: reauthorize and recompute the complete horizon and
           // page under the gate view; any drift refuses without the old page.
-          await this.assertTeachingAuthority(view,context,validated.temporalSelection);
+          await this.assertTeachingAuthority(view,context,validated.temporalSelection,validated.scopeRef);
           const finalCursor=await this.openCursor(view,context,validated);
           const finalValue=await this.projectPage(view,context,validated,finalCursor);
           // A failed preparatory read grants no shortcut around current
@@ -512,7 +512,7 @@ export class NativeTypedReadService implements NativeTypedRead{
         let selected=captured?.code===code?captured:code==='output_rights_refused'?denied():unverifiable(['OWNER_INTERFACE_RATIFICATION']);
         try{
           if(currentAuthorization&&!currentAuthorization())return refuse(new TypedReadRefusal('PERMISSION_DENIED',401));
-          await this.assertTeachingAuthority(view,context,validated.temporalSelection);
+          await this.assertTeachingAuthority(view,context,validated.temporalSelection,validated.scopeRef);
           await this.projectPage(view,context,validated);
           if(prep.ok){
             const current=await computeReadHorizon(view,context.ownerId,context.actorId,validated.temporalSelection.businessDate,prep.attemptRefs,horizonPlan(validated.functionRequest,this.consumerProfile));
@@ -572,12 +572,12 @@ export class NativeTypedReadService implements NativeTypedRead{
     try{assertTeacherScope(this.ownerId,context);}catch{throw denied();}
     if(request?.scopeRef?.basis?.scope?.ownerNamespace&&request.scopeRef.basis.scope.ownerNamespace!==context.ownerId)throw denied();
     let intent:TypedFunctionRequest;
-    try{intent=this.validateAcquireRequest(request,context);}catch(error){await this.store.readSnapshot(view=>this.assertInputAuthority(view,context,request?.functionIntent));throw error;}
+    try{try{request=structuredClone(request);}catch{throw invalid();}intent=this.validateAcquireRequest(request,context);}catch(error){await this.store.readSnapshot(view=>this.assertInputAuthority(view,context,request?.functionIntent,request?.scopeRef));throw error;}
     if(!this.bindingsQualified)throw unverifiable(['OWNER_INTERFACE_RATIFICATION']);
     if(!this.snapshotGrantSecret)throw unverifiable(['OWNER_INTERFACE_RATIFICATION']);
     try{
       return await this.store.readSnapshot(async view=>{
-        await this.assertTeachingAuthority(view,context,intent);
+        await this.assertTeachingAuthority(view,context,intent,request.scopeRef);
         if(this.consumerProfile==='OLD_SECTION_1_0'&&(intent.functionName!=='GetStudentDailyContext'||intent.pageSize!==100||intent.occurrence.mode!=='EXACT'))throw unverifiable();
         if(request.time.mode==='HISTORICAL')throw new TypedReadRefusal('SNAPSHOT_UNAVAILABLE',409,['NATIVE_REVISION_SNAPSHOT']);
         const planBinding=planBindingFor(intent,this.registrySha256,this.processEpoch,this.consumerProfile,this.sourceSetSha256);
@@ -683,28 +683,34 @@ export class NativeTypedReadService implements NativeTypedRead{
     const policyRevision='policy:'+digest({domain:'native-read-policy/v3',planBinding,processEpoch:this.processEpoch??null,bindingRevision:horizon.bindingRevision,...profileBinding(this.consumerProfile,this.sourceSetSha256)});
     if(request.snapshot.readRevision!==readRevision||request.snapshot.policyRevision!==policyRevision)throw staleGrant();
   }
-  private async assertCurrentBinding(view:TeacherPrerequisiteReadStore,context:TrustedTeacherContext,businessDate:string):Promise<void>{
+  private async assertCurrentBinding(view:TeacherPrerequisiteReadStore,context:TrustedTeacherContext,businessDate?:string){
     const bound=await view.teacherBindingByActor(context.ownerId,context.actorId);
     if(!bound)throw denied();
     if(bound.payload.state!=='ACTIVE'||bound.payload.assignmentState.state!=='known'||bound.payload.assignmentState.value!=='ACTIVE')throw denied();
-    if(businessDate<bound.payload.validFrom||bound.payload.validTo!==null&&businessDate>=bound.payload.validTo)throw denied();
+    if(businessDate!==undefined&&(businessDate<bound.payload.validFrom||bound.payload.validTo!==null&&businessDate>=bound.payload.validTo))throw denied();
+    return bound;
   }
-  private async assertInputAuthority(view:TeacherPrerequisiteReadStore,context:TrustedTeacherContext,selection:unknown):Promise<void>{
-    const date=isRecord(selection)&&typeof selection.businessDate==='string'?selection.businessDate:'';
-    await this.assertCurrentBinding(view,context,date);
-    // A malformed plan grants no read. When its class/date are identifiable,
-    // current authority still takes precedence over its decode diagnostics.
-    if(!isRecord(selection))return;
-    try{assertDate(date);validateObjectRef(selection.classGroupRef as ObjectRef,['ClassGroup']);}catch{return;}
-    await this.assertTeachingAuthority(view,context,{businessDate:date,classGroupRef:selection.classGroupRef as ObjectRef<'ClassGroup'>});
+  private assertActorScope(bound:{scopeRef:NativeObjectRef;namespace:string},scopeRef:NativeObjectRef):void{
+    if(canonicalJson(scopeRef)!==canonicalJson(bound.scopeRef)||scopeRef.basis.namespace!==bound.namespace)throw denied();
   }
-  private async assertTeachingAuthority(view:TeacherPrerequisiteReadStore,context:TrustedTeacherContext,selection:Pick<TypedTemporalSelection,'businessDate'|'classGroupRef'>):Promise<void>{
-    await this.assertCurrentBinding(view,context,selection.businessDate);
-    const bound=await view.teacherBindingByActor(context.ownerId,context.actorId);
-    if(!bound)throw denied();
+  private async assertInputAuthority(view:TeacherPrerequisiteReadStore,context:TrustedTeacherContext,selection:unknown,scopeRef:unknown):Promise<void>{
+    let date:string|undefined;
+    if(isRecord(selection)&&typeof selection.businessDate==='string')try{assertDate(selection.businessDate);date=selection.businessDate;}catch{}
+    // Invalid dates convey no dated authority. Current actor state still
+    // precedes diagnostics; a valid date additionally selects its interval.
+    const bound=await this.assertCurrentBinding(view,context,date);
+    let scope:NativeObjectRef|undefined;
+    try{validateNativeRef(scopeRef as NativeObjectRef);scope=scopeRef as NativeObjectRef;}catch{}
+    if(scope)this.assertActorScope(bound,scope);
+    if(date===undefined||!scope||!isRecord(selection))return;
+    try{validateObjectRef(selection.classGroupRef as ObjectRef,['ClassGroup']);}catch{return;}
+    await this.assertTeachingAuthority(view,context,{businessDate:date,classGroupRef:selection.classGroupRef as ObjectRef<'ClassGroup'>},scope);
+  }
+  private async assertTeachingAuthority(view:TeacherPrerequisiteReadStore,context:TrustedTeacherContext,selection:Pick<TypedTemporalSelection,'businessDate'|'classGroupRef'>,scopeRef:NativeObjectRef):Promise<void>{
+    const bound=await this.assertCurrentBinding(view,context,selection.businessDate);
+    this.assertActorScope(bound,scopeRef);
+    if(canonicalJson(selection.classGroupRef.identity.scopeRef)!==canonicalJson(scopeRef)||selection.classGroupRef.identity.namespace!==bound.namespace)throw denied();
     const teacherRef:ObjectRef={identity:{scopeRef:bound.scopeRef,namespace:bound.namespace,objectType:'Teacher',nativeKey:bound.entityKey},revision:bound.revisionId};
-    // Teacher authority is independent of record evidence completeness. Keep
-    // full current Teacher and selected ClassGroup refs and half-open dates.
     for(const edge of await view.temporalBindings(context.ownerId)){
       const p=edge.payload;if(p.bindingKind!=='TEACHING_ASSIGNMENT')continue;
       validateOwnerPayload(p);
@@ -714,10 +720,10 @@ export class NativeTypedReadService implements NativeTypedRead{
   }
   private assertQualifiedScope(ref:ObjectRef,request:TypedReadRequest,context:TrustedTeacherContext):void{
     if(ref.identity.scopeRef.basis.scope.ownerNamespace!==context.ownerId)throw denied();
-    if(ref.identity.namespace!==request.scopeRef.basis.namespace)throw denied();
+    if(ref.identity.namespace!==request.scopeRef.basis.namespace||canonicalJson(ref.identity.scopeRef)!==canonicalJson(request.scopeRef))throw denied();
   }
   private validateRequest(request:TypedReadRequest,context:TrustedTeacherContext):TypedReadRequest{
-    try{return this.validateRequestCore(request,context);}
+    try{return this.validateRequestCore(structuredClone(request),context);}
     catch(error){
       if(error instanceof TypedReadRefusal)throw error;
       if(error instanceof Error&&error.message==='registry_version')throw unverifiable();
@@ -1086,7 +1092,7 @@ export class NativeTypedReadService implements NativeTypedRead{
   }
 
   private async projectPage(view:TeacherPrerequisiteReadStore,context:TrustedTeacherContext,request:TypedReadRequest,cursor?:NativeOwnerCursorBinding):Promise<TypedReadOk>{
-    await this.assertTeachingAuthority(view,context,request.temporalSelection);
+    await this.assertTeachingAuthority(view,context,request.temporalSelection,request.scopeRef);
     this.assertSupportedPlan(request);
     view=await selectReadPlan(view,context.ownerId,request.temporalSelection.businessDate,horizonPlan(request.functionRequest,this.consumerProfile));
     if(this.consumerProfile==='CURRENT_1_1'&&this.cursorOptions.cursorOwner&&request.functionRequest.functionName==='GetStudentDailyContext'&&request.selector.kind==='EXACT_OBJECT'&&request.selector.objectRef.identity.objectType==='Student'&&request.linkMask.length===0&&request.fieldMask.every(f=>f.objectType==='Student'))return this.projectStudentOnly(view,context,request);

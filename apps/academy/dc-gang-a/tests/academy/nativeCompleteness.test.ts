@@ -189,14 +189,16 @@ test('NF-12 malformed nested prerequisite input is the closed input refusal inva
  expect(()=>validateNativeStudentPayload(null as never)).toThrow('invalid_prerequisite_shape');
  expect(()=>validateOwnerPayload({...classPayload,businessTimezone:null})).toThrow('invalid_prerequisite_shape');
 });
-test('NF-SWEEP every stored payload family refuses null/wrong-typed values at any path with a classified 4xx code',async()=>{
+test('NF-SWEEP every populated native prerequisite payload family refuses null/wrong-typed values at any path with a classified 4xx code',async()=>{
  const f=await scene(),studentKinds=new Set(['daily_progress','previous_homework_assessment','daily_record_draft']);
  const samples=new Map<string,unknown>();
- for(const table of ['record_versions','class_versions','teacher_versions','lesson_versions','binding_versions','scope_versions','score_versions'])for(const row of f.sql.rows(table)){
+ for(const table of ['record_versions','class_versions','teacher_versions','lesson_versions','binding_versions','activity_scope_versions','native_score_evidence_versions','student_record_versions'])for(const row of f.sql.rows(table)){
   const payload=row.payload??(typeof row.body==='string'?JSON.parse(row.body as string):row.body as {payload?:unknown}|undefined)?.payload;
-  const kind=(payload as {kind?:string}|undefined)?.kind;if(kind&&!samples.has(kind))samples.set(kind,payload);
+  const kind=(payload as {kind?:string}|undefined)?.kind;if(kind&&!['source_book_registration','learning_work_assignment','learning_work_attempt'].includes(kind)&&!samples.has(kind))samples.set(kind,payload);
  }
- expect(samples.size).toBeGreaterThanOrEqual(6);
+ expect([...samples.keys()].filter(kind=>!['source_book_registration','learning_work_assignment','learning_work_attempt'].includes(kind)).sort()).toEqual(['activity_scope','class_group','daily_progress','daily_record_draft','lesson_session','native_score_evidence','previous_homework_assessment','student_record','teacher_binding','temporal_binding']);
+ // Each sampled native family must be valid before mutation, never a wrong-family fallback.
+ for(const [kind,payload] of samples)expect(()=>(studentKinds.has(kind)?validateNativeStudentPayload:validateOwnerPayload)(payload as never)).not.toThrow();
  const paths=(value:unknown,prefix:string[]=[]):string[][]=>value&&typeof value==='object'?Object.entries(value as object).flatMap(([k,v])=>[[...prefix,k],...paths(v,[...prefix,k])]):[];
  const escaped:string[]=[];let cases=0;
  for(const [kind,payload] of samples)for(const path of paths(payload))for(const bad of [null,7,'x',{}]){
