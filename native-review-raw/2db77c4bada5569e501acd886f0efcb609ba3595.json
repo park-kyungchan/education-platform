@@ -1,0 +1,46 @@
+{
+ "binding": {
+  "repository": "park-kyungchan/education-platform",
+  "projectId": "education-platform",
+  "domainId": "education",
+  "semanticOwner": "education-platform",
+  "scope": "month-end-source-redesign"
+ },
+ "headSha": "2db77c4bada5569e501acd886f0efcb609ba3595",
+ "reviewedTreeSha": "a9f71fb3d64c255d85edc1c96189f463f5b16149",
+ "reviewedSourceManifestSha256": "1fb3026d37cc2c8a896eca2604fb099b56bc04a5afafd6a6b34a246e8d30f4fc",
+ "reviewer": {
+  "runtime": "claude",
+  "taskId": "316f906c-df11-4efa-b3f7-f035b3d9c444",
+  "threadId": null,
+  "nativeTaskId": null,
+  "nativeRunId": null,
+  "role": "Independent owner-scoped source reviewer (Claude Opus)",
+  "implementationWriter": false
+ },
+ "author": {
+  "runtime": "codex",
+  "taskId": "01a18091-9e66-76c2-b651-241cf823ce3d",
+  "threadId": null,
+  "nativeTaskId": null,
+  "nativeRunId": null
+ },
+ "conclusion": "pass",
+ "unresolvedFindings": 0,
+ "schema": "owner-scoped-native-review-output.v1",
+ "reviewStatus": "complete",
+ "recordedAtUtc": "2026-10-28T04:53:32Z",
+ "assignmentId": "academy-owner-review-2db77c4b",
+ "reviewHead": "2db77c4bada5569e501acd886f0efcb609ba3595",
+ "reviewedSourceManifest": {
+  "schema": "agent-platform.reviewed-source-manifest.v1",
+  "reviewedTreeSha": "a9f71fb3d64c255d85edc1c96189f463f5b16149",
+  "entryCount": 3878,
+  "blobCount": 3353,
+  "sha256": "1fb3026d37cc2c8a896eca2604fb099b56bc04a5afafd6a6b34a246e8d30f4fc"
+ },
+ "nativeTaskId": null,
+ "nativeRunId": null,
+ "findings": [],
+ "sourceReviewDecision": "I reviewed the round-8 delta (db3d9a8..2db77c4) against main f2e5f19. The exported validators in prerequisiteRecords.ts are now wrapped by shaped(); validateKnowledge is still unwrapped, but only internal validators and the stored-data read path in nativeTypedRead.ts call it. ownerWrite rejects a non-object payload. Withheld Section, Unit and TextbookEdition exact reads check the requested revision against currentCatalogPins. A scratch probe showed SC-CAT really reaches that withheld path: at the default revision it returns UNKNOWN, and at a wrong revision it returns REVISION_STALE. The link dedupe key now records whether a link came from the lesson payload or a dated binding (every emitLink caller is a payload link), and SC-WITNESS would fail under the old key. RC9 runs every operation through the real TeacherApplication on the in-memory FictionalSql store. In student-name-search.test.ts, all six original cases run in a `bun test --preload=network-deny <exact file>` child with only PATH, AGENT_PLATFORM_* and the case selector passed in (Bun drops undefined values). I ran the file: 6 child cases and the 1 wrapper passed. No other in-process test installs the guard globally; the other suites only preload it in child processes. scripts/verify-imports.ts passes, with every adaptations.json integrationSha256 matching the head bytes; the name-search test is not pinned in imported-files.json, and source.yml has no diff from main. The changed dc-gang-a suites pass 258/0 with the package's 50s timeout. The controller now reports the failed call site (the require at line 577) instead of the require helper, and its test has no side effects. I did not run the native harness or touch any database."
+}
