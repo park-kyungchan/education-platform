@@ -48,3 +48,10 @@ test('routing rejects missing targets instead of promising sources', () => {
     validateRouting({ schema: 'academy.class-timetable-routing/1', routes: [{ question: 'q', target: 'no/such/file.ts' }] }, '/'),
   );
 });
+test('isClassDay rejects invalid and non-canonical dates', () => {
+  const s = fictionalStudent() as Parameters<typeof isClassDay>[0];
+  for (const date of ['2026-02-31', '2026-02-29', '2026-13-01', '2026-00-01', '2026-1-01', '2026-10-28T00:00:00Z', '']) {
+    assert.throws(() => isClassDay(s, date), /lesson_date_invalid/);
+  }
+  assert.equal(isClassDay(s, '2024-02-29'), false);
+});

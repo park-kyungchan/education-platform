@@ -83,8 +83,10 @@ export function validateRouting(value: unknown, root: string = platformRoot): Ro
 
 /** True when lessonDate falls on one of the student's class days. */
 export function isClassDay(student: TimetableStudent, lessonDate: string): boolean {
-  const day = new Date(`${lessonDate}T00:00:00Z`).getUTCDay();
-  if (!Number.isInteger(day)) fail('lesson_date_invalid');
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(lessonDate)) fail('lesson_date_invalid');
+  const date = new Date(`${lessonDate}T00:00:00Z`);
+  if (!Number.isFinite(date.getTime()) || date.toISOString().slice(0, 10) !== lessonDate) fail('lesson_date_invalid');
+  const day = date.getUTCDay();
   return student.classDays.includes(WEEKDAYS[(day + 6) % 7] as Weekday);
 }
 
