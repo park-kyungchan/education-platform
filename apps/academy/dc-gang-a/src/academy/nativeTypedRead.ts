@@ -965,6 +965,20 @@ export class NativeTypedReadService implements NativeTypedRead{
     if(records.some(record=>record.identity.objectType===ref.identity.objectType&&record.identity.nativeKey===ref.identity.nativeKey))throw denied();
     return null;
   }
+  /** A student occurrence is complete only with the student's dated class membership and, for an exact
+   * occurrence, dated lesson participation (the evidence projectStudentOnly requires). Missing evidence is an
+   * explicit UNVERIFIED gap, so the page can never claim COMPLETE without it. */
+  private async studentOccurrenceGaps(view:TeacherPrerequisiteReadStore,context:TrustedTeacherContext,request:TypedReadRequest):Promise<TypedGap[]>{
+    const selection=request.temporalSelection,student=selection.studentRef;
+    if(student===null)return [];
+    const edges=(await view.temporalBindings(context.ownerId)).filter(v=>v.payload.validFrom<=selection.businessDate&&(v.payload.validTo===null||selection.businessDate<v.payload.validTo)).map(v=>v.payload);
+    const member=edges.some(p=>p.bindingKind==='CLASS_MEMBERSHIP'&&identityEqual(p.subjectRef.identity,student.identity)&&identityEqual(p.targetRef.identity,selection.classGroupRef.identity));
+    const lesson=selection.occurrence.mode==='EXACT'?selection.occurrence.lessonRef:null;
+    const participates=lesson===null||edges.some(p=>p.bindingKind==='LESSON_PARTICIPATION'&&identityEqual(p.subjectRef.identity,lesson.identity)&&identityEqual(p.targetRef.identity,student.identity));
+    return [...(member?[]:[{subject:student,path:'Student.links.studentMemberOfClass',reason:'UNVERIFIED' as const,requiredEvidence:['NATIVE_RELATION_MAPPING'],evidence:[]}]),
+      ...(participates||lesson===null?[]:[{subject:lesson,path:'LessonSession.links.lessonHasStudent',reason:'UNVERIFIED' as const,requiredEvidence:['NATIVE_RELATION_MAPPING'],evidence:[]}])] as TypedGap[];
+  }
+
   private assertTemporalJoins(request:TypedReadRequest,records:TypedRecord[]):void{
     const selection=request.temporalSelection;
     const check=(ref:ObjectRef|null)=>{
@@ -1051,6 +1065,7 @@ export class NativeTypedReadService implements NativeTypedRead{
     if(this.consumerProfile==='CURRENT_1_1'&&this.cursorOptions.cursorOwner&&request.functionRequest.functionName==='GetStudentDailyContext'&&request.selector.kind==='EXACT_OBJECT'&&request.selector.objectRef.identity.objectType==='Student'&&request.linkMask.length===0&&request.fieldMask.every(f=>f.objectType==='Student'))return this.projectStudentOnly(view,context,request);
     const {records,links,gaps,withheldCatalog,observedHomework,observedAttempts}=await this.projectAll(view,context,request);
     this.assertTemporalJoins(request,records);
+    gaps.push(...await this.studentOccurrenceGaps(view,context,request));
     // Explicit revision pins are checked in every consistency mode.
     {
       const byIdentity=new Map(records.map(record=>[identityKey(record.identity),record.revision]));
@@ -1257,11 +1272,23 @@ export class NativeTypedReadService implements NativeTypedRead{
         }
         if(payload.kind!=='daily_progress'&&payload.kind!=='previous_homework_assessment'&&payload.kind!=='daily_record_draft')continue;
         const objectType:EducationType=payload.kind==='daily_progress'?'DailyProgress':payload.kind==='previous_homework_assessment'?'PreviousHomeworkAssessment':'DailyRecordDraft';
-        const payloadScope=payload.kind==='previous_homework_assessment'?payload.assessmentScope:payload.recordScope;
+        let payloadScope=payload.kind==='previous_homework_assessment'?payload.assessmentScope:payload.recordScope;
+        if(objectType!=='DailyRecordDraft'){
+          const scopes=scopeVersions.filter(v=>v.payload.activityRef.identity.nativeKey===current.entityId&&v.payload.activityRef.identity.objectType===objectType);
+          const terminal=scopes.find(v=>activityScopeState(v.payload)==='DETACHED');
+          if(terminal){
+            // A detached progress/assessment is withheld; the DETACHED_ACTIVITY carrier is defined for homework/attempts only.
+            if(terminal.payload.activityRef.revision!==current.revisionId)throw staleRevision();
+            continue;
+          }
+          const active=scopes.filter(v=>activityScopeState(v.payload)==='ACTIVE'&&v.payload.activityRef.revision===current.revisionId);
+          if(active.length>1)continue;
+          if(active.length===1)payloadScope=active[0]!.payload.recordScope;
+        }
         const versionLike={scopeRef:payloadScope.studentRef.identity.scopeRef,namespace:payloadScope.studentRef.identity.namespace,entityKey:current.entityId,revisionId:current.revisionId,recordedAt:current.recordedAt};
         const record=this.baseRecord(request,versionLike,objectType);
-        if(payload.kind==='daily_progress'){record.recordScope=payload.recordScope;record.contentScope=payload.contentScope;record.progressState=payload.progressState;record.note=payload.note;}
-        if(payload.kind==='previous_homework_assessment'){record.recordScope=payload.assessmentScope;record.homeworkRef=payload.homeworkRef;record.outcome=payload.outcome;record.note=payload.note;record.assessedBy=payload.assessedBy;record.assessedAt=payload.assessedAt;}
+        if(payload.kind==='daily_progress'){record.recordScope=payloadScope;record.contentScope=payload.contentScope;record.progressState=payload.progressState;record.note=payload.note;}
+        if(payload.kind==='previous_homework_assessment'){record.recordScope=payloadScope;record.homeworkRef=payload.homeworkRef;record.outcome=payload.outcome;record.note=payload.note;record.assessedBy=payload.assessedBy;record.assessedAt=payload.assessedAt;}
         if(payload.kind==='daily_record_draft'){record.recordScope=payload.recordScope;record.progressRefs=payload.progressRefs;record.homeworkRefs=payload.homeworkRefs;record.attemptRefs=payload.attemptRefs;record.previousAssessmentRefs=payload.previousAssessmentRefs;record.progressText=payload.progressText;record.homeworkText=payload.homeworkText;record.noteText=payload.noteText;record.responsibleTeacherRef=payload.responsibleTeacherRef;record.draftState=payload.draftState;record.sourceSnapshot=payload.sourceSnapshot;}
         record.corrections=[];records.push(record);
       }

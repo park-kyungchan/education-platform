@@ -6,6 +6,7 @@ import {createAcademySourceAudit} from '../../src/lms/academySourceAudit';
 import {nativeBusinessDate,assertTeacherDate,computeReadHorizon} from '../../src/academy/nativePrerequisiteStore';
 import {requestDigest,validateOwnerPayload,type OwnerAppendCommand,type ActivityScopeLink,type LessonSessionRecord,type NativeScoreEvidence,type OwnerVersion} from '../../src/academy/contracts/prerequisiteRecords';
 import type {TeacherPrerequisiteReadStore} from '../../src/academy/ports/teacherStore';
+import {PrerequisiteApplication} from '../../src/academy/prerequisiteApplication';
 import {context,known,instant,objectRef} from './nativePrerequisiteContracts.test';
 import {foundation,admitted,FictionalSql} from './nativePrerequisiteStore.test';
 import {scene,retained} from './nativePrerequisitePort.test';
@@ -160,4 +161,14 @@ test('NF-07 a Student revision refuses other owner payload families and leaves t
  const c={context:context('nf-wrong-family'),studentId:'student-a',expectedRevisionId:f.student.revisionId,payload:classPayload};
  await expect(admitted(f.store,'append:student',c,()=>f.store.appendStudentRevision(c))).rejects.toThrow('invalid_student_payload_kind');
  expect(canonicalJson(f.sql.rows('record_heads'))).toBe(before);
+});
+test('NF-08 prerequisite reads enforce the teacher binding dated validity, like writes',async()=>{
+ const f=await foundation(),ctx={ownerId:context().ownerId,actorId:context().actorId,role:'teacher' as const};
+ await expect(new PrerequisiteApplication(f.store,ctx.ownerId,()=>'2025-12-30T00:00:00.000Z').classGroups(ctx)).rejects.toThrow('teacher_binding_inactive');
+ expect(await new PrerequisiteApplication(f.store,ctx.ownerId,()=>'2026-10-24T00:00:00.000Z').classGroups(ctx)).toHaveLength(1);
+});
+test('NF-09 each named student-record operation stores only its own payload kind',async()=>{
+ const f=await scene(),row=f.sql.rows('record_versions').find(r=>(r.payload as {kind?:string}).kind==='daily_progress')!;
+ const c={context:context('nf-kind'),studentId:String(row.student_id),payload:structuredClone(row.payload) as never};
+ await expect(admitted(f.store,'createAssessment',c,()=>f.store.createAssessment(c))).rejects.toThrow('invalid_student_payload_kind');
 });

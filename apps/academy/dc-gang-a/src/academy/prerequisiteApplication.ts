@@ -1,6 +1,7 @@
 import type {TeacherPrerequisiteReadStore,TeacherPrerequisiteStore} from './ports/teacherStore';
 import {assertTeacherScope} from './usecases/requestRecovery';
 import {canonicalJson} from '../learning/model';
+import {assertTeacherDate,nativeBusinessDate} from './nativePrerequisiteStore';
 import type {TrustedTeacherContext,NativeCommandIngress,BindTeacherInput,UpdateTeacherInput,RetireTeacherInput,CreateClassGroupInput,UpdateClassGroupInput,CreateLessonSessionInput,UpdateLessonSessionInput,UpsertTemporalBindingInput,AttachStudentRevisionInput,UpdateStudentRevisionInput,AttachActivityScopeInput,CorrectActivityScopeInput,CreateProgressInput,CorrectProgressInput,CreateAssessmentInput,CorrectAssessmentInput,CreateDraftInput,UpdateDraftInput,RecordScoreEvidenceInput,PreviewApprovalClosureInput,IssueApprovalInput,ApproveDraftInput,RevokeApprovalInput,CommandOutcomeInput,FenceCommandInput,FinalizeReadOccurrenceInput,ActivityScopeFilter} from './contracts/teacherOperations';
 import {validateScopeMutation,requestDigest,validateContext,type ApprovalClosure,type CommandContext,type NativeObjectRef,type NativeWriteResult,type ObjectRef,type OwnerAppendCommand,type OwnerFamily,type OwnerVersion,type ReadAdmission,type TeacherBinding} from './contracts/prerequisiteRecords';
 
@@ -12,7 +13,7 @@ import {validateScopeMutation,requestDigest,validateContext,type ApprovalClosure
  * registers no payload validators; allocation, CAS, completeness and
  * single-use enforcement stay in the IG-1 store path. */
 export class PrerequisiteApplication {
-  constructor(private readonly store:TeacherPrerequisiteStore,readonly ownerId:string){}
+  constructor(private readonly store:TeacherPrerequisiteStore,readonly ownerId:string,private readonly now:()=>string=()=>new Date().toISOString()){}
 
   private commandContext(context:TrustedTeacherContext,ingress:NativeCommandIngress):CommandContext{
     assertTeacherScope(this.ownerId,context);
@@ -60,7 +61,8 @@ export class PrerequisiteApplication {
       const bound=await view.teacherBindingByActor(context.ownerId,context.actorId);
       if(!bound)throw Error('teacher_binding_required');
       const payload=bound.payload;
-      if(payload.state!=='ACTIVE'||payload.assignmentState.state!=='known'||payload.assignmentState.value!=='ACTIVE')throw Error('teacher_binding_inactive');
+      // Same dated validity rule as every write: an expired ACTIVE binding refuses (403).
+      assertTeacherDate(bound.payload,nativeBusinessDate(this.now()));
       return read(view);
     });
   }

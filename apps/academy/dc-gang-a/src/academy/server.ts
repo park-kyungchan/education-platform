@@ -17,6 +17,8 @@ import {createNativeTypedRead,typedReadContractVersion,TypedReadRefusal,type Nat
 import {fixedConsumerProfile,scopeActionDefinitions,type ConsumerProfileId} from './contracts/prerequisiteRecords';
 /** Refusal statuses the action contracts declare per code ("409, ..."), so the HTTP mapping follows the
  * contract instead of a hand-kept list. */
+/** Closed input-validation refusals thrown by the prerequisite contract validators: caller errors (400). */
+export const inputRefusals:ReadonlySet<string>=new Set(['prerequisite_collection_bounds','duplicate_prerequisite_value','reference_depth','action_version','registry_version','score_scale_unsupported','synthetic_boolean','delegation_unsupported','calendar_underflow']);
 export const declaredRefusalStatus:ReadonlyMap<string,number>=new Map(Object.values(scopeActionDefinitions).flatMap(definition=>{
   const errors=(definition as {errors?:unknown}).errors;
   return errors&&typeof errors==='object'?Object.entries(errors as Record<string,unknown>).flatMap(([code,text])=>{const status=/^(4\d\d)\b/.exec(String(text));return status?[[code,Number(status[1])] as const]:[];}):[];
@@ -415,6 +417,7 @@ export function createTeacherServerHandler(options:TeacherServerOptions){
             if(code==='prerequisite_store_required')return json({error:'native_prerequisite_unavailable'},503);
             if(code==='committed_outcome_uncertain')return json({error:code,automaticRetry:false,readOriginalRequestBeforeNewIntent:true},503);
             if(['teacher_binding_required','teacher_binding_inactive','teacher_attribution_conflict','owner_scope_conflict','student_scope_conflict'].includes(code))return json({error:code},403);
+            if(inputRefusals.has(code))return json({error:code},400);
             const declared=declaredRefusalStatus.get(code);
             if(declared)return json(declared===409?{error:code,automaticRetry:false}:{error:code},declared);
             // Designed domain refusals are conflicts, not internal failures.

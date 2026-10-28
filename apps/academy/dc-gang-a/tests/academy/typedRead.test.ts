@@ -661,3 +661,24 @@ test('DP-OCC a DailyProgress daily-context query returns only the selected occur
   const res=await service.typedRead(ctx,registeredRequest('DailyProgress',{snapshot:snapshot('FAIL_ON_CHANGE'),expectedRevisions:[objectRef('DailyProgress','progress-prior','rev-progress-prior')]}));
   expect(res.items.flatMap(i=>i.kind==='OBJECT'?[i.record.identity.nativeKey]:[])).toEqual(['progress-a']);
 });
+
+test('SC-PROG a DailyProgress follows its current activity scope: a detached or re-scoped progress keeps no link to its old lesson',async()=>{
+  const scope=(state:'ACTIVE'|'DETACHED',lesson:ObjectRef)=>version('scope-progress','rev-scope-'+state,{schemaVersion:'2.0.0' as const,state,kind:'activity_scope' as const,activityKind:'DAILY_PROGRESS' as const,activityRef:progressRef as ObjectRef<'DailyProgress'>,recordScope:{...recScope,lessonRef:lesson as ObjectRef<'LessonSession'>},sourceLiteral:'synthetic-scope',synthetic:true});
+  const lessonLinks=async(scopes:OwnerVersion<any>[]):Promise<string[]>=>{
+    const {store,service}=fixture();mapFixtureViews(store,view=>({...view,activityScopes:async()=>scopes}));
+    try{const res=await service.typedRead(ctx,request({selector:{kind:'EXACT_OBJECT',objectRef:progressRef},linkMask:['activityInLesson']}));
+      return res.items.flatMap(i=>i.kind==='LINK'&&i.link.linkType==='activityInLesson'&&i.link.fromRef.identity.nativeKey==='progress-a'?[i.link.toRef.identity.nativeKey]:[]);}
+    catch(error){if(error instanceof TypedReadRefusal)return [];throw error;}
+  };
+  expect(await lessonLinks([])).toEqual(['lesson-a']);
+  expect(await lessonLinks([scope('DETACHED',lessonRef)])).toEqual([]);
+  expect(await lessonLinks([scope('ACTIVE',objectRef('LessonSession','lesson-b','rev-lesson-b'))])).not.toContain('lesson-a');
+});
+
+test('SC-OCC a student occurrence without dated class membership is never declared COMPLETE on the general path',async()=>{
+  const {store,service}=fixture();
+  store.temporals=store.temporals.filter(t=>t.payload.bindingKind!=='CLASS_MEMBERSHIP');
+  const res=await service.typedRead(ctx,request({selector:{kind:'EXACT_OBJECT',objectRef:studentRef},linkMask:['classTaughtBy']}));
+  expect(res.enumeration).not.toBe('COMPLETE');
+  expect(res.gaps.map(g=>g.path)).toContain('Student.links.studentMemberOfClass');
+});
