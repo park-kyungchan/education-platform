@@ -55,6 +55,7 @@ export async function runIntegratedAcademyContext(args:readonly string[]){
    workflowSelection:'context:academy reading-plan --topic <workflow>; context:academy select --topic <workflow> --max-bytes <budget>',
    resolveSelectedSource:'context:academy resolve --source <source-id>; returns the integrated path and current hash without source text',
    practicalContext:'modules/academy-workbench/context/academy-context/catalog.json',
+   classTimetable:'modules/academy-workbench/context/class-timetable/README.ko.md',
    researchContext:'modules/math-research-module/context/monthly-assessment-20261016/README.md',
    requestedBusinessDate:rest[1]??null,privatePackages:packages,
    additionalCustody:manifest.additionalCustody?{files:manifest.additionalCustody.totalFiles,groups:manifest.additionalCustody.groups.map(g=>({root:g.destinationRoot,files:g.fileCount,bytes:g.bytes})),readRule:'These are preserved snapshots and opaque archives. A directory date is not every contained event date. Select exact manifest/source fragments; never extract or load all archives by default.'}:null,
