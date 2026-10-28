@@ -1,3 +1,4 @@
+import {academyRoutingDescription} from './routing-context.ts';
 import {runtimeIdentityConfiguration,registerRuntimeIdentity} from './runtime-identity.ts';
 import {installStdioDiagnostics,createAcademyStdioTransport} from './stdio-diagnostics.ts';
 import {dailyRecordLearningConfiguration} from './dailyrecord-learning.ts';
@@ -33,14 +34,14 @@ registerDailyRecordTools(server,new DailyRecordService(native?.backend??null,con
 if(native)process.once('exit',native.close);
 server.registerTool('academy_capabilities', {
   title: 'Academy operational hierarchy and source contracts',
-  description: 'Discover hierarchical academy workflows, page the complete pinned source inventory, or inspect one exact source contract. Source metadata is not an executable operation. No source requests.',
+  description: academyRoutingDescription('academy_capabilities','Discover hierarchical academy workflows, page the complete pinned source inventory, or inspect one exact source contract. Source metadata is not an executable operation. No source requests.'),
   inputSchema: capabilitiesInputSchema,
   annotations: readOnlyAnnotations,
 }, input => result(service.capabilities(input)));
 registerSavedQuery(server,input=>service.query(input));
 server.registerTool('academy_source_status', {
   title: 'Historical saved-context coverage and preservation limits',
-  description: 'Saved-context coverage ONLY. Historical user-reported website/access limits do not describe the configured live DailyRecord backend. For today/current DailyRecord use academy_dailyrecord_get or academy_student_resolve then academy_dailyrecord_intake; only that call establishes live availability. This tool performs no live probe, refresh or authentication.',
+  description: academyRoutingDescription('academy_source_status','Saved-context coverage ONLY. Historical user-reported website/access limits do not describe the configured live DailyRecord backend. For today/current DailyRecord use academy_dailyrecord_get or academy_student_resolve then academy_dailyrecord_intake; only that call establishes live availability. This tool performs no live probe, refresh or authentication.'),
   inputSchema: sourceStatusInputSchema,
   annotations: readOnlyAnnotations,
 }, input => result(service.sourceStatus(input)));

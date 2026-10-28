@@ -1,5 +1,6 @@
 import {installStdioDiagnostics,createAcademyStdioTransport} from './stdio-diagnostics.ts';
 import {publicReadFailure} from './read-failure.ts';
+import {academyRoutingDescription} from './routing-context.ts';
 // Source-owned version of the installed neutral bridge. Failures close per
 // request; pinned launch admission supplies DailyRecord routing scope.
 import {Server} from '@modelcontextprotocol/server';
@@ -151,8 +152,8 @@ server.setRequestHandler('tools/list',async()=>{
  try{
  const active=await activeRelease();
  const hint=`DailyRecord owner-admitted dates: ${active.readAdmission.allowedFrom??'unbounded'} through ${active.readAdmission.allowedThrough??'unbounded'}.`;
- const identityTool={name:'academy_runtime_identity',description:'Inspect the active release graph and loaded bridge digest. Legacy graphs are explicitly incomplete. No source reads or namespace authorization.',inputSchema:z.toJSONSchema(z.object({}).strict()),annotations:readOnlyAnnotations};
- return {tools:[identityTool,...active.registry.map((r:any)=>r.endpoint==='dailyrecord'?{...r.tool,description:r.tool.description?.replace(/DailyRecord owner-admitted dates: [^.]+\./,hint)}:r.tool)]};
+ const identityTool={name:'academy_runtime_identity',description:academyRoutingDescription('academy_runtime_identity','Inspect the active release graph and loaded bridge digest. Legacy graphs are explicitly incomplete. No source reads or namespace authorization.'),inputSchema:z.toJSONSchema(z.object({}).strict()),annotations:readOnlyAnnotations};
+ return {tools:[identityTool,...active.registry.map((r:any)=>({...r.tool,description:academyRoutingDescription(r.tool.name,r.endpoint==='dailyrecord'?r.tool.description?.replace(/DailyRecord owner-admitted dates: [^.]+\./,hint)??'':r.tool.description??'',r.endpoint)}))]};
  }catch(error){throw Error(publicReadFailure(error,'release_discovery_unavailable').code);}
 });
 server.setRequestHandler('tools/call',async req=>{const pending=tail.then(()=>call(req.params));tail=pending.catch(()=>{});return pending;});

@@ -1,3 +1,4 @@
+import {academyRoutingDescription} from './routing-context.ts';
 import {createHash} from 'node:crypto';
 import {realpath} from 'node:fs/promises';
 import {isAbsolute} from 'node:path';
@@ -45,7 +46,7 @@ export async function runtimeIdentityConfiguration(args:readonly string[]){
 }
 export function registerRuntimeIdentity(server:McpServer,identity:Awaited<ReturnType<typeof runtimeIdentityConfiguration>>['identity']){
   server.registerTool('academy_endpoint_identity',{title:'Inspect exact owner endpoint build and contract identity',
-    description:'Launch-verified artifact digests only. This is release evidence, never namespace authorization or proof of live source freshness.',
+    description:academyRoutingDescription('academy_endpoint_identity','Launch-verified artifact digests only. This is release evidence, never namespace authorization or proof of live source freshness.'),
     inputSchema:z.object({}).strict(),annotations:readOnlyAnnotations},()=>{
     const structuredContent=identity?.summary??{status:'unqualified',reasonCode:'endpoint_identity_not_configured'};
     return {content:[{type:'text' as const,text:JSON.stringify(structuredContent)}],structuredContent};
