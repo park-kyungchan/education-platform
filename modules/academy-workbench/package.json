@@ -29,7 +29,7 @@
     "context:academy": "bun context/academy-context/cli.ts",
     "check:academy-context": "bun node_modules/typescript/bin/tsc -p context/academy-context/tsconfig.json && bun context/academy-context/cli.ts inspect",
     "test:academy-context": "bun test context/academy-context/select.test.ts context/academy-context/catalog.test.ts",
-    "check:class-timetable": "bun node_modules/typescript/bin/tsc -p context/class-timetable/tsconfig.json && bun run test:class-timetable",
+    "check:class-timetable": "bun node_modules/typescript/bin/tsc -p context/class-timetable/tsconfig.json && bun context/class-timetable/check-routing.ts && bun run test:class-timetable",
     "test:class-timetable": "bun test context/class-timetable/tests/",
     "check:mcp": "bun run --cwd tools/academy-mcp check",
     "test:mcp": "bun run --cwd tools/academy-mcp test"

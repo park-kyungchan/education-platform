@@ -21,4 +21,5 @@
 
 - `bun context/class-timetable/validate.ts` (workbench 루트에서 실행)
 - `bun test context/class-timetable/tests/`
-- `bun run check:class-timetable`와 `bun run test:class-timetable`은 타입 검사와 가상 데이터 테스트만 실행한다.
+- `bun run check:class-timetable`은 타입 검사, 실제 라우팅 메타데이터의 대상 존재 검사, 가상 데이터 테스트를 실행한다. 라우팅 검사는 학생 시간표나 대상 파일의 내용을 읽지 않는다.
+- `bun run test:class-timetable`은 가상 데이터 테스트만 실행한다.

@@ -1,6 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { mkdtemp, rm, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { isClassDay, validateRouting, validateTimetable } from '../validate.ts';
+import { checkRouting } from '../check-routing.ts';
 
 const fictionalStudent = () => ({
   name: 'fiction-a',
@@ -47,6 +51,23 @@ test('routing rejects missing targets instead of promising sources', () => {
   assert.throws(() =>
     validateRouting({ schema: 'academy.class-timetable-routing/1', routes: [{ question: 'q', target: 'no/such/file.ts' }] }, '/'),
   );
+});
+test('route-only check reads routing metadata and fails when an actual target disappears', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'class-routing-test-'));
+  try {
+    const routing = join(root, 'routing.json');
+    const target = join(root, 'source.ts');
+    await writeFile(routing, JSON.stringify({ schema: 'academy.class-timetable-routing/1', routes: [{ question: 'fiction', target: 'source.ts' }] }));
+    await writeFile(target, 'fictional source');
+    // No timetable.json exists in this isolated root.
+    assert.equal(await checkRouting(routing, root), 1);
+    await rm(target);
+    await assert.rejects(checkRouting(routing, root), /route_target_missing/);
+    await writeFile(routing, '{');
+    await assert.rejects(checkRouting(routing, root), SyntaxError);
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
 });
 test('isClassDay rejects invalid and non-canonical dates', () => {
   const s = fictionalStudent() as Parameters<typeof isClassDay>[0];
