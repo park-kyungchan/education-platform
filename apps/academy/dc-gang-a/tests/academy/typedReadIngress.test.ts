@@ -1,6 +1,6 @@
 import {describe,expect,test} from 'bun:test';
 import {signTeacherSession} from '../../src/academy/auth';
-import {createTeacherServerHandler,nativePrerequisiteOperations,nativePrereqRouteAliases,type LoginIdentity} from '../../src/academy/server';
+import {createTeacherServerHandler,declaredRefusalStatus,nativePrerequisiteOperations,nativePrereqRouteAliases,type LoginIdentity} from '../../src/academy/server';
 import type {TeacherApplication} from '../../src/academy/application';
 import {ctx,FakePrerequisiteStore,fictionalGrantVerifier,knownK,mapFixtureViews,nativeRef,objectRef,withOutputLabel,registeredRequest,request,testFunctionRequest,TEST_REGISTRY_SHA256,testTemporal,version} from './typedRead.test';
 import {TypedReadRefusal,createSnapshotGrantVerifier} from '../../src/academy/nativeTypedRead';
@@ -367,6 +367,15 @@ describe('authenticated prerequisite wrapper (IG3-REV-09)',()=>{
     };
     expect((await rejected(30_000)).codes).not.toContain('body:input_too_large');
     expect(await rejected(530_000)).toEqual({status:400,codes:['body:input_too_large']});
+  });
+  test('RC6: refusal statuses declared by the activity-scope action contract reach HTTP unchanged',async()=>{
+    expect(Object.fromEntries(declaredRefusalStatus)).toMatchObject({activity_scope_terminal:409,activity_scope_terminal_payload_changed:409,activity_scope_action_version:409,stale_base:409,invalid_activity_scope:400});
+    for(const [code,status] of declaredRefusalStatus){
+      const calls:Call[]=[];const handler=prerequisiteHandler(calls,{attachActivityScope:()=>{throw Error(code);}});
+      const res=await handler(new Request(ORIGIN+'/api/native-prereq/activity-scopes',{method:'POST',headers:{Origin:ORIGIN,'Content-Type':'application/json',Cookie:cookie()},body:JSON.stringify(sampleInput('attachActivityScope'))}));
+      expect([code,res.status]).toEqual([code,status]);
+      expect((await res.json()).error).toBe(code);
+    }
   });
   test('closed teachers/update alias dispatches update and retire by payload state',async()=>{
     const calls:Call[]=[];const handler=prerequisiteHandler(calls);

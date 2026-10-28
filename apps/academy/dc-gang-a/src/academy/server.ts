@@ -14,7 +14,13 @@ import type {PreservedSelection} from './contracts/preservedHistory';
 import {createCuratedConceptCandidateAccess} from './curatedConceptCandidates';
 import {nativeMetadataOperationIdPattern,nativeReadDescriptorMaxBytes,snapshotNativeReadBuildDescriptor,type NativeReadBuildDescriptor} from './nativeReadDescriptor';
 import {createNativeTypedRead,typedReadContractVersion,TypedReadRefusal,type NativeQualificationHooks,type BufferedTypedReadOutput,type NativeSnapshotAcquireRequest,type SnapshotAdmissionGrant,type TypedReadRequest} from './nativeTypedRead';
-import {fixedConsumerProfile,type ConsumerProfileId} from './contracts/prerequisiteRecords';
+import {fixedConsumerProfile,scopeActionDefinitions,type ConsumerProfileId} from './contracts/prerequisiteRecords';
+/** Refusal statuses the action contracts declare per code ("409, ..."), so the HTTP mapping follows the
+ * contract instead of a hand-kept list. */
+export const declaredRefusalStatus:ReadonlyMap<string,number>=new Map(Object.values(scopeActionDefinitions).flatMap(definition=>{
+  const errors=(definition as {errors?:unknown}).errors;
+  return errors&&typeof errors==='object'?Object.entries(errors as Record<string,unknown>).flatMap(([code,text])=>{const status=/^(4\d\d)\b/.exec(String(text));return status?[[code,Number(status[1])] as const]:[];}):[];
+}));
 import type {TeacherPrerequisiteStore} from './ports/teacherStore';
 import {ownerCursorLeaseFor,type NativeOwnerCursorLease} from './teacherAuthStore';
 import type {NativeTypedReadOptions} from './nativeTypedRead';
@@ -409,6 +415,8 @@ export function createTeacherServerHandler(options:TeacherServerOptions){
             if(code==='prerequisite_store_required')return json({error:'native_prerequisite_unavailable'},503);
             if(code==='committed_outcome_uncertain')return json({error:code,automaticRetry:false,readOriginalRequestBeforeNewIntent:true},503);
             if(['teacher_binding_required','teacher_binding_inactive','teacher_attribution_conflict','owner_scope_conflict','student_scope_conflict'].includes(code))return json({error:code},403);
+            const declared=declaredRefusalStatus.get(code);
+            if(declared)return json(declared===409?{error:code,automaticRetry:false}:{error:code},declared);
             // Designed domain refusals are conflicts, not internal failures.
             if(code.includes('conflict')||/^(approval_|duplicate_|completeness_|stale_)/.test(code)||['stale_base','revision_conflict','idempotency_reuse','identity_collision','teacher_binding_exists','invalid_transition','temporal_overlap'].includes(code))return json({error:code,automaticRetry:false},409);
             if(code.startsWith('invalid_')||code.endsWith('_required')||code==='unexpected or missing domain fields'||code==='sha256_required'||code.includes('must be nonempty'))return json({error:code},400);
