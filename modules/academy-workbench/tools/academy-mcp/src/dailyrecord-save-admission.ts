@@ -60,6 +60,21 @@ export interface DailyRecordSaveConsumeOwner {
 }
 
 const digest = (value: unknown) => createHash('sha256').update(JSON.stringify(value)).digest('hex');
+/** Canonical JSON digest identical to Education `learning/model.digest`:
+ * sorted object keys, no whitespace. The owner client
+ * (`journalHttpActionDigest`) compares its approval decision against this
+ * exact digest of the complete action, so the admission must return it —
+ * never the internal admitted-tuple key. */
+export function canonicalActionDigest(value: unknown): string {
+  const encode = (part: unknown): string => {
+    if (part === null || typeof part === 'boolean' || typeof part === 'string') return JSON.stringify(part);
+    if (typeof part === 'number' && Number.isFinite(part)) return JSON.stringify(part);
+    if (typeof part !== 'object' || part === null) throw Error('dailyrecord_save_action_not_json');
+    if (Array.isArray(part)) return '[' + part.map(encode).join(',') + ']';
+    return '{' + Object.keys(part).sort().map(k => JSON.stringify(k) + ':' + encode((part as Record<string, unknown>)[k])).join(',') + '}';
+  };
+  return createHash('sha256').update(encode(value), 'utf8').digest('hex');
+}
 
 /** Admission object handed to the native client's applyJournalAction port. */
 export function createDailyRecordSaveAdmission(
@@ -75,7 +90,7 @@ export function createDailyRecordSaveAdmission(
   const used = new Set<string>();
   return {
     admissionDigest: digest(admission),
-    async consumeApproval(action: Readonly<{target: {studentKey: string; date: string}; field: string; effectRecordKey: string; after: string}>) {
+    async consumeApproval(action: Readonly<{attemptId: string; target: {studentName: string; date: string; groupId: string; teacherKey: string; studentKey: string; courseKey: string; recordKey: string; membershipKey: string}; field: string; effectRecordKey: string; before: string; after: string; wireDigest: string}>) {
       const key = digest({studentId: action.target.studentKey, lessonDate: action.target.date, field: action.field, effectRecordKey: action.effectRecordKey, after: action.after});
       if (!admitted.has(key) || used.has(key)) return {status: 'rejected' as const};
       const actual = await owner.readCurrentRequest();
@@ -88,7 +103,7 @@ export function createDailyRecordSaveAdmission(
         field: action.field, effectRecordKey: action.effectRecordKey, after: action.after,
       }));
       used.add(key);
-      return consumed ? {status: 'verified' as const, actionDigest: key} : {status: 'rejected' as const};
+      return consumed ? {status: 'verified' as const, actionDigest: canonicalActionDigest(action)} : {status: 'rejected' as const};
     },
   };
 }

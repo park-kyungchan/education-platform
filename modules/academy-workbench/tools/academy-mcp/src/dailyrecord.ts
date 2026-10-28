@@ -68,6 +68,7 @@ export interface DailyRecordReadBackend {
   searchStudentsByName?(exactName:Readonly<string>,requestRef:string,lessonDate?:string):Promise<unknown>;
 }
 export const dailyRecordSaveSchema=z.object({context:dailyRecordContextSchema,observationHandle:dailyRecordIdSchema,
+  cismObservationHandle:dailyRecordIdSchema.optional(),
   reviewDigest:hash,proposals:z.array(proposalSchema).min(1).max(6)}).strict();
 export type DailyRecordSave=z.infer<typeof dailyRecordSaveSchema>;
 export type DailyRecordSaveFieldStatus='persisted'|'noop'|'not_persisted'|'conflict'|'unresolved'|'not_attempted'|'before_drift';
@@ -316,7 +317,7 @@ export class DailyRecordService {
       academyWrites:0,execution:'not_supported' as const,saveAdmission:'separate_trusted_native_owner_required' as const,fields:[]};
     // Recompute the exact review against a fresh before-state. The caller's
     // reviewDigest must match it, so unreviewed or drifted text never writes.
-    const reviewed=await this.review({context,observationHandle:input.observationHandle,proposals:input.proposals});
+    const reviewed=await this.review({context,observationHandle:input.observationHandle,cismObservationHandle:input.cismObservationHandle,proposals:input.proposals});
     if(reviewed.status!=='prepared'||reviewed.reviewDigest!==input.reviewDigest||reviewed.execution!=='not_supported')
       return {...base,status:'held' as const,reasonCode:'reviewed_patch_required',academyWrites:0,execution:'not_supported' as const,
         fields:reviewed.rows.map(r=>({field:r.field,status:'not_attempted' as const,dispatched:false}))};
@@ -329,7 +330,10 @@ export class DailyRecordService {
       const settled=fields.every(f=>f.status==='persisted'||f.status==='noop');
       return {...base,status:settled?'saved' as const:'held' as const,reasonCode:settled?null:'save_reconciliation_required',
         academyWrites,execution:'owner_write_backend' as const,fields};
-    }catch(error){return {...base,status:'unavailable' as const,...readFailureResult(error,'dailyrecord_save_unqualified_no_automatic_retry'),academyWrites:0,execution:'not_supported' as const,fields:[]};}
+    }catch(error){return {...base,status:'held' as const,...readFailureResult(error,'dailyrecord_save_unqualified_no_automatic_retry'),reasonCode:'save_reconciliation_required',academyWrites:null,execution:'not_supported' as const,fields:[]};}
+    // A backend throw is reconciled by readback, never denied as zero
+    // writes: conforming backends report per-field dispatch themselves,
+    // so this path only covers pre-dispatch or non-conforming failures.
   }
   async cism(value:unknown){
     const input=cismSectionSchema.parse(value),context=input.context;

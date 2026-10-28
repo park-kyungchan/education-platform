@@ -51,7 +51,8 @@ test('live request evidence is re-read per consumption and stale files reject',a
   const admission:DailyRecordSaveAdmission={schemaVersion:'academy.dailyrecord-save-admission/1',...evidence,
     admitted:[{studentId:scope.studentId,lessonDate:scope.lessonDate,field:'progress',effectRecordKey:'current-record-synthetic',after:'- 새 진도 문안'}]};
   const approval=createDailyRecordSaveAdmission(admission,{readCurrentRequest:liveSaveRequestEvidence(path),consumeOnce:async()=>true});
-  const action={target:{studentKey:scope.studentId,date:scope.lessonDate},field:'progress',effectRecordKey:'current-record-synthetic',after:'- 새 진도 문안'};
+  const fullTarget={studentName:'Synthetic Student',date:scope.lessonDate,groupId:'3',teacherKey:scope.teacherId,studentKey:scope.studentId,courseKey:'5',recordKey:'current-record-synthetic',membershipKey:'8'};
+  const action={attemptId:'attempt-1',target:fullTarget,field:'progress',effectRecordKey:'current-record-synthetic',before:'기존 문안',after:'- 새 진도 문안',wireDigest:'b'.repeat(64)};
   expect((await approval.consumeApproval(action)).status).toBe('verified');
   writeFileSync(path,JSON.stringify({...evidence,currentUserEventRef:'event-2'}));
   expect((await approval.consumeApproval(action)).status).toBe('rejected');
@@ -81,6 +82,42 @@ test('native backend refuses drifted before-state before any write and reports c
   expect(uncertain).toEqual([{field:'progress',status:'unresolved',dispatched:true}]);
 });
 
+test('admission returns the owner-compatible canonical full-action digest',async()=>{
+  const {createHash}=await import('node:crypto');
+  const canonical=(v:unknown):string=>{
+    if(v===null||typeof v!=='object')return JSON.stringify(v) as string;
+    if(Array.isArray(v))return '['+v.map(canonical).join(',')+']';
+    return '{'+Object.keys(v as object).sort().map(k=>JSON.stringify(k)+':'+canonical((v as Record<string,unknown>)[k])).join(',')+'}';
+  };
+  const evidence={runtime:'synthetic-runtime',requestRef:'synthetic-request',requestTextSha256:'a'.repeat(64),currentUserEventRef:'synthetic-event'};
+  const admission:DailyRecordSaveAdmission={schemaVersion:'academy.dailyrecord-save-admission/1',...evidence,
+    admitted:[{studentId:scope.studentId,lessonDate:scope.lessonDate,field:'progress',effectRecordKey:'current-record-synthetic',after:'- 새 진도 문안'}]};
+  const approval=createDailyRecordSaveAdmission(admission,{readCurrentRequest:async()=>evidence,consumeOnce:async()=>true});
+  const target={studentName:'Synthetic Student',date:scope.lessonDate,groupId:'3',teacherKey:scope.teacherId,studentKey:scope.studentId,courseKey:'5',recordKey:'current-record-synthetic',membershipKey:'8'};
+  const action={attemptId:'attempt-1',target,field:'progress',effectRecordKey:'current-record-synthetic',before:'기존 문안',after:'- 새 진도 문안',wireDigest:'b'.repeat(64)};
+  const decision=await approval.consumeApproval(action as never);
+  expect(decision).toEqual({status:'verified',actionDigest:createHash('sha256').update(canonical(action),'utf8').digest('hex')});
+});
+
+test('cism-bound memo review can be saved with its observation handle',async()=>{
+  const calls:{field:string;value:string;before:string;wireDigest:string}[][]=[];
+  const port=backend();const cism={scope:{...scope},selection:{reportId:'fictional-report',periodStart:'2040-01-08',periodEnd:'2040-01-14',section:'learning_support' as const},
+    observedAt:new Date(clock).toISOString(),sourceRevision:'5'.repeat(64),sourceReferenceDate:'2040-01-12',sectionLabel:'학습부진아 지도' as const,
+    text:'매일 짧게 복습하는 습관을 안내합니다.',evidenceRefs:['synthetic-cism-section']};
+  port.readCismSection=async()=>({status:'observed',observation:cism});
+  const service=new DailyRecordService(port,safeguard,()=>clock,learningPolicy,writeBackend(calls));
+  const c=context();c.selectedFields=['lessonMemo'];c.memoAnswer={kind:'content',requestRef:c.currentRequestRef,text:cism.text};
+  c.facts=[{ref:'synthetic-cism-section',field:'lessonMemo' as const,text:cism.text,origin:'cism_section' as const,requiredFragments:[],questionCounts:[],deadlines:[],stageClaims:[]}];
+  const observed=await service.cism({context:c,selection:cism.selection});
+  const intake=await service.intake({context:c});
+  const p={...proposal('lessonMemo',cism.text),factRefs:['synthetic-cism-section']};
+  const review=await service.review({context:c,observationHandle:intake.observationHandle!,cismObservationHandle:observed.observationHandle,proposals:[p]});
+  expect(review.status).toBe('prepared');
+  const saved=await service.save({context:c,observationHandle:intake.observationHandle!,cismObservationHandle:observed.observationHandle,reviewDigest:review.reviewDigest,proposals:[p]});
+  expect(saved).toMatchObject({status:'saved',academyWrites:1});
+  expect(calls).toHaveLength(1);
+});
+
 test('save admission consumes an exact admitted action once and rejects foreign scope',async()=>{
   const evidence={runtime:'synthetic-runtime',requestRef:'synthetic-request',requestTextSha256:'a'.repeat(64),currentUserEventRef:'synthetic-event'};
   const admission:DailyRecordSaveAdmission={schemaVersion:'academy.dailyrecord-save-admission/1',...evidence,
@@ -90,7 +127,8 @@ test('save admission consumes an exact admitted action once and rejects foreign 
     readCurrentRequest:async()=>evidence,
     consumeOnce:async key=>{if(consumed.includes(key))return false;consumed.push(key);return true;},
   });
-  const action={target:{studentKey:scope.studentId,date:scope.lessonDate},field:'progress',effectRecordKey:'current-record-synthetic',after:'- 새 진도 문안'};
+  const fullTarget={studentName:'Synthetic Student',date:scope.lessonDate,groupId:'3',teacherKey:scope.teacherId,studentKey:scope.studentId,courseKey:'5',recordKey:'current-record-synthetic',membershipKey:'8'};
+  const action={attemptId:'attempt-1',target:fullTarget,field:'progress',effectRecordKey:'current-record-synthetic',before:'기존 문안',after:'- 새 진도 문안',wireDigest:'b'.repeat(64)};
   expect((await approval.consumeApproval(action)).status).toBe('verified');
   expect((await approval.consumeApproval(action)).status).toBe('rejected');
   expect((await approval.consumeApproval({...action,after:'- 다른 문안'})).status).toBe('rejected');

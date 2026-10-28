@@ -117,6 +117,21 @@ async function call(req:any){
     const data=await readDailyRecordByName(args,{resolveStudent:input=>invoke('academy_student_resolve',input),intake:input=>invoke('academy_dailyrecord_intake',input)},active.readAdmission);
     return {content:[{type:'text',text:JSON.stringify(data)}],structuredContent:data};
    }
+   if(entry.upstreamName==='academy_dailyrecord_save'){
+    // Compose intake -> review -> save in this one upstream lifetime: the
+    // upstream service's observation handles are process-local, so a raw
+    // passthrough save could never recompute its reviewed patch. The
+    // bridge ticket is exchanged for a fresh upstream handle, the review
+    // is recomputed there, and only its digest reaches the save call.
+    const ticket=handles.get(args.observationHandle);
+    const scope=dailyRecordScopeSchema.parse(args.context.scope);
+    if(!ticket||ticket.releaseIdentity!==sha(active.identity)||Date.now()-ticket.at<0||Date.now()-ticket.at>300000||JSON.stringify(ticket.scope)!==JSON.stringify(scope)||ticket.request!==args.context.currentRequestRef)throw Error('observation_ticket_expired_or_foreign');
+    const fresh:any=await client.callTool({name:'academy_dailyrecord_intake',arguments:{context:args.context}});
+    if(fresh.isError||!fresh.structuredContent||signature(fresh.structuredContent)!==signature(ticket.intake))throw Error('fresh_before_state_changed_reconcile');
+    const reviewed:any=await client.callTool({name:'academy_dailyrecord_review',arguments:{context:args.context,observationHandle:fresh.structuredContent.observationHandle,cismObservationHandle:args.cismObservationHandle,proposals:args.proposals}});
+    if(reviewed.isError||!reviewed.structuredContent)throw Error('dailyrecord_route_upstream_failed_no_retry');
+    return client.callTool({name:entry.upstreamName,arguments:{context:args.context,observationHandle:fresh.structuredContent.observationHandle,cismObservationHandle:args.cismObservationHandle,reviewDigest:reviewed.structuredContent.reviewDigest,proposals:args.proposals}});
+   }
    if(entry.upstreamName==='academy_dailyrecord_review'&&args.observationHandle){
     const ticket=handles.get(args.observationHandle);
     const scope=dailyRecordScopeSchema.parse(args.context.scope);
