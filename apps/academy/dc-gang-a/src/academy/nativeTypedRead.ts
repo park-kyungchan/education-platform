@@ -1096,7 +1096,7 @@ export class NativeTypedReadService implements NativeTypedRead{
         if(withheld){
           const knownRevision=withheldRevisions.get(target.identity.objectType+':'+target.identity.nativeKey);
           if(knownRevision!==undefined&&knownRevision!==target.revision)throw staleRevision();
-          if(target.identity.objectType==='Section'){const pins=await view.currentCatalogPins(context.ownerId);const pin=pins.find(pin=>pin.node.id===target.identity.nativeKey);if(!pin||pin.revisionId!==target.revision)throw staleRevision();}
+          if(['Section','Unit','TextbookEdition'].includes(target.identity.objectType)){const pins=await view.currentCatalogPins(context.ownerId);const pin=pins.find(pin=>pin.node.id===target.identity.nativeKey);if(!pin||pin.revisionId!==target.revision)throw staleRevision();}
           const exactGaps=gaps.filter(gap=>(gap.path===target.identity.objectType+'.record'||gap.path===target.identity.objectType+'.recordScope'||gap.path==='Section.unitRef'||gap.path==='DailyTestAttempt.links.attemptFollows')&&(!gap.subject||identityEqual(gap.subject.identity,target.identity)));
           if(gaps.length>100)throw unverifiable();gaps.forEach(validateNativeGap);
           return {kind:'OK',contractVersion:typedReadContractVersion,consumerProfile:this.consumerProfile,requestId:request.requestId,correlationId:request.requestId,asOf:request.asOf,snapshot:request.snapshot,items:[],nextCursor:null,enumeration:'UNKNOWN',gaps:exactGaps.length?exactGaps:gaps};
@@ -1384,7 +1384,9 @@ export class NativeTypedReadService implements NativeTypedRead{
       if(!target||target.revision!==toRef.revision){
         gaps.push({subject:refOf(from),path:'links.'+linkType,reason:'UNVERIFIED',requiredEvidence:['NATIVE_RELATION_MAPPING'],evidence:provenance});return;
       }
-      const dedup=linkType+':'+identityKey(from.identity)+'->'+identityKey(toRef.identity)+':'+validFrom;
+      // The key carries the witness source: a payload link and a dated binding with the same start are distinct
+      // witnesses, while dated bindings of one relation (e.g. CLASS_MEMBERSHIP and ENROLLMENT) still collapse.
+      const dedup=linkType+':'+identityKey(from.identity)+'->'+identityKey(toRef.identity)+':'+validFrom+':'+(interval?.nativeKey.state==='known'?'binding':'payload');
       if(seenLinks.has(dedup))return;seenLinks.add(dedup);
       links.push({linkType,linkVersion:this.linkVersion(linkType),nativeRelationKey:interval?.nativeKey??unknownKnowledge<string>('UNVERIFIED',['NATIVE_RELATION_MAPPING']),fromRef:refOf(from),toRef,revision:from.revision,snapshot:request.snapshot,validFrom,validThrough:interval?.validThrough??unknownKnowledge<string>('UNVERIFIED',['NATIVE_RELATION_MAPPING']),provenance});
     };
@@ -1454,7 +1456,7 @@ export class NativeTypedReadService implements NativeTypedRead{
       if(!fromRecord||!toRecord||toRecord.revision!==payload.targetRef.revision||fromRecord.revision!==payload.subjectRef.revision){
         gaps.push({subject:payload.subjectRef,path:'links.'+linkType,reason:'UNVERIFIED',requiredEvidence:['NATIVE_RELATION_MAPPING'],evidence:provenance});continue;
       }
-      const dedup=linkType+':'+identityKey(payload.subjectRef.identity)+'->'+identityKey(payload.targetRef.identity)+':'+payload.validFrom;
+      const dedup=linkType+':'+identityKey(payload.subjectRef.identity)+'->'+identityKey(payload.targetRef.identity)+':'+payload.validFrom+':binding';
       if(seenLinks.has(dedup))continue;seenLinks.add(dedup);
       links.push({linkType,linkVersion:this.linkVersion(linkType),nativeRelationKey:{state:'known',value:version.entityKey,evidence:provenance},fromRef:payload.subjectRef,toRef:payload.targetRef,revision:version.revisionId,snapshot:request.snapshot,validFrom:payload.validFrom,validThrough:through,provenance});
     }

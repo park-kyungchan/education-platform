@@ -735,3 +735,19 @@ test('SC-REV-STALE a withheld exact object still refuses a revision that is not 
   mapFixtureViews(store,view=>({...view,activityScopes:async()=>[stale]}));
   await refusal(service.typedRead(ctx,request({selector:{kind:'EXACT_OBJECT',objectRef:{...progressRef,revision:'never-existed'}},linkMask:[]})),'REVISION_STALE',409);
 });
+
+test('SC-CAT a withheld Unit or TextbookEdition still refuses a revision that is not its current pin',async()=>{
+  for(const ref of [objectRef('Unit','minor','never-existed'),objectRef('TextbookEdition','book','never-existed')]){
+    const {service}=fixture();
+    await refusal(service.typedRead(ctx,request({selector:{kind:'EXACT_OBJECT',objectRef:ref},fieldMask:fullFieldMask([ref.identity.objectType]),linkMask:[]})),'REVISION_STALE',409);
+  }
+});
+
+test('SC-WITNESS a payload participant link and a dated participation binding with the same start are both kept',async()=>{
+  const {store,service}=fixture();
+  store.temporals=store.temporals.map(t=>t.payload.bindingKind==='LESSON_PARTICIPATION'?{...t,payload:{...t.payload,validFrom:DATE,validTo:'2026-10-25'}}:t);
+  const res=await service.typedRead(ctx,request({selector:{kind:'EXACT_OBJECT',objectRef:lessonRef},linkMask:['lessonHasStudent']}));
+  const links=res.items.flatMap(i=>i.kind==='LINK'&&i.link.linkType==='lessonHasStudent'?[i.link]:[]);
+  expect(links.map(l=>l.nativeRelationKey.state).sort()).toEqual(['known','unknown']);
+  expect(links.find(l=>l.nativeRelationKey.state==='known')!.validThrough).toMatchObject({state:'known',value:DATE});
+});

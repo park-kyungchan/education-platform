@@ -67,23 +67,23 @@ const text=(s:string)=>requireText(s,'native prerequisite');
 const utc=(s:string)=>{assertInstant(s);if(!s.endsWith('Z'))throw Error('utc_instant_required');};
 const en=(s:string,values:readonly string[])=>{if(!values.includes(s))throw Error('invalid_prerequisite_enum');};
 const list=<T>(xs:T[],validate:(x:T)=>void,min=0,max=100)=>{if(!Array.isArray(xs)||xs.length<min||xs.length>max)throw Error('prerequisite_collection_bounds');xs.forEach(validate);if(new Set(xs.map(x=>canonicalJson(x))).size!==xs.length)throw Error('duplicate_prerequisite_value');};
-export function validateNativeRef(r:NativeObjectRef,depth=0):void{
+function validateNativeRefUnshaped(r:NativeObjectRef,depth=0):void{
  if(depth>8)throw Error('reference_depth');assertExactKeys(r,['tag','basis','objectTypeId','objectTypeVersion','objectKey']);en(r.tag,['object-record']);[r.objectTypeId,r.objectTypeVersion,r.objectKey].forEach(text);
  const b=r.basis;assertExactKeys(b,['namespace','scope','contract','recordRevision','source']);text(b.namespace);assertExactKeys(b.scope,['ownerNamespace','projectKey','scopeKey']);Object.values(b.scope).forEach(text);
  const ownerKnowledge=<T>(v:OwnerKnowledge<T>,check:(x:T)=>void)=>{if(v.state==='KNOWN'){assertExactKeys(v,['state','value']);check(v.value);}else{assertExactKeys(v,['state','reason','evidenceRefs']);en(v.state,['UNKNOWN']);en(v.reason,['NOT_EXPOSED','NOT_OWNER_SUPPLIED','NOT_OBSERVED','WITHHELD','UNSUPPORTED']);list(v.evidenceRefs,x=>validateNativeRef(x,depth+1));}};
  ownerKnowledge(b.contract,x=>{assertExactKeys(x,['namespace','contractId','definitionVersion','sha256']);[x.namespace,x.contractId,x.definitionVersion].forEach(text);sha(x.sha256);});
  ownerKnowledge(b.recordRevision,validateRevision);assertExactKeys(b.source,['ownerNamespace','publicLocator','revision','evidenceRefs']);text(b.source.ownerNamespace);text(b.source.publicLocator);ownerKnowledge(b.source.revision,validateRevision);list(b.source.evidenceRefs,x=>validateNativeRef(x,depth+1));
 }
-export function validateRevision(r:Revision):void{assertExactKeys(r,['scheme','value']);en(r.scheme,['OWNER_REVISION','CONTENT_SHA256','GIT_COMMIT']);text(r.value);if(r.scheme==='CONTENT_SHA256')sha(r.value);}
-export function validateEvidence(e:EvidenceRef):void{assertExactKeys(e,['sourceRef','sourceRevision','locator','observedAt']);validateNativeRef(e.sourceRef);text(e.sourceRevision);text(e.locator);utc(e.observedAt);}
+function validateRevisionUnshaped(r:Revision):void{assertExactKeys(r,['scheme','value']);en(r.scheme,['OWNER_REVISION','CONTENT_SHA256','GIT_COMMIT']);text(r.value);if(r.scheme==='CONTENT_SHA256')sha(r.value);}
+function validateEvidenceUnshaped(e:EvidenceRef):void{assertExactKeys(e,['sourceRef','sourceRevision','locator','observedAt']);validateNativeRef(e.sourceRef);text(e.sourceRevision);text(e.locator);utc(e.observedAt);}
 export function validateKnowledge<T>(k:Knowledge<T>,check:(v:T)=>void):void{
  if(k.state==='known'){assertExactKeys(k,['state','value','evidence']);check(k.value);list(k.evidence,validateEvidence,1);}else{assertExactKeys(k,['state','reason','evidence','requiredEvidence']);en(k.state,['unknown']);en(k.reason,['UNVERIFIED','NOT_RECORDED','MISSING_EVIDENCE','AMBIGUOUS','STALE','CONFLICTING','NOT_APPLICABLE']);list(k.evidence,validateEvidence);list(k.requiredEvidence,x=>en(x,requiredEvidence),1);}
 }
-export function validateObjectRef(r:ObjectRef,types:readonly EducationType[]=educationTypes):void{assertExactKeys(r,['identity','revision']);const i=r.identity;assertExactKeys(i,['scopeRef','namespace','objectType','nativeKey']);validateNativeRef(i.scopeRef);text(i.namespace);en(i.objectType,types);text(i.nativeKey);text(r.revision);}
-export function validateScope(s:RecordScope):void{assertExactKeys(s,['studentRef','classGroupRef','businessDate','lessonRef']);validateObjectRef(s.studentRef,['Student']);validateObjectRef(s.classGroupRef,['ClassGroup']);validateObjectRef(s.lessonRef,['LessonSession']);assertDate(s.businessDate);if(new Set([s.studentRef,s.classGroupRef,s.lessonRef].map(r=>canonicalJson([r.identity.scopeRef,r.identity.namespace]))).size!==1)throw Error('scope_conflict');}
+function validateObjectRefUnshaped(r:ObjectRef,types:readonly EducationType[]=educationTypes):void{assertExactKeys(r,['identity','revision']);const i=r.identity;assertExactKeys(i,['scopeRef','namespace','objectType','nativeKey']);validateNativeRef(i.scopeRef);text(i.namespace);en(i.objectType,types);text(i.nativeKey);text(r.revision);}
+function validateScopeUnshaped(s:RecordScope):void{assertExactKeys(s,['studentRef','classGroupRef','businessDate','lessonRef']);validateObjectRef(s.studentRef,['Student']);validateObjectRef(s.classGroupRef,['ClassGroup']);validateObjectRef(s.lessonRef,['LessonSession']);assertDate(s.businessDate);if(new Set([s.studentRef,s.classGroupRef,s.lessonRef].map(r=>canonicalJson([r.identity.scopeRef,r.identity.namespace]))).size!==1)throw Error('scope_conflict');}
 export function scopeIdentity(s:RecordScope):string{return canonicalJson([s.studentRef.identity,s.classGroupRef.identity,s.businessDate,s.lessonRef.identity]);}
-export function validateSnapshot(s:ReadSnapshot,expectedVersion:'1.1.0'|'1.0.0'='1.1.0'):void{assertExactKeys(s,['registryVersion','readRevision','asOf','policyRevision','consistency']);if(s.registryVersion!==expectedVersion)throw Error('registry_version');text(s.readRevision);text(s.policyRevision);utc(s.asOf);en(s.consistency,['SNAPSHOT','FAIL_ON_CHANGE']);}
-export function validateContentScope(s:ContentScope):void{assertExactKeys(s,['editionRef','unitRef','sectionRefs','printedPages','problemLabels']);validateObjectRef(s.editionRef,['TextbookEdition']);validateObjectRef(s.unitRef,['Unit']);validateKnowledge(s.sectionRefs,x=>list(x,r=>validateObjectRef(r,['Section'])));validateKnowledge(s.printedPages,x=>{assertExactKeys(x,['first','last']);if(!Number.isSafeInteger(x.first)||x.first<1||!Number.isSafeInteger(x.last)||x.last<x.first)throw Error('invalid_pages');});validateKnowledge(s.problemLabels,x=>list(x,text));}
+function validateSnapshotUnshaped(s:ReadSnapshot,expectedVersion:'1.1.0'|'1.0.0'='1.1.0'):void{assertExactKeys(s,['registryVersion','readRevision','asOf','policyRevision','consistency']);if(s.registryVersion!==expectedVersion)throw Error('registry_version');text(s.readRevision);text(s.policyRevision);utc(s.asOf);en(s.consistency,['SNAPSHOT','FAIL_ON_CHANGE']);}
+function validateContentScopeUnshaped(s:ContentScope):void{assertExactKeys(s,['editionRef','unitRef','sectionRefs','printedPages','problemLabels']);validateObjectRef(s.editionRef,['TextbookEdition']);validateObjectRef(s.unitRef,['Unit']);validateKnowledge(s.sectionRefs,x=>list(x,r=>validateObjectRef(r,['Section'])));validateKnowledge(s.printedPages,x=>{assertExactKeys(x,['first','last']);if(!Number.isSafeInteger(x.first)||x.first<1||!Number.isSafeInteger(x.last)||x.last<x.first)throw Error('invalid_pages');});validateKnowledge(s.problemLabels,x=>list(x,text));}
 const sourceStudent=(s:SourceKey)=>{validateSourceKey(s);if(s.namespace!=='academy_student')throw Error('source_namespace_conflict');};
 function validateNativeStudentPayloadUnshaped(p:NativeStudentPayload):void{
  canonicalJson(p);sourceStudent(p.sourceStudent);
@@ -94,14 +94,14 @@ function validateNativeStudentPayloadUnshaped(p:NativeStudentPayload):void{
  default:throw Error('invalid_native_student_kind');
  }
 }
-export function validateInterval(from:string,to:string|null):void{assertDate(from);if(to!==null){assertDate(to);if(to<=from)throw Error('invalid_interval');}}
+function validateIntervalUnshaped(from:string,to:string|null):void{assertDate(from);if(to!==null){assertDate(to);if(to<=from)throw Error('invalid_interval');}}
 export function previousDay(day:string):string{assertDate(day);let [y,m,d]=day.split('-').map(Number);if(--d===0){if(--m===0){m=12;y--;}if(y<0)throw Error('calendar_underflow');d=[31,(y%4===0&&(y%100!==0||y%400===0))?29:28,31,30,31,30,31,31,30,31,30,31][m-1]!;}return `${String(y).padStart(4,'0')}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;}
 export function projectInterval(from:string,to:string|null,evidence:EvidenceRef[]):{validFrom:string;validThrough:Knowledge<string>}{validateInterval(from,to);list(evidence,validateEvidence);if(to!==null){if(!evidence.length)throw Error('interval_evidence_required');return {validFrom:from,validThrough:{state:'known',value:previousDay(to),evidence}};}return {validFrom:from,validThrough:{state:'unknown',reason:evidence.length?'NOT_APPLICABLE':'UNVERIFIED',evidence,requiredEvidence:['NATIVE_RELATION_MAPPING']}};}
-export function validateClosure(c:ApprovalClosure):void{assertExactKeys(c,['teacherRef','executorPrincipalBinding','scopeBinding','action','occurrenceId','targets','dependencies','changeDigest','requestIntentDigest','admissionId','linkExpectations']);validateNativeRef(c.teacherRef);[c.executorPrincipalBinding,c.scopeBinding,c.changeDigest,c.requestIntentDigest].forEach(sha);[c.occurrenceId,c.admissionId].forEach(text);validateAction(c.action);list(c.targets,validateIdentityRevision,1);list(c.dependencies,validateIdentityRevision);list(c.linkExpectations,validateLinkExpectation);}
-export function validateAction(a:ActionBinding):void{assertExactKeys(a,['name','version','definitionSha256']);text(a.name);if(!/^\d+\.\d+\.\d+$/.test(a.version))throw Error('action_version');sha(a.definitionSha256);}
+function validateClosureUnshaped(c:ApprovalClosure):void{assertExactKeys(c,['teacherRef','executorPrincipalBinding','scopeBinding','action','occurrenceId','targets','dependencies','changeDigest','requestIntentDigest','admissionId','linkExpectations']);validateNativeRef(c.teacherRef);[c.executorPrincipalBinding,c.scopeBinding,c.changeDigest,c.requestIntentDigest].forEach(sha);[c.occurrenceId,c.admissionId].forEach(text);validateAction(c.action);list(c.targets,validateIdentityRevision,1);list(c.dependencies,validateIdentityRevision);list(c.linkExpectations,validateLinkExpectation);}
+function validateActionUnshaped(a:ActionBinding):void{assertExactKeys(a,['name','version','definitionSha256']);text(a.name);if(!/^\d+\.\d+\.\d+$/.test(a.version))throw Error('action_version');sha(a.definitionSha256);}
 function validateExpected(r:Revision|'ABSENT'){if(r!=='ABSENT')validateRevision(r);}
 function validateIdentityRevision(r:IdentityRevision){assertExactKeys(r,['ref','expected']);validateNativeRef(r.ref);validateExpected(r.expected);}
-export function validateLinkExpectation(l:LinkRevisionExpectation){assertExactKeys(l,['linkDefinitionBinding','nativeLinkIdentity','from','to','expected']);sha(l.linkDefinitionBinding);text(l.nativeLinkIdentity);validateNativeRef(l.from);validateNativeRef(l.to);validateExpected(l.expected);}
+function validateLinkExpectationUnshaped(l:LinkRevisionExpectation){assertExactKeys(l,['linkDefinitionBinding','nativeLinkIdentity','from','to','expected']);sha(l.linkDefinitionBinding);text(l.nativeLinkIdentity);validateNativeRef(l.from);validateNativeRef(l.to);validateExpected(l.expected);}
 function validateOwnerPayloadUnshaped(p:OwnerPayload):void{
  canonicalJson(p);
  switch(p.kind){
@@ -119,7 +119,7 @@ function validateOwnerPayloadUnshaped(p:OwnerPayload):void{
 }
 function validateContextUnshaped(c:CommandContext):void{assertExactKeys(c,['ownerId','actorId','idempotencyKey','occurrenceId','admissionId','processEpoch','sourceObservedAt','verifiedSession','namespace','scopeRef','nativeOwnerBinding','nativeInterfaceBinding','action','requestIntentDigest']);[c.ownerId,c.actorId,c.idempotencyKey,c.occurrenceId,c.admissionId,c.processEpoch,c.namespace].forEach(text);assertInstant(c.sourceObservedAt);assertExactKeys(c.verifiedSession,['ownerId','actorId','authenticationRevision']);text(c.verifiedSession.authenticationRevision);if(c.verifiedSession.ownerId!==c.ownerId||c.verifiedSession.actorId!==c.actorId)throw Error('verified_session_binding_conflict');validateNativeRef(c.scopeRef);[c.nativeOwnerBinding,c.nativeInterfaceBinding,c.requestIntentDigest].forEach(sha);validateAction(c.action);}
 export function commandBinding(c:CommandContext,requestDigest:string):RequestBinding{return {ownerId:c.ownerId,actorId:c.actorId,idempotencyKey:c.idempotencyKey,requestDigest,occurrenceId:c.occurrenceId,admissionId:c.admissionId,processEpoch:c.processEpoch};}
-export function validateRequest(r:RequestBinding):void{assertExactKeys(r,['ownerId','actorId','idempotencyKey','requestDigest','occurrenceId','admissionId','processEpoch']);[r.ownerId,r.actorId,r.idempotencyKey,r.occurrenceId,r.admissionId,r.processEpoch].forEach(text);sha(r.requestDigest);}
+function validateRequestUnshaped(r:RequestBinding):void{assertExactKeys(r,['ownerId','actorId','idempotencyKey','requestDigest','occurrenceId','admissionId','processEpoch']);[r.ownerId,r.actorId,r.idempotencyKey,r.occurrenceId,r.admissionId,r.processEpoch].forEach(text);sha(r.requestDigest);}
 export function requestDigest(operation:string,command:unknown):string{return digest({operation,command});}
 
 /** Exact Root-selected effective closure. Constants are source capabilities, never operation admission. */
@@ -185,3 +185,16 @@ export function assertStudentOperationKind(operation:string,payload:unknown):voi
  const kind=studentOperationKinds[operation];
  if(kind&&(!payload||typeof payload!=='object'||(payload as {kind?:unknown}).kind!==kind))throw Error('invalid_student_payload_kind');
 }
+
+export const validateNativeRef=shaped(validateNativeRefUnshaped) as typeof validateNativeRefUnshaped;
+export const validateRevision=shaped(validateRevisionUnshaped) as typeof validateRevisionUnshaped;
+export const validateEvidence=shaped(validateEvidenceUnshaped) as typeof validateEvidenceUnshaped;
+export const validateObjectRef=shaped(validateObjectRefUnshaped) as typeof validateObjectRefUnshaped;
+export const validateScope=shaped(validateScopeUnshaped) as typeof validateScopeUnshaped;
+export const validateSnapshot=shaped(validateSnapshotUnshaped) as typeof validateSnapshotUnshaped;
+export const validateContentScope=shaped(validateContentScopeUnshaped) as typeof validateContentScopeUnshaped;
+export const validateInterval=shaped(validateIntervalUnshaped) as typeof validateIntervalUnshaped;
+export const validateClosure=shaped(validateClosureUnshaped) as typeof validateClosureUnshaped;
+export const validateAction=shaped(validateActionUnshaped) as typeof validateActionUnshaped;
+export const validateLinkExpectation=shaped(validateLinkExpectationUnshaped) as typeof validateLinkExpectationUnshaped;
+export const validateRequest=shaped(validateRequestUnshaped) as typeof validateRequestUnshaped;

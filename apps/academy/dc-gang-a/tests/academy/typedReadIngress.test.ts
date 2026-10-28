@@ -1,8 +1,10 @@
 import {readFileSync} from 'node:fs';
+import {foundation} from './nativePrerequisiteStore.test';
+import {context as commandFixture} from './nativePrerequisiteContracts.test';
 import {describe,expect,test} from 'bun:test';
 import {signTeacherSession} from '../../src/academy/auth';
 import {createTeacherServerHandler,declaredRefusalStatus,inputRefusals,prerequisiteRefusalStatus,nativePrerequisiteOperations,nativePrereqRouteAliases,type LoginIdentity} from '../../src/academy/server';
-import type {TeacherApplication} from '../../src/academy/application';
+import {TeacherApplication} from '../../src/academy/application';
 import {ctx,FakePrerequisiteStore,fictionalGrantVerifier,knownK,mapFixtureViews,nativeRef,objectRef,withOutputLabel,registeredRequest,request,testFunctionRequest,TEST_REGISTRY_SHA256,testTemporal,version} from './typedRead.test';
 import {TypedReadRefusal,createSnapshotGrantVerifier} from '../../src/academy/nativeTypedRead';
 import {r6OwnerFixture} from './nativePrerequisitePort.test';
@@ -641,5 +643,29 @@ describe('ORDINARY-R4-F1 stale preparation and current binding at the final fenc
     expect(store.finalizations.map(x=>[x.status,x.refusalCode])).toEqual([['REFUSED',code]]);
     expect(events).toEqual(['preparatory-stale','encode-selected-refusal','terminal-commit','response']);
     expect(store.commitCalls).toBe(1);expect(store.directFinalizeCalls).toBe(0);expect(leaseHeld).toBe(false);
+  });
+});
+
+describe('RC9 shape sweep through the real application and store',()=>{
+  test('every prerequisite operation answers a malformed field value with 4xx, never 503',async()=>{
+    const f=await foundation();
+    const handler=createTeacherServerHandler({app:new TeacherApplication(f.store as never,OWNER,undefined,undefined,f.store as never),origin:ORIGIN,sessionKey:SESSION_KEY,identity,invitationDigest:null,
+      saveIdentity:async()=>{throw Error('auth writer must not run');},curatedConceptCandidates:{read:()=>{throw Error('unused');}} as never});
+    const ingressKeys=['idempotencyKey','occurrenceId','admissionId','processEpoch','sourceObservedAt','authenticationRevision','namespace','scopeRef','nativeOwnerBinding','nativeInterfaceBinding','action','requestIntentDigest'];
+    const ingress=(label:string)=>{const c=commandFixture('rc9-'+label) as unknown as Record<string,unknown>&{verifiedSession:{authenticationRevision:string}};return Object.fromEntries(ingressKeys.map(k=>[k,k==='authenticationRevision'?c.verifiedSession.authenticationRevision:c[k]]));};
+    const samples:Record<string,Record<string,unknown>>={default:{command:ingress('base'),payload:{}},prerequisiteTeacher:{teacherKey:'teacher-a'},prerequisiteClassGroup:{classKey:'class-a'},prerequisiteLesson:{lessonKey:'lesson-a'},prerequisiteStudentRevision:{studentId:'student-a'},prerequisiteStudentRevisionHistory:{studentId:'student-a'},prerequisiteApproval:{approvalId:'approval-a'},prerequisiteOwnerRevision:{family:'teacher',entityKey:'teacher-a',revisionId:'rev-teacher'},prerequisiteOwnerHistory:{family:'teacher',entityKey:'teacher-a'},prerequisiteScoreEvidence:{entityKey:'evidence-a'},prerequisiteScoreEvidenceForAttempt:{attemptRef:{identity:{},revision:'rev-attempt'}},admitReadOccurrence:{ownerId:OWNER,actorId:ACTOR,requestId:'req-1'},readOccurrence:{ownerId:OWNER,actorId:ACTOR,requestId:'req-1'}};
+    const escaped:string[]=[];let cases=0;
+    for(const operation of nativePrerequisiteOperations){
+      const base=samples[operation]??samples.default!;
+      const variants:Record<string,unknown>[]=Object.keys(base).flatMap(key=>[null,7,'x',{},[]].map(bad=>({...base,[key]:bad})));
+      if(base.command&&typeof base.command==='object')for(const key of ingressKeys)for(const bad of [null,7,{}])variants.push({...base,command:{...ingress(operation+key),[key]:bad}});
+      for(const input of variants){
+        cases++;
+        const res=await handler(new Request(ORIGIN+'/api/native-prerequisite',{method:'POST',headers:{Origin:ORIGIN,'Content-Type':'application/json',Cookie:cookie()},body:JSON.stringify({operation,input})}));
+        if(res.status>=500)escaped.push(operation+':'+JSON.stringify(input).replace(/"scopeRef":\{.*?\}\}\}/,'"scopeRef":{..}').slice(0,110)+' -> '+res.status);
+      }
+    }
+    expect(cases).toBeGreaterThan(150);
+    expect(escaped).toEqual([]);
   });
 });

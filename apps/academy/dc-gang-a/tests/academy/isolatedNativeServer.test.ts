@@ -129,8 +129,8 @@ test('C2 exact four runner source paths permit only the declared Python source a
  }
 });
 test('C2 closed runner configuration preserves Root resource selection and refuses program/stage/pipe broadening',()=>{
- const base={...configuration(),ownerId:'synthetic-p4-e2e-p4-native-20261027-50',authSha256:null};
- const config={schema:'fixed-native-runner.v2',status:'SEALED',kind:'MIGRATE',stage:'MIGRATE',base,input:{readFd:7,writeFd:8,device:1,inode:17},output:{readFd:9,writeFd:10,device:1,inode:18},inputSha256:SHA,inputByteLength:1,resourceSelection:{path:'reports/p4-p5-execution/claude-takeover-20261027/gen82/candidate/bindings/resource-names.v1.json',sha256:'6e9e8143a44f9692dac281de073c966607492a7dac756565cba898f5e1870c0e',bytes:6820},bootstrapSelection:{path:'reports/p4-p5-execution/claude-takeover-20261027/gen82/candidate/bindings/bootstrap-selection.v1.json',sha256:'44f1b71bd2ee0889ea1762d8937a8e43f5694b5314cc0c5ce665ad8fc67e5f12',bytes:3983},liveHelper:null,helperStartReceipt:null,previousStageReceipt:null,windowState:'CLOSED'};
+ const base={...configuration(),ownerId:'synthetic-p4-e2e-p4-native-20261027-52',authSha256:null};
+ const config={schema:'fixed-native-runner.v2',status:'SEALED',kind:'MIGRATE',stage:'MIGRATE',base,input:{readFd:7,writeFd:8,device:1,inode:17},output:{readFd:9,writeFd:10,device:1,inode:18},inputSha256:SHA,inputByteLength:1,resourceSelection:{path:'reports/p4-p5-execution/claude-takeover-20261027/gen84/candidate/bindings/resource-names.v1.json',sha256:'43e2f06ae901e86ca1e503a74a62776857438ca296a8a830d676d6c2918d4bc7',bytes:6820},bootstrapSelection:{path:'reports/p4-p5-execution/claude-takeover-20261027/gen84/candidate/bindings/bootstrap-selection.v1.json',sha256:'e7d1b9394b08d5439f612e9bbe21b06b40b2516248c0fff470a1a0b2ed147d2b',bytes:3983},liveHelper:null,helperStartReceipt:null,previousStageReceipt:null,windowState:'CLOSED'};
  expect(validateFixedRunner(config).stage).toBe('MIGRATE');
  for(const value of [{...config,kind:'SHELL'},{...config,stage:'OTHER'},{...config,argv:['arbitrary']},{...config,input:{...config.input,readFd:0}},{...config,windowState:'OPEN'},{...config,resourceSelection:{...config.resourceSelection,sha256:SHA}}])expect(()=>validateFixedRunner(value)).toThrow();
 });
@@ -521,4 +521,16 @@ test('failed invitation consumption retains the invitation until persistence suc
  expect((await handler(request())).status).toBe(400);expect(persisted).toBe(secretDigest('fictional-invitation'));
  expect((await handler(request())).status).toBe(200);expect(persisted).toBe('');expect(calls).toBe(2);
  expect((await handler(request())).status).toBe(403);expect(calls).toBe(2);
+});
+
+
+test('controller CLI reports the failed call site rather than the shared require helper', async()=>{
+ const controller=join(import.meta.dir,'../../harness/native_qualification_controller.py');
+ const child=Bun.spawn(['/usr/bin/python3','-I','-S','-B',controller],{stdout:'pipe',stderr:'pipe'});
+ const [exit,output,error]=await Promise.all([child.exited,new Response(child.stdout).text(),new Response(child.stderr).text()]);
+ expect(exit).toBe(1);expect(output).toBe('');
+ const diagnostic=JSON.parse(error),match=String(diagnostic.code).match(/^fixed_controller_argv_required@native_qualification_controller\.py:(\d+)$/);
+ expect(match).not.toBeNull();
+ const lines=readFileSync(controller,'utf8').split('\n'),line=Number(match![1]);
+ expect(lines[line-1]).toContain('require(len(sys.argv)');
 });

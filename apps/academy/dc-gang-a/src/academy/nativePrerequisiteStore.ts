@@ -361,6 +361,7 @@ export class NativePrerequisiteStore {
  }
  private async ownerWrite(f:Family,c:OwnerAppendCommand<TeacherBinding>|OwnerAppendCommand<ClassGroupRecord>|OwnerAppendCommand<LessonSessionRecord>|OwnerAppendCommand<TemporalBinding>|OwnerAppendCommand<ActivityScopeLink>):Promise<NativeWriteResult>{assertExactKeys(c,['context','entityKey','expectedRevisionId','payload']);return this.execute(c.context,'append:'+f,c,async(db,at,r)=>{
  const x=c.context;if(f==='scope')await this.active(db,x,(c.payload as ActivityScopeLink)?.recordScope?.businessDate);const prior=c.entityKey===null?null:await this.one(db,f,x.ownerId,c.entityKey);if(c.entityKey!==null&&!prior)throw Error('identity_minting_forbidden');this.cas(prior,c.expectedRevisionId,x);const key=c.entityKey??`${f}:${randomUUID()}`;const raw=c.payload;
+ if(!raw||typeof raw!=='object'||Array.isArray(raw))throw Error('invalid_prerequisite_shape');
  const payload:OwnerPayload=raw.kind==='teacher_binding'?{...raw,teacherKey:key,ownerId:x.ownerId}:raw.kind==='class_group'?{...raw,classKey:key,ownerId:x.ownerId}:raw.kind==='lesson_session'?{...raw,lessonKey:key,ownerId:x.ownerId}:raw.kind==='temporal_binding'?{...raw,bindingKey:key,ownerId:x.ownerId}:raw;
  if(payload.kind!==kinds[f])throw Error('command_family_mismatch');
  // Validate the complete constructed native payload; supplied allocation fields are never silently accepted.
