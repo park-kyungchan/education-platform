@@ -1,0 +1,24 @@
+{
+  "schema": "academy.class-timetable-routing/1",
+  "authority": "none",
+  "meaning": "Question-to-source map so agents land on the exact file that answers an operations question instead of re-deriving it. Targets are repo-relative paths from the education-platform root.",
+  "routes": [
+    {
+      "question": "수업 요일·부·세션 시각·공지",
+      "target": "modules/academy-workbench/context/class-timetable/timetable.json"
+    },
+    {
+      "question": "평가 숫자 의미(dailyTestAssessment·previousHomeworkAssessment·수행도)",
+      "target": "apps/academy/dc-gang-a/src/lms/lessonJournalHttp.ts",
+      "anchor": "assessmentLabels"
+    },
+    {
+      "question": "수업 사이클·완료 판정·클리닉 단계",
+      "target": "apps/academy/dc-gang-a/src/academy/classroomCyclePolicy.ts"
+    },
+    {
+      "question": "DailyRecord 작성·학부모 문구",
+      "target": "apps/academy/dc-gang-a/docs/daily-record-authoring-policy.md"
+    }
+  ]
+}

@@ -15,6 +15,7 @@ test('discovery refuses unqualified destinations and path escapes without openin
 });
 test('integrated entry is small and points to retained originals without loading real records',async()=>{
  const entry=await runIntegratedAcademyContext(['entry']);expect(entry).toMatchObject({sourceBodiesLoaded:false,nativePermissionGranted:false,repository:'park-kyungchan/education-platform'});
+ expect(entry).toMatchObject({classTimetable:'modules/academy-workbench/context/class-timetable/README.ko.md'});
  expect(Buffer.byteLength(JSON.stringify(entry))).toBeLessThan(8192);
  await expect(runIntegratedAcademyContext(['entry','--student','arbitrary'])).rejects.toThrow('usage');
 });

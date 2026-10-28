@@ -28,6 +28,9 @@ describe('actual academy metadata integration', () => {
     const plan = readingPlan(catalogJson, 'academy.class-preparation');
     expect(plan.requiredReferenceIds).toContain('SRC-DC-CLASSROOM');
     expect(plan.requiredReferenceIds).toContain('SRC-CURRENT-NAVIGATION');
+    expect(plan.requiredReferenceIds).toContain('SRC-CLASS-TIMETABLE-GUIDE');
+    const source = catalogJson.sources.find(row => row.id === 'SRC-CLASS-TIMETABLE-GUIDE');
+    expect(source?.path).toBe('context/class-timetable/README.ko.md');
     expect(plan.requiredReferenceIds.length).toBeLessThan(plan.discoveryReferenceIds.length);
     expect(plan.sourceBodiesLoaded).toBe(false);
     expect(plan.nativePermissionGranted).toBe(false);
