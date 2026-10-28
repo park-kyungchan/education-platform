@@ -67,6 +67,19 @@ export interface DailyRecordReadBackend {
   readCismSection?(scope:Readonly<DailyRecordScope>,selection:Readonly<z.infer<typeof cismSelectionSchema>>):Promise<ReadResult<CismObservation>>;
   searchStudentsByName?(exactName:Readonly<string>,requestRef:string,lessonDate?:string):Promise<unknown>;
 }
+export const dailyRecordSaveSchema=z.object({context:dailyRecordContextSchema,observationHandle:dailyRecordIdSchema,
+  reviewDigest:hash,proposals:z.array(proposalSchema).min(1).max(6)}).strict();
+export type DailyRecordSave=z.infer<typeof dailyRecordSaveSchema>;
+export type DailyRecordSaveFieldStatus='persisted'|'noop'|'not_persisted'|'conflict'|'unresolved'|'not_attempted';
+/** Implemented by the native/source owner only, never from MCP arguments.
+ * Each patch must run through a fresh before-state read, the launch-pinned
+ * save admission's one-time consumption, a single write and an authoritative
+ * readback inside the owner client. Uncertain dispatches resolve by later
+ * readback, never by retrying inside this call. */
+export interface DailyRecordWriteBackend {
+  saveConfigured():boolean;
+  saveDailyRecord(scope:Readonly<DailyRecordScope>,patches:readonly {field:DailyRecordField;value:string}[]):Promise<{field:DailyRecordField;status:DailyRecordSaveFieldStatus;dispatched:boolean}[]>;
+}
 /** Inject the canonical Education safeguard, together with its verified policy/source identity. */
 export interface DailyRecordParentSafeguard {readonly policySha256:string;readonly safeguardSourceSha256:string;readonly sourceRef:string;check(text:string):boolean;checkLines(text:string):boolean}
 /** Trusted owner-side adapter; no catalog/bridge or verification flags come from tool input. */
@@ -117,7 +130,7 @@ export class DailyRecordService {
   readonly #handles=new Map<string,{observation:DailyRecordObservation;scope:DailyRecordScope;requestRef:string}>();
   readonly #cismHandles=new Map<string,CismObservation>();
   #tail:Promise<unknown>=Promise.resolve();
-  constructor(readonly backend:DailyRecordReadBackend|null=null,readonly parentSafeguard:DailyRecordParentSafeguard|null=null,readonly now:()=>number=Date.now,readonly learningPolicy:DailyRecordLearningPolicy|null=null){
+  constructor(readonly backend:DailyRecordReadBackend|null=null,readonly parentSafeguard:DailyRecordParentSafeguard|null=null,readonly now:()=>number=Date.now,readonly learningPolicy:DailyRecordLearningPolicy|null=null,readonly writeBackend:DailyRecordWriteBackend|null=null){
     if(learningPolicy)for(const pin of [learningPolicy.bundleSha256,learningPolicy.configSha256,learningPolicy.catalogSha256])hash.parse(pin);
     if(parentSafeguard){hash.parse(parentSafeguard.policySha256);hash.parse(parentSafeguard.safeguardSourceSha256);dailyRecordIdSchema.parse(parentSafeguard.sourceRef);}
   }
@@ -292,6 +305,28 @@ export class DailyRecordService {
       sourceRevision:held?.observation.sourceRevision??null,wireDigest:held?.observation.wireDigest??null,transmissionState:read?.status==='observed'?read.observation.transmissionState:held?.observation.transmissionState??'unknown',rows,patch};
     return {...this.#base(context),...body,status:rows.some(r=>r.blockers.length)||interviews.length?'held':'prepared',interviews,reviewDigest:digest(body),
       execution:'not_supported',saveAdmission:'separate_trusted_native_owner_required'};
+  }
+  async save(value:unknown){
+    const input=dailyRecordSaveSchema.parse(value),context=input.context;
+    const base={...this.#base(context),observationHandle:input.observationHandle,reviewDigest:input.reviewDigest};
+    if(!this.writeBackend?.saveConfigured())return {...base,status:'unavailable' as const,reasonCode:'dailyrecord_save_backend_not_configured',
+      academyWrites:0,execution:'not_supported' as const,saveAdmission:'separate_trusted_native_owner_required' as const,fields:[]};
+    // Recompute the exact review against a fresh before-state. The caller's
+    // reviewDigest must match it, so unreviewed or drifted text never writes.
+    const reviewed=await this.review({context,observationHandle:input.observationHandle,proposals:input.proposals});
+    if(reviewed.status!=='prepared'||reviewed.reviewDigest!==input.reviewDigest||reviewed.execution!=='not_supported')
+      return {...base,status:'held' as const,reasonCode:'reviewed_patch_required',academyWrites:0,execution:'not_supported' as const,
+        fields:reviewed.rows.map(r=>({field:r.field,status:'not_attempted' as const,dispatched:false}))};
+    const patch=(reviewed.patch as {field:DailyRecordField;after:string}[]).map(p=>({field:p.field,value:p.after}));
+    if(!patch.length)return {...base,status:'saved' as const,academyWrites:0,execution:'owner_write_backend' as const,
+      fields:input.proposals.map(p=>({field:p.field,status:'noop' as const,dispatched:false}))};
+    try{
+      const fields=await this.#serial(()=>this.writeBackend!.saveDailyRecord(freezeLabelData(structuredClone(context.scope)),patch));
+      const academyWrites=fields.filter(f=>f.dispatched).length;
+      const settled=fields.every(f=>f.status==='persisted'||f.status==='noop');
+      return {...base,status:settled?'saved' as const:'held' as const,reasonCode:settled?null:'save_reconciliation_required',
+        academyWrites,execution:'owner_write_backend' as const,fields};
+    }catch(error){return {...base,status:'unavailable' as const,...readFailureResult(error,'dailyrecord_save_unqualified_no_automatic_retry'),academyWrites:0,execution:'not_supported' as const,fields:[]};}
   }
   async cism(value:unknown){
     const input=cismSectionSchema.parse(value),context=input.context;
