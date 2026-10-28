@@ -1,0 +1,46 @@
+{
+  "binding": {
+    "repository": "park-kyungchan/education-platform",
+    "projectId": "education-platform",
+    "domainId": "education",
+    "semanticOwner": "education-platform",
+    "scope": "month-end-source-redesign"
+  },
+  "headSha": "7559c4bd0a3f1912e58dd632254d34edd99334f4",
+  "reviewedTreeSha": "3f4776b85a3ae1d8a466c9b9699427cfa672657c",
+  "reviewedSourceManifestSha256": "11fd5eec6e4de5aa0c9ca7a94ff6788e7f22eabc4e807631bed9c8ebd66b155f",
+  "reviewer": {
+    "runtime": "codex",
+    "taskId": "01a1812a-9c2e-76e0-b44e-4894ce9b2b99",
+    "threadId": "01a1812a-9c2e-76e0-b44e-4894ce9b2b99",
+    "nativeTaskId": null,
+    "nativeRunId": null,
+    "role": "Independent owner-scoped source reviewer (gpt-6.1-sol/high; explicit temporary user override)",
+    "implementationWriter": false
+  },
+  "author": {
+    "runtime": "codex",
+    "taskId": "01a180d9-12ee-78e0-9d77-fa644052874d",
+    "threadId": null,
+    "nativeTaskId": null,
+    "nativeRunId": null
+  },
+  "conclusion": "pass",
+  "unresolvedFindings": 0,
+  "schema": "owner-scoped-native-review-output.v1",
+  "reviewStatus": "complete",
+  "recordedAtUtc": "2026-10-28T06:23:43Z",
+  "assignmentId": "academy-v0-review-45a7c93d-2f66-43a4-9a6e-447618bec519",
+  "reviewHead": "7559c4bd0a3f1912e58dd632254d34edd99334f4",
+  "reviewedSourceManifest": {
+    "schema": "agent-platform.reviewed-source-manifest.v1",
+    "reviewedTreeSha": "3f4776b85a3ae1d8a466c9b9699427cfa672657c",
+    "entryCount": 3888,
+    "blobCount": 3362,
+    "sha256": "11fd5eec6e4de5aa0c9ca7a94ff6788e7f22eabc4e807631bed9c8ebd66b155f"
+  },
+  "nativeTaskId": null,
+  "nativeRunId": null,
+  "findings": [],
+  "sourceReviewDecision": "지정된 전체 diff의 신규 9개 경로와 source-author 메타데이터를 실제 제품 API, 읽기 포트, 검증·투영·거부 경로 및 CI/컴파일 설정과 독립 대조했습니다. 이전 수정 사항과 고정 ASOF 주입, 2035년 자식 프로세스의 실제 Student typedRead 회귀 검사를 확인했습니다. Bun 1.4.3에서 23개 테스트·82개 단언, 소유 모듈 설정의 TypeScript 검사 및 루트 TypeScript 검사가 통과했습니다. 기존 CI는 루트 tests 디렉터리를 재귀 검색하며, 직접 실행에서도 두 .test.mts 파일이 검색됐습니다. 허용된 원본과 카탈로그 12개 사례·124개 하위 사례 및 원본 해시가 정확히 일치하고, 트리 매니페스트도 재계산 결과와 일치합니다. source-author는 직전 소스 커밋을 가리키며 지정 작성자 ID와 일치하지만 인증된 작성자 증명은 주장하지 않습니다. 부분 지원·미제공 인터페이스 표기는 실제 검사 범위와 일치하며 현재 조치할 결함은 없습니다. 네트워크 접근 없이 검토했으므로 원격 pushed 상태와 현재 헤드의 canonical CI 결과는 검증하지 않았습니다. 전체 V0, 범용 governed query, qualified Function runner, 순수 simulation executor, native/runtime 또는 P8 Acceptance 완료를 인정하는 판정이 아닙니다. 파일·설정·인증·서비스 변경과 위임은 없었고 HEAD와 작업 트리는 유지됐습니다."
+}
