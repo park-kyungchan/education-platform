@@ -1,0 +1,73 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "verification",
+  "id": "education-platform:verification:academy-review-575ad95a0def8076c891ba14d037257ccf11fd6d",
+  "projectId": "education-platform",
+  "domainId": "education",
+  "createdAt": "2026-10-28T14:26:45.436Z",
+  "payload": {
+    "targetRefs": [
+      "education-platform:evidence:academy-review-575ad95a0def8076c891ba14d037257ccf11fd6d"
+    ],
+    "criteria": [
+      {
+        "id": "independent-native-source-review",
+        "status": "pass",
+        "message": "Independent muse-subagent review binds exact head/tree/manifest with distinct author/reviewer and zero findings.",
+        "evidenceRefs": [
+          "education-platform:evidence:academy-review-575ad95a0def8076c891ba14d037257ccf11fd6d"
+        ]
+      }
+    ],
+    "inputHashes": [
+      {
+        "path": "native-review-results/575ad95a0def8076c891ba14d037257ccf11fd6d.json",
+        "sha256": "c7e1ef3073c33452de1afa0e91281d558ff662de0ab202bba47e3ab83e457df8"
+      },
+      {
+        "path": "native-review-evidence/575ad95a0def8076c891ba14d037257ccf11fd6d.json",
+        "sha256": "c50da5f47e9b8d35d67465f072bca3e534e7dbde6844da261b19fe842156bfd8"
+      },
+      {
+        "path": "native-review-raw/575ad95a0def8076c891ba14d037257ccf11fd6d.json",
+        "sha256": "09aa5da9b0396f18082d1ac04697070cfe4a05af64259ba480031cdafba70f34"
+      }
+    ],
+    "runtime": {
+      "name": "muse-subagent",
+      "version": "observed-session-not-cryptographic-authentication"
+    },
+    "details": {
+      "semanticOwner": "education-platform",
+      "review": {
+        "binding": {
+          "repository": "park-kyungchan/education-platform",
+          "projectId": "education-platform",
+          "domainId": "education",
+          "semanticOwner": "education-platform",
+          "scope": "month-end-source-redesign"
+        },
+        "headSha": "575ad95a0def8076c891ba14d037257ccf11fd6d",
+        "reviewedTreeSha": "063df3c8c5894355614c8143a1188f5fae666c17",
+        "reviewedSourceManifestSha256": "7e65d4b4f750117886aae2e7ac3e12b4fce46fb43e586de95f7fed045d7298a6",
+        "reviewer": {
+          "runtime": "muse-subagent",
+          "taskId": "01a182e6-593c-7441-9916-c6e5c6fa7d84",
+          "threadId": "01a182e6-593c-7441-9916-c6e5c6fa7d84",
+          "nativeTaskId": null,
+          "nativeRunId": null,
+          "implementationWriter": false
+        },
+        "author": {
+          "runtime": "muse-code",
+          "taskId": "01a18277-3835-76a3-9a05-fa7f36617fee",
+          "threadId": "01a18277-3835-76a3-9a05-fa7f36617fee",
+          "nativeTaskId": null,
+          "nativeRunId": null
+        },
+        "conclusion": "pass",
+        "unresolvedFindings": 0
+      }
+    }
+  }
+}
