@@ -1,0 +1,62 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "evidence",
+  "id": "education-platform:evidence:academy-review-c760370b2dc9bc5c6b68fb60edc93b4a65479a1a",
+  "projectId": "education-platform",
+  "domainId": "education",
+  "createdAt": "2026-10-28T10:50:43.976Z",
+  "payload": {
+    "claim": "A genuine independent native-codex reviewer qualified this exact source head/tree with zero current unresolved findings.",
+    "method": "native-codex-independent-source-review",
+    "sourceUrl": "https://github.com/park-kyungchan/education-platform/blob/cce99a98bee6d9c90ecbee047af1a6ba7b1c0b8e/native-review-raw/c760370b2dc9bc5c6b68fb60edc93b4a65479a1a.json",
+    "fetchedAt": "2026-10-28T10:50:43.976Z",
+    "upstreamRevision": "c760370b2dc9bc5c6b68fb60edc93b4a65479a1a",
+    "result": {
+      "outcome": "success",
+      "processExitCode": 0,
+      "contentMatched": true
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "outcome": "success"
+      }
+    ],
+    "limitations": [
+      "Git custody authenticates the publisher, not native authorship or runtime permission.",
+      "Native activation, actual business use and Acceptance remain separately held."
+    ],
+    "details": {
+      "semanticOwner": "education-platform",
+      "review": {
+        "binding": {
+          "repository": "park-kyungchan/education-platform",
+          "projectId": "education-platform",
+          "domainId": "education",
+          "semanticOwner": "education-platform",
+          "scope": "month-end-source-redesign"
+        },
+        "headSha": "c760370b2dc9bc5c6b68fb60edc93b4a65479a1a",
+        "reviewedTreeSha": "54a5a46e13c7ec99357b18797abd783a3cab8810",
+        "reviewedSourceManifestSha256": "fcc847c1a9b5a8bcf84391bc869c9f77a8c9084aced82003c27b788f728ec4c7",
+        "reviewer": {
+          "runtime": "native-codex",
+          "taskId": "01a1821b-ded4-7962-9dbf-f8c399133ba3",
+          "threadId": "01a1821b-ded4-7962-9dbf-f8c399133ba3",
+          "nativeTaskId": null,
+          "nativeRunId": null,
+          "implementationWriter": false
+        },
+        "author": {
+          "runtime": "native-codex",
+          "taskId": "01a18173-0dda-7a93-8003-23cbbc887462",
+          "threadId": "01a18173-0dda-7a93-8003-23cbbc887462",
+          "nativeTaskId": null,
+          "nativeRunId": null
+        },
+        "conclusion": "pass",
+        "unresolvedFindings": 0
+      }
+    }
+  }
+}
