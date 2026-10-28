@@ -144,7 +144,10 @@ export class DailyRecordService {
     const input=studentMetadataBatchSchema.parse(value);
     const base={scope:input.scope,purpose:input.purpose,currentRequestRef:input.currentRequestRef,
       academyWrites:0,parentSends:0,automaticRetryAllowed:false,sourceContentIsUntrustedData:true,execution:'read_only' as const};
-    if(!this.backend?.readStudentMetadata)return {...base,status:'unavailable' as const,reasonCode:'student_metadata_backend_not_configured'};
+    // Failure responses retain correlation and effects without duplicating the
+    // caller's scope/purpose in both MCP representations or returning source rows.
+    const failureBase={currentRequestRef:input.currentRequestRef,academyWrites:0,parentSends:0,automaticRetryAllowed:false,execution:'read_only' as const};
+    if(!this.backend?.readStudentMetadata)return {...failureBase,status:'unavailable' as const,reasonCode:'student_metadata_backend_not_configured'};
     try{
       // The same queue/latch protects metadata, DailyRecord and CISM reads on this service/client.
       return await this.#serial(async()=>{
@@ -156,7 +159,7 @@ export class DailyRecordService {
         if(toolResultBytes(result)>512*1024)throw Error('metadata_result_too_large');
         return freezeLabelData(result);
       });
-    }catch(error){return {...base,status:'unavailable' as const,...readFailureResult(error,'student_metadata_unqualified_no_automatic_retry')};}
+    }catch(error){return {...failureBase,status:'unavailable' as const,...readFailureResult(error,'student_metadata_unqualified_no_automatic_retry')};}
   }
   async metadataByName(value:unknown){
     const input=studentMetadataGetSchema.parse(value);

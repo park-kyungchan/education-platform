@@ -176,7 +176,7 @@ test('MCP C2: strict unknown/foreign/principal/date/query inputs stop before aut
     try{
       const result=await callMetadata(foreign,{...metadataInput(),scope:{...metadataScope,...delta}});
       expect(result.structuredContent).toMatchObject({status:'unavailable'});expect(source.calls).toHaveLength(0);
-      expect(JSON.stringify(result)).not.toContain('native_metadata_scope_refused');
+      expect(result.structuredContent).toMatchObject({reasonCode:'native_metadata_scope_refused',failure:{category:'policy_denial',code:'native_metadata_scope_refused'}});
     }finally{await foreign.close();source.client.close();}
   }
 });
