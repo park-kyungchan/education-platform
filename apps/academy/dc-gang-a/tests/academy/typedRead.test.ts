@@ -7,7 +7,7 @@ import type {TeacherPrerequisiteReadStore,TeacherPrerequisiteStore} from '../../
 import type {CatalogNode} from '../../src/academy/domain';
 import type {CurrentRecord} from '../../src/academy/contracts/storageRecords';
 import type {TrustedTeacherContext} from '../../src/academy/contracts/teacherOperations';
-import {fixedConsumerProfile,type ConsumerProfileId} from '../../src/academy/contracts/prerequisiteRecords';
+import {fixedConsumerProfile,resolveActivityOccurrence,type ConsumerProfileId} from '../../src/academy/contracts/prerequisiteRecords';
 
 test('C1 source gaps have an independent bound of100, closed source carriers and an exact five-field Function adapter',async()=>{
  const build=(count:number)=>{
@@ -701,4 +701,37 @@ test('SC-REV-EXACT an exact read of a progress with an unresolved scope mapping 
   expect(res.items).toEqual([]);
   expect(res.enumeration).toBe('UNKNOWN');
   expect(res.gaps.map(g=>g.path)).toContain('DailyProgress.recordScope');
+});
+
+test('SC-LESSON without a dated participation binding the payload participant link stays and no gap contradicts it',async()=>{
+  const {store,service}=fixture();
+  store.temporals=store.temporals.filter(t=>t.payload.bindingKind!=='LESSON_PARTICIPATION');
+  const res=await service.typedRead(ctx,request({selector:{kind:'EXACT_OBJECT',objectRef:lessonRef},linkMask:['lessonHasStudent']}));
+  const links=res.items.flatMap(i=>i.kind==='LINK'&&i.link.linkType==='lessonHasStudent'?[i.link]:[]);
+  expect(links.map(l=>[l.toRef.identity.nativeKey,l.validFrom])).toEqual([['student-a',DATE]]);
+  expect(res.gaps.map(g=>g.path)).not.toContain('LessonSession.links.lessonHasStudent');
+});
+
+describe('OCC-RESOLVER one occurrence rule for every reader',()=>{
+  const at=(state:'ACTIVE'|'DETACHED',revision:string,lesson='lesson-a',key='scope-p')=>version(key,'rev-'+key+'-'+state+revision,{schemaVersion:'2.0.0' as const,state,kind:'activity_scope' as const,activityKind:'DAILY_PROGRESS' as const,activityRef:{...progressRef,revision} as ObjectRef<'DailyProgress'>,recordScope:{...recScope,lessonRef:objectRef('LessonSession',lesson,'rev-'+lesson) as ObjectRef<'LessonSession'>},sourceLiteral:'synthetic',synthetic:true});
+  const activity={objectType:'DailyProgress',nativeKey:'progress-a',revision:'rev-progress'};
+  const other=version('scope-h','rev-scope-h',{schemaVersion:'2.0.0' as const,state:'ACTIVE' as const,kind:'activity_scope' as const,activityKind:'HOMEWORK_ASSIGNMENT' as const,activityRef:homeworkRef as ObjectRef<'HomeworkAssignment'>,recordScope:recScope,sourceLiteral:'synthetic',synthetic:true});
+  test('no attachment: embedded scope, or unresolved without one',()=>{
+    expect(resolveActivityOccurrence(activity,recScope,[other]).state).toBe('EMBEDDED');
+    expect(resolveActivityOccurrence(activity,null,[]).state).toBe('UNRESOLVED');
+  });
+  test('one ACTIVE attachment pinning this revision moves it; a stale pin or two ACTIVE are unresolved; detached wins',()=>{
+    const moved=resolveActivityOccurrence(activity,recScope,[at('ACTIVE','rev-progress','lesson-b')]);
+    expect(moved.state==='ATTACHED'&&moved.scope.lessonRef.identity.nativeKey).toBe('lesson-b');
+    expect(resolveActivityOccurrence(activity,recScope,[at('ACTIVE','rev-progress-previous','lesson-b')]).state).toBe('UNRESOLVED');
+    expect(resolveActivityOccurrence(activity,recScope,[at('ACTIVE','rev-progress'),at('ACTIVE','rev-progress','lesson-b','scope-q')]).state).toBe('UNRESOLVED');
+    expect(resolveActivityOccurrence(activity,recScope,[at('ACTIVE','rev-progress'),at('DETACHED','rev-progress','lesson-a','scope-q')]).state).toBe('DETACHED');
+  });
+});
+
+test('SC-REV-STALE a withheld exact object still refuses a revision that is not its current one',async()=>{
+  const {store,service}=fixture();
+  const stale=version('scope-progress','rev-scope-stale',{schemaVersion:'2.0.0' as const,state:'ACTIVE' as const,kind:'activity_scope' as const,activityKind:'DAILY_PROGRESS' as const,activityRef:{...progressRef,revision:'rev-progress-previous'} as ObjectRef<'DailyProgress'>,recordScope:recScope,sourceLiteral:'synthetic-scope',synthetic:true});
+  mapFixtureViews(store,view=>({...view,activityScopes:async()=>[stale]}));
+  await refusal(service.typedRead(ctx,request({selector:{kind:'EXACT_OBJECT',objectRef:{...progressRef,revision:'never-existed'}},linkMask:[]})),'REVISION_STALE',409);
 });

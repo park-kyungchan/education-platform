@@ -3,7 +3,7 @@ import {assertTeacherScope} from './usecases/requestRecovery';
 import {canonicalJson} from '../learning/model';
 import {assertTeacherDate,nativeBusinessDate} from './nativePrerequisiteStore';
 import type {TrustedTeacherContext,NativeCommandIngress,BindTeacherInput,UpdateTeacherInput,RetireTeacherInput,CreateClassGroupInput,UpdateClassGroupInput,CreateLessonSessionInput,UpdateLessonSessionInput,UpsertTemporalBindingInput,AttachStudentRevisionInput,UpdateStudentRevisionInput,AttachActivityScopeInput,CorrectActivityScopeInput,CreateProgressInput,CorrectProgressInput,CreateAssessmentInput,CorrectAssessmentInput,CreateDraftInput,UpdateDraftInput,RecordScoreEvidenceInput,PreviewApprovalClosureInput,IssueApprovalInput,ApproveDraftInput,RevokeApprovalInput,CommandOutcomeInput,FenceCommandInput,FinalizeReadOccurrenceInput,ActivityScopeFilter} from './contracts/teacherOperations';
-import {validateScopeMutation,requestDigest,validateContext,type ApprovalClosure,type CommandContext,type NativeObjectRef,type NativeWriteResult,type ObjectRef,type OwnerAppendCommand,type OwnerFamily,type OwnerVersion,type ReadAdmission,type TeacherBinding} from './contracts/prerequisiteRecords';
+import {assertStudentOperationKind,validateScopeMutation,requestDigest,validateContext,type ApprovalClosure,type CommandContext,type NativeObjectRef,type NativeWriteResult,type ObjectRef,type OwnerAppendCommand,type OwnerFamily,type OwnerVersion,type ReadAdmission,type TeacherBinding} from './contracts/prerequisiteRecords';
 
 /** IG-2 facade over the complete IG-1 TeacherPrerequisiteStore port only.
  * Authenticated identity always comes from TrustedTeacherContext (ingress
@@ -164,7 +164,7 @@ export class PrerequisiteApplication {
     return this.execute('createProgress',command,cmd=>this.store.createProgress(cmd));
   }
   async correctProgress(context:TrustedTeacherContext,input:CorrectProgressInput):Promise<NativeWriteResult>{
-    if(input?.payload?.kind!=='daily_progress')throw Error('invalid_student_payload_kind');
+    assertStudentOperationKind('correctProgress',input?.payload);
     const ctx=this.commandContext(context,input?.command);
     await this.requireActiveTeacher(context,input?.payload?.recordScope?.businessDate);
     const command={context:ctx,studentId:input.studentId,entityId:input.entityId,expectedRevisionId:input.expectedRevisionId,payload:input.payload};
@@ -179,7 +179,7 @@ export class PrerequisiteApplication {
     return this.execute('createAssessment',command,cmd=>this.store.createAssessment(cmd));
   }
   async correctAssessment(context:TrustedTeacherContext,input:CorrectAssessmentInput):Promise<NativeWriteResult>{
-    if(input?.payload?.kind!=='previous_homework_assessment')throw Error('invalid_student_payload_kind');
+    assertStudentOperationKind('correctAssessment',input?.payload);
     const ctx=this.commandContext(context,input?.command);
     const bound=await this.requireActiveTeacher(context,input?.payload?.assessmentScope?.businessDate);
     if(input?.payload?.assessedBy?.state==='known')this.assertSelfTeacher(bound,input.payload.assessedBy.value);
@@ -195,7 +195,7 @@ export class PrerequisiteApplication {
     return this.execute('createDraft',command,cmd=>this.store.createDraft(cmd));
   }
   async updateDraft(context:TrustedTeacherContext,input:UpdateDraftInput):Promise<NativeWriteResult>{
-    if(input?.payload?.kind!=='daily_record_draft')throw Error('invalid_student_payload_kind');
+    assertStudentOperationKind('updateDraft',input?.payload);
     const ctx=this.commandContext(context,input?.command);
     const bound=await this.requireActiveTeacher(context,input?.payload?.recordScope?.businessDate);
     if(input?.payload?.responsibleTeacherRef?.state==='known')this.assertSelfTeacher(bound,input.payload.responsibleTeacherRef.value);

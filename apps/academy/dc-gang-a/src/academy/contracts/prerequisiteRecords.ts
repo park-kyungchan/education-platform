@@ -85,7 +85,7 @@ export function scopeIdentity(s:RecordScope):string{return canonicalJson([s.stud
 export function validateSnapshot(s:ReadSnapshot,expectedVersion:'1.1.0'|'1.0.0'='1.1.0'):void{assertExactKeys(s,['registryVersion','readRevision','asOf','policyRevision','consistency']);if(s.registryVersion!==expectedVersion)throw Error('registry_version');text(s.readRevision);text(s.policyRevision);utc(s.asOf);en(s.consistency,['SNAPSHOT','FAIL_ON_CHANGE']);}
 export function validateContentScope(s:ContentScope):void{assertExactKeys(s,['editionRef','unitRef','sectionRefs','printedPages','problemLabels']);validateObjectRef(s.editionRef,['TextbookEdition']);validateObjectRef(s.unitRef,['Unit']);validateKnowledge(s.sectionRefs,x=>list(x,r=>validateObjectRef(r,['Section'])));validateKnowledge(s.printedPages,x=>{assertExactKeys(x,['first','last']);if(!Number.isSafeInteger(x.first)||x.first<1||!Number.isSafeInteger(x.last)||x.last<x.first)throw Error('invalid_pages');});validateKnowledge(s.problemLabels,x=>list(x,text));}
 const sourceStudent=(s:SourceKey)=>{validateSourceKey(s);if(s.namespace!=='academy_student')throw Error('source_namespace_conflict');};
-export function validateNativeStudentPayload(p:NativeStudentPayload):void{
+function validateNativeStudentPayloadUnshaped(p:NativeStudentPayload):void{
  canonicalJson(p);sourceStudent(p.sourceStudent);
  switch(p.kind){
  case 'previous_homework_assessment':assertExactKeys(p,['kind','sourceStudent','homeworkRef','assessmentScope','outcome','note','assessedBy','assessedAt','evidenceRefs']);validateObjectRef(p.homeworkRef,['HomeworkAssignment']);validateScope(p.assessmentScope);validateKnowledge(p.outcome,x=>en(x,['COMPLETE','PARTIAL','NOT_DONE','EXCUSED']));validateKnowledge(p.note,text);validateKnowledge(p.assessedBy,x=>validateObjectRef(x,['Teacher']));validateKnowledge(p.assessedAt,utc);list(p.evidenceRefs,text,1);if(!p.evidenceRefs.includes(p.homeworkRef.revision))throw Error('homework_revision_evidence_required');return;
@@ -102,7 +102,7 @@ export function validateAction(a:ActionBinding):void{assertExactKeys(a,['name','
 function validateExpected(r:Revision|'ABSENT'){if(r!=='ABSENT')validateRevision(r);}
 function validateIdentityRevision(r:IdentityRevision){assertExactKeys(r,['ref','expected']);validateNativeRef(r.ref);validateExpected(r.expected);}
 export function validateLinkExpectation(l:LinkRevisionExpectation){assertExactKeys(l,['linkDefinitionBinding','nativeLinkIdentity','from','to','expected']);sha(l.linkDefinitionBinding);text(l.nativeLinkIdentity);validateNativeRef(l.from);validateNativeRef(l.to);validateExpected(l.expected);}
-export function validateOwnerPayload(p:OwnerPayload):void{
+function validateOwnerPayloadUnshaped(p:OwnerPayload):void{
  canonicalJson(p);
  switch(p.kind){
  case 'native_score_evidence':assertExactKeys(p,['kind','attemptRef','assignmentRef','recordScope','scale','score','recordedBy','measurementLiteral','synthetic']);validateObjectRef(p.attemptRef,['DailyTestAttempt']);validateObjectRef(p.assignmentRef,['HomeworkAssignment']);validateScope(p.recordScope);validateObjectRef(p.recordedBy,['Teacher']);assertExactKeys(p.scale,['family','version','kind']);if(p.scale.family!=='daily_test_attempt'||p.scale.version!=='1.0.0'||p.scale.kind!=='OWNER_RECORDED_NUMERIC_SCORE')throw Error('score_scale_unsupported');assertExactKeys(p.score,['earned','maximum']);if(!Number.isFinite(p.score.earned)||!Number.isFinite(p.score.maximum)||p.score.maximum<=0||p.score.earned<0||p.score.earned>p.score.maximum)throw Error('invalid_explicit_score');text(p.measurementLiteral);break;
@@ -117,7 +117,7 @@ export function validateOwnerPayload(p:OwnerPayload):void{
  }
  if(typeof p.synthetic!=='boolean')throw Error('synthetic_boolean');
 }
-export function validateContext(c:CommandContext):void{assertExactKeys(c,['ownerId','actorId','idempotencyKey','occurrenceId','admissionId','processEpoch','sourceObservedAt','verifiedSession','namespace','scopeRef','nativeOwnerBinding','nativeInterfaceBinding','action','requestIntentDigest']);[c.ownerId,c.actorId,c.idempotencyKey,c.occurrenceId,c.admissionId,c.processEpoch,c.namespace].forEach(text);assertInstant(c.sourceObservedAt);assertExactKeys(c.verifiedSession,['ownerId','actorId','authenticationRevision']);text(c.verifiedSession.authenticationRevision);if(c.verifiedSession.ownerId!==c.ownerId||c.verifiedSession.actorId!==c.actorId)throw Error('verified_session_binding_conflict');validateNativeRef(c.scopeRef);[c.nativeOwnerBinding,c.nativeInterfaceBinding,c.requestIntentDigest].forEach(sha);validateAction(c.action);}
+function validateContextUnshaped(c:CommandContext):void{assertExactKeys(c,['ownerId','actorId','idempotencyKey','occurrenceId','admissionId','processEpoch','sourceObservedAt','verifiedSession','namespace','scopeRef','nativeOwnerBinding','nativeInterfaceBinding','action','requestIntentDigest']);[c.ownerId,c.actorId,c.idempotencyKey,c.occurrenceId,c.admissionId,c.processEpoch,c.namespace].forEach(text);assertInstant(c.sourceObservedAt);assertExactKeys(c.verifiedSession,['ownerId','actorId','authenticationRevision']);text(c.verifiedSession.authenticationRevision);if(c.verifiedSession.ownerId!==c.ownerId||c.verifiedSession.actorId!==c.actorId)throw Error('verified_session_binding_conflict');validateNativeRef(c.scopeRef);[c.nativeOwnerBinding,c.nativeInterfaceBinding,c.requestIntentDigest].forEach(sha);validateAction(c.action);}
 export function commandBinding(c:CommandContext,requestDigest:string):RequestBinding{return {ownerId:c.ownerId,actorId:c.actorId,idempotencyKey:c.idempotencyKey,requestDigest,occurrenceId:c.occurrenceId,admissionId:c.admissionId,processEpoch:c.processEpoch};}
 export function validateRequest(r:RequestBinding):void{assertExactKeys(r,['ownerId','actorId','idempotencyKey','requestDigest','occurrenceId','admissionId','processEpoch']);[r.ownerId,r.actorId,r.idempotencyKey,r.occurrenceId,r.admissionId,r.processEpoch].forEach(text);sha(r.requestDigest);}
 export function requestDigest(operation:string,command:unknown):string{return digest({operation,command});}
@@ -144,4 +144,44 @@ export function fixedConsumerProfile(profile:ConsumerProfileId){
  const definition=consumerProfileDefinitions[profile],pins=consumerProfilePins[profile];
  if(digest(definition)!==pins.consumerProfileDigest)throw Error('consumer_profile_definition_mismatch');
  return {id:profile,definition,pins};
+}
+
+/** Malformed nested input (e.g. null where an object is required) surfaces as TypeError inside a validator;
+ * it is a caller input error, so it becomes the closed refusal invalid_prerequisite_shape (400). */
+function shaped<A extends unknown[]>(validate:(...args:A)=>void):(...args:A)=>void{
+ return (...args:A)=>{try{validate(...args);}catch(error){if(error instanceof TypeError)throw Error('invalid_prerequisite_shape');throw error;}};
+}
+export const validateNativeStudentPayload:(p:NativeStudentPayload)=>void=shaped(validateNativeStudentPayloadUnshaped);
+export const validateOwnerPayload:(p:OwnerPayload)=>void=shaped(validateOwnerPayloadUnshaped);
+export const validateContext:(c:CommandContext)=>void=shaped(validateContextUnshaped);
+
+/** The one rule for which occurrence a progress/assessment (or homework/attempt) belongs to. Every reader
+ * (read horizon, typed projection, approval closure) uses this instead of choosing between the embedded
+ * payload scope and the activity-scope attachments itself:
+ *  - no attachment for the activity: EMBEDDED (its payload scope), or UNRESOLVED when it has none;
+ *  - a DETACHED attachment: DETACHED (withheld; the caller checks the pinned revision);
+ *  - exactly one ACTIVE attachment pinning this exact revision: ATTACHED at that scope;
+ *  - otherwise (stale pin, several ACTIVE): UNRESOLVED, never the embedded original. */
+export type ActivityOccurrence=
+ |{state:'EMBEDDED';scope:RecordScope;attachments:OwnerVersion<ActivityScopeLink>[]}
+ |{state:'ATTACHED';scope:RecordScope;attachment:OwnerVersion<ActivityScopeLink>;attachments:OwnerVersion<ActivityScopeLink>[]}
+ |{state:'DETACHED';attachment:OwnerVersion<ActivityScopeLink>;attachments:OwnerVersion<ActivityScopeLink>[]}
+ |{state:'UNRESOLVED';attachments:OwnerVersion<ActivityScopeLink>[]};
+export function resolveActivityOccurrence(activity:{objectType:string;nativeKey:string;revision:string},embedded:RecordScope|null,scopes:readonly OwnerVersion<ActivityScopeLink>[]):ActivityOccurrence{
+ const attachments=scopes.filter(v=>v.payload.activityRef.identity.objectType===activity.objectType&&v.payload.activityRef.identity.nativeKey===activity.nativeKey);
+ if(!attachments.length)return embedded?{state:'EMBEDDED',scope:embedded,attachments}:{state:'UNRESOLVED',attachments};
+ const detached=attachments.find(v=>activityScopeState(v.payload)==='DETACHED');
+ if(detached)return {state:'DETACHED',attachment:detached,attachments};
+ const active=attachments.filter(v=>activityScopeState(v.payload)==='ACTIVE'&&v.payload.activityRef.revision===activity.revision);
+ return active.length===1?{state:'ATTACHED',scope:active[0]!.payload.recordScope,attachment:active[0]!,attachments}:{state:'UNRESOLVED',attachments};
+}
+/** The one operation -> student-record payload kind table (create and correct routes). */
+export const studentOperationKinds:Readonly<Record<string,NativeStudentPayload['kind']>>=Object.freeze({
+ createProgress:'daily_progress',correctProgress:'daily_progress',
+ createAssessment:'previous_homework_assessment',correctAssessment:'previous_homework_assessment',
+ createDraft:'daily_record_draft',updateDraft:'daily_record_draft',
+});
+export function assertStudentOperationKind(operation:string,payload:unknown):void{
+ const kind=studentOperationKinds[operation];
+ if(kind&&(!payload||typeof payload!=='object'||(payload as {kind?:unknown}).kind!==kind))throw Error('invalid_student_payload_kind');
 }

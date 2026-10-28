@@ -4,7 +4,7 @@ import {assertTeacherScope} from './usecases/requestRecovery';
 import type {TrustedTeacherContext} from './contracts/teacherOperations';
 import type {ReadHorizonExpectation,ReadHorizonPlan,ReadOutputRefusalSelector,TeacherPrerequisiteReadStore,TeacherPrerequisiteStore} from './ports/teacherStore';
 import {computeReadHorizon,selectReadPlan,readPlanStudentTuples} from './nativePrerequisiteStore';
-import {validateKnowledge,validateOwnerPayload,activityScopeState,fixedConsumerProfile,consumerProfilePins,selectedProtocolClosure,type ConsumerProfileId,type RecordScope,educationTypes,projectInterval,validateNativeRef,validateObjectRef,validateSnapshot,type EducationType,type EvidenceRef,type Knowledge,type NativeObjectRef,type ObjectRef,type ReadAdmission,type ReadSnapshot} from './contracts/prerequisiteRecords';
+import {validateKnowledge,validateOwnerPayload,activityScopeState,resolveActivityOccurrence,fixedConsumerProfile,consumerProfilePins,selectedProtocolClosure,type ConsumerProfileId,type RecordScope,educationTypes,projectInterval,validateNativeRef,validateObjectRef,validateSnapshot,type EducationType,type EvidenceRef,type Knowledge,type NativeObjectRef,type ObjectRef,type ReadAdmission,type ReadSnapshot} from './contracts/prerequisiteRecords';
 import type {CatalogNode} from './domain';
 import {validateAcademyRecord} from './records';
 import {validateLearningAssignment,validateLearningAttempt,type LearningWorkAssignment} from './learningWork';
@@ -974,7 +974,11 @@ export class NativeTypedReadService implements NativeTypedRead{
     const edges=(await view.temporalBindings(context.ownerId)).filter(v=>v.payload.validFrom<=selection.businessDate&&(v.payload.validTo===null||selection.businessDate<v.payload.validTo)).map(v=>v.payload);
     const member=edges.some(p=>p.bindingKind==='CLASS_MEMBERSHIP'&&identityEqual(p.subjectRef.identity,student.identity)&&identityEqual(p.targetRef.identity,selection.classGroupRef.identity));
     const lesson=selection.occurrence.mode==='EXACT'?selection.occurrence.lessonRef:null;
-    const participates=lesson===null||edges.some(p=>p.bindingKind==='LESSON_PARTICIPATION'&&identityEqual(p.subjectRef.identity,lesson.identity)&&identityEqual(p.targetRef.identity,student.identity));
+    // Participation evidence is either the lesson payload naming the student or a dated binding; the gap only
+    // reports the case with neither, so it never contradicts an emitted payload participant link.
+    const lessonPayload=lesson===null?null:(await view.lessons(context.ownerId)).find(v=>v.entityKey===lesson.identity.nativeKey)?.payload;
+    const named=!!lessonPayload&&lessonPayload.participantRefs.state==='known'&&lessonPayload.participantRefs.value.some(ref=>identityEqual(ref.identity,student.identity));
+    const participates=lesson===null||named||edges.some(p=>p.bindingKind==='LESSON_PARTICIPATION'&&identityEqual(p.subjectRef.identity,lesson.identity)&&identityEqual(p.targetRef.identity,student.identity));
     return [...(member?[]:[{subject:student,path:'Student.links.studentMemberOfClass',reason:'UNVERIFIED' as const,requiredEvidence:['NATIVE_RELATION_MAPPING'],evidence:[]}]),
       ...(participates||lesson===null?[]:[{subject:lesson,path:'LessonSession.links.lessonHasStudent',reason:'UNVERIFIED' as const,requiredEvidence:['NATIVE_RELATION_MAPPING'],evidence:[]}])] as TypedGap[];
   }
@@ -1063,7 +1067,7 @@ export class NativeTypedReadService implements NativeTypedRead{
     this.assertSupportedPlan(request);
     view=await selectReadPlan(view,context.ownerId,request.temporalSelection.businessDate,horizonPlan(request.functionRequest,this.consumerProfile));
     if(this.consumerProfile==='CURRENT_1_1'&&this.cursorOptions.cursorOwner&&request.functionRequest.functionName==='GetStudentDailyContext'&&request.selector.kind==='EXACT_OBJECT'&&request.selector.objectRef.identity.objectType==='Student'&&request.linkMask.length===0&&request.fieldMask.every(f=>f.objectType==='Student'))return this.projectStudentOnly(view,context,request);
-    const {records,links,gaps,withheldCatalog,observedHomework,observedAttempts}=await this.projectAll(view,context,request);
+    const {records,links,gaps,withheldCatalog,observedHomework,observedAttempts,withheldRevisions}=await this.projectAll(view,context,request);
     this.assertTemporalJoins(request,records);
     gaps.push(...await this.studentOccurrenceGaps(view,context,request));
     // Explicit revision pins are checked in every consistency mode.
@@ -1090,6 +1094,8 @@ export class NativeTypedReadService implements NativeTypedRead{
           // A progress/assessment withheld for an unresolved scope mapping answers with that explicit gap, not NOT_FOUND.
           ||((target.identity.objectType==='DailyProgress'||target.identity.objectType==='PreviousHomeworkAssessment')&&gaps.some(gap=>gap.path===target.identity.objectType+'.recordScope'&&!!gap.subject&&identityEqual(gap.subject.identity,target.identity)));
         if(withheld){
+          const knownRevision=withheldRevisions.get(target.identity.objectType+':'+target.identity.nativeKey);
+          if(knownRevision!==undefined&&knownRevision!==target.revision)throw staleRevision();
           if(target.identity.objectType==='Section'){const pins=await view.currentCatalogPins(context.ownerId);const pin=pins.find(pin=>pin.node.id===target.identity.nativeKey);if(!pin||pin.revisionId!==target.revision)throw staleRevision();}
           const exactGaps=gaps.filter(gap=>(gap.path===target.identity.objectType+'.record'||gap.path===target.identity.objectType+'.recordScope'||gap.path==='Section.unitRef'||gap.path==='DailyTestAttempt.links.attemptFollows')&&(!gap.subject||identityEqual(gap.subject.identity,target.identity)));
           if(gaps.length>100)throw unverifiable();gaps.forEach(validateNativeGap);
@@ -1136,7 +1142,7 @@ export class NativeTypedReadService implements NativeTypedRead{
   private baseRecord(request:TypedReadRequest,version:{scopeRef:NativeObjectRef;namespace:string;entityKey:string;revisionId:string;recordedAt:string},objectType:EducationType):TypedRecord{
     return {contractVersion:this.fixedProfile.definition.registry.version,typeVersion:this.typeVersion(objectType),identity:{scopeRef:version.scopeRef,namespace:version.namespace,objectType,nativeKey:version.entityKey},revision:version.revisionId,asOf:request.asOf,snapshot:request.snapshot,provenance:this.provenance(version.scopeRef,version.revisionId,'nativeTypedRead/'+version.entityKey,version.recordedAt)};
   }
-  private async projectAll(view:TeacherPrerequisiteReadStore,context:TrustedTeacherContext,request:TypedReadRequest):Promise<{records:TypedRecord[];links:TypedLink[];gaps:TypedGap[];withheldCatalog:Set<string>;observedHomework:Set<string>;observedAttempts:Set<string>}>{
+  private async projectAll(view:TeacherPrerequisiteReadStore,context:TrustedTeacherContext,request:TypedReadRequest):Promise<{records:TypedRecord[];links:TypedLink[];gaps:TypedGap[];withheldCatalog:Set<string>;observedHomework:Set<string>;observedAttempts:Set<string>;withheldRevisions:Map<string,string>}>{
     const records:TypedRecord[]=[];const gaps:TypedGap[]=[];const links:TypedLink[]=[];
     const observedHomework=new Set<string>(),observedAttempts=new Set<string>();
     for(const version of await view.teachers(context.ownerId)){
@@ -1165,6 +1171,7 @@ export class NativeTypedReadService implements NativeTypedRead{
       record.displayName=version.payload.displayName;record.enrollmentState=version.payload.enrollmentState;records.push(record);
     }
     const currentBinding=await view.teacherBindingByActor(context.ownerId,context.actorId);
+    const withheldRevisions=new Map<string,string>();
     const scopeVersions=await view.activityScopes(context.ownerId,{});
     const sourceStudents=await view.students(context.ownerId);
     const sourceRows=new Map<string,CurrentRecord[]>();
@@ -1226,7 +1233,7 @@ export class NativeTypedReadService implements NativeTypedRead{
         }
         if(payload.kind==='learning_work_assignment'||payload.kind==='learning_work_attempt'){
           const objectType=payload.kind==='learning_work_assignment'?'HomeworkAssignment':'DailyTestAttempt';
-          const observed=objectType==='HomeworkAssignment'?observedHomework:observedAttempts;observed.add(current.entityId);
+          const observed=objectType==='HomeworkAssignment'?observedHomework:observedAttempts;observed.add(current.entityId);withheldRevisions.set(objectType+':'+current.entityId,current.revisionId);
           const scopes=scopeVersions.filter(v=>v.payload.activityRef.identity.nativeKey===current.entityId&&v.payload.activityRef.identity.objectType===objectType&&canonicalJson(v.payload.activityRef.identity.scopeRef)===canonicalJson(request.scopeRef)&&v.payload.activityRef.identity.namespace===request.scopeRef.basis.namespace);
           const terminal=scopes.find(v=>activityScopeState(v.payload)==='DETACHED');
           if(terminal){
@@ -1276,18 +1283,14 @@ export class NativeTypedReadService implements NativeTypedRead{
         const objectType:EducationType=payload.kind==='daily_progress'?'DailyProgress':payload.kind==='previous_homework_assessment'?'PreviousHomeworkAssessment':'DailyRecordDraft';
         let payloadScope=payload.kind==='previous_homework_assessment'?payload.assessmentScope:payload.recordScope;
         if(objectType!=='DailyRecordDraft'){
-          const scopes=scopeVersions.filter(v=>v.payload.activityRef.identity.nativeKey===current.entityId&&v.payload.activityRef.identity.objectType===objectType);
-          const terminal=scopes.find(v=>activityScopeState(v.payload)==='DETACHED');
-          if(terminal){
+          const occurrence=resolveActivityOccurrence({objectType,nativeKey:current.entityId,revision:current.revisionId},payloadScope,scopeVersions);
+          if(occurrence.state==='DETACHED'){
             // A detached progress/assessment is withheld; the DETACHED_ACTIVITY carrier is defined for homework/attempts only.
-            if(terminal.payload.activityRef.revision!==current.revisionId)throw staleRevision();
+            if(occurrence.attachment.payload.activityRef.revision!==current.revisionId)throw staleRevision();
             continue;
           }
-          const active=scopes.filter(v=>activityScopeState(v.payload)==='ACTIVE'&&v.payload.activityRef.revision===current.revisionId);
-          // Once a scope exists, only an ACTIVE scope pinning this exact revision says where the record belongs;
-          // otherwise the mapping is unresolved (explicit gap), never the embedded original scope.
-          if(scopes.length&&active.length!==1){gaps.push({subject:{identity:{scopeRef:payloadScope.studentRef.identity.scopeRef,namespace:payloadScope.studentRef.identity.namespace,objectType,nativeKey:current.entityId},revision:current.revisionId},path:objectType+'.recordScope',reason:'UNVERIFIED',requiredEvidence:['NATIVE_RELATION_MAPPING'],evidence:[]});continue;}
-          if(active.length===1)payloadScope=active[0]!.payload.recordScope;
+          if(occurrence.state==='UNRESOLVED'){withheldRevisions.set(objectType+':'+current.entityId,current.revisionId);gaps.push({subject:{identity:{scopeRef:payloadScope.studentRef.identity.scopeRef,namespace:payloadScope.studentRef.identity.namespace,objectType,nativeKey:current.entityId},revision:current.revisionId},path:objectType+'.recordScope',reason:'UNVERIFIED',requiredEvidence:['NATIVE_RELATION_MAPPING'],evidence:[]});continue;}
+          payloadScope=occurrence.scope;
         }
         const versionLike={scopeRef:payloadScope.studentRef.identity.scopeRef,namespace:payloadScope.studentRef.identity.namespace,entityKey:current.entityId,revisionId:current.revisionId,recordedAt:current.recordedAt};
         const record=this.baseRecord(request,versionLike,objectType);
@@ -1392,6 +1395,7 @@ export class NativeTypedReadService implements NativeTypedRead{
       if(teacherRefs.state==='known')for(const toRef of teacherRefs.value)emitLink('lessonTaughtBy',record,toRef,date,record.provenance);
       else if(request.linkMask.includes('lessonTaughtBy'))gaps.push({subject:refOf(record),path:'links.lessonTaughtBy',reason:teacherRefs.reason,requiredEvidence:['NATIVE_RELATION_MAPPING'],evidence:[]});
       const participantRefs=record.participantRefs as Knowledge<ObjectRef[]>;
+      // Payload participants and dated LESSON_PARTICIPATION witnesses are separate links with their own intervals (OR2-02).
       if(participantRefs.state==='known')for(const toRef of participantRefs.value)emitLink('lessonHasStudent',record,toRef,date,record.provenance);
       else if(request.linkMask.includes('lessonHasStudent'))gaps.push({subject:refOf(record),path:'links.lessonHasStudent',reason:participantRefs.reason,requiredEvidence:['NATIVE_RELATION_MAPPING'],evidence:participantRefs.evidence});
     }
@@ -1456,7 +1460,7 @@ export class NativeTypedReadService implements NativeTypedRead{
     }
     records.sort((a,b)=>compareText(identityKey(a.identity),identityKey(b.identity)));
     links.sort((a,b)=>compareText(a.linkType+':'+identityKey(a.fromRef.identity)+'->'+identityKey(a.toRef.identity),b.linkType+':'+identityKey(b.fromRef.identity)+'->'+identityKey(b.toRef.identity)));
-    return {records,links,gaps,withheldCatalog,observedHomework,observedAttempts};
+    return {records,links,gaps,withheldCatalog,observedHomework,observedAttempts,withheldRevisions};
   }
 }
 export function createNativeTypedRead(store:TeacherPrerequisiteStore,ownerId:string,options:NativeTypedReadOptions={}):NativeTypedRead{

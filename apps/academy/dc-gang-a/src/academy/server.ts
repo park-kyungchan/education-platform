@@ -403,7 +403,7 @@ export function createTeacherServerHandler(options:TeacherServerOptions){
           if(req.method!=='POST')return json({error:'method_not_allowed'},405);
           if(url.search)return json({error:'unexpected_query_scope'},400);
           let data:Record<string,unknown>;
-          try{data=await body(req);}catch(e){console.error(JSON.stringify({status:'NATIVE_PREREQUISITE_INPUT_REJECTED',code:'body:'+(e instanceof Error&&/^[a-z0-9_]{1,60}$/.test(e.message)?e.message:'unparsable'),automaticRetry:false}));return json({error:'invalid_native_prerequisite_input'},400);}
+          try{data=await body(req);}catch(e){console.error(JSON.stringify({status:'NATIVE_PREREQUISITE_INPUT_REJECTED',code:'body:'+(e instanceof Error&&/^[A-Za-z0-9_]{1,60}$/.test(e.message)?e.message:'unparsable'),automaticRetry:false}));return json({error:'invalid_native_prerequisite_input'},400);}
           if(options.currentAuthentication){const current=options.currentAuthentication();identity=current.identity;sessionKey=current.sessionKey;}
           const currentActor=context(req);if(!currentActor||currentActor.ownerId!==actor.ownerId||currentActor.actorId!==actor.actorId)return json({error:'teacher_authentication_required'},401);
           let operation:string;let input:Record<string,unknown>;
@@ -443,7 +443,7 @@ export function createTeacherServerHandler(options:TeacherServerOptions){
             if(status!==null&&status<500)return json(status===409?{error:code,automaticRetry:false}:{error:code},status);
             // Unexpected failure: log only a closed code or class plus throw-site frames (no payloads) so it is diagnosable.
             const at=error instanceof Error?[...(error.stack??'').matchAll(/\/([A-Za-z_]+\.ts):(\d+):\d+/g)].slice(0,4).map(x=>x[1]+':'+x[2]).join('<'):'';
-            console.error(JSON.stringify({status:'NATIVE_PREREQUISITE_FAILED',code:(/^[a-z0-9_]{1,100}$/.test(code)?code:(error instanceof Error?error.constructor.name:'UNKNOWN'))+(at?'@'+at:''),automaticRetry:false}));
+            console.error(JSON.stringify({status:'NATIVE_PREREQUISITE_FAILED',code:(/^[A-Za-z0-9_]{1,100}$/.test(code)?code:(error instanceof Error?error.constructor.name:'UNKNOWN'))+(at?'@'+at:''),automaticRetry:false}));
             return json({error:'native_prerequisite_failed',automaticRetry:false},503);
           };
           // W12-F1 fence: ordinary teacher transport must never mark a

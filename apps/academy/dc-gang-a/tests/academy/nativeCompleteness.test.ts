@@ -4,9 +4,10 @@ import {canonicalJson,digest,known as legacyKnown} from '../../src/learning/mode
 import {nativeProposalTexts,assertCompleteGrades} from '../../src/academy/nativeCompleteness';
 import {createAcademySourceAudit} from '../../src/lms/academySourceAudit';
 import {nativeBusinessDate,assertTeacherDate,computeReadHorizon} from '../../src/academy/nativePrerequisiteStore';
-import {requestDigest,validateOwnerPayload,type OwnerAppendCommand,type ActivityScopeLink,type LessonSessionRecord,type NativeScoreEvidence,type OwnerVersion} from '../../src/academy/contracts/prerequisiteRecords';
+import {requestDigest,validateOwnerPayload,validateNativeStudentPayload,type OwnerAppendCommand,type ActivityScopeLink,type LessonSessionRecord,type NativeScoreEvidence,type OwnerVersion} from '../../src/academy/contracts/prerequisiteRecords';
 import type {TeacherPrerequisiteReadStore} from '../../src/academy/ports/teacherStore';
 import {PrerequisiteApplication} from '../../src/academy/prerequisiteApplication';
+import {prerequisiteRefusalStatus} from '../../src/academy/server';
 import {context,known,instant,objectRef} from './nativePrerequisiteContracts.test';
 import {foundation,admitted,FictionalSql} from './nativePrerequisiteStore.test';
 import {scene,retained} from './nativePrerequisitePort.test';
@@ -182,4 +183,26 @@ test('NF-11 an unknown business timezone is a closed input refusal',async()=>{
  const f=await scene(),body=f.sql.rows('class_versions')[0]!.body,payload=structuredClone((typeof body==='string'?JSON.parse(body):body).payload);
  payload.businessTimezone={...payload.businessTimezone,value:'Mars/Olympus'};
  expect(()=>validateOwnerPayload(payload)).toThrow('invalid_business_timezone');
+});
+test('NF-12 malformed nested prerequisite input is the closed input refusal invalid_prerequisite_shape',async()=>{
+ const f=await scene(),body=f.sql.rows('class_versions')[0]!.body,classPayload=structuredClone((typeof body==='string'?JSON.parse(body):body).payload);
+ expect(()=>validateNativeStudentPayload(null as never)).toThrow('invalid_prerequisite_shape');
+ expect(()=>validateOwnerPayload({...classPayload,businessTimezone:null})).toThrow('invalid_prerequisite_shape');
+});
+test('NF-SWEEP every stored payload family refuses null/wrong-typed values at any path with a classified 4xx code',async()=>{
+ const f=await scene(),studentKinds=new Set(['daily_progress','previous_homework_assessment','daily_record_draft']);
+ const samples=new Map<string,unknown>();
+ for(const table of ['record_versions','class_versions','teacher_versions','lesson_versions','binding_versions','scope_versions','score_versions'])for(const row of f.sql.rows(table)){
+  const payload=row.payload??(typeof row.body==='string'?JSON.parse(row.body as string):row.body as {payload?:unknown}|undefined)?.payload;
+  const kind=(payload as {kind?:string}|undefined)?.kind;if(kind&&!samples.has(kind))samples.set(kind,payload);
+ }
+ expect(samples.size).toBeGreaterThanOrEqual(6);
+ const paths=(value:unknown,prefix:string[]=[]):string[][]=>value&&typeof value==='object'?Object.entries(value as object).flatMap(([k,v])=>[[...prefix,k],...paths(v,[...prefix,k])]):[];
+ const escaped:string[]=[];let cases=0;
+ for(const [kind,payload] of samples)for(const path of paths(payload))for(const bad of [null,7,'x',{}]){
+  const variant=structuredClone(payload) as Record<string,unknown>;let at:Record<string,unknown>=variant;for(const k of path.slice(0,-1))at=at[k] as Record<string,unknown>;at[path.at(-1)!]=bad;
+  cases++;try{(studentKinds.has(kind)?validateNativeStudentPayload:validateOwnerPayload)(variant as never);}catch(error){const code=error instanceof Error?error.message:String(error),status=prerequisiteRefusalStatus(code);if(status===null||status>=500)escaped.push(kind+':'+path.join('.')+'='+JSON.stringify(bad)+' -> '+(error instanceof Error?error.constructor.name+':':'')+code);}
+ }
+ expect(cases).toBeGreaterThan(300);
+ expect(escaped).toEqual([]);
 });
