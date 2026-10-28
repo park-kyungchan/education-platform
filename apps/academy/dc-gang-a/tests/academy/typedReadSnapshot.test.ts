@@ -115,11 +115,11 @@ describe('ORDINARY-R7-F1 fresh cleanup revision selection',()=>{
     };
     let result;
     try{result=await f.service.typedReadBuffered(ctx,f.input,()=>f.state.sessionActive);}finally{TextEncoder.prototype.encode=encode;f.state.leaseHeld=false;}
-    const code=control==='expired'||control==='retired'?'PERMISSION_DENIED':control==='policy'?'OBJECTSET_CURSOR_STALE':control==='unchanged'?'CONTRACT_UNVERIFIABLE':'REVISION_STALE';
+    const code=control==='expired'||control==='retired'||control==='policy'?'PERMISSION_DENIED':control==='unchanged'?'CONTRACT_UNVERIFIABLE':'REVISION_STALE';
     expect(f.state.callbackReady&&f.state.triggered&&f.state.commitKnown).toBe(true);expect(f.state.transactions).toBe(2);expect(f.state.ownerCalls).toBe(1);
     expect(f.correction.count).toBe(control==='unchanged'||control==='policy'?0:1);
     expect((await f.store.teacherBindingByActor(ctx.ownerId,ctx.actorId))?.payload.state).toBe(control==='retired'?'RETIRED':'ACTIVE');
-    expect(f.state.sessionActive).toBe(control!=='expired');expect(result.status).toBe(control==='expired'?401:control==='retired'?403:409);
+    expect(f.state.sessionActive).toBe(control!=='expired');expect(result.status).toBe(control==='expired'?401:control==='retired'||control==='policy'?403:409);
     expect(encoded.length).toBeGreaterThan(0);expect(result.body).toBe(encoded.at(-1)!);
     const body=JSON.parse(new TextDecoder().decode(result.body!));expect(body.error.code).toBe(code);expect(body.items).toBeUndefined();expect(body.nextCursor).toBeUndefined();
     expect(f.sql.rows('read_occurrences').find(r=>r.request_id===f.input.requestId)).toMatchObject({status:'REFUSED',refusal_code:code,snapshot_digest:null});
@@ -167,8 +167,9 @@ describe('ORDINARY-R6-F1 real owner final refusal selection',()=>{
   for(const change of ['binding','policy'] as const)test('cleanup refreshes current '+change+' refusal',async()=>{
     const f=await r6OwnerFixture('cleanup',false,change);f.state.leaseHeld=true;
     let result;try{result=await f.service.typedReadBuffered(ctx,f.input,()=>f.state.sessionActive);}catch(error){expect(f.state.changeError).toBe(null);throw error;}finally{f.state.leaseHeld=false;}
-    const code=change==='binding'?'PERMISSION_DENIED':'OBJECTSET_CURSOR_STALE';
-    expect(f.state.changes).toBe(1);expect(f.state.transactions).toBe(2);expect(result.status).toBe(change==='binding'?403:409);
+    // Both binding retirement and closing TEACHING_ASSIGNMENT revoke actual current authority.
+    const code='PERMISSION_DENIED';
+    expect(f.state.changes).toBe(1);expect(f.state.transactions).toBe(2);expect(result.status).toBe(403);
     expect(JSON.parse(new TextDecoder().decode(result.body!)).error.code).toBe(code);
     expect(f.sql.rows('read_occurrences').find(r=>r.request_id===f.input.requestId)).toMatchObject({status:'REFUSED',refusal_code:code,snapshot_digest:null});
   });
@@ -576,6 +577,8 @@ describe('NG-A snapshot acquisition (SC1)',()=>{
       const acquired=await service.acquireSnapshot(ctx,acquireReq({requestId:'acquire-drift-'+consistency,consistency}) as never);
       // Whole-plan horizon drift after acquisition: binding head advances.
       store.binding=version('teacher-a','rev-teacher-drift',{...store.binding!.payload});
+      // Keep teaching authorized so this case isolates horizon drift.
+      store.temporals=store.temporals.map(v=>v.payload.bindingKind==='TEACHING_ASSIGNMENT'?{...v,payload:{...v.payload,targetRef:objectRef('Teacher','teacher-a','rev-teacher-drift')}}:v);
       await refusal(service.typedRead(ctx,request({snapshot:acquired.snapshot,asOf:acquired.snapshot.asOf,snapshotAdmission:acquired.snapshotAdmission})),'OBJECTSET_CURSOR_STALE',409);
       expect(store.finalizations.some(x=>x.status==='COMPLETED')).toBe(false);
       expect(store.finalizations.at(-1)).toMatchObject({status:'REFUSED',snapshotDigest:null});

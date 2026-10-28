@@ -153,7 +153,7 @@ export interface CatalogueEntry {readonly slot:string;readonly kind:string;reado
 /* B3: pinned Root definitions/slots; digests recomputed, no fallback. */
 const ROOT_CALLER_EVIDENCE_ROOT='/home/palantirkc/operations/platform-redesign-20261023T1807Z';
 export const ROOT_CALLER_DEFINITIONS_PIN=Object.freeze({path:'reports/p4-p5-execution/lead-workflow-improvement-20261025/e10-root-private-caller-definitions.v2.json',sha256:'a19e7892b1bfd5c98db35d0d438e58321077487f5e95e8c488eb293a9eb1ad71',bytes:26942});
-export const ROOT_CALLER_SLOTS_PIN=Object.freeze({path:'reports/p4-p5-execution/claude-takeover-20261027/gen84/candidate/bindings/root-private-caller-slots.v2.json',sha256:'0ac1fbe50983b143bd9112ee0d21c841fd881296f50416a281d6061ad5c13044',bytes:34142});
+export const ROOT_CALLER_SLOTS_PIN=Object.freeze({path:'reports/p4-p5-execution/claude-takeover-20261027/gen85/candidate/bindings/root-private-caller-slots.v2.json',sha256:'5217c3240cd193be6e165ef90674c52f835071c187a508d8ef29d3add4e7b6b1',bytes:34142});
 export interface RootCallerActionDefinition {readonly name:string;readonly version:string;readonly definitionSha256:string}
 export interface RootCallerRegistry {readonly actionsByOperation:ReadonlyMap<string,RootCallerActionDefinition>;readonly planDefinitionSha256:string;readonly intentDomain:string;readonly slots:readonly (readonly [string,string,string])[]}
 let rootCallerRegistryCache:RootCallerRegistry|null=null;
@@ -990,7 +990,7 @@ async function runProbe(i:FixedRunnerInvocation,memory:NativeMemory,store:Postgr
 }
 export async function produceNativeFixtures(i:FixedRunnerInvocation):Promise<void> {
  assertFixedRunner(i,'FIXTURE');const memory=await readNativeMemory(i),c=i.config.base;
- if(memoryGet(memory,'root.ownerId')!==c.ownerId||memoryGet(memory,'root.namespace')!=='p4-qualification-e2e-p4-native-20261027-52')throw Error('root_selected_fixture_scope_required');
+ if(memoryGet(memory,'root.ownerId')!==c.ownerId||memoryGet(memory,'root.namespace')!=='p4-qualification-e2e-p4-native-20261027-53')throw Error('root_selected_fixture_scope_required');
  validateRootBindingMemory(i,memory);
  const [{SQL},{PostgresAcademyStore}]=await Promise.all([import('bun'),import('../src/academy/postgresStore')]);i.claim();
  const db=new SQL({adapter:'postgres',path:c.provider.socket,username:c.provider.username,database:c.provider.database,max:5});

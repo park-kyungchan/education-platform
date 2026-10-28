@@ -25,11 +25,11 @@ describe('ORDINARY-R7-F1 real owner in-process revision response',()=>{
     TextEncoder.prototype.encode=function(input?:string){const bytes=encode.call(this,input);if(f.state.triggered&&input?.startsWith('{"kind":"ERROR"')){expect(f.state.leaseHeld&&f.state.gateHeld).toBe(true);expect(f.state.commitKnown).toBe(false);expect(f.sql.rows('read_occurrences').find(r=>r.request_id===f.input.requestId)?.status).toBe('PENDING');encoded.push(bytes);}return bytes;};
     let response:Response;
     try{response=await handler(post(f.input,{cookie:signed}));}finally{Date.now=clock;TextEncoder.prototype.encode=encode;}
-    const code=control==='expired'||control==='retired'?'PERMISSION_DENIED':control==='policy'?'OBJECTSET_CURSOR_STALE':control==='unchanged'?'CONTRACT_UNVERIFIABLE':'REVISION_STALE';
+    const code=control==='expired'||control==='retired'||control==='policy'?'PERMISSION_DENIED':control==='unchanged'?'CONTRACT_UNVERIFIABLE':'REVISION_STALE';
     expect(f.state.callbackReady&&f.state.triggered&&f.state.commitKnown).toBe(true);expect(f.state.transactions).toBe(2);expect(f.state.ownerCalls).toBe(1);expect(f.state.leaseHeld).toBe(false);
     expect(f.correction.count).toBe(control==='unchanged'||control==='policy'?0:1);expect(f.state.sessionActive).toBe(control!=='expired');
     expect((await f.store.teacherBindingByActor(ctx.ownerId,ctx.actorId))?.payload.state).toBe(control==='retired'?'RETIRED':'ACTIVE');
-    expect(response!.status).toBe(control==='expired'?401:control==='retired'?403:409);expect(encoded.length).toBeGreaterThan(0);
+    expect(response!.status).toBe(control==='expired'?401:control==='retired'||control==='policy'?403:409);expect(encoded.length).toBeGreaterThan(0);
     const prepared=JSON.parse(new TextDecoder().decode(encoded.at(-1)!));expect(prepared.error.code).toBe(code);expect(prepared.items).toBeUndefined();expect(prepared.nextCursor).toBeUndefined();
     if(control==='expired')expect(await response!.json()).toEqual({error:'teacher_authentication_required'});
     else expect(new Uint8Array(await response!.arrayBuffer())).toEqual(encoded.at(-1)!);

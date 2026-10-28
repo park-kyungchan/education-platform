@@ -363,7 +363,7 @@ describe('temporal projection (REQ-06)',()=>{
     expect(membership).toHaveLength(1);expect(membership[0]!.validFrom).toBe('2026-10-01');
     expect(membership[0]!.validThrough).toEqual({state:'known',value:'2026-10-24',evidence:expect.any(Array)});
     const closed=fixture();
-    closed.store.temporals=[version('bind-closed','rev-bind-closed',{kind:'temporal_binding',bindingKey:'bind-closed',ownerId:OWNER,bindingKind:'CLASS_MEMBERSHIP',subjectRef:studentRef,targetRef:classRef,validFrom:'2026-10-01',validTo:'2026-10-24',sourceLiteral:'synthetic-closed',synthetic:true})];
+    closed.store.temporals=[...closed.store.temporals.filter(v=>v.payload.bindingKind==='TEACHING_ASSIGNMENT'),version('bind-closed','rev-bind-closed',{kind:'temporal_binding',bindingKey:'bind-closed',ownerId:OWNER,bindingKind:'CLASS_MEMBERSHIP',subjectRef:studentRef,targetRef:classRef,validFrom:'2026-10-01',validTo:'2026-10-24',sourceLiteral:'synthetic-closed',synthetic:true})];
     const out=await closed.service.typedRead(ctx,request());
     expect(out.items.some(i=>i.kind==='LINK'&&i.link.linkType==='studentMemberOfClass')).toBe(false);
   });
@@ -380,7 +380,7 @@ describe('temporal projection (REQ-06)',()=>{
     expect(()=>projectLinkInterval('2026-10-10','2026-10-10',[evidence()])).toThrow();
     for(const [from,to] of [['2026-10-10','2026-10-10'],['2026-10-10','2026-10-09']] as const){
       const {store,service}=fixture();
-      store.temporals=[version('bind-bad','rev-bind-bad',{kind:'temporal_binding',bindingKey:'bind-bad',ownerId:OWNER,bindingKind:'CLASS_MEMBERSHIP',subjectRef:studentRef,targetRef:classRef,validFrom:from,validTo:to,sourceLiteral:'synthetic-invalid',synthetic:true})];
+      store.temporals=[...store.temporals.filter(v=>v.payload.bindingKind==='TEACHING_ASSIGNMENT'),version('bind-bad','rev-bind-bad',{kind:'temporal_binding',bindingKey:'bind-bad',ownerId:OWNER,bindingKind:'CLASS_MEMBERSHIP',subjectRef:studentRef,targetRef:classRef,validFrom:from,validTo:to,sourceLiteral:'synthetic-invalid',synthetic:true})];
       await refusal(service.typedRead(ctx,request()),'CONTRACT_UNVERIFIABLE',409);
     }
   });
@@ -750,4 +750,61 @@ test('SC-WITNESS a payload participant link and a dated participation binding wi
   const links=res.items.flatMap(i=>i.kind==='LINK'&&i.link.linkType==='lessonHasStudent'?[i.link]:[]);
   expect(links.map(l=>l.nativeRelationKey.state).sort()).toEqual(['known','unknown']);
   expect(links.find(l=>l.nativeRelationKey.state==='known')!.validThrough).toMatchObject({state:'known',value:DATE});
+});
+
+
+describe('AUTH-T dated teaching is shared by every native read boundary',()=>{
+ const changeTeaching=(store:FakePrerequisiteStore,mode:string)=>{
+  const rows=store.temporals.filter(v=>v.payload.bindingKind==='TEACHING_ASSIGNMENT');
+  if(mode==='missing'){store.temporals=store.temporals.filter(v=>v.payload.bindingKind!=='TEACHING_ASSIGNMENT');return;}
+  for(const row of rows){
+   if(mode==='closed')row.payload.validTo=DATE;
+   if(mode==='future')row.payload.validFrom='2026-10-25';
+   if(mode==='other-teacher')row.payload.targetRef=objectRef('Teacher','teacher-other','rev-other');
+   if(mode==='stale-teacher')row.payload.targetRef={...row.payload.targetRef,revision:'rev-historical-teacher'};
+   if(mode==='stale-class')row.payload.subjectRef={...row.payload.subjectRef,revision:'rev-historical-class'};
+  }
+ };
+ for(const mode of ['missing','closed','future','other-teacher','stale-teacher','stale-class'])test('AUTH-T1 acquire and all projection masks refuse '+mode,async()=>{
+  const f=fixture(),issuer=createNativeTypedRead(f.store.asStore(),OWNER,{processEpoch:'auth-t',registrySha256:TEST_REGISTRY_SHA256,snapshotGrantSecret:'invented-auth-t-secret',now:()=>Date.parse(ASOF)});
+  const acquire={schema:'native-read-acquire.v2' as const,consumerProfile:'CURRENT_1_1' as const,requestId:'auth-t-acquire',scopeRef:nativeRef(),consistency:'SNAPSHOT' as const,time:{mode:'CURRENT' as const},functionIntent:testFunctionRequest(testTemporal())};
+  const grant=await issuer.acquireSnapshot(ctx,acquire);changeTeaching(f.store,mode);
+  await refusal(issuer.acquireSnapshot(ctx,{...acquire,requestId:'auth-t-new-acquire'}),'PERMISSION_DENIED',403);
+  for(const [type,key,rev] of [['DailyProgress','progress-a','rev-progress'],['PreviousHomeworkAssessment','assessment-a','rev-assessment'],['DailyRecordDraft','draft-a','rev-draft'],['Student','student-a','rev-student']] as const){
+   const req=request({requestId:'auth-t-'+type,selector:{kind:'EXACT_OBJECT',objectRef:objectRef(type,key,rev)},fieldMask:fullFieldMask([type,'Teacher']),linkMask:['activityForStudent','activityInClass','activityInLesson']});
+   await refusal(f.service.typedRead(ctx,req),'PERMISSION_DENIED',403);
+   expect(f.store.finalizations.at(-1)).toMatchObject({status:'REFUSED',refusalCode:'PERMISSION_DENIED'});
+  }
+  await refusal(issuer.typedRead(ctx,request({requestId:'auth-t-prior-grant',snapshot:grant.snapshot,asOf:grant.snapshot.asOf,snapshotAdmission:grant.snapshotAdmission})),'PERMISSION_DENIED',403);
+  await refusal(f.service.verifyContinuation(ctx,request({requestId:'auth-t-continuation'})),'PERMISSION_DENIED',403);
+ });
+ test('AUTH-T2 the final gate refuses when teaching closes after preparation',async()=>{
+  const f=fixture(),commit=f.store.commitReadOutput.bind(f.store);
+  f.store.commitReadOutput=async(...args)=>{changeTeaching(f.store,'closed');return commit(...args);};
+  const out=await f.service.typedReadBuffered(ctx,request({selector:{kind:'EXACT_OBJECT',objectRef:progressRef}}),()=>true);
+  expect(out.status).toBe(403);expect(new TextDecoder().decode(out.body!)).not.toContain('Synthetic progress');
+  expect(f.store.finalizations.at(-1)).toMatchObject({status:'REFUSED',refusalCode:'PERMISSION_DENIED'});
+ });
+ test('AUTH-T3 authorized native records retain known scope with relation evidence gaps',async()=>{
+  for(const missing of ['CLASS_MEMBERSHIP','LESSON_PARTICIPATION'] as const){
+   const f=fixture();f.store.temporals=f.store.temporals.filter(v=>v.payload.bindingKind!==missing);
+   for(const [type,key,rev] of [['DailyProgress','progress-a','rev-progress'],['PreviousHomeworkAssessment','assessment-a','rev-assessment'],['DailyRecordDraft','draft-a','rev-draft']] as const){
+    const out=await f.service.typedRead(ctx,request({requestId:'auth-t-compat-'+type,selector:{kind:'EXACT_OBJECT',objectRef:objectRef(type,key,rev)},fieldMask:fullFieldMask([type]),linkMask:['activityForStudent','activityInClass','activityInLesson']}));
+    expect(out.items.filter(i=>i.kind==='OBJECT')).toHaveLength(1);expect(out.items.filter(i=>i.kind==='LINK')).toHaveLength(3);
+    if(missing==='CLASS_MEMBERSHIP'){expect(out.enumeration).toBe('UNKNOWN');expect(out.gaps.some(g=>g.path==='Student.links.studentMemberOfClass')).toBe(true);}
+    else expect(out.gaps.some(g=>g.path==='Student.links.studentParticipatesInLesson')).toBe(false);
+   }
+  }
+ });
+});
+
+
+test('AUTH-T5 current teaching denial precedes invalid acquisition and expired continuation diagnostics',async()=>{
+ const f=fixture();f.store.temporals=f.store.temporals.filter(v=>v.payload.bindingKind!=='TEACHING_ASSIGNMENT');
+ const expired=request({snapshotAdmission:{...request().snapshotAdmission,expiresAt:'2026-10-23T00:00:00.000Z'}});
+ await refusal(f.service.typedRead(ctx,expired),'PERMISSION_DENIED',403);
+ await refusal(f.service.verifyContinuation(ctx,expired),'PERMISSION_DENIED',403);
+ const issuer=createNativeTypedRead(f.store.asStore(),OWNER,{processEpoch:'auth-invalid',registrySha256:TEST_REGISTRY_SHA256,snapshotGrantSecret:'invented-auth-invalid-secret',now:()=>Date.parse(ASOF)});
+ await refusal(issuer.acquireSnapshot(ctx,{schema:'native-read-acquire.v2',consumerProfile:'CURRENT_1_1',requestId:'auth-invalid-acquire',scopeRef:nativeRef(),consistency:'SNAPSHOT',time:{mode:'CURRENT'},functionIntent:{...testFunctionRequest(testTemporal()),pageSize:0}}),'PERMISSION_DENIED',403);
+ expect(f.store.projectionCalls).toBe(0);expect(f.store.admissions.size).toBe(0);
 });
