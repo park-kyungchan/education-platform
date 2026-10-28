@@ -29,4 +29,14 @@ describe('owner admission record (G1)', () => {
     expect(() => ownerAdmissionSchema.parse({...doc, allowedFrom: '2026-10-26', allowedThrough: '2026-10-23'}))
       .toThrow('admission_range_inverted');
   });
+  test('explicit version 2 may admit unbounded dates without weakening historical records', () => {
+    const open = ownerAdmissionSchema.parse({...doc, schemaVersion:'academy.owner-admission/2', allowedFrom:null, allowedThrough:null});
+    for (const date of ['2026-10-21', '2026-10-26', '2026-10-28', '2040-01-01'])
+      expect(isDateAdmitted(date, open)).toBe(true);
+    for (const date of ['2026-02-29', '2026-13-01', 'tomorrow']) expect(isDateAdmitted(date, open)).toBe(false);
+    expect(() => ownerAdmissionSchema.parse({...doc, allowedFrom:null, allowedThrough:null})).toThrow();
+    const onlyThrough = ownerAdmissionSchema.parse({...open, allowedThrough:'2026-10-28'});
+    expect(isDateAdmitted('2026-10-28', onlyThrough)).toBe(true);
+    expect(isDateAdmitted('2026-10-29', onlyThrough)).toBe(false);
+  });
 });

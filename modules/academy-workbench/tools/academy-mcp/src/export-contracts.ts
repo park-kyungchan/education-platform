@@ -7,7 +7,7 @@ import { hierarchy, WORKFLOW_RELATIONS } from './taxonomy.ts';
 import { packageRoot } from './paths.ts';
 import {findItemLabelsInputSchema,itemLabelScopeInputSchema} from './item-labels.ts';
 import {reviewTypeQuestionsInputSchema} from './type-questions.ts';
-import {dailyRecordIntakeSchema,dailyRecordReviewSchema,cismSectionSchema} from './dailyrecord.ts';
+import {dailyRecordIntakeSchema,dailyRecordReviewSchema,cismSectionSchema,studentMetadataGetSchema} from './dailyrecord.ts';
 import {dailyRecordGetSchema} from './dailyrecord-read.ts';
 
 const directory = resolve(packageRoot, 'schemas');
@@ -17,6 +17,7 @@ const contracts = {
   sourceOwner: 'src/contracts.ts, src/service.ts, src/item-labels.ts and src/dailyrecord.ts',
   transport: 'stdio', sourceMode: 'saved_context',
   tools: {
+    academy_student_metadata_get: {input:z.toJSONSchema(studentMetadataGetSchema),runtimeRefinements:'Separate hash-pinned metadata owner policy. Exact dated owner identity and permitted query batch in one backend process; no cross-namespace proof propagation. Relative selectors require explicit owner admission and never imply exact calendar coverage.'},
     academy_dailyrecord_get:{input:z.toJSONSchema(dailyRecordGetSchema,{io:'input'}),runtimeRefinements:'Read-only name -> exact native resolution -> qualified intake. Today uses Asia/Seoul. Owner scope is never caller input; unavailable/ambiguous/out-of-admission requests stop without retry. Authoring interviews do not block an observed read.'},
     academy_capabilities: { input: z.toJSONSchema(capabilitiesInputSchema), runtimeRefinements: 'source_contract requires exact operationId; workflow_rules has no invented domain assignment; the server validates cross-field combinations.' },
     academy_query: { input: z.toJSONSchema(queryInputSchema,{io:'input'}), output: z.toJSONSchema(queryResultSchema) },

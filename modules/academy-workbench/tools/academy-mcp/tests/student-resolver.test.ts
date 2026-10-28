@@ -37,17 +37,17 @@ describe('student name resolver (G2, synthetic names only)', () => {
     let calls = 0;
     const flaky = {searchByName: async () => {calls++; throw new Error('synthetic_source_failure');}};
     expect(await resolveStudentByName('Invented Student', flaky))
-      .toEqual({status: 'unavailable', reasonCode: 'student_resolve_search_unqualified_no_automatic_retry'});
+      .toMatchObject({status: 'unavailable', reasonCode: 'student_resolve_search_unqualified_no_automatic_retry',failure:{category:'upstream_unavailable'}});
     expect(await resolveStudentByName('Invented Student', flaky))
-      .toEqual({status: 'unavailable', reasonCode: 'student_resolve_search_unqualified_no_automatic_retry'});
+      .toMatchObject({status: 'unavailable', reasonCode: 'student_resolve_search_unqualified_no_automatic_retry'});
     expect(calls).toBe(2);
     expect(await resolveStudentByName('Invented Student', port([{studentKey: 'nope'}])))
-      .toEqual({status: 'unavailable', reasonCode: 'student_resolve_search_unqualified_no_automatic_retry'});
+      .toMatchObject({status:'unavailable',reasonCode:'source_response_malformed',failure:{category:'malformed_response'}});
   });
   test('oversized result pages are unqualified', async () => {
     const many = Array.from({length: 201}, () => row('77001', 'Invented Student'));
     expect(await resolveStudentByName('Invented Student', port(many)))
-      .toEqual({status: 'unavailable', reasonCode: 'student_resolve_search_unqualified_no_automatic_retry'});
+      .toMatchObject({status: 'unavailable', reasonCode: 'student_resolve_search_unqualified_no_automatic_retry'});
   });
 });
 

@@ -1,14 +1,15 @@
 import {expect,test} from 'bun:test';
-import {mkdtemp,readFile,writeFile,readdir,rm} from 'node:fs/promises';
+import {mkdtemp,readFile,writeFile,readdir,rm,rename,unlink} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {resolve} from 'node:path';
 import {createHash} from 'node:crypto';
 import {Client} from '@modelcontextprotocol/client';
 import {StdioClientTransport} from '@modelcontextprotocol/client/stdio';
 import {context,fact} from './dailyrecord-fixture.ts';
-async function withNeutralClient(run:(fixture:{base:string;events:string;client:Client})=>Promise<void>){
+async function withNeutralClient(run:(fixture:{base:string;events:string;client:Client})=>Promise<void>,includeSaved=false,includeNativePool=false){
   const base=await mkdtemp(resolve(tmpdir(),'academy-neutral-synthetic-'));
-  const entry=resolve(import.meta.dir,'../src/neutral-server.ts'),deny=resolve(import.meta.dir,'network-deny.ts'),events=resolve(base,'events.txt');
+  const entry=process.env.ACADEMY_NEUTRAL_TEST_BUNDLE??resolve(import.meta.dir,'../src/neutral-server.ts');
+  const deny=resolve(import.meta.dir,'network-deny.ts'),events=resolve(base,'events.txt');
   const admission={schemaVersion:'academy.owner-admission/1',decider:'user',decidedAt:'2040-01-16',sourceNamespace:'academy.lms.dayrecord',teacherId:'99001',
     allowedFrom:'2040-01-15',allowedThrough:'2040-01-17',failClosedDefault:'2026-10-23'};
   const bytes=JSON.stringify(admission),admissionPath=resolve(base,'admission.json');
@@ -16,7 +17,10 @@ async function withNeutralClient(run:(fixture:{base:string;events:string;client:
   let client:Client|undefined,transport:StdioClientTransport|undefined;
   try{
     await writeFile(admissionPath,bytes);await writeFile(resolve(base,'routing.json'),JSON.stringify({admissionPath,admissionSha256:createHash('sha256').update(bytes).digest('hex')}));
-    await writeFile(resolve(base,'endpoints.json'),JSON.stringify({dailyrecord:{command:process.execPath,args:['--preload',deny,resolve(import.meta.dir,'neutral-upstream-fixture.ts'),events]}}));
+    const endpoints:any={dailyrecord:{command:process.execPath,args:['--preload',deny,resolve(import.meta.dir,'neutral-upstream-fixture.ts'),events]}};
+    if(includeSaved)endpoints.saved={command:process.execPath,args:['--preload',deny,resolve(import.meta.dir,'neutral-saved-fixture.ts')]};
+    if(includeNativePool)endpoints.paper1={command:process.execPath,args:['--preload',deny,resolve(import.meta.dir,'../src/pool-server.ts')]};
+    await writeFile(resolve(base,'endpoints.json'),JSON.stringify(endpoints));
     const discovery=Bun.spawn([process.execPath,'--preload',deny,entry,'--discover'],{env,stdout:'pipe',stderr:'pipe'});
     expect(await discovery.exited).toBe(0);expect((await readFile(events,'utf8')).trim().split('\n')).toEqual(['start']);
     client=new Client({name:'fictional-neutral-client',version:'1.0.0'});
@@ -39,6 +43,98 @@ test('neutral MCP runs resolve and intake in one upstream lifetime and logs meta
     expect(JSON.parse(saved.find(s=>s.includes('completedAt'))!)).toMatchObject({sourceAvailability:'observed',steps:[{tool:'academy_student_resolve',status:'resolved'},{tool:'academy_dailyrecord_intake',sourceAvailability:'observed'}]});
     const denied=await client.callTool({name:tool.name,arguments:{...request,teacherId:'99002'}});expect(denied.isError).toBe(true);
     expect((await readFile(events,'utf8')).match(/intake/g)).toHaveLength(1);
+  });
+},20000);
+test('neutral MCP exposes exact item-answer reads and does not write answer literals to receipts',async()=>{
+  await withNeutralClient(async({base,events,client})=>{
+    expect((await client.listTools()).tools.filter(t=>t.name==='academy_item_answer_lookup')).toHaveLength(1);
+    const result=await client.callTool({name:'academy_item_answer_lookup',arguments:{labels:['12345'],purpose:'Fictional item read',currentRequestRef:'fictional'}});
+    expect(result.structuredContent).toMatchObject({status:'observed',answers:[{identity:{lectureKey:'12345'},answerLiteral:'invented answer'}],nativePrintInvoked:false});
+    expect(await readFile(events,'utf8')).toContain('answer');
+    const receipts=await readdir(resolve(base,'receipts'));
+    expect((await Promise.all(receipts.map(n=>readFile(resolve(base,'receipts',n),'utf8')))).join('')).not.toContain('invented answer');
+  });
+},20000);
+test('neutral discovery retains available read tools and suppresses duplicate native routes',async()=>{
+  await withNeutralClient(async({client})=>{
+    const names=(await client.listTools()).tools.map(t=>t.name);
+    for(const name of ['academy_item_label_scope','academy_find_item_labels','academy_review_type_questions','academy_cism_section',
+      'academy_item_answer_lookup','academy_runtime_read_admission','academy_dailyrecord_get'])expect(names.filter(v=>v===name)).toHaveLength(1);
+    const result=await client.callTool({name:'academy_item_label_scope',arguments:{}});
+    expect(result.structuredContent).toMatchObject({status:'unavailable'});
+  },true);
+},20000);
+test('saved/native label discovery preserves both sources under unique names in a pinned release',async()=>{
+ await withNeutralClient(async({base,client})=>{
+  const registry=JSON.parse(await readFile(resolve(base,'registry.json'),'utf8'));
+  for(const name of ['academy_item_label_scope','academy_find_item_labels','academy_review_type_questions']){
+   expect(registry.find((entry:any)=>entry.tool.name===name)?.endpoint).toBe('paper1');
+   expect(registry.find((entry:any)=>entry.tool.name==='saved_'+name)).toMatchObject({endpoint:'saved',upstreamName:name});
+  }
+  const pin=async(path:string)=>({path,sha256:createHash('sha256').update(await readFile(path)).digest('hex')});
+  await writeFile(resolve(base,'release.json'),JSON.stringify({schemaVersion:'academy.mcp-release/1',generation:'native-saved-labels',routing:await pin(resolve(base,'routing.json')),endpoints:await pin(resolve(base,'endpoints.json')),registry:await pin(resolve(base,'registry.json'))}),{mode:0o600,flag:'wx'});
+  const names=(await client.listTools()).tools.map(tool=>tool.name);expect(new Set(names).size).toBe(names.length);
+  for(const name of ['academy_item_label_scope','saved_academy_item_label_scope']){
+   const result=await client.callTool({name,arguments:{}});expect(result.isError).not.toBe(true);expect(result.structuredContent).toMatchObject({status:'unavailable'});
+  }
+ },true,true);
+},30000);
+test('an existing session atomically switches pinned release generations and never falls back after removal',async()=>{
+  await withNeutralClient(async({base,events,client})=>{
+    const hash=(value:string)=>createHash('sha256').update(value).digest('hex');
+    const pinned=async(name:string,value:unknown)=>{
+      const bytes=typeof value==='string'?value:JSON.stringify(value),path=resolve(base,name);
+      await writeFile(path,bytes,{mode:0o600});return {path,sha256:hash(bytes)};
+    };
+    const endpointTemplate=JSON.parse(await readFile(resolve(base,'endpoints.json'),'utf8'));
+    const registry=await pinned('registry-v1.json',await readFile(resolve(base,'registry.json'),'utf8'));
+    const publish=async(generation:string,through:string,upstreamThrough=through,invalidDigest=false,scope?:'configured'|'source_verified',upstreamScope=scope,registryRef=registry)=>{
+      const endpoints=await pinned(`endpoints-${generation}.json`,{...endpointTemplate,dailyrecord:{...endpointTemplate.dailyrecord,
+        args:[...endpointTemplate.dailyrecord.args,upstreamThrough,...(upstreamScope?[upstreamScope]:[])]}});
+      const admission=await pinned(`admission-${generation}.json`,{schemaVersion:scope?'academy.owner-admission/2':'academy.owner-admission/1',decider:'user',decidedAt:'2040-01-16',
+        sourceNamespace:'academy.lms.dayrecord',teacherId:'99001',allowedFrom:'2040-01-15',allowedThrough:through,failClosedDefault:'2026-10-23',...(scope?{studentScope:scope}:{})});
+      const routing=await pinned(`routing-${generation}.json`,{admissionPath:admission.path,admissionSha256:admission.sha256});
+      const next=resolve(base,`release-${generation}.tmp`);
+      await writeFile(next,JSON.stringify({schemaVersion:'academy.mcp-release/1',generation,
+        routing:invalidDigest?{...routing,sha256:'0'.repeat(64)}:routing,endpoints,registry:registryRef}),{mode:0o600});
+      await rename(next,resolve(base,'release.json'));
+    };
+    const request={displayName:'Invented Student',purpose:'Synthetic read',currentRequestRef:'synthetic-release',lessonDate:'2040-01-16'};
+    await publish('v1','2040-01-15');
+    const denied=await client.callTool({name:'academy_dailyrecord_get',arguments:request});
+    expect(denied.structuredContent).toMatchObject({status:'unavailable',reasonCode:'lesson_date_out_of_admitted_scope'});
+    expect(await readFile(events,'utf8')).not.toContain('resolve');
+    await publish('v2','2040-01-17');
+    const observed=await client.callTool({name:'academy_dailyrecord_get',arguments:request});
+    expect(observed.structuredContent).toMatchObject({status:'observed',sourceAvailability:'observed'});
+    await publish('v3','2040-01-17','2040-01-15');
+    const before=await readFile(events,'utf8');
+    const mismatch=await client.callTool({name:'academy_dailyrecord_get',arguments:request});
+    expect(mismatch.isError).toBe(true);
+    expect(JSON.parse((mismatch.content as any)[0].text).code).toBe('release_upstream_admission_mismatch');
+    expect((await readFile(events,'utf8')).slice(before.length)).toBe('start\n');
+    await publish('bad-digest','2040-01-17','2040-01-17',true);
+    const badDigest=await client.callTool({name:'academy_dailyrecord_get',arguments:request});
+    expect(badDigest.isError).toBe(true);
+    expect(JSON.parse((badDigest.content as any)[0].text).code).toBe('label_snapshot_hash_mismatch');
+    await publish('v4','2040-01-17');
+    expect((await client.callTool({name:'academy_dailyrecord_get',arguments:request})).structuredContent).toMatchObject({status:'observed'});
+    await publish('v5','2040-01-17','2040-01-17',false,'source_verified','configured');
+    const scopeMismatch=await client.callTool({name:'academy_dailyrecord_get',arguments:request});
+    expect(scopeMismatch.isError).toBe(true);
+    expect(JSON.parse((scopeMismatch.content as any)[0].text).code).toBe('release_upstream_admission_mismatch');
+    const entries=JSON.parse(await readFile(resolve(base,'registry.json'),'utf8'));
+    const duplicate=await pinned('registry-duplicate.json',[...entries,entries[0]]);
+    await publish('duplicate','2040-01-17','2040-01-17',false,undefined,undefined,duplicate);
+    const malformed=await client.callTool({name:'academy_dailyrecord_get',arguments:request});
+    expect(malformed.isError).toBe(true);
+    expect(JSON.parse((malformed.content as any)[0].text).code).toBe('release_payload_unqualified');
+    await publish('v6','2040-01-17','2040-01-17',false,'source_verified','source_verified');
+    expect((await client.callTool({name:'academy_dailyrecord_get',arguments:request})).structuredContent).toMatchObject({status:'observed'});
+    await unlink(resolve(base,'release.json'));
+    const held=await client.callTool({name:'academy_dailyrecord_get',arguments:request});
+    expect(held.isError).toBe(true);
+    expect(JSON.parse((held.content as any)[0].text).code).toBe('release_pointer_missing');
   });
 },20000);
 test('neutral review accepts an identical scope in a different key order and still refuses foreign scope/request',async()=>{

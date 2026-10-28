@@ -13,6 +13,7 @@ function fixture(){
     readDailyRecord:async scope=>{
       const value=observation();value.scope={...scope};value.target={...value.target,...scope};
       value.previousTarget={...value.previousTarget!,sourceNamespace:scope.sourceNamespace,teacherId:scope.teacherId,studentId:scope.studentId};
+      value.previousTarget.lessonDate=new Date(Date.parse(scope.lessonDate+'T00:00:00Z')-86400000).toISOString().slice(0,10);
       value.toneSamples=[];return {status:'observed',observation:value};
     },
   },null,()=>clock);
@@ -51,6 +52,14 @@ test('missing admission and dates outside it stop before name search',async()=>{
   const f=fixture();expect(await readDailyRecordByName(request,f.port,null,()=>clock)).toMatchObject({status:'unavailable',reasonCode:'dailyrecord_owner_read_admission_not_configured'});
   expect(await readDailyRecordByName({...request,lessonDate:'2040-01-18'},f.port,admission,()=>clock)).toMatchObject({reasonCode:'lesson_date_out_of_admitted_scope'});
   expect(f.calls.names).toEqual([]);expect(f.calls.intakes).toEqual([]);
+});
+test('owner-provided open date bounds admit historical and later dates without caller-supplied scope',async()=>{
+  const f=fixture(),open={...admission,allowedFrom:null,allowedThrough:null};
+  for(const lessonDate of ['2040-01-01','2040-01-28']){
+    const result=await readDailyRecordByName({...request,lessonDate},f.port,open,()=>clock);
+    expect(result).toMatchObject({status:'observed',lessonDate});
+  }
+  expect(f.calls.intakes.map(x=>x.context.scope.lessonDate)).toEqual(['2040-01-01','2040-01-28']);
 });
 test('unresolved, ambiguous and foreign names stop before intake without retry',async()=>{
   for(const resolution of [{status:'unavailable',reasonCode:'student_name_ambiguous'},{status:'unavailable',reasonCode:'student_name_not_found'},

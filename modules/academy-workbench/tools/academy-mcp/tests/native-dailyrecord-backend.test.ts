@@ -1,5 +1,6 @@
 import {expect,test} from 'bun:test';
 import {NativeDailyRecordBackend,nativeDailyRecordConfigSchema,nativeDailyRecordConfiguration} from '../src/native-dailyrecord-backend.ts';
+import {DailyRecordService} from '../src/dailyrecord.ts';
 import type {OwnerAdmission} from '../src/owner-admission.ts';
 
 const scope={sourceNamespace:'academy.lms.dayrecord',teacherId:'99001',studentId:'77001',lessonDate:'2040-01-04'};
@@ -33,6 +34,13 @@ test('missing range retains the exact launch date and foreign or incompatible ow
  for(const changed of [{teacherId:'99002'},{allowedFrom:'2040-01-05'}])
   expect(()=>new NativeDailyRecordBackend(f.port,admission,()=>({username:'fictional',password:'fictional'}),{...range,...changed})).toThrow('native_dailyrecord_owner_admission_mismatch');
 });
+test('explicit open bounds are preserved at discovery and allow a qualified historical date',async()=>{
+ const f=fixture(),open={...range,schemaVersion:'academy.owner-admission/2' as const,allowedFrom:null,allowedThrough:null};
+ const backend=new NativeDailyRecordBackend(f.port,admission,()=>({username:'fictional',password:'fictional'}),open);
+ expect(backend.readRoutingAdmission()).toMatchObject({allowedFrom:null,allowedThrough:null});
+ await expect(backend.readDailyRecord({...scope,lessonDate:'2040-01-01'})).rejects.toThrow('native_dailyrecord_identity_conflict');
+ expect(f.calls.requests[0].date).toBe('2040-01-01');
+});
 test('the native source port rereads current/prior occurrences, exports only six selected fields and keeps source revision independent of read time',async()=>{
  const {backend,calls}=fixture();const a=await backend.readDailyRecord(scope),b=await backend.readDailyRecord(scope);
  expect(calls.auth).toBe(1);expect(calls.requests).toHaveLength(4);
@@ -52,14 +60,61 @@ test('a matching name cannot substitute for current native student identity',asy
  const f=fixture();f.port.execute=async()=>({dayRecords:[{...row,studentKey:'77002'}]});
  await expect(f.backend.readDailyRecord(scope)).rejects.toThrow('native_dailyrecord_identity_conflict');
 });
+test('source-verified student scope needs explicit owner policy, exact name and the same request',async()=>{
+ const f=fixture(),newTarget={...target,studentName:'Second Invented Student',studentKey:'77002'};
+ const newRow={...row,...newTarget},newPrior={...newRow,date:'2040-01-02',recordKey:'12'};
+ const port={...f.port,searchStudentsByName:async()=>[{studentName:newTarget.studentName,studentKey:newTarget.studentKey}],
+  execute:async(input:any)=>({dayRecords:[input.date===newTarget.date?newRow:newPrior]}),
+  journalState:async()=>({target:newTarget,fields:{...row.fields,dailyTestAssessment:'0',previousHomeworkAssessment:'3'},previousRecordKey:'12',previousDate:newPrior.date,wireDigest:'a'.repeat(64)})};
+ const open={...range,schemaVersion:'academy.owner-admission/2' as const,allowedFrom:null,allowedThrough:null,studentScope:'source_verified' as const};
+ const managed=new Set(['Invented Student','Second Invented Student']);
+ const backend=new NativeDailyRecordBackend(port,admission,()=>({username:'fictional',password:'fictional'}),open,managed);
+ await expect(backend.searchStudentsByName('Foreign Student','foreign-request')).rejects.toThrow();
+ expect(f.calls.auth).toBe(0);
+ await backend.searchStudentsByName(newTarget.studentName,'same-request');
+ const newScope={...scope,studentId:'77002'};
+ await expect(backend.readDailyRecord(newScope,'other-request')).rejects.toThrow('native_dailyrecord_scope_refused');
+ expect((await backend.readDailyRecord(newScope,'same-request')).status).toBe('observed');
+ const configured=new NativeDailyRecordBackend(port,admission,()=>({username:'fictional',password:'fictional'}),{...open,studentScope:'configured'});
+ await configured.searchStudentsByName(newTarget.studentName,'same-request');
+ await expect(configured.readDailyRecord(newScope,'same-request')).rejects.toThrow('native_dailyrecord_scope_refused');
+ const service=new DailyRecordService(new NativeDailyRecordBackend(port,admission,()=>({username:'fictional',password:'fictional'}),open,managed));
+ expect(await service.get({displayName:newTarget.studentName,lessonDate:scope.lessonDate,purpose:'Synthetic lesson read',currentRequestRef:'composed-request'}))
+  .toMatchObject({status:'observed',sourceAvailability:'observed',academyWrites:0,parentSends:0});
+ const ambiguous=new NativeDailyRecordBackend({...port,searchStudentsByName:async()=>[
+  {studentName:newTarget.studentName,studentKey:'77002'},{studentName:newTarget.studentName,studentKey:'77003'}]},admission,()=>({username:'fictional',password:'fictional'}),open,managed);
+ await ambiguous.searchStudentsByName(newTarget.studentName,'same-request');
+ await expect(ambiguous.readDailyRecord(newScope,'same-request')).rejects.toThrow('native_dailyrecord_scope_refused');
+});
+test('date-qualified lookup uses the exact dated lesson row instead of a recent-test search',async()=>{
+ const f=fixture(),events:string[]=[];
+ const port={...f.port,searchStudentsByName:async()=>{events.push('recent-test');return [];},
+  discoverDayRecordGroups:async(input:any)=>{events.push('groups:'+input.date);return {groups:[{groupId:'3'}]};},
+  execute:async(input:any)=>{events.push('day:'+input.date);return {dayRecords:[input.date===target.date?row:prior]};}};
+ const open={...range,schemaVersion:'academy.owner-admission/2' as const,allowedFrom:null,allowedThrough:null,studentScope:'source_verified' as const};
+ const service=new DailyRecordService(new NativeDailyRecordBackend(port,admission,()=>({username:'fictional',password:'fictional'}),open));
+ const result=await service.get({displayName:'Invented Student',lessonDate:scope.lessonDate,purpose:'Synthetic dated read',currentRequestRef:'dated-request'});
+ expect(result).toMatchObject({status:'observed',sourceAvailability:'observed'});
+ expect(events).toEqual(['groups:2040-01-04','day:2040-01-04','groups:2040-01-04','day:2040-01-04','day:2040-01-02']);
+ expect(events).not.toContain('recent-test');
+});
+test('date-qualified lookup never substitutes a foreign source row or falls back after a miss',async()=>{
+ for(const rows of [[],[{...row,teacherKey:'99002'}],[row,{...row,recordKey:'14'}]]){
+  let recent=0;const f=fixture(),port={...f.port,searchStudentsByName:async()=>{recent++;return [];},execute:async()=>({dayRecords:rows})};
+  const open={...range,schemaVersion:'academy.owner-admission/2' as const,allowedFrom:null,allowedThrough:null,studentScope:'source_verified' as const};
+  const service=new DailyRecordService(new NativeDailyRecordBackend(port,admission,()=>({username:'fictional',password:'fictional'}),open));
+  const result=await service.get({displayName:'Invented Student',lessonDate:scope.lessonDate,purpose:'Synthetic dated read',currentRequestRef:'dated-request'});
+  expect(result.status).toBe('unavailable');expect(recent).toBe(0);
+ }
+});
 test('a foreign previous occurrence cannot supply homework assessment or a tone sample',async()=>{
  const f=fixture();f.port.execute=async(input:any)=>({dayRecords:[input.date===target.date?row:{...prior,recordKey:'11'}]});
  await expect(f.backend.readDailyRecord(scope)).rejects.toThrow('native_dailyrecord_previous_conflict');
 });
 test('authentication failure is retained, without automatically issuing another login',async()=>{
  const f=fixture();f.port.authenticate=async()=>{f.calls.auth++;throw Error('source_login_challenge');};
- await expect(f.backend.readDailyRecord(scope)).rejects.toThrow('source_login_challenge');
- await expect(f.backend.readDailyRecord(scope)).rejects.toThrow('source_login_challenge');expect(f.calls.auth).toBe(1);
+ await expect(f.backend.readDailyRecord(scope)).rejects.toThrow('source_authentication_failed');
+ await expect(f.backend.readDailyRecord(scope)).rejects.toThrow('source_authentication_failed');expect(f.calls.auth).toBe(1);
 });
 test('native configuration rejects caller authority fields, duplicates and non-native launch',async()=>{
  const v={schemaVersion:'academy.native-dailyrecord-read/1',sourceBundlePath:'/explicit/bundle.mjs',sourceBundleSha256:'b'.repeat(64),date:scope.lessonDate,students:admission.students};
@@ -67,4 +122,15 @@ test('native configuration rejects caller authority fields, duplicates and non-n
  expect(()=>nativeDailyRecordConfigSchema.parse({...v,approved:true})).toThrow();
  expect(()=>nativeDailyRecordConfigSchema.parse({...v,students:[...v.students,...v.students]})).toThrow();
  await expect(nativeDailyRecordConfiguration(['--dailyrecord-native','/missing/config.json','b'.repeat(64)])).rejects.toThrow('native_dailyrecord_owner_required');
+});
+
+test('a dated source proof is request/date bound and expires before a dynamic student read',async()=>{
+ const f=fixture(),newRow={...row,studentName:'Second Invented Student',studentKey:'77002'};
+ const open={...range,schemaVersion:'academy.owner-admission/2' as const,allowedFrom:null,allowedThrough:null,studentScope:'source_verified' as const};
+ const backend=new NativeDailyRecordBackend({...f.port,execute:async()=>({dayRecords:[newRow]})},admission,()=>({username:'fictional',password:'fictional'}),open,new Set(['Second Invented Student']));
+ await backend.searchStudentsByName(newRow.studentName,'dated-proof',scope.lessonDate);
+ await expect(backend.readDailyRecord({...scope,studentId:'77002',lessonDate:'2040-01-05'},'dated-proof')).rejects.toThrow('native_dailyrecord_scope_refused');
+ const realNow=Date.now;try{const later=realNow()+300001;Date.now=()=>later;
+  await expect(backend.readDailyRecord({...scope,studentId:'77002'},'dated-proof')).rejects.toThrow('native_dailyrecord_scope_refused');
+ }finally{Date.now=realNow;}
 });

@@ -4,9 +4,14 @@ import {dirname,resolve} from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {z} from 'zod';
 import {readPinnedLocalBytes} from './item-label-store.ts';
-import {dailyRecordObservationSchema,studentMetadataBatchSchema,type DailyRecordReadBackend,type DailyRecordObservation,type StudentMetadataBatch,type StudentMetadataObservation} from './dailyrecord.ts';
+import {dailyRecordObservationSchema,studentMetadataBatchSchema,type DailyRecordReadBackend,type DailyRecordObservation,type StudentMetadataBatch,type StudentMetadataObservation,studentMetadataGetSchema,type StudentMetadataGet} from './dailyrecord.ts';
 import type {DailyRecordScope} from './dailyrecord-context.ts';
 import {ownerAdmissionSchema,isDateAdmitted,type OwnerAdmission} from './owner-admission.ts';
+import {metadataAdmissionSchema,metadataDateAdmitted,type MetadataAdmission} from './metadata-admission.ts';
+import {AcademyReadFailure} from './read-failure.ts';
+import {StudentNameNotAdmitted} from './student-resolver.ts';
+import {itemAnswerLookupSchema} from './item-answer-lookup.ts';
+import type {DailyRecordReadAdmission} from './dailyrecord-read.ts';
 
 const home='/opt/data/profiles/dc-gang-a-dev';
 const key=z.string().regex(/^[1-9][0-9]{0,15}$/),hash=z.string().regex(/^[a-f0-9]{64}$/);
@@ -118,28 +123,76 @@ function projectStudentMetadata(query:StudentMetadataBatch['queries'][number],va
  * source/wire qualification and independent occurrence binding. This port never writes. */
 export class NativeDailyRecordBackend implements DailyRecordReadBackend {
   #ready:Promise<unknown>|undefined;
-  constructor(readonly client:SourcePort,readonly admission:Admission,readonly credential:()=>{username:string;password:string},readonly ownerAdmission:OwnerAdmission|null=null){
+  #sourceResolved=new Map<string,{studentId:string;displayName:string;lessonDate?:string;at:number}>();
+  constructor(readonly client:SourcePort,readonly admission:Admission,readonly credential:()=>{username:string;password:string},readonly ownerAdmission:OwnerAdmission|null=null,
+    readonly managedNames:ReadonlySet<string>=new Set(admission.students.map(s=>s.displayName)),readonly metadataAdmission:MetadataAdmission|null=null){
+    if(metadataAdmission){this.metadataAdmission=metadataAdmissionSchema.parse(metadataAdmission);if(metadataAdmission.teacherId!==admission.teacherId)throw Error('native_metadata_scope_refused');}
     if(ownerAdmission){
       ownerAdmissionSchema.parse(ownerAdmission);
       if(ownerAdmission.teacherId!==admission.teacherId||!isDateAdmitted(admission.date,ownerAdmission))throw Error('native_dailyrecord_owner_admission_mismatch');
     }
   }
-  readRoutingAdmission(){
+  readRoutingAdmission():DailyRecordReadAdmission{
     // Discovery reflects only this exact owner launch. It does not widen its date or student scope.
     return {sourceNamespace:'academy.lms.dayrecord' as const,teacherId:this.admission.teacherId,
-      allowedFrom:this.ownerAdmission?.allowedFrom??this.admission.date,allowedThrough:this.ownerAdmission?.allowedThrough??this.admission.date};
+      allowedFrom:this.ownerAdmission ? this.ownerAdmission.allowedFrom : this.admission.date,
+      allowedThrough:this.ownerAdmission ? this.ownerAdmission.allowedThrough : this.admission.date,
+      ...(this.ownerAdmission?.schemaVersion==='academy.owner-admission/2'?{studentScope:this.ownerAdmission.studentScope??'configured'}:{})};
   }
   #authenticate(){
     // One retained promise for every read family, including synchronous credential/auth failures.
-    return this.#ready??=Promise.resolve().then(()=>this.client.authenticate(this.credential()));
+    return this.#ready??=Promise.resolve().then(()=>this.client.authenticate(this.credential())).catch(()=>{throw new AcademyReadFailure('authentication','source_authentication_failed','src/native-dailyrecord-backend.ts:#authenticate');});
+  }
+  async readItemAnswers(labels:readonly string[]):Promise<unknown>{
+    const input=itemAnswerLookupSchema.parse({labels:[...labels],purpose:'Owner-scoped item answer read',currentRequestRef:'native-item-answer'});
+    await this.#authenticate();
+    return this.client.execute({family:'item_answer',teacherLabel:this.admission.teacherLabel,teacherKey:this.admission.teacherId,
+      lectureKeys:input.labels,answerReadAdmission:true});
   }
   async readStudentMetadata(value:Readonly<StudentMetadataBatch>):Promise<StudentMetadataObservation>{
     const input=studentMetadataBatchSchema.parse(value),scope=input.scope;
     const student=this.admission.students.find(s=>s.studentId===scope.studentId);
-    if(scope.teacherId!==this.admission.teacherId||scope.lessonDate!==this.admission.date||!student)throw Error('native_metadata_scope_refused');
+    if(scope.teacherId!==this.admission.teacherId||!student)throw Error('native_metadata_scope_refused');
+    if(this.metadataAdmission)this.#authorizeMetadata(input);
+    else if(scope.lessonDate!==this.admission.date)throw Error('native_metadata_scope_refused');
+    return this.#readMetadata(input,student);
+  }
+  #authorizeMetadata(input:StudentMetadataBatch){
+    const policy=this.metadataAdmission;
+    // History always qualifies selector 1 before its requested periods; printed
+    // lookup may fall back to that same DT selector. Admit every possible read.
+    const selectors=(q:StudentMetadataBatch['queries'][number])=>q.kind==='daily_history'?['1',...q.periods]:q.kind==='student_papers'?[]:['1'];
+    if(!policy||input.scope.teacherId!==policy.teacherId||!metadataDateAdmitted(input.scope.lessonDate,policy)
+      ||input.queries.some(q=>!policy.operations.includes(q.kind)||('period' in q&&(!metadataDateAdmitted(q.period.from,policy)||!metadataDateAdmitted(q.period.through,policy)))
+        ||selectors(q).some(selector=>!policy.relativeSelectors.includes(selector as MetadataAdmission['relativeSelectors'][number]))))
+      throw Error('metadata_namespace_not_admitted');
+  }
+  async readStudentMetadataByName(value:Readonly<StudentMetadataGet>):Promise<StudentMetadataObservation>{
+    const input=studentMetadataGetSchema.parse(value),policy=this.metadataAdmission;
+    // Namespace authorization precedes authentication and the dated identity read.
+    const provisional={...input,scope:{sourceNamespace:'academy.lms.metadata' as const,teacherId:this.admission.teacherId,studentId:'1',lessonDate:input.lessonDate}};
+    this.#authorizeMetadata(provisional);
+    const configured=this.admission.students.find(s=>s.displayName===input.displayName);
+    if(!this.managedNames.has(input.displayName)||(!configured&&policy!.studentScope!=='source_verified'))throw Error('metadata_namespace_not_admitted');
+    this.#requireMetadataMethods(input.queries);
+    await this.#authenticate();
+    const selector=await this.client.discoverDayRecordGroups({teacherLabel:this.admission.teacherLabel,date:input.lessonDate});
+    const found=await this.client.execute({family:'day_record',teacherLabel:this.admission.teacherLabel,date:input.lessonDate,groupIds:selector.groups.map(g=>g.groupId),studentNames:[input.displayName]});
+    if(!Array.isArray(found.dayRecords)||found.dayRecords.some(r=>r.teacherKey!==this.admission.teacherId||r.studentName!==input.displayName||r.date!==input.lessonDate))throw Error('native_dated_name_scope_conflict');
+    if(found.dayRecords.length>1)throw Error('native_dated_name_ambiguous');
+    if(found.dayRecords.length!==1)throw Error('native_dailyrecord_occurrence_unverified');
+    const row=found.dayRecords[0]!,student={studentId:key.parse(row.studentKey),displayName:input.displayName};
+    if(configured&&configured.studentId!==student.studentId)throw Error('native_dated_name_scope_conflict');
+    // No caller proof or cross-process cache. This student is local to this batch.
+    return this.#readMetadata({purpose:input.purpose,currentRequestRef:input.currentRequestRef,scope:{...provisional.scope,studentId:student.studentId},queries:input.queries},student);
+  }
+  #requireMetadataMethods(queries:StudentMetadataBatch['queries']){
     const methods={student_papers:'searchStudentPaperMetadata',daily_metadata:'searchDailyTestMetadata',daily_inventory:'inspectDailyTestInventory',daily_history:'readDailyTestHistory',printed_paper_metadata:'lookupPrintedPaperMetadata'} as const;
-    // Refuse missing capabilities before login or any source request, never fall back to another family.
-    for(const query of input.queries)if(typeof this.client[methods[query.kind]]!=='function')throw Error('native_metadata_method_unavailable');
+    for(const query of queries)if(typeof this.client[methods[query.kind]]!=='function')throw Error('native_metadata_method_unavailable');
+  }
+  async #readMetadata(input:StudentMetadataBatch,student:Admission['students'][number]):Promise<StudentMetadataObservation>{
+    const scope=input.scope;
+    this.#requireMetadataMethods(input.queries);
     await this.#authenticate();
     const target={teacherLabel:this.admission.teacherLabel,studentName:student.displayName,studentKey:student.studentId};
     const results:StudentMetadataObservation['results']=[];
@@ -163,21 +216,55 @@ export class NativeDailyRecordBackend implements DailyRecordReadBackend {
    * no key upfront); otherwise the owner-issued admission table in this
    * process. No network and no secret use on the admission path; the later
    * intake still verifies key+name against the live wire. */
-  async searchStudentsByName(exactName: string): Promise<unknown>{
+  async searchStudentsByName(exactName: string,requestRef?:string,lessonDate?:string): Promise<unknown>{
+    if(requestRef)this.#sourceResolved.delete(requestRef);
+    if(this.ownerAdmission?.schemaVersion==='academy.owner-admission/2'&&this.ownerAdmission.studentScope==='source_verified'
+      &&!this.managedNames.has(exactName))throw new StudentNameNotAdmitted();
+    if(lessonDate && this.ownerAdmission?.schemaVersion==='academy.owner-admission/2'&&this.ownerAdmission.studentScope==='source_verified'){
+      if(!isDateAdmitted(lessonDate,this.ownerAdmission))throw Error('native_dailyrecord_scope_refused');
+      await this.#authenticate();
+      const selector=await this.client.discoverDayRecordGroups({teacherLabel:this.admission.teacherLabel,date:lessonDate});
+      const found=await this.client.execute({family:'day_record',teacherLabel:this.admission.teacherLabel,date:lessonDate,
+        groupIds:selector.groups.map(g=>g.groupId),studentNames:[exactName]});
+      if(Array.isArray(found.dayRecords)&&found.dayRecords.length>1)throw Error('native_dated_name_ambiguous');
+      if(!Array.isArray(found.dayRecords)||found.dayRecords.some(row=>row.studentName!==exactName||row.date!==lessonDate||row.teacherKey!==this.admission.teacherId))
+        throw Error('native_dated_name_scope_conflict');
+      return this.#rememberResolved(found.dayRecords.map(row=>({studentKey:row.studentKey,studentName:row.studentName})),exactName,requestRef,lessonDate);
+    }
     if(typeof this.client.searchStudentsByName==='function'){
+      // Name lookup uses the same owner session as subsequent source reads.
+      // Retain an authentication failure rather than replaying a login.
+      await this.#authenticate();
       const raw=await this.client.searchStudentsByName({teacherLabel:this.admission.teacherLabel,studentName:exactName});
       if(!Array.isArray(raw))throw Error('native_name_search_unqualified_no_automatic_retry');
-      return nameSearchPairs.parse(raw.map((row)=>{
+      const pairs=raw.map((row)=>{
         if(typeof row!=='object'||row===null)throw Error('native_name_search_unqualified_no_automatic_retry');
         const pair=row as Record<string,unknown>;
         return {studentKey:pair.studentKey,studentName:pair.studentName};
-      }));
+      });
+      return this.#rememberResolved(pairs,exactName,requestRef);
     }
-    return this.admission.students.filter((s)=>s.displayName===exactName)
+    const admitted = this.admission.students.filter((s)=>s.displayName===exactName)
       .map((s)=>({studentKey:s.studentId,studentName:s.displayName}));
+    if(!admitted.length)throw new StudentNameNotAdmitted();
+    return admitted;
   }
-  async readDailyRecord(scope:Readonly<DailyRecordScope>){
-    const student=this.admission.students.find(s=>s.studentId===scope.studentId);
+  #rememberResolved(raw:unknown,exactName:string,requestRef?:string,lessonDate?:string){
+    const pairs=nameSearchPairs.parse(raw);
+    const unique=new Map(pairs.filter(row=>row.studentName===exactName).map(row=>[row.studentKey,row]));
+    if(this.ownerAdmission?.schemaVersion==='academy.owner-admission/2' && this.ownerAdmission.studentScope==='source_verified'
+      && requestRef && pairs.every(row=>row.studentName===exactName) && unique.size===1){
+      const row=[...unique.values()][0]!;
+      this.#sourceResolved.set(requestRef,{studentId:row.studentKey,displayName:row.studentName,lessonDate,at:Date.now()});
+      if(this.#sourceResolved.size>32)this.#sourceResolved.delete(this.#sourceResolved.keys().next().value!);
+    }
+    return pairs;
+  }
+  async readDailyRecord(scope:Readonly<DailyRecordScope>,requestRef?:string){
+    const resolved=requestRef?this.#sourceResolved.get(requestRef):undefined;
+    const sourceStudent=this.ownerAdmission?.schemaVersion==='academy.owner-admission/2' && this.ownerAdmission.studentScope==='source_verified'
+      && resolved && resolved.studentId===scope.studentId && (!resolved.lessonDate||resolved.lessonDate===scope.lessonDate) && Date.now()-resolved.at>=0 && Date.now()-resolved.at<=300000 ? resolved : undefined;
+    const student=this.admission.students.find(s=>s.studentId===scope.studentId)??sourceStudent;
     if(scope.sourceNamespace!=='academy.lms.dayrecord'||scope.teacherId!==this.admission.teacherId
       ||!(this.ownerAdmission?isDateAdmitted(scope.lessonDate,this.ownerAdmission):scope.lessonDate===this.admission.date)||!student)throw Error('native_dailyrecord_scope_refused');
     // Keep a failed authentication promise: subsequent calls must not retry login.
@@ -210,7 +297,7 @@ export class NativeDailyRecordBackend implements DailyRecordReadBackend {
   }
 }
 
-export async function nativeDailyRecordConfiguration(args:readonly string[],ownerAdmission:OwnerAdmission|null=null){
+export async function nativeDailyRecordConfiguration(args:readonly string[],ownerAdmission:OwnerAdmission|null=null,metadataAdmission:MetadataAdmission|null=null){
   if(!args.length)return null;
   if(args.length!==3||args[0]!=='--dailyrecord-native')throw Error('dailyrecord_native_arguments_invalid');
   if(process.getuid?.()!==10000||process.env.HERMES_HOME!==home)throw Error('native_dailyrecord_owner_required');
@@ -234,6 +321,6 @@ export async function nativeDailyRecordConfiguration(args:readonly string[],owne
   if(!password)throw Error('native_http_secret_required');
   const client=new module.AcademyHttpClient({teacherLabel:owner.teacherLabel,teacherKey:owner.teacherSourceKey,collegeKey:owner.collegeSourceKey}) as SourcePort;
   const backend=new NativeDailyRecordBackend(client,{teacherId:owner.teacherSourceKey,teacherLabel:owner.teacherLabel,
-    date:config.date,students:config.students,sourceBundleSha256:config.sourceBundleSha256},()=>({username:owner.sourceUsername,password}),ownerAdmission);
+    date:config.date,students:config.students,sourceBundleSha256:config.sourceBundleSha256},()=>({username:owner.sourceUsername,password}),ownerAdmission,new Set(owner.expectedStudentNames),metadataAdmission);
   return {backend,close:()=>client.close()};
 }
