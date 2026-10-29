@@ -7,10 +7,16 @@ teacher request phrases, the backend/source identity and the meaning of the resu
 The neutral bridge applies the same mapping to its active discovery catalog.
 Descriptions guide selection; they do not change admission, authentication or schemas.
 
+For printed TOC, section names and section descriptions, first use the
+[edition catalog and private registration binding entry](../../../../../apps/academy/dc-gang-a/docs/textbook-catalog.md).
+Reuse an exact edition before repeating discovery or interviewing the teacher.
+Section-result tools observe attempts; they do not enumerate every physical section.
+
 | Teacher intent | MCP route | Backend/source and scope |
 | --- | --- | --- |
 | Read today's or a previous lesson date's DailyRecord | `academy_dailyrecord_get` | `DayRecordServlet`, `p_process=Main`; `academy.lms.dayrecord`. Resolve the dated occurrence within owner admission. A past lesson date is not a request for a saved snapshot. |
 | Read DT/result metadata by exact student name/date | `academy_student_metadata_get` | `DtResultSearch`, `UserBySearchTestResult`; independently admitted `academy.lms.metadata`. The keyed `academy_student_metadata` route remains compatible. |
+| Read existing textbook-section scores and per-item O/X | `academy_textbook_section_results` | Exact student/course/book and source-issued titles; existing section attempt results only. Follow the [teacher's report format](../../../../../apps/academy/dc-gang-a/docs/class-preparation-checklist-rubric.md#textbook-section-result-reports). Missing records do not establish missing sections or unfinished work. |
 | Read an exact numeric item's official answer literal | `academy_item_answer_lookup` | `TestPageShowExServlet`, `p_process=GetLectureList`, `lecture_list`; numeric `lectureKey`. Literal candidates are not qualified official rendering. |
 | Find existing type labels after teacher research | `academy_item_label_scope`, `academy_find_item_labels`, `academy_review_type_questions` | Original hierarchy IDs and type labels from the configured owner source. Keep these distinct from numeric answer labels and final item selection. |
 | Read a printed-code paper definition or student attempt | `academy_paper_definition_lookup`, `academy_printed_paper_lookup` | Owner-decoded source code and paper/attempt identity. A common definition does not establish a student's assignment or attempt. |
