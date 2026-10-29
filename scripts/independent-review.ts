@@ -234,7 +234,7 @@ const prepare=(subject:string,outDir:string)=>{
   const mergeBase=git(subject,'merge-base',values.BASE_SHA,values.HEAD_SHA).trim();
   mkdirSync(outDir,{recursive:true});
   const diffPath=resolve(outDir,'diff.patch');
-  writeFileSync(diffPath,git(subject,'diff','-M','--no-color',mergeBase,values.HEAD_SHA));
+  writeFileSync(diffPath,git(subject,'diff','-M','-D','--no-color',mergeBase,values.HEAD_SHA));
   const template=readFileSync(resolve(import.meta.dir,'../ci/independent-review/prompt.md'),'utf8');
   writeFileSync(resolve(outDir,'prompt.md'),renderPrompt(template,{...values,MERGE_BASE:mergeBase,DIFF_PATH:diffPath,DIFF_STAT:git(subject,'diff','-M','--shortstat',mergeBase,values.HEAD_SHA).trim()}));
 };

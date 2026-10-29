@@ -1,19 +1,23 @@
-import {bunToolchain} from './runtime';
-
+// The whole root source workflow. The merge review is the separate Independent exact-head review status
+// (.github/workflows/independent-review.yml); this workflow only runs the canonical checks.
+const SOURCE_SHA='${{ github.event.pull_request.head.sha || github.sha }}';
 export const educationSourceCi = {
  workflow: '.github/workflows/source.yml',
- owner: {repository:'park-kyungchan/education-platform',projectId:'education-platform',domainId:'education'},
- sourceSha: '${{ github.event.pull_request.head.sha || github.sha }}',
- permissions: {contents:'read',statuses:'read'},
- setup: {bootstrapBun:'1.4.2',script:'setup'},
- source: {
-  jobId: 'source',
-  action: 'park-kyungchan/agent-platform/.github/actions/bun-source@f6649663fb78261de2499f0920306c32f5e22f1f',
-  fetchDepth: 0,
-  bun: bunToolchain.version,
-  installDependencies: 'false',
-  scripts: ['setup','check:ci-projection','check'],
+ expected: {
+  name:'Source verification',
+  on:{pull_request:null,push:{branches:['main']},workflow_dispatch:null},
+  permissions:{contents:'read'},
+  concurrency:{group:'source-${{ github.workflow }}-${{ github.ref }}','cancel-in-progress':true},
+  jobs:{source:{
+   name:'Canonical source checks',
+   'runs-on':'ubuntu-latest',
+   'timeout-minutes':20,
+   steps:[
+    {uses:'actions/checkout@11d5960a326750d5838078e36cf38b85af677262',with:{ref:SOURCE_SHA,'persist-credentials':false,'fetch-depth':0}},
+    {uses:'oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6',with:{'bun-version':'1.4.2'}},
+    {name:'Set up pinned toolchains and module dependencies',run:'bun scripts/setup.ts'},
+    {name:'Run canonical checks',run:'bun run check'},
+   ],
+  }},
  },
- nativeReview: {jobId:'native-review',policyPath:'architecture/common-ci-provider.json'},
- gate: {jobId:'source-gate',needs:['source','native-review']},
 } as const;

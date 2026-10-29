@@ -6,7 +6,6 @@ on:
   workflow_dispatch:
 permissions:
   contents: read
-  statuses: read
 concurrency:
   group: source-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -24,43 +23,7 @@ jobs:
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
         with:
           bun-version: 1.4.2
-      - name: Verify generated CI projection and scoped module integration
-        uses: park-kyungchan/agent-platform/.github/actions/bun-source@f6649663fb78261de2499f0920306c32f5e22f1f
-        with:
-          project-id: education-platform
-          repository: park-kyungchan/education-platform
-          source-sha: ${{ github.event.pull_request.head.sha || github.sha }}
-          bun-version: 1.4.3
-          install-dependencies: 'false'
-          scripts: '["setup","check:ci-projection","check"]'
-  native-review:
-    name: Exact head native independent review
-    runs-on: ubuntu-latest
-    timeout-minutes: 3
-    steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
-        with:
-          ref: ${{ github.event.pull_request.head.sha || github.sha }}
-          persist-credentials: false
-      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
-        with:
-          bun-version: 1.4.2
-      - name: Verify generated owner review closure
-        run: bun ci/verify-projection.ts
-      - name: Read immutable native review receipt for this exact head
-        run: bun ci/native-review-gate.js
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-          REVIEW_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
-  source-gate:
-    name: Source and native review gate
-    if: ${{ always() }}
-    needs: [source, native-review]
-    runs-on: ubuntu-latest
-    timeout-minutes: 1
-    steps:
-      - name: Require both source checks and exact head native review
-        env:
-          SOURCE_RESULT: ${{ needs.source.result }}
-          REVIEW_RESULT: ${{ needs.native-review.result }}
-        run: test "$SOURCE_RESULT" = success && test "$REVIEW_RESULT" = success
+      - name: Set up pinned toolchains and module dependencies
+        run: bun scripts/setup.ts
+      - name: Run canonical checks
+        run: bun run check
