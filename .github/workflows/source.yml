@@ -7,6 +7,8 @@ on:
 permissions:
   contents: read
   statuses: read
+  actions: read
+  pull-requests: read
 concurrency:
   group: source-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -33,6 +35,22 @@ jobs:
           bun-version: 1.4.3
           install-dependencies: 'false'
           scripts: '["setup","check:ci-projection","check"]'
+      - name: Broad U and separate base-versus-candidate academy comparison
+        run: bun --no-env-file apps/academy/dc-gang-a/scripts/check-r07-slice-size.ts ci-unit
+        env:
+          R07_PR_REF: ${{ github.head_ref }}
+          R07_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          R07_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Preserve immutable U and C measurements
+        if: ${{ always() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: r07-unit-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/r07-unit-*/*.log
+            ${{ runner.temp }}/r07-unit-*/*.json
+            ${{ runner.temp }}/r07-unit-*/*.xml
+          if-no-files-found: ignore
   native-review:
     name: Exact head native independent review
     runs-on: ubuntu-latest
@@ -52,10 +70,43 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
           REVIEW_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+  r07-slice:
+    name: R07 slice scope and size
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
+        with:
+          bun-version: 1.4.3
+      - name: Check protected R07 scope, size and earlier exits
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          R07_PR_REF: ${{ github.head_ref }}
+          R07_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          R07_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          R07_REPOSITORY: ${{ github.repository }}
+          R07_HEAD_REPOSITORY: ${{ github.event.pull_request.head.repo.full_name }}
+          R07_GUARD_PATH: apps/academy/dc-gang-a/scripts/check-r07-slice-size.ts
+        run: |
+          set -euo pipefail
+          case "$R07_PR_REF" in feat/r07-*) ;; *) echo 'PASS non_r07_event'; exit 0;; esac
+          if git cat-file -e "$R07_BASE_SHA:$R07_GUARD_PATH" 2>/dev/null; then
+            git show "$R07_BASE_SHA:$R07_GUARD_PATH" > "$RUNNER_TEMP/r07-protected-guard.ts"
+          elif [ "$R07_PR_REF" = feat/r07-1a ]; then
+            git show "$R07_HEAD_SHA:$R07_GUARD_PATH" > "$RUNNER_TEMP/r07-protected-guard.ts"
+          else
+            echo 'r07_slice_scope_untrusted@.github/workflows/source.yml:1'; exit 1
+          fi
+          bun "$RUNNER_TEMP/r07-protected-guard.ts"
   source-gate:
     name: Source and native review gate
     if: ${{ always() }}
-    needs: [source, native-review]
+    needs: [source, native-review, r07-slice]
     runs-on: ubuntu-latest
     timeout-minutes: 1
     steps:
@@ -63,4 +114,5 @@ jobs:
         env:
           SOURCE_RESULT: ${{ needs.source.result }}
           REVIEW_RESULT: ${{ needs.native-review.result }}
-        run: test "$SOURCE_RESULT" = success && test "$REVIEW_RESULT" = success
+          SLICE_RESULT: ${{ needs.r07-slice.result }}
+        run: test "$SOURCE_RESULT" = success && test "$REVIEW_RESULT" = success && test "$SLICE_RESULT" = success

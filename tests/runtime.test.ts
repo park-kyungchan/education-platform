@@ -1,10 +1,12 @@
 import {expect,test} from 'bun:test';
-import {mkdtempSync,mkdirSync,writeFileSync,readFileSync,rmSync} from 'node:fs';
+import {mkdtempSync,mkdirSync,writeFileSync,readFileSync,rmSync,renameSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {delimiter,join,resolve} from 'node:path';
 import {moduleCheckExecution,projectRoot,readSourceMap} from '../src/modules';
 import {assertBunRuntime,bunToolchain,setupRuntime,publishActionsBunPath} from '../src/runtime';
 import {educationSourceCi} from '../src/source-ci';
+import {REQUIRED_CHECKS,executingUnitRuntime} from '../apps/academy/dc-gang-a/scripts/check-r07-slice-size';
+import {IMPORT_ARCHIVE,verifyImports} from '../scripts/verify-imports';
 
 test('Bun checks refuse old invokers and unadmitted scripts before spawning',async()=>{
  const module=(await readSourceMap()).modules.find(m=>m.id==='mathcrew')!;
@@ -92,6 +94,32 @@ test('setup publishes Bun1.4.3 to later Actions steps without overwriting existi
  }finally{rmSync(root,{recursive:true,force:true});}
 });
 
+test('every manifest-backed import preserves original hashes and refuses missing or tampered archives',()=>{
+ const root=mkdtempSync(join(tmpdir(),'r07-imports-')),manifest=readFileSync(resolve(projectRoot,IMPORT_ARCHIVE.path)),archive=JSON.parse(manifest.toString()) as {entries:{from:string;to:string}[]},original=JSON.parse(readFileSync(resolve(projectRoot,'provenance/imported-files.json'),'utf8')) as {files:{module:string;path:string;sha256:string}[]};
+ const put=(path:string,body:string|Uint8Array)=>{mkdirSync(resolve(root,path,'..'),{recursive:true});writeFileSync(resolve(root,path),body);};
+ try{
+  const paths=new Set(archive.entries.map(e=>e.from)),files=original.files.filter(f=>paths.has(f.module+'/'+f.path));expect(files).toHaveLength(archive.entries.length);
+  put('provenance/imported-files.json',JSON.stringify({files}));put('provenance/adaptations.json','{"files":[]}');put(IMPORT_ARCHIVE.path,manifest);
+  for(const e of archive.entries)put(e.to,readFileSync(resolve(projectRoot,e.to)));
+  expect(verifyImports(root).archived).toBe(archive.entries.length);
+  for(const e of archive.entries){const path=resolve(root,e.to),bytes=readFileSync(path);renameSync(path,path+'.held');expect(()=>verifyImports(root)).toThrow('missing_import');renameSync(path+'.held',path);writeFileSync(path,Buffer.concat([bytes,Buffer.from('\n')]));expect(()=>verifyImports(root)).toThrow('import_hash_mismatch');writeFileSync(path,bytes);}
+  for(const e of archive.entries){put(e.from,readFileSync(resolve(root,e.to)));expect(()=>verifyImports(root)).toThrow('archive_import_original_conflict');rmSync(resolve(root,e.from));}
+  put(IMPORT_ARCHIVE.path,Buffer.concat([manifest,Buffer.from('\n')]));expect(()=>verifyImports(root)).toThrow('archive_import_manifest_stale');put(IMPORT_ARCHIVE.path,manifest);expect(verifyImports(root).unchanged).toBe(files.length);
+ }finally{rmSync(root,{recursive:true,force:true});}
+});
+
+test('U engine equality refuses the actual predecessor and every differing workflow runtime',()=>{
+ const root=mkdtempSync(join(tmpdir(),'r07-engine-')),workflow=readFileSync(resolve(projectRoot,educationSourceCi.workflow),'utf8'),manifest=readFileSync(resolve(projectRoot,'apps/academy/dc-gang-a/package.json'),'utf8');
+ const old=Bun.spawnSync(['git','show','b7e135f83a41c4aaefb93fed40fa729df8dd4e84:apps/academy/dc-gang-a/package.json'],{cwd:projectRoot,stdout:'pipe',stderr:'pipe'});expect(old.exitCode).toBe(0);
+ try{
+  mkdirSync(resolve(root,'.github/workflows'),{recursive:true});mkdirSync(resolve(root,'apps/academy/dc-gang-a'),{recursive:true});writeFileSync(resolve(root,educationSourceCi.workflow),workflow);
+  const path=resolve(root,'apps/academy/dc-gang-a/package.json');writeFileSync(path,old.stdout);expect(()=>executingUnitRuntime(root)).toThrow('r07_unit_engine_mismatch');
+  const parsed=Bun.YAML.parse(workflow) as {jobs:{source:{steps:{with?:Record<string,string>}[]}}};const runtimes=parsed.jobs.source.steps.flatMap(s=>s.with?.['bun-version']?[s.with['bun-version']]:[]);
+  for(const version of runtimes.filter((v:string)=>v!==Bun.version)){const changed=JSON.parse(manifest);changed.engines.bun=version;writeFileSync(path,JSON.stringify(changed));expect(()=>executingUnitRuntime(root)).toThrow('r07_unit_engine_mismatch');}
+  writeFileSync(path,manifest);expect(executingUnitRuntime(root)).toBe(Bun.version);
+ }finally{rmSync(root,{recursive:true,force:true});}
+});
+
 test('root source CI guards owner setup inside the shared action and preserves runtime, review and gate boundaries',async()=>{
  const contract=educationSourceCi;
  const workflow=Bun.YAML.parse(readFileSync(resolve(projectRoot,contract.workflow),'utf8')) as any;
@@ -108,8 +136,11 @@ test('root source CI guards owner setup inside the shared action and preserves r
  expect(shared).toHaveLength(1);
  const sharedIndex=source.steps.indexOf(shared[0]);
  expect(source.steps.slice(0,sharedIndex).map((step:any)=>step.uses)).toEqual([checkout.uses,bootstrap.uses]);
- expect(sharedIndex).toBe(source.steps.length-1);
- expect(source.steps.filter((step:any)=>step.run)).toEqual([]);
+ const [unit,artifact]=source.steps.slice(sharedIndex+1);expect(source.steps.slice(sharedIndex+1)).toHaveLength(2);
+ expect(source.steps.filter((step:any)=>step.run)).toEqual([unit]);expect(unit.run).toBe(contract.unit.command);
+ expect(unit.env.R07_HEAD_SHA).toBe(contract.sourceSha);expect(artifact.uses).toBe(contract.unit.artifactAction);expect(artifact.if).toBe('${{ always() }}');
+ expect(artifact.with.path.trim().split('\n')).toEqual(['log','json','xml'].map(extension=>'${{ runner.temp }}/r07-unit-*/*.'+extension));
+ expect(executingUnitRuntime(projectRoot)).toBe(shared[0].with['bun-version']);
  expect(shared[0].with).toEqual({
   'project-id':contract.owner.projectId,repository:contract.owner.repository,
   'source-sha':contract.sourceSha,'bun-version':contract.source.bun,
@@ -127,10 +158,17 @@ test('root source CI guards owner setup inside the shared action and preserves r
  const provider=await Bun.file(resolve(projectRoot,contract.nativeReview.policyPath)).json();
  expect(provider.policy.repository).toBe(contract.owner.repository);expect(provider.policy.projectId).toBe(contract.owner.projectId);
  expect(provider.policy.domainId).toBe(contract.owner.domainId);expect(provider.policy.semanticOwner).toBe(contract.owner.projectId);
+ const slice=workflow.jobs[contract.r07Slice.jobId];
+ expect(slice.name).toBe(contract.r07Slice.name);
+ expect(slice.steps[0].with['fetch-depth']).toBe(0);
+ expect(slice.steps.at(-1).env.R07_GUARD_PATH).toBe(contract.r07Slice.script);
+ expect(slice.steps.at(-1).run).toContain('git show "$R07_BASE_SHA:$R07_GUARD_PATH"');
+ expect(slice.steps.at(-1).run).toContain('elif [ "$R07_PR_REF" = feat/r07-1a ]');
+ expect(Object.values(workflow.jobs).map((job:any)=>job.name).sort()).toEqual([...REQUIRED_CHECKS].sort());
  const gate=workflow.jobs[contract.gate.jobId];
  expect(gate.if).toBe('${{ always() }}');expect(gate.needs).toEqual(contract.gate.needs);
- for(const source of ['success','failure','cancelled','skipped'])for(const review of ['success','failure','cancelled','skipped']){
-  const child=Bun.spawn(['bash','-c',gate.steps[0].run],{env:{SOURCE_RESULT:source,REVIEW_RESULT:review},stdout:'pipe',stderr:'pipe'});
-  expect((await child.exited)===0).toBe(source==='success'&&review==='success');
+ for(const source of ['success','failure','cancelled','skipped'])for(const review of ['success','failure','cancelled','skipped'])for(const slice of ['success','failure','cancelled','skipped']){
+  const child=Bun.spawn(['bash','-c',gate.steps[0].run],{env:{SOURCE_RESULT:source,REVIEW_RESULT:review,SLICE_RESULT:slice},stdout:'pipe',stderr:'pipe'});
+  expect((await child.exited)===0).toBe(source==='success'&&review==='success'&&slice==='success');
  }
 });

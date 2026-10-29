@@ -3,10 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "engines": {"bun": "1.4.3"},
   "scripts": {
     "typecheck": "bun node_modules/typescript/bin/tsc --noEmit",
     "test": "bun test ./tests/academy ./tests/learning ./tests/storage ./tests/wholeLens ./tests/preclass ./tests/assessment",
-    "check": "bun run typecheck && bun run test && bun run test:journal-read && bun run test:pool-read && bun run check:product-control",
+    "check": "bun run typecheck && bun run check:r07 && bun run test && bun run test:journal-read && bun run test:pool-read && bun run check:product-control",
+    "check:r07": "bun run check:type-escapes && bun test tests/academy/r07-1a.test.ts && bun node_modules/typescript/bin/tsc --noEmit -p tsconfig.r07.json",
+    "check:type-escapes": "bun scripts/type-escape-ratchet.ts check",
     "test:journal-read": "bun test ./tests/lms/dayRecordGroupDiscovery.test.ts ./tests/lms/journalWireFingerprint.test.ts ./tests/lms/lessonJournalHttp.test.ts ./tests/lms/journalRequestAdmission.test.ts ./tests/lms/dailyRecordLearning.test.ts",
     "academy:serve": "bun src/academy/main.ts",
     "academy:serve:retained": "bun src/academy/main.ts --retained-only",
@@ -22,6 +25,7 @@
     "test:pool-read": "bun test ./tests/lms/academyHttpClient.test.ts ./tests/lms/academyFollowupComposition.test.ts ./tests/lms/teacherLessonCarryover.test.ts ./tests/lms/testPoolReadProtocol.test.ts ./tests/lms/testPoolInspection.test.ts ./tests/lms/testPoolPresentationProtocol.test.ts ./tests/lms/nativePaperReadProtocol.test.ts ./tests/lms/dayRecordGroupMetadata.test.ts"
   },
   "devDependencies": {
+    "fast-check": "4.10.2",
     "playwright": "1.64.1",
     "typescript": "7.0.2",
     "@types/bun": "1.4.2",
@@ -29,6 +33,7 @@
     "@types/jsdom": "30.0.0"
   },
   "dependencies": {
+    "typescript-parser": "npm:typescript@5.9.3",
     "acorn": "8.19.0",
     "jsdom": "30.1.2"
   }
