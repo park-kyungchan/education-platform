@@ -80,12 +80,17 @@ describe('history without an artifact',()=>{
     const ids=Object.keys(jobs).map(Number);
     return new Response(JSON.stringify(job?jobs[Number(job[1])]:{total_count:total??ids.length,check_runs:ids.map(id=>({id}))}),{status:200});
   }) as unknown as typeof fetch;
-  const job=(run:number,conclusion:string|null)=>({run_id:run,steps:[{name:'Request',conclusion:'success'},{name:REVIEW_STEP,conclusion}]});
-  test('an earlier run that reached the review step is a taken sample; the current run and unreached steps are not',async()=>{
-    expect(await priorSampleTaken('o/r',head,9,'t',history({1:job(5,'success')}))).toBe(true);
-    expect(await priorSampleTaken('o/r',head,9,'t',history({1:job(5,'failure')}))).toBe(true);
-    expect(await priorSampleTaken('o/r',head,9,'t',history({1:job(5,'skipped'),2:job(6,null),3:job(9,'success')}))).toBe(false);
-    await expect(priorSampleTaken('o/r',head,9,'t',history({1:job(5,'skipped')},101))).rejects.toThrow('independent_review_history_paged');
+  const job=(run:number,attempt:number,status:string,conclusion:string|null)=>({run_id:run,run_attempt:attempt,steps:[{name:'Request',status:'completed',conclusion:'success'},{name:REVIEW_STEP,status,conclusion}]});
+  const now={run:9,attempt:2};
+  test('any other run or attempt whose review step started is a taken sample',async()=>{
+    for(const [status,conclusion] of [['completed','success'],['completed','failure'],['completed','cancelled'],['in_progress',null]] as const){
+      expect(await priorSampleTaken('o/r',head,now,'t',history({1:job(5,1,status,conclusion)}))).toBe(true);
+      expect(await priorSampleTaken('o/r',head,now,'t',history({1:job(9,1,status,conclusion)}))).toBe(true);
+    }
+  });
+  test('the current attempt and never-started review steps are not',async()=>{
+    expect(await priorSampleTaken('o/r',head,now,'t',history({1:job(5,1,'completed','skipped'),2:job(6,1,'queued',null),3:job(9,2,'completed','success')}))).toBe(false);
+    await expect(priorSampleTaken('o/r',head,now,'t',history({1:job(5,1,'completed','skipped')},101))).rejects.toThrow('independent_review_history_paged');
   });
   test('the workflow step that samples the model carries the name the history reads',()=>{
     expect(workflow().jobs.review.steps.filter((s:any)=>String(s.uses??'').startsWith('openai/codex-action@')).map((s:any)=>s.name)).toEqual([REVIEW_STEP]);

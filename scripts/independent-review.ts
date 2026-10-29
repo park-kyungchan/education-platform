@@ -86,9 +86,10 @@ export const priorVerdict=async(repository:string,head:string,token:string,fetch
 };
 
 // Without a verdict artifact, GitHub's check-run history still shows whether a model sample was taken for this head
-// (artifact expired or removed). Any earlier run of this job that reached the Review step blocks a fresh sample.
+// (artifact expired or removed). Any other run or attempt of this job whose Review step started (any conclusion but
+// skipped, cancelled included) blocks a fresh sample.
 export const REVIEW_STEP='Review';
-export const priorSampleTaken=async(repository:string,head:string,currentRun:number,token:string,fetchImpl:typeof fetch=fetch):Promise<boolean>=>{
+export const priorSampleTaken=async(repository:string,head:string,current:{run:number;attempt:number},token:string,fetchImpl:typeof fetch=fetch):Promise<boolean>=>{
   const get=async(path:string)=>{
     const response=await fetchImpl(`https://api.github.com/repos/${repository}/${path}`,{headers:{authorization:`Bearer ${token}`,accept:'application/vnd.github+json'}});
     if(!response.ok)fail('independent_review_history_unreadable',`status=${response.status}`);
@@ -99,9 +100,9 @@ export const priorSampleTaken=async(repository:string,head:string,currentRun:num
   if(Number(body?.total_count)>runs.length)fail('independent_review_history_paged',`total=${String(body?.total_count)}`);
   for(const check of runs){
     const job=record(await get(`actions/jobs/${String(check.id)}`));
-    if(job?.run_id===currentRun)continue;
+    if(job?.run_id===current.run&&job?.run_attempt===current.attempt)continue;
     const steps=Array.isArray(job?.steps)?job.steps.map(x=>record(x)??{}):[];
-    if(steps.some(step=>step.name===REVIEW_STEP&&(step.conclusion==='success'||step.conclusion==='failure')))return true;
+    if(steps.some(step=>step.name===REVIEW_STEP&&step.status!=='queued'&&step.status!=='pending'&&step.conclusion!=='skipped'))return true;
   }
   return false;
 };
@@ -173,7 +174,7 @@ const prior=async(outDir:string)=>{
   const repository=env('GITHUB_REPOSITORY',/^[\w.-]+\/[\w.-]+$/),head=env('HEAD_SHA',SHA),token=env('GITHUB_TOKEN',/./);
   mkdirSync(outDir,{recursive:true});
   const artifact=await priorVerdict(repository,head,token);
-  if(!artifact&&await priorSampleTaken(repository,head,Number(env('GITHUB_RUN_ID',/^\d+$/)),token))fail('independent_review_prior_sample_unrecoverable','verdict artifact missing');
+  if(!artifact&&await priorSampleTaken(repository,head,{run:Number(env('GITHUB_RUN_ID',/^\d+$/)),attempt:Number(env('GITHUB_RUN_ATTEMPT',/^\d+$/))},token))fail('independent_review_prior_sample_unrecoverable','verdict artifact missing');
   if(artifact)writeFileSync(resolve(outDir,'verdict.json'),await download(artifact,token,resolve(outDir,'prior.zip')));
   appendFileSync(env('GITHUB_OUTPUT',/./),`found=${artifact?'true':'false'}\n`);
   console.log(JSON.stringify({prior:artifact?{artifact:artifact.id,run:artifact.workflow_run?.id}:null}));
