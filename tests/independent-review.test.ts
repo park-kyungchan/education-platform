@@ -1,7 +1,7 @@
 import {describe,expect,test} from 'bun:test';
 import {readFileSync,readdirSync} from 'node:fs';
 import {resolve} from 'node:path';
-import {ARTIFACT_PREFIX,REQUEST_LABEL,requested,FINDING_FIELDS,REVIEW_CHECK_NAME,SEVERITY,TEMPLATE_KEYS,VERDICTS,checkWorkflow,judge,parseVerdict,priorVerdict,renderPrompt,type Artifact,type Severity} from '../scripts/independent-review';
+import {ARTIFACT_PREFIX,WORKFLOW_PATH,REQUEST_LABEL,requested,FINDING_FIELDS,REVIEW_CHECK_NAME,SEVERITY,TEMPLATE_KEYS,VERDICTS,checkWorkflow,judge,parseVerdict,priorVerdict,renderPrompt,type Artifact,type Severity} from '../scripts/independent-review';
 
 const root=resolve(import.meta.dir,'..');
 const schema=JSON.parse(readFileSync(resolve(root,'ci/independent-review/schema.json'),'utf8'));
@@ -52,17 +52,25 @@ describe('judge',()=>{
 });
 
 describe('one verdict per head',()=>{
-  const artifact=(id:number,created:string,over:Partial<Artifact>={}):Artifact=>({id,name:ARTIFACT_PREFIX+head,expired:false,created_at:created,archive_download_url:'u',workflow_run:{id,head_sha:head},...over});
-  const reader=(artifacts:Artifact[],total=artifacts.length,status=200)=>(async()=>new Response(JSON.stringify({total_count:total,artifacts}),{status})) as unknown as typeof fetch;
-  test('no artifact means a first review; several mean the earliest is final',async()=>{
+  const artifact=(id:number,created:string,over:Partial<Artifact>={}):Artifact=>({id,name:ARTIFACT_PREFIX+head,expired:false,created_at:created,archive_download_url:'u',workflow_run:{id},...over});
+  const trustedRun={event:'pull_request_target',path:WORKFLOW_PATH+'@refs/heads/main'};
+  const reader=(artifacts:Artifact[],runs:Record<number,unknown>={},total=artifacts.length,status=200)=>(async(url:string|URL|Request)=>{
+    const run=/actions\/runs\/(\d+)$/.exec(String(url));
+    return new Response(JSON.stringify(run?runs[Number(run[1])]??trustedRun:{total_count:total,artifacts}),{status});
+  }) as unknown as typeof fetch;
+  test('no artifact means a first review; several trusted ones mean the earliest is final',async()=>{
     expect(await priorVerdict('o/r',head,'t',reader([]))).toBeUndefined();
     expect((await priorVerdict('o/r',head,'t',reader([artifact(2,'2026-10-29T02:00:00Z'),artifact(1,'2026-10-29T01:00:00Z')])))?.id).toBe(1);
   });
-  test('expired, foreign-head, paged or unreadable listings fail closed',async()=>{
+  test('an artifact from any other producer fails closed',async()=>{
+    for(const run of [{event:'push',path:WORKFLOW_PATH},{event:'pull_request',path:WORKFLOW_PATH},{event:'pull_request_target',path:'.github/workflows/other.yml'},{}])
+      await expect(priorVerdict('o/r',head,'t',reader([artifact(1,'x')],{1:run}))).rejects.toThrow('independent_review_artifact_untrusted');
+    await expect(priorVerdict('o/r',head,'t',reader([artifact(1,'x',{workflow_run:null})]))).rejects.toThrow('independent_review_artifact_untrusted');
+  });
+  test('expired, paged or unreadable listings fail closed',async()=>{
     await expect(priorVerdict('o/r',head,'t',reader([artifact(1,'x',{expired:true})]))).rejects.toThrow('independent_review_verdict_expired');
-    await expect(priorVerdict('o/r',head,'t',reader([artifact(1,'x',{workflow_run:{id:1,head_sha:'b'.repeat(40)}})]))).rejects.toThrow('independent_review_artifact_head_mismatch');
-    await expect(priorVerdict('o/r',head,'t',reader([artifact(1,'x')],101))).rejects.toThrow('independent_review_artifacts_paged');
-    await expect(priorVerdict('o/r',head,'t',reader([],0,403))).rejects.toThrow('independent_review_artifacts_unreadable');
+    await expect(priorVerdict('o/r',head,'t',reader([artifact(1,'x')],{},101))).rejects.toThrow('independent_review_artifacts_paged');
+    await expect(priorVerdict('o/r',head,'t',reader([],{},0,403))).rejects.toThrow('independent_review_artifacts_unreadable');
   });
 });
 

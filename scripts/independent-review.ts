@@ -61,15 +61,25 @@ export const renderPrompt=(template:string,values:Record<TemplateKey,string>):st
   return template.replace(/\{\{([A-Z_]+)\}\}/g,(_,key:TemplateKey)=>values[key]);
 };
 
-// The first verdict for a head is final. An expired one blocks instead of allowing a fresh sample.
+// The first verdict for a head is final. Only artifacts uploaded by a pull_request_target run of this workflow count:
+// any other producer of the reserved name (another workflow, or a PR-defined pull_request run) fails closed, and so
+// does an expired verdict, so neither can open a fresh sample.
+export const WORKFLOW_PATH='.github/workflows/independent-review.yml';
 export const priorVerdict=async(repository:string,head:string,token:string,fetchImpl:typeof fetch=fetch):Promise<Artifact|undefined>=>{
+  const get=async(path:string)=>{
+    const response=await fetchImpl(`https://api.github.com/repos/${repository}/${path}`,{headers:{authorization:`Bearer ${token}`,accept:'application/vnd.github+json'}});
+    if(!response.ok)fail('independent_review_artifacts_unreadable',`status=${response.status}`);
+    return await response.json() as unknown;
+  };
   const name=ARTIFACT_PREFIX+head;
-  const response=await fetchImpl(`https://api.github.com/repos/${repository}/actions/artifacts?name=${name}&per_page=100`,{headers:{authorization:`Bearer ${token}`,accept:'application/vnd.github+json'}});
-  if(!response.ok)return fail('independent_review_artifacts_unreadable',`status=${response.status}`);
-  const body=await response.json() as {total_count:number;artifacts:Artifact[]};
+  const body=await get(`actions/artifacts?name=${name}&per_page=100`) as {total_count:number;artifacts:Artifact[]};
   if(body.total_count>body.artifacts.length)fail('independent_review_artifacts_paged',`total=${body.total_count}`);
   const own=body.artifacts.filter(a=>a.name===name);
-  if(own.some(a=>a.workflow_run?.head_sha!==head))fail('independent_review_artifact_head_mismatch',`count=${own.length}`);
+  for(const artifact of own){
+    const id=artifact.workflow_run?.id;
+    const run=record(typeof id==='number'?await get(`actions/runs/${id}`):undefined);
+    if(run?.event!=='pull_request_target'||String(run.path).split('@')[0]!==WORKFLOW_PATH)fail('independent_review_artifact_untrusted',`artifact=${artifact.id}`);
+  }
   const live=own.filter(a=>!a.expired).sort((a,b)=>a.created_at.localeCompare(b.created_at)||a.id-b.id);
   if(own.length&&!live.length)fail('independent_review_verdict_expired',`count=${own.length}`);
   return live[0];
