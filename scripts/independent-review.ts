@@ -85,6 +85,27 @@ export const priorVerdict=async(repository:string,head:string,token:string,fetch
   return live[0];
 };
 
+// Without a verdict artifact, GitHub's check-run history still shows whether a model sample was taken for this head
+// (artifact expired or removed). Any earlier run of this job that reached the Review step blocks a fresh sample.
+export const REVIEW_STEP='Review';
+export const priorSampleTaken=async(repository:string,head:string,currentRun:number,token:string,fetchImpl:typeof fetch=fetch):Promise<boolean>=>{
+  const get=async(path:string)=>{
+    const response=await fetchImpl(`https://api.github.com/repos/${repository}/${path}`,{headers:{authorization:`Bearer ${token}`,accept:'application/vnd.github+json'}});
+    if(!response.ok)fail('independent_review_history_unreadable',`status=${response.status}`);
+    return await response.json() as unknown;
+  };
+  const body=record(await get(`commits/${head}/check-runs?check_name=${encodeURIComponent(REVIEW_CHECK_NAME)}&filter=all&per_page=100`));
+  const runs=Array.isArray(body?.check_runs)?body.check_runs.map(r=>record(r)??{}):fail('independent_review_history_unreadable','check_runs');
+  if(Number(body?.total_count)>runs.length)fail('independent_review_history_paged',`total=${String(body?.total_count)}`);
+  for(const check of runs){
+    const job=record(await get(`actions/jobs/${String(check.id)}`));
+    if(job?.run_id===currentRun)continue;
+    const steps=Array.isArray(job?.steps)?job.steps.map(x=>record(x)??{}):[];
+    if(steps.some(step=>step.name===REVIEW_STEP&&(step.conclusion==='success'||step.conclusion==='failure')))return true;
+  }
+  return false;
+};
+
 const download=async(artifact:Artifact,token:string,zipPath:string)=>{
   const first=await fetch(artifact.archive_download_url,{headers:{authorization:`Bearer ${token}`},redirect:'manual'});
   const location=first.headers.get('location');
@@ -118,7 +139,9 @@ export const checkWorkflow=(doc:unknown):void=>{
   const on=record(root.on)??fail('independent_review_workflow_shape','on');
   if(!sameKeys(on,['pull_request_target']))fail('independent_review_workflow_trigger',Object.keys(on).join());
   const permissions=record(root.permissions)??fail('independent_review_workflow_shape','permissions');
-  if(!sameKeys(permissions,['actions','contents'])||permissions.actions!=='read'||permissions.contents!=='read')fail('independent_review_workflow_permissions','not read-only');
+  if(!sameKeys(permissions,['actions','checks','contents'])||Object.values(permissions).some(v=>v!=='read'))fail('independent_review_workflow_permissions','not read-only');
+  const concurrency=record(root.concurrency)??fail('independent_review_workflow_shape','concurrency');
+  if(concurrency.group!=='independent-review-${{ github.event.pull_request.head.sha }}'||concurrency['cancel-in-progress']!==false)fail('independent_review_workflow_concurrency','per head, no cancel');
   const jobs=record(root.jobs)??fail('independent_review_workflow_shape','jobs');
   const job=record(jobs.review)??fail('independent_review_workflow_shape','jobs.review');
   if(!sameKeys(jobs,['review'])||job.name!==REVIEW_CHECK_NAME)fail('independent_review_workflow_job','name');
@@ -150,6 +173,7 @@ const prior=async(outDir:string)=>{
   const repository=env('GITHUB_REPOSITORY',/^[\w.-]+\/[\w.-]+$/),head=env('HEAD_SHA',SHA),token=env('GITHUB_TOKEN',/./);
   mkdirSync(outDir,{recursive:true});
   const artifact=await priorVerdict(repository,head,token);
+  if(!artifact&&await priorSampleTaken(repository,head,Number(env('GITHUB_RUN_ID',/^\d+$/)),token))fail('independent_review_prior_sample_unrecoverable','verdict artifact missing');
   if(artifact)writeFileSync(resolve(outDir,'verdict.json'),await download(artifact,token,resolve(outDir,'prior.zip')));
   appendFileSync(env('GITHUB_OUTPUT',/./),`found=${artifact?'true':'false'}\n`);
   console.log(JSON.stringify({prior:artifact?{artifact:artifact.id,run:artifact.workflow_run?.id}:null}));

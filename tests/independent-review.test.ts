@@ -1,7 +1,7 @@
 import {describe,expect,test} from 'bun:test';
 import {readFileSync,readdirSync} from 'node:fs';
 import {resolve} from 'node:path';
-import {ARTIFACT_PREFIX,WORKFLOW_PATH,REQUEST_LABEL,requested,FINDING_FIELDS,REVIEW_CHECK_NAME,SEVERITY,TEMPLATE_KEYS,VERDICTS,checkWorkflow,judge,parseVerdict,priorVerdict,renderPrompt,type Artifact,type Severity} from '../scripts/independent-review';
+import {REVIEW_STEP,priorSampleTaken,ARTIFACT_PREFIX,WORKFLOW_PATH,REQUEST_LABEL,requested,FINDING_FIELDS,REVIEW_CHECK_NAME,SEVERITY,TEMPLATE_KEYS,VERDICTS,checkWorkflow,judge,parseVerdict,priorVerdict,renderPrompt,type Artifact,type Severity} from '../scripts/independent-review';
 
 const root=resolve(import.meta.dir,'..');
 const schema=JSON.parse(readFileSync(resolve(root,'ci/independent-review/schema.json'),'utf8'));
@@ -74,6 +74,24 @@ describe('one verdict per head',()=>{
   });
 });
 
+describe('history without an artifact',()=>{
+  const history=(jobs:Record<number,unknown>,total?:number)=>(async(url:string|URL|Request)=>{
+    const job=/actions\/jobs\/(\d+)$/.exec(String(url));
+    const ids=Object.keys(jobs).map(Number);
+    return new Response(JSON.stringify(job?jobs[Number(job[1])]:{total_count:total??ids.length,check_runs:ids.map(id=>({id}))}),{status:200});
+  }) as unknown as typeof fetch;
+  const job=(run:number,conclusion:string|null)=>({run_id:run,steps:[{name:'Request',conclusion:'success'},{name:REVIEW_STEP,conclusion}]});
+  test('an earlier run that reached the review step is a taken sample; the current run and unreached steps are not',async()=>{
+    expect(await priorSampleTaken('o/r',head,9,'t',history({1:job(5,'success')}))).toBe(true);
+    expect(await priorSampleTaken('o/r',head,9,'t',history({1:job(5,'failure')}))).toBe(true);
+    expect(await priorSampleTaken('o/r',head,9,'t',history({1:job(5,'skipped'),2:job(6,null),3:job(9,'success')}))).toBe(false);
+    await expect(priorSampleTaken('o/r',head,9,'t',history({1:job(5,'skipped')},101))).rejects.toThrow('independent_review_history_paged');
+  });
+  test('the workflow step that samples the model carries the name the history reads',()=>{
+    expect(workflow().jobs.review.steps.filter((s:any)=>String(s.uses??'').startsWith('openai/codex-action@')).map((s:any)=>s.name)).toEqual([REVIEW_STEP]);
+  });
+});
+
 describe('request gate',()=>{
   test('same repository with the label passes; anything else fails, never skips',()=>{
     expect(()=>requested('o/r','o/r',JSON.stringify(['x',REQUEST_LABEL]))).not.toThrow();
@@ -84,10 +102,11 @@ describe('request gate',()=>{
 });
 
 describe('workflow invariants',()=>{
-  test('no other workflow can report the required check name',()=>{
+  test('job names are literal, and no other workflow can report the required check name',()=>{
     const dir=resolve(root,'.github/workflows');
-    const owners=readdirSync(dir).filter(f=>/\.ya?ml$/.test(f)).filter(f=>Object.values((Bun.YAML.parse(readFileSync(resolve(dir,f),'utf8')) as any).jobs??{}).some((j:any)=>j?.name===REVIEW_CHECK_NAME));
-    expect(owners).toEqual(['independent-review.yml']);
+    const jobs=readdirSync(dir).filter(f=>/\.ya?ml$/.test(f)).flatMap(f=>Object.entries((Bun.YAML.parse(readFileSync(resolve(dir,f),'utf8')) as any).jobs??{}).map(([key,job]:[string,any])=>({file:f,name:String(job?.name??key)})));
+    expect(jobs.filter(j=>j.name.includes('${{'))).toEqual([]);
+    expect(jobs.filter(j=>j.name===REVIEW_CHECK_NAME).map(j=>j.file)).toEqual(['independent-review.yml']);
   });
   test('the committed workflow passes and names the exported check',()=>{
     expect(()=>checkWorkflow(workflow())).not.toThrow();
@@ -104,6 +123,8 @@ describe('workflow invariants',()=>{
     ['independent_review_workflow_codex',doc=>{step(doc,'openai/codex-action@').with.model='gpt-6-luna';}],
     ['independent_review_workflow_codex',doc=>{step(doc,'openai/codex-action@').with['codex-args']='[]';}],
     ['independent_review_workflow_job',doc=>{doc.jobs.review.name='Review';}],
+    ['independent_review_workflow_concurrency',doc=>{doc.concurrency['cancel-in-progress']=true;}],
+    ['independent_review_workflow_concurrency',doc=>{doc.concurrency.group='independent-review-${{ github.event.pull_request.number }}';}],
     ['independent_review_workflow_skippable',doc=>{doc.jobs.review.if="contains(github.event.pull_request.labels.*.name, 'full-review')";}],
     ['independent_review_workflow_request',doc=>{doc.jobs.review.steps.splice(3,1);}],
     ['independent_review_workflow_request',doc=>{doc.jobs.review.steps[5]['continue-on-error']=true;}],

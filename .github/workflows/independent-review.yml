@@ -2,15 +2,19 @@ name: Independent review
 # Runs from the trusted base (pull_request_target): a pull request cannot change its own review job, prompt or judge.
 # The head is checked out as data only; no step executes code from it. Add the full-review label to a final candidate.
 # The job never skips: GitHub counts a skipped required job as success, so an unrequested review fails instead.
+# Threat model: outside contributors and accidents (re-run, re-label, concurrent requests, skips). Accounts with write
+# access act with the owner's admin token and could change the ruleset itself; their deliberate forgery is out of scope.
+# Concurrency is per head and never cancels, so a second request for a head waits and then reuses the first verdict.
 on:
   pull_request_target:
     types: [opened, labeled, synchronize, reopened]
 permissions:
   contents: read
   actions: read
+  checks: read
 concurrency:
-  group: independent-review-${{ github.event.pull_request.number }}
-  cancel-in-progress: true
+  group: independent-review-${{ github.event.pull_request.head.sha }}
+  cancel-in-progress: false
 jobs:
   review:
     name: Independent exact-head review
