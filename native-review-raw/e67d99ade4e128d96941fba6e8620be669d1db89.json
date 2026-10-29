@@ -1,0 +1,95 @@
+{
+  "schema": "owner-scoped-native-review-output.v1",
+  "reviewStatus": "complete",
+  "binding": {
+    "repository": "park-kyungchan/education-platform",
+    "projectId": "education-platform",
+    "domainId": "education",
+    "semanticOwner": "education-platform",
+    "scope": "month-end-source-redesign"
+  },
+  "headSha": "e67d99ade4e128d96941fba6e8620be669d1db89",
+  "reviewedTreeSha": "37c939b42b00891714f800077c150d558025dcf8",
+  "reviewedSourceManifestSha256": "3d76e8f3563cbab019b649f545a18760d851013028c8f84804a50947cba0d4ed",
+  "author": {
+    "runtime": "codex",
+    "taskId": "01a18236-fa65-79d2-b628-49c1460a3eb3"
+  },
+  "reviewer": {
+    "runtime": "codex",
+    "taskId": "/root/independent_closeout_review_20261029"
+  },
+  "conclusion": "pass",
+  "unresolvedFindings": 0,
+  "findings": [],
+  "reviewScope": {
+    "baseSha": "07cc66eb821bef2d32c044f4f981f8bf1807cc4b",
+    "changedFiles": [
+      "apps/academy/dc-gang-a/docs/class-preparation-checklist-rubric.md",
+      "apps/academy/dc-gang-a/docs/daily-record-authoring-policy.md",
+      "apps/academy/dc-gang-a/docs/textbook-catalog.md",
+      "apps/academy/dc-gang-a/research/textbooks/edition-catalog-20261028-v1.json",
+      "apps/academy/dc-gang-a/research/textbooks/edition-catalog-20261028-v2.json",
+      "modules/academy-workbench/tools/academy-mcp/docs/backend-routing-context.md"
+    ],
+    "method": "Independent source-only review of immutable git show/git diff output, with bounded local Bun validation. No delegation.",
+    "inspectedRuntime": {
+      "runtime": "Codex",
+      "host": "srv1873899",
+      "uid": 0,
+      "pane": "wN:pP",
+      "role": "independent reviewer"
+    }
+  },
+  "checks": [
+    {
+      "name": "Exact diff and tree binding",
+      "status": "pass",
+      "evidence": "The diff contains exactly the six listed Markdown/JSON files; the immutable head tree equals reviewedTreeSha. Manifest binding and manifest digest were copied unchanged from the supplied metadata."
+    },
+    {
+      "name": "Reference and version consistency",
+      "status": "pass",
+      "evidence": "All five Markdown links and the report-format anchor resolve at the immutable head. The current guide selects catalog v2; v2 explicitly supersedes retained v1. The private read-entry locator exists as a file; its contents were not read."
+    },
+    {
+      "name": "Qualified editions and source metadata",
+      "status": "pass",
+      "evidence": "Each catalog contains eight unique edition refs with explicit level, grade, term, brand, series applicability, cover code and version. PDF positions and render/source hashes have consistent bounded metadata. Middle-school Davinci has no inferred series."
+    },
+    {
+      "name": "TOC hierarchy and page coordinates",
+      "status": "pass",
+      "evidence": "Each catalog contains 139 nodes. Parent coordinates, printed page ordering, assessment major-only coordinates and declared page evidence are consistent. Eleven explicit printed ranges are retained; other ends remain null. PDF file indices are stored separately. Middle-school Davinci middle units and derived unnumbered elementary topic groups remain distinct."
+    },
+    {
+      "name": "Guide components and activity distinctions",
+      "status": "pass",
+      "evidence": "Each catalog contains 75 named guide components with descriptions and explicit unknown per-unit applicability. The three proficiency section labels remain distinct. Combined guide headings preserve separate components with attribution; status columns are not promoted to printed sections."
+    },
+    {
+      "name": "Notebook and homework rules",
+      "status": "pass",
+      "evidence": "Gauss solving, supplementary-book solving and Gauss preparation notes are separate checks. Actual assigned stages govern homework; an absent score row does not establish absence, nonperformance or incomplete homework. Historical scores do not override scoped teacher completion."
+    },
+    {
+      "name": "Shared-source privacy and authority boundaries",
+      "status": "pass",
+      "evidence": "The six changed files contain general policy and book-reference data, without student-specific records, credential values or embedded PDF payloads. Private bindings and receipts remain external locators. No implementation, native mapping, service, save, grading or parent-send authority is added."
+    },
+    {
+      "name": "Documented bounded reuse command",
+      "status": "pass",
+      "evidence": "After confirming the local v2 bytes equal the immutable head blob, the exact documented command ran from the package root. It returned edition 1SAG:v1, exactly one node for 5-1 at printed page 72, and eleven explicitly book-level guide components."
+    }
+  ],
+  "validationNotes": [
+    "An initial reviewer probe incorrectly assumed every printed page end must be null. Inspection showed eleven explicitly declared TOC ranges in each catalog. The probe was corrected to validate those declared ranges and unknown ends separately; the corrected checks passed without source changes."
+  ],
+  "reviewLimits": [
+    "No PDF/image re-analysis or network retrieval was performed. Physical-book accuracy, original visual coverage and English paraphrase fidelity were not independently re-established; the disclosed observed-sample and unknown-boundary limits remain in force.",
+    "No student, authentication, private binding, receipt or other session-transcript contents were read. The parent-owned state file was neither read nor changed.",
+    "No source, checkout, configuration, credentials, service or runtime was changed. No broad repository checks, production verification, merge, source save or parent transmission were performed.",
+    "The supplied reviewed-source-manifest digest was bound as metadata; this scoped review did not recompute the repository-wide manifest."
+  ]
+}
