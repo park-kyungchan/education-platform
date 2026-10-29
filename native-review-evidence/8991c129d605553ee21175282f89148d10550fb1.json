@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "evidence",
+  "id": "education-platform:evidence:academy-review-8991c129d605553ee21175282f89148d10550fb1",
+  "projectId": "education-platform",
+  "domainId": "education",
+  "createdAt": "2026-10-29T01:35:27.881Z",
+  "payload": {
+    "claim": "A genuine independent codex reviewer qualified this exact source head/tree with zero current unresolved findings.",
+    "method": "codex-independent-source-review",
+    "sourceUrl": "https://github.com/park-kyungchan/education-platform/blob/76ebb5b589689eb269c0c0fbd91ece9dd57f6ed9/native-review-raw/8991c129d605553ee21175282f89148d10550fb1.json",
+    "fetchedAt": "2026-10-29T01:35:27.881Z",
+    "upstreamRevision": "8991c129d605553ee21175282f89148d10550fb1",
+    "result": {
+      "outcome": "success",
+      "processExitCode": 0,
+      "contentMatched": true
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "outcome": "success"
+      }
+    ],
+    "limitations": [
+      "Git custody authenticates the publisher, not native authorship or runtime permission.",
+      "Native activation, actual business use and Acceptance remain separately held."
+    ],
+    "details": {
+      "semanticOwner": "education-platform",
+      "review": {
+        "binding": {
+          "repository": "park-kyungchan/education-platform",
+          "projectId": "education-platform",
+          "domainId": "education",
+          "semanticOwner": "education-platform",
+          "scope": "month-end-source-redesign"
+        },
+        "headSha": "8991c129d605553ee21175282f89148d10550fb1",
+        "reviewedTreeSha": "47c1f4fdac9750a33b2e18181919678fd453eb57",
+        "reviewedSourceManifestSha256": "7d0b263ff1c4af3f90503b9785f06a3569cc18448d230f4c30b7fd47245450d3",
+        "reviewer": {
+          "runtime": "codex",
+          "taskId": "/root/pr38_repair_exact_review"
+        },
+        "author": {
+          "runtime": "native-codex",
+          "taskId": "01a18544-5e91-7360-b51d-f26dc50327cd"
+        },
+        "conclusion": "pass",
+        "unresolvedFindings": 0
+      }
+    }
+  }
+}
