@@ -20,6 +20,16 @@ Always ask about **today's student-specific memo** when no current content or ex
 
 ## Teacher-confirmed textbook and activity mapping
 
+Before asking the teacher to identify an already mapped textbook, unit or printed section, consult the [printed textbook catalog and private binding entry](textbook-catalog.md). Reuse the qualified exact-edition result; ask only about a genuinely unresolved assignment or changed source binding. A book-level section guide is not a per-unit section inventory.
+
+For preparation-time notebook and activity checks, use the separate
+[class preparation checklist rubric](class-preparation-checklist-rubric.md).
+Its notebook requirements do not imply that a student's notebooks were inspected.
+
+Teacher correction dated 2026-10-28: assess homework against its actual assigned stages. When only solving was assigned, missing at-home grading or corrections is not incomplete homework. Corrections completed in class belong to that lesson's progress. Obtain the teacher's homework assessment code independently; this rule does not define an automatic grade or apply to an assignment that explicitly included corrections.
+
+For an explicitly teacher-bound term-major-minor unit notation such as `1-4-2`, the first number is the semester, followed by major unit4 and minor unit2; there is no intermediate unit. Preserve the original notation and its attributable binding, then use the canonical major-minor coordinate `4-2` within that exact book. This rule is not permission to reinterpret other ambiguous historical three-number labels.
+
 The teacher confirmed this notation on 2026-10-19. A textbook code such as `5-2-1` means grade5, semester2, series1. The last component is the series/volume, not a unit or test round. School stage, publisher and source namespace must come from the attributed source context; the numeric code alone does not identify them.
 
 A unit code such as `2-1` means major unit2, subunit1. Do not introduce an intermediate unit. Keep the hierarchy `student -> textbook(stage/grade/semester/series) -> major unit -> subunit -> activity -> round`. Map the activity track separately from the textbook identity; vocabulary such as a clinic track name must not silently change the named publisher or book.
