@@ -14,7 +14,7 @@ export const educationSourceCi = {
   installDependencies: 'false',
   scripts: ['setup','check:ci-projection','check'],
  },
- nativeReview: {jobId:'native-review',policyPath:'architecture/common-ci-provider.json'},
+ nativeReview: {jobId:'native-review',event:'pull_request',policyPath:'architecture/common-ci-provider.json'},
  r07Slice: {jobId:'r07-slice',name:'R07 slice scope and size',script:'apps/academy/dc-gang-a/scripts/check-r07-slice-size.ts'},
  unit: {command:'bun --no-env-file apps/academy/dc-gang-a/scripts/check-r07-slice-size.ts ci-unit',artifactAction:'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02'},
  gate: {jobId:'source-gate',needs:['source','native-review','r07-slice']},

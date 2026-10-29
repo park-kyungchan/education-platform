@@ -53,6 +53,7 @@ jobs:
           if-no-files-found: ignore
   native-review:
     name: Exact head native independent review
+    if: ${{ github.event_name == 'pull_request' }}
     runs-on: ubuntu-latest
     timeout-minutes: 3
     steps:
@@ -115,4 +116,13 @@ jobs:
           SOURCE_RESULT: ${{ needs.source.result }}
           REVIEW_RESULT: ${{ needs.native-review.result }}
           SLICE_RESULT: ${{ needs.r07-slice.result }}
-        run: test "$SOURCE_RESULT" = success && test "$REVIEW_RESULT" = success && test "$SLICE_RESULT" = success
+          WORKFLOW_EVENT: ${{ github.event_name }}
+          WORKFLOW_REF: ${{ github.ref }}
+        run: |
+          test "$SOURCE_RESULT" = success && test "$SLICE_RESULT" = success || exit 1
+          case "$WORKFLOW_EVENT" in
+            pull_request) test "$REVIEW_RESULT" = success ;;
+            push) test "$WORKFLOW_REF" = refs/heads/main && { test "$REVIEW_RESULT" = success || test "$REVIEW_RESULT" = skipped; } ;;
+            workflow_dispatch) test "$REVIEW_RESULT" = success || test "$REVIEW_RESULT" = skipped ;;
+            *) exit 1 ;;
+          esac

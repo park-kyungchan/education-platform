@@ -153,6 +153,7 @@ test('root source CI guards owner setup inside the shared action and preserves r
  expect(manifest.scripts[contract.source.scripts[1]]).toBe('bun ci/verify-projection.ts');
  expect(manifest.scripts[contract.source.scripts[2]]).toBe('bun scripts/check.ts');
  const review=workflow.jobs[contract.nativeReview.jobId];
+ expect(review.if).toBe("${{ github.event_name == '"+contract.nativeReview.event+"' }}");
  expect(review.steps.find((step:any)=>step.uses?.startsWith('oven-sh/setup-bun@')).with['bun-version']).toBe(contract.setup.bootstrapBun);
  expect(review.steps.filter((step:any)=>step.run).map((step:any)=>step.run)).toEqual(['bun ci/verify-projection.ts','bun ci/native-review-gate.js']);
  const provider=await Bun.file(resolve(projectRoot,contract.nativeReview.policyPath)).json();
@@ -167,8 +168,18 @@ test('root source CI guards owner setup inside the shared action and preserves r
  expect(Object.values(workflow.jobs).map((job:any)=>job.name).sort()).toEqual([...REQUIRED_CHECKS].sort());
  const gate=workflow.jobs[contract.gate.jobId];
  expect(gate.if).toBe('${{ always() }}');expect(gate.needs).toEqual(contract.gate.needs);
- for(const source of ['success','failure','cancelled','skipped'])for(const review of ['success','failure','cancelled','skipped'])for(const slice of ['success','failure','cancelled','skipped']){
-  const child=Bun.spawn(['bash','-c',gate.steps[0].run],{env:{SOURCE_RESULT:source,REVIEW_RESULT:review,SLICE_RESULT:slice},stdout:'pipe',stderr:'pipe'});
-  expect((await child.exited)===0).toBe(source==='success'&&review==='success'&&slice==='success');
+ expect(gate.steps[0].env.WORKFLOW_EVENT).toBe('${{ github.event_name }}');expect(gate.steps[0].env.WORKFLOW_REF).toBe('${{ github.ref }}');
+ for(const event of [...Object.keys(workflow.on),'unknown'])for(const ref of ['refs/heads/main','refs/heads/feature'])for(const source of ['success','failure','cancelled','skipped'])for(const review of ['success','failure','cancelled','skipped'])for(const slice of ['success','failure','cancelled','skipped']){
+  const child=Bun.spawn(['bash','-c',gate.steps[0].run],{env:{SOURCE_RESULT:source,REVIEW_RESULT:review,SLICE_RESULT:slice,WORKFLOW_EVENT:event,WORKFLOW_REF:ref},stdout:'pipe',stderr:'pipe'});
+  const admitted=event==='pull_request'||event==='workflow_dispatch'||event==='push'&&ref==='refs/heads/main',maySkip=event==='workflow_dispatch'||event==='push'&&ref==='refs/heads/main';
+  expect((await child.exited)===0).toBe(admitted&&source==='success'&&slice==='success'&&(review==='success'||review==='skipped'&&maySkip));
  }
+});
+
+test('actual predecessor fires native review on main and rejects the legitimate skipped outcome',async()=>{
+ const r=Bun.spawnSync(['git','show','b7e135f83a41c4aaefb93fed40fa729df8dd4e84:.github/workflows/source.yml'],{cwd:projectRoot,stdout:'pipe',stderr:'pipe'});expect(r.exitCode).toBe(0);
+ const prior=Bun.YAML.parse(r.stdout.toString()) as {jobs:Record<string,{if?:string;steps:{run:string}[]}>},review=prior.jobs[educationSourceCi.nativeReview.jobId];
+ const enforce=(value:string|undefined)=>expect(value).toBe("${{ github.event_name == 'pull_request' }}");expect(()=>enforce(review?.if)).toThrow();
+ const command=prior.jobs[educationSourceCi.gate.jobId]?.steps[0]?.run;if(!command)throw Error('predecessor_gate_missing');
+ const child=Bun.spawn(['bash','-c',command],{env:{SOURCE_RESULT:'success',REVIEW_RESULT:'skipped',SLICE_RESULT:'success',WORKFLOW_EVENT:'push',WORKFLOW_REF:'refs/heads/main'},stdout:'pipe',stderr:'pipe'});expect(await child.exited).not.toBe(0);
 });
