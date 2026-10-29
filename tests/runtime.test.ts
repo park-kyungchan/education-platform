@@ -1,10 +1,11 @@
 import {expect,test} from 'bun:test';
-import {mkdtempSync,mkdirSync,writeFileSync,readFileSync,rmSync,existsSync} from 'node:fs';
+import {mkdtempSync,mkdirSync,writeFileSync,readFileSync,rmSync,existsSync,renameSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {delimiter,join,resolve} from 'node:path';
 import {moduleCheckExecution,projectRoot,readSourceMap} from '../src/modules';
 import {assertBunRuntime,bunToolchain,setupRuntime,publishActionsBunPath} from '../src/runtime';
 import {educationSourceCi} from '../src/source-ci';
+import {IMPORT_ARCHIVE,verifyImports} from '../scripts/verify-imports';
 
 test('Bun checks refuse old invokers and unadmitted scripts before spawning',async()=>{
  const module=(await readSourceMap()).modules.find(m=>m.id==='mathcrew')!;
@@ -101,4 +102,18 @@ test('root source CI equals its table exactly and runs only the canonical checks
  expect(Object.keys(workflow.jobs)).toEqual(['source']);
  for(const path of ['.github/source-author.json','ci/native-review-gate.js','ci/verify-projection.ts','architecture/common-ci-provider.json'])expect(existsSync(resolve(projectRoot,path))).toBe(false);
  expect(manifest.scripts['check:ci-projection']).toBeUndefined();
+});
+
+test('every manifest-backed import preserves original hashes and refuses missing or tampered archives',()=>{
+ const root=mkdtempSync(join(tmpdir(),'r07-imports-')),manifest=readFileSync(resolve(projectRoot,IMPORT_ARCHIVE.path)),archive=JSON.parse(manifest.toString()) as {entries:{from:string;to:string}[]},original=JSON.parse(readFileSync(resolve(projectRoot,'provenance/imported-files.json'),'utf8')) as {files:{module:string;path:string;sha256:string}[]};
+ const put=(path:string,body:string|Uint8Array)=>{mkdirSync(resolve(root,path,'..'),{recursive:true});writeFileSync(resolve(root,path),body);};
+ try{
+  const paths=new Set(archive.entries.map(e=>e.from)),files=original.files.filter(f=>paths.has(f.module+'/'+f.path));expect(files).toHaveLength(archive.entries.length);
+  put('provenance/imported-files.json',JSON.stringify({files}));put('provenance/adaptations.json','{"files":[]}');put(IMPORT_ARCHIVE.path,manifest);
+  for(const e of archive.entries)put(e.to,readFileSync(resolve(projectRoot,e.to)));
+  expect(verifyImports(root).archived).toBe(archive.entries.length);
+  for(const e of archive.entries){const path=resolve(root,e.to),bytes=readFileSync(path);renameSync(path,path+'.held');expect(()=>verifyImports(root)).toThrow('missing_import');renameSync(path+'.held',path);writeFileSync(path,Buffer.concat([bytes,Buffer.from('\n')]));expect(()=>verifyImports(root)).toThrow('import_hash_mismatch');writeFileSync(path,bytes);}
+  for(const e of archive.entries){put(e.from,readFileSync(resolve(root,e.to)));expect(()=>verifyImports(root)).toThrow('archive_import_original_conflict');rmSync(resolve(root,e.from));}
+  put(IMPORT_ARCHIVE.path,Buffer.concat([manifest,Buffer.from('\n')]));expect(()=>verifyImports(root)).toThrow('archive_import_manifest_stale');put(IMPORT_ARCHIVE.path,manifest);expect(verifyImports(root).unchanged).toBe(files.length);
+ }finally{rmSync(root,{recursive:true,force:true});}
 });
