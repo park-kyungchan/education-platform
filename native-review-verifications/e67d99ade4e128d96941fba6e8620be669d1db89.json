@@ -1,0 +1,66 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "verification",
+  "id": "education-platform:verification:academy-review-e67d99ade4e128d96941fba6e8620be669d1db89",
+  "projectId": "education-platform",
+  "domainId": "education",
+  "createdAt": "2026-10-29T00:51:13.698Z",
+  "payload": {
+    "targetRefs": [
+      "education-platform:evidence:academy-review-e67d99ade4e128d96941fba6e8620be669d1db89"
+    ],
+    "criteria": [
+      {
+        "id": "independent-native-source-review",
+        "status": "pass",
+        "message": "Independent Codex review binds exact head/tree/manifest with distinct author/reviewer and zero findings.",
+        "evidenceRefs": [
+          "education-platform:evidence:academy-review-e67d99ade4e128d96941fba6e8620be669d1db89"
+        ]
+      }
+    ],
+    "inputHashes": [
+      {
+        "path": "native-review-results/e67d99ade4e128d96941fba6e8620be669d1db89.json",
+        "sha256": "c154c4c71f4de8dccc5d32fabcb058f8d58d297e45da88f2e75cc0cb7ffdb9eb"
+      },
+      {
+        "path": "native-review-evidence/e67d99ade4e128d96941fba6e8620be669d1db89.json",
+        "sha256": "63442051d90bc3c85062742b9d88ee7b0c72158d7a898ad80568e62f7749ebe7"
+      },
+      {
+        "path": "native-review-raw/e67d99ade4e128d96941fba6e8620be669d1db89.json",
+        "sha256": "010ee5c74543124df2d03a900799e833c7a86ddc770c6daf5fdf1d06a765e3fb"
+      }
+    ],
+    "runtime": {
+      "name": "Codex",
+      "version": "observed-session-not-cryptographic-authentication"
+    },
+    "details": {
+      "semanticOwner": "education-platform",
+      "review": {
+        "binding": {
+          "repository": "park-kyungchan/education-platform",
+          "projectId": "education-platform",
+          "domainId": "education",
+          "semanticOwner": "education-platform",
+          "scope": "month-end-source-redesign"
+        },
+        "headSha": "e67d99ade4e128d96941fba6e8620be669d1db89",
+        "reviewedTreeSha": "37c939b42b00891714f800077c150d558025dcf8",
+        "reviewedSourceManifestSha256": "3d76e8f3563cbab019b649f545a18760d851013028c8f84804a50947cba0d4ed",
+        "reviewer": {
+          "runtime": "Codex",
+          "taskId": "/root/independent_closeout_review_20261029"
+        },
+        "author": {
+          "runtime": "Codex",
+          "taskId": "01a18236-fa65-79d2-b628-49c1460a3eb3"
+        },
+        "conclusion": "pass",
+        "unresolvedFindings": 0
+      }
+    }
+  }
+}
