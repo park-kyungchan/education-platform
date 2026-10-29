@@ -3,8 +3,9 @@ name: Independent review
 # The head is checked out as data only; no step executes code from it. Add the full-review label to a final candidate.
 # The verdict is the commit status "Independent exact-head review" on the exact head (the required context on main).
 # This job's own check lands on the default-branch commit, so it is named differently and is never the required one.
-# Statuses cannot be deleted and forks cannot write them: the first status for a head is final, and a pending one left
-# by a cancelled run fails closed instead of sampling again. Fork workflows need approval for all outside contributors.
+# The status is posted by the review GitHub App, and the ruleset pins that app (integration_id) as the context's only
+# source, so a same-named check from a fork job or any other workflow never satisfies it. Statuses cannot be deleted:
+# the first status for a head is final, and a pending one left by a cancelled run fails closed instead of sampling again.
 # Threat model: outside contributors and accidents (re-run, re-label, concurrent requests, skips). Accounts with write
 # access act with the owner's admin token and could change the ruleset itself; their deliberate forgery is out of scope.
 on:
@@ -12,7 +13,6 @@ on:
     types: [opened, labeled, synchronize, reopened]
 permissions:
   contents: read
-  statuses: write
 concurrency:
   group: independent-review-${{ github.event.pull_request.head.sha }}
   cancel-in-progress: false
@@ -48,15 +48,23 @@ jobs:
           bun-version: 1.4.2
       - name: Require a same-repository head, the default base and the full-review label
         run: bun trusted/scripts/independent-review.ts request
+      - name: Mint the review app token
+        id: app
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510
+        with:
+          client-id: ${{ vars.REVIEW_APP_CLIENT_ID }}
+          private-key: ${{ secrets.REVIEW_APP_PRIVATE_KEY }}
+          permission-statuses: write
       - name: Claim the one review of this head
         id: claim
         run: bun trusted/scripts/independent-review.ts claim
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ steps.app.outputs.token }}
       - name: Build review input
         if: ${{ steps.claim.outputs.sample == 'true' }}
         run: bun trusted/scripts/independent-review.ts prepare subject review-input
       - name: Review
+        id: review
         if: ${{ steps.claim.outputs.sample == 'true' }}
         uses: openai/codex-action@bdf19a4a223ec2549a3e2274a0cf61556bc07675
         with:
@@ -70,7 +78,8 @@ jobs:
           output-file: review-input/verdict.json
           codex-args: '["-c", "project_doc_max_bytes=0"]'
       - name: Record the verdict on the head
-        if: ${{ always() && steps.claim.outputs.sample == 'true' }}
+        if: ${{ !cancelled() && steps.claim.outputs.sample == 'true' }}
         run: bun trusted/scripts/independent-review.ts record review-input/verdict.json
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ steps.app.outputs.token }}
+          REVIEW_OUTCOME: ${{ steps.review.outcome }}

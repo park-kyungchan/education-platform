@@ -72,7 +72,7 @@ describe('one verdict per head (commit statuses)',()=>{
     const s=store();
     expect(await claim(s.api,head,run)).toBe(true);
     expect(s.posts.map(p=>[p.state,p.context,p.target_url])).toEqual([['pending',REVIEW_CONTEXT,run]]);
-    expect((await recordVerdict(s.api,head,run,pass)).pass).toBe(true);
+    expect((await recordVerdict(s.api,head,run,'success',pass)).pass).toBe(true);
     expect(s.posts.map(p=>p.state)).toEqual(['pending','success']);
   });
   test('status policy: only a pending status is a lost sample',()=>{expect(STATUS_STATES).toEqual({pending:'lost',success:'recorded',failure:'recorded',error:'recorded'});});
@@ -89,7 +89,7 @@ describe('one verdict per head (commit statuses)',()=>{
   });
   test('after a recorded verdict any later run, re-run or re-label samples nothing',async()=>{
     for(const verdict of [pass,JSON.stringify({verdict:'changes_required',findings:[finding('high')]})]){
-      const s=store();await claim(s.api,head,run);await recordVerdict(s.api,head,run,verdict);
+      const s=store();await claim(s.api,head,run);await recordVerdict(s.api,head,run,'success',verdict);
       expect(await claim(s.api,head,otherRun)).toBe(false);
       expect(decide(await contextStatuses(s.api,head))).toEqual({sample:false,state:s.posts.at(-1)!.state as StatusState});
     }
@@ -97,15 +97,21 @@ describe('one verdict per head (commit statuses)',()=>{
   test('a missing or invalid verdict is recorded as failure, never left open',async()=>{
     for(const text of [undefined,'not json',JSON.stringify({verdict:'pass',findings:[finding('high')]})]){
       const s=store();await claim(s.api,head,run);
-      await expect(recordVerdict(s.api,head,run,text)).rejects.toThrow(ReviewErrorCode);
+      await expect(recordVerdict(s.api,head,run,'success',text)).rejects.toThrow(ReviewErrorCode);
       expect(s.posts.map(p=>p.state)).toEqual(['pending','failure']);
     }
   });
+  // FULL5 counterexample: a pass file left by a Review step that did not succeed is never recorded as success.
+  test.each(['failure','skipped','cancelled',''])('Review outcome %p records failure even with a pass file',async outcome=>{
+    const s=store();await claim(s.api,head,run);
+    await expect(recordVerdict(s.api,head,run,outcome,pass)).rejects.toThrow('independent_review_step_not_success');
+    expect(s.posts.map(p=>p.state)).toEqual(['pending','failure']);
+  });
   test('only the claiming run records, and only over its own pending status',async()=>{
     const s=store([status(1,'pending')]);
-    await expect(recordVerdict(s.api,head,run,pass)).rejects.toThrow('independent_review_claim_missing');
+    await expect(recordVerdict(s.api,head,run,'success',pass)).rejects.toThrow('independent_review_claim_missing');
     const t=store([status(1,'success',{target_url:run})]);
-    await expect(recordVerdict(t.api,head,run,pass)).rejects.toThrow('independent_review_claim_missing');
+    await expect(recordVerdict(t.api,head,run,'success',pass)).rejects.toThrow('independent_review_claim_missing');
     expect([...s.posts,...t.posts]).toEqual([]);
   });
   test('the newest status wins; other contexts are ignored; foreign, unknown or paged lists fail closed',async()=>{
@@ -143,6 +149,11 @@ describe('workflow invariants',()=>{
     doc.jobs.review.steps.slice(4).forEach((s:any)=>{s.if=false;});
     expect(()=>checkWorkflow(doc)).toThrow('independent_review_workflow_drift');
   });
+  test('FULL5 counterexample: recording after a cancellation (always()) fails',()=>{
+    const doc=workflow();
+    doc.jobs.review.steps.at(-1).if="${{ always() && steps.claim.outputs.sample == 'true' }}";
+    expect(()=>checkWorkflow(doc)).toThrow('independent_review_workflow_drift');
+  });
   // One fault per leaf, per key and per array, enumerated from the exported table.
   type Fault=[string,(doc:any)=>void];
   const faults:Fault[]=[];
@@ -173,16 +184,23 @@ describe('workflow invariants',()=>{
   // What makes the table itself safe.
   const job=EXPECTED_WORKFLOW.jobs.review;
   const steps=job.steps as readonly Record<string,any>[];
-  test('claiming never skips; only sampling and recording depend on the claim; recording always follows a claim',()=>{
+  test('claiming never skips; only sampling and recording depend on the claim; a cancelled run never records',()=>{
     expect('if' in job||'continue-on-error' in job).toBe(false);
     expect(steps.filter(s=>'continue-on-error' in s)).toEqual([]);
-    expect(steps.filter(s=>'if' in s).map(s=>s.if)).toEqual(["${{ steps.claim.outputs.sample == 'true' }}","${{ steps.claim.outputs.sample == 'true' }}","${{ always() && steps.claim.outputs.sample == 'true' }}"]);
-    expect(steps.slice(3,5).map(s=>s.run)).toEqual([RUN_PREFIX+'request',RUN_PREFIX+'claim']);
+    expect(steps.filter(s=>'if' in s).map(s=>s.if)).toEqual(["${{ steps.claim.outputs.sample == 'true' }}","${{ steps.claim.outputs.sample == 'true' }}","${{ !cancelled() && steps.claim.outputs.sample == 'true' }}"]);
+    expect(steps.at(-1)?.env).toEqual({GITHUB_TOKEN:'${{ steps.app.outputs.token }}',REVIEW_OUTCOME:'${{ steps.review.outcome }}'});
+    expect(steps.at(-2)?.id).toBe('review');
+    expect([steps[3]?.run,steps[4]?.id,steps[5]?.run]).toEqual([RUN_PREFIX+'request','app',RUN_PREFIX+'claim']);
     expect(steps.at(-1)?.run).toBe(RUN_PREFIX+'record review-input/verdict.json');
     expect(steps.filter(s=>String(s.uses).startsWith('openai/codex-action@')).map(s=>steps.indexOf(s))).toEqual([steps.length-2]);
   });
   test('trusted code only, pinned actions, least token, uncredentialed checkouts',()=>{
-    expect(EXPECTED_WORKFLOW.permissions).toEqual({contents:'read',statuses:'write'});
+    // The job token cannot write statuses; only the app token minted after the request gate can, and only statuses.
+    expect(EXPECTED_WORKFLOW.permissions).toEqual({contents:'read'});
+    expect(steps.filter(s=>JSON.stringify(s).includes('github.token'))).toEqual([]);
+    expect(steps.filter(s=>JSON.stringify(s).includes('steps.app.outputs.token')).map(s=>s.id)).toEqual(['claim',undefined]);
+    expect(steps[4]?.with).toEqual({'client-id':'${{ vars.REVIEW_APP_CLIENT_ID }}','private-key':'${{ secrets.REVIEW_APP_PRIVATE_KEY }}','permission-statuses':'write'});
+    expect(STATUS_CREATOR).toBe('education-platform-review[bot]');
     expect(steps.filter(s=>'run' in s&&!String(s.run).startsWith(RUN_PREFIX))).toEqual([]);
     expect(steps.filter(s=>'uses' in s&&!/@[0-9a-f]{40}$/.test(String(s.uses)))).toEqual([]);
     const checkouts=steps.filter(s=>String(s.uses).startsWith('actions/checkout@'));

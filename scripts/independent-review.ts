@@ -1,13 +1,16 @@
 // Independent exact-head review for pull requests, run by .github/workflows/independent-review.yml.
 // The workflow runs on pull_request_target from the default branch, so this file and the prompt are trusted; the PR
-// head is only read. The verdict is a commit status on the exact head. Statuses cannot be deleted and forks cannot
-// write them, so the first status for a head is final: no re-run, re-label or concurrent request samples the model again.
+// head is only read. The verdict is a commit status on the exact head, posted by the review GitHub App; the ruleset pins
+// that app as the context's only accepted source (integration_id), so a same-named check from any other workflow or fork
+// job never satisfies it. Statuses cannot be deleted, so the first status for a head is final: no re-run, re-label or
+// concurrent request samples the model again.
 import {mkdirSync,readFileSync,writeFileSync,appendFileSync,existsSync} from 'node:fs';
 import {resolve} from 'node:path';
 
 export const REVIEW_CONTEXT='Independent exact-head review'; // the required status context on main
 export const RUNNER_JOB_NAME='Independent review runner'; // its own check lands on the default-branch commit
-export const STATUS_CREATOR='github-actions[bot]';
+export const REVIEW_APP_SLUG='education-platform-review'; // the GitHub App pinned as integration_id on main
+export const STATUS_CREATOR=`${REVIEW_APP_SLUG}[bot]`;
 export const REVIEW_MODEL='gpt-6.1-sol';
 export const SEVERITY={high:true,medium:true,low:false} as const; // true: the finding blocks the merge
 export const VERDICTS=['pass','changes_required'] as const;
@@ -117,12 +120,15 @@ export const claim=async(api:Api,head:string,runUrl:string):Promise<boolean>=>{
 };
 
 // Record: only the run that claimed the head (its pending status is still the latest) posts the final verdict.
-// A missing or invalid verdict is recorded as failure, so the head never gets a second sample.
-export const recordVerdict=async(api:Api,head:string,runUrl:string,verdictText:string|undefined)=>{
+// A missing or invalid verdict, or a Review step that did not succeed, is recorded as failure, so the head never gets a
+// second sample. A cancelled run never reaches this step (the workflow guards it with !cancelled()), so its pending
+// status stays and fails closed.
+export const recordVerdict=async(api:Api,head:string,runUrl:string,reviewOutcome:string,verdictText:string|undefined)=>{
   const latest=(await contextStatuses(api,head))[0];
   if(latest?.state!=='pending'||latest.target_url!==runUrl)fail('independent_review_claim_missing',`latest=${String(latest?.id)}`);
   let result:{pass:boolean;blocking:number;findings:Finding[]};
   try{
+    if(reviewOutcome!=='success')fail('independent_review_step_not_success',`outcome=${reviewOutcome.slice(0,20)}`);
     if(verdictText===undefined)fail('independent_review_verdict_missing','no verdict file');
     const verdict=parseVerdict(verdictText!);
     result={...judge(verdict),findings:verdict.findings};
@@ -149,11 +155,12 @@ const jobApi=()=>githubApi(repository(),env('GITHUB_TOKEN',/./));
 // unlisted change through (FULL2: `if: false` on every step after the request gate skipped the model and the judge);
 // exact equality closes that class, and the tests derive one injected fault from every leaf of this table.
 const SAMPLE="${{ steps.claim.outputs.sample == 'true' }}";
+const APP_TOKEN='${{ steps.app.outputs.token }}';
 const CHECKOUT='actions/checkout@11d5960a326750d5838078e36cf38b85af677262';
 export const EXPECTED_WORKFLOW={
   name:'Independent review',
   on:{pull_request_target:{types:['opened','labeled','synchronize','reopened']}},
-  permissions:{contents:'read',statuses:'write'},
+  permissions:{contents:'read'},
   concurrency:{group:'independent-review-${{ github.event.pull_request.head.sha }}','cancel-in-progress':false},
   jobs:{review:{
     name:RUNNER_JOB_NAME,
@@ -173,9 +180,14 @@ export const EXPECTED_WORKFLOW={
       {name:'Check out exact head as data',uses:CHECKOUT,with:{ref:'${{ github.event.pull_request.head.sha }}',path:'subject','fetch-depth':0,'persist-credentials':false}},
       {uses:'oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6',with:{'bun-version':'1.4.2'}},
       {name:'Require a same-repository head, the default base and the full-review label',run:RUN_PREFIX+'request'},
-      {name:'Claim the one review of this head',id:'claim',run:RUN_PREFIX+'claim',env:{GITHUB_TOKEN:'${{ github.token }}'}},
+      {name:'Mint the review app token',id:'app',uses:'actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510',with:{
+        'client-id':'${{ vars.REVIEW_APP_CLIENT_ID }}',
+        'private-key':'${{ secrets.REVIEW_APP_PRIVATE_KEY }}',
+        'permission-statuses':'write',
+      }},
+      {name:'Claim the one review of this head',id:'claim',run:RUN_PREFIX+'claim',env:{GITHUB_TOKEN:APP_TOKEN}},
       {name:'Build review input',if:SAMPLE,run:RUN_PREFIX+'prepare subject review-input'},
-      {name:'Review',if:SAMPLE,uses:'openai/codex-action@bdf19a4a223ec2549a3e2274a0cf61556bc07675',with:{
+      {name:'Review',id:'review',if:SAMPLE,uses:'openai/codex-action@bdf19a4a223ec2549a3e2274a0cf61556bc07675',with:{
         'openai-api-key':'${{ secrets.OPENAI_API_KEY }}',
         'prompt-file':'review-input/prompt.md',
         'working-directory':'${{ github.workspace }}/subject',
@@ -186,7 +198,10 @@ export const EXPECTED_WORKFLOW={
         'output-file':'review-input/verdict.json',
         'codex-args':'["-c", "project_doc_max_bytes=0"]',
       }},
-      {name:'Record the verdict on the head',if:"${{ always() && steps.claim.outputs.sample == 'true' }}",run:RUN_PREFIX+'record review-input/verdict.json',env:{GITHUB_TOKEN:'${{ github.token }}'}},
+      {name:'Record the verdict on the head',if:"${{ !cancelled() && steps.claim.outputs.sample == 'true' }}",run:RUN_PREFIX+'record review-input/verdict.json',env:{
+        GITHUB_TOKEN:APP_TOKEN,
+        REVIEW_OUTCOME:'${{ steps.review.outcome }}',
+      }},
     ],
   }},
 } as const;
@@ -225,7 +240,7 @@ const prepare=(subject:string,outDir:string)=>{
 };
 
 const record_=async(path:string)=>{
-  const result=await recordVerdict(jobApi(),env('HEAD_SHA',SHA),runUrl(),existsSync(path)?readFileSync(path,'utf8'):undefined);
+  const result=await recordVerdict(jobApi(),env('HEAD_SHA',SHA),runUrl(),process.env.REVIEW_OUTCOME??'',existsSync(path)?readFileSync(path,'utf8'):undefined);
   const cell=(s:string)=>s.replace(/\|/g,'\\|').replace(/\n/g,' ');
   const summary=[`## ${REVIEW_CONTEXT}: ${result.pass?'PASS':'CHANGES REQUIRED'}`,'','| severity | location | summary |','|---|---|---|',...result.findings.map(f=>`| ${f.severity} | ${cell(f.file)}:${f.line} | ${cell(f.summary)} |`)].join('\n');
   if(process.env.GITHUB_STEP_SUMMARY)appendFileSync(process.env.GITHUB_STEP_SUMMARY,summary+'\n');
