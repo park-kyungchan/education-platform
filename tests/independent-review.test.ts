@@ -1,7 +1,7 @@
 import {describe,expect,test} from 'bun:test';
 import {readFileSync,readdirSync} from 'node:fs';
 import {resolve} from 'node:path';
-import {REVIEW_STEP,priorSampleTaken,ARTIFACT_PREFIX,WORKFLOW_PATH,REQUEST_LABEL,requested,FINDING_FIELDS,REVIEW_CHECK_NAME,SEVERITY,TEMPLATE_KEYS,VERDICTS,checkWorkflow,judge,parseVerdict,priorVerdict,renderPrompt,type Artifact,type Severity} from '../scripts/independent-review';
+import {REVIEW_STEP,EXPECTED_WORKFLOW,RUN_PREFIX,priorSampleTaken,ARTIFACT_PREFIX,WORKFLOW_PATH,REQUEST_LABEL,requested,FINDING_FIELDS,REVIEW_CHECK_NAME,SEVERITY,TEMPLATE_KEYS,VERDICTS,checkWorkflow,judge,parseVerdict,priorVerdict,renderPrompt,type Artifact,type Severity} from '../scripts/independent-review';
 
 const root=resolve(import.meta.dir,'..');
 const schema=JSON.parse(readFileSync(resolve(root,'ci/independent-review/schema.json'),'utf8'));
@@ -113,29 +113,59 @@ describe('workflow invariants',()=>{
     expect(jobs.filter(j=>j.name.includes('${{'))).toEqual([]);
     expect(jobs.filter(j=>j.name===REVIEW_CHECK_NAME).map(j=>j.file)).toEqual(['independent-review.yml']);
   });
-  test('the committed workflow passes and names the exported check',()=>{
+  test('the committed workflow equals the table exactly',()=>{
     expect(()=>checkWorkflow(workflow())).not.toThrow();
     expect(workflow().jobs.review.name).toBe(REVIEW_CHECK_NAME);
   });
-  const step=(doc:any,prefix:string)=>doc.jobs.review.steps.find((s:any)=>String(s.uses??'').startsWith(prefix)&&(prefix!=='actions/checkout@'||s.with.path==='subject'));
-  const faults:[string,(doc:any)=>void][]=[
-    ['independent_review_workflow_trigger',doc=>{doc.on.pull_request={};}],
-    ['independent_review_workflow_permissions',doc=>{doc.permissions.contents='write';}],
-    ['independent_review_workflow_unpinned',doc=>{step(doc,'openai/codex-action@').uses='openai/codex-action@v1';}],
-    ['independent_review_workflow_untrusted_run',doc=>{doc.jobs.review.steps.push({name:'x',run:'bun subject/scripts/check.ts'});}],
-    ['independent_review_workflow_credentials',doc=>{step(doc,'actions/checkout@').with['persist-credentials']=true;}],
-    ['independent_review_workflow_checkout',doc=>{step(doc,'actions/checkout@').with.ref='${{ github.event.pull_request.base.sha }}';}],
-    ['independent_review_workflow_codex',doc=>{step(doc,'openai/codex-action@').with.model='gpt-6-luna';}],
-    ['independent_review_workflow_codex',doc=>{step(doc,'openai/codex-action@').with['codex-args']='[]';}],
-    ['independent_review_workflow_job',doc=>{doc.jobs.review.name='Review';}],
-    ['independent_review_workflow_concurrency',doc=>{doc.concurrency['cancel-in-progress']=true;}],
-    ['independent_review_workflow_concurrency',doc=>{doc.concurrency.group='independent-review-${{ github.event.pull_request.number }}';}],
-    ['independent_review_workflow_skippable',doc=>{doc.jobs.review.if="contains(github.event.pull_request.labels.*.name, 'full-review')";}],
-    ['independent_review_workflow_request',doc=>{doc.jobs.review.steps.splice(3,1);}],
-    ['independent_review_workflow_request',doc=>{doc.jobs.review.steps[5]['continue-on-error']=true;}],
-  ];
-  test.each(faults)('injected fault fails with %s',(code,mutate)=>{
+  test('FULL2 counterexample: skipping every step after the request gate fails',()=>{
+    const doc=workflow();
+    doc.jobs.review.steps.slice(4).forEach((s:any)=>{s.if=false;});
+    expect(()=>checkWorkflow(doc)).toThrow('independent_review_workflow_drift');
+  });
+  // One fault per leaf, per key and per array, enumerated from the exported table.
+  type Fault=[string,(doc:any)=>void];
+  const faults:Fault[]=[];
+  const at=(doc:any,path:(string|number)[])=>path.reduce((node,key)=>node[key],doc);
+  const walk=(node:unknown,path:(string|number)[])=>{
+    const where=path.join('.')||'$';
+    if(Array.isArray(node)){
+      faults.push([`${where} +item`,doc=>{at(doc,path).push({});}]);
+      if(node.length)faults.push([`${where} -item`,doc=>{at(doc,path).pop();}]);
+      node.forEach((item,i)=>walk(item,[...path,i]));
+    }else if(node!==null&&typeof node==='object'){
+      faults.push([`${where} +key`,doc=>{at(doc,path).injected=false;}]);
+      for(const [key,value] of Object.entries(node)){
+        faults.push([`${where}.${key} -key`,doc=>{delete at(doc,path)[key];}]);
+        walk(value,[...path,key]);
+      }
+    }else{
+      const other=typeof node==='string'?node+'x':typeof node==='number'?node+1:!node;
+      faults.push([`${where} =changed`,doc=>{const parent=at(doc,path.slice(0,-1));parent[path.at(-1)!]=other;}]);
+    }
+  };
+  walk(EXPECTED_WORKFLOW,[]);
+  test('the enumeration reaches every step and field',()=>{expect(faults.length).toBeGreaterThan(100);});
+  test.each(faults)('injected fault %s fails',(_,mutate)=>{
     const doc=workflow();mutate(doc);
-    expect(()=>checkWorkflow(doc)).toThrow(code);
+    expect(()=>checkWorkflow(doc)).toThrow('independent_review_workflow_drift');
+  });
+  // What makes the table itself safe.
+  const job=EXPECTED_WORKFLOW.jobs.review;
+  const steps=job.steps as readonly Record<string,any>[];
+  test('the job never skips, and only the sampling steps depend on the prior verdict',()=>{
+    expect('if' in job||'continue-on-error' in job).toBe(false);
+    expect(steps.filter(s=>'continue-on-error' in s)).toEqual([]);
+    expect(steps.filter(s=>'if' in s).map(s=>s.name)).toEqual(['Build review input',REVIEW_STEP,'Keep the verdict for this head']);
+    expect(new Set(steps.filter(s=>'if' in s).map(s=>s.if))).toEqual(new Set(["${{ steps.prior.outputs.found == 'false' }}"]));
+    expect(steps[3]?.run).toBe(RUN_PREFIX+'request');
+    expect(steps.at(-1)).toEqual({name:'Judge',run:RUN_PREFIX+'judge review-input/verdict.json'});
+  });
+  test('trusted code only, pinned actions, read-only token, uncredentialed checkouts',()=>{
+    expect(Object.values(EXPECTED_WORKFLOW.permissions)).toEqual(['read','read','read']);
+    expect(steps.filter(s=>'run' in s&&!String(s.run).startsWith(RUN_PREFIX))).toEqual([]);
+    expect(steps.filter(s=>'uses' in s&&!/@[0-9a-f]{40}$/.test(String(s.uses)))).toEqual([]);
+    const checkouts=steps.filter(s=>String(s.uses).startsWith('actions/checkout@'));
+    expect(checkouts.map(s=>[s.with.path,s.with.ref,s.with['persist-credentials']])).toEqual([
+      ['trusted','${{ github.event.pull_request.base.sha }}',false],['subject','${{ github.event.pull_request.head.sha }}',false]]);
   });
 });

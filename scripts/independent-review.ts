@@ -134,40 +134,76 @@ export const requested=(repository:string,headRepository:string,labelsJson:strin
   if(!Array.isArray(labels)||!labels.includes(REQUEST_LABEL))fail('independent_review_not_requested',`label=${REQUEST_LABEL}`);
 };
 
-// Structural invariants of the workflow; tests run them on the committed file and on injected faults.
-export const checkWorkflow=(doc:unknown):void=>{
-  const root=record(doc)??fail('independent_review_workflow_shape','root');
-  const on=record(root.on)??fail('independent_review_workflow_shape','on');
-  if(!sameKeys(on,['pull_request_target']))fail('independent_review_workflow_trigger',Object.keys(on).join());
-  const permissions=record(root.permissions)??fail('independent_review_workflow_shape','permissions');
-  if(!sameKeys(permissions,['actions','checks','contents'])||Object.values(permissions).some(v=>v!=='read'))fail('independent_review_workflow_permissions','not read-only');
-  const concurrency=record(root.concurrency)??fail('independent_review_workflow_shape','concurrency');
-  if(concurrency.group!=='independent-review-${{ github.event.pull_request.head.sha }}'||concurrency['cancel-in-progress']!==false)fail('independent_review_workflow_concurrency','per head, no cancel');
-  const jobs=record(root.jobs)??fail('independent_review_workflow_shape','jobs');
-  const job=record(jobs.review)??fail('independent_review_workflow_shape','jobs.review');
-  if(!sameKeys(jobs,['review'])||job.name!==REVIEW_CHECK_NAME)fail('independent_review_workflow_job','name');
-  if('if' in job||'continue-on-error' in job)fail('independent_review_workflow_skippable','job condition');
-  const steps=Array.isArray(job.steps)?job.steps.map(s=>record(s)??fail('independent_review_workflow_shape','step')):fail('independent_review_workflow_shape','steps');
-  if(steps[3]?.run!==RUN_PREFIX+'request'||steps.some(s=>'continue-on-error' in s))fail('independent_review_workflow_request','request gate');
-  let checkouts=0,codex=0;
-  for(const step of steps){
-    const uses=typeof step.uses==='string'?step.uses:undefined,with_=record(step.with)??{};
-    if(uses&&!/@[0-9a-f]{40}$/.test(uses))fail('independent_review_workflow_unpinned',uses.split('@')[0]!);
-    if(typeof step.run==='string'&&!step.run.startsWith(RUN_PREFIX))fail('independent_review_workflow_untrusted_run',String(step.name));
-    if(uses?.startsWith('actions/checkout@')){
-      checkouts++;
-      if(with_['persist-credentials']!==false)fail('independent_review_workflow_credentials',String(with_.path));
-      const expected=with_.path==='trusted'?'${{ github.event.pull_request.base.sha }}':with_.path==='subject'?'${{ github.event.pull_request.head.sha }}':undefined;
-      if(!expected||with_.ref!==expected)fail('independent_review_workflow_checkout',String(with_.path));
-    }
-    if(uses?.startsWith('openai/codex-action@')){
-      codex++;
-      const args=typeof with_['codex-args']==='string'?with_['codex-args']:'';
-      if(with_.model!==REVIEW_MODEL||with_['permission-profile']!==':read-only'||with_['output-schema-file']!=='trusted/ci/independent-review/schema.json'||!args.includes('project_doc_max_bytes=0'))
-        fail('independent_review_workflow_codex','model/profile/schema/instructions');
-    }
+// The workflow must equal this table exactly (parsed YAML, every key and value). A property-by-property check let an
+// unlisted change through (FULL2: `if: false` on every step after the request gate skipped the model and the judge);
+// exact equality closes that class, and the tests derive one injected fault from every leaf of this table.
+const FOUND_FALSE="${{ steps.prior.outputs.found == 'false' }}";
+const CHECKOUT='actions/checkout@11d5960a326750d5838078e36cf38b85af677262';
+export const EXPECTED_WORKFLOW={
+  name:'Independent review',
+  on:{pull_request_target:{types:['opened','labeled','synchronize','reopened']}},
+  permissions:{contents:'read',actions:'read',checks:'read'},
+  concurrency:{group:'independent-review-${{ github.event.pull_request.head.sha }}','cancel-in-progress':false},
+  jobs:{review:{
+    name:REVIEW_CHECK_NAME,
+    'runs-on':'ubuntu-latest',
+    'timeout-minutes':60,
+    env:{
+      PR_NUMBER:'${{ github.event.pull_request.number }}',
+      BASE_SHA:'${{ github.event.pull_request.base.sha }}',
+      HEAD_SHA:'${{ github.event.pull_request.head.sha }}',
+      HEAD_REPOSITORY:'${{ github.event.pull_request.head.repo.full_name }}',
+      PR_LABELS:'${{ toJSON(github.event.pull_request.labels.*.name) }}',
+    },
+    steps:[
+      {name:'Check out trusted base',uses:CHECKOUT,with:{ref:'${{ github.event.pull_request.base.sha }}',path:'trusted','persist-credentials':false}},
+      {name:'Check out exact head as data',uses:CHECKOUT,with:{ref:'${{ github.event.pull_request.head.sha }}',path:'subject','fetch-depth':0,'persist-credentials':false}},
+      {uses:'oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6',with:{'bun-version':'1.4.2'}},
+      {name:'Require a same-repository head and the full-review label',run:RUN_PREFIX+'request'},
+      {name:'Reuse the first verdict for this head',id:'prior',run:RUN_PREFIX+'prior review-input',env:{GITHUB_TOKEN:'${{ github.token }}'}},
+      {name:'Build review input',if:FOUND_FALSE,run:RUN_PREFIX+'prepare subject review-input'},
+      {name:'Review',if:FOUND_FALSE,uses:'openai/codex-action@bdf19a4a223ec2549a3e2274a0cf61556bc07675',with:{
+        'openai-api-key':'${{ secrets.OPENAI_API_KEY }}',
+        'prompt-file':'review-input/prompt.md',
+        'working-directory':'${{ github.workspace }}/subject',
+        model:REVIEW_MODEL,
+        effort:'high',
+        'permission-profile':':read-only',
+        'output-schema-file':'trusted/ci/independent-review/schema.json',
+        'output-file':'review-input/verdict.json',
+        'codex-args':'["-c", "project_doc_max_bytes=0"]',
+      }},
+      {name:'Keep the verdict for this head',if:FOUND_FALSE,uses:'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02',with:{
+        name:ARTIFACT_PREFIX+'${{ github.event.pull_request.head.sha }}',
+        path:'review-input/verdict.json',
+        'if-no-files-found':'error',
+        'retention-days':90,
+      }},
+      {name:'Judge',run:RUN_PREFIX+'judge review-input/verdict.json'},
+    ],
+  }},
+} as const;
+
+// First path where two parsed values differ (keys compared as sets, arrays by length and position).
+export const firstDifference=(actual:unknown,expected:unknown,path='$'):string|undefined=>{
+  if(Array.isArray(expected)){
+    if(!Array.isArray(actual)||actual.length!==expected.length)return path;
+    for(let i=0;i<expected.length;i++){const d=firstDifference(actual[i],expected[i],`${path}[${i}]`);if(d)return d;}
+    return undefined;
   }
-  if(checkouts!==2||codex!==1)fail('independent_review_workflow_steps',`checkouts=${checkouts} codex=${codex}`);
+  const want=record(expected);
+  if(want){
+    const have=record(actual);
+    if(!have||!sameKeys(have,Object.keys(want)))return path;
+    for(const key of Object.keys(want)){const d=firstDifference(have[key],want[key],`${path}.${key}`);if(d)return d;}
+    return undefined;
+  }
+  return actual===expected?undefined:path;
+};
+
+export const checkWorkflow=(doc:unknown):void=>{
+  const difference=firstDifference(doc,EXPECTED_WORKFLOW);
+  if(difference)fail('independent_review_workflow_drift',difference);
 };
 
 const prior=async(outDir:string)=>{
