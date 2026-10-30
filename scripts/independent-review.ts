@@ -1,13 +1,13 @@
 // Independent exact-head review for pull requests, run by .github/workflows/independent-review.yml.
 // The workflow runs on pull_request_target from the default branch, so this file and the prompt are trusted; the PR
-// head is only read. The verdict is a commit status on the exact head, posted by the review GitHub App; the ruleset pins
-// that app as the context's only accepted source (integration_id), so a same-named check from any other workflow or fork
-// job never satisfies it. Statuses cannot be deleted, so the first status for a head is final: no re-run, re-label or
-// concurrent request samples the model again.
+// head is only read. The verdict is a commit status on the exact head, posted by the review GitHub App; statuses from
+// any other creator are refused, so a same-named check from any other workflow or fork job is never read as a verdict.
+// Statuses cannot be deleted, so the first status for a head is final: no re-run, reopen or concurrent request samples
+// the model again.
 import {mkdirSync,readFileSync,writeFileSync,appendFileSync,existsSync} from 'node:fs';
 import {resolve} from 'node:path';
 
-export const REVIEW_CONTEXT='Independent exact-head review'; // the required status context on main
+export const REVIEW_CONTEXT='Independent exact-head review'; // the verdict status context the owner merges on
 export const RUNNER_JOB_NAME='Independent review runner'; // its own check lands on the default-branch commit
 export const REVIEW_APP_SLUG='education-platform-review'; // the GitHub App pinned as integration_id on main
 export const STATUS_CREATOR=`${REVIEW_APP_SLUG}[bot]`;
@@ -19,7 +19,6 @@ export const VERDICTS=['pass','changes_required'] as const;
 export const FINDING_FIELDS=['evidence','file','line','severity','summary'] as const;
 export const TEMPLATE_KEYS=['REPOSITORY','PR_NUMBER','BASE_SHA','HEAD_SHA','MERGE_BASE','DIFF_PATH','DIFF_STAT','ASSUMPTIONS','REVIEW_SCOPE'] as const;
 export const RUN_PREFIX='bun trusted/scripts/independent-review.ts ';
-export const REQUEST_LABEL='full-review';
 // What the latest status of the context means for a new run: a terminal verdict is kept; a pending one is a sample
 // whose verdict was lost (cancelled or crashed run) and fails closed, so a new head is needed.
 export const STATUS_STATES={pending:'lost',success:'recorded',failure:'recorded',error:'recorded'} as const;
@@ -72,13 +71,12 @@ export const renderPrompt=(template:string,values:Record<TemplateKey,string>):st
   return template.replace(/\{\{([A-Z_]+)\}\}/g,(_,key:TemplateKey)=>values[key]);
 };
 
-// A skipped job never reports the context, and an unrequested, cross-repository or non-default-branch PR fails here.
-export const requested=(repository:string,headRepository:string,labelsJson:string,baseRef:string,defaultBranch:string):void=>{
+// Every ready (non-draft) same-repository PR into the default branch is reviewed; GitHub's draft state is the
+// only opt-out, so no manual request step exists. A cross-repository, non-default-branch or draft PR fails here.
+export const requested=(repository:string,headRepository:string,draft:string,baseRef:string,defaultBranch:string):void=>{
   if(headRepository!==repository)fail('independent_review_cross_repository',headRepository.split('/')[0]!);
   if(!defaultBranch||baseRef!==defaultBranch)fail('independent_review_base_not_default',`base=${baseRef}`);
-  let labels:unknown;
-  try{labels=JSON.parse(labelsJson);}catch{return fail('independent_review_labels_unreadable',`bytes=${labelsJson.length}`);}
-  if(!Array.isArray(labels)||!labels.includes(REQUEST_LABEL))fail('independent_review_not_requested',`label=${REQUEST_LABEL}`);
+  if(draft!=='false')fail(draft==='true'?'independent_review_draft':'independent_review_draft_state_unreadable',`bytes=${draft.length}`);
 };
 
 // GitHub REST access with the job token; every non-2xx answer fails closed at the calling site.
@@ -238,7 +236,7 @@ const APP_TOKEN='${{ steps.app.outputs.token }}';
 const CHECKOUT='actions/checkout@11d5960a326750d5838078e36cf38b85af677262';
 export const EXPECTED_WORKFLOW={
   name:'Independent review',
-  on:{pull_request_target:{types:['opened','labeled','synchronize','reopened']}},
+  on:{pull_request_target:{types:['opened','synchronize','reopened','ready_for_review']}},
   // Read-only job token: the prepare step reads PR commits, earlier review statuses and the earlier record log.
   permissions:{contents:'read',statuses:'read',actions:'read','pull-requests':'read'},
   concurrency:{group:'independent-review-${{ github.event.pull_request.head.sha }}','cancel-in-progress':false},
@@ -253,13 +251,13 @@ export const EXPECTED_WORKFLOW={
       DEFAULT_BRANCH:'${{ github.event.repository.default_branch }}',
       HEAD_SHA:'${{ github.event.pull_request.head.sha }}',
       HEAD_REPOSITORY:'${{ github.event.pull_request.head.repo.full_name }}',
-      PR_LABELS:'${{ toJSON(github.event.pull_request.labels.*.name) }}',
+      PR_DRAFT:'${{ github.event.pull_request.draft }}',
     },
     steps:[
       {name:'Check out trusted default branch',uses:CHECKOUT,with:{ref:'${{ github.sha }}',path:'trusted','persist-credentials':false}},
       {name:'Check out exact head as data',uses:CHECKOUT,with:{ref:'${{ github.event.pull_request.head.sha }}',path:'subject','fetch-depth':0,'persist-credentials':false}},
       {uses:'oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6',with:{'bun-version':'1.4.2'}},
-      {name:'Require a same-repository head, the default base and the full-review label',run:RUN_PREFIX+'request'},
+      {name:'Require a ready same-repository pull request into the default branch',run:RUN_PREFIX+'request'},
       {name:'Mint the review app token',id:'app',uses:'actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510',with:{
         'client-id':'${{ vars.REVIEW_APP_CLIENT_ID }}',
         'private-key':'${{ secrets.REVIEW_APP_PRIVATE_KEY }}',
@@ -350,7 +348,7 @@ const record_=async(path:string)=>{
 if(import.meta.main){
   const [mode,...args]=Bun.argv.slice(2);
   try{
-    if(mode==='request'&&args.length===0)requested(repository(),process.env.HEAD_REPOSITORY??'',process.env.PR_LABELS??'',process.env.BASE_REF??'',process.env.DEFAULT_BRANCH??'');
+    if(mode==='request'&&args.length===0)requested(repository(),process.env.HEAD_REPOSITORY??'',process.env.PR_DRAFT??'',process.env.BASE_REF??'',process.env.DEFAULT_BRANCH??'');
     else if(mode==='claim'&&args.length===0){const sample=await claim(jobApi(),env('HEAD_SHA',SHA),runUrl());appendFileSync(env('GITHUB_OUTPUT',/./),`sample=${sample}\n`);}
     else if(mode==='prepare'&&args.length===2)await prepare(args[0]!,args[1]!);
     else if(mode==='record'&&args.length===1)await record_(args[0]!);

@@ -8,6 +8,11 @@ import {loadRuntimeRelease} from '../src/runtime-release.ts';
 import {publicReadFailure} from '../src/read-failure.ts';
 import {createPackagedFixture} from './release-graph-fixture.ts';
 
+// The nonroot cases run the bridge as nobody with this runtime; they need root, runuser, chown and a runtime that
+// nobody can execute (a project-private runtime under a 0750 home is not, so those hosts skip them; CI runs them).
+const nobodyRuns=process.getuid?.()===0&&!!Bun.which('runuser')&&!!Bun.which('chown')
+  &&Bun.spawnSync(['runuser','-u','nobody','--',process.execPath,'--version'],{stdout:'ignore',stderr:'ignore'}).exitCode===0;
+
 async function failure(base:string){
   try{await loadRuntimeRelease(base);throw Error('expected_failure');}
   catch(error){return publicReadFailure(error);}
@@ -74,7 +79,7 @@ test('packaged MCP response preserves the failure contract and adds the safe rea
   }finally{if(process.getuid?.()===0)await chown(f.base,0,0);await chmod(f.base,0o700);await f.client.close();await f.transport.close();}
 },60000);
 
-test.skipIf(process.getuid?.()!==0||!Bun.which('runuser')||!Bun.which('chown'))('nonroot owner mismatch returns a bounded failure before attempting a receipt',async()=>{
+test.skipIf(!nobodyRuns)('nonroot owner mismatch returns a bounded failure before attempting a receipt',async()=>{
   const f=await createPackagedFixture();await f.client.close();await f.transport.close();
   const ownership=Bun.spawnSync(['chown','-R','65534:65534',f.base]);
   expect(ownership.exitCode).toBe(0);
@@ -110,7 +115,7 @@ test('a missing runtime base produces a sanitized failure before dispatch',async
   }finally{await rename(moved,f.base);await f.client.close();await f.transport.close();}
 },60000);
 
-test.skipIf(process.getuid?.()!==0||!Bun.which('runuser')||!Bun.which('chown'))('post-dispatch receipt failure is sanitized and requires reconciliation',async()=>{
+test.skipIf(!nobodyRuns)('post-dispatch receipt failure is sanitized and requires reconciliation',async()=>{
   const f=await createPackagedFixture(process.execPath,'receipt-inaccessible');await f.client.close();await f.transport.close();
   expect(Bun.spawnSync(['chown','-R','65534:65534',f.base]).exitCode).toBe(0);
   const client=new Client({name:'fictional-post-dispatch-client',version:'1.0.0'});

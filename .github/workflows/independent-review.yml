@@ -1,16 +1,17 @@
 name: Independent review
 # Runs on pull_request_target from the default branch: a pull request cannot change its own review job, prompt or judge.
-# The head is checked out as data only; no step executes code from it. Add the full-review label to a final candidate.
-# The verdict is the commit status "Independent exact-head review" on the exact head (the required context on main).
-# This job's own check lands on the default-branch commit, so it is named differently and is never the required one.
-# The status is posted by the review GitHub App, and the ruleset pins that app (integration_id) as the context's only
-# source, so a same-named check from a fork job or any other workflow never satisfies it. Statuses cannot be deleted:
+# The head is checked out as data only; no step executes code from it. Every ready (non-draft) pull request is reviewed;
+# mark a pull request as draft to hold reviews. The verdict is the commit status "Independent exact-head review" on the
+# exact head; the owner merges only after it succeeds (the ruleset requires no status check, user decision 2026-10-30).
+# This job's own check lands on the default-branch commit, so it is named differently from the verdict context.
+# The status is posted by the review GitHub App and the job refuses a status from any other creator, so a same-named
+# check from a fork job or any other workflow is never read as a verdict. Statuses cannot be deleted:
 # the first status for a head is final, and a pending one left by a cancelled run fails closed instead of sampling again.
-# Threat model: outside contributors and accidents (re-run, re-label, concurrent requests, skips). Accounts with write
+# Threat model: outside contributors and accidents (re-run, concurrent requests, skips). Accounts with write
 # access act with the owner's admin token and could change the ruleset itself; their deliberate forgery is out of scope.
 on:
   pull_request_target:
-    types: [opened, labeled, synchronize, reopened]
+    types: [opened, synchronize, reopened, ready_for_review]
 permissions:
   contents: read
   statuses: read
@@ -31,7 +32,7 @@ jobs:
       DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
       HEAD_SHA: ${{ github.event.pull_request.head.sha }}
       HEAD_REPOSITORY: ${{ github.event.pull_request.head.repo.full_name }}
-      PR_LABELS: ${{ toJSON(github.event.pull_request.labels.*.name) }}
+      PR_DRAFT: ${{ github.event.pull_request.draft }}
     steps:
       - name: Check out trusted default branch
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
@@ -49,7 +50,7 @@ jobs:
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
         with:
           bun-version: 1.4.2
-      - name: Require a same-repository head, the default base and the full-review label
+      - name: Require a ready same-repository pull request into the default branch
         run: bun trusted/scripts/independent-review.ts request
       - name: Mint the review app token
         id: app

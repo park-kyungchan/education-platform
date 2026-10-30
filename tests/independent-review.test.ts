@@ -1,7 +1,7 @@
 import {describe,expect,test} from 'bun:test';
 import {readFileSync,readdirSync} from 'node:fs';
 import {resolve} from 'node:path';
-import {loggedFindings,priorReviewedHead,reviewBaseline,renderScope,EXPECTED_WORKFLOW,RUN_PREFIX,REVIEW_CONTEXT,RUNNER_JOB_NAME,STATUS_CREATOR,STATUS_STATES,REQUEST_LABEL,FINDING_FIELDS,SEVERITY,TEMPLATE_KEYS,VERDICTS,checkWorkflow,claim,verdictLogLines,contextStatuses,decide,judge,parseVerdict,recordVerdict,renderPrompt,requested,type Api,type Severity,type StatusState,type TextApi} from '../scripts/independent-review';
+import {loggedFindings,priorReviewedHead,reviewBaseline,renderScope,EXPECTED_WORKFLOW,RUN_PREFIX,REVIEW_CONTEXT,RUNNER_JOB_NAME,STATUS_CREATOR,STATUS_STATES,FINDING_FIELDS,SEVERITY,TEMPLATE_KEYS,VERDICTS,checkWorkflow,claim,verdictLogLines,contextStatuses,decide,judge,parseVerdict,recordVerdict,renderPrompt,requested,type Api,type Severity,type StatusState,type TextApi} from '../scripts/independent-review';
 
 const root=resolve(import.meta.dir,'..');
 const schema=JSON.parse(readFileSync(resolve(root,'ci/independent-review/schema.json'),'utf8'));
@@ -88,7 +88,7 @@ describe('one verdict per head (commit statuses)',()=>{
     else expect(await claim(s.api,head,run)).toBe(false);
     expect(s.posts).toEqual([]);
   });
-  test('after a recorded verdict any later run, re-run or re-label samples nothing',async()=>{
+  test('after a recorded verdict any later run, re-run or reopen samples nothing',async()=>{
     for(const verdict of [pass,JSON.stringify({verdict:'changes_required',findings:[finding('high')]})]){
       const s=store();await claim(s.api,head,run);await recordVerdict(s.api,head,run,'success',verdict);
       expect(await claim(s.api,head,otherRun)).toBe(false);
@@ -126,13 +126,13 @@ describe('one verdict per head (commit statuses)',()=>{
 const ReviewErrorCode=/^independent_review_\w+@scripts\/independent-review\.ts:\d+ /;
 
 describe('request gate',()=>{
-  test('same repository, default base and the label pass; anything else fails, never skips',()=>{
-    expect(()=>requested('o/r','o/r',JSON.stringify(['x',REQUEST_LABEL]),'main','main')).not.toThrow();
-    expect(()=>requested('o/r','o/r',JSON.stringify(['x']),'main','main')).toThrow('independent_review_not_requested');
-    expect(()=>requested('o/r','fork/r',JSON.stringify([REQUEST_LABEL]),'main','main')).toThrow('independent_review_cross_repository');
-    expect(()=>requested('o/r','o/r',JSON.stringify([REQUEST_LABEL]),'release','main')).toThrow('independent_review_base_not_default');
-    expect(()=>requested('o/r','o/r',JSON.stringify([REQUEST_LABEL]),'','')).toThrow('independent_review_base_not_default');
-    expect(()=>requested('o/r','o/r','','main','main')).toThrow('independent_review_labels_unreadable');
+  test('a ready same-repository PR into the default base passes; anything else fails, never skips',()=>{
+    expect(()=>requested('o/r','o/r','false','main','main')).not.toThrow();
+    expect(()=>requested('o/r','o/r','true','main','main')).toThrow('independent_review_draft');
+    expect(()=>requested('o/r','fork/r','false','main','main')).toThrow('independent_review_cross_repository');
+    expect(()=>requested('o/r','o/r','false','release','main')).toThrow('independent_review_base_not_default');
+    expect(()=>requested('o/r','o/r','false','','')).toThrow('independent_review_base_not_default');
+    expect(()=>requested('o/r','o/r','','main','main')).toThrow('independent_review_draft_state_unreadable');
   });
 });
 
