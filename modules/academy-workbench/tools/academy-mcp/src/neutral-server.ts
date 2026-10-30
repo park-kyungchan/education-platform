@@ -6,8 +6,8 @@ import {academyRoutingDescription} from './routing-context.ts';
 import {Server} from '@modelcontextprotocol/server';
 import {Client} from '@modelcontextprotocol/client';
 import {StdioClientTransport} from '@modelcontextprotocol/client/stdio';
-import {readFileSync,writeFileSync,mkdirSync,lstatSync} from 'node:fs';
-import {randomUUID,createHash,createPrivateKey} from 'node:crypto';
+import {readFileSync,writeFileSync,mkdirSync} from 'node:fs';
+import {randomUUID,createHash} from 'node:crypto';
 import {z} from 'zod';
 import {dailyRecordGetSchema,dailyRecordGetDescription,readDailyRecordByName} from './dailyrecord-read.ts';
 import {ownerAdmissionSchema} from './owner-admission.ts';
@@ -17,31 +17,19 @@ import {dailyRecordScopeSchema,type DailyRecordScope} from './dailyrecord-contex
 import {dailyTestHeaderRouteSchema,dailyTestHeaderRouteDescription,readDailyTestHeaders} from './dailytest-header-route.ts';
 import {loadRuntimeRelease} from './runtime-release.ts';
 import {selectPaperRoute} from './paper-scope-routing.ts';
-import {signActorProof} from './dailyrecord-workflow.ts';
-import {dailyRecordWorkflowToolSchemas,type DailyRecordWorkflowToolName} from './dailyrecord.ts';
+import {observeAttribution} from './dailyrecord-workflow.ts';
+import {dailyRecordWorkflowToolSchemas} from './dailyrecord.ts';
 const processStartedAt=new Date().toISOString();
-// Runtime actor identity for the owner DailyRecord workflow: the MCP client
-// configuration that launched this bridge supplies an owner-registered
-// Ed25519 key. Models never see or pass it; without it the owner workflow
-// fails closed with actor_authentication_unavailable or actor_proof_required.
-const actorSigner=(()=>{
- const actorId=process.env.ACADEMY_MCP_ACTOR_ID,keyPath=process.env.ACADEMY_MCP_ACTOR_KEY_FILE;
- if(!actorId&&!keyPath)return null;
- try{
-  if(!actorId||!keyPath)throw Error();
-  const stat=lstatSync(keyPath);
-  if(!stat.isFile()||stat.isSymbolicLink()||(stat.mode&0o077)!==0||stat.uid!==process.getuid?.())throw Error();
-  const key=createPrivateKey(readFileSync(keyPath));if(key.asymmetricKeyType!=='ed25519')throw Error();
-  return {actorId,key};
- }catch{process.stderr.write('actor_key_unqualified@neutral-server.ts:actorSigner\n');return null;}
-})();
-const isWorkflowTool=(name:string):name is DailyRecordWorkflowToolName=>Object.hasOwn(dailyRecordWorkflowToolSchemas,name);
-/** Callers can never supply an actor proof; the bridge signs the normalized payload it forwards. */
-function withActorProof(name:string,args:Record<string,unknown>):Record<string,unknown>{
- const {actorProof:_ignored,...payload}=args;
- if(!isWorkflowTool(name)||!actorSigner)return payload;
- const normalized=dailyRecordWorkflowToolSchemas[name].parse(payload) as Record<string,unknown>;
- return {...normalized,actorProof:signActorProof(actorSigner.key,actorSigner.actorId,name,normalized)};
+// Owner DailyRecord workflow attribution: what this bridge actually observes
+// about its caller (MCP client info, process, parent command, Herdr pane),
+// plus the caller's declared actor. A caller-typed attribution is discarded.
+const isWorkflowTool=(name:string)=>Object.hasOwn(dailyRecordWorkflowToolSchemas,name);
+function withAttribution(name:string,args:Record<string,unknown>):Record<string,unknown>{
+ const {attribution:_ignored,...payload}=args;
+ if(!isWorkflowTool(name))return payload;
+ const client=server.getClientVersion();
+ return {...payload,attribution:observeAttribution({observedBy:'neutral-bridge',client:client?{name:String(client.name),version:String(client.version)}:null,
+  bridgeSha256:loadedBridgeSha256,declared:payload.actor})};
 }
 const bridgeTicketPrefix='muse-academy-observation:';
 const loadedBridgeSha256=createHash('sha256').update(readFileSync(process.argv[1]!)).digest('hex');
@@ -78,7 +66,7 @@ if(process.argv.includes('--discover')){
    if(tool.name==='academy_dailyrecord_get'||tool.name==='academy_endpoint_identity'||tool.name==='academy_runtime_identity')continue;
    if(endpoint==='saved'&&/^academy_(dailyrecord_|cism_|item_answer_lookup|runtime_read_admission|student_metadata|student_resolve|endpoint_identity|runtime_identity)/.test(tool.name))continue;
    const scopeHint=endpoint==='dailyrecord'?` DailyRecord owner-admitted dates: ${readAdmission.allowedFrom??'unbounded'} through ${readAdmission.allowedThrough??'unbounded'}.`:'';
-   registry.push({endpoint,upstreamName:tool.name,tool:{...tool,name:endpoint==='paper2'?'class2_'+tool.name:tool.name,description:tool.description+' '+(endpoint==='saved'?'Preserved evidence only; coverage/freshness is explicit.':tool.name==='academy_dailyrecord_save'?'One serialized native write batch; releases the account lock after completion. Requires an owner-signed per-request authorization (or, for legacy owners, the launch-pinned save admission) and a prior review; the bridge attaches its configured runtime actor proof. No printing, sending, automatic retry or credentials in arguments.':'One serialized native read batch; releases the account lock after completion. No saving, printing, sending, automatic retry or credentials in arguments.'+scopeHint)}});
+   registry.push({endpoint,upstreamName:tool.name,tool:{...tool,name:endpoint==='paper2'?'class2_'+tool.name:tool.name,description:tool.description+' '+(endpoint==='saved'?'Preserved evidence only; coverage/freshness is explicit.':tool.name==='academy_dailyrecord_save'?'One serialized native write batch; releases the account lock after completion. Requires a prior recorded review and the verbatim user instruction; the bridge records the observed caller attribution for audit. No printing, sending, automatic retry or credentials in arguments.':'One serialized native read batch; releases the account lock after completion. No saving, printing, sending, automatic retry or credentials in arguments.'+scopeHint)}});
   }
  }
  registry.push({endpoint:'dailyrecord',upstreamName:'academy_dailyrecord_get',tool:{name:'academy_dailyrecord_get',
@@ -212,16 +200,16 @@ async function call(req:any){
      const ticket=handles.get(args.observationHandle as string);
      const scope=dailyRecordScopeSchema.parse((args.context as any)?.scope);
      if(!ticket||ticket.releaseIdentity!==sha(active.identity)||Date.now()-ticket.at<0||Date.now()-ticket.at>300000||JSON.stringify(ticket.scope)!==JSON.stringify(scope)||ticket.request!==(args.context as any).currentRequestRef)throw Error('observation_ticket_expired_or_foreign');
-     const fresh:any=await client.callTool({name:'academy_dailyrecord_intake',arguments:withActorProof('academy_dailyrecord_intake',{context:args.context})});
+     const fresh:any=await client.callTool({name:'academy_dailyrecord_intake',arguments:withAttribution('academy_dailyrecord_intake',{context:args.context})});
      if(fresh.isError||!fresh.structuredContent||signature(fresh.structuredContent)!==signature(ticket.intake))throw Error('fresh_before_state_changed_reconcile');
      args.observationHandle=fresh.structuredContent.observationHandle;
     }
-    const forwarded=withActorProof(entry.upstreamName,args);
+    const forwarded=withAttribution(entry.upstreamName,args);
     // Mark a possible effect only once the save request is about to leave the bridge.
     if(entry.upstreamName==='academy_dailyrecord_save')saveIssued=true;
     return client.callTool({name:entry.upstreamName,arguments:forwarded});
    }
-   return client.callTool({name:entry.upstreamName,arguments:withActorProof(entry.upstreamName,args)});
+   return client.callTool({name:entry.upstreamName,arguments:withAttribution(entry.upstreamName,args)});
   },active.endpoints);
   if(result.isError)throw Error('dailyrecord_route_upstream_failed_no_retry');
   const after=await activeRelease();

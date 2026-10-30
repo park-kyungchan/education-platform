@@ -1,10 +1,11 @@
-import {generateKeyPairSync,randomUUID} from 'node:crypto';
+import {randomUUID} from 'node:crypto';
 import {existsSync,readFileSync,renameSync,writeFileSync} from 'node:fs';
 import {resolve} from 'node:path';
 import {applyJournalHttpAction} from '../../../../../apps/academy/dc-gang-a/src/lms/lessonJournalHttp.ts';
 import {NativeDailyRecordBackend} from '../src/native-dailyrecord-backend.ts';
+import {ownerAdmissionSchema} from '../src/owner-admission.ts';
 import {DailyRecordService} from '../src/dailyrecord.ts';
-import {createDailyRecordWorkflow,signAuthorization,textDigest,type DailyRecordAuthorization,type DailyRecordWorkflow} from '../src/dailyrecord-workflow.ts';
+import {createDailyRecordWorkflow,type DailyRecordWorkflow} from '../src/dailyrecord-workflow.ts';
 import type {DailyRecordContext,DailyRecordField} from '../src/dailyrecord-context.ts';
 import {learningPolicy,safeguard} from './dailyrecord-fixture.ts';
 
@@ -14,34 +15,22 @@ const admission={teacherId:'99001',teacherLabel:'Invented Teacher',date:'2040-01
 const target={studentName:'Invented Student',date:'2040-01-04',groupId:'3',teacherKey:'99001',studentKey:'77001',courseKey:'5',recordKey:'13',membershipKey:'8'};
 const prior={...target,date:'2040-01-02',recordKey:'12'};
 const wireDigest='a'.repeat(64);
+// Matches the deployed owner admission shape: open dates and source-verified student scope.
+const ownerAdmission=ownerAdmissionSchema.parse({schemaVersion:'academy.owner-admission/2' as const,decider:'user' as const,decidedAt:'2040-01-04',sourceNamespace:'academy.lms.dayrecord',teacherId:'99001',
+  allowedFrom:null,allowedThrough:null,failClosedDefault:'2026-10-23',studentScope:'source_verified' as const});
 export const initialFields={progress:'- 기존 진도 문안',homework:'- 기존 숙제 문안',lessonMemo:'기존 안내',attendance:'Y',dailyTestAssessment:'0',previousHomeworkAssessment:'3'};
 
-export function keypair(){
-  const {publicKey,privateKey}=generateKeyPairSync('ed25519');
-  return {publicPem:publicKey.export({type:'spki',format:'pem'}) as string,privatePem:privateKey.export({type:'pkcs8',format:'pem'}) as string};
-}
-export function registry<T extends 'actor'|'issuer'>(kind:T,principals:{id:string;publicPem:string;status?:'active'|'revoked'}[]){
-  return {schemaVersion:kind==='actor'?'academy.dailyrecord-actor-registry/1' as const:'academy.dailyrecord-authorization-issuers/1' as const,
-    principals:principals.map(p=>({id:p.id,publicKeySpkiPem:p.publicPem,status:p.status??'active'}))};
-}
-export const policyPins={learningPolicy:{bundleSha256:learningPolicy.bundleSha256,configSha256:learningPolicy.configSha256,catalogSha256:learningPolicy.catalogSha256},
-  parentSafeguard:{policySha256:safeguard.policySha256,safeguardSourceSha256:safeguard.safeguardSourceSha256}};
-export function workflowContext(fields:Partial<Record<DailyRecordField,string>>):DailyRecordContext{
-  return {schemaVersion:'academy.dailyrecord-user-context/1',purpose:'Save one fictional student lesson record.',currentRequestRef:'synthetic-request-1',
+export function workflowContext(fields:Partial<Record<DailyRecordField,string>>,requestRef='synthetic-request-1'):DailyRecordContext{
+  return {schemaVersion:'academy.dailyrecord-user-context/1',purpose:'Save one fictional student lesson record.',currentRequestRef:requestRef,
     scope:{...nativeScope},selectedFields:Object.keys(fields) as DailyRecordField[],memoAnswer:{kind:'no_addition',requestRef:'synthetic-memo-answer'},
     facts:Object.entries(fields).map(([field,text])=>({ref:'user-fact:'+field,field:field as DailyRecordField,text:text!.replace(/^- /,''),origin:'user_supplied' as const,requiredFragments:[],questionCounts:[],deadlines:[],stageClaims:[]}))};
 }
-export function proposals(fields:Partial<Record<DailyRecordField,string>>){
-  return Object.entries(fields).map(([field,value])=>({field:field as DailyRecordField,value:value!,factRefs:['user-fact:'+field],decision:{kind:'replace' as const,requestRef:'synthetic-request-1'}}));
+export function proposals(fields:Partial<Record<DailyRecordField,string>>,requestRef='synthetic-request-1'){
+  return Object.entries(fields).map(([field,value])=>({field:field as DailyRecordField,value:value!,factRefs:['user-fact:'+field],decision:{kind:'replace' as const,requestRef}}));
 }
-export function authorizationFor(issuerPrivatePem:string,input:{authorizationId?:string;actors:string[];reviewDigests:string[];
-  actions:{field:DailyRecordField;before:string;after:string}[];requestRef?:string;now?:number;policy?:DailyRecordAuthorization['reviewPolicy']}){
-  const now=input.now??Date.now();
-  return signAuthorization(issuerPrivatePem,{schemaVersion:'academy.dailyrecord-save-authorization/1',authorizationId:input.authorizationId??'authz-'+randomUUID(),
-    issuerId:'owner-issuer',issuedAt:new Date(now).toISOString(),expiresAt:new Date(now+3600000).toISOString(),
-    userEvent:{eventRef:'synthetic-user-event-1',channel:'synthetic-teacher-chat',observedAt:new Date(now-1000).toISOString(),textSha256:textDigest('fictional save instruction')},
-    requestRef:input.requestRef??'synthetic-request-1',authorizedActors:input.actors,reviewPolicy:input.policy??policyPins,basedOnReviewDigests:input.reviewDigests,
-    actions:input.actions.map(a=>({scope:{...nativeScope},...a})),parentTransmission:'not_authorized'});
+/** The verbatim (fictional) user instruction a delegated session supplies with a save. */
+export function userRequest(requestRef='synthetic-request-1',text='Save the reviewed fictional lesson record.'){
+  return {requestRef,instruction:{text,sessionRef:'synthetic-session-1',receivedAt:new Date().toISOString()}};
 }
 
 /**
@@ -91,9 +80,9 @@ export class FileSource {
 }
 export function nativeWorkflowService(base:string,workflow:DailyRecordWorkflow|null,onWrite?:()=>void){
   const source=new FileSource(base,onWrite);
-  const backend=new NativeDailyRecordBackend(source.port() as never,admission,()=>({username:'fictional',password:'fictional'}));
+  const backend=new NativeDailyRecordBackend(source.port() as never,admission,()=>({username:'fictional',password:'fictional'}),ownerAdmission);
   return {source,workflow,service:new DailyRecordService(backend,safeguard,Date.now,learningPolicy,backend,workflow)};
 }
-export function workflowService(base:string,input:{storeDir:string;actorRegistry:unknown;issuerRegistry:unknown}){
-  return nativeWorkflowService(base,createDailyRecordWorkflow({storeDir:input.storeDir,actorRegistry:input.actorRegistry as never,issuerRegistry:input.issuerRegistry as never}));
+export function workflowService(base:string,input:{storeDir:string}){
+  return nativeWorkflowService(base,createDailyRecordWorkflow({storeDir:input.storeDir}));
 }

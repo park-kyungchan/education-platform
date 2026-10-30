@@ -174,10 +174,14 @@ export class NativeDailyRecordBackend implements DailyRecordReadBackend,DailyRec
    * The client re-reads the exact before-state, consumes the launch-pinned
    * admission once per field, writes once and reads back; the first
    * non-settled field stops the batch with the rest not attempted. */
-  async saveDailyRecord(scope:Readonly<DailyRecordScope>,patches:readonly {field:DailyRecordField;value:string;before:string;wireDigest:string}[],requestApproval?:DailyRecordActionApproval){
+  async saveDailyRecord(scope:Readonly<DailyRecordScope>,patches:readonly {field:DailyRecordField;value:string;before:string;wireDigest:string}[],requestApproval?:DailyRecordActionApproval,subject?:{displayName:string}){
     const approval=requestApproval??this.saveApproval;
     if(!approval||typeof this.client.applyJournalAction!=='function')throw Error('dailyrecord_save_backend_not_configured');
-    const student=this.admission.students.find(s=>s.studentId===scope.studentId);
+    // A source-verified owner scope may save a student outside the launch list by the
+    // name recorded at intake; the row identity check below still binds name to key.
+    const sourceVerified=this.ownerAdmission?.schemaVersion==='academy.owner-admission/2'&&this.ownerAdmission.studentScope==='source_verified';
+    const student=this.admission.students.find(s=>s.studentId===scope.studentId)
+      ??(sourceVerified&&requestApproval&&subject?{studentId:scope.studentId,displayName:subject.displayName}:undefined);
     if(scope.sourceNamespace!=='academy.lms.dayrecord'||scope.teacherId!==this.admission.teacherId
       ||!(this.ownerAdmission?isDateAdmitted(scope.lessonDate,this.ownerAdmission):scope.lessonDate===this.admission.date)||!student)throw Error('native_dailyrecord_scope_refused');
     await this.#authenticate();
@@ -378,7 +382,7 @@ export class NativeDailyRecordBackend implements DailyRecordReadBackend,DailyRec
         ?{state:'known',value:state.fields[field],evidenceRefs:[ref+(field==='previousHomeworkAssessment'?':previous':':current')]}
         :{state:'unknown',reasonCode:'native_field_not_observed'}])),
       toneSamples:tone?[{target:observationTarget(prior),observedAt,text:tone,evidenceRefs:[ref+':previous']}]:[],transmissionState:'unknown'});
-    return {status:'observed' as const,observation};
+    return {status:'observed' as const,observation,subject:{displayName:student.displayName}};
   }
 }
 

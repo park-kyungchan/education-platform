@@ -7,7 +7,7 @@ import {resolveStudentByName,studentResolveInputSchema} from './student-resolver
 import {readDailyRecordByName,type DailyRecordReadAdmission} from './dailyrecord-read.ts';
 import {readFailureResult} from './read-failure.ts';
 import {toolResultBytes} from './tool-result.ts';
-import {actorProofSchema,consumedWithoutEffect,executionKey,fieldExecutionState,needsReconciliation,requestBoundApproval,settledEffect,signedAuthorizationSchema,textDigest,workflowLockKey,workflowRequestKey,canonicalSame,type DailyRecordActionApproval,type DailyRecordAuthorization,type DailyRecordReviewPolicyPins,type DailyRecordWorkflow,type FieldExecutionState} from './dailyrecord-workflow.ts';
+import {attributionSchema,attributionSummary,consumedWithoutEffect,declaredActorSchema,executionKey,fieldExecutionState,ledgerGroup,needsReconciliation,observeAttribution,requestBoundApproval,settledEffect,textDigest,unresolvedOnField,userRequestSchema,workflowLockKey,workflowRequestKey,canonicalSame,type DailyRecordActionApproval,type DailyRecordAttribution,type DailyRecordWorkflow} from './dailyrecord-workflow.ts';
 
 const hash=z.string().regex(/^[a-f0-9]{64}$/),instant=z.iso.datetime({offset:true});
 const knownValueSchema=z.discriminatedUnion('state',[
@@ -27,10 +27,10 @@ const learningEntrySchema=z.object({bookRef:dailyRecordIdSchema,unitRef:dailyRec
 const proposalSchema=z.object({field:dailyRecordFieldSchema,value:z.string().max(8192),factRefs:z.array(dailyRecordIdSchema).min(1).max(32),
   decision:z.object({kind:z.enum(['set','replace','clear']),requestRef:dailyRecordIdSchema}).strict(),learningEntries:z.array(learningEntrySchema).max(64).optional(),
 }).strict();
-export const dailyRecordIntakeSchema=z.object({context:dailyRecordContextSchema,suppliedValues:z.array(proposalSchema).max(6).default([]),actorProof:actorProofSchema.optional()}).strict();
+export const dailyRecordIntakeSchema=z.object({context:dailyRecordContextSchema,suppliedValues:z.array(proposalSchema).max(6).default([]),actor:declaredActorSchema.optional(),attribution:attributionSchema.optional()}).strict();
 export const dailyRecordReviewSchema=z.object({context:dailyRecordContextSchema,observationHandle:dailyRecordIdSchema.optional(),
   cismObservationHandle:dailyRecordIdSchema.optional(),
-  proposals:z.array(proposalSchema).min(1).max(6),actorProof:actorProofSchema.optional(),
+  proposals:z.array(proposalSchema).min(1).max(6),actor:declaredActorSchema.optional(),attribution:attributionSchema.optional(),
 }).strict();
 const cismSelectionSchema=z.object({reportId:dailyRecordIdSchema,periodStart:dailyRecordDateSchema,periodEnd:dailyRecordDateSchema,section:z.literal('learning_support')}).strict().refine(v=>v.periodStart<=v.periodEnd,'ordered_reporting_period_required');
 export const cismSectionSchema=z.object({context:dailyRecordContextSchema,selection:cismSelectionSchema}).strict();
@@ -39,7 +39,8 @@ export const cismObservationSchema=z.object({scope:dailyRecordScopeSchema,select
 }).strict();
 export type CismObservation=z.infer<typeof cismObservationSchema>;
 type Proposal=z.infer<typeof proposalSchema>;
-type ReadResult<T>={status:'observed';observation:T}|{status:'unavailable';reasonCode:string};
+/** `subject` carries the source-verified display name so a later process can re-select the same student. */
+type ReadResult<T>={status:'observed';observation:T;subject?:{displayName:string}}|{status:'unavailable';reasonCode:string};
 const metadataPeriod=z.object({from:dailyRecordDateSchema,through:dailyRecordDateSchema}).strict().refine(v=>v.from<=v.through,'ordered_metadata_period_required');
 export const studentMetadataQuerySchema=z.discriminatedUnion('kind',[
   z.object({kind:z.literal('student_papers'),period:metadataPeriod}).strict(),
@@ -83,12 +84,11 @@ export interface DailyRecordReadBackend {
 export const dailyRecordSaveSchema=z.object({context:dailyRecordContextSchema,observationHandle:dailyRecordIdSchema,
   cismObservationHandle:dailyRecordIdSchema.optional(),
   reviewDigest:hash,proposals:z.array(proposalSchema).min(1).max(6),
-  /** Owner-issued signed per-request authorization; its signature, not the caller, is the authority. */
-  authorization:signedAuthorizationSchema.optional(),actorProof:actorProofSchema.optional()}).strict();
-const authorizationIdSchema=z.string().regex(/^[A-Za-z0-9][A-Za-z0-9._:-]{7,127}$/);
-export const dailyRecordReconcileSchema=z.object({context:dailyRecordContextSchema,authorizationId:authorizationIdSchema,actorProof:actorProofSchema.optional()}).strict();
-export const dailyRecordExecutionStatusSchema=z.object({authorizationId:authorizationIdSchema,actorProof:actorProofSchema.optional()}).strict();
-/** Upstream tool name to input schema for actor-proof payload normalization. */
+  /** The user's verbatim instruction behind this save: provenance for audit, required by the owner workflow. */
+  request:userRequestSchema.optional(),actor:declaredActorSchema.optional(),attribution:attributionSchema.optional()}).strict();
+export const dailyRecordReconcileSchema=z.object({context:dailyRecordContextSchema,actor:declaredActorSchema.optional(),attribution:attributionSchema.optional()}).strict();
+export const dailyRecordExecutionStatusSchema=z.object({scope:dailyRecordScopeSchema,requestRef:dailyRecordIdSchema.optional(),actor:declaredActorSchema.optional(),attribution:attributionSchema.optional()}).strict();
+/** Upstream DailyRecord workflow tools that receive bridge-observed attribution. */
 export const dailyRecordWorkflowToolSchemas={academy_dailyrecord_intake:dailyRecordIntakeSchema,academy_dailyrecord_review:dailyRecordReviewSchema,
   academy_dailyrecord_save:dailyRecordSaveSchema,academy_dailyrecord_reconcile:dailyRecordReconcileSchema,academy_dailyrecord_execution_status:dailyRecordExecutionStatusSchema} as const;
 export type DailyRecordWorkflowToolName=keyof typeof dailyRecordWorkflowToolSchemas;
@@ -107,7 +107,7 @@ export interface DailyRecordWriteBackend {
   saveConfigured():boolean;
   /** Owner client write port is present; per-request approval is supplied by the owner workflow. */
   requestBoundSaveConfigured?():boolean;
-  saveDailyRecord(scope:Readonly<DailyRecordScope>,patches:readonly {field:DailyRecordField;value:string;before:string;wireDigest:string}[],approval?:DailyRecordActionApproval):Promise<{field:DailyRecordField;status:DailyRecordSaveFieldStatus;dispatched:boolean;transport?:'returned'|'uncertain'|'not_invoked'}[]>;
+  saveDailyRecord(scope:Readonly<DailyRecordScope>,patches:readonly {field:DailyRecordField;value:string;before:string;wireDigest:string}[],approval?:DailyRecordActionApproval,subject?:{displayName:string}):Promise<{field:DailyRecordField;status:DailyRecordSaveFieldStatus;dispatched:boolean;transport?:'returned'|'uncertain'|'not_invoked'}[]>;
 }
 /** Inject the canonical Education safeguard, together with its verified policy/source identity. */
 export interface DailyRecordParentSafeguard {readonly policySha256:string;readonly safeguardSourceSha256:string;readonly sourceRef:string;check(text:string):boolean;checkLines(text:string):boolean}
@@ -176,12 +176,13 @@ function holdActions(scope:DailyRecordScope,field:DailyRecordField,blockers:read
       correctionScope:action==='teacher_interview'||action==='owner_catalog_binding'?{scope,field,learningEntries:learningEntries??null,appliesTo:'this_student_edition_unit_activity_only' as const}:null};
   });
 }
+type ReviewPolicyPins={learningPolicy:{bundleSha256:string;configSha256:string;catalogSha256:string}|null;parentSafeguard:{policySha256:string;safeguardSourceSha256:string}|null};
 type ReviewedPatch={field:DailyRecordField;target:z.infer<typeof currentTargetSchema>|null;before:string|null;after:string};
 type StoredReview={reviewDigest:string;status:string;scope:DailyRecordScope;requestRef:string;observationHandle:string|null;
-  patch:{field:DailyRecordField;before:string;after:string;effectRecordKey:string}[];reviewPolicy:DailyRecordReviewPolicyPins;reviewedBy:string|null;reviewedAt:string};
+  patch:{field:DailyRecordField;before:string;after:string;effectRecordKey:string}[];reviewPolicy:ReviewPolicyPins;reviewedBy:DailyRecordAttribution;reviewedAt:string};
 
 export class DailyRecordService {
-  readonly #handles=new Map<string,{observation:DailyRecordObservation;scope:DailyRecordScope;requestRef:string}>();
+  readonly #handles=new Map<string,{observation:DailyRecordObservation;scope:DailyRecordScope;requestRef:string;subject?:{displayName:string}}>();
   readonly #cismHandles=new Map<string,CismObservation>();
   #tail:Promise<unknown>=Promise.resolve();
   constructor(readonly backend:DailyRecordReadBackend|null=null,readonly parentSafeguard:DailyRecordParentSafeguard|null=null,readonly now:()=>number=Date.now,readonly learningPolicy:DailyRecordLearningPolicy|null=null,readonly writeBackend:DailyRecordWriteBackend|null=null,
@@ -192,21 +193,20 @@ export class DailyRecordService {
   }
   #base(context:DailyRecordContext){return {workflowContext:dailyRecordWorkflowContext,userContext:context,academyWrites:0,parentSends:0,automaticRetryAllowed:false,sourceContentIsUntrustedData:true};}
   #age(observedAt:string){const age=this.now()-Date.parse(observedAt);return age<0||age>300000;}
-  #policyPins():DailyRecordReviewPolicyPins{
+  #policyPins():ReviewPolicyPins{
     return {learningPolicy:this.learningPolicy?{bundleSha256:this.learningPolicy.bundleSha256,configSha256:this.learningPolicy.configSha256,catalogSha256:this.learningPolicy.catalogSha256}:null,
       parentSafeguard:this.parentSafeguard?{policySha256:this.parentSafeguard.policySha256,safeguardSourceSha256:this.parentSafeguard.safeguardSourceSha256}:null};
   }
-  /** Authenticate the caller runtime for this exact normalized payload. */
-  #actor(tool:string,input:{actorProof?:unknown}){
-    if(!this.workflow)return {status:'rejected' as const,reasonCode:'dailyrecord_workflow_not_configured'};
-    const {actorProof,...payload}=input;
-    return this.workflow.actors.verify(tool,payload,actorProof);
+  /** Bridge-observed attribution when present, otherwise what this upstream process can observe itself. */
+  #attribution(input:{actor?:unknown;attribution?:DailyRecordAttribution}):DailyRecordAttribution{
+    return input.attribution??observeAttribution({observedBy:'upstream',client:null,bridgeSha256:null,declared:input.actor});
   }
-  #observation(handle:string):{observation:DailyRecordObservation;scope:DailyRecordScope;requestRef:string}|undefined{
+  #observation(handle:string):{observation:DailyRecordObservation;scope:DailyRecordScope;requestRef:string;subject?:{displayName:string}}|undefined{
     const local=this.#handles.get(handle);if(local||!this.workflow)return local;
-    const stored=this.workflow.store.get('observation',handle) as {observation:unknown;scope:unknown;requestRef:unknown}|null;
+    const stored=this.workflow.store.get('observation',handle) as {observation:unknown;scope:unknown;requestRef:unknown;subject?:{displayName:string}|null}|null;
     if(!stored)return undefined;
-    return {observation:freezeLabelData(dailyRecordObservationSchema.parse(stored.observation)),scope:dailyRecordScopeSchema.parse(stored.scope),requestRef:dailyRecordIdSchema.parse(stored.requestRef)};
+    return {observation:freezeLabelData(dailyRecordObservationSchema.parse(stored.observation)),scope:dailyRecordScopeSchema.parse(stored.scope),requestRef:dailyRecordIdSchema.parse(stored.requestRef),
+      ...(stored.subject?{subject:{displayName:z.string().min(1).max(200).parse(stored.subject.displayName)}}:{})};
   }
   // P4: serialization keeps the account-lock order, but failures close per
   // request. No session-wide latch: the next request gets a fresh judgement,
@@ -221,7 +221,7 @@ export class DailyRecordService {
     try{return await this.#serial(async()=>{
       const read=await this.backend!.readDailyRecord(freezeLabelData(structuredClone(scope)),requestRef);
       if(read.status==='unavailable')return {status:'unavailable' as const,reasonCode:safeReason(read.reasonCode)};
-      return {status:'observed' as const,observation:qualifiedObservation(read.observation,scope)};
+      return {status:'observed' as const,observation:qualifiedObservation(read.observation,scope),subject:read.subject};
     });
     }catch(error){return {status:'unavailable' as const,...readFailureResult(error,'dailyrecord_source_unqualified_no_automatic_retry')};}
   }
@@ -324,19 +324,19 @@ export class DailyRecordService {
     });
     for(const p of input.suppliedValues)blockers.push(...proposalBlockers(p,context).map(b=>p.field+':'+b));
     let observationHandle:string|null=null;
-    const actor=this.workflow&&input.actorProof!==undefined?this.#actor('academy_dailyrecord_intake',input):null;
+    const attribution=this.workflow?this.#attribution(input):null;
     if(source&&!blockers.length){
       if(this.#handles.size>=128)this.#handles.delete(this.#handles.keys().next().value!);observationHandle='dailyrecord-observation:'+randomUUID();
-      this.#handles.set(observationHandle,{observation:source,scope:freezeLabelData(structuredClone(context.scope)),requestRef:context.currentRequestRef});
-      if(this.workflow){
-        const createdBy=actor?.status==='authenticated'?actor.actorId:null;
-        this.workflow.store.publishOnce('observation',observationHandle,{observation:source,scope:context.scope,requestRef:context.currentRequestRef,createdBy,createdAt:new Date(this.now()).toISOString()});
-        this.workflow.store.appendAudit(workflowRequestKey(context.scope,context.currentRequestRef),{event:'observation_recorded',observationHandle,actorId:createdBy,sourceRevision:source.sourceRevision});
+      const subject=read.status==='observed'&&read.subject?{displayName:read.subject.displayName}:undefined;
+      this.#handles.set(observationHandle,{observation:source,scope:freezeLabelData(structuredClone(context.scope)),requestRef:context.currentRequestRef,...(subject?{subject}:{})});
+      if(this.workflow&&attribution){
+        this.workflow.store.publishOnce('observation',observationHandle,{observation:source,scope:context.scope,requestRef:context.currentRequestRef,subject:subject??null,createdBy:attribution,createdAt:new Date(this.now()).toISOString()});
+        this.workflow.store.appendAudit(workflowRequestKey(context.scope,context.currentRequestRef),{event:'observation_recorded',observationHandle,by:attributionSummary(attribution),sourceRevision:source.sourceRevision});
       }
     }
     return {...this.#base(context),status:blockers.length?'held':interviews.length?'interview_required':'ready_for_review',observationHandle,
       observationPersistence:observationHandle&&this.workflow?'owner_durable' as const:'process_local' as const,
-      actorAuthentication:actor?(actor.status==='authenticated'?{status:actor.status,actorId:actor.actorId}:actor):null,fields,interviews,blockers,
+      attribution:attribution?attributionSummary(attribution):null,fields,interviews,blockers,
       source:source?{observedAt:source.observedAt,sourceRevision:source.sourceRevision,wireDigest:source.wireDigest,transmissionState:source.transmissionState}:null,
       toneSamples:source?.toneSamples.filter(s=>this.parentSafeguard?.checkLines(s.text))??[],toneSelection:'hyphen_lines_only_other_formats_ignored',sourceAvailability:read.status,failure:'failure' in read?read.failure:null,execution:'not_supported'};
   }
@@ -415,22 +415,18 @@ export class DailyRecordService {
     const body={observationHandle:input.observationHandle??null,scope:context.scope,requestRef:context.currentRequestRef,userContextDigest:digest(context),parentSafeguard,cismSource,learningPolicy:this.learningPolicy?{bundleSha256:this.learningPolicy.bundleSha256,configSha256:this.learningPolicy.configSha256,catalogSha256:this.learningPolicy.catalogSha256}:null,
       sourceRevision:held?.observation.sourceRevision??null,wireDigest:held?.observation.wireDigest??null,transmissionState:read?.status==='observed'?read.observation.transmissionState:held?.observation.transmissionState??'unknown',rows,patch};
     const status=rows.some(r=>r.blockers.length)||interviews.length?'held' as const:'prepared' as const,reviewDigest=digest(body);
-    let reviewRecord:{persisted:boolean;reviewedBy:string|null;actorAuthentication:unknown}|null=null;
+    let reviewRecord:{persisted:boolean;reviewedBy:ReturnType<typeof attributionSummary>}|null=null;
     if(persist&&this.workflow&&status==='prepared'&&input.observationHandle){
-      const actor=this.#actor('academy_dailyrecord_review',input),reviewedBy=actor.status==='authenticated'?actor.actorId:null;
-      // Only an authenticated review can later support a save; an
-      // unauthenticated one is reported but never recorded as reviewed.
-      if(reviewedBy){
-        const record:StoredReview={reviewDigest,status,scope:context.scope,requestRef:context.currentRequestRef,observationHandle:input.observationHandle,
-          patch:(patch as ReviewedPatch[]).map(p=>({field:p.field,before:p.before??'',after:p.after,effectRecordKey:p.target?.recordId??''})),
-          reviewPolicy:this.#policyPins(),reviewedBy,reviewedAt:new Date(this.now()).toISOString()};
-        this.workflow.store.publishOnce('review',reviewDigest,record);
-        this.workflow.store.appendAudit(workflowRequestKey(context.scope,context.currentRequestRef),{event:'review_recorded',reviewDigest,actorId:reviewedBy,fields:record.patch.map(p=>p.field)});
-      }
-      reviewRecord={persisted:reviewedBy!==null,reviewedBy,actorAuthentication:actor.status==='authenticated'?{status:actor.status,actorId:actor.actorId}:actor};
+      const reviewedBy=this.#attribution(input);
+      const record:StoredReview={reviewDigest,status,scope:context.scope,requestRef:context.currentRequestRef,observationHandle:input.observationHandle,
+        patch:(patch as ReviewedPatch[]).map(p=>({field:p.field,before:p.before??'',after:p.after,effectRecordKey:p.target?.recordId??''})),
+        reviewPolicy:this.#policyPins(),reviewedBy,reviewedAt:new Date(this.now()).toISOString()};
+      this.workflow.store.publishOnce('review',reviewDigest,record);
+      this.workflow.store.appendAudit(workflowRequestKey(context.scope,context.currentRequestRef),{event:'review_recorded',reviewDigest,by:attributionSummary(reviewedBy),fields:record.patch.map(p=>p.field)});
+      reviewRecord={persisted:true,reviewedBy:attributionSummary(reviewedBy)};
     }
     return {...this.#base(context),...body,status,interviews,reviewDigest,reviewRecord,
-      execution:'not_supported',saveAdmission:this.workflow?'owner_signed_request_authorization_required':'separate_trusted_native_owner_required'};
+      execution:'not_supported',saveAdmission:this.workflow?'recorded_review_and_user_instruction_required':'separate_trusted_native_owner_required'};
   }
   async save(value:unknown){
     const input=dailyRecordSaveSchema.parse(value),context=input.context;
@@ -458,146 +454,125 @@ export class DailyRecordService {
     // writes: conforming backends report per-field dispatch themselves,
     // so this path only covers pre-dispatch or non-conforming failures.
   }
-  /** Owner-workflow save: authenticated actor, owner-signed per-request
-   * authorization, a prior authenticated durable review, a shared
-   * cross-process writer lock, fresh recomputed review, durable one-time
-   * consumption before dispatch and recorded field outcomes. Uncertain
-   * dispatches are never retried; they need academy_dailyrecord_reconcile. */
+  /** Owner-workflow save. Any delegated session may save; the request
+   * records the user's verbatim instruction and every step records who did
+   * it. A prior recorded review, the shared writer lock, a fresh recomputed
+   * review, one dispatch per exact request/field transition and recorded
+   * outcomes still gate every write. An unresolved dispatch on the same
+   * record field, under any request, blocks until academy_dailyrecord_reconcile. */
   async #saveRequestBound(input:z.infer<typeof dailyRecordSaveSchema>){
-    const workflow=this.workflow!,store=workflow.store,context=input.context,scope=context.scope;
-    const requestKey=workflowRequestKey(scope,context.currentRequestRef);
-    const base={...this.#base(context),observationHandle:input.observationHandle,reviewDigest:input.reviewDigest,
+    const store=this.workflow!.store,context=input.context,scope=context.scope,requestRef=context.currentRequestRef;
+    const requestKey=workflowRequestKey(scope,requestRef),attribution=this.#attribution(input),by=attributionSummary(attribution);
+    const base={...this.#base(context),observationHandle:input.observationHandle,reviewDigest:input.reviewDigest,attribution:by,
       parentTransmission:'separate_explicit_instruction_required' as const,workflowStoreScope:store.scope};
     const hold=(reasonCode:string,extra:Record<string,unknown>={})=>{
-      store.appendAudit(requestKey,{event:'save_held',reasonCode,reviewDigest:input.reviewDigest});
+      store.appendAudit(requestKey,{event:'save_held',reasonCode,reviewDigest:input.reviewDigest,by});
       return {...base,status:'held' as const,reasonCode,academyWrites:0,execution:'not_supported' as const,fields:[] as unknown[],...extra};
     };
     if(!this.writeBackend?.requestBoundSaveConfigured?.())
       return {...base,status:'unavailable' as const,reasonCode:'dailyrecord_request_bound_save_backend_not_configured',academyWrites:0,execution:'not_supported' as const,fields:[]};
-    const actor=this.#actor('academy_dailyrecord_save',input);
-    if(actor.status!=='authenticated')return hold(actor.reasonCode);
-    const verified=workflow.authorizations.verify(input.authorization);
-    if(verified.status!=='verified')return hold(verified.reasonCode);
-    const authorization=verified.authorization,authorizationId=authorization.authorizationId;
-    if(authorization.requestRef!==context.currentRequestRef)return hold('authorization_request_mismatch');
-    if(!authorization.authorizedActors.includes(actor.actorId))return hold('actor_not_authorized_for_request');
-    if(!canonicalSame(authorization.reviewPolicy,this.#policyPins()))return hold('authorization_review_policy_mismatch');
-    // The issuer must have authorized against at least one authenticated recorded review of this exact request.
-    if(!authorization.basedOnReviewDigests.some(d=>{const r=store.get('review',d) as StoredReview|null;return r!==null&&r.reviewedBy!==null&&canonicalSame(r.scope,scope)&&r.requestRef===context.currentRequestRef;}))
-      return hold('authorization_review_not_recorded');
+    if(!input.request)return hold('user_instruction_provenance_required');
+    if(input.request.requestRef!==requestRef)return hold('user_request_ref_mismatch');
+    const instructionSha256=textDigest(input.request.instruction.text);
+    const recorded=store.publishOnce('request',requestKey,{request:input.request,instructionSha256,recordedBy:attribution,recordedAt:new Date(this.now()).toISOString()});
+    if(!recorded.created&&(recorded.record as {instructionSha256:string}).instructionSha256!==instructionSha256)return hold('request_instruction_conflict');
+    if(recorded.created)store.appendAudit(requestKey,{event:'request_recorded',instructionSha256,sessionRef:input.request.instruction.sessionRef??null,by});
     const prior=store.get('review',input.reviewDigest) as StoredReview|null;
     if(!prior)return hold('prior_review_record_required');
-    if(prior.status!=='prepared'||prior.reviewedBy===null||!canonicalSame(prior.scope,scope)||prior.requestRef!==context.currentRequestRef
+    if(prior.status!=='prepared'||!canonicalSame(prior.scope,scope)||prior.requestRef!==requestRef
       ||prior.observationHandle!==input.observationHandle||!canonicalSame(prior.reviewPolicy,this.#policyPins()))return hold('prior_review_record_mismatch');
     if(!prior.patch.length)return {...base,status:'saved' as const,reasonCode:'reviewed_patch_empty',academyWrites:0,execution:'owner_request_bound' as const,
       fields:input.proposals.map(p=>({field:p.field,status:'noop' as const,dispatched:false}))};
-    for(const p of prior.patch){
-      if(!authorization.actions.some(a=>canonicalSame(a.scope,scope)&&a.field===p.field&&a.before===p.before&&a.after===p.after))
-        return hold('authorization_action_mismatch',{field:p.field});
-    }
-    const recorded=store.publishOnce('authorization',authorizationId,{signed:verified.signed,firstVerifiedAt:new Date(this.now()).toISOString()});
-    if(!recorded.created&&!canonicalSame((recorded.record as {signed:unknown}).signed,verified.signed))return hold('authorization_id_conflict');
-    if(recorded.created)store.appendAudit(requestKey,{event:'authorization_recorded',authorizationId,issuerId:authorization.issuerId,
-      userEventRef:authorization.userEvent.eventRef,actorId:actor.actorId,fields:authorization.actions.filter(a=>canonicalSame(a.scope,scope)).map(a=>a.field)});
-    const state=(field:DailyRecordField)=>fieldExecutionState(store,executionKey(authorizationId,scope,field));
-    const report=(field:DailyRecordField,extra:Record<string,unknown>={})=>({field,executionState:state(field),...extra});
+    const key=(p:{field:DailyRecordField;before:string;after:string})=>executionKey(requestRef,scope,p.field,p.before,p.after);
+    const report=(p:StoredReview['patch'][number],extra:Record<string,unknown>={})=>({field:p.field,executionState:fieldExecutionState(store,key(p)),...extra});
     try{
       return await store.withLock(workflowLockKey(scope),async()=>{
-        // Re-read execution state inside the lock: another process may have finished.
-        const states=prior.patch.map(p=>({field:p.field,state:state(p.field)}));
-        if(states.some(s=>needsReconciliation(s.state)))return hold('uncertain_dispatch_reconcile_required',{fields:states.map(s=>report(s.field))});
-        if(states.some(s=>consumedWithoutEffect(s.state)))return hold('authorization_consumed_new_authorization_required',{fields:states.map(s=>report(s.field))});
-        if(states.every(s=>settledEffect(s.state)))return {...base,status:'saved' as const,reasonCode:'duplicate_execution_already_settled',academyWrites:0,
-          execution:'owner_request_bound' as const,authorizationId,actorId:actor.actorId,fields:states.map(s=>report(s.field,{status:'noop',dispatched:false}))};
+        // Under the lock: another process may have dispatched meanwhile, under this or another request.
+        const unresolved=prior.patch.filter(p=>unresolvedOnField(store,scope,p.field).length);
+        if(unresolved.length)return hold('uncertain_dispatch_reconcile_required',{fields:unresolved.map(p=>({field:p.field,unresolvedExecutions:unresolvedOnField(store,scope,p.field).length}))});
+        const states=prior.patch.map(p=>fieldExecutionState(store,key(p)));
+        if(states.some(consumedWithoutEffect))return hold('transition_already_attempted_new_request_required',{fields:prior.patch.map(p=>report(p))});
+        if(states.every(settledEffect))return {...base,status:'saved' as const,reasonCode:'duplicate_execution_already_settled',academyWrites:0,
+          execution:'owner_request_bound' as const,fields:prior.patch.map(p=>report(p,{status:'noop',dispatched:false}))};
         const fresh=await this.#review({context,observationHandle:input.observationHandle,cismObservationHandle:input.cismObservationHandle,proposals:input.proposals},false);
         if(fresh.status!=='prepared'||fresh.reviewDigest!==input.reviewDigest)
           return hold('fresh_review_drift_new_review_required',{fields:fresh.rows.map(r=>({field:r.field,status:'not_attempted',dispatched:false,blockers:r.blockers,holdActions:r.holdActions}))});
         const patches=(fresh.patch as ReviewedPatch[]).map(p=>({field:p.field,value:p.after,before:p.before??'',wireDigest:fresh.wireDigest??''}));
-        const approval=requestBoundApproval(store,{authorization,actorId:actor.actorId,reviewDigest:input.reviewDigest,scope,reviewed:prior.patch});
-        store.appendAudit(requestKey,{event:'dispatch_started',authorizationId,actorId:actor.actorId,fields:patches.map(p=>p.field)});
+        const approval=requestBoundApproval(store,{requestRef,attribution,reviewDigest:input.reviewDigest,scope,reviewed:prior.patch});
+        const subject=this.#observation(input.observationHandle)?.subject;
+        store.appendAudit(requestKey,{event:'dispatch_started',by,fields:patches.map(p=>p.field)});
+        const outcome=(p:StoredReview['patch'][number],record:Record<string,unknown>)=>{
+          if(store.get('execution',key(p)))store.publishOnce('outcome',key(p),{...record,recordedBy:by,recordedAt:new Date(this.now()).toISOString()});
+        };
         let results:Awaited<ReturnType<DailyRecordWriteBackend['saveDailyRecord']>>;
-        try{results=await this.#serial(()=>this.writeBackend!.saveDailyRecord(freezeLabelData(structuredClone(scope)),patches,approval));}
+        try{results=await this.#serial(()=>this.writeBackend!.saveDailyRecord(freezeLabelData(structuredClone(scope)),patches,approval,subject));}
         catch(error){
-          // Consumption marks a possible dispatch; it stays unresolved until a readback reconciliation.
-          for(const p of patches)if(store.get('consumption',executionKey(authorizationId,scope,p.field)))
-            store.publishOnce('outcome',executionKey(authorizationId,scope,p.field),{status:'unresolved',dispatched:null,actorId:actor.actorId,recordedAt:new Date(this.now()).toISOString()});
-          store.appendAudit(requestKey,{event:'dispatch_failed',authorizationId,reasonCode:readFailureResult(error,'dailyrecord_save_unqualified_no_automatic_retry').reasonCode});
-          return {...base,status:'held' as const,reasonCode:'save_reconciliation_required',academyWrites:null,execution:'owner_request_bound' as const,authorizationId,actorId:actor.actorId,
-            fields:patches.map(p=>report(p.field,{status:'unresolved',dispatched:null}))};
+          // An execution record marks a possible dispatch; it stays unresolved until a readback reconciliation.
+          for(const p of prior.patch)outcome(p,{status:'unresolved',dispatched:null});
+          store.appendAudit(requestKey,{event:'dispatch_failed',by,reasonCode:readFailureResult(error,'dailyrecord_save_unqualified_no_automatic_retry').reasonCode});
+          return {...base,status:'held' as const,reasonCode:'save_reconciliation_required',academyWrites:null,execution:'owner_request_bound' as const,
+            fields:prior.patch.map(p=>report(p,{status:'unresolved',dispatched:null}))};
         }
-        for(const r of results){
-          // Fields refused before consumption (drift, not attempted) leave no execution record and stay available.
-          if(store.get('consumption',executionKey(authorizationId,scope,r.field)))
-            store.publishOnce('outcome',executionKey(authorizationId,scope,r.field),{status:r.status,dispatched:r.dispatched,transport:r.transport??null,actorId:actor.actorId,recordedAt:new Date(this.now()).toISOString()});
-        }
+        // Fields refused before their execution record (drift, not attempted) stay available.
+        for(const r of results){const p=prior.patch.find(x=>x.field===r.field);if(p)outcome(p,{status:r.status,dispatched:r.dispatched,transport:r.transport??null});}
         const academyWrites=results.filter(r=>r.dispatched).length;
         const settled=results.every(r=>r.status==='persisted'||r.status==='noop');
         const reasonCode=settled?null:results.some(r=>r.status==='unresolved'||r.status==='conflict')?'save_reconciliation_required'
           :results.some(r=>r.status==='before_drift')?'fresh_before_drift_new_review_required'
-          :results.some(r=>r.status==='not_persisted')?'readback_not_persisted_new_authorization_required':'partial_save_review_remaining_fields';
-        store.appendAudit(requestKey,{event:'dispatch_completed',authorizationId,actorId:actor.actorId,academyWrites,results:results.map(r=>({field:r.field,status:r.status,dispatched:r.dispatched}))});
-        return {...base,status:settled?'saved' as const:'held' as const,reasonCode,academyWrites,execution:'owner_request_bound' as const,authorizationId,actorId:actor.actorId,
-          fields:results.map(r=>report(r.field,{status:r.status,dispatched:r.dispatched}))};
+          :results.some(r=>r.status==='not_persisted')?'readback_not_persisted_new_request_required':'partial_save_review_remaining_fields';
+        store.appendAudit(requestKey,{event:'dispatch_completed',by,academyWrites,results:results.map(r=>({field:r.field,status:r.status,dispatched:r.dispatched}))});
+        return {...base,status:settled?'saved' as const:'held' as const,reasonCode,academyWrites,execution:'owner_request_bound' as const,
+          fields:results.map(r=>{const p=prior.patch.find(x=>x.field===r.field);return {field:r.field,status:r.status,dispatched:r.dispatched,executionState:p?fieldExecutionState(store,key(p)):'available'};})};
       });
     }catch(error){
       if(error instanceof Error&&error.message==='shared_writer_lock_busy')return hold('shared_writer_lock_busy');
       throw error;
     }
   }
-  /** Read-only classification of uncertain dispatches by authoritative readback. Never writes to the academy or retries. */
+  /** Read-only classification of every unresolved dispatch on this record, by authoritative readback. Never writes to the academy or retries. */
   async reconcile(value:unknown){
     const input=dailyRecordReconcileSchema.parse(value),context=input.context,scope=context.scope;
-    const base={...this.#base(context),authorizationId:input.authorizationId,execution:'read_only' as const,parentTransmission:'separate_explicit_instruction_required' as const};
+    const base={...this.#base(context),execution:'read_only' as const,parentTransmission:'separate_explicit_instruction_required' as const};
     if(!this.workflow)return {...base,status:'unavailable' as const,reasonCode:'dailyrecord_workflow_not_configured',fields:[]};
-    const store=this.workflow.store,actor=this.#actor('academy_dailyrecord_reconcile',input);
-    if(actor.status!=='authenticated')return {...base,status:'held' as const,reasonCode:actor.reasonCode,fields:[]};
-    const stored=store.get('authorization',input.authorizationId) as {signed:{authorization:DailyRecordAuthorization}}|null;
-    if(!stored)return {...base,status:'held' as const,reasonCode:'authorization_not_recorded',fields:[]};
-    const authorization=stored.signed.authorization,actions=authorization.actions.filter(a=>canonicalSame(a.scope,scope));
-    if(authorization.requestRef!==context.currentRequestRef||!actions.length)return {...base,status:'held' as const,reasonCode:'authorization_scope_mismatch',fields:[]};
-    const requestKey=workflowRequestKey(scope,context.currentRequestRef);
+    const store=this.workflow.store,by=attributionSummary(this.#attribution(input));
     return store.withLock(workflowLockKey(scope),async()=>{
-      const key=(field:DailyRecordField)=>executionKey(authorization.authorizationId,scope,field);
-      const pending=actions.filter(a=>needsReconciliation(fieldExecutionState(store,key(a.field))));
-      const fields=()=>actions.map(a=>({field:a.field,executionState:fieldExecutionState(store,key(a.field))}));
-      if(!pending.length)return {...base,status:'settled' as const,reasonCode:null,fields:fields()};
+      const pending=dailyRecordFields.flatMap(field=>unresolvedOnField(store,scope,field).map(key=>({field,key})));
+      const fields=()=>dailyRecordFields.flatMap(field=>store.ledger(ledgerGroup(scope,field)).map(key=>({field,requestRef:(store.get('execution',key) as {requestRef:string}|null)?.requestRef??null,executionState:fieldExecutionState(store,key)})));
+      if(!pending.length)return {...base,status:'settled' as const,reasonCode:null,by,fields:fields()};
       const read=await this.#read(scope,context.currentRequestRef);
       if(read.status!=='observed'){
-        store.appendAudit(requestKey,{event:'reconcile_readback_unavailable',authorizationId:authorization.authorizationId,actorId:actor.actorId,reasonCode:read.reasonCode});
-        return {...base,status:'held' as const,reasonCode:'readback_unavailable_reconcile_later',sourceReasonCode:read.reasonCode,fields:fields()};
+        store.appendAudit(workflowRequestKey(scope,context.currentRequestRef),{event:'reconcile_readback_unavailable',by,reasonCode:read.reasonCode});
+        return {...base,status:'held' as const,reasonCode:'readback_unavailable_reconcile_later',sourceReasonCode:read.reasonCode,by,fields:fields()};
       }
-      for(const action of pending){
-        const consumption=store.get('consumption',key(action.field)) as {effectRecordKey:string}|null;
-        const record=action.field==='previousHomeworkAssessment'?read.observation.previousTarget?.recordId:read.observation.target.recordId;
-        const current=read.observation.fields[action.field];
-        const classification=consumption&&consumption.effectRecordKey!==record?'conflict'
-          :current.state!=='known'?null:current.value===action.after?'persisted':current.value===action.before?'not_persisted':'conflict';
+      for(const {field,key} of pending){
+        const execution=store.get('execution',key) as {requestRef:string;effectRecordKey:string;beforeSha256:string;afterSha256:string};
+        const record=field==='previousHomeworkAssessment'?read.observation.previousTarget?.recordId:read.observation.target.recordId;
+        const current=read.observation.fields[field];
+        const classification=execution.effectRecordKey!==record?'conflict'
+          :current.state!=='known'?null:textDigest(current.value)===execution.afterSha256?'persisted':textDigest(current.value)===execution.beforeSha256?'not_persisted':'conflict';
         if(!classification)continue;
-        store.publishOnce('reconciliation',key(action.field),{classification,sourceRevision:read.observation.sourceRevision,observedAt:read.observation.observedAt,actorId:actor.actorId,reconciledAt:new Date(this.now()).toISOString()});
-        store.appendAudit(requestKey,{event:'reconciled',authorizationId:authorization.authorizationId,field:action.field,classification,actorId:actor.actorId});
+        store.publishOnce('reconciliation',key,{classification,sourceRevision:read.observation.sourceRevision,observedAt:read.observation.observedAt,by,reconciledAt:new Date(this.now()).toISOString()});
+        store.appendAudit(workflowRequestKey(scope,execution.requestRef),{event:'reconciled',field,classification,by});
       }
-      const after=fields();
-      return {...base,status:after.some(f=>needsReconciliation(f.executionState))?'held' as const:'settled' as const,
-        reasonCode:after.some(f=>needsReconciliation(f.executionState))?'readback_field_unknown_reconcile_later':null,fields:after};
+      const after=fields(),open=after.some(f=>needsReconciliation(f.executionState));
+      return {...base,status:open?'held' as const:'settled' as const,reasonCode:open?'readback_field_unknown_reconcile_later':null,by,fields:after};
     });
   }
-  /** Metadata-only handoff view of one authorization's execution; no field text. */
+  /** Metadata-only handoff view: per-field executions on this record with who did them, plus the request audit. No field or instruction text. */
   async executionStatus(value:unknown){
-    const input=dailyRecordExecutionStatusSchema.parse(value);
-    const base={authorizationId:input.authorizationId,academyWrites:0,parentSends:0,automaticRetryAllowed:false,execution:'read_only' as const};
+    const input=dailyRecordExecutionStatusSchema.parse(value),scope=input.scope;
+    const base={scope,requestRef:input.requestRef??null,academyWrites:0,parentSends:0,automaticRetryAllowed:false,execution:'read_only' as const};
     if(!this.workflow)return {...base,status:'unavailable' as const,reasonCode:'dailyrecord_workflow_not_configured'};
-    const store=this.workflow.store,actor=this.#actor('academy_dailyrecord_execution_status',input);
-    if(actor.status!=='authenticated')return {...base,status:'held' as const,reasonCode:actor.reasonCode};
-    const stored=store.get('authorization',input.authorizationId) as {signed:{authorization:DailyRecordAuthorization};firstVerifiedAt:string}|null;
-    if(!stored)return {...base,status:'not_recorded' as const,reasonCode:'authorization_not_recorded'};
-    const a=stored.signed.authorization;
-    const actions=a.actions.map(action=>({scope:action.scope,field:action.field,beforeSha256:textDigest(action.before),afterSha256:textDigest(action.after),
-      executionState:fieldExecutionState(store,executionKey(a.authorizationId,action.scope,action.field)) satisfies FieldExecutionState}));
-    const scopes=[...new Map(a.actions.map(x=>[workflowRequestKey(x.scope,a.requestRef),x.scope])).keys()];
-    return {...base,status:'recorded' as const,storeScope:store.scope,
-      authorization:{requestRef:a.requestRef,issuerId:a.issuerId,issuedAt:a.issuedAt,expiresAt:a.expiresAt,userEventRef:a.userEvent.eventRef,
-        authorizedActors:a.authorizedActors,basedOnReviewDigests:a.basedOnReviewDigests,parentTransmission:a.parentTransmission,firstVerifiedAt:stored.firstVerifiedAt},
-      actions,audit:scopes.flatMap(k=>store.audit(k))};
+    const store=this.workflow.store;
+    const fields=dailyRecordFields.map(field=>({field,executions:store.ledger(ledgerGroup(scope,field)).map(key=>{
+      const e=store.get('execution',key) as {requestRef:string;beforeSha256:string;afterSha256:string;attribution:DailyRecordAttribution;recordedAt:string};
+      return {requestRef:e.requestRef,beforeSha256:e.beforeSha256,afterSha256:e.afterSha256,executionState:fieldExecutionState(store,key),by:attributionSummary(e.attribution),recordedAt:e.recordedAt};
+    })})).filter(f=>f.executions.length);
+    const request=input.requestRef?store.get('request',workflowRequestKey(scope,input.requestRef)) as {instructionSha256:string;request:{instruction:{sessionRef?:string;receivedAt?:string}};recordedBy:DailyRecordAttribution;recordedAt:string}|null:null;
+    return {...base,status:'recorded' as const,storeScope:store.scope,fields,
+      request:request?{instructionSha256:request.instructionSha256,sessionRef:request.request.instruction.sessionRef??null,receivedAt:request.request.instruction.receivedAt??null,
+        recordedBy:attributionSummary(request.recordedBy),recordedAt:request.recordedAt}:null,
+      audit:input.requestRef?store.audit(workflowRequestKey(scope,input.requestRef)):[]};
   }
   async cism(value:unknown){
     const input=cismSectionSchema.parse(value),context=input.context;
