@@ -9,6 +9,7 @@ import { traceHierarchy, validateHierarchy, validateSourceKey, type CatalogNode,
 import { createAcademySourceAudit } from '../lms/academySourceAudit';
 import {readInputRecord} from '../contracts/readInputRecord';
 import { validateAcademyRecord, type AcademyRecord } from './records';
+import { isNativeStudentPayload } from './contracts/prerequisiteRecords';
 import {assertPreparationDate} from './preparationHistory';
 import {sameClinicTarget} from './learningWork';
 import {assertAssignmentNotReplaced,assertReplacementGraph,replacementPredecessor,retainedAssessmentScore,type AssignmentVersion} from './learningWorkBindings';
@@ -202,6 +203,8 @@ export class PostgresAcademyStore implements TeacherStore,SourceRefreshStore {
   async append(command: AppendCommand, recordedAt = new Date().toISOString()): Promise<WriteAcknowledgement> {
     assertExactKeys(command,['ownerId','studentId','entityId','actorId','idempotencyKey','expectedRevisionId','sourceObservedAt','payload']);
     canonicalJson(command); validateAcademyRecord(command.payload);
+    // Native student records are written only through the native prerequisite store (approval, admission, receipts).
+    if(isNativeStudentPayload(command.payload))throw Error('native_prerequisite_command_required');
     for(const value of [command.ownerId,command.studentId,command.entityId,command.actorId,command.idempotencyKey])requireText(value,'append identity');
     if(command.expectedRevisionId!==null)requireText(command.expectedRevisionId,'expected revision');
     assertInstant(command.sourceObservedAt);assertInstant(recordedAt);

@@ -8,3 +8,6 @@ export interface WriteAcknowledgement {readonly status:'saved'|'unchanged'|'repl
 export interface RecordVersion {ownerId:string;studentId:string;entityId:string;sequence:number;revisionId:string;previousRevisionId:string|null;previousDigest:string|null;payload:AcademyRecord;contentDigest:string;integrityDigest:string;sourceObservedAt:string;recordedAt:string;actorId:string;idempotencyKey:string;commandDigest:string}
 export type CurrentRecord=RecordVersion&{lastVerifiedAt:string};
 export interface PinnedCatalogNode {node:CatalogNode;revisionId:string}
+
+/** Native prerequisite results are additive; legacy acknowledgements remain closed. */
+export type {NativeWriteResult,NativeCommitReceipt} from './prerequisiteRecords';

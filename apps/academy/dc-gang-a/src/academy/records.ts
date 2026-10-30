@@ -1,3 +1,4 @@
+import {isNativeStudentPayload,validateNativeStudentPayload,type NativeStudentPayload} from './contracts/prerequisiteRecords';
 import { assertDate, assertExactKeys, assertInstant, assertKnowledge, assertRefs, canonicalJson, requireText, type Knowledge } from '../learning/model';
 import { createAcademySourceAudit } from '../lms/academySourceAudit';
 import { validateSourceKey, type SourceKey } from './domain';
@@ -47,9 +48,10 @@ export interface TeacherActivityRevision {
 export interface TeacherPreparationAssignment extends Omit<TeacherBookPreparationScope,'kind'> {
   kind:'teacher_preparation_assignment';sourceStudent:SourceKey;effectiveDate:string;
 }
-export type AcademyRecord = SourceBookRegistration | SourceAuditRecord | TeacherReportedNote | TeacherLessonCarryover | TeacherObservation | TeacherObservationRequest | SourceCourseInventory | SourcePrestudySnapshot | TeacherActivityRevision | TeacherPreparationAssignment | LearningWorkAssignment | LearningWorkAttempt | TeacherClinicRevision | TeacherClinicRequest;
+export type AcademyRecord = NativeStudentPayload | SourceBookRegistration | SourceAuditRecord | TeacherReportedNote | TeacherLessonCarryover | TeacherObservation | TeacherObservationRequest | SourceCourseInventory | SourcePrestudySnapshot | TeacherActivityRevision | TeacherPreparationAssignment | LearningWorkAssignment | LearningWorkAttempt | TeacherClinicRevision | TeacherClinicRequest;
 export function validateAcademyRecord(payload: AcademyRecord): void {
   canonicalJson(payload);
+  if(isNativeStudentPayload(payload)){validateNativeStudentPayload(payload);return;}
   if(payload.kind==='teacher_lesson_carryover'){
     assertExactKeys(payload,['kind','sourceStudent','sourceCourse','sourceBook','sourceMinorUnit','activity','status','originDate','targetDate','occurrence','text','directiveRef','evidenceRefs']);
     validateSourceKey(payload.sourceStudent);

@@ -338,11 +338,18 @@ export function assertContext(context: LessonContext): void {
   try { new Intl.DateTimeFormat("en", { timeZone: context.timeZone }); }
   catch { throw new Error("invalid time zone"); }
 }
-export function assertDate(value: string): void {
+declare const calendarDateBrand: unique symbol;
+export type CalendarDate = string & {readonly [calendarDateBrand]: true};
+/** The sole calendar parser; raw JSON cannot select a dated authority interval. */
+export function parseCalendarDate(value: unknown): CalendarDate {
   if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(value) ||
     !Number.isFinite(Date.parse(`${value}T00:00:00Z`)) || new Date(`${value}T00:00:00Z`).toISOString().slice(0, 10) !== value) {
     throw new Error("invalid calendar date");
   }
+  return value as CalendarDate;
+}
+export function assertDate(value: unknown): asserts value is CalendarDate {
+  parseCalendarDate(value);
 }
 export function assertTime(value: string): void {
   if (!/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(value)) throw new Error("invalid local lesson time");
@@ -382,7 +389,10 @@ function requireEnum(value: string, values: readonly string[]): void {
 /** Stable JSON avoids property-order-dependent hashes; it is not a signature. */
 export function canonicalJson(value: unknown): string {
   const visiting = new Set<object>();
-  const encode = (part: unknown): string => {
+  // This shared boundary also protects request digests before payload-specific
+  // validation. Bound recursive work independently of the HTTP byte limit.
+  const encode = (part: unknown, depth = 0): string => {
+    if (depth > 64) throw new Error('invalid_json_depth');
     if (part === null || typeof part === "boolean" || typeof part === "string") return JSON.stringify(part);
     if (typeof part === "number" && Number.isFinite(part)) return JSON.stringify(part);
     if (typeof part !== "object" || part === null) throw new Error("only finite JSON data is allowed");
@@ -395,10 +405,10 @@ export function canonicalJson(value: unknown): string {
     let result: string;
     if (Array.isArray(part)) {
       if (Object.keys(part).length !== part.length) throw new Error("sparse or decorated arrays are not allowed");
-      result = `[${part.map(encode).join(",")}]`;
+      result = `[${part.map(child => encode(child, depth + 1)).join(",")}]`;
     } else {
       if (Object.getPrototypeOf(part) !== Object.prototype && Object.getPrototypeOf(part) !== null) throw new Error("plain JSON objects required");
-      result = `{${Object.keys(part).sort().map(key => `${JSON.stringify(key)}:${encode((part as Record<string, unknown>)[key])}`).join(",")}}`;
+      result = `{${Object.keys(part).sort().map(key => `${JSON.stringify(key)}:${encode((part as Record<string, unknown>)[key], depth + 1)}`).join(",")}}`;
     }
     visiting.delete(part);
     return result;
