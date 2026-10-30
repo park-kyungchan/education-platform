@@ -8,7 +8,9 @@ export const academyContextRoot=resolve(import.meta.dir,'..');
 type PackageRoute={packageId:string;sourceCommit:string;proposedDestinationRoot:string;fileCount:number;bytes:number;manifestSha256:string};
 type Integration={schema:'education.private-context-integration/v1';targetRepository:string;visibilityRequired:string;packages:PackageRoute[];additionalCustody?:{totalFiles:number;groups:{sourceRoot:string;destinationRoot:string;fileCount:number;bytes:number}[]}};
 
-/** Discovery metadata only: no student source body, native store or network is opened. */
+/** Discovery metadata only. The manifest's private value records historical admission,
+ * not current GitHub visibility; see architecture/repository-visibility-policy.json.
+ * No student source body, native store or network is opened. */
 export function privatePackageRoutes(manifest:Integration,businessDate?:string){
  if(manifest.schema!=='education.private-context-integration/v1'||manifest.targetRepository!=='park-kyungchan/education-platform'||manifest.visibilityRequired!=='private')throw Error('academy_context_private_owner_required');
  if(businessDate!==undefined&&!/^\d{4}-\d{2}-\d{2}$/.test(businessDate))throw Error('academy_context_invalid_business_date');
