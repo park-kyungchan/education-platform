@@ -54,6 +54,26 @@ test('release preparation writes only a fresh local draft with exact pins and he
  }finally{await f.client.close();await f.transport.close();}
 },60000);
 
+test('release preparation pins a supplied private paper scope map without installing or launching endpoints',async()=>{
+ const f=await fixture();try{
+  const raw=JSON.parse(await readFile(f.manifest.path,'utf8'));
+  const paper1=await f.pin('paper1-manifest.json',{...raw,endpoint:'paper1'});
+  const paper2=await f.pin('paper2-manifest.json',{...raw,endpoint:'paper2'});
+  const registry=await f.pin('paper-registry.json',[{endpoint:'paper1',upstreamName:'academy_paper_headers',tool:{name:'academy_paper_headers'}},{endpoint:'paper2',upstreamName:'academy_paper_headers',tool:{name:'class2_academy_paper_headers'}}]);
+  const scopes=[{endpoint:'paper1',studentIds:['1001']},{endpoint:'paper2',studentIds:['1002']}];
+  const scopePin=await f.pin('private-paper-scopes.json',scopes);
+  const plan={generation:'paper-draft',bridge:f.bridge,admission:{path:resolve(f.base,'dailyrecord-admission.json'),sha256:hash(await readFile(resolve(f.base,'dailyrecord-admission.json')))},registry,paperScopes:scopePin,
+   endpoints:{paper1:{command:process.execPath,prefixArgs:['--no-env-file'],identity:paper1,args:f.ownerArgs},paper2:{command:process.execPath,prefixArgs:['--no-env-file'],identity:paper2,args:f.ownerArgs}}};
+  const before=await readFile(resolve(f.base,'release.json'),'utf8'),draft=await prepareRuntimeRelease(plan);
+  const release=JSON.parse(await readFile(draft.release.path,'utf8'));
+  expect(JSON.parse(await readFile(release.routing.path,'utf8')).paperScopes).toEqual(scopes);
+  expect(await readFile(resolve(f.base,'release.json'),'utf8')).toBe(before);
+  await expect(prepareRuntimeRelease({...plan,paperScopes:{...scopePin,sha256:'0'.repeat(64)}})).rejects.toThrow();
+  const unknown=await f.pin('paper-unknown.json',[{endpoint:'paper3',studentIds:['1001']}]);
+  await expect(prepareRuntimeRelease({...plan,paperScopes:unknown})).rejects.toThrow();
+ }finally{await f.client.close();await f.transport.close();}
+},60000);
+
 test.skipIf(!Bun.which('node'))('Node bridge reads through the exact packaged Bun owner with the same release graph',async()=>{
  const f=await fixture(Bun.which('node')!);try{
   expect((await f.client.callTool({name:'academy_runtime_identity',arguments:{}})).structuredContent).toMatchObject({graphQualification:'artifact_pinned',loadedBridgeSha256:f.bridge.sha256});

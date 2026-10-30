@@ -7,6 +7,7 @@ import {readPinnedLocalBytes} from './item-label-store.ts';
 import {artifactPinSchema,verifyEndpointManifest} from './runtime-identity.ts';
 import {ownerAdmissionSchema} from './owner-admission.ts';
 import {ReleaseBaseUnqualified} from './read-failure.ts';
+import {paperScopesSchema} from './paper-scope-routing.ts';
 
 const pin=z.object({path:z.string().refine(isAbsolute),sha256:z.string().regex(/^[a-f0-9]{64}$/)}).strict();
 const commonRelease={generation:z.string().regex(/^[a-zA-Z0-9._-]{1,64}$/),routing:pin,endpoints:pin,registry:pin};
@@ -15,7 +16,7 @@ const releaseSchema=z.discriminatedUnion('schemaVersion',[
   z.object({schemaVersion:z.literal('academy.mcp-release/2'),...commonRelease,bridge:artifactPinSchema,
     endpointIdentities:z.record(z.string().regex(/^[a-z][a-z0-9_]{0,63}$/),artifactPinSchema)}).strict(),
 ]);
-const routingSchema=z.object({admissionPath:z.string().refine(isAbsolute),admissionSha256:z.string().regex(/^[a-f0-9]{64}$/)}).strict();
+const routingSchema=z.object({admissionPath:z.string().refine(isAbsolute),admissionSha256:z.string().regex(/^[a-f0-9]{64}$/),paperScopes:paperScopesSchema.optional()}).strict();
 const registrySchema=z.array(z.object({endpoint:z.string().regex(/^[a-z][a-z0-9_]{0,63}$/),
   upstreamName:z.string().regex(/^[a-z][a-z0-9_]{0,127}$/),
   tool:z.object({name:z.string().regex(/^[a-z][a-z0-9_]{0,127}$/)}).passthrough()}).strict()).max(256);
@@ -71,7 +72,7 @@ export async function loadRuntimeRelease(base:string){
   }
   const after=await readPointer(base);
   if(after===null||createHash('sha256').update(pointer).digest('hex')!==createHash('sha256').update(after).digest('hex'))throw Error('release_pointer_changed');
-  return {generation:release.generation,admission,endpoints,registry,endpointIdentities,
+  return {generation:release.generation,admission,endpoints,registry,endpointIdentities,paperScopes:routing.paperScopes,
     identity:{schemaVersion:release.schemaVersion,generation:release.generation,
       pointerSha256:createHash('sha256').update(pointer).digest('hex'),routingSha256:release.routing.sha256,
       endpointsSha256:release.endpoints.sha256,registrySha256:release.registry.sha256,admissionSha256:routing.admissionSha256,

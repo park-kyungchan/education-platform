@@ -15,6 +15,7 @@ import {readPinnedLocalBytes} from './item-label-store.ts';
 import {readOnlyAnnotations} from './contracts.ts';
 import {dailyRecordScopeSchema,type DailyRecordScope} from './dailyrecord-context.ts';
 import {loadRuntimeRelease} from './runtime-release.ts';
+import {selectPaperRoute} from './paper-scope-routing.ts';
 const processStartedAt=new Date().toISOString();
 const loadedBridgeSha256=createHash('sha256').update(readFileSync(process.argv[1]!)).digest('hex');
 const base=process.env.ACADEMY_MCP_INSTALL_DIR??'/root/.local/share/academy-mcp';
@@ -75,7 +76,7 @@ async function activeRelease(){
  if(!release){if(sawRelease)throw Error('release_pointer_missing');return {registry,endpoints,readAdmission,generation:null,identity:{graphQualification:'legacy_graph_incomplete'},endpointIdentities:{} as Record<string,unknown>};}
  sawRelease=true;
  if(release.identity.bridgeSha256!==null&&release.identity.bridgeSha256!==loadedBridgeSha256)throw Error('release_bridge_identity_mismatch');
- return {registry:release.registry,endpoints:release.endpoints,readAdmission:{sourceNamespace:release.admission.sourceNamespace,
+ return {registry:release.registry,endpoints:release.endpoints,paperScopes:release.paperScopes,readAdmission:{sourceNamespace:release.admission.sourceNamespace,
   teacherId:release.admission.teacherId,allowedFrom:release.admission.allowedFrom,allowedThrough:release.admission.allowedThrough,
   ...(release.admission.schemaVersion==='academy.owner-admission/2'?{studentScope:release.admission.studentScope??'configured'}:{})},generation:release.generation,identity:release.identity,endpointIdentities:release.endpointIdentities};
 }
@@ -98,7 +99,8 @@ async function call(req:any){
    writeFileSync(log+'/'+occurrence+'-result.json',JSON.stringify({completedAt:new Date().toISOString(),tool:receiptTool,status:'identity_observed',resultSha256:sha(data),automaticRetryAllowed:false})+'\n',{mode:0o600,flag:'wx'});
    return {content:[{type:'text',text:JSON.stringify(data)}],structuredContent:data};
   }
-  const entry=active.registry.find((r:any)=>r.tool.name===req.name);if(!entry)throw Error('unknown_tool');
+  const registered=active.registry.find((r:any)=>r.tool.name===req.name);if(!registered)throw Error('unknown_tool');
+  const entry=selectPaperRoute('paperScopes' in active?active.paperScopes:undefined,active.registry,registered,args);
   const result:any=await upstream(entry.endpoint,async client=>{
    const expectedIdentity=active.endpointIdentities[entry.endpoint];
    if(expectedIdentity){

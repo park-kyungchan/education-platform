@@ -6,9 +6,10 @@ import {z} from 'zod';
 import {artifactPinSchema,verifyEndpointManifest} from './runtime-identity.ts';
 import {readPinnedLocalBytes} from './item-label-store.ts';
 import {ownerAdmissionSchema} from './owner-admission.ts';
+import {paperScopesSchema} from './paper-scope-routing.ts';
 
 const planSchema=z.object({generation:z.string().regex(/^[A-Za-z0-9._-]{1,64}$/),bridge:artifactPinSchema,
-  admission:artifactPinSchema,registry:artifactPinSchema,
+  admission:artifactPinSchema,registry:artifactPinSchema,paperScopes:artifactPinSchema.optional(),
   endpoints:z.record(z.string().regex(/^[a-z][a-z0-9_]{0,63}$/),z.object({command:z.string().startsWith('/'),
     prefixArgs:z.array(z.string().max(4096)).max(16).default([]),identity:artifactPinSchema,args:z.array(z.string().max(4096)).max(128)}).strict()),
 }).strict();
@@ -20,6 +21,8 @@ export async function prepareRuntimeRelease(value:unknown){
   ownerAdmissionSchema.parse(JSON.parse((await readPinnedLocalBytes(plan.admission.path,plan.admission.sha256)).bytes.toString('utf8')));
   const registry=z.array(z.object({endpoint:z.string(),upstreamName:z.string(),tool:z.object({name:z.string()}).passthrough()}).strict()).max(256).parse(JSON.parse((await readPinnedLocalBytes(plan.registry.path,plan.registry.sha256)).bytes.toString('utf8')));
   if(new Set(registry.map(r=>r.tool.name)).size!==registry.length||registry.some(r=>!Object.hasOwn(plan.endpoints,r.endpoint)))throw Error('release_payload_unqualified');
+  const paperScopes=plan.paperScopes?paperScopesSchema.parse(JSON.parse((await readPinnedLocalBytes(plan.paperScopes.path,plan.paperScopes.sha256)).bytes.toString('utf8'))):undefined;
+  if(paperScopes?.some(s=>!['paper1','paper2'].includes(s.endpoint)||!Object.hasOwn(plan.endpoints,s.endpoint)))throw Error('release_payload_unqualified');
   const endpoints:Record<string,unknown>={},endpointIdentities:Record<string,z.infer<typeof artifactPinSchema>>={};
   for(const [endpoint,config] of Object.entries(plan.endpoints)){
     const {manifest}=await verifyEndpointManifest(config.identity);
@@ -29,7 +32,7 @@ export async function prepareRuntimeRelease(value:unknown){
   }
   const base=await mkdtemp(join(tmpdir(),'academy-release-draft-'));
   const save=async(name:string,value:unknown)=>{const path=join(base,name),bytes=JSON.stringify(value,null,2)+'\n';await writeFile(path,bytes,{mode:0o600,flag:'wx'});return {path,sha256:hash(bytes)};};
-  const routing=await save('routing.json',{admissionPath:plan.admission.path,admissionSha256:plan.admission.sha256}),endpointPin=await save('endpoints.json',endpoints);
+  const routing=await save('routing.json',{admissionPath:plan.admission.path,admissionSha256:plan.admission.sha256,...(paperScopes?{paperScopes}:{})}),endpointPin=await save('endpoints.json',endpoints);
   const release=await save('release.json',{schemaVersion:'academy.mcp-release/2',generation:plan.generation,bridge:plan.bridge,routing,endpoints:endpointPin,registry:plan.registry,endpointIdentities});
   await save('migration-review.json',{status:'local_draft_not_installed',release,registrationPerformed:false,nativeEndpointsLaunched:false,
     holds:['exact-head independent review','source-owner namespace admission','native installation and client registration authority','fresh client qualification','Muse authentication hold'],
