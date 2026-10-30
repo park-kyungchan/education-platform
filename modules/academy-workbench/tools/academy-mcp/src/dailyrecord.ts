@@ -7,6 +7,7 @@ import {resolveStudentByName,studentResolveInputSchema} from './student-resolver
 import {readDailyRecordByName,type DailyRecordReadAdmission} from './dailyrecord-read.ts';
 import {readFailureResult} from './read-failure.ts';
 import {toolResultBytes} from './tool-result.ts';
+import {canonicalJson} from './dailyrecord-save-admission.ts';
 import {attributionSchema,attributionSummary,consumedWithoutEffect,declaredActorSchema,executionKey,fieldExecutionState,needsReconciliation,studentExecutions,observeAttribution,requestBoundApproval,settledEffect,textDigest,unresolvedOnField,userRequestSchema,workflowLockKey,workflowRequestKey,canonicalSame,type DailyRecordActionApproval,type DailyRecordAttribution,type DailyRecordWorkflow} from './dailyrecord-workflow.ts';
 
 const hash=z.string().regex(/^[a-f0-9]{64}$/),instant=z.iso.datetime({offset:true});
@@ -180,7 +181,9 @@ function holdActions(scope:DailyRecordScope,field:DailyRecordField,blockers:read
 type ReviewPolicyPins={learningPolicy:{bundleSha256:string;configSha256:string;catalogSha256:string}|null;parentSafeguard:{policySha256:string;safeguardSourceSha256:string}|null};
 type ReviewedPatch={field:DailyRecordField;target:z.infer<typeof currentTargetSchema>|null;before:string|null;after:string};
 type StoredReview={reviewDigest:string;status:string;scope:DailyRecordScope;requestRef:string;observationHandle:string|null;
-  patch:{field:DailyRecordField;before:string;after:string;effectRecordKey:string}[];reviewPolicy:ReviewPolicyPins;reviewedBy:DailyRecordAttribution;reviewedAt:string};
+  patch:{field:DailyRecordField;before:string;after:string;effectRecordKey:string}[];reviewPolicy:ReviewPolicyPins;reviewedBy:DailyRecordAttribution;reviewedAt:string;
+  /** Digest of the exact context and proposals this review judged; a save must submit the same. */
+  inputDigest:string};
 
 /** How long an unchanged readback must wait before it may prove an uncertain dispatch did not land. */
 export const reconcileSettleMs=15*60*1000;
@@ -424,7 +427,8 @@ export class DailyRecordService {
       const reviewedBy=this.#attribution(input);
       const record:StoredReview={reviewDigest,status,scope:context.scope,requestRef:context.currentRequestRef,observationHandle:input.observationHandle,
         patch:(patch as ReviewedPatch[]).map(p=>({field:p.field,before:p.before??'',after:p.after,effectRecordKey:p.target?.recordId??''})),
-        reviewPolicy:this.#policyPins(),reviewedBy,reviewedAt:new Date(this.now()).toISOString()};
+        reviewPolicy:this.#policyPins(),reviewedBy,reviewedAt:new Date(this.now()).toISOString(),
+        inputDigest:textDigest(canonicalJson({context,proposals:input.proposals,cismObservationHandle:input.cismObservationHandle??null}))};
       this.workflow.store.publishOnce('review',reviewDigest,record);
       this.workflow.store.appendAudit(workflowRequestKey(context.scope,context.currentRequestRef),{event:'review_recorded',reviewDigest,by:attributionSummary(reviewedBy),fields:record.patch.map(p=>p.field)});
       reviewRecord={persisted:true,reviewedBy:attributionSummary(reviewedBy)};
@@ -484,7 +488,8 @@ export class DailyRecordService {
     const prior=store.get('review',input.reviewDigest) as StoredReview|null;
     if(!prior)return hold('prior_review_record_required');
     if(prior.status!=='prepared'||!canonicalSame(prior.scope,scope)||prior.requestRef!==requestRef
-      ||prior.observationHandle!==input.observationHandle||!canonicalSame(prior.reviewPolicy,this.#policyPins()))return hold('prior_review_record_mismatch');
+      ||prior.observationHandle!==input.observationHandle||!canonicalSame(prior.reviewPolicy,this.#policyPins())
+      ||prior.inputDigest!==textDigest(canonicalJson({context,proposals:input.proposals,cismObservationHandle:input.cismObservationHandle??null})))return hold('prior_review_record_mismatch');
     const key=(p:{field:DailyRecordField;effectRecordKey:string;before:string;after:string})=>executionKey(requestRef,scope,p.field,p.effectRecordKey,p.before,p.after);
     const report=(p:StoredReview['patch'][number],extra:Record<string,unknown>={})=>({field:p.field,executionState:fieldExecutionState(store,key(p)),...extra});
     try{
@@ -575,7 +580,9 @@ export class DailyRecordService {
         // Only an observed new value settles at once. Showing the old (or another) value
         // settles only after the settle window, so a request still pending remotely after
         // its sender died cannot land after a new request was admitted.
-        const settled=this.now()-Date.parse(record.recordedAt)>=reconcileSettleMs;
+        // Measured from the latest known dispatch moment (the outcome record when one exists).
+        const outcomeAt=(store.get('outcome',key) as {recordedAt?:string}|null)?.recordedAt;
+        const settled=this.now()-Math.max(Date.parse(record.recordedAt),outcomeAt?Date.parse(outcomeAt):0)>=reconcileSettleMs;
         if(current.state==='known'&&textDigest(current.value)!==record.afterSha256&&!settled){unsettled=true;continue;}
         const classification=current.state!=='known'?null:textDigest(current.value)===record.afterSha256?'persisted':textDigest(current.value)===record.beforeSha256?'not_persisted':'conflict';
         if(!classification)continue;

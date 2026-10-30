@@ -55,6 +55,9 @@ test('duplicate saves report the recorded outcome and never dispatch twice',asyn
     const r=await reviewed(f.process().service,'codex',{progress:'- 지정 문제 풀이 진행.'});
     expect(await f.process().service.save(r.save('codex'))).toMatchObject({status:'saved',academyWrites:1});
     expect(await f.process().service.save(r.save('claude'))).toMatchObject({status:'saved',reasonCode:'duplicate_execution_already_settled',academyWrites:0});
+    // A resubmission with edited proposals is not the reviewed save and never reports success.
+    const edited={...r.save('claude'),proposals:proposals({progress:'- 바뀐 문안.'})};
+    expect(await f.process().service.save(edited)).toMatchObject({status:'held',reasonCode:'prior_review_record_mismatch',academyWrites:0});
     expect(f.writes()).toBe(1);
   }finally{f.cleanup();}
 },20000);
