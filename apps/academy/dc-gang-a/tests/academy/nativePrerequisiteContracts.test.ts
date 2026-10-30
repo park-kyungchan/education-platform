@@ -5,7 +5,7 @@ import {canonicalJson,digest,stableId} from '../../src/learning/model';
 import {validateAcademyRecord} from '../../src/academy/records';
 import {PostgresAcademyStore} from '../../src/academy/postgresStore';
 import type {SQL} from 'bun';
-import {NATIVE_STUDENT_KINDS,resolveActivityOccurrence,type ActivityScopeLink,type OwnerVersion,validateNativeStudentPayload,validateKnowledge,projectInterval,previousDay,scopeIdentity,validateContext,validateNativeRef,type NativeObjectRef,type ObjectRef,type EducationType,type EvidenceRef,type Knowledge,type RecordScope,type DailyProgressPayload,type DailyRecordDraftPayload,type PreviousHomeworkAssessmentPayload,type CommandContext,type ApprovalClosure,type ApprovalVersionPayload} from '../../src/academy/contracts/prerequisiteRecords';
+import {NATIVE_STUDENT_KINDS,resolveActivityOccurrence,validateOwnerPayload,type ActivityScopeLink,type OwnerVersion,validateNativeStudentPayload,validateKnowledge,projectInterval,previousDay,scopeIdentity,validateContext,validateNativeRef,type NativeObjectRef,type ObjectRef,type EducationType,type EvidenceRef,type Knowledge,type RecordScope,type DailyProgressPayload,type DailyRecordDraftPayload,type PreviousHomeworkAssessmentPayload,type CommandContext,type ApprovalClosure,type ApprovalVersionPayload} from '../../src/academy/contracts/prerequisiteRecords';
 export const instant='2026-10-24T00:00:00.000Z';
 export const hash='a'.repeat(64);
 export function nativeRef(key='synthetic-scope'):NativeObjectRef{return {tag:'object-record',basis:{namespace:'synthetic-native',scope:{ownerNamespace:'synthetic-owner',projectKey:'synthetic-project',scopeKey:'synthetic-scope'},contract:{state:'KNOWN',value:{namespace:'synthetic-native',contractId:'synthetic-contract',definitionVersion:'1.1.0',sha256:hash}},recordRevision:{state:'KNOWN',value:{scheme:'OWNER_REVISION',value:'synthetic-scope-r1'}},source:{ownerNamespace:'synthetic-owner',publicLocator:'synthetic-interface',revision:{state:'KNOWN',value:{scheme:'OWNER_REVISION',value:'synthetic-interface-r1'}},evidenceRefs:[]}},objectTypeId:'Scope',objectTypeVersion:'1.0.0',objectKey:key};}
@@ -107,4 +107,11 @@ test('activity occurrence is ATTACHED only for exactly one ACTIVE attachment tha
  // Same type, key and revision in another namespace or scope is a different activity: ignored, never ATTACHED/DETACHED.
  const foreign=(state:'ACTIVE'|'DETACHED',field:'namespace'|'scopeRef')=>{const v=link('r2','lesson-b',state);const id=v.payload.activityRef.identity;Object.assign(id,field==='namespace'?{namespace:'other-native'}:{scopeRef:nativeRef('other-scope')});return v;};
  for(const field of ['namespace','scopeRef'] as const)for(const state of ['ACTIVE','DETACHED'] as const)expect(resolveActivityOccurrence(activity,scope(),[foreign(state,field)]).state).toBe('EMBEDDED');
+});
+test('approval consumption: CONSUMED needs a draft revision string; every other state needs null',()=>{
+ const {consumedByDraftRevision:_,...missing}={...approval(),state:'CONSUMED' as const};
+ for(const bad of [missing,{...approval(),state:'CONSUMED' as const,consumedByDraftRevision:0},{...approval(),state:'CONSUMED' as const,consumedByDraftRevision:''},{...approval(),state:'CONSUMED' as const,consumedByDraftRevision:null},{...approval(),state:'ISSUED' as const,consumedByDraftRevision:'draft-r1'}])
+  expect(()=>validateOwnerPayload(bad as unknown as ApprovalVersionPayload)).toThrow();
+ expect(()=>validateOwnerPayload({...approval(),state:'CONSUMED',consumedByDraftRevision:'draft-r1'})).not.toThrow();
+ expect(()=>validateOwnerPayload({...approval(),state:'ISSUED',consumedByDraftRevision:null})).not.toThrow();
 });
