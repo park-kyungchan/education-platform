@@ -13,6 +13,9 @@ on:
     types: [opened, labeled, synchronize, reopened]
 permissions:
   contents: read
+  statuses: read
+  actions: read
+  pull-requests: read
 concurrency:
   group: independent-review-${{ github.event.pull_request.head.sha }}
   cancel-in-progress: false
@@ -63,6 +66,8 @@ jobs:
       - name: Build review input
         if: ${{ steps.claim.outputs.sample == 'true' }}
         run: bun trusted/scripts/independent-review.ts prepare subject review-input
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
       - name: Review
         id: review
         if: ${{ steps.claim.outputs.sample == 'true' }}

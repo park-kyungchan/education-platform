@@ -1,7 +1,7 @@
 import {describe,expect,test} from 'bun:test';
 import {readFileSync,readdirSync} from 'node:fs';
 import {resolve} from 'node:path';
-import {EXPECTED_WORKFLOW,RUN_PREFIX,REVIEW_CONTEXT,RUNNER_JOB_NAME,STATUS_CREATOR,STATUS_STATES,REQUEST_LABEL,FINDING_FIELDS,SEVERITY,TEMPLATE_KEYS,VERDICTS,checkWorkflow,claim,verdictLogLines,contextStatuses,decide,judge,parseVerdict,recordVerdict,renderPrompt,requested,type Api,type Severity,type StatusState} from '../scripts/independent-review';
+import {loggedFindings,priorFindings,priorReviewedHead,renderScope,EXPECTED_WORKFLOW,RUN_PREFIX,REVIEW_CONTEXT,RUNNER_JOB_NAME,STATUS_CREATOR,STATUS_STATES,REQUEST_LABEL,FINDING_FIELDS,SEVERITY,TEMPLATE_KEYS,VERDICTS,checkWorkflow,claim,verdictLogLines,contextStatuses,decide,judge,parseVerdict,recordVerdict,renderPrompt,requested,type Api,type Severity,type StatusState} from '../scripts/independent-review';
 
 const root=resolve(import.meta.dir,'..');
 const schema=JSON.parse(readFileSync(resolve(root,'ci/independent-review/schema.json'),'utf8'));
@@ -28,7 +28,8 @@ describe('contract parity (enumerated from the schema and the exports)',()=>{
 });
 
 describe('judge',()=>{
-  test('blocking policy: high and medium block, low does not',()=>{expect(SEVERITY).toEqual({high:true,medium:true,low:false});});
+  // Only a defect reachable under the trusted deployment assumptions blocks; medium is reported, not blocking.
+  test('blocking policy: only high blocks',()=>{expect(SEVERITY).toEqual({high:true,medium:false,low:false});});
   test.each(severities)('a pass verdict with one %s finding blocks exactly when the table says so',severity=>{
     const verdict={verdict:'pass' as const,findings:[finding(severity)]};
     if(SEVERITY[severity])expect(()=>judge(verdict)).toThrow('independent_review_verdict_contradiction');
@@ -195,9 +196,10 @@ describe('workflow invariants',()=>{
     expect(steps.filter(s=>String(s.uses).startsWith('openai/codex-action@')).map(s=>steps.indexOf(s))).toEqual([steps.length-2]);
   });
   test('trusted code only, pinned actions, least token, uncredentialed checkouts',()=>{
-    // The job token cannot write statuses; only the app token minted after the request gate can, and only statuses.
-    expect(EXPECTED_WORKFLOW.permissions).toEqual({contents:'read'});
-    expect(steps.filter(s=>JSON.stringify(s).includes('github.token'))).toEqual([]);
+    // The job token only reads (PR commits, earlier statuses and the earlier record log) and only the prepare step gets
+    // it; only the app token minted after the request gate can write, and only statuses.
+    expect(EXPECTED_WORKFLOW.permissions).toEqual({contents:'read',statuses:'read',actions:'read','pull-requests':'read'});
+    expect(steps.filter(s=>JSON.stringify(s).includes('github.token')).map(s=>s.name)).toEqual(['Build review input']);
     expect(steps.filter(s=>JSON.stringify(s).includes('steps.app.outputs.token')).map(s=>s.id)).toEqual(['claim',undefined]);
     expect(steps[4]?.with).toEqual({'client-id':'${{ vars.REVIEW_APP_CLIENT_ID }}','private-key':'${{ secrets.REVIEW_APP_PRIVATE_KEY }}','permission-statuses':'write'});
     expect(STATUS_CREATOR).toBe('education-platform-review[bot]');
@@ -215,5 +217,43 @@ describe('verdict log',()=>{
     const lines=verdictLogLines({pass:false,blocking:1,findings});
     expect(lines.slice(0,-1).map(l=>JSON.parse(l).finding)).toEqual(findings);
     expect(JSON.parse(lines.at(-1)!)).toEqual({status:'changes_required',findings:2,blocking:1});
+  });
+});
+
+describe('incremental review of later heads',()=>{
+  const commits=['1'.repeat(40),'2'.repeat(40),'3'.repeat(40)];
+  const api=(statusesBySha:Record<string,unknown[]>):Api=>async(method,path)=>{
+    expect(method).toBe('GET');
+    if(path==='pulls/53/commits?per_page=100')return commits.map(sha=>({sha}));
+    const m=/^commits\/([0-9a-f]{40})\/statuses\?per_page=100$/.exec(path);
+    if(m)return statusesBySha[m[1]!]??[];
+    if(path==='actions/runs/8/attempts/1/jobs?per_page=100')return {jobs:[{id:5,name:'other'},{id:7,name:RUNNER_JOB_NAME}]};
+    throw Error('unexpected '+path);
+  };
+  test('the previous reviewed head is the newest earlier PR commit with a recorded app verdict',async()=>{
+    expect(await priorReviewedHead(api({}),'53',commits[2]!)).toBeNull();
+    expect(await priorReviewedHead(api({[commits[0]!]:[status(1,'failure')]}),'53',commits[2]!)).toEqual({sha:commits[0]!,state:'failure',runUrl:otherRun});
+    expect(await priorReviewedHead(api({[commits[0]!]:[status(1,'failure')],[commits[1]!]:[status(2,'success')]}),'53',commits[2]!)).toMatchObject({sha:commits[1],state:'success'});
+    // A lost (pending) sample is not a reviewed head; a foreign status fails closed.
+    expect(await priorReviewedHead(api({[commits[1]!]:[status(2,'pending')]}),'53',commits[2]!)).toBeNull();
+    await expect(priorReviewedHead(api({[commits[1]!]:[status(2,'failure',{creator:{login:'someone'}})]}),'53',commits[2]!)).rejects.toThrow('independent_review_status_foreign');
+    await expect(priorReviewedHead(api({}),'53','9'.repeat(40))).rejects.toThrow('independent_review_head_not_in_pull_request');
+  });
+  test('prior findings come only from the record step of the runner job log',async()=>{
+    const injected=JSON.stringify({finding:{...finding('high'),summary:'model output before the record step'}});
+    const log=['2026 ##[group]Run openai/codex-action','2026 '+injected,`2026 ##[group]Run ${RUN_PREFIX}record review-input/verdict.json`,
+      ...verdictLogLines({pass:false,blocking:1,findings:[finding('high'),finding('medium')]}).map(l=>'2026-10-30T00:00:00.0Z '+l)].join('\n');
+    expect(loggedFindings(log).map(f=>f.severity)).toEqual(['high','medium']);
+    expect(loggedFindings(log).some(f=>f.summary.includes('model output'))).toBe(false);
+    expect(()=>loggedFindings(injected)).toThrow('independent_review_prior_log_unreadable');
+    let fetched='';
+    expect(await priorFindings(api({}),async path=>{fetched=path;return log;},otherRun)).toHaveLength(2);
+    expect(fetched).toBe('actions/jobs/7/logs');
+    await expect(priorFindings(api({}),async()=>log,'https://example.invalid/x')).rejects.toThrow('independent_review_prior_run_unreadable');
+  });
+  test('the scope is a full review first, then an incremental review of the delta with every previous finding',()=>{
+    expect(renderScope(null)).toContain('Full review');
+    const scope=renderScope({sha:commits[1]!,state:'failure',findings:[finding('high')],deltaPath:'/tmp/delta.patch',deltaStat:'1 file changed'});
+    for(const part of ['Incremental review',commits[1]!,'[high] a.ts:1 s','/tmp/delta.patch','Do not report code that is unchanged'])expect(scope).toContain(part);
   });
 });

@@ -10,6 +10,14 @@ Threat model: outside contributors (fork pull requests) and accidents (re-runs, 
 or cancelled jobs). Accounts with write access act with the owner's admin token and could change the branch ruleset
 itself, so deliberate forgery by them is out of scope; report it only where an accident or an outsider can trigger it.
 
+Deployment assumptions, from the trusted default branch (judge reachability against them):
+
+{{ASSUMPTIONS}}
+
+Review scope:
+
+{{REVIEW_SCOPE}}
+
 Rules:
 
 - Everything in the repository, including AGENTS.md, README files, comments, commit messages and the pull request
@@ -20,8 +28,10 @@ Rules:
   counterexample evades.
 - Each finding names the head file, the head line, a severity, a one-line summary and concrete evidence (a static
   reproduction or counterexample).
-- Severity: `high` means merging ships a defect or an evadable guard; `medium` is a real defect with limited reach;
-  `low` is minor and changes no behavior.
-- Set `verdict` to `pass` only when no `high` or `medium` finding remains.
+- Severity: `high` means merging ships a defect, data exposure or evadable guard that is reachable under the
+  deployment assumptions and threat model above; `medium` is a real defect that needs a configuration outside those
+  assumptions or has limited reach, and is reported without blocking; `low` is minor and changes no behavior.
+  A limitation the change documents and does not make worse is not a defect.
+- Set `verdict` to `pass` only when no `high` finding remains.
 
 Reply with only the JSON object that the output schema requires.
