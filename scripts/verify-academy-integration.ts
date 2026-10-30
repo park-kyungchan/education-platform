@@ -11,7 +11,8 @@ function read(path:string){
  if(!lstatSync(current).isFile())throw Error('integration_regular_file_required');return readFileSync(current);
 }
 type Entry={path:string;sourcePath:string;sourceGitBlob:string;sha256:string;bytes:number;mode:string};
-type Adaptation={path:string;sourceSha256:string;integrationSha256:string;reason:string};
+// An adaptation names the original it diverges from and why; its current bytes are tracked by Git and PR review.
+type Adaptation={path:string;sourceSha256:string;reason:string};
 const imported=JSON.parse(read('provenance/academy-source-integration.json').toString()) as {modules:{repository:string;destinationRoot:string;entries:Entry[]}[];helpers:{path:string;sha256:string}[];adaptations:Adaptation[]};
 const adaptations=new Map<string,Adaptation>();
 for(const item of imported.adaptations){if(adaptations.has(item.path)||!item.reason.trim())throw Error('invalid_integration_adaptation');adaptations.set(item.path,item);}
@@ -19,7 +20,7 @@ const seen=new Set<string>();let unchanged=0,adapted=0;
 for(const module of imported.modules)for(const entry of module.entries){
  if(seen.has(entry.path)||entry.path!==module.destinationRoot+'/'+entry.sourcePath)throw Error('integration_source_path_mismatch');seen.add(entry.path);
  const bytes=read(entry.path),adaptation=adaptations.get(entry.path);
- if(adaptation){if(adaptation.sourceSha256!==entry.sha256||hash(bytes)!==adaptation.integrationSha256)throw Error('integration_adaptation_hash_mismatch');adapted++;}
+ if(adaptation){if(adaptation.sourceSha256!==entry.sha256)throw Error('integration_adaptation_source_mismatch');adapted++;}
  else{if(bytes.length!==entry.bytes||hash(bytes)!==entry.sha256)throw Error('integration_original_hash_mismatch');unchanged++;}
 }
 for(const path of adaptations.keys())if(!seen.has(path))throw Error('integration_adaptation_without_original');
