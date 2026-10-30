@@ -66,7 +66,44 @@ export function createDailyRecordLearningReviewer(input:unknown){
       if(g){for(const s of sections)if(!g.sections.some(x=>x.sectionRef===s.sectionRef))g.sections.push(s);}
       else groups.set(key,{book:b,unit:u,entry:e,sections});
     }
-    return [...groups.values()].map(({book,unit,entry,sections})=>'- '+[entry.deadline?`${entry.deadline}까지`:null,book.label,unit.kind==='chapter_assessment'?`${unit.code}단원`:unit.code,unit.title,sections.map(s=>s.label).join('·'),entry.activity].filter(Boolean).join(' ')).join('\n');
+    // Keep the exact structured bindings above; only the parent-facing display
+    // is grouped. Whole minor units can share a line when the activity and
+    // deadline are identical. Section-scoped and chapter entries remain local.
+    type DisplayGroup={book:LearningBook;units:LearningUnit[];entry:LearningEntry;sections:LearningSection[]};
+    const display:DisplayGroup[]=[];
+    for(const g of groups.values()){
+      const match=g.entry.scope==='unit'&&g.unit.kind==='minor'
+        ?display.find(d=>d.book.bookRef===g.book.bookRef&&d.entry.scope==='unit'&&d.units.every(u=>u.kind==='minor')&&d.entry.activity===g.entry.activity&&d.entry.deadline===g.entry.deadline)
+        :undefined;
+      if(match)match.units.push(g.unit);
+      else display.push({book:g.book,units:[g.unit],entry:g.entry,sections:g.sections});
+    }
+    const shortActivity=(d:DisplayGroup)=>{
+      const shortened=d.entry.activity.replace(/원본\s*(?=오답\s*클리닉)/g,'');
+      // Do not collapse two distinct activity names into the same wording.
+      return display.some(other=>other!==d&&other.book.bookRef===d.book.bookRef&&other.entry.activity!==d.entry.activity&&other.entry.activity.replace(/원본\s*(?=오답\s*클리닉)/g,'')===shortened)
+        ?d.entry.activity:shortened;
+    };
+    const detail=(d:DisplayGroup)=>{
+      const unit=d.units[0]!;
+      const unitText=d.units.length>1?d.units.map(u=>u.code).join('·'):[unit.kind==='chapter_assessment'?`${unit.code}단원`:unit.code,unit.title].join(' ');
+      return [unitText,d.sections.map(s=>s.label).join('·'),shortActivity(d)].filter(Boolean).join(' ');
+    };
+    if(display.length===1)return '- '+[display[0]!.entry.deadline?`${display[0]!.entry.deadline}까지`:null,display[0]!.book.label,detail(display[0]!)].filter(Boolean).join(' ');
+    // Undated entries precede dated groups so no date can implicitly attach to
+    // an entry whose deadline has not been supplied. Each known date is shown once.
+    const dates=[...new Set(display.map(d=>d.entry.deadline))];
+    const orderedDates=[...(dates.includes(null)?[null]:[]),...dates.filter((date):date is string=>date!==null)];
+    const lines:string[]=[];
+    for(const date of orderedDates){
+      if(date)lines.push(`- ${date}까지`);
+      let currentBook:string|null=null;
+      for(const d of display.filter(g=>g.entry.deadline===date)){
+        if(currentBook!==d.book.bookRef){lines.push('- '+d.book.label);currentBook=d.book.bookRef;}
+        lines.push('- '+detail(d));
+      }
+    }
+    return lines.join('\n');
   }
   return {schemaVersion:'academy.dailyrecord-learning-review/1' as const,render,
     review(studentRef:string,value:string,entries:unknown){try{const expected=render(studentRef,entries);return {blockers:expected===value?[]:['learning_render_mismatch'],expected,coverage:'observed_only' as const};}catch(error){return {blockers:[error instanceof Error?error.message:'learning_mapping_unqualified'],expected:null,coverage:'observed_only' as const};}}
