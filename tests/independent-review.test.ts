@@ -1,7 +1,7 @@
 import {describe,expect,test} from 'bun:test';
 import {readFileSync,readdirSync} from 'node:fs';
 import {resolve} from 'node:path';
-import {EXPECTED_WORKFLOW,RUN_PREFIX,REVIEW_CONTEXT,RUNNER_JOB_NAME,STATUS_CREATOR,STATUS_STATES,REQUEST_LABEL,FINDING_FIELDS,SEVERITY,TEMPLATE_KEYS,VERDICTS,checkWorkflow,claim,contextStatuses,decide,judge,parseVerdict,recordVerdict,renderPrompt,requested,type Api,type Severity,type StatusState} from '../scripts/independent-review';
+import {EXPECTED_WORKFLOW,RUN_PREFIX,REVIEW_CONTEXT,RUNNER_JOB_NAME,STATUS_CREATOR,STATUS_STATES,REQUEST_LABEL,FINDING_FIELDS,SEVERITY,TEMPLATE_KEYS,VERDICTS,checkWorkflow,claim,verdictLogLines,contextStatuses,decide,judge,parseVerdict,recordVerdict,renderPrompt,requested,type Api,type Severity,type StatusState} from '../scripts/independent-review';
 
 const root=resolve(import.meta.dir,'..');
 const schema=JSON.parse(readFileSync(resolve(root,'ci/independent-review/schema.json'),'utf8'));
@@ -206,5 +206,14 @@ describe('workflow invariants',()=>{
     const checkouts=steps.filter(s=>String(s.uses).startsWith('actions/checkout@'));
     expect(checkouts.map(s=>[s.with.path,s.with.ref,s.with['persist-credentials']])).toEqual([
       ['trusted','${{ github.sha }}',false],['subject','${{ github.event.pull_request.head.sha }}',false]]);
+  });
+});
+
+describe('verdict log',()=>{
+  test('every finding is logged in full before the totals',()=>{
+    const findings=[finding('high'),finding('low')];
+    const lines=verdictLogLines({pass:false,blocking:1,findings});
+    expect(lines.slice(0,-1).map(l=>JSON.parse(l).finding)).toEqual(findings);
+    expect(JSON.parse(lines.at(-1)!)).toEqual({status:'changes_required',findings:2,blocking:1});
   });
 });
