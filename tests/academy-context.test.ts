@@ -1,6 +1,7 @@
 import {expect,test} from 'bun:test';
 import {privatePackageRoutes,runIntegratedAcademyContext} from '../src/academy-context';
 import {resolve} from 'node:path';
+import {existsSync} from 'node:fs';
 
 const packageRoute=(packageId:string)=>({packageId,sourceCommit:'a'.repeat(40),proposedDestinationRoot:'context/private-students/'+packageId,fileCount:1,bytes:10,manifestSha256:'b'.repeat(64)});
 const manifest={schema:'education.private-context-integration/v1' as const,targetRepository:'park-kyungchan/education-platform',visibilityRequired:'private',packages:[packageRoute('2099-01-05'),packageRoute('2099-01-05-part2')]};
@@ -27,6 +28,8 @@ test('discovery refuses unqualified destinations and path escapes without openin
 test('integrated entry is small and points to retained originals without loading real records',async()=>{
  const entry=await runIntegratedAcademyContext(['entry']);expect(entry).toMatchObject({sourceBodiesLoaded:false,nativePermissionGranted:false,repository:'park-kyungchan/education-platform'});
  expect(entry).toMatchObject({classTimetable:'modules/academy-workbench/context/class-timetable/README.ko.md'});
+ expect(entry).toMatchObject({operationalContextIntakeContract:'apps/academy/dc-gang-a/docs/operational-context-intake-contract.md'});
+ expect(existsSync(resolve(import.meta.dir,'../apps/academy/dc-gang-a/docs/operational-context-intake-contract.md'))).toBe(true);
  expect(Buffer.byteLength(JSON.stringify(entry))).toBeLessThan(8192);
  await expect(runIntegratedAcademyContext(['entry','--student','arbitrary'])).rejects.toThrow('usage');
 });

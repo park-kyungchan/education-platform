@@ -53,6 +53,7 @@ export async function runIntegratedAcademyContext(args:readonly string[]){
    hierarchy:['work-purpose','business-date','class-or-cohort','student','book-edition','unit','activity','occurrence-or-attempt','stage-and-attributable-observation-or-decision'],
    relationBoundaries:'Containment, prerequisite, provenance, scoped correction and recurring workflow are distinct. Missing evidence is unknown; latest timestamp alone never overwrites a different occurrence.',
    policy:'apps/academy/dc-gang-a/docs/academy-operational-contract.json',
+   operationalContextIntakeContract:'apps/academy/dc-gang-a/docs/operational-context-intake-contract.md',
    dailyRecordPolicy:'apps/academy/dc-gang-a/docs/daily-record-authoring-policy.md',
    workflowSelection:'context:academy reading-plan --topic <workflow>; context:academy select --topic <workflow> --max-bytes <budget>',
    resolveSelectedSource:'context:academy resolve --source <source-id>; returns the integrated path and current hash without source text',
