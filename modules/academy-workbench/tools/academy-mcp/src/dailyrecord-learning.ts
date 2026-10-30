@@ -23,15 +23,27 @@ export async function dailyRecordLearningConfiguration(args:readonly string[]){
     if(typeof owner.createDailyRecordLearningReviewer!=='function')throw Error('canonical_learning_owner_required');
     const reviewer=owner.createDailyRecordLearningReviewer(JSON.parse(catalog.bytes.toString('utf8')));
     if(reviewer.schemaVersion!=='academy.dailyrecord-learning-review/1'||typeof reviewer.review!=='function')throw Error('canonical_learning_contract_required');
+    const retained=(scope:Readonly<{sourceNamespace:string;teacherId:string;studentId:string}>)=>
+      config.students.find(s=>s.sourceNamespace===scope.sourceNamespace&&s.teacherId===scope.teacherId&&s.studentId===scope.studentId);
     learningPolicy={bundleSha256,configSha256,catalogSha256:config.catalogSha256,
       review(scope,value,entries){
-        const student=config.students.find(s=>s.sourceNamespace===scope.sourceNamespace&&s.teacherId===scope.teacherId&&s.studentId===scope.studentId);
+        const student=retained(scope);
         if(!student)return ['student_namespace_bridge_unverified_ask_teacher'];
         try{
           const result=reviewer.review(student.retainedStudentRef,value,entries);
           if(!Array.isArray(result.blockers)||result.blockers.some((b:unknown)=>typeof b!=='string'||!/^[a-z][a-z0-9_]{0,100}$/.test(b)))return ['canonical_learning_result_unqualified'];
           return result.blockers as string[];
         }catch{return ['canonical_learning_review_unavailable'];}
+      },
+      suggest(scope,value,entries){
+        const student=retained(scope);if(!student)return null;
+        try{
+          const result=reviewer.review(student.retainedStudentRef,value,entries);
+          if(!Array.isArray(result.blockers)||result.blockers.length!==1||result.blockers[0]!=='learning_render_mismatch'
+            ||typeof result.expected!=='string'||!result.expected.length||result.expected.length>8192
+            ||/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/.test(result.expected))return null;
+          return result.expected;
+        }catch{return null;}
       }};
     i+=4;
   }
