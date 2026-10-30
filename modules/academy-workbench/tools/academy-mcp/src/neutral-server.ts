@@ -67,7 +67,7 @@ if(process.argv.includes('--discover')){
  // This composition is available only when both independently admitted native
  // reads exist. It does not turn a saved snapshot into a live source.
  if(registry.some(r=>r.tool.name==='academy_student_metadata_get'&&r.endpoint==='dailyrecord')
-   &&registry.some(r=>r.tool.name==='academy_paper_headers'&&r.endpoint!=='saved')){
+   &&registry.some(r=>r.upstreamName==='academy_paper_headers'&&['paper1','paper2'].includes(r.endpoint))){
   registry.push({endpoint:'dailyrecord',upstreamName:'academy_dailytest_history_with_headers',tool:{name:'academy_dailytest_history_with_headers',
     description:dailyTestHeaderRouteDescription,inputSchema:z.toJSONSchema(dailyTestHeaderRouteSchema,{io:'input'}),
     annotations:{...readOnlyAnnotations,openWorldHint:true,idempotentHint:false}}});
@@ -116,7 +116,8 @@ async function call(req:any){
   const entry=selectPaperRoute('paperScopes' in active?active.paperScopes:undefined,active.registry,registered,args);
   const result:any=entry.upstreamName==='academy_dailytest_history_with_headers'?await (async()=>{
    const metadataEntry=active.registry.find((r:any)=>r.tool.name==='academy_student_metadata_get'&&r.endpoint==='dailyrecord');
-   const paperEntry=active.registry.find((r:any)=>r.tool.name==='academy_paper_headers'&&r.endpoint!=='saved');
+   const paperEntry=active.registry.find((r:any)=>r.upstreamName==='academy_paper_headers'&&r.endpoint==='paper1')
+    ??active.registry.find((r:any)=>r.upstreamName==='academy_paper_headers'&&r.endpoint==='paper2');
    if(!metadataEntry||!paperEntry)throw Error('dailytest_header_upstream_not_configured');
    const invoke=async(target:any,input:unknown,source:'metadata'|'paper')=>upstream(target.endpoint,async client=>{
     const expectedIdentity=active.endpointIdentities[target.endpoint];

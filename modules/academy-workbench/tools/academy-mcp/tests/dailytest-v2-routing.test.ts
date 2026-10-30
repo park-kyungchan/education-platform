@@ -17,7 +17,7 @@ test('V2 composite routes after student resolution to either pinned paper admiss
   }
   let endpointPin=await f.pin('endpoints-two-papers.json',endpoints);
   const registry=JSON.parse(await readFile(f.release.registry.path,'utf8'));
-  registry.push(...['paper1','paper2'].map((endpoint,i)=>({endpoint,upstreamName:'academy_paper_headers',tool:{name:i?'class2_academy_paper_headers':'academy_paper_headers',inputSchema:{type:'object'}}})));
+  registry.push(...['paper2','paper1'].map(endpoint=>({endpoint,upstreamName:'academy_paper_headers',tool:{name:endpoint==='paper2'?'class2_academy_paper_headers':'academy_paper_headers',inputSchema:{type:'object'}}})));
   registry.push({endpoint:'dailyrecord',upstreamName:'academy_dailytest_history_with_headers',tool:{name:'academy_dailytest_history_with_headers',inputSchema:{type:'object'}}});
   const registryPin=await f.pin('registry-two-papers.json',registry),originalRouting=JSON.parse(await readFile(f.release.routing.path,'utf8'));
   let n=0;const publish=async(scopes:any)=>{const routing=await f.pin(`scoped-routing-${++n}.json`,{...originalRouting,paperScopes:scopes});const pointer=await f.pin(`scoped-release-${n}.json`,{...f.release,generation:`scope-${n}`,routing,endpoints:endpointPin,registry:registryPin,endpointIdentities:{dailyrecord:f.manifest,...manifests}});await rename(pointer.path,resolve(f.base,'release.json'));};
@@ -65,5 +65,35 @@ test('V2 composite routes after student resolution to either pinned paper admiss
   const after=await readFile(f.events,'utf8');expect(after.slice(before.length)).not.toContain('"op":"auth"');
   expect((await readFile(paperEvents,'utf8')).trim().split('\n')).toEqual(['paper1','paper2','paper2','paper2','paper2','paper2']);
 
+ }finally{await f.client.close();await f.transport.close();}
+},60000);
+
+test('paper2-only V2 discovery and composite dispatch honor scope and never fall back',async()=>{
+ const f=await createPackagedFixture();
+ try{
+  const built=await Bun.build({entrypoints:[resolve(import.meta.dir,'dailytest-v2-paper-fixture.ts')],target:'node',outdir:f.base,naming:'paper-only.mjs'});expect(built.success).toBe(true);
+  const path=resolve(f.base,'paper-only.mjs'),artifact={path,sha256:hash(await readFile(path))},events=resolve(f.base,'paper-only-events'),args=['paper2',events,'ok'];
+  const manifest=await f.pin('paper-only-manifest.json',{schemaVersion:'academy.endpoint-identity/1',endpoint:'paper2',semanticContractVersion:'fictional-paper/1',launchArgumentsSha256:hash(JSON.stringify(args)),artifacts:[{...artifact,role:'entry'}]});
+  const endpoints=JSON.parse(await readFile(f.release.endpoints.path,'utf8'));endpoints.paper2={command:process.execPath,args:['--no-env-file',path,'--runtime-identity',manifest.path,manifest.sha256,...args]};
+  const endpointPin=await f.pin('paper-only-endpoints.json',endpoints);
+  const {mkdtemp,writeFile}=await import('node:fs/promises'),{tmpdir}=await import('node:os');
+  const discoveryBase=await mkdtemp(resolve(tmpdir(),'academy-paper2-discovery-'));
+  await writeFile(resolve(discoveryBase,'routing.json'),await readFile(f.release.routing.path));await writeFile(resolve(discoveryBase,'endpoints.json'),JSON.stringify(endpoints));
+  const discovery=Bun.spawn([process.execPath,'--no-env-file',f.bridge.path,'--discover'],{env:{...f.env,ACADEMY_MCP_INSTALL_DIR:discoveryBase},stdout:'pipe',stderr:'pipe'});
+  expect(await discovery.exited).toBe(0);
+  const entries=JSON.parse(await readFile(resolve(discoveryBase,'registry.json'),'utf8'));
+  expect(entries.filter((r:any)=>r.upstreamName==='academy_paper_headers').map((r:any)=>[r.endpoint,r.tool.name])).toEqual([['paper2','class2_academy_paper_headers']]);
+  expect(entries.filter((r:any)=>r.tool.name==='academy_dailytest_history_with_headers')).toHaveLength(1);
+  const registry=await f.pin('paper-only-registry.json',entries),routingBase=JSON.parse(await readFile(f.release.routing.path,'utf8'));
+  let n=0;const publish=async(paperScopes:any)=>{const routing=await f.pin(`paper-only-routing-${++n}.json`,{...routingBase,paperScopes});const release=await f.pin(`paper-only-release-${n}.json`,{...f.release,generation:`paper-only-${n}`,routing,endpoints:endpointPin,registry,endpointIdentities:{dailyrecord:f.manifest,paper2:manifest}});await rename(release.path,resolve(f.base,'release.json'));};
+  const call=()=>f.client.callTool({name:'academy_dailytest_history_with_headers',arguments:{displayName:'Fictional Two',lessonDate:'2026-10-21',purpose:'Fictional request',currentRequestRef:'fictional-ref',periods:['11']}});
+  await publish([{endpoint:'paper2',studentIds:['77002']}]);
+  expect((await f.client.listTools()).tools.map(t=>t.name)).toContain('academy_dailytest_history_with_headers');
+  expect((await call()).structuredContent).toMatchObject({status:'observed',headersRead:1});
+  expect((await readFile(events,'utf8')).trim().split('\n')).toEqual(['paper2']);
+  const alias=await f.client.callTool({name:'class2_academy_paper_headers',arguments:{studentId:'77001',paperCodes:['#ABC']}});expect(alias.isError).toBe(true);
+  await publish([{endpoint:'paper2',studentIds:['77001']}]);expect((await call()).isError).toBe(true);
+  await publish([{endpoint:'paper1',studentIds:['77002']}]);expect((await call()).isError).toBe(true);
+  expect((await readFile(events,'utf8')).trim().split('\n')).toEqual(['paper2']);
  }finally{await f.client.close();await f.transport.close();}
 },60000);
