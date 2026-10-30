@@ -74,12 +74,12 @@ test('native backend refuses drifted before-state before any write and reports c
   const backend=new NativeDailyRecordBackend(port as never,nativeAdmission,()=>({username:'fictional',password:'fictional'}),null,new Set(['Invented Student']),null,approval as never);
   expect(backend.saveConfigured()).toBe(true);
   const drifted=await backend.saveDailyRecord(nativeScope,[{field:'progress',value:'- 새 문안',before:'다른 기존 문안',wireDigest:'a'.repeat(64)}]);
-  expect(drifted).toEqual([{field:'progress',status:'before_drift',dispatched:false}]);expect(writes).toBe(0);
+  expect(drifted).toEqual([{field:'progress',status:'before_drift',dispatched:false,transport:'not_invoked'}]);expect(writes).toBe(0);
   const saved=await backend.saveDailyRecord(nativeScope,[{field:'progress',value:'- 새 문안',before:'Current progress',wireDigest:'a'.repeat(64)}]);
-  expect(saved).toEqual([{field:'progress',status:'persisted',dispatched:true}]);expect(writes).toBe(1);
+  expect(saved).toEqual([{field:'progress',status:'persisted',dispatched:true,transport:'returned'}]);expect(writes).toBe(1);
   mode='throw';
   const uncertain=await backend.saveDailyRecord(nativeScope,[{field:'progress',value:'- 새 문안',before:'Current progress',wireDigest:'a'.repeat(64)}]);
-  expect(uncertain).toEqual([{field:'progress',status:'unresolved',dispatched:true}]);
+  expect(uncertain).toEqual([{field:'progress',status:'unresolved',dispatched:true,transport:'uncertain'}]);
 });
 
 test('admission returns the owner-compatible canonical full-action digest',async()=>{
