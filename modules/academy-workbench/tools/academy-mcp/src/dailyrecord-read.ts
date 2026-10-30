@@ -43,6 +43,7 @@ const intakeReadSchema=z.object({
     ]),
   })).length(6),
   interviews:z.array(z.object({field:z.enum(dailyRecordFields),reasonCode:dailyRecordIdSchema})),
+  observationHandle:dailyRecordIdSchema.nullable().optional(),observationPersistence:z.enum(['owner_durable','process_local']).optional(),
 }).refine(v=>new Set(v.fields.map(f=>f.field)).size===dailyRecordFields.length,'unique_intake_fields_required');
 
 /** Compose existing read contracts, without accepting identity/admission/proposals from the caller. */
@@ -75,6 +76,10 @@ export async function readDailyRecordByName(value:unknown,port:DailyRecordReadRo
     return {...base,status:'observed' as const,sourceAvailability:'observed' as const,scope:context.scope,
       route:['academy_student_resolve','academy_dailyrecord_intake'],fields:intake.fields,source:intake.source,
       preparation:{status:intake.status,interviews:intake.interviews,requiredOnlyForAuthoring:true},
-      transmissionState:intake.source.transmissionState};
+      transmissionState:intake.source.transmissionState,
+      // An owner-durable handle lets any later process review and save this exact
+      // scope and request; a process-local handle would not outlive this call.
+      authoringHandle:intake.observationPersistence==='owner_durable'&&intake.observationHandle
+        ?{observationHandle:intake.observationHandle,persistence:'owner_durable' as const,boundTo:{scope:context.scope,currentRequestRef:context.currentRequestRef}}:null};
   }catch{return held('dailyrecord_source_unqualified_no_automatic_retry');}
 }

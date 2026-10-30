@@ -179,7 +179,8 @@ export const workflowRequestKey=(scope:DailyRecordScope,requestRef:string)=>cano
 export const workflowLockKey=(scope:DailyRecordScope)=>canonicalJson({sourceNamespace:scope.sourceNamespace,teacherId:scope.teacherId,studentId:scope.studentId});
 /** One dispatch per exact request/field transition. */
 export const executionKey=(requestRef:string,scope:DailyRecordScope,field:DailyRecordField,effectRecordKey:string,before:string,after:string)=>
-  canonicalJson({requestRef,scope,field,effectRecordKey,beforeSha256:sha256(before),afterSha256:sha256(after)});
+  // Bound to the student and physical record, not the lesson date it was reached through.
+  canonicalJson({requestRef,student:workflowLockKey(scope),field,effectRecordKey,beforeSha256:sha256(before),afterSha256:sha256(after)});
 /** Every execution for one student, across dates and requests; filtered by physical record field. */
 export const ledgerGroup=(scope:DailyRecordScope)=>workflowLockKey(scope);
 export type FieldExecutionState='available'|'dispatch_outcome_unknown'|'reconciliation_required'|'settled_persisted'|'settled_noop'|'settled_not_persisted'

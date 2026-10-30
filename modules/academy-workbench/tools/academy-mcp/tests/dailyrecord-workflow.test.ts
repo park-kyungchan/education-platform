@@ -338,6 +338,11 @@ test('a managed source-verified student outside the launch list is resolved, rev
     const service=()=>{const backend=new NativeDailyRecordBackend(port() as never,admission,()=>({username:'fictional',password:'fictional'}),owner,managed);
       return new DailyRecordService(backend,safeguard,Date.now,learningPolicy,backend,createDailyRecordWorkflow({storeDir:store}));};
     const c={...workflowContext({progress:'- 지정 문제 풀이 진행.'}),scope};
+    // The composed name route returns an owner-durable authoring handle that a fresh process can review and save.
+    const got:any=await service().get({displayName:'Second Student',lessonDate:'2040-01-04',purpose:'Synthetic save',currentRequestRef:c.currentRequestRef});
+    expect(got).toMatchObject({status:'observed',authoringHandle:{persistence:'owner_durable',boundTo:{scope,currentRequestRef:c.currentRequestRef}}});
+    const viaGet:any=await service().review({context:c,observationHandle:got.authoringHandle.observationHandle,proposals:proposals({progress:'- 지정 문제 풀이 진행.'})});
+    expect(viaGet.status).toBe('prepared');
     const first=service();
     expect(await first.resolveStudent({purpose:'Synthetic save',currentRequestRef:c.currentRequestRef,displayName:'Second Student',lessonDate:'2040-01-04'})).toMatchObject({status:'resolved'});
     const intake:any=await first.intake({context:c});
@@ -393,4 +398,11 @@ test('execution keys distinguish physical records, and a changed previous-record
     const key=executionKey('synthetic-current-user-request',scope,'previousHomeworkAssessment','old-previous-record','4','5');
     expect(fieldExecutionState(workflow.store,key)).toBe('dispatch_outcome_unknown');
   }finally{rmSync(base,{recursive:true,force:true});}
+});
+
+test('the same physical transition reached through another lesson date is not a fresh execution',async()=>{
+  const {executionKey}=await import('../src/dailyrecord-workflow.ts');
+  expect(executionKey('r1',{...nativeScope,lessonDate:'2040-01-04'},'previousHomeworkAssessment','12','3','4'))
+    .toBe(executionKey('r1',{...nativeScope,lessonDate:'2040-01-05'},'previousHomeworkAssessment','12','3','4'));
+  expect(executionKey('r1',nativeScope,'previousHomeworkAssessment','12','3','4')).not.toBe(executionKey('r2',nativeScope,'previousHomeworkAssessment','12','3','4'));
 });

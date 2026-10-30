@@ -180,7 +180,7 @@ async function call(req:any){
    }
    if(entry.upstreamName==='academy_dailyrecord_get'){
     const invoke=async(name:string,input:unknown)=>{
-     const response=await client.callTool({name,arguments:input as Record<string,unknown>});
+     const response=await client.callTool({name,arguments:withAttribution(name,input as Record<string,unknown>)});
      if(response.isError||!response.structuredContent)throw Error('dailyrecord_route_upstream_failed_no_retry');
      const data=response.structuredContent as Record<string,unknown>;
      steps.push({tool:name,status:data.status??null,sourceAvailability:data.sourceAvailability??null});
