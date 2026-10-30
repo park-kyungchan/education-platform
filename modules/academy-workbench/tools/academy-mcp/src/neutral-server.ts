@@ -1,5 +1,5 @@
 import {installStdioDiagnostics,createAcademyStdioTransport} from './stdio-diagnostics.ts';
-import {publicReadFailure} from './read-failure.ts';
+import {publicReadFailure,type ReadFailureCategory} from './read-failure.ts';
 import {academyRoutingDescription} from './routing-context.ts';
 // Source-owned version of the installed neutral bridge. Failures close per
 // request; pinned launch admission supplies DailyRecord routing scope.
@@ -14,6 +14,7 @@ import {ownerAdmissionSchema} from './owner-admission.ts';
 import {readPinnedLocalBytes} from './item-label-store.ts';
 import {readOnlyAnnotations} from './contracts.ts';
 import {dailyRecordScopeSchema,type DailyRecordScope} from './dailyrecord-context.ts';
+import {dailyTestHeaderRouteSchema,dailyTestHeaderRouteDescription,readDailyTestHeaders} from './dailytest-header-route.ts';
 import {loadRuntimeRelease} from './runtime-release.ts';
 import {selectPaperRoute} from './paper-scope-routing.ts';
 const processStartedAt=new Date().toISOString();
@@ -63,6 +64,14 @@ if(process.argv.includes('--discover')){
  for(const entry of registry)if(entry.endpoint==='saved'&&nativeNames.has(entry.tool.name)){
   entry.tool={...entry.tool,name:'saved_'+entry.tool.name,description:'Saved-source alias. '+entry.tool.description};
  }
+ // This composition is available only when both independently admitted native
+ // reads exist. It does not turn a saved snapshot into a live source.
+ if(registry.some(r=>r.tool.name==='academy_student_metadata_get'&&r.endpoint==='dailyrecord')
+   &&registry.some(r=>r.upstreamName==='academy_paper_headers'&&['paper1','paper2'].includes(r.endpoint))){
+  registry.push({endpoint:'dailyrecord',upstreamName:'academy_dailytest_history_with_headers',tool:{name:'academy_dailytest_history_with_headers',
+    description:dailyTestHeaderRouteDescription,inputSchema:z.toJSONSchema(dailyTestHeaderRouteSchema,{io:'input'}),
+    annotations:{...readOnlyAnnotations,openWorldHint:true,idempotentHint:false}}});
+ }
  const names=registry.map(r=>r.tool.name);
  if(names.length>256||new Set(names).size!==names.length||names.some(name=>!/^[a-z][a-z0-9_]{0,127}$/.test(name)))throw Error('discovery_tool_name_collision');
  writeFileSync(base+'/registry.json',JSON.stringify(registry,null,2)+'\n',{mode:0o600,flag:'wx'});
@@ -80,6 +89,10 @@ async function activeRelease(){
   teacherId:release.admission.teacherId,allowedFrom:release.admission.allowedFrom,allowedThrough:release.admission.allowedThrough,
   ...(release.admission.schemaVersion==='academy.owner-admission/2'?{studentScope:release.admission.studentScope??'configured'}:{})},generation:release.generation,identity:release.identity,endpointIdentities:release.endpointIdentities};
 }
+class CompositeSourceUnavailable extends Error {
+ constructor(readonly source:'metadata'|'paper',readonly sourceRequests:number|null,readonly failure:{category:ReadFailureCategory;code:string;evidenceLocator:string;automaticRetryAllowed:false}){super(failure.code);}
+}
+
 const handles=new Map<string,{original:string;intake:any;scope:DailyRecordScope;request:string;at:number;releaseIdentity:string}>();
 const signature=(x:any)=>JSON.stringify({fields:x.fields?.map((f:any)=>({field:f.field,before:f.before?.state==='known'?{state:'known',value:f.before.value}:{state:'unknown',reasonCode:f.before?.reasonCode},target:f.target})),revision:x.source?.sourceRevision,wire:x.source?.wireDigest});
 async function call(req:any){
@@ -101,7 +114,45 @@ async function call(req:any){
   }
   const registered=active.registry.find((r:any)=>r.tool.name===req.name);if(!registered)throw Error('unknown_tool');
   const entry=selectPaperRoute('paperScopes' in active?active.paperScopes:undefined,active.registry,registered,args);
-  const result:any=await upstream(entry.endpoint,async client=>{
+  const result:any=entry.upstreamName==='academy_dailytest_history_with_headers'?await (async()=>{
+   const metadataEntry=active.registry.find((r:any)=>r.tool.name==='academy_student_metadata_get'&&r.endpoint==='dailyrecord');
+   const paperEntry=active.registry.find((r:any)=>r.upstreamName==='academy_paper_headers'&&r.endpoint==='paper1')
+    ??active.registry.find((r:any)=>r.upstreamName==='academy_paper_headers'&&r.endpoint==='paper2');
+   if(!metadataEntry||!paperEntry)throw Error('dailytest_header_upstream_not_configured');
+   const invoke=async(target:any,input:unknown,source:'metadata'|'paper')=>upstream(target.endpoint,async client=>{
+    const expectedIdentity=active.endpointIdentities[target.endpoint];
+    if(expectedIdentity){const handshake=await client.callTool({name:'academy_endpoint_identity',arguments:{}});
+     if(handshake.isError||JSON.stringify(handshake.structuredContent)!==JSON.stringify(expectedIdentity))throw Error('release_endpoint_identity_mismatch');}
+    if(active.generation!==null&&target.endpoint==='dailyrecord'){
+     const handshake=await client.callTool({name:'academy_runtime_read_admission',arguments:{}});
+     const summary=handshake.structuredContent as Record<string,unknown>|undefined;
+     if(handshake.isError||summary?.status!=='configured'||summary.admissionSha256!==sha(active.readAdmission))throw Error('release_upstream_admission_mismatch');
+    }
+    const response=await client.callTool({name:target.upstreamName,arguments:input as Record<string,unknown>});
+    const data=response.structuredContent as Record<string,unknown>|undefined;
+    if((source==='paper'&&data?.status==='blocked')||(source==='metadata'&&data?.status==='unavailable')){
+     const effects=data.effects as Record<string,unknown>|undefined;
+     const metrics=data.metrics as Record<string,unknown>|undefined;
+     const count=data.sourceRequests??effects?.sourceRequests??metrics?.sourceRequests;
+     const reason=source==='paper'?data.code:data.reasonCode;
+     const failure=source==='paper'?
+      reason==='read_scope_not_admitted'?{category:'policy_denial' as const,code:reason,evidenceLocator:'academy-mcp:upstream-read-admission',automaticRetryAllowed:false as const}:
+      reason==='source_failure_latched_no_retry'?{category:'upstream_unavailable' as const,code:reason,evidenceLocator:'academy-mcp:paper-source-latch',automaticRetryAllowed:false as const}:
+      {category:'upstream_unavailable' as const,code:'source_headers_read_failed',evidenceLocator:'academy-mcp:paper-source-read',automaticRetryAllowed:false as const}:
+      publicReadFailure(Error(typeof reason==='string'?reason:''),'student_metadata_unqualified_no_automatic_retry');
+     throw new CompositeSourceUnavailable(source,typeof count==='number'&&Number.isSafeInteger(count)&&count>=0&&count<=100000?count:null,failure);
+    }
+    if(response.isError||!data)throw Error('dailyrecord_route_upstream_failed_no_retry');
+    return data;
+   },active.endpoints);
+   // Close the metadata upstream before opening the independently admitted
+   // paper reader: both may serialize on the same native account lock.
+   const data=await readDailyTestHeaders(args,{metadata:input=>invoke(metadataEntry,input,'metadata'),headers:input=>{
+    const selected=selectPaperRoute('paperScopes' in active?active.paperScopes:undefined,active.registry,paperEntry,input);
+    return invoke(selected,input,'paper');
+   }});
+   return {content:[{type:'text',text:JSON.stringify(data)}],structuredContent:data};
+  })():await upstream(entry.endpoint,async client=>{
    const expectedIdentity=active.endpointIdentities[entry.endpoint];
    if(expectedIdentity){
     const handshake=await client.callTool({name:'academy_endpoint_identity',arguments:{}});
@@ -163,7 +214,7 @@ async function call(req:any){
   writeFileSync(log+'/'+occurrence+'-result.json',JSON.stringify({completedAt:new Date().toISOString(),tool:receiptTool,isError:!!result.isError,status:result.structuredContent?.status??null,sourceAvailability:result.structuredContent?.sourceAvailability??null,steps,resultSha256:sha(result),academyWrites:entry.upstreamName==='academy_dailyrecord_save'?(typeof result.structuredContent?.academyWrites==='number'?result.structuredContent.academyWrites:null):0,parentSends:0,automaticRetryAllowed:false})+'\n',{mode:0o600,flag:'wx'});
   return result;
  }catch(error){
-  const failure=publicReadFailure(error,'upstream_failure_reconcile_dispatch'),code=failure.code;
+  const failure=error instanceof CompositeSourceUnavailable?error.failure:publicReadFailure(error,'upstream_failure_reconcile_dispatch'),code=failure.code;
   // Before a durable dispatch receipt, no upstream operation has started and
   // the release base may not be a qualified or accessible receipt target.
   // Once the upstream save was invoked, neither a transport failure nor a
@@ -173,7 +224,7 @@ async function call(req:any){
    try{writeFileSync(log+'/'+occurrence+'-failure.json',JSON.stringify({code,failure,observedAt:new Date().toISOString(),tool:receiptTool,automaticRetryAllowed:false,...effect,parentSends:0})+'\n',{mode:0o600,flag:'wx'});}
    catch{throw Object.assign(Error('receipt_write_unavailable_reconcile'),{data:{occurrence,automaticRetryAllowed:false,...(saveIssued?{effectStatus:'unknown'}:{})}});}
   }
-  const data={status:'blocked',code,failure,occurrence,automaticRetryAllowed:false,...effect,parentSends:0};
+  const data={status:'blocked',code,failure,occurrence,...(error instanceof CompositeSourceUnavailable?{failedSource:error.source,reasonCode:error.failure.code,sourceRequests:error.sourceRequests}:{}),automaticRetryAllowed:false,...effect,parentSends:0};
   return {isError:true,content:[{type:'text',text:JSON.stringify(data)}],structuredContent:data};
  }
 }

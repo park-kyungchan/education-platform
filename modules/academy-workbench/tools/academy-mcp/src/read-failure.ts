@@ -28,6 +28,9 @@ const catalog={
   native_metadata_selector_conflict:['contract_drift','src/native-dailyrecord-backend.ts:projectStudentMetadata'],
   native_dailyrecord_occurrence_unverified:['partial_coverage','src/native-dailyrecord-backend.ts:readDailyRecord'],
   native_metadata_method_unavailable:['endpoint_absence','src/native-dailyrecord-backend.ts:readStudentMetadata'],
+  student_metadata_backend_not_configured:['endpoint_absence','src/dailyrecord.ts:metadataByName'],
+  student_metadata_unqualified_no_automatic_retry:['upstream_unavailable','src/dailyrecord.ts:metadataByName'],
+  source_response_malformed:['malformed_response','academy-mcp:response-contract'],
   unknown_tool:['endpoint_absence','src/neutral-server.ts:call'],
   paper_scope_unresolved:['policy_denial','src/paper-scope-routing.ts:selectPaperRoute'],
   release_pointer_missing:['contract_drift','src/neutral-server.ts:activeRelease'],
@@ -43,6 +46,15 @@ const catalog={
   observation_ticket_expired_or_foreign:['policy_denial','src/neutral-server.ts:call'],
   fresh_before_state_changed_reconcile:['contract_drift','src/neutral-server.ts:call'],
   dailyrecord_route_upstream_failed_no_retry:['upstream_unavailable','src/neutral-server.ts:call'],
+
+  dailytest_header_upstream_not_configured:['endpoint_absence','src/neutral-server.ts:call'],
+  dailytest_header_scope_conflict:['contract_drift','src/dailytest-header-route.ts:readDailyTestHeaders'],
+  dailytest_header_identity_conflict:['contract_drift','src/dailytest-header-route.ts:readDailyTestHeaders'],
+  dailytest_header_duplicate_field:['contract_drift','src/dailytest-header-route.ts:readDailyTestHeaders'],
+  dailytest_header_selection_changed:['contract_drift','src/dailytest-header-route.ts:readDailyTestHeaders'],
+  dailytest_header_offset_out_of_range:['policy_denial','src/dailytest-header-route.ts:readDailyTestHeaders'],
+  dailytest_header_result_too_large:['partial_coverage','src/dailytest-header-route.ts:readDailyTestHeaders'],
+
 } as const satisfies Record<string,readonly [ReadFailureCategory,string]>;
 export class AcademyReadFailure extends Error {
   constructor(readonly category:ReadFailureCategory,readonly code:string,readonly evidenceLocator:string){super(code);}

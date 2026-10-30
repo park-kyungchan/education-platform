@@ -22,6 +22,17 @@ const service=new DailyRecordService({
       rendering:'not_qualified',paperMembership:'unqualified'})),observedAt:new Date().toISOString(),
     coverage:'exact_requested_shared_answers_not_printed_versions',nativePrintInvoked:false,automaticRetryAllowed:false};},
   searchStudentsByName:async name=>{appendFileSync(events,'resolve\n');return name==='Invented Student'?[{studentKey:'77001',studentName:name}]:[];},
+  readStudentMetadataByName:async input=>{
+    appendFileSync(events,'metadata\n');
+    const injected=resolve(base,'inject-metadata-error');if(existsSync(injected))throw Error(readFileSync(injected,'utf8'));
+    const rows=[{studentKey:'77001',studentName:input.displayName,paperKey:'7001',attemptKey:'8001',sourceRowId:null,sourceScore:75}];
+    return {scope:{sourceNamespace:'academy.lms.metadata',teacherId:'99001',studentId:'77001',lessonDate:input.lessonDate},
+      results:input.queries.map(query=>({query,observation:{status:'observed',studentKey:'77001',studentName:input.displayName,
+        currentFilterQualification:{selector:'1',observedAt:'2040-01-16T00:00:00Z',rows},
+        observations:query.kind==='daily_history'?query.periods.map(selector=>({selector,rows,observedAt:'2040-01-16T00:00:00Z',
+          operation:'DtResultSearch',page:1,coverage:'one_observed_student_search_page_not_complete_history',fixedSourceFilter:{sort_date:selector}})):[],
+        coverage:'all_parsed_embedded_rows_on_each_observed_response_not_complete_history'}}))};
+  },
   readDailyRecord:async scope=>{
     appendFileSync(events,'intake\n');
     const value=observation();value.scope={...scope};value.target={...value.target,...scope};value.observedAt=new Date().toISOString();
