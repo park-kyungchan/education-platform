@@ -3,6 +3,7 @@ import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import {canonicalJson,digest,stableId} from '../../src/learning/model';
 import {validateAcademyRecord} from '../../src/academy/records';
+import {assertApprovalUsable,assertStudentCorrection} from '../../src/academy/nativePrerequisiteStore';
 import {PostgresAcademyStore} from '../../src/academy/postgresStore';
 import type {SQL} from 'bun';
 import {NATIVE_STUDENT_KINDS,resolveActivityOccurrence,validateOwnerPayload,type ActivityScopeLink,type OwnerVersion,validateNativeStudentPayload,validateKnowledge,projectInterval,previousDay,scopeIdentity,validateContext,validateNativeRef,type NativeObjectRef,type ObjectRef,type EducationType,type EvidenceRef,type Knowledge,type RecordScope,type DailyProgressPayload,type DailyRecordDraftPayload,type PreviousHomeworkAssessmentPayload,type CommandContext,type ApprovalClosure,type ApprovalVersionPayload} from '../../src/academy/contracts/prerequisiteRecords';
@@ -87,6 +88,9 @@ describe.skipIf(!contractRoot||!originalRoot)('NF-07 exact active source and suc
   const helper=qualification.isolatedHelper.writer;expect(helper.sourcePaths).toEqual(units.groups[3].helperSourcePaths);expect(helper.sourcePaths).toEqual(qualification.isolatedHelper.sourcePaths);expect(helper.sourcePaths).toEqual(qualification.syntheticAuthInitialization.sourcePaths);expect([...helper.sourcePaths,...helper.testPaths].sort()).toEqual(units.groups[3].writerBoundary.add.sort());expect(qualification.syntheticAuthInitialization.sourceOwner).toContain(helper.sourcePaths[0]);
  });
 });
+
+test('immutable full approval rejects link-only/source/action/occurrence/admission changes and proof reuse',()=>{expect(()=>assertApprovalUsable(approval(),closure(),'2026-10-24T00:01:00.000Z',hash)).not.toThrow();for(const patch of [{occurrenceId:'synthetic-other'},{admissionId:'synthetic-other'},{executorPrincipalBinding:'b'.repeat(64)},{action:{...closure().action,version:'2.0.0'}},{linkExpectations:[]},{linkExpectations:[{...closure().linkExpectations[0]!,expected:{scheme:'OWNER_REVISION' as const,value:'synthetic-link-r2'}}]}])expect(()=>assertApprovalUsable(approval(),{...closure(),...patch},'2026-10-24T00:01:00.000Z',hash)).toThrow('approval_closure_mismatch');expect(()=>assertApprovalUsable({...approval(),state:'REVOKED'},closure(),'2026-10-24T00:01:00.000Z',hash)).toThrow('approval_revoked');expect(()=>assertApprovalUsable({...approval(),state:'CONSUMED',consumedByDraftRevision:'synthetic-approved-r2'},closure(),'2026-10-24T00:01:00.000Z',hash)).toThrow('approval_consumed');expect(()=>assertApprovalUsable(approval(),closure(),approval().expiresAt,hash)).toThrow('approval_expired');});
+test('draft approval and occurrence corrections are fenced by the real correction validator',()=>{expect(()=>assertStudentCorrection(draft(),{...draft(),draftState:known('APPROVED')})).toThrow('invalid_transition');expect(()=>assertStudentCorrection(progress(),{...progress(),recordScope:scope('lesson-b')})).toThrow('progress_identity_changed');expect(()=>assertStudentCorrection(assessment(),{...assessment(),homeworkRef:objectRef('HomeworkAssignment','homework-b')})).toThrow('assessment_identity_changed');});
 
 const nativePayloads={previous_homework_assessment:assessment,daily_progress:progress,daily_record_draft:draft} as const;
 test('legacy append refuses every native student kind before touching the database',async()=>{
