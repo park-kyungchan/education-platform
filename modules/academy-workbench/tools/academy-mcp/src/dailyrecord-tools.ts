@@ -70,7 +70,7 @@ export function registerDailyRecordTools(server:McpServer,service=new DailyRecor
   },async input=>result(await service.save(input)));
   server.registerTool('academy_dailyrecord_reconcile',{
     title:'Reconcile uncertain DailyRecord dispatches by authoritative readback',
-    description:academyRoutingDescription('academy_dailyrecord_reconcile','For one exact student/date record, read the current source once under the shared owner lock and classify every unresolved dispatch, under any request, as persisted, not_persisted or conflict. Records who reconciled. Never writes to the academy, retries, rolls back or sends; a not_persisted or conflict field needs a new user request and review.'),
+    description:academyRoutingDescription('academy_dailyrecord_reconcile','For one exact student/date record, read the current source once under the shared owner lock and classify every unresolved dispatch, under any request, as persisted, not_persisted or conflict. The new value closes a dispatch at once; the old or another value closes it only after a returned transport, because an uncertain request may still land at any later time. To close such an uncertain dispatch as not landed, pass resolution.request with the verbatim user instruction for the current requestRef; it is recorded with who reconciled. Never writes to the academy, retries, rolls back or sends; a not_persisted or conflict field needs a new user request and review.'),
     inputSchema:dailyRecordReconcileSchema,annotations:{...annotations,idempotentHint:false},
   },async input=>result(await service.reconcile(input)));
   server.registerTool('academy_dailyrecord_execution_status',{

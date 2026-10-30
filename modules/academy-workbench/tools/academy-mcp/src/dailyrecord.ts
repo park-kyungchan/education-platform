@@ -88,7 +88,8 @@ export const dailyRecordSaveSchema=z.object({context:dailyRecordContextSchema,ob
   reviewDigest:hash,proposals:z.array(proposalSchema).min(1).max(6),
   /** The user's verbatim instruction behind this save: provenance for audit, required by the owner workflow. */
   request:userRequestSchema.optional(),actor:declaredActorSchema.optional(),attribution:attributionSchema.optional()}).strict();
-export const dailyRecordReconcileSchema=z.object({context:dailyRecordContextSchema,actor:declaredActorSchema.optional(),attribution:attributionSchema.optional()}).strict();
+export const dailyRecordReconcileSchema=z.object({context:dailyRecordContextSchema,resolution:z.object({request:userRequestSchema}).strict().optional(),
+  actor:declaredActorSchema.optional(),attribution:attributionSchema.optional()}).strict();
 export const dailyRecordExecutionStatusSchema=z.object({scope:dailyRecordScopeSchema,requestRef:dailyRecordIdSchema.optional(),actor:declaredActorSchema.optional(),attribution:attributionSchema.optional()}).strict();
 /** Upstream DailyRecord workflow tools that receive bridge-observed attribution. */
 export const dailyRecordWorkflowToolSchemas={academy_dailyrecord_intake:dailyRecordIntakeSchema,academy_dailyrecord_review:dailyRecordReviewSchema,
@@ -186,7 +187,6 @@ type StoredReview={reviewDigest:string;status:string;scope:DailyRecordScope;requ
   inputDigest:string};
 
 /** How long an unchanged readback must wait before it may prove an uncertain dispatch did not land. */
-export const reconcileSettleMs=15*60*1000;
 
 export class DailyRecordService {
   readonly #handles=new Map<string,{observation:DailyRecordObservation;scope:DailyRecordScope;requestRef:string;subject?:{displayName:string}}>();
@@ -419,7 +419,9 @@ export class DailyRecordService {
     const patch=rows.filter(r=>r.disposition==='proposed').map(r=>({field:r.field,target:r.target,before:r.before.state==='known'?r.before.value:null,after:r.after,factRefs:r.factRefs,learningEntries:r.learningEntries}));
     const parentSafeguard=this.parentSafeguard?{sourceRef:this.parentSafeguard.sourceRef,policySha256:this.parentSafeguard.policySha256,safeguardSourceSha256:this.parentSafeguard.safeguardSourceSha256}:null;
     const cismSource=cism?{observationHandle:input.cismObservationHandle,scope:cism.scope,selection:cism.selection,observedAt:cism.observedAt,sourceRevision:cism.sourceRevision,evidenceRefs:cism.evidenceRefs}:null;
-    const body={observationHandle:input.observationHandle??null,scope:context.scope,requestRef:context.currentRequestRef,userContextDigest:digest(context),parentSafeguard,cismSource,learningPolicy:this.learningPolicy?{bundleSha256:this.learningPolicy.bundleSha256,configSha256:this.learningPolicy.configSha256,catalogSha256:this.learningPolicy.catalogSha256}:null,
+    // The exact submitted input is part of the digest, so distinct reviewed inputs never share one immutable review record.
+    const inputDigest=textDigest(canonicalJson({context,proposals:input.proposals,cismObservationHandle:input.cismObservationHandle??null}));
+    const body={observationHandle:input.observationHandle??null,inputDigest,scope:context.scope,requestRef:context.currentRequestRef,userContextDigest:digest(context),parentSafeguard,cismSource,learningPolicy:this.learningPolicy?{bundleSha256:this.learningPolicy.bundleSha256,configSha256:this.learningPolicy.configSha256,catalogSha256:this.learningPolicy.catalogSha256}:null,
       sourceRevision:held?.observation.sourceRevision??null,wireDigest:held?.observation.wireDigest??null,transmissionState:read?.status==='observed'?read.observation.transmissionState:held?.observation.transmissionState??'unknown',rows,patch};
     const status=rows.some(r=>r.blockers.length)||interviews.length?'held' as const:'prepared' as const,reviewDigest=digest(body);
     let reviewRecord:{persisted:boolean;reviewedBy:ReturnType<typeof attributionSummary>}|null=null;
@@ -428,7 +430,7 @@ export class DailyRecordService {
       const record:StoredReview={reviewDigest,status,scope:context.scope,requestRef:context.currentRequestRef,observationHandle:input.observationHandle,
         patch:(patch as ReviewedPatch[]).map(p=>({field:p.field,before:p.before??'',after:p.after,effectRecordKey:p.target?.recordId??''})),
         reviewPolicy:this.#policyPins(),reviewedBy,reviewedAt:new Date(this.now()).toISOString(),
-        inputDigest:textDigest(canonicalJson({context,proposals:input.proposals,cismObservationHandle:input.cismObservationHandle??null}))};
+        inputDigest};
       this.workflow.store.publishOnce('review',reviewDigest,record);
       this.workflow.store.appendAudit(workflowRequestKey(context.scope,context.currentRequestRef),{event:'review_recorded',reviewDigest,by:attributionSummary(reviewedBy),fields:record.patch.map(p=>p.field)});
       reviewRecord={persisted:true,reviewedBy:attributionSummary(reviewedBy)};
@@ -525,7 +527,7 @@ export class DailyRecordService {
         }
         // Fields refused before their execution record (drift, not attempted) stay available.
         // A readback that shows the old value after an uncertain transport does not prove
-        // the request will never land; it stays unresolved until a settled reconciliation.
+        // the request will never land; it stays unresolved until reconciliation.
         const recorded=(r:typeof results[number])=>r.status==='not_persisted'&&r.transport!=='returned'?'unresolved':r.status;
         for(const r of results){const p=prior.patch.find(x=>x.field===r.field);if(p)outcome(p,{status:recorded(r),readbackStatus:r.status,dispatched:r.dispatched,transport:r.transport??null});}
         const academyWrites=results.filter(r=>r.dispatched).length;
@@ -544,18 +546,23 @@ export class DailyRecordService {
   }
   /** Read-only classification of every unresolved dispatch of this student, by
    * authoritative readback of each execution's own lesson record. Never
-   * writes to the academy or retries. */
+   * writes to the academy or retries. Only the new value, or the old value
+   * after a returned transport, closes an execution by readback: elapsed time
+   * never proves an uncertain request will not land. Closing an uncertain
+   * dispatch as not landed needs the user's verbatim instruction. */
   async reconcile(value:unknown){
     const input=dailyRecordReconcileSchema.parse(value),context=input.context,scope=context.scope;
     const base={...this.#base(context),execution:'read_only' as const,parentTransmission:'separate_explicit_instruction_required' as const};
     if(!this.workflow)return {...base,status:'unavailable' as const,reasonCode:'dailyrecord_workflow_not_configured',fields:[]};
-    const store=this.workflow.store,by=attributionSummary(this.#attribution(input));
+    const store=this.workflow.store,by=attributionSummary(this.#attribution(input)),resolution=input.resolution?.request;
+    if(resolution&&resolution.requestRef!==context.currentRequestRef)return {...base,status:'held' as const,reasonCode:'user_request_ref_mismatch',by,fields:[]};
+    const resolvedBy=resolution?{requestRef:resolution.requestRef,instruction:resolution.instruction,instructionSha256:textDigest(resolution.instruction.text)}:null;
     return store.withLock(workflowLockKey(scope),async()=>{
       const fields=()=>studentExecutions(store,scope).map(e=>({field:e.record.field,lessonDate:e.record.scope.lessonDate,requestRef:e.record.requestRef,executionState:e.state}));
       const pending=studentExecutions(store,scope).filter(e=>needsReconciliation(e.state));
       if(!pending.length)return {...base,status:'settled' as const,reasonCode:null,by,fields:fields()};
       type SourceRead={status:'observed';observation:DailyRecordObservation}|{status:'unavailable';reasonCode:string};
-      const reads=new Map<string,SourceRead>();let notObserved=false,unsettled=false;
+      const reads=new Map<string,SourceRead>();let notObserved=false,uncertain=false;
       for(const {key,record} of pending){
         const scopeKey=JSON.stringify(record.scope);
         if(!reads.has(scopeKey)){
@@ -577,22 +584,22 @@ export class DailyRecordService {
           continue;
         }
         const current=read.observation.fields[record.field];
-        // Only an observed new value settles at once. Showing the old (or another) value
-        // settles only after the settle window, so a request still pending remotely after
-        // its sender died cannot land after a new request was admitted.
-        // Measured from the latest known dispatch moment (the outcome record when one exists).
-        const outcomeAt=(store.get('outcome',key) as {recordedAt?:string}|null)?.recordedAt;
-        const settled=this.now()-Math.max(Date.parse(record.recordedAt),outcomeAt?Date.parse(outcomeAt):0)>=reconcileSettleMs;
-        if(current.state==='known'&&textDigest(current.value)!==record.afterSha256&&!settled){unsettled=true;continue;}
-        const classification=current.state!=='known'?null:textDigest(current.value)===record.afterSha256?'persisted':textDigest(current.value)===record.beforeSha256?'not_persisted':'conflict';
-        if(!classification)continue;
-        store.publishOnce('reconciliation',key,{classification,sourceRevision:read.observation.sourceRevision,observedAt:read.observation.observedAt,by,reconciledAt:new Date(this.now()).toISOString()});
-        store.appendAudit(workflowRequestKey(record.scope,record.requestRef),{event:'reconciled',field:record.field,classification,by});
+        if(current.state!=='known')continue;
+        const classification=textDigest(current.value)===record.afterSha256?'persisted':textDigest(current.value)===record.beforeSha256?'not_persisted':'conflict';
+        // Without a returned transport the request may still be pending remotely after its
+        // sender died, so only the new value, or the user's instruction, closes it.
+        const returned=(store.get('outcome',key) as {transport?:string|null}|null)?.transport==='returned';
+        if(classification!=='persisted'&&!returned&&!resolvedBy){uncertain=true;continue;}
+        const basis=classification==='persisted'?'readback_new_value':returned?'readback_after_returned_transport':'user_instruction';
+        store.publishOnce('reconciliation',key,{classification,basis,resolvedBy:basis==='user_instruction'?resolvedBy:null,
+          sourceRevision:read.observation.sourceRevision,observedAt:read.observation.observedAt,by,reconciledAt:new Date(this.now()).toISOString()});
+        store.appendAudit(workflowRequestKey(record.scope,record.requestRef),{event:'reconciled',field:record.field,classification,basis,
+          instructionSha256:basis==='user_instruction'?resolvedBy!.instructionSha256:null,by});
       }
       const after=fields(),open=after.some(f=>needsReconciliation(f.executionState));
       const unavailable=[...reads.values()].some(r=>r.status!=='observed');
       return {...base,status:open?'held' as const:'settled' as const,
-        reasonCode:open?(unavailable?'readback_unavailable_reconcile_later':notObserved?'affected_record_not_observed_manual_reconcile_required':unsettled?'readback_unchanged_within_settle_window_reconcile_later':'readback_field_unknown_reconcile_later'):null,settleWindowMs:reconcileSettleMs,by,fields:after};
+        reasonCode:open?(unavailable?'readback_unavailable_reconcile_later':notObserved?'affected_record_not_observed_manual_reconcile_required':uncertain?'uncertain_dispatch_not_landed_user_resolution_required':'readback_field_unknown_reconcile_later'):null,by,fields:after};
     });
   }
   /** Metadata-only handoff view: per-field executions on this record with who did them, plus the request audit. No field or instruction text. */

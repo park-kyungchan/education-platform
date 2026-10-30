@@ -9,7 +9,7 @@ import {NativeDailyRecordBackend} from '../src/native-dailyrecord-backend.ts';
 import {ownerAdmissionSchema} from '../src/owner-admission.ts';
 import type {DailyRecordField} from '../src/dailyrecord-context.ts';
 import {backend,clock,context,proposal,safeguard} from './dailyrecord-fixture.ts';
-import {nativeScope,proposals,userRequest,workflowContext,workflowService} from './dailyrecord-workflow-fixture.ts';
+import {initialFields,nativeScope,proposals,userRequest,workflowContext,workflowService} from './dailyrecord-workflow-fixture.ts';
 
 function fixture(){
   const base=mkdtempSync(resolve(tmpdir(),'dailyrecord-workflow-'));
@@ -410,8 +410,7 @@ test('the same physical transition reached through another lesson date is not a 
   expect(executionKey('r1',nativeScope,'previousHomeworkAssessment','12','3','4')).not.toBe(executionKey('r2',nativeScope,'previousHomeworkAssessment','12','3','4'));
 });
 
-test('an old value after an uncertain transport stays unresolved until the settle window passes',async()=>{
-  const {reconcileSettleMs}=await import('../src/dailyrecord.ts');
+test('an old value after an uncertain transport stays unresolved at any elapsed time until the user resolves it',async()=>{
   const f=fixture();
   try{
     const p=f.process(),r=await reviewed(p.service,'codex',{progress:'- 지정 문제 풀이 진행.'});
@@ -419,12 +418,36 @@ test('an old value after an uncertain transport stays unresolved until the settl
     expect(await p.service.save(r.save('codex'))).toMatchObject({status:'held',reasonCode:'save_reconciliation_required',
       fields:[{field:'progress',status:'unresolved',transport:'uncertain',executionState:'reconciliation_required'}]});
     rmSync(resolve(f.base,'inject-lost-write-progress'));
-    // The request may still be pending remotely: an unchanged readback inside the window proves nothing.
-    expect(await f.process().service.reconcile({context:r.c})).toMatchObject({status:'held',reasonCode:'readback_unchanged_within_settle_window_reconcile_later',
+    // The request may still be pending remotely: an unchanged readback proves nothing, however late.
+    const later=f.process(()=>Date.now()+7*24*3600*1000);
+    expect(await later.service.reconcile({context:r.c})).toMatchObject({status:'held',reasonCode:'uncertain_dispatch_not_landed_user_resolution_required',
       fields:[{field:'progress',executionState:'reconciliation_required'}]});
-    const later=f.process(()=>Date.now()+reconcileSettleMs+1000);
-    expect(await later.service.reconcile({context:r.c})).toMatchObject({status:'settled',fields:[{field:'progress',executionState:'reconciled_not_persisted'}]});
+    expect(await later.service.save(r.save('codex'))).toMatchObject({status:'held',reasonCode:'uncertain_dispatch_reconcile_required',academyWrites:0});
+    const resolution={request:{requestRef:'other-request',instruction:{text:'synthetic: the earlier save did not land; close it'}}};
+    expect(await later.service.reconcile({context:r.c,resolution})).toMatchObject({status:'held',reasonCode:'user_request_ref_mismatch'});
+    resolution.request.requestRef=r.c.currentRequestRef;
+    expect(await later.service.reconcile({context:r.c,resolution,actor:actor('claude')})).toMatchObject({status:'settled',
+      fields:[{field:'progress',executionState:'reconciled_not_persisted'}]});
+    const status:any=await later.service.executionStatus({scope:r.c.scope,requestRef:r.c.currentRequestRef});
+    expect(status.audit).toEqual(expect.arrayContaining([expect.objectContaining({event:'reconciled',basis:'user_instruction',classification:'not_persisted'})]));
+    expect(JSON.stringify(status)).not.toContain('did not land');
     expect(await later.service.save(r.save('codex'))).toMatchObject({status:'held',reasonCode:'transition_already_attempted_new_request_required'});
+    expect(f.writes()).toBe(1);
+  }finally{f.cleanup();}
+},20000);
+
+test('reviews differing only in the decision kind get distinct records and each stays savable',async()=>{
+  const f=fixture();
+  try{
+    // An empty field admits both 'set' and 'replace', so the two reviews differ only in the decision kind.
+    writeFileSync(resolve(f.base,'source.json'),JSON.stringify({...initialFields,progress:''}));
+    const p=f.process(),r=await reviewed(p.service,'codex',{progress:'- 지정 문제 풀이 진행.'});
+    const asSet=r.save('codex').proposals.map(x=>({...x,decision:{...x.decision,kind:'set' as const}}));
+    const second:any=await p.service.review({context:r.c,observationHandle:r.intake.observationHandle,proposals:asSet,actor:actor('claude')});
+    expect(second.status).toBe('prepared');
+    expect(second.reviewDigest).not.toBe(r.review.reviewDigest);
+    expect(await f.process().service.save({...r.save('claude'),proposals:asSet,reviewDigest:second.reviewDigest}))
+      .toMatchObject({status:'saved',fields:[{field:'progress',status:'persisted'}]});
   }finally{f.cleanup();}
 },20000);
 
