@@ -1,5 +1,6 @@
 import './network-deny.ts';
-import {appendFileSync} from 'node:fs';
+import {appendFileSync,chmodSync} from 'node:fs';
+import {dirname,join} from 'node:path';
 import {McpServer} from '@modelcontextprotocol/server';
 import {runtimeIdentityConfiguration,registerRuntimeIdentity} from '../src/runtime-identity.ts';
 import {installStdioDiagnostics,createAcademyStdioTransport} from '../src/stdio-diagnostics.ts';
@@ -16,7 +17,7 @@ const port={authenticate:async()=>{event('auth');if(variant==='expired')throw Er
  discoverDayRecordGroups:async()=>{event('groups');return {groups:[{groupId:'3'}]};},
  execute:async(i:any)=>{event('identity');return {dayRecords:[row(i.studentNames[0],i.date)]};},
  journalState:async(t:any)=>{event('journal');if(variant==='drift')throw Error('script_digest_drift');return {target:t,fields:row(t.studentName,t.date).fields,previousRecordKey:previousDate(t.date).replaceAll('-',''),previousDate:previousDate(t.date),wireDigest:'a'.repeat(64)};},close:()=>{},
- searchDailyTestMetadata:async()=>{event('metadata');return metadata();},
+ searchDailyTestMetadata:async()=>{event('metadata');if(variant==='receipt-inaccessible')chmodSync(join(dirname(events),'receipts'),0o000);return metadata();},
  readDailyTestHistory:async(i:any)=>{event('history');return {status:'observed',studentKey:'77002',studentName:'Fictional Two',currentFilterQualification:{observedAt:new Date().toISOString(),selector:'1',rows:metadata().rows},observations:i.periods.map((selector:string)=>({...metadata(selector),selector})),calendarBounds:'source_relative_labels_only_not_exact_calendar_bounds',expectedPaperDefinitions:'not_observed',coverage:'all_parsed_embedded_rows_on_each_observed_response_not_complete_history'};},
  inspectDailyTestInventory:async()=>{event('metadata');if(variant==='drift')throw Error('script_digest_drift');if(variant==='truncated')throw new SyntaxError('PRIVATE_RESPONSE_CANARY');return metadata();},
 };

@@ -19,7 +19,12 @@ const processStartedAt=new Date().toISOString();
 const loadedBridgeSha256=createHash('sha256').update(readFileSync(process.argv[1]!)).digest('hex');
 const base=process.env.ACADEMY_MCP_INSTALL_DIR??'/root/.local/share/academy-mcp';
 // Launch-owned pinned scope only; no caller may provide or widen admission.
-const initialRelease=await loadRuntimeRelease(base);
+const initialRelease=await loadRuntimeRelease(base).catch(async error=>{
+ const failure=publicReadFailure(error,'release_discovery_unavailable');
+ const reason='reason' in failure?` reason=${failure.reason}`:'';
+ await new Promise<void>(resolve=>process.stderr.write(`${failure.code}${reason}\n`,()=>resolve()));
+ process.exit(1);
+});
 const routing=initialRelease?null:JSON.parse(readFileSync(base+'/routing.json','utf8'));
 const admissionBytes=routing?await readPinnedLocalBytes(routing.admissionPath,routing.admissionSha256):null;
 const ownerAdmission=initialRelease?.admission??ownerAdmissionSchema.parse(JSON.parse(admissionBytes!.bytes.toString('utf8')));
@@ -80,9 +85,9 @@ async function call(req:any){
  const args=structuredClone(req.arguments??{});
  const occurrence=randomUUID();
  let receiptTool=req.name==='academy_runtime_identity'?req.name:'unrecognized_tool';
- let dispatchIssued=false;
+ let dispatchIssued=false,saveIssued=false;
  const steps:{tool:string;status:unknown;sourceAvailability:unknown}[]=[];
- const dispatch=()=>{if(dispatchIssued)return;dispatchIssued=true;writeFileSync(log+'/'+occurrence+'-dispatch.json',JSON.stringify({issuedAt:new Date().toISOString(),tool:receiptTool,argumentsSha256:sha(args),automaticRetryAllowed:false,academyWrites:0,parentSends:0})+'\n',{mode:0o600,flag:'wx'});};
+ const dispatch=()=>{if(dispatchIssued)return;writeFileSync(log+'/'+occurrence+'-dispatch.json',JSON.stringify({issuedAt:new Date().toISOString(),tool:receiptTool,argumentsSha256:sha(args),automaticRetryAllowed:false,academyWrites:0,parentSends:0})+'\n',{mode:0o600,flag:'wx'});dispatchIssued=true;};
  try{
   const active=await activeRelease();
   if(active.registry.some((entry:any)=>entry.tool.name===req.name))receiptTool=req.name;
@@ -130,6 +135,7 @@ async function call(req:any){
     if(fresh.isError||!fresh.structuredContent||signature(fresh.structuredContent)!==signature(ticket.intake))throw Error('fresh_before_state_changed_reconcile');
     const reviewed:any=await client.callTool({name:'academy_dailyrecord_review',arguments:{context:args.context,observationHandle:fresh.structuredContent.observationHandle,cismObservationHandle:args.cismObservationHandle,proposals:args.proposals}});
     if(reviewed.isError||!reviewed.structuredContent)throw Error('dailyrecord_route_upstream_failed_no_retry');
+    saveIssued=true;
     return client.callTool({name:entry.upstreamName,arguments:{context:args.context,observationHandle:fresh.structuredContent.observationHandle,cismObservationHandle:args.cismObservationHandle,reviewDigest:reviewed.structuredContent.reviewDigest,proposals:args.proposals}});
    }
    if(entry.upstreamName==='academy_dailyrecord_review'&&args.observationHandle){
@@ -152,13 +158,20 @@ async function call(req:any){
    if(handles.size>64)handles.delete(handles.keys().next().value!);
    data.observationHandle=ticket;result.content=[{type:'text',text:JSON.stringify(data)}];
   }
-  writeFileSync(log+'/'+occurrence+'-result.json',JSON.stringify({completedAt:new Date().toISOString(),tool:receiptTool,isError:!!result.isError,status:result.structuredContent?.status??null,sourceAvailability:result.structuredContent?.sourceAvailability??null,steps,resultSha256:sha(result),academyWrites:req.name==='academy_dailyrecord_save'?(result.structuredContent?.academyWrites??0):0,parentSends:0,automaticRetryAllowed:false})+'\n',{mode:0o600,flag:'wx'});
+  writeFileSync(log+'/'+occurrence+'-result.json',JSON.stringify({completedAt:new Date().toISOString(),tool:receiptTool,isError:!!result.isError,status:result.structuredContent?.status??null,sourceAvailability:result.structuredContent?.sourceAvailability??null,steps,resultSha256:sha(result),academyWrites:entry.upstreamName==='academy_dailyrecord_save'?(typeof result.structuredContent?.academyWrites==='number'?result.structuredContent.academyWrites:null):0,parentSends:0,automaticRetryAllowed:false})+'\n',{mode:0o600,flag:'wx'});
   return result;
  }catch(error){
-  dispatch();
   const failure=publicReadFailure(error,'upstream_failure_reconcile_dispatch'),code=failure.code;
-  writeFileSync(log+'/'+occurrence+'-failure.json',JSON.stringify({code,failure,observedAt:new Date().toISOString(),tool:receiptTool,automaticRetryAllowed:false,academyWrites:0,parentSends:0})+'\n',{mode:0o600,flag:'wx'});
-  const data={status:'blocked',code,failure,occurrence,automaticRetryAllowed:false,academyWrites:0,parentSends:0};
+  // Before a durable dispatch receipt, no upstream operation has started and
+  // the release base may not be a qualified or accessible receipt target.
+  // Once the upstream save was invoked, neither a transport failure nor a
+  // failed receipt proves whether the source write took effect.
+  const effect=saveIssued?{academyWrites:null,effectStatus:'unknown'}:{academyWrites:0};
+  if(dispatchIssued){
+   try{writeFileSync(log+'/'+occurrence+'-failure.json',JSON.stringify({code,failure,observedAt:new Date().toISOString(),tool:receiptTool,automaticRetryAllowed:false,...effect,parentSends:0})+'\n',{mode:0o600,flag:'wx'});}
+   catch{throw Object.assign(Error('receipt_write_unavailable_reconcile'),{data:{occurrence,automaticRetryAllowed:false,...(saveIssued?{effectStatus:'unknown'}:{})}});}
+  }
+  const data={status:'blocked',code,failure,occurrence,automaticRetryAllowed:false,...effect,parentSends:0};
   return {isError:true,content:[{type:'text',text:JSON.stringify(data)}],structuredContent:data};
  }
 }
@@ -169,7 +182,12 @@ server.setRequestHandler('tools/list',async()=>{
  const hint=`DailyRecord owner-admitted dates: ${active.readAdmission.allowedFrom??'unbounded'} through ${active.readAdmission.allowedThrough??'unbounded'}.`;
  const identityTool={name:'academy_runtime_identity',description:academyRoutingDescription('academy_runtime_identity','Inspect the active release graph and loaded bridge digest. Legacy graphs are explicitly incomplete. No source reads or namespace authorization.'),inputSchema:z.toJSONSchema(z.object({}).strict()),annotations:readOnlyAnnotations};
  return {tools:[identityTool,...active.registry.map((r:any)=>({...r.tool,description:academyRoutingDescription(r.tool.name,r.endpoint==='dailyrecord'?r.tool.description?.replace(/DailyRecord owner-admitted dates: [^.]+\./,hint)??'':r.tool.description??'',r.endpoint)}))]};
- }catch(error){throw Error(publicReadFailure(error,'release_discovery_unavailable').code);}
+ }catch(error){
+  const failure=publicReadFailure(error,'release_discovery_unavailable');
+  const result=Error(failure.code);
+  if('reason' in failure)Object.assign(result,{data:{reason:failure.reason}});
+  throw result;
+ }
 });
 server.setRequestHandler('tools/call',async req=>{const pending=tail.then(()=>call(req.params));tail=pending.catch(()=>{});return pending;});
 installStdioDiagnostics(server);
