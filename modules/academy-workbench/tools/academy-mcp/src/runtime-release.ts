@@ -6,6 +6,7 @@ import {z} from 'zod';
 import {readPinnedLocalBytes} from './item-label-store.ts';
 import {artifactPinSchema,verifyEndpointManifest} from './runtime-identity.ts';
 import {ownerAdmissionSchema} from './owner-admission.ts';
+import {ReleaseBaseUnqualified} from './read-failure.ts';
 
 const pin=z.object({path:z.string().refine(isAbsolute),sha256:z.string().regex(/^[a-f0-9]{64}$/)}).strict();
 const commonRelease={generation:z.string().regex(/^[a-zA-Z0-9._-]{1,64}$/),routing:pin,endpoints:pin,registry:pin};
@@ -22,9 +23,12 @@ const registrySchema=z.array(z.object({endpoint:z.string().regex(/^[a-z][a-z0-9_
 /** Read the owner-controlled pointer as one bounded regular file. A release is
  * activated by atomically replacing this pointer after all pinned files exist. */
 async function readPointer(base:string):Promise<Buffer|null>{
-  if(!isAbsolute(base)||await realpath(base)!==base)throw Error('release_base_unqualified');
+  if(!isAbsolute(base))throw new ReleaseBaseUnqualified('relative_path');
+  if(await realpath(base)!==base)throw new ReleaseBaseUnqualified('noncanonical_path');
   const directory=await stat(base),uid=process.getuid?.();
-  if(!directory.isDirectory()||(directory.mode&0o022)!==0||(uid!==undefined&&directory.uid!==uid))throw Error('release_base_unqualified');
+  if(!directory.isDirectory())throw new ReleaseBaseUnqualified('not_directory');
+  if((directory.mode&0o022)!==0)throw new ReleaseBaseUnqualified('writable_by_others');
+  if(uid!==undefined&&directory.uid!==uid)throw new ReleaseBaseUnqualified('owner_mismatch');
   let file;
   try{file=await open(join(base,'release.json'),constants.O_RDONLY|constants.O_NOFOLLOW|constants.O_NONBLOCK);}
   catch(error){if((error as NodeJS.ErrnoException).code==='ENOENT')return null;throw error;}

@@ -46,8 +46,14 @@ const catalog={
 export class AcademyReadFailure extends Error {
   constructor(readonly category:ReadFailureCategory,readonly code:string,readonly evidenceLocator:string){super(code);}
 }
+export type ReleaseBaseFailureReason='relative_path'|'noncanonical_path'|'not_directory'|'writable_by_others'|'owner_mismatch';
+export class ReleaseBaseUnqualified extends Error {
+  constructor(readonly reason:ReleaseBaseFailureReason){super('release_base_unqualified');}
+}
 /** Public error text is a finite domain catalog, never an upstream message pattern. */
 export function publicReadFailure(error:unknown,fallback='source_read_unavailable'){
+  if(error instanceof ReleaseBaseUnqualified)
+    return {category:'policy_denial' as const,code:'release_base_unqualified' as const,evidenceLocator:catalog.release_base_unqualified[1],automaticRetryAllowed:false as const,reason:error.reason};
   if(error instanceof AcademyReadFailure && error.code==='source_authentication_failed')
     return {category:'authentication' as const,code:error.code,evidenceLocator:catalog.source_authentication_failed[1],automaticRetryAllowed:false as const};
   if(error instanceof z.ZodError || error instanceof SyntaxError)

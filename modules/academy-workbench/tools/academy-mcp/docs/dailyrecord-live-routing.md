@@ -110,6 +110,12 @@ behavior without a separately authorized upgrade. The release schema is
 `academy.mcp-release/1`; see `src/runtime-release.ts` and synthetic release
 tests for exact fields and checks. Do not mutate or overwrite pinned releases.
 
+An unqualified release base keeps the existing `release_base_unqualified` code.
+An optional finite `reason` distinguishes path form, directory type, write mode,
+and owner mismatch without exposing a path or numeric identity. It is available
+in tool failures, discovery error data, and a fresh bridge's startup diagnostic.
+It identifies a failed check only; it does not repair ownership or authorize a retry.
+
 ## Item answers
 
 `academy_item_answer_lookup` reads a bounded set of exact numeric item labels

@@ -6,7 +6,7 @@ import {createHash} from 'node:crypto';
 import {Client} from '@modelcontextprotocol/client';
 import {StdioClientTransport} from '@modelcontextprotocol/client/stdio';
 import {context,fact} from './dailyrecord-fixture.ts';
-async function withNeutralClient(run:(fixture:{base:string;events:string;client:Client})=>Promise<void>,includeSaved=false,includeNativePool=false){
+async function withNeutralClient(run:(fixture:{base:string;events:string;client:Client})=>Promise<void>,includeSaved=false,includeNativePool=false,saveAlias=false){
   const base=await mkdtemp(resolve(tmpdir(),'academy-neutral-synthetic-'));
   const entry=process.env.ACADEMY_NEUTRAL_TEST_BUNDLE??resolve(import.meta.dir,'../src/neutral-server.ts');
   const deny=resolve(import.meta.dir,'network-deny.ts'),events=resolve(base,'events.txt');
@@ -23,6 +23,7 @@ async function withNeutralClient(run:(fixture:{base:string;events:string;client:
     await writeFile(resolve(base,'endpoints.json'),JSON.stringify(endpoints));
     const discovery=Bun.spawn([process.execPath,'--preload',deny,entry,'--discover'],{env,stdout:'pipe',stderr:'pipe'});
     expect(await discovery.exited).toBe(0);expect((await readFile(events,'utf8')).trim().split('\n')).toEqual(['start']);
+    if(saveAlias){const path=resolve(base,'registry.json'),registry=JSON.parse(await readFile(path,'utf8'));registry.find((r:any)=>r.upstreamName==='academy_dailyrecord_save').tool.name='fictional_save_alias';await writeFile(path,JSON.stringify(registry));}
     client=new Client({name:'fictional-neutral-client',version:'1.0.0'});
     transport=new StdioClientTransport({command:process.execPath,args:['--preload',deny,entry],env,stderr:'pipe'});await client.connect(transport);
     await run({base,events,client});
@@ -60,6 +61,48 @@ test('neutral save composes intake, review and save in one upstream lifetime',as
     const startsAfter=((await readFile(events,'utf8')).match(/start/g)??[]).length;
     expect(startsAfter-startsBefore).toBe(1);
   });
+},20000);
+test('save receipt failure preserves uncertainty after an issued synthetic write',async()=>{
+  await withNeutralClient(async({base,events,client})=>{
+    await writeFile(resolve(base,'inject-save-receipt-failure'),'enabled');
+    const c=context();
+    const intake:any=await client.callTool({name:'academy_dailyrecord_intake',arguments:{context:c}});
+    const saved:any=await client.callTool({name:'academy_dailyrecord_save',arguments:{context:c,observationHandle:intake.structuredContent.observationHandle,
+      reviewDigest:'9'.repeat(64),proposals:[{field:'progress',value:'- 지정 문제 12문항 풀이 진행.',factRefs:['user-fact:progress'],decision:{kind:'replace',requestRef:c.currentRequestRef}}]}});
+    expect(await readFile(events,'utf8')).toContain('synthetic-save');
+    expect(saved.isError).toBe(true);
+    expect(saved.structuredContent).toMatchObject({academyWrites:null,effectStatus:'unknown',automaticRetryAllowed:false});
+    const names=await readdir(resolve(base,'receipts'));
+    const failure=JSON.parse(await readFile(resolve(base,'receipts',names.find(n=>n.endsWith('-failure.json'))!),'utf8'));
+    expect(failure).toMatchObject({academyWrites:null,effectStatus:'unknown',automaticRetryAllowed:false});
+  });
+},20000);
+test('save result receipt preserves an uncertain synthetic backend result',async()=>{
+  await withNeutralClient(async({base,events,client})=>{
+    await writeFile(resolve(base,'inject-uncertain-save'),'enabled');
+    const c=context();
+    const intake:any=await client.callTool({name:'academy_dailyrecord_intake',arguments:{context:c}});
+    const saved:any=await client.callTool({name:'academy_dailyrecord_save',arguments:{context:c,observationHandle:intake.structuredContent.observationHandle,
+      reviewDigest:'9'.repeat(64),proposals:[{field:'progress',value:'- 지정 문제 12문항 풀이 진행.',factRefs:['user-fact:progress'],decision:{kind:'replace',requestRef:c.currentRequestRef}}]}});
+    expect(await readFile(events,'utf8')).toContain('synthetic-save');
+    expect(saved.structuredContent).toMatchObject({academyWrites:null,automaticRetryAllowed:false});
+    const names=await readdir(resolve(base,'receipts'));
+    const results=await Promise.all(names.filter(n=>n.endsWith('-result.json')).map(async n=>JSON.parse(await readFile(resolve(base,'receipts',n),'utf8'))));
+    expect(results.find(r=>r.tool==='academy_dailyrecord_save')).toMatchObject({academyWrites:null,automaticRetryAllowed:false});
+  });
+},20000);
+test('save alias records the upstream uncertain write count',async()=>{
+  await withNeutralClient(async({base,client})=>{
+    await writeFile(resolve(base,'inject-uncertain-save'),'enabled');
+    const c=context();
+    const intake:any=await client.callTool({name:'academy_dailyrecord_intake',arguments:{context:c}});
+    const saved:any=await client.callTool({name:'fictional_save_alias',arguments:{context:c,observationHandle:intake.structuredContent.observationHandle,
+      reviewDigest:'9'.repeat(64),proposals:[{field:'progress',value:'- 지정 문제 12문항 풀이 진행.',factRefs:['user-fact:progress'],decision:{kind:'replace',requestRef:c.currentRequestRef}}]}});
+    expect(saved.structuredContent).toMatchObject({academyWrites:null});
+    const names=await readdir(resolve(base,'receipts'));
+    const results=await Promise.all(names.filter(n=>n.endsWith('-result.json')).map(async n=>JSON.parse(await readFile(resolve(base,'receipts',n),'utf8'))));
+    expect(results.find(r=>r.tool==='fictional_save_alias')).toMatchObject({academyWrites:null});
+  },false,false,true);
 },20000);
 test('neutral MCP exposes exact item-answer reads and does not write answer literals to receipts',async()=>{
   await withNeutralClient(async({base,events,client})=>{
