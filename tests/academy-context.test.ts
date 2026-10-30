@@ -4,6 +4,17 @@ import {resolve} from 'node:path';
 
 const packageRoute=(packageId:string)=>({packageId,sourceCommit:'a'.repeat(40),proposedDestinationRoot:'context/private-students/'+packageId,fileCount:1,bytes:10,manifestSha256:'b'.repeat(64)});
 const manifest={schema:'education.private-context-integration/v1' as const,targetRepository:'park-kyungchan/education-platform',visibilityRequired:'private',packages:[packageRoute('2099-01-05'),packageRoute('2099-01-05-part2')]};
+test('current public direction is distinct from the preserved historical admission',async()=>{
+ const read=(path:string)=>Bun.file(resolve(import.meta.dir,'..',path)).json();
+ const [policy,project,architecture,historical]=await Promise.all([
+  read('architecture/repository-visibility-policy.json'),read('project.json'),
+  read('architecture/academy-integration.json'),read('provenance/private-context-integration.json')
+ ]);
+ expect(policy).toMatchObject({repository:'park-kyungchan/education-platform',currentDirection:'public',historicalAdmission:{historicalFileCount:566,preserveOriginalBytesAndFields:true},boundaries:{credentialsOrSecretsDisclosureAuthorized:false,separatelyHeldOriginalGitHistoriesPublicationAuthorized:false,academyRuntimeOrStudentSourceMutationAuthorized:false}});
+ expect(project.payload.details.visibility).toBe('public');
+ expect(architecture).toMatchObject({visibilityRequired:'public',visibilityPolicy:'architecture/repository-visibility-policy.json'});
+ expect(historical).toMatchObject({visibilityRequired:'private',publicAssetUseAllowed:false});
+});
 test('date selection retains every same-day package without treating the addendum as a replacement',()=>{
  const routes=privatePackageRoutes(manifest,'2099-01-05');expect(routes.map(r=>r.packageId)).toEqual(['2099-01-05','2099-01-05-part2']);
  expect(()=>privatePackageRoutes(manifest,'2099-01-06')).toThrow('not_retained');

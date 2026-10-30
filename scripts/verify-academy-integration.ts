@@ -25,6 +25,8 @@ for(const module of imported.modules)for(const entry of module.entries){
 for(const path of adaptations.keys())if(!seen.has(path))throw Error('integration_adaptation_without_original');
 for(const entry of imported.helpers)if(hash(read(entry.path))!==entry.sha256)throw Error('integration_helper_source_drift');
 const privateContext=JSON.parse(read('provenance/private-context-integration.json').toString());
+// These are historical admission fields. Current visibility is recorded separately
+// in architecture/repository-visibility-policy.json; this check preserves evidence.
 if(privateContext.targetRepository!=='park-kyungchan/education-platform'||privateContext.visibilityRequired!=='private'||privateContext.rootOctober23OperationalOutputsIncluded!==false||privateContext.nativeStoresIncluded!==false||privateContext.publicAssetUseAllowed!==false)throw Error('private_context_boundary_drift');
 let privateFiles=0;
 for(const pkg of privateContext.packages){
