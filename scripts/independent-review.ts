@@ -239,12 +239,19 @@ const prepare=(subject:string,outDir:string)=>{
   writeFileSync(resolve(outDir,'prompt.md'),renderPrompt(template,{...values,MERGE_BASE:mergeBase,DIFF_PATH:diffPath,DIFF_STAT:git(subject,'diff','-M','--shortstat',mergeBase,values.HEAD_SHA).trim()}));
 };
 
+// The job log carries every finding, one JSON line each, then the totals: the step summary is not readable through the
+// REST API, so an owner fixing a failed head must be able to read the findings from the log.
+export const verdictLogLines=(result:{pass:boolean;blocking:number;findings:readonly Finding[]}):string[]=>[
+  ...result.findings.map(finding=>JSON.stringify({finding})),
+  JSON.stringify({status:result.pass?'pass':'changes_required',findings:result.findings.length,blocking:result.blocking}),
+];
+
 const record_=async(path:string)=>{
   const result=await recordVerdict(jobApi(),env('HEAD_SHA',SHA),runUrl(),process.env.REVIEW_OUTCOME??'',existsSync(path)?readFileSync(path,'utf8'):undefined);
   const cell=(s:string)=>s.replace(/\|/g,'\\|').replace(/\n/g,' ');
   const summary=[`## ${REVIEW_CONTEXT}: ${result.pass?'PASS':'CHANGES REQUIRED'}`,'','| severity | location | summary |','|---|---|---|',...result.findings.map(f=>`| ${f.severity} | ${cell(f.file)}:${f.line} | ${cell(f.summary)} |`)].join('\n');
   if(process.env.GITHUB_STEP_SUMMARY)appendFileSync(process.env.GITHUB_STEP_SUMMARY,summary+'\n');
-  console.log(JSON.stringify({status:result.pass?'pass':'changes_required',findings:result.findings.length,blocking:result.blocking}));
+  for(const line of verdictLogLines(result))console.log(line);
   if(!result.pass)fail('independent_review_changes_required',`findings=${result.findings.length} blocking=${result.blocking}`);
 };
 
