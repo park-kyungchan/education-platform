@@ -157,7 +157,8 @@ export const recordVerdict=async(api:Api,head:string,runUrl:string,reviewOutcome
 export const priorReviewedHead=async(api:Api,pr:string,head:string):Promise<{sha:string;state:StatusState;runUrl:string}[]>=>{
   const body=await api('GET',`pulls/${pr}/commits?per_page=100`);
   if(!Array.isArray(body))return fail('independent_review_commits_unreadable','not a list');
-  if(body.length>=100)fail('independent_review_commits_paged',`count=${body.length}`);
+  // A pull request of 100 or more commits is not paged through: it simply gets full reviews.
+  if(body.length>=100)return [];
   const shas=body.map(c=>String(record(c)?.sha??''));
   const at=shas.indexOf(head);
   if(at<0)fail('independent_review_head_not_in_pull_request','head');
@@ -170,11 +171,13 @@ export const priorReviewedHead=async(api:Api,pr:string,head:string):Promise<{sha
   return heads;
 };
 const RECORD_MARKER=`##[group]Run ${RUN_PREFIX}record`;
-// Only the record step prints these lines (verdictLogLines); model output earlier in the log is never parsed. A head is
-// a valid baseline only if its record step printed the totals of a parsed verdict: a failed, skipped or invalid review
-// posts failure without totals and never narrows a later review.
+// Only the record step, the last step of the job, prints these lines (verdictLogLines). Parsing starts at the LAST record
+// marker, so model output earlier in the job cannot stand in for it. A head is a valid baseline only if the totals equal
+// the parsed findings: a failed or invalid review prints no totals, and a marker forged inside a finding's text (which the
+// runner may render as its own line) leaves fewer parsed findings than the totals. Quotes inside a finding are escaped,
+// so its text can never produce a parsable finding or totals line. Every mismatch means a full review.
 export const loggedFindings=(log:string):Finding[]|null=>{
-  const start=log.indexOf(RECORD_MARKER);
+  const start=log.lastIndexOf(RECORD_MARKER);
   if(start<0)return null;
   const findings:Finding[]=[];let totals:{findings:number}|null=null;
   for(const line of log.slice(start).split('\n')){
@@ -194,13 +197,17 @@ export const priorFindings=async(api:Api,text:TextApi,runUrl:string):Promise<Fin
   // Any unreadable or unparsable earlier log falls back to a full review; it never fails this head.
   try{return loggedFindings(await text(`actions/jobs/${job.id}/logs`));}catch{return null;}
 };
-// The newest earlier head with a valid verdict is the baseline; without one the review stays full.
+// The newest earlier head with a valid verdict is the baseline. Discovery only ever narrows a review: any failure to
+// find or read one (deleted runs, API errors, foreign statuses, history rewrites) keeps the review full, because the
+// head is already claimed and a failed preparation could never be sampled again.
 export const reviewBaseline=async(api:Api,text:TextApi,pr:string,head:string,isAncestor:(sha:string)=>boolean)=>{
-  for(const candidate of await priorReviewedHead(api,pr,head)){
-    if(!isAncestor(candidate.sha))return null;
-    const findings=await priorFindings(api,text,candidate.runUrl);
-    if(findings)return {...candidate,findings};
-  }
+  try{
+    for(const candidate of await priorReviewedHead(api,pr,head)){
+      if(!isAncestor(candidate.sha))return null;
+      const findings=await priorFindings(api,text,candidate.runUrl);
+      if(findings)return {...candidate,findings};
+    }
+  }catch{return null;}
   return null;
 };
 export const renderScope=(prior:{sha:string;state:StatusState;findings:readonly Finding[];deltaPath:string;deltaStat:string}|null):string=>{
