@@ -93,38 +93,39 @@ export class DailyRecordWorkflowStore {
     return names.slice(-limit).map(n=>JSON.parse(readFileSync(resolve(dir,n),'utf8')) as Record<string,unknown>).filter(e=>e.requestKey===requestKey);
   }
   /** Cross-process mutual exclusion for participating writers on this host.
-   * The lock is one file published atomically with its holder identity, so
-   * there is never a lock without a holder to judge. */
+   *
+   * Generation lock: holding means owning the newest `<key>.<n>.lock`, published
+   * atomically with its holder identity. Release publishes `<key>.<n>.released`.
+   * The next writer may create generation n+1 only when generation n is released
+   * or its holder's process incarnation is gone; exclusive creation makes exactly
+   * one of several contenders win. No process ever removes another's live lock,
+   * so a paused holder or a paused contender cannot cause two concurrent holders. */
   async withLock<T>(key:string,run:()=>Promise<T>,options:{waitMs?:number;pollMs?:number}={}):Promise<T>{
-    const dir=resolve(this.root,'locks'),file=resolve(dir,sha256(key)+'.lock'),token=randomUUID(),deadline=Date.now()+(options.waitMs??30000);
+    const dir=resolve(this.root,'locks'),prefix=sha256(key)+'.',token=randomUUID(),deadline=Date.now()+(options.waitMs??30000);
+    const file=(n:number)=>resolve(dir,prefix+n+'.lock'),released=(n:number)=>resolve(dir,prefix+n+'.released');
+    let held=0;
     for(;;){
-      const holder:Holder={pid:process.pid,bootId:bootId(),startTime:processStart(process.pid),token,acquiredAt:new Date().toISOString()};
-      if(exclusiveWrite(dir,file,JSON.stringify(holder)))break;
-      this.#breakIfAbandoned(file);
+      const latest=this.#latestGeneration(dir,prefix);
+      const free=latest===0||this.#exists(released(latest))||(()=>{const h=this.#holder(file(latest));return h!==null&&!holderAlive(h);})();
+      if(free){
+        const holder:Holder={pid:process.pid,bootId:bootId(),startTime:processStart(process.pid),token,acquiredAt:new Date().toISOString()};
+        if(exclusiveWrite(dir,file(latest+1),JSON.stringify(holder))){held=latest+1;break;}
+        continue;
+      }
       if(Date.now()>deadline)throw Error('shared_writer_lock_busy');
       await new Promise(r=>setTimeout(r,options.pollMs??20));
     }
+    // Older generations can no longer be judged by anyone; remove them.
+    for(const n of this.#generations(dir,prefix))if(n<held){rmSync(file(n),{force:true});rmSync(released(n),{force:true});}
     try{return await run();}
-    finally{if(this.#holder(file)?.token===token)rmSync(file,{force:true});}
+    finally{if(this.#holder(file(held))?.token===token)exclusiveWrite(dir,released(held),token);}
   }
+  #generations(dir:string,prefix:string):number[]{
+    return readdirSync(dir).filter(n=>n.startsWith(prefix)&&n.endsWith('.lock')).map(n=>Number(n.slice(prefix.length,-5))).filter(n=>Number.isSafeInteger(n)&&n>0);
+  }
+  #latestGeneration(dir:string,prefix:string){return Math.max(0,...this.#generations(dir,prefix));}
+  #exists(path:string){try{lstatSync(path);return true;}catch{return false;}}
   #holder(file:string):Partial<Holder>|null{try{return JSON.parse(readFileSync(file,'utf8'));}catch{return null;}}
-  #olderThan(path:string,ms:number){try{return Date.now()-lstatSync(path).mtimeMs>ms;}catch{return false;}}
-  /** Break only a lock whose holder process incarnation is gone. A guard
-   * directory makes the check-and-break single-winner; only the dead holder
-   * or one breaker can remove the file, so no live lock is replaced. */
-  #breakIfAbandoned(file:string){
-    const first=this.#holder(file);
-    if(!first||holderAlive(first))return;
-    const guard=file+'.break';
-    try{mkdirSync(guard,{mode:0o700});}catch{if(this.#olderThan(guard,10000))rmSync(guard,{recursive:true,force:true});return;}
-    try{
-      const again=this.#holder(file);
-      if(!again||again.token!==first.token||holderAlive(again))return;
-      const grave=file+'.abandoned-'+randomUUID();
-      try{renameSync(file,grave);}catch{return;}
-      rmSync(grave,{force:true});
-    }finally{rmSync(guard,{recursive:true,force:true});}
-  }
 }
 
 /** What the caller says about itself; recorded as declared, never as verified. */
@@ -184,8 +185,8 @@ export const workflowRequestKey=(scope:DailyRecordScope,requestRef:string)=>cano
 /** Per-student lock: current and previous-record fields of one student serialize together. */
 export const workflowLockKey=(scope:DailyRecordScope)=>canonicalJson({sourceNamespace:scope.sourceNamespace,teacherId:scope.teacherId,studentId:scope.studentId});
 /** One dispatch per exact request/field transition. */
-export const executionKey=(requestRef:string,scope:DailyRecordScope,field:DailyRecordField,before:string,after:string)=>
-  canonicalJson({requestRef,scope,field,beforeSha256:sha256(before),afterSha256:sha256(after)});
+export const executionKey=(requestRef:string,scope:DailyRecordScope,field:DailyRecordField,effectRecordKey:string,before:string,after:string)=>
+  canonicalJson({requestRef,scope,field,effectRecordKey,beforeSha256:sha256(before),afterSha256:sha256(after)});
 /** Every execution for one student, across dates and requests; filtered by physical record field. */
 export const ledgerGroup=(scope:DailyRecordScope)=>workflowLockKey(scope);
 export type FieldExecutionState='available'|'dispatch_outcome_unknown'|'reconciliation_required'|'settled_persisted'|'settled_noop'|'settled_not_persisted'
@@ -222,7 +223,7 @@ export function requestBoundApproval(store:DailyRecordWorkflowStore,input:{reque
     const reviewed=input.reviewed.find(p=>p.field===action.field);
     if(!reviewed||action.target.studentKey!==input.scope.studentId||action.target.teacherKey!==input.scope.teacherId||action.target.date!==input.scope.lessonDate
       ||action.effectRecordKey!==reviewed.effectRecordKey||action.before!==reviewed.before||action.after!==reviewed.after)return {status:'rejected'};
-    const key=executionKey(input.requestRef,input.scope,reviewed.field,action.before,action.after),actionDigest=canonicalActionDigest(action);
+    const key=executionKey(input.requestRef,input.scope,reviewed.field,reviewed.effectRecordKey,action.before,action.after),actionDigest=canonicalActionDigest(action);
     // Ledger first: a crash between the two writes leaves an index entry that still reads as available.
     store.addToLedger(ledgerGroup(input.scope),key);
     const created=store.publishOnce('execution',key,{requestRef:input.requestRef,scope:input.scope,field:reviewed.field,attribution:input.attribution,reviewDigest:input.reviewDigest,

@@ -482,7 +482,7 @@ export class DailyRecordService {
     if(!prior)return hold('prior_review_record_required');
     if(prior.status!=='prepared'||!canonicalSame(prior.scope,scope)||prior.requestRef!==requestRef
       ||prior.observationHandle!==input.observationHandle||!canonicalSame(prior.reviewPolicy,this.#policyPins()))return hold('prior_review_record_mismatch');
-    const key=(p:{field:DailyRecordField;before:string;after:string})=>executionKey(requestRef,scope,p.field,p.before,p.after);
+    const key=(p:{field:DailyRecordField;effectRecordKey:string;before:string;after:string})=>executionKey(requestRef,scope,p.field,p.effectRecordKey,p.before,p.after);
     const report=(p:StoredReview['patch'][number],extra:Record<string,unknown>={})=>({field:p.field,executionState:fieldExecutionState(store,key(p)),...extra});
     try{
       return await store.withLock(workflowLockKey(scope),async()=>{
@@ -544,7 +544,7 @@ export class DailyRecordService {
       const pending=studentExecutions(store,scope).filter(e=>needsReconciliation(e.state));
       if(!pending.length)return {...base,status:'settled' as const,reasonCode:null,by,fields:fields()};
       type SourceRead={status:'observed';observation:DailyRecordObservation}|{status:'unavailable';reasonCode:string};
-      const reads=new Map<string,SourceRead>();
+      const reads=new Map<string,SourceRead>();let notObserved=false;
       for(const {key,record} of pending){
         const scopeKey=JSON.stringify(record.scope);
         if(!reads.has(scopeKey)){
@@ -557,9 +557,16 @@ export class DailyRecordService {
           continue;
         }
         const target=record.field==='previousHomeworkAssessment'?read.observation.previousTarget?.recordId:read.observation.target.recordId;
+        // The lesson now binds a different record (for example a backfilled
+        // intermediate lesson): the affected record was not observed, so the
+        // effect stays unresolved and blocks its own record field.
+        if(record.effectRecordKey!==target){
+          notObserved=true;
+          store.appendAudit(workflowRequestKey(record.scope,record.requestRef),{event:'reconcile_effect_record_not_observed',field:record.field,by});
+          continue;
+        }
         const current=read.observation.fields[record.field];
-        const classification=record.effectRecordKey!==target?'conflict'
-          :current.state!=='known'?null:textDigest(current.value)===record.afterSha256?'persisted':textDigest(current.value)===record.beforeSha256?'not_persisted':'conflict';
+        const classification=current.state!=='known'?null:textDigest(current.value)===record.afterSha256?'persisted':textDigest(current.value)===record.beforeSha256?'not_persisted':'conflict';
         if(!classification)continue;
         store.publishOnce('reconciliation',key,{classification,sourceRevision:read.observation.sourceRevision,observedAt:read.observation.observedAt,by,reconciledAt:new Date(this.now()).toISOString()});
         store.appendAudit(workflowRequestKey(record.scope,record.requestRef),{event:'reconciled',field:record.field,classification,by});
@@ -567,7 +574,7 @@ export class DailyRecordService {
       const after=fields(),open=after.some(f=>needsReconciliation(f.executionState));
       const unavailable=[...reads.values()].some(r=>r.status!=='observed');
       return {...base,status:open?'held' as const:'settled' as const,
-        reasonCode:open?(unavailable?'readback_unavailable_reconcile_later':'readback_field_unknown_reconcile_later'):null,by,fields:after};
+        reasonCode:open?(unavailable?'readback_unavailable_reconcile_later':notObserved?'affected_record_not_observed_manual_reconcile_required':'readback_field_unknown_reconcile_later'):null,by,fields:after};
     });
   }
   /** Metadata-only handoff view: per-field executions on this record with who did them, plus the request audit. No field or instruction text. */

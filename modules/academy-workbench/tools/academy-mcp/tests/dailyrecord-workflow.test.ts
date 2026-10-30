@@ -226,7 +226,7 @@ test('the shared lock serializes holders, waits for a live holder and breaks a d
     const second=store.withLock('k',async()=>{order.push('second');});
     await new Promise(r=>setTimeout(r,60));release();await Promise.all([first,second]);
     expect(order).toEqual(['first-in','first-out','second']);
-    const lockFile=(key:string)=>resolve(base,'store','locks',createHash('sha256').update(key,'utf8').digest('hex')+'.lock');
+    const lockFile=(key:string)=>resolve(base,'store','locks',createHash('sha256').update(key,'utf8').digest('hex')+'.1.lock');
     const plant=(key:string,holder:unknown)=>writeFileSync(lockFile(key),JSON.stringify(holder));
     const dead=Bun.spawnSync([process.execPath,'-e','console.log(process.pid)']);
     plant('dead',{pid:Number(dead.stdout.toString().trim()),token:'abandoned',acquiredAt:new Date().toISOString()});
@@ -240,7 +240,9 @@ test('the shared lock serializes holders, waits for a live holder and breaks a d
     await expect(store.withLock('live',async()=>{},{waitMs:150})).rejects.toThrow('shared_writer_lock_busy');
     expect(JSON.parse(readFileSync(lockFile('live'),'utf8')).token).toBe('live');
     rmSync(lockFile('live'));
-    expect(readdirSync(resolve(base,'store','locks')).filter(n=>!n.startsWith('.'))).toEqual([]);
+    // Each acquisition prunes older generations: one generation file remains per key.
+    const kPrefix=createHash('sha256').update('k','utf8').digest('hex')+'.';
+    expect(readdirSync(resolve(base,'store','locks')).filter(n=>n.startsWith(kPrefix)&&n.endsWith('.lock'))).toHaveLength(1);
     expect(store.publishOnce('request','n1',{v:1}).created).toBe(true);
     expect(store.publishOnce('request','n1',{v:2})).toEqual({created:false,record:{v:1}});
   }finally{rmSync(base,{recursive:true,force:true});}
@@ -350,3 +352,48 @@ test('a managed source-verified student outside the launch list is resolved, rev
     expect(state.progress).toBe('- 지정 문제 풀이 진행.');
   }finally{rmSync(base,{recursive:true,force:true});}
 },20000);
+
+test('a paused contender never removes a live generation and contenders get exactly one winner',async()=>{
+  const base=mkdtempSync(resolve(tmpdir(),'dailyrecord-lock-gen-'));
+  try{
+    const store=new DailyRecordWorkflowStore(resolve(base,'store'));
+    let active=0,maxActive=0;
+    const body=async()=>{active++;maxActive=Math.max(maxActive,active);await new Promise(r=>setTimeout(r,15));active--;};
+    await Promise.all(Array.from({length:12},()=>store.withLock('contended',body,{waitMs:5000,pollMs:2})));
+    expect(maxActive).toBe(1);
+    // Multi-process contention through the same store.
+    const script=resolve(base,'contend.ts');
+    writeFileSync(script,`import {DailyRecordWorkflowStore} from ${JSON.stringify(resolve(import.meta.dir,'../src/dailyrecord-workflow.ts'))};
+const store=new DailyRecordWorkflowStore(process.argv[2]);const {appendFileSync}=await import('node:fs');
+for(let i=0;i<5;i++)await store.withLock('cross',async()=>{appendFileSync(process.argv[3],'in\\n');await new Promise(r=>setTimeout(r,10));appendFileSync(process.argv[3],'out\\n');},{waitMs:20000,pollMs:3});`);
+    const trace=resolve(base,'trace.txt');
+    const children=Array.from({length:4},()=>Bun.spawn([process.execPath,script,resolve(base,'store'),trace],{stdout:'ignore',stderr:'inherit'}));
+    expect(await Promise.all(children.map(c=>c.exited))).toEqual([0,0,0,0]);
+    const lines=readFileSync(trace,'utf8').trim().split('\n');
+    expect(lines).toHaveLength(40);
+    for(let i=0;i<lines.length;i+=2)expect([lines[i],lines[i+1]]).toEqual(['in','out']);
+  }finally{rmSync(base,{recursive:true,force:true});}
+},30000);
+
+test('execution keys distinguish physical records, and a changed previous-record binding stays unresolved',async()=>{
+  const {executionKey,requestBoundApproval,createDailyRecordWorkflow,fieldExecutionState}=await import('../src/dailyrecord-workflow.ts');
+  expect(executionKey('r',nativeScope,'previousHomeworkAssessment','R1','3','4')).not.toBe(executionKey('r',nativeScope,'previousHomeworkAssessment','R2','3','4'));
+  const {scope,learningPolicy}=await import('./dailyrecord-fixture.ts');
+  const base=mkdtempSync(resolve(tmpdir(),'dailyrecord-binding-'));
+  try{
+    const workflow=createDailyRecordWorkflow({storeDir:resolve(base,'store')});
+    const attribution={schemaVersion:'academy.dailyrecord-attribution/1' as const,observedBy:'upstream' as const,observedAt:new Date().toISOString(),client:null,
+      process:{pid:1,ppid:0,uid:0,parentCommand:null,bridgeSha256:null},herdrPaneId:null,declared:null};
+    // An uncertain previous-record dispatch to a record the lesson no longer binds.
+    const approval=requestBoundApproval(workflow.store,{requestRef:'synthetic-current-user-request',attribution,reviewDigest:'d'.repeat(64),scope,
+      reviewed:[{field:'previousHomeworkAssessment',before:'4',after:'5',effectRecordKey:'old-previous-record'}]});
+    const target={studentName:'Synthetic Student',date:scope.lessonDate,groupId:'3',teacherKey:scope.teacherId,studentKey:scope.studentId,courseKey:'5',recordKey:'current-record-synthetic',membershipKey:'8'};
+    expect((await approval.consumeApproval({attemptId:'a1',target,field:'previousHomeworkAssessment',effectRecordKey:'old-previous-record',before:'4',after:'5',wireDigest:'2'.repeat(64)})).status).toBe('verified');
+    const service=new DailyRecordService(backend(),safeguard,Date.now,learningPolicy,null,workflow);
+    const result:any=await service.reconcile({context:context()});
+    expect(result).toMatchObject({status:'held',reasonCode:'affected_record_not_observed_manual_reconcile_required',
+      fields:[{field:'previousHomeworkAssessment',executionState:'dispatch_outcome_unknown'}]});
+    const key=executionKey('synthetic-current-user-request',scope,'previousHomeworkAssessment','old-previous-record','4','5');
+    expect(fieldExecutionState(workflow.store,key)).toBe('dispatch_outcome_unknown');
+  }finally{rmSync(base,{recursive:true,force:true});}
+});
