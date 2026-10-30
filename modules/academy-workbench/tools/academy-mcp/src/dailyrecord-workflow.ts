@@ -92,41 +92,37 @@ export class DailyRecordWorkflowStore {
     let names:string[];try{names=readdirSync(dir).filter(n=>n.endsWith('.json')&&!n.startsWith('.')).sort();}catch(error){if(errno(error)==='ENOENT')return [];throw error;}
     return names.slice(-limit).map(n=>JSON.parse(readFileSync(resolve(dir,n),'utf8')) as Record<string,unknown>).filter(e=>e.requestKey===requestKey);
   }
-  /** Cross-process mutual exclusion for participating writers on this host. */
+  /** Cross-process mutual exclusion for participating writers on this host.
+   * The lock is one file published atomically with its holder identity, so
+   * there is never a lock without a holder to judge. */
   async withLock<T>(key:string,run:()=>Promise<T>,options:{waitMs?:number;pollMs?:number}={}):Promise<T>{
-    const dir=resolve(this.root,'locks',sha256(key)),token=randomUUID(),deadline=Date.now()+(options.waitMs??30000);
-    const holder:Holder={pid:process.pid,bootId:bootId(),startTime:processStart(process.pid),token,acquiredAt:''};
+    const dir=resolve(this.root,'locks'),file=resolve(dir,sha256(key)+'.lock'),token=randomUUID(),deadline=Date.now()+(options.waitMs??30000);
     for(;;){
-      try{
-        mkdirSync(dir,{mode:0o700});
-        writeFileSync(resolve(dir,'holder.json'),JSON.stringify({...holder,acquiredAt:new Date().toISOString()}),{mode:0o600,flag:'wx'});
-        break;
-      }catch(error){
-        if(errno(error)!=='EEXIST')throw error;
-        this.#breakIfAbandoned(dir);
-        if(Date.now()>deadline)throw Error('shared_writer_lock_busy');
-        await new Promise(r=>setTimeout(r,options.pollMs??20));
-      }
+      const holder:Holder={pid:process.pid,bootId:bootId(),startTime:processStart(process.pid),token,acquiredAt:new Date().toISOString()};
+      if(exclusiveWrite(dir,file,JSON.stringify(holder)))break;
+      this.#breakIfAbandoned(file);
+      if(Date.now()>deadline)throw Error('shared_writer_lock_busy');
+      await new Promise(r=>setTimeout(r,options.pollMs??20));
     }
     try{return await run();}
-    finally{if(this.#holder(dir)?.token===token)rmSync(dir,{recursive:true,force:true});}
+    finally{if(this.#holder(file)?.token===token)rmSync(file,{force:true});}
   }
-  #holder(dir:string):Partial<Holder>|null{try{return JSON.parse(readFileSync(resolve(dir,'holder.json'),'utf8'));}catch{return null;}}
+  #holder(file:string):Partial<Holder>|null{try{return JSON.parse(readFileSync(file,'utf8'));}catch{return null;}}
   #olderThan(path:string,ms:number){try{return Date.now()-lstatSync(path).mtimeMs>ms;}catch{return false;}}
-  /** Break only a lock whose holder process incarnation is gone (or that never
-   * recorded a holder). A guard directory makes the check-and-break single-winner. */
-  #breakIfAbandoned(dir:string){
-    const first=this.#holder(dir);
-    if(first?holderAlive(first):!this.#olderThan(dir,5000))return;
-    const guard=dir+'.break';
+  /** Break only a lock whose holder process incarnation is gone. A guard
+   * directory makes the check-and-break single-winner; only the dead holder
+   * or one breaker can remove the file, so no live lock is replaced. */
+  #breakIfAbandoned(file:string){
+    const first=this.#holder(file);
+    if(!first||holderAlive(first))return;
+    const guard=file+'.break';
     try{mkdirSync(guard,{mode:0o700});}catch{if(this.#olderThan(guard,10000))rmSync(guard,{recursive:true,force:true});return;}
     try{
-      const again=this.#holder(dir);
-      const abandoned=again?again.token===first?.token&&!holderAlive(again):first===null&&this.#olderThan(dir,5000);
-      if(!abandoned)return;
-      const grave=dir+'.abandoned-'+randomUUID();
-      try{renameSync(dir,grave);}catch{return;}
-      rmSync(grave,{recursive:true,force:true});
+      const again=this.#holder(file);
+      if(!again||again.token!==first.token||holderAlive(again))return;
+      const grave=file+'.abandoned-'+randomUUID();
+      try{renameSync(file,grave);}catch{return;}
+      rmSync(grave,{force:true});
     }finally{rmSync(guard,{recursive:true,force:true});}
   }
 }
@@ -190,8 +186,8 @@ export const workflowLockKey=(scope:DailyRecordScope)=>canonicalJson({sourceName
 /** One dispatch per exact request/field transition. */
 export const executionKey=(requestRef:string,scope:DailyRecordScope,field:DailyRecordField,before:string,after:string)=>
   canonicalJson({requestRef,scope,field,beforeSha256:sha256(before),afterSha256:sha256(after)});
-/** One record field, across every request. */
-export const ledgerGroup=(scope:DailyRecordScope,field:DailyRecordField)=>canonicalJson({scope,field});
+/** Every execution for one student, across dates and requests; filtered by physical record field. */
+export const ledgerGroup=(scope:DailyRecordScope)=>workflowLockKey(scope);
 export type FieldExecutionState='available'|'dispatch_outcome_unknown'|'reconciliation_required'|'settled_persisted'|'settled_noop'|'settled_not_persisted'
   |'reconciled_persisted'|'reconciled_not_persisted'|'reconciled_conflict';
 export function fieldExecutionState(store:DailyRecordWorkflowStore,key:string):FieldExecutionState{
@@ -205,9 +201,16 @@ export const needsReconciliation=(state:FieldExecutionState)=>state==='dispatch_
 export const settledEffect=(state:FieldExecutionState)=>state==='settled_persisted'||state==='settled_noop'||state==='reconciled_persisted';
 /** A transition that was dispatched without landing is never replayed under the same request. */
 export const consumedWithoutEffect=(state:FieldExecutionState)=>state==='settled_not_persisted'||state==='reconciled_not_persisted'||state==='reconciled_conflict';
-/** Any unresolved dispatch on this record field, under any request, blocks a new one. */
-export const unresolvedOnField=(store:DailyRecordWorkflowStore,scope:DailyRecordScope,field:DailyRecordField)=>
-  store.ledger(ledgerGroup(scope,field)).filter(key=>needsReconciliation(fieldExecutionState(store,key)));
+export type ExecutionRecord={requestRef:string;scope:DailyRecordScope;field:DailyRecordField;attribution:DailyRecordAttribution;reviewDigest:string;attemptId:string;
+  effectRecordKey:string;beforeSha256:string;afterSha256:string;actionDigest:string;recordedAt:string};
+/** Executions of one student. A ledger entry whose execution record was never
+ * published (crash between the two writes) is skipped: it never dispatched. */
+export function studentExecutions(store:DailyRecordWorkflowStore,scope:DailyRecordScope){
+  return store.ledger(ledgerGroup(scope)).flatMap(key=>{const record=store.get('execution',key) as ExecutionRecord|null;return record?[{key,record,state:fieldExecutionState(store,key)}]:[];});
+}
+/** Any unresolved dispatch on this physical record field, reached through any lesson date or request, blocks a new one. */
+export const unresolvedOnField=(store:DailyRecordWorkflowStore,scope:DailyRecordScope,field:DailyRecordField,effectRecordKey:string)=>
+  studentExecutions(store,scope).filter(e=>e.record.field===field&&e.record.effectRecordKey===effectRecordKey&&needsReconciliation(e.state));
 
 export type JournalAction=Readonly<{attemptId:string;target:{studentName:string;date:string;groupId:string;teacherKey:string;studentKey:string;courseKey:string;recordKey:string;membershipKey:string};field:string;effectRecordKey:string;before:string;after:string;wireDigest:string}>;
 export interface DailyRecordActionApproval {consumeApproval(action:JournalAction):Promise<{status:'verified';actionDigest:string}|{status:'rejected'}>}
@@ -221,7 +224,7 @@ export function requestBoundApproval(store:DailyRecordWorkflowStore,input:{reque
       ||action.effectRecordKey!==reviewed.effectRecordKey||action.before!==reviewed.before||action.after!==reviewed.after)return {status:'rejected'};
     const key=executionKey(input.requestRef,input.scope,reviewed.field,action.before,action.after),actionDigest=canonicalActionDigest(action);
     // Ledger first: a crash between the two writes leaves an index entry that still reads as available.
-    store.addToLedger(ledgerGroup(input.scope,reviewed.field),key);
+    store.addToLedger(ledgerGroup(input.scope),key);
     const created=store.publishOnce('execution',key,{requestRef:input.requestRef,scope:input.scope,field:reviewed.field,attribution:input.attribution,reviewDigest:input.reviewDigest,
       attemptId:action.attemptId,effectRecordKey:action.effectRecordKey,beforeSha256:sha256(action.before),afterSha256:sha256(action.after),actionDigest,
       recordedAt:new Date().toISOString()}).created;

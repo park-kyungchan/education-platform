@@ -186,11 +186,16 @@ test('a source-verified student outside the launch list saves by the intake-reco
     applyJournalAction:async()=>{writes++;return {status:'persisted' as const,transport:'returned' as const};},close:()=>{}};
   const approval={consumeApproval:async()=>({status:'verified' as const,actionDigest:'c'.repeat(64)})};
   const patch=[{field:'progress' as const,value:'- 새 문안',before:'Current',wireDigest:'a'.repeat(64)}];
-  const verified=new NativeDailyRecordBackend(port as never,admission,()=>({username:'fictional',password:'fictional'}),owner);
+  const managed=new Set(['Invented Student','Second Student','Third Student']);
+  const verified=new NativeDailyRecordBackend(port as never,admission,()=>({username:'fictional',password:'fictional'}),owner,managed);
+  const unmanaged=new NativeDailyRecordBackend(port as never,admission,()=>({username:'fictional',password:'fictional'}),owner);
+  await expect(unmanaged.saveDailyRecord(scope,patch,approval,{displayName:'Second Student'})).rejects.toThrow('native_dailyrecord_scope_refused');
   await expect(verified.saveDailyRecord(scope,patch,approval)).rejects.toThrow('native_dailyrecord_scope_refused');
   expect(await verified.saveDailyRecord(scope,patch,approval,{displayName:'Second Student'})).toEqual([{field:'progress',status:'persisted',dispatched:true,transport:'returned'}]);
-  await expect(verified.saveDailyRecord(scope,patch,approval,{displayName:'Another Name'})).rejects.toThrow('native_dailyrecord_occurrence_unverified');
-  const configuredOnly=new NativeDailyRecordBackend(port as never,admission,()=>({username:'fictional',password:'fictional'}),ownerAdmissionSchema.parse({...owner,studentScope:'configured'}));
+  // An unmanaged name is refused; a managed name without the exact source row is unverified.
+  await expect(verified.saveDailyRecord(scope,patch,approval,{displayName:'Another Name'})).rejects.toThrow('native_dailyrecord_scope_refused');
+  await expect(verified.saveDailyRecord(scope,patch,approval,{displayName:'Third Student'})).rejects.toThrow('native_dailyrecord_occurrence_unverified');
+  const configuredOnly=new NativeDailyRecordBackend(port as never,admission,()=>({username:'fictional',password:'fictional'}),ownerAdmissionSchema.parse({...owner,studentScope:'configured'}),managed);
   await expect(configuredOnly.saveDailyRecord(scope,patch,approval,{displayName:'Second Student'})).rejects.toThrow('native_dailyrecord_scope_refused');
   expect(writes).toBe(1);
 });
@@ -221,8 +226,8 @@ test('the shared lock serializes holders, waits for a live holder and breaks a d
     const second=store.withLock('k',async()=>{order.push('second');});
     await new Promise(r=>setTimeout(r,60));release();await Promise.all([first,second]);
     expect(order).toEqual(['first-in','first-out','second']);
-    const lockDir=(key:string)=>resolve(base,'store','locks',createHash('sha256').update(key,'utf8').digest('hex'));
-    const plant=(key:string,holder:unknown)=>{mkdirSync(lockDir(key));writeFileSync(resolve(lockDir(key),'holder.json'),JSON.stringify(holder));};
+    const lockFile=(key:string)=>resolve(base,'store','locks',createHash('sha256').update(key,'utf8').digest('hex')+'.lock');
+    const plant=(key:string,holder:unknown)=>writeFileSync(lockFile(key),JSON.stringify(holder));
     const dead=Bun.spawnSync([process.execPath,'-e','console.log(process.pid)']);
     plant('dead',{pid:Number(dead.stdout.toString().trim()),token:'abandoned',acquiredAt:new Date().toISOString()});
     expect(await store.withLock('dead',async()=>'acquired',{waitMs:2000})).toBe('acquired');
@@ -230,7 +235,12 @@ test('the shared lock serializes holders, waits for a live holder and breaks a d
     const boot=readFileSync('/proc/sys/kernel/random/boot_id','utf8').trim();
     plant('reused',{pid:process.pid,bootId:boot,startTime:'0',token:'stale',acquiredAt:new Date().toISOString()});
     expect(await store.withLock('reused',async()=>'acquired',{waitMs:2000})).toBe('acquired');
-    expect(readdirSync(resolve(base,'store','locks'))).toEqual([]);
+    // A live holder with its true incarnation is never broken, however long it holds.
+    plant('live',{pid:process.pid,bootId:boot,startTime:readFileSync('/proc/self/stat','utf8').split(') ')[1]!.split(' ')[19],token:'live',acquiredAt:new Date(0).toISOString()});
+    await expect(store.withLock('live',async()=>{},{waitMs:150})).rejects.toThrow('shared_writer_lock_busy');
+    expect(JSON.parse(readFileSync(lockFile('live'),'utf8')).token).toBe('live');
+    rmSync(lockFile('live'));
+    expect(readdirSync(resolve(base,'store','locks')).filter(n=>!n.startsWith('.'))).toEqual([]);
     expect(store.publishOnce('request','n1',{v:1}).created).toBe(true);
     expect(store.publishOnce('request','n1',{v:2})).toEqual({created:false,record:{v:1}});
   }finally{rmSync(base,{recursive:true,force:true});}
@@ -257,3 +267,86 @@ test('without the workflow the legacy launch-pinned route is unchanged',async()=
   const review:any=await service.review({context:c,observationHandle:intake.observationHandle!,proposals:[proposal('progress','지정 문제 12문항 풀이 진행.')]});
   expect(review).toMatchObject({status:'prepared',reviewRecord:null,saveAdmission:'separate_trusted_native_owner_required'});
 });
+
+test('the field ledger follows the physical record, so another lesson date cannot bypass an unresolved previous-record write',async()=>{
+  const {requestBoundApproval,unresolvedOnField,studentExecutions}=await import('../src/dailyrecord-workflow.ts');
+  const base=mkdtempSync(resolve(tmpdir(),'dailyrecord-ledger-'));
+  try{
+    const store=new DailyRecordWorkflowStore(resolve(base,'store'));
+    const first={...nativeScope,lessonDate:'2040-01-04'},second={...nativeScope,lessonDate:'2040-01-05'};
+    const attribution={schemaVersion:'academy.dailyrecord-attribution/1' as const,observedBy:'upstream' as const,observedAt:new Date().toISOString(),client:null,
+      process:{pid:1,ppid:0,uid:0,parentCommand:null,bridgeSha256:null},herdrPaneId:null,declared:null};
+    const approval=requestBoundApproval(store,{requestRef:'r1',attribution,reviewDigest:'d'.repeat(64),scope:first,
+      reviewed:[{field:'previousHomeworkAssessment',before:'3',after:'4',effectRecordKey:'12'}]});
+    const target={studentName:'Invented Student',date:first.lessonDate,groupId:'3',teacherKey:'99001',studentKey:'77001',courseKey:'5',recordKey:'13',membershipKey:'8'};
+    expect((await approval.consumeApproval({attemptId:'a1',target,field:'previousHomeworkAssessment',effectRecordKey:'12',before:'3',after:'4',wireDigest:'a'.repeat(64)})).status).toBe('verified');
+    // Seen through a later lesson whose previous record is the same physical record.
+    expect(unresolvedOnField(store,second,'previousHomeworkAssessment','12')).toHaveLength(1);
+    expect(unresolvedOnField(store,second,'previousHomeworkAssessment','99')).toHaveLength(0);
+    // A ledger entry whose execution record was never published is skipped, not a crash.
+    store.addToLedger(JSON.stringify(['ignored']),'never-published');
+    const {workflowLockKey}=await import('../src/dailyrecord-workflow.ts');
+    store.addToLedger(workflowLockKey(first),'never-published');
+    expect(studentExecutions(store,first)).toHaveLength(1);
+  }finally{rmSync(base,{recursive:true,force:true});}
+});
+
+test('status survives a ledger entry without an execution record',async()=>{
+  const f=fixture();
+  try{
+    const p=f.process(),r=await reviewed(p.service,'codex',{progress:'- 지정 문제 풀이 진행.'});
+    const {workflowLockKey}=await import('../src/dailyrecord-workflow.ts');
+    p.workflow!.store.addToLedger(workflowLockKey(nativeScope),'crashed-before-execution-record');
+    expect(await p.service.save(r.save('codex'))).toMatchObject({status:'saved',academyWrites:1});
+    expect(await p.service.executionStatus({scope:nativeScope})).toMatchObject({status:'recorded',fields:[{field:'progress',executions:[{executionState:'settled_persisted'}]}]});
+  }finally{f.cleanup();}
+},20000);
+
+test('an empty reviewed patch still fails closed when the source drifted before save',async()=>{
+  const f=fixture();
+  try{
+    const p=f.process();
+    // The proposal equals the current source, so the prepared review has an empty patch.
+    const r=await reviewed(p.service,'codex',{progress:'- 기존 진도 문안'});
+    expect(r.review.patch).toEqual([]);
+    p.source.write({...p.source.read(),progress:'- 다른 교사가 바꾼 문안'});
+    expect(await p.service.save(r.save('codex'))).toMatchObject({status:'held',reasonCode:'fresh_review_drift_new_review_required',academyWrites:0});
+    const again=await reviewed(p.service,'codex',{progress:'- 다른 교사가 바꾼 문안'},'synthetic-request-2');
+    expect(await p.service.save(again.save('codex'))).toMatchObject({status:'saved',reasonCode:'reviewed_patch_empty',academyWrites:0});
+    expect(f.writes()).toBe(0);
+  }finally{f.cleanup();}
+},20000);
+
+test('a managed source-verified student outside the launch list is resolved, reviewed and then saved by a fresh process',async()=>{
+  const {createDailyRecordWorkflow}=await import('../src/dailyrecord-workflow.ts');
+  const {learningPolicy}=await import('./dailyrecord-fixture.ts');
+  const base=mkdtempSync(resolve(tmpdir(),'dailyrecord-outside-list-'));
+  try{
+    const scope={sourceNamespace:'academy.lms.dayrecord',teacherId:'99001',studentId:'77002',lessonDate:'2040-01-04'};
+    const admission={teacherId:'99001',teacherLabel:'Invented Teacher',date:'2040-01-04',students:[{studentId:'77001',displayName:'Invented Student'}],sourceBundleSha256:'b'.repeat(64)};
+    const owner=ownerAdmissionSchema.parse({schemaVersion:'academy.owner-admission/2',decider:'user',decidedAt:'2040-01-04',sourceNamespace:'academy.lms.dayrecord',teacherId:'99001',
+      allowedFrom:null,allowedThrough:null,failClosedDefault:'2026-10-23',studentScope:'source_verified'});
+    const target={studentName:'Second Student',date:'2040-01-04',groupId:'3',teacherKey:'99001',studentKey:'77002',courseKey:'5',recordKey:'23',membershipKey:'9'};
+    const prior={...target,date:'2040-01-02',recordKey:'22'};
+    const state={progress:'- 기존 진도 문안',homework:'',lessonMemo:'',attendance:'Y',dailyTestAssessment:'0',previousHomeworkAssessment:'3'};
+    const port=()=>({authenticate:async()=>{},discoverDayRecordGroups:async()=>({groups:[{groupId:'3'}]}),
+      execute:async(input:any)=>({dayRecords:input.studentNames[0]==='Second Student'?[{...(input.date===target.date?target:prior),fields:{progress:state.progress,homework:state.homework,lessonMemo:state.lessonMemo,attendance:state.attendance}}]:[]}),
+      journalState:async()=>({target,fields:{...state},previousRecordKey:'22',previousDate:'2040-01-02',wireDigest:'a'.repeat(64)}),
+      applyJournalAction:async(action:any,approval:any)=>{
+        if((await approval.consumeApproval(action)).status!=='verified')throw Error('journal_http_approval_rejected');
+        (state as Record<string,string>)[action.field]=action.after;return {status:'persisted' as const,transport:'returned' as const};},close:()=>{}});
+    const managed=new Set(['Invented Student','Second Student']),store=resolve(base,'store');
+    const service=()=>{const backend=new NativeDailyRecordBackend(port() as never,admission,()=>({username:'fictional',password:'fictional'}),owner,managed);
+      return new DailyRecordService(backend,safeguard,Date.now,learningPolicy,backend,createDailyRecordWorkflow({storeDir:store}));};
+    const c={...workflowContext({progress:'- 지정 문제 풀이 진행.'}),scope};
+    const first=service();
+    expect(await first.resolveStudent({purpose:'Synthetic save',currentRequestRef:c.currentRequestRef,displayName:'Second Student',lessonDate:'2040-01-04'})).toMatchObject({status:'resolved'});
+    const intake:any=await first.intake({context:c});
+    expect(intake).toMatchObject({sourceAvailability:'observed',observationPersistence:'owner_durable'});expect(intake.observationHandle).toBeTruthy();
+    const review:any=await first.review({context:c,observationHandle:intake.observationHandle,proposals:proposals({progress:'- 지정 문제 풀이 진행.'})});
+    expect(review.status).toBe('prepared');
+    const saved=await service().save({context:c,observationHandle:intake.observationHandle,reviewDigest:review.reviewDigest,proposals:proposals({progress:'- 지정 문제 풀이 진행.'}),request:userRequest()});
+    expect(saved).toMatchObject({status:'saved',academyWrites:1,fields:[{field:'progress',status:'persisted'}]});
+    expect(state.progress).toBe('- 지정 문제 풀이 진행.');
+  }finally{rmSync(base,{recursive:true,force:true});}
+},20000);

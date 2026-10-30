@@ -7,7 +7,7 @@ import {resolveStudentByName,studentResolveInputSchema} from './student-resolver
 import {readDailyRecordByName,type DailyRecordReadAdmission} from './dailyrecord-read.ts';
 import {readFailureResult} from './read-failure.ts';
 import {toolResultBytes} from './tool-result.ts';
-import {attributionSchema,attributionSummary,consumedWithoutEffect,declaredActorSchema,executionKey,fieldExecutionState,ledgerGroup,needsReconciliation,observeAttribution,requestBoundApproval,settledEffect,textDigest,unresolvedOnField,userRequestSchema,workflowLockKey,workflowRequestKey,canonicalSame,type DailyRecordActionApproval,type DailyRecordAttribution,type DailyRecordWorkflow} from './dailyrecord-workflow.ts';
+import {attributionSchema,attributionSummary,consumedWithoutEffect,declaredActorSchema,executionKey,fieldExecutionState,needsReconciliation,studentExecutions,observeAttribution,requestBoundApproval,settledEffect,textDigest,unresolvedOnField,userRequestSchema,workflowLockKey,workflowRequestKey,canonicalSame,type DailyRecordActionApproval,type DailyRecordAttribution,type DailyRecordWorkflow} from './dailyrecord-workflow.ts';
 
 const hash=z.string().regex(/^[a-f0-9]{64}$/),instant=z.iso.datetime({offset:true});
 const knownValueSchema=z.discriminatedUnion('state',[
@@ -73,7 +73,8 @@ export type TextbookSectionObservation={student:{studentId:string;displayName:st
 /** Implemented by the native/source owner, never by MCP arguments. All methods are read-only. */
 export interface DailyRecordReadBackend {
   readRoutingAdmission?():DailyRecordReadAdmission;
-  readDailyRecord(scope:Readonly<DailyRecordScope>,requestRef:string):Promise<ReadResult<DailyRecordObservation>>;
+  /** `subject` is the source-verified name recorded at intake, letting a fresh process re-select a student outside the launch list. */
+  readDailyRecord(scope:Readonly<DailyRecordScope>,requestRef:string,subject?:{displayName:string}):Promise<ReadResult<DailyRecordObservation>>;
   readStudentMetadataByName?(input:Readonly<StudentMetadataGet>):Promise<StudentMetadataObservation>;
   readStudentMetadata?(input:Readonly<StudentMetadataBatch>):Promise<StudentMetadataObservation>;
   readItemAnswers?(labels:readonly string[]):Promise<unknown>;
@@ -216,10 +217,10 @@ export class DailyRecordService {
     const result=this.#tail.then(run);
     this.#tail=result.catch(()=>{});return result;
   }
-  async #read(scope:DailyRecordScope,requestRef:string){
+  async #read(scope:DailyRecordScope,requestRef:string,subject?:{displayName:string}){
     if(!this.backend)return {status:'unavailable' as const,reasonCode:'dailyrecord_read_backend_not_configured'};
     try{return await this.#serial(async()=>{
-      const read=await this.backend!.readDailyRecord(freezeLabelData(structuredClone(scope)),requestRef);
+      const read=await this.backend!.readDailyRecord(freezeLabelData(structuredClone(scope)),requestRef,subject);
       if(read.status==='unavailable')return {status:'unavailable' as const,reasonCode:safeReason(read.reasonCode)};
       return {status:'observed' as const,observation:qualifiedObservation(read.observation,scope),subject:read.subject};
     });
@@ -353,7 +354,7 @@ export class DailyRecordService {
     }
     if(held&&this.#age(held.observation.observedAt))global.push('stale_source');
     // Fresh authoritative before-state; this pure review neither consumes approval nor writes.
-    const read=!held||global.length?null:await this.#read(context.scope,context.currentRequestRef);
+    const read=!held||global.length?null:await this.#read(context.scope,context.currentRequestRef,held.subject);
     if(read?.status==='unavailable')global.push(read.reasonCode);
     if(held&&read?.status==='observed'){
       if(this.#age(read.observation.observedAt))global.push('stale_source');
@@ -481,22 +482,23 @@ export class DailyRecordService {
     if(!prior)return hold('prior_review_record_required');
     if(prior.status!=='prepared'||!canonicalSame(prior.scope,scope)||prior.requestRef!==requestRef
       ||prior.observationHandle!==input.observationHandle||!canonicalSame(prior.reviewPolicy,this.#policyPins()))return hold('prior_review_record_mismatch');
-    if(!prior.patch.length)return {...base,status:'saved' as const,reasonCode:'reviewed_patch_empty',academyWrites:0,execution:'owner_request_bound' as const,
-      fields:input.proposals.map(p=>({field:p.field,status:'noop' as const,dispatched:false}))};
     const key=(p:{field:DailyRecordField;before:string;after:string})=>executionKey(requestRef,scope,p.field,p.before,p.after);
     const report=(p:StoredReview['patch'][number],extra:Record<string,unknown>={})=>({field:p.field,executionState:fieldExecutionState(store,key(p)),...extra});
     try{
       return await store.withLock(workflowLockKey(scope),async()=>{
         // Under the lock: another process may have dispatched meanwhile, under this or another request.
-        const unresolved=prior.patch.filter(p=>unresolvedOnField(store,scope,p.field).length);
-        if(unresolved.length)return hold('uncertain_dispatch_reconcile_required',{fields:unresolved.map(p=>({field:p.field,unresolvedExecutions:unresolvedOnField(store,scope,p.field).length}))});
+        const unresolved=prior.patch.map(p=>({field:p.field,count:unresolvedOnField(store,scope,p.field,p.effectRecordKey).length})).filter(u=>u.count);
+        if(unresolved.length)return hold('uncertain_dispatch_reconcile_required',{fields:unresolved.map(u=>({field:u.field,unresolvedExecutions:u.count}))});
         const states=prior.patch.map(p=>fieldExecutionState(store,key(p)));
         if(states.some(consumedWithoutEffect))return hold('transition_already_attempted_new_request_required',{fields:prior.patch.map(p=>report(p))});
-        if(states.every(settledEffect))return {...base,status:'saved' as const,reasonCode:'duplicate_execution_already_settled',academyWrites:0,
+        if(prior.patch.length&&states.every(settledEffect))return {...base,status:'saved' as const,reasonCode:'duplicate_execution_already_settled',academyWrites:0,
           execution:'owner_request_bound' as const,fields:prior.patch.map(p=>report(p,{status:'noop',dispatched:false}))};
+        // Even an empty reviewed patch is re-checked against the fresh source before reporting success.
         const fresh=await this.#review({context,observationHandle:input.observationHandle,cismObservationHandle:input.cismObservationHandle,proposals:input.proposals},false);
         if(fresh.status!=='prepared'||fresh.reviewDigest!==input.reviewDigest)
           return hold('fresh_review_drift_new_review_required',{fields:fresh.rows.map(r=>({field:r.field,status:'not_attempted',dispatched:false,blockers:r.blockers,holdActions:r.holdActions}))});
+        if(!prior.patch.length)return {...base,status:'saved' as const,reasonCode:'reviewed_patch_empty',academyWrites:0,execution:'owner_request_bound' as const,
+          fields:input.proposals.map(p=>({field:p.field,status:'noop' as const,dispatched:false}))};
         const patches=(fresh.patch as ReviewedPatch[]).map(p=>({field:p.field,value:p.after,before:p.before??'',wireDigest:fresh.wireDigest??''}));
         const approval=requestBoundApproval(store,{requestRef,attribution,reviewDigest:input.reviewDigest,scope,reviewed:prior.patch});
         const subject=this.#observation(input.observationHandle)?.subject;
@@ -529,33 +531,43 @@ export class DailyRecordService {
       throw error;
     }
   }
-  /** Read-only classification of every unresolved dispatch on this record, by authoritative readback. Never writes to the academy or retries. */
+  /** Read-only classification of every unresolved dispatch of this student, by
+   * authoritative readback of each execution's own lesson record. Never
+   * writes to the academy or retries. */
   async reconcile(value:unknown){
     const input=dailyRecordReconcileSchema.parse(value),context=input.context,scope=context.scope;
     const base={...this.#base(context),execution:'read_only' as const,parentTransmission:'separate_explicit_instruction_required' as const};
     if(!this.workflow)return {...base,status:'unavailable' as const,reasonCode:'dailyrecord_workflow_not_configured',fields:[]};
     const store=this.workflow.store,by=attributionSummary(this.#attribution(input));
     return store.withLock(workflowLockKey(scope),async()=>{
-      const pending=dailyRecordFields.flatMap(field=>unresolvedOnField(store,scope,field).map(key=>({field,key})));
-      const fields=()=>dailyRecordFields.flatMap(field=>store.ledger(ledgerGroup(scope,field)).map(key=>({field,requestRef:(store.get('execution',key) as {requestRef:string}|null)?.requestRef??null,executionState:fieldExecutionState(store,key)})));
+      const fields=()=>studentExecutions(store,scope).map(e=>({field:e.record.field,lessonDate:e.record.scope.lessonDate,requestRef:e.record.requestRef,executionState:e.state}));
+      const pending=studentExecutions(store,scope).filter(e=>needsReconciliation(e.state));
       if(!pending.length)return {...base,status:'settled' as const,reasonCode:null,by,fields:fields()};
-      const read=await this.#read(scope,context.currentRequestRef);
-      if(read.status!=='observed'){
-        store.appendAudit(workflowRequestKey(scope,context.currentRequestRef),{event:'reconcile_readback_unavailable',by,reasonCode:read.reasonCode});
-        return {...base,status:'held' as const,reasonCode:'readback_unavailable_reconcile_later',sourceReasonCode:read.reasonCode,by,fields:fields()};
-      }
-      for(const {field,key} of pending){
-        const execution=store.get('execution',key) as {requestRef:string;effectRecordKey:string;beforeSha256:string;afterSha256:string};
-        const record=field==='previousHomeworkAssessment'?read.observation.previousTarget?.recordId:read.observation.target.recordId;
-        const current=read.observation.fields[field];
-        const classification=execution.effectRecordKey!==record?'conflict'
-          :current.state!=='known'?null:textDigest(current.value)===execution.afterSha256?'persisted':textDigest(current.value)===execution.beforeSha256?'not_persisted':'conflict';
+      type SourceRead={status:'observed';observation:DailyRecordObservation}|{status:'unavailable';reasonCode:string};
+      const reads=new Map<string,SourceRead>();
+      for(const {key,record} of pending){
+        const scopeKey=JSON.stringify(record.scope);
+        if(!reads.has(scopeKey)){
+          const observation=store.get('observation',(store.get('review',record.reviewDigest) as StoredReview|null)?.observationHandle??'') as {subject?:{displayName:string}|null}|null;
+          reads.set(scopeKey,await this.#read(record.scope,context.currentRequestRef,observation?.subject??undefined));
+        }
+        const read=reads.get(scopeKey)!;
+        if(read.status!=='observed'){
+          store.appendAudit(workflowRequestKey(record.scope,record.requestRef),{event:'reconcile_readback_unavailable',by,reasonCode:read.reasonCode});
+          continue;
+        }
+        const target=record.field==='previousHomeworkAssessment'?read.observation.previousTarget?.recordId:read.observation.target.recordId;
+        const current=read.observation.fields[record.field];
+        const classification=record.effectRecordKey!==target?'conflict'
+          :current.state!=='known'?null:textDigest(current.value)===record.afterSha256?'persisted':textDigest(current.value)===record.beforeSha256?'not_persisted':'conflict';
         if(!classification)continue;
         store.publishOnce('reconciliation',key,{classification,sourceRevision:read.observation.sourceRevision,observedAt:read.observation.observedAt,by,reconciledAt:new Date(this.now()).toISOString()});
-        store.appendAudit(workflowRequestKey(scope,execution.requestRef),{event:'reconciled',field,classification,by});
+        store.appendAudit(workflowRequestKey(record.scope,record.requestRef),{event:'reconciled',field:record.field,classification,by});
       }
       const after=fields(),open=after.some(f=>needsReconciliation(f.executionState));
-      return {...base,status:open?'held' as const:'settled' as const,reasonCode:open?'readback_field_unknown_reconcile_later':null,by,fields:after};
+      const unavailable=[...reads.values()].some(r=>r.status!=='observed');
+      return {...base,status:open?'held' as const:'settled' as const,
+        reasonCode:open?(unavailable?'readback_unavailable_reconcile_later':'readback_field_unknown_reconcile_later'):null,by,fields:after};
     });
   }
   /** Metadata-only handoff view: per-field executions on this record with who did them, plus the request audit. No field or instruction text. */
@@ -564,10 +576,10 @@ export class DailyRecordService {
     const base={scope,requestRef:input.requestRef??null,academyWrites:0,parentSends:0,automaticRetryAllowed:false,execution:'read_only' as const};
     if(!this.workflow)return {...base,status:'unavailable' as const,reasonCode:'dailyrecord_workflow_not_configured'};
     const store=this.workflow.store;
-    const fields=dailyRecordFields.map(field=>({field,executions:store.ledger(ledgerGroup(scope,field)).map(key=>{
-      const e=store.get('execution',key) as {requestRef:string;beforeSha256:string;afterSha256:string;attribution:DailyRecordAttribution;recordedAt:string};
-      return {requestRef:e.requestRef,beforeSha256:e.beforeSha256,afterSha256:e.afterSha256,executionState:fieldExecutionState(store,key),by:attributionSummary(e.attribution),recordedAt:e.recordedAt};
-    })})).filter(f=>f.executions.length);
+    const executions=studentExecutions(store,scope).filter(e=>canonicalSame(e.record.scope,scope));
+    const fields=dailyRecordFields.map(field=>({field,executions:executions.filter(e=>e.record.field===field).map(({record:e,state})=>
+      ({requestRef:e.requestRef,effectRecordKey:e.effectRecordKey,beforeSha256:e.beforeSha256,afterSha256:e.afterSha256,executionState:state,by:attributionSummary(e.attribution),recordedAt:e.recordedAt}))}))
+      .filter(f=>f.executions.length);
     const request=input.requestRef?store.get('request',workflowRequestKey(scope,input.requestRef)) as {instructionSha256:string;request:{instruction:{sessionRef?:string;receivedAt?:string}};recordedBy:DailyRecordAttribution;recordedAt:string}|null:null;
     return {...base,status:'recorded' as const,storeScope:store.scope,fields,
       request:request?{instructionSha256:request.instructionSha256,sessionRef:request.request.instruction.sessionRef??null,receivedAt:request.request.instruction.receivedAt??null,

@@ -181,7 +181,7 @@ export class NativeDailyRecordBackend implements DailyRecordReadBackend,DailyRec
     // name recorded at intake; the row identity check below still binds name to key.
     const sourceVerified=this.ownerAdmission?.schemaVersion==='academy.owner-admission/2'&&this.ownerAdmission.studentScope==='source_verified';
     const student=this.admission.students.find(s=>s.studentId===scope.studentId)
-      ??(sourceVerified&&requestApproval&&subject?{studentId:scope.studentId,displayName:subject.displayName}:undefined);
+      ??(sourceVerified&&requestApproval&&subject&&this.managedNames.has(subject.displayName)?{studentId:scope.studentId,displayName:subject.displayName}:undefined);
     if(scope.sourceNamespace!=='academy.lms.dayrecord'||scope.teacherId!==this.admission.teacherId
       ||!(this.ownerAdmission?isDateAdmitted(scope.lessonDate,this.ownerAdmission):scope.lessonDate===this.admission.date)||!student)throw Error('native_dailyrecord_scope_refused');
     await this.#authenticate();
@@ -349,11 +349,15 @@ export class NativeDailyRecordBackend implements DailyRecordReadBackend,DailyRec
     }
     return pairs;
   }
-  async readDailyRecord(scope:Readonly<DailyRecordScope>,requestRef?:string){
+  async readDailyRecord(scope:Readonly<DailyRecordScope>,requestRef?:string,subject?:{displayName:string}){
     const resolved=requestRef?this.#sourceResolved.get(requestRef):undefined;
     const sourceStudent=this.ownerAdmission?.schemaVersion==='academy.owner-admission/2' && this.ownerAdmission.studentScope==='source_verified'
       && resolved && resolved.studentId===scope.studentId && (!resolved.lessonDate||resolved.lessonDate===scope.lessonDate) && Date.now()-resolved.at>=0 && Date.now()-resolved.at<=300000 ? resolved : undefined;
-    const student=this.admission.students.find(s=>s.studentId===scope.studentId)??sourceStudent;
+    // A later process re-selects a source-verified student by the name recorded at
+    // intake; the row identity check below still binds that name to the exact key.
+    const recordedSubject=this.ownerAdmission?.schemaVersion==='academy.owner-admission/2'&&this.ownerAdmission.studentScope==='source_verified'&&subject&&this.managedNames.has(subject.displayName)
+      ?{studentId:scope.studentId,displayName:subject.displayName}:undefined;
+    const student=this.admission.students.find(s=>s.studentId===scope.studentId)??sourceStudent??recordedSubject;
     if(scope.sourceNamespace!=='academy.lms.dayrecord'||scope.teacherId!==this.admission.teacherId
       ||!(this.ownerAdmission?isDateAdmitted(scope.lessonDate,this.ownerAdmission):scope.lessonDate===this.admission.date)||!student)throw Error('native_dailyrecord_scope_refused');
     // Keep a failed authentication promise: subsequent calls must not retry login.
