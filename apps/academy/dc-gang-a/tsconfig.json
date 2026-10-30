@@ -13,10 +13,17 @@
     "strict": true,
     "skipLibCheck": true,
     "noEmit": true,
-    "allowImportingTsExtensions": true
+    "allowImportingTsExtensions": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true,
+    "isolatedModules": true,
+    "forceConsistentCasingInFileNames": true
   },
   "include": [
     "src/**/*.ts",
-    "data/raw_sessions/**/*.ts"
+    "data/raw_sessions/**/*.ts",
+    "harness/**/*.ts",
+    "scripts/**/*.ts"
   ]
 }
