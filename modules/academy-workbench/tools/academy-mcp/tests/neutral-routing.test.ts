@@ -88,46 +88,49 @@ test('neutral save composes intake, review and save in one upstream lifetime',as
     expect(startsAfter-startsBefore).toBe(1);
   });
 },20000);
-test('save receipt failure preserves uncertainty after an issued synthetic write',async()=>{
-  await withNeutralClient(async({base,events,client})=>{
-    await writeFile(resolve(base,'inject-save-receipt-failure'),'enabled');
-    const c=context();
-    const intake:any=await client.callTool({name:'academy_dailyrecord_intake',arguments:{context:c}});
-    const saved:any=await client.callTool({name:'academy_dailyrecord_save',arguments:{context:c,observationHandle:intake.structuredContent.observationHandle,
-      reviewDigest:'9'.repeat(64),proposals:[{field:'progress',value:'- 지정 문제 12문항 풀이 진행.',factRefs:['user-fact:progress'],decision:{kind:'replace',requestRef:c.currentRequestRef}}]}});
-    expect(await readFile(events,'utf8')).toContain('synthetic-save');
-    expect(saved.isError).toBe(true);
-    expect(saved.structuredContent).toMatchObject({academyWrites:null,effectStatus:'unknown',automaticRetryAllowed:false});
-    const names=await readdir(resolve(base,'receipts'));
-    const failure=JSON.parse(await readFile(resolve(base,'receipts',names.find(n=>n.endsWith('-failure.json'))!),'utf8'));
-    expect(failure).toMatchObject({academyWrites:null,effectStatus:'unknown',automaticRetryAllowed:false});
-  });
-},20000);
-test('save result receipt preserves an uncertain synthetic backend result',async()=>{
+// The bridge forwards the caller's own reviewDigest; it never recomputes and
+// substitutes one. Receipt uncertainty after a genuine owner-workflow
+// dispatch is covered in dailyrecord-workflow-e2e.test.ts.
+test('legacy bridge forwards the caller digest: an unreviewed save never reaches the write backend',async()=>{
   await withNeutralClient(async({base,events,client})=>{
     await writeFile(resolve(base,'inject-uncertain-save'),'enabled');
     const c=context();
     const intake:any=await client.callTool({name:'academy_dailyrecord_intake',arguments:{context:c}});
     const saved:any=await client.callTool({name:'academy_dailyrecord_save',arguments:{context:c,observationHandle:intake.structuredContent.observationHandle,
       reviewDigest:'9'.repeat(64),proposals:[{field:'progress',value:'- 지정 문제 12문항 풀이 진행.',factRefs:['user-fact:progress'],decision:{kind:'replace',requestRef:c.currentRequestRef}}]}});
-    expect(await readFile(events,'utf8')).toContain('synthetic-save');
-    expect(saved.structuredContent).toMatchObject({academyWrites:null,automaticRetryAllowed:false});
+    expect(saved.structuredContent).toMatchObject({status:'held',reasonCode:'reviewed_patch_required',academyWrites:0});
+    expect(await readFile(events,'utf8')).not.toContain('synthetic-save');
     const names=await readdir(resolve(base,'receipts'));
     const results=await Promise.all(names.filter(n=>n.endsWith('-result.json')).map(async n=>JSON.parse(await readFile(resolve(base,'receipts',n),'utf8'))));
-    expect(results.find(r=>r.tool==='academy_dailyrecord_save')).toMatchObject({academyWrites:null,automaticRetryAllowed:false});
+    expect(results.find(r=>r.tool==='academy_dailyrecord_save')).toMatchObject({academyWrites:0,automaticRetryAllowed:false});
   });
 },20000);
-test('save alias records the upstream uncertain write count',async()=>{
-  await withNeutralClient(async({base,client})=>{
+test('legacy bridge cannot save a review made in another upstream lifetime',async()=>{
+  await withNeutralClient(async({base,events,client})=>{
+    await writeFile(resolve(base,'inject-uncertain-save'),'enabled');
+    const c=context(),proposals=[{field:'progress',value:'- 지정 문제 12문항 풀이 진행.',factRefs:['user-fact:progress'],decision:{kind:'replace',requestRef:c.currentRequestRef}}];
+    const intake:any=await client.callTool({name:'academy_dailyrecord_intake',arguments:{context:c}});
+    const reviewed:any=await client.callTool({name:'academy_dailyrecord_review',arguments:{context:c,observationHandle:intake.structuredContent.observationHandle,proposals}});
+    expect(reviewed.structuredContent.status).toBe('prepared');
+    // Process-local upstream handles make that review unverifiable later: fail closed.
+    const saved:any=await client.callTool({name:'academy_dailyrecord_save',arguments:{context:c,observationHandle:intake.structuredContent.observationHandle,
+      reviewDigest:reviewed.structuredContent.reviewDigest,proposals}});
+    expect(saved.structuredContent).toMatchObject({status:'held',reasonCode:'reviewed_patch_required',academyWrites:0});
+    expect(await readFile(events,'utf8')).not.toContain('synthetic-save');
+  });
+},20000);
+test('save alias forwards the caller digest and records zero writes when held',async()=>{
+  await withNeutralClient(async({base,events,client})=>{
     await writeFile(resolve(base,'inject-uncertain-save'),'enabled');
     const c=context();
     const intake:any=await client.callTool({name:'academy_dailyrecord_intake',arguments:{context:c}});
     const saved:any=await client.callTool({name:'fictional_save_alias',arguments:{context:c,observationHandle:intake.structuredContent.observationHandle,
       reviewDigest:'9'.repeat(64),proposals:[{field:'progress',value:'- 지정 문제 12문항 풀이 진행.',factRefs:['user-fact:progress'],decision:{kind:'replace',requestRef:c.currentRequestRef}}]}});
-    expect(saved.structuredContent).toMatchObject({academyWrites:null});
+    expect(saved.structuredContent).toMatchObject({status:'held',academyWrites:0});
+    expect(await readFile(events,'utf8')).not.toContain('synthetic-save');
     const names=await readdir(resolve(base,'receipts'));
     const results=await Promise.all(names.filter(n=>n.endsWith('-result.json')).map(async n=>JSON.parse(await readFile(resolve(base,'receipts',n),'utf8'))));
-    expect(results.find(r=>r.tool==='fictional_save_alias')).toMatchObject({academyWrites:null});
+    expect(results.find(r=>r.tool==='fictional_save_alias')).toMatchObject({academyWrites:0});
   },false,false,true);
 },20000);
 test('neutral MCP exposes exact item-answer reads and does not write answer literals to receipts',async()=>{

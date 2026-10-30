@@ -6,6 +6,7 @@ import {z} from 'zod';
 import {readPinnedLocalBytes} from './item-label-store.ts';
 import {dailyRecordObservationSchema,studentMetadataBatchSchema,type DailyRecordReadBackend,type DailyRecordWriteBackend,type DailyRecordObservation,type StudentMetadataBatch,type StudentMetadataObservation,studentMetadataGetSchema,type StudentMetadataGet,type DailyRecordSaveFieldStatus,type TextbookSectionResults,type TextbookSectionObservation} from './dailyrecord.ts';
 import {createDailyRecordSaveAdmission,liveSaveRequestEvidence,type DailyRecordSaveAdmission,type DailyRecordSaveApproval} from './dailyrecord-save-admission.ts';
+import type {DailyRecordActionApproval} from './dailyrecord-workflow.ts';
 import type {DailyRecordField} from './dailyrecord-context.ts';
 import type {DailyRecordScope} from './dailyrecord-context.ts';
 import {ownerAdmissionSchema,isDateAdmitted,type OwnerAdmission} from './owner-admission.ts';
@@ -16,6 +17,8 @@ import {itemAnswerLookupSchema} from './item-answer-lookup.ts';
 import type {DailyRecordReadAdmission} from './dailyrecord-read.ts';
 
 const home='/opt/data/profiles/dc-gang-a-dev';
+/** Owner-private artifacts root; owner workflow stores and admissions must live here. */
+export const nativeOwnerArtifactsRoot=home+'/artifacts/';
 const key=z.string().regex(/^[1-9][0-9]{0,15}$/),hash=z.string().regex(/^[a-f0-9]{64}$/);
 export const nativeDailyRecordConfigSchema=z.object({schemaVersion:z.literal('academy.native-dailyrecord-read/1'),
   sourceBundlePath:z.string().startsWith('/'),sourceBundleSha256:hash,
@@ -165,13 +168,20 @@ export class NativeDailyRecordBackend implements DailyRecordReadBackend,DailyRec
       records,observedAt:raw.observedAt,coverage:'exact_selected_existing_records_not_whole_book'};
   }
   saveConfigured():boolean{return this.saveApproval!==null&&typeof this.client.applyJournalAction==='function';}
+  /** The owner client can write; authority comes from the per-request approval the owner workflow supplies. */
+  requestBoundSaveConfigured():boolean{return typeof this.client.applyJournalAction==='function';}
   /** One serialized write batch on the already-authenticated owner client.
    * The client re-reads the exact before-state, consumes the launch-pinned
    * admission once per field, writes once and reads back; the first
    * non-settled field stops the batch with the rest not attempted. */
-  async saveDailyRecord(scope:Readonly<DailyRecordScope>,patches:readonly {field:DailyRecordField;value:string;before:string;wireDigest:string}[]){
-    if(!this.saveConfigured())throw Error('dailyrecord_save_backend_not_configured');
-    const student=this.admission.students.find(s=>s.studentId===scope.studentId);
+  async saveDailyRecord(scope:Readonly<DailyRecordScope>,patches:readonly {field:DailyRecordField;value:string;before:string;wireDigest:string}[],requestApproval?:DailyRecordActionApproval,subject?:{displayName:string}){
+    const approval=requestApproval??this.saveApproval;
+    if(!approval||typeof this.client.applyJournalAction!=='function')throw Error('dailyrecord_save_backend_not_configured');
+    // A source-verified owner scope may save a student outside the launch list by the
+    // name recorded at intake; the row identity check below still binds name to key.
+    const sourceVerified=this.ownerAdmission?.schemaVersion==='academy.owner-admission/2'&&this.ownerAdmission.studentScope==='source_verified';
+    const student=this.admission.students.find(s=>s.studentId===scope.studentId)
+      ??(sourceVerified&&requestApproval&&subject&&this.managedNames.has(subject.displayName)?{studentId:scope.studentId,displayName:subject.displayName}:undefined);
     if(scope.sourceNamespace!=='academy.lms.dayrecord'||scope.teacherId!==this.admission.teacherId
       ||!(this.ownerAdmission?isDateAdmitted(scope.lessonDate,this.ownerAdmission):scope.lessonDate===this.admission.date)||!student)throw Error('native_dailyrecord_scope_refused');
     await this.#authenticate();
@@ -187,25 +197,25 @@ export class NativeDailyRecordBackend implements DailyRecordReadBackend,DailyRec
     // Bind dispatch to the reviewed before-state: any drift refuses the
     // whole batch before a single write or admission consumption.
     if(patches.some(p=>p.wireDigest!==state.wireDigest||state.fields[p.field]!==p.before))
-      return patches.map(p=>({field:p.field,status:'before_drift' as const,dispatched:false}));
-    const fields:{field:DailyRecordField;status:DailyRecordSaveFieldStatus;dispatched:boolean}[]=[];
+      return patches.map(p=>({field:p.field,status:'before_drift' as const,dispatched:false,transport:'not_invoked' as const}));
+    const fields:{field:DailyRecordField;status:DailyRecordSaveFieldStatus;dispatched:boolean;transport:'returned'|'uncertain'|'not_invoked'}[]=[];
     for(let i=0;i<patches.length;i++){
       const patch=patches[i]!;
       const action={attemptId:randomUUID(),target:targetOf(row),field:patch.field,
         effectRecordKey:patch.field==='previousHomeworkAssessment'?state.previousRecordKey:row.recordKey,
         before:patch.before,after:patch.value,wireDigest:state.wireDigest};
-      let settled:{status:DailyRecordSaveFieldStatus;dispatched:boolean};
+      let settled:{status:DailyRecordSaveFieldStatus;dispatched:boolean;transport:'returned'|'uncertain'|'not_invoked'};
       try{
-        const result=await this.client.applyJournalAction!(action,this.saveApproval!);
-        settled={status:result.status,dispatched:result.transport!=='not_invoked'};
+        const result=await this.client.applyJournalAction!(action,approval);
+        settled={status:result.status,dispatched:result.transport!=='not_invoked',transport:result.transport};
       }catch{
         // The client may have dispatched before throwing; report the field
         // as unresolved instead of denying a possible write upstream.
-        settled={status:'unresolved',dispatched:true};
+        settled={status:'unresolved',dispatched:true,transport:'uncertain'};
       }
       fields.push({field:patch.field,...settled});
       if(settled.status!=='persisted'&&settled.status!=='noop'){
-        for(let j=i+1;j<patches.length;j++)fields.push({field:patches[j]!.field,status:'not_attempted',dispatched:false});
+        for(let j=i+1;j<patches.length;j++)fields.push({field:patches[j]!.field,status:'not_attempted',dispatched:false,transport:'not_invoked'});
         break;
       }
     }
@@ -339,11 +349,15 @@ export class NativeDailyRecordBackend implements DailyRecordReadBackend,DailyRec
     }
     return pairs;
   }
-  async readDailyRecord(scope:Readonly<DailyRecordScope>,requestRef?:string){
+  async readDailyRecord(scope:Readonly<DailyRecordScope>,requestRef?:string,subject?:{displayName:string}){
     const resolved=requestRef?this.#sourceResolved.get(requestRef):undefined;
     const sourceStudent=this.ownerAdmission?.schemaVersion==='academy.owner-admission/2' && this.ownerAdmission.studentScope==='source_verified'
       && resolved && resolved.studentId===scope.studentId && (!resolved.lessonDate||resolved.lessonDate===scope.lessonDate) && Date.now()-resolved.at>=0 && Date.now()-resolved.at<=300000 ? resolved : undefined;
-    const student=this.admission.students.find(s=>s.studentId===scope.studentId)??sourceStudent;
+    // A later process re-selects a source-verified student by the name recorded at
+    // intake; the row identity check below still binds that name to the exact key.
+    const recordedSubject=this.ownerAdmission?.schemaVersion==='academy.owner-admission/2'&&this.ownerAdmission.studentScope==='source_verified'&&subject&&this.managedNames.has(subject.displayName)
+      ?{studentId:scope.studentId,displayName:subject.displayName}:undefined;
+    const student=this.admission.students.find(s=>s.studentId===scope.studentId)??sourceStudent??recordedSubject;
     if(scope.sourceNamespace!=='academy.lms.dayrecord'||scope.teacherId!==this.admission.teacherId
       ||!(this.ownerAdmission?isDateAdmitted(scope.lessonDate,this.ownerAdmission):scope.lessonDate===this.admission.date)||!student)throw Error('native_dailyrecord_scope_refused');
     // Keep a failed authentication promise: subsequent calls must not retry login.
@@ -372,7 +386,7 @@ export class NativeDailyRecordBackend implements DailyRecordReadBackend,DailyRec
         ?{state:'known',value:state.fields[field],evidenceRefs:[ref+(field==='previousHomeworkAssessment'?':previous':':current')]}
         :{state:'unknown',reasonCode:'native_field_not_observed'}])),
       toneSamples:tone?[{target:observationTarget(prior),observedAt,text:tone,evidenceRefs:[ref+':previous']}]:[],transmissionState:'unknown'});
-    return {status:'observed' as const,observation};
+    return {status:'observed' as const,observation,subject:{displayName:student.displayName}};
   }
 }
 

@@ -1,0 +1,90 @@
+import {randomUUID} from 'node:crypto';
+import {existsSync,readFileSync,renameSync,writeFileSync} from 'node:fs';
+import {resolve} from 'node:path';
+import {applyJournalHttpAction} from '../../../../../apps/academy/dc-gang-a/src/lms/lessonJournalHttp.ts';
+import {NativeDailyRecordBackend} from '../src/native-dailyrecord-backend.ts';
+import {ownerAdmissionSchema} from '../src/owner-admission.ts';
+import {DailyRecordService} from '../src/dailyrecord.ts';
+import {createDailyRecordWorkflow,type DailyRecordWorkflow} from '../src/dailyrecord-workflow.ts';
+import type {DailyRecordContext,DailyRecordField} from '../src/dailyrecord-context.ts';
+import {learningPolicy,safeguard} from './dailyrecord-fixture.ts';
+
+// Purpose-built fictional identities, keys and records; never sampled from runtime data.
+export const nativeScope={sourceNamespace:'academy.lms.dayrecord',teacherId:'99001',studentId:'77001',lessonDate:'2040-01-04'};
+const admission={teacherId:'99001',teacherLabel:'Invented Teacher',date:'2040-01-04',students:[{studentId:'77001',displayName:'Invented Student'}],sourceBundleSha256:'b'.repeat(64)};
+const target={studentName:'Invented Student',date:'2040-01-04',groupId:'3',teacherKey:'99001',studentKey:'77001',courseKey:'5',recordKey:'13',membershipKey:'8'};
+const prior={...target,date:'2040-01-02',recordKey:'12'};
+const wireDigest='a'.repeat(64);
+// Matches the deployed owner admission shape: open dates and source-verified student scope.
+const ownerAdmission=ownerAdmissionSchema.parse({schemaVersion:'academy.owner-admission/2' as const,decider:'user' as const,decidedAt:'2040-01-04',sourceNamespace:'academy.lms.dayrecord',teacherId:'99001',
+  allowedFrom:null,allowedThrough:null,failClosedDefault:'2026-10-23',studentScope:'source_verified' as const});
+export const initialFields={progress:'- 기존 진도 문안',homework:'- 기존 숙제 문안',lessonMemo:'기존 안내',attendance:'Y',dailyTestAssessment:'0',previousHomeworkAssessment:'3'};
+
+export function workflowContext(fields:Partial<Record<DailyRecordField,string>>,requestRef='synthetic-request-1'):DailyRecordContext{
+  return {schemaVersion:'academy.dailyrecord-user-context/1',purpose:'Save one fictional student lesson record.',currentRequestRef:requestRef,
+    scope:{...nativeScope},selectedFields:Object.keys(fields) as DailyRecordField[],memoAnswer:{kind:'no_addition',requestRef:'synthetic-memo-answer'},
+    facts:Object.entries(fields).map(([field,text])=>({ref:'user-fact:'+field,field:field as DailyRecordField,text:text!.replace(/^- /,''),origin:'user_supplied' as const,requiredFragments:[],questionCounts:[],deadlines:[],stageClaims:[]}))};
+}
+export function proposals(fields:Partial<Record<DailyRecordField,string>>,requestRef='synthetic-request-1'){
+  return Object.entries(fields).map(([field,value])=>({field:field as DailyRecordField,value:value!,factRefs:['user-fact:'+field],decision:{kind:'replace' as const,requestRef}}));
+}
+/** The verbatim (fictional) user instruction a delegated session supplies with a save. */
+export function userRequest(requestRef='synthetic-request-1',text='Save the reviewed fictional lesson record.'){
+  return {requestRef,instruction:{text,sessionRef:'synthetic-session-1',receivedAt:new Date().toISOString()}};
+}
+
+/**
+ * File-backed fictional academy source shared by every process of one test.
+ * Only the HTTP source is synthetic: writes go through the real owner
+ * journal client (`applyJournalHttpAction`) and the real native backend.
+ * Injection marker files in the base directory model transport and
+ * readback failures; `events.txt` records metadata only.
+ */
+export class FileSource {
+  constructor(readonly base:string,readonly onWrite:()=>void=()=>{}){if(!existsSync(this.path))this.write(initialFields);}
+  get path(){return resolve(this.base,'source.json');}
+  #has(name:string){return existsSync(resolve(this.base,name));}
+  #event(line:string){writeFileSync(resolve(this.base,'events.txt'),line+'\n',{flag:'a'});}
+  read():Record<string,string>{return JSON.parse(readFileSync(this.path,'utf8'));}
+  write(fields:Record<string,string>){const temporary=this.path+'.'+randomUUID();writeFileSync(temporary,JSON.stringify(fields));renameSync(temporary,this.path);}
+  port(){
+    const source=this;let readbackArmed=false;
+    const state=()=>{
+      if(readbackArmed&&source.#has('inject-readback-failure'))throw Error('synthetic_readback_unavailable');
+      if(source.#has('inject-source-read-failure'))throw Error('synthetic_source_unavailable');
+      const fields=source.read();
+      return {target:{...target},fields,previousRecordKey:'12',previousDate:prior.date,wireDigest};
+    };
+    const row=(t:typeof target)=>{const fields=source.read();return {...t,fields:{progress:fields.progress,homework:fields.homework,lessonMemo:fields.lessonMemo,attendance:fields.attendance}};};
+    return {
+      authenticate:async()=>{},
+      discoverDayRecordGroups:async()=>({groups:[{groupId:'3'}]}),
+      execute:async(input:{date:string})=>({dayRecords:[row(input.date===target.date?target:prior)]}),
+      journalState:async()=>state(),
+      applyJournalAction:async(action:any,approval:{consumeApproval:(a:any)=>Promise<any>})=>{
+        readbackArmed=false;
+        return applyJournalHttpAction(action,{consumeApproval:a=>approval.consumeApproval(a),read:async()=>state(),
+          write:async a=>{
+            source.#event('write:'+a.field);source.onWrite();
+            if(source.#has('inject-slow-write'))await new Promise(r=>setTimeout(r,400));
+            if(source.#has('inject-lost-write-'+a.field)){source.#event('lost:'+a.field);throw Error('synthetic_transport_reset');}
+            // The server answers but does not apply the write: a returned transport with the old value.
+            if(source.#has('inject-ignored-write-'+a.field)){source.#event('ignored:'+a.field);return;}
+            const fields=source.read();fields[a.field]=a.after;source.write(fields);
+            if(source.#has('inject-crash-after-write'))process.exit(70);
+            readbackArmed=true;
+            if(source.#has('inject-transport-error-after-write'))throw Error('synthetic_transport_reset_after_write');
+          }});
+      },
+      close:()=>{},
+    };
+  }
+}
+export function nativeWorkflowService(base:string,workflow:DailyRecordWorkflow|null,onWrite?:()=>void,now:()=>number=Date.now){
+  const source=new FileSource(base,onWrite);
+  const backend=new NativeDailyRecordBackend(source.port() as never,admission,()=>({username:'fictional',password:'fictional'}),ownerAdmission);
+  return {source,workflow,service:new DailyRecordService(backend,safeguard,now,learningPolicy,backend,workflow)};
+}
+export function workflowService(base:string,input:{storeDir:string},now:()=>number=Date.now){
+  return nativeWorkflowService(base,createDailyRecordWorkflow({storeDir:input.storeDir}),undefined,now);
+}

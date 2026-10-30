@@ -66,14 +66,16 @@ const digest = (value: unknown) => createHash('sha256').update(JSON.stringify(va
  * exact digest of the complete action, so the admission must return it —
  * never the internal admitted-tuple key. */
 export function canonicalActionDigest(value: unknown): string {
-  const encode = (part: unknown): string => {
-    if (part === null || typeof part === 'boolean' || typeof part === 'string') return JSON.stringify(part);
-    if (typeof part === 'number' && Number.isFinite(part)) return JSON.stringify(part);
-    if (typeof part !== 'object' || part === null) throw Error('dailyrecord_save_action_not_json');
-    if (Array.isArray(part)) return '[' + part.map(encode).join(',') + ']';
-    return '{' + Object.keys(part).sort().map(k => JSON.stringify(k) + ':' + encode((part as Record<string, unknown>)[k])).join(',') + '}';
-  };
-  return createHash('sha256').update(encode(value), 'utf8').digest('hex');
+  return createHash('sha256').update(canonicalJson(value), 'utf8').digest('hex');
+}
+/** Sorted-key, whitespace-free JSON; undefined object members are omitted. */
+export function canonicalJson(part: unknown): string {
+  if (part === null || typeof part === 'boolean' || typeof part === 'string') return JSON.stringify(part);
+  if (typeof part === 'number' && Number.isFinite(part)) return JSON.stringify(part);
+  if (typeof part !== 'object' || part === null) throw Error('dailyrecord_save_action_not_json');
+  if (Array.isArray(part)) return '[' + part.map(canonicalJson).join(',') + ']';
+  return '{' + Object.keys(part).filter(k => (part as Record<string, unknown>)[k] !== undefined).sort()
+    .map(k => JSON.stringify(k) + ':' + canonicalJson((part as Record<string, unknown>)[k])).join(',') + '}';
 }
 
 /** Admission object handed to the native client's applyJournalAction port. */
