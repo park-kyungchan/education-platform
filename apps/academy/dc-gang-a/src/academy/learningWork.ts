@@ -24,12 +24,18 @@ export interface LearningWorkAssignment {
   paper:Knowledge<PaperIssuance>;evidenceRefs:readonly string[];
   replaces?:Knowledge<AssignmentReplacement>;
 }
+export interface RawDailyRatingV1 {schemaVersion:'1.0.0';family:'daily_rating_code';lexeme:'-1'|'10'}
+export function validateRawDailyRating(value:RawDailyRatingV1):void{
+  assertExactKeys(value,['schemaVersion','family','lexeme']);
+  if(value.schemaVersion!=='1.0.0'||value.family!=='daily_rating_code'||(value.lexeme!=='-1'&&value.lexeme!=='10'))throw Error('invalid_raw_daily_rating');
+}
 export interface LearningWorkAttempt {
   kind:'learning_work_attempt';sourceStudent:SourceKey;attemptKey:SourceKey;assignmentRevisionId:string;
   paperIssuanceKey:SourceKey|null;previousAttemptRevisionId:string|null;occurredAt:Knowledge<string>;
   state:'unknown'|'not_started'|'solving'|'submitted'|'graded';
   itemResults:readonly {assignedItemId:string;grade:Knowledge<'correct'|'incorrect'|'ungraded'>}[];evidenceRefs:readonly string[];
   assessmentBasis?:Knowledge<TextbookAssessmentBasis>;
+  rawDailyRating?:RawDailyRatingV1;
 }
 export interface TeacherClinicRevision {
   kind:'teacher_clinic_revision';sourceStudent:SourceKey;assignmentRevisionId:string;attemptEntityId:string;attemptRevisionId:string;assignedItemId:string;
@@ -66,7 +72,8 @@ export function workToken(value:string):void{requireText(value,'work identity');
 function list<T>(value:readonly T[],max:number):void{if(!Array.isArray(value)||value.length<1||value.length>max)throw Error('invalid_work_list');}
 function keyNamespace(key:SourceKey,namespace:string){validateSourceKey(key);if(key.namespace!==namespace)throw Error('source_namespace_conflict');}
 export function validateLearningAttempt(value:LearningWorkAttempt):void{
-  canonicalJson(value);assertExactKeys(value,['kind','sourceStudent','attemptKey','assignmentRevisionId','paperIssuanceKey','previousAttemptRevisionId','occurredAt','state','itemResults','evidenceRefs',...(Object.hasOwn(value,'assessmentBasis')?['assessmentBasis']:[])]);
+  canonicalJson(value);assertExactKeys(value,['kind','sourceStudent','attemptKey','assignmentRevisionId','paperIssuanceKey','previousAttemptRevisionId','occurredAt','state','itemResults','evidenceRefs',...(Object.hasOwn(value,'assessmentBasis')?['assessmentBasis']:[]),...(Object.hasOwn(value,'rawDailyRating')?['rawDailyRating']:[])]);
+  if(Object.hasOwn(value,'rawDailyRating'))validateRawDailyRating(value.rawDailyRating!);
   if(value.kind!=='learning_work_attempt'||!['unknown','not_started','solving','submitted','graded'].includes(value.state))throw Error('invalid_work_attempt');
   keyNamespace(value.sourceStudent,'academy_student');validateSourceKey(value.attemptKey);workToken(value.assignmentRevisionId);
   if(value.paperIssuanceKey!==null)validateSourceKey(value.paperIssuanceKey);
