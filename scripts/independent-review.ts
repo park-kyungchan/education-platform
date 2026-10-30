@@ -256,7 +256,7 @@ export const EXPECTED_WORKFLOW={
     steps:[
       {name:'Check out trusted default branch',uses:CHECKOUT,with:{ref:'${{ github.sha }}',path:'trusted','persist-credentials':false}},
       {name:'Check out exact head as data',uses:CHECKOUT,with:{ref:'${{ github.event.pull_request.head.sha }}',path:'subject','fetch-depth':0,'persist-credentials':false}},
-      {uses:'oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6',with:{'bun-version':'1.4.2'}},
+      {uses:'oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6',with:{'bun-version':'1.4.3'}},
       {name:'Require a ready same-repository pull request into the default branch',run:RUN_PREFIX+'request'},
       {name:'Mint the review app token',id:'app',uses:'actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510',with:{
         'client-id':'${{ vars.REVIEW_APP_CLIENT_ID }}',
