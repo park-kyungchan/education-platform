@@ -400,7 +400,7 @@ export class DailyRecordService {
         }
       }
       if(changed&&p.value!==''&&['progress','homework','lessonMemo'].includes(p.field)){
-        if(/시리즈\s*\d+|(?:^|[^A-Za-z0-9])v\d+(?![A-Za-z0-9])/iu.test(p.value))blockers.push('parent_book_internal_notation_excluded');
+        if(/시리즈\s*\d+|v\d+/iu.test(p.value))blockers.push('parent_book_internal_notation_excluded');
         if(this.parentSafeguard&&!this.parentSafeguard.checkLines(p.value))blockers.push('parent_hyphen_lines_required');
         if(['progress','homework'].includes(p.field)){
           if(!this.learningPolicy)blockers.push('canonical_learning_policy_not_connected');

@@ -17,10 +17,13 @@ test('changed text requires hyphen lines and owner mapping; untouched legacy tex
 });
 test('changed parent fields reject internal series and version labels',async()=>{
  const c=context(),s=new DailyRecordService(backend(),safeguard,()=>clock,learningPolicy),i=await s.intake({context:c});
- for(const value of ['- 가상 교재 시리즈1 풀이','- 가상 교재 v2 풀이']){
+ for(const value of ['- 가상 교재 시리즈1 풀이','- 가상 교재 v2 풀이','- 가상 교재5-1-1v1 풀이']){
   const r=await s.review({context:c,observationHandle:i.observationHandle,proposals:[proposal('progress',value)]});
   expect(r.rows[0].blockers).toContain('parent_book_internal_notation_excluded');
  }
+ const memo=context();memo.selectedFields=['lessonMemo'];memo.memoAnswer={kind:'content',requestRef:memo.currentRequestRef,text:'가상 교재5-1-1v1 준비'};memo.facts=[fact('lessonMemo','가상 교재5-1-1v1 준비')];
+ const mi=await s.intake({context:memo}),mr=await s.review({context:memo,observationHandle:mi.observationHandle,proposals:[proposal('lessonMemo','가상 교재5-1-1v1 준비')]});
+ expect(mr.rows[0].blockers).toContain('parent_book_internal_notation_excluded');
 });
 
 test('teacher-confirmed non-catalog activity keeps the exact before-state and attributed fact',async()=>{
