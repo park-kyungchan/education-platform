@@ -50,6 +50,12 @@ no automatic retry. Without that launch configuration the tool returns
 the tool is not save authority; each save still needs its own issued
 admission. No parent sending, printing or paper generation is included.
 
+For an exact learning-render mismatch, a fresh qualified review may return
+`learningSuggestedRendering` from the pinned owner catalog. This is a format
+example, not an automatic rewrite or evidence of semantic equivalence: the
+teacher must check that it preserves the intended facts before a new review.
+Unknown book or section bindings remain blockers and do not produce a guess.
+
 ## Owner admission
 
 The native entrypoints accept a launch-only flag:

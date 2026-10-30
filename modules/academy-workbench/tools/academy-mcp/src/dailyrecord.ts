@@ -99,7 +99,7 @@ export interface DailyRecordWriteBackend {
 /** Inject the canonical Education safeguard, together with its verified policy/source identity. */
 export interface DailyRecordParentSafeguard {readonly policySha256:string;readonly safeguardSourceSha256:string;readonly sourceRef:string;check(text:string):boolean;checkLines(text:string):boolean}
 /** Trusted owner-side adapter; no catalog/bridge or verification flags come from tool input. */
-export interface DailyRecordLearningPolicy {readonly bundleSha256:string;readonly configSha256:string;readonly catalogSha256:string;review(scope:Readonly<DailyRecordScope>,value:string,entries:unknown):string[]}
+export interface DailyRecordLearningPolicy {readonly bundleSha256:string;readonly configSha256:string;readonly catalogSha256:string;review(scope:Readonly<DailyRecordScope>,value:string,entries:unknown):string[];suggest?(scope:Readonly<DailyRecordScope>,value:string,entries:unknown):string|null}
 const same=(a:unknown,b:unknown)=>JSON.stringify(a)===JSON.stringify(b);
 const digest=(value:unknown)=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 const fieldValues=(observation:DailyRecordObservation)=>Object.fromEntries(dailyRecordFields.map(field=>{const value=observation.fields[field];return [field,value.state==='known'?{state:value.state,value:value.value}:{state:value.state,reasonCode:value.reasonCode}];}));
@@ -294,6 +294,7 @@ export class DailyRecordService {
     const rows=input.proposals.map(p=>{
       const before=held?.observation.fields[p.field]??{state:'unknown' as const,reasonCode:'qualified_before_source_unavailable'},target=p.field==='previousHomeworkAssessment'?held?.observation.previousTarget??null:held?.observation.target??null;
       const blockers=[...global,...proposalBlockers(p,context)];
+      let learningSuggestedRendering:string|null=null;
       if(before.state!=='known')blockers.push('unknown_before');
       if(!target)blockers.push(p.field==='previousHomeworkAssessment'?'independent_previous_record_required':'qualified_current_record_required');
       const changed=before.state!=='known'||before.value!==p.value;
@@ -323,12 +324,18 @@ export class DailyRecordService {
         if(this.parentSafeguard&&!this.parentSafeguard.checkLines(p.value))blockers.push('parent_hyphen_lines_required');
         if(['progress','homework'].includes(p.field)){
           if(!this.learningPolicy)blockers.push('canonical_learning_policy_not_connected');
-          else blockers.push(...this.learningPolicy.review(context.scope,p.value,p.learningEntries));
+          else {
+            const learningBlockers=this.learningPolicy.review(context.scope,p.value,p.learningEntries);
+            blockers.push(...learningBlockers);
+            if(held&&!global.length&&learningBlockers.includes('learning_render_mismatch'))
+              learningSuggestedRendering=this.learningPolicy.suggest?.(context.scope,p.value,p.learningEntries)??null;
+          }
         }
         if(!this.parentSafeguard)blockers.push('canonical_parent_safeguard_not_connected');
         else if(this.parentSafeguard.check(p.value))blockers.push('parent_internal_language_excluded');
       }
-      return {field:p.field,target,before,after:p.value,factRefs:p.factRefs,learningEntries:p.learningEntries??null,disposition:blockers.length?'blocked':changed?'proposed':'noop',blockers:[...new Set(blockers)],missingFactFragments:missingFragments,
+      return {field:p.field,target,before,after:p.value,factRefs:p.factRefs,learningEntries:p.learningEntries??null,learningSuggestedRendering,
+        learningSuggestionMeaning:learningSuggestedRendering===null?null:'format_example_only_teacher_must_review_meaning',disposition:blockers.length?'blocked':changed?'proposed':'noop',blockers:[...new Set(blockers)],missingFactFragments:missingFragments,
         semanticFactReview:'teacher_review_required_not_proven_by_fragment_checks'};
     });
     const interviews=context.memoAnswer.kind==='not_supplied'?[{field:'lessonMemo',reasonCode:'today_student_specific_memo_required'}]:[];

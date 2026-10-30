@@ -38,3 +38,29 @@ test('pinned owner bundle gets only the configured retained identity; tools cann
   const service=new DailyRecordService();await expect(service.review({context:context(),catalog:{verified:true},proposals:[proposal('progress','x')]})).rejects.toThrow();
  }finally{await rm(dir,{recursive:true,force:true});}
 });
+
+test('a qualified format mismatch returns an advisory example without a patch or an authority grant',async()=>{
+ const policy={...learningPolicy,review:()=>['learning_render_mismatch'],suggest:()=>'- 가상 교재 1-1 지정 단원 풀이'};
+ const c=context(),s=new DailyRecordService(backend(),safeguard,()=>clock,policy),i=await s.intake({context:c});
+ const p=proposal('progress','지정 문제 12문항 풀이 진행.');
+ const result=await s.review({context:c,observationHandle:i.observationHandle,proposals:[p]});
+ expect(result.status).toBe('held');expect(result.patch).toEqual([]);
+ expect(result.rows[0].learningSuggestedRendering).toBe('- 가상 교재 1-1 지정 단원 풀이');
+ expect(result.rows[0].learningSuggestionMeaning).toBe('format_example_only_teacher_must_review_meaning');
+ const withoutObservation=await s.review({context:c,proposals:[p]});
+ expect(withoutObservation.rows[0].learningSuggestedRendering).toBeNull();
+});
+
+test('owner suggestions require the exact bridge and a bounded valid mismatch',async()=>{
+ const dir=await mkdtemp(resolve(tmpdir(),'fictional-learning-suggestion-')),sha=(b:string)=>createHash('sha256').update(b).digest('hex');
+ try{
+  const catalog='{}',catalogPath=resolve(dir,'catalog.json');await writeFile(catalogPath,catalog);
+  const code=`export function createDailyRecordLearningReviewer(){return {schemaVersion:'academy.dailyrecord-learning-review/1',review(student,value){return value==='unverified'?{blockers:['edition_unit_section_unverified_ask_teacher'],expected:null}:{blockers:['learning_render_mismatch'],expected:'- 가상 교재 1-1 풀이'}}}}`;
+  const bundle=resolve(dir,'owner.mjs');await writeFile(bundle,code);const scope=context().scope;
+  const config=JSON.stringify({schemaVersion:'academy.dailyrecord-learning-config/1',catalogPath,catalogSha256:sha(catalog),students:[{sourceNamespace:scope.sourceNamespace,teacherId:scope.teacherId,studentId:scope.studentId,retainedStudentRef:'retained-fictional'}]}),configPath=resolve(dir,'config.json');await writeFile(configPath,config);
+  const {learningPolicy:owner}=await dailyRecordLearningConfiguration(['--dailyrecord-learning',bundle,sha(code),configPath,sha(config)]);
+  expect(owner!.suggest!(scope,'mismatch',[])).toBe('- 가상 교재 1-1 풀이');
+  expect(owner!.suggest!(scope,'unverified',[])).toBeNull();
+  expect(owner!.suggest!({...scope,studentId:'foreign'},'mismatch',[])).toBeNull();
+ }finally{await rm(dir,{recursive:true,force:true});}
+});
