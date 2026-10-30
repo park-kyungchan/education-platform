@@ -51,6 +51,15 @@ export function resolveLearningNotation(catalog:LearningCatalog,studentRef:strin
 
 export function createDailyRecordLearningReviewer(input:unknown){
   const catalog=qualifyLearningCatalog(input);
+  function parentBook(book:LearningBook){
+    if(book.schoolLevel===null||book.grade===null||book.term===null||book.seriesKind==='unknown')throw Error('book_parent_notation_unverified_ask_teacher');
+    const brand=book.brand.replace(/^가우스\s+플러스$/,'가우스플러스');
+    return brand+(book.schoolLevel==='middle'?' 중':'')+`${book.grade}-${book.term}`+(book.seriesKind==='numbered'?`-${book.series}`:'');
+  }
+  function parentDeadline(date:string){
+    const day=['일','월','화','수','목','금','토'][new Date(date+'T00:00:00Z').getUTCDay()];
+    return `${Number(date.slice(5,7))}월 ${Number(date.slice(8,10))}일(${day})까지`;
+  }
   function render(studentRef:string,inputEntries:unknown){
     if(!text(studentRef)||!Array.isArray(inputEntries)||!inputEntries.length||inputEntries.length>64)throw Error('learning_entries_required');
     const groups=new Map<string,{book:LearningBook;unit:LearningUnit;entry:LearningEntry;sections:LearningSection[]}>();
@@ -89,17 +98,19 @@ export function createDailyRecordLearningReviewer(input:unknown){
       const unitText=d.units.length>1?d.units.map(u=>u.code).join('·'):[unit.kind==='chapter_assessment'?`${unit.code}단원`:unit.code,unit.title].join(' ');
       return [unitText,d.sections.map(s=>s.label).join('·'),shortActivity(d)].filter(Boolean).join(' ');
     };
-    if(display.length===1)return '- '+[display[0]!.entry.deadline?`${display[0]!.entry.deadline}까지`:null,display[0]!.book.label,detail(display[0]!)].filter(Boolean).join(' ');
+    const labels=new Map<string,string>();
+    for(const d of display){const label=parentBook(d.book),prior=labels.get(label);if(prior&&prior!==d.book.bookRef)throw Error('book_parent_notation_ambiguous_ask_teacher');labels.set(label,d.book.bookRef);}
+    if(display.length===1)return '- '+[display[0]!.entry.deadline?parentDeadline(display[0]!.entry.deadline):null,parentBook(display[0]!.book),detail(display[0]!)].filter(Boolean).join(' ');
     // Undated entries precede dated groups so no date can implicitly attach to
     // an entry whose deadline has not been supplied. Each known date is shown once.
     const dates=[...new Set(display.map(d=>d.entry.deadline))];
     const orderedDates=[...(dates.includes(null)?[null]:[]),...dates.filter((date):date is string=>date!==null)];
     const lines:string[]=[];
     for(const date of orderedDates){
-      if(date)lines.push(`- ${date}까지`);
+      if(date)lines.push(`- ${parentDeadline(date)}`);
       let currentBook:string|null=null;
       for(const d of display.filter(g=>g.entry.deadline===date)){
-        if(currentBook!==d.book.bookRef){lines.push('- '+d.book.label);currentBook=d.book.bookRef;}
+        if(currentBook!==d.book.bookRef){lines.push('- '+parentBook(d.book));currentBook=d.book.bookRef;}
         lines.push('- '+detail(d));
       }
     }

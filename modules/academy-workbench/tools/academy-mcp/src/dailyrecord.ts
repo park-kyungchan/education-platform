@@ -172,6 +172,7 @@ const holdActionTable:[RegExp,string,string][]=[
   [/^(supplied_fact_fragment_missing|unsupported_question_count|unsupported_deadline|unsupported_completion_claim|unsupported_stage_completion_claim|stage_completion_mismatch|field_fact_reference_required|explicit_user_source_option_fact_required|conflicting_explicit_user_source_options|duplicate_fact_ref)$/,'supply_or_correct_fact','The text asserts something the supplied teacher facts do not support; obtain that teacher fact or remove the claim.'],
   [/^(source_before_or_contract_drift|stale_source|qualified_before_source_unavailable|unknown_before|qualified_current_record_required|independent_previous_record_required|exact_fresh_cism_observation_handle_required|cism_fact_not_bound_to_exact_observed_section)$/,'fresh_intake','Run a fresh intake and review; the source changed or is not qualified.'],
   [/^(parent_hyphen_lines_required|parent_internal_language_excluded|invalid_explicit_field_value)$/,'rewrite_text','Rewrite the parent-facing field text and review again.'],
+  [/^parent_book_internal_notation_excluded$/,'rewrite_text','Use the teacher-facing textbook notation without internal series or version labels.'],
   [/^(existing_value_requires_explicit_replace|explicit_clear_decision_required|clear_requires_empty_value|no_addition_preserves_existing_memo|today_memo_interview_required|field_not_selected|current_request_ref_required)$/,'explicit_teacher_decision','Obtain the explicit teacher decision for this exact field and request.'],
 ];
 function holdActions(scope:DailyRecordScope,field:DailyRecordField,blockers:readonly string[],learningEntries:unknown){
@@ -399,6 +400,7 @@ export class DailyRecordService {
         }
       }
       if(changed&&p.value!==''&&['progress','homework','lessonMemo'].includes(p.field)){
+        if(/시리즈\s*\d+|v\d+/iu.test(p.value))blockers.push('parent_book_internal_notation_excluded');
         if(this.parentSafeguard&&!this.parentSafeguard.checkLines(p.value))blockers.push('parent_hyphen_lines_required');
         if(['progress','homework'].includes(p.field)){
           if(!this.learningPolicy)blockers.push('canonical_learning_policy_not_connected');
