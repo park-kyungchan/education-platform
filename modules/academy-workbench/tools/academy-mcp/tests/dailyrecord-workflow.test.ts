@@ -361,6 +361,20 @@ test('a paused contender never removes a live generation and contenders get exac
     const body=async()=>{active++;maxActive=Math.max(maxActive,active);await new Promise(r=>setTimeout(r,15));active--;};
     await Promise.all(Array.from({length:12},()=>store.withLock('contended',body,{waitMs:5000,pollMs:2})));
     expect(maxActive).toBe(1);
+    // An older generation file (as left by a stale contender) never admits anyone while the newest generation is live.
+    const lockDir=resolve(base,'store','locks'),prefix=createHash('sha256').update('stale','utf8').digest('hex')+'.';
+    let release!:()=>void;const holding=new Promise<void>(r=>{release=r;});
+    await store.withLock('stale',async()=>{});
+    const live=store.withLock('stale',async()=>{await holding;});
+    await new Promise(r=>setTimeout(r,30));
+    const generations=()=>readdirSync(lockDir).filter(n=>n.startsWith(prefix)&&n.endsWith('.lock')).map(n=>Number(n.slice(prefix.length,-5))).sort();
+    expect(generations()).toEqual([2]);
+    writeFileSync(resolve(lockDir,prefix+'1.lock'),JSON.stringify({pid:process.pid,bootId:'stale-contender',startTime:'0',token:'stale',acquiredAt:new Date().toISOString()}));
+    let entered=false;
+    const waiter=store.withLock('stale',async()=>{entered=true;},{waitMs:3000,pollMs:5});
+    await new Promise(r=>setTimeout(r,60));
+    expect(entered).toBe(false);
+    release();await live;await waiter;expect(entered).toBe(true);
     // Multi-process contention through the same store.
     const script=resolve(base,'contend.ts');
     writeFileSync(script,`import {DailyRecordWorkflowStore} from ${JSON.stringify(resolve(import.meta.dir,'../src/dailyrecord-workflow.ts'))};

@@ -98,8 +98,10 @@ export class DailyRecordWorkflowStore {
    * atomically with its holder identity. Release publishes `<key>.<n>.released`.
    * The next writer may create generation n+1 only when generation n is released
    * or its holder's process incarnation is gone; exclusive creation makes exactly
-   * one of several contenders win. No process ever removes another's live lock,
-   * so a paused holder or a paused contender cannot cause two concurrent holders. */
+   * one of several contenders win, and a contender that recreated a pruned
+   * generation name sees the newer generation and withdraws. No process ever
+   * removes another's live lock, so a paused holder or contender cannot cause
+   * two concurrent holders. */
   async withLock<T>(key:string,run:()=>Promise<T>,options:{waitMs?:number;pollMs?:number}={}):Promise<T>{
     const dir=resolve(this.root,'locks'),prefix=sha256(key)+'.',token=randomUUID(),deadline=Date.now()+(options.waitMs??30000);
     const file=(n:number)=>resolve(dir,prefix+n+'.lock'),released=(n:number)=>resolve(dir,prefix+n+'.released');
@@ -109,7 +111,13 @@ export class DailyRecordWorkflowStore {
       const free=latest===0||this.#exists(released(latest))||(()=>{const h=this.#holder(file(latest));return h!==null&&!holderAlive(h);})();
       if(free){
         const holder:Holder={pid:process.pid,bootId:bootId(),startTime:processStart(process.pid),token,acquiredAt:new Date().toISOString()};
-        if(exclusiveWrite(dir,file(latest+1),JSON.stringify(holder))){held=latest+1;break;}
+        if(exclusiveWrite(dir,file(latest+1),JSON.stringify(holder))){
+          // A paused contender can recreate a pruned (older) generation name. Pruning
+          // never removes the newest generation, so any newer file proves this one
+          // is stale: withdraw only our own file and contend again.
+          if(this.#latestGeneration(dir,prefix)>latest+1){rmSync(file(latest+1),{force:true});continue;}
+          held=latest+1;break;
+        }
         continue;
       }
       if(Date.now()>deadline)throw Error('shared_writer_lock_busy');
