@@ -26,6 +26,7 @@ export async function dailyRecordLearningConfiguration(args:readonly string[]){
     const retained=(scope:Readonly<{sourceNamespace:string;teacherId:string;studentId:string}>)=>
       config.students.find(s=>s.sourceNamespace===scope.sourceNamespace&&s.teacherId===scope.teacherId&&s.studentId===scope.studentId);
     learningPolicy={bundleSha256,configSha256,catalogSha256:config.catalogSha256,
+      scopeQualified(scope){return !!retained(scope);},
       review(scope,value,entries){
         const student=retained(scope);
         if(!student)return ['student_namespace_bridge_unverified_ask_teacher'];

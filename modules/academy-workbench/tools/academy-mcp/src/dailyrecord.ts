@@ -27,6 +27,7 @@ export type DailyRecordObservation=z.infer<typeof dailyRecordObservationSchema>;
 const learningEntrySchema=z.object({bookRef:dailyRecordIdSchema,unitRef:dailyRecordIdSchema,scope:z.enum(['unit','sections']),sectionRefs:z.array(dailyRecordIdSchema).max(64),activity:z.string().min(1).max(400),deadline:dailyRecordDateSchema.nullable()}).strict();
 const proposalSchema=z.object({field:dailyRecordFieldSchema,value:z.string().max(8192),factRefs:z.array(dailyRecordIdSchema).min(1).max(32),
   decision:z.object({kind:z.enum(['set','replace','clear']),requestRef:dailyRecordIdSchema}).strict(),learningEntries:z.array(learningEntrySchema).max(64).optional(),
+  teacherReported:z.object({preserveBefore:z.boolean(),mappedText:z.string().max(8192),lines:z.array(z.object({factRef:dailyRecordIdSchema,text:z.string().min(3).max(1000)}).strict()).min(1).max(32)}).strict().optional(),
 }).strict();
 export const dailyRecordIntakeSchema=z.object({context:dailyRecordContextSchema,suppliedValues:z.array(proposalSchema).max(6).default([]),actor:declaredActorSchema.optional(),attribution:attributionSchema.optional()}).strict();
 export const dailyRecordReviewSchema=z.object({context:dailyRecordContextSchema,observationHandle:dailyRecordIdSchema.optional(),
@@ -116,7 +117,7 @@ export interface DailyRecordWriteBackend {
 /** Inject the canonical Education safeguard, together with its verified policy/source identity. */
 export interface DailyRecordParentSafeguard {readonly policySha256:string;readonly safeguardSourceSha256:string;readonly sourceRef:string;check(text:string):boolean;checkLines(text:string):boolean}
 /** Trusted owner-side adapter; no catalog/bridge or verification flags come from tool input. */
-export interface DailyRecordLearningPolicy {readonly bundleSha256:string;readonly configSha256:string;readonly catalogSha256:string;review(scope:Readonly<DailyRecordScope>,value:string,entries:unknown):string[];suggest?(scope:Readonly<DailyRecordScope>,value:string,entries:unknown):string|null}
+export interface DailyRecordLearningPolicy {readonly bundleSha256:string;readonly configSha256:string;readonly catalogSha256:string;scopeQualified?(scope:Readonly<DailyRecordScope>):boolean;review(scope:Readonly<DailyRecordScope>,value:string,entries:unknown):string[];suggest?(scope:Readonly<DailyRecordScope>,value:string,entries:unknown):string|null}
 const same=(a:unknown,b:unknown)=>JSON.stringify(a)===JSON.stringify(b);
 const digest=(value:unknown)=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 const fieldValues=(observation:DailyRecordObservation)=>Object.fromEntries(dailyRecordFields.map(field=>{const value=observation.fields[field];return [field,value.state==='known'?{state:value.state,value:value.value}:{state:value.state,reasonCode:value.reasonCode}];}));
@@ -166,6 +167,7 @@ const holdActionTable:[RegExp,string,string][]=[
   [/^learning_entries_required$/,'supply_learning_entries','Supply learningEntries binding book, unit and sections through the owner catalog.'],
   [/^learning_(mapping_unqualified|evidence_required|book_invalid|unit_invalid|section_invalid|edition_invalid|grade_invalid|entry_invalid)$|^duplicate_learning_/,'owner_catalog_binding','The owner catalog has no qualified binding for this entry; record a teacher-confirmed binding in the private owner catalog. Never invent a mapping.'],
   [/^learning_render_mismatch$/,'teacher_review_rendering','Text differs from the canonical grouped rendering; the teacher reviews any format example for meaning before resubmitting.'],
+  [/^teacher_reported_/,'supply_or_correct_fact','Bind each teacher-reported line to its exact user-supplied fact and preserve any selected existing text.'],
   [/^canonical_(learning_policy|parent_safeguard)_not_connected$|^learning_(catalog|contract)_invalid$/,'owner_configuration','The runtime owner must connect the pinned policy; a caller cannot resolve this.'],
   [/^(supplied_fact_fragment_missing|unsupported_question_count|unsupported_deadline|unsupported_completion_claim|unsupported_stage_completion_claim|stage_completion_mismatch|field_fact_reference_required|explicit_user_source_option_fact_required|conflicting_explicit_user_source_options|duplicate_fact_ref)$/,'supply_or_correct_fact','The text asserts something the supplied teacher facts do not support; obtain that teacher fact or remove the claim.'],
   [/^(source_before_or_contract_drift|stale_source|qualified_before_source_unavailable|unknown_before|qualified_current_record_required|independent_previous_record_required|exact_fresh_cism_observation_handle_required|cism_fact_not_bound_to_exact_observed_section)$/,'fresh_intake','Run a fresh intake and review; the source changed or is not qualified.'],
@@ -401,7 +403,17 @@ export class DailyRecordService {
         if(['progress','homework'].includes(p.field)){
           if(!this.learningPolicy)blockers.push('canonical_learning_policy_not_connected');
           else {
-            const learningBlockers=this.learningPolicy.review(context.scope,p.value,p.learningEntries);
+            const teacher=p.teacherReported;
+            if(teacher){
+              if(!this.learningPolicy.scopeQualified?.(context.scope))blockers.push('student_namespace_bridge_unverified_ask_teacher');
+              if(p.field!=='progress')blockers.push('teacher_reported_progress_only');
+              const prefix=teacher.preserveBefore&&before.state==='known'?before.value:'';
+              if(teacher.preserveBefore&&(before.state!=='known'||!before.value))blockers.push('teacher_reported_before_required');
+              if(teacher.lines.some(line=>!line.text.startsWith('- ')||line.text.includes('\n')||!p.factRefs.includes(line.factRef)||!facts.some(f=>f.ref===line.factRef&&f.origin==='user_supplied'&&f.text.includes(line.text.slice(2)))))blockers.push('teacher_reported_exact_fact_required');
+              if([prefix,teacher.mappedText,...teacher.lines.map(line=>line.text)].filter(Boolean).join('\n')!==p.value)blockers.push('teacher_reported_render_mismatch');
+              if(!teacher.mappedText&&p.learningEntries?.length)blockers.push('teacher_reported_mapping_mismatch');
+            }
+            const learningBlockers=teacher&&!teacher.mappedText?[]:this.learningPolicy.review(context.scope,teacher?teacher.mappedText:p.value,p.learningEntries);
             blockers.push(...learningBlockers);
             if(held&&!global.length&&learningBlockers.includes('learning_render_mismatch'))
               learningSuggestedRendering=this.learningPolicy.suggest?.(context.scope,p.value,p.learningEntries)??null;
