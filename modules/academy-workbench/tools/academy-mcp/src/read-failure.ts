@@ -29,6 +29,7 @@ const catalog={
   native_dailyrecord_occurrence_unverified:['partial_coverage','src/native-dailyrecord-backend.ts:readDailyRecord'],
   native_metadata_method_unavailable:['endpoint_absence','src/native-dailyrecord-backend.ts:readStudentMetadata'],
   unknown_tool:['endpoint_absence','src/neutral-server.ts:call'],
+  paper_scope_unresolved:['policy_denial','src/paper-scope-routing.ts:selectPaperRoute'],
   release_pointer_missing:['contract_drift','src/neutral-server.ts:activeRelease'],
   release_upstream_admission_mismatch:['contract_drift','src/neutral-server.ts:call'],
   release_payload_unqualified:['contract_drift','src/runtime-release.ts:loadRuntimeRelease'],

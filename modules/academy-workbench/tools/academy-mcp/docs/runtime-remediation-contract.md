@@ -41,6 +41,33 @@ retains the exact-head, owner-admission, installation, fresh-client and Muse
 holds. Native paper1/paper2 migration needs their separately owned sources and
 identity contracts; registry advertisements cannot substitute for them.
 
+### Paper scope routing (source only)
+
+An optional `paperScopes` list in release-pinned routing bytes maps endpoint
+names to existing configured student IDs. For the shared paper-header,
+definition, printed-paper lookup, daily-inventory and paper/source contract
+names, the bridge chooses
+exactly one matching endpoint before starting a process. Missing, overlapping,
+or unsupported mappings stop without probing or retrying other endpoints.
+An explicitly named compatibility route is checked against the same map and
+never redirected to a different endpoint. The
+selected native endpoint continues to enforce its own authoritative admission;
+the map is a routing hint, not a grant. Without the optional map, old releases
+retain their existing behavior. A stale map can cause refusal but cannot widen
+the native endpoint's scope.
+
+Populate the map from the selected endpoints' verified current native
+configuration as a separate private JSON file, and supply its path and digest
+as the release preparation plan's optional `paperScopes` artifact pin. Preparation
+copies the validated map into pinned routing bytes, rejects unknown endpoints,
+and creates only an uninstalled draft. Never accept the map or a scope flag from
+the MCP caller. The current legacy release has no paper scope map, so existing
+clients remain unchanged until a separately qualified release is installed.
+The pin proves the supplied map's bytes, not its correspondence to native
+configuration. Installation must independently verify the map against each
+exact selected endpoint configuration and qualify the released endpoints and
+fresh clients. Synthetic tests do not establish current native availability.
+
 ## Metadata authorization and process lifetime
 
 `--metadata-admission PATH SHA256` selects an owner-issued strict
