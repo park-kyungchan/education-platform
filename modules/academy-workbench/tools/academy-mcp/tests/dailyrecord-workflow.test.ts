@@ -215,7 +215,7 @@ test('held mapping rows carry field-local actions and a scoped correction target
   expect(review.patch).toEqual([]);expect(review.rows[0].learningSuggestedRendering).toBeNull();
 });
 
-test('the shared lock serializes holders, waits for a live holder and breaks a dead or PID-reused one',async()=>{
+test('the kernel lock serializes holders, times out while held and is released when a holder process dies',async()=>{
   const base=mkdtempSync(resolve(tmpdir(),'dailyrecord-lock-'));
   try{
     const store=new DailyRecordWorkflowStore(resolve(base,'store')),order:string[]=[];
@@ -226,39 +226,36 @@ test('the shared lock serializes holders, waits for a live holder and breaks a d
     const second=store.withLock('k',async()=>{order.push('second');});
     await new Promise(r=>setTimeout(r,60));release();await Promise.all([first,second]);
     expect(order).toEqual(['first-in','first-out','second']);
-    const lockFile=(key:string)=>resolve(base,'store','locks',createHash('sha256').update(key,'utf8').digest('hex')+'.1.lock');
-    const plant=(key:string,holder:unknown)=>writeFileSync(lockFile(key),JSON.stringify(holder));
-    const dead=Bun.spawnSync([process.execPath,'-e','console.log(process.pid)']);
-    plant('dead',{pid:Number(dead.stdout.toString().trim()),token:'abandoned',acquiredAt:new Date().toISOString()});
-    expect(await store.withLock('dead',async()=>'acquired',{waitMs:2000})).toBe('acquired');
-    // A live PID whose start time differs is a reused PID, not the original holder.
-    const boot=readFileSync('/proc/sys/kernel/random/boot_id','utf8').trim();
-    plant('reused',{pid:process.pid,bootId:boot,startTime:'0',token:'stale',acquiredAt:new Date().toISOString()});
-    expect(await store.withLock('reused',async()=>'acquired',{waitMs:2000})).toBe('acquired');
-    // A live holder with its true incarnation is never broken, however long it holds.
-    plant('live',{pid:process.pid,bootId:boot,startTime:readFileSync('/proc/self/stat','utf8').split(') ')[1]!.split(' ')[19],token:'live',acquiredAt:new Date(0).toISOString()});
-    await expect(store.withLock('live',async()=>{},{waitMs:150})).rejects.toThrow('shared_writer_lock_busy');
-    expect(JSON.parse(readFileSync(lockFile('live'),'utf8')).token).toBe('live');
-    rmSync(lockFile('live'));
-    // Each acquisition prunes older generations: one generation file remains per key.
-    const kPrefix=createHash('sha256').update('k','utf8').digest('hex')+'.';
-    expect(readdirSync(resolve(base,'store','locks')).filter(n=>n.startsWith(kPrefix)&&n.endsWith('.lock'))).toHaveLength(1);
+    // A holder process that dies without releasing: the kernel drops its lock.
+    const script=resolve(base,'crash.ts');
+    writeFileSync(script,`import {DailyRecordWorkflowStore} from ${JSON.stringify(resolve(import.meta.dir,'../src/dailyrecord-workflow.ts'))};
+await new DailyRecordWorkflowStore(process.argv[2]).withLock('crash',async()=>{console.log('held');process.exit(9);});`);
+    const child=Bun.spawn([process.execPath,script,resolve(base,'store')],{stdout:'pipe',stderr:'inherit'});
+    expect(await child.exited).toBe(9);expect(await new Response(child.stdout).text()).toBe('held\n');
+    expect(await store.withLock('crash',async()=>'acquired',{waitMs:2000})).toBe('acquired');
     expect(store.publishOnce('request','n1',{v:1}).created).toBe(true);
     expect(store.publishOnce('request','n1',{v:2})).toEqual({created:false,record:{v:1}});
   }finally{rmSync(base,{recursive:true,force:true});}
 },20000);
 
-test('native launches enable the workflow inside the owner root regardless of flag order',()=>{
+test('native launches keep the workflow store under the real owner root with no symlink, and create nothing early',async()=>{
+  const {createDailyRecordWorkflow}=await import('../src/dailyrecord-workflow.ts');
   const root='/opt/data/profiles/dc-gang-a-dev/artifacts/';
   const native={requiredRoot:root,nativeDefaultStore:root+'dailyrecord-workflow'};
   expect(()=>dailyRecordWorkflowConfiguration(['--dailyrecord-workflow-store','/tmp/outside-owner','--dailyrecord-native','c','s'],native)).toThrow('dailyrecord_workflow_store_owner_root_required');
   expect(()=>dailyRecordWorkflowConfiguration(['--dailyrecord-native','c','s','--dailyrecord-workflow-store',root+'../escape'],native)).toThrow('dailyrecord_workflow_store_owner_root_required');
+  expect(dailyRecordWorkflowConfiguration(['--dailyrecord-native','c','s'],native)).toEqual({remainingArgs:['--dailyrecord-native','c','s'],storeDir:root+'dailyrecord-workflow'});
   expect(existsSync('/tmp/outside-owner')).toBe(false);
   const base=mkdtempSync(resolve(tmpdir(),'dailyrecord-workflow-flags-'));
   try{
-    const configured=dailyRecordWorkflowConfiguration(['--other','--dailyrecord-workflow-store',resolve(base,'store')]);
-    expect(configured).toMatchObject({remainingArgs:['--other'],storeDir:resolve(base,'store')});expect(configured.workflow).not.toBeNull();
-    expect(dailyRecordWorkflowConfiguration(['--other']).workflow).toBeNull();
+    const {symlinkSync,realpathSync}=await import('node:fs');
+    const owner=realpathSync(base)+'/owner/',outside=resolve(base,'outside');mkdirSync(owner);mkdirSync(outside);
+    symlinkSync(outside,owner+'archive');
+    expect(()=>createDailyRecordWorkflow({storeDir:owner+'archive/workflow',requiredRoot:owner})).toThrow('dailyrecord_workflow_store_symlink_refused');
+    expect(readdirSync(outside)).toEqual([]);
+    expect(()=>createDailyRecordWorkflow({storeDir:owner+'workflow',requiredRoot:resolve(base,'link-root')+'/'})).toThrow();
+    expect(createDailyRecordWorkflow({storeDir:owner+'workflow',requiredRoot:owner}).store.root).toBe(owner+'workflow');
+    expect(dailyRecordWorkflowConfiguration(['--other']).storeDir).toBeNull();
   }finally{rmSync(base,{recursive:true,force:true});}
 });
 
@@ -353,7 +350,7 @@ test('a managed source-verified student outside the launch list is resolved, rev
   }finally{rmSync(base,{recursive:true,force:true});}
 },20000);
 
-test('a paused contender never removes a live generation and contenders get exactly one winner',async()=>{
+test('in-process and multi-process contenders never hold the kernel lock together',async()=>{
   const base=mkdtempSync(resolve(tmpdir(),'dailyrecord-lock-gen-'));
   try{
     const store=new DailyRecordWorkflowStore(resolve(base,'store'));
@@ -361,20 +358,6 @@ test('a paused contender never removes a live generation and contenders get exac
     const body=async()=>{active++;maxActive=Math.max(maxActive,active);await new Promise(r=>setTimeout(r,15));active--;};
     await Promise.all(Array.from({length:12},()=>store.withLock('contended',body,{waitMs:5000,pollMs:2})));
     expect(maxActive).toBe(1);
-    // An older generation file (as left by a stale contender) never admits anyone while the newest generation is live.
-    const lockDir=resolve(base,'store','locks'),prefix=createHash('sha256').update('stale','utf8').digest('hex')+'.';
-    let release!:()=>void;const holding=new Promise<void>(r=>{release=r;});
-    await store.withLock('stale',async()=>{});
-    const live=store.withLock('stale',async()=>{await holding;});
-    await new Promise(r=>setTimeout(r,30));
-    const generations=()=>readdirSync(lockDir).filter(n=>n.startsWith(prefix)&&n.endsWith('.lock')).map(n=>Number(n.slice(prefix.length,-5))).sort();
-    expect(generations()).toEqual([2]);
-    writeFileSync(resolve(lockDir,prefix+'1.lock'),JSON.stringify({pid:process.pid,bootId:'stale-contender',startTime:'0',token:'stale',acquiredAt:new Date().toISOString()}));
-    let entered=false;
-    const waiter=store.withLock('stale',async()=>{entered=true;},{waitMs:3000,pollMs:5});
-    await new Promise(r=>setTimeout(r,60));
-    expect(entered).toBe(false);
-    release();await live;await waiter;expect(entered).toBe(true);
     // Multi-process contention through the same store.
     const script=resolve(base,'contend.ts');
     writeFileSync(script,`import {DailyRecordWorkflowStore} from ${JSON.stringify(resolve(import.meta.dir,'../src/dailyrecord-workflow.ts'))};

@@ -1,5 +1,6 @@
 import {createHash,randomUUID} from 'node:crypto';
-import {closeSync,fsyncSync,linkSync,lstatSync,mkdirSync,openSync,readFileSync,readdirSync,renameSync,rmSync,unlinkSync,writeFileSync,writeSync} from 'node:fs';
+import {dlopen,FFIType} from 'bun:ffi';
+import {closeSync,fsyncSync,linkSync,lstatSync,mkdirSync,openSync,readFileSync,readdirSync,realpathSync,unlinkSync,writeSync} from 'node:fs';
 import {resolve} from 'node:path';
 import {z} from 'zod';
 import {canonicalActionDigest,canonicalJson} from './dailyrecord-save-admission.ts';
@@ -41,17 +42,12 @@ function exclusiveWrite(dir:string,target:string,bytes:string):boolean{
   try{linkSync(temporary,target);}catch(error){unlinkSync(temporary);if(errno(error)==='EEXIST')return false;throw error;}
   unlinkSync(temporary);syncDirectory(dir);return true;
 }
-const bootId=()=>{try{return readFileSync('/proc/sys/kernel/random/boot_id','utf8').trim();}catch{return null;}};
-/** Process incarnation: kernel start time (stat field 22) distinguishes a reused PID. */
-const processStart=(pid:number)=>{
-  try{const stat=readFileSync(`/proc/${pid}/stat`,'utf8');return stat.slice(stat.lastIndexOf(')')+2).split(' ')[19]??null;}catch{return null;}
-};
-type Holder={pid:number;bootId:string|null;startTime:string|null;token:string;acquiredAt:string};
-function holderAlive(holder:Partial<Holder>):boolean{
-  if(typeof holder.pid!=='number'||!Number.isSafeInteger(holder.pid)||holder.pid<1)return false;
-  if(holder.bootId&&holder.startTime)return holder.bootId===bootId()&&processStart(holder.pid)===holder.startTime;
-  try{process.kill(holder.pid,0);return true;}catch(error){return errno(error)==='EPERM';}
-}
+/** Kernel advisory lock (flock(2)): released by the kernel when the holder's
+ * file description closes or its process dies, whatever its PID namespace.
+ * The harness never judges another process's liveness itself. */
+const LOCK_EX=2,LOCK_NB=4,LOCK_UN=8;
+let libc:{symbols:{flock:(fd:number,operation:number)=>number}}|null=null;
+const kernel=()=>libc??=dlopen('libc.so.6',{flock:{args:[FFIType.i32,FFIType.i32],returns:FFIType.i32}}) as never;
 
 export class DailyRecordWorkflowStore {
   readonly scope=workflowStoreScope;
@@ -92,48 +88,20 @@ export class DailyRecordWorkflowStore {
     let names:string[];try{names=readdirSync(dir).filter(n=>n.endsWith('.json')&&!n.startsWith('.')).sort();}catch(error){if(errno(error)==='ENOENT')return [];throw error;}
     return names.slice(-limit).map(n=>JSON.parse(readFileSync(resolve(dir,n),'utf8')) as Record<string,unknown>).filter(e=>e.requestKey===requestKey);
   }
-  /** Cross-process mutual exclusion for participating writers on this host.
-   *
-   * Generation lock: holding means owning the newest `<key>.<n>.lock`, published
-   * atomically with its holder identity. Release publishes `<key>.<n>.released`.
-   * The next writer may create generation n+1 only when generation n is released
-   * or its holder's process incarnation is gone; exclusive creation makes exactly
-   * one of several contenders win, and a contender that recreated a pruned
-   * generation name sees the newer generation and withdraws. No process ever
-   * removes another's live lock, so a paused holder or contender cannot cause
-   * two concurrent holders. */
+  /** Mutual exclusion for every participating writer on this filesystem, by
+   * kernel flock(2) on one lock file per key. Separate opens conflict even in
+   * one process; a crashed holder's lock is released by the kernel. */
   async withLock<T>(key:string,run:()=>Promise<T>,options:{waitMs?:number;pollMs?:number}={}):Promise<T>{
-    const dir=resolve(this.root,'locks'),prefix=sha256(key)+'.',token=randomUUID(),deadline=Date.now()+(options.waitMs??30000);
-    const file=(n:number)=>resolve(dir,prefix+n+'.lock'),released=(n:number)=>resolve(dir,prefix+n+'.released');
-    let held=0;
-    for(;;){
-      const latest=this.#latestGeneration(dir,prefix);
-      const free=latest===0||this.#exists(released(latest))||(()=>{const h=this.#holder(file(latest));return h!==null&&!holderAlive(h);})();
-      if(free){
-        const holder:Holder={pid:process.pid,bootId:bootId(),startTime:processStart(process.pid),token,acquiredAt:new Date().toISOString()};
-        if(exclusiveWrite(dir,file(latest+1),JSON.stringify(holder))){
-          // A paused contender can recreate a pruned (older) generation name. Pruning
-          // never removes the newest generation, so any newer file proves this one
-          // is stale: withdraw only our own file and contend again.
-          if(this.#latestGeneration(dir,prefix)>latest+1){rmSync(file(latest+1),{force:true});continue;}
-          held=latest+1;break;
-        }
-        continue;
+    const fd=openSync(resolve(this.root,'locks',sha256(key)+'.flock'),'a',0o600),{flock}=kernel().symbols;
+    const deadline=Date.now()+(options.waitMs??30000);
+    try{
+      while(flock(fd,LOCK_EX|LOCK_NB)!==0){
+        if(Date.now()>deadline)throw Error('shared_writer_lock_busy');
+        await new Promise(r=>setTimeout(r,options.pollMs??20));
       }
-      if(Date.now()>deadline)throw Error('shared_writer_lock_busy');
-      await new Promise(r=>setTimeout(r,options.pollMs??20));
-    }
-    // Older generations can no longer be judged by anyone; remove them.
-    for(const n of this.#generations(dir,prefix))if(n<held){rmSync(file(n),{force:true});rmSync(released(n),{force:true});}
-    try{return await run();}
-    finally{if(this.#holder(file(held))?.token===token)exclusiveWrite(dir,released(held),token);}
+      try{return await run();}finally{flock(fd,LOCK_UN);}
+    }finally{closeSync(fd);}
   }
-  #generations(dir:string,prefix:string):number[]{
-    return readdirSync(dir).filter(n=>n.startsWith(prefix)&&n.endsWith('.lock')).map(n=>Number(n.slice(prefix.length,-5))).filter(n=>Number.isSafeInteger(n)&&n>0);
-  }
-  #latestGeneration(dir:string,prefix:string){return Math.max(0,...this.#generations(dir,prefix));}
-  #exists(path:string){try{lstatSync(path);return true;}catch{return false;}}
-  #holder(file:string):Partial<Holder>|null{try{return JSON.parse(readFileSync(file,'utf8'));}catch{return null;}}
 }
 
 /** What the caller says about itself; recorded as declared, never as verified. */
@@ -172,12 +140,29 @@ export const userRequestSchema=z.object({
 export type DailyRecordUserRequest=z.infer<typeof userRequestSchema>;
 
 export interface DailyRecordWorkflow {readonly store:DailyRecordWorkflowStore}
-export const createDailyRecordWorkflow=(input:{storeDir:string}):DailyRecordWorkflow=>({store:new DailyRecordWorkflowStore(input.storeDir)});
+/** The store must sit under a real (non-symlink) owner root with no symlink
+ * component, so records cannot escape to another location. */
+function assertOwnerStorePath(storeDir:string,requiredRoot:string){
+  if(resolve(storeDir)!==storeDir||!storeDir.startsWith(requiredRoot))throw Error('dailyrecord_workflow_store_owner_root_required');
+  const root=requiredRoot.replace(/\/$/,'');
+  if(realpathSync(root)!==root)throw Error('dailyrecord_workflow_store_owner_root_required');
+  let current=root;
+  for(const part of storeDir.slice(root.length).split('/').filter(Boolean)){
+    current+='/'+part;
+    try{if(lstatSync(current).isSymbolicLink())throw Error('dailyrecord_workflow_store_symlink_refused');}
+    catch(error){if(errno(error)==='ENOENT')break;throw error;}
+  }
+}
+export function createDailyRecordWorkflow(input:{storeDir:string;requiredRoot?:string}):DailyRecordWorkflow{
+  if(input.requiredRoot)assertOwnerStorePath(input.storeDir,input.requiredRoot);
+  return {store:new DailyRecordWorkflowStore(input.storeDir)};
+}
 /**
- * Launch flags. Native launches enable the workflow by default with a store
- * inside the owner artifacts root, wherever the flags appear.
+ * Launch flags only; nothing is created here. Native launches enable the
+ * workflow by default inside the owner artifacts root, wherever the flags
+ * appear; the server creates the store after the owner launch is verified.
  */
-export function dailyRecordWorkflowConfiguration(args:readonly string[],options:{nativeDefaultStore?:string;requiredRoot?:string}={}):{remainingArgs:string[];workflow:DailyRecordWorkflow|null;storeDir:string|null}{
+export function dailyRecordWorkflowConfiguration(args:readonly string[],options:{nativeDefaultStore?:string;requiredRoot?:string}={}):{remainingArgs:string[];storeDir:string|null}{
   const remainingArgs:string[]=[];let storeDir:string|null=null;
   for(let i=0;i<args.length;i++){
     if(args[i]!=='--dailyrecord-workflow-store'){remainingArgs.push(args[i]!);continue;}
@@ -186,7 +171,7 @@ export function dailyRecordWorkflowConfiguration(args:readonly string[],options:
   }
   storeDir??=options.nativeDefaultStore??null;
   if(storeDir&&options.requiredRoot&&(resolve(storeDir)!==storeDir||!storeDir.startsWith(options.requiredRoot)))throw Error('dailyrecord_workflow_store_owner_root_required');
-  return {remainingArgs,storeDir,workflow:storeDir?createDailyRecordWorkflow({storeDir}):null};
+  return {remainingArgs,storeDir};
 }
 
 export const workflowRequestKey=(scope:DailyRecordScope,requestRef:string)=>canonicalJson({scope,requestRef});
