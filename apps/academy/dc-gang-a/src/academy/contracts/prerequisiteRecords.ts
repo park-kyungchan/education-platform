@@ -183,8 +183,11 @@ export type ActivityOccurrence=
  |{state:'ATTACHED';scope:RecordScope;attachment:OwnerVersion<ActivityScopeLink>;attachments:OwnerVersion<ActivityScopeLink>[]}
  |{state:'DETACHED';attachment:OwnerVersion<ActivityScopeLink>;attachments:OwnerVersion<ActivityScopeLink>[]}
  |{state:'UNRESOLVED';attachments:OwnerVersion<ActivityScopeLink>[]};
-export function resolveActivityOccurrence(activity:{objectType:string;nativeKey:string;revision:string},embedded:RecordScope|null,scopes:readonly OwnerVersion<ActivityScopeLink>[]):ActivityOccurrence{
- const attachments=scopes.filter(v=>v.payload.activityRef.identity.objectType===activity.objectType&&v.payload.activityRef.identity.nativeKey===activity.nativeKey);
+/** Full native identity key: scope, namespace, type and key (attachments from another scope never match). */
+export function educationIdentityKey(identity:EducationIdentity):string{return canonicalJson([identity.scopeRef,identity.namespace,identity.objectType,identity.nativeKey]);}
+export function resolveActivityOccurrence(activity:{identity:EducationIdentity;revision:string},embedded:RecordScope|null,scopes:readonly OwnerVersion<ActivityScopeLink>[]):ActivityOccurrence{
+ const key=educationIdentityKey(activity.identity);
+ const attachments=scopes.filter(v=>educationIdentityKey(v.payload.activityRef.identity)===key);
  if(!attachments.length)return embedded?{state:'EMBEDDED',scope:embedded,attachments}:{state:'UNRESOLVED',attachments};
  const detached=attachments.find(v=>activityScopeState(v.payload)==='DETACHED');
  if(detached)return {state:'DETACHED',attachment:detached,attachments};

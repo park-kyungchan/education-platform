@@ -81,7 +81,7 @@ describe.skipIf(!contractRoot||!originalRoot)('NF-07 exact active source and suc
   const native=JSON.parse(readFileSync(contractRoot+'/native-prerequisite-contract.v4.json','utf8'));
   const dto=JSON.parse(readFileSync(contractRoot+'/native-dto-contract.v4.json','utf8'));
   const port=readFileSync(new URL('../../src/academy/ports/teacherStore.ts',import.meta.url),'utf8');expect(dto.portSource.declarations).toBe(port);expect(dto.declarationsAndValidators).toBe(readFileSync(new URL('../../src/academy/contracts/prerequisiteRecords.ts',import.meta.url),'utf8'));
-  const body=port.split('export interface TeacherReadStore {')[1]!.split('\n}')[0]+'\n'+port.split('export interface TeacherPrerequisiteReadStore extends TeacherReadStore {')[1]!.split('\n}')[0];const methods=[...body.matchAll(/^\s*(\w+)\??\(/gm)].map(m=>m[1]!);expect(methods).toHaveLength(30);expect(native.portContracts_REQ02.readPort.methods.sort()).toEqual(methods.sort());for(const writer of ['append','appendScoreEvidence','admitCommand','fenceCommand','db','finalizeReadOccurrence'])expect(methods.includes(writer)).toBe(false);
+  const body=port.split('export interface TeacherReadStore {')[1]!.split('\n}')[0]+'\n'+port.split('export interface TeacherPrerequisiteReadStore extends TeacherReadStore {')[1]!.split('\n}')[0];const methods=[...body.matchAll(/^\s*(\w+)\??\(/gm)].map(m=>m[1]!);expect(native.portContracts_REQ02.readPort.methods.sort()).toEqual(methods.sort());for(const writer of ['append','appendScoreEvidence','admitCommand','fenceCommand','db','finalizeReadOccurrence'])expect(methods.includes(writer)).toBe(false);
   const units=JSON.parse(readFileSync(contractRoot+'/implementation-units.v4.json','utf8')),dependency=JSON.parse(readFileSync(contractRoot+'/dependency-amendment.v4.json','utf8')),qualification=JSON.parse(readFileSync(contractRoot+'/qualification-contract.v4.json','utf8'));
   for(const [i,g] of units.groups.entries()){expect(dependency.implementationGroupsSummary[i].writerBoundary).toEqual(g.writerBoundary);expect(dependency.implementationGroupsSummary[i].gate).toBe(g.gate);expect(g.contractRef).toContain(prefix);expect(g.contractRef).not.toContain('.v2.json');expect(g.gate).not.toContain('G-REVIEW-AMEND');}
   const helper=qualification.isolatedHelper.writer;expect(helper.sourcePaths).toEqual(units.groups[3].helperSourcePaths);expect(helper.sourcePaths).toEqual(qualification.isolatedHelper.sourcePaths);expect(helper.sourcePaths).toEqual(qualification.syntheticAuthInitialization.sourcePaths);expect([...helper.sourcePaths,...helper.testPaths].sort()).toEqual(units.groups[3].writerBoundary.add.sort());expect(qualification.syntheticAuthInitialization.sourceOwner).toContain(helper.sourcePaths[0]);
@@ -99,9 +99,12 @@ test('legacy append refuses every native student kind before touching the databa
 });
 test('activity occurrence is ATTACHED only for exactly one ACTIVE attachment that pins this revision',()=>{
  const link=(revision:string,lesson:string,state:'ACTIVE'|'DETACHED'='ACTIVE'):OwnerVersion<ActivityScopeLink>=>({payload:{schemaVersion:'2.0.0',state,kind:'activity_scope',activityKind:'HOMEWORK_ASSIGNMENT',activityRef:objectRef('HomeworkAssignment','work-a',revision),recordScope:scope(lesson),sourceLiteral:'synthetic-explicit-scope',synthetic:true}} as OwnerVersion<ActivityScopeLink>);
- const activity={objectType:'HomeworkAssignment',nativeKey:'work-a',revision:'r2'};
+ const activity={identity:objectRef('HomeworkAssignment','work-a').identity,revision:'r2'};
  expect(resolveActivityOccurrence(activity,null,[link('r2','lesson-b')]).state).toBe('ATTACHED');
  expect(resolveActivityOccurrence(activity,null,[link('r1','lesson-a'),link('r2','lesson-b')]).state).toBe('UNRESOLVED');
  expect(resolveActivityOccurrence(activity,null,[link('r1','lesson-a')]).state).toBe('UNRESOLVED');
  expect(resolveActivityOccurrence(activity,scope(),[]).state).toBe('EMBEDDED');
+ // Same type, key and revision in another namespace or scope is a different activity: ignored, never ATTACHED/DETACHED.
+ const foreign=(state:'ACTIVE'|'DETACHED',field:'namespace'|'scopeRef')=>{const v=link('r2','lesson-b',state);const id=v.payload.activityRef.identity;Object.assign(id,field==='namespace'?{namespace:'other-native'}:{scopeRef:nativeRef('other-scope')});return v;};
+ for(const field of ['namespace','scopeRef'] as const)for(const state of ['ACTIVE','DETACHED'] as const)expect(resolveActivityOccurrence(activity,scope(),[foreign(state,field)]).state).toBe('EMBEDDED');
 });
