@@ -6,7 +6,7 @@ import {createHash} from 'node:crypto';
 import {Client} from '@modelcontextprotocol/client';
 import {StdioClientTransport} from '@modelcontextprotocol/client/stdio';
 import {context,fact} from './dailyrecord-fixture.ts';
-async function withNeutralClient(run:(fixture:{base:string;events:string;client:Client})=>Promise<void>,includeSaved=false,includeNativePool=false,saveAlias=false){
+async function withNeutralClient(run:(fixture:{base:string;events:string;client:Client})=>Promise<void>,includeSaved=false,includeNativePool=false,saveAlias=false,includePaperHeader=false){
   const base=await mkdtemp(resolve(tmpdir(),'academy-neutral-synthetic-'));
   const entry=process.env.ACADEMY_NEUTRAL_TEST_BUNDLE??resolve(import.meta.dir,'../src/neutral-server.ts');
   const deny=resolve(import.meta.dir,'network-deny.ts'),events=resolve(base,'events.txt');
@@ -20,15 +20,41 @@ async function withNeutralClient(run:(fixture:{base:string;events:string;client:
     const endpoints:any={dailyrecord:{command:process.execPath,args:['--preload',deny,resolve(import.meta.dir,'neutral-upstream-fixture.ts'),events]}};
     if(includeSaved)endpoints.saved={command:process.execPath,args:['--preload',deny,resolve(import.meta.dir,'neutral-saved-fixture.ts')]};
     if(includeNativePool)endpoints.paper1={command:process.execPath,args:['--preload',deny,resolve(import.meta.dir,'../src/pool-server.ts')]};
+    if(includePaperHeader)endpoints.paper1={command:process.execPath,args:['--preload',deny,resolve(import.meta.dir,'neutral-paper-header-fixture.ts'),events]};
     await writeFile(resolve(base,'endpoints.json'),JSON.stringify(endpoints));
     const discovery=Bun.spawn([process.execPath,'--preload',deny,entry,'--discover'],{env,stdout:'pipe',stderr:'pipe'});
-    expect(await discovery.exited).toBe(0);expect((await readFile(events,'utf8')).trim().split('\n')).toEqual(['start']);
+    expect(await discovery.exited).toBe(0);expect((await readFile(events,'utf8')).trim().split('\n')).toEqual(includePaperHeader?['start','paper-start']:['start']);
     if(saveAlias){const path=resolve(base,'registry.json'),registry=JSON.parse(await readFile(path,'utf8'));registry.find((r:any)=>r.upstreamName==='academy_dailyrecord_save').tool.name='fictional_save_alias';await writeFile(path,JSON.stringify(registry));}
     client=new Client({name:'fictional-neutral-client',version:'1.0.0'});
     transport=new StdioClientTransport({command:process.execPath,args:['--preload',deny,entry],env,stderr:'pipe'});await client.connect(transport);
     await run({base,events,client});
   }finally{await client?.close();await transport?.close();await rm(base,{recursive:true,force:true});}
 }
+test('neutral discovers and composes admitted DailyTest history with exact shared paper headers',async()=>{
+  await withNeutralClient(async({base,events,client})=>{
+    const discovered=(await client.listTools()).tools.filter(t=>t.name==='academy_dailytest_history_with_headers');expect(discovered).toHaveLength(1);
+    for(const term of ['소단원','미완료','기본','완료판정','오답클리닉','승인 거부'])expect(discovered[0]!.description).toContain(term);
+    const result:any=await client.callTool({name:'academy_dailytest_history_with_headers',arguments:{displayName:'Invented Student',lessonDate:'2040-01-16',
+      purpose:'Synthetic read',currentRequestRef:'synthetic-request',periods:['11']}});
+    expect(result.isError).not.toBe(true);
+    expect(result.structuredContent).toMatchObject({status:'observed',teacherCompletion:'unqualified',periods:[{selector:'1',rows:[{
+      paperKey:'7001',attemptKey:'8001',sourceScore:75,header:{title:'Invented title',questionCount:'4'}}]},{selector:'11'}]});
+    const trace=(await readFile(events,'utf8')).trim().split('\n');expect(trace.indexOf('metadata')).toBeLessThan(trace.lastIndexOf('paper-start'));
+    expect(trace.lastIndexOf('paper-start')).toBeLessThan(trace.indexOf('headers'));
+    const receipts=await readdir(resolve(base,'receipts'));
+    expect((await Promise.all(receipts.map(n=>readFile(resolve(base,'receipts',n),'utf8')))).join('')).not.toContain('Invented Student');
+  },false,false,false,true);
+},20000);
+test('composite preserves safe upstream metadata failures without exposing unknown payloads or calling paper',async()=>{
+ await withNeutralClient(async({base,events,client})=>{
+  const call=()=>client.callTool({name:'academy_dailytest_history_with_headers',arguments:{displayName:'Invented Student',lessonDate:'2040-01-16',purpose:'Synthetic read',currentRequestRef:'synthetic-request',periods:['11']}});
+  for(const [reason,category] of [['source_authentication_failed','authentication'],['native_dated_name_ambiguous','identity_ambiguity'],['native_metadata_method_unavailable','endpoint_absence'],['student_metadata_backend_not_configured','endpoint_absence']]){
+   await writeFile(resolve(base,'inject-metadata-error'),reason);const result=await call();expect(result.structuredContent).toMatchObject({status:'blocked',code:reason,reasonCode:reason,failedSource:'metadata',sourceRequests:null,failure:{category}});
+  }
+  await writeFile(resolve(base,'inject-metadata-error'),'PRIVATE_CANARY');const result=await call();expect(result.structuredContent).toMatchObject({code:'student_metadata_unqualified_no_automatic_retry'});expect(JSON.stringify(result)).not.toContain('PRIVATE_CANARY');
+  expect(await readFile(events,'utf8')).not.toContain('headers');
+ },false,false,false,true);
+},20000);
 test('neutral MCP runs resolve and intake in one upstream lifetime and logs metadata only',async()=>{
   await withNeutralClient(async({base,events,client})=>{
     const tools=(await client.listTools()).tools,tool=tools.find(t=>t.name==='academy_dailyrecord_get')!;
