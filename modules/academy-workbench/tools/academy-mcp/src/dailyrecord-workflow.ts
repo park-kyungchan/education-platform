@@ -117,9 +117,9 @@ export const attributionSchema=z.object({
   declared:declaredActorSchema.nullable(),
 }).strict();
 export type DailyRecordAttribution=z.infer<typeof attributionSchema>;
+/** Executable name only: positional arguments can carry the user's instruction text. */
 const parentCommand=(ppid:number)=>{
-  try{const argv=readFileSync(`/proc/${ppid}/cmdline`,'utf8').split('\0').filter(Boolean);
-    return argv.slice(0,3).map(a=>a.split('/').pop()!).join(' ').slice(0,200)||null;}catch{return null;}
+  try{const argv0=readFileSync(`/proc/${ppid}/cmdline`,'utf8').split('\0')[0]??'';return argv0.split('/').pop()!.slice(0,200)||null;}catch{return null;}
 };
 export function observeAttribution(input:{observedBy:'neutral-bridge'|'upstream';client:{name:string;version:string}|null;bridgeSha256:string|null;declared:unknown}):DailyRecordAttribution{
   const declared=declaredActorSchema.safeParse(input.declared);

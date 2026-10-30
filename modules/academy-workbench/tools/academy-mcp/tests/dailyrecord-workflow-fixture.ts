@@ -68,6 +68,8 @@ export class FileSource {
             source.#event('write:'+a.field);source.onWrite();
             if(source.#has('inject-slow-write'))await new Promise(r=>setTimeout(r,400));
             if(source.#has('inject-lost-write-'+a.field)){source.#event('lost:'+a.field);throw Error('synthetic_transport_reset');}
+            // The server answers but does not apply the write: a returned transport with the old value.
+            if(source.#has('inject-ignored-write-'+a.field)){source.#event('ignored:'+a.field);return;}
             const fields=source.read();fields[a.field]=a.after;source.write(fields);
             if(source.#has('inject-crash-after-write'))process.exit(70);
             readbackArmed=true;
@@ -78,11 +80,11 @@ export class FileSource {
     };
   }
 }
-export function nativeWorkflowService(base:string,workflow:DailyRecordWorkflow|null,onWrite?:()=>void){
+export function nativeWorkflowService(base:string,workflow:DailyRecordWorkflow|null,onWrite?:()=>void,now:()=>number=Date.now){
   const source=new FileSource(base,onWrite);
   const backend=new NativeDailyRecordBackend(source.port() as never,admission,()=>({username:'fictional',password:'fictional'}),ownerAdmission);
-  return {source,workflow,service:new DailyRecordService(backend,safeguard,Date.now,learningPolicy,backend,workflow)};
+  return {source,workflow,service:new DailyRecordService(backend,safeguard,now,learningPolicy,backend,workflow)};
 }
-export function workflowService(base:string,input:{storeDir:string}){
-  return nativeWorkflowService(base,createDailyRecordWorkflow({storeDir:input.storeDir}));
+export function workflowService(base:string,input:{storeDir:string},now:()=>number=Date.now){
+  return nativeWorkflowService(base,createDailyRecordWorkflow({storeDir:input.storeDir}),undefined,now);
 }

@@ -182,6 +182,9 @@ type ReviewedPatch={field:DailyRecordField;target:z.infer<typeof currentTargetSc
 type StoredReview={reviewDigest:string;status:string;scope:DailyRecordScope;requestRef:string;observationHandle:string|null;
   patch:{field:DailyRecordField;before:string;after:string;effectRecordKey:string}[];reviewPolicy:ReviewPolicyPins;reviewedBy:DailyRecordAttribution;reviewedAt:string};
 
+/** How long an unchanged readback must wait before it may prove an uncertain dispatch did not land. */
+export const reconcileSettleMs=15*60*1000;
+
 export class DailyRecordService {
   readonly #handles=new Map<string,{observation:DailyRecordObservation;scope:DailyRecordScope;requestRef:string;subject?:{displayName:string}}>();
   readonly #cismHandles=new Map<string,CismObservation>();
@@ -516,15 +519,18 @@ export class DailyRecordService {
             fields:prior.patch.map(p=>report(p,{status:'unresolved',dispatched:null}))};
         }
         // Fields refused before their execution record (drift, not attempted) stay available.
-        for(const r of results){const p=prior.patch.find(x=>x.field===r.field);if(p)outcome(p,{status:r.status,dispatched:r.dispatched,transport:r.transport??null});}
+        // A readback that shows the old value after an uncertain transport does not prove
+        // the request will never land; it stays unresolved until a settled reconciliation.
+        const recorded=(r:typeof results[number])=>r.status==='not_persisted'&&r.transport!=='returned'?'unresolved':r.status;
+        for(const r of results){const p=prior.patch.find(x=>x.field===r.field);if(p)outcome(p,{status:recorded(r),readbackStatus:r.status,dispatched:r.dispatched,transport:r.transport??null});}
         const academyWrites=results.filter(r=>r.dispatched).length;
         const settled=results.every(r=>r.status==='persisted'||r.status==='noop');
-        const reasonCode=settled?null:results.some(r=>r.status==='unresolved'||r.status==='conflict')?'save_reconciliation_required'
+        const reasonCode=settled?null:results.some(r=>r.status==='unresolved'||r.status==='conflict'||recorded(r)==='unresolved')?'save_reconciliation_required'
           :results.some(r=>r.status==='before_drift')?'fresh_before_drift_new_review_required'
           :results.some(r=>r.status==='not_persisted')?'readback_not_persisted_new_request_required':'partial_save_review_remaining_fields';
         store.appendAudit(requestKey,{event:'dispatch_completed',by,academyWrites,results:results.map(r=>({field:r.field,status:r.status,dispatched:r.dispatched}))});
         return {...base,status:settled?'saved' as const:'held' as const,reasonCode,academyWrites,execution:'owner_request_bound' as const,
-          fields:results.map(r=>{const p=prior.patch.find(x=>x.field===r.field);return {field:r.field,status:r.status,dispatched:r.dispatched,executionState:p?fieldExecutionState(store,key(p)):'available'};})};
+          fields:results.map(r=>{const p=prior.patch.find(x=>x.field===r.field);return {field:r.field,status:recorded(r),dispatched:r.dispatched,transport:r.transport??null,executionState:p?fieldExecutionState(store,key(p)):'available'};})};
       });
     }catch(error){
       if(error instanceof Error&&error.message==='shared_writer_lock_busy')return hold('shared_writer_lock_busy');
@@ -544,7 +550,7 @@ export class DailyRecordService {
       const pending=studentExecutions(store,scope).filter(e=>needsReconciliation(e.state));
       if(!pending.length)return {...base,status:'settled' as const,reasonCode:null,by,fields:fields()};
       type SourceRead={status:'observed';observation:DailyRecordObservation}|{status:'unavailable';reasonCode:string};
-      const reads=new Map<string,SourceRead>();let notObserved=false;
+      const reads=new Map<string,SourceRead>();let notObserved=false,unsettled=false;
       for(const {key,record} of pending){
         const scopeKey=JSON.stringify(record.scope);
         if(!reads.has(scopeKey)){
@@ -566,6 +572,11 @@ export class DailyRecordService {
           continue;
         }
         const current=read.observation.fields[record.field];
+        // Only an observed new value settles at once. Showing the old (or another) value
+        // settles only after the settle window, so a request still pending remotely after
+        // its sender died cannot land after a new request was admitted.
+        const settled=this.now()-Date.parse(record.recordedAt)>=reconcileSettleMs;
+        if(current.state==='known'&&textDigest(current.value)!==record.afterSha256&&!settled){unsettled=true;continue;}
         const classification=current.state!=='known'?null:textDigest(current.value)===record.afterSha256?'persisted':textDigest(current.value)===record.beforeSha256?'not_persisted':'conflict';
         if(!classification)continue;
         store.publishOnce('reconciliation',key,{classification,sourceRevision:read.observation.sourceRevision,observedAt:read.observation.observedAt,by,reconciledAt:new Date(this.now()).toISOString()});
@@ -574,7 +585,7 @@ export class DailyRecordService {
       const after=fields(),open=after.some(f=>needsReconciliation(f.executionState));
       const unavailable=[...reads.values()].some(r=>r.status!=='observed');
       return {...base,status:open?'held' as const:'settled' as const,
-        reasonCode:open?(unavailable?'readback_unavailable_reconcile_later':notObserved?'affected_record_not_observed_manual_reconcile_required':'readback_field_unknown_reconcile_later'):null,by,fields:after};
+        reasonCode:open?(unavailable?'readback_unavailable_reconcile_later':notObserved?'affected_record_not_observed_manual_reconcile_required':unsettled?'readback_unchanged_within_settle_window_reconcile_later':'readback_field_unknown_reconcile_later'):null,settleWindowMs:reconcileSettleMs,by,fields:after};
     });
   }
   /** Metadata-only handoff view: per-field executions on this record with who did them, plus the request audit. No field or instruction text. */

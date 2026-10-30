@@ -15,7 +15,7 @@ function fixture(){
   const base=mkdtempSync(resolve(tmpdir(),'dailyrecord-workflow-'));
   const config={storeDir:resolve(base,'owner-store')};
   // A fresh service models a new process: no in-memory handle survives.
-  const process=()=>workflowService(base,config);
+  const process=(now:()=>number=Date.now)=>workflowService(base,config,now);
   const writes=()=>existsSync(resolve(base,'events.txt'))?readFileSync(resolve(base,'events.txt'),'utf8').split('\n').filter(l=>l.startsWith('write:')).length:0;
   return {base,process,writes,cleanup:()=>rmSync(base,{recursive:true,force:true})};
 }
@@ -103,11 +103,11 @@ test('partial save keeps field outcomes; a failed transition is never replayed a
   try{
     const p=f.process(),fields={progress:'- 지정 문제 풀이 진행.',homework:'- 다음 시간까지 지정 문제 풀이.'};
     const r=await reviewed(p.service,'codex',fields);
-    writeFileSync(resolve(f.base,'inject-lost-write-homework'),'');
+    writeFileSync(resolve(f.base,'inject-ignored-write-homework'),'');
     expect(await p.service.save(r.save('codex'))).toMatchObject({status:'held',reasonCode:'readback_not_persisted_new_request_required',academyWrites:2,
       fields:[{field:'progress',status:'persisted',executionState:'settled_persisted'},{field:'homework',status:'not_persisted',executionState:'settled_not_persisted'}]});
     expect(await p.service.save(r.save('codex'))).toMatchObject({status:'held',reasonCode:'transition_already_attempted_new_request_required',academyWrites:0});
-    rmSync(resolve(f.base,'inject-lost-write-homework'));
+    rmSync(resolve(f.base,'inject-ignored-write-homework'));
     // A new user request reviews again: the persisted field is now a noop and only the remaining one dispatches.
     const again=await reviewed(p.service,'claude',fields,'synthetic-request-2');
     expect(again.review.patch.map((x:any)=>x.field)).toEqual(['homework']);
@@ -120,7 +120,7 @@ test('a failed first field leaves the next field not attempted and still availab
   const f=fixture();
   try{
     const p=f.process(),r=await reviewed(p.service,'codex',{progress:'- 지정 문제 풀이 진행.',homework:'- 다음 시간까지 지정 문제 풀이.'});
-    writeFileSync(resolve(f.base,'inject-lost-write-progress'),'');
+    writeFileSync(resolve(f.base,'inject-ignored-write-progress'),'');
     expect(await p.service.save(r.save('codex'))).toMatchObject({status:'held',
       fields:[{field:'progress',status:'not_persisted',executionState:'settled_not_persisted'},{field:'homework',status:'not_attempted',dispatched:false,executionState:'available'}]});
     expect(f.writes()).toBe(1);
@@ -405,4 +405,28 @@ test('the same physical transition reached through another lesson date is not a 
   expect(executionKey('r1',{...nativeScope,lessonDate:'2040-01-04'},'previousHomeworkAssessment','12','3','4'))
     .toBe(executionKey('r1',{...nativeScope,lessonDate:'2040-01-05'},'previousHomeworkAssessment','12','3','4'));
   expect(executionKey('r1',nativeScope,'previousHomeworkAssessment','12','3','4')).not.toBe(executionKey('r2',nativeScope,'previousHomeworkAssessment','12','3','4'));
+});
+
+test('an old value after an uncertain transport stays unresolved until the settle window passes',async()=>{
+  const {reconcileSettleMs}=await import('../src/dailyrecord.ts');
+  const f=fixture();
+  try{
+    const p=f.process(),r=await reviewed(p.service,'codex',{progress:'- 지정 문제 풀이 진행.'});
+    writeFileSync(resolve(f.base,'inject-lost-write-progress'),'');
+    expect(await p.service.save(r.save('codex'))).toMatchObject({status:'held',reasonCode:'save_reconciliation_required',
+      fields:[{field:'progress',status:'unresolved',transport:'uncertain',executionState:'reconciliation_required'}]});
+    rmSync(resolve(f.base,'inject-lost-write-progress'));
+    // The request may still be pending remotely: an unchanged readback inside the window proves nothing.
+    expect(await f.process().service.reconcile({context:r.c})).toMatchObject({status:'held',reasonCode:'readback_unchanged_within_settle_window_reconcile_later',
+      fields:[{field:'progress',executionState:'reconciliation_required'}]});
+    const later=f.process(()=>Date.now()+reconcileSettleMs+1000);
+    expect(await later.service.reconcile({context:r.c})).toMatchObject({status:'settled',fields:[{field:'progress',executionState:'reconciled_not_persisted'}]});
+    expect(await later.service.save(r.save('codex'))).toMatchObject({status:'held',reasonCode:'transition_already_attempted_new_request_required'});
+  }finally{f.cleanup();}
+},20000);
+
+test('attribution records the parent executable only, never its arguments',async()=>{
+  const {observeAttribution}=await import('../src/dailyrecord-workflow.ts');
+  const a=observeAttribution({observedBy:'upstream',client:null,bridgeSha256:null,declared:null});
+  expect(a.process.parentCommand===null||!a.process.parentCommand.includes(' ')).toBe(true);
 });
