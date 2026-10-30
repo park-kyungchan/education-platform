@@ -88,7 +88,8 @@ export const dailyRecordSaveSchema=z.object({context:dailyRecordContextSchema,ob
   reviewDigest:hash,proposals:z.array(proposalSchema).min(1).max(6),
   /** The user's verbatim instruction behind this save: provenance for audit, required by the owner workflow. */
   request:userRequestSchema.optional(),actor:declaredActorSchema.optional(),attribution:attributionSchema.optional()}).strict();
-export const dailyRecordReconcileSchema=z.object({context:dailyRecordContextSchema,resolution:z.object({request:userRequestSchema}).strict().optional(),
+export const dailyRecordReconcileSchema=z.object({context:dailyRecordContextSchema,resolution:z.object({request:userRequestSchema,
+  executions:z.array(z.object({requestRef:dailyRecordIdSchema,field:dailyRecordFieldSchema}).strict()).min(1).max(6)}).strict().optional(),
   actor:declaredActorSchema.optional(),attribution:attributionSchema.optional()}).strict();
 export const dailyRecordExecutionStatusSchema=z.object({scope:dailyRecordScopeSchema,requestRef:dailyRecordIdSchema.optional(),actor:declaredActorSchema.optional(),attribution:attributionSchema.optional()}).strict();
 /** Upstream DailyRecord workflow tools that receive bridge-observed attribution. */
@@ -557,6 +558,9 @@ export class DailyRecordService {
     const store=this.workflow.store,by=attributionSummary(this.#attribution(input)),resolution=input.resolution?.request;
     if(resolution&&resolution.requestRef!==context.currentRequestRef)return {...base,status:'held' as const,reasonCode:'user_request_ref_mismatch',by,fields:[]};
     const resolvedBy=resolution?{requestRef:resolution.requestRef,instruction:resolution.instruction,instructionSha256:textDigest(resolution.instruction.text)}:null;
+    // A resolution closes only the executions it names, on this exact lesson record.
+    const resolves=(record:{scope:DailyRecordScope;requestRef:string;field:DailyRecordField})=>!!resolvedBy&&canonicalSame(record.scope,scope)
+      &&input.resolution!.executions.some(e=>e.requestRef===record.requestRef&&e.field===record.field);
     return store.withLock(workflowLockKey(scope),async()=>{
       const fields=()=>studentExecutions(store,scope).map(e=>({field:e.record.field,lessonDate:e.record.scope.lessonDate,requestRef:e.record.requestRef,executionState:e.state}));
       const pending=studentExecutions(store,scope).filter(e=>needsReconciliation(e.state));
@@ -589,7 +593,7 @@ export class DailyRecordService {
         // Without a returned transport the request may still be pending remotely after its
         // sender died, so only the new value, or the user's instruction, closes it.
         const returned=(store.get('outcome',key) as {transport?:string|null}|null)?.transport==='returned';
-        if(classification!=='persisted'&&!returned&&!resolvedBy){uncertain=true;continue;}
+        if(classification!=='persisted'&&!returned&&!resolves(record)){uncertain=true;continue;}
         const basis=classification==='persisted'?'readback_new_value':returned?'readback_after_returned_transport':'user_instruction';
         store.publishOnce('reconciliation',key,{classification,basis,resolvedBy:basis==='user_instruction'?resolvedBy:null,
           sourceRevision:read.observation.sourceRevision,observedAt:read.observation.observedAt,by,reconciledAt:new Date(this.now()).toISOString()});

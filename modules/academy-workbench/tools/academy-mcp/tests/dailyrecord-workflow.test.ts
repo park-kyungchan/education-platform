@@ -423,9 +423,16 @@ test('an old value after an uncertain transport stays unresolved at any elapsed 
     expect(await later.service.reconcile({context:r.c})).toMatchObject({status:'held',reasonCode:'uncertain_dispatch_not_landed_user_resolution_required',
       fields:[{field:'progress',executionState:'reconciliation_required'}]});
     expect(await later.service.save(r.save('codex'))).toMatchObject({status:'held',reasonCode:'uncertain_dispatch_reconcile_required',academyWrites:0});
-    const resolution={request:{requestRef:'other-request',instruction:{text:'synthetic: the earlier save did not land; close it'}}};
+    const resolution={request:{requestRef:'other-request',instruction:{text:'synthetic: the earlier save did not land; close it'}},
+      executions:[{requestRef:r.c.currentRequestRef,field:'homework' as DailyRecordField}]};
     expect(await later.service.reconcile({context:r.c,resolution})).toMatchObject({status:'held',reasonCode:'user_request_ref_mismatch'});
     resolution.request.requestRef=r.c.currentRequestRef;
+    // A resolution closes only the executions it names on this exact lesson record.
+    expect(await later.service.reconcile({context:r.c,resolution})).toMatchObject({status:'held',reasonCode:'uncertain_dispatch_not_landed_user_resolution_required'});
+    resolution.executions=[{requestRef:r.c.currentRequestRef,field:'progress'}];
+    const otherLesson={...r.c,scope:{...r.c.scope,lessonDate:'2040-01-12'}};
+    expect(await later.service.reconcile({context:otherLesson,resolution})).toMatchObject({status:'held',reasonCode:'uncertain_dispatch_not_landed_user_resolution_required',
+      fields:[{field:'progress',executionState:'reconciliation_required'}]});
     expect(await later.service.reconcile({context:r.c,resolution,actor:actor('claude')})).toMatchObject({status:'settled',
       fields:[{field:'progress',executionState:'reconciled_not_persisted'}]});
     const status:any=await later.service.executionStatus({scope:r.c.scope,requestRef:r.c.currentRequestRef});
