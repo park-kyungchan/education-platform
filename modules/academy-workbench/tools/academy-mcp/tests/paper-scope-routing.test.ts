@@ -9,6 +9,8 @@ const scopes=paperScopesSchema.parse([{endpoint:'paper1',studentIds:['1001']},{e
 test('selects one verified configured scope without probing or widening upstream authority',()=>{
   expect(selectPaperRoute(scopes,registry,primary,{studentId:'1001'})).toBe(primary);
   expect(selectPaperRoute(scopes,registry,primary,{studentId:'1002'})).toBe(secondary);
+  const extraAlias={...secondary,tool:{name:'paper2_headers_alias'}};
+  expect(selectPaperRoute(scopes,[primary,secondary,extraAlias],primary,{studentId:'1002'})).toBe(secondary);
   expect(selectPaperRoute(undefined,registry,primary,{studentId:'1002'})).toBe(primary);
   expect(selectPaperRoute(scopes,registry,secondary,{studentId:'1002'})).toBe(secondary);
   expect(()=>selectPaperRoute(scopes,registry,secondary,{studentId:'1001'})).toThrow('paper_scope_unresolved');

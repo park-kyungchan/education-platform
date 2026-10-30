@@ -18,7 +18,9 @@ export function selectPaperRoute(scopes:PaperScopes|undefined,registry:any[],ent
   const matches=scopes.filter(s=>s.studentIds.includes(studentId));
   if(matches.length!==1)throw Error('paper_scope_unresolved');
   if(entry.endpoint==='paper2'&&matches[0]!.endpoint!=='paper2')throw Error('paper_scope_unresolved');
-  const candidates=registry.filter(r=>r.endpoint===matches[0]!.endpoint&&r.upstreamName===entry.upstreamName);
-  if(candidates.length!==1)throw Error('paper_scope_unresolved');
-  return candidates[0];
+  // Several public aliases may describe the same endpoint and upstream tool.
+  // They are one dispatch target; their presentation metadata is not routing.
+  const candidate=registry.find(r=>r.endpoint===matches[0]!.endpoint&&r.upstreamName===entry.upstreamName);
+  if(!candidate)throw Error('paper_scope_unresolved');
+  return candidate;
 }
