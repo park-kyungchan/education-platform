@@ -9,11 +9,11 @@ export const bunToolchain = {
 export function assertBunRuntime(version = Bun.version): void {
   if (version !== bunToolchain.version) throw Error('bun_runtime_mismatch:expected_' + bunToolchain.version);
 }
-/** The existing Actions workflow may bootstrap setup; module checks still require Bun 1.4.3. */
+/** Setup and every module check run on Bun 1.4.3, including the Actions bootstrap. */
 export function setupRuntime(options = {version:Bun.version,actions:process.env.GITHUB_ACTIONS,path:process.env.GITHUB_PATH}) {
   const actionsPath = options.actions === 'true' && options.path ? options.path : undefined;
   if(actionsPath&&/[\r\n\0]/.test(actionsPath))throw Error('invalid_actions_path');
-  if (!(options.version === '1.4.2' && actionsPath)) assertBunRuntime(options.version);
+  assertBunRuntime(options.version);
   return {bootstrapVersion:options.version,actionsPath};
 }
 

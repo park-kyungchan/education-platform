@@ -54,19 +54,18 @@ test('setup plan, module runtime declarations and active doctor pin share Bun1.4
  }
  const curriculum=await Bun.file(resolve(projectRoot,'packages/curriculum/runtime.manifest.json')).json();
  expect(curriculum.runtime.bun).toBe(bunToolchain.version);
- expect(curriculum.runtime.bunTypes).toBe('1.4.2');
+ expect(curriculum.runtime.bunTypes).toBe(bunToolchain.version);
 });
 
-test('only the existing Actions source step can use Bun1.4.2 as setup bootstrap',()=>{
+test('setup runs only on Bun 1.4.3, also as the Actions bootstrap',()=>{
  for(const options of [
   {version:'1.4.2',actions:undefined,path:undefined},
-  {version:'1.4.2',actions:'true',path:undefined},
-  {version:'1.4.2',actions:'false',path:'/fixture/path'},
+  {version:'1.4.2',actions:'true',path:'/fixture/path'},
   {version:'1.4.1',actions:'true',path:'/fixture/path'},
  ])expect(()=>setupRuntime(options)).toThrow('bun_runtime_mismatch');
- expect(setupRuntime({version:'1.4.2',actions:'true',path:'/fixture/path'})).toEqual({bootstrapVersion:'1.4.2',actionsPath:'/fixture/path'});
+ expect(setupRuntime({version:'1.4.3',actions:'true',path:'/fixture/path'})).toEqual({bootstrapVersion:'1.4.3',actionsPath:'/fixture/path'});
  expect(setupRuntime({version:'1.4.3',actions:undefined,path:'/fixture/path'}).actionsPath).toBeUndefined();
- expect(()=>setupRuntime({version:'1.4.2',actions:'true',path:'/fixture/path\n/other'})).toThrow('invalid_actions_path');
+ expect(()=>setupRuntime({version:'1.4.3',actions:'true',path:'/fixture/path\n/other'})).toThrow('invalid_actions_path');
 });
 
 test('standalone module CI templates provision the maintained Bun runtime before checks',()=>{

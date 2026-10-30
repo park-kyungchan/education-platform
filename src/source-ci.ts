@@ -14,7 +14,7 @@ export const educationSourceCi = {
    'timeout-minutes':20,
    steps:[
     {uses:'actions/checkout@11d5960a326750d5838078e36cf38b85af677262',with:{ref:SOURCE_SHA,'persist-credentials':false,'fetch-depth':0}},
-    {uses:'oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6',with:{'bun-version':'1.4.2'}},
+    {uses:'oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6',with:{'bun-version':'1.4.3'}},
     {name:'Set up pinned toolchains and module dependencies',run:'bun scripts/setup.ts'},
     {name:'Run canonical checks',run:'bun run check'},
    ],
