@@ -3,7 +3,9 @@ import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import {canonicalJson,digest,stableId} from '../../src/learning/model';
 import {validateAcademyRecord} from '../../src/academy/records';
-import {validateNativeStudentPayload,validateKnowledge,projectInterval,previousDay,scopeIdentity,validateContext,validateNativeRef,type NativeObjectRef,type ObjectRef,type EducationType,type EvidenceRef,type Knowledge,type RecordScope,type DailyProgressPayload,type DailyRecordDraftPayload,type PreviousHomeworkAssessmentPayload,type CommandContext,type ApprovalClosure,type ApprovalVersionPayload} from '../../src/academy/contracts/prerequisiteRecords';
+import {PostgresAcademyStore} from '../../src/academy/postgresStore';
+import type {SQL} from 'bun';
+import {NATIVE_STUDENT_KINDS,resolveActivityOccurrence,type ActivityScopeLink,type OwnerVersion,validateNativeStudentPayload,validateKnowledge,projectInterval,previousDay,scopeIdentity,validateContext,validateNativeRef,type NativeObjectRef,type ObjectRef,type EducationType,type EvidenceRef,type Knowledge,type RecordScope,type DailyProgressPayload,type DailyRecordDraftPayload,type PreviousHomeworkAssessmentPayload,type CommandContext,type ApprovalClosure,type ApprovalVersionPayload} from '../../src/academy/contracts/prerequisiteRecords';
 export const instant='2026-10-24T00:00:00.000Z';
 export const hash='a'.repeat(64);
 export function nativeRef(key='synthetic-scope'):NativeObjectRef{return {tag:'object-record',basis:{namespace:'synthetic-native',scope:{ownerNamespace:'synthetic-owner',projectKey:'synthetic-project',scopeKey:'synthetic-scope'},contract:{state:'KNOWN',value:{namespace:'synthetic-native',contractId:'synthetic-contract',definitionVersion:'1.1.0',sha256:hash}},recordRevision:{state:'KNOWN',value:{scheme:'OWNER_REVISION',value:'synthetic-scope-r1'}},source:{ownerNamespace:'synthetic-owner',publicLocator:'synthetic-interface',revision:{state:'KNOWN',value:{scheme:'OWNER_REVISION',value:'synthetic-interface-r1'}},evidenceRefs:[]}},objectTypeId:'Scope',objectTypeVersion:'1.0.0',objectKey:key};}
@@ -84,4 +86,22 @@ describe.skipIf(!contractRoot||!originalRoot)('NF-07 exact active source and suc
   for(const [i,g] of units.groups.entries()){expect(dependency.implementationGroupsSummary[i].writerBoundary).toEqual(g.writerBoundary);expect(dependency.implementationGroupsSummary[i].gate).toBe(g.gate);expect(g.contractRef).toContain(prefix);expect(g.contractRef).not.toContain('.v2.json');expect(g.gate).not.toContain('G-REVIEW-AMEND');}
   const helper=qualification.isolatedHelper.writer;expect(helper.sourcePaths).toEqual(units.groups[3].helperSourcePaths);expect(helper.sourcePaths).toEqual(qualification.isolatedHelper.sourcePaths);expect(helper.sourcePaths).toEqual(qualification.syntheticAuthInitialization.sourcePaths);expect([...helper.sourcePaths,...helper.testPaths].sort()).toEqual(units.groups[3].writerBoundary.add.sort());expect(qualification.syntheticAuthInitialization.sourceOwner).toContain(helper.sourcePaths[0]);
  });
+});
+
+const nativePayloads={previous_homework_assessment:assessment,daily_progress:progress,daily_record_draft:draft} as const;
+test('legacy append refuses every native student kind before touching the database',async()=>{
+ const untouched=new Proxy({},{get(){throw Error('database_touched');},apply(){throw Error('database_touched');}}) as unknown as SQL;
+ const store=new PostgresAcademyStore(untouched);
+ for(const kind of NATIVE_STUDENT_KINDS){
+  const payload=nativePayloads[kind]();
+  await expect(store.append({ownerId:'owner-a',studentId:'student-a',entityId:'entity-'+kind,actorId:'teacher-a',idempotencyKey:'key-'+kind,expectedRevisionId:null,sourceObservedAt:instant,payload},instant)).rejects.toThrow('native_prerequisite_command_required');
+ }
+});
+test('activity occurrence is ATTACHED only for exactly one ACTIVE attachment that pins this revision',()=>{
+ const link=(revision:string,lesson:string,state:'ACTIVE'|'DETACHED'='ACTIVE'):OwnerVersion<ActivityScopeLink>=>({payload:{schemaVersion:'2.0.0',state,kind:'activity_scope',activityKind:'HOMEWORK_ASSIGNMENT',activityRef:objectRef('HomeworkAssignment','work-a',revision),recordScope:scope(lesson),sourceLiteral:'synthetic-explicit-scope',synthetic:true}} as OwnerVersion<ActivityScopeLink>);
+ const activity={objectType:'HomeworkAssignment',nativeKey:'work-a',revision:'r2'};
+ expect(resolveActivityOccurrence(activity,null,[link('r2','lesson-b')]).state).toBe('ATTACHED');
+ expect(resolveActivityOccurrence(activity,null,[link('r1','lesson-a'),link('r2','lesson-b')]).state).toBe('UNRESOLVED');
+ expect(resolveActivityOccurrence(activity,null,[link('r1','lesson-a')]).state).toBe('UNRESOLVED');
+ expect(resolveActivityOccurrence(activity,scope(),[]).state).toBe('EMBEDDED');
 });

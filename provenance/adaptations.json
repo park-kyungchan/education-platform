@@ -54,8 +54,8 @@
     {
       "path": "apps/academy/dc-gang-a/src/academy/contracts/teacherOperations.ts",
       "sourceSha256": "fdbaf7ffbe55d9d089330dbb98c7c5ddb1bd2cd8efeb73cce0a63add01472e50",
-      "integrationSha256": "f68fa81c8d74263054cdf0472f1b94600fd8c5b50a51bacc4c42aa7025df55d7",
-      "reason": "Integrate authenticated scoped activity, parent drafts, exact71-policy cases and exam drafts through additive workspace tables in the same provider; preserve legacy985 reader rollback",
+      "integrationSha256": "f5dc0b23b00a05c523e9a7ee0949ab35d1fe2883a71ac9d659e45280cb78fc69",
+      "reason": "Integrate authenticated scoped activity, parent drafts, exact71-policy cases and exam drafts through additive workspace tables in the same provider; preserve legacy985 reader rollback; R07 native source joined with current main c9ccd690 before gen90 class repair qualification; P4 native qualification (platform-redesign gate P4, run e2e-p4-native-20261027-69, gen101)",
       "taskRef": "ACADEMY-TEACHER-WORKSPACE"
     },
     {
@@ -69,9 +69,9 @@
     },
     {
       "path": "apps/academy/dc-gang-a/src/academy/learningWork.ts",
-      "reason": "Integration candidate reconciles inherited source changes; exact final review and synthetic checks remain required.",
+      "reason": "Integration candidate reconciles inherited source changes; exact final review and synthetic checks remain required.; R07 native source joined with current main c9ccd690 before gen90 class repair qualification",
       "sourceSha256": "7598a30b6c3ad9e3c6cb9c9f1cb78753e18ca202349ec8660f033ed350c065ea",
-      "integrationSha256": "747f44cb2eda9844d6fdc266f51d89eeb71f7d8c90618a11c4f967dd3f120261",
+      "integrationSha256": "14dc91d992d57478a81e107215ebb61b13644ba317e59e0c6315767cc4212645",
       "localImplementationScopeRefs": [
         "ACADEMY-REPOSITORY-INTEGRATION-20261023"
       ]
@@ -134,15 +134,15 @@
     {
       "path": "apps/academy/dc-gang-a/src/academy/ports/teacherStore.ts",
       "sourceSha256": "c558301d5e96dd90e32f2845802fae3c1c0268c46e67ec32953b56485ace9765",
-      "integrationSha256": "379812d9011d075b100070a3b938514c84578bd98481f6f8a01b7d6892ce6f94",
-      "reason": "Integrate authenticated scoped activity, parent drafts, exact71-policy cases and exam drafts through additive workspace tables in the same provider; preserve legacy985 reader rollback",
+      "integrationSha256": "0194b6f0d6b3bf08f77c6cc0cfa37080543f9655bbb411b5162cd715a7edd119",
+      "reason": "Integrate authenticated scoped activity, parent drafts, exact71-policy cases and exam drafts through additive workspace tables in the same provider; preserve legacy985 reader rollback; R07 native source joined with current main c9ccd690 before gen90 class repair qualification",
       "taskRef": "ACADEMY-TEACHER-WORKSPACE"
     },
     {
       "path": "apps/academy/dc-gang-a/src/academy/postgresStore.ts",
       "sourceSha256": "66688bb706c057df85dcae229a34c7952484b369490c845e143c83c775ae7f20",
-      "integrationSha256": "f74213e45b6e81ad992d629a08e706707fc11dacb50c8a2c865e87c0c16b22c9",
-      "reason": "Integrate authenticated scoped activity, parent drafts, exact71-policy cases and exam drafts through additive workspace tables in the same provider; preserve legacy985 reader rollback; same-provider authenticated concept and retained certification integration with additive rollback-compatible ledger and exact source scopes Integration candidate reconciles inherited branch changes while preserving current October21 wire and policy contracts; final review pending.",
+      "integrationSha256": "069c92edfe0a4e84879245b40699008ec778d81cbd7e395cda18a3aecfcb1e45",
+      "reason": "Integrate authenticated scoped activity, parent drafts, exact71-policy cases and exam drafts through additive workspace tables in the same provider; preserve legacy985 reader rollback; same-provider authenticated concept and retained certification integration with additive rollback-compatible ledger and exact source scopes Integration candidate reconciles inherited branch changes while preserving current October21 wire and policy contracts; final review pending.; R07 native source joined with current main c9ccd690 before gen90 class repair qualification; P4 native qualification (platform-redesign gate P4, run e2e-p4-native-20261027-68, gen100); P4 native qualification (platform-redesign gate P4, run e2e-p4-native-20261027-69, gen101)",
       "taskRef": "ACADEMY-TEACHER-WORKSPACE",
       "localImplementationScopeRefs": [
         "ACADEMY-REPOSITORY-INTEGRATION-20261023"
@@ -531,9 +531,9 @@
     },
     {
       "path": "apps/academy/dc-gang-a/src/academy/records.ts",
-      "reason": "Validate attributable teacher_lesson_carryover reminders with explicit unknown links; preserve existing record and completion semantics.",
+      "reason": "Validate attributable teacher_lesson_carryover reminders with explicit unknown links; preserve existing record and completion semantics.; R07 native source joined with current main c9ccd690 before gen90 class repair qualification",
       "sourceSha256": "a3a9a81fa1fc2c5d9089105bd910f2f6a098b838913f39fa363bcd2b3b9c9bb8",
-      "integrationSha256": "7ed81d2fa383da7165b504eb1414c9d0ccedeec81e47889f68933552e88c32d2",
+      "integrationSha256": "7dcca2943a611e0e46a28b515232f977997479d6c1aac3fadfeeab4a2677c3da",
       "localImplementationScopeRefs": [
         "academy-followup-implementation-20261023"
       ]
@@ -555,6 +555,18 @@
       "localImplementationScopeRefs": [
         "academy-followup-implementation-20261023"
       ]
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/academy/contracts/storageRecords.ts",
+      "reason": "R07 native source joined with current main c9ccd690 before gen90 class repair qualification",
+      "sourceSha256": "2be06aa781d4a4071daaa08fed142354e42654e86764aecdfb6cdb45e5e0bd22",
+      "integrationSha256": "bf8a9dc7b3bdb156da2d4cab141d73b4e56d9014eea75379e513d41c64fab274"
+    },
+    {
+      "path": "apps/academy/dc-gang-a/src/learning/model.ts",
+      "reason": "R07 native source joined with current main c9ccd690 before gen90 class repair qualification",
+      "sourceSha256": "72e1969820c62c867f0d334cb0376516901848b21e82c0e87ea87b185ba44aa3",
+      "integrationSha256": "9603c0c5c8d30453bb8f60ecb79b7d0974619fb17807b76d969fc132015f8b9f"
     }
   ],
   "mathematicalMeaningChanged": false,

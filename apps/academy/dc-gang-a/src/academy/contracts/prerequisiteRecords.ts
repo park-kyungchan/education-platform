@@ -27,6 +27,11 @@ export interface PreviousHomeworkAssessmentPayload {kind:'previous_homework_asse
 export interface DailyProgressPayload {kind:'daily_progress';sourceStudent:SourceKey;recordScope:RecordScope;contentScope:ContentScope;progressState:Knowledge<'NOT_STARTED'|'IN_PROGRESS'|'COMPLETED'>;note:Knowledge<string>}
 export interface DailyRecordDraftPayload {kind:'daily_record_draft';sourceStudent:SourceKey;recordScope:RecordScope;progressRefs:Knowledge<ObjectRef<'DailyProgress'>[]>;homeworkRefs:Knowledge<ObjectRef<'HomeworkAssignment'>[]>;attemptRefs:Knowledge<ObjectRef<'DailyTestAttempt'>[]>;previousAssessmentRefs:Knowledge<ObjectRef<'PreviousHomeworkAssessment'>[]>;progressText:Knowledge<string>;homeworkText:Knowledge<string>;noteText:Knowledge<string>;responsibleTeacherRef:Knowledge<ObjectRef<'Teacher'>>;draftState:Knowledge<'DRAFT'|'APPROVED'>;sourceSnapshot:ReadSnapshot;supersedesDraftRef:ObjectRef<'DailyRecordDraft'>|null}
 export type NativeStudentPayload=PreviousHomeworkAssessmentPayload|DailyProgressPayload|DailyRecordDraftPayload;
+/** Every native student payload kind; the type below fails to compile if a kind is added to the union and not here. */
+export const NATIVE_STUDENT_KINDS=['previous_homework_assessment','daily_progress','daily_record_draft'] as const satisfies readonly NativeStudentPayload['kind'][];
+type MissingNativeKind=Exclude<NativeStudentPayload['kind'],typeof NATIVE_STUDENT_KINDS[number]>;
+export const nativeKindsComplete:[MissingNativeKind] extends [never]?true:never=true;
+export const isNativeStudentPayload=(payload:{kind:string}):payload is NativeStudentPayload=>NATIVE_STUDENT_KINDS.some(kind=>kind===payload.kind);
 export interface ActionBinding {name:string;version:string;definitionSha256:string}
 export interface IdentityRevision {ref:NativeObjectRef;expected:Revision|'ABSENT'}
 export interface LinkRevisionExpectation {linkDefinitionBinding:string;nativeLinkIdentity:string;from:NativeObjectRef;to:NativeObjectRef;expected:Revision|'ABSENT'}
@@ -183,8 +188,10 @@ export function resolveActivityOccurrence(activity:{objectType:string;nativeKey:
  if(!attachments.length)return embedded?{state:'EMBEDDED',scope:embedded,attachments}:{state:'UNRESOLVED',attachments};
  const detached=attachments.find(v=>activityScopeState(v.payload)==='DETACHED');
  if(detached)return {state:'DETACHED',attachment:detached,attachments};
- const active=attachments.filter(v=>activityScopeState(v.payload)==='ACTIVE'&&v.payload.activityRef.revision===activity.revision);
- return active.length===1?{state:'ATTACHED',scope:active[0]!.payload.recordScope,attachment:active[0]!,attachments}:{state:'UNRESOLVED',attachments};
+ // Exactly one ACTIVE attachment overall, and it pins this revision; several ACTIVE (whatever they pin) or a stale pin is UNRESOLVED.
+ const active=attachments.filter(v=>activityScopeState(v.payload)==='ACTIVE');
+ const only=active.length===1?active[0]:undefined;
+ return only&&only.payload.activityRef.revision===activity.revision?{state:'ATTACHED',scope:only.payload.recordScope,attachment:only,attachments}:{state:'UNRESOLVED',attachments};
 }
 /** The one operation -> student-record payload kind table (create and correct routes). */
 export const studentOperationKinds:Readonly<Record<string,NativeStudentPayload['kind']>>=Object.freeze({
