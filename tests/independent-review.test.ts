@@ -1,7 +1,7 @@
 import {describe,expect,test} from 'bun:test';
 import {readFileSync,readdirSync} from 'node:fs';
 import {resolve} from 'node:path';
-import {loggedFindings,priorFindings,priorReviewedHead,renderScope,EXPECTED_WORKFLOW,RUN_PREFIX,REVIEW_CONTEXT,RUNNER_JOB_NAME,STATUS_CREATOR,STATUS_STATES,REQUEST_LABEL,FINDING_FIELDS,SEVERITY,TEMPLATE_KEYS,VERDICTS,checkWorkflow,claim,verdictLogLines,contextStatuses,decide,judge,parseVerdict,recordVerdict,renderPrompt,requested,type Api,type Severity,type StatusState} from '../scripts/independent-review';
+import {loggedFindings,priorReviewedHead,reviewBaseline,renderScope,EXPECTED_WORKFLOW,RUN_PREFIX,REVIEW_CONTEXT,RUNNER_JOB_NAME,STATUS_CREATOR,STATUS_STATES,REQUEST_LABEL,FINDING_FIELDS,SEVERITY,TEMPLATE_KEYS,VERDICTS,checkWorkflow,claim,verdictLogLines,contextStatuses,decide,judge,parseVerdict,recordVerdict,renderPrompt,requested,type Api,type Severity,type StatusState,type TextApi} from '../scripts/independent-review';
 
 const root=resolve(import.meta.dir,'..');
 const schema=JSON.parse(readFileSync(resolve(root,'ci/independent-review/schema.json'),'utf8'));
@@ -222,34 +222,45 @@ describe('verdict log',()=>{
 
 describe('incremental review of later heads',()=>{
   const commits=['1'.repeat(40),'2'.repeat(40),'3'.repeat(40)];
-  const api=(statusesBySha:Record<string,unknown[]>):Api=>async(method,path)=>{
+  const api=(statusesBySha:Record<string,unknown[]>,jobStatus='completed'):Api=>async(method,path)=>{
     expect(method).toBe('GET');
     if(path==='pulls/53/commits?per_page=100')return commits.map(sha=>({sha}));
     const m=/^commits\/([0-9a-f]{40})\/statuses\?per_page=100$/.exec(path);
     if(m)return statusesBySha[m[1]!]??[];
-    if(path==='actions/runs/8/attempts/1/jobs?per_page=100')return {jobs:[{id:5,name:'other'},{id:7,name:RUNNER_JOB_NAME}]};
+    if(/^actions\/runs\/\d+\/attempts\/1\/jobs\?per_page=100$/.test(path))return {jobs:[{id:5,name:'other',status:'completed'},{id:7,name:RUNNER_JOB_NAME,status:jobStatus}]};
     throw Error('unexpected '+path);
   };
-  test('the previous reviewed head is the newest earlier PR commit with a recorded app verdict',async()=>{
-    expect(await priorReviewedHead(api({}),'53',commits[2]!)).toBeNull();
-    expect(await priorReviewedHead(api({[commits[0]!]:[status(1,'failure')]}),'53',commits[2]!)).toEqual({sha:commits[0]!,state:'failure',runUrl:otherRun});
-    expect(await priorReviewedHead(api({[commits[0]!]:[status(1,'failure')],[commits[1]!]:[status(2,'success')]}),'53',commits[2]!)).toMatchObject({sha:commits[1],state:'success'});
-    // A lost (pending) sample is not a reviewed head; a foreign status fails closed.
-    expect(await priorReviewedHead(api({[commits[1]!]:[status(2,'pending')]}),'53',commits[2]!)).toBeNull();
+  const recordLog=(findings:ReturnType<typeof finding>[],totals=true)=>['2026 ##[group]Run openai/codex-action',
+    `2026 ##[group]Run ${RUN_PREFIX}record review-input/verdict.json`,
+    ...verdictLogLines({pass:false,blocking:findings.length,findings}).slice(0,totals?undefined:-1).map(l=>'2026-10-30T00:00:00.0Z '+l)].join('\n');
+  test('earlier recorded app verdicts are listed newest first; lost or foreign statuses are not baselines',async()=>{
+    expect(await priorReviewedHead(api({}),'53',commits[2]!)).toEqual([]);
+    expect((await priorReviewedHead(api({[commits[0]!]:[status(1,'failure')],[commits[1]!]:[status(2,'success')]}),'53',commits[2]!)).map(h=>h.sha)).toEqual([commits[1]!,commits[0]!]);
+    expect(await priorReviewedHead(api({[commits[1]!]:[status(2,'pending')]}),'53',commits[2]!)).toEqual([]);
     await expect(priorReviewedHead(api({[commits[1]!]:[status(2,'failure',{creator:{login:'someone'}})]}),'53',commits[2]!)).rejects.toThrow('independent_review_status_foreign');
     await expect(priorReviewedHead(api({}),'53','9'.repeat(40))).rejects.toThrow('independent_review_head_not_in_pull_request');
   });
-  test('prior findings come only from the record step of the runner job log',async()=>{
+  test('findings come only from a complete record step; model output and verdict-less runs never count',()=>{
     const injected=JSON.stringify({finding:{...finding('high'),summary:'model output before the record step'}});
-    const log=['2026 ##[group]Run openai/codex-action','2026 '+injected,`2026 ##[group]Run ${RUN_PREFIX}record review-input/verdict.json`,
-      ...verdictLogLines({pass:false,blocking:1,findings:[finding('high'),finding('medium')]}).map(l=>'2026-10-30T00:00:00.0Z '+l)].join('\n');
-    expect(loggedFindings(log).map(f=>f.severity)).toEqual(['high','medium']);
-    expect(loggedFindings(log).some(f=>f.summary.includes('model output'))).toBe(false);
-    expect(()=>loggedFindings(injected)).toThrow('independent_review_prior_log_unreadable');
-    let fetched='';
-    expect(await priorFindings(api({}),async path=>{fetched=path;return log;},otherRun)).toHaveLength(2);
-    expect(fetched).toBe('actions/jobs/7/logs');
-    await expect(priorFindings(api({}),async()=>log,'https://example.invalid/x')).rejects.toThrow('independent_review_prior_run_unreadable');
+    const log=recordLog([finding('high'),finding('medium')]).replace('##[group]Run openai/codex-action','##[group]Run openai/codex-action\n2026 '+injected);
+    expect(loggedFindings(log)!.map(f=>f.severity)).toEqual(['high','medium']);
+    expect(loggedFindings(log)!.some(f=>f.summary.includes('model output'))).toBe(false);
+    expect(loggedFindings(injected)).toBeNull();
+    // A failed or invalid review posts failure without totals: never a baseline.
+    expect(loggedFindings(recordLog([finding('high')],false))).toBeNull();
+    expect(loggedFindings(recordLog([]))).toEqual([]);
+  });
+  test('the baseline is the newest earlier head with a valid finished verdict, else a full review',async()=>{
+    const statuses={[commits[0]!]:[status(1,'success')],[commits[1]!]:[status(2,'failure')]};
+    const logs:Record<string,string>={'actions/jobs/7/logs':recordLog([finding('high')])};
+    const text=(byPath:Record<string,string>):TextApi=>async path=>{if(!(path in byPath))throw new Error('unexpected');return byPath[path]!;};
+    expect(await reviewBaseline(api(statuses),text(logs),'53',commits[2]!,()=>true)).toMatchObject({sha:commits[1],findings:[{severity:'high'}]});
+    // An unfinished earlier run or an unreadable log yields a full review instead of failing the head.
+    expect(await reviewBaseline(api(statuses,'in_progress'),text(logs),'53',commits[2]!,()=>true)).toBeNull();
+    expect(await reviewBaseline(api(statuses),async()=>recordLog([finding('high')],false),'53',commits[2]!,()=>true)).toBeNull();
+    expect(await reviewBaseline(api(statuses),async()=>{throw Error('log not yet available');},'53',commits[2]!,()=>true)).toBeNull();
+    // A rewritten history never narrows the scope.
+    expect(await reviewBaseline(api(statuses),text(logs),'53',commits[2]!,()=>false)).toBeNull();
   });
   test('the scope is a full review first, then an incremental review of the delta with every previous finding',()=>{
     expect(renderScope(null)).toContain('Full review');

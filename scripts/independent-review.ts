@@ -154,39 +154,54 @@ export const recordVerdict=async(api:Api,head:string,runUrl:string,reviewOutcome
 // full re-review sampled new paths through unchanged code and never converged (P6 failure ledger #9, PR #53).
 // The previous reviewed head is the newest earlier commit of the PR carrying a recorded verdict of this context from
 // the review app; its findings are read back from the trusted record step of that run's job log.
-export const priorReviewedHead=async(api:Api,pr:string,head:string):Promise<{sha:string;state:StatusState;runUrl:string}|null>=>{
+export const priorReviewedHead=async(api:Api,pr:string,head:string):Promise<{sha:string;state:StatusState;runUrl:string}[]>=>{
   const body=await api('GET',`pulls/${pr}/commits?per_page=100`);
   if(!Array.isArray(body))return fail('independent_review_commits_unreadable','not a list');
   if(body.length>=100)fail('independent_review_commits_paged',`count=${body.length}`);
   const shas=body.map(c=>String(record(c)?.sha??''));
   const at=shas.indexOf(head);
   if(at<0)fail('independent_review_head_not_in_pull_request','head');
+  // Newest first: every earlier PR commit with a recorded verdict of this context from the review app.
+  const heads:{sha:string;state:StatusState;runUrl:string}[]=[];
   for(let i=at-1;i>=0;i--){
     const latest=(await contextStatuses(api,shas[i]!))[0];
-    if(latest&&STATUS_STATES[latest.state]==='recorded'&&latest.target_url)return {sha:shas[i]!,state:latest.state,runUrl:latest.target_url};
+    if(latest&&STATUS_STATES[latest.state]==='recorded'&&latest.target_url)heads.push({sha:shas[i]!,state:latest.state,runUrl:latest.target_url});
   }
-  return null;
+  return heads;
 };
 const RECORD_MARKER=`##[group]Run ${RUN_PREFIX}record`;
-// Only the record step prints these lines (verdictLogLines); model output earlier in the log is never parsed.
-export const loggedFindings=(log:string):Finding[]=>{
+// Only the record step prints these lines (verdictLogLines); model output earlier in the log is never parsed. A head is
+// a valid baseline only if its record step printed the totals of a parsed verdict: a failed, skipped or invalid review
+// posts failure without totals and never narrows a later review.
+export const loggedFindings=(log:string):Finding[]|null=>{
   const start=log.indexOf(RECORD_MARKER);
-  if(start<0)return fail('independent_review_prior_log_unreadable','record step');
-  const findings:Finding[]=[];
+  if(start<0)return null;
+  const findings:Finding[]=[];let totals:{findings:number}|null=null;
   for(const line of log.slice(start).split('\n')){
-    const at=line.indexOf('{"finding":');
-    if(at<0)continue;
-    findings.push(...parseVerdict(JSON.stringify({verdict:'changes_required',findings:[JSON.parse(line.slice(at)).finding]})).findings);
+    const at=line.indexOf('{"finding":'),total=line.indexOf('{"status":');
+    if(at>=0)findings.push(...parseVerdict(JSON.stringify({verdict:'changes_required',findings:[JSON.parse(line.slice(at)).finding]})).findings);
+    else if(total>=0){const t=record(JSON.parse(line.slice(total)));if(t&&typeof t.findings==='number')totals={findings:t.findings};}
   }
-  return findings;
+  return totals&&totals.findings===findings.length?findings:null;
 };
-export const priorFindings=async(api:Api,text:TextApi,runUrl:string):Promise<Finding[]>=>{
+// Findings of one earlier run, or null when that run is unfinished, its log is unavailable or it has no valid verdict.
+export const priorFindings=async(api:Api,text:TextApi,runUrl:string):Promise<Finding[]|null>=>{
   const match=/\/actions\/runs\/(\d+)\/attempts\/(\d+)$/.exec(runUrl);
-  if(!match)return fail('independent_review_prior_run_unreadable','target url');
+  if(!match)return null;
   const jobs=record(await api('GET',`actions/runs/${match[1]}/attempts/${match[2]}/jobs?per_page=100`))?.jobs;
   const job=Array.isArray(jobs)?jobs.map(j=>record(j)).find(j=>j?.name===RUNNER_JOB_NAME):undefined;
-  if(!job||typeof job.id!=='number')return fail('independent_review_prior_job_missing',RUNNER_JOB_NAME);
-  return loggedFindings(await text(`actions/jobs/${job.id}/logs`));
+  if(!job||typeof job.id!=='number'||job.status!=='completed')return null;
+  // Any unreadable or unparsable earlier log falls back to a full review; it never fails this head.
+  try{return loggedFindings(await text(`actions/jobs/${job.id}/logs`));}catch{return null;}
+};
+// The newest earlier head with a valid verdict is the baseline; without one the review stays full.
+export const reviewBaseline=async(api:Api,text:TextApi,pr:string,head:string,isAncestor:(sha:string)=>boolean)=>{
+  for(const candidate of await priorReviewedHead(api,pr,head)){
+    if(!isAncestor(candidate.sha))return null;
+    const findings=await priorFindings(api,text,candidate.runUrl);
+    if(findings)return {...candidate,findings};
+  }
+  return null;
 };
 export const renderScope=(prior:{sha:string;state:StatusState;findings:readonly Finding[];deltaPath:string;deltaStat:string}|null):string=>{
   if(!prior)return 'Full review: this is the first reviewed head of the pull request. Review the whole diff.';
@@ -294,14 +309,14 @@ const prepare=async(subject:string,outDir:string)=>{
   const diffPath=resolve(outDir,'diff.patch');
   writeFileSync(diffPath,git(subject,'diff','-M','-D','--no-color',mergeBase,values.HEAD_SHA));
   const token=env('GITHUB_TOKEN',/./),api=githubApi(repository(),token);
-  const prior=await priorReviewedHead(api,values.PR_NUMBER,values.HEAD_SHA);
-  // A rewritten history (the previous head is not an ancestor) gets a full review again.
-  const ancestor=prior!==null&&Bun.spawnSync(['git','-C',subject,'merge-base','--is-ancestor',prior.sha,values.HEAD_SHA]).exitCode===0;
+  // A rewritten history (the baseline is not an ancestor) or no valid baseline gets a full review again.
+  const isAncestor=(sha:string)=>Bun.spawnSync(['git','-C',subject,'merge-base','--is-ancestor',sha,values.HEAD_SHA]).exitCode===0;
+  const baseline=await reviewBaseline(api,githubText(repository(),token),values.PR_NUMBER,values.HEAD_SHA,isAncestor);
   let scope=renderScope(null);
-  if(prior&&ancestor){
+  if(baseline){
     const deltaPath=resolve(outDir,'delta.patch');
-    writeFileSync(deltaPath,git(subject,'diff','-M','-D','--no-color',prior.sha,values.HEAD_SHA));
-    scope=renderScope({...prior,findings:await priorFindings(api,githubText(repository(),token),prior.runUrl),deltaPath,deltaStat:git(subject,'diff','-M','--shortstat',prior.sha,values.HEAD_SHA).trim()});
+    writeFileSync(deltaPath,git(subject,'diff','-M','-D','--no-color',baseline.sha,values.HEAD_SHA));
+    scope=renderScope({...baseline,deltaPath,deltaStat:git(subject,'diff','-M','--shortstat',baseline.sha,values.HEAD_SHA).trim()});
   }
   const template=readFileSync(resolve(import.meta.dir,'../ci/independent-review/prompt.md'),'utf8');
   const assumptions=readFileSync(resolve(import.meta.dir,'../ci/independent-review/assumptions.md'),'utf8').trim();
