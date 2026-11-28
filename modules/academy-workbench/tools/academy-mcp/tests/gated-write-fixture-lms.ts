@@ -26,6 +26,8 @@ export function fixtureLms(){
     pages:{book_incorrect:bookPage(),clinic:clinicPage()} as Record<ClinicKind,string>,
     allowWrite:true,
     noteTestingNos:[TESTING] as string[],
+    /** The live LMS sends cls_no 0 on every wrong-note row (specs/academy-mcp/gated-writes.md). */
+    noteClsNo:0,
     noteAnswer:null as null|(()=>string|Response),
     writeAnswer:(()=>createdAnswer()) as ()=>string|Response|Promise<string|Response>,
     scoreAnswer:(()=>scoreAnswer()) as ()=>string|Response,
@@ -45,7 +47,7 @@ export function fixtureLms(){
       const answer=(out:string|Response)=>typeof out==='string'?new Response(out):out;
       if(request.process==='getWrongAnswerNoteResult'){
         if(state.noteAnswer)return answer(state.noteAnswer());
-        return new Response(JSON.stringify({result:'ok',noteResultList:state.noteTestingNos.map(n=>({pri_no:Number(STUDENT),cls_no:Number(COURSE),testing_no:Number(n),p_no:Number(PAPER),name:NAME_CANARY}))}));
+        return new Response(JSON.stringify({result:'ok',noteResultList:state.noteTestingNos.map(n=>({pri_no:Number(STUDENT),cls_no:state.noteClsNo,testing_no:Number(n),p_no:Number(PAPER),name:NAME_CANARY}))}));
       }
       if(role==='write')return answer(await state.writeAnswer());
       return answer(state.scoreAnswer());

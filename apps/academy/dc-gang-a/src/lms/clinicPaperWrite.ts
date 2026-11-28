@@ -266,7 +266,7 @@ export function parseWriteResponse(text: string, studentKey: string): {responseS
   return {responseSha256: sha256Hex(text), printListSha256: sha256Hex(canonicalJson(body.print_list)), paperKeys: [...keys].sort((a, b) => Number(a) - Number(b)), paperCount: papers.length};
 }
 
-/** The testing numbers of the rows of `getWrongAnswerNoteResult` for one exact course and student; every row must carry both keys. */
+/** The testing numbers of the rows of `getWrongAnswerNoteResult` for one exact course and student; every row must carry the student key as `pri_no` and a `cls_no` of 0 (the live LMS) or the course key; the course is verified by the request scope (`wrongNoteFields`: one course, one book, one student). */
 export function parseWrongNoteResult(text: string, scope: {studentKey: string; courseKey: string}): string[] {
   let body: Record<string, unknown>;
   try { body = parseJson(text); } catch { throw Error('clinic_scope_unresolved'); }
@@ -274,7 +274,7 @@ export function parseWrongNoteResult(text: string, scope: {studentKey: string; c
   const nos = new Set<string>();
   for (const raw of body.noteResultList) {
     const row = asRecord(raw);
-    if (!row || keyOf(row.pri_no) !== scope.studentKey || keyOf(row.cls_no) !== scope.courseKey) throw Error('clinic_scope_unresolved');
+    if (!row || keyOf(row.pri_no) !== scope.studentKey || !(row.cls_no === 0 || row.cls_no === '0' || keyOf(row.cls_no) === scope.courseKey)) throw Error('clinic_scope_unresolved');
     const no = keyOf(row.testing_no);
     if (no === null) throw Error('clinic_scope_unresolved');
     nos.add(no);

@@ -162,7 +162,6 @@ describe('direct-key historical lookup (specs/academy-mcp/direct-key-lookup.md)'
   const refusals:[string,WireAnswers,Record<string,unknown>][]=[
    ['a wrong-note row of another student',{getWrongAnswerNoteResult:note([noteRow({pri_no:770012})])},{}],
    ['a wrong-note row without cls_no',{getWrongAnswerNoteResult:note([noteRow({cls_no:undefined})])},{}],
-   ['a wrong-note row of another course',{getWrongAnswerNoteResult:note([noteRow(),noteRow({cls_no:560099,testing_no:6009})])},{}],
    ['a report without SERVER_RET = OK',{getCourseBookReport:'<html><body>SERVER_RET = FAIL<BR>{}<END_DATA></body></html>'},{}],
    ['a report that is no envelope',{getCourseBookReport:'<html><body>Invented error page</body></html>'},{}],
    ['a report of another student',{getCourseBookReport:envelope(reportRaw({block1:[{'1':REPORT_TITLE,'2':'a','3':'b','4':'Other Invented'}]}))},{}],
@@ -185,6 +184,30 @@ describe('direct-key historical lookup (specs/academy-mcp/direct-key-lookup.md)'
   const mislabeled=wire(historicalAnswers(),memoryOf([{bookNo:BOOK,courseKey:COURSE,bookLabel:'개념원리 2-1 Invented'}]));
   expect(await mislabeled.service.textbookSectionsByName({...request,bookLabel:'개념원리 2-1'})).toMatchObject({status:'unavailable',reasonCode:'historical_key_unverified'});
   expect(bookTitleAgrees(REPORT_TITLE,MEMORY_LABEL)).toBe(true);expect(bookTitleAgrees(REPORT_TITLE,'다빈치 1-1')).toBe(false);
+ });
+
+ test('direct_key_cls_no_zero_rows_are_in_scope',async()=>{
+  // The live shape (finding ama-live-directkey-clsno-zero): cls_no is the number 0 on every row.
+  const zero=(over:Record<string,unknown>={})=>noteRow({cls_no:0,...over});
+  const w=wire(historicalAnswers({getWrongAnswerNoteResult:note([zero(),zero({testing_name:OTHER_TITLE,p_no:5002,testing_no:6002})])}));
+  const answer=await w.service.textbookSectionsByName({...request,...explicitKeys}) as any;
+  expect(answer).toMatchObject({status:'observed',bindingSource:'historical_key_registry',courseKey:COURSE,bookNo:BOOK});
+  expect(answer.index.map((r:any)=>r.sourceTitle)).toEqual([TITLE,OTHER_TITLE]);
+  expect(JSON.parse(w.bodies.getWrongAnswerNoteResult![0]!.get('answerNoteResult')!)).toEqual({courseKeyList:[COURSE],bookNoList:[BOOK],userKeyList:[KEY]});
+  // Zero and the course key may be mixed; a row of another student is never in scope.
+  const mixed=wire(historicalAnswers({getWrongAnswerNoteResult:note([zero(),noteRow({testing_name:OTHER_TITLE,p_no:5002,testing_no:6002})])}));
+  expect(await mixed.service.textbookSectionsByName({...request,...explicitKeys})).toMatchObject({status:'observed'});
+  const foreign=wire(historicalAnswers({getWrongAnswerNoteResult:note([zero({pri_no:770012})])}));
+  expect(await foreign.service.textbookSectionsByName({...request,...explicitKeys})).toMatchObject({status:'unavailable',reasonCode:'historical_key_unverified'});
+ });
+
+ test('direct_key_cls_no_other_course_refuses_historical_key_unverified',async()=>{
+  for(const cls of [560099,-1,'abc',null])
+   for(const rows of [[noteRow({cls_no:0}),noteRow({cls_no:cls,testing_no:6009})],[noteRow({cls_no:cls})]]){
+    const w=wire(historicalAnswers({getWrongAnswerNoteResult:note(rows)}));
+    const answer=await w.service.textbookSectionsByName({...request,...explicitKeys}) as any;
+    expect({cls,status:answer.status,reasonCode:answer.reasonCode,index:answer.index}).toEqual({cls,status:'unavailable',reasonCode:'historical_key_unverified',index:undefined});
+   }
  });
 
  test('direct_key_r5_missing_and_ambiguous_bindings',async()=>{

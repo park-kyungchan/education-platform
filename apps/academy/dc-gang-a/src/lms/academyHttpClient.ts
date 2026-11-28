@@ -955,8 +955,9 @@ export class AcademyHttpClient {
   }
   /** Direct-key historical index (specs/academy-mcp/direct-key-lookup.md R2-R4): the wrong-answer
    * note of one exact course, book and student, for a book that the live getTextBookProgress
-   * list no longer holds. Every row must carry the student key as `pri_no` and the course key
-   * as `cls_no`, or the read refuses with historical_key_unverified. No paper search and no
+   * list no longer holds. Every row must carry the student key as `pri_no` and a `cls_no` of 0 (what the
+   * live LMS sends on every row) or the course key; the course itself is verified by the request scope
+   * (one course, one book, one student) and by getCourseBookReport. Anything else refuses with historical_key_unverified. No paper search and no
    * live-list request: the caller has already read the live list. */
   async readHistoricalTextbookIndex(input:{teacherLabel:string;studentKey:string;studentName:string;courseKey:string;bookNo:string}){
     const {scope}=this.#historicalScope(input);
@@ -969,7 +970,7 @@ export class AcademyHttpClient {
     const rows=data.noteResultList.map(raw=>{
       let row:Record<string,unknown>;
       try{row=readInputRecord(raw);}catch{throw Error('historical_key_unverified');}
-      if(String(row.pri_no)!==scope.studentKey||String(row.cls_no)!==scope.courseKey)throw Error('historical_key_unverified');
+      if(String(row.pri_no)!==scope.studentKey||!(row.cls_no===0||row.cls_no==='0'||String(row.cls_no)===scope.courseKey))throw Error('historical_key_unverified');
       let sourceTitle:string,paperKey:string,attemptKey:string;
       try{sourceTitle=readLiteralName(row.testing_name);paperKey=sourceResponseKey(row.p_no);attemptKey=sourceResponseKey(row.testing_no);}
       catch{throw Error('historical_key_unverified');}
